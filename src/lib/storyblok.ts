@@ -1,10 +1,9 @@
 import type { PageStoryData, StoryblokLinkItem } from "./types"
 
-import StoryblokClient from 'storyblok-js-client'
+import StoryblokClient, { StoryParams } from 'storyblok-js-client'
 
 interface FetchOptions {
   preview?: boolean;
-  variables?: any;
 }
 
 const Storyblok = new StoryblokClient({
@@ -19,6 +18,9 @@ export const getAllLinks = async ({ preview = false }: FetchOptions = {}) => {
 }
 
 export const getStoryBySlug = async (slug: string, { preview = false }: FetchOptions = {}) => {
-  const response = await Storyblok.getStory(slug, { version: preview ? 'draft' : 'published' })
+  const response = await Storyblok.getStory(slug, {
+    version: preview ? 'draft' : 'published',
+    cv: preview ? Date.now() : undefined,
+  })
   return response.data.story as PageStoryData
 }

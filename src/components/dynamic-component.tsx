@@ -20,7 +20,7 @@ const DynamicComponent: React.FC<Props> = ({ block }) => {
   if (typeof Components[block.component] !== 'undefined') {
     const Component = Components[block.component]
     return (
-      <SbEditable content={block}>
+      <SbEditable content={block} key={block._uid}>
         <Component block={block}/>
       </SbEditable>
     )

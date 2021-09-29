@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
   }
 }
 
-export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const allLinks = await getAllLinks()
 
   const paths = allLinks

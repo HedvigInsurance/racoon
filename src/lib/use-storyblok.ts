@@ -1,6 +1,7 @@
 import type { PageStoryData } from './types';
 
 import { useEffect, useState } from 'react'
+import { getStoryBySlug } from './storyblok';
 
 export default function useStoryblok(originalStory: PageStoryData, preview: boolean = false) {
   const [story, setStory] = useState(originalStory)
@@ -24,6 +25,18 @@ export default function useStoryblok(originalStory: PageStoryData, preview: bool
           setStory(event.story);
         }
       });
+
+      // @ts-ignore - Storyblok doesn't have types for this
+      storyblokInstance.on("enterEditmode", (event) => {
+        // Load draft version on initial enter of editor
+        getStoryBySlug(event.slug, { preview: true })
+          .then((story) => {
+            setStory(story)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      })
     }
   }
 
