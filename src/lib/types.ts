@@ -1,9 +1,8 @@
+import type { StoryblokComponent, StoryData } from "storyblok-js-client"
+
 export type StoryblokComponentName = 'hero_block' | 'spacer_block' | 'column_text_block'
 
-interface StoryblokBaseBlock {
-  _uid: string
-  component: StoryblokComponentName
-}
+interface StoryblokBaseBlock extends StoryblokComponent<StoryblokComponentName> {}
 
 export interface SBHeroBlock extends StoryblokBaseBlock {
   component: 'hero_block'
@@ -34,21 +33,33 @@ export interface SBColumnTextBlock extends StoryblokBaseBlock {
 
 export type StoryblokBlock = SBHeroBlock | SBSpacerBlock | SBColumnTextBlock
 
-export interface StoryblokPageItem {
-  id: string
+export interface StoryblokLinkItem {
+  id: number
+  slug: string
   name: string
-  full_slug: string
-  content: {
-    _uid: string
-    page_title: string
-    component: string
-    hide_footer: boolean
-    robots: string
-    seo_meta_title: string
-    seo_meta_og_image: string
-    seo_meta_og_title: string
-    seo_meta_description: string
-    seo_meta_og_description: string
-    body: Array<StoryblokBlock>
-  }
+  is_folder: boolean
+  parent_id: number
+  published: boolean
+  path: string | null
+  position: number
+  uuid: string
+  is_startpage: boolean
+  real_path: string
 }
+
+interface PageComponent {
+  _uid: "4ac3d3bb-4bf5-4b4e-a8b8-ed52cce15635"
+  body: Array<StoryblokBlock>
+  component: "page"
+  hide_footer: boolean
+  page_title: string
+  public: boolean
+  robots: "index" | "noindex"
+  seo_meta_description: string
+  seo_meta_og_description: string
+  seo_meta_og_image: string
+  seo_meta_og_title: string
+  seo_meta_title: string
+}
+
+export type PageStoryData = StoryData<PageComponent>

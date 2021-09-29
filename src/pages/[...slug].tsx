@@ -1,16 +1,16 @@
 import type { ParsedUrlQuery } from 'querystring';
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import type { StoryblokPageItem } from "@/lib/types";
+import type { PageStoryData } from '@/lib/types';
 
 import React from "react";
 import Head from "next/head";
 import DynamicComponent from "@/components/dynamic-component";
 import useStoryblok from "@/lib/use-storyblok";
-import { getAllLinksWithSlug, getPageBySlug } from "@/lib/storyblok";
+import { getAllLinks, getStoryBySlug } from "@/lib/storyblok";
 
 interface Props {
   preview: boolean;
-  story: StoryblokPageItem
+  story: PageStoryData
 }
 
 interface Params extends ParsedUrlQuery {
@@ -36,22 +36,22 @@ const Page: NextPage<Props> = (props) => {
 export const getStaticProps: GetStaticProps<Props, Params> = async (context) => {
   const slug = context.params?.slug ? context.params.slug.join("/") : "home";
 
-  const data = await getPageBySlug(slug, { preview: context.preview });
+  const story = await getStoryBySlug(slug, { preview: context.preview });
  
   return {
     props: {
-      story: data,
+      story,
       preview: context.preview || false
     },
     revalidate: 3600, // revalidate every hour
   }
 }
 
-export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const allLinks = await getAllLinksWithSlug()
+export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
+  const allLinks = await getAllLinks()
 
   const paths = allLinks
-    .filter((item) => item.isFolder === false)
+    .filter((item) => item.is_folder === false)
     .filter((item) => item.published === true)
     .filter((item) => item.slug.endsWith("/global/") === false)
     .filter((item) => item.slug !== 'home')

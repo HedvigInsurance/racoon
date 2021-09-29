@@ -1,8 +1,8 @@
-import type { StoryblokPageItem } from './types';
+import type { PageStoryData } from './types';
 
 import { useEffect, useState } from 'react'
 
-export default function useStoryblok(originalStory: StoryblokPageItem, preview: boolean = false) {
+export default function useStoryblok(originalStory: PageStoryData, preview: boolean = false) {
   const [story, setStory] = useState(originalStory)
 
   function initEventListeners() {
