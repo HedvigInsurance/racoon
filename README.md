@@ -27,4 +27,10 @@ Raccoons can eat just about anything, making them ideal for urban life. They lov
 ## Resources
 
 - [The Complete Guide to Build a Full Blown Multilanguage Website with Next.js](https://www.storyblok.com/tp/next-js-react-guide)
+- [Add a headless CMS to Next.js in 5 minutes](https://www.storyblok.com/tp/add-a-headless-cms-to-next-js-in-5-minutes#adding-preview-mode)
 - [CodeSandbox: storyblok/getting-started](https://codesandbox.io/s/github/storyblok/getting-started)
+- [Next.js Storyblok CMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-storyblok)
+
+## Todo
+
+- [ ] Integrate with [Storyblok Image Service](https://www.storyblok.com/docs/image-service)
