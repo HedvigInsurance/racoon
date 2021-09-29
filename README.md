@@ -23,3 +23,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## The name
 
 Raccoons can eat just about anything, making them ideal for urban life. They love big city life! Today there are 20 times more of them in cities compared to 70 years ago. They can now be found across the globe. They are true urban dwellers.
+
+## Resources
+
+- [The Complete Guide to Build a Full Blown Multilanguage Website with Next.js](https://www.storyblok.com/tp/next-js-react-guide)
+- [CodeSandbox: storyblok/getting-started](https://codesandbox.io/s/github/storyblok/getting-started)
