@@ -1,6 +1,6 @@
 import type { PageStoryData, StoryblokLinkItem } from "./types"
 
-import StoryblokClient, { StoryParams } from 'storyblok-js-client'
+import StoryblokClient from 'storyblok-js-client'
 
 interface FetchOptions {
   preview?: boolean;
