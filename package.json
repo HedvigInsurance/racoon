@@ -1,33 +1,43 @@
 {
   "name": "racoon",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -s public/",
-    "serve-storybook": "serve storybook-static"
-  },
-  "dependencies": {
-    "axios": "^0.21.4",
-    "next": "11.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "storyblok-js-client": "^4.1.5",
-    "storyblok-react": "^0.1.2"
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.3.9",
-    "@storybook/addon-links": "^6.3.9",
-    "@storybook/react": "^6.3.9",
-    "@types/react": "17.0.19",
-    "babel-loader": "^8.2.2",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2",
-    "serve": "^12.0.1",
-    "typescript": "4.4.2"
+    "turbo": "^1.0.11"
+  },
+  "turbo": {
+    "pipeline": {
+      "build": {
+        "outputs": [
+          ".next/**"
+        ],
+        "dependsOn": [
+          "^build"
+        ]
+      },
+      "test": {
+        "outputs": [
+          "covereage/**"
+        ],
+        "dependsOn": []
+      },
+      "lint": {
+        "outputs": []
+      },
+      "dev": {
+        "cache": false
+      }
+    }
   }
 }
