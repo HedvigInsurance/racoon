@@ -13,12 +13,9 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
-    "axios": "^0.21.4",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "storyblok-js-client": "^4.1.5",
-    "storyblok-react": "^0.1.2"
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.3.9",
@@ -29,7 +26,7 @@
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "serve": "^12.0.1",
-    "typescript": "4.4.2",
-    "tsconfig": "*"
+    "tsconfig": "*",
+    "typescript": "4.4.2"
   }
 }
