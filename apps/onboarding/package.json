@@ -10,10 +10,12 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -s public/",
     "serve-storybook": "serve storybook-static",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
+    "download-translations": "./scripts/download-translations.sh"
   },
   "dependencies": {
     "next": "11.1.2",
+    "next-i18next": "^10.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
