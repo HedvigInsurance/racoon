@@ -1,3 +1,5 @@
+type ForeverParams = { code?: string }
+
 export const PageLink = {
-  forever: (code: string) => `/forever/${code}`,
+  forever: ({ code }: ForeverParams) => code ? `/forever?code=${code}` : '/forever',
 }

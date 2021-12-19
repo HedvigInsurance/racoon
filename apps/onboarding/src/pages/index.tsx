@@ -10,7 +10,7 @@ const Home: NextPage = () => {
           This is a demo
         </h1>
 
-        <Link href={PageLink.forever('335FVT')}>Forever page</Link>
+        <Link href={PageLink.forever({ code: '335FVT' })}>Forever page</Link>
       </main>
     </div>
   )
