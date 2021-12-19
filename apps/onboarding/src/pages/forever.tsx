@@ -12,15 +12,16 @@ const ForeverPage: NextPage = () => {
   const [code, setCode] = useState(() => router.query.code as string)
 
   return (
-    <div>
-      <header>
+    <div className="h-screen flex flex-col p-2">
+      <header className="flex-shrink-0 p-5 flex justify-center">
         <HedvigLogo />
       </header>
-      <main>
-        <div>
-          <form>
-            <label>{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
+      <main className="flex-1 flex flex-col justify-between">
+        <div className="flex-1">
+          <form className="flex flex-col justify-center space-y-2">
+            <label className="text-center">{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
             <input
+              className="border border-gray-300 p-2 w-full rounded"
               type="text"
               placeholder="7VEKCAG"
               value={code}
@@ -28,18 +29,20 @@ const ForeverPage: NextPage = () => {
               required
             />
 
-            <button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</button>
+            <button type="submit" className="bg-slate-300 p-2 rounded">
+              {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
+            </button>
           </form>
         </div>
 
-        <footer>
-          <div>{t('FOREVER_LANDINGPAGE_INFO_TEXT')}</div>
+        <footer className="flex-shrink-0 space-y-2">
+          <p>{t('FOREVER_LANDINGPAGE_INFO_TEXT')}</p>
 
-          <div>
+          <div className="flex items-stretch justify-center space-x-2">
             <Link href={router.asPath} locale="se">
               Sv
             </Link>
-            <div></div>
+            <div className="w-px bg-gray-300"></div>
             <Link href={router.asPath} locale="se-en">
               En
             </Link>
