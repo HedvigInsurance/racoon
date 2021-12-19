@@ -1,6 +1,7 @@
 module.exports = {
   i18n: {
     locales: [
+      'default',
       'se',
       'se-en',
       'no',
@@ -8,6 +9,7 @@ module.exports = {
       'dk',
       'dk-en',
     ],
-    defaultLocale: 'se-en',
+    defaultLocale: 'default',
+    localeDetection: false,
   },
 }
