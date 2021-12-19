@@ -6,9 +6,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <main>
-        <h1>
-          This is a demo
-        </h1>
+        <h1>This is a demo</h1>
 
         <Link href={PageLink.forever({ code: '335FVT' })}>Forever page</Link>
       </main>

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { HedvigLogo } from "ui"
+import { HedvigLogo } from 'ui'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation('common')
@@ -33,14 +33,16 @@ const ForeverPage: NextPage = () => {
         </div>
 
         <footer>
-          <div>
-            {t('FOREVER_LANDINGPAGE_INFO_TEXT')}
-          </div>
+          <div>{t('FOREVER_LANDINGPAGE_INFO_TEXT')}</div>
 
           <div>
-            <Link href={router.asPath} locale="se">Sv</Link>
+            <Link href={router.asPath} locale="se">
+              Sv
+            </Link>
             <div></div>
-            <Link href={router.asPath} locale="se-en">En</Link>
+            <Link href={router.asPath} locale="se-en">
+              En
+            </Link>
           </div>
         </footer>
       </main>
@@ -50,7 +52,7 @@ const ForeverPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale as string, ['common']),
+    ...(await serverSideTranslations(locale as string, ['common'])),
   },
 })
 
