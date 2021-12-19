@@ -12,7 +12,8 @@ coverage
 .next/
 
 # production
-/build
+build
+dist
 
 # misc
 .DS_Store

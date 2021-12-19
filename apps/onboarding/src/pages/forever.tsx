@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
+import { HedvigLogo } from "ui"
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation('common')
@@ -13,7 +14,7 @@ const ForeverPage: NextPage = () => {
   return (
     <div>
       <header>
-        <div>Hedvig</div>
+        <HedvigLogo />
       </header>
       <main>
         <div>
