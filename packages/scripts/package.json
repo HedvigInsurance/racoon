@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "bin": {
+    "eslint": "./node_modules/.bin/eslint"
+  },
   "files": [
     "eslint-preset.js"
   ],
