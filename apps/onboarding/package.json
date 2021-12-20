@@ -18,6 +18,9 @@
     "ui": "*"
   },
   "devDependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@hedviginsurance/brand": "^4.2.0",
     "@types/react": "^17.0.37",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.5.0",
