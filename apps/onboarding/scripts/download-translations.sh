@@ -33,9 +33,9 @@ lokalise2 \
   --language-mapping '[
     {"original_language_iso": "en","custom_language_iso": "default"},
     {"original_language_iso": "da_DK","custom_language_iso": "dk"},
-    {"original_language_iso": "en_DK","custom_language_iso": "dk-en"},
+    {"original_language_iso": "en_DK","custom_language_iso": "dk-EN"},
     {"original_language_iso": "sv_SE","custom_language_iso": "se"},
-    {"original_language_iso": "en_SE","custom_language_iso": "se-en"},
+    {"original_language_iso": "en_SE","custom_language_iso": "se-EN"},
     {"original_language_iso": "nb_NO","custom_language_iso": "no"},
-    {"original_language_iso": "en_NO","custom_language_iso": "no-en"}
+    {"original_language_iso": "en_NO","custom_language_iso": "no-EN"}
   ]'
