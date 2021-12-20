@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.markdown {
+  @apply text-gray-900;
+}
+
+.markdown a {
+  @apply text-purple-900 underline;
+}

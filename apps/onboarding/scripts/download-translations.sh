@@ -29,8 +29,9 @@ lokalise2 \
   --placeholder-format icu \
   --include-tags web-onboarding \
   --indentation 2sp \
-  --filter-langs 'da_DK,en_DK,sv_SE,en_SE,nb_NO,en_NO' \
+  --filter-langs 'en,da_DK,en_DK,sv_SE,en_SE,nb_NO,en_NO' \
   --language-mapping '[
+    {"original_language_iso": "en","custom_language_iso": "default"},
     {"original_language_iso": "da_DK","custom_language_iso": "dk"},
     {"original_language_iso": "en_DK","custom_language_iso": "dk-en"},
     {"original_language_iso": "sv_SE","custom_language_iso": "se"},

@@ -5,9 +5,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { HedvigLogo } from 'ui'
+import { marked } from 'marked'
+import createDOMPurify from 'dompurify'
+import { JSDOM } from 'jsdom'
 
 const ForeverPage: NextPage = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation()
   const router = useRouter()
   const [code, setCode] = useState(() => router.query.code as string)
 
@@ -46,7 +49,10 @@ const ForeverPage: NextPage = () => {
               {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
             </button>
 
-            <p className="text-xs text-gray-700">{t('FOREVER_LANDINGPAGE_INFO_TEXT')}</p>
+            <div
+              className="text-xs text-gray-700 markdown"
+              dangerouslySetInnerHTML={{ __html: t('FOREVER_LANDINGPAGE_INFO_TEXT') }}
+            />
 
             <div className="flex items-stretch justify-center space-x-2">
               <Link href={router.asPath} locale="se">
@@ -64,10 +70,29 @@ const ForeverPage: NextPage = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale as string, ['common'])),
-  },
-})
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const translations = await serverSideTranslations(locale as string)
+
+  const window = new JSDOM('').window
+  const DOMPurify = createDOMPurify(window as unknown as Window)
+
+  const markdownFields = ['FOREVER_LANDINGPAGE_INFO_TEXT']
+  for (const localeKey of Object.keys(translations._nextI18Next.initialI18nStore)) {
+    const localeTranslations = translations._nextI18Next.initialI18nStore[localeKey].common
+    for (const markdownField of markdownFields) {
+      if (localeTranslations[markdownField]) {
+        localeTranslations[markdownField] = DOMPurify.sanitize(
+          marked(localeTranslations[markdownField]),
+        )
+      }
+    }
+  }
+
+  return {
+    props: {
+      ...translations,
+    },
+  }
+}
 
 export default ForeverPage
