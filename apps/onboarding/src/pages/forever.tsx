@@ -9,11 +9,13 @@ import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
+import { useCurrentLocale } from '@/lib/l10n'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [code, setCode] = useState(() => router.query.code as string)
+  const { path: urlLocale } = useCurrentLocale()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -51,17 +53,17 @@ const ForeverPage: NextPage = () => {
             </button>
 
             <div
-              className="text-xs text-gray-700 markdown"
+              className="text-xs text-gray-700 text-center markdown"
               dangerouslySetInnerHTML={{ __html: t('FOREVER_LANDINGPAGE_INFO_TEXT') }}
             />
 
             <div className="flex items-stretch justify-center space-x-2">
               <Link href={router.asPath} locale="se">
-                <a className="">Sv</a>
+                <a className={urlLocale === 'se' ? 'text-gray-900' : 'text-gray-500'}>Sv</a>
               </Link>
               <div className="w-px bg-gray-700" />
               <Link href={router.asPath} locale="se-en">
-                En
+                <a className={urlLocale === 'se-EN' ? 'text-gray-900' : 'text-gray-500'}>En</a>
               </Link>
             </div>
           </footer>
