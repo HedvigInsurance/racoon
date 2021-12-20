@@ -1,9 +1,10 @@
+/* eslint @next/next/no-html-link-for-pages: 0 */
 import type { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
+import { useTranslation } from 'next-i18next'
 import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
