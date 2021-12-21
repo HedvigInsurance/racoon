@@ -1,9 +1,23 @@
-const { colorsV3 } = require('@hedviginsurance/brand')
+const { colorsV3, fonts } = require('@hedviginsurance/brand')
 
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      sans: [fonts.FAVORIT, 'sans-serif'],
+    },
     extend: {
+      spacing: {
+        1: '0.25rem',
+        2: '0.5rem',
+        3: '0.75rem',
+        4: '1rem',
+        5: '1.5rem',
+        6: '2rem',
+        7: '3rem',
+        8: '4rem',
+        9: '6rem',
+      },
       colors: {
         gray: {
           100: colorsV3.gray100,

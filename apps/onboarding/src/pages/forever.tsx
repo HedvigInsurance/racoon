@@ -3,67 +3,104 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
 import { useCurrentLocale } from '@/lib/l10n'
+import classNames from 'classnames'
+import { Button } from '@/components/button'
+import { InputField } from '@/components/input'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
-  const [code, setCode] = useState(() => router.query.code as string)
+  const [code, setCode] = useState('')
   const { path: urlLocale } = useCurrentLocale()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
 
+  useEffect(() => {
+    const initialCode = router.query.code
+
+    if (typeof initialCode === 'string') {
+      let charIndex = 0
+
+      const handle = window.setInterval(() => {
+        if (charIndex < initialCode.length) {
+          setCode((codePiece) => codePiece + initialCode[charIndex])
+          charIndex++
+        } else {
+          window.clearInterval(handle)
+        }
+      }, 250)
+
+      return () => {
+        window.clearInterval(handle)
+      }
+    }
+
+    // only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="h-screen flex flex-col p-6 bg-white">
-        <header className="flex-shrink-0 flex justify-center">
+      <div className="h-screen flex flex-col p-6 bg-white xl:py-10 xl:px-14">
+        <header className="flex-shrink-0 flex justify-center xl:justify-start">
           <a href="/" className="hover:text-purple-900">
             <HedvigLogo />
           </a>
         </header>
-        <main className="flex-1 flex flex-col justify-between">
-          <div className="flex-1 flex flex-col justify-center space-y-4">
-            <label className="text-center text-gray-700">
-              {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
-            </label>
-            <input
-              className="border border-gray-500 py-3 px-6 w-full rounded-lg text-center text-gray-900 text-lg"
-              type="text"
-              placeholder="7VEKCAG"
-              value={code}
-              onChange={({ target: { value } }) => setCode(value)}
-              required
-            />
+        <main className="flex-1 flex flex-col justify-between items-center space-y-10 xl:space-y-0">
+          <div className="flex-1 flex flex-col justify-center w-full max-w-sm xl:space-y-10">
+            <div className="flex-1 flex flex-col justify-center space-y-4 xl:flex-initial">
+              <label className="text-center text-gray-700">
+                {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
+              </label>
+              <InputField
+                type="text"
+                placeholder="7VEKCAG"
+                value={code}
+                onChange={({ target: { value } }) => setCode(value)}
+                required
+              />
+            </div>
+
+            <Button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</Button>
           </div>
 
-          <footer className="flex-shrink-0 space-y-10">
-            <button
-              type="submit"
-              className="bg-purple-500 text-gray-900 rounded-lg py-3 px-6 w-full"
-            >
-              {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
-            </button>
-
+          <footer className="flex-shrink-0 space-y-10 flex flex-col items-center">
             <div
-              className="text-xs text-gray-700 text-center markdown"
+              className="text-xs xl:text-sm text-gray-700 text-center max-w-xl markdown"
               dangerouslySetInnerHTML={{ __html: t('FOREVER_LANDINGPAGE_INFO_TEXT') }}
             />
 
             <div className="flex items-stretch justify-center space-x-2">
               <Link href={router.asPath} locale="se">
-                <a className={urlLocale === 'se' ? 'text-gray-900' : 'text-gray-500'}>Sv</a>
+                <a
+                  className={classNames('hover:text-gray-900', {
+                    'text-gray-900': urlLocale === 'se',
+                    'text-gray-500': urlLocale !== 'se',
+                  })}
+                >
+                  Sv
+                </a>
               </Link>
               <div className="w-px bg-gray-700" />
-              <Link href={router.asPath} locale="se-en">
-                <a className={urlLocale === 'se-EN' ? 'text-gray-900' : 'text-gray-500'}>En</a>
+              <Link href={router.asPath} locale="se-EN">
+                <a
+                  className={classNames('hover:text-gray-900', {
+                    'text-gray-900': urlLocale === 'se-EN',
+                    'text-gray-500': urlLocale !== 'se-EN',
+                  })}
+                >
+                  En
+                </a>
               </Link>
             </div>
           </footer>

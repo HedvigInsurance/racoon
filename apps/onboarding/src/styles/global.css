@@ -9,3 +9,27 @@
 .markdown a {
   @apply text-purple-900 underline;
 }
+
+@font-face {
+  font-family: FavoritStd;
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Bold.woff2') format('woff2'),
+    url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: FavoritStd;
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Book.woff2') format('woff2'),
+    url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Book.woff') format('woff');
+}
+
+@font-face {
+  font-family: FavoritStd;
+  font-style: italic;
+  font-weight: 400;
+  src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-BookItalic.woff2') format('woff2'),
+    url('https://cdn.hedvig.com/identity/fonts/FavoritStd-BookItalic.woff') format('woff');
+}
