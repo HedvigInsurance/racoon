@@ -9,16 +9,18 @@ import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
-import { useCurrentLocale } from '@/lib/l10n'
+import { useCurrentLocale, useCurrentMarket } from '@/lib/l10n'
 import classNames from 'classnames'
 import { Button } from '@/components/button'
 import { InputField } from '@/components/input'
+import { Separate } from '@/components/separate'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [code, setCode] = useState('')
   const { path: urlLocale } = useCurrentLocale()
+  const { languages } = useCurrentMarket()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -29,6 +31,7 @@ const ForeverPage: NextPage = () => {
 
     if (typeof initialCode === 'string') {
       let charIndex = 0
+      setCode('')
 
       const handle = window.setInterval(() => {
         if (charIndex < initialCode.length) {
@@ -81,27 +84,20 @@ const ForeverPage: NextPage = () => {
             />
 
             <div className="flex items-stretch justify-center space-x-2">
-              <Link href={router.asPath} locale="se">
-                <a
-                  className={classNames('hover:text-gray-900', {
-                    'text-gray-900': urlLocale === 'se',
-                    'text-gray-500': urlLocale !== 'se',
-                  })}
-                >
-                  Sv
-                </a>
-              </Link>
-              <div className="w-px bg-gray-700" />
-              <Link href={router.asPath} locale="se-EN">
-                <a
-                  className={classNames('hover:text-gray-900', {
-                    'text-gray-900': urlLocale === 'se-EN',
-                    'text-gray-500': urlLocale !== 'se-EN',
-                  })}
-                >
-                  En
-                </a>
-              </Link>
+              <Separate Separator={<div className="w-px bg-gray-700" />}>
+                {languages.map((language) => (
+                  <Link key={language.urlParam} href={router.asPath} locale={language.urlParam}>
+                    <a
+                      className={classNames(
+                        'hover:text-gray-900',
+                        urlLocale === language.urlParam ? 'text-gray-900' : 'text-gray-500',
+                      )}
+                    >
+                      {language.displayName}
+                    </a>
+                  </Link>
+                ))}
+              </Separate>
             </div>
           </footer>
         </main>
