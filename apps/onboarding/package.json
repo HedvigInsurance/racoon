@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
+    "test": "jest --passWithNoTests",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh"
@@ -21,14 +22,20 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@hedviginsurance/brand": "^4.2.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/react": "^17.0.37",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.5.0",
     "eslint-config-next": "^12.0.7",
+    "eslint-plugin-testing-library": "^5.0.1",
+    "jest": "^27.4.5",
     "postcss": "^8.4.5",
     "scripts": "*",
     "serve": "^12.0.1",
     "tailwindcss": "^3.0.7",
+    "ts-jest": "^27.1.2",
     "tsconfig": "*",
     "typescript": "^4.5.4"
   }
