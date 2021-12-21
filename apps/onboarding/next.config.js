@@ -13,4 +13,5 @@ module.exports = {
       },
     ]
   },
+  pageExtensions: ['page.tsx', 'api.ts', 'next.tsx', 'next.ts'],
 }

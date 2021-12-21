@@ -1,55 +1,28 @@
 /* eslint @next/next/no-html-link-for-pages: 0 */
 import type { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
-import { useCurrentLocale, useCurrentMarket } from '@/lib/l10n'
-import classNames from 'classnames'
 import { Button } from '@/components/button'
 import { InputField } from '@/components/input'
-import { Separate } from '@/components/separate'
+import { usePrintCodeEffect } from './hooks/use-print-code-effect'
+import { LanguageSwitcher } from './components/language-switcher'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [code, setCode] = useState('')
-  const { path: urlLocale } = useCurrentLocale()
-  const { languages } = useCurrentMarket()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
 
-  useEffect(() => {
-    const initialCode = router.query.code
-
-    if (typeof initialCode === 'string') {
-      let charIndex = 0
-      setCode('')
-
-      const handle = window.setInterval(() => {
-        if (charIndex < initialCode.length) {
-          setCode((codePiece) => codePiece + initialCode[charIndex])
-          charIndex++
-        } else {
-          window.clearInterval(handle)
-        }
-      }, 250)
-
-      return () => {
-        window.clearInterval(handle)
-      }
-    }
-
-    // only run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  usePrintCodeEffect({ initialCode: router.query.code, setCode })
 
   return (
     <form onSubmit={handleSubmit}>
@@ -83,22 +56,7 @@ const ForeverPage: NextPage = () => {
               dangerouslySetInnerHTML={{ __html: t('FOREVER_LANDINGPAGE_INFO_TEXT') }}
             />
 
-            <div className="flex items-stretch justify-center space-x-2">
-              <Separate Separator={<div className="w-px bg-gray-700" />}>
-                {languages.map((language) => (
-                  <Link key={language.urlParam} href={router.asPath} locale={language.urlParam}>
-                    <a
-                      className={classNames(
-                        'hover:text-gray-900',
-                        urlLocale === language.urlParam ? 'text-gray-900' : 'text-gray-500',
-                      )}
-                    >
-                      {language.displayName}
-                    </a>
-                  </Link>
-                ))}
-              </Separate>
-            </div>
+            <LanguageSwitcher />
           </footer>
         </main>
       </div>
