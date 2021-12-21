@@ -5,5 +5,8 @@ const FALLBACK_LOCALE: LocaleLabel = 'se-EN'
 
 export const useCurrentLocale = () => {
   const router = useRouter()
-  return locales[(router.locale || FALLBACK_LOCALE) as LocaleLabel]
+
+  const locale = router.locale === 'default' ? FALLBACK_LOCALE : router.locale || FALLBACK_LOCALE
+
+  return locales[locale as LocaleLabel]
 }
