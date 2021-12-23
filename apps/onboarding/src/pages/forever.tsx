@@ -25,10 +25,11 @@ const ForeverPage: NextPage = () => {
         </header>
         <main className="flex-1 flex flex-col justify-between">
           <div className="flex-1 flex flex-col justify-center space-y-4">
-            <label className="text-center text-gray-700">
+            <label className="text-center text-gray-700" htmlFor="forever-code-input">
               {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
             </label>
             <input
+              id="forever-code-input"
               className="border border-gray-500 py-3 px-6 w-full rounded-lg text-center text-gray-900 text-lg"
               type="text"
               placeholder="7VEKCAG"
