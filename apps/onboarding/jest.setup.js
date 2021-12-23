@@ -1,6 +1,9 @@
 // Used for @testing-library/react
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect'
+// Polyfill 'fetch' used in react components
+import 'whatwg-fetch'
+
 import { server } from './src/mocks/server'
 
 // Mock next-i18next
