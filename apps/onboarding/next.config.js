@@ -5,7 +5,6 @@ const { withSentryConfig } = require('@sentry/nextjs')
 const moduleExports = {
   reactStrictMode: true,
   i18n,
-  basePath: '/next',
   async redirects() {
     return [
       {
