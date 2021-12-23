@@ -5,15 +5,6 @@ const { withSentryConfig } = require('@sentry/nextjs')
 const moduleExports = {
   reactStrictMode: true,
   i18n,
-  async redirects() {
-    return [
-      {
-        source: '/forever/:code',
-        destination: '/forever?code=:code',
-        permanent: true,
-      },
-    ]
-  },
   pageExtensions: ['page.tsx', 'api.ts', 'next.tsx', 'next.ts'],
 }
 
