@@ -47,7 +47,9 @@ const ForeverPage: NextPage = () => {
               />
             </div>
 
-            <Button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</Button>
+            <Button type="submit" disabled={!code}>
+              {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
+            </Button>
           </div>
 
           <footer className="flex-shrink-0 space-y-10 flex flex-col items-center">
