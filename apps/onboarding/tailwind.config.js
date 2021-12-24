@@ -41,6 +41,17 @@ module.exports = {
           600: colorsV3.red600,
         },
       },
+      animation: {
+        loader: 'loader 0.6s infinite alternate',
+      },
+      keyframes: {
+        loader: {
+          to: {
+            opacity: 0.5,
+            transform: 'translate3d(0, -0.15rem, 0)',
+          },
+        },
+      },
     },
   },
   plugins: [],

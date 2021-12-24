@@ -2,25 +2,57 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import { gql, useLazyQuery } from '@apollo/client'
 import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom'
 import { Button } from '@/components/button'
-import { InputField } from '@/components/input'
+import { InputField } from '@/components/input-field'
 import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { LanguageSwitcher } from './components/language-switcher'
+
+const CAMPAIGN_QUERY = gql`
+  query Campaign($code: String!) {
+    campaign(code: $code) {
+      code
+    }
+  }
+`
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [code, setCode] = useState('')
+  const [apiError, setApiError] = useState<string | undefined>()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [fetchCampaign, { error, loading }] = useLazyQuery(CAMPAIGN_QUERY)
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setApiError(undefined)
+
+    try {
+      const { data } = await fetchCampaign({ variables: { code } })
+      console.log('data', data)
+    } catch (error) {
+      setApiError(t('FOREVER_ERROR_GENERIC'))
+    }
   }
+
+  useEffect(() => {
+    if (error) {
+      setApiError(t('FOREVER_CODE_ERROR'))
+    }
+  }, [error, t])
+
+  useEffect(() => {
+    if (code.length === 0) {
+      setApiError(undefined)
+    }
+  }, [code, t])
 
   usePrintCodeEffect({ initialCode: router.query.code, setCode })
 
@@ -40,14 +72,17 @@ const ForeverPage: NextPage = () => {
               </label>
               <InputField
                 type="text"
+                id="code"
+                name="code"
                 placeholder="7VEKCAG"
                 value={code}
                 onChange={({ target: { value } }) => setCode(value)}
                 required
+                errorMessage={apiError}
               />
             </div>
 
-            <Button type="submit" disabled={!code}>
+            <Button type="submit" loading={loading}>
               {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
             </Button>
           </div>
