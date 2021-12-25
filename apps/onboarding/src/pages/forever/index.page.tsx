@@ -36,8 +36,7 @@ const ForeverPage: NextPage = () => {
     setApiError(undefined)
 
     try {
-      const { data } = await fetchCampaign({ variables: { code } })
-      console.log('data', data)
+      fetchCampaign({ variables: { code } })
     } catch (error) {
       setApiError(t('FOREVER_ERROR_GENERIC'))
     }
@@ -53,7 +52,7 @@ const ForeverPage: NextPage = () => {
     if (code.length === 0) {
       setApiError(undefined)
     }
-  }, [code, t])
+  }, [code])
 
   usePrintCodeEffect({ initialCode: router.query.code, setCode })
 
