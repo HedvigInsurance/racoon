@@ -13,6 +13,7 @@ import { Button } from '@/components/button'
 import { InputField } from '@/components/input-field'
 import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { LanguageSwitcher } from './components/language-switcher'
+import { ReadyRedirect } from './components/ready-redirect'
 
 const CAMPAIGN_QUERY = gql`
   query Campaign($code: String!) {
@@ -28,7 +29,7 @@ const ForeverPage: NextPage = () => {
   const [code, setCode] = useState('')
   const [apiError, setApiError] = useState<string | undefined>()
 
-  const [fetchCampaign, { error, loading }] = useLazyQuery(CAMPAIGN_QUERY)
+  const [fetchCampaign, { error, loading, data }] = useLazyQuery(CAMPAIGN_QUERY)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -55,6 +56,10 @@ const ForeverPage: NextPage = () => {
   }, [code, t])
 
   usePrintCodeEffect({ initialCode: router.query.code, setCode })
+
+  if (data) {
+    return <ReadyRedirect code={data.campaign.code} />
+  }
 
   return (
     <form onSubmit={handleSubmit}>
