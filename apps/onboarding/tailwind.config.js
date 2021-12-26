@@ -43,12 +43,23 @@ module.exports = {
       },
       animation: {
         loader: 'loader 0.6s infinite alternate',
+        fadeInUp: 'fadeInUp 0.7s cubic-bezier(0.39, 0.575, 0.565, 1)',
       },
       keyframes: {
         loader: {
           to: {
             opacity: 0.5,
             transform: 'translate3d(0, -0.15rem, 0)',
+          },
+        },
+        fadeInUp: {
+          from: {
+            opacity: 0,
+            transform: 'translate3d(0, 100%, 0)',
+          },
+          to: {
+            opacity: 1,
+            transform: 'translate3d(0, 0, 0)',
           },
         },
       },

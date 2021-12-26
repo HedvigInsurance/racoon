@@ -1,5 +1,6 @@
 import { CampaignCode } from '@/lib/campaign-code'
 import { ExternalLinkButton } from '@/components/button'
+import { PageLayout } from './page-layout'
 import { PageLink } from '@/lib/page-link'
 import { useTranslation } from 'next-i18next'
 
@@ -16,11 +17,13 @@ export const ReadyRedirect = ({ code }: ReadyRedirectProps) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-2">
-      <p className="text-center text-gray-700">{t('FOREVER_INTRO_READY_QUESTION')}</p>
-      <ExternalLinkButton href={PageLink.landing()} onClick={handleClickLink}>
-        {t('FOREVER_INTRO_READY_CTA')}
-      </ExternalLinkButton>
-    </div>
+    <PageLayout>
+      <div className="space-y-4 animate-fadeInUp">
+        <p className="text-center text-gray-700">{t('FOREVER_INTRO_READY_QUESTION')}</p>
+        <ExternalLinkButton href={PageLink.landing()} onClick={handleClickLink}>
+          {t('FOREVER_INTRO_READY_CTA')}
+        </ExternalLinkButton>
+      </div>
+    </PageLayout>
   )
 }

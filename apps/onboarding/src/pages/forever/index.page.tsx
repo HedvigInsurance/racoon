@@ -7,6 +7,7 @@ import { HedvigLogo } from 'ui'
 import { InputField } from '@/components/input-field'
 import { JSDOM } from 'jsdom'
 import { LanguageSwitcher } from './components/language-switcher'
+import { PageLayout } from './components/page-layout'
 import { ReadyRedirect } from './components/ready-redirect'
 import createDOMPurify from 'dompurify'
 import { marked } from 'marked'
@@ -42,12 +43,6 @@ const ForeverPage: NextPage = () => {
     }
   }, [error, t])
 
-  useEffect(() => {
-    if (code.length === 0) {
-      setApiError(undefined)
-    }
-  }, [code])
-
   usePrintCodeEffect({ initialCode: router.query.code, setCode })
 
   if (data?.campaign) {
@@ -56,45 +51,26 @@ const ForeverPage: NextPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="h-screen flex flex-col p-6 bg-white xl:py-10 xl:px-14">
-        <header className="flex-shrink-0 flex justify-center xl:justify-start">
-          <a href="/" className="hover:text-purple-900">
-            <HedvigLogo />
-          </a>
-        </header>
-        <main className="flex-1 flex flex-col justify-between items-center space-y-10 xl:space-y-0">
-          <div className="flex-1 flex flex-col justify-center w-full max-w-sm xl:space-y-10">
-            <div className="flex-1 flex flex-col justify-center space-y-4 xl:flex-initial">
-              <label className="text-center text-gray-700">
-                {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
-              </label>
-              <InputField
-                type="text"
-                id="code"
-                name="code"
-                placeholder="7VEKCAG"
-                value={code}
-                onChange={({ target: { value } }) => setCode(value)}
-                required
-                errorMessage={apiError}
-              />
-            </div>
+      <PageLayout>
+        <div className="flex-1 flex flex-col justify-center space-y-4 xl:flex-initial">
+          <label className="text-center text-gray-700">{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
+          <InputField
+            type="text"
+            id="code"
+            name="code"
+            placeholder="7VEKCAG"
+            autoComplete="off"
+            value={code}
+            onChange={({ target: { value } }) => setCode(value)}
+            required
+            errorMessage={apiError}
+          />
+        </div>
 
-            <Button type="submit" loading={loading}>
-              {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
-            </Button>
-          </div>
-
-          <footer className="flex-shrink-0 space-y-10 flex flex-col items-center">
-            <div
-              className="text-xs xl:text-sm text-gray-700 text-center max-w-xl markdown"
-              dangerouslySetInnerHTML={{ __html: t('FOREVER_LANDINGPAGE_INFO_TEXT') }}
-            />
-
-            <LanguageSwitcher />
-          </footer>
-        </main>
-      </div>
+        <Button type="submit" loading={loading}>
+          {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
+        </Button>
+      </PageLayout>
     </form>
   )
 }
