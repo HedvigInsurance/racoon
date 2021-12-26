@@ -1,19 +1,20 @@
 /* eslint @next/next/no-html-link-for-pages: 0 */
 import type { GetStaticProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'next-i18next'
-import { HedvigLogo } from 'ui'
-import { marked } from 'marked'
-import createDOMPurify from 'dompurify'
-import { JSDOM } from 'jsdom'
+
 import { Button } from '@/components/button'
+import { HedvigLogo } from 'ui'
 import { InputField } from '@/components/input-field'
-import { usePrintCodeEffect } from './hooks/use-print-code-effect'
+import { JSDOM } from 'jsdom'
 import { LanguageSwitcher } from './components/language-switcher'
 import { ReadyRedirect } from './components/ready-redirect'
+import createDOMPurify from 'dompurify'
+import { marked } from 'marked'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useCampaignLazyQuery } from '@/lib/generated-types'
+import { usePrintCodeEffect } from './hooks/use-print-code-effect'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()

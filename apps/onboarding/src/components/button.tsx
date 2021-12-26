@@ -1,8 +1,9 @@
-import { useCurrentLocale } from '@/lib/l10n'
-import classNames from 'classnames'
 import Link, { LinkProps as NextLinkProps } from 'next/link'
-import React from 'react'
+
 import { LoadingDots } from './loading-dots'
+import React from 'react'
+import classNames from 'classnames'
+import { useCurrentLocale } from '@/lib/l10n'
 
 type ClassNameProps = { loading?: boolean; disabled?: boolean }
 
