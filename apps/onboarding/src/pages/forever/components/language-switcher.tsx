@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router'
-import { Separate } from '@/components/separate'
-import { useCurrentMarket } from '@/lib/l10n'
-import classNames from 'classnames'
 import Link from 'next/link'
+import { Separate } from '@/components/separate'
+import classNames from 'classnames'
+import { useCurrentMarket } from '@/lib/l10n'
+import { useRouter } from 'next/router'
 
 export const LanguageSwitcher = () => {
   const router = useRouter()

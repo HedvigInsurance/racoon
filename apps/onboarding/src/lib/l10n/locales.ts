@@ -1,6 +1,6 @@
-import { Locale as IsoLocale, Market as ApiMarket } from '@/lib/types'
-import { ssnLengths, ssnFormats, birthDateFormats } from './birth-date-and-ssn-formats'
+import { Market as ApiMarket, Locale as IsoLocale } from '@/lib/types'
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
+import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
 
 export const LOCALE_URL_PARAMS = ['se', 'se-EN', 'no', 'no-EN', 'dk', 'dk-EN'] as const
 export type LocaleUrlParams = typeof LOCALE_URL_PARAMS

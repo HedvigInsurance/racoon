@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
+
+import { useEffect } from 'react'
 
 export const LOAD_CHAR_INTERVAL = 250
 

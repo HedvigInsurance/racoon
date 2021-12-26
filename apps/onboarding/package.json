@@ -9,9 +9,12 @@
     "test": "jest",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
-    "download-translations": "./scripts/download-translations.sh"
+    "download-translations": "./scripts/download-translations.sh",
+    "sort-imports": "import-sort --write ./src/**/*.{ts,tsx}",
+    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.6",
     "@sentry/nextjs": "^6.16.1",
     "classnames": "^2.3.1",
     "dompurify": "^2.3.4",
@@ -26,6 +29,10 @@
   "devDependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.2",
     "@hedviginsurance/brand": "^4.2.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -40,6 +47,9 @@
     "eslint-plugin-testing-library": "^5.0.1",
     "jest": "^27.4.5",
     "msw": "^0.36.3",
+    "graphql": "^16.2.0",
+    "graphql-tag": "^2.12.6",
+    "import-sort-cli": "^6.0.0",
     "postcss": "^8.4.5",
     "scripts": "*",
     "serve": "^12.0.1",
