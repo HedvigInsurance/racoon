@@ -26,6 +26,7 @@ const CAMPAIGN_QUERY = gql`
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
+
   const [code, setCode] = useState('')
   const [apiError, setApiError] = useState<string | undefined>()
 
@@ -36,7 +37,7 @@ const ForeverPage: NextPage = () => {
     setApiError(undefined)
 
     try {
-      fetchCampaign({ variables: { code } })
+      await fetchCampaign({ variables: { code } })
     } catch (error) {
       setApiError(t('FOREVER_ERROR_GENERIC'))
     }
