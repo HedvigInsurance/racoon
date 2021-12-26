@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { gql, useLazyQuery } from '@apollo/client'
 import { HedvigLogo } from 'ui'
 import { marked } from 'marked'
 import createDOMPurify from 'dompurify'
@@ -14,14 +13,7 @@ import { InputField } from '@/components/input-field'
 import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { LanguageSwitcher } from './components/language-switcher'
 import { ReadyRedirect } from './components/ready-redirect'
-
-const CAMPAIGN_QUERY = gql`
-  query Campaign($code: String!) {
-    campaign(code: $code) {
-      code
-    }
-  }
-`
+import { useCampaignLazyQuery } from '@/lib/generated-types'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
@@ -30,7 +22,7 @@ const ForeverPage: NextPage = () => {
   const [code, setCode] = useState('')
   const [apiError, setApiError] = useState<string | undefined>()
 
-  const [fetchCampaign, { error, loading, data }] = useLazyQuery(CAMPAIGN_QUERY)
+  const [fetchCampaign, { error, loading, data }] = useCampaignLazyQuery()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -57,7 +49,7 @@ const ForeverPage: NextPage = () => {
 
   usePrintCodeEffect({ initialCode: router.query.code, setCode })
 
-  if (data) {
+  if (data?.campaign) {
     return <ReadyRedirect code={data.campaign.code} />
   }
 

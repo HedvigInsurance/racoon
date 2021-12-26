@@ -8,14 +8,14 @@
     "start": "next start -p $PORT",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
-    "download-translations": "./scripts/download-translations.sh"
+    "download-translations": "./scripts/download-translations.sh",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@sentry/nextjs": "^6.16.1",
     "classnames": "^2.3.1",
     "dompurify": "^2.3.4",
-    "graphql": "^16.2.0",
     "jsdom": "^19.0.0",
     "marked": "^4.0.8",
     "next": "^12.0.7",
@@ -27,6 +27,10 @@
   "devDependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.2",
     "@hedviginsurance/brand": "^4.2.0",
     "@types/dompurify": "^2.3.2",
     "@types/jsdom": "^16.2.14",
@@ -35,6 +39,8 @@
     "autoprefixer": "^10.4.0",
     "eslint": "^8.5.0",
     "eslint-config-next": "^12.0.7",
+    "graphql": "^16.2.0",
+    "graphql-tag": "^2.12.6",
     "postcss": "^8.4.5",
     "scripts": "*",
     "serve": "^12.0.1",
