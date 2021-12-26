@@ -1,10 +1,15 @@
 // Used for @testing-library/react
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect'
-// Polyfill 'fetch' used in react components
+// Polyfills 'fetch' used in react components
 import 'whatwg-fetch'
+import { TextEncoder, TextDecoder } from 'util'
 
 import { server } from './src/mocks/server'
+
+// Polyfills TextEncoder/TextDecoder
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 
 // Mock next-i18next
 jest.mock('next-i18next', () => {
