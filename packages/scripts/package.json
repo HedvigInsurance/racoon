@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "bin": {
-    "eslint": "./node_modules/.bin/eslint",
-    "jest": "./node_modules/.bin/jest"
+    "eslint": "./node_modules/.bin/eslint"
   },
   "files": [
     "eslint-preset.js"
@@ -14,11 +13,9 @@
     "clean": "rm -rf .turbo && rm -rf node_modules"
   },
   "dependencies": {
-    "babel-jest": "^27.4.5",
     "eslint-config-next": "^12.0.7",
     "eslint-config-prettier": "^8.3.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.4.5"
+    "identity-obj-proxy": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^8.5.0",

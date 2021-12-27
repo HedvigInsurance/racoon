@@ -22,7 +22,7 @@ export const usePrintCodeEffect = ({ initialCode, setCode }: PrintCodeEffectPara
         } else {
           window.clearInterval(handle)
         }
-      }, 250)
+      }, LOAD_CHAR_INTERVAL)
 
       return () => {
         window.clearInterval(handle)

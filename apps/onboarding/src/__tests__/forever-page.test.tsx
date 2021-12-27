@@ -24,9 +24,9 @@ describe('<ForeverPage />', () => {
 
     const input = getByRole('textbox', { name: /FOREVER_LANDINGPAGE_INPUT_TEXT/i })
 
-    // It uses 'usePrintCodeEffect' internally which will load the code, character by character,
-    // in a 'LOAD_CHAR_INTERVAL' length interval. So we need to wait until all code's characters
-    // are loaded before making the the asserption.
+    // It uses 'usePrintCodeEffect' internally which will load the campaign code provided in the URL
+    // character by character and using a 'LOAD_CHAR_INTERVAL' length interval. So we need to wait until all
+    // code's characters are loaded before making the the assertion.
     await waitFor(() => expect(input).toHaveValue('123456'), {
       timeout: code.length * LOAD_CHAR_INTERVAL,
     })
