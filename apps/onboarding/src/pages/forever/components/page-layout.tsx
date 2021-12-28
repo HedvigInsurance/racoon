@@ -22,7 +22,7 @@ export const PageLayout = ({ children, className, code }: PageLayoutProps) => {
         {code && (
           <meta
             property="og:description"
-            content={t('FOREVER_LANDINGPAGE_DESCRIPTION', { CODE: code })}
+            content={t('FOREVER_LANDINGPAGE_DESCRIPTION', { CODE: code.toUpperCase() })}
           />
         )}
         <meta
