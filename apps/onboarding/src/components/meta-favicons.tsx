@@ -1,10 +1,8 @@
-import { colorsV3 } from '@hedviginsurance/brand'
-
 export const MetaFavicons = () => {
   return (
     <>
-      <meta name="theme-color" content={colorsV3.white} />
-      <meta name="msapplication-TileColor" content={colorsV3.white} />
+      <meta name="theme-color" content="#ffffff" />
+      <meta name="msapplication-TileColor" content="#ffffff" />
 
       <link
         rel="apple-touch-icon"

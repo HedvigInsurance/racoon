@@ -67,3 +67,9 @@ yarn download-translations
 ```
 
 > This command requires a `LOKALISE_API_KEY` environment variable.
+
+## Tracking
+
+Google Tag Manager is setup according to the [official example](https://github.com/vercel/next.js/tree/canary/examples/with-google-tag-manager).
+
+The Adtraction script is include in `src/pages/_app.next.tsx`.
