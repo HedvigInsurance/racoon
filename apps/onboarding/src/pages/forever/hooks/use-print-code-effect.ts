@@ -20,7 +20,7 @@ export const usePrintCodeEffect = ({ initialCode, setCode }: PrintCodeEffectPara
         } else {
           window.clearInterval(handle)
         }
-      }, 250)
+      }, 150)
 
       return () => {
         window.clearInterval(handle)
