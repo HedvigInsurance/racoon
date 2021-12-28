@@ -7,9 +7,10 @@ import { useTranslation } from 'next-i18next'
 type PageLayoutProps = {
   children: React.ReactNode
   className?: string
+  code?: string
 }
 
-export const PageLayout = ({ children, className }: PageLayoutProps) => {
+export const PageLayout = ({ children, className, code }: PageLayoutProps) => {
   const { t } = useTranslation()
 
   return (
@@ -18,7 +19,12 @@ export const PageLayout = ({ children, className }: PageLayoutProps) => {
         <title>{t('FOREVER_LANDINGPAGE_TITLE')}</title>
 
         <meta property="og:title" content={t('FOREVER_LANDINGPAGE_TITLE')} />
-        <meta property="og:description" content={t('FOREVER_LANDINGPAGE_DESCRIPTION')} />
+        {code && (
+          <meta
+            property="og:description"
+            content={t('FOREVER_LANDINGPAGE_DESCRIPTION', { CODE: code })}
+          />
+        )}
         <meta
           property="og:image"
           content="https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg"
