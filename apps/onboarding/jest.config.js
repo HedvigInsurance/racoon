@@ -13,7 +13,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ['node_modules', '<rootDir>/'],
-  // Handle module aliases
+  // Handle module aliases (this may be automatically configured on next versions of next/jest)
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: `<rootDir>/${compilerOptions.baseUrl}/`,
   }),
