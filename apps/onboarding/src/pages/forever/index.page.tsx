@@ -51,8 +51,10 @@ const ForeverPage: NextPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PageLayout className="lg:space-y-6" code={initialCode}>
-        <div className="flex-1 flex flex-col justify-center space-y-4 lg:flex-initial">
-          <label className="text-center text-gray-700">{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
+        <div className="flex-1 flex flex-col justify-center space-y-2 lg:flex-initial">
+          <label className="text-gray-900 text-sm leading-snug">
+            {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
+          </label>
           <InputField
             type="text"
             id="code"
