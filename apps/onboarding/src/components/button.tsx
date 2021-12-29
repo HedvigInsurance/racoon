@@ -80,7 +80,7 @@ export const ExternalLinkButton = ({
   return (
     <a
       {...props}
-      href={`/${path}/${href}`}
+      href={`/${path.toLowerCase()}${href}`}
       className={classNames(
         getCommonClassName({ loading }),
         'flex justify-center items-center',
