@@ -4,10 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/button'
 import { InputField } from '@/components/input-field'
-import { JSDOM } from 'jsdom'
 import { PageLayout } from './components/page-layout'
 import { ReadyRedirect } from './components/ready-redirect'
-import createDOMPurify from 'dompurify'
 import { marked } from 'marked'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useCampaignLazyQuery } from '@/lib/generated-types'
@@ -74,6 +72,9 @@ const ForeverPage: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const { JSDOM } = await import('jsdom')
+  const createDOMPurify = await (await import('dompurify')).default
+
   const translations = await serverSideTranslations(locale as string)
 
   const window = new JSDOM('').window
