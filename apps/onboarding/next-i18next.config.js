@@ -4,4 +4,11 @@ module.exports = {
     defaultLocale: 'default',
     localeDetection: false,
   },
+
+  localeStructure: '{lng}/{ns}',
+
+  interpolation: {
+    prefix: '{',
+    suffix: '}',
+  },
 }

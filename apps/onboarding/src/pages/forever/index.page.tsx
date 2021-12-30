@@ -16,6 +16,7 @@ import { useTranslation } from 'next-i18next'
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
+  const initialCode = router.query.code as string | undefined
 
   const [code, setCode] = useState('')
   const [apiError, setApiError] = useState<string | undefined>()
@@ -39,7 +40,7 @@ const ForeverPage: NextPage = () => {
     }
   }, [error, t])
 
-  usePrintCodeEffect({ initialCode: router.query.code, setCode })
+  usePrintCodeEffect({ initialCode, setCode })
 
   if (data?.campaign) {
     return <ReadyRedirect code={data.campaign.code} />
@@ -47,9 +48,11 @@ const ForeverPage: NextPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <PageLayout className="lg:space-y-6">
-        <div className="flex-1 flex flex-col justify-center space-y-4 lg:flex-initial">
-          <label className="text-center text-gray-700">{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
+      <PageLayout className="lg:space-y-6" code={initialCode}>
+        <div className="flex-1 flex flex-col justify-center space-y-2 lg:flex-initial">
+          <label className="text-gray-900 text-sm leading-snug">
+            {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
+          </label>
           <InputField
             data-cy="code-input"
             type="text"

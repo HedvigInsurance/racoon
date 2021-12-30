@@ -1,15 +1,17 @@
-const CAMPAIGN_CODE_KEY = 'HEDVIG_CAMPAIGN_CODE'
+import Cookie from 'js-cookie'
+
+const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
 
 const getPersistedCampaignCode = () => {
-  return window.sessionStorage.getItem(CAMPAIGN_CODE_KEY)
+  return Cookie.get(CAMPAIGN_CODE_COOKIE_KEY)
 }
 
 const saveCampaignCode = (campaignCode: string) => {
-  window.sessionStorage.setItem(CAMPAIGN_CODE_KEY, campaignCode)
+  Cookie.set(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
 }
 
 const removeCampaignCode = () => {
-  window.sessionStorage.removeItem(CAMPAIGN_CODE_KEY)
+  Cookie.remove(CAMPAIGN_CODE_COOKIE_KEY)
 }
 
 export const CampaignCode = {
