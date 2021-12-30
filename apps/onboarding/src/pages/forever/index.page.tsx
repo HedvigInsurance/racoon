@@ -51,6 +51,7 @@ const ForeverPage: NextPage = () => {
         <div className="flex-1 flex flex-col justify-center space-y-4 lg:flex-initial">
           <label className="text-center text-gray-700">{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</label>
           <InputField
+            data-cy="code-input"
             type="text"
             id="code"
             name="code"
