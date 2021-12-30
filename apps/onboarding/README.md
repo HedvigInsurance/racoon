@@ -46,6 +46,36 @@ You trigger the code generator using:
 yarn codegen
 ```
 
+## Developing with Mocked API
+
+[Mock Service Worker](https://mswjs.io/) is an API mocking library for browser and Node. It provides seamless mocking by interception of actual requests on the network level using Service Worker API. This makes your application unaware of any mocking being at place.
+
+### Enable/Disable API Mocking
+
+To enable/disable mocking, all you have to do is add `NEXT_PUBLIC_API_MOCKING=[enabled|disabled]` into `.env.development` file and run the app on development mode - `yarn dev`. Not defining a `NEXT_PUBLIC_API_MOCKING` key will result on disabling API mocking.
+
+### How to define mocks
+
+Information about how to define mocks can be found [here](https://mswjs.io/docs/getting-started/mocks).
+
+## Testing
+
+### Jest
+
+You can use [Jest](https://jestjs.io/) + [testing-library/react](https://testing-library.com/docs/react-testing-library/intro/) to write unit tests. When doing so, make sure to get test utilities from `@lib/test-utils.tsx` file. Additionally, test files that are suppose to be ran with Jest should include `.test` on their names: E.g: `my-component.test.tsx`. In a regular setup, Jest also consider files that include `.spec` but that was removed from this project since `.spec` files specifies E2E test files. More info about this is in the next section.
+
+To run unit tests, execute the command `yarn test`.
+
+### Cypress
+
+[Cypress](https://www.cypress.io/) is a great tool to implement integration and E2E tests. All of its features and ways of working is beyond the scope of this README file so please refer to the [official documentation](https://docs.cypress.io/guides/overview/why-cypress) for more information about it.
+In this project E2E test files should be placed inside `cypress/integration` folder. Please note that they need to incude `.spec` on their names.
+
+You can run E2E tests using one of both commands:
+
+- `yarn e2e`: run the NextJS application (`yarn dev`) followed by _Cypress_ in the interactive mode. In this mode you can visualize the execution of your tests in a real browser.
+- `yarn e2e:headless`: run the NextJS application (`yarn dev`) followed by _Cypress_ in the headless mode. This mode is more suitable for CI/CD environments as it doesn't display the execution of your tests in a browser window.
+
 ## Internationalization (i18n)
 
 The app uses the built-in [Internationalized Routing](https://nextjs.org/docs/advanced-features/i18n-routing) feature of Next.js.
