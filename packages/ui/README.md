@@ -1,4 +1,4 @@
-# Hedvig Web UI Kit
+# Racoon | Hedvig Web UI Kit
 
 This is the component library for the web design system at Hedvig.
 
