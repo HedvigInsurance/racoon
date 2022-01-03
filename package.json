@@ -13,7 +13,8 @@
     "test": "turbo run test",
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "storybook": "yarn workspace ui storybook"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
@@ -42,6 +43,9 @@
         "cache": false
       },
       "clean": {
+        "cache": false
+      },
+      "storybook": {
         "cache": false
       }
     }
