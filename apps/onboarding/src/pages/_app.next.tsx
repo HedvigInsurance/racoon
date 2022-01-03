@@ -12,6 +12,11 @@ import { useApollo } from '@/lib/apollo-client'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { useEffect } from 'react'
 
+// Enable API mocking
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  require('../mocks')
+}
+
 function MyApp({ Component, pageProps, router }: AppProps) {
   const { adtractionScriptSrc } = useCurrentLocale()
   const apolloClient = useApollo(pageProps)

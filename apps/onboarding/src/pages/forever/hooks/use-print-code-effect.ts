@@ -2,6 +2,8 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import { useEffect } from 'react'
 
+export const LOAD_CHAR_INTERVAL = 250
+
 type PrintCodeEffectParams = {
   initialCode: unknown
   setCode: Dispatch<SetStateAction<string>>
@@ -20,7 +22,7 @@ export const usePrintCodeEffect = ({ initialCode, setCode }: PrintCodeEffectPara
         } else {
           window.clearInterval(handle)
         }
-      }, 150)
+      }, LOAD_CHAR_INTERVAL)
 
       return () => {
         window.clearInterval(handle)
