@@ -1,20 +1,30 @@
-name: Create diagram
+name: Update repo diagram
 
 on:
-  workflow_dispatch: {}
   push:
     branches:
       - main
+      
+  workflow_dispatch:
 
 jobs:
   get_data:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+
       - name: Update diagram
         uses: githubocto/repo-visualizer@main
         with:
           output_file: repo-diagram.svg
-          branch: assets
           excluded_paths: 'ignore,.github'
+          should_push: false
+      
+      - name: Add & commit
+        uses: EndBug/add-and-commit@v7
+        with:
+          branch: assets
+          branch_mode: create
+          add: 'repo-diagram.svg'
+          message: 'Repo visualizer: updated diagram'
