@@ -27,7 +27,7 @@ jobs:
         run: git checkout assets
 
       - name: Overwrite diagram
-        run: git mv ./temp-repo-diagram.svg ./repo-diagram.svg
+        run: git mv --force ./temp-repo-diagram.svg ./repo-diagram.svg
 
       - name: Add & commit
         uses: EndBug/add-and-commit@v7
