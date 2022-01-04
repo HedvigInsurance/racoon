@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          depth: 0
 
       - name: Update diagram
         uses: githubocto/repo-visualizer@main
@@ -24,7 +22,10 @@ jobs:
           should_push: false
 
       - name: Checkout assets branch
-        run: git checkout assets
+        run: |
+          git branch assets
+          git checkout assets
+          git pull origin assets --rebase
 
       - name: Overwrite diagram
         run: mv ./temp-repo-diagram.svg ./repo-diagram.svg
