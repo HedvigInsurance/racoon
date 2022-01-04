@@ -5,15 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "test": "jest --passWithNoTests",
-    "e2e": "start-server-and-test start http://localhost:3000 cypress open",
-    "e2e:headless": "start-server-and-test start http://localhost:3000 cypress run",
+    "e2e": "start-server-and-test 'yarn start 3000' http://localhost:3000 cypress",
+    "e2e:headless": "start-server-and-test 'yarn start 3000' http://localhost:3000 cypress:headless",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
     "sort-imports": "import-sort --write ./src/**/*.{ts,tsx}",
-    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix"
+    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
