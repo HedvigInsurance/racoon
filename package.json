@@ -12,6 +12,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "e2e": "turbo run e2e",
+    "e2e:headless": "turbo run e2e:headless",
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -40,6 +41,11 @@
         "dependsOn": []
       },
       "e2e": {
+        "dependsOn": [
+          "build"
+        ]
+      },
+      "e2e:headless": {
         "dependsOn": [
           "build"
         ]

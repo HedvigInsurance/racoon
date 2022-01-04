@@ -7,14 +7,13 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --passWithNoTests",
-    "e2e": "PORT=3000 start-server-and-test start http://localhost:3000 cypress:headless",
+    "e2e": "start-server-and-test start http://localhost:3000 cypress open",
+    "e2e:headless": "start-server-and-test start http://localhost:3000 cypress run",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
     "sort-imports": "import-sort --write ./src/**/*.{ts,tsx}",
-    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix",
-    "cypress": "cypress open",
-    "cypress:headless": "cypress run"
+    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
