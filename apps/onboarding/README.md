@@ -88,7 +88,7 @@ We perform automatic geo-redirects using a global [middleware](https://nextjs.or
 
 The app is also setup to use [i18next](https://www.i18next.com) which provides support for loading and working with translations.
 
-> Something in the setup is causing the locale characters after the dash `-` to be transformed into upper case like `se-en => se-EN` when building the site. Since the file system is case sensitive (at least Mac) this requires us to name our locale folders in the same way. It's possble to use lower case locales in the URL (it's case insensitive), however, navigating between pages will convert to the upper case version. Another option without this issue could be [next-multilingual](https://github.com/Avansai/next-multilingual).
+> Something in the setup is causing the locale characters after the dash `-` to be transformed into upper case like `se-en => se-EN` when building the site. Since the file system is case sensitive (at least Mac) this requires us to name our locale folders in the same way. It's possble to use lower case locales in the URL (it's case insensitive), however, navigating between pages will convert to the upper case version. Another option without this issue could be [next-multilingual](https://github.com/Avansai/next-multilingual). [Official response](https://github.com/isaachinman/next-i18next/issues/1066) from to the `next-i18next` library author. [Next.js-related thread](https://github.com/vercel/next.js/discussions/31831) doesn't offer much help.
 
 Translation files are stored in `public/locales` and can be fetched by running:
 
