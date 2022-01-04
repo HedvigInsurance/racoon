@@ -77,7 +77,7 @@ const ForeverPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { JSDOM } = await import('jsdom')
-  const createDOMPurify = await (await import('dompurify')).default
+  const createDOMPurify = (await import('dompurify')).default
 
   const translations = await serverSideTranslations(locale as string)
 
