@@ -25,7 +25,7 @@ jobs:
         run: |
           git branch assets
           git checkout assets
-          git pull origin assets
+          git pull --ff-only origin assets
 
       - name: Overwrite diagram
         run: mv ./temp-repo-diagram.svg ./repo-diagram.svg
