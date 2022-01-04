@@ -15,15 +15,26 @@
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react --inject ./react-shim.js",
     "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react --inject ./react-shim.js",
     "lint": "TIMING=1 eslint src --fix",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "storybook": "start-storybook --ci -p 6006",
+    "build-storybook": "build-storybook --quiet -o dist"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-links": "^6.4.9",
+    "@storybook/react": "^6.4.9",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "babel-loader": "^8.2.3",
     "react": "^17.0.2",
-    "tsconfig": "*",
     "scripts": "*",
+    "tsconfig": "*",
     "tsup": "^5.11.6",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
