@@ -15,5 +15,6 @@ jobs:
       - name: Update diagram
         uses: githubocto/repo-visualizer@main
         with:
-          output_file: 'assets/repo-diagram.svg'
+          output_file: 'repo-diagram.svg'
+          branch: assets
           excluded_paths: 'ignore,.github'
