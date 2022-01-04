@@ -11,6 +11,7 @@
     "dev": "turbo run dev --parallel --continue",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "e2e": "turbo run e2e",
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -24,7 +25,9 @@
     "pipeline": {
       "build": {
         "outputs": [
-          ".next/**"
+          ".next/**",
+          ".turbo/**",
+          "dist/**"
         ],
         "dependsOn": [
           "^build"
@@ -35,6 +38,11 @@
           "covereage/**"
         ],
         "dependsOn": []
+      },
+      "e2e": {
+        "dependsOn": [
+          "build"
+        ]
       },
       "lint": {
         "outputs": []
