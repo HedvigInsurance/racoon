@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 const PUBLIC_FILE = /\.(.*)$/
 
-const DEFAULT_PATH_LOCALE = `en-se`
+const DEFAULT_PATH_LOCALE = 'se-en'
 
 // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 const SUPPORTED_MARKETS = ['se', 'dk', 'no']
