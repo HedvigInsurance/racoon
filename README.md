@@ -44,6 +44,10 @@ This Turborepo includes the following packages and apps:
 
 Each package and app is 100% Typescript.
 
+Below is an up-to-date visualization of the files and folders that make up the repository:
+
+![Repo visualization diagram](./assets/repo-diagram.svg)
+
 ### Setup reference
 
 The setup is based on the Turborepo [`kitchen-sink` template](https://github.com/vercel/turborepo/tree/main/examples/kitchen-sink).
