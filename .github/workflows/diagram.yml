@@ -16,5 +16,5 @@ jobs:
         uses: githubocto/repo-visualizer@main
         with:
           output_file: repo-diagram.svg
-          branch: origin/assets
+          branch: assets
           excluded_paths: 'ignore,.github'
