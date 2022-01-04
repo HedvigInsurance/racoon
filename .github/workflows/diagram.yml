@@ -23,12 +23,12 @@ jobs:
 
       - name: Checkout assets branch
         run: |
-          git branch assets
-          git checkout assets
+          git checkout --orphan assets
+          git reset --hard
           git pull origin assets --rebase --autostash
 
       - name: Overwrite diagram
-        run: mv ./temp-repo-diagram.svg ./repo-diagram.svg
+        run: git mv ./temp-repo-diagram.svg ./repo-diagram.svg
 
       - name: Add & commit
         uses: EndBug/add-and-commit@v7
