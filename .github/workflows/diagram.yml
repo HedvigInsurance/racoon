@@ -21,10 +21,13 @@ jobs:
           excluded_paths: 'ignore,.github'
           should_push: false
       
+      - name: Checkout assets branch
+        uses: actions/checkout@v2
+        with:
+          branch: assets
+      
       - name: Add & commit
         uses: EndBug/add-and-commit@v7
         with:
-          branch: assets
-          branch_mode: create
           add: 'repo-diagram.svg'
           message: 'Repo visualizer: updated diagram'
