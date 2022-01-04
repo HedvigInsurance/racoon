@@ -22,11 +22,8 @@ jobs:
           should_push: false
 
       - name: Checkout assets branch
-        uses: actions/checkout@v2
-        with:
-          ref: assets
-          clean: false
-          
+        run: git checkout assets
+
       - name: Overwrite diagram
         run: mv ./temp-repo-diagram.svg ./repo-diagram.svg
 
