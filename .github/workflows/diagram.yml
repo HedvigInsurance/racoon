@@ -36,3 +36,4 @@ jobs:
           add: 'repo-diagram.svg'
           message: 'Repo visualizer: updated diagram'
           branch: assets
+          pull: NO-PULL
