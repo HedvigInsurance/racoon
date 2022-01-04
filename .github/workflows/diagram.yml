@@ -23,6 +23,7 @@ jobs:
 
       - name: Checkout assets branch
         run: |
+          git reset
           git checkout --orphan assets
           git reset --hard
           git pull origin assets --rebase --autostash
