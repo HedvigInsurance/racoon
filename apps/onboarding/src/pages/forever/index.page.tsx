@@ -2,7 +2,7 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { useEffect, useState } from 'react'
 
-import { Button } from '@/components/button'
+import { Button } from 'ui'
 import { InputField } from '@/components/input-field'
 import { PageLayout } from './components/page-layout'
 import { ReadyRedirect } from './components/ready-redirect'
@@ -67,9 +67,7 @@ const ForeverPage: NextPage = () => {
           />
         </div>
 
-        <Button type="submit" loading={loading}>
-          {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
-        </Button>
+        <Button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</Button>
       </PageLayout>
     </form>
   )
