@@ -1,0 +1,80 @@
+name: ci-onboarding
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/onboarding/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - apps/onboarding/**
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    steps:
+      # report general machine parameters
+      - run: node -p 'os.cpus()'
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+      - run: yarn cypress info
+
+      - run: yarn lint
+
+      # still need to build everything here. It would be awesome
+      # if I could use turborepo remote caching here
+      - run: yarn build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: onboarding-build
+          if-no-files-found: error
+          path: apps/onboarding/.next
+
+  ui-test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # run unit tests
+      - run: yarn --cwd apps/onboarding test
+
+  e2e-test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    needs: install
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: onboarding-build
+
+      - name: 'UI Tests - Chrome'
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn --cwd app/onboarding e2e:headless
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          group: 'UI - Chrome'
+          spec: apps/onboarding/cypress/integration/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
