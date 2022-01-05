@@ -1,21 +1,17 @@
-name: ci-onboarding
+name: ci
 
 on:
   push:
     branches:
       - main
-    paths:
-      - apps/onboarding/**
   pull_request:
     branches:
       - main
-    paths:
-      - apps/onboarding/**
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  e2e-test:
+  test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.17.0-chrome88-ff89
@@ -26,19 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Install
         run: yarn
 
       - name: Lint
         run: yarn lint
 
-      - name: 'E2E Tets - Chrome'
+      - name: UT
+        run: yarn test
+
+      - name: 'E2E - Chrome'
         uses: cypress-io/github-action@v2
         with:
           install: false
-          project: apps/onboarding
-          # still need to build everything here. It would be awesome
-          # if I could use turborepo remote caching here
           command: yarn e2e:headless
           browser: chrome
         env:
