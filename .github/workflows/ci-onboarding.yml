@@ -23,6 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # install NPM dependencies, cache them correctly
       - name: Cypress install
         uses: cypress-io/github-action@v2
         with:
@@ -34,6 +35,8 @@ jobs:
       # still need to build everything here. It would be awesome
       # if I could use turborepo remote caching here
       - run: yarn build
+        env:
+          NODE_ENV: test
 
       - name: Save build folder
         uses: actions/upload-artifact@v2
@@ -56,14 +59,14 @@ jobs:
         with:
           name: onboarding-build
 
-      - name: 'UI Tests - Chrome'
+      - name: 'E2E Tets - Chrome'
         uses: cypress-io/github-action@v2
         with:
           start: yarn --cwd app/onboarding e2e:headless
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: chrome
-          group: 'UI - Chrome'
+          group: 'E2E - Chrome'
           spec: apps/onboarding/cypress/integration/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
