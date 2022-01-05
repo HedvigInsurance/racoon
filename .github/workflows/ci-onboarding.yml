@@ -40,18 +40,7 @@ jobs:
         with:
           name: onboarding-build
           if-no-files-found: error
-          path: apps/onboarding/.next
-
-  ui-test:
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # run unit tests
-      - run: yarn --cwd apps/onboarding test
+          path: apps/onboarding/.next/
 
   e2e-test:
     timeout-minutes: 15
