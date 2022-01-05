@@ -64,11 +64,9 @@ jobs:
       - name: 'E2E Tets - Chrome'
         uses: cypress-io/github-action@v2
         with:
-          start: yarn --cwd app/onboarding e2e:headless
+          start: yarn --cwd apps/onboarding e2e:headless
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: chrome
-          group: 'E2E - Chrome'
-          spec: apps/onboarding/cypress/integration/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
