@@ -2,21 +2,22 @@ import { faker } from '@faker-js/faker'
 
 describe('DK Embark Flows', () => {
   faker.setLocale('en')
-  ;[
+  const parameters = [
     '/dk-en/new-member/home-needer',
     '/dk-en/new-member/home-accident-needer',
     '/dk-en/new-member/home-accident-travel-needer',
-  ].forEach((flowUrl) => {
-    it(`should get a Danish home content price quote (${flowUrl})`, () => {
+  ]
+
+  parameters.forEach((flowUrl) => {
+    it(`should get a Danish price quote (${flowUrl})`, () => {
       cy.visit(flowUrl, {
         onBeforeLoad: (win) => {
           win.sessionStorage.clear()
         },
       })
 
-      cy.contains('button', 'Accept All Cookies', { timeout: 10000 }).click()
-
       // ownership
+      cy.contains('button', 'Accept All Cookies', { timeout: 10000 }).click()
       cy.contains('button', 'I rent it').click()
 
       // size
