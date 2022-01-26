@@ -45,11 +45,13 @@ it('should get a price quote for a Swedish house', () => {
   cy.focused().type(faker.datatype.number({ min: 30, max: 120 }).toString())
   cy.contains('span', 'Ancillary area')
     .parent()
-    .siblings('input[type=number]')
+    .parent()
+    .find('input[type=number]')
     .type(faker.datatype.number({ min: 0, max: 40 }).toString())
   cy.contains('span', 'Year of construction')
     .parent()
-    .siblings('input[type=number]')
+    .parent()
+    .find('input[type=number]')
     .type(`${faker.datatype.number({ min: 1930, max: 2010 })}{enter}`)
 
   // baths
