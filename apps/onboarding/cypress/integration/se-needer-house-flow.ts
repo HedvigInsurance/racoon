@@ -1,9 +1,13 @@
 import { faker } from '@faker-js/faker'
 
-it('should get a price quote for a Swedish house', () => {
+it('should get a price quote for a Swedish house', async () => {
   faker.setLocale('sv')
 
-  cy.visit(`/se-en/new-member/home-accident-needer`)
+  cy.visit(`/se-en/new-member/home-accident-needer`, {
+    onBeforeLoad: (win) => {
+      win.sessionStorage.clear()
+    },
+  })
 
   // insurance-type
   cy.contains('button', 'Accept All Cookies', { timeout: 10000 }).click()
