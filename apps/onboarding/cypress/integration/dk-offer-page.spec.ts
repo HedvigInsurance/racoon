@@ -1,5 +1,4 @@
 import faker from '@faker-js/faker'
-import { getRandomIsoBirthDate } from './helpers'
 
 const QUOTE_CART_MUTATION = /* GraphQL */ `
   mutation CreateOnboardingQuoteCart {
@@ -31,11 +30,15 @@ const QUOTE_BUNDLE_MUTATION = /* GraphQL */ `
   }
 `
 
+const BIRTH_DATE = '1999-07-12'
+// You need to manually unsign this member in Hope before running the script
+const SSN = '1207999772'
+
 const HOME_CONTENT_QUOTE = {
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email(),
-  birthDate: getRandomIsoBirthDate(),
+  birthDate: BIRTH_DATE,
   data: {
     type: 'DANISH_HOME_CONTENT',
     street: faker.address.streetAddress(),
@@ -85,6 +88,22 @@ describe('DK Offer Page', () => {
         const discountCode = 'hedvig20'
         cy.get('input[name=code]').type(`${discountCode}{enter}`)
         cy.contains('20% discount for 5 months').should('be.visible')
+
+        cy.contains('button', 'Proceed').click()
+
+        // Checkout
+        cy.get('input[name=ssn]').type(`${SSN}{enter}`)
+        cy.contains('button', 'Complete purchase', { timeout: 5000 }).should('be.disabled')
+        cy.contains('button', 'Complete purchase', { timeout: 10000 })
+          .should('not.be.disabled')
+          .click()
+
+        // Connect Payment Page
+        cy.contains('Welcome to Hedvig,your insurance is now active', { timeout: 20000 }).should(
+          'be.visible',
+        )
+        // Cypress doesn't really work well with iFrames so we stop here
+        // https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
       })
     })
   })

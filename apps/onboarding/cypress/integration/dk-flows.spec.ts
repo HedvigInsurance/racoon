@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+import { getRandomBirthDateDK } from './helpers'
 
 describe('DK Embark Flows', () => {
   faker.setLocale('en')
@@ -49,11 +50,7 @@ describe('DK Embark Flows', () => {
 
       // birth-date
       cy.contains('And your date of birth?', { timeout: 5000 }).should('be.visible')
-      const pastDate = faker.date.between('1940-01-01', '1990-01-01')
-      const date = String(pastDate.getDate()).padStart(2, '0')
-      const month = String(pastDate.getMonth() + 1).padStart(2, '0')
-      const birthDate = `${date}-${month}-${pastDate.getFullYear()}`
-      cy.focused().type(`${birthDate}{enter}`)
+      cy.focused().type(`${getRandomBirthDateDK()}{enter}`)
 
       // email
       cy.contains('Lastly, your email address?', { timeout: 5000 }).should('be.visible')
