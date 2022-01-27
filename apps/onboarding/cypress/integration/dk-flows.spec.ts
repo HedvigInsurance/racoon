@@ -27,7 +27,7 @@ describe('DK Embark Flows', () => {
 
       // address
       const address = 'Dansborg Alle 2, 1. tv'
-      cy.contains('Enter your home address', { timeout: 1000 }).click()
+      cy.contains('Enter your home address', { timeout: 5000 }).click()
       cy.focused().type('Dansborg{downarrow}')
       cy.contains('Dansborg Alle', { timeout: 1000 }).click()
       cy.contains('Dansborg Alle 1', { timeout: 1000 }).first().click()
@@ -35,11 +35,11 @@ describe('DK Embark Flows', () => {
       cy.contains('button', 'Continue', { timeout: 1000 }).click()
 
       // co-insured
-      cy.contains('Great. How many people will the insurance cover?', { timeout: 1000 }).click()
+      cy.contains('Great. How many people will the insurance cover?', { timeout: 5000 }).click()
       cy.focused().type(`${faker.datatype.number({ min: 1, max: 5 })}{enter}`)
 
       // name
-      cy.contains('First name', { timeout: 1000 })
+      cy.contains('First name', { timeout: 5000 })
         .parent()
         .siblings('input[type=text]')
         .type(faker.name.firstName())
