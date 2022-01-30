@@ -1,21 +1,41 @@
-import { renderToString } from "react-dom/server";
-import { RemixServer } from "remix";
-import type { EntryContext } from "remix";
+import { RemixServer, createCookie } from 'remix'
+import { getRecommendedLocale, localesList } from './lib/i18n'
 
-export default function handleRequest(
+import type { EntryContext } from 'remix'
+import { renderToString } from 'react-dom/server'
+
+const LOCALE_COOKIE_NAME = 'HEDVIG_LOCALE'
+
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) {
-  const markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+  const url = new URL(request.url)
+  const cookie = createCookie(LOCALE_COOKIE_NAME)
 
-  responseHeaders.set("Content-Type", "text/html");
+  if (!localesList.some((locale) => url.pathname.startsWith(`/${locale}/`))) {
+    const data = await cookie.parse(request.headers.get('Cookie'))
+    const locale = data ?? getRecommendedLocale(request.headers)
 
-  return new Response("<!DOCTYPE html>" + markup, {
+    const newLocation = `/${locale}${url.pathname}`
+    return new Response(newLocation, {
+      status: 302,
+      headers: {
+        Location: newLocation,
+        'Set-Cookie': await cookie.serialize(locale),
+      },
+    })
+  }
+
+  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />)
+
+  responseHeaders.set('Content-Type', 'text/html')
+  responseHeaders.set('Set-Cookie', await cookie.serialize(url.pathname.split('/')[1]))
+
+  return new Response('<!DOCTYPE html>' + markup, {
     status: responseStatusCode,
-    headers: responseHeaders
-  });
+    headers: responseHeaders,
+  })
 }
