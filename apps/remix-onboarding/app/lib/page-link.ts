@@ -1,6 +1,4 @@
-import { Locale } from './types'
-
-type BaseParams = { locale: Locale }
+type BaseParams = { locale: string }
 
 type ForeverParams = BaseParams & { code?: string }
 

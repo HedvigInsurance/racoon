@@ -1,5 +1,6 @@
 import {
   Links,
+  LinksFunction,
   LiveReload,
   LoaderFunction,
   Meta,
@@ -10,6 +11,7 @@ import {
 } from 'remix'
 
 import type { MetaFunction } from 'remix'
+import styles from './tailwind.css'
 
 type LoaderData = {
   ENV: {
@@ -23,6 +25,10 @@ export const meta: MetaFunction = () => {
     title: 'New Remix App',
     viewport: 'width=device-width, initial-scale=1',
   }
+}
+
+export const links: LinksFunction = () => {
+  return [{ rel: 'stylesheet', href: styles }]
 }
 
 export const loader: LoaderFunction = (): LoaderData => {
