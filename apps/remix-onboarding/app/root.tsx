@@ -17,6 +17,7 @@ import { useRemixI18Next } from 'remix-i18next'
 
 type LoaderData = {
   locale: string
+  i18n: any
   ENV: {
     GOOGLE_SITE_VERIFICATION?: string
     GOOGLE_TAG_MANAGER_ID?: string
@@ -35,9 +36,12 @@ export const links: LinksFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
-  const locale = await i18n.getLocale(request)
+  const url = new URL(request.url)
+  const locale = url.pathname.split('/')[1]
+
   return {
     locale,
+    i18n: await i18n.getTranslations(locale, 'common'),
     ENV: {
       GOOGLE_SITE_VERIFICATION: process.env.REMIX_PUBLIC_GOOGLE_SITE_VERIFICATION,
       GOOGLE_TAG_MANAGER_ID: process.env.REMIX_PUBLIC_GOOGLE_TAG_MANAGER_ID,
@@ -50,7 +54,7 @@ export default function App() {
   useRemixI18Next(data.locale)
 
   return (
-    <html lang="en">
+    <html lang={data.locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="google-site-verification" content={data.ENV.GOOGLE_SITE_VERIFICATION} />

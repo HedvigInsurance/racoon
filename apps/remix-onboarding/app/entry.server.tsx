@@ -3,8 +3,7 @@ import { getRecommendedLocale, localesList } from './lib/i18n'
 
 import type { EntryContext } from 'remix'
 import { RemixI18NextProvider } from 'remix-i18next'
-import i18next from 'i18next'
-import { initReactI18next } from 'react-i18next'
+import { i18nextInit } from './services/i18next'
 import { renderToString } from 'react-dom/server'
 
 const LOCALE_COOKIE_NAME = 'HEDVIG_LOCALE'
@@ -32,15 +31,8 @@ export default async function handleRequest(
     })
   }
 
-  await i18next.use(initReactI18next).init({
-    supportedLngs: ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'],
-    defaultNS: 'common',
-    fallbackLng: 'se-en',
-    react: { useSuspense: false },
-  })
-
   const markup = renderToString(
-    <RemixI18NextProvider i18n={i18next}>
+    <RemixI18NextProvider i18n={await i18nextInit()}>
       <RemixServer context={remixContext} url={request.url} />
     </RemixI18NextProvider>,
   )

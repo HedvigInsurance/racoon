@@ -13,9 +13,12 @@ import { CampaignCode } from '~/lib/campaign-code'
 import { InputField } from '~/components/input-field'
 import { PageLayout } from '~/components/page-layout'
 import { PageLink } from '~/lib/page-link'
-import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
 import { useTranslation } from 'react-i18next'
+
+type LoaderData = {
+  campaignCode: string
+}
 
 export const meta: MetaFunction = () => ({
   title: 'FOREVER_LANDINGPAGE_TITLE',
@@ -24,10 +27,10 @@ export const meta: MetaFunction = () => ({
   'og:image': 'https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg',
 })
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }): Promise<LoaderData> => {
+  invariant(params.code)
   return {
     campaignCode: params.code,
-    i18n: await i18n.getTranslations(request, ['common']),
   }
 }
 
@@ -56,9 +59,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 const ForeverCodePage = () => {
-  const data = useLoaderData()
+  const data = useLoaderData<LoaderData>()
   const errors = useActionData<FormError>()
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <Form method="post">
