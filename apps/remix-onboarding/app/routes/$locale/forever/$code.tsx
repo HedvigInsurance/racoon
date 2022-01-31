@@ -1,6 +1,9 @@
-import { ActionFunction, Form, LoaderFunction, redirect, useLoaderData, useTransition } from 'remix'
+import { ActionFunction, Form, LoaderFunction, redirect, useActionData, useLoaderData } from 'remix'
 
+import { Button } from '~/components/button'
 import { CampaignCode } from '~/lib/campaign-code'
+import { InputField } from '~/components/input-field'
+import { PageLayout } from '~/components/page-layout'
 import { PageLink } from '~/lib/page-link'
 import invariant from 'tiny-invariant'
 
@@ -12,48 +15,54 @@ export const loader: LoaderFunction = async ({ params }): Promise<LoaderData> =>
   }
 }
 
+type FormError = { code?: boolean }
+
 export const action: ActionFunction = async ({ request, params }) => {
   invariant(params.locale, 'locale is required')
 
   const formParams = await request.formData()
-  const campaignCode = formParams.get('campaignCode')
+  const code = formParams.get('code')
 
-  if (typeof campaignCode !== 'string') {
-    return redirect('/')
+  const errors: FormError = {}
+  if (!code) errors.code = true
+
+  if (Object.keys(errors).length) {
+    return errors
   }
 
-  return redirect(PageLink.forever({ code: campaignCode, locale: params.locale }), {
+  invariant(typeof code === 'string')
+
+  return redirect(PageLink.forever({ code, locale: params.locale }), {
     headers: {
-      'Set-Cookie': await CampaignCode.save(campaignCode),
+      'Set-Cookie': await CampaignCode.save(code),
     },
   })
 }
 
 const ForeverCodePage = () => {
   const data = useLoaderData<LoaderData>()
-  const { submission } = useTransition()
+  const errors = useActionData<FormError>()
 
   return (
-    <main className="h-screen flex flex-col items-center justify-center">
-      <h1 className="font-bold">Forever</h1>
+    <Form method="post">
+      <PageLayout className="lg:space-y-6" code={data.campaignCode}>
+        <div className="flex-1 flex flex-col justify-center space-y-2 lg:flex-initial">
+          <label className="text-gray-900 text-sm leading-snug">
+            FOREVER_LANDINGPAGE_INPUT_TEXT
+          </label>
+          <InputField
+            data-cy="code-input"
+            type="text"
+            name="code"
+            placeholder="7VEKCAG"
+            required
+            errorMessage={errors?.code ? 'FOREVER_LANDINGPAGE_INPUT_ERROR' : undefined}
+          />
+        </div>
 
-      <Form method="post">
-        <input
-          type="text"
-          name="campaignCode"
-          placeholder="Campaign Code"
-          className="border border-gray-400 p-2 w-full"
-          defaultValue={data.campaignCode}
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          {submission ? 'Submitting...' : 'Submit'}
-        </button>
-      </Form>
-    </main>
+        <Button type="submit">FOREVER_LANDINGPAGE_BTN_LABEL</Button>
+      </PageLayout>
+    </Form>
   )
 }
 

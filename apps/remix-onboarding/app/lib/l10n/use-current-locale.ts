@@ -1,13 +1,10 @@
-import { LocaleLabel, locales } from './locales'
-
-import { useRouter } from 'next/router'
-
-const FALLBACK_LOCALE: LocaleLabel = 'se-EN'
+import type { Locale } from '~/lib/types'
+import invariant from 'tiny-invariant'
+import { locales } from './locales'
+import { useParams } from 'remix'
 
 export const useCurrentLocale = () => {
-  const router = useRouter()
-
-  const locale = router.locale === 'default' ? FALLBACK_LOCALE : router.locale || FALLBACK_LOCALE
-
-  return locales[locale as LocaleLabel]
+  const params = useParams()
+  invariant(typeof params.locale === 'string', 'locale is required')
+  return locales[params.locale as Locale]
 }
