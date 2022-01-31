@@ -2,6 +2,9 @@ import { RemixServer, createCookie } from 'remix'
 import { getRecommendedLocale, localesList } from './lib/i18n'
 
 import type { EntryContext } from 'remix'
+import { RemixI18NextProvider } from 'remix-i18next'
+import i18next from 'i18next'
+import { initReactI18next } from 'react-i18next'
 import { renderToString } from 'react-dom/server'
 
 const LOCALE_COOKIE_NAME = 'HEDVIG_LOCALE'
@@ -29,7 +32,18 @@ export default async function handleRequest(
     })
   }
 
-  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />)
+  await i18next.use(initReactI18next).init({
+    supportedLngs: ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'],
+    defaultNS: 'common',
+    fallbackLng: 'se-en',
+    react: { useSuspense: false },
+  })
+
+  const markup = renderToString(
+    <RemixI18NextProvider i18n={i18next}>
+      <RemixServer context={remixContext} url={request.url} />
+    </RemixI18NextProvider>,
+  )
 
   responseHeaders.set('Content-Type', 'text/html')
   responseHeaders.set('Set-Cookie', await cookie.serialize(url.pathname.split('/')[1]))

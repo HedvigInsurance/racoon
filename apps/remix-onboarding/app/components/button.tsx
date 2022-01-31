@@ -49,17 +49,16 @@ export const LinkButton = ({
   ...props
 }: LinkButtonProps) => {
   return (
-    <Link {...props}>
-      <a
-        className={classNames(
-          getCommonClassName({ loading }),
-          'flex justify-center items-center',
-          className,
-        )}
-        onClick={onClick}
-      >
-        {children}
-      </a>
+    <Link
+      {...props}
+      className={classNames(
+        getCommonClassName({ loading }),
+        'flex justify-center items-center',
+        className,
+      )}
+      onClick={onClick}
+    >
+      {children}
     </Link>
   )
 }
@@ -75,12 +74,12 @@ export const ExternalLinkButton = ({
   href,
   ...props
 }: ExternalLinkProps) => {
-  const { path } = useCurrentLocale()
+  const { pathLocale } = useCurrentLocale()
 
   return (
     <a
       {...props}
-      href={`/${path.toLowerCase()}${href}`}
+      href={`/${pathLocale.toLowerCase()}${href}`}
       className={classNames(
         getCommonClassName({ loading }),
         'flex justify-center items-center',

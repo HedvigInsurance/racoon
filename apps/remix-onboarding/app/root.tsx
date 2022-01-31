@@ -11,9 +11,12 @@ import {
 } from 'remix'
 
 import type { MetaFunction } from 'remix'
+import { i18n } from './i18n.server'
 import styles from './tailwind.css'
+import { useRemixI18Next } from 'remix-i18next'
 
 type LoaderData = {
+  locale: string
   ENV: {
     GOOGLE_SITE_VERIFICATION?: string
     GOOGLE_TAG_MANAGER_ID?: string
@@ -31,8 +34,10 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }]
 }
 
-export const loader: LoaderFunction = (): LoaderData => {
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
+  const locale = await i18n.getLocale(request)
   return {
+    locale,
     ENV: {
       GOOGLE_SITE_VERIFICATION: process.env.REMIX_PUBLIC_GOOGLE_SITE_VERIFICATION,
       GOOGLE_TAG_MANAGER_ID: process.env.REMIX_PUBLIC_GOOGLE_TAG_MANAGER_ID,
@@ -42,6 +47,7 @@ export const loader: LoaderFunction = (): LoaderData => {
 
 export default function App() {
   const data = useLoaderData<LoaderData>()
+  useRemixI18Next(data.locale)
 
   return (
     <html lang="en">
