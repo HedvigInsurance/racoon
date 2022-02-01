@@ -13,23 +13,35 @@ import { CampaignCode } from '~/lib/campaign-code'
 import { InputField } from '~/components/input-field'
 import { PageLayout } from '~/components/page-layout'
 import { PageLink } from '~/lib/page-link'
+import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
+import { replaceMarkdown } from '~/services/markdown.server'
 import { useTranslation } from 'react-i18next'
 
 type LoaderData = {
   campaignCode: string
+  i18n: any
 }
 
-export const meta: MetaFunction = () => ({
-  title: 'FOREVER_LANDINGPAGE_TITLE',
-  'og:title': 'FOREVER_LANDINGPAGE_TITLE',
-  'og:description': 'FOREVER_LANDINGPAGE_DESCRIPTION',
-  'og:image': 'https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg',
-})
+export const meta: MetaFunction = ({ parentsData }) => {
+  return {
+    title: parentsData.root.i18n.common.FOREVER_LANDINGPAGE_TITLE,
+    'og:title': parentsData.root.i18n.common.FOREVER_LANDINGPAGE_TITLE,
+    'og:description': parentsData.root.i18n.common.FOREVER_LANDINGPAGE_DESCRIPTION,
+    'og:image': 'https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg',
+  }
+}
 
 export const loader: LoaderFunction = async ({ params }): Promise<LoaderData> => {
   invariant(params.code)
+  invariant(params.locale)
+
+  const translations = await replaceMarkdown(await i18n.getTranslations(params.locale, 'common'), [
+    'FOREVER_LANDINGPAGE_INFO_TEXT',
+  ])
+
   return {
+    i18n: translations,
     campaignCode: params.code,
   }
 }
