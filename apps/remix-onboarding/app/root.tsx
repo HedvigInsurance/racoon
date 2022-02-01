@@ -10,13 +10,15 @@ import {
   useLoaderData,
 } from 'remix'
 
+import { GoogleTagManagerScript } from './components/google-tag-manager-script'
+import { MetaFavicons } from './components/meta-favicons'
 import type { MetaFunction } from 'remix'
 import { i18n } from './i18n.server'
 import styles from './tailwind.css'
+import { useCurrentLocale } from './lib/l10n'
 import { useRemixI18Next } from 'remix-i18next'
 
 type LoaderData = {
-  locale: string
   i18n: any
   ENV: {
     GOOGLE_SITE_VERIFICATION?: string
@@ -40,7 +42,6 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> =
   const locale = url.pathname.split('/')[1]
 
   return {
-    locale,
     i18n: await i18n.getTranslations(locale, 'common'),
     ENV: {
       GOOGLE_SITE_VERIFICATION: process.env.REMIX_PUBLIC_GOOGLE_SITE_VERIFICATION,
@@ -51,15 +52,17 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> =
 
 export default function App() {
   const data = useLoaderData<LoaderData>()
-  useRemixI18Next(data.locale)
+  const locale = useCurrentLocale()
+  useRemixI18Next(locale.pathLocale)
 
   return (
-    <html lang={data.locale}>
+    <html lang={locale.htmlLang}>
       <head>
         <meta charSet="utf-8" />
         <meta name="google-site-verification" content={data.ENV.GOOGLE_SITE_VERIFICATION} />
         <Meta />
         <Links />
+        <MetaFavicons />
       </head>
       <body>
         <Outlet />
@@ -67,30 +70,10 @@ export default function App() {
         <Scripts />
 
         {data.ENV.GOOGLE_TAG_MANAGER_ID && (
-          <>
-            <noscript>
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${data.ENV.GOOGLE_TAG_MANAGER_ID}`}
-                height="0"
-                width="0"
-                style={{ display: 'none', visibility: 'hidden' }}
-              />
-            </noscript>
-
-            <script
-              id="gtm-base"
-              dangerouslySetInnerHTML={{
-                __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${data.ENV.GOOGLE_TAG_MANAGER_ID}');
-          `,
-              }}
-            />
-          </>
+          <GoogleTagManagerScript gtmId={data.ENV.GOOGLE_TAG_MANAGER_ID} />
         )}
+
+        {locale.adtractionScriptSrc && <script defer src={locale.adtractionScriptSrc} />}
 
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
