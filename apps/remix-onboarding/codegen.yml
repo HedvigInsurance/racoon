@@ -1,0 +1,8 @@
+schema: https://graphql.dev.hedvigit.com/graphql
+documents: './graphql/**/*.graphql'
+generates:
+  ./app/lib/generated-types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

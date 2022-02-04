@@ -11,7 +11,8 @@
     "dev:css": "tailwindcss -o ./app/tailwind.css --watch",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
-    "download-translations": "./scripts/download-translations.sh"
+    "download-translations": "./scripts/download-translations.sh",
+    "codegen": "graphql-codegen && prettier --write ./app/lib/generated-types.ts && import-sort --write ./app/lib/generated-types.ts"
   },
   "dependencies": {
     "@remix-run/react": "^1.1.3",
@@ -31,14 +32,23 @@
     "ui": "*"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.4.0",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.3",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.5",
     "@hedviginsurance/brand": "^4.2.0",
     "@remix-run/dev": "^1.1.3",
     "@types/accept-language-parser": "^1.5.3",
+    "@types/dompurify": "^2.3.3",
+    "@types/jsdom": "^16.2.14",
+    "@types/marked": "^4.0.2",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "autoprefixer": "^10.4.2",
     "concurrently": "^7.0.0",
     "dotenv": "^14.3.2",
+    "graphql": "^16.2.0",
+    "graphql-tag": "^2.12.6",
     "postcss": "^8.4.5",
     "scripts": "*",
     "tailwindcss": "^3.0.18",

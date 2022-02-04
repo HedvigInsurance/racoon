@@ -6,13 +6,16 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useTransition,
 } from 'remix'
+import { CampaignDocument, CampaignQuery, CampaignQueryVariables } from '~/lib/generated-types'
 
 import { Button } from '~/components/button'
 import { CampaignCode } from '~/lib/campaign-code'
 import { InputField } from '~/components/input-field'
 import { PageLayout } from '~/components/page-layout'
 import { PageLink } from '~/lib/page-link'
+import { apolloClient } from '~/services/apollo'
 import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
 import { replaceMarkdown } from '~/services/markdown.server'
@@ -63,17 +66,31 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   invariant(typeof code === 'string')
 
-  return redirect(PageLink.forever({ code, locale: params.locale }), {
-    headers: {
-      'Set-Cookie': await CampaignCode.save(code),
-    },
-  })
+  try {
+    const { data } = await apolloClient.query<CampaignQuery, CampaignQueryVariables>({
+      query: CampaignDocument,
+      variables: { code },
+    })
+
+    if (!data.campaign) {
+      return { code: true }
+    }
+
+    return redirect(PageLink.landing({ locale: params.locale }), {
+      headers: {
+        'Set-Cookie': await CampaignCode.save(code),
+      },
+    })
+  } catch (error) {
+    return { code: true }
+  }
 }
 
 const ForeverCodePage = () => {
   const data = useLoaderData<LoaderData>()
   const errors = useActionData<FormError>()
   const { t } = useTranslation('common')
+  const { state } = useTransition()
 
   return (
     <Form method="post">
@@ -92,7 +109,9 @@ const ForeverCodePage = () => {
           />
         </div>
 
-        <Button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</Button>
+        <Button type="submit" loading={state === 'submitting'}>
+          {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
+        </Button>
       </PageLayout>
     </Form>
   )
