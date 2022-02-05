@@ -15,7 +15,7 @@ import { CampaignCode } from '~/lib/campaign-code'
 import { InputField } from '~/components/input-field'
 import { PageLayout } from '~/components/page-layout'
 import { PageLink } from '~/lib/page-link'
-import { apolloClient } from '~/services/apollo'
+import { apolloClient } from '~/services/apollo.server'
 import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
 import { replaceMarkdown } from '~/services/markdown.server'
@@ -49,7 +49,7 @@ export const loader: LoaderFunction = async ({ params }): Promise<LoaderData> =>
   }
 }
 
-type FormError = { code?: boolean }
+type FormError = { code?: string }
 
 export const action: ActionFunction = async ({ request, params }) => {
   invariant(params.locale, 'locale is required')
@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const code = formParams.get('code')
 
   const errors: FormError = {}
-  if (!code) errors.code = true
+  if (!code) errors.code = 'GENERIC_ERROR_INPUT_REQUIRED'
 
   if (Object.keys(errors).length) {
     return errors
@@ -73,7 +73,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     })
 
     if (!data.campaign) {
-      return { code: true }
+      return { code: 'FOREVER_CODE_ERROR' }
     }
 
     return redirect(PageLink.landing({ locale: params.locale }), {
@@ -82,7 +82,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       },
     })
   } catch (error) {
-    return { code: true }
+    return { code: 'FOREVER_CODE_ERROR' }
   }
 }
 
@@ -105,7 +105,7 @@ const ForeverCodePage = () => {
             name="code"
             placeholder="7VEKCAG"
             required
-            errorMessage={errors?.code ? t('FOREVER_LANDINGPAGE_INPUT_ERROR') : undefined}
+            errorMessage={errors?.code ? t(errors.code) : undefined}
           />
         </div>
 
