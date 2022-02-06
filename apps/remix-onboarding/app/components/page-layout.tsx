@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next'
 type PageLayoutProps = {
   children: React.ReactNode
   className?: string
-  code?: string
 }
 
-export const PageLayout = ({ children, className, code }: PageLayoutProps) => {
+export const PageLayout = ({ children, className }: PageLayoutProps) => {
   const { t } = useTranslation()
 
   return (

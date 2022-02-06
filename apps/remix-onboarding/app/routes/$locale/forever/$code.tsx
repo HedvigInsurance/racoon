@@ -9,6 +9,7 @@ import {
   useTransition,
 } from 'remix'
 import { CampaignDocument, CampaignQuery, CampaignQueryVariables } from '~/lib/generated-types'
+import { getI18n, useTranslation } from 'react-i18next'
 
 import { Button } from '~/components/button'
 import { CampaignCode } from '~/lib/campaign-code'
@@ -19,18 +20,21 @@ import { apolloClient } from '~/services/apollo.server'
 import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
 import { replaceMarkdown } from '~/services/markdown.server'
-import { useTranslation } from 'react-i18next'
+import { usePrintCodeEffect } from '~/hooks/use-print-code-effect'
 
 type LoaderData = {
   campaignCode: string
   i18n: any
 }
 
-export const meta: MetaFunction = ({ parentsData }) => {
+export const meta: MetaFunction = ({ data }) => {
+  const i18next = getI18n()
   return {
-    title: parentsData.root.i18n.common.FOREVER_LANDINGPAGE_TITLE,
-    'og:title': parentsData.root.i18n.common.FOREVER_LANDINGPAGE_TITLE,
-    'og:description': parentsData.root.i18n.common.FOREVER_LANDINGPAGE_DESCRIPTION,
+    title: i18next.t('FOREVER_LANDINGPAGE_TITLE'),
+    'og:title': i18next.t('FOREVER_LANDINGPAGE_TITLE'),
+    'og:description': i18next.t('FOREVER_LANDINGPAGE_DESCRIPTION', {
+      CODE: data.campaignCode.toUpperCase(),
+    }),
     'og:image': 'https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg',
   }
 }
@@ -89,12 +93,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 const ForeverCodePage = () => {
   const data = useLoaderData<LoaderData>()
   const errors = useActionData<FormError>()
-  const { t } = useTranslation('common')
+  const { t } = useTranslation()
   const { state } = useTransition()
+
+  const animatedCampaignCode = usePrintCodeEffect({ initialCode: data.campaignCode })
 
   return (
     <Form method="post">
-      <PageLayout className="lg:space-y-6" code={data.campaignCode}>
+      <PageLayout className="lg:space-y-6">
         <div className="flex-1 flex flex-col justify-center space-y-2 lg:flex-initial">
           <label className="text-gray-900 text-sm leading-snug">
             {t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
@@ -106,6 +112,7 @@ const ForeverCodePage = () => {
             placeholder="7VEKCAG"
             required
             errorMessage={errors?.code ? t(errors.code) : undefined}
+            defaultValue={animatedCampaignCode}
           />
         </div>
 

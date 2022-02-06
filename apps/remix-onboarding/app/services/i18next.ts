@@ -1,6 +1,5 @@
-import { createInstance, i18n } from 'i18next'
-
 import { Locale } from '~/lib/types'
+import { createInstance } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 export const supportedLngs: Array<Locale> = ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en']
