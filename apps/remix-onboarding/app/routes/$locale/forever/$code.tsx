@@ -9,7 +9,6 @@ import {
   useTransition,
 } from 'remix'
 import { CampaignDocument, CampaignQuery, CampaignQueryVariables } from '~/lib/generated-types'
-import { getI18n, useTranslation } from 'react-i18next'
 
 import { Button } from '~/components/button'
 import { CampaignCode } from '~/lib/campaign-code'
@@ -21,20 +20,22 @@ import { i18n } from '~/i18n.server'
 import invariant from 'tiny-invariant'
 import { replaceMarkdown } from '~/services/markdown.server'
 import { usePrintCodeEffect } from '~/hooks/use-print-code-effect'
+import { useTranslation } from 'react-i18next'
 
 type LoaderData = {
   campaignCode: string
   i18n: any
+  meta: {
+    title: string
+    description: string
+  }
 }
 
 export const meta: MetaFunction = ({ data }) => {
-  const i18next = getI18n()
   return {
-    title: i18next.t('FOREVER_LANDINGPAGE_TITLE'),
-    'og:title': i18next.t('FOREVER_LANDINGPAGE_TITLE'),
-    'og:description': i18next.t('FOREVER_LANDINGPAGE_DESCRIPTION', {
-      CODE: data.campaignCode.toUpperCase(),
-    }),
+    title: data.meta.title,
+    'og:title': data.meta.title,
+    'og:description': data.meta.description,
     'og:image': 'https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg',
   }
 }
@@ -47,9 +48,17 @@ export const loader: LoaderFunction = async ({ params }): Promise<LoaderData> =>
     'FOREVER_LANDINGPAGE_INFO_TEXT',
   ])
 
+  const t = await i18n.getFixedT(params.locale)
+
   return {
     i18n: translations,
     campaignCode: params.code,
+    meta: {
+      title: t('FOREVER_LANDINGPAGE_TITLE'),
+      description: t('FOREVER_LANDINGPAGE_DESCRIPTION', {
+        CODE: params.code.toUpperCase(),
+      }),
+    },
   }
 }
 

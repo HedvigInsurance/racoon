@@ -15789,10 +15789,10 @@ remedial@^1.0.7:
   resolved "https://registry.yarnpkg.com/remedial/-/remedial-1.0.8.tgz#a5e4fd52a0e4956adbaf62da63a5a46a78c578a0"
   integrity sha512-/62tYiOe6DzS5BqVsNpH/nkGlX45C/Sp6V+NtiN6JQNS1Viay7cWkazmRkrQrdFj2eshDe96SIQNIoMxqhzBOg==
 
-remix-i18next@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/remix-i18next/-/remix-i18next-2.1.5.tgz#195871b3e52ee1e070cc1bbae4588f185059dd05"
-  integrity sha512-ADz5rtBVzvVqEXzaCUk8bk3/JVhiXEfJYsJwhNB0K5COdAE0PxZ1zW2ThtUTPbPLj1rwj0AWpn0+3UT0RgrYIg==
+remix-i18next@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/remix-i18next/-/remix-i18next-2.2.0.tgz#f8af07c1f5bf042cd6be21d90ce5f069bbc50f36"
+  integrity sha512-pEVn2JCWvTSSuLaZX9C9o9Jb6pgrfZtyrJ5pOlZPXFiigeH3m9sjOq/01f7XJj7hYwHM3QVnm/VmalCuzUaa1g==
   dependencies:
     accept-language-parser "^1.5.0"
     lru-cache "^6.0.0"
