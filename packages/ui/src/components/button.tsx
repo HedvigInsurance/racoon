@@ -26,3 +26,6 @@ export const Button = styled.button<ButtonProps>`
 
   opacity: ${({ $loading }) => ($loading ? '0.5' : '1')};
 `
+
+export const LinkButton = styled(Button)<{ href: string }>()
+LinkButton.defaultProps = { as: 'a' }

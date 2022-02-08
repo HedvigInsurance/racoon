@@ -18,9 +18,9 @@ export const config = {
 const client = createApolloClient()
 
 const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { code } = await getFormData(req)
+  const { code, locale } = await getFormData(req)
 
-  if (typeof code !== 'string') {
+  if (typeof code !== 'string' || typeof locale !== 'string') {
     return res.status(400).json({ code: 'GENERIC_ERROR_INPUT_REQUIRED' })
   }
 
@@ -37,7 +37,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
     const cookie = Cookie.fromApiRoute(req, res)
     cookie.set(COOKIE_KEY, code)
 
-    res.redirect(PageLink.landing())
+    res.redirect(PageLink.foreverReady({ locale, code }))
   } catch (error) {
     return { code: 'FOREVER_CODE_ERROR' }
   }

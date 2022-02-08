@@ -1,15 +1,28 @@
 import Link from 'next/link'
 import type { NextPage } from 'next'
 import { PageLink } from '@/lib/page-link'
+import styled from '@emotion/styled'
+
+const Wrapper = styled.main({
+  height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+const Heading = styled.h1({
+  fontWeight: 'bold',
+})
 
 const Home: NextPage = () => {
   return (
-    <main className="h-screen flex flex-col items-center justify-center">
-      <h1 className="font-bold">This is a demo:</h1>
+    <Wrapper>
+      <Heading>This is a demo:</Heading>
       <Link href={PageLink.forever({ code: '8batky' })}>
         <a>Forever page</a>
       </Link>
-    </main>
+    </Wrapper>
   )
 }
 

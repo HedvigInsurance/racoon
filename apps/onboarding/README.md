@@ -18,13 +18,9 @@ The second route contains an unknown dynamic segment and is hence server side re
 
 ## Styling
 
-The project uses Tailwind CSS. PostCSS is needed for Tailwind.
+The project uses Emotion.
 
-> The purpose of the POC is not to evaluate styling solution. Tailwind is used to quickly implement a working site.
-
-## Emotion dependencies
-
-Emotion is not setup for the project. However, the dependencies are needed to import colors from `@hedviginsurance/brand`.
+Caveat: There's no simple way to enable the [`css` prop](https://emotion.sh/docs/css-prop) wihout opting out of SWC. Unfortunately the [official instructions](https://emotion.sh/docs/typescript#emotionreact) causes issues with SSR - differnt class names.
 
 ## Crashlytics
 
