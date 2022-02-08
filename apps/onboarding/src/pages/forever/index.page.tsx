@@ -18,14 +18,15 @@ const ForeverPage: NextPage = () => {
   const router = useRouter()
   const initialCode = router.query.code as string | undefined
 
-  const [code, setCode] = useState('')
   const [apiError, setApiError] = useState<string | undefined>()
 
-  const [fetchCampaign, { error, loading, data }] = useCampaignLazyQuery()
+  const [fetchCampaign, { error, data }] = useCampaignLazyQuery()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setApiError(undefined)
+    const formData = new FormData(event.currentTarget)
+    const code = formData.get('code') as string
 
     try {
       await fetchCampaign({ variables: { code } })
@@ -40,7 +41,7 @@ const ForeverPage: NextPage = () => {
     }
   }, [error, t])
 
-  usePrintCodeEffect({ initialCode, setCode })
+  const animatedCode = usePrintCodeEffect({ initialCode: initialCode || '' })
 
   if (data?.campaign) {
     return <ReadyRedirect code={data.campaign.code} />
@@ -59,11 +60,9 @@ const ForeverPage: NextPage = () => {
             id="code"
             name="code"
             placeholder="7VEKCAG"
-            autoComplete="off"
-            value={code}
-            onChange={({ target: { value } }) => setCode(value)}
             required
             errorMessage={apiError}
+            defaultValue={animatedCode}
           />
         </div>
 
