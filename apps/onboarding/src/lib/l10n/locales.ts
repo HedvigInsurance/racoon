@@ -2,7 +2,7 @@ import { Market as ApiMarket, Locale as IsoLocale } from '@/lib/types'
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
 
-export const LOCALE_URL_PARAMS = ['se', 'se-EN', 'no', 'no-EN', 'dk', 'dk-EN'] as const
+export const LOCALE_URL_PARAMS = ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'] as const
 export type LocaleUrlParams = typeof LOCALE_URL_PARAMS
 export type LocaleLabel = LocaleUrlParams[number]
 
@@ -48,8 +48,8 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     },
     phoneNumber: phoneNumbers.SE,
   },
-  'se-EN': {
-    path: 'se-EN',
+  'se-en': {
+    path: 'se-en',
     isoLocale: IsoLocale.EnSe,
     marketLabel: 'SE',
     apiMarket: ApiMarket.Sweden,
@@ -85,8 +85,8 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
   },
-  'no-EN': {
-    path: 'no-EN',
+  'no-en': {
+    path: 'no-en',
     isoLocale: IsoLocale.EnNo,
     marketLabel: 'NO',
     apiMarket: ApiMarket.Norway,
@@ -121,8 +121,8 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
   },
-  'dk-EN': {
-    path: 'dk-EN',
+  'dk-en': {
+    path: 'dk-en',
     isoLocale: IsoLocale.EnDk,
     marketLabel: 'DK',
     apiMarket: ApiMarket.Denmark,

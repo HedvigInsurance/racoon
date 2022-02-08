@@ -12,19 +12,19 @@ export const markets: Record<MarketLabel, MarketData> = {
   SE: {
     languages: [
       { urlParam: 'se', displayName: 'Sv' },
-      { urlParam: 'se-EN', displayName: 'En' },
+      { urlParam: 'se-en', displayName: 'En' },
     ],
   },
   NO: {
     languages: [
       { urlParam: 'no', displayName: 'No' },
-      { urlParam: 'no-EN', displayName: 'En' },
+      { urlParam: 'no-en', displayName: 'En' },
     ],
   },
   DK: {
     languages: [
       { urlParam: 'dk', displayName: 'Da' },
-      { urlParam: 'dk-EN', displayName: 'En' },
+      { urlParam: 'dk-en', displayName: 'En' },
     ],
   },
 }
