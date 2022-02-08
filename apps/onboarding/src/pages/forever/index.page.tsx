@@ -73,7 +73,7 @@ const ForeverPage: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const translations = replaceMarkdown(await serverSideTranslations(locale as string), [
+  const translations = await replaceMarkdown(await serverSideTranslations(locale as string), [
     'FOREVER_LANDINGPAGE_INFO_TEXT',
   ])
 
