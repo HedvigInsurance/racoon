@@ -1,7 +1,11 @@
 import { colorsV3 } from '@hedviginsurance/brand'
 import styled from '@emotion/styled'
 
-export const Button = styled.button`
+type ButtonProps = {
+  $loading?: boolean
+}
+
+export const Button = styled.button<ButtonProps>`
   appearance: none;
   border: 0;
   background-color: ${colorsV3.purple500};
@@ -19,4 +23,6 @@ export const Button = styled.button`
     color: ${colorsV3.gray500};
     background-color: ${colorsV3.gray300};
   }
+
+  opacity: ${({ $loading }) => ($loading ? '0.5' : '1')};
 `

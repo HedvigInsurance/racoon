@@ -1,54 +1,28 @@
-/* eslint @next/next/no-html-link-for-pages: 0 */
 import type { GetStaticProps, NextPage } from 'next'
-import { useEffect, useState } from 'react'
 
 import { Button } from 'ui'
 import { InputField } from '@/components/input-field'
 import { PageLayout } from './components/page-layout'
-import { ReadyRedirect } from './components/ready-redirect'
 import { replaceMarkdown } from 'services/i18n'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useCampaignLazyQuery } from '@/lib/generated-types'
+import { useForm } from 'hooks/use-form'
 import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 const ForeverPage: NextPage = () => {
   const { t } = useTranslation()
+
   const router = useRouter()
   const initialCode = router.query.code as string | undefined
-
-  const [apiError, setApiError] = useState<string | undefined>()
-
-  const [fetchCampaign, { error, data }] = useCampaignLazyQuery()
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setApiError(undefined)
-    const formData = new FormData(event.currentTarget)
-    const code = formData.get('code') as string
-
-    try {
-      await fetchCampaign({ variables: { code } })
-    } catch (error) {
-      setApiError(t('FOREVER_ERROR_GENERIC'))
-    }
-  }
-
-  useEffect(() => {
-    if (error) {
-      setApiError(t('FOREVER_CODE_ERROR'))
-    }
-  }, [error, t])
-
   const animatedCode = usePrintCodeEffect({ initialCode: initialCode || '' })
 
-  if (data?.campaign) {
-    return <ReadyRedirect code={data.campaign.code} />
-  }
+  const { submission, errors, formProps } = useForm({
+    action: '/api/pages/forever',
+  })
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form {...formProps}>
       <PageLayout className="lg:space-y-6" code={initialCode}>
         <div className="flex-1 flex flex-col justify-center space-y-2 lg:flex-initial">
           <label className="text-gray-900 text-sm leading-snug">
@@ -56,17 +30,18 @@ const ForeverPage: NextPage = () => {
           </label>
           <InputField
             data-cy="code-input"
-            type="text"
             id="code"
             name="code"
             placeholder="7VEKCAG"
             required
-            errorMessage={apiError}
+            errorMessage={errors?.code ? t(errors?.code) : undefined}
             defaultValue={animatedCode}
           />
         </div>
 
-        <Button type="submit">{t('FOREVER_LANDINGPAGE_BTN_LABEL')}</Button>
+        <Button type="submit" $loading={submission}>
+          {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
+        </Button>
       </PageLayout>
     </form>
   )
