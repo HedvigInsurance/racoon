@@ -6,7 +6,7 @@ import { Button } from 'ui'
 import { InputField } from '@/components/input-field'
 import { PageLayout } from './components/page-layout'
 import { ReadyRedirect } from './components/ready-redirect'
-import { marked } from 'marked'
+import { replaceMarkdown } from 'services/i18n'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useCampaignLazyQuery } from '@/lib/generated-types'
 import { usePrintCodeEffect } from './hooks/use-print-code-effect'
@@ -74,31 +74,11 @@ const ForeverPage: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const { JSDOM } = await import('jsdom')
-  const createDOMPurify = (await import('dompurify')).default
+  const translations = replaceMarkdown(await serverSideTranslations(locale as string), [
+    'FOREVER_LANDINGPAGE_INFO_TEXT',
+  ])
 
-  const translations = await serverSideTranslations(locale as string)
-
-  const window = new JSDOM('').window
-  const DOMPurify = createDOMPurify(window as unknown as Window)
-
-  const markdownFields = ['FOREVER_LANDINGPAGE_INFO_TEXT']
-  for (const localeKey of Object.keys(translations._nextI18Next.initialI18nStore)) {
-    const localeTranslations = translations._nextI18Next.initialI18nStore[localeKey].common
-    for (const markdownField of markdownFields) {
-      if (localeTranslations[markdownField]) {
-        localeTranslations[markdownField] = DOMPurify.sanitize(
-          marked(localeTranslations[markdownField]),
-        )
-      }
-    }
-  }
-
-  return {
-    props: {
-      ...translations,
-    },
-  }
+  return { props: { ...translations } }
 }
 
 export default ForeverPage
