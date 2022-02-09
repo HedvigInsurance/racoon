@@ -20,19 +20,19 @@
     "build-storybook": "build-storybook --quiet -o dist"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.17.2",
     "@emotion/babel-plugin": "^11.7.2",
-    "@storybook/addon-essentials": "^6.4.9",
-    "@storybook/addon-links": "^6.4.9",
-    "@storybook/react": "^6.4.9",
-    "@types/react": "^17.0.37",
+    "@storybook/addon-essentials": "^6.4.18",
+    "@storybook/addon-links": "^6.4.18",
+    "@storybook/react": "^6.4.18",
+    "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "babel-loader": "^8.2.3",
     "react": "^17.0.2",
     "scripts": "*",
     "tsconfig": "*",
-    "tsup": "^5.11.6",
-    "typescript": "^4.5.4"
+    "tsup": "^5.11.13",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
