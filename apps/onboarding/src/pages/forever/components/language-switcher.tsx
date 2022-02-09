@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { Separate } from 'ui'
-import { colorsV3 } from '@hedviginsurance/brand'
 import styled from '@emotion/styled'
 import { useCurrentMarket } from '@/lib/l10n'
 import { useRouter } from 'next/router'
@@ -9,25 +8,21 @@ const Wrapper = styled(Separate)({
   display: 'flex',
 })
 
-const Separator = styled.div({
+const Separator = styled.div(({ theme }) => ({
   width: 1,
   height: '100%',
-  backgroundColor: colorsV3.gray700,
-  marginLeft: '0.25rem',
-  marginRight: '0.25rem',
-})
+  backgroundColor: theme.colors.gray700,
+  marginLeft: '0.5rem',
+  marginRight: '0.5rem',
+}))
 
-const Anchor = styled.a<{ active: boolean }>(
-  {
-    textDecoration: 'none',
-    '&:hover': {
-      color: colorsV3.gray900,
-    },
+const Anchor = styled.a<{ active: boolean }>(({ active, theme }) => ({
+  textDecoration: 'none',
+  '&:hover': {
+    color: theme.colors.gray900,
   },
-  ({ active }) => ({
-    color: active ? colorsV3.gray900 : colorsV3.gray500,
-  }),
-)
+  color: active ? theme.colors.gray900 : theme.colors.gray500,
+}))
 
 export const LanguageSwitcher = () => {
   const router = useRouter()

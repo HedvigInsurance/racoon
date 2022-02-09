@@ -2,21 +2,20 @@ import { HedvigLogo, Space, mq } from 'ui'
 
 import Head from 'next/head'
 import { LanguageSwitcher } from './language-switcher'
-import { colorsV3 } from '@hedviginsurance/brand'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 
-const Wrapper = styled.div({
+const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '2rem',
-  backgroundColor: colorsV3.white,
+  backgroundColor: theme.colors.white,
   height: '100vh',
 
   [mq.lg]: {
     padding: '2.5rem 3.5rem',
   },
-})
+}))
 
 const Header = styled.header({
   display: 'flex',
@@ -28,13 +27,13 @@ const Header = styled.header({
   },
 })
 
-const SiteLink = styled.a({
-  color: colorsV3.gray900,
+const SiteLink = styled.a(({ theme }) => ({
+  color: theme.colors.gray900,
 
   '&:hover': {
-    color: colorsV3.purple900,
+    color: theme.colors.purple900,
   },
-})
+}))
 
 const Main = styled(Space)({
   flex: '1 1 0%',
@@ -51,9 +50,9 @@ const Footer = styled(Space)({
   alignItems: 'center',
 })
 
-const Paragraph = styled.div({
+const Paragraph = styled.div(({ theme }) => ({
   fontSize: '0.75rem',
-  color: colorsV3.gray700,
+  color: theme.colors.gray700,
   textAlign: 'center',
   maxWidth: '36rem',
 
@@ -62,10 +61,10 @@ const Paragraph = styled.div({
   },
 
   a: {
-    color: colorsV3.purple900,
+    color: theme.colors.purple900,
     textDecoration: 'underline',
   },
-})
+}))
 
 const Content = styled.div({
   flex: '1 1 0%',

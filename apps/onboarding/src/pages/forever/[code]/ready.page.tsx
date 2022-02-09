@@ -3,7 +3,6 @@ import { LinkButton, Space } from 'ui'
 import type { NextPage } from 'next'
 import { PageLayout } from '../components/page-layout'
 import { PageLink } from '@/lib/page-link'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
@@ -26,10 +25,10 @@ const Wrapper = styled(Space)({
   alignItems: 'center',
 })
 
-const Paragrapgh = styled.p({
+const Paragrapgh = styled.p(({ theme }) => ({
   textAlign: 'center',
-  color: colorsV3.gray700,
-})
+  color: theme.colors.gray700,
+}))
 
 const ForeverPageReady: NextPage = () => {
   const { t } = useTranslation()

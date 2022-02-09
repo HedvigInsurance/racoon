@@ -1,6 +1,5 @@
 import { Space } from './space'
 import { WarningTriangleIcon } from '../icons/warning-triangle-icon'
-import { colorsV3 } from '@hedviginsurance/brand'
 import styled from '@emotion/styled'
 
 type ErrorProps = { $error: boolean }
@@ -11,68 +10,53 @@ const InputWrapper = styled.div({
   position: 'relative',
 })
 
-const StyledInput = styled.input<ErrorProps>(
-  {
-    color: colorsV3.gray900,
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    textTransform: 'uppercase',
-    padding: '1rem',
-    width: '100%',
-    borderRadius: '0.5rem',
-    borderWidth: '1px',
-    borderStyle: 'solid',
+const StyledInput = styled.input<ErrorProps>(({ theme, $error }) => ({
+  color: theme.colors.gray900,
+  fontSize: '1.125rem',
+  lineHeight: '1.75rem',
+  textTransform: 'uppercase',
+  padding: '1rem',
+  width: '100%',
+  borderRadius: '0.5rem',
+  borderWidth: '1px',
+  borderStyle: 'solid',
 
-    '::placeholder': {
-      color: colorsV3.gray500,
-    },
-
-    ':focus': {
-      outline: '2px solid transparent',
-      outlineOffset: '2px',
-      borderColor: colorsV3.gray900,
-    },
-
-    ':disabled': {
-      backgroundColor: colorsV3.gray300,
-      color: colorsV3.gray500,
-    },
+  '::placeholder': {
+    color: theme.colors.gray500,
   },
-  ({ $error }) => ({
-    borderColor: $error ? colorsV3.red500 : colorsV3.gray300,
 
-    ':focus': {
-      borderColor: $error ? colorsV3.red500 : colorsV3.gray500,
-    },
-  }),
-)
-
-const ErrorMessageWrapper = styled(Space)<ErrorProps>(
-  {
-    display: 'flex',
-    alignItems: 'center',
+  ':focus': {
+    outline: '2px solid transparent',
+    outlineOffset: '2px',
+    borderColor: $error ? theme.colors.red500 : theme.colors.gray900,
   },
-  ({ $error }) => ({
-    opacity: $error ? 1 : 0,
-  }),
-)
 
-const StyledWarningTriangleIcon = styled(WarningTriangleIcon)({
-  color: colorsV3.red600,
+  ':disabled': {
+    backgroundColor: theme.colors.gray300,
+    color: theme.colors.gray500,
+  },
+
+  borderColor: $error ? theme.colors.red500 : theme.colors.gray300,
+}))
+
+const ErrorMessageWrapper = styled(Space)<ErrorProps>(({ $error }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  opacity: $error ? 1 : 0,
+}))
+
+const StyledWarningTriangleIcon = styled(WarningTriangleIcon)(({ theme }) => ({
+  color: theme.colors.red600,
   width: '1rem',
   height: '1rem',
-})
+}))
 
-const ErrorMessage = styled.span<ErrorProps>(
-  {
-    color: colorsV3.red600,
-    fontSize: '0.75rem',
-    lineHeight: '1rem',
-  },
-  ({ $error }) => ({
-    opacity: $error ? 1 : 0,
-  }),
-)
+const ErrorMessage = styled.span<ErrorProps>(({ theme, $error }) => ({
+  color: theme.colors.red600,
+  fontSize: '0.75rem',
+  lineHeight: '1rem',
+  opacity: $error ? 1 : 0,
+}))
 
 type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string

@@ -2,7 +2,6 @@ import { Button, InputField, Space, mq } from 'ui'
 import type { GetStaticProps, NextPage } from 'next'
 
 import { PageLayout } from './components/page-layout'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { replaceMarkdown } from 'services/i18n'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
@@ -11,11 +10,11 @@ import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-const Label = styled.label({
-  color: colorsV3.gray900,
+const Label = styled.label(({ theme }) => ({
+  color: theme.colors.gray900,
   fontSize: '0.875rem',
   lineHeight: '1.375rem',
-})
+}))
 
 const FormWrapper = styled(Space)({
   display: 'flex',

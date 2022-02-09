@@ -7,7 +7,9 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { MetaFavicons } from '@/components/meta-favicons'
 import Script from 'next/script'
+import { ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
+import { theme } from 'ui'
 import { useApollo } from '@/lib/apollo-client'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { useEffect } from 'react'
@@ -40,7 +42,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </Head>
 
       <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </ApolloProvider>
 
       {adtractionScriptSrc && <Script strategy="afterInteractive" src={adtractionScriptSrc} />}

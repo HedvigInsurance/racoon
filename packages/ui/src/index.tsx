@@ -6,3 +6,5 @@ export { InputField } from './components/input-field'
 
 export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
+
+export { theme } from './lib/theme'
