@@ -1,4 +1,4 @@
-import { HedvigLogo, Separate, mq } from 'ui'
+import { HedvigLogo, Space, mq } from 'ui'
 
 import Head from 'next/head'
 import { LanguageSwitcher } from './language-switcher'
@@ -36,7 +36,7 @@ const SiteLink = styled.a({
   },
 })
 
-const Main = styled(Separate)({
+const Main = styled(Space)({
   flex: '1 1 0%',
   display: 'flex',
   flexDirection: 'column',
@@ -44,7 +44,7 @@ const Main = styled(Separate)({
   alignItems: 'center',
 })
 
-const Footer = styled(Separate)({
+const Footer = styled(Space)({
   flexShrink: 0,
   display: 'flex',
   flexDirection: 'column',

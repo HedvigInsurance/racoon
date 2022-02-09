@@ -1,4 +1,4 @@
-import { Button, InputField, Separate, mq } from 'ui'
+import { Button, InputField, Space, mq } from 'ui'
 import type { GetStaticProps, NextPage } from 'next'
 
 import { PageLayout } from './components/page-layout'
@@ -17,7 +17,7 @@ const Label = styled.label({
   lineHeight: '1.375rem',
 })
 
-const FormWrapper = styled(Separate)({
+const FormWrapper = styled(Space)({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -44,7 +44,7 @@ const ForeverPage: NextPage = () => {
   return (
     <form {...formProps}>
       <PageLayout code={initialCode}>
-        <Separate y={2}>
+        <Space y={2}>
           <FormWrapper y={0.5}>
             <Label>{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</Label>
             <InputField
@@ -56,14 +56,13 @@ const ForeverPage: NextPage = () => {
               errorMessage={errorMessage ? t(errorMessage) : undefined}
               defaultValue={animatedCode}
             />
-
-            <input hidden name="locale" value={router.locale} readOnly />
           </FormWrapper>
 
+          <input hidden name="locale" value={router.locale} readOnly />
           <Button type="submit" $loading={state === 'submitting'}>
             {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
           </Button>
-        </Separate>
+        </Space>
       </PageLayout>
     </form>
   )

@@ -13,6 +13,8 @@ const Separator = styled.div({
   width: 1,
   height: '100%',
   backgroundColor: colorsV3.gray700,
+  marginLeft: '0.25rem',
+  marginRight: '0.25rem',
 })
 
 const Anchor = styled.a<{ active: boolean }>(
@@ -32,7 +34,7 @@ export const LanguageSwitcher = () => {
   const { languages } = useCurrentMarket()
 
   return (
-    <Wrapper x={0.5} Separator={<Separator />}>
+    <Wrapper Separator={<Separator />}>
       {languages.map((language) => (
         <Link key={language.urlParam} href={router.asPath} locale={language.urlParam} passHref>
           <Anchor active={router.locale === language.urlParam}>{language.displayName}</Anchor>

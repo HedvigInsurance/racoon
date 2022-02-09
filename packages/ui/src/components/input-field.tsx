@@ -1,4 +1,4 @@
-import { Separate } from './separate'
+import { Space } from './space'
 import { WarningTriangleIcon } from '../icons/warning-triangle-icon'
 import { colorsV3 } from '@hedviginsurance/brand'
 import styled from '@emotion/styled'
@@ -47,7 +47,7 @@ const StyledInput = styled.input<ErrorProps>(
   }),
 )
 
-const ErrorMessageWrapper = styled(Separate)<ErrorProps>(
+const ErrorMessageWrapper = styled(Space)<ErrorProps>(
   {
     display: 'flex',
     alignItems: 'center',
@@ -83,7 +83,7 @@ export const InputField = ({ className, errorMessage, ...props }: InputFieldProp
   const errorMessageId = `${props.id}-error`
 
   return (
-    <Separate y={0.25}>
+    <Space y={0.25}>
       <InputWrapper>
         <StyledInput
           aria-invalid={hasError}
@@ -99,6 +99,6 @@ export const InputField = ({ className, errorMessage, ...props }: InputFieldProp
           {errorMessage || 'PLACEHOLDER'}
         </ErrorMessage>
       </ErrorMessageWrapper>
-    </Separate>
+    </Space>
   )
 }

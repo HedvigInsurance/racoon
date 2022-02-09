@@ -16,6 +16,7 @@ export const Button = styled.button<ButtonProps>(
     fontSize: '1rem',
     lineHeight: '1.5rem',
     cursor: 'pointer',
+    width: '100%',
 
     ':hover': {
       backgroundColor: colorsV3.purple800,
@@ -33,5 +34,6 @@ export const Button = styled.button<ButtonProps>(
 
 export const LinkButton = styled(Button)<{ href: string }>({
   textDecoration: 'none',
+  textAlign: 'center',
 })
 LinkButton.defaultProps = { as: 'a' }

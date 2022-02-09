@@ -1,4 +1,4 @@
-import { LinkButton, Separate } from 'ui'
+import { LinkButton, Space } from 'ui'
 
 import type { NextPage } from 'next'
 import { PageLayout } from '../components/page-layout'
@@ -19,7 +19,7 @@ const fadeInUp = keyframes({
   },
 })
 
-const Wrapper = styled(Separate)({
+const Wrapper = styled(Space)({
   animation: `${fadeInUp} 0.7s cubic-bezier(0.39, 0.575, 0.565, 1)`,
   display: 'flex',
   flexDirection: 'column',

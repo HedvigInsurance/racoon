@@ -1,6 +1,7 @@
 export { HedvigLogo } from './components/hedvig-logo'
 export { Button, LinkButton } from './components/button'
 export { Separate } from './components/separate'
+export { Space } from './components/space'
 export { InputField } from './components/input-field'
 
 export type { Level } from './lib/media-query'
