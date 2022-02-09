@@ -20,7 +20,7 @@ The second route contains an unknown dynamic segment and is hence server side re
 
 The project uses Emotion.
 
-Caveat: There's no simple way to enable the [`css` prop](https://emotion.sh/docs/css-prop) wihout opting out of SWC. Unfortunately the [official instructions](https://emotion.sh/docs/typescript#emotionreact) causes issues with SSR - differnt class names.
+Caveat: To enable the [`css` prop](https://emotion.sh/docs/css-prop) we need to opt out of SWC. I believe we should hold out until Next adds [official support](https://github.com/vercel/next.js/issues/30804).
 
 ## Crashlytics
 
