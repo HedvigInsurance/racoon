@@ -23,5 +23,18 @@
 }
 
 body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   font-family: FavoritStd, 'Helvetica Neue', sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }

@@ -17,6 +17,7 @@ const Separator = styled.div({
 
 const Anchor = styled.a<{ active: boolean }>(
   {
+    textDecoration: 'none',
     '&:hover': {
       color: colorsV3.gray900,
     },

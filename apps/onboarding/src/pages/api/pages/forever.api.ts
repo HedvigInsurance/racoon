@@ -31,7 +31,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
     })
 
     if (!data.campaign) {
-      return { code: 'FOREVER_CODE_ERROR' }
+      return res.status(400).json({ code: 'FOREVER_CODE_ERROR' })
     }
 
     const cookie = Cookie.fromApiRoute(req, res)
@@ -39,7 +39,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
 
     res.redirect(PageLink.foreverReady({ locale, code }))
   } catch (error) {
-    return { code: 'FOREVER_CODE_ERROR' }
+    return res.status(400).json({ form: 'FOREVER_ERROR_GENERIC' })
   }
 }
 

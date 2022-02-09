@@ -35,9 +35,11 @@ const ForeverPage: NextPage = () => {
   const initialCode = router.query.code as string | undefined
   const animatedCode = usePrintCodeEffect({ initialCode: initialCode || '' })
 
-  const { submission, errors, formProps } = useForm({
+  const { state, errors, formProps } = useForm({
     action: '/api/pages/forever',
   })
+
+  const errorMessage = errors?.code ?? errors?.form
 
   return (
     <form {...formProps}>
@@ -51,14 +53,14 @@ const ForeverPage: NextPage = () => {
               name="code"
               placeholder="7VEKCAG"
               required
-              errorMessage={errors?.code ? t(errors?.code) : undefined}
+              errorMessage={errorMessage ? t(errorMessage) : undefined}
               defaultValue={animatedCode}
             />
 
             <input hidden name="locale" value={router.locale} readOnly />
           </FormWrapper>
 
-          <Button type="submit" $loading={submission}>
+          <Button type="submit" $loading={state === 'submitting'}>
             {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
           </Button>
         </Separate>
