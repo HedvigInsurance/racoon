@@ -1,0 +1,42 @@
+{
+  "pipeline": {
+    "build": {
+      "outputs": [
+        ".next/**",
+        ".turbo/**",
+        "dist/**"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test": {
+      "outputs": [
+        "covereage/**"
+      ],
+      "dependsOn": []
+    },
+    "e2e": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "e2e:headless": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "storybook": {
+      "cache": false
+    }
+  }
+}
