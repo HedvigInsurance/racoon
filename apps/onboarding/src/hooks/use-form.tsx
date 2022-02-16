@@ -25,21 +25,26 @@ export const useForm = <Data,>({ action, method, onSuccess }: Options) => {
     event.preventDefault()
     setFormState({ state: 'submitting', errors: null })
 
-    const response = await fetch(action, {
-      method: method || 'post',
-      body: new FormData(event.currentTarget),
-    })
+    try {
+      const response = await fetch(action, {
+        method: method || 'post',
+        body: new FormData(event.currentTarget),
+      })
 
-    if (response.ok) {
-      if (response.redirected) {
-        router.push(response.url)
+      if (response.ok) {
+        if (response.redirected) {
+          router.push(response.url)
+        } else {
+          onSuccess?.((await response.json()) as Data)
+          setFormState({ state: 'idle', errors: null })
+        }
       } else {
-        onSuccess?.((await response.json()) as Data)
-        setFormState({ state: 'idle', errors: null })
+        const errors = await response.json()
+        setFormState({ state: 'idle', errors })
       }
-    } else {
-      const errors = await response.json()
-      setFormState({ state: 'idle', errors })
+    } catch (error) {
+      console.error(error)
+      setFormState({ state: 'idle', errors: { form: 'Error' } })
     }
   }
 
