@@ -54,9 +54,8 @@ const FooterButton = styled(Button)({
 const ContentCard = styled.div({
   gridColumn: '1 / span 2',
   textAlign: 'start',
-  margin: '1rem 1rem 0 0', 
-  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem',  textAlign: 'center',}
-  
+  margin: '1rem 1rem 0 0',
+  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
 const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2' })
@@ -78,7 +77,7 @@ const NewMemberPage: NextPage = () => {
           </BodyText>
         </ContentCard>
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
             Main Coverage
           </Heading>
         </TitleContainer>
@@ -89,7 +88,7 @@ const NewMemberPage: NextPage = () => {
           description="Coverage for your house or apartment contents"
         />
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
             Additional Coverage
           </Heading>
         </TitleContainer>

@@ -26,6 +26,7 @@
     "classnames": "^2.3.1",
     "cookies-next": "^2.0.4",
     "dompurify": "^2.3.6",
+    "embark-core": "*",
     "formidable": "^2.0.1",
     "framer-motion": "^6.2.8",
     "graphql": "^16.3.0",
