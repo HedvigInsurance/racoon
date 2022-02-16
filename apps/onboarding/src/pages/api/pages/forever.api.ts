@@ -2,10 +2,10 @@ import type { CampaignQuery, CampaignQueryVariables } from '@/lib/generated-type
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { CampaignDocument } from '@/lib/generated-types'
-import { Cookie } from 'next-cookie'
 import { PageLink } from '@/lib/page-link'
 import { createApolloClient } from '@/lib/apollo-client'
 import { getFormData } from '@/lib/get-form-data'
+import { setCookies } from 'cookies-next'
 
 const COOKIE_KEY = '_hvcode'
 
@@ -34,8 +34,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
       return res.status(400).json({ code: 'FOREVER_CODE_ERROR' })
     }
 
-    const cookie = Cookie.fromApiRoute(req, res)
-    cookie.set(COOKIE_KEY, code)
+    setCookies(COOKIE_KEY, code, { req, res })
 
     res.redirect(PageLink.foreverReady({ locale, code }))
   } catch (error) {
