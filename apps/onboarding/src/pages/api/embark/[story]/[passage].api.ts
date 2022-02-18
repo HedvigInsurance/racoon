@@ -26,6 +26,7 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
         data: formFields,
       },
     })
+
     updateEmbarkHistory(req, res, newHistory)
     return res.json({ ok: true })
   } catch (error) {

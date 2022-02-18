@@ -1,17 +1,58 @@
-import { ActionInput, EmbarkHistory, HistoryItem } from './types'
+import { ActionInput, EmbarkHistory, HistoryItem, Store } from './types'
+import { Passage, PassageAction, Redirect } from '@/shared/types'
 
 import { JSONStory } from '@/angel/types'
-import { Passage } from '@/shared/types'
 import { angel } from '../angel'
 import { convertHistoryToStore } from './utils/convert-history-to-store'
 import { convertPassage } from './convert'
 import { getActionLink } from './utils/get-action-link'
+import { getRedirectLink } from './utils/get-redirect-link'
 import invariant from 'tiny-invariant'
 import { parseActionInput } from './utils/parse-action-input'
 
 type FetchPassageParams = {
   story: JSONStory
   history: EmbarkHistory
+}
+
+type GetNextPassageParams = {
+  story: JSONStory
+  store: Store
+  passage: Passage
+  prevPassage?: Passage
+}
+
+const getNextPassage = ({
+  story,
+  store,
+  passage,
+  prevPassage,
+}: GetNextPassageParams): Passage | null => {
+  let passageName = getRedirectLink(store, passage.redirects)
+
+  // no more redirects
+  if (!passageName && prevPassage) return passage
+
+  if (!passageName && passage.action) {
+    // try to get next passage from action
+    passageName = getActionLink({ action: passage.action, store })
+  }
+
+  if (!passageName) {
+    // passage is the last one
+    return null
+  }
+
+  const passageOrUndefined = angel.getPassageByName(story, passageName)
+  invariant(passageOrUndefined !== undefined, 'Could not determine next passage')
+  const nextPassage = angel.parsePassage(passageOrUndefined)
+
+  return getNextPassage({
+    story,
+    store,
+    passage: nextPassage,
+    prevPassage: passage,
+  })
 }
 
 const fetchPassage = ({ story, history }: FetchPassageParams) => {
@@ -31,12 +72,15 @@ const fetchPassage = ({ story, history }: FetchPassageParams) => {
 
     if (lastPassage.action) {
       const store = convertHistoryToStore(history)
-      // Get next passage from action
-      const passageName = getActionLink({ action: lastPassage.action, store })
 
-      const passageOrUndefined = angel.getPassageByName(story, passageName)
-      invariant(passageOrUndefined !== undefined, 'Could not determine next passage')
-      passage = angel.parsePassage(passageOrUndefined)
+      const nextPassage = getNextPassage({ story, store, passage: lastPassage })
+
+      if (nextPassage === null) {
+        // Last passage was the last one
+        return null
+      }
+
+      passage = nextPassage
     } else {
       // Get next passage from (redirect)
       const startPassage = angel.getStartPassage(story)
@@ -66,7 +110,7 @@ const submitUserInput = ({ story, history, input }: SubmitUserInputParams) => {
     passageName: passage.name,
   }
 
-  return [...history.filter((item) => item.passageName !== input.name), historyItem]
+  return [...history.filter((item) => item.passageName !== historyItem.passageName), historyItem]
 }
 
 export const api = {

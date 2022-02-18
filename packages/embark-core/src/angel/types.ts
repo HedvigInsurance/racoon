@@ -19,3 +19,18 @@ export type JSONStory = {
   keywords: Record<string, string>
   trackableProperties: Array<string>
 }
+
+export enum Attribute {
+  NextLink = 'next',
+  ToLink = 'to',
+  Key = 'key',
+  Title = 'title',
+  Placeholder = 'placeholder',
+  IsLarge = 'large',
+  Mask = 'mask',
+  Unit = 'unit',
+  MinValue = 'minvalue',
+  Value = 'value',
+  Redirect = 'redirect',
+  When = 'when',
+}

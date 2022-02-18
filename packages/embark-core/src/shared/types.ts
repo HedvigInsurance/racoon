@@ -6,6 +6,7 @@ export enum PassageElement {
   TextAction = 'TextAction',
   TextActionSet = 'TextActionSet',
   NumberAction = 'NumberAction',
+  Redirect = 'Redirect',
 }
 
 type Placeholder = { key: string; pattern: string }
@@ -21,6 +22,35 @@ export type Link = {
   to: string
 }
 
+export enum WhenOperator {
+  GREATER_THAN = '>',
+  LESS_THAN = '<',
+  EQUAL = '=',
+  PASS = 'PASS',
+}
+
+export type WhenStatement =
+  | {
+      key: string
+      value: string
+      operator: WhenOperator
+    }
+  | {
+      operator: WhenOperator.PASS
+    }
+
+export type Redirect =
+  | {
+      link: Link
+      conditions: Array<WhenStatement>
+    }
+  | {
+      link: Link
+      conditions: Array<WhenStatement>
+      key: string
+      value: string
+    }
+
 type SelectActionOption = {
   key: string
   value: string
@@ -32,6 +62,12 @@ export type SelectAction = {
   options: Array<SelectActionOption>
 }
 
+export enum TextActionMask {
+  PersonalNumber = 'PersonalNumber',
+  BirthDate = 'BirthDate',
+  BirthDateReverse = 'BirthDateReverse',
+}
+
 export type BaseTextAction = {
   type: PassageElement.TextAction
 
@@ -40,7 +76,7 @@ export type BaseTextAction = {
   size: 'small' | 'large'
 
   placeholder?: TextLabel
-  mask?: string
+  mask?: TextActionMask
   unit?: TextLabel
 }
 
@@ -72,4 +108,5 @@ export type Passage = {
   messages: Array<Message>
   responses: Array<Message>
   action?: PassageAction
+  redirects: Array<Redirect>
 }

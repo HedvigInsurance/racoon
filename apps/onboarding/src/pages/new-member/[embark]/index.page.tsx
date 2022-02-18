@@ -10,20 +10,20 @@ import { useForm } from 'hooks/use-form'
 import { useRouter } from 'next/router'
 import { useTranslateTextLabel } from './hooks/use-translate-text-label'
 
-type Props = {
-  passage: ClientPassage
-  storyName: string
-}
-
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()
   return useCallback(() => replace(asPath), [replace, asPath])
 }
 
+type Props = {
+  passage: ClientPassage
+  storyName: string
+}
+
 const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   const t = useTranslateTextLabel()
-
   const refreshData = useRouterRefresh()
+
   const submitDataForm = useForm({
     action: `/api/embark/${storyName}/${passage.name}`,
     onSuccess: refreshData,

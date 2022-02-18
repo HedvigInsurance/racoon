@@ -3,9 +3,9 @@ import type { Passage, PassageAction } from '@/shared/types'
 import { DOMParser } from '@xmldom/xmldom'
 import { JSONPassage } from './types'
 import { PassageElement } from '@/shared/types'
-import invariant from 'tiny-invariant'
 import { parseMessage } from './utils/parse-message'
 import { parseNumberAction } from './utils/parse-number-action'
+import { parseRedirect } from './utils/parse-redirect'
 import { parseResponse } from './utils/parse-response'
 import { parseSelectAction } from './utils/parse-select-action'
 import { parseTextAction } from './utils/parse-text-action'
@@ -49,6 +49,10 @@ export const parsePassage = (passage: JSONPassage): Passage => {
   const responses = Array.from(rawResponses).map(parseResponse)
 
   let action: PassageAction | undefined = undefined
+
+  const rawRedirects = rootElement.getElementsByTagName(PassageElement.Redirect)
+  const redirects = Array.from(rawRedirects).map(parseRedirect)
+
   for (const { element, parser } of actionParsers) {
     const actionElement = rootElement.getElementsByTagName(element)[0]
     if (actionElement) {
@@ -56,12 +60,11 @@ export const parsePassage = (passage: JSONPassage): Passage => {
     }
   }
 
-  invariant(action !== undefined, 'Passage must have an action')
-
   return {
     name: passage.name,
     messages,
     responses,
     action,
+    redirects,
   }
 }
