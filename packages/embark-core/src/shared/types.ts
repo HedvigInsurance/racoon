@@ -29,6 +29,11 @@ export enum WhenOperator {
   PASS = 'PASS',
 }
 
+export enum LogicalOperator {
+  AND = '&&',
+  OR = '||',
+}
+
 export type WhenStatement =
   | {
       key: string
@@ -43,10 +48,12 @@ export type Redirect =
   | {
       link: Link
       conditions: Array<WhenStatement>
+      logicalOperator: LogicalOperator
     }
   | {
       link: Link
       conditions: Array<WhenStatement>
+      logicalOperator: LogicalOperator
       key: string
       value: string
     }
