@@ -1,6 +1,6 @@
 import '@/styles/global.css'
 
-import { GTM_ID, pageview } from '@/lib/gtm'
+import { GTM_ID, pageview } from '@/services/gtm'
 
 import { ApolloProvider } from '@apollo/client'
 import type { AppProps } from 'next/app'
@@ -10,7 +10,7 @@ import Script from 'next/script'
 import { ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import { theme } from 'ui'
-import { useApollo } from '@/lib/apollo-client'
+import { useApollo } from '@/services/apollo'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { useEffect } from 'react'
 

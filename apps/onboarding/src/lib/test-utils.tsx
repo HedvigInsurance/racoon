@@ -1,10 +1,10 @@
 import { ReactElement, ReactNode } from 'react'
 import { RenderOptions, render } from '@testing-library/react'
+
 import { ApolloProvider } from '@apollo/client'
 import { NextRouter } from 'next/router'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
-
-import { createApolloClient } from './apollo-client'
+import { createApolloClient } from '@/services/apollo'
 
 const createRouterMock = (router?: Partial<NextRouter>): NextRouter => ({
   basePath: '',

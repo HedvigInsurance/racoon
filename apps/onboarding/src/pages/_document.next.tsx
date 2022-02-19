@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
-import { GTM_ID } from '@/lib/gtm'
+import { GTM_ID } from '@/services/gtm'
 
 export default class MyDocument extends Document {
   render() {

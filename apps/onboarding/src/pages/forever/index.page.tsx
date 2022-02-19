@@ -2,7 +2,7 @@ import { Button, InputField, Space, mq } from 'ui'
 import type { GetStaticProps, NextPage } from 'next'
 
 import { PageLayout } from './components/page-layout'
-import { replaceMarkdown } from 'services/i18n'
+import { replaceMarkdown } from '@/services/i18n'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
 import { useForm } from 'hooks/use-form'

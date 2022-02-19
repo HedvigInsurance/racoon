@@ -1,4 +1,4 @@
-import { SSRConfig } from 'next-i18next'
+import type { SSRConfig } from 'next-i18next'
 import { marked } from 'marked'
 
 export const replaceMarkdown = async (translations: SSRConfig, fields: Array<string>) => {

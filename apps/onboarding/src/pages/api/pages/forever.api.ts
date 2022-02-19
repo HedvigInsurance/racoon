@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { CampaignDocument } from '@/lib/generated-types'
 import { PageLink } from '@/lib/page-link'
-import { createApolloClient } from '@/lib/apollo-client'
+import { createApolloClient } from '@/services/apollo'
 import { getFormData } from '@/lib/get-form-data'
 import { setCookies } from 'cookies-next'
 

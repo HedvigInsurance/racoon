@@ -9,7 +9,8 @@
       "@/lib/*": ["lib/*"],
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/services/*": ["services/*"]
     },
     "incremental": true
   },
