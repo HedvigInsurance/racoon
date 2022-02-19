@@ -22,5 +22,5 @@
     "prettier": "^2.5.1",
     "turbo": "^1.1.2"
   },
-  "packageManager": "yarn@1.22.15"
+  "packageManager": "yarn@1.22.17"
 }

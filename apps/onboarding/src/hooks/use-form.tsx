@@ -29,6 +29,7 @@ export const useForm = <Data,>({ action, method, onSuccess }: Options) => {
       const response = await fetch(action, {
         method: method || 'post',
         body: new FormData(event.currentTarget),
+        credentials: 'same-origin',
       })
 
       if (response.ok) {
