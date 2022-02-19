@@ -34,7 +34,7 @@ To get Sentry to work you need either a `.sentryclirc` file or set a `SENTRY_AUT
 
 Apollo Client v3 is used to make API requests.
 
-[GraphQL Code Generator](https://www.graphql-code-generator.com) is used to automatically generate Apollo Client hooks. The setup is configured in `./codegen.yml` and outputs a single module: `src/lib/generated-types.ts`.
+[GraphQL Code Generator](https://www.graphql-code-generator.com) is used to automatically generate Apollo Client hooks. The setup is configured in `./codegen.yml` and outputs a single module: `src/services/apollo/types.ts`.
 
 You trigger the code generator using:
 

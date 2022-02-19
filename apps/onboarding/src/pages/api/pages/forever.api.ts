@@ -1,7 +1,7 @@
-import type { CampaignQuery, CampaignQueryVariables } from '@/lib/generated-types'
+import type { CampaignQuery, CampaignQueryVariables } from '@/services/apollo/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { CampaignDocument } from '@/lib/generated-types'
+import { CampaignDocument } from '@/services/apollo/types'
 import { PageLink } from '@/lib/page-link'
 import { createApolloClient } from '@/services/apollo'
 import { getFormData } from '@/lib/get-form-data'

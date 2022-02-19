@@ -13,7 +13,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
     "sort-imports": "import-sort --write ./src/**/*.{ts,tsx}",
-    "codegen": "graphql-codegen && prettier --write ./src/lib/generated-types.ts && import-sort --write ./src/lib/generated-types.ts && yarn lint --fix",
+    "codegen": "graphql-codegen && prettier --write ./src/services/apollo/types.ts && import-sort --write ./src/services/apollo/types.ts && yarn lint --fix",
     "cypress": "cypress open",
     "cypress:headless": "cypress run"
   },

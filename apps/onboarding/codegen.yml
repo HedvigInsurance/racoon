@@ -1,7 +1,7 @@
 schema: https://graphql.dev.hedvigit.com/graphql
 documents: './src/**/*.graphql'
 generates:
-  ./src/lib/generated-types.ts:
+  ./src/services/apollo/types.ts:
     plugins:
       - typescript
       - typescript-operations

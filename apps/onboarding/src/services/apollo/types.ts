@@ -6,7 +6,7 @@ export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
-const defaultOptions = {}
+const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -78,6 +78,8 @@ export type ActivePaymentMethodsResponse = {
   __typename?: 'ActivePaymentMethodsResponse'
   storedPaymentMethodsDetails: StoredPaymentMethodsDetails
 }
+
+export type ActivePaymentMethodsV2Response = StoredCardDetails | StoredThirdPartyDetails
 
 export type ActivePayoutMethodsResponse = {
   __typename?: 'ActivePayoutMethodsResponse'
@@ -1517,6 +1519,7 @@ export type BundledQuote = {
   insuranceTerms: Array<InsuranceTerm>
   lastName?: Maybe<Scalars['String']>
   perils: Array<PerilV2>
+  phoneNumber?: Maybe<Scalars['String']>
   price: MonetaryAmountV2
   /** @deprecated Use data instead. */
   quoteDetails: QuoteDetails
@@ -1717,9 +1720,11 @@ export type ChatState = {
   showOfferScreen: Scalars['Boolean']
 }
 
-/** The signing of an onboarding session, that contains information about the current signing status. */
+/** The checkout state of a quote cart, that contains information about the current signing status. */
 export type Checkout = {
   __typename?: 'Checkout'
+  /**  Url to redirect the user to, in order to complete the checkout. Used for NORWEGIAN_BANK_ID and DANISH_BANK_ID.  */
+  redirectUrl?: Maybe<Scalars['String']>
   /**  Current signing status of the session  */
   status: CheckoutStatus
   /**  A user-visible text that explains the current status. Useful for async signing like SE BankID.  */
@@ -1735,7 +1740,7 @@ export enum CheckoutMethod {
 }
 
 export enum CheckoutStatus {
-  /** This signing is completed, which means the onboarding session has reached its terminal state. */
+  /** This signing is completed, which means the quote cart has reached its terminal state. */
   Completed = 'COMPLETED',
   /** The signing has failed - which means it also can be retried. */
   Failed = 'FAILED',
@@ -1964,7 +1969,8 @@ export type ConcurrentInception = {
 
 export type ConnectPaymentFinished = {
   __typename?: 'ConnectPaymentFinished'
-  resultCode: Scalars['String']
+  paymentTokenId: Scalars['ID']
+  status: TokenStatus
 }
 
 export type ConnectPaymentInput = {
@@ -2566,6 +2572,9 @@ export type CreateOnboardingQuoteCartInput = {
 }
 
 export type CreateQuoteBundleInput = {
+  contractBundleId?: InputMaybe<Scalars['ID']>
+  initiatedFrom?: InputMaybe<QuoteInitiatedFrom>
+  numberCoInsured?: InputMaybe<Scalars['Int']>
   payload: Array<Scalars['JSON']>
 }
 
@@ -3068,6 +3077,13 @@ export type EditSwedishHouseInput = {
   zipCode?: InputMaybe<Scalars['String']>
 }
 
+export type EmbarkApiGraphQlConstantVariable = {
+  __typename?: 'EmbarkAPIGraphQLConstantVariable'
+  as: EmbarkApiGraphQlSingleVariableCasting
+  key: Scalars['String']
+  value: Scalars['String']
+}
+
 export type EmbarkApiGraphQlError = {
   __typename?: 'EmbarkAPIGraphQLError'
   contains?: Maybe<Scalars['String']>
@@ -3108,6 +3124,7 @@ export enum EmbarkApiGraphQlSingleVariableCasting {
 }
 
 export type EmbarkApiGraphQlVariable =
+  | EmbarkApiGraphQlConstantVariable
   | EmbarkApiGraphQlGeneratedVariable
   | EmbarkApiGraphQlMultiActionVariable
   | EmbarkApiGraphQlSingleVariable
@@ -3523,6 +3540,7 @@ export type EmbarkPassage = {
   messages: Array<EmbarkMessage>
   name: Scalars['String']
   offerRedirect?: Maybe<EmbarkOfferRedirect>
+  quoteCartOfferRedirects: Array<EmbarkQuoteCartOfferRedirect>
   redirects: Array<EmbarkRedirect>
   response: EmbarkResponse
   text: Scalars['String']
@@ -3551,6 +3569,19 @@ export type EmbarkPreviousInsuranceProviderActionData = {
 export enum EmbarkPreviousInsuranceProviderActionDataProviders {
   Norwegian = 'NORWEGIAN',
   Swedish = 'SWEDISH',
+}
+
+export type EmbarkQuoteCartOfferRedirect = {
+  __typename?: 'EmbarkQuoteCartOfferRedirect'
+  component: Scalars['String']
+  data: EmbarkQuoteCartOfferRedirectData
+}
+
+export type EmbarkQuoteCartOfferRedirectData = {
+  __typename?: 'EmbarkQuoteCartOfferRedirectData'
+  expression: EmbarkExpression
+  id: Scalars['String']
+  selectedInsuranceTypes: Array<Scalars['String']>
 }
 
 export type EmbarkRedirect =
@@ -3673,6 +3704,7 @@ export type EmbarkStoryMetadataEntryPill = {
 
 export enum EmbarkStoryType {
   AppOnboarding = 'APP_ONBOARDING',
+  AppOnboardingQuoteCart = 'APP_ONBOARDING_QUOTE_CART',
   WebOnboarding = 'WEB_ONBOARDING',
 }
 
@@ -7487,41 +7519,38 @@ export type Mutation = {
   markMessageAsRead: Message
   norwegianBankIdAuth: NorwegianBankIdAuthResponse
   offerClosed: Scalars['Boolean']
-  /**
-   * Create a new onboarding session. This is not an authentication session, but rather an object that
-   * ties the onboarding journey together.
-   */
+  /** Create a new quote cart, used to tie the onboarding journey together. */
   onboardingQuoteCart_create: CreateQuoteCartResult
   paymentConnection_connectPayment: ConnectPaymentResult
   paymentConnection_submitAdditionalPaymentDetails: ConnectPaymentResult
   paymentConnection_submitAdyenRedirection: ConnectPaymentFinished
   /**
-   * Add a campaign by its code to this onboarding session. This campaign won't be "redeemed", but rather
+   * Add a campaign by its code to this cart. This campaign won't be "redeemed", but rather
    * left in a pending state on the onboarding until signing occurs and a member is created.
    *
    * Returns an error if there was a problem with redeeming it, or null upon success.
    */
   quoteCart_addCampaign: AddCampaignResult
-  /** Add a payment token id to the quote cart */
+  /** Add a payment token id to the quote cart. */
   quoteCart_addPaymentToken: AddPaymentTokenResult
   /**
-   * Once an onboarding session is "signed", it can be finalized/consumed by this method, which will produce
+   * Once an cart is "signed", it can be finalized/consumed by this method, which will produce
    * an access token. This access token will serve as the means of authorization towards the member that was
    * created as part of the onboarding.
    *
    * This is needed at this stage because the "connecting payments" stage will happen with an actual signed member.
    */
   quoteCart_createAccessToken: CreateQuoteCartAccessTokenResult
-  /** Create a quote as part of this onboarding session. */
+  /** Create a quote and add it to the given cart. */
   quoteCart_createQuoteBundle: CreateQuoteBundleResult
   /** Edit the cart. Will only update the fields that are present in the payload. */
   quoteCart_editQuote: EditQuoteResult
   /** Remove the existing campaign. */
   quoteCart_removeCampaign: RemoveCampaignResult
   /**
-   * Initiate signing of this onboarding, optionally tagging a subset of the quotes if not all of them are wanted.
+   * Initiate checkout, optionally tagging a subset of the quotes if not all of them are wanted.
    *
-   * Note, the session should only be moved into its signing state once the prior things, such as campaign, are
+   * Note, the session should only be moved into its checkout state once the prior things, such as campaign, are
    * considered done.
    */
   quoteCart_startCheckout: StartCheckoutResult
@@ -8119,6 +8148,8 @@ export type Query = {
   activeContractBundles: Array<ContractBundle>
   /** Returns the active payment method which the member chose to tokenize */
   activePaymentMethods?: Maybe<ActivePaymentMethodsResponse>
+  /** Returns the active payment method which the member chose to tokenize now supporting more payment methods then card */
+  activePaymentMethodsV2?: Maybe<ActivePaymentMethodsV2Response>
   /** Returns the active payout method which the member chose to tokenize */
   activePayoutMethods?: Maybe<ActivePayoutMethodsResponse>
   adyenPublicKey: Scalars['String']
@@ -8186,6 +8217,7 @@ export type Query = {
   keyGearItems: Array<KeyGearItem>
   /** Retrieve multiple languages */
   languages: Array<Language>
+  /** @deprecated Legacy concept that should not be used */
   lastQuoteOfMember: Quote
   /** Retrieve multiple marketingStories */
   marketingStories: Array<MarketingStory>
@@ -8526,15 +8558,15 @@ export type QuoteBundleVariantTagArgs = {
 }
 
 /**
- * An onboarding session is a type that exists to guide the client through an onboarding journey,
+ * An quote cart is a type that exists to guide the client through an onboarding journey,
  * as a means of storing intermediate state up until the point where it is "signed" and then flushed
  * into a proper "member".
  */
 export type QuoteCart = {
   __typename?: 'QuoteCart'
-  /**  The quote bundle "view" of the quotes created as part of this onboarding  */
+  /**  The quote bundle "view" of the quotes created as part of this cart.  */
   bundle?: Maybe<QuoteBundle>
-  /**  Campaign, if one has been attached by a code  */
+  /**  Campaign, if one has been attached by a code.  */
   campaign?: Maybe<Campaign>
   /**  The ongoing signing state, if it has been initiated - or null if it has not.  */
   checkout?: Maybe<Checkout>
@@ -8546,7 +8578,7 @@ export type QuoteCart = {
 }
 
 /**
- * An onboarding session is a type that exists to guide the client through an onboarding journey,
+ * An quote cart is a type that exists to guide the client through an onboarding journey,
  * as a means of storing intermediate state up until the point where it is "signed" and then flushed
  * into a proper "member".
  */
@@ -8563,6 +8595,11 @@ export type QuoteDetails =
   | SwedishAccidentDetails
   | SwedishApartmentQuoteDetails
   | SwedishHouseQuoteDetails
+
+export enum QuoteInitiatedFrom {
+  CrossSell = 'CROSS_SELL',
+  SelfChange = 'SELF_CHANGE',
+}
 
 /** Representing a RGBA color value: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba() */
 export type Rgba = {
@@ -9748,6 +9785,17 @@ export type StartSignResponse =
   | SimpleSignSession
   | SwedishBankIdSession
 
+export type StoredCardDetails = {
+  __typename?: 'StoredCardDetails'
+  brand?: Maybe<Scalars['String']>
+  cardName?: Maybe<Scalars['String']>
+  expiryMonth: Scalars['String']
+  expiryYear: Scalars['String']
+  holderName?: Maybe<Scalars['String']>
+  id: Scalars['String']
+  lastFourDigits: Scalars['String']
+}
+
 export type StoredPaymentMethodsDetails = {
   __typename?: 'StoredPaymentMethodsDetails'
   brand?: Maybe<Scalars['String']>
@@ -9757,6 +9805,12 @@ export type StoredPaymentMethodsDetails = {
   holderName?: Maybe<Scalars['String']>
   id: Scalars['String']
   lastFourDigits: Scalars['String']
+}
+
+export type StoredThirdPartyDetails = {
+  __typename?: 'StoredThirdPartyDetails'
+  name: Scalars['String']
+  type: Scalars['String']
 }
 
 export type SubmitAdyenRedirectionInput = {
@@ -10031,6 +10085,12 @@ export type TitleAndBulletPoints = {
   claimFirstMessage: Scalars['String']
   color: HedvigColor
   title: Scalars['String']
+}
+
+export enum TokenStatus {
+  Authorised = 'AUTHORISED',
+  Failed = 'FAILED',
+  Pending = 'PENDING',
 }
 
 export enum TokenizationChannel {
@@ -11439,7 +11499,7 @@ export type CampaignQueryVariables = Exact<{
 
 export type CampaignQuery = {
   __typename?: 'Query'
-  campaign?: { __typename?: 'Campaign'; code: string } | null | undefined
+  campaign?: { __typename?: 'Campaign'; code: string } | null
 }
 
 export const CampaignDocument = gql`
