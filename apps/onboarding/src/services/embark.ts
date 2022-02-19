@@ -29,11 +29,7 @@ export const getEmbarkHistory = (req: IncomingMessage, res: ServerResponse): Emb
 }
 
 export const updateEmbarkHistory = (req: IncomingMessage, res: ServerResponse, history: any) => {
-  setCookies(COOKIE_KEY, JSON.stringify(history), {
-    req,
-    res,
-    sameSite: 'lax',
-  })
+  setCookies(COOKIE_KEY, JSON.stringify(history), { req, res, sameSite: 'lax' })
 }
 
 export const clearEmbarkHistory = (req: IncomingMessage, res: ServerResponse) => {

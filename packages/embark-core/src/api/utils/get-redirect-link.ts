@@ -16,7 +16,6 @@ const parseValue = (value: string) => {
 }
 
 const evaluateCondition = (statement: WhenStatement, store: Store) => {
-  console.log('evaluateCondition', statement)
   if (statement.operator === WhenOperator.PASS) {
     return true
   }

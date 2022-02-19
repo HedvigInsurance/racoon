@@ -44,19 +44,13 @@ export type WhenStatement =
       operator: WhenOperator.PASS
     }
 
-export type Redirect =
-  | {
-      link: Link
-      conditions: Array<WhenStatement>
-      logicalOperator: LogicalOperator
-    }
-  | {
-      link: Link
-      conditions: Array<WhenStatement>
-      logicalOperator: LogicalOperator
-      key: string
-      value: string
-    }
+export type Redirect = {
+  link: Link
+  conditions: Array<WhenStatement>
+  logicalOperator: LogicalOperator
+  key?: string
+  value?: string
+}
 
 type SelectActionOption = {
   key: string

@@ -1,10 +1,11 @@
 import { ActionInput, EmbarkHistory, HistoryItem, Store } from './types'
-import { Passage, PassageAction, Redirect } from '@/shared/types'
 
 import { JSONStory } from '@/angel/types'
+import { Passage } from '@/shared/types'
 import { angel } from '../angel'
 import { convertHistoryToStore } from './utils/convert-history-to-store'
 import { convertPassage } from './convert'
+import { followRedirects } from './utils/follow-redirects'
 import { getActionLink } from './utils/get-action-link'
 import { getRedirectLink } from './utils/get-redirect-link'
 import invariant from 'tiny-invariant'
@@ -103,7 +104,10 @@ const submitUserInput = ({ story, history, input }: SubmitUserInputParams) => {
   const passage = angel.parsePassage(rawPassage)
 
   invariant(passage.action !== undefined, 'Passage does not have an action')
-  const storeDiff = parseActionInput({ action: passage.action, input })
+  const actionStoreDiff = parseActionInput({ action: passage.action, input })
+
+  const store = convertHistoryToStore(history)
+  const storeDiff = followRedirects({ story, store, passage, storeDiff: actionStoreDiff })
 
   const historyItem: HistoryItem = {
     storeDiff,
