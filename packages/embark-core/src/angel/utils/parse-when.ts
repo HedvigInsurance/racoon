@@ -19,10 +19,8 @@ export const parseWhen = (
     .map((s) => s.trim())
     .map<WhenStatement>((statement) => {
       if (statement.includes(WhenOperator.GREATER_THAN)) {
-        console.log('parseGraterThan', statement)
         return parseGraterThan(statement)
       } else if (statement.includes(WhenOperator.LESS_THAN)) {
-        console.log('parseLessThan', statement)
         return parseLessThan(statement)
       } else if (statement === 'true') {
         return { operator: WhenOperator.PASS }
