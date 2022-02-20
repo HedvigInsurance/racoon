@@ -35,7 +35,9 @@ export function middleware(request: NextRequest) {
 
   if (shouldHandleLocale) {
     const locale = guessLocale(request) || DEFAULT_PATH_LOCALE
-    return NextResponse.redirect(`/${locale}${request.nextUrl.pathname.replace('/default', '')}`)
+    return NextResponse.redirect(
+      `${request.nextUrl.origin}/${locale}${request.nextUrl.pathname.replace('/default', '')}`,
+    )
   }
 
   return undefined
