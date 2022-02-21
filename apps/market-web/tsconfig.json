@@ -1,0 +1,18 @@
+{
+  "exclude": ["node_modules"],
+  "extends": "tsconfig/nextjs.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": "src",
+    "paths": {
+      "@/lib/*": ["lib/*"],
+      "@/blocks/*": ["blocks/*"],
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"]
+    },
+    "incremental": true
+  },
+  "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}
