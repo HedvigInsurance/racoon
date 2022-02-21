@@ -1,6 +1,5 @@
 import { HedvigLogo, mq } from 'ui'
 
-import Head from 'next/head'
 import styled from '@emotion/styled'
 
 const Container = styled.div(({ theme }) => ({
@@ -35,30 +34,19 @@ const Main = styled.main({
   justifyContent: 'space-between',
 })
 
-
 type PageLayoutProps = {
   children: React.ReactNode
 }
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
-
   return (
-    <>
-      <Head>
-        <title>Hedvig</title>
-        <meta property="og:title" content="Hedvig" />
-      </Head>
-
-      <Container>
-        <Header>
-          <SiteLink href="/">
-            <HedvigLogo />
-          </SiteLink>
-        </Header>
-        <Main as="main">
-          {children}
-        </Main>
-      </Container>
-    </>
+    <Container>
+      <Header>
+        <SiteLink href="/">
+          <HedvigLogo />
+        </SiteLink>
+      </Header>
+      <Main as="main">{children}</Main>
+    </Container>
   )
 }
