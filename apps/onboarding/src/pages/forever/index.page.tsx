@@ -1,4 +1,4 @@
-import { Button, InputField, Space, mq } from 'ui'
+import { Button, InputField, Space } from 'ui'
 import type { GetStaticProps, NextPage } from 'next'
 
 import { PageLayout } from './components/page-layout'
@@ -10,21 +10,8 @@ import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-const Label = styled.label(({ theme }) => ({
-  color: theme.colors.gray900,
-  fontSize: '0.875rem',
-  lineHeight: '1.375rem',
-}))
-
-const FormWrapper = styled(Space)({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  flex: '1 1 0%',
-
-  [mq.lg]: {
-    flex: '0 1 auto',
-  },
+const UppercaseInputField = styled(InputField)({
+  textTransform: 'uppercase',
 })
 
 const ForeverPage: NextPage = () => {
@@ -44,18 +31,16 @@ const ForeverPage: NextPage = () => {
     <form {...formProps}>
       <PageLayout code={initialCode}>
         <Space y={2}>
-          <FormWrapper y={0.5}>
-            <Label>{t('FOREVER_LANDINGPAGE_INPUT_TEXT')}</Label>
-            <InputField
-              data-cy="code-input"
-              id="code"
-              name="code"
-              placeholder="7VEKCAG"
-              required
-              errorMessage={errorMessage ? t(errorMessage) : undefined}
-              defaultValue={animatedCode}
-            />
-          </FormWrapper>
+          <UppercaseInputField
+            data-cy="code-input"
+            id="code"
+            name="code"
+            label={t('FOREVER_LANDINGPAGE_INPUT_TEXT')}
+            placeholder="7VEKCAG"
+            required
+            errorMessage={errorMessage ? t(errorMessage) : undefined}
+            defaultValue={animatedCode}
+          />
 
           <input hidden name="locale" value={router.locale} readOnly />
           <Button type="submit" $loading={state === 'submitting'}>
