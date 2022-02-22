@@ -24,6 +24,7 @@ export type LocaleData = {
     backendFormatExample: string
   }
   phoneNumber?: PhoneNumberData
+  currencyLocale: 'en-SE' | 'sv-SE' | 'en-NO' | 'nb-NO' | 'en-DK' | 'da-DK'
 }
 
 export type MarketLabel = 'SE' | 'NO' | 'DK'
@@ -47,6 +48,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
     phoneNumber: phoneNumbers.SE,
+    currencyLocale: 'sv-SE',
   },
   'se-en': {
     path: 'se-en',
@@ -66,6 +68,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       backendFormatExample: 'YYYY-MM-DD',
     },
     phoneNumber: phoneNumbers.SE,
+    currencyLocale: 'en-SE',
   },
   no: {
     path: 'no',
@@ -84,6 +87,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       formatRegex: birthDateFormats.NO,
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
+    currencyLocale: 'nb-NO',
   },
   'no-en': {
     path: 'no-en',
@@ -102,6 +106,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       formatRegex: birthDateFormats.NO,
       backendFormatExample: 'YYYY-MM-DD',
     },
+    currencyLocale: 'en-NO',
   },
   dk: {
     path: 'dk',
@@ -120,6 +125,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       formatRegex: birthDateFormats.DK,
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
+    currencyLocale: 'da-DK',
   },
   'dk-en': {
     path: 'dk-en',
@@ -138,5 +144,6 @@ export const locales: Record<LocaleLabel, LocaleData> = {
       formatRegex: birthDateFormats.DK,
       backendFormatExample: 'YYYY-MM-DD',
     },
+    currencyLocale: 'en-DK',
   },
 }

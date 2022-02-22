@@ -7,15 +7,31 @@ query QuoteCart($id: ID!, $locale: Locale!) {
         tag(locale: $locale)
         bundle {
           displayName(locale: $locale)
+          bundleCost {
+            monthlyNet {
+              amount
+              currency
+            }
+          }
           quotes {
             id
+            price {
+              amount
+              currency
+            }
+            firstName
+            lastName
+            ssn
+            birthDate
+            startDate
+            email
+            phoneNumber
+            typeOfContract
+            displayName(locale: $locale)
+            data
           }
         }
       }
-    }
-    checkoutMethods
-    checkout {
-      status
     }
   }
 }
