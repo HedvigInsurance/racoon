@@ -1,20 +1,18 @@
 import Head from 'next/head'
+import { Loader } from './components/loader'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
 import styled from '@emotion/styled'
 import { theme } from 'ui'
 
 const Heading = styled.h1({
+  marginBottom: 0,
   maxWidth: '13ch',
   fontSize: 'clamp(1.5rem, 5vw, 3rem)',
   fontFamily: theme.fonts.heading,
   color: theme.colors.gray900,
   letterSpacing: '-0.02em',
   lineHeight: 1.25
-})
-
-const Loader = styled.div({
-  display: 'block',
 })
 
 const Wrapper = styled.div({
@@ -41,7 +39,7 @@ const LoadingPage: NextPage = () => {
         <Wrapper>
           <LoadingContent>
             <Heading>Vi sätter ihop din försäkring</Heading>
-            <Loader>Loading</Loader>
+            <Loader />
           </LoadingContent>
         </Wrapper>
       </PageLayout>
