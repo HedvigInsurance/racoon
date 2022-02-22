@@ -1,22 +1,29 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Button, ButtonProps } from './button'
+import { Meta, Story } from '@storybook/react'
 
-import { Button } from './button'
+type StoryProps = ButtonProps & { disabled: boolean }
 
-export default {
+const storyMeta: Meta<StoryProps> = {
   title: 'Button',
   component: Button,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-    disabled: { control: 'boolean' },
+  args: {
+    $color: 'lavender',
+    $hasFullWidth: false,
+    $variant: 'filled',
+    disabled: false,
   },
-} as ComponentMeta<typeof Button>
-
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>Hello</Button>
-
-export const Secondary = Template.bind({})
-Secondary.args = {}
-
-export const SecondaryDisabled = Template.bind({})
-SecondaryDisabled.args = {
-  disabled: true,
+  parameters: {
+    backgrounds: {
+      default: 'gray100',
+    },
+  },
 }
+
+export default storyMeta
+
+type Template = Story<StoryProps>
+
+const Template: Template = (args) => <Button {...args}>Hello</Button>
+
+export const Default = Template.bind({})
+Default.args = {}
