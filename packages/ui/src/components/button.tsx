@@ -27,6 +27,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     lineHeight: '1.5rem',
     border: '1px solid',
     borderRadius: '0.5rem',
+    maxWidth: '100%',
 
     ...($variant === 'filled' && {
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
