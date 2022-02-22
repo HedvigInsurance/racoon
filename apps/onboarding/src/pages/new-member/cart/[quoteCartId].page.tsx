@@ -4,6 +4,7 @@ import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/se
 
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/page-link'
+import { YourInformation } from './components/your-information'
 import { createApolloClient } from '@/services/apollo'
 import { getBundlePrice } from './selectors/get-bundle-price'
 import { getLocale } from '@/lib/l10n'
@@ -17,6 +18,8 @@ type Props = {
 const NewMemberCartPage: NextPage<Props> = ({ footer }) => {
   return (
     <div>
+      <YourInformation />
+
       <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
     </div>
   )
