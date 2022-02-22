@@ -1,5 +1,7 @@
-import { Button, InputField } from 'ui'
+import { Button, InputField, Space } from 'ui'
 import React, { useState } from 'react'
+
+import { Switch } from './switch'
 
 export const SsnInputForm = () => {
   const [ssnValue, setSsnValue] = useState('')
@@ -18,17 +20,20 @@ export const SsnInputForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputField
-        label="Personnummer"
-        placeholder="YYYYMMDDXXXX"
-        required
-        value={ssnValue}
-        name="ssn"
-        onChange={handleInputChange}
-      />
-      <Button onClick={handleSubmit} $hasFullWidth>
-        Hämta uppgifter - se ditt pris
-      </Button>
+      <Space y={1}>
+        <InputField
+          label="Personnummer"
+          placeholder="YYYYMMDDXXXX"
+          required
+          value={ssnValue}
+          name="ssn"
+          onChange={handleInputChange}
+        />
+        <Switch labelText="Är det din nuvarande adress?" />
+        <Button onClick={handleSubmit} $hasFullWidth>
+          Hämta uppgifter - se ditt pris
+        </Button>
+      </Space>
     </form>
   )
 }
