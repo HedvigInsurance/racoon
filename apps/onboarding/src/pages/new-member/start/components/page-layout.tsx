@@ -32,6 +32,7 @@ const Main = styled.main({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+  alignItems: 'center',
 })
 
 type PageLayoutProps = {
