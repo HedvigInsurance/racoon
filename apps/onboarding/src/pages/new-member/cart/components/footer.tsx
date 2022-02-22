@@ -1,14 +1,14 @@
+import { MonthlyPrice, PriceProps } from './monthly-price'
+
 import { LinkButton } from 'ui'
 import React from 'react'
 import styled from '@emotion/styled'
-import { useFormattedPrice } from '../hooks/use-formatted-price'
 import { useTranslation } from 'next-i18next'
 
 export type FooterProps = {
   buttonText: string
   buttonLinkTo: string
-  price: { amount: number; currency: string }
-}
+} & PriceProps
 
 const Wrapper = styled.div({
   width: '100vw',
@@ -36,13 +36,6 @@ const InnerWrapper = styled.div({
 
 const PriceWrapper = styled.div({})
 
-const Price = styled.p(({ theme }) => ({
-  fontSize: '1rem',
-  lineHeight: '1.5rem',
-  color: theme.colors.gray900,
-  margin: 0,
-}))
-
 const PriceLabel = styled.p(({ theme }) => ({
   fontSize: '0.75rem',
   lineHeight: '1rem',
@@ -52,16 +45,13 @@ const PriceLabel = styled.p(({ theme }) => ({
 
 export const Footer = ({ buttonText, buttonLinkTo, price }: FooterProps) => {
   const { t } = useTranslation()
-  const formattedPrice = useFormattedPrice(price)
-
   return (
     <Wrapper>
       <InnerWrapper>
         <PriceWrapper>
-          <Price>{`${formattedPrice}${t('PRICE_SUFFIX_INTERVAL')}`}</Price>
+          <MonthlyPrice price={price}/>
           <PriceLabel>{t('CANCEL_ANYTIME')}</PriceLabel>
         </PriceWrapper>
-
         <LinkButton $color="lavender" href={buttonLinkTo}>
           {buttonText}
         </LinkButton>

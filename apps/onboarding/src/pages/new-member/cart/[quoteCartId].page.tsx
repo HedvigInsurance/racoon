@@ -3,6 +3,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
 
 import { Hero } from './components/hero'
+import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
 import { PageLink } from '@/lib/page-link'
@@ -14,13 +15,15 @@ import { getSelectedBundleVariant } from './selectors/get-selected-bundle-varian
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 type Props = {
+  intro: { price: FooterProps['price'] }
   footer: { price: FooterProps['price'] }
 }
 
-const NewMemberCartPage: NextPage<Props> = ({ footer }) => {
+const NewMemberCartPage: NextPage<Props> = ({ intro, footer }) => {
   return (
     <PageLayout headerVariant="light">
       <Hero />
+      <Intro {...intro} />
       <YourInformation />
       <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
     </PageLayout>
@@ -40,11 +43,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
     })
 
     const selectedVariant = getSelectedBundleVariant(data, selectedInsuranceTypes)
+    const price = getBundlePrice(selectedVariant)
 
     return {
       props: {
+        intro: {
+          price: price,
+        },
         footer: {
-          price: getBundlePrice(selectedVariant),
+          price: price,
         },
 
         ...(await serverSideTranslations(locale as string)),
