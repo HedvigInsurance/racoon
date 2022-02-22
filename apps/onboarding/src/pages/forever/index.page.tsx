@@ -43,7 +43,13 @@ const ForeverPage: NextPage = () => {
           />
 
           <input hidden name="locale" value={router.locale} readOnly />
-          <Button type="submit" $loading={state === 'submitting'}>
+          <Button
+            type="submit"
+            disabled={state === 'submitting'}
+            $variant="filled"
+            $color="lavender"
+            $hasFullWidth
+          >
             {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
           </Button>
         </Space>

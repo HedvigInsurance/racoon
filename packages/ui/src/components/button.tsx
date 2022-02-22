@@ -1,32 +1,71 @@
 import styled from '@emotion/styled'
 
-type ButtonProps = {
-  $loading?: boolean
+export type ButtonProps = {
+  $variant?: 'filled' | 'outlined' | 'text'
+  $hasFullWidth?: boolean
+  $color?: 'dark' | 'lavender'
 }
 
-export const Button = styled.button<ButtonProps>(({ theme, $loading }) => ({
+export const UnstyledButton = styled.button({
+  padding: 0,
+  margin: 0,
+  background: 'none',
+  border: 'none',
+  outline: 'none',
   appearance: 'none',
-  border: 0,
-  color: theme.colors.gray900,
-  backgroundColor: theme.colors.purple500,
-  borderRadius: '0.5rem',
-  padding: '0.75rem 2rem',
-  fontSize: '1rem',
-  lineHeight: '1.5rem',
   cursor: 'pointer',
-  width: '100%',
-
-  opacity: $loading ? 0.5 : 1,
-
-  ':hover': {
-    backgroundColor: theme.colors.purple800,
-  },
-
   ':disabled': {
-    color: theme.colors.gray500,
-    backgroundColor: theme.colors.gray300,
+    cursor: 'default',
   },
-}))
+})
+
+export const Button = styled(UnstyledButton)<ButtonProps>(
+  ({ theme, $variant = 'filled', $hasFullWidth, $color }) => ({
+    width: $hasFullWidth ? '100%' : 'auto',
+    padding: '0.75rem 2rem',
+    fontSize: '1rem',
+    lineHeight: '1.5rem',
+    border: '1px solid',
+    borderRadius: '0.5rem',
+
+    ...($variant === 'filled' && {
+      backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
+      color: $color === 'lavender' ? theme.colors.gray900 : theme.colors.gray100,
+      borderColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
+      ':hover': {
+        backgroundColor: $color === 'lavender' ? theme.colors.purple800 : theme.colors.gray800,
+      },
+      ':disabled': {
+        color: theme.colors.gray500,
+        backgroundColor: theme.colors.gray300,
+        borderColor: theme.colors.gray300,
+      },
+    }),
+
+    ...($variant === 'outlined' && {
+      backgroundColor: 'transparent',
+      color: theme.colors.gray900,
+      borderColor: theme.colors.gray900,
+      ':hover': {
+        color: theme.colors.gray700,
+        borderColor: theme.colors.gray700,
+      },
+      ':disabled': {
+        color: theme.colors.gray500,
+        borderColor: theme.colors.gray500,
+      },
+    }),
+
+    ...($variant === 'text' && {
+      backgroundColor: 'transparent',
+      color: $color === 'lavender' ? theme.colors.purple900 : theme.colors.gray900,
+      border: 'none',
+      ':disabled': {
+        color: theme.colors.gray500,
+      },
+    }),
+  }),
+)
 
 export const LinkButton = styled(Button)<{ href: string }>({
   textDecoration: 'none',
