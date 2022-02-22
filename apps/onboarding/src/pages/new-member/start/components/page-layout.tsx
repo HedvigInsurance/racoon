@@ -1,4 +1,4 @@
-import { HedvigLogo, mq, theme } from 'ui'
+import { HedvigLogo, mq } from 'ui'
 
 import styled from '@emotion/styled'
 

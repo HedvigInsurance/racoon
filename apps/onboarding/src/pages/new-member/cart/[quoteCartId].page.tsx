@@ -2,6 +2,7 @@ import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
 
+import { Hero } from './components/hero'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
 import { PageLink } from '@/lib/page-link'
@@ -18,7 +19,8 @@ type Props = {
 
 const NewMemberCartPage: NextPage<Props> = ({ footer }) => {
   return (
-    <PageLayout>
+    <PageLayout headerVariant="light">
+      <Hero />
       <YourInformation />
       <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
     </PageLayout>
