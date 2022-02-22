@@ -1,7 +1,7 @@
 import { HedvigLogo, Space, mq } from 'ui'
 
 import Head from 'next/head'
-import { LanguageSwitcher } from './language-switcher'
+import { LanguageSwitcher } from '@/components/language-switcher'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 

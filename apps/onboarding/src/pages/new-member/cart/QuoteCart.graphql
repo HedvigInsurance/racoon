@@ -1,0 +1,21 @@
+query QuoteCart($id: ID!, $locale: Locale!) {
+  quoteCart(id: $id) {
+    id
+    bundle {
+      possibleVariations {
+        id
+        tag(locale: $locale)
+        bundle {
+          displayName(locale: $locale)
+          quotes {
+            id
+          }
+        }
+      }
+    }
+    checkoutMethods
+    checkout {
+      status
+    }
+  }
+}

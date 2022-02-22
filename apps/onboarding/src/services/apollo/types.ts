@@ -11502,6 +11502,34 @@ export type CampaignQuery = {
   campaign?: { __typename?: 'Campaign'; code: string } | null
 }
 
+export type QuoteCartQueryVariables = Exact<{
+  id: Scalars['ID']
+  locale: Locale
+}>
+
+export type QuoteCartQuery = {
+  __typename?: 'Query'
+  quoteCart: {
+    __typename?: 'QuoteCart'
+    id: string
+    checkoutMethods: Array<CheckoutMethod>
+    bundle?: {
+      __typename?: 'QuoteBundle'
+      possibleVariations: Array<{
+        __typename?: 'QuoteBundleVariant'
+        id: string
+        tag?: string | null
+        bundle: {
+          __typename?: 'QuoteBundle'
+          displayName: string
+          quotes: Array<{ __typename?: 'BundledQuote'; id: string }>
+        }
+      }>
+    } | null
+    checkout?: { __typename?: 'Checkout'; status: CheckoutStatus } | null
+  }
+}
+
 export const CampaignDocument = gql`
   query Campaign($code: String!) {
     campaign(code: $code) {
@@ -11541,3 +11569,59 @@ export function useCampaignLazyQuery(
 export type CampaignQueryHookResult = ReturnType<typeof useCampaignQuery>
 export type CampaignLazyQueryHookResult = ReturnType<typeof useCampaignLazyQuery>
 export type CampaignQueryResult = Apollo.QueryResult<CampaignQuery, CampaignQueryVariables>
+export const QuoteCartDocument = gql`
+  query QuoteCart($id: ID!, $locale: Locale!) {
+    quoteCart(id: $id) {
+      id
+      bundle {
+        possibleVariations {
+          id
+          tag(locale: $locale)
+          bundle {
+            displayName(locale: $locale)
+            quotes {
+              id
+            }
+          }
+        }
+      }
+      checkoutMethods
+      checkout {
+        status
+      }
+    }
+  }
+`
+
+/**
+ * __useQuoteCartQuery__
+ *
+ * To run a query within a React component, call `useQuoteCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuoteCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuoteCartQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useQuoteCartQuery(
+  baseOptions: Apollo.QueryHookOptions<QuoteCartQuery, QuoteCartQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<QuoteCartQuery, QuoteCartQueryVariables>(QuoteCartDocument, options)
+}
+export function useQuoteCartLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartQuery, QuoteCartQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<QuoteCartQuery, QuoteCartQueryVariables>(QuoteCartDocument, options)
+}
+export type QuoteCartQueryHookResult = ReturnType<typeof useQuoteCartQuery>
+export type QuoteCartLazyQueryHookResult = ReturnType<typeof useQuoteCartLazyQuery>
+export type QuoteCartQueryResult = Apollo.QueryResult<QuoteCartQuery, QuoteCartQueryVariables>
