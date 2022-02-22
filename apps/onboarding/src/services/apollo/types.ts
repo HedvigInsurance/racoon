@@ -212,6 +212,11 @@ export type AddressHouseExtraBuilding = {
   type: Scalars['String']
 }
 
+export type AddressInput = {
+  street: Scalars['String']
+  zipCode: Scalars['String']
+}
+
 export enum AddressOwnership {
   Brf = 'BRF',
   Own = 'OWN',
@@ -2634,6 +2639,12 @@ export type CreateSwedishApartmentInput = {
   street: Scalars['String']
   type: ApartmentType
   zipCode: Scalars['String']
+}
+
+export type CreateSwedishBundleInput = {
+  address?: InputMaybe<AddressInput>
+  isStudent: Scalars['Boolean']
+  ssn: Scalars['String']
 }
 
 export type CreateSwedishHouseInput = {
@@ -7543,6 +7554,8 @@ export type Mutation = {
   quoteCart_createAccessToken: CreateQuoteCartAccessTokenResult
   /** Create a quote and add it to the given cart. */
   quoteCart_createQuoteBundle: CreateQuoteBundleResult
+  /** Create a Swedish quote bundle based on SSN. */
+  quoteCart_createSwedishBundle: CreateQuoteBundleResult
   /** Edit the cart. Will only update the fields that are present in the payload. */
   quoteCart_editQuote: EditQuoteResult
   /** Remove the existing campaign. */
@@ -7726,6 +7739,11 @@ export type MutationQuoteCart_CreateAccessTokenArgs = {
 export type MutationQuoteCart_CreateQuoteBundleArgs = {
   id: Scalars['ID']
   input: CreateQuoteBundleInput
+}
+
+export type MutationQuoteCart_CreateSwedishBundleArgs = {
+  id: Scalars['ID']
+  input: CreateSwedishBundleInput
 }
 
 export type MutationQuoteCart_EditQuoteArgs = {
@@ -11512,7 +11530,6 @@ export type QuoteCartQuery = {
   quoteCart: {
     __typename?: 'QuoteCart'
     id: string
-    checkoutMethods: Array<CheckoutMethod>
     bundle?: {
       __typename?: 'QuoteBundle'
       possibleVariations: Array<{
@@ -11522,11 +11539,28 @@ export type QuoteCartQuery = {
         bundle: {
           __typename?: 'QuoteBundle'
           displayName: string
-          quotes: Array<{ __typename?: 'BundledQuote'; id: string }>
+          bundleCost: {
+            __typename?: 'InsuranceCost'
+            monthlyNet: { __typename?: 'MonetaryAmountV2'; amount: string; currency: string }
+          }
+          quotes: Array<{
+            __typename?: 'BundledQuote'
+            id: string
+            firstName?: string | null
+            lastName?: string | null
+            ssn?: string | null
+            birthDate: any
+            startDate?: any | null
+            email?: string | null
+            phoneNumber?: string | null
+            typeOfContract: TypeOfContract
+            displayName: string
+            data: any
+            price: { __typename?: 'MonetaryAmountV2'; amount: string; currency: string }
+          }>
         }
       }>
     } | null
-    checkout?: { __typename?: 'Checkout'; status: CheckoutStatus } | null
   }
 }
 
@@ -11579,15 +11613,31 @@ export const QuoteCartDocument = gql`
           tag(locale: $locale)
           bundle {
             displayName(locale: $locale)
+            bundleCost {
+              monthlyNet {
+                amount
+                currency
+              }
+            }
             quotes {
               id
+              price {
+                amount
+                currency
+              }
+              firstName
+              lastName
+              ssn
+              birthDate
+              startDate
+              email
+              phoneNumber
+              typeOfContract
+              displayName(locale: $locale)
+              data
             }
           }
         }
-      }
-      checkoutMethods
-      checkout {
-        status
       }
     }
   }
