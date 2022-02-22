@@ -23,6 +23,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
   ({ theme, $variant = 'filled', $hasFullWidth, $color }) => ({
     width: $hasFullWidth ? '100%' : 'auto',
     padding: '0.75rem 2rem',
+    fontFamily: theme.fonts.body,
     fontSize: '1rem',
     lineHeight: '1.5rem',
     border: '1px solid',

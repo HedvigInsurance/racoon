@@ -23,8 +23,12 @@ const TABLE = [
 ]
 
 const Wrapper = styled(Space)({
-  paddingLeft: '0.5rem',
-  paddingRight: '0.5rem',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'stretch',
 })
 
 const Table = styled.div({})
@@ -33,7 +37,7 @@ const Row = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: '2.25rem',
+  height: '2.5rem',
 })
 
 const TableTitle = styled.p(({ theme }) => ({
