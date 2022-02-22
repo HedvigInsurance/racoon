@@ -47,10 +47,11 @@ export type InputBaseProps = {
   errorMessage?: string
   infoMessage?: string
   label?: string
-  children: (props: ChildrenProps) => JSX.Element
 }
 
-export const InputBase = ({ id, errorMessage, infoMessage, label, children }: InputBaseProps) => {
+type Props = InputBaseProps & { children: (props: ChildrenProps) => JSX.Element }
+
+export const InputBase = ({ id, errorMessage, infoMessage, label, children }: Props) => {
   const hasError = errorMessage !== undefined
   const errorMessageId = `${id}-error`
   const hasInfo = infoMessage !== undefined && !hasError
