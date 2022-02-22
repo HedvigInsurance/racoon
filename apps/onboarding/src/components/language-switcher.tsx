@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 const Wrapper = styled(Separate)({
   display: 'flex',
+  height: '1.5rem',
 })
 
 const Separator = styled.div(({ theme }) => ({
