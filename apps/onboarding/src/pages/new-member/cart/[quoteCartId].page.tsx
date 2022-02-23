@@ -16,7 +16,9 @@ import { getInformationTable } from './selectors/get-information-table'
 import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
 import { getSelectedBundleVariant } from './selectors/get-selected-bundle-variant'
+import { mq } from 'ui'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import styled from '@emotion/styled'
 
 type Props = {
   intro: { price: FooterProps['price'] }
@@ -24,14 +26,44 @@ type Props = {
   yourInformation: Table
 }
 
+const Grid = styled.div({
+  [mq.lg]: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    height: '100vh',
+  },
+})
+
+const Col = styled.div({
+  [mq.lg]: {
+    gridColumn: '2',
+    width: '50vw',
+    overflow: 'auto',
+  },
+})
+
+const Content = styled.div({
+  [mq.lg]: {
+    maxWidth: '600px',
+    margin: 'auto',
+    padding: '2rem 1rem',
+  },
+})
+
 const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation }) => {
   return (
     <PageLayout headerVariant="light">
-      <Hero />
-      <Intro {...intro} />
-      <YourInformation table={yourInformation} />
-      <ContactCard />
-      <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
+      <Grid>
+        <Hero />
+        <Col>
+          <Content>
+            <Intro {...intro} />
+            <YourInformation table={yourInformation} />
+            <ContactCard />
+          </Content>
+          <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
+        </Col>
+      </Grid>
     </PageLayout>
   )
 }

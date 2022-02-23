@@ -18,6 +18,7 @@ const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) =>
   zIndex: '1000',
 
   [mq.lg]: {
+    position: 'fixed',
     padding: '1.5rem 2rem',
   },
 }))
