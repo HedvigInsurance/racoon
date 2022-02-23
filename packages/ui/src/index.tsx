@@ -12,3 +12,4 @@ export { theme } from './lib/theme'
 
 export { MailIcon } from './icons/mail-icon'
 export { PhoneIcon } from './icons/phone-icon'
+export { InsuranceIcon } from './icons/insurance-icon'
