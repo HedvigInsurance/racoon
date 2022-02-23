@@ -5,13 +5,13 @@ import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
   width: '100%',
-  maxHeight: '600px',
-  overflow: 'hidden',
+  padding: '0.75rem 1rem',
 })
 
 const Header = styled(Space)({})
 
 const Text = styled.p(({ theme }) => ({
+  marginBottom: '2rem',
   color: theme.colors.gray700,
 }))
 
@@ -22,7 +22,6 @@ const InfoRow = styled(Space)({
 
 const InfoLabel = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
-  display: 'block',
   fontSize: '1rem',
   margin: '0 0 0 1rem',
 }))
