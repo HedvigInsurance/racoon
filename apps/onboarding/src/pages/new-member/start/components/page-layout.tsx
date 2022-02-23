@@ -9,7 +9,7 @@ const Container = styled.div(({ theme }) => ({
   height: '100vh',
 }))
 
-const Header = styled.header<{variant: HeaderVariant}>(({ theme, variant }) => ({
+const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) => ({
   position: 'absolute',
   display: 'flex',
   width: '100%',
@@ -22,7 +22,7 @@ const Header = styled.header<{variant: HeaderVariant}>(({ theme, variant }) => (
   },
 }))
 
-const SiteLink = styled.a<{variant: HeaderVariant}>(({ theme, variant }) => ({
+const SiteLink = styled.a<{ variant: HeaderVariant }>(({ theme, variant }) => ({
   color: 'inherit',
 
   '&:hover': {
@@ -43,7 +43,7 @@ type PageLayoutProps = {
   headerVariant?: HeaderVariant
 }
 
-export const PageLayout = ({ children, headerVariant = 'dark'}: PageLayoutProps) => {
+export const PageLayout = ({ children, headerVariant = 'dark' }: PageLayoutProps) => {
   return (
     <Container>
       <Header variant={headerVariant}>

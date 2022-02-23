@@ -11,10 +11,11 @@ export type FooterProps = {
 } & PriceProps
 
 const Wrapper = styled.div({
+  marginTop: '0.75rem',
   width: '100vw',
   minHeight: '5rem',
   padding: '1rem',
-  position: 'fixed',
+  position: 'sticky',
   bottom: 0,
   left: 0,
   display: 'flex',
@@ -49,7 +50,7 @@ export const Footer = ({ buttonText, buttonLinkTo, price }: FooterProps) => {
     <Wrapper>
       <InnerWrapper>
         <PriceWrapper>
-          <MonthlyPrice price={price}/>
+          <MonthlyPrice price={price} />
           <PriceLabel>{t('CANCEL_ANYTIME')}</PriceLabel>
         </PriceWrapper>
         <LinkButton $color="lavender" href={buttonLinkTo}>
