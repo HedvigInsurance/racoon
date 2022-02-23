@@ -34,7 +34,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
       color: $color === 'lavender' ? theme.colors.gray900 : theme.colors.gray100,
       borderColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
-      ':hover': {
+      ':hover, :focus': {
         backgroundColor: $color === 'lavender' ? theme.colors.purple800 : theme.colors.gray800,
       },
       ':disabled': {
@@ -48,7 +48,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
       backgroundColor: 'transparent',
       color: theme.colors.gray900,
       borderColor: theme.colors.gray900,
-      ':hover': {
+      ':hover, :focus': {
         color: theme.colors.gray700,
         borderColor: theme.colors.gray700,
       },
@@ -59,6 +59,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     }),
 
     ...($variant === 'text' && {
+      padding: 0,
       backgroundColor: 'transparent',
       color: $color === 'lavender' ? theme.colors.purple900 : theme.colors.gray900,
       border: 'none',
@@ -72,5 +73,6 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
 export const LinkButton = styled(Button)<{ href: string }>({
   textDecoration: 'none',
   textAlign: 'center',
+  display: 'block',
 })
 LinkButton.defaultProps = { as: 'a' }
