@@ -11,6 +11,7 @@ const Wrapper = styled.div({
 const Header = styled(Space)({})
 
 const Text = styled.p(({ theme }) => ({
+  marginBottom: '2rem',
   color: theme.colors.gray700,
 }))
 
