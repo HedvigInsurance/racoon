@@ -2,6 +2,11 @@ import React from 'react'
 import { Tick } from './icons/tick'
 import styled from '@emotion/styled'
 
+type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value'> & {
+  labelText: string
+  isChecked: boolean
+}
+
 const Wrapper = styled.label({
   display: 'flex',
   alignItems: 'center',
@@ -9,16 +14,16 @@ const Wrapper = styled.label({
   cursor: 'pointer',
 })
 
-const SwitchContainer = styled.span(({ theme }) => ({
+const SwitchContainer = styled.span<Pick<SwitchProps, 'isChecked'>>(({ theme, isChecked }) => ({
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
   height: '1.25rem',
   width: '1.25rem',
-  border: '1px solid',
+  border: `1px solid ${theme.colors.gray900}`,
   borderRadius: '2px',
   cursor: 'pointer',
-  backgroundColor: theme.colors.gray900,
+  backgroundColor: isChecked ? theme.colors.gray900 : 'transparent',
 }))
 
 /**
@@ -36,16 +41,13 @@ const LabelText = styled.span(({ theme }) => ({
   fontSize: '0.875rem',
 }))
 
-type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value'> & {
-  labelText: string
-  isChecked: boolean
-}
-
 export const Switch = ({ labelText, isChecked, onChange, ...rest }: SwitchProps) => {
   return (
     <Wrapper>
       <HiddenCheckbox type="checkbox" onChange={onChange} checked={isChecked} {...rest} />
-      <SwitchContainer aria-hidden={true}>{isChecked && <Tick />}</SwitchContainer>
+      <SwitchContainer aria-hidden={true} isChecked={isChecked}>
+        {isChecked && <Tick />}
+      </SwitchContainer>
       <LabelText>{labelText}</LabelText>
     </Wrapper>
   )
