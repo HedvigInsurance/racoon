@@ -5,8 +5,7 @@ import contactCardImage from './contact-card-image.png'
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
+  padding: '0.75rem 1rem',
 })
 
 const Card = styled(Space)(({ theme }) => ({

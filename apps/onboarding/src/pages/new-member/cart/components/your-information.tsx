@@ -4,9 +4,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 
 const Wrapper = styled(Space)({
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-
+  padding: '0.75rem 1rem',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'stretch',
