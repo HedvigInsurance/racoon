@@ -1,5 +1,3 @@
-import { LinkButton } from 'ui'
-import React from 'react'
 import styled from '@emotion/styled'
 import { useFormattedPrice } from '@/pages/new-member/cart/hooks/use-formatted-price'
 import { useTranslation } from 'next-i18next'
@@ -14,7 +12,6 @@ const Amount = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
   margin: 0,
 }))
-
 
 export const MonthlyPrice = ({ price }: PriceProps) => {
   const { t } = useTranslation()
