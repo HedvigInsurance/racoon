@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import heroMobile from '../../assets/hero_mobile.jpg'
 import { mq } from 'ui'
 import styled from '@emotion/styled'
 

@@ -11511,6 +11511,21 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization',
 }
 
+export type QuoteCartQuotesQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type QuoteCartQuotesQuery = {
+  __typename?: 'Query'
+  quoteCart: {
+    __typename?: 'QuoteCart'
+    bundle?: {
+      __typename?: 'QuoteBundle'
+      quotes: Array<{ __typename?: 'BundledQuote'; id: string; data: any }>
+    } | null
+  }
+}
+
 export type CampaignQueryVariables = Exact<{
   code: Scalars['String']
 }>
@@ -11518,6 +11533,24 @@ export type CampaignQueryVariables = Exact<{
 export type CampaignQuery = {
   __typename?: 'Query'
   campaign?: { __typename?: 'Campaign'; code: string } | null
+}
+
+export type EditQuoteMutationVariables = Exact<{
+  quoteCartId: Scalars['ID']
+  quoteId: Scalars['ID']
+  payload: Scalars['JSON']
+}>
+
+export type EditQuoteMutation = {
+  __typename?: 'Mutation'
+  quoteCart_editQuote:
+    | {
+        __typename?: 'QuoteBundleError'
+        message: string
+        type: string
+        limits?: Array<{ __typename?: 'UnderwritingLimit'; code: string }> | null
+      }
+    | { __typename?: 'QuoteCart'; id: string }
 }
 
 export type QuoteCartQueryVariables = Exact<{
@@ -11564,6 +11597,59 @@ export type QuoteCartQuery = {
   }
 }
 
+export const QuoteCartQuotesDocument = gql`
+  query QuoteCartQuotes($id: ID!) {
+    quoteCart(id: $id) {
+      bundle {
+        quotes {
+          id
+          data
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useQuoteCartQuotesQuery__
+ *
+ * To run a query within a React component, call `useQuoteCartQuotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuoteCartQuotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuoteCartQuotesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useQuoteCartQuotesQuery(
+  baseOptions: Apollo.QueryHookOptions<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>(
+    QuoteCartQuotesDocument,
+    options,
+  )
+}
+export function useQuoteCartQuotesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>(
+    QuoteCartQuotesDocument,
+    options,
+  )
+}
+export type QuoteCartQuotesQueryHookResult = ReturnType<typeof useQuoteCartQuotesQuery>
+export type QuoteCartQuotesLazyQueryHookResult = ReturnType<typeof useQuoteCartQuotesLazyQuery>
+export type QuoteCartQuotesQueryResult = Apollo.QueryResult<
+  QuoteCartQuotesQuery,
+  QuoteCartQuotesQueryVariables
+>
 export const CampaignDocument = gql`
   query Campaign($code: String!) {
     campaign(code: $code) {
@@ -11603,6 +11689,61 @@ export function useCampaignLazyQuery(
 export type CampaignQueryHookResult = ReturnType<typeof useCampaignQuery>
 export type CampaignLazyQueryHookResult = ReturnType<typeof useCampaignLazyQuery>
 export type CampaignQueryResult = Apollo.QueryResult<CampaignQuery, CampaignQueryVariables>
+export const EditQuoteDocument = gql`
+  mutation EditQuote($quoteCartId: ID!, $quoteId: ID!, $payload: JSON!) {
+    quoteCart_editQuote(id: $quoteCartId, quoteId: $quoteId, payload: $payload) {
+      ... on QuoteCart {
+        id
+      }
+      ... on QuoteBundleError {
+        message
+        type
+        limits {
+          code
+        }
+      }
+    }
+  }
+`
+export type EditQuoteMutationFn = Apollo.MutationFunction<
+  EditQuoteMutation,
+  EditQuoteMutationVariables
+>
+
+/**
+ * __useEditQuoteMutation__
+ *
+ * To run a mutation, you first call `useEditQuoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditQuoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editQuoteMutation, { data, loading, error }] = useEditQuoteMutation({
+ *   variables: {
+ *      quoteCartId: // value for 'quoteCartId'
+ *      quoteId: // value for 'quoteId'
+ *      payload: // value for 'payload'
+ *   },
+ * });
+ */
+export function useEditQuoteMutation(
+  baseOptions?: Apollo.MutationHookOptions<EditQuoteMutation, EditQuoteMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<EditQuoteMutation, EditQuoteMutationVariables>(
+    EditQuoteDocument,
+    options,
+  )
+}
+export type EditQuoteMutationHookResult = ReturnType<typeof useEditQuoteMutation>
+export type EditQuoteMutationResult = Apollo.MutationResult<EditQuoteMutation>
+export type EditQuoteMutationOptions = Apollo.BaseMutationOptions<
+  EditQuoteMutation,
+  EditQuoteMutationVariables
+>
 export const QuoteCartDocument = gql`
   query QuoteCart($id: ID!, $locale: Locale!) {
     quoteCart(id: $id) {
