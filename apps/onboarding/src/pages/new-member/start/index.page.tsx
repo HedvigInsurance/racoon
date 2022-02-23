@@ -6,7 +6,7 @@ import { SsnInputForm } from './components/ssn-input-form'
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
-  padding: '1rem',
+  padding: '6rem 1rem',
   width: '100%',
   maxWidth: '30rem',
 })
