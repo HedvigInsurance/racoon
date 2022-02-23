@@ -1,7 +1,7 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
-
+import { Benefits } from './components/benefits'
 import { Hero } from './components/hero'
 import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
@@ -29,6 +29,7 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation }) 
       <Hero />
       <Intro {...intro} />
       <YourInformation table={yourInformation} />
+      <Benefits />
       <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
     </PageLayout>
   )
