@@ -39,10 +39,7 @@ const NewMemberStartPage: NextPage = () => {
               Vi använder personnumret för att hämta uppgifter om ditt hem för att ge dig ett pris.
             </Text>
             <SsnInputForm />
-            <LinkButton
-              href="https://www.hedvig.com/se-en/new-member/new/insurance-type"
-              $variant="text"
-            >
+            <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
               {'Eller fyll i manuellt >'}
             </LinkButton>
           </Space>
