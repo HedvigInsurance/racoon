@@ -1,5 +1,6 @@
 import { Heading, LinkButton, Space, mq } from 'ui'
 
+import { Footer } from './components/footer'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
 import { SsnInputForm } from './components/ssn-input-form'
@@ -26,6 +27,10 @@ const Text = styled.p(({ theme }) => ({
   margin: 0,
 }))
 
+const Spacer = styled.div({
+  height: '3rem',
+})
+
 const NewMemberStartPage: NextPage = () => {
   return (
     <PageLayout>
@@ -42,6 +47,8 @@ const NewMemberStartPage: NextPage = () => {
             <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
               {'Eller fyll i manuellt >'}
             </LinkButton>
+            <Spacer />
+            <Footer />
           </Space>
         </InnerWrapper>
       </PageWrapper>
