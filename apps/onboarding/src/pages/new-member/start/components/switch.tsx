@@ -8,8 +8,10 @@ type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value'> & 
 }
 
 const Wrapper = styled.label({
-  display: 'flex',
+  display: 'grid',
   alignItems: 'center',
+  gridAutoFlow: 'column',
+  justifyContent: 'start',
   gap: '0.75rem',
   cursor: 'pointer',
 })
