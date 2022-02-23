@@ -34,8 +34,6 @@ const Main = styled.main({
   flex: '1 1 0%',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'center',
 })
 
 type HeaderVariant = 'light' | 'dark'
