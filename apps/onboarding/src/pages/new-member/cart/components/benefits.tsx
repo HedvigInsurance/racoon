@@ -5,8 +5,7 @@ import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
   width: '100%',
-  maxHeight: '600px',
-  overflow: 'hidden',
+  padding: '0.75rem 1rem',
 })
 
 const Header = styled(Space)({})
