@@ -25,7 +25,6 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     padding: '0.75rem 2rem',
     fontFamily: theme.fonts.body,
     fontSize: '1rem',
-    fontFamily: theme.fonts.body,
     lineHeight: '1.5rem',
     border: '1px solid',
     borderRadius: '0.5rem',
