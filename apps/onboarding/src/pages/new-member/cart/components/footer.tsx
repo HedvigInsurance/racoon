@@ -1,6 +1,6 @@
+import { LinkButton, mq } from 'ui'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
-import { LinkButton } from 'ui'
 import React from 'react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
@@ -23,6 +23,10 @@ const Wrapper = styled.div({
   alignItems: 'center',
   backgroundColor: 'white',
   boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.05), 0px -8px 16px rgba(0, 0, 0, 0.05)',
+
+  [mq.lg]: {
+    width: '50vw',
+  },
 })
 
 const InnerWrapper = styled.div({
@@ -33,6 +37,14 @@ const InnerWrapper = styled.div({
   gridTemplateColumns: 'max-content 1fr',
   gap: '1rem',
   alignItems: 'center',
+
+  [mq.lg]: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    maxWidth: '600px',
+    padding: '0 2rem',
+  }  
 })
 
 const PriceWrapper = styled.div({})
