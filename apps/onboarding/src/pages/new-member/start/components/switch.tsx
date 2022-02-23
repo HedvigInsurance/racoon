@@ -2,10 +2,11 @@ import React from 'react'
 import { Tick } from './icons/tick'
 import styled from '@emotion/styled'
 
-const Wrapper = styled.div({
+const Wrapper = styled.label({
   display: 'flex',
   alignItems: 'center',
   gap: '0.75rem',
+  cursor: 'pointer',
 })
 
 const SwitchContainer = styled.span(({ theme }) => ({
@@ -21,36 +22,31 @@ const SwitchContainer = styled.span(({ theme }) => ({
 }))
 
 /**
- * Makes usage of a visually hidden checkbox for accessiblity reasons like
- * to make it discoverable for assistence tools and to enable binding it with
- * a <label> element.
- * Based on https://css-tricks.com/inclusively-hidden/
+ * Visually hidden checkbox for accessiblity reasons
  */
-const InclusiveHiddenCheckbox = styled.input`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-`
+const HiddenCheckbox = styled.input({
+  opacity: 0,
+  margin: 0,
+  position: 'absolute',
+  cursor: 'pointer',
+})
 
-const Label = styled.label(({ theme }) => ({
+const LabelText = styled.span(({ theme }) => ({
   color: theme.colors.gray900,
   fontSize: '0.875rem',
 }))
 
 type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value'> & {
   labelText: string
+  isChecked: boolean
 }
 
-export const Switch = ({ labelText, ...rest }: SwitchProps) => (
-  <Wrapper>
-    <InclusiveHiddenCheckbox type="checkbox" {...rest} />
-    <SwitchContainer aria-hidden={true}>
-      <Tick />
-    </SwitchContainer>
-    <Label>{labelText}</Label>
-  </Wrapper>
-)
+export const Switch = ({ labelText, isChecked, onChange, ...rest }: SwitchProps) => {
+  return (
+    <Wrapper>
+      <HiddenCheckbox type="checkbox" onChange={onChange} checked={isChecked} {...rest} />
+      <SwitchContainer aria-hidden={true}>{isChecked && <Tick />}</SwitchContainer>
+      <LabelText>{labelText}</LabelText>
+    </Wrapper>
+  )
+}

@@ -5,6 +5,7 @@ import { Switch } from './switch'
 
 export const SsnInputForm = () => {
   const [ssnValue, setSsnValue] = useState('')
+  const [isCurrentAddress, setIsCurrentAddress] = useState(true)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
@@ -18,9 +19,13 @@ export const SsnInputForm = () => {
     console.log('ssn', ssnValue)
   }
 
+  const handleCheckboxChange = () => {
+    setIsCurrentAddress(!isCurrentAddress)
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Space y={1}>
+    <>
+      <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
           label="Personnummer"
           placeholder="YYYYMMDDXXXX"
@@ -29,11 +34,17 @@ export const SsnInputForm = () => {
           name="ssn"
           onChange={handleInputChange}
         />
-        <Switch labelText="Är det din nuvarande adress?" />
-        <Button onClick={handleSubmit} $hasFullWidth>
+      </form>
+      <Space y={3}>
+        <Switch
+          isChecked={isCurrentAddress}
+          onChange={handleCheckboxChange}
+          labelText="Jag vill ha prisförslag för min nuvarande adress"
+        />
+        <Button type="submit" onClick={handleSubmit} $hasFullWidth>
           Hämta uppgifter - se ditt pris
         </Button>
       </Space>
-    </form>
+    </>
   )
 }
