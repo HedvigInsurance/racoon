@@ -1,6 +1,7 @@
 import { Heading, LinkButton, Space, mq } from 'ui'
 
 import { Footer } from './components/footer'
+import { Hero } from './components/hero'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
 import { SsnInputForm } from './components/ssn-input-form'
@@ -13,7 +14,7 @@ const PageWrapper = styled.div({
   alignItems: 'center',
 })
 const InnerWrapper = styled.div({
-  padding: '6rem 1rem',
+  padding: '1rem',
   width: '100%',
   maxWidth: '30rem',
   [mq.lg]: {
@@ -33,7 +34,8 @@ const Spacer = styled.div({
 
 const NewMemberStartPage: NextPage = () => {
   return (
-    <PageLayout>
+    <PageLayout headerVariant="light">
+      <Hero />
       <PageWrapper>
         <InnerWrapper>
           <Space y={1}>
