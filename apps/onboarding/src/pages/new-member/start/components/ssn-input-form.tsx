@@ -10,8 +10,8 @@ export const SsnInputForm = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     const nonNumbersRegex = /\D/
-    const newSsn = value.replace(nonNumbersRegex, '')
-    setSsnValue(newSsn)
+    const ssn = value.replace(nonNumbersRegex, '')
+    setSsnValue(ssn)
   }
 
   const handleSubmit = (event: React.SyntheticEvent) => {
@@ -41,7 +41,7 @@ export const SsnInputForm = () => {
           onChange={handleCheckboxChange}
           labelText="Jag vill ha prisförslag för min nuvarande adress"
         />
-        <Button type="submit" onClick={handleSubmit} $hasFullWidth>
+        <Button type="submit" onClick={handleSubmit} $hasFullWidth disabled={!isCurrentAddress}>
           Hämta uppgifter - se ditt pris
         </Button>
       </Space>
