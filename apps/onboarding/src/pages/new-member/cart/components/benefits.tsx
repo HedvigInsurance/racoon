@@ -21,7 +21,6 @@ const InfoRow = styled(Space)({
 
 const InfoLabel = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
-  display: 'block',
   fontSize: '1rem',
   margin: '0 0 0 1rem',
 }))
