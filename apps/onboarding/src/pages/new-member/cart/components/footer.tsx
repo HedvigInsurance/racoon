@@ -11,7 +11,7 @@ export type FooterProps = {
 } & PriceProps
 
 const Wrapper = styled.div({
-  marginTop: '0.75rem',
+  marginTop: '1.5rem',
   width: '100vw',
   minHeight: '5rem',
   padding: '1rem',
