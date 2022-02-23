@@ -12,3 +12,5 @@ export const getSelectedBundleVariant = (data: QuoteCartQuery, insuranceTypes: A
 
   return variant ?? bundle.possibleVariations[0]
 }
+
+export type QuoteBundleVariant = ReturnType<typeof getSelectedBundleVariant>

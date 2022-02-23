@@ -1,26 +1,7 @@
 import { Button, Heading, Space } from 'ui'
-
+import { Table } from '../types'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-
-const TABLE = [
-  {
-    title: 'Name',
-    value: 'Magnus Berg',
-  },
-  {
-    title: 'Antal försäkrade',
-    value: '1 person',
-  },
-  {
-    title: 'Gatuadress',
-    value: 'Vagnvägen 4, 175 56, Älvsjö',
-  },
-  {
-    title: 'Kvadratmeter',
-    value: '100 m2',
-  },
-]
 
 const Wrapper = styled(Space)({
   paddingLeft: '1rem',
@@ -52,7 +33,9 @@ const TableValue = styled.p(({ theme }) => ({
   fontSize: '1rem',
 }))
 
-export const YourInformation = () => {
+type Props = { table: Table }
+
+export const YourInformation = ({ table }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -62,10 +45,12 @@ export const YourInformation = () => {
       </Heading>
 
       <Table>
-        {TABLE.map((row) => (
+        {table.rows.map((row) => (
           <Row key={row.title}>
-            <TableTitle>{row.title}</TableTitle>
-            <TableValue>{row.value}</TableValue>
+            <TableTitle>{t(row.title)}</TableTitle>
+            <TableValue>
+              {row.value.type === 'text' ? row.value.text : t(row.value.key, row.value.variables)}
+            </TableValue>
           </Row>
         ))}
       </Table>
