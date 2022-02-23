@@ -1,5 +1,6 @@
 import { InputBase, InputBaseProps } from './input-base'
 
+import { UnstyledButton } from './button'
 import styled from '@emotion/styled'
 import { useState } from 'react'
 
@@ -34,20 +35,17 @@ const Wrapper = styled.div<ErrorProps>(({ theme, $error }) => ({
   borderColor: $error ? theme.colors.red500 : theme.colors.gray300,
 }))
 
-const StepButton = styled.button(({ theme }) => ({
+const StepButton = styled(UnstyledButton)(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
   left: '1rem',
 
-  appearance: 'none',
-  border: '1px solid',
-  borderColor: theme.colors.gray500,
-
   height: '2rem',
   width: '2rem',
   borderRadius: '50%',
-  backgroundColor: 'transparent',
+  border: '1px solid',
+  borderColor: theme.colors.gray500,
 
   ':focus, :hover': {
     outline: '2px solid transparent',
