@@ -212,6 +212,11 @@ export type AddressHouseExtraBuilding = {
   type: Scalars['String']
 }
 
+export type AddressInput = {
+  street: Scalars['String']
+  zipCode: Scalars['String']
+}
+
 export enum AddressOwnership {
   Brf = 'BRF',
   Own = 'OWN',
@@ -2634,6 +2639,12 @@ export type CreateSwedishApartmentInput = {
   street: Scalars['String']
   type: ApartmentType
   zipCode: Scalars['String']
+}
+
+export type CreateSwedishBundleInput = {
+  address?: InputMaybe<AddressInput>
+  isStudent: Scalars['Boolean']
+  ssn: Scalars['String']
 }
 
 export type CreateSwedishHouseInput = {
@@ -7543,6 +7554,8 @@ export type Mutation = {
   quoteCart_createAccessToken: CreateQuoteCartAccessTokenResult
   /** Create a quote and add it to the given cart. */
   quoteCart_createQuoteBundle: CreateQuoteBundleResult
+  /** Create a Swedish quote bundle based on SSN. */
+  quoteCart_createSwedishBundle: CreateQuoteBundleResult
   /** Edit the cart. Will only update the fields that are present in the payload. */
   quoteCart_editQuote: EditQuoteResult
   /** Remove the existing campaign. */
@@ -7726,6 +7739,11 @@ export type MutationQuoteCart_CreateAccessTokenArgs = {
 export type MutationQuoteCart_CreateQuoteBundleArgs = {
   id: Scalars['ID']
   input: CreateQuoteBundleInput
+}
+
+export type MutationQuoteCart_CreateSwedishBundleArgs = {
+  id: Scalars['ID']
+  input: CreateSwedishBundleInput
 }
 
 export type MutationQuoteCart_EditQuoteArgs = {
@@ -11502,6 +11520,50 @@ export type CampaignQuery = {
   campaign?: { __typename?: 'Campaign'; code: string } | null
 }
 
+export type QuoteCartQueryVariables = Exact<{
+  id: Scalars['ID']
+  locale: Locale
+}>
+
+export type QuoteCartQuery = {
+  __typename?: 'Query'
+  quoteCart: {
+    __typename?: 'QuoteCart'
+    id: string
+    bundle?: {
+      __typename?: 'QuoteBundle'
+      possibleVariations: Array<{
+        __typename?: 'QuoteBundleVariant'
+        id: string
+        tag?: string | null
+        bundle: {
+          __typename?: 'QuoteBundle'
+          displayName: string
+          bundleCost: {
+            __typename?: 'InsuranceCost'
+            monthlyNet: { __typename?: 'MonetaryAmountV2'; amount: string; currency: string }
+          }
+          quotes: Array<{
+            __typename?: 'BundledQuote'
+            id: string
+            firstName?: string | null
+            lastName?: string | null
+            ssn?: string | null
+            birthDate: any
+            startDate?: any | null
+            email?: string | null
+            phoneNumber?: string | null
+            typeOfContract: TypeOfContract
+            displayName: string
+            data: any
+            price: { __typename?: 'MonetaryAmountV2'; amount: string; currency: string }
+          }>
+        }
+      }>
+    } | null
+  }
+}
+
 export const CampaignDocument = gql`
   query Campaign($code: String!) {
     campaign(code: $code) {
@@ -11541,3 +11603,75 @@ export function useCampaignLazyQuery(
 export type CampaignQueryHookResult = ReturnType<typeof useCampaignQuery>
 export type CampaignLazyQueryHookResult = ReturnType<typeof useCampaignLazyQuery>
 export type CampaignQueryResult = Apollo.QueryResult<CampaignQuery, CampaignQueryVariables>
+export const QuoteCartDocument = gql`
+  query QuoteCart($id: ID!, $locale: Locale!) {
+    quoteCart(id: $id) {
+      id
+      bundle {
+        possibleVariations {
+          id
+          tag(locale: $locale)
+          bundle {
+            displayName(locale: $locale)
+            bundleCost {
+              monthlyNet {
+                amount
+                currency
+              }
+            }
+            quotes {
+              id
+              price {
+                amount
+                currency
+              }
+              firstName
+              lastName
+              ssn
+              birthDate
+              startDate
+              email
+              phoneNumber
+              typeOfContract
+              displayName(locale: $locale)
+              data
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useQuoteCartQuery__
+ *
+ * To run a query within a React component, call `useQuoteCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuoteCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuoteCartQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useQuoteCartQuery(
+  baseOptions: Apollo.QueryHookOptions<QuoteCartQuery, QuoteCartQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<QuoteCartQuery, QuoteCartQueryVariables>(QuoteCartDocument, options)
+}
+export function useQuoteCartLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartQuery, QuoteCartQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<QuoteCartQuery, QuoteCartQueryVariables>(QuoteCartDocument, options)
+}
+export type QuoteCartQueryHookResult = ReturnType<typeof useQuoteCartQuery>
+export type QuoteCartLazyQueryHookResult = ReturnType<typeof useQuoteCartLazyQuery>
+export type QuoteCartQueryResult = Apollo.QueryResult<QuoteCartQuery, QuoteCartQueryVariables>

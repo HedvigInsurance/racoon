@@ -9,3 +9,6 @@ export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
 
 export { theme } from './lib/theme'
+
+export { MailIcon } from './icons/mail-icon'
+export { PhoneIcon } from './icons/phone-icon'

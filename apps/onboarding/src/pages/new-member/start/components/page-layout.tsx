@@ -9,21 +9,24 @@ const Container = styled.div(({ theme }) => ({
   height: '100vh',
 }))
 
-const Header = styled.header({
+const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) => ({
+  position: 'absolute',
   display: 'flex',
   width: '100%',
   padding: '1rem',
+  color: variant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
+  zIndex: '1000',
 
   [mq.lg]: {
     padding: '1.5rem 2rem',
   },
-})
+}))
 
-const SiteLink = styled.a(({ theme }) => ({
-  color: theme.colors.gray900,
+const SiteLink = styled.a<{ variant: HeaderVariant }>(({ theme, variant }) => ({
+  color: 'inherit',
 
   '&:hover': {
-    color: theme.colors.gray700,
+    color: variant === 'light' ? theme.colors.gray300 : theme.colors.gray700,
   },
 }))
 
@@ -35,15 +38,18 @@ const Main = styled.main({
   alignItems: 'center',
 })
 
+type HeaderVariant = 'light' | 'dark'
+
 type PageLayoutProps = {
   children: React.ReactNode
+  headerVariant?: HeaderVariant
 }
 
-export const PageLayout = ({ children }: PageLayoutProps) => {
+export const PageLayout = ({ children, headerVariant = 'dark' }: PageLayoutProps) => {
   return (
     <Container>
-      <Header>
-        <SiteLink href="/">
+      <Header variant={headerVariant}>
+        <SiteLink variant={headerVariant} href="/">
           <HedvigLogo />
         </SiteLink>
       </Header>
