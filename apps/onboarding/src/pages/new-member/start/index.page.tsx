@@ -4,8 +4,10 @@ import { Footer } from './components/footer'
 import { Hero } from './components/hero'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
+import { PageLink } from '@/lib/page-link'
 import { SsnInputForm } from './components/ssn-input-form'
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n'
 
 const PageWrapper = styled.div({
   width: '100vw',
@@ -33,6 +35,8 @@ const Spacer = styled.div({
 })
 
 const NewMemberStartPage: NextPage = () => {
+  const { path } = useCurrentLocale()
+
   return (
     <PageLayout headerVariant="light">
       <Hero />
@@ -46,7 +50,7 @@ const NewMemberStartPage: NextPage = () => {
               Vi använder personnumret för att hämta uppgifter om ditt hem för att ge dig ett pris.
             </Text>
             <SsnInputForm />
-            <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
+            <LinkButton href={PageLink.embark({ locale: path })} $variant="text">
               {'Eller fyll i manuellt >'}
             </LinkButton>
             <Spacer />
