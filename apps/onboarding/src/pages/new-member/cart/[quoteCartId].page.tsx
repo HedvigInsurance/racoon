@@ -1,12 +1,12 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
+import { Intro, IntroProps } from './components/intro'
 import { QuickForm, QuickFormProps } from './components/quick-form'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
 
 import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
-import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
 import { Table } from './types'
@@ -23,7 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
 
 type Props = {
-  intro: { price: FooterProps['price'] }
+  intro: IntroProps
   footer: FooterProps
   yourInformation: Table
   quickForm: QuickFormProps
@@ -91,10 +91,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
     const selectedVariant = getSelectedBundleVariant(data, selectedInsuranceTypes)
     const mainQuote = getMainQuote(selectedVariant)
     const price = getBundlePrice(selectedVariant)
+    const street = mainQuote.data.street
 
     return {
       props: {
-        intro: { price },
+        intro: { street, price },
         yourInformation: getInformationTable(mainQuote),
         footer: { price, quoteCartId },
         quickForm: {
