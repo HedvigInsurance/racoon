@@ -5,6 +5,8 @@ import { useCreateQuoteBundleMutation, useCreateQuoteCartMutation } from '@/serv
 import { Switch } from './switch'
 import { useCurrentLocale } from '@/lib/l10n'
 
+const SSN_LENGTHS = [10, 12]
+
 export const SsnInputForm = () => {
   const [ssnValue, setSsnValue] = useState('')
   const [isCurrentAddress, setIsCurrentAddress] = useState(true)
@@ -39,7 +41,7 @@ export const SsnInputForm = () => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    if (ssnValue.length !== 12) {
+    if (!SSN_LENGTHS.includes(ssnValue.length)) {
       return
     }
     createQuoteBundle()
