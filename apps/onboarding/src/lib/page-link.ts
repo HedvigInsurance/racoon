@@ -16,4 +16,5 @@ export const PageLink = {
   landing: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/landing`,
   old_checkout: ({ locale, quoteCartId }: WOCheckoutParams) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
+  embark: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/new`,
 }
