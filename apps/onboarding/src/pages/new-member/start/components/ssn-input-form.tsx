@@ -16,6 +16,8 @@ const Fullscreen = styled.div({
   zIndex: 99999,
 })
 
+const SSN_LENGTHS = [10, 12]
+
 export const SsnInputForm = () => {
   const [ssnValue, setSsnValue] = useState('')
   const [isCurrentAddress, setIsCurrentAddress] = useState(true)
@@ -51,8 +53,10 @@ export const SsnInputForm = () => {
   const router = useRouter()
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
+    if (!SSN_LENGTHS.includes(ssnValue.length)) {
+      return
+    }
     if (quoteCartId === undefined) return
-    if (ssnValue.length !== 12) return
     await createQuoteBundle()
     await router.push(PageLink.cart({ quoteCartId }))
   }
@@ -83,7 +87,7 @@ export const SsnInputForm = () => {
       <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
           label="Personal number"
-          placeholder="YYYYMMDDXXXX"
+          placeholder="YYMMDDXXXX"
           required
           value={ssnValue}
           name="ssn"
