@@ -6,6 +6,7 @@ import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/se
 import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
+import { InsuranceSelector } from './components/insurance-selector'
 import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
@@ -65,6 +66,7 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
           <Content>
             <Intro {...intro} />
             <YourInformation table={yourInformation} />
+            <InsuranceSelector />
             <Benefits />
             <QuickForm {...quickForm} />
             <ContactCard />
