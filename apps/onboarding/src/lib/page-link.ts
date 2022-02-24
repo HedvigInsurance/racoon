@@ -17,4 +17,5 @@ export const PageLink = {
   old_checkout: ({ locale, quoteCartId }: WOCheckoutParams) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/new`,
+  privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
 }
