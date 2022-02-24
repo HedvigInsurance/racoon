@@ -1,6 +1,7 @@
 import * as Apollo from '@apollo/client'
 
 import { gql } from '@apollo/client'
+
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
@@ -11597,6 +11598,35 @@ export type QuoteCartQuery = {
   }
 }
 
+export type CreateQuoteBundleMutationVariables = Exact<{
+  id: Scalars['ID']
+  input: CreateSwedishBundleInput
+}>
+
+export type CreateQuoteBundleMutation = {
+  __typename?: 'Mutation'
+  quoteCart_createSwedishBundle:
+    | { __typename?: 'QuoteBundleError' }
+    | {
+        __typename?: 'QuoteCart'
+        id: string
+        bundle?: {
+          __typename?: 'QuoteBundle'
+          quotes: Array<{ __typename?: 'BundledQuote'; id: string }>
+        } | null
+      }
+}
+
+export type CreateQuoteCartMutationVariables = Exact<{
+  market: Market
+  locale: Scalars['String']
+}>
+
+export type CreateQuoteCartMutation = {
+  __typename?: 'Mutation'
+  onboardingQuoteCart_create: { __typename?: 'CreateQuoteCartResult'; id: string }
+}
+
 export const QuoteCartQuotesDocument = gql`
   query QuoteCartQuotes($id: ID!) {
     quoteCart(id: $id) {
@@ -11816,3 +11846,106 @@ export function useQuoteCartLazyQuery(
 export type QuoteCartQueryHookResult = ReturnType<typeof useQuoteCartQuery>
 export type QuoteCartLazyQueryHookResult = ReturnType<typeof useQuoteCartLazyQuery>
 export type QuoteCartQueryResult = Apollo.QueryResult<QuoteCartQuery, QuoteCartQueryVariables>
+export const CreateQuoteBundleDocument = gql`
+  mutation CreateQuoteBundle($id: ID!, $input: CreateSwedishBundleInput!) {
+    quoteCart_createSwedishBundle(id: $id, input: $input) {
+      ... on QuoteCart {
+        id
+        bundle {
+          quotes {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+export type CreateQuoteBundleMutationFn = Apollo.MutationFunction<
+  CreateQuoteBundleMutation,
+  CreateQuoteBundleMutationVariables
+>
+
+/**
+ * __useCreateQuoteBundleMutation__
+ *
+ * To run a mutation, you first call `useCreateQuoteBundleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateQuoteBundleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createQuoteBundleMutation, { data, loading, error }] = useCreateQuoteBundleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateQuoteBundleMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateQuoteBundleMutation,
+    CreateQuoteBundleMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateQuoteBundleMutation, CreateQuoteBundleMutationVariables>(
+    CreateQuoteBundleDocument,
+    options,
+  )
+}
+export type CreateQuoteBundleMutationHookResult = ReturnType<typeof useCreateQuoteBundleMutation>
+export type CreateQuoteBundleMutationResult = Apollo.MutationResult<CreateQuoteBundleMutation>
+export type CreateQuoteBundleMutationOptions = Apollo.BaseMutationOptions<
+  CreateQuoteBundleMutation,
+  CreateQuoteBundleMutationVariables
+>
+export const CreateQuoteCartDocument = gql`
+  mutation CreateQuoteCart($market: Market!, $locale: String!) {
+    onboardingQuoteCart_create(input: { market: $market, locale: $locale }) {
+      id
+    }
+  }
+`
+export type CreateQuoteCartMutationFn = Apollo.MutationFunction<
+  CreateQuoteCartMutation,
+  CreateQuoteCartMutationVariables
+>
+
+/**
+ * __useCreateQuoteCartMutation__
+ *
+ * To run a mutation, you first call `useCreateQuoteCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateQuoteCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createQuoteCartMutation, { data, loading, error }] = useCreateQuoteCartMutation({
+ *   variables: {
+ *      market: // value for 'market'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useCreateQuoteCartMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateQuoteCartMutation,
+    CreateQuoteCartMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateQuoteCartMutation, CreateQuoteCartMutationVariables>(
+    CreateQuoteCartDocument,
+    options,
+  )
+}
+export type CreateQuoteCartMutationHookResult = ReturnType<typeof useCreateQuoteCartMutation>
+export type CreateQuoteCartMutationResult = Apollo.MutationResult<CreateQuoteCartMutation>
+export type CreateQuoteCartMutationOptions = Apollo.BaseMutationOptions<
+  CreateQuoteCartMutation,
+  CreateQuoteCartMutationVariables
+>
