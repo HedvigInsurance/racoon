@@ -1,6 +1,7 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
+
 import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
@@ -84,10 +85,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
     const selectedVariant = getSelectedBundleVariant(data, selectedInsuranceTypes)
     const mainQuote = getMainQuote(selectedVariant)
     const price = getBundlePrice(selectedVariant)
+    const street = mainQuote.data.street
 
     return {
       props: {
-        intro: { price },
+        intro: { street, price },
         yourInformation: getInformationTable(mainQuote),
         footer: { price },
 

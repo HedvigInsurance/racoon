@@ -5,7 +5,9 @@ import { Badge } from './badge'
 import { Stars } from './icons/stars'
 import styled from '@emotion/styled'
 
-type IntroProps = {} & PriceProps
+type IntroProps = {
+  street: string,
+} & PriceProps
 
 const Wrapper = styled.div({
   padding: '1.25rem 1rem',
@@ -28,11 +30,11 @@ const Text = styled.p({
   color: theme.colors.gray700,
 })
 
-export const Intro = ({ price }: IntroProps) => {
+export const Intro = ({ street, price }: IntroProps) => {
   return (
     <Wrapper>
       <Heading headingLevel="h2" variant="s" colorVariant="dark">
-        Home owners + Accident
+        {street}
       </Heading>
       <Space y={1.5}>
         <Row x={0.5}>
