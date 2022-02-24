@@ -24,7 +24,7 @@ import styled from '@emotion/styled'
 
 type Props = {
   intro: IntroProps
-  footer: { price: FooterProps['price'] }
+  footer: FooterProps
   yourInformation: Table
   quickForm: QuickFormProps
 }
