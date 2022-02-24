@@ -18,6 +18,8 @@ const LoadingContent = styled.div({
   maxWidth: '20ch',
   margin: '0 auto',
   overflow: 'hidden',
+  boxSizing: 'border-box',
+  padding: '1rem',
 })
 
 const Overlay = styled.div({
