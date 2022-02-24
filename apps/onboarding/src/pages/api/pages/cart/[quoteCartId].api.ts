@@ -44,22 +44,22 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
     const quotes = data.quoteCart.bundle?.quotes ?? []
 
     await Promise.all(
-      quotes.map((quote) =>
-        client.mutate<EditQuoteMutation, EditQuoteMutationVariables>({
+      quotes.map(async (quote) => {
+        const data = {
+          numberCoInsured: householdSize - 1,
+          isStudent,
+          subType: getSubType(isStudent, quote.data.typeOfContract),
+        }
+
+        return await client.mutate<EditQuoteMutation, EditQuoteMutationVariables>({
           mutation: EditQuoteDocument,
           variables: {
             quoteCartId,
             quoteId: quote.id,
-            payload: {
-              data: {
-                numberCoInsured: householdSize - 1,
-                isStudent,
-                subType: getSubType(isStudent, quote.data.typeOfContract),
-              },
-            },
+            payload: { data },
           },
-        }),
-      ),
+        })
+      }),
     )
 
     return res.status(200).json({ ok: true })

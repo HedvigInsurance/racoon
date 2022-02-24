@@ -21,12 +21,12 @@ export const getQuickForm = (quote: BundledQuote): QuickFormProps['fields'] => {
         {
           label: 'Yes',
           value: 'YES',
-          defaultChecked: quote.data.isStudent === true,
+          defaultChecked: quote.data.subType.includes('STUDENT_'),
         },
         {
           label: 'No',
           value: 'NO',
-          defaultChecked: quote.data.isStudent === false,
+          defaultChecked: !quote.data.subType.includes('STUDENT_'),
         },
       ],
     },
