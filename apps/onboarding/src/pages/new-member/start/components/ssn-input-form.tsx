@@ -78,7 +78,7 @@ export const SsnInputForm = () => {
       <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
           label="Personal number"
-          placeholder="YYYYMMDDXXXX"
+          placeholder="YYMMDDXXXX"
           required
           value={ssnValue}
           name="ssn"
