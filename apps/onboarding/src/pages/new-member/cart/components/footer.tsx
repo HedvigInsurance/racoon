@@ -31,18 +31,14 @@ const Wrapper = styled.div({
 const InnerWrapper = styled.div({
   width: '100%',
   height: '100%',
-  maxWidth: '628px',
-  display: 'grid',
-  gridTemplateColumns: 'max-content 1fr',
+  display: 'flex',
   gap: '1rem',
   alignItems: 'center',
+  justifyContent: 'space-between',
 
   [mq.lg]: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    maxWidth: '600px',
     padding: '0 2rem',
+    maxWidth: '600px',
   },
 })
 
