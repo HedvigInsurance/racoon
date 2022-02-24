@@ -10,6 +10,7 @@ import { Hero } from './components/hero'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
 import { Table } from './types'
+import { UpsellCard } from './components/upsell-card'
 import { YourInformation } from './components/your-information'
 import { createApolloClient } from '@/services/apollo'
 import { getBundlePrice } from './selectors/get-bundle-price'
@@ -80,8 +81,9 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
             <Content>
               <Intro {...intro} />
               <YourInformation table={yourInformation} />
-              <Benefits />
               <QuickForm {...quickForm} />
+              <UpsellCard />
+              <Benefits />
               <ContactCard />
             </Content>
             <Footer {...footer} />
