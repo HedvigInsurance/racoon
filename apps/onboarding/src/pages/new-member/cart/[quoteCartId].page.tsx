@@ -9,7 +9,6 @@ import { Hero } from './components/hero'
 import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
-import { PageLink } from '@/lib/page-link'
 import { Table } from './types'
 import { YourInformation } from './components/your-information'
 import { createApolloClient } from '@/services/apollo'
@@ -25,7 +24,7 @@ import styled from '@emotion/styled'
 
 type Props = {
   intro: { price: FooterProps['price'] }
-  footer: { price: FooterProps['price'] }
+  footer: FooterProps
   yourInformation: Table
   quickForm: QuickFormProps
 }
@@ -67,7 +66,7 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
             <QuickForm {...quickForm} />
             <ContactCard />
           </Content>
-          <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
+          <Footer {...footer} />
         </Col>
       </Grid>
     </PageLayout>
@@ -94,7 +93,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
       props: {
         intro: { price },
         yourInformation: getInformationTable(mainQuote),
-        footer: { price },
+        footer: { price, quoteCartId },
         quickForm: {
           quoteCartId,
           fields: getQuickForm(mainQuote),

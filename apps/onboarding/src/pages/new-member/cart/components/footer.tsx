@@ -1,14 +1,13 @@
 import { LinkButton, mq } from 'ui'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
+import { PageLink } from '@/lib/page-link'
 import React from 'react'
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n'
 import { useTranslation } from 'next-i18next'
 
-export type FooterProps = {
-  buttonText: string
-  buttonLinkTo: string
-} & PriceProps
+export type FooterProps = PriceProps & { quoteCartId: string }
 
 const Wrapper = styled.div({
   marginTop: '1.5rem',
@@ -32,19 +31,15 @@ const Wrapper = styled.div({
 const InnerWrapper = styled.div({
   width: '100%',
   height: '100%',
-  maxWidth: '628px',
-  display: 'grid',
-  gridTemplateColumns: 'max-content 1fr',
+  display: 'flex',
   gap: '1rem',
   alignItems: 'center',
+  justifyContent: 'space-between',
 
   [mq.lg]: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    maxWidth: '600px',
     padding: '0 2rem',
-  }  
+    maxWidth: '600px',
+  },
 })
 
 const PriceWrapper = styled.div({})
@@ -56,8 +51,10 @@ const PriceLabel = styled.p(({ theme }) => ({
   margin: 0,
 }))
 
-export const Footer = ({ buttonText, buttonLinkTo, price }: FooterProps) => {
+export const Footer = ({ price, quoteCartId }: FooterProps) => {
   const { t } = useTranslation()
+  const { path } = useCurrentLocale()
+
   return (
     <Wrapper>
       <InnerWrapper>
@@ -65,8 +62,8 @@ export const Footer = ({ buttonText, buttonLinkTo, price }: FooterProps) => {
           <MonthlyPrice price={price} />
           <PriceLabel>{t('CANCEL_ANYTIME')}</PriceLabel>
         </PriceWrapper>
-        <LinkButton $color="lavender" href={buttonLinkTo}>
-          {buttonText}
+        <LinkButton $color="lavender" href={PageLink.old_checkout({ locale: path, quoteCartId })}>
+          Continue to checkout
         </LinkButton>
       </InnerWrapper>
     </Wrapper>
