@@ -1,6 +1,7 @@
 import { Button, InputStepper, Space } from 'ui'
 import { InputRadio, RadioGroup } from './radio-group'
 
+import { InputField } from '../types'
 import styled from '@emotion/styled'
 import { useForm } from 'hooks/use-form'
 import useRouterRefresh from 'hooks/use-router-refresh'
@@ -14,34 +15,9 @@ const SubmitButton = styled(Button)({
   width: '100%',
 })
 
-type FieldBase = {
-  label: string
-  infoMessage?: string
-  name: string
-}
-
-type StepperField = FieldBase & {
-  type: 'stepper'
-  min: number
-  max: number
-  step: number
-  defaultValue: number
-}
-
-type RadioField = FieldBase & {
-  type: 'radio'
-  options: Array<{
-    label: string
-    value: string
-    defaultChecked: boolean
-  }>
-}
-
-type Field = StepperField | RadioField
-
 export type QuickFormProps = {
   quoteCartId: string
-  fields: Array<Field>
+  fields: Array<InputField>
 }
 
 export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
