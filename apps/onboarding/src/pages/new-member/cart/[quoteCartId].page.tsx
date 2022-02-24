@@ -18,6 +18,7 @@ import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
 import { getQuickForm } from './selectors/get-quick-form'
 import { getSelectedBundleVariant } from './selectors/get-selected-bundle-variant'
+import { keyframes } from '@emotion/react'
 import { mq } from 'ui'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
@@ -28,6 +29,19 @@ type Props = {
   yourInformation: Table
   quickForm: QuickFormProps
 }
+
+const fadeInUp = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+})
+
+const AnimateIn = styled.div({
+  animation: `${fadeInUp} 0.5s ease-in-out`,
+})
 
 const Grid = styled.div({
   [mq.md]: {
@@ -55,24 +69,26 @@ const Content = styled.div({
 
 const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, quickForm }) => {
   return (
-    <PageLayout headerVariant="light">
-      <Grid>
-        <Hero
-          mobileImgSrc="/racoon-assets/hero_mobile.jpg"
-          desktopImgSrc="/racoon-assets/hero_desktop.jpg"
-        />
-        <Col>
-          <Content>
-            <Intro {...intro} />
-            <YourInformation table={yourInformation} />
-            <Benefits />
-            <QuickForm {...quickForm} />
-            <ContactCard />
-          </Content>
-          <Footer {...footer} />
-        </Col>
-      </Grid>
-    </PageLayout>
+    <AnimateIn>
+      <PageLayout headerVariant="light">
+        <Grid>
+          <Hero
+            mobileImgSrc="/racoon-assets/hero_mobile.jpg"
+            desktopImgSrc="/racoon-assets/hero_desktop.jpg"
+          />
+          <Col>
+            <Content>
+              <Intro {...intro} />
+              <YourInformation table={yourInformation} />
+              <Benefits />
+              <QuickForm {...quickForm} />
+              <ContactCard />
+            </Content>
+            <Footer {...footer} />
+          </Col>
+        </Grid>
+      </PageLayout>
+    </AnimateIn>
   )
 }
 
