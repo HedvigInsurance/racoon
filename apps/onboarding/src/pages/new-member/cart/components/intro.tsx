@@ -1,11 +1,10 @@
 import { Heading, Space, theme } from 'ui'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
-import { Badge } from './badge'
 import { Stars } from './icons/stars'
 import styled from '@emotion/styled'
 
-type IntroProps = {
+export type IntroProps = {
   street: string,
 } & PriceProps
 
@@ -39,7 +38,6 @@ export const Intro = ({ street, price }: IntroProps) => {
       <Space y={1.5}>
         <Row x={0.5}>
           <MonthlyPrice price={price} />
-          <Badge>20% OFF</Badge>
         </Row>
         <div>
           <Reviews x={0.25}>
@@ -47,7 +45,6 @@ export const Intro = ({ street, price }: IntroProps) => {
             <Stars />
             <span>1697 reviews</span>
           </Reviews>
-          <Text>Lindholmsallén 26B, Lindholmen, Göteborg</Text>
         </div>
       </Space>
     </Wrapper>
