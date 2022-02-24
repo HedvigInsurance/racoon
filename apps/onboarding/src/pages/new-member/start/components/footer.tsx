@@ -14,9 +14,8 @@ const TextLink = styled.a(({ theme }) => ({
 export const Footer = () => {
   return (
     <FooterText>
-      Genom att fortsätta bekräftar jag att jag har tagit del av information om Hedvigs
-      personuppgiftpolicy.{' '}
-      <TextLink href="https://www.hedvig.com/se-en/privacy-policy">Läs mer</TextLink>
+      By continuing, I confirm that I have received information about Hedvig&apos;s personal data
+      policy. <TextLink href="https://www.hedvig.com/se-en/privacy-policy">Read more</TextLink>
     </FooterText>
   )
 }

@@ -59,15 +59,15 @@ const NewMemberStartPage: NextPage = () => {
           <Content>
             <Space y={1}>
               <Heading variant="s" headingLevel="h1" colorVariant="dark">
-                Skaffa en snabbare, enklare och smidigare försäkring
+                Get faster, simpler and smoother insurance
               </Heading>
               <Text>
-                Vi använder personnumret för att hämta uppgifter om ditt hem för att ge dig ett
-                pris.
+                Enter your personal number to get a smart price quote. We will pick up information
+                about your home automatically.
               </Text>
               <SsnInputForm />
               <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
-                {'Eller fyll i manuellt >'}
+                {'Submit my information manually  >'}
               </LinkButton>
               <Spacer />
               <Footer />
