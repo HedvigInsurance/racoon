@@ -6,6 +6,9 @@ const moduleExports = {
   reactStrictMode: true,
   i18n,
   pageExtensions: ['page.tsx', 'api.ts', 'next.tsx', 'next.ts'],
+  images: {
+    domains: ['promise.hedvig.com'],
+  },
 }
 
 const sentryWebpackPluginOptions = {

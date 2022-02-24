@@ -1,19 +1,8 @@
 import Head from 'next/head'
-import { Loader } from './components/loader'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { theme } from 'ui'
-
-const Heading = styled.h1({
-  marginBottom: 0,
-  maxWidth: '13ch',
-  fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-  fontFamily: theme.fonts.heading,
-  color: theme.colors.gray900,
-  letterSpacing: '-0.02em',
-  lineHeight: 1.25
-})
 
 const Wrapper = styled.div({
   display: 'flex',
@@ -25,8 +14,57 @@ const Wrapper = styled.div({
 })
 
 const LoadingContent = styled.div({
-  margin: '-20vh auto 0'
+  position: 'relative',
+  maxWidth: '20ch',
+  margin: '0 auto',
+  overflow: 'hidden',
+  boxSizing: 'border-box',
+  padding: '1rem',
 })
+
+const Overlay = styled.div({
+  position: 'absolute',
+  inset: 0,
+  background: 'linear-gradient(white, transparent, transparent, white)',
+})
+
+const fadeInUp = keyframes({
+  '35%, 50%': {
+    opacity: 1,
+    transform: 'translate3d(0, 0, 0)',
+  },
+  '0%': {
+    opacity: 0,
+    transform: 'translate3d(0, 400px, 0)',
+  },
+  '100%': {
+    opacity: 0,
+    transform: 'translate3d(0, -400px, 0)',
+  },
+})
+
+const Text = styled.p(({ theme }) => ({
+  margin: 0,
+  fontSize: '1.5rem',
+  lineHeight: 1.33,
+  fontFamily: theme.fonts.body,
+
+  opacity: 0,
+  animation: `${fadeInUp} 3.5s cubic-bezier(0.39, 0.575, 0.565, 1) infinite`,
+}))
+
+const TEXTS = [
+  'Vi bygger din hemförsäkring',
+  'skyddar vid eldsvåda, brand,',
+  'inbrott, stöld,',
+  'skadegörelse,',
+  'överfall, resor,',
+  'sjuk på resa,',
+  'vitvaror, drulle,',
+  'djur i huset,',
+  'inga callcentres,',
+  'inga telefonköer,',
+]
 
 const LoadingPage: NextPage = () => {
   return (
@@ -38,8 +76,12 @@ const LoadingPage: NextPage = () => {
       <PageLayout>
         <Wrapper>
           <LoadingContent>
-            <Heading>Vi sätter ihop din försäkring</Heading>
-            <Loader />
+            {TEXTS.map((text, i) => (
+              <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
+                {text}
+              </Text>
+            ))}
+            <Overlay />
           </LoadingContent>
         </Wrapper>
       </PageLayout>

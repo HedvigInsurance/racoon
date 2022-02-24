@@ -1,13 +1,14 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
+import { QuickForm, QuickFormProps } from './components/quick-form'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
 
+import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
 import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
-import { PageLink } from '@/lib/page-link'
 import { Table } from './types'
 import { YourInformation } from './components/your-information'
 import { createApolloClient } from '@/services/apollo'
@@ -15,23 +16,59 @@ import { getBundlePrice } from './selectors/get-bundle-price'
 import { getInformationTable } from './selectors/get-information-table'
 import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
+import { getQuickForm } from './selectors/get-quick-form'
 import { getSelectedBundleVariant } from './selectors/get-selected-bundle-variant'
+import { mq } from 'ui'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import styled from '@emotion/styled'
 
 type Props = {
   intro: { price: FooterProps['price'] }
-  footer: { price: FooterProps['price'] }
+  footer: FooterProps
   yourInformation: Table
+  quickForm: QuickFormProps
 }
 
-const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation }) => {
+const Grid = styled.div({
+  [mq.lg]: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    height: '100vh',
+  },
+})
+
+const Col = styled.div({
+  [mq.lg]: {
+    gridColumn: '2',
+    width: '50vw',
+    overflow: 'auto',
+  },
+})
+
+const Content = styled.div({
+  [mq.lg]: {
+    maxWidth: '600px',
+    margin: 'auto',
+    padding: '2rem 1rem',
+  },
+})
+
+const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, quickForm }) => {
   return (
     <PageLayout headerVariant="light">
-      <Hero />
-      <Intro {...intro} />
-      <YourInformation table={yourInformation} />
-      <ContactCard />
-      <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
+      <Grid>
+        <Hero />
+        <Col>
+          <Content>
+            <Intro {...intro} />
+            <YourInformation table={yourInformation} />
+            <Benefits />
+            <QuickForm {...quickForm} />
+            <ContactCard />
+          </Content>
+          <Footer {...footer} />
+        </Col>
+      </Grid>
     </PageLayout>
   )
 }
@@ -56,7 +93,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
       props: {
         intro: { price },
         yourInformation: getInformationTable(mainQuote),
-        footer: { price },
+        footer: { price, quoteCartId },
+        quickForm: {
+          quoteCartId,
+          fields: getQuickForm(mainQuote),
+        },
 
         ...(await serverSideTranslations(locale as string)),
       },
