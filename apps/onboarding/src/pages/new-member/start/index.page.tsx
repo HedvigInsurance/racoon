@@ -1,7 +1,7 @@
 import { Heading, LinkButton, Space, mq } from 'ui'
 
 import { Footer } from './components/footer'
-import { Hero } from './components/hero'
+import { Hero } from '../cart/components/hero'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
 import { SsnInputForm } from './components/ssn-input-form'
@@ -35,7 +35,10 @@ const Spacer = styled.div({
 const NewMemberStartPage: NextPage = () => {
   return (
     <PageLayout headerVariant="light">
-      <Hero />
+      <Hero
+        mobileImgSrc="/racoon-assets/hero_start_mobile.jpg"
+        desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
+      />
       <PageWrapper>
         <InnerWrapper>
           <Space y={1}>

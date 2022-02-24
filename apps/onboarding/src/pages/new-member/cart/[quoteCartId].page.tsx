@@ -58,7 +58,10 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
   return (
     <PageLayout headerVariant="light">
       <Grid>
-        <Hero />
+        <Hero
+          mobileImgSrc="/racoon-assets/hero_mobile.jpg"
+          desktopImgSrc="/racoon-assets/hero_desktop.jpg"
+        />
         <Col>
           <Content>
             <Intro {...intro} />
