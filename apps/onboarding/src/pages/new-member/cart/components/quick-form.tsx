@@ -1,7 +1,7 @@
-import { Button, InputStepper, Space } from 'ui'
+import { Button, InputField, InputStepper, Space } from 'ui'
 import { InputRadio, RadioGroup } from './radio-group'
 
-import { InputField } from '../types'
+import type { InputField as InputFieldType } from '../types'
 import styled from '@emotion/styled'
 import { useForm } from 'hooks/use-form'
 import useRouterRefresh from 'hooks/use-router-refresh'
@@ -17,7 +17,7 @@ const SubmitButton = styled(Button)({
 
 export type QuickFormProps = {
   quoteCartId: string
-  fields: Array<InputField>
+  fields: Array<InputFieldType>
 }
 
 export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
@@ -48,6 +48,18 @@ export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
                     />
                   ))}
                 </RadioGroup>
+              )
+            case 'number':
+              return (
+                <InputField
+                  key={field.name}
+                  {...field}
+                  label={t(field.label)}
+                  type="number"
+                  min={field.min}
+                  max={field.max}
+                  suffix="m2"
+                />
               )
           }
         })}

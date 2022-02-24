@@ -2,9 +2,23 @@ import { InputBase, InputBaseProps } from './input-base'
 
 import styled from '@emotion/styled'
 
-type ErrorProps = { $error: boolean }
+type StyleProps = { $error: boolean; $suffix?: string }
 
-const StyledInput = styled.input<ErrorProps>(({ theme, $error }) => ({
+const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
+  position: 'relative',
+  display: 'inline-block',
+  width: '100%',
+
+  '::after': {
+    content: `"${$suffix}"`,
+    position: 'absolute',
+    top: '50%',
+    right: '1rem',
+    transform: 'translateY(-50%)',
+  },
+}))
+
+const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   color: theme.colors.gray900,
   fontSize: '1.125rem',
   lineHeight: '1.75rem',
@@ -34,18 +48,24 @@ const StyledInput = styled.input<ErrorProps>(({ theme, $error }) => ({
   borderColor: $error ? theme.colors.red500 : theme.colors.gray300,
 }))
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & InputBaseProps
+type Props = React.InputHTMLAttributes<HTMLInputElement> &
+  InputBaseProps & {
+    suffix?: string
+  }
 
-export const InputField = (props: Props) => {
+export const InputField = ({ suffix, ...props }: Props) => {
   return (
     <InputBase {...props}>
       {({ hasError, errorMessageId }) => (
-        <StyledInput
-          aria-invalid={hasError}
-          aria-describedby={hasError ? errorMessageId : undefined}
-          $error={hasError}
-          {...props}
-        />
+        <Wrapper $error={hasError} $suffix={suffix}>
+          <StyledInput
+            aria-invalid={hasError}
+            aria-describedby={hasError ? errorMessageId : undefined}
+            $error={hasError}
+            $suffix={suffix}
+            {...props}
+          />
+        </Wrapper>
       )}
     </InputBase>
   )

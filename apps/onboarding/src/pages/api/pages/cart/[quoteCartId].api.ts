@@ -30,10 +30,15 @@ const getSubType = (isStudent: boolean, typeOfContract: string) => {
 
 const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) => {
   const quoteCartId = req.query.quoteCartId as string
-  const { householdSize: rawHouseholdSize, isStudent: rawIsStudent } = await getFormData(req)
+  const {
+    householdSize: rawHouseholdSize,
+    isStudent: rawIsStudent,
+    livingSpace: rawLivingSpace,
+  } = await getFormData(req)
 
   const householdSize = parseInt(rawHouseholdSize as string, 10)
   const isStudent = rawIsStudent === 'YES'
+  const livingSpace = parseInt(rawLivingSpace as string, 10)
 
   try {
     const { data } = await client.query<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>({
@@ -49,6 +54,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
           numberCoInsured: householdSize - 1,
           isStudent,
           subType: getSubType(isStudent, quote.data.typeOfContract),
+          livingSpace: livingSpace || quote.data.livingSpace,
         }
 
         return await client.mutate<EditQuoteMutation, EditQuoteMutationVariables>({

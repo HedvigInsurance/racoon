@@ -34,4 +34,11 @@ type RadioField = FieldBase & {
   }>
 }
 
-export type InputField = StepperField | RadioField
+type NumberField = FieldBase & {
+  type: 'number'
+  min: number
+  max: number
+  defaultValue: number
+}
+
+export type InputField = StepperField | RadioField | NumberField
