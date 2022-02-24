@@ -3,17 +3,10 @@ import { Heading, Space } from 'ui'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 
-const Wrapper = styled.div({
+const Wrapper = styled(Space)({
   width: '100%',
   padding: '0.75rem 1rem',
 })
-
-const Header = styled(Space)({})
-
-const Text = styled.p(({ theme }) => ({
-  marginBottom: '2rem',
-  color: theme.colors.gray700,
-}))
 
 const InfoRow = styled(Space)({
   display: 'flex',
@@ -23,41 +16,52 @@ const InfoRow = styled(Space)({
 const InfoLabel = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
   fontSize: '1rem',
-  margin: '0 0 0 1rem',
+  lineHeight: 1.33,
+  margin: 0,
 }))
 
 const InfoDescription = styled.p(({ theme }) => ({
-  fontSize: '0.75rem',
+  fontSize: '0.875rem',
   color: theme.colors.gray700,
   margin: 0,
+  lineHeight: 1.25,
 }))
 
 export const Benefits = () => {
   return (
-    <Wrapper>
-      <Header x={1}>
-        <Heading headingLevel="h3" variant="s" colorVariant="dark">
-          Why you will love Hedvig
-        </Heading>
-      </Header>
-
-      <Text>
-        Home owners insurance is for you who who rent or own an apartment, rent a room or live in a
-        detachedd house. The insurance covers up to 6 people, your apartment, your stuff, both at
-        home and on the go. Drulle insurance and travel protection are included.
-      </Text>
+    <Wrapper y={1.5}>
+      <Heading headingLevel="h3" variant="s" colorVariant="dark">
+        Why choose Hedvig?
+      </Heading>
 
       <Space y={1.5}>
         <InfoRow x={1}>
           <Image
-            src="https://promise.hedvig.com/media/all_risk_eba77dfb03.svg"
+            src="https://promise.hedvig.com/media/appliance_damage_2a23c61a09.svg"
             alt=""
             width="32"
             height="32"
           />
           <InfoLabel>
-            Drulle included
-            <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
+            Smooth claims
+            <InfoDescription>
+              Make your claim at any time or anywhere in the Hedvig app. Get support within minutes.
+            </InfoDescription>
+          </InfoLabel>
+        </InfoRow>
+
+        <InfoRow x={1}>
+          <Image
+            src="https://promise.hedvig.com/media/sick_on_holiday_17b3f1899c.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
+          <InfoLabel>
+            Instant help
+            <InfoDescription>
+              Your personal five-star rated service team is on stand-by and ready to help.
+            </InfoDescription>
           </InfoLabel>
         </InfoRow>
 
@@ -69,21 +73,10 @@ export const Benefits = () => {
             height="32"
           />
           <InfoLabel>
-            Smooth claim, fast payouts
-            <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
-          </InfoLabel>
-        </InfoRow>
-
-        <InfoRow x={1}>
-          <Image
-            src="https://promise.hedvig.com/media/assault_d371c026ac.svg"
-            alt=""
-            width="32"
-            height="32"
-          />
-          <InfoLabel>
-            Instant help
-            <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
+            Cancel anytime
+            <InfoDescription>
+              No strings attached. Cancel at any time and come back to open arms later.
+            </InfoDescription>
           </InfoLabel>
         </InfoRow>
       </Space>

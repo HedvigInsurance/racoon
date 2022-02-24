@@ -54,6 +54,7 @@ const getLivingSpaceField = (quote: BundledQuote): InputField => {
     name: 'livingSpace',
     min: 6,
     max: 250,
+    suffix: 'm²',
     defaultValue: quote.data.livingSpace,
   }
 }
