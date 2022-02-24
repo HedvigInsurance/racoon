@@ -6,7 +6,7 @@ const Wrapper = styled.div({
   maxHeight: '600px',
   overflow: 'hidden',
 
-  [mq.lg]: {
+  [mq.md]: {
     position: 'fixed',
     maxHeight: 'none',
     width: '50vw',
@@ -16,7 +16,7 @@ const Wrapper = styled.div({
 
 const Img = styled.img({
   width: '100%',
-  [mq.lg]: {
+  [mq.md]: {
     height: '100%',
     width: '50vw',
     objectFit: 'cover',

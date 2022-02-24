@@ -7,20 +7,35 @@ import { PageLayout } from './components/page-layout'
 import { SsnInputForm } from './components/ssn-input-form'
 import styled from '@emotion/styled'
 
-const PageWrapper = styled.div({
-  width: '100vw',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+const Grid = styled.div({
+  [mq.md]: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    height: '100vh',
+  },
 })
-const InnerWrapper = styled.div({
+
+const Col = styled.div({
+  [mq.md]: {
+    gridColumn: '2',
+    width: '50vw',
+    overflow: 'auto',
+  },
+})
+
+const Content = styled.div({
   padding: '1rem',
   width: '100%',
   maxWidth: '30rem',
-  [mq.lg]: {
-    paddingTop: '8rem',
+  margin: '0 auto',
+
+  [mq.md]: {
+    maxWidth: '600px',
+    margin: 'auto',
+    padding: '4rem 1rem',
   },
 })
+
 const Text = styled.p(({ theme }) => ({
   lineHeight: '1.5rem',
   fontSize: '1rem',
@@ -35,28 +50,31 @@ const Spacer = styled.div({
 const NewMemberStartPage: NextPage = () => {
   return (
     <PageLayout headerVariant="light">
-      <Hero
-        mobileImgSrc="/racoon-assets/hero_start_mobile.jpg"
-        desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
-      />
-      <PageWrapper>
-        <InnerWrapper>
-          <Space y={1}>
-            <Heading variant="s" headingLevel="h1" colorVariant="dark">
-              Skaffa en snabbare, enklare och smidigare försäkring
-            </Heading>
-            <Text>
-              Vi använder personnumret för att hämta uppgifter om ditt hem för att ge dig ett pris.
-            </Text>
-            <SsnInputForm />
-            <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
-              {'Eller fyll i manuellt >'}
-            </LinkButton>
-            <Spacer />
-            <Footer />
-          </Space>
-        </InnerWrapper>
-      </PageWrapper>
+      <Grid>
+        <Hero
+          mobileImgSrc="/racoon-assets/hero_start_mobile.jpg"
+          desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
+        />
+        <Col>
+          <Content>
+            <Space y={1}>
+              <Heading variant="s" headingLevel="h1" colorVariant="dark">
+                Skaffa en snabbare, enklare och smidigare försäkring
+              </Heading>
+              <Text>
+                Vi använder personnumret för att hämta uppgifter om ditt hem för att ge dig ett
+                pris.
+              </Text>
+              <SsnInputForm />
+              <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
+                {'Eller fyll i manuellt >'}
+              </LinkButton>
+              <Spacer />
+              <Footer />
+            </Space>
+          </Content>
+        </Col>
+      </Grid>
     </PageLayout>
   )
 }

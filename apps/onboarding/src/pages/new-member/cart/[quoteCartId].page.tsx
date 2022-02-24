@@ -31,7 +31,7 @@ type Props = {
 }
 
 const Grid = styled.div({
-  [mq.lg]: {
+  [mq.md]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     height: '100vh',
@@ -39,7 +39,7 @@ const Grid = styled.div({
 })
 
 const Col = styled.div({
-  [mq.lg]: {
+  [mq.md]: {
     gridColumn: '2',
     width: '50vw',
     overflow: 'auto',
@@ -47,7 +47,7 @@ const Col = styled.div({
 })
 
 const Content = styled.div({
-  [mq.lg]: {
+  [mq.md]: {
     maxWidth: '600px',
     margin: 'auto',
     padding: '2rem 1rem',
