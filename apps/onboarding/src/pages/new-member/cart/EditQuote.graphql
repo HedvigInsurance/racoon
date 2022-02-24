@@ -1,0 +1,14 @@
+mutation EditQuote($quoteCartId: ID!, $quoteId: ID!, $payload: JSON!) {
+  quoteCart_editQuote(id: $quoteCartId, quoteId: $quoteId, payload: $payload) {
+    ... on QuoteCart {
+      id
+    }
+    ... on QuoteBundleError {
+      message
+      type
+      limits {
+        code
+      }
+    }
+  }
+}

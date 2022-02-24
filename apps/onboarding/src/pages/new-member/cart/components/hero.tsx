@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import heroMobile from '../../assets/hero_mobile.jpg'
 import { mq } from 'ui'
 import styled from '@emotion/styled'
 
@@ -8,7 +6,7 @@ const Wrapper = styled.div({
   maxHeight: '600px',
   overflow: 'hidden',
 
-  [mq.lg]: {
+  [mq.md]: {
     position: 'fixed',
     maxHeight: 'none',
     width: '50vw',
@@ -18,20 +16,25 @@ const Wrapper = styled.div({
 
 const Img = styled.img({
   width: '100%',
-  [mq.lg]: {
+  [mq.md]: {
     height: '100%',
     width: '50vw',
     objectFit: 'cover',
   },
 })
 
-export const Hero = () => {
+type HeroProps = {
+  mobileImgSrc: string
+  desktopImgSrc: string
+}
+
+export const Hero = ({ mobileImgSrc, desktopImgSrc }: HeroProps) => {
   return (
     <Wrapper>
       <picture>
-        <source media="(orientation: portrait)" srcSet="/assets/hero_mobile.jpg" />
-        <source media="(orientation: landscape)" srcSet="/assets/hero_desktop.jpg" />
-        <Img src="/assets/hero_mobile.jpg" />
+        <source media="(orientation: portrait)" srcSet={mobileImgSrc} />
+        <source media="(orientation: landscape)" srcSet={desktopImgSrc} />
+        <Img src={mobileImgSrc} />
       </picture>
     </Wrapper>
   )

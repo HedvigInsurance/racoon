@@ -40,7 +40,7 @@ const InfoRow = styled(Space)({
 })
 
 const InfoLabel = styled.p(({ theme }) => ({
-  fontSize: '1rem',
+  fontSize: '0.875rem',
   margin: 0,
   color: theme.colors.gray700,
 }))

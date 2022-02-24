@@ -74,8 +74,8 @@ const StyledInput = styled.input(({ theme }) => ({
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & InputBaseProps
 
-export const InputStepper = (props: Props) => {
-  const [value, setValue] = useState(props.defaultValue || '0')
+export const InputStepper = ({ defaultValue = '0', ...props }: Props) => {
+  const [value, setValue] = useState(defaultValue)
 
   const step = Number(props.step) || 1
 
@@ -92,7 +92,9 @@ export const InputStepper = (props: Props) => {
     <InputBase {...props}>
       {({ hasError, errorMessageId }) => (
         <Wrapper $error={hasError}>
-          <StepButton onClick={() => handleClick('down')}>-</StepButton>
+          <StepButton type="button" onClick={() => handleClick('down')}>
+            -
+          </StepButton>
 
           <StyledInput
             aria-invalid={hasError}
@@ -104,7 +106,9 @@ export const InputStepper = (props: Props) => {
             {...props}
           />
 
-          <StepButtonRight onClick={() => handleClick('up')}>+</StepButtonRight>
+          <StepButtonRight type="button" onClick={() => handleClick('up')}>
+            +
+          </StepButtonRight>
         </Wrapper>
       )}
     </InputBase>
