@@ -1,5 +1,6 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
+import { Intro, IntroProps } from './components/intro'
 import { QuickForm, QuickFormProps } from './components/quick-form'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
 
@@ -7,7 +8,6 @@ import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
 import { InsuranceSelector } from './components/insurance-selector'
-import { Intro } from './components/intro'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLayout } from '../start/components/page-layout'
 import { Table } from './types'
@@ -19,16 +19,30 @@ import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
 import { getQuickForm } from './selectors/get-quick-form'
 import { getSelectedBundleVariant } from './selectors/get-selected-bundle-variant'
+import { keyframes } from '@emotion/react'
 import { mq } from 'ui'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
 
 type Props = {
-  intro: { price: FooterProps['price'] }
+  intro: IntroProps
   footer: FooterProps
   yourInformation: Table
   quickForm: QuickFormProps
 }
+
+const fadeInUp = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+})
+
+const AnimateIn = styled.div({
+  animation: `${fadeInUp} 0.5s ease-in-out`,
+})
 
 const Grid = styled.div({
   [mq.md]: {
@@ -56,25 +70,27 @@ const Content = styled.div({
 
 const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, quickForm }) => {
   return (
-    <PageLayout headerVariant="light">
-      <Grid>
-        <Hero
-          mobileImgSrc="/racoon-assets/hero_mobile.jpg"
-          desktopImgSrc="/racoon-assets/hero_desktop.jpg"
-        />
-        <Col>
-          <Content>
-            <Intro {...intro} />
-            <YourInformation table={yourInformation} />
-            <InsuranceSelector />
-            <Benefits />
-            <QuickForm {...quickForm} />
-            <ContactCard />
-          </Content>
-          <Footer {...footer} />
-        </Col>
-      </Grid>
-    </PageLayout>
+    <AnimateIn>
+      <PageLayout headerVariant="light">
+        <Grid>
+          <Hero
+            mobileImgSrc="/racoon-assets/hero_mobile.jpg"
+            desktopImgSrc="/racoon-assets/hero_desktop.jpg"
+          />
+          <Col>
+            <Content>
+              <Intro {...intro} />
+              <YourInformation table={yourInformation} />
+              <InsuranceSelector />
+              <Benefits />
+              <QuickForm {...quickForm} />
+              <ContactCard />
+            </Content>
+            <Footer {...footer} />
+          </Col>
+        </Grid>
+      </PageLayout>
+    </AnimateIn>
   )
 }
 
@@ -93,10 +109,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
     const selectedVariant = getSelectedBundleVariant(data, selectedInsuranceTypes)
     const mainQuote = getMainQuote(selectedVariant)
     const price = getBundlePrice(selectedVariant)
+    const street = mainQuote.data.street
 
     return {
       props: {
-        intro: { price },
+        intro: { street, price },
         yourInformation: getInformationTable(mainQuote),
         footer: { price, quoteCartId },
         quickForm: {

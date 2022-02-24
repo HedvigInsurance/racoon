@@ -7,7 +7,7 @@ import { useForm } from 'hooks/use-form'
 import useRouterRefresh from 'hooks/use-router-refresh'
 import { useTranslation } from 'next-i18next'
 
-const Wrapper = styled(Space)({
+const Wrapper = styled.div({
   padding: '0.75rem 1rem',
 })
 
@@ -31,42 +31,46 @@ export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
 
   return (
     <form {...formProps}>
-      <Wrapper y={1.5}>
-        {fields.map((field) => {
-          switch (field.type) {
-            case 'stepper':
-              return <InputStepper key={field.name} {...field} label={t(field.label)} />
-            case 'radio':
-              return (
-                <RadioGroup key={field.name} label={t(field.label)}>
-                  {field.options.map((option) => (
-                    <InputRadio
-                      key={option.value}
-                      id={field.name + option.value}
-                      name={field.name}
-                      {...option}
+      <Wrapper>
+        <Space y={1.5}>
+          <Space y={0.5}>
+            {fields.map((field) => {
+              switch (field.type) {
+                case 'stepper':
+                  return <InputStepper key={field.name} {...field} label={t(field.label)} />
+                case 'radio':
+                  return (
+                    <RadioGroup key={field.name} label={t(field.label)}>
+                      {field.options.map((option) => (
+                        <InputRadio
+                          key={option.value}
+                          id={field.name + option.value}
+                          name={field.name}
+                          {...option}
+                        />
+                      ))}
+                    </RadioGroup>
+                  )
+                case 'number':
+                  return (
+                    <InputField
+                      key={field.name}
+                      {...field}
+                      label={t(field.label)}
+                      type="number"
+                      min={field.min}
+                      max={field.max}
+                      suffix="m2"
                     />
-                  ))}
-                </RadioGroup>
-              )
-            case 'number':
-              return (
-                <InputField
-                  key={field.name}
-                  {...field}
-                  label={t(field.label)}
-                  type="number"
-                  min={field.min}
-                  max={field.max}
-                  suffix="m2"
-                />
-              )
-          }
-        })}
+                  )
+              }
+            })}
+          </Space>
 
-        <SubmitButton type="submit" disabled={state === 'submitting'}>
-          Update information
-        </SubmitButton>
+          <SubmitButton type="submit" $variant="outlined" disabled={state === 'submitting'}>
+            Update information
+          </SubmitButton>
+        </Space>
       </Wrapper>
     </form>
   )

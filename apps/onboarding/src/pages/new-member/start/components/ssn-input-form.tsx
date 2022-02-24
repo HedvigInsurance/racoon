@@ -2,8 +2,21 @@ import { Button, Heading, InputField, Space } from 'ui'
 import React, { useEffect, useState } from 'react'
 import { useCreateQuoteBundleMutation, useCreateQuoteCartMutation } from '@/services/apollo/types'
 
+import LoadingPage from '../loading.page'
+import { PageLink } from '@/lib/page-link'
+import ReactDOM from 'react-dom'
 import { Switch } from './switch'
+import styled from '@emotion/styled'
 import { useCurrentLocale } from '@/lib/l10n'
+import { useRouter } from 'next/router'
+
+const Fullscreen = styled.div({
+  position: 'fixed',
+  inset: 0,
+  zIndex: 99999,
+})
+
+const SSN_LENGTHS = [10, 12]
 
 export const SsnInputForm = () => {
   const [ssnValue, setSsnValue] = useState('')
@@ -37,12 +50,15 @@ export const SsnInputForm = () => {
     setSsnValue(ssn)
   }
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const router = useRouter()
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    if (ssnValue.length !== 12) {
+    if (!SSN_LENGTHS.includes(ssnValue.length)) {
       return
     }
-    createQuoteBundle()
+    if (quoteCartId === undefined) return
+    await createQuoteBundle()
+    await router.push(PageLink.cart({ quoteCartId }))
   }
 
   const handleCheckboxChange = () => {
@@ -52,17 +68,12 @@ export const SsnInputForm = () => {
   const quoteBundle = quoteBundleData?.quoteCart_createSwedishBundle
   const hasQuoteBundle = Boolean(quoteBundle) && quoteBundle?.__typename === 'QuoteCart'
 
-  if (isLoadingQuoteBundle) {
-    return <div>Loading...</div>
-  }
-
-  if (hasQuoteBundle) {
-    return (
-      <>
-        {quoteBundle.bundle?.quotes.map(({ id }) => (
-          <div key={id}>Quote ID: {id}</div>
-        ))}
-      </>
+  if (isLoadingQuoteBundle || hasQuoteBundle) {
+    return ReactDOM.createPortal(
+      <Fullscreen>
+        <LoadingPage />
+      </Fullscreen>,
+      document.body,
     )
   }
 
@@ -76,7 +87,7 @@ export const SsnInputForm = () => {
       <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
           label="Personal number"
-          placeholder="YYYYMMDDXXXX"
+          placeholder="YYMMDDXXXX"
           required
           value={ssnValue}
           name="ssn"

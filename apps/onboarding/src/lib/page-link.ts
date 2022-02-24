@@ -4,6 +4,7 @@ type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
+type CartParams = BaseParams & { quoteCartId: string }
 const WEB_ONBOARDING_URL = process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
@@ -18,4 +19,6 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/new`,
   privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
+  cart: ({ locale, quoteCartId }: CartParams) =>
+    `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}`,
 }
