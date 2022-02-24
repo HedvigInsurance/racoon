@@ -1,6 +1,8 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
+import { QuickForm, QuickFormProps } from './components/quick-form'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
+
 import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
 import { Hero } from './components/hero'
@@ -15,6 +17,7 @@ import { getBundlePrice } from './selectors/get-bundle-price'
 import { getInformationTable } from './selectors/get-information-table'
 import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
+import { getQuickForm } from './selectors/get-quick-form'
 import { getSelectedBundleVariant } from './selectors/get-selected-bundle-variant'
 import { mq } from 'ui'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -24,6 +27,7 @@ type Props = {
   intro: { price: FooterProps['price'] }
   footer: { price: FooterProps['price'] }
   yourInformation: Table
+  quickForm: QuickFormProps
 }
 
 const Grid = styled.div({
@@ -50,7 +54,7 @@ const Content = styled.div({
   },
 })
 
-const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation }) => {
+const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, quickForm }) => {
   return (
     <PageLayout headerVariant="light">
       <Grid>
@@ -60,6 +64,7 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation }) 
             <Intro {...intro} />
             <YourInformation table={yourInformation} />
             <Benefits />
+            <QuickForm {...quickForm} />
             <ContactCard />
           </Content>
           <Footer {...footer} buttonText="Continue to checkout" buttonLinkTo={PageLink.landing()} />
@@ -90,6 +95,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
         intro: { price },
         yourInformation: getInformationTable(mainQuote),
         footer: { price },
+        quickForm: {
+          quoteCartId,
+          fields: getQuickForm(mainQuote),
+        },
 
         ...(await serverSideTranslations(locale as string)),
       },
