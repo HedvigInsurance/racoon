@@ -1,4 +1,4 @@
-import { Heading, InsuranceIcon, MailIcon, Space } from 'ui'
+import { Heading, Space } from 'ui'
 
 import Image from 'next/image'
 import styled from '@emotion/styled'
@@ -49,7 +49,12 @@ export const Benefits = () => {
 
       <Space y={1.5}>
         <InfoRow x={1}>
-          <InsuranceIcon height={32} width={32} />
+          <Image
+            src="https://promise.hedvig.com/media/all_risk_eba77dfb03.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
           <InfoLabel>
             Drulle included
             <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
@@ -57,7 +62,12 @@ export const Benefits = () => {
         </InfoRow>
 
         <InfoRow x={1}>
-          <InsuranceIcon height={32} width={32} />
+          <Image
+            src="https://promise.hedvig.com/media/theft_701fa78317.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
           <InfoLabel>
             Smooth claim, fast payouts
             <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
@@ -65,7 +75,12 @@ export const Benefits = () => {
         </InfoRow>
 
         <InfoRow x={1}>
-          <InsuranceIcon height={32} width={32} />
+          <Image
+            src="https://promise.hedvig.com/media/assault_d371c026ac.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
           <InfoLabel>
             Instant help
             <InfoDescription>Lorem ipsum dolor sit amet, consectetur ipsum.</InfoDescription>
