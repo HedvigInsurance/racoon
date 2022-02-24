@@ -29,9 +29,9 @@ export const Hero = () => {
   return (
     <Wrapper>
       <picture>
-        <source media="(orientation: portrait)" srcSet="/assets/hero_mobile.jpg" />
-        <source media="(orientation: landscape)" srcSet="/assets/hero_desktop.jpg" />
-        <Img src="/assets/hero_mobile.jpg" />
+        <source media="(orientation: portrait)" srcSet="/racoon-assets/hero_mobile.jpg" />
+        <source media="(orientation: landscape)" srcSet="/racoon-assets/hero_desktop.jpg" />
+        <Img src="/racoon-assets/hero_mobile.jpg" />
       </picture>
     </Wrapper>
   )
