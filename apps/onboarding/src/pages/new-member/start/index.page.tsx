@@ -4,8 +4,10 @@ import { Footer } from './components/footer'
 import { Hero } from '../cart/components/hero'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
+import { PageLink } from '@/lib/page-link'
 import { SsnInputForm } from './components/ssn-input-form'
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n'
 
 const Grid = styled.div({
   [mq.md]: {
@@ -48,6 +50,8 @@ const Spacer = styled.div({
 })
 
 const NewMemberStartPage: NextPage = () => {
+  const { path } = useCurrentLocale()
+
   return (
     <PageLayout headerVariant="light">
       <Grid>
@@ -66,7 +70,7 @@ const NewMemberStartPage: NextPage = () => {
                 about your home automatically.
               </Text>
               <SsnInputForm />
-              <LinkButton href="https://www.hedvig.com/se-en/new-member/new" $variant="text">
+              <LinkButton href={PageLink.embark({ locale: path })} $variant="text">
                 {'Submit my information manually  >'}
               </LinkButton>
               <Spacer />

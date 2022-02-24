@@ -1,4 +1,6 @@
+import { PageLink } from '@/lib/page-link'
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n'
 
 const FooterText = styled.p(({ theme }) => ({
   fontSize: '0.8125rem',
@@ -12,10 +14,12 @@ const TextLink = styled.a(({ theme }) => ({
 }))
 
 export const Footer = () => {
+  const { path } = useCurrentLocale()
+
   return (
     <FooterText>
       By continuing, I confirm that I have received information about Hedvig&apos;s personal data
-      policy. <TextLink href="https://www.hedvig.com/se-en/privacy-policy">Read more</TextLink>
+      policy. <TextLink href={PageLink.privacy_policy({ locale: path })}>Read more</TextLink>
     </FooterText>
   )
 }
