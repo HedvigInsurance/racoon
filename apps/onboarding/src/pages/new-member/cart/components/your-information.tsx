@@ -29,6 +29,7 @@ const TableValue = styled.p(({ theme }) => ({
   margin: 0,
   color: theme.colors.gray700,
   fontSize: '1rem',
+  textAlign: 'right',
 }))
 
 type Props = { table: Table }

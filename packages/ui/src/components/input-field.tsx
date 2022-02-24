@@ -10,7 +10,7 @@ const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
   width: '100%',
 
   '::after': {
-    content: `"${$suffix}"`,
+    content: $suffix ? `"${$suffix}"` : '""',
     position: 'absolute',
     top: '50%',
     right: '1rem',
