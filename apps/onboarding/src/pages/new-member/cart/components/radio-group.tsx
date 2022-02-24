@@ -77,7 +77,7 @@ type InputRadioProps = {
 export const InputRadio = ({ id, label, value, ...props }: InputRadioProps) => {
   return (
     <InputRadioWrapper>
-      <RadioButton id={id} value={value ? 'YES' : 'NO'} {...props} />
+      <RadioButton id={id} value={value} {...props} />
       <Label htmlFor={id}>{label}</Label>
     </InputRadioWrapper>
   )
