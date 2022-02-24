@@ -75,7 +75,7 @@ export const SsnInputForm = () => {
       )}
       <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
-          label="Personnummer"
+          label="Personal number"
           placeholder="YYYYMMDDXXXX"
           required
           value={ssnValue}
@@ -87,10 +87,10 @@ export const SsnInputForm = () => {
         <Switch
           isChecked={isCurrentAddress}
           onChange={handleCheckboxChange}
-          labelText="Jag vill ha prisförslag för min nuvarande adress"
+          labelText="I want a price quote for my current address"
         />
         <Button type="submit" onClick={handleSubmit} $hasFullWidth disabled={!isCurrentAddress}>
-          Hämta uppgifter - se ditt pris
+          Get the info - Give me a price
         </Button>
       </Space>
     </>

@@ -17,7 +17,7 @@ const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) =>
   color: variant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
   zIndex: '1000',
 
-  [mq.lg]: {
+  [mq.md]: {
     position: 'fixed',
     padding: '1.5rem 2rem',
   },
