@@ -34,19 +34,32 @@ const isStudentElligible = (quote: BundledQuote) => {
   return age <= 30 && livingSpace <= 60
 }
 
+const getHouseholdSizeField = (quote: BundledQuote): InputField => {
+  return {
+    label: 'DETAILS_MODULE_TABLE_HOUSEHOLD_SIZE_CELL_LABEL',
+    infoMessage: 'All ages, from 2-65 years',
+    type: 'stepper',
+    name: 'householdSize',
+    min: 1,
+    max: 6,
+    step: 1,
+    defaultValue: quote.data.numberCoInsured + 1,
+  }
+}
+
+const getLivingSpaceField = (quote: BundledQuote): InputField => {
+  return {
+    label: 'DETAILS_MODULE_TABLE_LIVINGSPACE_CELL_LABEL_HOUSE',
+    type: 'number',
+    name: 'livingSpace',
+    min: 6,
+    max: 250,
+    defaultValue: quote.data.livingSpace,
+  }
+}
+
 export const getQuickForm = (quote: BundledQuote): Array<InputField> => {
-  const fields: Array<InputField> = [
-    {
-      label: 'DETAILS_MODULE_TABLE_HOUSEHOLD_SIZE_CELL_LABEL',
-      infoMessage: 'All ages, from 2-65 years',
-      type: 'stepper',
-      name: 'householdSize',
-      min: 1,
-      max: 6,
-      step: 1,
-      defaultValue: quote.data.numberCoInsured + 1,
-    },
-  ]
+  const fields: Array<InputField> = [getHouseholdSizeField(quote), getLivingSpaceField(quote)]
 
   if (isStudentElligible(quote)) {
     fields.push(getIsStudentField(quote))
