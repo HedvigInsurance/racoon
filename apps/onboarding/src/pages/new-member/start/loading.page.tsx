@@ -54,16 +54,17 @@ const Text = styled.p(({ theme }) => ({
 }))
 
 const TEXTS = [
-  'Vi bygger din hemförsäkring',
-  'skyddar vid eldsvåda, brand,',
-  'inbrott, stöld,',
-  'skadegörelse,',
-  'överfall, resor,',
-  'sjuk på resa,',
-  'vitvaror, drulle,',
-  'djur i huset,',
-  'inga callcentres,',
-  'inga telefonköer,',
+  'Building your home insurance',
+  'Covers fire, burglary,',
+  'theft, damage,',
+  'assault, travels,',
+  'sickness on vacation,',
+  'appliances,',
+  'among other things.',
+  'All-risk included.',
+  'No paperwork,',
+  'no phone lines,',
+  'no hassle.',
 ]
 
 const LoadingPage: NextPage = () => {
