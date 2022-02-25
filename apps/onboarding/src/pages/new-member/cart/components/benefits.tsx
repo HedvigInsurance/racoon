@@ -36,7 +36,7 @@ export const Benefits = () => {
   return (
     <Wrapper y={1}>
       <Heading headingLevel="h3" variant="xs" colorVariant="dark">
-        Why choose Hedvig?
+        About the insurance
       </Heading>
 
       <Space y={1}>
