@@ -30,6 +30,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     border: '1px solid',
     borderRadius: $size === 'lg' ? '0.5rem' : '0.375rem',
     maxWidth: '100%',
+    transition: 'all ease-out 200ms',
 
     ...($variant === 'filled' && {
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
@@ -74,6 +75,6 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
 export const LinkButton = styled(Button)<{ href: string }>({
   textDecoration: 'none',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
 })
 LinkButton.defaultProps = { as: 'a' }

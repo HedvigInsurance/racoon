@@ -25,7 +25,7 @@ const Col = styled.div({
   },
 })
 
-const Content = styled.div({
+const Content = styled(Space)({
   padding: '1rem',
   width: '100%',
   maxWidth: '30rem',
@@ -36,6 +36,11 @@ const Content = styled.div({
     margin: 'auto',
     padding: '6rem 1rem',
   },
+})
+
+const LinkWrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
 })
 
 const Text = styled.p(({ theme }) => ({
@@ -60,22 +65,22 @@ const NewMemberStartPage: NextPage = () => {
           desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
         />
         <Col>
-          <Content>
-            <Space y={1}>
-              <Heading variant="s" headingLevel="h1" colorVariant="dark">
-                Get faster, simpler and smoother insurance
-              </Heading>
-              <Text>
-                Enter your personal number to get a smart price quote. We will pick up information
-                about your home automatically.
-              </Text>
-              <SsnInputForm />
+          <Content y={1}>
+            <Heading variant="s" headingLevel="h1" colorVariant="dark">
+              Get faster, simpler and smoother insurance
+            </Heading>
+            <Text>
+              Enter your personal number to get a smart price quote. We will pick up information
+              about your home automatically.
+            </Text>
+            <SsnInputForm />
+            <LinkWrapper>
               <LinkButton href={PageLink.embark({ locale: path })} $variant="text">
                 {'Submit my information manually  >'}
               </LinkButton>
-              <Spacer />
-              <Footer />
-            </Space>
+            </LinkWrapper>
+            <Spacer />
+            <Footer />
           </Content>
         </Col>
       </Grid>
