@@ -72,9 +72,9 @@ export const UpsellCard = () => (
             <Arrow /> No deductible
           </Item>
         </List>
-        <Footer>
+        {/* <Footer>
           <Button $variant="outlined" $size="sm">Add</Button>
-        </Footer>
+        </Footer> */}
       </Content>
     </Card>
   </Wrapper>
