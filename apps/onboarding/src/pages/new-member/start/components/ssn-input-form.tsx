@@ -88,6 +88,7 @@ export const SsnInputForm = () => {
         <InputField
           label="Personal number"
           placeholder="YYMMDDXXXX"
+          inputMode="numeric"
           required
           value={ssnValue}
           name="ssn"
