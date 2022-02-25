@@ -67,7 +67,7 @@ const NewMemberStartPage: NextPage = () => {
         <Col>
           <Content y={1}>
             <Heading variant="s" headingLevel="h1" colorVariant="dark">
-              Get faster, simpler and smoother insurance
+              Fast, easy and smooth insurance
             </Heading>
             <Text>
               Enter your personal number to get a smart price quote. We will pick up information
