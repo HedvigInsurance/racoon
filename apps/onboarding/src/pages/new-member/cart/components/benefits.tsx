@@ -10,13 +10,13 @@ const Wrapper = styled(Space)({
 
 const InfoRow = styled(Space)({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
 })
 
 const InfoLabel = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
   fontSize: '1rem',
-  lineHeight: 1.33,
+  lineHeight: 1.4,
   margin: 0,
 }))
 
@@ -24,24 +24,32 @@ const InfoDescription = styled.p(({ theme }) => ({
   fontSize: '0.875rem',
   color: theme.colors.gray700,
   margin: 0,
-  lineHeight: 1.25,
+  lineHeight: 1.4,
 }))
+
+const IconWrapper = styled.div({
+  flexShrink: 0,
+  paddingTop: '2px'
+})
 
 export const Benefits = () => {
   return (
-    <Wrapper y={1.5}>
+    <Wrapper y={1}>
       <Heading headingLevel="h3" variant="s" colorVariant="dark">
         Why choose Hedvig?
       </Heading>
 
-      <Space y={1.5}>
+      <Space y={1}>
         <InfoRow x={1}>
-          <Image
-            src="https://promise.hedvig.com/media/appliance_damage_2a23c61a09.svg"
-            alt=""
-            width="32"
-            height="32"
-          />
+          <IconWrapper>
+            <Image
+              src="https://promise.hedvig.com/media/appliance_damage_2a23c61a09.svg"
+              alt=""
+              width="32"
+              height="32"
+              layout="fixed"
+            />
+          </IconWrapper>
           <InfoLabel>
             Smooth claims
             <InfoDescription>
@@ -51,12 +59,15 @@ export const Benefits = () => {
         </InfoRow>
 
         <InfoRow x={1}>
-          <Image
-            src="https://promise.hedvig.com/media/sick_on_holiday_17b3f1899c.svg"
-            alt=""
-            width="32"
-            height="32"
-          />
+          <IconWrapper>
+            <Image
+              src="https://promise.hedvig.com/media/sick_on_holiday_17b3f1899c.svg"
+              alt=""
+              width="32"
+              height="32"
+              layout="fixed"
+            />
+          </IconWrapper>
           <InfoLabel>
             Instant help
             <InfoDescription>
@@ -66,12 +77,15 @@ export const Benefits = () => {
         </InfoRow>
 
         <InfoRow x={1}>
-          <Image
-            src="https://promise.hedvig.com/media/theft_701fa78317.svg"
-            alt=""
-            width="32"
-            height="32"
-          />
+          <IconWrapper>
+            <Image
+              src="https://promise.hedvig.com/media/theft_701fa78317.svg"
+              alt=""
+              width="32"
+              height="32"
+              layout="fixed"
+            />
+          </IconWrapper>
           <InfoLabel>
             Cancel anytime
             <InfoDescription>
