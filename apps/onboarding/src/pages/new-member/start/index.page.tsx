@@ -38,6 +38,11 @@ const Content = styled.div({
   },
 })
 
+const LinkWrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+})
+
 const Text = styled.p(({ theme }) => ({
   lineHeight: '1.5rem',
   fontSize: '1rem',
@@ -70,9 +75,11 @@ const NewMemberStartPage: NextPage = () => {
                 about your home automatically.
               </Text>
               <SsnInputForm />
-              <LinkButton href={PageLink.embark({ locale: path })} $variant="text">
-                {'Submit my information manually  >'}
-              </LinkButton>
+              <LinkWrapper>
+                <LinkButton href={PageLink.embark({ locale: path })} $variant="text">
+                  {'Submit my information manually  >'}
+                </LinkButton>
+              </LinkWrapper>
               <Spacer />
               <Footer />
             </Space>

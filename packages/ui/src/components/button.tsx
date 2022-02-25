@@ -73,6 +73,6 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
 export const LinkButton = styled(Button)<{ href: string }>({
   textDecoration: 'none',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
 })
 LinkButton.defaultProps = { as: 'a' }
