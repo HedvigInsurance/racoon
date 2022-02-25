@@ -4,6 +4,7 @@ export type ButtonProps = {
   $variant?: 'filled' | 'outlined' | 'text'
   $hasFullWidth?: boolean
   $color?: 'dark' | 'lavender'
+  $size?: 'sm' | 'lg'
 }
 
 export const UnstyledButton = styled.button({
@@ -20,14 +21,14 @@ export const UnstyledButton = styled.button({
 })
 
 export const Button = styled(UnstyledButton)<ButtonProps>(
-  ({ theme, $variant = 'filled', $hasFullWidth, $color }) => ({
+  ({ theme, $variant = 'filled', $hasFullWidth, $color, $size = 'lg' }) => ({
     width: $hasFullWidth ? '100%' : 'auto',
-    padding: '0.75rem 2rem',
+    padding: $size === 'lg' ? '0.75rem 2rem' : '0.375rem 0.75rem',
+    lineHeight: $size === 'lg' ? '1.5rem' : '1rem',
     fontFamily: theme.fonts.body,
     fontSize: '1rem',
-    lineHeight: '1.5rem',
     border: '1px solid',
-    borderRadius: '0.5rem',
+    borderRadius: $size === 'lg' ? '0.5rem' : '0.375rem',
     maxWidth: '100%',
 
     ...($variant === 'filled' && {
