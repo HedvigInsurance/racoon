@@ -36,9 +36,10 @@ type RadioField = FieldBase & {
 
 type NumberField = FieldBase & {
   type: 'number'
-  min: number
-  max: number
+  min?: number
+  max?: number
   defaultValue: number
+  suffix?: string
 }
 
 export type InputField = StepperField | RadioField | NumberField
