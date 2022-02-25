@@ -15,6 +15,7 @@ const Wrapper = styled.div({
 })
 
 const Img = styled.img({
+  display: 'block',
   width: '100%',
   [mq.md]: {
     height: '100%',
