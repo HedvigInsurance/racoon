@@ -8,7 +8,7 @@ import useRouterRefresh from 'hooks/use-router-refresh'
 import { useTranslation } from 'next-i18next'
 
 const Wrapper = styled.div({
-  padding: '0.75rem 1rem',
+  padding: '1.25rem 1rem',
 })
 
 const SubmitButton = styled(Button)({
@@ -60,13 +60,11 @@ export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
                       type="number"
                       min={field.min}
                       max={field.max}
-                      suffix="m2"
                     />
                   )
               }
             })}
           </Space>
-
           <SubmitButton type="submit" $variant="outlined" disabled={state === 'submitting'}>
             Update information
           </SubmitButton>

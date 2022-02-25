@@ -14,8 +14,8 @@ const Wrapper = styled.div({
 
 const Row = styled(Space)({
   display: 'flex',
-  marginTop: '0.5rem',
   alignItems: 'center',
+  marginTop: '0.25rem',
 })
 
 const Reviews = styled(Row)({
@@ -35,8 +35,8 @@ export const Intro = ({ street, price }: IntroProps) => {
       <Heading headingLevel="h2" variant="s" colorVariant="dark">
         {street}
       </Heading>
-      <Space y={1.5}>
-        <Row x={0.5}>
+      <div>
+        <Row x={0}>
           <MonthlyPrice price={price} />
         </Row>
         <div>
@@ -46,7 +46,7 @@ export const Intro = ({ street, price }: IntroProps) => {
             <span>1697 reviews</span>
           </Reviews>
         </div>
-      </Space>
+      </div>
     </Wrapper>
   )
 }

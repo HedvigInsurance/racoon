@@ -15,7 +15,6 @@ const Wrapper = styled.div({
 
 const LoadingContent = styled.div({
   position: 'relative',
-  maxWidth: '20ch',
   margin: '0 auto',
   overflow: 'hidden',
   boxSizing: 'border-box',
@@ -25,7 +24,7 @@ const LoadingContent = styled.div({
 const Overlay = styled.div({
   position: 'absolute',
   inset: 0,
-  background: 'linear-gradient(white, transparent, transparent, white)',
+  background: 'linear-gradient(white, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), white)',
 })
 
 const fadeInUp = keyframes({
@@ -46,25 +45,24 @@ const fadeInUp = keyframes({
 const Text = styled.p(({ theme }) => ({
   margin: 0,
   fontSize: '1.5rem',
-  lineHeight: 1.33,
+  lineHeight: 1.5,
   fontFamily: theme.fonts.body,
 
   opacity: 0,
-  animation: `${fadeInUp} 3.5s cubic-bezier(0.39, 0.575, 0.565, 1) infinite`,
+  animation: `${fadeInUp} 5.5s cubic-bezier(0.39, 0.575, 0.565, 1) infinite`,
 }))
 
 const TEXTS = [
-  'Building your home insurance',
-  'Covers fire, burglary,',
-  'theft, damage,',
-  'assault, travels,',
-  'sickness on vacation,',
-  'appliances,',
-  'among other things.',
-  'All-risk included.',
-  'No paperwork,',
-  'no phone lines,',
-  'no hassle.',
+  'Building your insurance',
+  'Comprehensive coverage',
+  'All-risk included',
+  '5-star rating on Trustpilot',
+  'No paperwork or',
+  'phone lines',
+  'No interrogations or',
+  'shaming',
+  'Just insurance,',
+  'for how people live today',
 ]
 
 const LoadingPage: NextPage = () => {

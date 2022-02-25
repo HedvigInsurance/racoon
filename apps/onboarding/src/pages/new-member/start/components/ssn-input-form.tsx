@@ -1,4 +1,4 @@
-import { Button, Heading, InputField, Space } from 'ui'
+import { Button, InputField, Space } from 'ui'
 import React, { useEffect, useState } from 'react'
 import { useCreateQuoteBundleMutation, useCreateQuoteCartMutation } from '@/services/apollo/types'
 
@@ -77,21 +77,20 @@ export const SsnInputForm = () => {
     )
   }
 
+  const errorMessage = quoteBundleError ? "Couldn't create quote, please try again" : undefined
+
   return (
     <>
-      {(quoteBundleError || (quoteBundleData && !hasQuoteBundle)) && (
-        <Heading variant="xs" headingLevel="h3" colorVariant="dark">
-          {"Couldn't create quote, please try again"}
-        </Heading>
-      )}
       <form onSubmit={handleSubmit} id="ssn-form">
         <InputField
           label="Personal number"
           placeholder="YYMMDDXXXX"
+          inputMode="numeric"
           required
           value={ssnValue}
           name="ssn"
           onChange={handleInputChange}
+          errorMessage={errorMessage}
         />
       </form>
       <Space y={3}>

@@ -1,5 +1,6 @@
 import { Footer, FooterProps } from './components/footer'
 import type { GetServerSideProps, NextPage } from 'next'
+import { InsuranceSelector, InsuranceSelectorOption } from './components/insurance-selector'
 import { Intro, IntroProps } from './components/intro'
 import { QuickForm, QuickFormProps } from './components/quick-form'
 import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/services/apollo/types'
@@ -15,6 +16,7 @@ import { YourInformation } from './components/your-information'
 import { createApolloClient } from '@/services/apollo'
 import { getBundlePrice } from './selectors/get-bundle-price'
 import { getInformationTable } from './selectors/get-information-table'
+import { getInsuranceOptions } from './selectors/get-insurance-options'
 import { getLocale } from '@/lib/l10n'
 import { getMainQuote } from './selectors/get-main-quote'
 import { getQuickForm } from './selectors/get-quick-form'
@@ -29,6 +31,7 @@ type Props = {
   footer: FooterProps
   yourInformation: Table
   quickForm: QuickFormProps
+  insuranceOptions: Array<InsuranceSelectorOption>
 }
 
 const fadeInUp = keyframes({
@@ -61,14 +64,21 @@ const Col = styled.div({
 })
 
 const Content = styled.div({
+  maxWidth: '600px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
   [mq.md]: {
-    maxWidth: '600px',
-    margin: 'auto',
     padding: '2rem 1rem',
   },
 })
 
-const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, quickForm }) => {
+const NewMemberCartPage: NextPage<Props> = ({
+  intro,
+  footer,
+  yourInformation,
+  quickForm,
+  insuranceOptions,
+}) => {
   return (
     <AnimateIn>
       <PageLayout headerVariant="light">
@@ -82,8 +92,9 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
               <Intro {...intro} />
               <YourInformation table={yourInformation} />
               <QuickForm {...quickForm} />
-              <UpsellCard />
+              <InsuranceSelector options={insuranceOptions} />
               <Benefits />
+              <UpsellCard />
               <ContactCard />
             </Content>
             <Footer {...footer} />
@@ -110,6 +121,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
     const mainQuote = getMainQuote(selectedVariant)
     const price = getBundlePrice(selectedVariant)
     const street = mainQuote.data.street
+    const insuranceOptions = getInsuranceOptions(data, selectedVariant)
 
     return {
       props: {
@@ -120,6 +132,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query, loc
           quoteCartId,
           fields: getQuickForm(mainQuote),
         },
+        insuranceOptions,
 
         ...(await serverSideTranslations(locale as string)),
       },

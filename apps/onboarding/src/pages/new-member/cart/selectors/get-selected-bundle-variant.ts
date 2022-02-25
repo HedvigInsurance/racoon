@@ -10,7 +10,7 @@ export const getSelectedBundleVariant = (data: QuoteCartQuery, insuranceTypes: A
     return variantInsuranceTypes.sort().join() === insuranceTypes.concat().sort().join()
   })
 
-  return variant ?? bundle.possibleVariations[0]
+  return variant ?? bundle.possibleVariations[bundle.possibleVariations.length - 1]
 }
 
 export type QuoteBundleVariant = ReturnType<typeof getSelectedBundleVariant>
