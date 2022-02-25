@@ -58,10 +58,10 @@ const TEXTS = [
   'All-risk included',
   'Cancel at any time',
   'Five-star rated service',
-  'No paperwork',
-  'or phone lines',
-  'No interrogations',
-  'or shaming',
+  'No paperwork or',
+  'phone lines',
+  'No interrogations or',
+  'shaming',
   'No problems',
 ]
 
