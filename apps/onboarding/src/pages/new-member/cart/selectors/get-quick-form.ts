@@ -59,7 +59,7 @@ const getLivingSpaceField = (quote: BundledQuote): InputField => {
 }
 
 export const getQuickForm = (quote: BundledQuote): Array<InputField> => {
-  const fields: Array<InputField> = [getLivingSpaceField(quote)]
+  const fields: Array<InputField> = []
 
   if (isStudentElligible(quote)) {
     fields.push(getIsStudentField(quote))
