@@ -1,4 +1,4 @@
-import { Button, InputField, InputStepper, Space } from 'ui'
+import { Button, InputStepper, Space } from 'ui'
 import { InputRadio, RadioGroup } from './radio-group'
 
 import type { InputField as InputFieldType } from '../types'
@@ -50,18 +50,6 @@ export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
                         />
                       ))}
                     </RadioGroup>
-                  )
-                case 'number':
-                  return (
-                    <InputField
-                      key={field.name}
-                      {...field}
-                      label={t(field.label)}
-                      type="number"
-                      min={field.min}
-                      max={field.max}
-                      suffix="m2"
-                    />
                   )
               }
             })}
