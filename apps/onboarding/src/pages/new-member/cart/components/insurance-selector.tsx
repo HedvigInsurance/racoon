@@ -13,6 +13,7 @@ const Wrapper = styled.div({
 const InfoRow = styled(Space)({
   display: 'flex',
   justifyContent: 'space-between',
+  gap: '0.5rem',
 })
 
 const Title = styled.p(({ theme }) => ({

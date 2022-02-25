@@ -9,7 +9,7 @@ export type PriceProps = {
 
 const Amount = styled.p(({ theme }) => ({
   fontSize: '1rem',
-  lineHeight: '1.5rem',
+  lineHeight: 1.4,
   color: theme.colors.gray900,
   margin: 0,
 }))

@@ -1,4 +1,4 @@
-import { Button, Heading, Space } from 'ui'
+import { Heading, Space } from 'ui'
 import { Table } from '../types'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
@@ -18,8 +18,8 @@ const Row = styled.div(({ theme }) => ({
   alignItems: 'center',
   padding: '0.75rem 0',
   ':not(&:last-of-type)': {
-    borderBottom: `1px solid ${theme.colors.gray300}`
-  }
+    borderBottom: `1px solid ${theme.colors.gray300}`,
+  },
 }))
 
 const TableTitle = styled.p(({ theme }) => ({
@@ -33,7 +33,7 @@ const TableValue = styled.p(({ theme }) => ({
   color: theme.colors.gray900,
   fontSize: '0.875rem',
   textAlign: 'right',
-  whiteSpace: 'pre-line'
+  whiteSpace: 'pre-line',
 }))
 
 type Props = { table: Table }
@@ -58,7 +58,7 @@ export const YourInformation = ({ table }: Props) => {
         ))}
       </Table>
 
-      <Button $variant="outlined">{t('CHECKOUT_EDIT_INFORMATION_BUTTON')}</Button>
+      {/* <Button $variant="outlined">{t('CHECKOUT_EDIT_INFORMATION_BUTTON')}</Button> */}
     </Wrapper>
   )
 }
