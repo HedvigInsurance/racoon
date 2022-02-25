@@ -56,13 +56,13 @@ const TEXTS = [
   'Building your insurance',
   'Comprehensive coverage',
   'All-risk included',
-  'Cancel at any time',
-  'Five-star rated service',
+  '5-star rating on Trustpilot',
   'No paperwork or',
   'phone lines',
   'No interrogations or',
   'shaming',
-  'No problems',
+  'Just insurance,',
+  'for how people live today',
 ]
 
 const LoadingPage: NextPage = () => {
