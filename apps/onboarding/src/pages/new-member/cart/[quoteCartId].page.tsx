@@ -92,6 +92,7 @@ const NewMemberCartPage: NextPage<Props> = ({
               <Intro {...intro} />
               <YourInformation table={yourInformation} />
               <InsuranceSelector options={insuranceOptions} />
+              <Benefits />
               <QuickForm {...quickForm} />
               <UpsellCard />
               <ContactCard />
