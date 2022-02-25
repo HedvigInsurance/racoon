@@ -27,6 +27,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     lineHeight: $size === 'lg' ? '1.5rem' : '1rem',
     fontFamily: theme.fonts.body,
     fontSize: '1rem',
+    fontWeight: 400,
     border: '1px solid',
     borderRadius: $size === 'lg' ? '0.5rem' : '0.375rem',
     maxWidth: '100%',
