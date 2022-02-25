@@ -34,7 +34,7 @@ const Content = styled.div({
   [mq.md]: {
     maxWidth: '600px',
     margin: 'auto',
-    padding: '4rem 1rem',
+    padding: '6rem 1rem',
   },
 })
 
