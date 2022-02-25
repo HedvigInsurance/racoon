@@ -87,7 +87,6 @@ const NewMemberCartPage: NextPage<Props> = ({ intro, footer, yourInformation, qu
               <Benefits />
               <QuickForm {...quickForm} />
               <UpsellCard />
-              <Benefits />
               <ContactCard />
             </Content>
             <Footer {...footer} />

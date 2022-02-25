@@ -6,7 +6,7 @@ import Image from 'next/image'
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
-  padding: '0.75rem 1rem',
+  padding: '1.25rem 1rem',
 })
 
 const Card = styled.div(({ theme }) => ({
@@ -24,6 +24,12 @@ const Content = styled.div({
 })
 
 const Title = styled.p({
+  fontSize: '1.25rem',
+  marginTop: 0,
+  marginBottom: '0.75rem',
+})
+
+const ListTitle = styled.p({
   marginTop: 0,
   marginBottom: '0.75rem',
 })
@@ -48,13 +54,13 @@ const Footer = styled.div({
 
 export const UpsellCard = () => (
   <Wrapper>
-    <p>Get more coverage</p>
+    <Title>Get more coverage</Title>
     <Card>
       <Header>
         <Image src={AccidentImg} alt="Accident image" />
       </Header>
       <Content>
-        <Title>Accident insurance</Title>
+        <ListTitle>Accident insurance</ListTitle>
         <List>
           <Item>
             <Arrow /> Covers all co-insured

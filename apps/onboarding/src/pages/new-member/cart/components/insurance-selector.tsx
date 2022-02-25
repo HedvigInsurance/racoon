@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 const Wrapper = styled.div({
   width: '100%',
-  padding: '0.75rem 1rem',
+  padding: '1.25rem 1rem',
 })
 
 const InfoRow = styled(Space)({
