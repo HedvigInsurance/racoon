@@ -3,7 +3,8 @@ import { Table } from '../types'
 
 const getAddress = (quote: BundledQuote) => {
   const { street, zipCode, city } = quote.data
-  return [street, zipCode, city].filter((item) => item).join(', ')
+  const address = `${street} \n ${zipCode} ${city || ''}`
+  return address
 }
 
 const getName = (quote: BundledQuote) => {
