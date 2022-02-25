@@ -30,7 +30,9 @@ const Wrapper = styled.div({
 
 const InnerWrapper = styled.div({
   width: '100%',
+  maxWidth: '600px',
   height: '100%',
+  padding: '0 1rem',
   display: 'flex',
   gap: '1rem',
   alignItems: 'center',
@@ -38,7 +40,6 @@ const InnerWrapper = styled.div({
 
   [mq.lg]: {
     padding: '0 2rem',
-    maxWidth: '600px',
   },
 })
 

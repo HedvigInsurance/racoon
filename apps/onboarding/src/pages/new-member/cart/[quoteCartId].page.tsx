@@ -62,9 +62,10 @@ const Col = styled.div({
 })
 
 const Content = styled.div({
+  maxWidth: '600px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
   [mq.md]: {
-    maxWidth: '600px',
-    margin: 'auto',
     padding: '2rem 1rem',
   },
 })
