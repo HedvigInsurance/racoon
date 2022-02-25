@@ -29,13 +29,13 @@ const InfoDescription = styled.p(({ theme }) => ({
 
 const IconWrapper = styled.div({
   flexShrink: 0,
-  paddingTop: '2px'
+  paddingTop: '2px',
 })
 
 export const Benefits = () => {
   return (
     <Wrapper y={1}>
-      <Heading headingLevel="h3" variant="s" colorVariant="dark">
+      <Heading headingLevel="h3" variant="xs" colorVariant="dark">
         Why choose Hedvig?
       </Heading>
 

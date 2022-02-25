@@ -43,3 +43,5 @@ type NumberField = FieldBase & {
 }
 
 export type InputField = StepperField | RadioField | NumberField
+
+export type Price = { amount: number; currency: string }
