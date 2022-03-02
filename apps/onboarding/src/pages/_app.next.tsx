@@ -1,6 +1,6 @@
 import '@/styles/global.css'
 
-import { GTM_ID, pageview } from '@/services/gtm'
+import { GTM_ID, pageview, useGTMUserProperties } from '@/services/gtm'
 
 import { ApolloProvider } from '@apollo/client'
 import type { AppProps } from 'next/app'
@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   const { adtractionScriptSrc } = useCurrentLocale()
   const apolloClient = useApollo(pageProps)
 
+  useGTMUserProperties()
   useEffect(() => {
     router.events.on('routeChangeComplete', pageview)
     return () => router.events.off('routeChangeComplete', pageview)
