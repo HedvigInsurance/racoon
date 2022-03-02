@@ -9,10 +9,12 @@ export const useTranslateTextLabel = () => {
     (label?: TextLabelProps) => {
       if (label) {
         const { text, placeholders } = label
-        return placeholders?.reduce(
-          (acc, placeholder) => acc.replace(placeholder.pattern, t(placeholder.key)),
-          text,
-        )
+        if (placeholders)
+          return placeholders.reduce(
+            (acc, placeholder) => acc.replace(placeholder.pattern, t(placeholder.key)),
+            text,
+          )
+        return text
       }
     },
     [t],
