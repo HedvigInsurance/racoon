@@ -5,6 +5,7 @@ import type { ClientPassage } from 'embark-core'
 import { PassageAction } from './components/passage-action'
 import { getNextEmbarkPassage } from 'services/embark'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import styled from '@emotion/styled'
 import { useCallback } from 'react'
 import { useForm } from 'hooks/use-form'
 import { useRouter } from 'next/router'
@@ -20,6 +21,19 @@ type Props = {
   storyName: string
 }
 
+const Wrapper = styled(Space)(({ theme }) => ({
+  backgroundColor: theme.colors.gray100,
+  height: '100vh',
+  padding: '1rem',
+}))
+
+const Message = styled.div(({ theme }) => ({
+  backgroundColor: theme.colors.gray300,
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  maxWidth: '30ch',
+}))
+
 const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   const t = useTranslateTextLabel()
   const refreshData = useRouterRefresh()
@@ -31,29 +45,23 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
 
   return (
-    <Space y={2}>
-      <div>
+    <Wrapper y={2}>
+      <Space y={0.5}>
         {passage.messages.map((message) => (
-          <div key={message.text}>{t(message)}</div>
+          <Message key={message.text}>{t(message)}</Message>
         ))}
-      </div>
+      </Space>
+
+      <form {...goBackForm.formProps}>
+        <Button type="submit">{goBackForm.state === 'submitting' ? 'Loading' : 'Back'}</Button>
+      </form>
 
       {passage.action && (
         <form {...submitDataForm.formProps}>
           <PassageAction action={passage.action} />
-          <Button type="submit">
-            {submitDataForm.state === 'submitting' ? '...' : 'Continue'}
-          </Button>
-          {submitDataForm.errors?.form && <div>Something went wrong</div>}
         </form>
       )}
-
-      <form {...goBackForm.formProps}>
-        <Button type="submit" $loading={goBackForm.state === 'submitting'}>
-          Back
-        </Button>
-      </form>
-    </Space>
+    </Wrapper>
   )
 }
 
