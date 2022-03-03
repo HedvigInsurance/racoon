@@ -3,10 +3,13 @@ import { useEffect } from 'react'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
-export const pageview = (url: string, title: string) => {
+export const pageview = (url: string) => {
   pushToGTMDataLayer({
-    event: 'pageview',
-    page: url,
+    event: 'virtual_page_view',
+      pageData: {
+        page: url,
+        title: document.title,
+      },
   })
 }
 
@@ -15,10 +18,15 @@ type GTMUserProperties = {
   environment: 'development' | 'production' | 'test'
 }
 
+type GTMPageData = {
+  page: string
+  title: string
+}
+
 type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
-  page?: string
+  pageData?: GTMPageData
 }
 
 /**
