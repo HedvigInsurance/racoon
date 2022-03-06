@@ -11,7 +11,7 @@ export type {
   ClientGraphQLAction,
 } from './api/types'
 export type { JSONStory } from '@/angel/types'
-export type { TextLabel } from '@/shared/types'
+export type { TextLabel, Passage as EmbarkPassage } from '@/shared/types'
 export { PassageElement } from '@/shared/types'
 
 export const Embark = {

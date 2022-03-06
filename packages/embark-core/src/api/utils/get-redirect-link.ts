@@ -1,4 +1,4 @@
-import { LogicalOperator, Redirect, WhenStatement } from '@/shared/types'
+import { LogicalOperator, PassageRedirect, WhenStatement } from '@/shared/types'
 
 import { Store } from '../types'
 import { WhenOperator } from '../../shared/types'
@@ -44,19 +44,23 @@ const evaluateCondition = (statement: WhenStatement, store: Store) => {
     : storeValue < parsedValue
 }
 
-export const getRedirectLink = (store: Store, redirects: Array<Redirect>) => {
+export const getRedirectLink = (store: Store, redirects: Array<PassageRedirect>) => {
   for (const redirect of redirects) {
     let isPassing: boolean
 
-    if (redirect.logicalOperator === LogicalOperator.AND) {
-      isPassing = redirect.conditions.every((statement) => evaluateCondition(statement, store))
+    if (redirect.condition.operator === LogicalOperator.AND) {
+      isPassing = redirect.condition.statements.every((statement) =>
+        evaluateCondition(statement, store),
+      )
     } else {
-      invariant(redirect.logicalOperator === LogicalOperator.OR, 'Unknown logical operator')
-      isPassing = redirect.conditions.some((statement) => evaluateCondition(statement, store))
+      invariant(redirect.condition.operator === LogicalOperator.OR, 'Unknown logical operator')
+      isPassing = redirect.condition.statements.some((statement) =>
+        evaluateCondition(statement, store),
+      )
     }
 
     if (isPassing) {
-      return redirect.link.to
+      return redirect
     }
   }
 }

@@ -3,6 +3,7 @@ import {
   GraphQLAPI,
   NumberAction,
   PassageElement,
+  QuoteCartRedirect,
   TextAction,
   TextActionSet,
   TextLabel,
@@ -28,12 +29,15 @@ export type ClientNumberAction = Omit<NumberAction, 'key' | 'link'>
 
 export type ClientGraphQLAction = Pick<GraphQLAPI, 'type' | 'variables' | 'document'>
 
+export type ClientQuoteCartRedirect = Pick<QuoteCartRedirect, 'type' | 'id' | 'insuranceTypes'>
+
 export type ClientAction =
   | ClientSelectAction
   | ClientTextAction
   | ClientTextActionSet
   | ClientNumberAction
   | ClientGraphQLAction
+  | ClientQuoteCartRedirect
 
 export type ClientPassage = {
   name: string

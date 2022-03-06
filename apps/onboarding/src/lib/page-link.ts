@@ -6,8 +6,8 @@ type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
-type CartParams = BaseParams & { quoteCartId: string }
 type WOOfferParams = Required<CartParams> & { showEdit: boolean }
+type CartParams = BaseParams & { quoteCartId: string; types?: Array<string> }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -21,8 +21,13 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/new`,
   privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
-  cart: ({ locale, quoteCartId }: CartParams) =>
-    `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}`,
+  cart: ({ locale, quoteCartId, types = [] }: CartParams) => {
+    const searchParams = new URLSearchParams()
+    for (const insuranceType of types) {
+      searchParams.append('type', insuranceType)
+    }
+    return `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}?${searchParams.toString()}`
+  },
   old_onboarding_se_needer: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-accident-needer`,
   old_onboarding_se_switcher: ({ locale }: Required<BaseParams>) =>

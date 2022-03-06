@@ -17,6 +17,7 @@ export enum PassageElement {
   GraphQLConstantVariable = 'ConstantVariable',
   GraphQLResult = 'Result',
   Error = 'Error',
+  QuoteCartOfferRedirect = 'QuoteCartOfferRedirect',
 }
 
 type Placeholder = { key: string; pattern: string }
@@ -35,7 +36,7 @@ export type Link = {
 export enum WhenOperator {
   GREATER_THAN = '>',
   LESS_THAN = '<',
-  EQUAL = '=',
+  EQUAL = '==',
   PASS = 'PASS',
 }
 
@@ -54,12 +55,24 @@ export type WhenStatement =
       operator: WhenOperator.PASS
     }
 
+export type WhenCondition = {
+  statements: Array<WhenStatement>
+  operator: LogicalOperator
+}
+
 export type Redirect = {
+  type: PassageElement.Redirect
   link: Link
-  conditions: Array<WhenStatement>
-  logicalOperator: LogicalOperator
+  condition: WhenCondition
   key?: string
   value?: string
+}
+
+export type QuoteCartRedirect = {
+  type: PassageElement.QuoteCartOfferRedirect
+  id: string
+  insuranceTypes: Array<string>
+  condition: WhenCondition
 }
 
 export type Tooltip = {
@@ -157,12 +170,14 @@ export type GraphQLAPI = {
 
 export type PassageAction = SelectAction | TextAction | TextActionSet | NumberAction | GraphQLAPI
 
+export type PassageRedirect = Redirect | QuoteCartRedirect
+
 export type Passage = {
   name: string
   messages: Array<Message>
   responses: Array<Message>
   action?: PassageAction
-  redirects: Array<Redirect>
+  redirects: Array<PassageRedirect>
 }
 
 export enum NumberOperator {

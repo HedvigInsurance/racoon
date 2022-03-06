@@ -104,9 +104,15 @@ const NewMemberCartPage: NextPage<Props> = ({
   )
 }
 
+const getInsuranceTypes = (types: string | Array<string> | undefined) => {
+  if (types === undefined) return []
+  if (Array.isArray(types)) return types
+  return types.split(',')
+}
+
 export const getServerSideProps: GetServerSideProps<Props> = async ({ query, locale }) => {
   const quoteCartId = query.quoteCartId as string
-  const selectedInsuranceTypes = (query.type || []) as string[]
+  const selectedInsuranceTypes = getInsuranceTypes(query.type)
   const currentLocale = getLocale(locale as LocaleLabel)
   const client = createApolloClient()
 

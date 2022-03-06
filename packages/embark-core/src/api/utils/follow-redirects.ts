@@ -1,5 +1,6 @@
+import { Passage, PassageElement, PassageRedirect, Redirect } from '@/shared/types'
+
 import { JSONStory } from '@/angel/types'
-import { Passage } from '@/shared/types'
 import { Store } from '../types'
 import { angel } from '@/angel/index'
 import { getRedirectLink } from './get-redirect-link'
@@ -13,13 +14,19 @@ type FollowRedirectsParams = {
   storeDiff?: Store
 }
 
+const isRedirect = (redirect: PassageRedirect): redirect is Redirect => {
+  return redirect.type === PassageElement.Redirect
+}
+
 export const followRedirects = ({
   story,
   store,
   passage,
   storeDiff = {},
 }: FollowRedirectsParams): Store => {
-  let passageName = getRedirectLink(store, passage.redirects)
+  const redirectLink = getRedirectLink(store, passage.redirects)
+  let passageName =
+    redirectLink?.type === PassageElement.Redirect ? redirectLink.link.to : undefined
 
   if (!passageName) return storeDiff
 
@@ -27,7 +34,8 @@ export const followRedirects = ({
   invariant(passageOrUndefined !== undefined, 'Could not determine next passage')
   const nextPassage = angel.parsePassage(passageOrUndefined)
 
-  const redirect = passage.redirects.find((redirect) => redirect.link.to === passageName)
+  const redirect = passage.redirects.filter(isRedirect).find((item) => item.link.to === passageName)
+
   return followRedirects({
     story,
     store,

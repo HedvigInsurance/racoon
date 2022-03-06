@@ -1,5 +1,5 @@
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import { ClientGraphQLAction, Embark, EmbarkHistory, JSONStory } from 'embark-core'
+import { ClientGraphQLAction, Embark, EmbarkHistory, EmbarkPassage, JSONStory } from 'embark-core'
 import type { IncomingMessage, ServerResponse } from 'http'
 import { getCookie, removeCookies, setCookies } from 'cookies-next'
 
@@ -30,7 +30,11 @@ export const getEmbarkHistory = (req: IncomingMessage, res: ServerResponse): Emb
   return []
 }
 
-export const updateEmbarkHistory = (req: IncomingMessage, res: ServerResponse, history: any) => {
+export const updateEmbarkHistory = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  history: EmbarkHistory,
+) => {
   setCookies(COOKIE_KEY, JSON.stringify(history), { req, res, sameSite: 'lax' })
 }
 
@@ -55,9 +59,16 @@ type RunMutationParams = {
   story: JSONStory
   action: ClientGraphQLAction
   history: EmbarkHistory
+  passage: EmbarkPassage
 }
 
-export const runMutation = async ({ client, action, story, history }: RunMutationParams) => {
+export const runMutation = async ({
+  client,
+  action,
+  story,
+  passage,
+  history,
+}: RunMutationParams) => {
   try {
     const variables = Embark.evaluateVariables({ story, history, variables: action.variables })
     console.log(action.document)
@@ -69,7 +80,7 @@ export const runMutation = async ({ client, action, story, history }: RunMutatio
     })
 
     console.log(JSON.stringify(response, null, 2))
-    return response
+    return Embark.submitPassage({ story, history, passage })
   } catch (error) {
     throw error
   }

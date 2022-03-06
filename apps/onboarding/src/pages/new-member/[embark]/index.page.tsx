@@ -1,12 +1,13 @@
 import { Button, Space } from 'ui'
+import { ClientPassage, PassageElement } from 'embark-core'
 import type { GetServerSideProps, NextPage } from 'next'
+import { useCallback, useEffect } from 'react'
 
-import type { ClientPassage } from 'embark-core'
+import { PageLink } from '@/lib/page-link'
 import { PassageAction } from './components/passage-action'
 import { getNextEmbarkPassage } from 'services/embark'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
-import { useCallback } from 'react'
 import { useForm } from 'hooks/use-form'
 import { useRouter } from 'next/router'
 import { useTranslateTextLabel } from './hooks/use-translate-text-label'
@@ -44,7 +45,14 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   })
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
 
-  console.log('passage', passage)
+  const router = useRouter()
+  useEffect(() => {
+    if (passage.action?.type === PassageElement.QuoteCartOfferRedirect) {
+      router.push(
+        PageLink.cart({ quoteCartId: passage.action.id, types: passage.action.insuranceTypes }),
+      )
+    }
+  }, [router, passage])
 
   return (
     <Wrapper y={2}>

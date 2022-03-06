@@ -37,7 +37,12 @@ const getNextPassage = ({
   passage,
   prevPassage,
 }: GetNextPassageParams): Passage | null => {
-  let passageName = getRedirectLink(store, passage.redirects)
+  let passageName: string | undefined = undefined
+
+  const redirect = getRedirectLink(store, passage.redirects)
+  if (redirect && redirect.type === PassageElement.Redirect) {
+    passageName = redirect.link.to
+  }
 
   // no more redirects
   if (!passageName && prevPassage) return passage
@@ -53,7 +58,7 @@ const getNextPassage = ({
   }
 
   const passageOrUndefined = angel.getPassageByName(story, passageName)
-  invariant(passageOrUndefined !== undefined, 'Could not determine next passage')
+  invariant(passageOrUndefined !== undefined, `Could not determine next passage: ${passageName}`)
   const nextPassage = angel.parsePassage(passageOrUndefined)
 
   return getNextPassage({
@@ -66,22 +71,21 @@ const getNextPassage = ({
 
 const fetchPassage = ({ story, history }: FetchPassageParams) => {
   let passage: Passage
+  const store = computeStore({ story, history })
 
-  if (history.length === 0) {
+  const lastHistoryItem = history[history.length - 1]
+  const lastPassageName = lastHistoryItem?.passageName
+
+  if (lastPassageName === undefined || lastPassageName === 'INITIAL_DATA') {
     // Get start (initial) passage
     const startPassage = angel.getStartPassage(story)
     passage = angel.parsePassage(startPassage)
   } else {
-    const lastHistoryItem = history[history.length - 1]
-    const lastPassageName = lastHistoryItem.passageName
-
     const rawLastPassage = angel.getPassageByName(story, lastPassageName)
     invariant(rawLastPassage !== undefined, 'Could not find passage')
     const lastPassage = angel.parsePassage(rawLastPassage)
 
     if (lastPassage.action) {
-      const store = computeStore({ story, history })
-
       const nextPassage = getNextPassage({ story, store, passage: lastPassage })
 
       if (nextPassage === null) {
@@ -97,7 +101,8 @@ const fetchPassage = ({ story, history }: FetchPassageParams) => {
     }
   }
 
-  return convertPassage(passage)
+  const redirect = getRedirectLink(store, passage.redirects)
+  return convertPassage({ passage, store, redirect })
 }
 
 type SubmitUserInputParams = {
@@ -116,7 +121,20 @@ const submitUserInput = ({ story, history, input }: SubmitUserInputParams) => {
 
   const actionStoreDiff = parseActionInput({ action: passage.action, input })
 
-  const tempHistoryItem = { storeDiff: actionStoreDiff, passageName: passage.name }
+  return submitPassage({ story, history, passage, storeDiff: actionStoreDiff })
+}
+
+type SubmitPassageParams = {
+  story: JSONStory
+  history: EmbarkHistory
+  passage: Passage
+  storeDiff?: Store
+}
+
+const submitPassage = ({ story, history, passage, storeDiff = {} }: SubmitPassageParams) => {
+  invariant(passage.action !== undefined, 'Passage does not have an action')
+
+  const tempHistoryItem = { storeDiff, passageName: passage.name }
   const nextHistory = [
     ...history.filter((item) => item.passageName !== tempHistoryItem.passageName),
     tempHistoryItem,
@@ -132,7 +150,7 @@ const submitUserInput = ({ story, history, input }: SubmitUserInputParams) => {
         story,
         store: nextStore,
         passage: nextPassage,
-        storeDiff: actionStoreDiff,
+        storeDiff,
       })
     }
   }
@@ -171,10 +189,7 @@ const evaluateVariables = ({ story, history, variables }: EvaluateVariablesParam
     }
   }
 
-  return {
-    quoteCartId: '866ba7de-5d90-4f13-826b-a2cc6c04dcd6',
-    ...variablesMap,
-  }
+  return variablesMap
 }
 
 type GetPassageParams = {
@@ -192,5 +207,6 @@ export const api = {
   fetchPassage,
   getPassage,
   submitUserInput,
+  submitPassage,
   evaluateVariables,
 }

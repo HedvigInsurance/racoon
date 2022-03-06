@@ -41,4 +41,6 @@ export enum Attribute {
   Value = 'value',
   Redirect = 'redirect',
   When = 'when',
+  QuoteCardId = 'id',
+  InsuranceTypes = 'insurancetypes',
 }

@@ -10,6 +10,11 @@ const parseLessThan = (statement: string): WhenStatement => {
   return { key, value, operator: WhenOperator.LESS_THAN }
 }
 
+const parseEqual = (statement: string): WhenStatement => {
+  const [key, value] = statement.split(WhenOperator.EQUAL).map((s) => s.trim())
+  return { key, value, operator: WhenOperator.EQUAL }
+}
+
 export const parseWhen = (
   rawStatement: string,
   logicalOperator: LogicalOperator,
@@ -22,6 +27,8 @@ export const parseWhen = (
         return parseGraterThan(statement)
       } else if (statement.includes(WhenOperator.LESS_THAN)) {
         return parseLessThan(statement)
+      } else if (statement.includes(WhenOperator.EQUAL)) {
+        return parseEqual(statement)
       } else if (statement === 'true') {
         return { operator: WhenOperator.PASS }
       } else {

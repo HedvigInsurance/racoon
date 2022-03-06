@@ -16,6 +16,7 @@ export const getActionLink = ({ action, store }: Params) => {
     case PassageElement.TextAction:
     case PassageElement.TextActionSet:
     case PassageElement.NumberAction:
+    case PassageElement.GraphQLAPI:
       return action.link.to
   }
 }

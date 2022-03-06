@@ -20,6 +20,12 @@ const computeValue = (left: number, operator: NumberOperator, right: number): nu
 export const evaluateComputedValues = ({ store, values }: EvaluateComputedValuesParams): Store => {
   return values.reduce<Store>((prev, value) => {
     const storeValue = store[value.expression.key]
+
+    if (storeValue === undefined) {
+      console.warn(`Could not find value for computed value ${value.expression.key}`)
+      return prev
+    }
+
     invariant(
       typeof storeValue === 'number',
       `Invalid computed value: ${value.expression.key} -> ${storeValue}`,

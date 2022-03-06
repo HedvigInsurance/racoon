@@ -1,5 +1,6 @@
+import { PassageElement, Redirect } from '@/shared/types'
+
 import { Attribute } from '../types'
-import { Redirect } from '@/shared/types'
 import invariant from 'tiny-invariant'
 import { parseLink } from './parse-link'
 import { parseLogicalOperator } from './parse-logical-operator'
@@ -14,12 +15,12 @@ export const parseRedirect = (element: Element): Redirect => {
   invariant(typeof link === 'string', `Redirect must have a ${Attribute.ToLink} attribute`)
   invariant(typeof when === 'string', `Redirect must have a ${Attribute.When} attribute`)
 
-  const logicalOperator = parseLogicalOperator(when)
+  const operator = parseLogicalOperator(when)
 
   return {
+    type: PassageElement.Redirect,
     link: parseLink(link),
-    conditions: parseWhen(when, logicalOperator),
-    logicalOperator,
+    condition: { statements: parseWhen(when, operator), operator },
     key: key ?? undefined,
     value: value ?? undefined,
   }

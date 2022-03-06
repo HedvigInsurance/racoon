@@ -33,6 +33,7 @@ export const parseTextActionInput = ({ action, input }: Params): Store => {
   } else if (action.mask === TextActionMask.BirthDateReverse) {
     invariant(BIRTH_DATE_REVERSE_REGEX.test(value))
     storeDiff[`${action.key}.Age`] = parseBirthDateAge(value, BIRTH_DATE_PATTERN_REVERSE)
+    storeDiff[action.key] = value.split('-').reverse().join('-')
   }
 
   return storeDiff
