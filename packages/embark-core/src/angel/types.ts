@@ -5,6 +5,11 @@ export type JSONPassage = {
   text: string
 }
 
+export type JSONComputedValue = {
+  key: string
+  value: string
+}
+
 export type JSONStory = {
   id: string
   name: string
@@ -18,6 +23,7 @@ export type JSONStory = {
 
   keywords: Record<string, string>
   trackableProperties: Array<string>
+  computedStoreValues: Array<JSONComputedValue>
 }
 
 export enum Attribute {

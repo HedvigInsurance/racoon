@@ -37,7 +37,7 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (passage.action.type === PassageElement.GraphQLAPI) {
-      await runMutation({ client, history, action: passage.action })
+      await runMutation({ client, story, history, action: passage.action })
     } else {
       const newHistory = Embark.submitUserInput({
         story,

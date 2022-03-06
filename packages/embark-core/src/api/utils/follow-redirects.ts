@@ -1,7 +1,7 @@
 import { JSONStory } from '@/angel/types'
 import { Passage } from '@/shared/types'
 import { Store } from '../types'
-import { angel } from '../../angel'
+import { angel } from '@/angel/index'
 import { getRedirectLink } from './get-redirect-link'
 import invariant from 'tiny-invariant'
 import { parseRedirectInput } from './parse-redirect-input'

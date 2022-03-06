@@ -1,5 +1,6 @@
 import type { JSONStory } from './types'
 import invariant from 'tiny-invariant'
+import { parseComputedValues } from './utils/parse-computed-values'
 import { parsePassage } from './parse'
 
 const getStartPassage = (story: JSONStory) => {
@@ -21,4 +22,5 @@ export const angel = {
   parsePassage,
   getPassage,
   getPassageByName,
+  parseComputedValues,
 }

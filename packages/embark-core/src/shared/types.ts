@@ -14,6 +14,7 @@ export enum PassageElement {
   GraphQLQuery = 'Query',
   GraphQLMutation = 'Mutation',
   GraphQLVariable = 'Variable',
+  GraphQLConstantVariable = 'ConstantVariable',
   GraphQLResult = 'Result',
   Error = 'Error',
 }
@@ -124,8 +125,16 @@ export enum GraphQLVariableType {
 }
 
 export type GraphQLVariable = {
+  type: PassageElement.GraphQLVariable
   key: string
   from: string
+  as: GraphQLVariableType
+}
+
+export type GraphQLConstantVariable = {
+  type: PassageElement.GraphQLConstantVariable
+  key: string
+  value: string
   as: GraphQLVariableType
 }
 
@@ -139,7 +148,7 @@ export type GraphQLResult = {
 export type GraphQLAPI = {
   type: PassageElement.GraphQLAPI
   link: Link
-  variables: Array<GraphQLVariable>
+  variables: Array<GraphQLVariable | GraphQLConstantVariable>
   requestType: GraphQLType
   document: string
   results: Array<GraphQLResult>
@@ -154,4 +163,20 @@ export type Passage = {
   responses: Array<Message>
   action?: PassageAction
   redirects: Array<Redirect>
+}
+
+export enum NumberOperator {
+  Add = '+',
+  Subtract = '-',
+}
+
+export type NumberExpression = {
+  key: string
+  operator: NumberOperator
+  value: number
+}
+
+export type ComputedValue = {
+  key: string
+  expression: NumberExpression
 }

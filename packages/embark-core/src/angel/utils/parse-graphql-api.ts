@@ -1,35 +1,11 @@
-import {
-  GraphQLAPI,
-  GraphQLType,
-  GraphQLVariable,
-  GraphQLVariableType,
-  PassageElement,
-} from '@/shared/types'
+import { GraphQLAPI, GraphQLType, PassageElement } from '@/shared/types'
 
 import { Attribute } from '../types'
 import invariant from 'tiny-invariant'
+import { parseGraphQLConstantVariable } from './parse-graphql-constant-variable'
+import { parseGraphQLResult } from './parse-graphql-result'
+import { parseGraphQLVariable } from './parse-graphql-variable'
 import { parseLink } from './parse-link'
-
-const VARIABLE_TYPE_MAP = Object.values(GraphQLVariableType)
-const parseVariableType = (asType: string) => {
-  if (VARIABLE_TYPE_MAP.includes(asType as GraphQLVariableType)) {
-    return asType as GraphQLVariableType
-  }
-
-  throw new Error(`${PassageElement.GraphQLVariable}: invalid variable type ${asType}`)
-}
-
-const parseVariable = (element: Element): GraphQLVariable => {
-  const key = element.getAttribute(Attribute.Key)
-  const fromKey = element.getAttribute(Attribute.From)
-  const asType = element.getAttribute(Attribute.As)
-
-  invariant(key, `${PassageElement.GraphQLVariable}: key attribute is required`)
-  invariant(fromKey, `${PassageElement.GraphQLVariable}: from attribute is required`)
-  invariant(asType, `${PassageElement.GraphQLVariable}: as attribute is required`)
-
-  return { key, from: fromKey, as: parseVariableType(asType) }
-}
 
 const GRAPHQL_TYPE_MAP: Record<GraphQLType, GraphQLType> = {
   [PassageElement.GraphQLQuery]: PassageElement.GraphQLQuery,
@@ -40,16 +16,6 @@ const parseGraphQLType = (rawType: string) => {
   const type = GRAPHQL_TYPE_MAP[rawType as GraphQLType]
   if (type) return type
   throw new Error(`Invalid GraphQL type: ${rawType}`)
-}
-
-const parseResult = (element: Element) => {
-  const key = element.getAttribute(Attribute.Key)
-  const asKey = element.getAttribute(Attribute.As)
-
-  invariant(key, `${PassageElement.GraphQLResult}: key attribute is required`)
-  invariant(asKey, `${PassageElement.GraphQLResult}: as attribute is required`)
-
-  return { key, as: asKey }
 }
 
 export const parseGraphQLAPI = (element: Element): GraphQLAPI => {
@@ -73,10 +39,17 @@ export const parseGraphQLAPI = (element: Element): GraphQLAPI => {
   const document = requestElement.textContent.trim()
 
   const variableElements = element.getElementsByTagName(PassageElement.GraphQLVariable)
-  const variables = Array.from(variableElements).map(parseVariable)
+  const regularVariables = Array.from(variableElements).map(parseGraphQLVariable)
+
+  const constantVariableElements = element.getElementsByTagName(
+    PassageElement.GraphQLConstantVariable,
+  )
+  const constantVariables = Array.from(constantVariableElements).map(parseGraphQLConstantVariable)
+
+  const variables = [...regularVariables, ...constantVariables]
 
   const resultElements = element.getElementsByTagName(PassageElement.GraphQLResult)
-  const results = Array.from(resultElements).map(parseResult)
+  const results = Array.from(resultElements).map(parseGraphQLResult)
 
   return {
     type: PassageElement.GraphQLAPI,

@@ -1,12 +1,17 @@
-import { ActionInput, EmbarkHistory, HistoryItem, Store } from './types'
-import { GraphQLVariable, GraphQLVariableType, Passage } from '@/shared/types'
+import { ActionInput, EmbarkHistory, Store } from './types'
+import {
+  GraphQLConstantVariable,
+  GraphQLVariable,
+  GraphQLVariableType,
+  Passage,
+} from '@/shared/types'
 
 import { JSONStory } from '@/angel/types'
 import { PassageElement } from '@/shared/types'
 import _get from 'lodash/get'
 import _set from 'lodash/set'
-import { angel } from '../angel'
-import { convertHistoryToStore } from './utils/convert-history-to-store'
+import { angel } from '@/angel/index'
+import { computeStore } from './utils/compute-store'
 import { convertPassage } from './convert'
 import { followRedirects } from './utils/follow-redirects'
 import { getActionLink } from './utils/get-action-link'
@@ -75,7 +80,7 @@ const fetchPassage = ({ story, history }: FetchPassageParams) => {
     const lastPassage = angel.parsePassage(rawLastPassage)
 
     if (lastPassage.action) {
-      const store = convertHistoryToStore(history)
+      const store = computeStore({ story, history })
 
       const nextPassage = getNextPassage({ story, store, passage: lastPassage })
 
@@ -108,74 +113,66 @@ const submitUserInput = ({ story, history, input }: SubmitUserInputParams) => {
 
   invariant(passage.action !== undefined, 'Passage does not have an action')
   invariant(passage.action.type !== PassageElement.GraphQLAPI)
-  let storeDiff = parseActionInput({ action: passage.action, input })
 
-  console.log(JSON.stringify(storeDiff, null, 2))
+  const actionStoreDiff = parseActionInput({ action: passage.action, input })
 
-  const currentStore = convertHistoryToStore(history)
-  const nextStore = { ...currentStore, ...storeDiff }
+  const tempHistoryItem = { storeDiff: actionStoreDiff, passageName: passage.name }
+  const nextHistory = [
+    ...history.filter((item) => item.passageName !== tempHistoryItem.passageName),
+    tempHistoryItem,
+  ]
+  const nextStore = computeStore({ story, history: nextHistory })
 
-  console.log(JSON.stringify(nextStore, null, 2))
-
+  let combinedStoreDiff: Store = {}
   const nextPassageName = getActionLink({ action: passage.action, store: nextStore })
   if (nextPassageName) {
     const nextPassage = getPassage({ story, name: nextPassageName })
     if (nextPassage) {
-      storeDiff = followRedirects({ story, store: nextStore, passage: nextPassage, storeDiff })
+      combinedStoreDiff = followRedirects({
+        story,
+        store: nextStore,
+        passage: nextPassage,
+        storeDiff: actionStoreDiff,
+      })
     }
   }
 
-  const historyItem: HistoryItem = {
-    storeDiff,
-    passageName: passage.name,
-  }
-
+  const historyItem = { ...tempHistoryItem, storeDiff: combinedStoreDiff }
   return [...history.filter((item) => item.passageName !== historyItem.passageName), historyItem]
 }
 
-const generateUUID = () => {
-  let d = new Date().getTime(),
-    d2 = (performance && performance.now && performance.now() * 1000) || 0
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    let r = Math.random() * 16
-    if (d > 0) {
-      r = (d + r) % 16 | 0
-      d = Math.floor(d / 16)
-    } else {
-      r = (d2 + r) % 16 | 0
-      d2 = Math.floor(d2 / 16)
-    }
-    return (c == 'x' ? r : (r & 0x7) | 0x8).toString(16)
-  })
-}
-
 type EvaluateVariablesParams = {
+  story: JSONStory
   history: EmbarkHistory
-  variables: Array<GraphQLVariable>
+  variables: Array<GraphQLVariable | GraphQLConstantVariable>
 }
 
-const evaluateVariables = ({ history, variables }: EvaluateVariablesParams) => {
-  const store = convertHistoryToStore(history)
+const evaluateVariables = ({ story, history, variables }: EvaluateVariablesParams) => {
+  const store = computeStore({ story, history })
   const variablesMap = {}
 
   for (const variable of variables) {
-    const rawValue = _get(store, variable.from)
-    if (rawValue !== undefined) {
-      let value = rawValue
+    if (variable.type === PassageElement.GraphQLVariable) {
+      const rawValue = _get(store, variable.from)
+      if (rawValue !== undefined) {
+        let value = rawValue
 
-      if (variable.as === GraphQLVariableType.Boolean) {
-        value = rawValue === 'true'
+        if (variable.as === GraphQLVariableType.Boolean) {
+          value = rawValue === 'true'
+        }
+
+        _set(variablesMap, variable.key, value)
+      } else {
+        console.log(`Could not find value for variable ${variable.from}`)
+        console.log(JSON.stringify(store, null, 2))
       }
-
-      _set(variablesMap, variable.key, value)
     } else {
-      console.log(`Could not find value for variable ${variable.key}`)
-      console.log(JSON.stringify(store, null, 2))
+      _set(variablesMap, variable.key, variable.value)
     }
   }
 
   return {
-    id: generateUUID(),
+    quoteCartId: '866ba7de-5d90-4f13-826b-a2cc6c04dcd6',
     ...variablesMap,
   }
 }

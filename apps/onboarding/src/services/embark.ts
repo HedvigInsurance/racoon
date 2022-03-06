@@ -52,13 +52,14 @@ export const getNextEmbarkPassage = async ({ storyName, req, res }: GetNextEmbar
 
 type RunMutationParams = {
   client: ApolloClient<NormalizedCacheObject>
+  story: JSONStory
   action: ClientGraphQLAction
   history: EmbarkHistory
 }
 
-export const runMutation = async ({ client, action, history }: RunMutationParams) => {
+export const runMutation = async ({ client, action, story, history }: RunMutationParams) => {
   try {
-    const variables = Embark.evaluateVariables({ variables: action.variables, history })
+    const variables = Embark.evaluateVariables({ story, history, variables: action.variables })
     console.log(action.document)
     console.log(JSON.stringify(variables, null, 2))
 
