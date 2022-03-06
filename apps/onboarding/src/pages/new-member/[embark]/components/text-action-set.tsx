@@ -6,7 +6,7 @@ export const TextActionSet = ({ actions }: ClientTextActionSet) => {
   return (
     <>
       {actions.map(({ key, ...action }) => (
-        <TextAction key={key} name={key} {...action} />
+        <TextAction key={key} name={key} singleAction={false} {...action} />
       ))}
 
       <Button>Continue</Button>

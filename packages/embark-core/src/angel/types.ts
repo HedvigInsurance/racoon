@@ -24,6 +24,8 @@ export enum Attribute {
   NextLink = 'next',
   ToLink = 'to',
   Key = 'key',
+  From = 'from',
+  As = 'as',
   Title = 'title',
   Placeholder = 'placeholder',
   IsLarge = 'large',

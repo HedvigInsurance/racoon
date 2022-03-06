@@ -1,5 +1,6 @@
 import {
   BaseTextAction,
+  GraphQLAPI,
   NumberAction,
   PassageElement,
   TextAction,
@@ -25,11 +26,14 @@ export type ClientTextActionSet = Omit<TextActionSet, 'actions' | 'link'> & {
 
 export type ClientNumberAction = Omit<NumberAction, 'key' | 'link'>
 
+export type ClientGraphQLAction = Pick<GraphQLAPI, 'type' | 'variables' | 'document'>
+
 export type ClientAction =
   | ClientSelectAction
   | ClientTextAction
   | ClientTextActionSet
   | ClientNumberAction
+  | ClientGraphQLAction
 
 export type ClientPassage = {
   name: string

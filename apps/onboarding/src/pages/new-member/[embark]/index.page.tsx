@@ -44,6 +44,8 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   })
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
 
+  console.log('passage', passage)
+
   return (
     <Wrapper y={2}>
       <Space y={0.5}>

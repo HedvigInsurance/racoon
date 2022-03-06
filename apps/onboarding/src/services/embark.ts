@@ -1,8 +1,10 @@
-import { Embark, EmbarkHistory, JSONStory } from 'embark-core'
+import type { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import { ClientGraphQLAction, Embark, EmbarkHistory, JSONStory } from 'embark-core'
 import type { IncomingMessage, ServerResponse } from 'http'
 import { getCookie, removeCookies, setCookies } from 'cookies-next'
 
 import fs from 'fs/promises'
+import gql from 'graphql-tag'
 import path from 'path'
 
 const COOKIE_KEY = '_HEDVIG_EMBARK_HISTORY'
@@ -46,4 +48,28 @@ export const getNextEmbarkPassage = async ({ storyName, req, res }: GetNextEmbar
   const history = getEmbarkHistory(req, res)
   const story = await fetchEmbarkStory(storyName)
   return Embark.fetchPassage({ story, history })
+}
+
+type RunMutationParams = {
+  client: ApolloClient<NormalizedCacheObject>
+  action: ClientGraphQLAction
+  history: EmbarkHistory
+}
+
+export const runMutation = async ({ client, action, history }: RunMutationParams) => {
+  try {
+    const variables = Embark.evaluateVariables({ variables: action.variables, history })
+    console.log(action.document)
+    console.log(JSON.stringify(variables, null, 2))
+
+    const response = await client.mutate({
+      mutation: gql(action.document),
+      variables,
+    })
+
+    console.log(JSON.stringify(response, null, 2))
+    return response
+  } catch (error) {
+    throw error
+  }
 }

@@ -9,6 +9,9 @@ type Params = {
 
 export const getSelectActionLink = ({ action, store }: Params) => {
   const selectedOption = action.options.find((option) => option.value === store[option.key])
-  invariant(selectedOption !== undefined, 'Could not find selected option')
+  invariant(selectedOption !== undefined, () => {
+    const options = action.options.map((option) => option.value).join(', ')
+    return `Could not find selected option ${options} in store: ${JSON.stringify(store, null, 2)}`
+  })
   return selectedOption.link.to
 }

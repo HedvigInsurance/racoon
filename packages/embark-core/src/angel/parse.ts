@@ -3,6 +3,7 @@ import type { Passage, PassageAction } from '@/shared/types'
 import { DOMParser } from '@xmldom/xmldom'
 import { JSONPassage } from './types'
 import { PassageElement } from '@/shared/types'
+import { parseGraphQLAPI } from './utils/parse-graphql-api'
 import { parseMessage } from './utils/parse-message'
 import { parseNumberAction } from './utils/parse-number-action'
 import { parseRedirect } from './utils/parse-redirect'
@@ -36,6 +37,10 @@ const actionParsers: Array<ActionParser> = [
   {
     element: PassageElement.NumberAction,
     parser: parseNumberAction,
+  },
+  {
+    element: PassageElement.GraphQLAPI,
+    parser: parseGraphQLAPI,
   },
 ]
 

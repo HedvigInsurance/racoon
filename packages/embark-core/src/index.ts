@@ -8,6 +8,7 @@ export type {
   ClientTextAction,
   ClientNumberAction,
   ClientTextActionSet,
+  ClientGraphQLAction,
 } from './api/types'
 export type { JSONStory } from '@/angel/types'
 export type { TextLabel } from '@/shared/types'

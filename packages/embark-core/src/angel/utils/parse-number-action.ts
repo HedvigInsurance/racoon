@@ -4,6 +4,7 @@ import { Attribute } from '../types'
 import invariant from 'tiny-invariant'
 import { parseLabel } from './parse-label'
 import { parseLink } from './parse-link'
+import { parseTooltip } from './parse-tooltip'
 
 export const parseNumberAction = (element: Element): NumberAction => {
   const key = element.getAttribute(Attribute.Key)
@@ -12,6 +13,8 @@ export const parseNumberAction = (element: Element): NumberAction => {
   const unit = element.getAttribute(Attribute.Unit)
   const rawMinValue = element.getAttribute(Attribute.MinValue)
   const minValue = rawMinValue ? parseInt(rawMinValue, 10) : undefined
+
+  const tooltipElement = element.getElementsByTagName(PassageElement.Tooltip)[0]
 
   invariant(typeof key === 'string')
   invariant(typeof link === 'string')
@@ -24,5 +27,6 @@ export const parseNumberAction = (element: Element): NumberAction => {
     unit: parseLabel(unit),
     placeholder: placeholder ? parseLabel(placeholder) : undefined,
     minValue,
+    tooltip: tooltipElement ? parseTooltip(tooltipElement) : undefined,
   }
 }

@@ -1,5 +1,6 @@
 import { ClientAction, PassageElement } from 'embark-core'
 
+import { GraphQLAction } from './graphql-action'
 import { NumberAction } from './number-action'
 import { SelectAction } from './select-action'
 import { TextAction } from './text-action'
@@ -22,6 +23,9 @@ export const PassageAction = ({ action }: Props) => {
 
     case PassageElement.NumberAction:
       return <NumberAction {...action} />
+
+    case PassageElement.GraphQLAPI:
+      return <GraphQLAction />
 
     default:
       return null

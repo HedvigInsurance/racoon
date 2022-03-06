@@ -26,5 +26,8 @@ export const convertPassageAction = (action: PassageAction): ClientAction => {
 
     case PassageElement.NumberAction:
       return action
+
+    case PassageElement.GraphQLAPI:
+      return { type: action.type, variables: action.variables, document: action.document }
   }
 }

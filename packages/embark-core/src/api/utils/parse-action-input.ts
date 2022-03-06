@@ -1,5 +1,5 @@
 import { ActionInput, Store } from '../types'
-import { PassageAction, PassageElement } from '@/shared/types'
+import { GraphQLAPI, PassageAction, PassageElement } from '@/shared/types'
 
 import { parseNumberActionInput } from './parse-number-action-input'
 import { parseSelectActionInput } from './parse-select-action-input'
@@ -7,7 +7,7 @@ import { parseTextActionInput } from './parse-text-action-input'
 import { parseTextActionSetInput } from './parse-text-action-set-input'
 
 type Params = {
-  action: PassageAction
+  action: Exclude<PassageAction, GraphQLAPI>
   input: ActionInput
 }
 

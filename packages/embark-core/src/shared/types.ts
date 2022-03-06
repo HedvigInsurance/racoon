@@ -7,6 +7,15 @@ export enum PassageElement {
   TextActionSet = 'TextActionSet',
   NumberAction = 'NumberAction',
   Redirect = 'Redirect',
+  Tooltip = 'Tooltip',
+  TooltipTitle = 'Title',
+  TooltipDescription = 'Description',
+  GraphQLAPI = 'GraphQLApi',
+  GraphQLQuery = 'Query',
+  GraphQLMutation = 'Mutation',
+  GraphQLVariable = 'Variable',
+  GraphQLResult = 'Result',
+  Error = 'Error',
 }
 
 type Placeholder = { key: string; pattern: string }
@@ -50,6 +59,11 @@ export type Redirect = {
   logicalOperator: LogicalOperator
   key?: string
   value?: string
+}
+
+export type Tooltip = {
+  title: TextLabel
+  description: TextLabel
 }
 
 type SelectActionOption = {
@@ -100,9 +114,39 @@ export type NumberAction = {
 
   placeholder?: TextLabel
   minValue?: number
+  tooltip?: Tooltip
 }
 
-export type PassageAction = SelectAction | TextAction | TextActionSet | NumberAction
+export enum GraphQLVariableType {
+  String = 'string',
+  Int = 'int',
+  Boolean = 'boolean',
+}
+
+export type GraphQLVariable = {
+  key: string
+  from: string
+  as: GraphQLVariableType
+}
+
+export type GraphQLType = PassageElement.GraphQLQuery | PassageElement.GraphQLMutation
+
+export type GraphQLResult = {
+  key: string
+  as: string
+}
+
+export type GraphQLAPI = {
+  type: PassageElement.GraphQLAPI
+  link: Link
+  variables: Array<GraphQLVariable>
+  requestType: GraphQLType
+  document: string
+  results: Array<GraphQLResult>
+  errorLink?: Link
+}
+
+export type PassageAction = SelectAction | TextAction | TextActionSet | NumberAction | GraphQLAPI
 
 export type Passage = {
   name: string
