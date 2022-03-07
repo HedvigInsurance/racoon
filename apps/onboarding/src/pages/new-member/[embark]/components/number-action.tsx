@@ -8,7 +8,14 @@ export const NumberAction = ({ placeholder, minValue }: ClientNumberAction) => {
 
   return (
     <>
-      <InputField name="value" type="number" placeholder={t(placeholder)} min={minValue} required />
+      <InputField
+        name="value"
+        type="number"
+        placeholder={t(placeholder)}
+        min={minValue}
+        required
+        autoFocus
+      />
       <Button>Continue</Button>
     </>
   )

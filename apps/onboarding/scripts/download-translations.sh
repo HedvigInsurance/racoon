@@ -53,6 +53,7 @@ lokalise2 \
   --placeholder-format icu \
   --include-tags Embark \
   --indentation 2sp \
+  --all-platforms \
   --filter-langs 'en,da_DK,en_DK,sv_SE,en_SE,nb_NO,en_NO' \
   --language-mapping '[
     {"original_language_iso": "en","custom_language_iso": "default"},

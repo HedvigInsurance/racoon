@@ -17,6 +17,25 @@ const useRouterRefresh = () => {
   return useCallback(() => replace(asPath), [replace, asPath])
 }
 
+const useCartPageRedirect = (passage: ClientPassage) => {
+  const router = useRouter()
+  useEffect(() => {
+    if (passage.action?.type === PassageElement.QuoteCartOfferRedirect) {
+      router.push(
+        PageLink.cart({ quoteCartId: passage.action.id, types: passage.action.insuranceTypes }),
+      )
+    }
+  }, [router, passage])
+}
+
+const useSubmitGraphQL = (submitForm: () => void, passage: ClientPassage) => {
+  useEffect(() => {
+    if (passage.action?.type === PassageElement.GraphQLAPI) {
+      submitForm()
+    }
+  }, [passage, submitForm])
+}
+
 type Props = {
   passage: ClientPassage
   storyName: string
@@ -45,14 +64,8 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   })
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
 
-  const router = useRouter()
-  useEffect(() => {
-    if (passage.action?.type === PassageElement.QuoteCartOfferRedirect) {
-      router.push(
-        PageLink.cart({ quoteCartId: passage.action.id, types: passage.action.insuranceTypes }),
-      )
-    }
-  }, [router, passage])
+  useCartPageRedirect(passage)
+  useSubmitGraphQL(submitDataForm.submitForm, passage)
 
   return (
     <Wrapper y={2}>
