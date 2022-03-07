@@ -7,7 +7,7 @@ import {
 
 import React from 'react'
 import styled from '@emotion/styled'
-import { BaseBlockProps, MarkdownHtmlComponent } from './BaseBlockProps'
+import { StoryblokBaseBlock, MarkdownHtmlComponent } from '@/lib/types'
 
 type ParagraphFontSize = 'sm' | 'md' | 'lg' | 'xl'
 
@@ -28,7 +28,7 @@ const InnerContent = styled.div<{ fontSize: ParagraphFontSize }>`
   }
 `
 
-export interface PlainTextBlockProps extends BaseBlockProps {
+type PlainTextBlockProps = StoryblokBaseBlock & {
   content: MarkdownHtmlComponent
   font_size: ParagraphFontSize
 }

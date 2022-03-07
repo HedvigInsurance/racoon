@@ -2,8 +2,8 @@ import { TABLET_BP_UP, getMinimalColorStyles } from '@/blocks/blockHelpers'
 
 import { TextPosition } from 'utils/textPosition'
 import { fonts } from '@hedviginsurance/brand'
-import { minimalColorComponentColors } from 'blocks/BaseBlockProps'
 import styled from '@emotion/styled'
+import { minimalColorComponentColors } from '@/lib/types'
 
 export type FontSizes = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

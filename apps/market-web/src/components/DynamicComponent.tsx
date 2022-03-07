@@ -1,4 +1,4 @@
-import type { StoryblokBlock, StoryblokComponentName } from '@/lib/types'
+import type { StoryblokBaseBlock, StoryblokComponentName } from '@/lib/types'
 
 import { HeadlineBlock } from '../blocks/HeadlineBlock/HeadlineBlock'
 import { PlainTextBlock } from '../blocks/PlainTextBlock'
@@ -7,18 +7,18 @@ import SbEditable from 'storyblok-react'
 import { SpacerBlock } from '../blocks/SpacerBlock'
 
 type Props = {
-  block: StoryblokBlock
+  block: StoryblokBaseBlock
 }
 
-const Components: Record<StoryblokComponentName, React.FC<any>> = {
+export const BlockComponents: Record<StoryblokComponentName, React.FC<any>> = {
   headline_block: HeadlineBlock,
   spacer_block: SpacerBlock,
   plain_text_block: PlainTextBlock,
 }
 
 const DynamicComponent = ({ block }: Props) => {
-  if (typeof Components[block.component] !== 'undefined') {
-    const Component = Components[block.component]
+  if (typeof BlockComponents[block.component] !== 'undefined') {
+    const Component = BlockComponents[block.component]
     return (
       <SbEditable content={block} key={block._uid}>
         <Component {...block} />

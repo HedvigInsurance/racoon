@@ -1,29 +1,42 @@
 import type { StoryData, StoryblokComponent } from 'storyblok-js-client'
 
-import { MarkdownHtmlComponent } from '@/blocks/BaseBlockProps'
+import { SectionSize } from '@/blocks/blockHelpers'
+
+export type minimalColorComponentColors =
+  | 'standard'
+  | 'standard-inverse'
+  | 'gray700'
+  | 'gray500-inverse'
+  | 'purple300'
+  | 'purple500'
+
+export interface MinimalColorComponent {
+  _uid: string
+  plugin: 'hedvig_minimal_color_picker'
+  color: minimalColorComponentColors
+}
+
+export interface MarkdownHtmlComponent {
+  _uid: string
+  html: string
+  original: string
+  plugin: 'markdown-html'
+}
+
+export interface TextField {
+  _uid: string
+  text: string
+  component: string
+}
 
 export type StoryblokComponentName = 'headline_block' | 'spacer_block' | 'plain_text_block'
 
-interface StoryblokBaseBlock extends StoryblokComponent<StoryblokComponentName> {}
-
-export interface SBSpacerBlock extends StoryblokBaseBlock {
-  component: 'spacer_block'
-  size: string
+export interface StoryblokBaseBlock extends StoryblokComponent<StoryblokComponentName> {
+  color?: MinimalColorComponent
+  size?: SectionSize
+  extra_styling?: string
+  index?: number
 }
-
-export interface SBHeadlineBlock extends StoryblokBaseBlock {
-  component: 'headline_block'
-  text_one: { html: string }
-  text_two: { html: string }
-}
-
-export interface SBPlainTextBlock extends StoryblokBaseBlock {
-  component: 'plain_text_block'
-  content: MarkdownHtmlComponent
-  font_size: 'sm' | 'md' | 'lg' | 'xl'
-}
-
-export type StoryblokBlock = SBHeadlineBlock | SBSpacerBlock | SBPlainTextBlock
 
 export interface StoryblokLinkItem {
   id: number
@@ -41,7 +54,7 @@ export interface StoryblokLinkItem {
 
 interface PageComponent {
   _uid: '4ac3d3bb-4bf5-4b4e-a8b8-ed52cce15635'
-  body: Array<StoryblokBlock>
+  body: Array<StoryblokBaseBlock>
   component: 'page'
   hide_footer: boolean
   page_title: string

@@ -1,13 +1,13 @@
 import { ContentWrapper, SectionWrapper, TABLET_BP_UP } from 'blocks/blockHelpers'
 import { FontSizes, Heading } from 'components/Heading/Heading'
 
-import { BaseBlockProps } from 'blocks/BaseBlockProps'
 import { HedvigSymbol } from '@hedviginsurance/brand'
 import React from 'react'
 import { TextPosition } from 'utils/textPosition'
 import styled from '@emotion/styled'
+import { StoryblokBaseBlock } from '@/lib/types'
 
-interface HeadlineBlockProps extends BaseBlockProps {
+type HeadlineBlockProps = StoryblokBaseBlock & {
   text: string
   text_position: TextPosition
   capitalize?: boolean
