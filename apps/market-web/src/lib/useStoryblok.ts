@@ -1,5 +1,6 @@
-import type { PageStoryData } from './types'
 import { useEffect, useState } from 'react'
+
+import type { PageStoryData } from './types'
 import { getStoryBySlug } from './storyblok'
 
 export default function useStoryblok(originalStory: PageStoryData, preview: boolean = false) {
