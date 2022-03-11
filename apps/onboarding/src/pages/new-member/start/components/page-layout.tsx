@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 const Container = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: theme.colors.white,
+  backgroundColor: theme.colors.gray100,
   height: '100vh',
 }))
 

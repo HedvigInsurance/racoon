@@ -1,4 +1,5 @@
-import type { FormEvent } from 'react'
+import { FormEvent, useCallback, useRef } from 'react'
+
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -17,18 +18,26 @@ type Options = {
   onSuccess?: SuccessFunction
 }
 
-export const useForm = <Data,>({ action, method, onSuccess }: Options) => {
+export const useForm = <Data>({ action, method, onSuccess }: Options) => {
   const router = useRouter()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setFormState({ state: 'submitting', errors: null })
 
     try {
+      const formData = new FormData(event.currentTarget)
+      // @ts-ignore doesn't know about submitter
+      if (event.nativeEvent.submitter) {
+        // @ts-ignore
+        formData.append(event.nativeEvent.submitter.name, event.nativeEvent.submitter.value)
+      }
+
       const response = await fetch(action, {
         method: method || 'post',
-        body: new FormData(event.currentTarget),
+        body: formData,
         credentials: 'same-origin',
       })
 
@@ -49,11 +58,18 @@ export const useForm = <Data,>({ action, method, onSuccess }: Options) => {
     }
   }
 
+  const submitForm = useCallback(() => {
+    if (formRef.current?.reportValidity()) {
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+    }
+  }, [])
+
   const formProps = {
     action,
     method,
     onSubmit: handleSubmit,
+    ref: formRef,
   }
 
-  return { ...formState, formProps }
+  return { ...formState, submitForm, formProps }
 }
