@@ -10,7 +10,8 @@
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
-      "@/services/*": ["services/*"]
+      "@/services/*": ["services/*"],
+      "@/hooks/*": ["hooks/*"]
     },
     "incremental": true
   },
