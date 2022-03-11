@@ -3,13 +3,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Bullet, BulletList } from './components/bullet-list'
 import { Button, Heading, InputField, Space, mq } from 'ui'
-import {
-  EntryPoint,
-  EntryPointField,
-  LocaleField,
-  MarketField,
-  PersonalNumberField,
-} from './shared'
+import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
 
 import { Hero } from '../cart/components/hero'
 import LoadingPage from './loading.page'
@@ -186,7 +180,7 @@ const AnimatedContent = ({ children, animateKey }: AnimatedContentProps) => {
 }
 
 const NewMemberStartPage: NextPage = () => {
-  const { apiMarket, isoLocale } = useCurrentLocale()
+  const { path } = useCurrentLocale()
   const form = useForm({ action: '/api/pages/start' })
   const [entryPoint, setEntryPoint] = useState(EntryPoint.Current)
 
@@ -243,8 +237,6 @@ const NewMemberStartPage: NextPage = () => {
                           <CaptionLink href="https://www.hedvig.com/se/personuppgifter">
                             Så hanterar vi dina personuppgifter
                           </CaptionLink>
-
-                          <input hidden readOnly name={MarketField} value={apiMarket} />
                         </AnimatedContent>
                       )}
                     </AnimatePresence>
@@ -303,8 +295,9 @@ const NewMemberStartPage: NextPage = () => {
 
             <StickyFooter>
               <FooterContent>
-                <input hidden readOnly name={LocaleField} value={isoLocale} />
-                <Button style={{ width: '100%' }}>Fortsätt</Button>
+                <Button style={{ width: '100%' }} name={LocaleField} value={path}>
+                  Fortsätt
+                </Button>
               </FooterContent>
             </StickyFooter>
           </Col>
