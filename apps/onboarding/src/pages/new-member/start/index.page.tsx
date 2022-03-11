@@ -12,6 +12,7 @@ import {
 } from './shared'
 
 import { Hero } from '../cart/components/hero'
+import LoadingPage from './loading.page'
 import type { NextPage } from 'next'
 import { PageLayout } from './components/page-layout'
 import { Tick } from './components/icons/tick'
@@ -189,6 +190,8 @@ const NewMemberStartPage: NextPage = () => {
   const form = useForm({ action: '/api/pages/start' })
   const [entryPoint, setEntryPoint] = useState(EntryPoint.Current)
 
+  if (form.state === 'submitting') return <LoadingPage />
+
   return (
     <PageLayout headerVariant="light">
       <form {...form.formProps}>
@@ -241,7 +244,6 @@ const NewMemberStartPage: NextPage = () => {
                             Så hanterar vi dina personuppgifter
                           </CaptionLink>
 
-                          <input hidden readOnly name={LocaleField} value={isoLocale} />
                           <input hidden readOnly name={MarketField} value={apiMarket} />
                         </AnimatedContent>
                       )}
@@ -301,6 +303,7 @@ const NewMemberStartPage: NextPage = () => {
 
             <StickyFooter>
               <FooterContent>
+                <input hidden readOnly name={LocaleField} value={isoLocale} />
                 <Button style={{ width: '100%' }}>Fortsätt</Button>
               </FooterContent>
             </StickyFooter>

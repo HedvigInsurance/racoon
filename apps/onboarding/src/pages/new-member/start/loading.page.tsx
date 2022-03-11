@@ -21,11 +21,11 @@ const LoadingContent = styled.div({
   padding: '1rem',
 })
 
-const Overlay = styled.div({
+const Overlay = styled.div(({ theme }) => ({
   position: 'absolute',
   inset: 0,
-  background: 'linear-gradient(white, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), white)',
-})
+  background: `linear-gradient(${theme.colors.gray100}, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), ${theme.colors.gray100})`,
+}))
 
 const fadeInUp = keyframes({
   '35%, 50%': {

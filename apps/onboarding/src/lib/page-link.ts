@@ -21,4 +21,8 @@ export const PageLink = {
   privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
   cart: ({ locale, quoteCartId }: CartParams) =>
     `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}`,
+  old_onboarding_se_needer: ({ locale }: Required<BaseParams>) =>
+    `${WEB_ONBOARDING_URL}/${locale}/new-member/home-accident-needer`,
+  old_onboarding_se_switcher: ({ locale }: Required<BaseParams>) =>
+    `${WEB_ONBOARDING_URL}/${locale}/new-member/home-switcher`,
 }

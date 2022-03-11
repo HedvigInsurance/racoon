@@ -71,11 +71,15 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
     [LocaleField]: locale,
   } = await getFormData(req)
 
-  if (!isEntryPoint(entryPoint) || !isMarket(market) || !isLocale(locale)) {
-    return res.status(400).json({ [EntryPointField]: 'GENERIC_ERROR_INPUT_REQUIRED' })
+  if (!isEntryPoint(entryPoint) || !isLocale(locale)) {
+    return res.status(400).json({ form: 'GENERIC_ERROR_INPUT_REQUIRED' })
   }
 
   if (entryPoint === EntryPoint.Current) {
+    if (!isMarket(market)) {
+      return res.status(400).json({ form: 'GENERIC_ERROR_INPUT_REQUIRED' })
+    }
+
     if (typeof personalNumber !== 'string') {
       return res.status(400).json({ [PersonalNumberField]: 'GENERIC_ERROR_INPUT_REQUIRED' })
     }
@@ -98,9 +102,9 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (entryPoint) {
     case EntryPoint.New:
-      return res.redirect(`/new-member/home-accident-needer`)
+      return res.redirect(302, PageLink.old_onboarding_se_needer({ locale }))
 
     case EntryPoint.Switch:
-      return res.redirect(`/switch-member/home-switcher`)
+      return res.redirect(302, PageLink.old_onboarding_se_switcher({ locale }))
   }
 }
