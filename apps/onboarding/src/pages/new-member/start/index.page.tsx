@@ -5,9 +5,9 @@ import { Button, Heading, InputField, Space, mq } from 'ui'
 import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
 import type { GetStaticProps, NextPage } from 'next'
 
-import { Hero } from '../cart/components/hero'
+import { HeroImage } from '@/components/hero-image'
 import { LoadingState } from './components/loading-state'
-import { PageLayout } from './components/page-layout'
+import { PageHeaderLayout } from '@/components/page-header-layout'
 import { RadioGroupItem } from './components/radio-group-item'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
@@ -109,10 +109,10 @@ const NewMemberStartPage: NextPage = () => {
 
   return (
     <>
-      <PageLayout headerVariant="light">
+      <PageHeaderLayout headerVariant="light">
         <form {...form.formProps}>
           <Grid>
-            <Hero
+            <HeroImage
               mobileImgSrc="/racoon-assets/hero_start_mobile.jpg"
               desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
             />
@@ -188,7 +188,7 @@ const NewMemberStartPage: NextPage = () => {
             </Col>
           </Grid>
         </form>
-      </PageLayout>
+      </PageHeaderLayout>
 
       <Overlay visible={form.state === 'submitting'}>
         <LoadingState />

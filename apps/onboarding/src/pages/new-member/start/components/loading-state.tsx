@@ -1,4 +1,4 @@
-import { PageLayout } from './page-layout'
+import { PageHeaderLayout } from '@/components/page-header-layout'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 
@@ -65,7 +65,7 @@ const TEXTS = [
 
 export const LoadingState = () => {
   return (
-    <PageLayout>
+    <PageHeaderLayout>
       <Wrapper>
         <LoadingContent>
           {TEXTS.map((text, i) => (
@@ -76,6 +76,6 @@ export const LoadingState = () => {
           <Overlay />
         </LoadingContent>
       </Wrapper>
-    </PageLayout>
+    </PageHeaderLayout>
   )
 }

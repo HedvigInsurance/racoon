@@ -24,12 +24,12 @@ const Img = styled.img({
   },
 })
 
-type HeroProps = {
+type Props = {
   mobileImgSrc: string
   desktopImgSrc: string
 }
 
-export const Hero = ({ mobileImgSrc, desktopImgSrc }: HeroProps) => {
+export const HeroImage = ({ mobileImgSrc, desktopImgSrc }: Props) => {
   return (
     <Wrapper>
       <picture>
