@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
-import { PageLayout } from './components/page-layout'
+import { PageLayout } from './page-layout'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 
@@ -65,7 +65,7 @@ const TEXTS = [
   'for how people live today',
 ]
 
-const LoadingPage: NextPage = () => {
+const LoadingState: NextPage = () => {
   return (
     <>
       <Head>
@@ -88,4 +88,4 @@ const LoadingPage: NextPage = () => {
   )
 }
 
-export default LoadingPage
+export default LoadingState

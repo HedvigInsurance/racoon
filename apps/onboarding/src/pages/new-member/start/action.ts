@@ -5,7 +5,6 @@ import {
   CreateQuoteCartDocument,
   CreateQuoteCartMutation,
   CreateQuoteCartMutationVariables,
-  Market,
 } from '@/services/apollo/types'
 import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -20,10 +19,6 @@ const client = createApolloClient()
 
 const isEntryPoint = (entryPoint: unknown): entryPoint is EntryPoint => {
   return Object.values(EntryPoint).includes(entryPoint as EntryPoint)
-}
-
-const isMarket = (market: unknown): market is Market => {
-  return Object.values(Market).includes(market as Market)
 }
 
 const isLocale = (locale: unknown): locale is LocaleLabel => {

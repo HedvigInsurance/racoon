@@ -37,6 +37,11 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
       color: $color === 'lavender' ? theme.colors.gray900 : theme.colors.gray100,
       borderColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
+
+      ':focus': {
+        outline: `5px auto ${theme.colors.purple700}`,
+      },
+
       ':hover, :focus': {
         backgroundColor: $color === 'lavender' ? theme.colors.purple800 : theme.colors.gray800,
       },
