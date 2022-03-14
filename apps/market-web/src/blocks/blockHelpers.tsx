@@ -1,3 +1,4 @@
+import { MinimalColorComponent, minimalColorComponentColors } from '@/lib/types'
 import { colorsV3, fonts } from '@hedviginsurance/brand'
 
 import React from 'react'
