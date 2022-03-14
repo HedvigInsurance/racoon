@@ -6,7 +6,7 @@ const Wrapper = styled.div({
   maxHeight: '600px',
   overflow: 'hidden',
 
-  [mq.md]: {
+  [mq.lg]: {
     position: 'fixed',
     maxHeight: 'none',
     width: '50vw',
@@ -17,19 +17,20 @@ const Wrapper = styled.div({
 const Img = styled.img({
   display: 'block',
   width: '100%',
-  [mq.md]: {
+
+  [mq.lg]: {
     height: '100%',
     width: '50vw',
     objectFit: 'cover',
   },
 })
 
-type HeroProps = {
+type Props = {
   mobileImgSrc: string
   desktopImgSrc: string
 }
 
-export const Hero = ({ mobileImgSrc, desktopImgSrc }: HeroProps) => {
+export const HeroImage = ({ mobileImgSrc, desktopImgSrc }: Props) => {
   return (
     <Wrapper>
       <picture>

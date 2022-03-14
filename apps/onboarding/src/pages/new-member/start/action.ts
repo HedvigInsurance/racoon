@@ -51,6 +51,10 @@ const createSwedishQuoteBundle = async (variables: CreateQuoteBundleMutationVari
     throw new Error('Could not create quote bundle')
   }
 
+  if (data.quoteCart_createSwedishBundle.__typename === 'QuoteBundleError') {
+    throw new Error('Error creating quote bundle')
+  }
+
   return data.quoteCart_createSwedishBundle
 }
 
@@ -84,10 +88,10 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
         input: { ssn: personalNumber, isStudent: false },
       })
 
-      return res.redirect(PageLink.cart({ quoteCartId }))
+      return res.redirect(PageLink.old_offer({ locale: path, quoteCartId }))
     } catch (error) {
-      console.log(error)
-      return res.status(400).json({ form: 'GENERIC_ERROR_INPUT_REQUIRED' })
+      console.warn(error)
+      return res.redirect(302, PageLink.old_onboarding_se_needer({ locale: path }))
     }
   }
 

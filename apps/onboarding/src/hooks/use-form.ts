@@ -43,7 +43,7 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
 
       if (response.ok) {
         if (response.redirected) {
-          router.push(response.url)
+          await router.push(response.url)
         } else {
           onSuccess?.((await response.json()) as Data)
           setFormState({ state: 'idle', errors: null })
@@ -53,8 +53,7 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
         setFormState({ state: 'idle', errors })
       }
     } catch (error) {
-      console.error(error)
-      setFormState({ state: 'idle', errors: { form: 'Error' } })
+      setFormState({ state: 'idle', errors: { form: 'Unknown error' } })
     }
   }
 

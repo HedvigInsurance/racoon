@@ -39,12 +39,12 @@ const Main = styled.main({
 
 type HeaderVariant = 'light' | 'dark'
 
-type PageLayoutProps = {
+type Props = {
   children: React.ReactNode
   headerVariant?: HeaderVariant
 }
 
-export const PageLayout = ({ children, headerVariant = 'dark' }: PageLayoutProps) => {
+export const PageHeaderLayout = ({ children, headerVariant = 'dark' }: Props) => {
   return (
     <Container>
       <Header variant={headerVariant}>

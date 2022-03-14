@@ -7,9 +7,9 @@ import { QuoteCartDocument, QuoteCartQuery, QuoteCartQueryVariables } from '@/se
 
 import { Benefits } from './components/benefits'
 import { ContactCard } from './components/contact-card'
-import { Hero } from './components/hero'
+import { HeroImage } from '@/components/hero-image'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { PageLayout } from '../start/components/page-layout'
+import { PageHeaderLayout } from '@/components/page-header-layout'
 import { Table } from './types'
 import { UpsellCard } from './components/upsell-card'
 import { YourInformation } from './components/your-information'
@@ -48,7 +48,7 @@ const AnimateIn = styled.div({
 })
 
 const Grid = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     height: '100vh',
@@ -56,7 +56,7 @@ const Grid = styled.div({
 })
 
 const Col = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     gridColumn: '2',
     width: '50vw',
     overflow: 'auto',
@@ -67,7 +67,7 @@ const Content = styled.div({
   maxWidth: '600px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  [mq.md]: {
+  [mq.lg]: {
     padding: '2rem 1rem',
   },
 })
@@ -81,9 +81,9 @@ const NewMemberCartPage: NextPage<Props> = ({
 }) => {
   return (
     <AnimateIn>
-      <PageLayout headerVariant="light">
+      <PageHeaderLayout headerVariant="light">
         <Grid>
-          <Hero
+          <HeroImage
             mobileImgSrc="/racoon-assets/hero_mobile.jpg"
             desktopImgSrc="/racoon-assets/hero_desktop.jpg"
           />
@@ -100,7 +100,7 @@ const NewMemberCartPage: NextPage<Props> = ({
             <Footer {...footer} />
           </Col>
         </Grid>
-      </PageLayout>
+      </PageHeaderLayout>
     </AnimateIn>
   )
 }
