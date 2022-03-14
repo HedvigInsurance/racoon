@@ -48,7 +48,7 @@ const AnimateIn = styled.div({
 })
 
 const Grid = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     height: '100vh',
@@ -56,7 +56,7 @@ const Grid = styled.div({
 })
 
 const Col = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     gridColumn: '2',
     width: '50vw',
     overflow: 'auto',
@@ -67,7 +67,7 @@ const Content = styled.div({
   maxWidth: '600px',
   marginLeft: 'auto',
   marginRight: 'auto',
-  [mq.md]: {
+  [mq.lg]: {
     padding: '2rem 1rem',
   },
 })

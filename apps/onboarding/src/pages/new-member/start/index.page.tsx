@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 const Grid = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     height: '100vh',
@@ -25,7 +25,7 @@ const Grid = styled.div({
 })
 
 const Col = styled.div({
-  [mq.md]: {
+  [mq.lg]: {
     gridColumn: '2',
     width: '50vw',
     overflow: 'auto',
@@ -35,14 +35,21 @@ const Col = styled.div({
 const Content = styled(Space)({
   padding: '1rem',
   width: '100%',
-  minHeight: '100%',
-  maxWidth: '30rem',
+  maxWidth: '600px',
   margin: '0 auto',
+  boxSizing: 'border-box',
 
   [mq.md]: {
-    maxWidth: '600px',
-    margin: 'auto',
-    padding: '6rem 1rem',
+    minHeight: 'initial',
+    padding: '2rem 1rem',
+  },
+
+  [mq.lg]: {
+    padding: '2rem',
+  },
+
+  [mq.xl]: {
+    paddingTop: '6rem',
   },
 })
 
@@ -71,13 +78,11 @@ const StickyFooter = styled.div(({ theme }) => ({
   bottom: 0,
   width: '100%',
   backgroundColor: theme.colors.white,
-  padding: '1rem',
-  paddingBottom: '2rem',
   boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.05), 0px -8px 16px rgba(0, 0, 0, 0.05)',
   display: 'flex',
   justifyContent: 'stretch',
 
-  [mq.md]: {
+  [mq.lg]: {
     width: '50vw',
   },
 }))
@@ -86,6 +91,13 @@ const FooterContent = styled.div({
   width: '100%',
   maxWidth: '600px',
   margin: 'auto',
+  padding: '1rem',
+  paddingBottom: '2rem',
+
+  [mq.lg]: {
+    paddingLeft: '2rem',
+    paddingRight: '2rem',
+  },
 })
 
 const Spacer = styled.div({
