@@ -7,7 +7,7 @@ import { Tick } from './icons/tick'
 import styled from '@emotion/styled'
 
 const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
-  padding: '1rem',
+  padding: 0,
   backgroundColor: theme.colors.white,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
   borderRadius: '0.5rem',
@@ -29,6 +29,7 @@ const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
 }))
 
 const InnerWrapper = styled.div({
+  padding: '1rem',
   display: 'flex',
   gap: '1rem',
 })
@@ -67,8 +68,10 @@ const Description = styled.p(({ theme }) => ({
   color: theme.colors.gray600,
 }))
 
-const AnimatedContentWrapper = styled(motion.div)({
-  paddingTop: '1.5rem',
+const StyledAnimatedContent = styled(motion.div)({
+  overflow: 'hidden',
+  padding: '1rem',
+  paddingTop: '0.5rem',
 })
 
 type AnimatedContentProps = {
@@ -77,7 +80,7 @@ type AnimatedContentProps = {
 
 const AnimatedContent = ({ children }: AnimatedContentProps) => {
   return (
-    <motion.div
+    <StyledAnimatedContent
       initial="collapsed"
       animate="open"
       exit="collapsed"
@@ -86,10 +89,9 @@ const AnimatedContent = ({ children }: AnimatedContentProps) => {
         collapsed: { opacity: 0, height: 0 },
       }}
       transition={{ duration: 0.25 }}
-      style={{ overflow: 'hidden' }}
     >
-      <AnimatedContentWrapper>{children}</AnimatedContentWrapper>
-    </motion.div>
+      {children}
+    </StyledAnimatedContent>
   )
 }
 

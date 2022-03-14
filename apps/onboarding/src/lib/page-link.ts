@@ -25,4 +25,6 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-accident-needer`,
   old_onboarding_se_switcher: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-switcher`,
+  old_offer: ({ locale, quoteCartId }: Required<CartParams>) =>
+    `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}`,
 }

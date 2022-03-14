@@ -1,5 +1,3 @@
-import Head from 'next/head'
-import type { NextPage } from 'next'
 import { PageLayout } from './page-layout'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -65,27 +63,19 @@ const TEXTS = [
   'for how people live today',
 ]
 
-const LoadingState: NextPage = () => {
+export const LoadingState = () => {
   return (
-    <>
-      <Head>
-        <title>Hedvig | Loading</title>
-        <meta property="og:title" content="Hedvig" />
-      </Head>
-      <PageLayout>
-        <Wrapper>
-          <LoadingContent>
-            {TEXTS.map((text, i) => (
-              <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
-                {text}
-              </Text>
-            ))}
-            <Overlay />
-          </LoadingContent>
-        </Wrapper>
-      </PageLayout>
-    </>
+    <PageLayout>
+      <Wrapper>
+        <LoadingContent>
+          {TEXTS.map((text, i) => (
+            <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
+              {text}
+            </Text>
+          ))}
+          <Overlay />
+        </LoadingContent>
+      </Wrapper>
+    </PageLayout>
   )
 }
-
-export default LoadingState
