@@ -40,3 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_ENV: test
+          STORYBLOK_API_TOKEN: ${{ secrets.STORYBLOK_API_TOKEN }}
+          STORYBLOK_PREVIEW_SECRET: ${{ secrets.STORYBLOK_PREVIEW_SECRET }}
