@@ -1,11 +1,13 @@
 import { LocaleLabel } from './l10n/locales'
 
+const WEB_ONBOARDING_URL = process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL
+
 type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type CartParams = BaseParams & { quoteCartId: string }
-const WEB_ONBOARDING_URL = process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL
+type WOOfferParams = Required<CartParams> & { showEdit: boolean }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -25,8 +27,11 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-accident-needer`,
   old_onboarding_se_switcher: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-switcher`,
-  old_offer: ({ locale, quoteCartId }: Required<CartParams>) =>
-    `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}`,
   old_landing_page: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member`,
+  old_offer: ({ locale, quoteCartId, showEdit }: WOOfferParams) => {
+    const searchParams = new URLSearchParams()
+    if (showEdit) searchParams.append('showEdit', 'true')
+    return `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}?${searchParams.toString()}`
+  },
 }

@@ -88,7 +88,7 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
         input: { ssn: personalNumber, isStudent: false },
       })
 
-      return res.redirect(PageLink.old_offer({ locale: path, quoteCartId }))
+      return res.redirect(302, PageLink.old_offer({ locale: path, quoteCartId, showEdit: true }))
     } catch (error) {
       console.warn(error)
       return res.redirect(302, PageLink.old_onboarding_se_needer({ locale: path }))
