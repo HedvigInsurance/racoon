@@ -5,6 +5,7 @@ import { PageLayout } from '../components/page-layout'
 import { PageLink } from '@/lib/page-link'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n'
 import { useTranslation } from 'next-i18next'
 
 const fadeInUp = keyframes({
@@ -32,12 +33,15 @@ const Paragrapgh = styled.p(({ theme }) => ({
 
 const ForeverPageReady: NextPage = () => {
   const { t } = useTranslation()
+  const { path } = useCurrentLocale()
 
   return (
     <PageLayout>
       <Wrapper y={1}>
         <Paragrapgh>{t('FOREVER_INTRO_READY_QUESTION')}</Paragrapgh>
-        <LinkButton href={PageLink.landing()}>{t('FOREVER_INTRO_READY_CTA')}</LinkButton>
+        <LinkButton href={PageLink.old_landing_page({ locale: path })}>
+          {t('FOREVER_INTRO_READY_CTA')}
+        </LinkButton>
       </Wrapper>
     </PageLayout>
   )
