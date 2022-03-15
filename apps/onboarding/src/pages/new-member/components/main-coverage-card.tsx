@@ -3,67 +3,67 @@ import { Space, mq } from 'ui'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 
-const Wrapper = styled.div`
-  display: flex;
-  width: min(48rem, 80%);
-  height: 8.125rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray700};
-  border-radius: 8px;
-  overflow: hidden;
+const Wrapper = styled.div(({ theme }) => ({
+  display: 'flex',
+  width: 'min(48rem, 80%)',
+  height: '8.125rem',
+  border: `1px solid ${theme.colors.gray700}`,
+  borderRadius: '8px',
+  overflow: 'hidden',
 
-  ${mq.sm} {
-    height: 22.5rem;
-    flex-flow: column;
-    border-radius: 16px;
-  }
-`
+  [mq.sm]: {
+    height: '22.5rem',
+    flexFlow: 'column',
+    borderRadius: '16px',
+  },
+}))
 
-const ImageFrame = styled.div`
-  position: relative;
-  flex: 1 0 33%;
-  overflow: hidden;
+const ImageFrame = styled.div({
+  position: 'relative',
+  flex: '1 0 33%',
+  overflow: 'hidden',
 
-  ${mq.sm} {
-    flex: 1 1 100%;
-    max-height: 80%;
-  }
-`
+  [mq.sm]: {
+    flex: '1 1 100%',
+    maxHeight: '80%',
+  },
+})
 
-const Section = styled.div`
-  padding: 1em 0.5em;
-  flex-grow: 1;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
+const Section = styled.div({
+  padding: '1em 0.5em',
+  flexGrow: 1,
+  display: 'flex',
+  flexFlow: 'column',
+  justifyContent: 'center',
 
-  ${mq.sm} {
-    padding: 1.5em;
-  }
-`
+  [mq.sm]: {
+    padding: '1.5em',
+  },
+})
 
-const Title = styled.h1`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: 1.125rem;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray900};
+const Title = styled.h1(({ theme }) => ({
+  margin: 0,
+  fontFamily: theme.fonts.heading,
+  fontSize: '1.125rem',
+  fontWeight: 400,
+  color: theme.colors.gray900,
 
-  ${mq.sm} {
-    font-size: 1.5rem;
-  }
-`
+  [mq.sm]: {
+    fontSize: '1.5rem',
+  },
+}))
 
-const Description = styled.p`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.body};
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: ${({ theme }) => theme.colors.gray700};
+const Description = styled.p(({ theme }) => ({
+  margin: 0,
+  fontFamily: theme.fonts.body,
+  fontSize: '0.875rem',
+  lineHeight: 1.5,
+  color: theme.colors.gray700,
 
-  ${mq.sm} {
-    font-size: 1.125rem;
-  }
-`
+  [mq.sm]: {
+    fontSize: '1.125rem',
+  },
+}))
 
 export type MainCoverageCardProps = {
   imgSrc: string | StaticImageData
