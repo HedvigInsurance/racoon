@@ -7,7 +7,7 @@ export type CheckboxProps = {
   label?: string
   prependLabel?: boolean
   disabled?: boolean
-  checked: boolean
+  checked?: boolean
   onChange?: () => void
 }
 
@@ -16,7 +16,9 @@ const CheckboxContainer = styled.div`
   align-items: center;
 `
 
-const Icon = styled(CheckIcon)``
+const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>`
+  visibility: ${(props) => (props.checked && !props.disabled ? 'visible' : 'hidden')};
+`
 
 // Hide checkbox visually but remain accessible to screen readers.
 // Source: https://polished.js.org/docs/#hidevisually
@@ -31,16 +33,20 @@ const HiddenInput = styled.input`
   position: absolute;
   white-space: nowrap;
   width: 1px;
+  &:focus + * {
+    border: 2px solid ${(props) => props.theme.colors.gray900};
+  }
 `
 
-const DisabledTick = styled.div`
+const DisabledTick = styled.div<{ disabled?: boolean }>`
   position: absolute;
   width: 10px;
   height: 2px;
   background-color: ${(props) => props.theme.colors.gray500};
+  display: ${(props) => (props.disabled ? 'initial' : 'none')};
 `
 const StyledCheckbox = styled.div<{
-  checked: boolean
+  checked?: boolean
   disabled?: boolean
 }>`
   position: relative;
@@ -63,18 +69,8 @@ const StyledCheckbox = styled.div<{
   ${(props) =>
     !props.checked && !props.disabled && `border: 1px solid ${props.theme.colors.gray500};`}
 
-  ${HiddenInput}:focus + & {
-    border: 2px solid ${(props) => props.theme.colors.gray900};
-  }
   &:hover {
     ${(props) => !props.checked && `border: 2px solid ${props.theme.colors.gray900};`}
-  }
-
-  ${Icon} {
-    visibility: ${(props) => (props.checked && !props.disabled ? 'visible' : 'hidden')};
-  }
-  ${DisabledTick} {
-    display: ${(props) => (props.disabled ? 'initial' : 'none')};
   }
 `
 
@@ -83,8 +79,8 @@ const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: Checkbox
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
     <StyledCheckbox {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>
-      <DisabledTick />
-      <Icon />
+      <DisabledTick disabled={disabled} />
+      <Icon disabled={disabled} checked={checked} />
     </StyledCheckbox>
     {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
   </CheckboxContainer>
