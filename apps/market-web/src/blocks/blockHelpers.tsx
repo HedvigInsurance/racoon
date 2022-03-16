@@ -153,6 +153,7 @@ export const backgroundImageStyles = (
 }
 type SectionProps = {
   as?: React.ElementType
+  children?: React.ReactNode
   colorComponent?: MinimalColorComponent
   size?: SectionSize
   backgroundImage?: string
@@ -193,13 +194,13 @@ const SectionBackground = styled('div')<{
   zIndex: -1,
 }))
 
-export const SectionWrapper: React.FC<SectionProps> = ({
+export const SectionWrapper = ({
   children,
   backgroundImage,
   backgroundImageMobile,
   backgroundTint,
   ...props
-}) => {
+}: SectionProps) => {
   return (
     <SectionWrapperComponent {...props}>
       <SectionBackground
@@ -253,17 +254,18 @@ export const ContentWrapperStyled = styled('div')<{
 
 export interface ContentWrapperProps {
   index?: number
+  children: React.ReactNode
   contentWidth?: boolean
   fullWidth?: boolean
 }
 
-export const ContentWrapper: React.FC<ContentWrapperProps> = ({
+export const ContentWrapper = ({
   index = 0,
   contentWidth = false,
   children,
   fullWidth = false,
   ...props
-}) => (
+}: ContentWrapperProps) => (
   <ContentWrapperStyled visible={true} contentWidth={contentWidth} fullWidth={fullWidth} {...props}>
     {children}
   </ContentWrapperStyled>

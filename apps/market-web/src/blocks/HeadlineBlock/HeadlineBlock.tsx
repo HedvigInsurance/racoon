@@ -50,7 +50,7 @@ const Wordmark = styled('div')({
   },
 })
 
-export const HeadlineBlock: React.FC<HeadlineBlockProps> = ({
+export const HeadlineBlock = ({
   color,
   index,
   text,
@@ -62,7 +62,7 @@ export const HeadlineBlock: React.FC<HeadlineBlockProps> = ({
   element,
   font_size,
   font_size_mobile,
-}) => {
+}: HeadlineBlockProps) => {
   return (
     <SectionWrapper colorComponent={color} extraStyling={extra_styling} size="none">
       <ContentWrapper contentWidth index={index}>
