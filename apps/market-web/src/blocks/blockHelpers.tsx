@@ -7,10 +7,8 @@ import styled from '@emotion/styled'
 
 export const CONTENT_GUTTER = '2rem'
 export const CONTENT_GUTTER_MOBILE = '1rem'
-export const MOBILE_BP_UP = '@media (min-width: 481px)'
-export const MOBILE_BP_DOWN = '@media (max-width: 480px)'
-export const TABLET_BP_DOWN = '@media (max-width: 800px)'
-export const TABLET_BP_UP = '@media (min-width: 801px)'
+export const MOBILE_BP_UP = '@media (min-width: 480px)'
+export const TABLET_BP_UP = '@media (min-width: 800px)'
 export const LAPTOP_BP_UP = '@media (min-width: 1024px)'
 export const GIANT_BP_UP = '@media (min-width: 1700px)'
 
@@ -43,39 +41,39 @@ interface ColorSet {
 const sectionSizeStyles = {
   none: { padding: 0 },
   xxs: {
-    padding: '0.5rem 0',
-    [TABLET_BP_DOWN]: {
-      padding: '0.25rem 0',
-    },
-  },
-  xs: {
-    padding: '1rem 0',
-    [TABLET_BP_DOWN]: {
+    padding: '0.25rem 0',
+    [TABLET_BP_UP]: {
       padding: '0.5rem 0',
     },
   },
+  xs: {
+    padding: '0.5rem 0',
+    [TABLET_BP_UP]: {
+      padding: '1rem 0',
+    },
+  },
   sm: {
-    padding: '3.5rem 0',
-    [TABLET_BP_DOWN]: {
-      padding: '2rem 0',
-    },
-  },
-  md: {
-    padding: '5rem 0',
-    [TABLET_BP_DOWN]: {
-      padding: '2.5rem 0',
-    },
-  },
-  lg: {
-    padding: '7.5rem 0',
-    [TABLET_BP_DOWN]: {
+    padding: '2rem 0',
+    [TABLET_BP_UP]: {
       padding: '3.5rem 0',
     },
   },
+  md: {
+    padding: '2.5rem 0',
+    [TABLET_BP_UP]: {
+      padding: '5rem 0',
+    },
+  },
+  lg: {
+    padding: '3.5rem 0',
+    [TABLET_BP_UP]: {
+      padding: '7.5rem 0',
+    },
+  },
   xl: {
-    padding: '10rem 0',
-    [TABLET_BP_DOWN]: {
-      padding: '6rem 0',
+    padding: '6rem 0',
+    [TABLET_BP_UP]: {
+      padding: '10rem 0',
     },
   },
 }
@@ -141,14 +139,14 @@ export const backgroundImageStyles = (
   const bgTint = tint ? 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),' : ''
 
   return {
-    backgroundImage: `${bgTint} url(${backgroundImage})`,
+    backgroundImage: `${bgTint} url(${backgroundImageMobile})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
 
-    [TABLET_BP_DOWN]: backgroundImageMobile
+    [TABLET_BP_UP]: backgroundImageMobile
       ? {
-          backgroundImage: `${bgTint} url(${backgroundImageMobile})`,
+          backgroundImage: `${bgTint} url(${backgroundImage})`,
         }
       : {},
   }
@@ -239,11 +237,11 @@ export const ContentWrapperStyled = styled('div')<{
   fullWidth: boolean
 }>(({ visible, contentWidth, fullWidth }) => ({
   width: '100%',
-  padding: '0 ' + CONTENT_GUTTER,
   margin: '0 auto',
+  padding: '0 ' + CONTENT_GUTTER_MOBILE,
 
-  [MOBILE_BP_DOWN]: {
-    padding: '0 ' + CONTENT_GUTTER_MOBILE,
+  [MOBILE_BP_UP]: {
+    padding: '0 ' + CONTENT_GUTTER,
   },
 
   ...getContentMaxWidth(contentWidth, fullWidth),
