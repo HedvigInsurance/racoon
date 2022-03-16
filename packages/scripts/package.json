@@ -13,8 +13,11 @@
     "clean": "rm -rf .turbo && rm -rf node_modules"
   },
   "dependencies": {
+    "@typescript-eslint/parser": "^5.15.0",
     "eslint-config-next": "^12.0.10",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-testing-library": "^5.0.5",
     "identity-obj-proxy": "^3.0.0"
   },
