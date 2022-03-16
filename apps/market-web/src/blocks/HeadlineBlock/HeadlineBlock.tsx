@@ -18,7 +18,7 @@ type HeadlineBlockProps = StoryblokBaseBlock & {
   element: 'h1' | 'h2' | 'h3' | 'h4'
 }
 
-const Text = styled('span')({
+const Text = styled.span({
   ['br']: {
     display: 'none',
   },
@@ -30,7 +30,7 @@ const Text = styled('span')({
   },
 })
 
-const Wordmark = styled('div')({
+const Wordmark = styled.div({
   display: 'inline-flex',
   position: 'absolute',
   marginTop: '0.625rem',

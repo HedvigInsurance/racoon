@@ -162,7 +162,7 @@ type SectionProps = {
   extraStyling?: string
 }
 
-const SectionWrapperComponentUnstyled = styled('section')<SectionProps>(
+const SectionWrapperComponentUnstyled = styled.section<SectionProps>(
   ({ colorComponent, size = 'lg' }) => ({
     position: 'relative',
     transition: 'background 300ms',
@@ -178,7 +178,7 @@ const SectionWrapperComponentUnstyled = styled('section')<SectionProps>(
 export const SectionWrapperComponent = styled(SectionWrapperComponentUnstyled)<SectionProps>`
   ${({ extraStyling = '' }) => String(extraStyling)}
 `
-const SectionBackground = styled('div')<{
+const SectionBackground = styled.div<{
   backgroundImage?: string
   backgroundImageMobile?: string
   tint?: boolean
@@ -214,7 +214,7 @@ export const SectionWrapper = ({
   )
 }
 
-export const MarginSectionWrapper = styled('section')<SectionProps>(
+export const MarginSectionWrapper = styled.section<SectionProps>(
   ({ colorComponent, size = 'lg', backgroundImage = 'none' }) => ({
     ...getSectionSizeStyle(size),
     ...getMinimalColorStyles(colorComponent?.color ?? 'standard'),
@@ -232,7 +232,7 @@ const getContentMaxWidth = (contentWidth: boolean, fullWidth: boolean) => {
   return CONTENT_MAX_WIDTH_XL
 }
 
-export const ContentWrapperStyled = styled('div')<{
+export const ContentWrapperStyled = styled.div<{
   visible: boolean
   contentWidth: boolean
   fullWidth: boolean
