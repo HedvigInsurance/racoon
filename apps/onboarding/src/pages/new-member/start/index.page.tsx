@@ -66,11 +66,15 @@ const HighlightBlock = styled.div(({ theme }) => ({
   borderRadius: '0.25rem',
 }))
 
-const CaptionLink = styled.a(({ theme }) => ({
+const CaptionText = styled.p(({ theme }) => ({
   fontFamily: theme.fonts.body,
   color: theme.colors.gray500,
+  fontSize: '0.875rem',
+  textAlign: 'center',
+}))
+
+const CaptionLink = styled.a(() => ({
   textDecoration: 'underline',
-  cursor: 'pointer',
 }))
 
 const StickyFooter = styled.div(({ theme }) => ({
@@ -114,7 +118,7 @@ const Overlay = styled.div<{ visible: boolean }>(({ theme, visible }) => ({
 const NewMemberStartPage: NextPage = () => {
   const { path } = useCurrentLocale()
   const form = useForm({ action: '/api/pages/start' })
-  const [entryPoint, setEntryPoint] = useState(EntryPoint.Current)
+  const [entryPoint, setEntryPoint] = useState<EntryPoint>()
   const { t } = useTranslation()
 
   const personalNumberError = form.errors?.[PersonalNumberField]
@@ -129,11 +133,10 @@ const NewMemberStartPage: NextPage = () => {
               desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
             />
             <Col>
-              <Content y={1}>
+              <Content y={2}>
                 <Heading variant="s" headingLevel="h1" colorVariant="dark">
-                  Få prisförslag, jämför och försäkring hos Hedvig direkt
+                  Få prisförslag, jämför och byt
                 </Heading>
-                <Text>Få prisförslag</Text>
 
                 <RadioGroup.Root
                   name={EntryPointField}
@@ -148,20 +151,17 @@ const NewMemberStartPage: NextPage = () => {
                       description="Få prisförslag på din nuvarande adress"
                     >
                       <InputField
-                        label="Personnummer"
-                        placeholder="YYMMDDXXXX"
+                        placeholder="YYMMDD-XXXX"
                         inputMode="numeric"
                         required
+                        min={11}
+                        max={13}
                         name={PersonalNumberField}
                         onKeyDown={(event) => event.key === 'Enter' && form.submitForm()}
                         // https://github.com/personnummer/js
                         pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
                         errorMessage={personalNumberError && t(personalNumberError)}
                       />
-
-                      <CaptionLink href="https://www.hedvig.com/se/personuppgifter">
-                        Så hanterar vi dina personuppgifter
-                      </CaptionLink>
                     </RadioGroupItem>
 
                     <RadioGroupItem
@@ -187,6 +187,12 @@ const NewMemberStartPage: NextPage = () => {
                     </RadioGroupItem>
                   </Space>
                 </RadioGroup.Root>
+
+                <CaptionText>
+                  By continuing, you agree to the Hedvig{' '}
+                  <CaptionLink>Terms and Conditions</CaptionLink> and{' '}
+                  <CaptionLink>Hedvig Privacy Policy</CaptionLink>.
+                </CaptionText>
               </Content>
 
               <Spacer />

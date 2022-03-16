@@ -2,8 +2,6 @@ import { Space } from './space'
 import { WarningTriangleIcon } from '../icons/warning-triangle-icon'
 import styled from '@emotion/styled'
 
-type MessageProps = { $visible?: boolean }
-
 const Label = styled.label(({ theme }) => ({
   fontFamily: theme.fonts.body,
   color: theme.colors.gray900,
@@ -11,11 +9,10 @@ const Label = styled.label(({ theme }) => ({
   lineHeight: '1.375rem',
 }))
 
-const MessageWrapper = styled(Space)<MessageProps>(({ $visible = true }) => ({
+const MessageWrapper = styled(Space)({
   display: 'flex',
   alignItems: 'center',
-  opacity: $visible ? 1 : 0,
-}))
+})
 
 const StyledWarningTriangleIcon = styled(WarningTriangleIcon)(({ theme }) => ({
   color: theme.colors.red600,
@@ -67,10 +64,12 @@ export const InputBase = ({ id, errorMessage, infoMessage, label, children }: Pr
             <InfoMessage>{infoMessage}</InfoMessage>
           </MessageWrapper>
         ) : (
-          <MessageWrapper x={0.25} $visible={hasError} aria-hidden={!hasError}>
-            <StyledWarningTriangleIcon />
-            <ErrorMessage id={errorMessageId}>{errorMessage || 'PLACEHOLDER'}</ErrorMessage>
-          </MessageWrapper>
+          hasError && (
+            <MessageWrapper x={0.25}>
+              <StyledWarningTriangleIcon />
+              <ErrorMessage id={errorMessageId}>{errorMessage || 'PLACEHOLDER'}</ErrorMessage>
+            </MessageWrapper>
+          )
         )}
       </Space>
     </Space>
