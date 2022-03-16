@@ -3,9 +3,9 @@ import { FontSizes, Heading } from 'components/Heading/Heading'
 
 import { HedvigSymbol } from '@hedviginsurance/brand'
 import React from 'react'
+import { StoryblokBaseBlock } from '@/lib/types'
 import { TextPosition } from 'utils/textPosition'
 import styled from '@emotion/styled'
-import { StoryblokBaseBlock } from '@/lib/types'
 
 type HeadlineBlockProps = StoryblokBaseBlock & {
   text: string
@@ -64,8 +64,8 @@ export const HeadlineBlock: React.FC<HeadlineBlockProps> = ({
   font_size_mobile,
 }) => {
   return (
-    <SectionWrapper colorComponent={color} extraStyling={extra_styling} size="none" brandPivot>
-      <ContentWrapper brandPivot index={index}>
+    <SectionWrapper colorComponent={color} extraStyling={extra_styling} size="none">
+      <ContentWrapper contentWidth index={index}>
         <Heading
           as={element}
           textPosition={text_position}

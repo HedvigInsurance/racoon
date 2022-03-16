@@ -22,7 +22,7 @@ export const CONTENT_MAX_WIDTH = {
   maxWidth: 1000,
 }
 
-export const CONTENT_MAX_WIDTH_DEPRECATED = {
+export const CONTENT_MAX_WIDTH_XL = {
   maxWidth: 1200,
   [GIANT_BP_UP]: {
     maxWidth: 1500,
@@ -153,7 +153,7 @@ export const backgroundImageStyles = (
       : {},
   }
 }
-interface SectionProps {
+type SectionProps = {
   as?: React.ElementType
   colorComponent?: MinimalColorComponent
   size?: SectionSize
@@ -161,22 +161,19 @@ interface SectionProps {
   backgroundImageMobile?: string
   backgroundTint?: boolean
   extraStyling?: string
-  brandPivot?: boolean
 }
+
 const SectionWrapperComponentUnstyled = styled('section')<SectionProps>(
-  ({ colorComponent, size = 'lg', brandPivot }) => ({
+  ({ colorComponent, size = 'lg' }) => ({
     position: 'relative',
     transition: 'background 300ms',
-    fontFamily: brandPivot ? `${fonts.FAVORIT}, sans-serif` : undefined,
+    fontFamily: `${fonts.FAVORIT}, sans-serif`,
     ...getSectionSizeStyle(size),
     color: getMinimalColorStyles(colorComponent?.color ?? 'standard').color,
-
-    'h1, h2, h3, h4': brandPivot
-      ? {
-          fontFamily: `${fonts.FAVORIT}, sans-serif`,
-          fontWeight: 400,
-        }
-      : {},
+    'h1, h2, h3, h4': {
+      fontFamily: `${fonts.FAVORIT}, sans-serif`,
+      fontWeight: 400,
+    },
   }),
 )
 export const SectionWrapperComponent = styled(SectionWrapperComponentUnstyled)<SectionProps>`
@@ -226,21 +223,21 @@ export const MarginSectionWrapper = styled('section')<SectionProps>(
   }),
 )
 
-const getContentMaxWidth = (brandPivot: boolean, fullWidth: boolean) => {
+const getContentMaxWidth = (contentWidth: boolean, fullWidth: boolean) => {
   if (fullWidth) {
     return SITE_MAX_WIDTH
   }
-  if (brandPivot) {
+  if (contentWidth) {
     return CONTENT_MAX_WIDTH
   }
-  return CONTENT_MAX_WIDTH_DEPRECATED
+  return CONTENT_MAX_WIDTH_XL
 }
 
 export const ContentWrapperStyled = styled('div')<{
   visible: boolean
-  brandPivot: boolean
+  contentWidth: boolean
   fullWidth: boolean
-}>(({ visible, brandPivot, fullWidth }) => ({
+}>(({ visible, contentWidth, fullWidth }) => ({
   width: '100%',
   padding: '0 ' + CONTENT_GUTTER,
   margin: '0 auto',
@@ -249,7 +246,7 @@ export const ContentWrapperStyled = styled('div')<{
     padding: '0 ' + CONTENT_GUTTER_MOBILE,
   },
 
-  ...getContentMaxWidth(brandPivot, fullWidth),
+  ...getContentMaxWidth(contentWidth, fullWidth),
 
   opacity: visible ? 1 : 0,
   transform: visible ? 'translateY(0)' : 'translateY(5%)',
@@ -258,18 +255,18 @@ export const ContentWrapperStyled = styled('div')<{
 
 export interface ContentWrapperProps {
   index?: number
-  brandPivot?: boolean
+  contentWidth?: boolean
   fullWidth?: boolean
 }
 
 export const ContentWrapper: React.FC<ContentWrapperProps> = ({
   index = 0,
-  brandPivot = false,
+  contentWidth = false,
   children,
   fullWidth = false,
   ...props
 }) => (
-  <ContentWrapperStyled visible={true} brandPivot={brandPivot} fullWidth={fullWidth} {...props}>
+  <ContentWrapperStyled visible={true} contentWidth={contentWidth} fullWidth={fullWidth} {...props}>
     {children}
   </ContentWrapperStyled>
 )

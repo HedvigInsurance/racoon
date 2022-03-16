@@ -36,16 +36,9 @@ export const PlainTextBlock: React.FunctionComponent<PlainTextBlockProps> = ({
   content,
   index,
 }) => (
-  <SectionWrapper
-    colorComponent={color}
-    size={size}
-    extraStyling={extra_styling}
-  >
-    <ContentWrapper brandPivot index={index}>
-      <InnerContent
-        fontSize={font_size}
-        dangerouslySetInnerHTML={{ __html: content?.html }}
-      />
+  <SectionWrapper colorComponent={color} size={size} extraStyling={extra_styling}>
+    <ContentWrapper contentWidth index={index}>
+      <InnerContent fontSize={font_size} dangerouslySetInnerHTML={{ __html: content?.html }} />
     </ContentWrapper>
   </SectionWrapper>
 )
