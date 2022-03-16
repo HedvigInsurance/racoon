@@ -1,14 +1,6 @@
-type WarningTriangleIconProps = {
-  className?: string
-  width?: number
-  height?: number
-}
+import { IconProps } from '.'
 
-export const WarningTriangleIcon = ({
-  className,
-  width = 24,
-  height = 24,
-}: WarningTriangleIconProps) => (
+export const WarningTriangleIcon = ({ className, width = 24, height = 24 }: IconProps) => (
   <svg
     width={width}
     height={height}
