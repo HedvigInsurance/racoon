@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 
 export type FontSizes = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-interface HeadingProps {
+type HeadingProps = {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
   capitalize?: boolean
   color?: minimalColorComponentColors
@@ -37,15 +37,12 @@ export const headingSizeMap = {
 export const Heading = styled.h1<HeadingProps>`
   position: relative;
   margin: 0;
-  color: ${(props) =>
-    props.color ? getMinimalColorStyles(props.color).color : 'inherit'};
+  color: ${(props) => (props.color ? getMinimalColorStyles(props.color).color : 'inherit')};
   font-size: ${(props) => headingSizeMapMobile[props.mobileSize ?? props.size]};
   text-align: ${(props) => props.textPosition};
   text-transform: ${(props) => (props.capitalize ? 'uppercase' : undefined)};
   font-family: ${(props) =>
-    props.useDisplayFont
-      ? `${fonts.EB_GARAMOND}, serif !important`
-      : undefined};
+    props.useDisplayFont ? `${fonts.EB_GARAMOND}, serif !important` : undefined};
   line-height: 1.2;
 
   ${TABLET_BP_UP} {

@@ -32,7 +32,7 @@ export type SectionSizeProps = {
   size: SectionSize
 }
 
-interface ColorSet {
+type ColorSet = {
   color: string
   background: string
   secondaryColor?: string
@@ -252,7 +252,7 @@ export const ContentWrapperStyled = styled('div')<{
   transition: 'opacity 800ms, transform 500ms',
 }))
 
-export interface ContentWrapperProps {
+export type ContentWrapperProps = {
   index?: number
   children: React.ReactNode
   contentWidth?: boolean

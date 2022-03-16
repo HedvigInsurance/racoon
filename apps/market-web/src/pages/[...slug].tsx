@@ -8,12 +8,12 @@ import type { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import useStoryblok from '@/lib/useStoryblok'
 
-interface Props {
+type Props = {
   preview: boolean
   story: PageStoryData
 }
 
-interface Params extends ParsedUrlQuery {
+type Params = ParsedUrlQuery & {
   slug: Array<string>
 }
 
