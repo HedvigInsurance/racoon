@@ -7,7 +7,7 @@ export type RadioProps = {
   label?: string
   prependLabel?: boolean
   disabled?: boolean
-  checked: boolean
+  checked?: boolean
   onChange?: () => void
 }
 
@@ -16,7 +16,9 @@ const RadioContainer = styled.div`
   align-items: center;
 `
 
-const Icon = styled(CheckIcon)``
+const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>`
+  visibility: ${(props) => (props.checked && !props.disabled ? 'visible' : 'hidden')};
+`
 
 // Hide checkbox visually but remain accessible to screen readers.
 // Source: https://polished.js.org/docs/#hidevisually
@@ -31,9 +33,12 @@ const HiddenInput = styled.input`
   position: absolute;
   white-space: nowrap;
   width: 1px;
+  &:focus + & {
+    border: 2px solid ${(props) => props.theme.colors.gray900};
+  }
 `
 const StyledRadio = styled.div<{
-  checked: boolean
+  checked?: boolean
   disabled?: boolean
 }>`
   border-radius: 50%;
@@ -56,15 +61,8 @@ const StyledRadio = styled.div<{
   ${(props) =>
     !props.checked && !props.disabled && `border: 1px solid ${props.theme.colors.gray500};`}
 
-  ${HiddenInput}:focus + & {
-    border: 2px solid ${(props) => props.theme.colors.gray900};
-  }
   &:hover {
     ${(props) => !props.checked && `border: 2px solid ${props.theme.colors.gray900};`}
-  }
-
-  ${Icon} {
-    visibility: ${(props) => (props.checked && !props.disabled ? 'visible' : 'hidden')};
   }
 `
 
@@ -73,7 +71,7 @@ const Radio = ({ disabled, checked, onChange, label, prependLabel }: RadioProps)
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
     <StyledRadio {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>
-      <Icon />
+      <Icon checked={checked} disabled={disabled} />
     </StyledRadio>
     {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
   </RadioContainer>
