@@ -19,12 +19,12 @@ type HeadlineBlockProps = StoryblokBaseBlock & {
 }
 
 const Text = styled.span({
-  ['br']: {
+  br: {
     display: 'none',
   },
 
   [TABLET_BP_UP]: {
-    ['br']: {
+    br: {
       display: 'block',
     },
   },
@@ -36,14 +36,14 @@ const Wordmark = styled.div({
   marginTop: '0.625rem',
   marginLeft: '0.5rem',
 
-  ['svg']: {
+  svg: {
     width: '1.25rem',
     height: '1.25rem',
   },
 
   [TABLET_BP_UP]: {
     marginTop: '1rem',
-    ['svg']: {
+    svg: {
       width: '2rem',
       height: '2rem',
     },
