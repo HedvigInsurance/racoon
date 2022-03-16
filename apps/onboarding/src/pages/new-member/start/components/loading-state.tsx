@@ -1,6 +1,6 @@
-import { PageHeaderLayout } from '@/components/page-header-layout'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { PageHeaderLayout } from '@/components/page-header-layout'
 
 const Wrapper = styled.div({
   display: 'flex',

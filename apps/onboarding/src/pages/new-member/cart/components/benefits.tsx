@@ -1,7 +1,7 @@
+import styled from '@emotion/styled'
+import Image from 'next/image'
 import { Heading, Space } from 'ui'
 
-import Image from 'next/image'
-import styled from '@emotion/styled'
 
 const Wrapper = styled(Space)({
   width: '100%',

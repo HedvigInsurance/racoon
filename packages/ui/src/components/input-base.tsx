@@ -1,6 +1,6 @@
-import { Space } from './space'
-import { WarningTriangleIcon } from '../icons/warning-triangle-icon'
 import styled from '@emotion/styled'
+import { WarningTriangleIcon } from '../icons/warning-triangle-icon'
+import { Space } from './space'
 
 type MessageProps = { $visible?: boolean }
 

@@ -1,5 +1,5 @@
-import type { BundledQuote } from './get-main-quote'
 import { Table } from '../types'
+import type { BundledQuote } from './get-main-quote'
 
 const getAddress = (quote: BundledQuote) => {
   const { street, zipCode, city } = quote.data

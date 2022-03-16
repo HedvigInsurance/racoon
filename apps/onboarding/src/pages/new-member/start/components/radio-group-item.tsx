@@ -1,10 +1,8 @@
+import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-
 import { AnimatePresence, motion } from 'framer-motion'
-
 import { Space } from 'ui'
 import { Tick } from './icons/tick'
-import styled from '@emotion/styled'
 
 const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
   padding: 0,

@@ -1,8 +1,7 @@
-import { Heading, MailIcon, PhoneIcon, Space } from 'ui'
-
-import Image from 'next/image'
-import contactCardImage from './contact-card-image.png'
 import styled from '@emotion/styled'
+import Image from 'next/image'
+import { Heading, MailIcon, PhoneIcon, Space } from 'ui'
+import contactCardImage from './contact-card-image.png'
 
 const Wrapper = styled.div({
   padding: '1.25rem 1rem',

@@ -1,8 +1,8 @@
+import styled from '@emotion/styled'
 import { Heading, Space, theme } from 'ui'
+import { Stars } from './icons/stars'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
-import { Stars } from './icons/stars'
-import styled from '@emotion/styled'
 
 export type IntroProps = {
   street: string,

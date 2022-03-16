@@ -1,11 +1,11 @@
+import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
+import React from 'react'
 import { LinkButton, mq } from 'ui'
+import { useCurrentLocale } from '@/lib/l10n'
+import { PageLink } from '@/lib/page-link'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
-import { PageLink } from '@/lib/page-link'
-import React from 'react'
-import styled from '@emotion/styled'
-import { useCurrentLocale } from '@/lib/l10n'
-import { useTranslation } from 'next-i18next'
 
 export type FooterProps = PriceProps & { quoteCartId: string }
 

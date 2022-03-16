@@ -1,6 +1,6 @@
+import { QuoteCartQuery } from '@/services/apollo/types'
 import { InsuranceSelectorOption } from '../components/insurance-selector'
 import { QuoteBundleVariant } from './get-selected-bundle-variant'
-import { QuoteCartQuery } from '@/services/apollo/types'
 
 export const getInsuranceOptions = (
   data: QuoteCartQuery,

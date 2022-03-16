@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import { HedvigLogo } from './hedvig-logo'
 
 export default {

@@ -1,11 +1,10 @@
-import type { CampaignQuery, CampaignQueryVariables } from '@/services/apollo/types'
+import { setCookies } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-import { CampaignDocument } from '@/services/apollo/types'
+import { getFormData } from '@/lib/get-form-data'
 import { PageLink } from '@/lib/page-link'
 import { createApolloClient } from '@/services/apollo'
-import { getFormData } from '@/lib/get-form-data'
-import { setCookies } from 'cookies-next'
+import type { CampaignQuery, CampaignQueryVariables } from '@/services/apollo/types'
+import { CampaignDocument } from '@/services/apollo/types'
 
 const COOKIE_KEY = '_hvcode'
 

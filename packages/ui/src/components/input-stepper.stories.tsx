@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import { InputStepper } from './input-stepper'
 
 export default {

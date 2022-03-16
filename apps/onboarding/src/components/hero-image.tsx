@@ -1,5 +1,5 @@
-import { mq } from 'ui'
 import styled from '@emotion/styled'
+import { mq } from 'ui'
 
 const Wrapper = styled.div({
   width: '100%',

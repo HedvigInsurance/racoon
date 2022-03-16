@@ -1,7 +1,7 @@
-import { Price } from '../types'
 import styled from '@emotion/styled'
-import { useFormattedPrice } from '@/pages/new-member/cart/hooks/use-formatted-price'
 import { useTranslation } from 'next-i18next'
+import { useFormattedPrice } from '@/pages/new-member/cart/hooks/use-formatted-price'
+import { Price } from '../types'
 
 export type PriceProps = {
   price: Price
