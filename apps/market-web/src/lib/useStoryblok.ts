@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-
-import type { PageStoryData } from './types'
 import { getStoryBySlug } from './storyblok'
+import type { PageStoryData } from './types'
 
 export default function useStoryblok(originalStory: PageStoryData, preview: boolean = false) {
   const [story, setStory] = useState(originalStory)

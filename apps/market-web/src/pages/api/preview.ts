@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-
 import { getStoryBySlug } from '@/lib/storyblok'
 
 export default async function preview(req: NextApiRequest, res: NextApiResponse) {
