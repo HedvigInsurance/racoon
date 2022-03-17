@@ -1,6 +1,7 @@
+import React, { CSSProperties } from 'react'
+
 import { CheckIcon } from '../../icons/check-mark'
 import { ControlLabel } from './control-label'
-import React from 'react'
 import styled from '@emotion/styled'
 
 export type CheckboxProps = {
@@ -8,6 +9,7 @@ export type CheckboxProps = {
   prependLabel?: boolean
   disabled?: boolean
   checked?: boolean
+  containerStyles?: CSSProperties
   onChange?: () => void
 }
 
@@ -62,7 +64,7 @@ const StyledCheckbox = styled.div<{
       ? props.theme.colors.gray300
       : props.checked
       ? props.theme.colors.gray900
-      : 'initial'};
+      : props.theme.colors.white};
   border-radius: 2px;
   box-sizing: border-box;
   transition: all 150ms;
@@ -74,8 +76,15 @@ const StyledCheckbox = styled.div<{
   }
 `
 
-const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: CheckboxProps) => (
-  <CheckboxContainer>
+const Checkbox = ({
+  disabled,
+  checked,
+  onChange,
+  label,
+  prependLabel,
+  containerStyles,
+}: CheckboxProps) => (
+  <CheckboxContainer style={containerStyles}>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
     <StyledCheckbox {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>

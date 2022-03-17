@@ -1,6 +1,7 @@
+import React, { CSSProperties } from 'react'
+
 import { CheckIcon } from '../../icons/check-mark'
 import { ControlLabel } from './control-label'
-import React from 'react'
 import styled from '@emotion/styled'
 
 export type RadioProps = {
@@ -9,6 +10,7 @@ export type RadioProps = {
   disabled?: boolean
   checked?: boolean
   onChange?: () => void
+  containerStyles?: CSSProperties
 }
 
 const RadioContainer = styled.div`
@@ -55,7 +57,7 @@ const StyledRadio = styled.div<{
       ? props.theme.colors.gray300
       : props.checked
       ? props.theme.colors.gray900
-      : 'initial'};
+      : props.theme.colors.white};
   box-sizing: border-box;
   transition: all 150ms;
   ${(props) =>
@@ -66,8 +68,15 @@ const StyledRadio = styled.div<{
   }
 `
 
-const Radio = ({ disabled, checked, onChange, label, prependLabel }: RadioProps) => (
-  <RadioContainer>
+const Radio = ({
+  disabled,
+  checked,
+  onChange,
+  label,
+  prependLabel,
+  containerStyles,
+}: RadioProps) => (
+  <RadioContainer style={containerStyles}>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
     <StyledRadio {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>
