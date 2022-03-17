@@ -1,8 +1,11 @@
-import { MainCoverageCard } from './components/Cards'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
+
 import type { NextPage } from 'next'
 import homeImg from './assets/home.jpg'
+import { useState } from 'react'
 
 const NewMemberPage: NextPage = () => {
+  const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState<boolean>(false)
   return (
     <main style={{ padding: '0 1rem' }}>
       <h1>Landing page</h1>
@@ -12,6 +15,19 @@ const NewMemberPage: NextPage = () => {
           cardImg={homeImg}
           title="Home Insurance"
           description="Coverage for your house or apartment contents"
+        />
+      </div>
+      <div
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 30 }}
+      >
+        <AdditionalCoverageCard
+          enableHover
+          cardImg={homeImg}
+          checked={additionalCoverageSelected}
+          selected={additionalCoverageSelected}
+          onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
+          title="Travel Insurance "
+          description="Covers you and your family when you’re traveling"
         />
       </div>
     </main>
