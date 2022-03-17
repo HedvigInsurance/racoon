@@ -85,7 +85,7 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
 
       await createSwedishQuoteBundle({
         id: quoteCartId,
-        input: { ssn: personalNumber, isStudent: false },
+        input: { ssn: personalNumber.replace('-', ''), isStudent: false },
       })
 
       return res.redirect(302, PageLink.old_offer({ locale: path, quoteCartId, showEdit: true }))
