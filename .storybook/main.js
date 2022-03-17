@@ -1,4 +1,5 @@
 const path = require('path')
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   stories: ['../packages/ui/**/*.stories.@(ts|tsx|mdx)', '../apps/**/*.stories.@(ts|tsx|mdx)'],
@@ -17,6 +18,12 @@ module.exports = {
           '@emotion/core': emotionReactEleven,
           '@emotion/styled': emotionStyledEleven,
         },
+        plugins: [
+          ...(config.resolve.plugins || []),
+          new TsconfigPathsPlugin({
+            configFile: path.resolve(__dirname, '../apps/market-web/tsconfig.json'),
+          }),
+        ],
       },
     }
   },

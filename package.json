@@ -24,7 +24,8 @@
     "@storybook/addon-links": "^6.4.18",
     "@storybook/react": "^6.4.18",
     "prettier": "^2.5.1",
-    "turbo": "^1.1.2"
+    "turbo": "^1.1.2",
+    "tsconfig-paths-webpack-plugin": "^3.5.2"
   },
   "packageManager": "yarn@1.22.17"
 }
