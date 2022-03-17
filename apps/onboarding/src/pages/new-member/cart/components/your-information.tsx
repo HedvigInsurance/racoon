@@ -1,7 +1,7 @@
-import { Heading, Space } from 'ui'
-import { Table } from '../types'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { Heading, Space } from 'ui'
+import { Table } from '../types'
 
 const Wrapper = styled(Space)({
   padding: '1.25rem 1rem',

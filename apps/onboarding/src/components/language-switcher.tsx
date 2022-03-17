@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import { Separate } from 'ui'
 import styled from '@emotion/styled'
-import { useCurrentMarket } from '@/lib/l10n'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Separate } from 'ui'
+import { useCurrentMarket } from '@/lib/l10n'
 
 const Wrapper = styled(Separate)({
   display: 'flex',

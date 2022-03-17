@@ -1,20 +1,18 @@
-import * as RadioGroup from '@radix-ui/react-radio-group'
-
-import { Bullet, BulletList } from './components/bullet-list'
-import { Button, Heading, InputField, Space, mq } from 'ui'
-import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
-import type { GetStaticProps, NextPage } from 'next'
-
-import { HeroImage } from '@/components/hero-image'
-import { LoadingState } from './components/loading-state'
-import { PageHeaderLayout } from '@/components/page-header-layout'
-import { RadioGroupItem } from './components/radio-group-item'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
-import { useCurrentLocale } from '@/lib/l10n'
-import { useForm } from '@/hooks/use-form'
-import { useState } from 'react'
+import * as RadioGroup from '@radix-ui/react-radio-group'
+import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useState } from 'react'
+import { Button, Heading, InputField, Space, mq } from 'ui'
+import { HeroImage } from '@/components/hero-image'
+import { PageHeaderLayout } from '@/components/page-header-layout'
+import { useForm } from '@/hooks/use-form'
+import { useCurrentLocale } from '@/lib/l10n'
+import { Bullet, BulletList } from './components/bullet-list'
+import { LoadingState } from './components/loading-state'
+import { RadioGroupItem } from './components/radio-group-item'
+import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
 
 const Grid = styled.div({
   [mq.lg]: {

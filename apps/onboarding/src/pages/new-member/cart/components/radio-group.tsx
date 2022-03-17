@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import { InputBase, InputBaseProps } from 'ui'
 
-import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
   display: 'grid',

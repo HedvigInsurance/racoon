@@ -1,5 +1,5 @@
-import { Space } from 'ui'
 import styled from '@emotion/styled'
+import { Space } from 'ui'
 
 export const BulletList = styled(Space)({
   listStyle: 'inside',

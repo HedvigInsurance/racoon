@@ -1,5 +1,5 @@
-import type { BundledQuote } from './get-main-quote'
 import type { InputField } from '../types'
+import type { BundledQuote } from './get-main-quote'
 
 const getIsStudentField = (quote: BundledQuote): InputField => {
   return {

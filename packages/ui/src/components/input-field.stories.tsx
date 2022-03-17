@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import { InputField } from './input-field'
 
 export default {

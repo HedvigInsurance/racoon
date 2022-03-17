@@ -1,9 +1,8 @@
-import { HedvigLogo, Space, mq } from 'ui'
-
-import Head from 'next/head'
-import { LanguageSwitcher } from '@/components/language-switcher'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import Head from 'next/head'
+import { HedvigLogo, Space, mq } from 'ui'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',

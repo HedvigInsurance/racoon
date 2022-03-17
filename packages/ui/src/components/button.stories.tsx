@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from './button'
 import { Meta, Story } from '@storybook/react'
+import { Button, ButtonProps } from './button'
 
 type StoryProps = ButtonProps & { disabled: boolean }
 

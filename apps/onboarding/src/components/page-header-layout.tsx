@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import { HedvigLogo, mq } from 'ui'
 
-import styled from '@emotion/styled'
 
 const Container = styled.div(({ theme }) => ({
   display: 'flex',

@@ -1,12 +1,12 @@
-import { LinkButton, Space } from 'ui'
 
-import type { NextPage } from 'next'
-import { PageLayout } from '../components/page-layout'
-import { PageLink } from '@/lib/page-link'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useCurrentLocale } from '@/lib/l10n'
+import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
+import { LinkButton, Space } from 'ui'
+import { useCurrentLocale } from '@/lib/l10n'
+import { PageLink } from '@/lib/page-link'
+import { PageLayout } from '../components/page-layout'
 
 const fadeInUp = keyframes({
   from: {

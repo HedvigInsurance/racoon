@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import { InputBase, InputBaseProps } from './input-base'
 
-import styled from '@emotion/styled'
 
 type StyleProps = { $error: boolean; $suffix?: string }
 

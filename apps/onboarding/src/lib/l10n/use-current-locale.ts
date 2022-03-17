@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router'
 import { LocaleLabel, locales } from './locales'
 
-import { useRouter } from 'next/router'
 
 const FALLBACK_LOCALE: LocaleLabel = 'se-en'
 

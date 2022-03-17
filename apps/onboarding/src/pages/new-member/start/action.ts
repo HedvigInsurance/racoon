@@ -1,3 +1,9 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { getFormData } from '@/lib/get-form-data'
+import { getLocale } from '@/lib/l10n'
+import { LocaleLabel } from '@/lib/l10n/locales'
+import { PageLink } from '@/lib/page-link'
+import { createApolloClient } from '@/services/apollo'
 import {
   CreateQuoteBundleDocument,
   CreateQuoteBundleMutation,
@@ -7,13 +13,6 @@ import {
   CreateQuoteCartMutationVariables,
 } from '@/services/apollo/types'
 import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
-import type { NextApiRequest, NextApiResponse } from 'next'
-
-import { LocaleLabel } from '@/lib/l10n/locales'
-import { PageLink } from '@/lib/page-link'
-import { createApolloClient } from '@/services/apollo'
-import { getFormData } from '@/lib/get-form-data'
-import { getLocale } from '@/lib/l10n'
 
 const client = createApolloClient()
 

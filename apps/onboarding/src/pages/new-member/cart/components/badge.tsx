@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import React, { ReactNode } from 'react'
 
-import styled from '@emotion/styled'
 
 export type BadgeProps = {
   children: ReactNode

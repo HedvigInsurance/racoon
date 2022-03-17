@@ -1,18 +1,18 @@
 import '@/styles/global.css'
 
-import { GTM_ID, pageview, useGTMUserProperties } from '@/services/gtm'
 
 import { ApolloProvider } from '@apollo/client'
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import { MetaFavicons } from '@/components/meta-favicons'
-import Script from 'next/script'
 import { ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
-import { theme } from 'ui'
-import { useApollo } from '@/services/apollo'
-import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
+import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import Script from 'next/script'
 import { useEffect } from 'react'
+import { theme } from 'ui'
+import { MetaFavicons } from '@/components/meta-favicons'
+import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
+import { useApollo } from '@/services/apollo'
+import { GTM_ID, pageview, useGTMUserProperties } from '@/services/gtm'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {

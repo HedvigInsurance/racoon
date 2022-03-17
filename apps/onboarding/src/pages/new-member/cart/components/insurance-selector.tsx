@@ -1,9 +1,8 @@
-import { Heading, Space } from 'ui'
-
-import { MonthlyPrice } from './monthly-price'
-import { Price } from '../types'
 import styled from '@emotion/styled'
 import { useState } from 'react'
+import { Heading, Space } from 'ui'
+import { Price } from '../types'
+import { MonthlyPrice } from './monthly-price'
 
 const Wrapper = styled.div({
   width: '100%',

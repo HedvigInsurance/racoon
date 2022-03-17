@@ -1,9 +1,8 @@
+import styled from '@emotion/styled'
+import Image from 'next/image'
 import { Button, theme } from 'ui'
-
 import AccidentImg from '../../assets/accident.jpg'
 import { Arrow } from './icons/arrow'
-import Image from 'next/image'
-import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
   padding: '1.25rem 1rem',

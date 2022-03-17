@@ -1,14 +1,13 @@
-import { Button, InputField, Space } from 'ui'
-import type { GetStaticProps, NextPage } from 'next'
-
-import { PageLayout } from './components/page-layout'
-import { replaceMarkdown } from '@/services/i18n'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
-import { useForm } from 'hooks/use-form'
-import { usePrintCodeEffect } from './hooks/use-print-code-effect'
-import { useRouter } from 'next/router'
+import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
+import { Button, InputField, Space } from 'ui'
+import { replaceMarkdown } from '@/services/i18n'
+import { useForm } from 'hooks/use-form'
+import { PageLayout } from './components/page-layout'
+import { usePrintCodeEffect } from './hooks/use-print-code-effect'
 
 const UppercaseInputField = styled(InputField)({
   textTransform: 'uppercase',
