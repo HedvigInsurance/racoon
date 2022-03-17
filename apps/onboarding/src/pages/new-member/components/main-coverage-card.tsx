@@ -1,7 +1,7 @@
+import styled from '@emotion/styled'
+import Image from 'next/image'
 import { Space, mq } from 'ui'
 
-import Image from 'next/image'
-import styled from '@emotion/styled'
 
 const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',

@@ -1,32 +1,23 @@
 {
   "pipeline": {
     "build": {
-      "outputs": [
-        ".next/**",
-        ".turbo/**",
-        "dist/**"
-      ],
-      "dependsOn": [
-        "^build"
-      ]
+      "outputs": [".next/**", ".turbo/**", "dist/**"],
+      "dependsOn": ["^build"]
     },
     "test": {
-      "outputs": [
-        "covereage/**"
-      ],
+      "outputs": ["covereage/**"],
       "dependsOn": []
     },
     "e2e": {
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "e2e:headless": {
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
       "outputs": []
     },
     "dev": {

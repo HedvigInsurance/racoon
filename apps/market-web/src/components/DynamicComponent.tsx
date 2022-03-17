@@ -1,9 +1,8 @@
-import type { StoryblokBaseBlock, StoryblokComponentName } from '@/lib/types'
-
-import { HeadlineBlock } from '../blocks/HeadlineBlock/HeadlineBlock'
-import { PlainTextBlock } from '../blocks/PlainTextBlock'
 import React from 'react'
 import SbEditable from 'storyblok-react'
+import type { StoryblokBaseBlock, StoryblokComponentName } from '@/lib/types'
+import { HeadlineBlock } from '../blocks/HeadlineBlock/HeadlineBlock'
+import { PlainTextBlock } from '../blocks/PlainTextBlock'
 import { SpacerBlock } from '../blocks/SpacerBlock'
 
 type Props = {

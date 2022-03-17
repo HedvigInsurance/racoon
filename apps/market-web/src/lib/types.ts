@@ -1,5 +1,4 @@
 import type { StoryData, StoryblokComponent } from 'storyblok-js-client'
-
 import { SectionSize } from '@/blocks/blockHelpers'
 
 export type minimalColorComponentColors =

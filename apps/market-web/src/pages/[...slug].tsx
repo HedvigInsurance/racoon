@@ -1,11 +1,10 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { getAllLinks, getStoryBySlug } from '@/lib/storyblok'
-
-import DynamicComponent from '@/components/DynamicComponent'
-import Head from 'next/head'
-import type { PageStoryData } from '@/lib/types'
 import type { ParsedUrlQuery } from 'querystring'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import Head from 'next/head'
 import React from 'react'
+import DynamicComponent from '@/components/DynamicComponent'
+import { getAllLinks, getStoryBySlug } from '@/lib/storyblok'
+import type { PageStoryData } from '@/lib/types'
 import useStoryblok from '@/lib/useStoryblok'
 
 type Props = {
