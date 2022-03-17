@@ -1,9 +1,8 @@
-import { MinimalColorComponent, minimalColorComponentColors } from '@/lib/types'
-import { colorsV3, fonts } from '@hedviginsurance/brand'
-
-import React from 'react'
-import { match } from 'matchly'
 import styled from '@emotion/styled'
+import { colorsV3, fonts } from '@hedviginsurance/brand'
+import { match } from 'matchly'
+import React from 'react'
+import { MinimalColorComponent, minimalColorComponentColors } from '@/lib/types'
 
 export const CONTENT_GUTTER = '2rem'
 export const CONTENT_GUTTER_MOBILE = '1rem'

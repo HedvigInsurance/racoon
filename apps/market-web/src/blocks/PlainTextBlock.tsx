@@ -1,8 +1,7 @@
-import { ContentWrapper, MOBILE_BP_UP, SectionWrapper } from './blockHelpers'
-import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
-
-import React from 'react'
 import styled from '@emotion/styled'
+import React from 'react'
+import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
+import { ContentWrapper, MOBILE_BP_UP, SectionWrapper } from './blockHelpers'
 
 type ParagraphFontSize = 'sm' | 'md' | 'lg' | 'xl'
 
