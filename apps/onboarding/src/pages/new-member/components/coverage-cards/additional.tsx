@@ -18,7 +18,7 @@ const ImageFrame = styled.div({
 const Wrapper = styled.div<WrapperProps>(
   {
     display: 'flex',
-    width: 'max(13.6rem, 40%)',
+    width: 'calc(max(13.6rem, 40%) - 1px)',
     height: '10rem',
     borderRadius: '8px',
     overflow: 'hidden',
@@ -26,7 +26,7 @@ const Wrapper = styled.div<WrapperProps>(
     flexFlow: 'column',
 
     [mq.md]: {
-      height: '8.125rem',
+      height: 'calc(8.125rem - 1px)',
       borderRadius: '16px',
       flexFlow: 'row',
     },
