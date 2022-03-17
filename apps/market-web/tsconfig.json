@@ -9,6 +9,7 @@
       "@/lib/*": ["lib/*"],
       "@/blocks/*": ["blocks/*"],
       "@/components/*": ["components/*"],
+      "@/helpers/*": ["helpers/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"]
     },
