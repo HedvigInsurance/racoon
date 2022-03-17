@@ -7,7 +7,7 @@ import { TextPosition } from '@/helpers/textPosition'
 import { StoryblokBaseBlock } from '@/lib/types'
 
 
-type HeadlineBlockProps = StoryblokBaseBlock & {
+export type HeadlineBlockProps = StoryblokBaseBlock & {
   text: string
   text_position: TextPosition
   capitalize?: boolean
