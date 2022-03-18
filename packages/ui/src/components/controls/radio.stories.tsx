@@ -1,8 +1,7 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-
-import { Radio } from './radio'
 import styled from '@emotion/styled'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
+import { Radio } from './radio'
 
 export default {
   title: 'Radio',

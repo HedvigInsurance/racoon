@@ -1,3 +1,5 @@
+import styled from '@emotion/styled'
+import React from 'react'
 import {
   ControlContainer,
   ControlLabel,
@@ -7,8 +9,6 @@ import {
   StyledCheckbox,
 } from './base'
 
-import React from 'react'
-import styled from '@emotion/styled'
 
 const StyledRadio = styled(StyledCheckbox)({ borderRadius: '50%' })
 
