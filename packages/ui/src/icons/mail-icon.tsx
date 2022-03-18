@@ -1,4 +1,4 @@
-import { IconProps } from '.'
+import { IconProps } from './types'
 
 export const MailIcon = ({ className, width = 24, height = 24 }: IconProps) => (
   <svg
