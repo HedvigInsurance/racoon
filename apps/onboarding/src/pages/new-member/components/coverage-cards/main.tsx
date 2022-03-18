@@ -1,9 +1,9 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
 import { BaseCardProps, Description, Title, WrapperProps } from './base'
+import { Space, mq } from 'ui'
 
+import { Checkbox } from 'ui'
+import Image from 'next/image'
+import styled from '@emotion/styled'
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -21,7 +21,7 @@ const Section = styled.div<{ isCheckable?: boolean }>(
     padding: '1em 0.5em',
     flexGrow: 1,
     display: 'flex',
-    flexFlow: 'row',
+    flexDirection: 'row',
     alignItems: 'center',
     [mq.sm]: {
       padding: '1.5em',
@@ -47,7 +47,7 @@ const Wrapper = styled.div<WrapperProps>(
     [mq.sm]: {
       height: '22.5rem',
       borderRadius: '16px',
-      flexFlow: 'column',
+      flexDirection: 'column',
     },
   },
   ({ theme, ...props }) => ({

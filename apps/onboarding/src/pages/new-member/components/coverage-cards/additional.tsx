@@ -1,9 +1,9 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
 import { BaseCardProps, CheckboxContainer, Description, Title, WrapperProps } from './base'
+import { Space, mq } from 'ui'
 
+import { Checkbox } from 'ui'
+import Image from 'next/image'
+import styled from '@emotion/styled'
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -23,12 +23,12 @@ const Wrapper = styled.div<WrapperProps>(
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',
-    flexFlow: 'column',
+    flexDirection: 'column',
 
     [mq.md]: {
       height: '8.125rem',
       borderRadius: '16px',
-      flexFlow: 'row',
+      flexDirection: 'row',
     },
   },
   ({ theme, ...props }) => ({
@@ -44,7 +44,7 @@ const Section = styled.div<{ isCheckable?: boolean }>(
     padding: '0.5em',
     flexGrow: 1,
     display: 'flex',
-    flexFlow: 'row',
+    flexDirection: 'row',
     alignItems: 'center',
     [mq.sm]: {
       padding: '1.5em',
@@ -58,6 +58,13 @@ const Section = styled.div<{ isCheckable?: boolean }>(
     [mq.md]: { paddingRight: '1.5em' },
   }),
 )
+
+const AdditionalDescription = styled(Description)({
+  fontSize: '0.75rem',
+  [mq.sm]: {
+    fontSize: '0.875rem',
+  },
+})
 
 export const AdditionalCoverageCard = ({
   cardImg,
@@ -84,7 +91,7 @@ export const AdditionalCoverageCard = ({
       <Section isCheckable={isCheckable}>
         <Space y={0.5}>
           <Title>{title}</Title>
-          <Description style={{ marginTop: 0 }}>{description}</Description>
+          <AdditionalDescription style={{ marginTop: 0 }}>{description}</AdditionalDescription>
         </Space>
         {isCheckable && (
           <CheckboxContainer>
