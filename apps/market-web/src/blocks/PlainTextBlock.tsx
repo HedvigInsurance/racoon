@@ -1,8 +1,7 @@
-import { ContentWrapper, MOBILE_BP_UP, SectionWrapper } from './blockHelpers'
-import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
-
-import React from 'react'
 import styled from '@emotion/styled'
+import React from 'react'
+import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
+import { ContentWrapper, MOBILE_BP_UP, SectionWrapper } from './blockHelpers'
 
 type ParagraphFontSize = 'sm' | 'md' | 'lg' | 'xl'
 
@@ -38,7 +37,7 @@ export const PlainTextBlock: React.FunctionComponent<PlainTextBlockProps> = ({
 }) => (
   <SectionWrapper colorComponent={color} size={size} extraStyling={extra_styling}>
     <ContentWrapper contentWidth index={index}>
-      <InnerContent fontSize={font_size} dangerouslySetInnerHTML={{ __html: content?.html }} />
+      <InnerContent fontSize={font_size} dangerouslySetInnerHTML={{ __html: content.html }} />
     </ContentWrapper>
   </SectionWrapper>
 )
