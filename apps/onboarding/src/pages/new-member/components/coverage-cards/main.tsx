@@ -1,4 +1,4 @@
-import { BaseCardProps, Description, Section, Title, WrapperProps } from './base'
+import { BaseCardProps, Description, Title, WrapperProps } from './base'
 import { Space, mq } from 'ui'
 
 import { Checkbox } from 'ui'
@@ -62,12 +62,13 @@ const CheckboxContainer = styled.div({
   marginLeft: 'auto',
 })
 
-const BaseCard = ({
+export const MainCoverageCard = ({
   cardImg,
   title,
   description,
   onCheck,
   checked,
+  imgAlt,
   ...wrapperProps
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
@@ -77,7 +78,7 @@ const BaseCard = ({
         <Image
           src={cardImg.src}
           blurDataURL={cardImg.blurDataURL}
-          alt={`Main Coverage - ${title}`}
+          alt={imgAlt}
           placeholder="blur"
           layout="fill"
           objectFit="cover"
@@ -98,4 +99,4 @@ const BaseCard = ({
   )
 }
 
-export default BaseCard
+export default MainCoverageCard

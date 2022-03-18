@@ -13,6 +13,7 @@ export type BaseCardProps = {
   description: string
   checked?: boolean
   onCheck?: () => void
+  imgAlt?: string
 } & WrapperProps
 
 export const Title = styled.h1(({ theme }) => ({
