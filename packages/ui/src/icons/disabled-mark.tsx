@@ -1,4 +1,4 @@
-import { IconProps } from '.'
+import { IconProps } from './types'
 
 export const DisabledTick = ({ className, width = 10, height = 2 }: IconProps) => {
   return (
