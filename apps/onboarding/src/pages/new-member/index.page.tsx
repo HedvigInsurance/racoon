@@ -1,8 +1,8 @@
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
 import type { NextPage } from 'next'
-import homeImg from './assets/home.jpg'
 import { useState } from 'react'
+import homeImg from './assets/home.jpg'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
 const NewMemberPage: NextPage = () => {
   const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState<boolean>(false)
