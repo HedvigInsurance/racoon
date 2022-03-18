@@ -98,5 +98,3 @@ export const MainCoverageCard = ({
     </Wrapper>
   )
 }
-
-export default MainCoverageCard

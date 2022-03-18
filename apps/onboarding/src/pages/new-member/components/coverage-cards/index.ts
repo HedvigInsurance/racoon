@@ -1,4 +1,2 @@
-import { AdditionalCoverageCard } from './additional'
-import { MainCoverageCard } from './main'
-
-export { MainCoverageCard, AdditionalCoverageCard }
+export { AdditionalCoverageCard } from './additional'
+export { MainCoverageCard } from './main'
