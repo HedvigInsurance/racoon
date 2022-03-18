@@ -12,8 +12,8 @@ export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
 
 export { theme } from './lib/theme'
-export { default as Checkbox } from './components/controls/checkbox'
-export { default as Radio } from './components/controls/radio'
+export { Checkbox } from './components/controls/checkbox'
+export { Radio } from './components/controls/radio'
 
 export { MailIcon } from './icons/mail-icon'
 export { PhoneIcon } from './icons/phone-icon'
