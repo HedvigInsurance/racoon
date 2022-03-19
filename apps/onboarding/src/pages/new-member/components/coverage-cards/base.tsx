@@ -1,10 +1,13 @@
-import styled from '@emotion/styled'
+import { CSSObject } from '@emotion/react'
 import { mq } from 'ui'
+import styled from '@emotion/styled'
 
 export type WrapperProps = {
   selected?: boolean
   enableHover?: boolean
+  isCheckable?: boolean
   direction?: 'row' | 'column'
+  wrapperStyles?: CSSObject
 }
 
 export type BaseCardProps = {
@@ -52,3 +55,22 @@ export const CheckboxContainer = styled.div({
     marginLeft: 'auto',
   },
 })
+
+export const Wrapper = styled.div<WrapperProps>(
+  {
+    transition: 'all 150ms',
+    display: 'flex',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    position: 'relative',
+    flexDirection: 'column',
+  },
+  ({ theme, ...props }) => ({
+    cursor: props.isCheckable ? 'pointer' : 'initial',
+    border: props.selected
+      ? `1px solid ${theme.colors.black}`
+      : `1px solid ${theme.colors.gray300}`,
+    ':hover': (props.enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
+    ...props.wrapperStyles,
+  }),
+)

@@ -1,9 +1,9 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
 import { BaseCardProps, Description, Title, WrapperProps } from './base'
+import { Space, mq } from 'ui'
 
+import { Checkbox } from 'ui'
+import Image from 'next/image'
+import styled from '@emotion/styled'
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -35,15 +35,14 @@ const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-const Wrapper = styled.div<WrapperProps>(
+const MainWrapper = styled.div<WrapperProps>(
   {
     display: 'flex',
-    width: 'min(48rem, 80%)',
     height: '8.125rem',
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',
-
+    transition: 'all 150ms',
     [mq.sm]: {
       height: '22.5rem',
       borderRadius: '16px',
@@ -51,10 +50,12 @@ const Wrapper = styled.div<WrapperProps>(
     },
   },
   ({ theme, ...props }) => ({
+    cursor: props.isCheckable ? 'pointer' : 'initial',
     border: props.selected
       ? `1px solid ${theme.colors.black}`
       : `1px solid ${theme.colors.gray300}`,
     ':hover': (props.enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
+    ...props.wrapperStyles,
   }),
 )
 
@@ -73,7 +74,7 @@ export const MainCoverageCard = ({
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
   return (
-    <Wrapper {...wrapperProps} onClick={onCheck}>
+    <MainWrapper {...wrapperProps} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
         <Image
           src={cardImg.src}
@@ -95,6 +96,6 @@ export const MainCoverageCard = ({
           </CheckboxContainer>
         )}
       </Section>
-    </Wrapper>
+    </MainWrapper>
   )
 }
