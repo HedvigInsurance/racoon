@@ -63,7 +63,6 @@ export const Wrapper = styled.div<WrapperProps>(
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',
-    flexDirection: 'column',
   },
   ({ theme, ...props }) => ({
     cursor: props.isCheckable ? 'pointer' : 'initial',

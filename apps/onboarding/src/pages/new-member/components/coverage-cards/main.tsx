@@ -1,4 +1,4 @@
-import { BaseCardProps, Description, Title, WrapperProps } from './base'
+import { BaseCardProps, Description, Title, Wrapper, WrapperProps } from './base'
 import { Space, mq } from 'ui'
 
 import { Checkbox } from 'ui'
@@ -35,29 +35,14 @@ const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-const MainWrapper = styled.div<WrapperProps>(
-  {
-    display: 'flex',
-    height: '8.125rem',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    position: 'relative',
-    transition: 'all 150ms',
-    [mq.sm]: {
-      height: '22.5rem',
-      borderRadius: '16px',
-      flexDirection: 'column',
-    },
+const MainWrapper = styled(Wrapper)({
+  height: '8.125rem',
+  [mq.sm]: {
+    height: '22.5rem',
+    borderRadius: '16px',
+    flexDirection: 'column',
   },
-  ({ theme, ...props }) => ({
-    cursor: props.isCheckable ? 'pointer' : 'initial',
-    border: props.selected
-      ? `1px solid ${theme.colors.black}`
-      : `1px solid ${theme.colors.gray300}`,
-    ':hover': (props.enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
-    ...props.wrapperStyles,
-  }),
-)
+})
 
 const CheckboxContainer = styled.div({
   marginLeft: 'auto',

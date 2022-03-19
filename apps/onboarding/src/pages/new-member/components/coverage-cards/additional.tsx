@@ -17,6 +17,7 @@ const ImageFrame = styled.div({
 
 const AdditionalWrapper = styled(Wrapper)({
   height: '10rem',
+  flexDirection: 'column',
   [mq.sm]: {
     height: 'unset',
     borderRadius: '16px',
