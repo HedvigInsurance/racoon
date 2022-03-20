@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import { CSSProperties } from 'react'
 import { CheckIcon } from '../../../icons/check-mark'
-import styled from '@emotion/styled'
 
 export type ControlProps = {
   label?: string

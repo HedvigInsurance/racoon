@@ -1,5 +1,5 @@
-import { BodyText, BodyTextProps } from './body'
 import { Meta, Story } from '@storybook/react'
+import { BodyText, BodyTextProps } from './body'
 
 const storyMeta: Meta<BodyTextProps> = {
   title: 'Body text',
