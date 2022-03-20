@@ -6,7 +6,8 @@ export type BodyTextProps = {
   variant: 0 | 1 | 2 | 3
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
   colorVariant: 'dark' | 'medium' | 'light'
-  block?: boolean
+  displayBlock?: boolean
+  fixedSize?: boolean
   children: React.ReactNode
 }
 
@@ -14,22 +15,27 @@ type ColorProp = Pick<BodyTextProps, 'colorVariant'>
 
 type StyleProps = {
   as: BodyTextProps['headingLevel']
-  block: BodyTextProps['block']
+  displayBlock: BodyTextProps['displayBlock']
+  fixedSize: BodyTextProps['fixedSize']
 } & ColorProp
 
-const TextBase = styled.span<StyleProps>(({ theme, colorVariant, block }) => ({
+const TextBase = styled.span<StyleProps>(({ theme, colorVariant, displayBlock, fixedSize }) => ({
   color:
     colorVariant === 'light'
       ? theme.colors.gray100
       : colorVariant === 'medium'
       ? theme.colors.gray700
       : theme.colors.gray900,
-  display: block ? 'block' : 'initial',
+  display: displayBlock ? 'block' : 'initial',
   margin: 0,
   padding: 0,
   fontFamily: theme.fonts.body,
   fontWeight: 400,
   letterSpacing: '-0.02em',
+  [mq.md]: fixedSize && {
+    fontSize: 'initial!important',
+    lineHeight: 'initial!important',
+  },
 }))
 
 const Body0 = styled(TextBase)<StyleProps>(() => ({
@@ -82,11 +88,13 @@ export const BodyText = ({
   headingLevel = 'span',
   colorVariant,
   children,
+  displayBlock,
+  fixedSize,
 }: BodyTextProps) => {
   const TextComponent = textLevels[variant]
 
   return (
-    <TextComponent as={headingLevel} colorVariant={colorVariant}>
+    <TextComponent as={headingLevel} {...{ fixedSize, colorVariant, displayBlock }}>
       {children}
     </TextComponent>
   )
