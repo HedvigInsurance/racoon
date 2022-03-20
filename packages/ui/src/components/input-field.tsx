@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { InputBase, InputBaseProps } from './input-base'
 
-
 type StyleProps = { $error: boolean; $suffix?: string }
 
 const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
@@ -48,12 +47,12 @@ const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   borderColor: $error ? theme.colors.red500 : theme.colors.gray300,
 }))
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> &
+export type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> &
   InputBaseProps & {
     suffix?: string
   }
 
-export const InputField = ({ suffix, ...props }: Props) => {
+export const InputField = ({ suffix, children, ...props }: InputFieldProps) => {
   return (
     <InputBase {...props}>
       {({ hasError, errorMessageId }) => (
@@ -65,6 +64,8 @@ export const InputField = ({ suffix, ...props }: Props) => {
             $suffix={suffix}
             {...props}
           />
+
+          {children}
         </Wrapper>
       )}
     </InputBase>
