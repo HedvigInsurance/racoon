@@ -2,7 +2,8 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { Space, mq } from 'ui'
 import { Checkbox } from 'ui'
-import { BaseCardProps, CheckboxContainer, Description, Section, Title, Wrapper } from './base'
+import { BodyText } from '@/components/body-text'
+import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
 
 
 const ImageFrame = styled.div({
@@ -32,13 +33,6 @@ const AdditionalSection = styled(Section)({
   },
 })
 
-const AdditionalDescription = styled(Description)({
-  fontSize: '0.75rem',
-  [mq.sm]: {
-    fontSize: '0.875rem',
-  },
-})
-
 export const AdditionalCoverageCard = ({
   cardImg,
   title,
@@ -63,8 +57,12 @@ export const AdditionalCoverageCard = ({
       </ImageFrame>
       <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>
-          <Title>{title}</Title>
-          <AdditionalDescription style={{ marginTop: 0 }}>{description}</AdditionalDescription>
+          <BodyText variant={1} colorVariant="dark" displayBlock fixedSize>
+            {title}
+          </BodyText>
+          <BodyText variant={3} colorVariant="medium" displayBlock>
+            {description}
+          </BodyText>
         </Space>
         {isCheckable && (
           <CheckboxContainer>

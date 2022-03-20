@@ -19,30 +19,6 @@ export type BaseCardProps = {
   imgAlt?: string
 } & WrapperProps
 
-export const Title = styled.h1(({ theme }) => ({
-  margin: 0,
-  fontFamily: theme.fonts.heading,
-  fontSize: '1.125rem',
-  fontWeight: 400,
-  color: theme.colors.gray900,
-
-  [mq.sm]: {
-    fontSize: '1.5rem',
-  },
-}))
-
-export const Description = styled.p(({ theme }) => ({
-  margin: 0,
-  fontFamily: theme.fonts.body,
-  fontSize: '0.875rem',
-  lineHeight: 1.5,
-  color: theme.colors.gray700,
-
-  [mq.sm]: {
-    fontSize: '1.125rem',
-  },
-}))
-
 export const CheckboxContainer = styled.div({
   position: 'absolute',
   top: 0,

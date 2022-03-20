@@ -1,9 +1,9 @@
-import { BaseCardProps, Description, Section, Title, Wrapper } from './base'
-import { Space, mq } from 'ui'
-
-import { Checkbox } from 'ui'
-import Image from 'next/image'
 import styled from '@emotion/styled'
+import Image from 'next/image'
+import { BodyText, Space, mq } from 'ui'
+import { Checkbox } from 'ui'
+import { BaseCardProps, Description, Section, Title, Wrapper } from './base'
+
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -53,8 +53,12 @@ export const MainCoverageCard = ({
       </ImageFrame>
       <Section isCheckable={isCheckable}>
         <Space y={0.5}>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
+          <BodyText variant={0} colorVariant="dark" displayBlock>
+            {title}
+          </BodyText>
+          <BodyText variant={2} colorVariant="medium" displayBlock>
+            {description}
+          </BodyText>
         </Space>
         {isCheckable && (
           <CheckboxContainer>
