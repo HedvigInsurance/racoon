@@ -7,6 +7,7 @@ export type { InputBaseProps } from './components/inputs/input-base'
 export { InputField } from './components/inputs/input-field'
 export { InputStepper } from './components/inputs/input-stepper'
 export { Heading } from './components/text/heading'
+export { BodyText } from './components/text/body'
 
 export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
