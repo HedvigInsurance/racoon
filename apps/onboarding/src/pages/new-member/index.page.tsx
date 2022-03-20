@@ -1,9 +1,9 @@
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
-import type { NextPage } from 'next'
-import homeImg from './assets/home.jpg'
 import styled from '@emotion/styled'
+import type { NextPage } from 'next'
 import { useState } from 'react'
+import homeImg from './assets/home.jpg'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
 const CardGrid = styled.div({
   display: 'grid',
