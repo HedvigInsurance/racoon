@@ -1,4 +1,4 @@
-import { BaseCardProps, CheckboxContainer, Description, Title, Wrapper } from './base'
+import { BaseCardProps, CheckboxContainer, Description, Section, Title, Wrapper } from './base'
 import { Space, mq } from 'ui'
 
 import { Checkbox } from 'ui'
@@ -17,6 +17,7 @@ const ImageFrame = styled.div({
 
 const AdditionalWrapper = styled(Wrapper)({
   height: '10rem',
+  flexDirection: 'column',
   [mq.sm]: {
     height: 'unset',
     borderRadius: '16px',
@@ -24,25 +25,12 @@ const AdditionalWrapper = styled(Wrapper)({
   },
 })
 
-const Section = styled.div<{ isCheckable?: boolean }>(
-  {
-    padding: '0.5em',
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    [mq.sm]: {
-      padding: '1.5em',
-      paddingLeft: '1em',
-    },
+const AdditionalSection = styled(Section)({
+  padding: '0.5em',
+  [mq.sm]: {
+    paddingLeft: '1em',
   },
-  ({ theme, ...props }) => ({
-    [mq.sm]: {
-      paddingRight: (props.isCheckable && '0.5em') || 'initial',
-    },
-    [mq.md]: { paddingRight: '1.5em' },
-  }),
-)
+})
 
 const AdditionalDescription = styled(Description)({
   fontSize: '0.75rem',
@@ -73,7 +61,7 @@ export const AdditionalCoverageCard = ({
           objectFit="cover"
         />
       </ImageFrame>
-      <Section isCheckable={isCheckable}>
+      <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>
           <Title>{title}</Title>
           <AdditionalDescription style={{ marginTop: 0 }}>{description}</AdditionalDescription>
@@ -83,7 +71,7 @@ export const AdditionalCoverageCard = ({
             <Checkbox onChange={onCheck} checked={checked} />
           </CheckboxContainer>
         )}
-      </Section>
+      </AdditionalSection>
     </AdditionalWrapper>
   )
 }

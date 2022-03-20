@@ -56,6 +56,25 @@ export const CheckboxContainer = styled.div({
   },
 })
 
+export const Section = styled.div<{ isCheckable?: boolean }>(
+  {
+    padding: '1em 0.5em',
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    [mq.sm]: {
+      padding: '1.5em',
+    },
+  },
+  ({ theme, ...props }) => ({
+    [mq.sm]: {
+      paddingRight: (props.isCheckable && '0.5em') || 'initial',
+    },
+    [mq.md]: { paddingRight: '1.5em' },
+  }),
+)
+
 export const Wrapper = styled.div<WrapperProps>(
   {
     transition: 'all 150ms',
@@ -63,7 +82,6 @@ export const Wrapper = styled.div<WrapperProps>(
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',
-    flexDirection: 'column',
   },
   ({ theme, ...props }) => ({
     cursor: props.isCheckable ? 'pointer' : 'initial',
