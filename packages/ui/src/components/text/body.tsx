@@ -4,8 +4,9 @@ import { mq } from '../../lib/media-query'
 
 export type BodyTextProps = {
   variant: 0 | 1 | 2 | 3
-  headingLevel: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+  headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
   colorVariant: 'dark' | 'medium' | 'light'
+  block?: boolean
   children: React.ReactNode
 }
 
@@ -13,15 +14,17 @@ type ColorProp = Pick<BodyTextProps, 'colorVariant'>
 
 type StyleProps = {
   as: BodyTextProps['headingLevel']
+  block: BodyTextProps['block']
 } & ColorProp
 
-const TextBase = styled.span<ColorProp>(({ theme, colorVariant }) => ({
+const TextBase = styled.span<StyleProps>(({ theme, colorVariant, block }) => ({
   color:
     colorVariant === 'light'
       ? theme.colors.gray100
       : colorVariant === 'medium'
       ? theme.colors.gray700
       : theme.colors.gray900,
+  display: block ? 'block' : 'initial',
   margin: 0,
   padding: 0,
   fontFamily: theme.fonts.body,
