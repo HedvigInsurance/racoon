@@ -1,6 +1,6 @@
+import { css } from '@emotion/react'
 import { colorsV3, fonts, getCdnFontFaces } from '@hedviginsurance/brand'
 
-import { css } from '@emotion/react'
 
 export const globalStyles = css`
   ${getCdnFontFaces()}
