@@ -149,7 +149,7 @@ export const Accordion = ({ title, paragraph }: AccordionProps) => {
         </ExpandToggler>
       </AccordionTitle>
       <AnimateHeight height={isOpen ? 'auto' : 0}>
-        <AccordionContent dangerouslySetInnerHTML={{ __html: paragraph?.html }} />
+        <AccordionContent dangerouslySetInnerHTML={{ __html: paragraph.html }} />
       </AnimateHeight>
     </AccordionItem>
   )
