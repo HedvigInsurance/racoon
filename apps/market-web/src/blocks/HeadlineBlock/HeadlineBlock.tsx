@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import { HedvigSymbol } from '@hedviginsurance/brand'
-import { ContentWrapper, SectionWrapper, TABLET_BP_UP } from 'blocks/blockHelpers'
-import { FontSizes, Heading } from 'components/Heading/Heading'
 import React from 'react'
+import { mq } from 'ui'
+import { ContentWrapper, SectionWrapper } from '@/blocks/blockHelpers'
+import { FontSizes, Heading } from '@/components/Heading/Heading'
 import { TextPosition } from '@/helpers/textPosition'
 import { StoryblokBaseBlock } from '@/lib/types'
 
@@ -23,7 +24,7 @@ const Text = styled.span({
     display: 'none',
   },
 
-  [TABLET_BP_UP]: {
+  [mq.md]: {
     br: {
       display: 'block',
     },
@@ -41,7 +42,7 @@ const Wordmark = styled.div({
     height: '1.25rem',
   },
 
-  [TABLET_BP_UP]: {
+  [mq.md]: {
     marginTop: '1rem',
     svg: {
       width: '2rem',
