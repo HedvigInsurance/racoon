@@ -16,9 +16,7 @@
     "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react --inject ./react-shim.js",
     "lint": "TIMING=1 eslint src",
     "lint:fix": "TIMING=1 eslint src --fix",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "storybook": "start-storybook --ci -p 6006",
-    "build-storybook": "build-storybook --quiet -o dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
