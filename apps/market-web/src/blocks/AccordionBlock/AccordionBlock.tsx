@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import { Container } from 'constate'
 import Head from 'next/head'
-import React from 'react'
+import { useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { mq } from 'ui'
 import { Plus } from '@/components/icons/Plus'
@@ -136,14 +135,25 @@ const ExpanderIcon = styled(Plus)<Openable>(({ isOpen }) => ({
 }))
 
 export const Accordion = ({ title, paragraph }: AccordionProps) => {
-          <AccordionContent
-            dangerouslySetInnerHTML={{ __html: paragraph?.html }}
-          />
-        </AnimateHeight>
-      </AccordionItem>
-    )}
-  </Container>
-)
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleIsOpen = () => setIsOpen(!isOpen)
+
+  return (
+    <AccordionItem>
+      <AccordionTitle>
+        <ExpandToggler onClick={toggleIsOpen}>
+          <AccordionTitleContent>{title}</AccordionTitleContent>
+          <ExpanderWrapper>
+            <ExpanderIcon isOpen={isOpen} />
+          </ExpanderWrapper>
+        </ExpandToggler>
+      </AccordionTitle>
+      <AnimateHeight height={isOpen ? 'auto' : 0}>
+        <AccordionContent dangerouslySetInnerHTML={{ __html: paragraph?.html }} />
+      </AnimateHeight>
+    </AccordionItem>
+  )
+}
 
 export type AccordionBlockProps = StoryblokBaseBlock & {
   title: string
