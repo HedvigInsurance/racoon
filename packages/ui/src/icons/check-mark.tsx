@@ -1,17 +1,15 @@
-import { IconProps } from './types'
+import { IconRoot, IconRootProps } from './root'
 
-export const CheckIcon = ({ className, width = 14, height = 14 }: IconProps) => {
+export const CheckIcon = ({ className, size = '0.875rem' }: IconRootProps) => {
   return (
-    <svg
+    <IconRoot
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      width={width}
-      height={height}
       viewBox="0 0 14 11"
       fill="none"
-      style={{ marginTop: 1.5 }}
+      size={size}
     >
       <path d="M1 5L5 9L13 1" stroke="#FAFAFA" strokeWidth="2" />
-    </svg>
+    </IconRoot>
   )
 }
