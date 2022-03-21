@@ -1,10 +1,9 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
-import { BodyText } from '@/components/body-text'
 import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
+import { Checkbox, Space, mq } from 'ui'
 
+import { BodyText } from '@/components/body-text'
+import Image from 'next/image'
+import styled from '@emotion/styled'
 
 const ImageFrame = styled.div({
   position: 'relative',

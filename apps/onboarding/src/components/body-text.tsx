@@ -1,6 +1,6 @@
 import styled, { StyledComponent } from '@emotion/styled'
 import React from 'react'
-import { mq } from '../../lib/media-query'
+import { mq } from 'ui'
 
 export type BodyTextProps = {
   variant: 0 | 1 | 2 | 3
