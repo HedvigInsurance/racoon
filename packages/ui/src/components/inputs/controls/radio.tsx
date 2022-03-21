@@ -1,5 +1,3 @@
-import styled from '@emotion/styled'
-import React from 'react'
 import {
   ControlContainer,
   ControlLabel,
@@ -9,18 +7,13 @@ import {
   StyledCheckbox,
 } from './base'
 
+import React from 'react'
+import styled from '@emotion/styled'
 
 const StyledRadio = styled(StyledCheckbox)({ borderRadius: '50%' })
 
-export const Radio = ({
-  disabled,
-  checked,
-  onChange,
-  label,
-  prependLabel,
-  containerStyles,
-}: ControlProps) => (
-  <ControlContainer style={containerStyles}>
+export const Radio = ({ disabled, checked, onChange, label, prependLabel }: ControlProps) => (
+  <ControlContainer>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
     <StyledRadio {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>

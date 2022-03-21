@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
 import { CSSProperties } from 'react'
 import { CheckIcon } from '../../../icons/check-mark'
+import styled from '@emotion/styled'
 
 export type ControlProps = {
   label?: string
@@ -8,11 +8,11 @@ export type ControlProps = {
   disabled?: boolean
   checked?: boolean
   onChange?: () => void
-  containerStyles?: CSSProperties
 }
 
 export const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>((props) => ({
   visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
+  marginTop: '1.5px',
 }))
 
 // Hide checkbox visually but remain accessible to screen readers.
@@ -22,11 +22,11 @@ export const HiddenInput = styled.input(
     border: 0,
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
-    height: 1,
-    margin: -1,
+    height: '1px',
+    margin: '-1px',
     overflow: 'hidden',
-    padding: 0,
-    width: 1,
+    padding: '0px',
+    width: '1px',
     position: 'absolute',
     whiteSpace: 'nowrap',
   },
@@ -46,8 +46,8 @@ export const ControlLabel = styled.div<{ disabled?: boolean }>(
   {
     fontStyle: 'normal',
     fontWeight: 400,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: '0.875rem',
+    lineHeight: 1.25,
   },
   (props) => ({
     fontFamily: props.theme.fonts.body,
@@ -64,9 +64,9 @@ export const StyledCheckbox = styled.div<{
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 20,
-    height: 20,
-    margin: 6,
+    width: '1.25rem',
+    height: '1.25rem',
+    margin: '0.4rem',
     borderRadius: 2,
     boxSizing: 'border-box',
     transition: 'all 150ms',
