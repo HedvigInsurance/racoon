@@ -1,13 +1,14 @@
-import styled from '@emotion/styled'
-import type { NextPage } from 'next'
-import { useState } from 'react'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 import { Button, Heading, mq } from 'ui'
+
 import { BodyText } from '@/components/body-text'
-import { LanguageSwitcher } from '@/components/language-switcher'
 import { Header } from '@/components/nav/header'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import type { NextPage } from 'next'
 import { ResponsiveFooter } from '@/components/nav/responsive-footer'
 import homeImg from './assets/home.jpg'
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
+import styled from '@emotion/styled'
+import { useState } from 'react'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -94,7 +95,6 @@ const NewMemberPage: NextPage = () => {
         <AdditionalCoverageCard
           enableHover
           cardImg={homeImg}
-          checked={additionalCoverageSelected}
           selected={additionalCoverageSelected}
           onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
           title="Travel Insurance "
