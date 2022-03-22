@@ -1,14 +1,13 @@
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
-import { Button, Heading, mq } from 'ui'
-
-import { BodyText } from '@/components/body-text'
-import { Header } from '@/components/nav/header'
-import { LanguageSwitcher } from '@/components/language-switcher'
+import styled from '@emotion/styled'
 import type { NextPage } from 'next'
+import { useState } from 'react'
+import { Button, Heading, mq } from 'ui'
+import { BodyText } from '@/components/body-text'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import { Header } from '@/components/nav/header'
 import { ResponsiveFooter } from '@/components/nav/responsive-footer'
 import homeImg from './assets/home.jpg'
-import styled from '@emotion/styled'
-import { useState } from 'react'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
 const CardGrid = styled.div({
   display: 'grid',

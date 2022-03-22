@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { mq } from 'ui'
-import styled from '@emotion/styled'
 
 export type StickyFooterProps = {
   children: React.ReactNode
