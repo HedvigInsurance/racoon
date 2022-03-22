@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { Heading, HeadingProps } from './heading'
+import { Heading, HeadingProps } from './Heading'
 
 const storyMeta: Meta<HeadingProps> = {
   title: 'Heading',

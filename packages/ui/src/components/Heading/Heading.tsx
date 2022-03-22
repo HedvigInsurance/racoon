@@ -1,6 +1,6 @@
 import styled, { StyledComponent } from '@emotion/styled'
 import React from 'react'
-import { mq } from '../lib/media-query'
+import { mq } from '../../lib/media-query'
 
 export type HeadingProps = {
   variant: 'xl' | 'l' | 'm' | 's' | 'xs' | 'overline'

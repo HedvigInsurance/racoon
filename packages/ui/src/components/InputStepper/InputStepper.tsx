@@ -1,8 +1,8 @@
 
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { UnstyledButton } from './button'
-import { InputBase, InputBaseProps } from './input-base'
+import { UnstyledButton } from '../Button/Button'
+import { InputBase, InputBaseProps } from '../InputBase'
 
 type ErrorProps = { $error: boolean }
 
