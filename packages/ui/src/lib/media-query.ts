@@ -1,6 +1,7 @@
-export type Level = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
 const breakpoints: Array<[Level, number]> = [
+  ['xs', 480],
   ['sm', 640],
   ['md', 768],
   ['lg', 1024],

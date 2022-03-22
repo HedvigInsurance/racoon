@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import React from 'react'
+import { mq } from 'ui'
 import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
-import { ContentWrapper, MOBILE_BP_UP, SectionWrapper } from './blockHelpers'
+import { ContentWrapper, SectionWrapper } from './blockHelpers'
 
 type ParagraphFontSize = 'sm' | 'md' | 'lg' | 'xl'
 
@@ -17,7 +18,7 @@ const InnerContent = styled.div<{ fontSize: ParagraphFontSize }>`
   margin-left: auto;
   margin-right: auto;
 
-  ${MOBILE_BP_UP} {
+  ${mq.xs} {
     font-size: ${(props) => paragraphSizeMap[props.fontSize]};
   }
 `

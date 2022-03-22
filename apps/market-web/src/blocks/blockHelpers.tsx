@@ -2,14 +2,11 @@ import styled from '@emotion/styled'
 import { colorsV3, fonts } from '@hedviginsurance/brand'
 import { match } from 'matchly'
 import React from 'react'
+import { mq } from 'ui'
 import { MinimalColorComponent, minimalColorComponentColors } from '@/lib/types'
 
 export const CONTENT_GUTTER = '2rem'
 export const CONTENT_GUTTER_MOBILE = '1rem'
-export const MOBILE_BP_UP = '@media (min-width: 480px)'
-export const TABLET_BP_UP = '@media (min-width: 800px)'
-export const LAPTOP_BP_UP = '@media (min-width: 1024px)'
-export const GIANT_BP_UP = '@media (min-width: 1700px)'
 
 export const SITE_MAX_WIDTH = {
   maxWidth: '100%',
@@ -21,7 +18,7 @@ export const CONTENT_MAX_WIDTH = {
 
 export const CONTENT_MAX_WIDTH_XL = {
   maxWidth: 1200,
-  [GIANT_BP_UP]: {
+  [mq.xxl]: {
     maxWidth: 1500,
   },
 }
@@ -41,37 +38,37 @@ const sectionSizeStyles = {
   none: { padding: 0 },
   xxs: {
     padding: '0.25rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '0.5rem 0',
     },
   },
   xs: {
     padding: '0.5rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '1rem 0',
     },
   },
   sm: {
     padding: '2rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '3.5rem 0',
     },
   },
   md: {
     padding: '2.5rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '5rem 0',
     },
   },
   lg: {
     padding: '3.5rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '7.5rem 0',
     },
   },
   xl: {
     padding: '6rem 0',
-    [TABLET_BP_UP]: {
+    [mq.lg]: {
       padding: '10rem 0',
     },
   },
@@ -143,7 +140,7 @@ export const backgroundImageStyles = (
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
 
-    [TABLET_BP_UP]: backgroundImageMobile
+    [mq.md]: backgroundImageMobile
       ? {
           backgroundImage: `${bgTint} url(${backgroundImage})`,
         }
@@ -240,7 +237,7 @@ export const ContentWrapperStyled = styled.div<{
   margin: '0 auto',
   padding: '0 ' + CONTENT_GUTTER_MOBILE,
 
-  [MOBILE_BP_UP]: {
+  [mq.xs]: {
     padding: '0 ' + CONTENT_GUTTER,
   },
 

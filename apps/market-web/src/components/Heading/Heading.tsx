@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { fonts } from '@hedviginsurance/brand'
-import { TABLET_BP_UP, getMinimalColorStyles } from '@/blocks/blockHelpers'
+import { mq } from 'ui'
+import { getMinimalColorStyles } from '@/blocks/blockHelpers'
 import { TextPosition } from '@/helpers/textPosition'
 import { minimalColorComponentColors } from '@/lib/types'
 
@@ -44,7 +45,7 @@ export const Heading = styled.h1<HeadingProps>`
     props.useDisplayFont ? `${fonts.EB_GARAMOND}, serif !important` : undefined};
   line-height: 1.2;
 
-  ${TABLET_BP_UP} {
+  ${mq.md} {
     font-size: ${(props) => headingSizeMap[props.size]};
   }
 `
