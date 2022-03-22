@@ -31,19 +31,21 @@ const Col = styled.div({
 })
 
 const Content = styled(Space)({
-  padding: '1rem',
+  '--padding-x': '1rem',
+  padding: 'var(--padding-x)',
   width: '100%',
-  maxWidth: '600px',
+  maxWidth: 'calc(30rem + var(--padding-x) * 2)',
   margin: '0 auto',
   boxSizing: 'border-box',
 
   [mq.md]: {
     minHeight: 'initial',
-    padding: '2rem 1rem',
+    paddingTop: '2rem',
+    paddingBottom: '2rem',
   },
 
   [mq.lg]: {
-    padding: '2rem',
+    '--padding-x': '2rem',
   },
 
   [mq.xl]: {
@@ -51,11 +53,16 @@ const Content = styled(Space)({
   },
 })
 
-const Text = styled.p(({ theme }) => ({
+const SubHeading = styled.p(({ theme }) => ({
   lineHeight: '1.5rem',
   fontSize: '1rem',
   color: theme.colors.gray700,
   margin: 0,
+  display: 'none',
+
+  [mq.lg]: {
+    display: 'block',
+  },
 }))
 
 const HighlightBlock = styled.div(({ theme }) => ({
@@ -69,6 +76,8 @@ const CaptionText = styled.p(({ theme }) => ({
   color: theme.colors.gray500,
   fontSize: '0.875rem',
   textAlign: 'center',
+  maxWidth: '20rem',
+  margin: '0 auto',
 }))
 
 const CaptionLink = styled.a(() => ({
@@ -78,14 +87,17 @@ const CaptionLink = styled.a(() => ({
 const StickyFooter = styled.div(({ theme }) => ({
   position: 'fixed',
   bottom: 0,
-  width: '100%',
+  left: 0,
+  right: 0,
   backgroundColor: theme.colors.white,
   boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.05), 0px -8px 16px rgba(0, 0, 0, 0.05)',
   display: 'flex',
   justifyContent: 'stretch',
 
   [mq.lg]: {
-    width: '50vw',
+    position: 'static',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
   },
 }))
 
@@ -97,8 +109,7 @@ const FooterContent = styled.div({
   paddingBottom: '2rem',
 
   [mq.lg]: {
-    paddingLeft: '2rem',
-    paddingRight: '2rem',
+    padding: 0,
   },
 })
 
@@ -106,7 +117,7 @@ const Spacer = styled.div({
   height: '6rem',
 })
 
-const Overlay = styled.div<{ visible: boolean }>(({ theme, visible }) => ({
+const Overlay = styled.div<{ visible: boolean }>(({ visible }) => ({
   position: 'fixed',
   zIndex: 9999,
   inset: 0,
@@ -132,14 +143,21 @@ const NewMemberStartPage: NextPage = () => {
             />
             <Col>
               <Content y={2}>
-                <Heading variant="s" headingLevel="h1" colorVariant="dark">
-                  Få prisförslag, jämför och byt
-                </Heading>
+                <Space y={1}>
+                  <Heading variant="s" headingLevel="h1" colorVariant="dark">
+                    Få prisförslag, jämför och byt
+                  </Heading>
+
+                  <SubHeading>
+                    Vi behöver lite information för att ge dig ett prisförslag.
+                  </SubHeading>
+                </Space>
 
                 <RadioGroup.Root
                   name={EntryPointField}
                   value={entryPoint}
                   onValueChange={(value) => setEntryPoint(value as EntryPoint)}
+                  required
                 >
                   <Space y={0.5}>
                     <RadioGroupItem
@@ -186,6 +204,13 @@ const NewMemberStartPage: NextPage = () => {
                   </Space>
                 </RadioGroup.Root>
 
+                <StickyFooter>
+                  <FooterContent>
+                    <input hidden readOnly name={LocaleField} value={path} />
+                    <Button style={{ width: '100%' }}>Fortsätt</Button>
+                  </FooterContent>
+                </StickyFooter>
+
                 <CaptionText>
                   By continuing, you agree to the Hedvig{' '}
                   <CaptionLink>Terms and Conditions</CaptionLink> and{' '}
@@ -194,13 +219,6 @@ const NewMemberStartPage: NextPage = () => {
               </Content>
 
               <Spacer />
-
-              <StickyFooter>
-                <FooterContent>
-                  <input hidden readOnly name={LocaleField} value={path} />
-                  <Button style={{ width: '100%' }}>Fortsätt</Button>
-                </FooterContent>
-              </StickyFooter>
             </Col>
           </Grid>
         </form>
