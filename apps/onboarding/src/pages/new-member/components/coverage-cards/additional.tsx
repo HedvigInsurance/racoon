@@ -37,13 +37,18 @@ export const AdditionalCoverageCard = ({
   title,
   description,
   onCheck,
-  checked,
   imgAlt,
+  selected,
   ...wrapperProps
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
   return (
-    <AdditionalWrapper {...wrapperProps} isCheckable={isCheckable} onClick={onCheck}>
+    <AdditionalWrapper
+      {...wrapperProps}
+      selected={selected}
+      isCheckable={isCheckable}
+      onClick={onCheck}
+    >
       <ImageFrame>
         <Image
           src={cardImg.src}
@@ -65,7 +70,7 @@ export const AdditionalCoverageCard = ({
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox onChange={onCheck} checked={checked} />
+            <Checkbox onChange={onCheck} checked={selected} />
           </CheckboxContainer>
         )}
       </AdditionalSection>

@@ -6,7 +6,6 @@ export type WrapperProps = {
   selected?: boolean
   enableHover?: boolean
   isCheckable?: boolean
-  direction?: 'row' | 'column'
   wrapperStyles?: CSSObject
 }
 
@@ -14,7 +13,6 @@ export type BaseCardProps = {
   cardImg: StaticImageData
   title: string
   description: string
-  checked?: boolean
   onCheck?: () => void
   imgAlt?: string
 } & WrapperProps
@@ -59,12 +57,10 @@ export const Wrapper = styled.div<WrapperProps>(
     overflow: 'hidden',
     position: 'relative',
   },
-  ({ theme, ...props }) => ({
-    cursor: props.isCheckable ? 'pointer' : 'initial',
-    border: props.selected
-      ? `1px solid ${theme.colors.black}`
-      : `1px solid ${theme.colors.gray300}`,
-    ':hover': (props.enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
-    ...props.wrapperStyles,
+  ({ theme, isCheckable, selected, enableHover, wrapperStyles }) => ({
+    cursor: isCheckable ? 'pointer' : 'initial',
+    border: selected ? `1px solid ${theme.colors.black}` : `1px solid ${theme.colors.gray300}`,
+    ':hover': (enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
+    ...wrapperStyles,
   }),
 )
