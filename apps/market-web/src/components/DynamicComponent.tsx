@@ -10,6 +10,7 @@ type Props = {
 }
 
 export const BlockComponents: Record<StoryblokComponentName, React.FC<any>> = {
+  banner_block: HeadlineBlock,
   headline_block: HeadlineBlock,
   spacer_block: SpacerBlock,
   plain_text_block: PlainTextBlock,
