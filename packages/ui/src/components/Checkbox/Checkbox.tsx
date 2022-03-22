@@ -16,16 +16,16 @@ const Icon = styled(CheckIcon)<ControlStateProps>((props) => ({
 
 // Hide checkbox visually but remain accessible to screen readers.
 // Source: https://polished.js.org/docs/#hidevisually
-const HiddenInput = styled.input(
+export const HiddenInput = styled.input(
   {
     border: 0,
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
-    height: 1,
-    margin: -1,
+    height: '1px',
+    margin: '-1px',
     overflow: 'hidden',
-    padding: 0,
-    width: 1,
+    padding: '0px',
+    width: '1px',
     position: 'absolute',
     whiteSpace: 'nowrap',
   },
@@ -45,8 +45,8 @@ const ControlLabel = styled.div<{ disabled?: boolean }>(
   {
     fontStyle: 'normal',
     fontWeight: 400,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: '0.875rem',
+    lineHeight: 1.25,
   },
   (props) => ({
     fontFamily: props.theme.fonts.body,
@@ -60,10 +60,10 @@ const StyledCheckbox = styled.div<ControlStateProps>(
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 20,
-    height: 20,
-    margin: 6,
-    borderRadius: 2,
+    width: '1.25rem',
+    height: '1.25rem',
+    margin: '0.4rem',
+    borderRadius: '2px',
     boxSizing: 'border-box',
     transition: 'all 150ms',
   },
@@ -98,7 +98,7 @@ export const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: C
   <ControlContainer>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
-    <StyledCheckbox {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>
+    <StyledCheckbox {...{ checked, onClick: onChange, disabled }}>
       <DisabledTick disabled={disabled} />
       <Icon disabled={disabled} checked={checked} />
     </StyledCheckbox>
