@@ -16,7 +16,7 @@ export const Radio = ({ disabled, checked, onChange, label, prependLabel }: Cont
   <ControlContainer>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
-    <StyledRadio {...{ checked, onClick: !disabled ? onChange : () => {}, disabled }}>
+    <StyledRadio {...{ checked, onClick: onChange, disabled }}>
       <Icon checked={checked} disabled={disabled} />
     </StyledRadio>
     {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}

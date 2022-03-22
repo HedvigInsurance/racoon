@@ -1,15 +1,18 @@
 import styled from '@emotion/styled'
 import { CheckIcon } from '../../../icons/check-mark'
 
+export type ControlStateProps = {
+  checked?: boolean
+  disabled?: boolean
+}
+
 export type ControlProps = {
   label?: string
   prependLabel?: boolean
-  disabled?: boolean
-  checked?: boolean
   onChange?: () => void
-}
+} & ControlStateProps
 
-export const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>((props) => ({
+export const Icon = styled(CheckIcon)<ControlStateProps>((props) => ({
   visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
   marginTop: '1.5px',
 }))
@@ -54,10 +57,7 @@ export const ControlLabel = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-export const StyledCheckbox = styled.div<{
-  checked?: boolean
-  disabled?: boolean
-}>(
+export const StyledCheckbox = styled.div<ControlStateProps>(
   {
     position: 'relative',
     display: 'inline-flex',

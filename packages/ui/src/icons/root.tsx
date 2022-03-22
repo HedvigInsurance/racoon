@@ -12,5 +12,5 @@ export const IconRoot = styled.svg<IconRootProps>((props) => ({
   height: props.size ? props.size : '1rem',
   fill: props.color ? props.color : 'currentColor',
   color: props.color ? props.color : 'currentColor',
-  fontSize: props.size ? props.size : '1.5rem',
+  fontSize: props.fontSize ? props.fontSize : '1.5rem',
 }))
