@@ -12,6 +12,7 @@ export type ControlProps = {
 }
 
 const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>((props) => ({
+  marginTop: '1.5px',
   visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
 }))
 
