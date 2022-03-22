@@ -1,7 +1,8 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
 import { Heading, MailIcon, PhoneIcon, Space } from 'ui'
+
+import Image from 'next/image'
 import contactCardImage from './contact-card-image.png'
+import styled from '@emotion/styled'
 
 const Wrapper = styled.div({
   padding: '1.25rem 1rem',
@@ -60,12 +61,12 @@ export const ContactCard = () => {
 
         <Space y={0.5}>
           <InfoRow x={0.5}>
-            <PhoneIcon height={16} width={16} />
+            <PhoneIcon size="1rem" />
             <InfoLabel>+46 (0)7 350 20 00</InfoLabel>
           </InfoRow>
 
           <InfoRow x={0.5}>
-            <MailIcon height={16} width={16} />
+            <MailIcon size="1rem" />
             <InfoLabel>claire@hedvigsupport.com</InfoLabel>
           </InfoRow>
         </Space>
