@@ -1,7 +1,6 @@
 import * as Apollo from '@apollo/client'
 
 import { gql } from '@apollo/client'
-
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
@@ -226,7 +225,7 @@ export enum AddressOwnership {
 
 export type Adyen = {
   __typename?: 'Adyen'
-  availablePaymentOptions: Array<Scalars['PaymentMethodsResponse']>
+  availablePaymentMethods: Scalars['PaymentMethodsResponse']
 }
 
 export type Aggregate = {
@@ -238,6 +237,7 @@ export type Agreement =
   | DanishAccidentAgreement
   | DanishHomeContentAgreement
   | DanishTravelAgreement
+  | NorwegianAccidentAgreement
   | NorwegianHomeContentAgreement
   | NorwegianTravelAgreement
   | SwedishAccidentAgreement
@@ -1968,6 +1968,8 @@ export type CompleteQuoteDetails =
 /** An inception where all quotes need to have the same startDate and currentInsurer */
 export type ConcurrentInception = {
   __typename?: 'ConcurrentInception'
+  correspondingQuoteIds: Array<Scalars['ID']>
+  /** @deprecated correspondingQuotes is deprecated, doesn't work with QuoteCart use correspondingQuoteIds instead */
   correspondingQuotes: Array<Quote>
   currentInsurer?: Maybe<CurrentInsurer>
   startDate?: Maybe<Scalars['LocalDate']>
@@ -3111,6 +3113,7 @@ export type EmbarkApiGraphQlGeneratedVariable = {
 
 export type EmbarkApiGraphQlMultiActionVariable = {
   __typename?: 'EmbarkAPIGraphQLMultiActionVariable'
+  from: Scalars['String']
   key: Scalars['String']
   variables: Array<EmbarkApiGraphQlVariable>
 }
@@ -5135,7 +5138,9 @@ export type IndefinitePercentageDiscount = {
 /** An inception that may be switchable and has a single date */
 export type IndependentInception = {
   __typename?: 'IndependentInception'
+  /** @deprecated correspondingQuote is deprecated, doesn't work with QuoteCart use correspondingQuoteId instead */
   correspondingQuote: Quote
+  correspondingQuoteId: Scalars['ID']
   currentInsurer?: Maybe<CurrentInsurer>
   startDate?: Maybe<Scalars['LocalDate']>
 }
@@ -5144,6 +5149,13 @@ export type IndependentInception = {
 export type IndependentInceptions = {
   __typename?: 'IndependentInceptions'
   inceptions: Array<IndependentInception>
+}
+
+export type InitWidgetInput = {
+  locale: Scalars['String']
+  market: Market
+  partnerId: Scalars['String']
+  requestId: Scalars['String']
 }
 
 export type InitiateDataCollectionInput = {
@@ -7559,6 +7571,8 @@ export type Mutation = {
   quoteCart_createSwedishBundle: CreateQuoteBundleResult
   /** Edit the cart. Will only update the fields that are present in the payload. */
   quoteCart_editQuote: EditQuoteResult
+  /** Initiate widget, widget should send requestId (Avy) and partner name */
+  quoteCart_initWidget: CreateQuoteCartResult
   /** Remove the existing campaign. */
   quoteCart_removeCampaign: RemoveCampaignResult
   /**
@@ -7753,6 +7767,10 @@ export type MutationQuoteCart_EditQuoteArgs = {
   quoteId: Scalars['ID']
 }
 
+export type MutationQuoteCart_InitWidgetArgs = {
+  input: InitWidgetInput
+}
+
 export type MutationQuoteCart_RemoveCampaignArgs = {
   id: Scalars['ID']
 }
@@ -7910,6 +7928,27 @@ export type Node = {
   id: Scalars['ID']
   /** The Stage of an object */
   stage: Stage
+}
+
+export type NorwegianAccidentAgreement = AgreementCore & {
+  __typename?: 'NorwegianAccidentAgreement'
+  activeFrom?: Maybe<Scalars['LocalDate']>
+  activeTo?: Maybe<Scalars['LocalDate']>
+  carrier?: Maybe<Scalars['String']>
+  certificateUrl?: Maybe<Scalars['String']>
+  id: Scalars['ID']
+  numberCoInsured: Scalars['Int']
+  partner?: Maybe<Scalars['String']>
+  premium: MonetaryAmountV2
+  status: AgreementStatus
+}
+
+export type NorwegianAccidentDetails = {
+  __typename?: 'NorwegianAccidentDetails'
+  city?: Maybe<Scalars['String']>
+  coInsured: Scalars['Int']
+  street: Scalars['String']
+  zipCode: Scalars['String']
 }
 
 export type NorwegianBankIdAuthResponse = {
@@ -8244,6 +8283,7 @@ export type Query = {
   messages: Array<Maybe<Message>>
   news: Array<News>
   nextChargeDate?: Maybe<Scalars['LocalDate']>
+  partner: RapioPartner
   /** Returns the status for the payin method (Trustly's direct debit for Sweden) (Adyen for Norway) */
   payinMethodStatus: PayinMethodStatus
   perils: Array<PerilV2>
@@ -8444,6 +8484,10 @@ export type QueryNewsArgs = {
   sinceVersion: Scalars['String']
 }
 
+export type QueryPartnerArgs = {
+  id: Scalars['ID']
+}
+
 export type QueryPerilsArgs = {
   contractType: TypeOfContract
   locale: Locale
@@ -8609,6 +8653,7 @@ export type QuoteDetails =
   | DanishAccidentDetails
   | DanishHomeContentsDetails
   | DanishTravelDetails
+  | NorwegianAccidentDetails
   | NorwegianHomeContentsDetails
   | NorwegianTravelDetails
   | SwedishAccidentDetails
@@ -8635,6 +8680,12 @@ export type RgbaInput = {
   b: Scalars['RGBAHue']
   g: Scalars['RGBAHue']
   r: Scalars['RGBAHue']
+}
+
+export type RapioPartner = {
+  __typename?: 'RapioPartner'
+  id: Scalars['ID']
+  name: Scalars['String']
 }
 
 export type RedeemedCodeV2Result =
@@ -10552,6 +10603,7 @@ export enum TypeOfContract {
   DkHomeContentStudentRent = 'DK_HOME_CONTENT_STUDENT_RENT',
   DkTravel = 'DK_TRAVEL',
   DkTravelStudent = 'DK_TRAVEL_STUDENT',
+  NoAccident = 'NO_ACCIDENT',
   NoHomeContentOwn = 'NO_HOME_CONTENT_OWN',
   NoHomeContentRent = 'NO_HOME_CONTENT_RENT',
   NoHomeContentYouthOwn = 'NO_HOME_CONTENT_YOUTH_OWN',
@@ -11479,6 +11531,8 @@ export enum _MutationKind {
   DeleteMany = 'deleteMany',
   Publish = 'publish',
   PublishMany = 'publishMany',
+  SchedulePublish = 'schedulePublish',
+  ScheduleUnpublish = 'scheduleUnpublish',
   Unpublish = 'unpublish',
   UnpublishMany = 'unpublishMany',
   Update = 'update',
@@ -11510,6 +11564,23 @@ export enum _SystemDateTimeFieldVariation {
   Base = 'base',
   Combined = 'combined',
   Localization = 'localization',
+}
+
+export type QuoteCartStatusQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type QuoteCartStatusQuery = {
+  __typename?: 'Query'
+  quoteCart: {
+    __typename?: 'QuoteCart'
+    market: Market
+    checkout?: {
+      __typename?: 'Checkout'
+      status: CheckoutStatus
+      statusText?: string | null
+    } | null
+  }
 }
 
 export type QuoteCartQuotesQueryVariables = Exact<{
@@ -11627,6 +11698,58 @@ export type CreateQuoteCartMutation = {
   onboardingQuoteCart_create: { __typename?: 'CreateQuoteCartResult'; id: string }
 }
 
+export const QuoteCartStatusDocument = gql`
+  query QuoteCartStatus($id: ID!) {
+    quoteCart(id: $id) {
+      market
+      checkout {
+        status
+        statusText
+      }
+    }
+  }
+`
+
+/**
+ * __useQuoteCartStatusQuery__
+ *
+ * To run a query within a React component, call `useQuoteCartStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuoteCartStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuoteCartStatusQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useQuoteCartStatusQuery(
+  baseOptions: Apollo.QueryHookOptions<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>(
+    QuoteCartStatusDocument,
+    options,
+  )
+}
+export function useQuoteCartStatusLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>(
+    QuoteCartStatusDocument,
+    options,
+  )
+}
+export type QuoteCartStatusQueryHookResult = ReturnType<typeof useQuoteCartStatusQuery>
+export type QuoteCartStatusLazyQueryHookResult = ReturnType<typeof useQuoteCartStatusLazyQuery>
+export type QuoteCartStatusQueryResult = Apollo.QueryResult<
+  QuoteCartStatusQuery,
+  QuoteCartStatusQueryVariables
+>
 export const QuoteCartQuotesDocument = gql`
   query QuoteCartQuotes($id: ID!) {
     quoteCart(id: $id) {
