@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { CSSProperties } from 'react'
 import { CheckIcon } from '../../../icons/check-mark'
 
 export type ControlProps = {
@@ -67,7 +66,7 @@ export const StyledCheckbox = styled.div<{
     width: '1.25rem',
     height: '1.25rem',
     margin: '0.4rem',
-    borderRadius: 2,
+    borderRadius: '2px',
     boxSizing: 'border-box',
     transition: 'all 150ms',
   },
