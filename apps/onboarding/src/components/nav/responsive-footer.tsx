@@ -16,6 +16,7 @@ const StickyContainer = styled.div((props) => ({
   boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
   padding: '1rem',
   paddingBottom: '2rem',
+  marginTop: 'auto',
   [mq.sm]: {
     position: 'static',
     backgroundColor: 'inherit',
