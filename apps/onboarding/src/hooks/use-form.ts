@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useRef } from 'react'
 import { useState } from 'react'
 
-type TransitionState = 'idle' | 'submitting' | 'success'
+type TransitionState = 'idle' | 'submitting'
 
 type FormState = {
   state: TransitionState
