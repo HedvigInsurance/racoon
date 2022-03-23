@@ -36,8 +36,6 @@ export const InputFieldWithHint = ({ onChange, ...props }: InputFieldProps) => {
     ? props.placeholder?.slice(currentValue.length)
     : undefined
 
-  console.log(hasStartedTyping, 'hasStartedTyping', currentValue)
-
   return (
     <InputField {...props} onChange={handleChange}>
       {hasStartedTyping && (
