@@ -28,8 +28,8 @@ export const structuredSoftwareApplication = () => [
     applicationCategory: 'FinanceApplication',
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.7',
-      ratingCount: '1200',
+      ratingValue: '4.6',
+      ratingCount: '1637',
     },
   },
   {
