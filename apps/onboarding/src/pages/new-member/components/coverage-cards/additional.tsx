@@ -1,68 +1,34 @@
-import styled from '@emotion/styled'
-import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
-import { BaseCardProps, CheckboxContainer, Description, Title, WrapperProps } from './base'
+import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
+import { Checkbox, Space, mq } from 'ui'
 
+import { BodyText } from '@/components/BodyText'
+import Image from 'next/image'
+import styled from '@emotion/styled'
 
 const ImageFrame = styled.div({
   position: 'relative',
-  flex: '1 0 50%',
+  flex: '1 1 50%',
   overflow: 'hidden',
 
   [mq.sm]: {
-    flex: '1 1 37%',
+    flex: '1 0 30%',
   },
 })
 
-const Wrapper = styled.div<WrapperProps>(
-  {
-    display: 'flex',
-    width: 'max(13.6rem, 40%)',
-    height: '10rem',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    position: 'relative',
-    flexDirection: 'column',
-
-    [mq.md]: {
-      height: '8.125rem',
-      borderRadius: '16px',
-      flexDirection: 'row',
-    },
-  },
-  ({ theme, ...props }) => ({
-    border: props.selected
-      ? `1px solid ${theme.colors.black}`
-      : `1px solid ${theme.colors.gray300}`,
-    ':hover': (props.enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
-  }),
-)
-
-const Section = styled.div<{ isCheckable?: boolean }>(
-  {
-    padding: '0.5em',
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    [mq.sm]: {
-      padding: '1.5em',
-      paddingLeft: '1em',
-    },
-  },
-  ({ theme, ...props }) => ({
-    [mq.sm]: {
-      paddingRight: (props.isCheckable && '0.5em') || 'initial',
-    },
-    [mq.md]: { paddingRight: '1.5em' },
-  }),
-)
-
-const AdditionalDescription = styled(Description)({
-  fontSize: '0.75rem',
+const AdditionalWrapper = styled(Wrapper)({
+  height: '10rem',
+  flexDirection: 'column',
   [mq.sm]: {
-    fontSize: '0.875rem',
+    height: 'unset',
+    borderRadius: '16px',
+    flexDirection: 'row',
+  },
+})
+
+const AdditionalSection = styled(Section)({
+  padding: '0.5em',
+  [mq.sm]: {
+    paddingLeft: '1em',
   },
 })
 
@@ -71,13 +37,18 @@ export const AdditionalCoverageCard = ({
   title,
   description,
   onCheck,
-  checked,
   imgAlt,
+  selected,
   ...wrapperProps
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
   return (
-    <Wrapper {...wrapperProps} onClick={onCheck}>
+    <AdditionalWrapper
+      {...wrapperProps}
+      selected={selected}
+      isCheckable={isCheckable}
+      onClick={onCheck}
+    >
       <ImageFrame>
         <Image
           src={cardImg.src}
@@ -88,17 +59,21 @@ export const AdditionalCoverageCard = ({
           objectFit="cover"
         />
       </ImageFrame>
-      <Section isCheckable={isCheckable}>
+      <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>
-          <Title>{title}</Title>
-          <AdditionalDescription style={{ marginTop: 0 }}>{description}</AdditionalDescription>
+          <BodyText variant={1} colorVariant="dark" displayBlock fixedSize>
+            {title}
+          </BodyText>
+          <BodyText variant={3} colorVariant="medium" displayBlock>
+            {description}
+          </BodyText>
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox onChange={onCheck} checked={checked} />
+            <Checkbox onChange={onCheck} checked={selected} />
           </CheckboxContainer>
         )}
-      </Section>
-    </Wrapper>
+      </AdditionalSection>
+    </AdditionalWrapper>
   )
 }
