@@ -1,13 +1,12 @@
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
+import styled from '@emotion/styled'
+import type { NextPage } from 'next'
+import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
-
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
-import type { NextPage } from 'next'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import homeImg from './assets/home.jpg'
-import styled from '@emotion/styled'
-import { useState } from 'react'
+import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
 
 const CardGrid = styled.div({
   display: 'grid',

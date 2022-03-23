@@ -1,6 +1,6 @@
 import { CSSObject } from '@emotion/react'
-import { mq } from 'ui'
 import styled from '@emotion/styled'
+import { mq } from 'ui'
 
 export type WrapperProps = {
   selected?: boolean

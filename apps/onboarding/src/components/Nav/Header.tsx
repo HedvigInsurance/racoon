@@ -1,8 +1,7 @@
-import { HedvigLogo, mq } from 'ui'
-
-import { LanguageSwitcher } from '../language-switcher'
-import React from 'react'
 import styled from '@emotion/styled'
+import React from 'react'
+import { HedvigLogo, mq } from 'ui'
+import { LanguageSwitcher } from '../language-switcher'
 
 const HeaderContainer = styled.div((props) => ({
   padding: '22.5px 0',

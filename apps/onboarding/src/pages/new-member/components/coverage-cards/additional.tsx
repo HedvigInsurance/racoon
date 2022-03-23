@@ -1,9 +1,9 @@
-import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
-import { Checkbox, Space, mq } from 'ui'
-
-import { BodyText } from '@/components/BodyText'
-import Image from 'next/image'
 import styled from '@emotion/styled'
+import Image from 'next/image'
+import { Checkbox, Space, mq } from 'ui'
+import { BodyText } from '@/components/BodyText'
+import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
+
 
 const ImageFrame = styled.div({
   position: 'relative',
