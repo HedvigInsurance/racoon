@@ -23,6 +23,7 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 ├─ components/
 │  ├─ Widget/
 │  │  ├─ Widget.tsx             <-- main React component
+│  │  ├─ Widget.stories.tsx     <-- Storybook file
 │  │  ├─ WidgetChild.tsx        <-- sub-component
 │  │  ├─ Widget.helpers.tsx     <-- component-level helper functions
 │  │  ├─ Widget.constants.tsx   <-- component-level constants
