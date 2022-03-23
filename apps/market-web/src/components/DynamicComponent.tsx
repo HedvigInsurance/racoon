@@ -1,10 +1,11 @@
 import React from 'react'
 import SbEditable from 'storyblok-react'
 import { AccordionBlock } from '@/blocks/AccordionBlock/AccordionBlock'
+import { BannerBlock } from '@/blocks/BannerBlock/BannerBlock'
+import { HeadlineBlock } from '@/blocks/HeadlineBlock/HeadlineBlock'
+import { PlainTextBlock } from '@/blocks/PlainTextBlock'
+import { SpacerBlock } from '@/blocks/SpacerBlock'
 import type { StoryblokBaseBlock, StoryblokComponentName } from '@/lib/types'
-import { HeadlineBlock } from '../blocks/HeadlineBlock/HeadlineBlock'
-import { PlainTextBlock } from '../blocks/PlainTextBlock'
-import { SpacerBlock } from '../blocks/SpacerBlock'
 
 type Props = {
   block: StoryblokBaseBlock
@@ -12,7 +13,7 @@ type Props = {
 
 export const BlockComponents: Record<StoryblokComponentName, React.FC<any>> = {
   accordion_block: AccordionBlock,
-  banner_block: HeadlineBlock,
+  banner_block: BannerBlock,
   headline_block: HeadlineBlock,
   spacer_block: SpacerBlock,
   plain_text_block: PlainTextBlock,
