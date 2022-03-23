@@ -22,16 +22,21 @@ const HiddenText = styled.span({
 })
 
 export const InputFieldWithHint = ({ onChange, ...props }: InputFieldProps) => {
-  const [internalValue, setInternalValue] = useState(props.value)
+  const stringValue = props.value ? props.value.toString() : undefined
+  const [internalValue, setInternalValue] = useState(stringValue)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInternalValue(event.target.value)
     onChange && onChange(event)
   }
 
-  const currentValue = String(props.value ?? internalValue)
-  const hasStartedTyping = String(currentValue).length > 0
-  const visisblePlaceholder = props.placeholder?.slice(currentValue.length)
+  const currentValue = stringValue ?? internalValue
+  const hasStartedTyping = currentValue ? currentValue.length > 0 : false
+  const visisblePlaceholder = currentValue
+    ? props.placeholder?.slice(currentValue.length)
+    : undefined
+
+  console.log(hasStartedTyping, 'hasStartedTyping', currentValue)
 
   return (
     <InputField {...props} onChange={handleChange}>
