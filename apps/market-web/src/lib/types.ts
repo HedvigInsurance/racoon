@@ -28,7 +28,11 @@ export interface TextField {
   component: string
 }
 
-export type StoryblokComponentName = 'headline_block' | 'spacer_block' | 'plain_text_block'
+export type StoryblokComponentName =
+  | 'banner_block'
+  | 'headline_block'
+  | 'spacer_block'
+  | 'plain_text_block'
 
 export interface StoryblokBaseBlock extends StoryblokComponent<StoryblokComponentName> {
   color?: MinimalColorComponent
