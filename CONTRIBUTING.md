@@ -9,6 +9,40 @@
 - We prefer `type` over `interface`
 - Limit the use of `any`, always try to be explicit.
 
+### File/Directory structure
+
+This project follows Josh Comeau's [Delightful File/Directory Structure](https://www.joshwcomeau.com/react/file-structure) with the following exceptions:
+
+- Skip `index.ts` files inside component folders
+- Name hooks as `useThing.ts`
+- Use PascalCase for React components and camelCase for all other files
+
+#### General folder structure (Next.js workspace)
+
+```text
+├─ components/
+│  ├─ Widget/
+│  │  ├─ Widget.tsx             <-- main React component
+│  │  ├─ Widget.stories.tsx     <-- Storybook file
+│  │  ├─ WidgetChild.tsx        <-- sub-component
+│  │  ├─ Widget.helpers.tsx     <-- component-level helper functions
+│  │  ├─ Widget.constants.tsx   <-- component-level constants
+│  │  ├─ useThing.tsx           <-- component-level hook
+├─ helpers/
+│  ├─ auth.helper.ts            <-- app-level helper function
+├─ utils.ts                     <-- app-level generic functions like "lodash"
+├─ hooks/
+│  ├─ useBoop.ts                <-- app-level hook
+├─ services/
+│  ├─ i18n.ts                   <-- namespaced utilities related to "i18n"
+├─ constants.ts                 <-- app-level constants
+├─ types.ts                     <-- app-level types
+├─ graphql                      <-- app-level types
+│  ├─ Query.graphql             <-- GraphQL schema query/mutation/fragment
+├─ pages/
+│  ├─ about.ts                  <-- Next.js page component
+```
+
 #### Code styling
 
 - Make use of object and array destructuring
