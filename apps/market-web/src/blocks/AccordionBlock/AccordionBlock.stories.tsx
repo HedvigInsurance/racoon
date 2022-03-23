@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { AccordionBlock, AccordionBlockProps } from './AccordionBlock'
+import { AccordionBlock } from './AccordionBlock'
 
 export default {
   title: 'Market Web / Blocks / AccordionBlock',
