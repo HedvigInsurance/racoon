@@ -6,6 +6,8 @@ export type HeadingProps = {
   variant: 'xl' | 'l' | 'm' | 's' | 'xs' | 'overline'
   headingLevel: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   colorVariant: 'dark' | 'light'
+  displayBlock?: boolean
+  fixedSize?: boolean
   children: React.ReactNode
 }
 
@@ -13,14 +15,21 @@ type ColorProp = Pick<HeadingProps, 'colorVariant'>
 
 type StyleProps = {
   as: HeadingProps['headingLevel']
+  fixedSize: HeadingProps['fixedSize']
+  displayBlock: HeadingProps['displayBlock']
 } & ColorProp
 
-const HeadingBase = styled.span<ColorProp>(({ theme, colorVariant }) => ({
+const HeadingBase = styled.span<StyleProps>(({ theme, colorVariant, fixedSize, displayBlock }) => ({
   color: colorVariant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
   margin: 0,
   padding: 0,
   fontFamily: theme.fonts.heading,
   fontWeight: 400,
+  display: displayBlock ? 'block' : 'initial',
+  [mq.md]: fixedSize && {
+    fontSize: 'initial!important',
+    lineHeight: 'initial!important',
+  },
 }))
 
 const HeadingXL = styled(HeadingBase)<StyleProps>(() => ({
@@ -95,11 +104,18 @@ const headings: Headings = {
   overline: HeadingOverline,
 }
 
-export const Heading = ({ variant, headingLevel, colorVariant, children }: HeadingProps) => {
+export const Heading = ({
+  variant,
+  headingLevel,
+  colorVariant,
+  fixedSize,
+  displayBlock,
+  children,
+}: HeadingProps) => {
   const HeadingComponent = headings[variant]
 
   return (
-    <HeadingComponent as={headingLevel} colorVariant={colorVariant}>
+    <HeadingComponent as={headingLevel} {...{ fixedSize, displayBlock, colorVariant }}>
       {children}
     </HeadingComponent>
   )
