@@ -6,9 +6,7 @@ const DEFAULT_WEBSITE_DESCRIPTION =
 const DEFAULT_ORG_DESCRIPTION =
   'Med Hedvig Hemförsäkring får du allt du förväntar dig av en försäkring, men inget du förväntar dig av ett försäkringsbolag'
 
-export const structuredFAQPage = (
-  accordions: ReadonlyArray<AccordionProps>,
-) => ({
+export const structuredFAQPage = (accordions: ReadonlyArray<AccordionProps>) => ({
   '@context': 'http://schema.org',
   '@type': 'FAQPage',
   mainEntity: accordions.map((item) => ({
@@ -66,9 +64,7 @@ interface StructuredOrganizationParams {
   description?: string
 }
 
-const structuredDataOrganization = ({
-  description,
-}: Required<StructuredOrganizationParams>) => ({
+const structuredDataOrganization = ({ description }: Required<StructuredOrganizationParams>) => ({
   '@type': 'Organization',
   name: 'Hedvig',
   url: 'https://www.hedvig.com',
@@ -76,9 +72,9 @@ const structuredDataOrganization = ({
   description,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Valhallavägen 117',
+    streetAddress: 'c/o WeWork, Malmskillnadsgatan 32',
     addressLocality: 'Stockholm',
-    postalCode: '115 31',
+    postalCode: '111 51',
     addressCountry: 'SE',
   },
   sameAs: [
