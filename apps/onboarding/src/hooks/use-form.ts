@@ -1,9 +1,8 @@
-import { FormEvent, useCallback, useRef } from 'react'
-
 import { useRouter } from 'next/router'
+import { FormEvent, useCallback, useRef } from 'react'
 import { useState } from 'react'
 
-type TransitionState = 'idle' | 'submitting'
+type TransitionState = 'idle' | 'submitting' | 'success'
 
 type FormState = {
   state: TransitionState
@@ -43,7 +42,10 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
 
       if (response.ok) {
         if (response.redirected) {
-          await router.push(response.url)
+          const isSuccess = await router.push(response.url)
+          if (isSuccess) {
+            setFormState({ state: 'idle', errors: null })
+          }
         } else {
           onSuccess?.((await response.json()) as Data)
           setFormState({ state: 'idle', errors: null })
