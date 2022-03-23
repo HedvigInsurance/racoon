@@ -29,6 +29,7 @@ export interface TextField {
 }
 
 export type StoryblokComponentName =
+  | 'accordion_block'
   | 'banner_block'
   | 'headline_block'
   | 'spacer_block'
