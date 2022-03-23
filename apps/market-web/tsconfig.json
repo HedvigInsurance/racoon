@@ -6,11 +6,11 @@
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
-      "@/lib/*": ["lib/*"],
       "@/blocks/*": ["blocks/*"],
       "@/components/*": ["components/*"],
       "@/helpers/*": ["helpers/*"],
       "@/pages/*": ["pages/*"],
+      "@/services/*": ["services/*"],
       "@/styles/*": ["styles/*"]
     },
     "incremental": true

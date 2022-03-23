@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import React from 'react'
 import { minimalColorMap } from '@/helpers/storybook'
-import { MarkdownHtmlComponent } from '@/lib/types'
+import { MarkdownHtmlComponent } from '@/services/storyblok/types'
 import { BannerBlock } from './BannerBlock'
 
 const exampleText: MarkdownHtmlComponent = {

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { mq } from 'ui'
-import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
+import { StoryblokBaseBlock, MarkdownHtmlComponent } from '@/services/storyblok/types'
 import { CONTENT_MAX_WIDTH_XL, SectionWrapper } from '../blockHelpers'
 
 const BannerContent = styled('div')({

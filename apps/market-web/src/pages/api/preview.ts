@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getStoryBySlug } from '@/lib/storyblok'
+import { getStoryBySlug } from '@/services/storyblok/storyblok'
 
 export default async function preview(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.secret !== process.env.STORYBLOK_PREVIEW_SECRET) {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  const slug = req.query.slug as string | undefined || ''
+  const slug = (req.query.slug as string | undefined) || ''
   // Get the storyblok params for the bridge to work
   const params = req.url?.split('?') ?? []
 
@@ -25,11 +25,9 @@ export default async function preview(req: NextApiRequest, res: NextApiResponse)
   const cookies = res.getHeader('Set-Cookie') ?? []
   if (typeof cookies === 'object') {
     res.setHeader(
-      "Set-Cookie",
-      cookies.map((cookie) =>
-        cookie.replace("SameSite=Lax", "SameSite=None;Secure")
-      )
-    );
+      'Set-Cookie',
+      cookies.map((cookie) => cookie.replace('SameSite=Lax', 'SameSite=None;Secure')),
+    )
   }
 
   // Redirect to the path from the fetched post

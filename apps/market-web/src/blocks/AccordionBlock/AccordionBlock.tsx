@@ -5,7 +5,7 @@ import AnimateHeight from 'react-animate-height'
 import { mq } from 'ui'
 import { Plus } from '@/components/icons/Plus'
 import { structuredFAQPage } from '@/helpers/structuredData'
-import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
+import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/services/storyblok/types'
 import { SectionWrapper, ContentWrapper } from '../blockHelpers'
 
 export type AccordionProps = {
