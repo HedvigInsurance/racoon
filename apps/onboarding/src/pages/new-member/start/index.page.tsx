@@ -10,6 +10,7 @@ import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/use-form'
 import { useCurrentLocale } from '@/lib/l10n'
 import { Bullet, BulletList } from './components/bullet-list'
+import { InputFieldWithHint } from './components/InputFieldWithHint'
 import { LoadingState } from './components/loading-state'
 import { RadioGroupItem } from './components/radio-group-item'
 import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
@@ -166,8 +167,8 @@ const NewMemberStartPage: NextPage = () => {
                       title="Där jag bor idag"
                       description="Få prisförslag på din nuvarande adress"
                     >
-                      <InputField
-                        placeholder="YYMMDD-XXXX"
+                      <InputFieldWithHint
+                        placeholder="YYMMDDXXXX"
                         inputMode="numeric"
                         required
                         min={11}

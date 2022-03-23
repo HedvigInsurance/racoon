@@ -5,6 +5,7 @@ export { Space } from './components/space'
 export { InputBase } from './components/input-base'
 export type { InputBaseProps } from './components/input-base'
 export { InputField } from './components/input-field'
+export type { InputFieldProps } from './components/input-field'
 export { InputStepper } from './components/input-stepper'
 export { Heading } from './components/heading'
 
