@@ -4,7 +4,7 @@ import { mq } from 'ui'
 
 export type BodyTextProps = {
   variant: 0 | 1 | 2 | 3
-  headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+  headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
   colorVariant: 'dark' | 'medium' | 'light'
   displayBlock?: boolean
   fixedSize?: boolean
@@ -19,7 +19,7 @@ type StyleProps = {
   fixedSize: BodyTextProps['fixedSize']
 } & ColorProp
 
-const TextBase = styled.span<StyleProps>(({ theme, colorVariant, displayBlock, fixedSize }) => ({
+const TextBase = styled.p<StyleProps>(({ theme, colorVariant, displayBlock, fixedSize }) => ({
   color:
     colorVariant === 'light'
       ? theme.colors.gray100
@@ -85,7 +85,7 @@ const textLevels: BodyTexts = {
 
 export const BodyText = ({
   variant,
-  headingLevel = 'span',
+  headingLevel = 'p',
   colorVariant,
   children,
   displayBlock,
