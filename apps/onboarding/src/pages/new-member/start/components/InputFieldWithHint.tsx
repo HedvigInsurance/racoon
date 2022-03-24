@@ -22,7 +22,7 @@ const HiddenText = styled.span({
 })
 
 export const InputFieldWithHint = ({ onChange, ...props }: InputFieldProps) => {
-  const stringValue = props.value ? props.value.toString() : undefined
+  const stringValue = props.value?.toString()
   const [internalValue, setInternalValue] = useState(stringValue)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
