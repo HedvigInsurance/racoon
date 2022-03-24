@@ -186,12 +186,12 @@ const NewMemberStartPage: NextPage = () => {
                         placeholder="YYMMDDXXXX"
                         inputMode="numeric"
                         required
-                        min={11}
-                        max={13}
+                        min={10}
+                        max={10}
                         name={PersonalNumberField}
                         onKeyDown={(event) => event.key === 'Enter' && form.submitForm()}
-                        // https://github.com/personnummer/js
-                        pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+                        pattern="^(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+                        title="Skriv ditt personnummer med 10 siffror, YYMMDDXXXX"
                         errorMessage={personalNumberError && t(personalNumberError)}
                       />
                     </RadioGroupItem>
