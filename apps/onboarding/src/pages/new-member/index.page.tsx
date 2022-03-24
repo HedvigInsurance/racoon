@@ -5,9 +5,9 @@ import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
+import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
+import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
 import homeImg from './assets/home.jpg'
-import { AdditionalCoverageCard } from './components/coverage-cards/additional'
-import { MainCoverageCard } from './components/coverage-cards/main'
 
 const CardGrid = styled.div({
   display: 'grid',
