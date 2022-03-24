@@ -190,7 +190,7 @@ const NewMemberStartPage: NextPage = () => {
                         max={10}
                         name={PersonalNumberField}
                         onKeyDown={(event) => event.key === 'Enter' && form.submitForm()}
-                        pattern="^(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+                        pattern="^(\d{2})(\d{2})(\d{2})((?!000)\d{3})(\d)$"
                         title="Skriv ditt personnummer med 10 siffror, YYMMDDXXXX"
                         errorMessage={personalNumberError && t(personalNumberError)}
                       />
