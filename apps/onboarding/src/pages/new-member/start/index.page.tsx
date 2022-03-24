@@ -5,7 +5,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
-import { Button, Heading, InputField, Space, mq } from 'ui'
+import { Button, Heading, Space, mq } from 'ui'
 import { HeroImage } from '@/components/hero-image'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/use-form'
@@ -148,6 +148,7 @@ const NewMemberStartPage: NextPage = () => {
   const { t } = useTranslation()
 
   const personalNumberError = form.errors?.[PersonalNumberField]
+  const showLoader = form.state === 'submitting' && entryPoint === EntryPoint.Current
 
   return (
     <>
@@ -241,7 +242,7 @@ const NewMemberStartPage: NextPage = () => {
         </form>
       </PageHeaderLayout>
 
-      <Overlay animate={form.state === 'submitting' ? 'visible' : 'hidden'}>
+      <Overlay animate={showLoader ? 'visible' : 'hidden'}>
         <LoadingState />
       </Overlay>
     </>
