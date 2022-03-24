@@ -6,7 +6,8 @@ import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import homeImg from './assets/home.jpg'
-import { AdditionalCoverageCard, MainCoverageCard } from './components/coverage-cards'
+import { AdditionalCoverageCard } from './components/coverage-cards/additional'
+import { MainCoverageCard } from './components/coverage-cards/main'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -59,7 +60,7 @@ const ContentCard = styled.div({
 })
 
 const NewMemberPage: NextPage = () => {
-  const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState<boolean>(false)
+  const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState(false)
   return (
     <PageContainer>
       <Header />

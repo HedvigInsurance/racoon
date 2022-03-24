@@ -22,7 +22,7 @@ export const CheckboxContainer = styled.div({
   top: 0,
   right: 0,
   zIndex: 30,
-  padding: 10,
+  padding: '0.625rem',
   [mq.sm]: {
     padding: 0,
     position: 'static',
@@ -41,9 +41,9 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
       padding: '1.5em',
     },
   },
-  ({ theme, ...props }) => ({
+  ({isCheckable }) => ({
     [mq.sm]: {
-      paddingRight: (props.isCheckable && '0.5em') || 'initial',
+      paddingRight: (isCheckable && '0.5em') || 'initial',
     },
     [mq.md]: { paddingRight: '1.5em' },
   }),

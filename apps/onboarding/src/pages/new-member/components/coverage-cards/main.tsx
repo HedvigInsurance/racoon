@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { Space, mq } from 'ui'
-import { Checkbox } from 'ui'
+import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { BaseCardProps, Section, Wrapper } from './base'
 
