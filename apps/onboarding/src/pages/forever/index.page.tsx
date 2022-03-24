@@ -4,10 +4,11 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { Button, InputField, Space } from 'ui'
+import { PageLayout } from '@/components/forever/PageLayout'
+import { usePrintCodeEffect } from '@/components/forever/usePrintCodeEffect'
+import { useForm } from '@/hooks/use-form'
 import { replaceMarkdown } from '@/services/i18n'
-import { useForm } from 'hooks/use-form'
-import { PageLayout } from './components/page-layout'
-import { usePrintCodeEffect } from './hooks/use-print-code-effect'
+
 
 const UppercaseInputField = styled(InputField)({
   textTransform: 'uppercase',
