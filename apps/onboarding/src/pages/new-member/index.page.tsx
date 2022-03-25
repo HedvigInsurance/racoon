@@ -54,11 +54,13 @@ const FooterButton = styled(Button)({
 const ContentCard = styled.div({
   gridColumn: '1 / span 2',
   textAlign: 'start',
-  margin: '0 1rem',
-  marginTop: '1rem',
-  marginLeft:0,  
+  margin: '1rem 1rem 0 0', 
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem',  textAlign: 'center',}
+  
 })
+
+const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2' })
+const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridColumn: '1 / span 1' })
 
 const NewMemberPage: NextPage = () => {
   const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState(false)
@@ -80,26 +82,24 @@ const NewMemberPage: NextPage = () => {
             Main Coverage
           </Heading>
         </TitleContainer>
-        <MainCoverageCard
+        <GridMainCoverageCard
           selected
           cardImg={homeImg}
           title="Home Insurance"
           description="Coverage for your house or apartment contents"
-          wrapperStyles={{ gridColumn: '1 / span 2' }}
         />
         <TitleContainer>
           <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
             Additional Coverage
           </Heading>
         </TitleContainer>
-        <AdditionalCoverageCard
+        <GridAdditionalCoverageCard
           enableHover
           cardImg={homeImg}
           selected={additionalCoverageSelected}
           onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
           title="Travel Insurance "
           description="Covers you and your family when you’re traveling"
-          wrapperStyles={{ gridColumn: '1 / span 1' }}
         />
       </CardGrid>
       <ResponsiveFooter>
