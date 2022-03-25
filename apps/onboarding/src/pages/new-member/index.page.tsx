@@ -13,7 +13,7 @@ const CardGrid = styled.div({
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '0 6px',
+  padding: '0 1rem',
   margin: 'auto',
   columnGap: 6,
   maxWidth: '53rem',
@@ -53,10 +53,11 @@ const FooterButton = styled(Button)({
 
 const ContentCard = styled.div({
   gridColumn: '1 / span 2',
-  textAlign: 'center',
+  textAlign: 'start',
   margin: '0 1rem',
   marginTop: '1rem',
-  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem' },
+  marginLeft:0,  
+  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem',  textAlign: 'center',}
 })
 
 const NewMemberPage: NextPage = () => {
