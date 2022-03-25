@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
 import { ClientPassage } from 'embark-core'
-import { useForm } from 'hooks/use-form'
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { getNextEmbarkPassage } from 'services/embark'
 import { Button, Space } from 'ui'
 import { PassageAction } from '@/components/embark/PassageAction'
 import { useOfferPageRedirectEffect } from '@/components/embark/useOfferPageRedirectEffect'
 import { useSubmitGraphQLEffect } from '@/components/embark/useSubmitGraphQLEffect'
 import { useTranslateTextLabel } from '@/components/embark/useTranslateTextLabel'
+import { useForm } from '@/hooks/use-form'
+import { getNextEmbarkPassage } from '@/services/embark'
 
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()
