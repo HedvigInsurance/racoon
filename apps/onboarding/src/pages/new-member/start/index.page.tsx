@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
+import { motion } from 'framer-motion'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -120,12 +121,27 @@ const Spacer = styled.div({
   height: '6rem',
 })
 
-const Overlay = styled.div<{ visible: boolean }>(({ visible }) => ({
+const Overlay = styled(motion.div)(() => ({
   position: 'fixed',
   zIndex: 9999,
   inset: 0,
-  display: visible ? 'block' : 'none',
+  display: 'none',
 }))
+
+Overlay.defaultProps = {
+  variants: {
+    visible: {
+      opacity: 1,
+      display: 'block',
+    },
+    hidden: {
+      opacity: 0,
+      transitionEnd: {
+        display: 'none',
+      },
+    },
+  },
+}
 
 const NewMemberStartPage: NextPage = () => {
   const { path } = useCurrentLocale()
@@ -134,6 +150,7 @@ const NewMemberStartPage: NextPage = () => {
   const { t } = useTranslation()
 
   const personalNumberError = form.errors?.[PersonalNumberField]
+  const showLoader = form.state === 'submitting' && entryPoint === EntryPoint.Current
 
   return (
     <>
@@ -217,7 +234,7 @@ const NewMemberStartPage: NextPage = () => {
         </form>
       </PageHeaderLayout>
 
-      <Overlay visible={form.state === 'submitting'}>
+      <Overlay animate={showLoader ? 'visible' : 'hidden'}>
         <LoadingState />
       </Overlay>
     </>
