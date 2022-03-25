@@ -1,11 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getEmbarkHistory, updateEmbarkHistory } from 'services/embark'
+import { getEmbarkHistory, updateEmbarkHistory } from '@/services/embark'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+export const config = { api: { bodyParser: false } }
 
 const goBack = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

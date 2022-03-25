@@ -1,13 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { clearEmbarkHistory, updateEmbarkHistory } from 'services/embark'
-
 import { getFormData } from '@/lib/get-form-data'
+import { clearEmbarkHistory, updateEmbarkHistory } from '@/services/embark'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+export const config = { api: { bodyParser: false } }
 
 const handleClearEmbarkHistory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

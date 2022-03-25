@@ -1,20 +1,15 @@
 import { Embark, PassageElement } from 'embark-core'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getFormData } from '@/lib/get-form-data'
+import { initializeApollo } from '@/services/apollo'
 import {
   fetchEmbarkStory,
   getEmbarkHistory,
   runMutation,
   updateEmbarkHistory,
-} from 'services/embark'
+} from '@/services/embark'
 
-import { getFormData } from '@/lib/get-form-data'
-import { initializeApollo } from '@/services/apollo'
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+export const config = { api: { bodyParser: false } }
 
 const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
   const storyName = req.query.story as string
