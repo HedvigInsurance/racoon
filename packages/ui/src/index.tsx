@@ -14,5 +14,5 @@ export { mq } from './lib/media-query'
 
 export { theme } from './lib/theme'
 
-export { MailIcon } from './icons/mail-icon'
-export { PhoneIcon } from './icons/phone-icon'
+export { MailIcon } from './icons/MailIcon'
+export { PhoneIcon } from './icons/PhoneIcon'
