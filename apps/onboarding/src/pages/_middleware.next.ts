@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getLocale } from '@/lib/l10n'
 import type { LocaleLabel } from '@/lib/l10n/locales'
-import { QuoteCart } from '@/lib/quote-cart'
+import { QuoteCart } from '@/services/quote-cart'
 
 const PUBLIC_FILE = /\.(.*)$/
 
@@ -43,14 +43,14 @@ const quoteCartSessionMiddleware = async (req: NextRequest) => {
 
   if (onboardingQuoteCartId) {
     const isValid = await QuoteCart.validate({
-      quoteCartId: onboardingQuoteCartId,
+      id: onboardingQuoteCartId,
       market: apiMarket,
     })
     onboardingQuoteCartId = isValid ? onboardingQuoteCartId : undefined
   }
 
   if (onboardingQuoteCartId === undefined) {
-    const id = await QuoteCart.renewQuoteCartId({ locale: isoLocale, market: apiMarket })
+    const id = await QuoteCart.create({ locale: isoLocale, market: apiMarket })
     return NextResponse.next().cookie(QuoteCart.COOKIE_KEY, id)
   }
 }
@@ -59,11 +59,15 @@ export async function middleware(req: NextRequest) {
   const isPageRoute =
     !PUBLIC_FILE.test(req.nextUrl.pathname) && !req.nextUrl.pathname.includes('/api/')
 
+  console.log(PUBLIC_FILE.test(req.nextUrl.pathname))
   const shouldHandleLocale = isPageRoute && req.nextUrl.locale === 'default'
 
-  if (shouldHandleLocale) return localeRedirectMiddleware(req)
-
-  if (isPageRoute) return await quoteCartSessionMiddleware(req)
+  try {
+    if (shouldHandleLocale) return localeRedirectMiddleware(req)
+    if (isPageRoute) return await quoteCartSessionMiddleware(req)
+  } catch (error) {
+    console.error('Unknown error', error)
+  }
 
   return undefined
 }

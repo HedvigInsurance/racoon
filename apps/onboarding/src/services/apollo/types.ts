@@ -11566,6 +11566,22 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization',
 }
 
+export type AddCampaignCodeMutationVariables = Exact<{
+  id: Scalars['ID']
+  code: Scalars['String']
+}>
+
+export type AddCampaignCodeMutation = {
+  __typename?: 'Mutation'
+  quoteCart_addCampaign:
+    | { __typename?: 'BasicError'; errorMessage: string }
+    | {
+        __typename?: 'QuoteCart'
+        id: string
+        campaign?: { __typename?: 'Campaign'; code: string } | null
+      }
+}
+
 export type QuoteCartStatusQueryVariables = Exact<{
   id: Scalars['ID']
 }>
@@ -11698,6 +11714,62 @@ export type CreateQuoteCartMutation = {
   onboardingQuoteCart_create: { __typename?: 'CreateQuoteCartResult'; id: string }
 }
 
+export const AddCampaignCodeDocument = gql`
+  mutation AddCampaignCode($id: ID!, $code: String!) {
+    quoteCart_addCampaign(id: $id, code: $code) {
+      ... on QuoteCart {
+        id
+        campaign {
+          code
+        }
+      }
+      ... on BasicError {
+        errorMessage: message
+      }
+    }
+  }
+`
+export type AddCampaignCodeMutationFn = Apollo.MutationFunction<
+  AddCampaignCodeMutation,
+  AddCampaignCodeMutationVariables
+>
+
+/**
+ * __useAddCampaignCodeMutation__
+ *
+ * To run a mutation, you first call `useAddCampaignCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCampaignCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCampaignCodeMutation, { data, loading, error }] = useAddCampaignCodeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      code: // value for 'code'
+ *   },
+ * });
+ */
+export function useAddCampaignCodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddCampaignCodeMutation,
+    AddCampaignCodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<AddCampaignCodeMutation, AddCampaignCodeMutationVariables>(
+    AddCampaignCodeDocument,
+    options,
+  )
+}
+export type AddCampaignCodeMutationHookResult = ReturnType<typeof useAddCampaignCodeMutation>
+export type AddCampaignCodeMutationResult = Apollo.MutationResult<AddCampaignCodeMutation>
+export type AddCampaignCodeMutationOptions = Apollo.BaseMutationOptions<
+  AddCampaignCodeMutation,
+  AddCampaignCodeMutationVariables
+>
 export const QuoteCartStatusDocument = gql`
   query QuoteCartStatus($id: ID!) {
     quoteCart(id: $id) {
