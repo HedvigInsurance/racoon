@@ -59,7 +59,6 @@ export async function middleware(req: NextRequest) {
   const isPageRoute =
     !PUBLIC_FILE.test(req.nextUrl.pathname) && !req.nextUrl.pathname.includes('/api/')
 
-  console.log(PUBLIC_FILE.test(req.nextUrl.pathname))
   const shouldHandleLocale = isPageRoute && req.nextUrl.locale === 'default'
 
   try {
