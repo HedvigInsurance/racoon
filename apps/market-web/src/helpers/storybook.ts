@@ -1,4 +1,4 @@
-import { MinimalColorComponent } from '@/lib/types'
+import { MinimalColorComponent } from '@/services/storyblok/types'
 
 export const minimalColorMap: Record<string, MinimalColorComponent> = {
   standard: {

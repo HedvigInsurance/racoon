@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { mq } from 'ui'
-import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/lib/types'
+import { MarkdownHtmlComponent, StoryblokBaseBlock } from '@/services/storyblok/types'
 import { ContentWrapper, SectionWrapper } from './blockHelpers'
 
 type ParagraphFontSize = 'sm' | 'md' | 'lg' | 'xl'

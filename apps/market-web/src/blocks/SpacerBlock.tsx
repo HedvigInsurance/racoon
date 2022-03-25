@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { StoryblokBaseBlock } from '@/lib/types'
+import { StoryblokBaseBlock } from '@/services/storyblok/types'
 import { SectionWrapper } from './blockHelpers'
 
 const Spacer = styled(SectionWrapper)`

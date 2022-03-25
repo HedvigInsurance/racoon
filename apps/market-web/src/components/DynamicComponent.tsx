@@ -5,7 +5,7 @@ import { BannerBlock } from '@/blocks/BannerBlock/BannerBlock'
 import { HeadlineBlock } from '@/blocks/HeadlineBlock/HeadlineBlock'
 import { PlainTextBlock } from '@/blocks/PlainTextBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
-import type { StoryblokBaseBlock, StoryblokComponentName } from '@/lib/types'
+import type { StoryblokBaseBlock, StoryblokComponentName } from '@/services/storyblok/types'
 
 type Props = {
   block: StoryblokBaseBlock

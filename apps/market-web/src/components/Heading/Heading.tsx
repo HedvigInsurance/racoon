@@ -3,7 +3,7 @@ import { fonts } from '@hedviginsurance/brand'
 import { mq } from 'ui'
 import { getMinimalColorStyles } from '@/blocks/blockHelpers'
 import { TextPosition } from '@/helpers/textPosition'
-import { minimalColorComponentColors } from '@/lib/types'
+import { minimalColorComponentColors } from '@/services/storyblok/types'
 
 export type FontSizes = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

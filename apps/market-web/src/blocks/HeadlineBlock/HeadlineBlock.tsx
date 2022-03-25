@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
 import { HedvigSymbol } from '@hedviginsurance/brand'
 import React from 'react'
+import { StoryblokBaseBlock } from '@/services/storyblok/types'
 import { mq } from 'ui'
 import { ContentWrapper, SectionWrapper } from '@/blocks/blockHelpers'
 import { FontSizes, Heading } from '@/components/Heading/Heading'
 import { TextPosition } from '@/helpers/textPosition'
-import { StoryblokBaseBlock } from '@/lib/types'
-
 
 type HeadlineBlockProps = StoryblokBaseBlock & {
   text: string

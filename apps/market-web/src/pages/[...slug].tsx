@@ -3,9 +3,9 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import DynamicComponent from '@/components/DynamicComponent'
-import { getAllLinks, getStoryBySlug } from '@/lib/storyblok'
-import type { PageStoryData } from '@/lib/types'
-import useStoryblok from '@/lib/useStoryblok'
+import { getStoryBySlug, getAllLinks } from '@/services/storyblok/storyblok'
+import { PageStoryData } from '@/services/storyblok/types'
+import useStoryblok from '@/services/storyblok/useStoryblok'
 
 type Props = {
   preview: boolean
