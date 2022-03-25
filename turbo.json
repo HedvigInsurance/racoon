@@ -9,10 +9,10 @@
       "dependsOn": []
     },
     "e2e": {
-      "dependsOn": ["build"]
+      "dependsOn": ["onboarding#build"]
     },
     "e2e:headless": {
-      "dependsOn": ["build"]
+      "dependsOn": ["onboarding#build"]
     },
     "lint": {
       "outputs": []
