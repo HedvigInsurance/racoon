@@ -381,5 +381,8 @@
   "START_SCREEN_OPTION_SWITCH_USP_3": "",
   "START_SCREEN_FOOTER_TOS": "",
   "START_SCREEN_LOADER": "",
-  "START_SCREEN_SUBMIT_BUTTON": "Fortsett"
+  "START_SCREEN_SUBMIT_BUTTON": "Fortsett",
+  "DETAILS_MODULE_BODY": "Kontroller at denne informasjonen om deg stemmer.",
+  "CLOSE": "Lukk",
+  "START_SCREEN_PERSONAL_NUMBER_INPUT_TITLE": ""
 }

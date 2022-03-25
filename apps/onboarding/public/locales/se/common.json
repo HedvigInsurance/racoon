@@ -36,7 +36,7 @@
   "SIDEBAR_ADD_DISCOUNT_BODY": "Har du en rabattkod? Skriv in den nedan.",
   "SIDEBAR_ADD_DISCOUNT_CELL_LABEL": "Rabattkod",
   "SIDEBAR_ADD_DISCOUNT_FINEPRINT": "Genom att klicka på ‘Lägg till rabattkod’ så accepterar du",
-  "DETAILS_MODULE_HEADLINE": "Dina uppgifter",
+  "DETAILS_MODULE_HEADLINE": "Din information",
   "DETAILS_MODULE_TABLE_TITLE": "Din bostad",
   "DETAILS_MODULE_INFOBOX_TITLE": "Frågor?",
   "DETAILS_MODULE_INFOBOX_BODY": "Har några funderingar kring din information så kan du alltid skriva till oss!",
@@ -381,5 +381,8 @@
   "START_SCREEN_OPTION_SWITCH_USP_3": "Snabbt och enkelt att byta till Hedvig",
   "START_SCREEN_FOOTER_TOS": "Genom att fortsätta godkänner du att vi får hantera dina personuppgifter. Läs mer om [vår personuppgiftspolicy](https:\/\/www.hedvig.com\/se\/personuppgifter).",
   "START_SCREEN_LOADER": "Hedvig.\nHelt digitalt.\nSmidig hjälp.\nSnabb service.\nAllt i en app.\nKrångelfritt.",
-  "START_SCREEN_SUBMIT_BUTTON": "Fortsätt"
+  "START_SCREEN_SUBMIT_BUTTON": "Fortsätt",
+  "DETAILS_MODULE_BODY": "Kontrollera att denna information om dig stämmer.",
+  "CLOSE": "Stäng",
+  "START_SCREEN_PERSONAL_NUMBER_INPUT_TITLE": "Skriv ditt personnummer med 10 siffror, YYMMDDXXXX"
 }
