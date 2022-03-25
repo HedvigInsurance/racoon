@@ -60,12 +60,12 @@ export const ContactCard = () => {
 
         <Space y={0.5}>
           <InfoRow x={0.5}>
-            <PhoneIcon size="1rem" />
+            <PhoneIcon  />
             <InfoLabel>+46 (0)7 350 20 00</InfoLabel>
           </InfoRow>
 
           <InfoRow x={0.5}>
-            <MailIcon size="1rem" />
+            <MailIcon />
             <InfoLabel>claire@hedvigsupport.com</InfoLabel>
           </InfoRow>
         </Space>
