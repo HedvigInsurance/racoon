@@ -6,8 +6,8 @@ type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
-type WOOfferParams = Required<CartParams> & { showEdit: boolean }
 type CartParams = BaseParams & { quoteCartId: string; types?: Array<string> }
+type WOOfferParams = CartParams & { showEdit: boolean }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
