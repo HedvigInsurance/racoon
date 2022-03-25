@@ -38,7 +38,7 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
     flexDirection: 'row',
     alignItems: 'center',
     [mq.sm]: {
-      padding: '1.5em',
+      padding: '1.5rem',
     },
   },
   ({isCheckable }) => ({

@@ -66,7 +66,7 @@ const NewMemberPage: NextPage = () => {
       <Header />
       <CardGrid>
         <ContentCard>
-          <Heading variant="m" headingLevel="h2" colorVariant="dark" displayBlock>
+          <Heading variant="m" headingLevel="h2" colorVariant="dark">
             Get a personal quote
           </Heading>
           <BodyText variant={1} colorVariant="medium" displayBlock>
@@ -75,7 +75,7 @@ const NewMemberPage: NextPage = () => {
           </BodyText>
         </ContentCard>
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" fixedSize headingLevel="h3">
+          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
             Main Coverage
           </Heading>
         </TitleContainer>
@@ -87,7 +87,7 @@ const NewMemberPage: NextPage = () => {
           wrapperStyles={{ gridColumn: '1 / span 2' }}
         />
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" fixedSize headingLevel="h3">
+          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
             Additional Coverage
           </Heading>
         </TitleContainer>
