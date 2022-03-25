@@ -18,6 +18,7 @@
   "embark.external_insurance_action.login.title": "Logga in på {insuranceProviderName}",
   "embark.external_insurance_action.login.continue_button": "Fortsätt",
   "embark.external_insurance_action.login.personal_number_placeholder": "Personnummer",
+  "YES": "Ja",
   "MY_TEXT_KEY": "",
   "FIRST_NAME": "",
   "CONTINUE": "",
@@ -585,5 +586,17 @@
   "REFERRAL_CAMPAIGN_NOTIFICATION_MESSAGE": "Bjud in dina vänner via vårt bonusprogram. De 300 första får 500 kronor avdrag var på sina försäkringspremier.",
   "EMBARK_MOVING_SE_WATER_CONNECTED_LABEL": "Indraget vatten",
   "NO_SIGNUP_CURRENTLY_INSURED_MESSAGE_COMBO": "",
-  "NO_SIGNUP_BIRTH_DATE_FOOTER": ""
+  "NO_SIGNUP_BIRTH_DATE_FOOTER": "",
+  "EMBARK_NO_ACCIDENT_CROSS_SELLING_CO_INSURED_MESSAGE": "",
+  "SE_WEB_SIGNUP_NEEDER_BATHS_OPTION_3": "Tre badrum",
+  "SE_WEB_SIGNUP_NEEDER_BATHS_OPTION_MORE_THAN_3": "Fler än 3 badrum",
+  "NO_SIGNUP_ERROR_CO_INSURED_MESSAGE_2": "",
+  "EMBARK_NO_CANCEL_PERMISSION": "",
+  "EMBARK_NO_ACCIDENT_UNABLE_CANCEL": "",
+  "NEW_INSURANCE_START_WELCOME_MESSAGE_2": "",
+  "NO_SIGNUP_NAME_MESSAGE_FIRST": "",
+  "NO_SIGNUP_EMAIL_MESSAGE_LAST": "",
+  "NO_SIGNUP_HOUSEHOLD_SIZE_MESSAGE": "",
+  "EMBARK_HOUSEHOLD_UNIT": "personer (inkl. dig själv)",
+  "NO_SIGNUP_HOUSEHOLD_SIZE": "Antal försäkrade"
 }

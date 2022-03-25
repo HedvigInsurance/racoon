@@ -57,7 +57,7 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
       </Space>
 
       <form {...goBackForm.formProps}>
-        <Button type="submit">{goBackForm.state === 'submitting' ? 'Loading' : 'Back'}</Button>
+        <Button>{goBackForm.state === 'submitting' ? 'Loading' : 'Back'}</Button>
       </form>
 
       {passage.action && (

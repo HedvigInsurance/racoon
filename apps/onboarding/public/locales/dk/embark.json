@@ -18,6 +18,7 @@
   "embark.external_insurance_action.login.title": "Log på {insuranceProviderName}",
   "embark.external_insurance_action.login.continue_button": "Fortsæt",
   "embark.external_insurance_action.login.personal_number_placeholder": "CPR nummer",
+  "YES": "Ja",
   "MY_TEXT_KEY": "Min tekstnøgle",
   "FIRST_NAME": "Fornavn",
   "CONTINUE": "Fortsæt",
@@ -585,5 +586,17 @@
   "REFERRAL_CAMPAIGN_NOTIFICATION_MESSAGE": "Inviter dine venner med i vores bonusprogram og spar 500 kroner på dine forsikringsudgifter. Gælder for de første 1000 rekrutteringer ",
   "EMBARK_MOVING_SE_WATER_CONNECTED_LABEL": "",
   "NO_SIGNUP_CURRENTLY_INSURED_MESSAGE_COMBO": "",
-  "NO_SIGNUP_BIRTH_DATE_FOOTER": ""
+  "NO_SIGNUP_BIRTH_DATE_FOOTER": "",
+  "EMBARK_NO_ACCIDENT_CROSS_SELLING_CO_INSURED_MESSAGE": "",
+  "SE_WEB_SIGNUP_NEEDER_BATHS_OPTION_3": "",
+  "SE_WEB_SIGNUP_NEEDER_BATHS_OPTION_MORE_THAN_3": "",
+  "NO_SIGNUP_ERROR_CO_INSURED_MESSAGE_2": "",
+  "EMBARK_NO_CANCEL_PERMISSION": "",
+  "EMBARK_NO_ACCIDENT_UNABLE_CANCEL": "",
+  "NEW_INSURANCE_START_WELCOME_MESSAGE_2": "",
+  "NO_SIGNUP_NAME_MESSAGE_FIRST": "",
+  "NO_SIGNUP_EMAIL_MESSAGE_LAST": "",
+  "NO_SIGNUP_HOUSEHOLD_SIZE_MESSAGE": "",
+  "EMBARK_HOUSEHOLD_UNIT": "personer (inkl. dig selv)",
+  "NO_SIGNUP_HOUSEHOLD_SIZE": ""
 }
