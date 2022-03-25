@@ -1,5 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 
 const Wrapper = styled.div({
@@ -50,25 +51,15 @@ const Text = styled.p(({ theme }) => ({
   animation: `${fadeInUp} 5.5s cubic-bezier(0.39, 0.575, 0.565, 1) infinite`,
 }))
 
-const TEXTS = [
-  'Building your insurance',
-  'Comprehensive coverage',
-  'All-risk included',
-  '5-star rating on Trustpilot',
-  'No paperwork or',
-  'phone lines',
-  'No interrogations or',
-  'shaming',
-  'Just insurance,',
-  'for how people live today',
-]
-
 export const LoadingState = () => {
+  const { t } = useTranslation()
+  const lines = t('START_SCREEN_LOADER').split('\n')
+
   return (
     <PageHeaderLayout>
       <Wrapper>
         <LoadingContent>
-          {TEXTS.map((text, i) => (
+          {lines.map((text, i) => (
             <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
               {text}
             </Text>

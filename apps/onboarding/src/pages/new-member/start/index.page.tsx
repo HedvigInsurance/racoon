@@ -4,11 +4,12 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
-import { Button, Heading, InputField, Space, mq } from 'ui'
+import { Button, Heading, Space, mq } from 'ui'
 import { HeroImage } from '@/components/hero-image'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/use-form'
 import { useCurrentLocale } from '@/lib/l10n'
+import { replaceMarkdown } from '@/services/i18n'
 import { Bullet, BulletList } from './components/bullet-list'
 import { InputFieldWithHint } from './components/InputFieldWithHint'
 import { LoadingState } from './components/loading-state'
@@ -72,17 +73,18 @@ const HighlightBlock = styled.div(({ theme }) => ({
   borderRadius: '0.25rem',
 }))
 
-const CaptionText = styled.p(({ theme }) => ({
+const CaptionText = styled.div(({ theme }) => ({
   fontFamily: theme.fonts.body,
   color: theme.colors.gray500,
   fontSize: '0.875rem',
   textAlign: 'center',
-  maxWidth: '20rem',
+  maxWidth: '24rem',
   margin: '0 auto',
-}))
 
-const CaptionLink = styled.a(() => ({
-  textDecoration: 'underline',
+  a: {
+    color: theme.colors.gray500,
+    textDecoration: 'underline',
+  },
 }))
 
 const StickyFooter = styled.div(({ theme }) => ({
@@ -146,14 +148,10 @@ const NewMemberStartPage: NextPage = () => {
               <Content y={2}>
                 <Space y={1}>
                   <Heading variant="s" headingLevel="h1" colorVariant="dark">
-                    Få prisförslag, jämför och byt
+                    {t('START_SCREEN_HEADER')}
                   </Heading>
-
-                  <SubHeading>
-                    Vi behöver lite information för att ge dig ett prisförslag.
-                  </SubHeading>
+                  <SubHeading>{t('START_SCREEN_SUBHEADER')}</SubHeading>
                 </Space>
-
                 <RadioGroup.Root
                   name={EntryPointField}
                   value={entryPoint}
@@ -164,8 +162,8 @@ const NewMemberStartPage: NextPage = () => {
                     <RadioGroupItem
                       value={EntryPoint.Current}
                       checked={entryPoint === EntryPoint.Current}
-                      title="Där jag bor idag"
-                      description="Få prisförslag på din nuvarande adress"
+                      title={t('START_SCREEN_OPTION_CURRENT_HEADER')}
+                      description={t('START_SCREEN_OPTION_CURRENT_SUBHEADER')}
                     >
                       <InputFieldWithHint
                         placeholder="YYMMDDXXXX"
@@ -184,39 +182,33 @@ const NewMemberStartPage: NextPage = () => {
                     <RadioGroupItem
                       value={EntryPoint.New}
                       checked={entryPoint === EntryPoint.New}
-                      title="Dit jag ska flytta"
-                      description="Teckna en ny försäkring för en ny adress"
+                      title={t('START_SCREEN_OPTION_NEW_HEADER')}
+                      description={t('START_SCREEN_OPTION_NEW_SUBHEADER')}
                     />
 
                     <RadioGroupItem
                       value={EntryPoint.Switch}
                       checked={entryPoint === EntryPoint.Switch}
-                      title="Jämför pris och byt"
-                      description="Jämför ditt nuvarande pris"
+                      title={t('START_SCREEN_OPTION_SWITCH_HEADER')}
+                      description={t('START_SCREEN_OPTION_SWITCH_SUBHEADER')}
                     >
                       <HighlightBlock>
                         <BulletList y={0.75}>
-                          <Bullet>Vi avslutar din nuvarande försäkring</Bullet>
-                          <Bullet>Vi försöker alltid ge dig ett bra pris</Bullet>
-                          <Bullet>Vi sköter hela bytet åt dig</Bullet>
+                          <Bullet>{t('START_SCREEN_OPTION_SWITCH_USP_1')}</Bullet>
+                          <Bullet>{t('START_SCREEN_OPTION_SWITCH_USP_2')}</Bullet>
+                          <Bullet>{t('START_SCREEN_OPTION_SWITCH_USP_3')}</Bullet>
                         </BulletList>
                       </HighlightBlock>
                     </RadioGroupItem>
                   </Space>
                 </RadioGroup.Root>
-
                 <StickyFooter>
                   <FooterContent>
                     <input hidden readOnly name={LocaleField} value={path} />
-                    <Button style={{ width: '100%' }}>Fortsätt</Button>
+                    <Button style={{ width: '100%' }}>{t('START_SCREEN_SUBMIT_BUTTON')}</Button>
                   </FooterContent>
                 </StickyFooter>
-
-                <CaptionText>
-                  By continuing, you agree to the Hedvig{' '}
-                  <CaptionLink>Terms and Conditions</CaptionLink> and{' '}
-                  <CaptionLink>Hedvig Privacy Policy</CaptionLink>.
-                </CaptionText>
+                <CaptionText dangerouslySetInnerHTML={{ __html: t('START_SCREEN_FOOTER_TOS') }} />
               </Content>
 
               <Spacer />
@@ -233,7 +225,9 @@ const NewMemberStartPage: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const translations = await serverSideTranslations(locale as string)
+  const translations = await replaceMarkdown(await serverSideTranslations(locale as string), [
+    'START_SCREEN_FOOTER_TOS',
+  ])
   return { props: { ...translations } }
 }
 
