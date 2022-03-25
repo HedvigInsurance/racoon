@@ -12,12 +12,12 @@ If it makes sense, add screenshots and/or screen recordings here.
 
 ## Justify why they are needed
 
+## Jira issue(s): []
+
 <!--
 If there is a Jira issue, add the key (e.g. GRW-123) between the brackets.
 A link to that issue will automatically be created.
 -->
-
-## Fixes []
 
 ## Checklist before requesting a review
 
