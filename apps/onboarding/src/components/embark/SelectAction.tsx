@@ -1,6 +1,6 @@
-import type { ClientSelectAction } from 'embark-core'
 import styled from '@emotion/styled'
-import { useTranslateTextLabel } from '../hooks/use-translate-text-label'
+import type { ClientSelectAction } from 'embark-core'
+import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 const Wrapper = styled.div(({ theme }) => ({
   display: 'grid',

@@ -1,6 +1,6 @@
 import type { TextLabel as TextLabelProps } from 'embark-core'
-import { useCallback } from 'react'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 export const useTranslateTextLabel = () => {
   const { t } = useTranslation('embark')

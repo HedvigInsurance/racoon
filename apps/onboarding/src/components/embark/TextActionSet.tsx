@@ -1,6 +1,6 @@
-import { Button } from 'ui'
 import type { ClientTextActionSet } from 'embark-core'
-import { TextAction } from './text-action'
+import { Button } from 'ui'
+import { TextAction } from './TextAction'
 
 export const TextActionSet = ({ actions }: ClientTextActionSet) => {
   return (

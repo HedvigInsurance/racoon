@@ -1,7 +1,6 @@
-import { Button, InputField } from 'ui'
-
 import type { ClientNumberAction } from 'embark-core'
-import { useTranslateTextLabel } from '../hooks/use-translate-text-label'
+import { Button, InputField } from 'ui'
+import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 export const NumberAction = ({ placeholder, minValue }: ClientNumberAction) => {
   const t = useTranslateTextLabel()

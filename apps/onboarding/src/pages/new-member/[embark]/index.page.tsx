@@ -1,39 +1,20 @@
-import { Button, Space } from 'ui'
-import { ClientPassage, PassageElement } from 'embark-core'
-import type { GetServerSideProps, NextPage } from 'next'
-import { useCallback, useEffect } from 'react'
-
-import { PageLink } from '@/lib/page-link'
-import { PassageAction } from './components/passage-action'
-import { getNextEmbarkPassage } from 'services/embark'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styled from '@emotion/styled'
+import { ClientPassage } from 'embark-core'
 import { useForm } from 'hooks/use-form'
+import type { GetServerSideProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { useTranslateTextLabel } from './hooks/use-translate-text-label'
+import { useCallback } from 'react'
+import { getNextEmbarkPassage } from 'services/embark'
+import { Button, Space } from 'ui'
+import { PassageAction } from '@/components/embark/PassageAction'
+import { useOfferPageRedirectEffect } from '@/components/embark/useOfferPageRedirectEffect'
+import { useSubmitGraphQLEffect } from '@/components/embark/useSubmitGraphQLEffect'
+import { useTranslateTextLabel } from '@/components/embark/useTranslateTextLabel'
 
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()
   return useCallback(() => replace(asPath), [replace, asPath])
-}
-
-const useCartPageRedirect = (passage: ClientPassage) => {
-  const router = useRouter()
-  useEffect(() => {
-    if (passage.action?.type === PassageElement.QuoteCartOfferRedirect) {
-      router.push(
-        PageLink.cart({ quoteCartId: passage.action.id, types: passage.action.insuranceTypes }),
-      )
-    }
-  }, [router, passage])
-}
-
-const useSubmitGraphQL = (submitForm: () => void, passage: ClientPassage) => {
-  useEffect(() => {
-    if (passage.action?.type === PassageElement.GraphQLAPI) {
-      submitForm()
-    }
-  }, [passage, submitForm])
 }
 
 type Props = {
@@ -64,8 +45,8 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   })
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
 
-  useCartPageRedirect(passage)
-  useSubmitGraphQL(submitDataForm.submitForm, passage)
+  useOfferPageRedirectEffect(passage)
+  useSubmitGraphQLEffect(submitDataForm.submitForm, passage)
 
   return (
     <Wrapper y={2}>

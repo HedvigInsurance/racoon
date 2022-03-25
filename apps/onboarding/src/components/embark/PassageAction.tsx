@@ -1,10 +1,9 @@
 import { ClientAction, PassageElement } from 'embark-core'
-
-import { GraphQLAction } from './graphql-action'
-import { NumberAction } from './number-action'
-import { SelectAction } from './select-action'
-import { TextAction } from './text-action'
-import { TextActionSet } from './text-action-set'
+import { GraphQLAction } from './GraphQLAction'
+import { NumberAction } from './NumberAction'
+import { SelectAction } from './SelectAction'
+import { TextAction } from './TextAction'
+import { TextActionSet } from './TextActionSet'
 
 type Props = {
   action: ClientAction

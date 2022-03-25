@@ -1,7 +1,6 @@
-import { Button, InputField } from 'ui'
-
 import type { ClientTextAction } from 'embark-core'
-import { useTranslateTextLabel } from '../hooks/use-translate-text-label'
+import { Button, InputField } from 'ui'
+import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = ClientTextAction & {
   name?: string
