@@ -1,3 +1,4 @@
+export { Checkbox } from './components/Checkbox/Checkbox';
 export { HedvigLogo } from './components/hedvig-logo'
 export { Button, LinkButton } from './components/button'
 export { Separate } from './components/separate'
