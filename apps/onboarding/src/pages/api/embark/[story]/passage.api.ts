@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Embark } from '@/services/embark'
+import * as Embark from '@/services/embark'
 
 const fetchPassage = async (req: NextApiRequest, res: NextApiResponse) => {
   const storyName = req.query.story as string

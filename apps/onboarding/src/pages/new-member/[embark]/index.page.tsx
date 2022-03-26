@@ -10,7 +10,7 @@ import { useOfferPageRedirectEffect } from '@/components/embark/useOfferPageRedi
 import { useSubmitGraphQLEffect } from '@/components/embark/useSubmitGraphQLEffect'
 import { useTranslateTextLabel } from '@/components/embark/useTranslateTextLabel'
 import { useForm } from '@/hooks/use-form'
-import { Embark } from '@/services/embark'
+import * as Embark from '@/services/embark'
 
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()

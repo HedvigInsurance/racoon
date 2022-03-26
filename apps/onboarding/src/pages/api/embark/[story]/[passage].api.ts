@@ -2,7 +2,7 @@ import { PassageElement } from 'embark-core'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
 import { initializeApollo } from '@/services/apollo'
-import { Embark } from '@/services/embark'
+import * as Embark from '@/services/embark'
 
 export const config = { api: { bodyParser: false } }
 

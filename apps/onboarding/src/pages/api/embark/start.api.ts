@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
-import { Embark } from '@/services/embark'
+import * as Embark from '@/services/embark'
 
 export const config = { api: { bodyParser: false } }
 
