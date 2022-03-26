@@ -1,13 +1,8 @@
-import { Embark, PassageElement } from 'embark-core'
+import { PassageElement } from 'embark-core'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
 import { initializeApollo } from '@/services/apollo'
-import {
-  fetchEmbarkStory,
-  getEmbarkHistory,
-  runMutation,
-  updateEmbarkHistory,
-} from '@/services/embark'
+import { Embark } from '@/services/embark'
 
 export const config = { api: { bodyParser: false } }
 
@@ -17,11 +12,11 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const formFields = await getFormData(req)
-    const history = getEmbarkHistory(req, res)
-    const story = await fetchEmbarkStory(storyName)
+    const history = Embark.history(req, res)
+    const story = await Embark.story(storyName)
 
     const client = initializeApollo()
-    const passage = Embark.getPassage({ story, name: passageName })
+    const passage = Embark.passage({ story, name: passageName })
 
     if (passage === null) {
       return res.status(404).json({ error: 'Passage not found' })
@@ -32,16 +27,16 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (passage.action.type === PassageElement.GraphQLAPI) {
-      const newHistory = await runMutation({
+      const newHistory = await Embark.runMutation({
         client,
         story,
         history,
         passage,
         action: passage.action,
       })
-      updateEmbarkHistory(req, res, newHistory)
+      Embark.save(req, res, newHistory)
     } else {
-      const newHistory = Embark.submitUserInput({
+      const newHistory = Embark.submit({
         story,
         history,
         input: {
@@ -50,7 +45,7 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       })
 
-      updateEmbarkHistory(req, res, newHistory)
+      Embark.save(req, res, newHistory)
     }
 
     return res.json({ ok: true })

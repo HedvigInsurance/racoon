@@ -10,7 +10,7 @@ import { useOfferPageRedirectEffect } from '@/components/embark/useOfferPageRedi
 import { useSubmitGraphQLEffect } from '@/components/embark/useSubmitGraphQLEffect'
 import { useTranslateTextLabel } from '@/components/embark/useTranslateTextLabel'
 import { useForm } from '@/hooks/use-form'
-import { getNextEmbarkPassage } from '@/services/embark'
+import { Embark } from '@/services/embark'
 
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()
@@ -77,7 +77,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 }) => {
   const translations = await serverSideTranslations(locale as string, ['embark'])
   const storyName = query.embark as string
-  const passage = await getNextEmbarkPassage({ req, res, storyName })
+  const passage = await Embark.nextPassage({ req, res, storyName })
 
   return {
     props: {

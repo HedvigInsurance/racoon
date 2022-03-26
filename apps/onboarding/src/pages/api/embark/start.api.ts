@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
-import { clearEmbarkHistory, updateEmbarkHistory } from '@/services/embark'
+import { Embark } from '@/services/embark'
 
 export const config = { api: { bodyParser: false } }
 
 const handleClearEmbarkHistory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    clearEmbarkHistory(req, res)
+    Embark.clear(req, res)
 
     const { redirectUrl, ...rawInitialData } = await getFormData(req)
 
@@ -20,7 +20,7 @@ const handleClearEmbarkHistory = async (req: NextApiRequest, res: NextApiRespons
       {},
     )
 
-    updateEmbarkHistory(req, res, [{ passageName: 'INITIAL_DATA', storeDiff: initialData }])
+    Embark.save(req, res, [{ passageName: 'INITIAL_DATA', storeDiff: initialData }])
 
     if (typeof redirectUrl === 'string') {
       return res.redirect(redirectUrl)
