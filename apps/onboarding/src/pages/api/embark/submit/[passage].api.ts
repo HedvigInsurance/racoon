@@ -34,7 +34,6 @@ const postEmbarkSubmitPassage = async (req: NextApiRequest, res: NextApiResponse
         passage,
         action: passage.action,
       })
-      Embark.Persistence.save({ req, res, session })
     } else {
       session.history = Embark.submit({
         story,
@@ -44,9 +43,9 @@ const postEmbarkSubmitPassage = async (req: NextApiRequest, res: NextApiResponse
           data: formFields,
         },
       })
-      Embark.Persistence.save({ req, res, session })
     }
 
+    Embark.Persistence.save({ req, res, session })
     return res.json({ ok: true })
   } catch (error) {
     console.error(error)
