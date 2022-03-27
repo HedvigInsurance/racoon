@@ -10,7 +10,7 @@ import { useOfferPageRedirectEffect } from '@/components/embark/useOfferPageRedi
 import { useSubmitGraphQLEffect } from '@/components/embark/useSubmitGraphQLEffect'
 import { useTranslateTextLabel } from '@/components/embark/useTranslateTextLabel'
 import { useForm } from '@/hooks/use-form'
-import * as Embark from '@/services/embark'
+import * as Embark from '@/services/embark/embark'
 
 const useRouterRefresh = () => {
   const { asPath, replace } = useRouter()
@@ -19,7 +19,6 @@ const useRouterRefresh = () => {
 
 type Props = {
   passage: ClientPassage
-  storyName: string
 }
 
 const Wrapper = styled(Space)(({ theme }) => ({
@@ -35,12 +34,12 @@ const Message = styled.div(({ theme }) => ({
   maxWidth: '30ch',
 }))
 
-const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
+const EmbarkPage: NextPage<Props> = ({ passage }) => {
   const t = useTranslateTextLabel()
   const refreshData = useRouterRefresh()
 
   const submitDataForm = useForm({
-    action: `/api/embark/${storyName}/${passage.name}`,
+    action: `/api/embark/submit/${passage.name}`,
     onSuccess: refreshData,
   })
   const goBackForm = useForm({ action: `/api/embark/go-back`, onSuccess: refreshData })
@@ -69,21 +68,18 @@ const EmbarkPage: NextPage<Props> = ({ passage, storyName }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  locale,
-  query,
-  req,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ locale, req, res }) => {
   const translations = await serverSideTranslations(locale as string, ['embark'])
-  const storyName = query.embark as string
-  const passage = await Embark.nextPassage({ req, res, storyName })
+
+  const session = Embark.Persistence.get({ req, res })
+  if (session === null) throw new Error('Session not found')
+
+  const passage = await Embark.nextPassage({ storyName: session.story, history: session.history })
 
   return {
     props: {
       // remove undefined values
       passage: JSON.parse(JSON.stringify(passage)),
-      storyName,
       ...translations,
     },
   }

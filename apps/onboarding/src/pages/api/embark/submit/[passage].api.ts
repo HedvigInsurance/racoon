@@ -2,18 +2,18 @@ import { PassageElement } from 'embark-core'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
 import { initializeApollo } from '@/services/apollo'
-import * as Embark from '@/services/embark'
+import * as Embark from '@/services/embark/embark'
 
 export const config = { api: { bodyParser: false } }
 
-const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
-  const storyName = req.query.story as string
+const postEmbarkSubmitPassage = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = Embark.Persistence.get({ req, res })
+  if (session === null) throw new Error('Session not found')
   const passageName = req.query.passage as string
 
   try {
     const formFields = await getFormData(req)
-    const history = Embark.history(req, res)
-    const story = await Embark.story(storyName)
+    const story = await Embark.story(session.story)
 
     const client = initializeApollo()
     const passage = Embark.passage({ story, name: passageName })
@@ -27,25 +27,24 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (passage.action.type === PassageElement.GraphQLAPI) {
-      const newHistory = await Embark.runMutation({
+      session.history = await Embark.runMutation({
         client,
         story,
-        history,
+        history: session.history,
         passage,
         action: passage.action,
       })
-      Embark.save(req, res, newHistory)
+      Embark.Persistence.save({ req, res, session })
     } else {
-      const newHistory = Embark.submit({
+      session.history = Embark.submit({
         story,
-        history,
+        history: session.history,
         input: {
           name: passageName,
           data: formFields,
         },
       })
-
-      Embark.save(req, res, newHistory)
+      Embark.Persistence.save({ req, res, session })
     }
 
     return res.json({ ok: true })
@@ -55,4 +54,4 @@ const submitUserInput = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default submitUserInput
+export default postEmbarkSubmitPassage

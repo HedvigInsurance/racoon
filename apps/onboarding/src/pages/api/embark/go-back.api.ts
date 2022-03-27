@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import * as Embark from '@/services/embark'
+import * as Embark from '@/services/embark/embark'
 
 export const config = { api: { bodyParser: false } }
 
-const goBack = async (req: NextApiRequest, res: NextApiResponse) => {
+const postEmbarkGoBack = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const history = Embark.history(req, res)
-    const lastEntry = history.pop()
-    Embark.save(req, res, history)
+    const session = Embark.Persistence.get({ req, res })
+    if (session === null) throw new Error('Session not found')
+    const lastEntry = session.pop()
+    Embark.Persistence.save({ req, res, session })
     return res.json({ entry: lastEntry })
   } catch (error) {
     console.error(error)
@@ -15,4 +16,4 @@ const goBack = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default goBack
+export default postEmbarkGoBack
