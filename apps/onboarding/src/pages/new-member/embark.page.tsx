@@ -19,6 +19,7 @@ const useRouterRefresh = () => {
 
 type Props = {
   passage: ClientPassage
+  showBackButton: boolean
 }
 
 const Wrapper = styled(Space)(({ theme }) => ({
@@ -34,7 +35,7 @@ const Message = styled.div(({ theme }) => ({
   maxWidth: '30ch',
 }))
 
-const EmbarkPage: NextPage<Props> = ({ passage }) => {
+const EmbarkPage: NextPage<Props> = ({ passage, showBackButton }) => {
   const t = useTranslateTextLabel()
   const refreshData = useRouterRefresh()
 
@@ -55,9 +56,11 @@ const EmbarkPage: NextPage<Props> = ({ passage }) => {
         ))}
       </Space>
 
-      <form {...goBackForm.formProps}>
-        <Button>{goBackForm.state === 'submitting' ? 'Loading' : 'Back'}</Button>
-      </form>
+      {showBackButton && (
+        <form {...goBackForm.formProps}>
+          <Button>{goBackForm.state === 'submitting' ? 'Loading' : 'Back'}</Button>
+        </form>
+      )}
 
       {passage.action && (
         <form {...submitDataForm.formProps}>
@@ -80,6 +83,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale, re
     props: {
       // remove undefined values
       passage: JSON.parse(JSON.stringify(passage)),
+      showBackButton: session.history.length > 0,
       ...translations,
     },
   }
