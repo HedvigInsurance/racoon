@@ -1,3 +1,4 @@
+import { css, Global } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'framer-motion'
@@ -29,7 +30,6 @@ const Col = styled.div({
   [mq.lg]: {
     gridColumn: '2',
     width: '50vw',
-    overflow: 'auto',
   },
 })
 
@@ -143,6 +143,14 @@ Overlay.defaultProps = {
   },
 }
 
+// Reference: https://stackoverflow.com/a/39289453
+const scrollbarShiftFix = css({
+  html: {
+    overflowX: 'hidden',
+    marginRight: 'calc(-1 * (100vw - 100%))',
+  },
+})
+
 const NewMemberStartPage: NextPage = () => {
   const { path } = useCurrentLocale()
   const form = useForm({ action: '/api/pages/start' })
@@ -154,6 +162,7 @@ const NewMemberStartPage: NextPage = () => {
 
   return (
     <>
+      <Global styles={scrollbarShiftFix} />
       <PageHeaderLayout headerVariant="light">
         <form {...form.formProps}>
           <Grid>
