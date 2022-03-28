@@ -16,8 +16,7 @@
     "e2e:headless": "turbo run e2e:headless",
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "storybook": "yarn workspace ui storybook"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^2.5.1",
