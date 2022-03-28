@@ -36,7 +36,7 @@
   "SIDEBAR_ADD_DISCOUNT_BODY": "Har du en rabatkode? Indtast den nedenfor.",
   "SIDEBAR_ADD_DISCOUNT_CELL_LABEL": "Rabatkode",
   "SIDEBAR_ADD_DISCOUNT_FINEPRINT": "Ved at klikke på \"Tilføj rabatkode\" accepterer du",
-  "DETAILS_MODULE_HEADLINE": "Dine oplysninger",
+  "DETAILS_MODULE_HEADLINE": "Din information",
   "DETAILS_MODULE_TABLE_TITLE": "Din bolig",
   "DETAILS_MODULE_INFOBOX_TITLE": "Spørgsmål?",
   "DETAILS_MODULE_INFOBOX_BODY": "Har du nogen spørgsmål om dine oplysninger, kan du altid skrive til os!",
@@ -381,5 +381,8 @@
   "START_SCREEN_OPTION_SWITCH_USP_3": "",
   "START_SCREEN_FOOTER_TOS": "",
   "START_SCREEN_LOADER": "",
-  "START_SCREEN_SUBMIT_BUTTON": "Fortsæt"
+  "START_SCREEN_SUBMIT_BUTTON": "Fortsæt",
+  "DETAILS_MODULE_BODY": "Kontrollér, at denne information om dig stemmer overens.",
+  "CLOSE": "Luk",
+  "START_SCREEN_PERSONAL_NUMBER_INPUT_TITLE": ""
 }

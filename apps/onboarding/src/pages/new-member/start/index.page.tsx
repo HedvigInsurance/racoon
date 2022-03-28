@@ -195,12 +195,13 @@ const NewMemberStartPage: NextPage = () => {
                         placeholder="YYMMDDXXXX"
                         inputMode="numeric"
                         required
-                        min={11}
+                        min={10}
                         max={13}
                         name={PersonalNumberField}
                         onKeyDown={(event) => event.key === 'Enter' && form.submitForm()}
                         // https://github.com/personnummer/js
                         pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+                        title={t('START_SCREEN_PERSONAL_NUMBER_INPUT_TITLE')}
                         errorMessage={personalNumberError && t(personalNumberError)}
                       />
                     </RadioGroupItem>

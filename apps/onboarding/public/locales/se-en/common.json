@@ -8,7 +8,7 @@
   "FOUR_OH_FOUR_HEADLINE": "Blah",
   "FOUR_OH_FOUR_LINKS": "Want to <a href=\\\"https:\/\/www.hedvig.com\\\">read more about Hedvig<\/a> or <a href=\\\"\/hedvig\\\">become a member<\/a>?\",",
   "FOUR_OH_FOUR_PAGE_TITLE": "This page could not be found | Hedvig",
-  "OFFER_PAGE_TITLE": "You offer from Hedvig | Hedvig",
+  "OFFER_PAGE_TITLE": "Your offer from Hedvig | Hedvig",
   "SIGN_EMAIL_CHECK": "Oops. Did you write you email address correctly?",
   "DOWNLOAD_PAGE_TITLE": "Download the Hedvig app | Hedvig",
   "SIGN_PAGE_TITLE": "Sign with BankID | Hedvig",
@@ -381,5 +381,8 @@
   "START_SCREEN_OPTION_SWITCH_USP_3": "Fast and easy to switch to Hedvig",
   "START_SCREEN_FOOTER_TOS": "By continuing, you agree that we can handle your personal data. Read more about our [privacy policy](https:\/\/www.hedvig.com\/se-en\/privacy-policy).",
   "START_SCREEN_LOADER": "Hedvig.\n100% digital.\nFlexible help.\nFast service.\nAll in one app.\nHassle-free.",
-  "START_SCREEN_SUBMIT_BUTTON": "Continue"
+  "START_SCREEN_SUBMIT_BUTTON": "Continue",
+  "DETAILS_MODULE_BODY": "Please make sure that the information below is correct.",
+  "CLOSE": "Close",
+  "START_SCREEN_PERSONAL_NUMBER_INPUT_TITLE": "Write your personal number with 10 digits, YYMMDDXXXX"
 }
