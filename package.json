@@ -17,7 +17,6 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "storybook": "yarn workspace ui storybook",
     "prepare": "husky install"
   },
   "devDependencies": {
