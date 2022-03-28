@@ -8,10 +8,10 @@
       "outputs": ["covereage/**"],
       "dependsOn": []
     },
-    "e2e": {
+    "onboarding#e2e": {
       "dependsOn": ["build"]
     },
-    "e2e:headless": {
+    "onboarding#e2e:headless": {
       "dependsOn": ["build"]
     },
     "lint": {

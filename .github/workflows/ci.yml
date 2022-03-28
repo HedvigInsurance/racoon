@@ -31,11 +31,11 @@ jobs:
       - name: UT
         run: yarn test
 
-      - name: 'E2E - Chrome'
+      - name: 'E2E - Chrome: onboarding'
         uses: cypress-io/github-action@v2
         with:
           install: false
-          command: yarn e2e:headless
+          command: yarn e2e-onboarding:headless
           browser: chrome
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
