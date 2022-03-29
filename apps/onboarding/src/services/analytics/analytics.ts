@@ -12,8 +12,19 @@ export const FlowType = {
 
 export type Event = 'begin_onboarding' | 'ssn_fetching_failed'
 
+const entryPointToFlowType = (entryPoint: EntryPoint) => {
+  switch (entryPoint) {
+    case EntryPoint.Current:
+      return 'ssn_input'
+    case EntryPoint.New:
+      return 'needer'
+    case EntryPoint.Switch:
+      return 'switcher'
+  }
+}
+
 export const beginOnboarding = (entryPoint: EntryPoint) => {
-  const flowType = entryPoint === EntryPoint.Current ? 'ssn_input' : entryPoint
+  const flowType = entryPointToFlowType(entryPoint)
   track('begin_onboarding', { offerData: { flow_type: flowType } })
   FlowType.save(flowType)
 }
