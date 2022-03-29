@@ -17,11 +17,23 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "start": "yarn workspace onboarding start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "storybook": "yarn workspace ui storybook"
+    "storybook": "yarn workspace ui storybook",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "prettier": "^2.5.1",
     "turbo": "^1.1.2"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.17",
+  "lint-staged": {
+    "*.md": [
+      "prettier --ignore-unknown --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --ignore-unknown --write",
+      "eslint --fix"
+    ]
+  }
 }
