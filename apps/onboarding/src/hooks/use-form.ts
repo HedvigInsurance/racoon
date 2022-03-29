@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { FormEvent, useCallback, useRef } from 'react'
+import { FormEvent, useCallback, useEffect, useRef } from 'react'
 import { useState } from 'react'
 
 type TransitionState = 'idle' | 'submitting'
@@ -21,6 +21,12 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
   const router = useRouter()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
   const formRef = useRef<HTMLFormElement>(null)
+
+  useEffect(() => {
+    const handleChangeRoute = () => setFormState({ state: 'idle', errors: null })
+    router.events.on('routeChangeStart', handleChangeRoute)
+    return () => router.events.off('routeChangeStart', handleChangeRoute)
+  }, [router])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
