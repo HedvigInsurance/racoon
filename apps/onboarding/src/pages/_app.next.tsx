@@ -1,6 +1,5 @@
 import '@/styles/global.css'
 
-
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
@@ -11,8 +10,8 @@ import { useEffect } from 'react'
 import { theme } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
+import { GTM_ID, pageview, useGTMUserProperties } from '@/services/analytics/gtm'
 import { useApollo } from '@/services/apollo'
-import { GTM_ID, pageview, useGTMUserProperties } from '@/services/gtm'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {

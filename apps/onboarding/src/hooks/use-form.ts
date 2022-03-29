@@ -9,15 +9,14 @@ type FormState = {
   errors: Record<string, string> | null
 }
 
-type SuccessFunction<Data = any> = (_data: Data) => void
-
 type Options = {
   action: string
   method?: 'put' | 'post' | 'patch' | 'delete'
-  onSuccess?: SuccessFunction
+  onSuccess?: (data: { redirectUrl?: string }) => void
+  onSubmit?: (formData: FormData) => void
 }
 
-export const useForm = <Data>({ action, method, onSuccess }: Options) => {
+export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
   const router = useRouter()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
   const formRef = useRef<HTMLFormElement>(null)
@@ -28,6 +27,8 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
 
     try {
       const formData = new FormData(event.currentTarget)
+      onSubmit?.(formData)
+
       // @ts-ignore doesn't know about submitter
       if (event.nativeEvent.submitter) {
         // @ts-ignore
@@ -41,13 +42,13 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
       })
 
       if (response.ok) {
+        onSuccess?.({ redirectUrl: response.redirected ? response.url : undefined })
         if (response.redirected) {
           const isSuccess = await router.push(response.url)
           if (isSuccess) {
             setFormState({ state: 'idle', errors: null })
           }
         } else {
-          onSuccess?.((await response.json()) as Data)
           setFormState({ state: 'idle', errors: null })
         }
       } else {
