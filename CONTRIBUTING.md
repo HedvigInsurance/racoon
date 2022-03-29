@@ -1,15 +1,17 @@
 # Contributing
 
-## Development guidelines
+This document contains guidelines for how we write, organize and collaborate on our code.
 
-### Typescript
+## Table of contents
 
-#### Code structuring
+- [File and Directory structure](#file-and-directory-structure)
+- [Commits and Branches](#commits-and-branches)
+- [Pull Requests and Code Reviews](#pull-requests-and-code-reviews)
+- [Continuous Integration and Deployment](#continuous-integration-and-deployment)
+- [Code guidelines](#code-guidelines)
+- [Useful links](#useful-links)
 
-- We prefer `type` over `interface`
-- Limit the use of `any`, always try to be explicit.
-
-### File/Directory structure
+## File and Directory structure
 
 This project follows Josh Comeau's [Delightful File/Directory Structure](https://www.joshwcomeau.com/react/file-structure) with the following exceptions:
 
@@ -17,7 +19,7 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 - Name hooks as `useThing.ts`
 - Use PascalCase for React components and camelCase for all other files
 
-#### General folder structure (Next.js workspace)
+### General folder structure (Next.js workspace)
 
 ```text
 ├─ components/
@@ -43,13 +45,7 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 │  ├─ about.ts                  <-- Next.js page component
 ```
 
-#### Code styling
-
-- Make use of object and array destructuring
-- Respect the code style guidelines, `prettier` and `yarn lint` is everyone's best friend
-- Don't use default exports as they lead to poor discoverability. Stick to named exports
-
-## Commits & Branches
+## Commits and Branches
 
 ### Commits
 
@@ -81,7 +77,7 @@ Prefixing the branch name with the issue number will link it to the ticket in Ji
 - `style`: Changes that do not affect the meaning of the code (white-space, formatting etc)
 - `test`: Adding tests or correcting existing tests
 
-## Pull Requests & Code Reviews
+## Pull Requests and Code Reviews
 
 ### Pull Requests
 
@@ -115,6 +111,403 @@ When a PR is merged to the main branch:
 
 - `Market Web` will be deployed to `staging`, deployment to `production` is manual in Heroku
 - `Web Onboarding` will be deployed to `staging`, deployment to `production` is manual in Heroku
+
+## Code guidelines
+
+- Make use of object and array destructuring
+- Respect the code style guidelines, `prettier` and `yarn lint` is everyone's best friend
+
+### Exports
+
+Don't use default exports as they lead to poor discoverability. Stick to named exports.
+
+```tsx
+// Do:
+
+export const DynamicComponent = () => {
+  // ...
+}
+```
+
+```tsx
+// Don't:
+
+const DynamicComponent = () => {
+  // ...
+}
+
+export default DynamicComponent
+```
+
+### Imports
+
+We explicitly import React hooks as well as React (since we haven't yet upgraded to React 17).
+
+```tsx
+import React, { useState, useEffect } from 'react'
+```
+
+We don't however import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
+The reason for this is that the types from React are not always named in a way that makes super clear that's where they come from.
+
+```tsx
+// Do:
+
+import React, { useState, useEffect } from 'react'
+
+/* ... */
+
+export const DoSomething: React.ReactNode = () => {
+  /* ... */
+}
+```
+
+```tsx
+// Don't:
+
+import React, { useState, useEffect, ReactNode } from 'react'
+
+/* ... */
+
+export const DoSomething: ReactNode = () => {
+  /* ... */
+}
+```
+
+### Components
+
+#### Components in files
+
+As stated in the section on Files the rule of thumb is pretty easy - **one React component per file**. And the component exported from a file **should be named the same as the file**.
+
+#### Declaring components
+
+When declaring components we use anonymous arrow functions, and not the `function` keyword.
+
+```tsx
+// Do:
+
+export const Component = () => {
+  // ...
+}
+```
+
+```tsx
+// Don't:
+
+export function Component() {
+  // ...
+}
+```
+
+#### Component size
+
+Our React components should be easy to get an overview of, which means that their returned JSX "markup" _ideally_ fits on the screen of a 15/16 inch laptop without you having to scroll. If it's bigger than that you should probably look into splitting it up into smaller components. If you feel like you can't then you should most likely do some refactoring :)
+
+### Props
+
+#### Receiving props
+
+We always destructure props in the component **receiving** them.
+
+```tsx
+// Do:
+
+const MyComponent = ({ prop1, prop2 }) => {
+  return (
+    <>
+      <div>{prop1}</div>
+      <div>{prop2}</div>
+    </>
+  )
+}
+
+const MyComponent = ({ prop1, ...rest }) => {
+  return (
+    <>
+      <div>{prop1}</div>
+      <MyOtherComponent {...rest} />
+    </>
+  )
+}
+```
+
+```tsx
+// Don't:
+
+const MyComponent = (props) => {
+  return (
+    <>
+      <div>{props.prop1}</div>
+      <div>{props.prop2}</div>
+    </>
+  )
+}
+```
+
+#### Passing props
+
+We only spread props when **passing** them if we want to pass an unknown number of props. Otherwise we don't spread them, even if there are many of them and they're called the same in the receiving component as in the one passing them.
+
+```tsx
+// Do:
+
+<MyComponent prop1={prop1} prop2={prop2} prop3={prop3} />
+
+<MyComponent {...unknownNumberOfProps} />
+```
+
+```tsx
+// Don't:
+
+<MyComponent {...{ prop1, prop2, prop3 }} />
+```
+
+#### Typing props
+
+The pattern we _have previously been_ following and is the dominating one in our codebases is typing the return type of our components with the `React.FC` and typing the props like `React.FC<Props>`.
+
+This pattern, however, is now discouraged (see the [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/)), and we're gradually moving to typing our props in the way you usually type function parameters. All new components we write should follow the pattern below, and all old components you edit should also be edited to follow this pattern.
+
+```tsx
+// Do:
+
+export const Component = ({ prop1, prop2 }: Props) => {
+  // ...
+}
+```
+
+```tsx
+// Don't:
+
+export const Component: React.FC<Props> = ({ prop1, prop2 }) => {
+  // ...
+}
+```
+
+Also, we prefer `type` aliases for props to inline typing
+
+```tsx
+// Do:
+
+type Props = {
+  prop1: string
+  prop2: number
+}
+
+export const Component = ({ prop1, prop2 }: Props) => {
+  // ...
+}
+```
+
+```tsx
+// Don't:
+
+export const Component = ({ prop1, prop2 }: { prop1: string; prop2: number }) => {
+  // ...
+}
+```
+
+### Deprecating functions
+
+If a function should no longer be used, but it doesn't make sense to replace it everywhere at the moment, it should be marked as `@deprecated` with a [JSDoc comment](https://jsdoc.app/tags-deprecated.html):
+
+```tsx
+/**
+ * @deprecated This function should not be used, use newFunction instead.
+ */
+export const oldFunction = () => {
+  //...
+}
+```
+
+### Naming
+
+Variables, including parameters, should have descriptive names. I.e. avoid naming things `x` or `a` (or e.g. `T` in the case of type variables for generics).
+
+```tsx
+// Do:
+
+quotes.map((quote, index) => {
+  // ...
+})
+```
+
+```tsx
+// Don't:
+
+quotes.map((x, i) => {
+  // ...
+})
+```
+
+### Boolean variables
+
+Boolean values starts with `is` or `has`. In special cases `should` or `can` is fine.
+
+```tsx
+// Do:
+
+const isOpen = true
+
+const hasData = false
+
+// Ok:
+
+const shouldUpdate = true
+
+const canRedirect = false
+```
+
+```tsx
+// Don't:
+
+const open = true
+
+const data = false
+```
+
+For more in-depth inspiration see [this blogpost](https://dev.to/michi/tips-on-naming-boolean-variables-cleaner-code-35ig). 👈
+
+### Functions
+
+Function names start with a verb since they _do_ stuff.
+
+```tsx
+// Do:
+
+const getData = () => {}
+
+const handleClick = () => {}
+```
+
+```tsx
+// Don't:
+
+const data = () => {}
+
+const clickHandler = () => {}
+```
+
+### Event handler functions
+
+Names of functions that handle events (like clicks) starts with the word "handle".
+
+Exceptions are when the event only should trigger a change of state, i.e. call a _setSomeAwesomeState_ function, then it's perfectly fine to just call that function immediately.
+
+```tsx
+// Do:
+
+onClick={(event) => handleClick(event)}
+
+onClick={() => handleOpenModal()}
+
+onClick={() => setIsModalOpen(true)}
+```
+
+```tsx
+// Ok:
+
+onClick={(event) => onClick(event)}
+
+onClick={() => onOpenModal()}
+```
+
+```tsx
+// Don't:
+
+onClick={(event) => click(event)}
+
+onClick={() => openModal()}
+```
+
+### Types
+
+All types used in a file are declared at the top of the file, just below the imports. Since types are often imported anyways, which means they're not declared where they are used, it makes sense to just gather all of them there. But name them well (as you should with everything you name) - it's nice to get a grasp of what they're used for by just looking at them!
+
+_Alternative rule:_
+
+Types are declared as close to where they are used as possible. For example, a `type` alias listing the props of a component should be declared just above that component.
+
+#### Avoid `any`
+
+Limit the use of `any`, always try to be explicit.
+
+```tsx
+// Do: explicit
+
+const sum = (a: number, b: number): number => a + b
+```
+
+```tsx
+// Do: implicit
+
+const sum = (a: number, b: number) => a + b
+```
+
+```tsx
+// Don't:
+
+const sum = (a: number, b: number): any => a + b
+```
+
+#### `type` vs `interface`
+
+We use `type` to type over `interface`, especially for props. [Here is a short note](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example/#types-or-interfaces) on that matter, from a React-TypeScript cheatsheet that is linked to from the official TypeScript docs.
+
+```tsx
+// Do:
+
+type Props = {
+  prop: string
+  isProp: boolean
+}
+```
+
+```tsx
+// Don't:
+
+interface Props {
+  prop: string
+  isProp: boolean
+}
+```
+
+### Styling
+
+We use [Emotion](https://emotion.sh/docs/introduction) to style our components, which is pretty much like [Styled Components](https://styled-components.com/) with one difference being that you get types out of the box.
+
+```tsx
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
+```
+
+```tsx
+// Do:
+
+// regular div
+const CoolDiv = styled.div({
+  background: 'peachpuff',
+  width: '100%',
+})
+
+// div with props (props sould be destructured)
+const DivWithProps = styled.div<{ isPurple: boolean }>(({ isPurple }) => {
+  background: isPurple ? 'lavendar' : 'peachpuff'
+})
+```
+
+```tsx
+// Don't:
+
+const NotSoCoolDiv = styled('div')`
+  background: peachpuff;
+`
+
+const AnotherNotCoolDiv = styled.div`
+  background: peachpuff;
+`
+```
 
 ## Useful links
 
