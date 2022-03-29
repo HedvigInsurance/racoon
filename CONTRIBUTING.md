@@ -486,15 +486,15 @@ import { keyframes } from '@emotion/core'
 // Do:
 
 // regular div
-const CoolDiv = styled.div`
-  background: peachpuff;
-  width: 100%;
-`
+const CoolDiv = styled.div({
+  background: 'peachpuff',
+  width: '100%',
+})
 
 // div with props (props sould be destructured)
-const DivWithProps = styled.div<{ isPurple }>`
-  background: ${({ isPurple }) => (isPurple ? 'lavendar' : 'peachpuff')};
-`
+const DivWithProps = styled.div<{ isPurple: boolean }>(({ isPurple }) => {
+  background: isPurple ? 'lavendar' : 'peachpuff'
+})
 ```
 
 ```tsx
@@ -504,9 +504,9 @@ const NotSoCoolDiv = styled('div')`
   background: peachpuff;
 `
 
-const AnotherNotCoolDiv = styled.div({
-  background: 'peachpuff',
-})
+const AnotherNotCoolDiv = styled.div`
+  background: peachpuff;
+`
 ```
 
 ## Useful links
