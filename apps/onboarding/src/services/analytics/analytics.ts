@@ -10,7 +10,7 @@ export const FlowType = {
   get: () => window.sessionStorage.getItem(FLOW_TYPE_COOKIE_KEY),
 }
 
-export type Event = 'begin_onboarding' | 'ssn_fetching_failed'
+export type Event = 'begin_onboarding_flows' | 'ssn_fetching_failed'
 
 const entryPointToFlowType = (entryPoint: EntryPoint) => {
   switch (entryPoint) {
@@ -25,7 +25,7 @@ const entryPointToFlowType = (entryPoint: EntryPoint) => {
 
 export const beginOnboarding = (entryPoint: EntryPoint) => {
   const flowType = entryPointToFlowType(entryPoint)
-  track('begin_onboarding', { offerData: { flow_type: flowType } })
+  track('begin_onboarding_flows', { offerData: { flow_type: flowType } })
   FlowType.save(flowType)
 }
 
