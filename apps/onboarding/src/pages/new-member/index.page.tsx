@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
@@ -8,6 +9,7 @@ import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
+import { replaceMarkdown } from '@/services/i18n';
 import homeImg from './assets/home.jpg'
 
 const CardGrid = styled.div({
@@ -108,6 +110,15 @@ const NewMemberPage: NextPage = () => {
       </ResponsiveFooter>
     </PageContainer>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string))
+    },
+  };
 }
 
 export default NewMemberPage
