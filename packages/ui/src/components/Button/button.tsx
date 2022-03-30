@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import React from 'react'
 import { ReactNode } from 'react'
 
 export type ButtonProps = {
@@ -46,6 +47,7 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
     maxWidth: '100%',
     transition: 'all ease-out 200ms',
     display: 'flex',
+    alignItems: 'center',
 
     ...($variant === 'filled' && {
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
@@ -93,9 +95,15 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
 )
 
 export const Button = ({ children, icon, ...rest }: ButtonProps) => {
+  const sizedIcon = React.Children.map(icon, (child) =>
+    React.cloneElement(child as React.ReactElement<any>, {
+      size: rest.$size === 'sm' ? '1rem' : '1.5rem',
+    }),
+  )
+
   return (
     <ButtonElement {...rest}>
-      {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
+      {icon && <IconWrapper padded={Boolean(children)}>{sizedIcon}</IconWrapper>}
       {children}
     </ButtonElement>
   )
