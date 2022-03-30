@@ -11,6 +11,7 @@ import { HeroImage } from '@/components/hero-image'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/use-form'
 import { useCurrentLocale } from '@/lib/l10n'
+import * as Analytics from '@/services/analytics/analytics'
 import { replaceMarkdown } from '@/services/i18n'
 import { Bullet, BulletList } from './components/bullet-list'
 import { InputFieldWithHint } from './components/InputFieldWithHint'
@@ -153,9 +154,18 @@ const scrollbarShiftFix = css({
 
 const NewMemberStartPage: NextPage = () => {
   const { path } = useCurrentLocale()
-  const form = useForm({ action: '/api/pages/start' })
   const [entryPoint, setEntryPoint] = useState<EntryPoint>()
   const { t } = useTranslation()
+
+  const form = useForm({
+    action: '/api/pages/start',
+    onSubmit: () => entryPoint && Analytics.beginOnboarding(entryPoint),
+    onSuccess: ({ redirectUrl }) => {
+      if (entryPoint === EntryPoint.Current && redirectUrl?.includes('/offer/') !== true) {
+        Analytics.ssnFetchingFailed()
+      }
+    },
+  })
 
   const personalNumberError = form.errors?.[PersonalNumberField]
   const showLoader = form.state === 'submitting' && entryPoint === EntryPoint.Current
