@@ -1,5 +1,5 @@
 import StoryblokClient from 'storyblok-js-client'
-import type { PageStoryData, StoryblokLinkItem } from './types'
+import type { ImageUrl, PageStoryData, StoryblokLinkItem } from './types'
 
 interface FetchOptions {
   preview?: boolean
@@ -23,3 +23,20 @@ export const getStoryBySlug = async (slug: string, { preview = false }: FetchOpt
   })
   return response.data.story as PageStoryData
 }
+
+export const getPublicHost = (): string | undefined => {
+  if (typeof window === 'undefined' && typeof process !== 'undefined' && process.env.PUBLIC_HOST) {
+    return process.env.PUBLIC_HOST
+  }
+
+  if (typeof window !== 'undefined') {
+    return (window as any).PUBLIC_HOST
+  }
+
+  return ''
+}
+
+export const getStoryblokImage = (url?: ImageUrl) =>
+  getPublicHost()
+    ? (url || '').replace(/^(https?:)?\/\/a\.storyblok\.com\//, getPublicHost() + '/')
+    : url

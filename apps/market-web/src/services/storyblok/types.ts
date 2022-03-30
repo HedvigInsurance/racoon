@@ -1,6 +1,8 @@
 import type { StoryData, StoryblokComponent } from 'storyblok-js-client'
 import { SectionSize } from '@/blocks/blockHelpers'
 
+export type ImageUrl = string
+
 export type minimalColorComponentColors =
   | 'standard'
   | 'standard-inverse'
@@ -31,6 +33,7 @@ export interface TextField {
 export type StoryblokComponentName =
   | 'accordion_block'
   | 'banner_block'
+  | 'bullet_point_block'
   | 'headline_block'
   | 'spacer_block'
   | 'plain_text_block'
