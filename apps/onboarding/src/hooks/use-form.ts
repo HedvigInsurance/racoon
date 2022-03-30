@@ -22,6 +22,8 @@ export const useForm = <Data>({ action, method, onSuccess }: Options) => {
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
   const formRef = useRef<HTMLFormElement>(null)
 
+  // Reset form state when navigating away from/back to this page.
+  // Safari somehow keeps the state even after the page is unmounted.
   useEffect(() => {
     const handleChangeRoute = () => setFormState({ state: 'idle', errors: null })
     router.events.on('routeChangeStart', handleChangeRoute)
