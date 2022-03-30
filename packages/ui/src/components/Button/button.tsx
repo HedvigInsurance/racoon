@@ -1,11 +1,24 @@
 import styled from '@emotion/styled'
+import { ReactNode } from 'react'
 
 export type ButtonProps = {
   $variant?: 'filled' | 'outlined' | 'text'
   $hasFullWidth?: boolean
   $color?: 'dark' | 'lavender'
   $size?: 'sm' | 'lg'
+  children?: ReactNode
+  icon?: ReactNode
+  onClick?: () => void
 }
+
+type IconWrapperProps = {
+  padded?: boolean
+}
+
+const IconWrapper = styled.div<IconWrapperProps>(({ padded }) => ({
+  marginRight: padded ? '0.5rem' : 0,
+  lineHeight: 0, // Otherwise the div will have too large height inherited globally
+}))
 
 export const UnstyledButton = styled.button({
   padding: 0,
@@ -20,7 +33,7 @@ export const UnstyledButton = styled.button({
   },
 })
 
-export const Button = styled(UnstyledButton)<ButtonProps>(
+const ButtonElement = styled(UnstyledButton)<ButtonProps>(
   ({ theme, $variant = 'filled', $hasFullWidth, $color, $size = 'lg' }) => ({
     width: $hasFullWidth ? '100%' : 'auto',
     padding: $size === 'lg' ? '0.75rem 2rem' : '0.375rem 0.75rem',
@@ -32,6 +45,7 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
     borderRadius: $size === 'lg' ? '0.5rem' : '0.375rem',
     maxWidth: '100%',
     transition: 'all ease-out 200ms',
+    display: 'flex',
 
     ...($variant === 'filled' && {
       backgroundColor: $color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
@@ -78,7 +92,16 @@ export const Button = styled(UnstyledButton)<ButtonProps>(
   }),
 )
 
-export const LinkButton = styled(Button)<{ href: string }>({
+export const Button = ({ children, icon, ...rest }: ButtonProps) => {
+  return (
+    <ButtonElement {...rest}>
+      {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
+      {children}
+    </ButtonElement>
+  )
+}
+
+export const LinkButton = styled(ButtonElement)<{ href: string }>({
   textDecoration: 'none',
   textAlign: 'center',
   display: 'inline-block',

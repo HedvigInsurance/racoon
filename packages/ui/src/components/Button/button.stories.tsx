@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react'
+import { MailIcon } from '../../icons/MailIcon'
 import { Button, ButtonProps } from './button'
 
 type StoryProps = ButtonProps & { disabled: boolean }
@@ -23,7 +24,13 @@ export default storyMeta
 
 type Template = Story<StoryProps>
 
-const Template: Template = (args) => <Button {...args}>Hello</Button>
+const Template: Template = ({ children, ...args }) => <Button {...args}>{children}</Button>
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = { children: 'Hello' }
+
+export const WithIcon = Template.bind({})
+WithIcon.args = { icon: <MailIcon />, children: 'Send email' }
+
+export const OnlyIcon = Template.bind({})
+OnlyIcon.args = { icon: <MailIcon /> }
