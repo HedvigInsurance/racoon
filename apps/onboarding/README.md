@@ -22,14 +22,6 @@ The project uses Emotion.
 
 Caveat: To enable the [`css` prop](https://emotion.sh/docs/css-prop) we need to opt out of SWC. I believe we should hold out until Next adds [official support](https://github.com/vercel/next.js/issues/30804).
 
-## Crashlytics
-
-Sentry is setup according to the official Next.js example. No further customisations have been made.
-
-The `src/pages/_error.next.tsx` was automatically created by Sentry Wizard.
-
-To get Sentry to work you need either a `.sentryclirc` file or set a `SENTRY_AUTH_TOKEN` environment variable.
-
 ## GraphQL
 
 Apollo Client v3 is used to make API requests.

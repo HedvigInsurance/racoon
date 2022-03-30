@@ -40,8 +40,5 @@ storybook-static
 # turborepo
 .turbo
 
-# sentry
-.sentryclirc
-
 # remix
 .cache/
