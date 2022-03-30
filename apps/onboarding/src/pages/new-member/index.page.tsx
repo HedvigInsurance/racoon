@@ -9,7 +9,6 @@ import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
-import { replaceMarkdown } from '@/services/i18n';
 import homeImg from './assets/home.jpg'
 
 const CardGrid = styled.div({
