@@ -20,6 +20,7 @@ export const getColor = (color?: string) => {
 const simplifiedColorNames: Record<string, string> = {
   lavender: theme.colors.purple500,
   dark: theme.colors.gray900,
+  light: theme.colors.gray100,
 }
 
 export const getColor = (color?: string) => {
