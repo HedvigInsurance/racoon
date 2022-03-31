@@ -72,3 +72,26 @@ interface PageComponent {
 }
 
 export type PageStoryData = StoryData<PageComponent>
+
+export type LinkComponent = {
+  id: string
+  url: string
+  linktype: 'story' | 'url'
+  cached_url: string // use this
+}
+
+export type MenuItemGroup = {
+  _uid: string
+  label: string
+  link?: LinkComponent
+  menu_items: ReadonlyArray<MenuItem>
+}
+
+export type MenuItem = {
+  _uid: string
+  label: string
+  link: LinkComponent
+  component: 'menu_item'
+  menu_items?: ReadonlyArray<MenuItem>
+  menu_item_groups?: ReadonlyArray<MenuItemGroup>
+}

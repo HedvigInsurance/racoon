@@ -4,11 +4,15 @@ export type IconRootProps = {
   className?: string
   color?: string
   size?: string
+  transform?: string
 }
 
-export const IconRoot = styled.svg<IconRootProps>((props) => ({
-  width: props.size ? props.size : '1rem',
-  height: props.size ? props.size : '1rem',
-  fill: props.color ? props.color : 'currentColor',
-  color: props.color ? props.color : 'currentColor',
+export const IconRoot = styled.svg<IconRootProps>(({ size, color, transform }) => ({
+  width: size ? size : '1rem',
+  height: size ? size : '1rem',
+  fill: color ? color : 'currentColor',
+  color: color ? color : 'currentColor',
+
+  transform,
+  transition: 'transform 250ms',
 }))

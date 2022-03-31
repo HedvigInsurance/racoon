@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
 import { getColor } from '../../lib/theme'
+import { ButtonProps } from '../Button/button'
 import { ToggleButton } from '../ToggleButton/ToggleButton'
 
 const BURGER_LINE_WIDTH = '1.5rem'
@@ -61,7 +62,7 @@ const IconWrapper = styled.div({
   height: BURGER_LINE_WIDTH,
 })
 
-export type BurgerButtonProps = {
+export type BurgerButtonProps = Pick<ButtonProps, 'color'> & {
   onClick?: (isOpen: boolean) => void
   color?: BurgerButtonColors
 }

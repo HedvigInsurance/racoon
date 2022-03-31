@@ -2,7 +2,6 @@
   "name": "ui",
   "version": "0.0.0",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "private": true,
@@ -48,6 +47,7 @@
     "@emotion/styled": "^11.8.1",
     "@hedviginsurance/brand": "^4.2.0",
     "react": "^17.0.2",
+    "react-animate-height": "^2.0.23",
     "react-dom": "^17.0.2"
   }
 }
