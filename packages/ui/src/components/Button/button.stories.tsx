@@ -34,3 +34,13 @@ WithIcon.args = { icon: <MailIcon />, children: 'Send email' }
 
 export const OnlyIcon = Template.bind({})
 OnlyIcon.args = { icon: <MailIcon /> }
+
+const TemplateManyButtons: Template = ({ children, ...args }) => (
+  <>
+    <Button {...args}>{children}</Button>
+    <Button {...args}>{children}</Button>
+  </>
+)
+
+export const TwoButtons = TemplateManyButtons.bind({}).bind({})
+TwoButtons.args = { icon: <MailIcon />, children: 'Send email' }

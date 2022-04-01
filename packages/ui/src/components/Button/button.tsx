@@ -48,7 +48,7 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
     borderRadius: $size === 'lg' ? '0.5rem' : '0.375rem',
     maxWidth: '100%',
     transition: 'all ease-out 200ms',
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
 
     ...($variant === 'filled' && {
