@@ -6,7 +6,6 @@ import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
 import { MonthlyPrice, PriceProps } from './monthly-price'
 
-
 export type FooterProps = PriceProps & { quoteCartId: string }
 
 const Wrapper = styled.div({
@@ -66,7 +65,7 @@ export const Footer = ({ price, quoteCartId }: FooterProps) => {
           <MonthlyPrice price={price} />
           <PriceLabel>{t('CANCEL_ANYTIME')}</PriceLabel>
         </PriceWrapper>
-        <LinkButton $color="lavender" href={PageLink.old_checkout({ locale: path, quoteCartId })}>
+        <LinkButton color="lavender" href={PageLink.old_checkout({ locale: path, quoteCartId })}>
           Continue to checkout
         </LinkButton>
       </InnerWrapper>
