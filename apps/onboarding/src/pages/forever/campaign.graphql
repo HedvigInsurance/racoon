@@ -1,5 +1,0 @@
-query Campaign($code: String!) {
-  campaign(code: $code) {
-    code
-  }
-}

@@ -1,6 +1,5 @@
-import * as Apollo from '@apollo/client'
-
 import { gql } from '@apollo/client'
+import * as Apollo from '@apollo/client'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
@@ -24,6 +23,7 @@ export type Scalars = {
   Hex: any
   /** An ISO-8601 String representation of a `java.time.Instant`, e.g. "2019-07-03T19:07:38.494081Z". */
   Instant: any
+  /** Generic type for json values */
   JSON: any
   JSONObject: any
   JSONString: any
@@ -34,7 +34,9 @@ export type Scalars = {
   /** The Long scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
   Long: any
   Object: any
+  /** Adyen additional payment details type, used in 3DS flow */
   PaymentDetailsInput: any
+  /** Adyen payment details type */
   PaymentMethodDetails: any
   PaymentMethodsResponse: any
   /** A String-representation of Adyen's payments details request */
@@ -2728,6 +2730,7 @@ export type CrossSellQuotesSuccess = {
 export enum CrossSellType {
   Accident = 'ACCIDENT',
   HomeContent = 'HOME_CONTENT',
+  House = 'HOUSE',
   Travel = 'TRAVEL',
 }
 
@@ -10608,6 +10611,7 @@ export enum TypeOfContract {
   NoHomeContentRent = 'NO_HOME_CONTENT_RENT',
   NoHomeContentYouthOwn = 'NO_HOME_CONTENT_YOUTH_OWN',
   NoHomeContentYouthRent = 'NO_HOME_CONTENT_YOUTH_RENT',
+  NoHouse = 'NO_HOUSE',
   NoTravel = 'NO_TRAVEL',
   NoTravelYouth = 'NO_TRAVEL_YOUTH',
   SeAccident = 'SE_ACCIDENT',
@@ -11614,15 +11618,6 @@ export type QuoteCartQuotesQuery = {
   }
 }
 
-export type CampaignQueryVariables = Exact<{
-  code: Scalars['String']
-}>
-
-export type CampaignQuery = {
-  __typename?: 'Query'
-  campaign?: { __typename?: 'Campaign'; code: string } | null
-}
-
 export type EditQuoteMutationVariables = Exact<{
   quoteCartId: Scalars['ID']
   quoteId: Scalars['ID']
@@ -11875,45 +11870,6 @@ export type QuoteCartQuotesQueryResult = Apollo.QueryResult<
   QuoteCartQuotesQuery,
   QuoteCartQuotesQueryVariables
 >
-export const CampaignDocument = gql`
-  query Campaign($code: String!) {
-    campaign(code: $code) {
-      code
-    }
-  }
-`
-
-/**
- * __useCampaignQuery__
- *
- * To run a query within a React component, call `useCampaignQuery` and pass it any options that fit your needs.
- * When your component renders, `useCampaignQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCampaignQuery({
- *   variables: {
- *      code: // value for 'code'
- *   },
- * });
- */
-export function useCampaignQuery(
-  baseOptions: Apollo.QueryHookOptions<CampaignQuery, CampaignQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<CampaignQuery, CampaignQueryVariables>(CampaignDocument, options)
-}
-export function useCampaignLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<CampaignQuery, CampaignQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<CampaignQuery, CampaignQueryVariables>(CampaignDocument, options)
-}
-export type CampaignQueryHookResult = ReturnType<typeof useCampaignQuery>
-export type CampaignLazyQueryHookResult = ReturnType<typeof useCampaignLazyQuery>
-export type CampaignQueryResult = Apollo.QueryResult<CampaignQuery, CampaignQueryVariables>
 export const EditQuoteDocument = gql`
   mutation EditQuote($quoteCartId: ID!, $quoteId: ID!, $payload: JSON!) {
     quoteCart_editQuote(id: $quoteCartId, quoteId: $quoteId, payload: $payload) {
