@@ -10,7 +10,7 @@ export type ButtonProps = {
   children?: ReactNode
   icon?: ReactNode
   onClick?: () => void
-  type?: 'submit'
+  type?: 'button' | 'submit'
   disabled?: boolean
 }
 
