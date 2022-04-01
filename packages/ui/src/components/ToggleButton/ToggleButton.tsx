@@ -16,7 +16,7 @@ export const ToggleButton = ({
   const [isActive, setIsActive] = useState(Boolean(initialActive))
 
   const handleClick = () => {
-    if (onToggle) onToggle(!isActive)
+    onToggle?.(!isActive)
     setIsActive((current) => !current)
   }
 
