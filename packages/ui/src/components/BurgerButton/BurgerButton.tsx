@@ -1,17 +1,19 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { getColor } from '../../lib/theme'
+import { getColor, theme } from '../../lib/theme'
 import { ToggleButton } from '../ToggleButton/ToggleButton'
 
 const BURGER_LINE_WIDTH = '1.5rem'
 const TRANSITION_TIME = 300
 
+type BurgerButtonColors = 'dark' | 'light'
+
 type AnimatedToggleButtonProps = {
   isActive: boolean
-  color?: 'dark' | 'lavender' | 'white'
+  color?: BurgerButtonColors
 }
 
-const CrossBurger = styled('div')<AnimatedToggleButtonProps>(({ isActive, color }) => ({
+const CrossBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => ({
   '&::before, &::after': {
     position: 'absolute',
     left: 0,
@@ -45,7 +47,7 @@ const CrossBurger = styled('div')<AnimatedToggleButtonProps>(({ isActive, color 
   },
 }))
 
-const MiddleBurger = styled('div')<AnimatedToggleButtonProps>(({ isActive, color }) => ({
+const MiddleBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => ({
   width: BURGER_LINE_WIDTH,
   position: 'absolute',
   top: '50%',
@@ -57,7 +59,7 @@ const MiddleBurger = styled('div')<AnimatedToggleButtonProps>(({ isActive, color
   transform: 'translateY(-1px)',
 }))
 
-const IconWrapper = styled('div')({
+const IconWrapper = styled.div({
   position: 'relative',
   width: BURGER_LINE_WIDTH,
   height: BURGER_LINE_WIDTH,
@@ -65,10 +67,10 @@ const IconWrapper = styled('div')({
 
 export type BurgerButtonProps = {
   onClick?: (isOpen: boolean) => void
-  color?: 'dark' | 'lavender' | 'white'
+  color?: BurgerButtonColors
 }
 
-export const BurgerButton = ({ color, onClick }: BurgerButtonProps) => {
+export const BurgerButton = ({ color = 'dark', onClick }: BurgerButtonProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleToggle = () => {
