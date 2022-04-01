@@ -20,7 +20,7 @@ type IconWrapperProps = {
 
 const IconWrapper = styled.div<IconWrapperProps>(({ padded }) => ({
   marginRight: padded ? '0.5rem' : 0,
-  lineHeight: 0, // Otherwise the div will have too large height inherited globally
+  display: 'flex',
 }))
 
 export const UnstyledButton = styled.button({
