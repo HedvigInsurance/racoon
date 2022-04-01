@@ -8,9 +8,9 @@ const storyMeta: Meta<StoryProps> = {
   title: 'Button',
   component: Button,
   args: {
-    $color: 'lavender',
-    $hasFullWidth: false,
-    $variant: 'filled',
+    color: 'lavender',
+    fullWidth: false,
+    variant: 'filled',
     disabled: false,
   },
   parameters: {
