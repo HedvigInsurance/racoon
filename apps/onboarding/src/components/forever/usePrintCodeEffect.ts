@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const LOAD_CHAR_INTERVAL = 200
+export const LOAD_CHAR_INTERVAL = 150
 
 type PrintCodeEffectParams = {
   initialCode: string
