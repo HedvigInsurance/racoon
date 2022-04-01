@@ -12,11 +12,14 @@ import { MetaFavicons } from '@/components/meta-favicons'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { GTM_ID, pageview, useGTMUserProperties } from '@/services/analytics/gtm'
 import { useApollo } from '@/services/apollo'
+import * as Datadog from '@/services/datadog'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   require('../mocks')
 }
+
+Datadog.initRum()
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const { adtractionScriptSrc } = useCurrentLocale()

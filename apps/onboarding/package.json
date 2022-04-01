@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.9",
+    "@datadog/browser-rum": "^4.7.0",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@radix-ui/react-radio-group": "^0.1.5",
