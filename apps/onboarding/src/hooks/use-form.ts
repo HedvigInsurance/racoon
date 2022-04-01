@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { FormEvent, useCallback, useRef } from 'react'
+import { FormEvent, useCallback, useEffect, useRef } from 'react'
 import { useState } from 'react'
 
 type TransitionState = 'idle' | 'submitting'
@@ -20,6 +20,14 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
   const router = useRouter()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
   const formRef = useRef<HTMLFormElement>(null)
+
+  // Reset form state when navigating away from/back to this page.
+  // Safari somehow keeps the state even after the page is unmounted.
+  useEffect(() => {
+    const handleChangeRoute = () => setFormState({ state: 'idle', errors: null })
+    router.events.on('routeChangeStart', handleChangeRoute)
+    return () => router.events.off('routeChangeStart', handleChangeRoute)
+  }, [router])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
