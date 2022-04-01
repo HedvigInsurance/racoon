@@ -1,5 +1,8 @@
-import { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { getLocale } from '@/lib/l10n'
+import type { LocaleLabel } from '@/lib/l10n/locales'
+import { QuoteCart } from '@/lib/quote-cart'
 
 const PUBLIC_FILE = /\.(.*)$/
 
@@ -27,18 +30,40 @@ const guessLocale = (request: NextRequest) => {
   return null
 }
 
-export function middleware(request: NextRequest) {
-  const shouldHandleLocale =
-    !PUBLIC_FILE.test(request.nextUrl.pathname) &&
-    !request.nextUrl.pathname.includes('/api/') &&
-    request.nextUrl.locale === 'default'
+const localeRedirectMiddleware = async (req: NextRequest) => {
+  const locale = guessLocale(req) || DEFAULT_PATH_LOCALE
+  return NextResponse.redirect(
+    `${req.nextUrl.origin}/${locale}${req.nextUrl.pathname.replace('/default', '')}`,
+  )
+}
 
-  if (shouldHandleLocale) {
-    const locale = guessLocale(request) || DEFAULT_PATH_LOCALE
-    return NextResponse.redirect(
-      `${request.nextUrl.origin}/${locale}${request.nextUrl.pathname.replace('/default', '')}`,
-    )
+const quoteCartSessionMiddleware = async (req: NextRequest) => {
+  let onboardingQuoteCartId: string | undefined = req.cookies[QuoteCart.COOKIE_KEY]
+  const { apiMarket, isoLocale } = getLocale(req.nextUrl.locale as LocaleLabel)
+
+  if (onboardingQuoteCartId) {
+    const isValid = await QuoteCart.validate({
+      quoteCartId: onboardingQuoteCartId,
+      market: apiMarket,
+    })
+    onboardingQuoteCartId = isValid ? onboardingQuoteCartId : undefined
   }
+
+  if (onboardingQuoteCartId === undefined) {
+    const id = await QuoteCart.renewQuoteCartId({ locale: isoLocale, market: apiMarket })
+    return NextResponse.next().cookie(QuoteCart.COOKIE_KEY, id)
+  }
+}
+
+export async function middleware(req: NextRequest) {
+  const isPageRoute =
+    !PUBLIC_FILE.test(req.nextUrl.pathname) && !req.nextUrl.pathname.includes('/api/')
+
+  const shouldHandleLocale = isPageRoute && req.nextUrl.locale === 'default'
+
+  if (shouldHandleLocale) return localeRedirectMiddleware(req)
+
+  if (isPageRoute) return await quoteCartSessionMiddleware(req)
 
   return undefined
 }
