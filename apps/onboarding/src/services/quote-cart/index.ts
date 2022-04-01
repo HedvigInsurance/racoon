@@ -1,1 +1,1 @@
-export { QuoteCart } from './quote-cart'
+export * as QuoteCart from './quote-cart'
