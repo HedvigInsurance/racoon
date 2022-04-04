@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { GetStaticProps, NextPage } from 'next'
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
@@ -79,7 +79,7 @@ const NewMemberPage: NextPage = () => {
           </BodyText>
         </ContentCard>
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
             {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
           </Heading>
         </TitleContainer>
@@ -90,8 +90,8 @@ const NewMemberPage: NextPage = () => {
           description={t('MAIN_COVERAGE_DESC_HOME')}
         />
         <TitleContainer>
-          <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
-          {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+            {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
           </Heading>
         </TitleContainer>
         <GridAdditionalCoverageCard
@@ -104,19 +104,18 @@ const NewMemberPage: NextPage = () => {
         />
       </CardGrid>
       <ResponsiveFooter>
-        <FooterButton $color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
+        <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
       </ResponsiveFooter>
     </PageContainer>
   )
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-
   return {
     props: {
-      ...(await serverSideTranslations(locale as string))
+      ...(await serverSideTranslations(locale as string)),
     },
-  };
+  }
 }
 
 export default NewMemberPage

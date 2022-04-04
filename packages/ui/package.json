@@ -18,7 +18,8 @@
     "lint:fix": "TIMING=1 eslint src --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "storybook": "start-storybook --ci -p 6006",
-    "build-storybook": "build-storybook --quiet -o dist"
+    "build-storybook": "build-storybook --quiet -o dist",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",

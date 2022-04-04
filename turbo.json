@@ -28,6 +28,9 @@
     },
     "storybook": {
       "cache": false
+    },
+    "typecheck": {
+      "outputs": []
     }
   }
 }

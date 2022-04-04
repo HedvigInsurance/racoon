@@ -15,7 +15,8 @@
     "download-translations": "./scripts/download-translations.sh",
     "codegen": "graphql-codegen && prettier --write ./src/services/apollo/types.ts && yarn lint --fix",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run"
+    "cypress:headless": "cypress run",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.5.9",
