@@ -27,9 +27,9 @@
   "COMPARE_BODY": "Det er vigtigt for os, at du føler dig tryg ved, at du får de bedst mulige betingelser.",
   "COMPARE_TABLE_TITLE": "Dækning",
   "SIDEBAR_INSURANCE_LABEL_SE": "",
-  "SIDEBAR_SHOW_DETAILS_BUTTON": "Opdater oplysninger",
+  "SIDEBAR_SHOW_DETAILS_BUTTON": "Rediger oplysninger",
   "SIDEBAR_STARTDATE_CELL_LABEL": "Startdato",
-  "SIDEBAR_PROCEED_BUTTON": "Fortsæt",
+  "SIDEBAR_PROCEED_BUTTON": "Fortsæt til kassen",
   "SIDEBAR_ADD_DISCOUNT_BUTTON": "Tilføj rabatkode",
   "SIDEBAR_REMOVE_DISCOUNT_BUTTON": "Slet rabatkode",
   "SIDEBAR_ADD_DISCOUNT_HEADLINE": "Tilføj rabatkode",
@@ -237,7 +237,7 @@
   "DETAILS_MODULE_TABLE_BIRTHDATE_CELL_LABEL": "Fødselsdato",
   "DETAILS_MODULE_PERSONAL_INFORMATION": "Personoplysninger",
   "SIDEBAR_NO_BUNDLE_DISCOUNT_TEXT": "",
-  "HERO_OFFER_DETAILS_HEADER": "Dit pristilbud",
+  "HERO_OFFER_DETAILS_HEADER": "Personlig information",
   "ONBOARDING_CONNECT_DD_INSTRUCTIONS_CONNECT_PAYMENT": "Tilføj dit betalingskort, tilbagevendende fakturering i slutningen af hver måned",
   "ONBOARDING_CONNECT_DD_INSTRUCTIONS_DOWNLOAD_APP": "Download Hedvig Appen for at bruge og administrere din forsikring",
   "ONBOARDING_DOWNLOAD_PARAGRAPH_1": "Du kan ordne alt, hvad der vedrører din forsikring, din dækning og dine skader, via Hedvig-appen.",
@@ -303,7 +303,7 @@
   "OFFER_BUNDLE_SELECTOR_DESCRIPTION": "",
   "OFFER_APP_PROMOTION_HEADING": "En forsikrings-app, der løser alle dine problemer",
   "OFFER_APP_PROMOTION_PARAGRAPH": "Anmeld skader, håndter dine forsikringer eller stil spørgsmål. Med appen får du fuld kontrol over dine forsikringer - og omgående hjælp, hvis der er sket noget.",
-  "WEB_OFFER_DOCUMENTS_SECTION_TITLE": "Vigtige dokumenter",
+  "WEB_OFFER_DOCUMENTS_SECTION_TITLE": "Dokumenter",
   "STARTPAGE_UNINSURED_BODY_WITHOUT_ACCIDENT": "Beregn prisen på en ny indboforsikring hos Hedvig",
   "CHECKOUT_FIRSTNAME_LABEL": "Fornavn",
   "CHECKOUT_LASTNAME_LABEL": "Efternavn",
@@ -395,5 +395,7 @@
   "ADDITIONAL_COVERAGE_TITLE_ACCIDENT": "",
   "ADDITIONAL_COVERAGE_DESC_ACCIDENT": "",
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "",
-  "ADDITIONAL_COVERAGE_DESC_TRAVEL": ""
+  "ADDITIONAL_COVERAGE_DESC_TRAVEL": "",
+  "SIDEBAR_TITLE": "Dit Tilbud",
+  "CHECKOUT_CONTACT_US_CTA": ""
 }
