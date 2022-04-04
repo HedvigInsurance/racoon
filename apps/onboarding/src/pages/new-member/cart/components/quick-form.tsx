@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, InputField, InputStepper, Space } from 'ui'
-import { useForm } from 'hooks/use-form'
-import useRouterRefresh from 'hooks/use-router-refresh'
+import { useForm } from '@/hooks/use-form'
+import useRouterRefresh from '@/hooks/use-router-refresh'
 import type { InputField as InputFieldType } from '../types'
 import { InputRadio, RadioGroup } from './radio-group'
 
@@ -64,7 +64,7 @@ export const QuickForm = ({ quoteCartId, fields }: QuickFormProps) => {
               }
             })}
           </Space>
-          <SubmitButton type="submit" $variant="outlined" disabled={state === 'submitting'}>
+          <SubmitButton type="submit" variant="outlined" disabled={state === 'submitting'}>
             Update information
           </SubmitButton>
         </Space>

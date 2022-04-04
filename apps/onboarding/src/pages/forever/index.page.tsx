@@ -9,7 +9,6 @@ import { usePrintCodeEffect } from '@/components/forever/usePrintCodeEffect'
 import { useForm } from '@/hooks/use-form'
 import { replaceMarkdown } from '@/services/i18n'
 
-
 const UppercaseInputField = styled(InputField)({
   textTransform: 'uppercase',
 })
@@ -46,9 +45,9 @@ const ForeverPage: NextPage = () => {
           <Button
             type="submit"
             disabled={state === 'submitting'}
-            $variant="filled"
-            $color="lavender"
-            $hasFullWidth
+            variant="filled"
+            color="lavender"
+            fullWidth
           >
             {t('FOREVER_LANDINGPAGE_BTN_LABEL')}
           </Button>

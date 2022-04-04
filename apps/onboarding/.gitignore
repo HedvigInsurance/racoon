@@ -2,3 +2,6 @@
 cypress/screenshots/
 cypress/downloads/
 cypress/videos/
+
+# TypeScript
+tsconfig.tsbuildinfo

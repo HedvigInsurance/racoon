@@ -58,7 +58,7 @@ export const YourInformation = ({ table }: Props) => {
         ))}
       </Table>
 
-      {/* <Button $variant="outlined">{t('CHECKOUT_EDIT_INFORMATION_BUTTON')}</Button> */}
+      {/* <Button variant="outlined">{t('CHECKOUT_EDIT_INFORMATION_BUTTON')}</Button> */}
     </Wrapper>
   )
 }

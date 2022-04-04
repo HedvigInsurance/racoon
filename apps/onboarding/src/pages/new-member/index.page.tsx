@@ -122,7 +122,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
         ))}
       </CardGrid>
       <ResponsiveFooter>
-        <FooterButton $color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
+        <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
       </ResponsiveFooter>
     </PageContainer>
   )

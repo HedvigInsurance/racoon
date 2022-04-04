@@ -72,7 +72,7 @@ export const UpsellCard = () => (
           </Item>
         </List>
         {/* <Footer>
-          <Button $variant="outlined" $size="sm">Add</Button>
+          <Button variant="outlined" size="sm">Add</Button>
         </Footer> */}
       </Content>
     </Card>

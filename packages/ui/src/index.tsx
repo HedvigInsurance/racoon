@@ -1,6 +1,6 @@
-export { Checkbox } from './components/Checkbox/Checkbox';
+export { Checkbox } from './components/Checkbox/Checkbox'
 export { HedvigLogo } from './components/hedvig-logo'
-export { Button, LinkButton } from './components/button'
+export { Button, LinkButton } from './components/Button/button'
 export { Separate } from './components/separate'
 export { Space } from './components/space'
 export { InputBase } from './components/input-base'

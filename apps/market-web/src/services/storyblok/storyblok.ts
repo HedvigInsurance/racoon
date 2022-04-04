@@ -1,13 +1,12 @@
 import StoryblokClient from 'storyblok-js-client'
 import type { PageStoryData, StoryblokLinkItem } from './types'
 
-
 interface FetchOptions {
   preview?: boolean
 }
 
 const Storyblok = new StoryblokClient({
-  accessToken: process.env.STORYBLOK_API_TOKEN as string,
+  accessToken: process.env.STORYBLOK_API_KEY as string,
   cache: { clear: 'auto', type: 'memory' },
 })
 
