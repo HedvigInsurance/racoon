@@ -11,7 +11,7 @@ export default function useStoryblok(originalStory: PageStoryData, preview: bool
     if (typeof StoryblokBridge !== 'undefined') {
       // initialize the bridge with your token
       const storyblokInstance = new StoryblokBridge({
-        accessToken: process.env.STORYBLOK_API_TOKEN,
+        accessToken: process.env.STORYBLOK_API_KEY,
       })
 
       // reload on Next.js page on save or publish event in the Visual Editor

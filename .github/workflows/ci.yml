@@ -42,5 +42,5 @@ jobs:
           NEXT_PUBLIC_GRAPHQL_ENDPOINT: https://graphql.dev.hedvigit.com/graphql
           NEXT_PUBLIC_WEB_ONBOARDING_URL: https://www.dev.hedvigit.com
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          STORYBLOK_API_TOKEN: ${{ secrets.STORYBLOK_API_TOKEN }}
+          STORYBLOK_API_KEY: ${{ secrets.STORYBLOK_API_KEY }}
           STORYBLOK_PREVIEW_SECRET: ${{ secrets.STORYBLOK_PREVIEW_SECRET }}

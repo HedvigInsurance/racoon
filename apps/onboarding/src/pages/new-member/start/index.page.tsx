@@ -242,7 +242,7 @@ const NewMemberStartPage: NextPage = () => {
                 <StickyFooter>
                   <FooterContent>
                     <input hidden readOnly name={LocaleField} value={path} />
-                    <Button style={{ width: '100%' }}>{t('START_SCREEN_SUBMIT_BUTTON')}</Button>
+                    <Button fullWidth>{t('START_SCREEN_SUBMIT_BUTTON')}</Button>
                   </FooterContent>
                 </StickyFooter>
                 <CaptionText dangerouslySetInnerHTML={{ __html: t('START_SCREEN_FOOTER_TOS') }} />
