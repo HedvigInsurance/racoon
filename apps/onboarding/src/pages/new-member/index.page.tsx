@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
@@ -64,33 +66,33 @@ const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridColumn: 
 
 const NewMemberPage: NextPage = () => {
   const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState(false)
+  const { t } = useTranslation()
   return (
     <PageContainer>
       <Header />
       <CardGrid>
         <ContentCard>
           <Heading variant="m" headingLevel="h2" colorVariant="dark">
-            Get a personal quote
+            {t('LANDING_PAGE_HEADLINE')}
           </Heading>
           <BodyText variant={1} colorVariant="medium" displayBlock>
-            Choose the add-ons you’d like with your Home Insurance, and in the next step, we’ll ask
-            you a few follow-up questions.
+            {t('LANDING_PAGE_SUBHEADING')}
           </BodyText>
         </ContentCard>
         <TitleContainer>
           <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
-            Main Coverage
+            {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
           </Heading>
         </TitleContainer>
         <GridMainCoverageCard
           selected
           cardImg={homeImg}
-          title="Home Insurance"
-          description="Coverage for your house or apartment contents"
+          title={t('MAIN_COVERAGE_TITLE_HOME')}
+          description={t('MAIN_COVERAGE_DESC_HOME')}
         />
         <TitleContainer>
           <Heading variant="xs" colorVariant="dark"  headingLevel="h3">
-            Additional Coverage
+          {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
           </Heading>
         </TitleContainer>
         <GridAdditionalCoverageCard
@@ -98,15 +100,24 @@ const NewMemberPage: NextPage = () => {
           cardImg={homeImg}
           selected={additionalCoverageSelected}
           onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
-          title="Travel Insurance "
-          description="Covers you and your family when you’re traveling"
+          title={t('ADDITIONAL_COVERAGE_TITLE_TRAVEL')}
+          description={t('ADDITIONAL_COVERAGE_DESC_TRAVEL')}
         />
       </CardGrid>
       <ResponsiveFooter>
-        <FooterButton $color="dark">Continue</FooterButton>
+        <FooterButton $color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
       </ResponsiveFooter>
     </PageContainer>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string))
+    },
+  };
 }
 
 export default NewMemberPage
