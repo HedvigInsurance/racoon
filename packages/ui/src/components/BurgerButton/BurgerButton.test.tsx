@@ -9,15 +9,14 @@ describe('BurgerButton', () => {
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
-  test('executes click handler', async () => {
+  test('executes click handler', () => {
     // align
     const handleClick = jest.fn()
-    const user = userEvent.setup()
 
     renderWithTheme(<BurgerButton onClick={handleClick} />)
 
     // act
-    await user.click(screen.getByRole('button'))
+    userEvent.click(screen.getByRole('button'))
 
     // assert
     expect(handleClick).toHaveBeenCalledTimes(1)

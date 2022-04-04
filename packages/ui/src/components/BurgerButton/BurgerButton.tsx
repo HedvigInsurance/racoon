@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { getColor, theme } from '../../lib/theme'
+import { getColor } from '../../lib/theme'
 import { ToggleButton } from '../ToggleButton/ToggleButton'
 
 const BURGER_LINE_WIDTH = '1.5rem'
@@ -27,23 +27,19 @@ const CrossBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) 
 
   '&::before': {
     top: 2,
-    ...(isActive
-      ? {
-          transform: 'translateY(-1px) rotate(45deg)',
-          top: '50%',
-          backgroundColor: getColor(color),
-        }
-      : {}),
+    ...(isActive && {
+      transform: 'translateY(-1px) rotate(45deg)',
+      top: '50%',
+      backgroundColor: getColor(color),
+    }),
   },
   '&::after': {
     bottom: 2,
-    ...(isActive
-      ? {
-          bottom: '50%',
-          transform: 'translateY(1px) rotate(-45deg)',
-          backgroundColor: getColor(color),
-        }
-      : {}),
+    ...(isActive && {
+      bottom: '50%',
+      transform: 'translateY(1px) rotate(-45deg)',
+      backgroundColor: getColor(color),
+    }),
   },
 }))
 
@@ -82,8 +78,8 @@ export const BurgerButton = ({ color = 'dark', onClick }: BurgerButtonProps) => 
   return (
     <ToggleButton
       onToggle={handleToggle}
-      $size="sm"
-      $variant="text"
+      size="sm"
+      variant="text"
       icon={
         <IconWrapper>
           <CrossBurger isActive={isOpen} color={color} />

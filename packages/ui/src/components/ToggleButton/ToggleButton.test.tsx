@@ -12,12 +12,11 @@ describe('ToggleButton', () => {
   test('executes toggled handler', async () => {
     // align
     const handleToggle = jest.fn()
-    const user = userEvent.setup()
 
     renderWithTheme(<ToggleButton onToggle={handleToggle}>click me plz!</ToggleButton>)
 
     // act
-    await user.click(screen.getByRole('button'))
+    await userEvent.click(screen.getByRole('button'))
 
     // assert
     expect(handleToggle).toHaveBeenCalledTimes(1)
@@ -27,7 +26,6 @@ describe('ToggleButton', () => {
   test('executes toggled handler to un-toggle when initially active', async () => {
     // align
     const handleToggle = jest.fn()
-    const user = userEvent.setup()
 
     renderWithTheme(
       <ToggleButton initialActive={true} onToggle={handleToggle}>
@@ -36,7 +34,7 @@ describe('ToggleButton', () => {
     )
 
     // act
-    await user.click(screen.getByRole('button'))
+    await userEvent.click(screen.getByRole('button'))
 
     // assert
     expect(handleToggle).toHaveBeenCalledWith(false)
@@ -45,13 +43,12 @@ describe('ToggleButton', () => {
   test('can toggle twice to activate and then deactivate', async () => {
     // align
     const handleToggle = jest.fn()
-    const user = userEvent.setup()
 
     renderWithTheme(<ToggleButton onToggle={handleToggle}>click me plz!</ToggleButton>)
 
     // act
-    await user.click(screen.getByRole('button'))
-    await user.click(screen.getByRole('button'))
+    await userEvent.click(screen.getByRole('button'))
+    await userEvent.click(screen.getByRole('button'))
 
     // assert
     expect(handleToggle).toHaveBeenCalledTimes(2)

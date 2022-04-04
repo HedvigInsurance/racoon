@@ -16,15 +16,14 @@ describe('Button', () => {
     expect(container.querySelector('svg')).toBeInTheDocument()
   })
 
-  test('executes click handler', async () => {
+  test('executes click handler', () => {
     // align
     const handleClick = jest.fn()
-    const user = userEvent.setup()
 
     renderWithTheme(<Button onClick={handleClick}>click me plz!</Button>)
 
     // act
-    await user.click(screen.getByRole('button'))
+    userEvent.click(screen.getByRole('button'))
 
     // assert
     expect(handleClick).toHaveBeenCalledTimes(1)
