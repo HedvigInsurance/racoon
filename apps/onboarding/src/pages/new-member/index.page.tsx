@@ -19,7 +19,7 @@ const CardGrid = styled.div({
   justifyContent: 'center',
   padding: '0 1rem',
   margin: 'auto',
-  columnGap: 6,
+  gap: 6,
   maxWidth: '53rem',
   gridAutoColumns: '1fr 1fr',
   marginBottom: 'auto',
@@ -63,7 +63,7 @@ const ContentCard = styled.div({
 })
 
 const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2' })
-const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridColumn: '1 / span 1' })
+const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea:'span 1' })
 
 type Props = {
   insurances: MarketInsurance[]
@@ -119,7 +119,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
             title={t(name)}
             description={t(description)}
           />
-        ))}
+        ))}      
       </CardGrid>
       <ResponsiveFooter>
         <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>

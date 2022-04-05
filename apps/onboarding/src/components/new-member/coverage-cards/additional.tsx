@@ -19,7 +19,7 @@ const AdditionalWrapper = styled(Wrapper)({
   height: '10rem',
   flexDirection: 'column',
   [mq.sm]: {
-    height: 'unset',
+    height: '100%',
     borderRadius: '16px',
     flexDirection: 'row',
   },
