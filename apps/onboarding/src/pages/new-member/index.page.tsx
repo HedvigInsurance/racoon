@@ -62,14 +62,14 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2' })
+const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2', [mq.sm]:{gridColumn:'span 1'} })
 const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea:'span 1' })
 
 type Props = {
   insurances: MarketInsurance[]
 }
 const NewMemberPage: NextPage<Props> = ({ insurances }) => {
-  const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState(false)
+  const [selected, setSelected] = useState(false)
   const { t } = useTranslation()
   const mainCoverageInsurances = insurances.filter(
     ({ isAdditionalCoverage }) => !isAdditionalCoverage,
@@ -98,7 +98,8 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
         {mainCoverageInsurances.map(({ name, description, img, isPreselected }) => (
           <GridMainCoverageCard
             key={name}
-            selected={isPreselected}
+            selected={selected}
+            onCheck={() => setSelected(!selected)}
             cardImg={img}
             title={t(name)}
             description={t(description)}
@@ -114,8 +115,8 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
             key={name}
             enableHover
             cardImg={img}
-            selected={additionalCoverageSelected}
-            onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
+            selected={selected}
+            onCheck={() => setSelected(!selected)}
             title={t(name)}
             description={t(description)}
           />

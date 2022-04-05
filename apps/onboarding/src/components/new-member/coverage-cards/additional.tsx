@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
-import { BaseCardProps, CheckboxContainer, Section, Wrapper } from './base'
+import { BaseCardProps,  Section, Wrapper } from './base'
 
 
 const ImageFrame = styled.div({
@@ -29,6 +29,19 @@ const AdditionalSection = styled(Section)({
   padding: '0.5em',
   [mq.sm]: {
     paddingLeft: '1em',
+  },
+})
+
+export const CheckboxContainer = styled.div({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  zIndex: 30,
+  padding: '0.625rem',
+  [mq.sm]: {
+    padding: 0,
+    position: 'static',
+    marginLeft: 'auto',
   },
 })
 
