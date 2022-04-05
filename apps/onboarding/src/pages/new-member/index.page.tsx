@@ -140,6 +140,12 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === 'default') {
+    return {
+      notFound: true,
+    }
+  }
+
   const currentMarket = getMarketFromLocaleLabel(locale as LocaleLabel)
 
   return {
