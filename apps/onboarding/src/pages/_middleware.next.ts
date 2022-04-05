@@ -61,9 +61,15 @@ export async function middleware(req: NextRequest) {
 
   const shouldHandleLocale = isPageRoute && req.nextUrl.locale === 'default'
 
-  if (shouldHandleLocale) return localeRedirectMiddleware(req)
+  if (shouldHandleLocale) {
+    console.log(`applying locale middleware for req ${req.url}`)
+    return localeRedirectMiddleware(req)
+  }
 
-  if (isPageRoute) return await quoteCartSessionMiddleware(req)
+  if (isPageRoute) {
+    console.log(`applying locale middleware for req ${req.url}`)
+    return quoteCartSessionMiddleware(req)
+  }
 
   return undefined
 }
