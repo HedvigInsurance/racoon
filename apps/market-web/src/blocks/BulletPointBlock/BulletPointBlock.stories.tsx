@@ -7,6 +7,19 @@ import { BulletPointBlock } from './BulletPointBlock'
 export default {
   title: 'Market Web / Blocks / BulletPointBlock',
   component: BulletPointBlock,
+  argTypes: {
+    color: {
+      options: Object.keys(minimalColorMap),
+      mapping: minimalColorMap,
+    },
+    color_body: {
+      options: Object.keys(minimalColorMap),
+      mapping: minimalColorMap,
+    },
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
 } as ComponentMeta<typeof BulletPointBlock>
 
 const text: MarkdownHtmlComponent = {
@@ -57,6 +70,7 @@ export const Default = Template.bind({})
 Default.args = {
   _uid: '9123',
   component: 'bullet_point_block',
-  color_body: minimalColorMap['gray700'],
   bullet_points: bulletPointsIcon,
+  color: minimalColorMap['standard'],
+  color_body: minimalColorMap['gray700'],
 }
