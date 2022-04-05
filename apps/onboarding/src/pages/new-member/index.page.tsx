@@ -48,6 +48,7 @@ const PageContainer = styled.main((props) => ({
 
 const FooterButton = styled(Button)({
   width: '100%',
+  textAlign: 'center',
   [mq.sm]: {
     width: 'auto',
     marginTop: '5rem',
@@ -62,9 +63,12 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type GridCardProps ={size: 'half'|'full'}
-const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>(props=>({ gridColumn: '1 / span 2', [mq.sm]:{gridColumn:props.size==='half'?'span 1': '1 / span 2'} }))
-const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea:'span 1' })
+type GridCardProps = { size: 'half' | 'full' }
+const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => ({
+  gridColumn: '1 / span 2',
+  [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
+}))
+const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
 
 type Props = {
   insurances: MarketInsurance[]
@@ -96,19 +100,19 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
           </Heading>
         </TitleContainer>
 
-        {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) =>{
-          const isLastItem = index === arr.length-1;
-          const cardSize = (isLastItem && index%2===0)?'full':'half'
-          return  (
+        {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) => {
+          const isLastItem = index === arr.length - 1
+          const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+          return (
             <GridMainCoverageCard
-           key={name}
-           selected={selected}
-           onCheck={() => setSelected(!selected)}
-           cardImg={img}
-           title={t(name)}
-           description={t(description)}
-           size={cardSize}
-         />
+              key={name}
+              selected={selected}
+              onCheck={() => setSelected(!selected)}
+              cardImg={img}
+              title={t(name)}
+              description={t(description)}
+              size={cardSize}
+            />
           )
         })}
         <TitleContainer>
@@ -126,7 +130,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
             title={t(name)}
             description={t(description)}
           />
-        ))}      
+        ))}
       </CardGrid>
       <ResponsiveFooter>
         <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>

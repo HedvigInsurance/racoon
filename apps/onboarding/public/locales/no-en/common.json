@@ -327,7 +327,7 @@
   "SIDEBAR_ADD_CAMPAIGN_ERROR": "The discount code is invalid",
   "CHECKOUT_PHONE_NUMBER_LABEL": "Phone number",
   "GENERIC_ERROR_HEADING": "Something went wrong",
-  "GENERIC_ERROR_TEXT": "Please try again or go back. If the error persists, please contact us in the chat or email [hedvig@hedvig.com](mailto:hedvig@hedvig.com).",
+  "GENERIC_ERROR_TEXT": "Please try again or go back. If the error persists, please contact us in the chat or email [hei@hedvig.com](mailto:hei@hedvig.com).",
   "GENERIC_ERROR_ACTION_RETRY": "Retry",
   "GENERIC_ERROR_ACTION": "Go back",
   "CHECKOUT_PHONE_NUMBER_ERROR": "This is a required field.",
@@ -397,5 +397,12 @@
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "Travel Insurance",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "Covers you and your family when you’re travelling",
   "SIDEBAR_TITLE": "Your Quote",
-  "CHECKOUT_CONTACT_US_CTA": "Need help? Contact us"
+  "CHECKOUT_CONTACT_US_CTA": "Need help? Contact us",
+  "CHECKOUT_ERROR_TEXT_PART_1": "Please try again or go back. If the error persists, please",
+  "CHECKOUT_ERROR_TEXT_PART_2": "contact us in the chat",
+  "CHECKOUT_ERROR_TEXT_PART_3": "or email [hei@hedvig.com](mailto:hei@hedvig.com).",
+  "MAIN_COVERAGE_TITLE_HOUSE": "House Insurance",
+  "MAIN_COVERAGE_TITLE_ACCIDENT": "Accident Insurance",
+  "MAIN_COVERAGE_DESC_HOUSE": "Coverage for your house and buildings",
+  "MAIN_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident"
 }

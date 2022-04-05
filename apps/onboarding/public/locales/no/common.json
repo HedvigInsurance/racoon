@@ -327,7 +327,7 @@
   "SIDEBAR_ADD_CAMPAIGN_ERROR": "Rabattkoden er ugyldig",
   "CHECKOUT_PHONE_NUMBER_LABEL": "Telefonnummer",
   "GENERIC_ERROR_HEADING": "Noe gikk galt",
-  "GENERIC_ERROR_TEXT": "Vennligst prøv igjen eller gå tilbake. Hvis feilen vedvarer, vennligst kontakt oss i chatten eller e-post [hedvig@hedvig.com](mailto:hedvig@hedvig.com).",
+  "GENERIC_ERROR_TEXT": "Vennligst prøv igjen eller gå tilbake. Hvis feilen vedvarer, vennligst kontakt oss i chatten eller e-post [hei@hedvig.com](mailto:hei@hedvig.com).",
   "GENERIC_ERROR_ACTION_RETRY": "Prøv igjen",
   "GENERIC_ERROR_ACTION": "Gå tilbake",
   "CHECKOUT_PHONE_NUMBER_ERROR": "Dette feltet er obligatorisk",
@@ -397,5 +397,12 @@
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "Reiseforsikring",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "Sikkerhet for deg og familien din når du er på reise",
   "SIDEBAR_TITLE": "Ditt Tilbud",
-  "CHECKOUT_CONTACT_US_CTA": ""
+  "CHECKOUT_CONTACT_US_CTA": "Trenger du hjelp? Kontakt oss",
+  "CHECKOUT_ERROR_TEXT_PART_1": "Vennligst prøv igjen eller gå tilbake. Hvis feilen vedvarer, vennligst",
+  "CHECKOUT_ERROR_TEXT_PART_2": "kontakt oss i chatten",
+  "CHECKOUT_ERROR_TEXT_PART_3": "eller e-post [hei@hedvig.com](mailto:hei@hedvig.com).",
+  "MAIN_COVERAGE_TITLE_HOUSE": "Husforsikring",
+  "MAIN_COVERAGE_TITLE_ACCIDENT": "Ulykkeforsikring",
+  "MAIN_COVERAGE_DESC_HOUSE": "Trygghet for huset og bygningene dine.",
+  "MAIN_COVERAGE_DESC_ACCIDENT": "Ekstra sikkerhet hvis det skulle skje en ulykke. "
 }
