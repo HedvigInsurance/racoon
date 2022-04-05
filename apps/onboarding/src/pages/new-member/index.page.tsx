@@ -96,7 +96,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
           </Heading>
         </TitleContainer>
 
-        {mainCoverageInsurances.concat(mainCoverageInsurances).map(({ name, description, img, isPreselected }, index, arr) =>{
+        {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) =>{
           const isLastItem = index === arr.length-1;
           const cardSize = (isLastItem && index%2===0)?'full':'half'
           return  (
