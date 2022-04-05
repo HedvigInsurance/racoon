@@ -10,10 +10,10 @@ export type ButtonSize = 'xs' | 'sm' | 'lg'
 export type ButtonColors = 'dark' | 'light' | 'lavender'
 
 export type ButtonProps = Margins & {
-  variant?: 'filled' | 'outlined' | 'text'
+  variant?: ButtonVariant
   fullWidth?: boolean
-  color?: 'dark' | 'lavender'
-  size?: 'sm' | 'lg'
+  color?: ButtonColors
+  size?: ButtonSize
   children?: ReactNode
   icon?: ReactNode
   onClick?: () => void
@@ -56,7 +56,7 @@ const iconSizes = {
 }
 
 const ButtonElement = styled(UnstyledButton)<ButtonProps>(
-  ({ theme, variant = 'filled', fullWidth, color, size = 'lg',  ...props  }) => ({
+  ({ theme, variant = 'filled', fullWidth, color, size = 'lg', ...props }) => ({
     width: fullWidth ? '100%' : 'auto',
     padding: paddingsForSize[size],
     lineHeight: size === 'lg' ? '1.5rem' : '1rem',

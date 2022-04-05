@@ -33,7 +33,7 @@ type MenuLinkProps = {
 export const MenuItem = ({ href, children }: MenuLinkProps) => {
   return (
     <MenuListItem>
-      <LinkButton $size="xs" $variant="text" href={href || ''}>
+      <LinkButton size="xs" variant="text" href={href || ''}>
         {children}
       </LinkButton>
     </MenuListItem>

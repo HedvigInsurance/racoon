@@ -44,11 +44,11 @@ export const MenuItemGroup = ({ title, href, children }: MenuItemGroupProps) => 
     <Group>
       <MenuGroupHeader>
         {href ? (
-          <LinkButton $variant="text" $size="sm" href={href}>
+          <LinkButton variant="text" size="sm" href={href}>
             <MenuGroupLabel>{title}</MenuGroupLabel>
           </LinkButton>
         ) : (
-          <LinkButton as="span" $variant="text" $size="sm">
+          <LinkButton as="span" variant="text" size="sm">
             <MenuGroupLabel>{title}</MenuGroupLabel>
           </LinkButton>
         )}

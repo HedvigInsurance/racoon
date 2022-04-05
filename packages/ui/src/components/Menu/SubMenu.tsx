@@ -116,19 +116,19 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
     <MenuListItem>
       <SubMenuLabelWrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseOutForMenuItem}>
         {href ? (
-          <LinkButton $size="xs" $variant="text" href={href}>
+          <LinkButton size="xs" variant="text" href={href}>
             {title}
           </LinkButton>
         ) : (
-          <LinkButton $size="xs" $variant="text" as="span" href="">
+          <LinkButton size="xs" variant="text" as="span" href="">
             {title}
           </LinkButton>
         )}
 
         <Button
           onClick={() => setIsOpen(true)}
-          $size="xs"
-          $variant="text"
+          size="xs"
+          variant="text"
           icon={<ChevronIcon transform={isOpen ? 'rotate(0)' : 'rotate(-90)'} />}
         />
       </SubMenuLabelWrapper>
