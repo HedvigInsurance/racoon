@@ -14,10 +14,13 @@ const exampleText: MarkdownHtmlComponent = {
 export default {
   title: 'Market Web / Blocks / BannerBlock',
   component: BannerBlock,
+  parameters: {
+    layout: 'fullscreen',
+  },
   args: {
     _uid: '1234',
     component: 'banner_block',
-    color: minimalColorMap['standard'],
+    color: minimalColorMap['purple500'],
     text: exampleText,
   },
 } as ComponentMeta<typeof BannerBlock>

@@ -5,6 +5,7 @@ module.exports = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: '@storybook/react',
+  staticDirs: ['./assets'],
   // TODO: remove when upgrading to storybook v7 (https://github.com/storybookjs/storybook/pull/13300)
   webpackFinal: async (config) => {
     const emotionReactEleven = path.dirname(require.resolve('@emotion/react/package.json'))
