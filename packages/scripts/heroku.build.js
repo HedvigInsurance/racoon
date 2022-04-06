@@ -14,7 +14,7 @@ function main() {
   }
 
   let yarnBuild = null
-  switch (appName) {
+  switch (APPNAME) {
     case 'racoon-onboarding':
       yarnBuild = spawn('yarn', ['build:onboarding'])
       break
