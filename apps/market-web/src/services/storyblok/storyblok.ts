@@ -36,6 +36,7 @@ export const getPublicHost = (): string | undefined => {
   return ''
 }
 
+// We use our own domains for assets in staging and prod https://www.storyblok.com/docs/custom-assets-domain
 export const getStoryblokImage = (url?: ImageUrl) =>
   getPublicHost()
     ? (url || '').replace(/^(https?:)?\/\/a\.storyblok\.com\//, getPublicHost() + '/')
