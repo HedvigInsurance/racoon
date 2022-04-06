@@ -25,8 +25,17 @@ const MainWrapper = styled(Wrapper)({
   },
 })
 
-const CheckboxContainer = styled.div({
+export const CheckboxContainer = styled.div({
+  padding: 0,
+  position: 'static',
   marginLeft: 'auto',
+  [mq.sm]: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 30,
+    padding: '0.625rem',
+  },
 })
 
 export const MainCoverageCard = ({
