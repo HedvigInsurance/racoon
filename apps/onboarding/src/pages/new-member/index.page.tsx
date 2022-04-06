@@ -103,11 +103,12 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
         {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) => {
           const isLastItem = index === arr.length - 1
           const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+          const isSingleCard = arr.length === 1
           return (
             <GridMainCoverageCard
               key={name}
               selected={selected}
-              onCheck={() => setSelected(!selected)}
+              onCheck={!isSingleCard ? () => setSelected(!selected) : undefined}
               cardImg={img}
               title={t(name)}
               description={t(description)}
