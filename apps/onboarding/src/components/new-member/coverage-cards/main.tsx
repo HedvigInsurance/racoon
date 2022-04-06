@@ -4,7 +4,6 @@ import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { BaseCardProps, Section, Wrapper } from './base'
 
-
 const ImageFrame = styled.div({
   position: 'relative',
   flex: '1 0 33%',
@@ -51,14 +50,7 @@ export const MainCoverageCard = ({
   return (
     <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
-        <Image
-          src={cardImg.src}
-          blurDataURL={cardImg.blurDataURL}
-          alt={imgAlt}
-          placeholder="blur"
-          layout="fill"
-          objectFit="cover"
-        />
+        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" />
       </ImageFrame>
       <Section isCheckable={isCheckable}>
         <Space y={0.5}>

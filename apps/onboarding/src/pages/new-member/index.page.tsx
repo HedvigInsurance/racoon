@@ -11,7 +11,6 @@ import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/a
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { getMarketFromLocaleLabel, MarketInsurance } from '@/lib/l10n/markets'
-import homeImg from './assets/home.jpg'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -100,7 +99,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
           </Heading>
         </TitleContainer>
 
-        {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) => {
+        {mainCoverageInsurances.map(({ name, description, img }, index, arr) => {
           const isLastItem = index === arr.length - 1
           const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
           const isSingleCard = arr.length === 1
@@ -121,7 +120,7 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
             {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
           </Heading>
         </TitleContainer>
-        {additionalCoverageInsurances.map(({ name, description, img, isPreselected }) => (
+        {additionalCoverageInsurances.map(({ name, description, img }) => (
           <GridAdditionalCoverageCard
             key={name}
             enableHover

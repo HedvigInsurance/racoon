@@ -2,8 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
-import { BaseCardProps,  Section, Wrapper } from './base'
-
+import { BaseCardProps, Section, Wrapper } from './base'
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -63,14 +62,7 @@ export const AdditionalCoverageCard = ({
       onClick={onCheck}
     >
       <ImageFrame>
-        <Image
-          src={cardImg.src}
-          blurDataURL={cardImg.blurDataURL}
-          alt={imgAlt}
-          placeholder="blur"
-          layout="fill"
-          objectFit="cover"
-        />
+        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" />
       </ImageFrame>
       <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>

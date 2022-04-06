@@ -1,4 +1,3 @@
-import { CSSObject } from '@emotion/react'
 import styled from '@emotion/styled'
 import { mq } from 'ui'
 
@@ -9,7 +8,7 @@ export type WrapperProps = {
 }
 
 export type BaseCardProps = {
-  cardImg: StaticImageData
+  cardImg: string
   title: string
   description: string
   onCheck?: () => void
