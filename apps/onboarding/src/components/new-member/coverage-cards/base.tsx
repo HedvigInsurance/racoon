@@ -16,19 +16,6 @@ export type BaseCardProps = {
   imgAlt?: string
 } & WrapperProps
 
-export const CheckboxContainer = styled.div({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  zIndex: 30,
-  padding: '0.625rem',
-  [mq.sm]: {
-    padding: 0,
-    position: 'static',
-    marginLeft: 'auto',
-  },
-})
-
 export const Section = styled.div<{ isCheckable?: boolean }>(
   {
     padding: '1em 0.5em',

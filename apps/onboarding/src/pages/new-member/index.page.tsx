@@ -9,6 +9,8 @@ import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
+import { LocaleLabel } from '@/lib/l10n/locales'
+import { getMarketFromLocaleLabel, MarketInsurance } from '@/lib/l10n/markets'
 import homeImg from './assets/home.jpg'
 
 const CardGrid = styled.div({
@@ -17,7 +19,7 @@ const CardGrid = styled.div({
   justifyContent: 'center',
   padding: '0 1rem',
   margin: 'auto',
-  columnGap: 6,
+  gap: 6,
   maxWidth: '53rem',
   gridAutoColumns: '1fr 1fr',
   marginBottom: 'auto',
@@ -46,6 +48,7 @@ const PageContainer = styled.main((props) => ({
 
 const FooterButton = styled(Button)({
   width: '100%',
+  textAlign: 'center',
   [mq.sm]: {
     width: 'auto',
     marginTop: '5rem',
@@ -60,12 +63,25 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-const GridMainCoverageCard = styled(MainCoverageCard)({ gridColumn: '1 / span 2' })
-const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridColumn: '1 / span 1' })
+type GridCardProps = { size: 'half' | 'full' }
+const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => ({
+  gridColumn: '1 / span 2',
+  [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
+}))
+const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
 
-const NewMemberPage: NextPage = () => {
-  const [additionalCoverageSelected, setAdditionalCoverageSelected] = useState(false)
+type Props = {
+  insurances: MarketInsurance[]
+}
+const NewMemberPage: NextPage<Props> = ({ insurances }) => {
+  const [selected, setSelected] = useState(false)
   const { t } = useTranslation()
+  const mainCoverageInsurances = insurances.filter(
+    ({ isAdditionalCoverage }) => !isAdditionalCoverage,
+  )
+  const additionalCoverageInsurances = insurances.filter(
+    ({ isAdditionalCoverage }) => isAdditionalCoverage,
+  )
   return (
     <PageContainer>
       <Header />
@@ -83,25 +99,39 @@ const NewMemberPage: NextPage = () => {
             {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
           </Heading>
         </TitleContainer>
-        <GridMainCoverageCard
-          selected
-          cardImg={homeImg}
-          title={t('MAIN_COVERAGE_TITLE_HOME')}
-          description={t('MAIN_COVERAGE_DESC_HOME')}
-        />
+
+        {mainCoverageInsurances.map(({ name, description, img, isPreselected }, index, arr) => {
+          const isLastItem = index === arr.length - 1
+          const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+          const isSingleCard = arr.length === 1
+          return (
+            <GridMainCoverageCard
+              key={name}
+              selected={selected}
+              onCheck={!isSingleCard ? () => setSelected(!selected) : undefined}
+              cardImg={img}
+              title={t(name)}
+              description={t(description)}
+              size={cardSize}
+            />
+          )
+        })}
         <TitleContainer>
           <Heading variant="xs" colorVariant="dark" headingLevel="h3">
             {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
           </Heading>
         </TitleContainer>
-        <GridAdditionalCoverageCard
-          enableHover
-          cardImg={homeImg}
-          selected={additionalCoverageSelected}
-          onCheck={() => setAdditionalCoverageSelected(!additionalCoverageSelected)}
-          title={t('ADDITIONAL_COVERAGE_TITLE_TRAVEL')}
-          description={t('ADDITIONAL_COVERAGE_DESC_TRAVEL')}
-        />
+        {additionalCoverageInsurances.map(({ name, description, img, isPreselected }) => (
+          <GridAdditionalCoverageCard
+            key={name}
+            enableHover
+            cardImg={img}
+            selected={selected}
+            onCheck={() => setSelected(!selected)}
+            title={t(name)}
+            description={t(description)}
+          />
+        ))}
       </CardGrid>
       <ResponsiveFooter>
         <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
@@ -111,9 +141,18 @@ const NewMemberPage: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === 'default') {
+    return {
+      notFound: true,
+    }
+  }
+
+  const currentMarket = getMarketFromLocaleLabel(locale as LocaleLabel)
+
   return {
     props: {
       ...(await serverSideTranslations(locale as string)),
+      insurances: currentMarket.insurances,
     },
   }
 }
