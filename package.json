@@ -8,6 +8,10 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:web": "turbo run web#build",
+    "build:onboarding": "turbo run onboarding#build",
+    "start:web": "yarn workspace web start",
+    "start:onboarding": "yarn workspace onboarding start",
     "dev": "turbo run dev --parallel --continue",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
@@ -15,10 +19,10 @@
     "e2e-onboarding": "turbo run onboarding#e2e",
     "e2e-onboarding:headless": "turbo run onboarding#e2e:headless",
     "clean": "turbo run clean && rm -rf node_modules",
-    "start": "yarn workspace onboarding start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "heroku-postbuild": "echo skip builds on Heroku"
   },
   "devDependencies": {
     "husky": "^7.0.4",

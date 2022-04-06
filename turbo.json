@@ -8,12 +8,6 @@
       "outputs": ["covereage/**"],
       "dependsOn": []
     },
-    "onboarding#e2e": {
-      "dependsOn": ["build"]
-    },
-    "onboarding#e2e:headless": {
-      "dependsOn": ["build"]
-    },
     "lint": {
       "outputs": []
     },
@@ -31,6 +25,20 @@
     },
     "typecheck": {
       "outputs": []
+    },
+    "onboarding#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", ".turbo/**", "dist/**"]
+    },
+    "web#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", ".turbo/**", "dist/**"]
+    },
+    "onboarding#e2e": {
+      "dependsOn": ["build"]
+    },
+    "onboarding#e2e:headless": {
+      "dependsOn": ["build"]
     }
   }
 }
