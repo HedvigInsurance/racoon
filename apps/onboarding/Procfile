@@ -1,1 +1,1 @@
-web: yarn build:onboarding && yarn start:onboarding
+web: yarn start:onboarding
