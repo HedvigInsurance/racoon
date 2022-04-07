@@ -62,7 +62,7 @@ export const AdditionalCoverageCard = ({
       onClick={onCheck}
     >
       <ImageFrame>
-        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" />
+        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
       </ImageFrame>
       <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>

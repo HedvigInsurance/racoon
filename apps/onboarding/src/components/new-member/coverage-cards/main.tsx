@@ -50,7 +50,7 @@ export const MainCoverageCard = ({
   return (
     <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
-        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" />
+        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
       </ImageFrame>
       <Section isCheckable={isCheckable}>
         <Space y={0.5}>
