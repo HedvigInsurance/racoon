@@ -3,6 +3,7 @@ import { LocaleLabel, locales, LOCALE_URL_PARAMS } from './locales'
 export type LocaleUrlParam = typeof LOCALE_URL_PARAMS[number]
 
 export type MarketInsurance = {
+  id: string
   name: string
   description: string
   img: string
@@ -12,11 +13,16 @@ export type MarketInsurance = {
 }
 
 export type MarketData = {
+  label: MarketLabel
   languages: Array<{ urlParam: LocaleUrlParam; displayName: string }>
   insurances?: Array<MarketInsurance>
 }
 
-export type MarketLabel = 'SE' | 'NO' | 'DK'
+export enum MarketLabel {
+  SE = 'SE',
+  NO = 'NO',
+  DK = 'DK',
+}
 
 const homeContentsInsurance = {
   name: 'MAIN_COVERAGE_TITLE_HOME',
@@ -38,12 +44,14 @@ const travelInsurance = {
 
 export const markets: Record<MarketLabel, MarketData> = {
   SE: {
+    label: MarketLabel.SE,
     languages: [
       { urlParam: 'se', displayName: 'Sv' },
       { urlParam: 'se-en', displayName: 'En' },
     ],
   },
   NO: {
+    label: MarketLabel.NO,
     languages: [
       { urlParam: 'no', displayName: 'No' },
       { urlParam: 'no-en', displayName: 'En' },
@@ -51,11 +59,13 @@ export const markets: Record<MarketLabel, MarketData> = {
     insurances: [
       {
         ...homeContentsInsurance,
+        id: 'no-home-contents',
         isPreselected: true,
         embarkStoreKey: 'isHomeContents',
       },
       {
         ...travelInsurance,
+        id: 'no-travel',
         isAdditionalCoverage: true,
         embarkStoreKey: 'isTravel',
       },
@@ -63,6 +73,7 @@ export const markets: Record<MarketLabel, MarketData> = {
         ? [
             {
               ...accidentInsurance,
+              id: 'no-accident',
               isAdditionalCoverage: true,
               embarkStoreKey: 'isAccident',
             },
@@ -71,6 +82,7 @@ export const markets: Record<MarketLabel, MarketData> = {
     ],
   },
   DK: {
+    label: MarketLabel.DK,
     languages: [
       { urlParam: 'dk', displayName: 'Da' },
       { urlParam: 'dk-en', displayName: 'En' },

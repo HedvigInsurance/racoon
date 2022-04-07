@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
@@ -9,8 +10,9 @@ import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
+import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { getMarketFromLocaleLabel, MarketInsurance } from '@/lib/l10n/markets'
+import { getMarketFromLocaleLabel, MarketInsurance, MarketLabel } from '@/lib/l10n/markets'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -69,18 +71,25 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 }))
 const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
 
-type Props = {
+type NewMemberPageProps = {
   insurances: MarketInsurance[]
+  embarkInitialStore: Record<string, boolean>
 }
-const NewMemberPage: NextPage<Props> = ({ insurances }) => {
-  const [selected, setSelected] = useState(false)
+const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitialStore }) => {
   const { t } = useTranslation()
+  const locale = useCurrentLocale()
+  const router = useRouter()
+
+  const [embarkStore, setEmbarkStore] = useState(embarkInitialStore)
+  const [redirecting, setRedirecting] = useState(false)
+
   const mainCoverageInsurances = insurances.filter(
     ({ isAdditionalCoverage }) => !isAdditionalCoverage,
   )
   const additionalCoverageInsurances = insurances.filter(
     ({ isAdditionalCoverage }) => isAdditionalCoverage,
   )
+
   return (
     <PageContainer>
       <Header />
@@ -99,15 +108,23 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
           </Heading>
         </TitleContainer>
 
-        {mainCoverageInsurances.map(({ name, description, img }, index, arr) => {
+        {mainCoverageInsurances.map(({ name, description, img, embarkStoreKey }, index, arr) => {
           const isLastItem = index === arr.length - 1
           const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
           const isSingleCard = arr.length === 1
           return (
             <GridMainCoverageCard
               key={name}
-              selected={selected}
-              onCheck={!isSingleCard ? () => setSelected(!selected) : undefined}
+              selected={embarkStore[embarkStoreKey]}
+              onCheck={
+                !isSingleCard
+                  ? () =>
+                      setEmbarkStore((prevState) => ({
+                        ...prevState,
+                        [embarkStoreKey]: !prevState[embarkStoreKey],
+                      }))
+                  : undefined
+              }
               cardImg={img}
               title={t(name)}
               description={t(description)}
@@ -120,38 +137,73 @@ const NewMemberPage: NextPage<Props> = ({ insurances }) => {
             {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
           </Heading>
         </TitleContainer>
-        {additionalCoverageInsurances.map(({ name, description, img }) => (
+        {additionalCoverageInsurances.map(({ name, description, img, embarkStoreKey }) => (
           <GridAdditionalCoverageCard
             key={name}
             enableHover
             cardImg={img}
-            selected={selected}
-            onCheck={() => setSelected(!selected)}
+            selected={embarkStore[embarkStoreKey]}
+            onCheck={() =>
+              setEmbarkStore((prevState) => ({
+                ...prevState,
+                [embarkStoreKey]: !prevState[embarkStoreKey],
+              }))
+            }
             title={t(name)}
             description={t(description)}
           />
         ))}
       </CardGrid>
       <ResponsiveFooter>
-        <FooterButton color="dark">{t('START_SCREEN_SUBMIT_BUTTON')}</FooterButton>
+        <FooterButton
+          onClick={() => {
+            setRedirecting(true)
+            window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
+            router.push(
+              `${process.env.NEXT_PUBLIC_WEBONBOARDING_HOST}/${locale.path}/new-member/onboarding`,
+            )
+          }}
+          color="dark"
+          disabled={redirecting}
+        >
+          {t('START_SCREEN_SUBMIT_BUTTON')}
+        </FooterButton>
       </ResponsiveFooter>
     </PageContainer>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const { insurances } = getMarketFromLocaleLabel(locale as LocaleLabel)
-
-  if (!insurances || insurances.length === 0) {
+export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context) => {
+  const locale = context.locale as LocaleLabel
+  const currentMarket = getMarketFromLocaleLabel(locale)
+  if (!currentMarket?.insurances || currentMarket.insurances?.length === 0) {
     return {
       notFound: true,
     }
   }
 
+  const embarkInitialStore = currentMarket.insurances.reduce<Record<string, boolean>>(
+    (res, insurance) => ({
+      ...res,
+      [insurance.embarkStoreKey]: insurance.isPreselected ?? false,
+    }),
+    {},
+  )
+  let insurances = [...currentMarket.insurances]
+  if (currentMarket.label === MarketLabel.NO) {
+    if (process.env.FEATURE_ACCIDENT_NO === 'true') {
+      embarkInitialStore.isAccidentEnabled = true
+    } else {
+      insurances = currentMarket.insurances.filter((insurance) => insurance.id !== 'no-accident')
+      embarkInitialStore.isAccidentEnabled = false
+    }
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale as string)),
+      ...(await serverSideTranslations(locale)),
       insurances,
+      embarkInitialStore,
     },
   }
 }
