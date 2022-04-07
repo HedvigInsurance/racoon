@@ -6,7 +6,7 @@ import { getPaddings, Paddings } from '../../lib/paddings'
 import { getColor } from '../../lib/theme'
 
 export type ButtonVariant = 'filled' | 'outlined' | 'text'
-export type ButtonSize = 'xs' | 'sm' | 'lg'
+export type ButtonSize = 'sm' | 'lg'
 
 export type ButtonColors = 'dark' | 'light' | 'lavender'
 
@@ -46,15 +46,8 @@ export const UnstyledButton = styled.button({
 })
 
 const paddingsForSize: Record<ButtonSize, string> = {
-  xs: '0.375rem 0.375rem',
   sm: '0.375rem 0.75rem',
   lg: '0.75rem 2rem',
-}
-
-const iconSizes = {
-  xs: '1rem',
-  sm: '1rem',
-  lg: '1.5rem',
 }
 
 const ButtonElement = styled(UnstyledButton)<ButtonProps>(
