@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { ElementType } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
 import { getColor } from '../../lib/theme'
@@ -134,9 +134,9 @@ export const Button = ({ children, icon, ...rest }: ButtonProps) => {
   )
 }
 
-type LinkButtonProps = ButtonProps & {
+export type LinkButtonProps = ButtonProps & {
   href?: string
-  as?: string
+  as?: ElementType
 }
 
 export const LinkButton = styled(ButtonElement)<LinkButtonProps>(({ as }: LinkButtonProps) => ({
