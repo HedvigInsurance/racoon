@@ -162,7 +162,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitial
             setRedirecting(true)
             window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
             router.push(
-              `${process.env.NEXT_PUBLIC_WEBONBOARDING_HOST}/${locale.path}/new-member/onboarding`,
+              `${process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL}/${locale.path}/new-member/onboarding`,
             )
           }}
           color="dark"
