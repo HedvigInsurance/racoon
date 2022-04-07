@@ -7,21 +7,12 @@ import { LinkButton } from '../Button/button'
 export const MenuListItem = styled.li({
   position: 'relative',
   margin: 0,
-  padding: 0,
-
-  paddingLeft: '1rem',
-  paddingBottom: '1rem',
+  padding: '0.25rem',
 
   color: getColor('light'),
 
   [mq.md]: {
     color: getColor('dark'),
-  },
-
-  [mq.xl]: {
-    paddingLeft: '1.5rem',
-    paddingRight: '1.5rem',
-    paddingBottom: 0,
   },
 })
 
@@ -33,7 +24,7 @@ type MenuLinkProps = {
 export const MenuItem = ({ href, children }: MenuLinkProps) => {
   return (
     <MenuListItem>
-      <LinkButton size="xs" variant="text" href={href || ''}>
+      <LinkButton size="sm" variant="text" href={href || ''}>
         {children}
       </LinkButton>
     </MenuListItem>

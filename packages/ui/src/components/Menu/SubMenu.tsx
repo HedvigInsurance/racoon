@@ -31,23 +31,13 @@ const DropdownMenuContainer = styled('div')<{
   },
 }))
 
-const DropdownMenuItemList = styled.ul({
+const DropdownMenuItemList = styled.div({
   margin: 0,
-  padding: '1rem 0 0 0',
+  padding: '1rem 0',
   listStyle: 'none',
-
-  // Would like to reference MenuListItem here, but
-  // https://github.com/emotion-js/emotion/issues/1203
-  [mq.md]: {
-    li: {
-      paddingLeft: '0.75rem',
-      paddingRight: '0.75rem',
-      marginBottom: '0.5rem',
-    },
-  },
 })
 
-// This component makes sure that we close the meny when it loses
+// This component makes sure that we close the menu when it loses
 // focus. It's hopefully useful when navigating with keyboard.
 //
 // thanks https://muffinman.io/blog/catching-the-blur-event-on-an-element-and-its-children/
@@ -116,11 +106,11 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
     <MenuListItem>
       <SubMenuLabelWrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseOutForMenuItem}>
         {href ? (
-          <LinkButton size="xs" variant="text" href={href}>
+          <LinkButton size="sm" variant="text" href={href}>
             {title}
           </LinkButton>
         ) : (
-          <LinkButton size="xs" variant="text" as="span" href="">
+          <LinkButton size="sm" variant="text" as="span" href="">
             {title}
           </LinkButton>
         )}
@@ -129,7 +119,7 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
           onClick={() => setIsOpen(true)}
           size="xs"
           variant="text"
-          icon={<ChevronIcon transform={isOpen ? 'rotate(0)' : 'rotate(-90)'} />}
+          icon={<ChevronIcon transform={isOpen ? 'rotate(-180)' : 'rotate(0)'} />}
         />
       </SubMenuLabelWrapper>
 

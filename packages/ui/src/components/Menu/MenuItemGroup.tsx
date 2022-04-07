@@ -11,13 +11,9 @@ const Group = styled.div({
 
 const MenuGroupHeader = styled.span({
   fontSize: '0.75rem',
-
-  paddingLeft: '0.325rem',
   marginBottom: '0.625rem',
 
   [mq.md]: {
-    paddingLeft: '0.325rem',
-    paddingRight: '0.75rem',
     marginBottom: '0.625rem',
   },
 })
@@ -31,6 +27,11 @@ const MenuGroupLabel = styled.span({
   [mq.md]: {
     color: colorsV3.gray700,
   },
+})
+
+const MenuGroupList = styled.ul({
+  listStyle: 'none',
+  paddingInlineStart: 0,
 })
 
 type MenuItemGroupProps = {
@@ -53,8 +54,7 @@ export const MenuItemGroup = ({ title, href, children }: MenuItemGroupProps) => 
           </LinkButton>
         )}
       </MenuGroupHeader>
-
-      {children}
+      <MenuGroupList>{children}</MenuGroupList>
     </Group>
   )
 }
