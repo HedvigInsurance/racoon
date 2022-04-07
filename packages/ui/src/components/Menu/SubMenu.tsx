@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
-import { ReactNode, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useContext, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { ChevronIcon } from '../../icons/Chrevron'
-import { mq } from '../../lib/media-query'
+import { mq, useBreakpoint } from '../../lib/media-query'
 import { LinkButton, Button } from '../Button/button'
+import { MenuThemeContext } from './Menu'
 import { MenuListItem } from './MenuItem'
 
 const TRANSITION_TIME = 150
@@ -82,6 +83,8 @@ type SubMenuProps = {
 export const SubMenu = ({ title, href, children }: SubMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [menuItemTimeout, setMenuItemTimeout] = useState<NodeJS.Timeout>()
+  const theme = useContext(MenuThemeContext)
+  const isLargeScreen = useBreakpoint('md')
 
   // Delay the closing of the sub-menu so that the user can move the cursor
   // over to that element
@@ -135,7 +138,9 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
               setIsOpen(false)
             }}
           >
+            <MenuThemeContext.Provider value={isLargeScreen ? "dark" : theme}>
             <DropdownMenuItemList>{children}</DropdownMenuItemList>
+            </MenuThemeContext.Provider>
           </ChildrenBlur>
         </DropdownMenuContainer>
       </AnimateHeight>

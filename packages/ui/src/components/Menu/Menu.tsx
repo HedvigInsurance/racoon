@@ -1,17 +1,15 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { createContext, ReactNode } from 'react'
 import { mq } from '../../lib/media-query'
-import { getColor } from '../../lib/theme'
-import { ButtonColors } from '../Button/button'
 import { MenuItem } from './MenuItem'
 import { MenuItemGroup, MenuItemGroupContainer } from './MenuItemGroup'
 import { SubMenu } from './SubMenu'
 
 const MenuContainer = styled.div({
-  backgroundColor: getColor('dark'),
-  [mq.md]: {
-    backgroundColor: 'transparent',
-  },
+  // backgroundColor: getColor('dark'),
+  // [mq.md]: {
+  //   backgroundColor: 'transparent',
+  // },
 })
 
 const MenuList = styled.ul({
@@ -28,16 +26,22 @@ const MenuList = styled.ul({
   },
 })
 
+export const MenuThemeContext = createContext<MenuTheme>('dark')
+
+export type MenuTheme = 'dark' | 'light'
+
 export type MenuProps = {
   children?: ReactNode
-  theme?: ButtonColors
+  theme?: MenuTheme
 }
 
-const Menu = ({ children, theme }: MenuProps) => {
+const Menu = ({ children, theme = 'dark' }: MenuProps) => {
   return (
+    <MenuThemeContext.Provider value={theme}>
     <MenuContainer>
       <MenuList>{children}</MenuList>
     </MenuContainer>
+    </MenuThemeContext.Provider>
   )
 }
 
