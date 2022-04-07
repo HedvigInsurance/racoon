@@ -4,6 +4,7 @@ import { AccordionBlock } from '@/blocks/AccordionBlock/AccordionBlock'
 import { BannerBlock } from '@/blocks/BannerBlock/BannerBlock'
 import { BulletPointBlock } from '@/blocks/BulletPointBlock/BulletPointBlock'
 import { ColumnTextBlock } from '@/blocks/ColumnTextBlock/ColumnTextBlock'
+import { CtaBlock } from '@/blocks/CtaBlock/CtaBlock'
 import { HeadlineBlock } from '@/blocks/HeadlineBlock/HeadlineBlock'
 import { HeroBlock } from '@/blocks/HeroBlock/HeroBlock'
 import { PlainTextBlock } from '@/blocks/PlainTextBlock'
@@ -19,6 +20,7 @@ export const BlockComponents: Record<StoryblokComponentName, React.FC<any>> = {
   banner_block: BannerBlock,
   bullet_point_block: BulletPointBlock,
   column_text_block: ColumnTextBlock,
+  cta_block: CtaBlock,
   headline_block: HeadlineBlock,
   spacer_block: SpacerBlock,
   plain_text_block: PlainTextBlock,
