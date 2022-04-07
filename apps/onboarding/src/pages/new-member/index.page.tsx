@@ -12,7 +12,9 @@ import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/a
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { getMarketFromLocaleLabel, MarketInsurance, MarketLabel } from '@/lib/l10n/markets'
+import { Market } from '@/lib/types'
+import { getMarketFromLocaleLabel, getEmbarkInitialStore } from './new-member.helpers'
+import { Insurances } from './types'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -72,7 +74,7 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
 
 type NewMemberPageProps = {
-  insurances: MarketInsurance[]
+  insurances: Insurances
   embarkInitialStore: Record<string, boolean>
 }
 const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitialStore }) => {
@@ -174,28 +176,61 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitial
 }
 
 export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context) => {
+  // TODO make usage of a proper API
+  // This is being hardcoded at the moment but in the future that kind of information
+  // will be retrieved from an proper API
+  const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
+    [Market.Sweden]: [],
+    [Market.Denmark]: [],
+    [Market.Norway]: [
+      {
+        id: 'no-home-contents',
+        name: 'MAIN_COVERAGE_TITLE_HOME',
+        description: 'MAIN_COVERAGE_DESC_HOME',
+        img: '/racoon-assets/home.jpg',
+        isPreselected: true,
+        embarkStoreKey: 'isHomeContents',
+      },
+      {
+        id: 'no-travel',
+        name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
+        description: 'ADDITIONAL_COVERAGE_DESC_TRAVEL',
+        img: '/racoon-assets/travel.jpg',
+        isAdditionalCoverage: true,
+        embarkStoreKey: 'isTravel',
+      },
+      {
+        id: 'no-accident',
+        name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
+        description: 'MAIN_COVERAGE_DESC_ACCIDENT',
+        img: '/racoon-assets/accident.jpg',
+        isAdditionalCoverage: true,
+        embarkStoreKey: 'isAccident',
+      },
+    ],
+  }
+
   const locale = context.locale as LocaleLabel
-  const currentMarket = getMarketFromLocaleLabel(locale)
-  if (!currentMarket?.insurances || currentMarket.insurances?.length === 0) {
+  const market = getMarketFromLocaleLabel(locale)
+  const insurances = INSURANCES_BY_MARKET[market]
+
+  if (insurances.length === 0) {
     return {
       notFound: true,
     }
   }
 
-  const embarkInitialStore = currentMarket.insurances.reduce<Record<string, boolean>>(
-    (res, insurance) => ({
-      ...res,
-      [insurance.embarkStoreKey]: insurance.isPreselected ?? false,
-    }),
-    {},
-  )
-  let insurances = [...currentMarket.insurances]
-  if (currentMarket.label === MarketLabel.NO) {
-    if (process.env.FEATURE_ACCIDENT_NO === 'true') {
-      embarkInitialStore.isAccidentEnabled = true
-    } else {
-      insurances = currentMarket.insurances.filter((insurance) => insurance.id !== 'no-accident')
-      embarkInitialStore.isAccidentEnabled = false
+  if (market === Market.Norway && process.env.FEATURE_ACCIDENT_NO !== 'true') {
+    const insurancesWithoutAccident = insurances.filter(
+      (insurance) => insurance.id !== 'no-accident',
+    )
+
+    return {
+      props: {
+        ...(await serverSideTranslations(locale)),
+        insurances: insurancesWithoutAccident,
+        embarkInitialStore: getEmbarkInitialStore(insurancesWithoutAccident),
+      },
     }
   }
 
@@ -203,7 +238,7 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
     props: {
       ...(await serverSideTranslations(locale)),
       insurances,
-      embarkInitialStore,
+      embarkInitialStore: getEmbarkInitialStore(insurances),
     },
   }
 }
