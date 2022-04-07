@@ -59,11 +59,15 @@ export const markets: Record<MarketLabel, MarketData> = {
         isAdditionalCoverage: true,
         embarkStoreKey: 'isTravel',
       },
-      {
-        ...accidentInsurance,
-        isAdditionalCoverage: true,
-        embarkStoreKey: 'isAccident',
-      },
+      ...(process.env.FEATURE_ACCIDENT_NO
+        ? [
+            {
+              ...accidentInsurance,
+              isAdditionalCoverage: true,
+              embarkStoreKey: 'isAccident',
+            },
+          ]
+        : ([] as MarketInsurance[])),
     ],
   },
   DK: {
