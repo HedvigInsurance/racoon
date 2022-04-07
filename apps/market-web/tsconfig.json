@@ -11,7 +11,8 @@
       "@/helpers/*": ["helpers/*"],
       "@/pages/*": ["pages/*"],
       "@/services/*": ["services/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/lib/*": ["lib/*"]
     },
     "incremental": true
   },
