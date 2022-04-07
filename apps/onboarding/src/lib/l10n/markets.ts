@@ -6,13 +6,14 @@ export type MarketInsurance = {
   name: string
   description: string
   img: string
+  embarkStoreKey: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
 }
 
 export type MarketData = {
   languages: Array<{ urlParam: LocaleUrlParam; displayName: string }>
-  insurances: Array<MarketInsurance>
+  insurances?: Array<MarketInsurance>
 }
 
 export type MarketLabel = 'SE' | 'NO' | 'DK'
@@ -20,12 +21,6 @@ export type MarketLabel = 'SE' | 'NO' | 'DK'
 const homeContentsInsurance = {
   name: 'MAIN_COVERAGE_TITLE_HOME',
   description: 'MAIN_COVERAGE_DESC_HOME',
-  img: '/racoon-assets/home.jpg',
-}
-
-const houseInsurance = {
-  name: 'MAIN_COVERAGE_TITLE_HOUSE',
-  description: 'MAIN_COVERAGE_DESC_HOUSE',
   img: '/racoon-assets/home.jpg',
 }
 
@@ -47,23 +42,6 @@ export const markets: Record<MarketLabel, MarketData> = {
       { urlParam: 'se', displayName: 'Sv' },
       { urlParam: 'se-en', displayName: 'En' },
     ],
-    insurances: [
-      {
-        ...homeContentsInsurance,
-        isPreselected: true,
-      },
-      {
-        ...houseInsurance,
-      },
-      {
-        ...travelInsurance,
-        isAdditionalCoverage: true,
-      },
-      {
-        ...accidentInsurance,
-        isAdditionalCoverage: true,
-      },
-    ],
   },
   NO: {
     languages: [
@@ -74,39 +52,24 @@ export const markets: Record<MarketLabel, MarketData> = {
       {
         ...homeContentsInsurance,
         isPreselected: true,
+        embarkStoreKey: 'isHomeContents',
       },
       {
         ...travelInsurance,
         isAdditionalCoverage: true,
+        embarkStoreKey: 'isTravel',
       },
-      ...(process.env.FEATURE_ACCIDENT_NO
-        ? [
-            {
-              ...accidentInsurance,
-              isAdditionalCoverage: true,
-            },
-          ]
-        : ([] as MarketInsurance[])),
+      {
+        ...accidentInsurance,
+        isAdditionalCoverage: true,
+        embarkStoreKey: 'isAccident',
+      },
     ],
   },
   DK: {
     languages: [
       { urlParam: 'dk', displayName: 'Da' },
       { urlParam: 'dk-en', displayName: 'En' },
-    ],
-    insurances: [
-      {
-        ...homeContentsInsurance,
-        isPreselected: true,
-      },
-      {
-        ...travelInsurance,
-        isAdditionalCoverage: true,
-      },
-      {
-        ...accidentInsurance,
-        isAdditionalCoverage: true,
-      },
     ],
   },
 }
