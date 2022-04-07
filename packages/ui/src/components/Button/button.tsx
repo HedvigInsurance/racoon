@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React, { ElementType } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
+import { getPaddings, Paddings } from '../../lib/paddings'
 import { getColor } from '../../lib/theme'
 
 export type ButtonVariant = 'filled' | 'outlined' | 'text'
@@ -9,17 +10,18 @@ export type ButtonSize = 'xs' | 'sm' | 'lg'
 
 export type ButtonColors = 'dark' | 'light' | 'lavender'
 
-export type ButtonProps = Margins & {
-  variant?: ButtonVariant
-  fullWidth?: boolean
-  color?: ButtonColors
-  size?: ButtonSize
-  children?: ReactNode
-  icon?: ReactNode
-  onClick?: () => void
-  type?: 'button' | 'submit'
-  disabled?: boolean
-}
+export type ButtonProps = Paddings &
+  Margins & {
+    variant?: ButtonVariant
+    fullWidth?: boolean
+    color?: ButtonColors
+    size?: ButtonSize
+    children?: ReactNode
+    icon?: ReactNode
+    onClick?: () => void
+    type?: 'button' | 'submit'
+    disabled?: boolean
+  }
 
 type IconWrapperProps = {
   padded?: boolean
@@ -74,8 +76,6 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
       outline: `5px auto ${theme.colors.purple700}`,
     },
 
-    ...getMargins(props),
-
     ...((variant === 'filled' || variant === 'outlined') && {
       borderRadius: size === 'lg' ? '0.5rem' : '0.375rem',
     }),
@@ -116,20 +116,17 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
         color: theme.colors.gray500,
       },
     }),
+
+    ...getMargins(props),
+    ...getPaddings(props),
   }),
 )
 
 export const Button = ({ children, icon, ...rest }: ButtonProps) => {
-  const sizedIcon = React.Children.map(icon, (child) =>
-    React.cloneElement(child as React.ReactElement<any>, {
-      size: iconSizes[rest.size || 'lg'],
-    }),
-  )
-
   return (
     <ButtonElement {...rest}>
       {children}
-      {icon && <IconWrapper padded={Boolean(children)}>{sizedIcon}</IconWrapper>}
+      {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
     </ButtonElement>
   )
 }
