@@ -1,4 +1,4 @@
-import { Market as ApiMarket, Locale as IsoLocale } from '@/lib/types'
+import { Market as ApiMarket, Locale as IsoLocale, MarketLabel } from '@/lib/types'
 import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 
@@ -27,13 +27,11 @@ export type LocaleData = {
   currencyLocale: 'en-SE' | 'sv-SE' | 'en-NO' | 'nb-NO' | 'en-DK' | 'da-DK'
 }
 
-export type MarketLabel = 'SE' | 'NO' | 'DK'
-
 export const locales: Record<LocaleLabel, LocaleData> = {
   se: {
     path: 'se',
     isoLocale: IsoLocale.SvSe,
-    marketLabel: 'SE',
+    marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'sv',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
@@ -53,7 +51,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'se-en': {
     path: 'se-en',
     isoLocale: IsoLocale.EnSe,
-    marketLabel: 'SE',
+    marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'en',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
@@ -73,7 +71,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   no: {
     path: 'no',
     isoLocale: IsoLocale.NbNo,
-    marketLabel: 'NO',
+    marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'no',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
@@ -92,7 +90,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'no-en': {
     path: 'no-en',
     isoLocale: IsoLocale.EnNo,
-    marketLabel: 'NO',
+    marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'en',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
@@ -111,7 +109,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   dk: {
     path: 'dk',
     isoLocale: IsoLocale.DaDk,
-    marketLabel: 'DK',
+    marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'da',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
@@ -130,7 +128,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'dk-en': {
     path: 'dk-en',
     isoLocale: IsoLocale.EnDk,
-    marketLabel: 'DK',
+    marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'en',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
