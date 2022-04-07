@@ -14,5 +14,5 @@ export const IconRoot = styled.svg<IconRootProps>(({ size, color, transform }) =
   color: color ? color : 'currentColor',
 
   transform,
-  transition: 'transform 250ms',
+  transition: transform ? 'transform 250ms' : undefined,
 }))
