@@ -34,6 +34,7 @@ export type StoryblokComponentName =
   | 'accordion_block'
   | 'banner_block'
   | 'bullet_point_block'
+  | 'column_text_block'
   | 'headline_block'
   | 'spacer_block'
   | 'plain_text_block'
