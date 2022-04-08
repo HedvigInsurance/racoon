@@ -4,7 +4,7 @@ const { spawn } = require('child_process')
 const APPNAME = process.env.APPNAME || ''
 
 function isValidAppName() {
-  const validAppNames = ['racoon-onboarding', 'racoon-web']
+  const validAppNames = ['racoon-onboarding', 'racoon-market-web']
   return validAppNames.includes(APPNAME)
 }
 
@@ -18,7 +18,7 @@ function main() {
     case 'racoon-onboarding':
       yarnBuild = spawn('yarn', ['build:onboarding'])
       break
-    case 'racoon-web':
+    case 'racoon-market-web':
       yarnBuild = spawn('yarn', ['build:web'])
       break
   }
