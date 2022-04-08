@@ -13,11 +13,6 @@ export const theme = {
   },
 }
 
-const simplifiedColorNames: Record<string, string> = {
-  lavender: theme.colors.purple500,
-  dark: theme.colors.gray900,
-}
-
 export const getColor = (color?: string) => {
   return theme.colors[color as keyof typeof theme.colors] || 'currentColor'
 }

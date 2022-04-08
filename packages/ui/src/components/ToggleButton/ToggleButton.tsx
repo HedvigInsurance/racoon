@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, ButtonProps } from '../Button/button'
 
-export type ToggleButtonProps = ButtonProps & {
+export type ToggleButtonProps = Omit<ButtonProps, 'onClick'> & {
   initialActive?: boolean
   children?: React.ReactNode
   onToggle?: (isActive: boolean) => void
