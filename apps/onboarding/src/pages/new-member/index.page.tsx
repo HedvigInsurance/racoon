@@ -176,6 +176,12 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitial
 }
 
 export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context) => {
+  // Skips prerendering this page for 'default' locale
+  // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
+  if (context.locale === 'default') {
+    return { notFound: true }
+  }
+
   // TODO make usage of a proper API
   // This is being hardcoded at the moment but in the future that kind of information
   // will be retrieved from an proper API
