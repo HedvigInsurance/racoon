@@ -4,9 +4,9 @@ export type Margins = {
   // margin-top and margin-bottom
   my?: string
   // margin-left
-  ms?: string
+  ml?: string
   // margin-right
-  me?: string
+  mr?: string
   // margin-top
   mt?: string
   // margin-bottom
@@ -20,7 +20,7 @@ export const getMargins = (margins: Margins) => {
     ...(margins.m && { margin: margins.m }),
     ...(margins.mt && { marginTop: margins.mt || margins.my }),
     ...(margins.mb && { marginBottom: margins.mb || margins.my }),
-    ...(margins.ms && { marginLeft: margins.ms || margins.mx }),
-    ...(margins.me && { marginRight: margins.me || margins.mx }),
+    ...(margins.ml && { marginLeft: margins.ml || margins.mx }),
+    ...(margins.mr && { marginRight: margins.mr || margins.mx }),
   }
 }

@@ -106,11 +106,11 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
     <MenuListItem>
       <SubMenuLabelWrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseOutForMenuItem}>
         {href ? (
-          <LinkButton pe="0.125rem" size="sm" variant="text" href={href}>
+          <LinkButton pr="0.125rem" size="sm" variant="text" href={href}>
             {title}
           </LinkButton>
         ) : (
-          <LinkButton pe="0.125rem" size="sm" variant="text" as="span" href="">
+          <LinkButton pr="0.125rem" size="sm" variant="text" as="span" href="">
             {title}
           </LinkButton>
         )}
@@ -118,8 +118,7 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
         <Button
           onClick={() => setIsOpen(true)}
           size="sm"
-          ps="0.125rem"
-          pe="0.125rem"
+          px="0.125rem"
           variant="text"
           icon={<ChevronIcon size="0.75rem" transform={isOpen ? 'rotate(-180)' : 'rotate(0)'} />}
         />

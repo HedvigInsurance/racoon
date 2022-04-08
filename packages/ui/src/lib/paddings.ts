@@ -4,9 +4,9 @@ export type Paddings = {
   // padding-top and padding-bottom
   py?: string
   // padding-left
-  ps?: string
+  pl?: string
   // padding-right
-  pe?: string
+  pr?: string
   // padding-top
   pt?: string
   // padding-bottom
@@ -20,7 +20,7 @@ export const getPaddings = (paddings: Paddings) => {
     ...(paddings.p && { padding: paddings.p }),
     ...(paddings.pt && { paddingTop: paddings.pt || paddings.py }),
     ...(paddings.pb && { paddingBottom: paddings.pb || paddings.py }),
-    ...(paddings.ps && { paddingLeft: paddings.ps || paddings.px }),
-    ...(paddings.pe && { paddingRight: paddings.pe || paddings.px }),
+    ...(paddings.pl && { paddingLeft: paddings.pl || paddings.px }),
+    ...(paddings.pr && { paddingRight: paddings.pr || paddings.px }),
   }
 }
