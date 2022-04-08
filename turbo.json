@@ -1,4 +1,6 @@
 {
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
   "pipeline": {
     "build": {
       "outputs": [".next/**", ".turbo/**", "dist/**"],
@@ -8,10 +10,10 @@
       "outputs": ["covereage/**"],
       "dependsOn": []
     },
-    "onboarding#e2e": {
+    "e2e": {
       "dependsOn": ["build"]
     },
-    "onboarding#e2e:headless": {
+    "e2e:headless": {
       "dependsOn": ["build"]
     },
     "lint": {
