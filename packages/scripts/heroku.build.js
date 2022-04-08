@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const { spawn } = require('child_process')
+const { exec } = require('child_process')
 
 const APPNAME = process.env.APPNAME || ''
 
@@ -9,24 +9,26 @@ function isValidAppName() {
 }
 
 function main() {
-  if (!APPNAME || !isValidAppName()) {
+  if (!isValidAppName()) {
     throw new Error('APPNAME env provided is invalid!')
   }
 
-  let yarnBuild = null
+  let filterPattern = null
   switch (APPNAME) {
     case 'racoon-onboarding':
-      yarnBuild = spawn('yarn', ['build:onboarding'])
+      filterPattern = 'onboarding'
       break
     case 'racoon-market-web':
-      yarnBuild = spawn('yarn', ['build:web'])
+      filterPattern = 'market-web'
       break
   }
 
-  if (yarnBuild) {
-    yarnBuild.stdout.on('data', (data) => console.log(`${data}`))
-    yarnBuild.stderr.on('data', (data) => console.error(`${data}`))
-    yarnBuild.on('close', (code) => console.log(`child process exited with code ${code}`))
+  if (filterPattern != null) {
+    const buildCommand = exec(`npx turbo run build --filter=${filterPattern}`)
+
+    buildCommand.stdout.on('data', (data) => console.log(`${data}`))
+    buildCommand.stderr.on('data', (data) => console.error(`${data}`))
+    buildCommand.on('close', (code) => console.log(`child process exited with code ${code}`))
   }
 }
 

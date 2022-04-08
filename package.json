@@ -8,10 +8,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:web": "turbo run web#build",
-    "build:onboarding": "turbo run onboarding#build",
-    "start:web": "yarn workspace web start",
-    "start:onboarding": "yarn workspace onboarding start",
     "dev": "turbo run dev --parallel --continue",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",

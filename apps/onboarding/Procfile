@@ -1,1 +1,1 @@
-web: yarn start:onboarding
+web: yarn workspace onboarding start
