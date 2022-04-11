@@ -21,16 +21,22 @@ type LanguagePickerProps = {
   theme: MenuTheme
 }
 
-export const LanguagePicker = ({theme} : LanguagePickerProps) => {
+export const LanguagePicker = ({ theme }: LanguagePickerProps) => {
   const router = useRouter()
   const { languages } = useCurrentMarket()
-
 
   return (
     <Wrapper Separator={<Separator />}>
       {languages.map((language) => (
         <Link key={language.urlParam} href={router.asPath} locale={language.urlParam} passHref>
-          <LinkButton color={theme} variant='text' size="xs" disabled={router.locale === language.urlParam}>{language.displayName}</LinkButton>
+          <LinkButton
+            color={theme}
+            variant="text"
+            size="sm"
+            disabled={router.locale === language.urlParam}
+          >
+            {language.displayName}
+          </LinkButton>
         </Link>
       ))}
     </Wrapper>

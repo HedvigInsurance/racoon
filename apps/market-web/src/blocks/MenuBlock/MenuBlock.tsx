@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 // import AnimateHeight from 'react-animate-height'
 import { MenuTheme } from 'ui/src/components/Menu/Menu'
+import { useBreakpoint } from 'ui/src/lib/media-query'
 import { getColor } from 'ui/src/lib/theme'
 import { Menu, mq } from 'ui'
 import { MenuItem as StoryblokMenuItem } from '@/services/storyblok/types'
@@ -10,31 +11,50 @@ import { LanguagePicker } from './LanguagePicker'
 
 const TRANSITION_TIME = 250
 
-const AnimateHeight = styled.div<{height: string | number  }>(({height}) => ({
-  height: height,
-  maxHeight: '200vh',
+// This could probably be refactored into ui/Menu for its collapsible prop
+const AnimateHeight = styled.div<{ height: string | number }>(({ height }) => ({
+  height: 'auto',
+  maxHeight: height,
   transition: `max-height ${TRANSITION_TIME}ms`,
-  overflow: 'hidden',
-}))
-//  duration={TRANSITION_TIME} height={isOpen ? '100%' : 0}>
+  // This is what hides the content when height is 0
+  overflow: height === 0 ? 'hidden' : 'scroll',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
 
-const MenuWrapper = styled.div<{ theme: MenuTheme }>(({ theme }) => ({
-  // height: '100vh',
-  // position: 'absolute',
-  // left: 0,
-  // right: 0,
-  // bottom: 0,
-  // top: 0,
-  backgroundColor: getColor('dark'),
-  paddingTop: MOBILE_WRAPPER_HEIGHT,
+  [mq.md]: {
+    position: 'initial',
+    overflow: 'hidden',
+  },
 }))
+
+const MenuWrapper = styled.div({
+  backgroundColor: getColor('dark'),
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  padding: `${MOBILE_WRAPPER_HEIGHT} 0.5rem 7rem 0.5rem`,
+
+  [mq.md]: {
+    backgroundColor: 'transparent',
+    paddingTop: 0,
+    height: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 'initial',
+
+    overflowY: 'hidden',
+  },
+})
 
 const AdditionalItem = styled.div({
   marginLeft: '1rem',
 
   [mq.md]: {
     marginLeft: '2rem',
-    marginRight: '2rem',
   },
 })
 
@@ -47,20 +67,29 @@ type MenuBlockProps = {
 }
 
 export const MenuBlock = ({ items, theme, isOpen, cta }: MenuBlockProps) => {
-  if (isOpen) {
+  const isDesktop = useBreakpoint('md')
+
+  // Only scroll menu on mobile, not entire page
+  if (isOpen && !isDesktop) {
     document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'initial'
   }
 
   return (
     <AnimateHeight height={isOpen ? '100vh' : 0}>
-      <MenuWrapper theme={theme}>
+      <MenuWrapper>
         <Menu theme={theme}>
           {items.map((item) => {
             if (item.menu_items) {
               return (
-                <Menu.SubMenu key={item._uid} title={item.label}>
+                <Menu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
                   {item.menu_items.map((subItem) => {
-                    return <Menu.Item key={subItem._uid}>{subItem.label}</Menu.Item>
+                    return (
+                      <Menu.Item key={subItem._uid}>
+                        <Menu.Link href={subItem.link.cached_url}>{subItem.label}</Menu.Link>
+                      </Menu.Item>
+                    )
                   })}
                 </Menu.SubMenu>
               )
@@ -68,13 +97,23 @@ export const MenuBlock = ({ items, theme, isOpen, cta }: MenuBlockProps) => {
 
             if (item.menu_item_groups) {
               return (
-                <Menu.SubMenu key={item._uid} title={item.label}>
+                <Menu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
                   <Menu.GroupContainer>
                     {item.menu_item_groups.map((group) => {
                       return (
-                        <Menu.ItemGroup title={group.label} key={group._uid}>
+                        <Menu.ItemGroup
+                          href={group.link?.cached_url}
+                          title={group.label}
+                          key={group._uid}
+                        >
                           {group.menu_items.map((menuItem) => {
-                            return <Menu.Item key={menuItem._uid}>{menuItem.label}</Menu.Item>
+                            return (
+                              <Menu.Item key={menuItem._uid}>
+                                <Menu.Link href={menuItem.link.cached_url}>
+                                  {menuItem.label}
+                                </Menu.Link>
+                              </Menu.Item>
+                            )
                           })}
                         </Menu.ItemGroup>
                       )
@@ -84,13 +123,18 @@ export const MenuBlock = ({ items, theme, isOpen, cta }: MenuBlockProps) => {
               )
             }
 
-            return <Menu.Item key={item._uid}>{item.label}</Menu.Item>
+            return (
+              <Menu.Item key={item._uid}>
+                <Menu.Link href={item.link.cached_url}>{item.label}</Menu.Link>
+              </Menu.Item>
+            )
           })}
+
+          <Menu.Item>
+            <LanguagePicker theme={theme} />
+          </Menu.Item>
+          <Menu.Item>{cta}</Menu.Item>
         </Menu>
-        <AdditionalItem>
-          <LanguagePicker theme={theme} />
-        </AdditionalItem>
-        <AdditionalItem>{cta}</AdditionalItem>
       </MenuWrapper>
     </AnimateHeight>
   )

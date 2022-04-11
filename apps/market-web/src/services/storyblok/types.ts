@@ -102,3 +102,10 @@ export type MenuItem = {
 }
 
 export type Image = string
+
+export enum InverseColors {
+  DEFAULT = 'standard-inverse',
+  INVERSE = 'standard',
+}
+
+export type GlobalStory = any

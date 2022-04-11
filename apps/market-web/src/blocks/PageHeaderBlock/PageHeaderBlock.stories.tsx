@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider'
 import React from 'react'
 import { StoryData } from 'storyblok-js-client'
-import { globalStoryMock, link, minimalColorMap } from 'test-utils/storyblock-test-util'
+import { globalStoryMock, link, minimalColorMap } from '@/helpers/mockedData'
 import { HeroBlock } from '../HeroBlock/HeroBlock'
 import { PageHeaderBlock, PageHeaderBlockProps } from './PageHeaderBlock'
 
@@ -52,7 +52,6 @@ const TemplateWithHero: ComponentStory<typeof PageHeaderBlock> = (
   args: PageHeaderBlockProps & { story: StoryData },
 ) => (
   <>
-
     <MemoryRouterProvider url="/initial-url">
       <PageHeaderBlock {...args} />
       <HeroBlock

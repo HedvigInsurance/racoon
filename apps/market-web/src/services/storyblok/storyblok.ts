@@ -1,5 +1,13 @@
 import StoryblokClient from 'storyblok-js-client'
-import type { ImageUrl, LinkComponent, PageStoryData, StoryblokLinkItem } from './types'
+import { getColor } from 'ui'
+import {
+  Image,
+  InverseColors,
+  LinkComponent,
+  minimalColorComponentColors,
+  PageStoryData,
+  StoryblokLinkItem,
+} from './types'
 
 interface FetchOptions {
   preview?: boolean
@@ -24,7 +32,21 @@ export const getStoryBySlug = async (slug: string, { preview = false }: FetchOpt
   return response.data.story as PageStoryData
 }
 
-export const getPublicHost = (): string | undefined => {
+export const getStoryblokLinkUrl = (link?: LinkComponent) => {
+  const cachedLink =
+    link?.linktype !== 'story' || /^\//.test(link.cached_url)
+      ? link?.cached_url
+      : `/${link.cached_url}`
+  const publicHost = getPublicHost()
+  return publicHost ? cachedLink?.replace('https://www.hedvig.com', publicHost) : cachedLink
+}
+
+export const getStoryblokImage = (url?: Image) =>
+  getPublicHost()
+    ? (url || '').replace(/^(https?:)?\/\/a\.storyblok\.com\//, getPublicHost() + '/')
+    : url
+
+const getPublicHost = (): string | undefined => {
   if (typeof window === 'undefined' && typeof process !== 'undefined' && process.env.PUBLIC_HOST) {
     return process.env.PUBLIC_HOST
   }
@@ -36,17 +58,9 @@ export const getPublicHost = (): string | undefined => {
   return ''
 }
 
-// We use our own domains for assets in staging and prod https://www.storyblok.com/docs/custom-assets-domain
-export const getStoryblokImage = (url?: ImageUrl) =>
-  getPublicHost()
-    ? (url || '').replace(/^(https?:)?\/\/a\.storyblok\.com\//, getPublicHost() + '/')
-    : url
+export const storyblokColorToBrandColor = (storyblokColor?: minimalColorComponentColors) => {
+  if (storyblokColor === InverseColors.DEFAULT) return getColor('light')
+  if (storyblokColor === InverseColors.INVERSE) return getColor('dark')
 
-export const getStoryblokLinkUrl = (link: LinkComponent) => {
-  const cachedLink =
-    link.linktype !== 'story' || /^\//.test(link.cached_url)
-      ? link.cached_url
-      : `/${link.cached_url}`
-  const publicHost = getPublicHost()
-  return publicHost ? cachedLink.replace('https://www.hedvig.com', publicHost) : cachedLink
+  return getColor(storyblokColor)
 }

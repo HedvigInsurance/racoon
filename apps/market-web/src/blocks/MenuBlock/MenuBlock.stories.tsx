@@ -1,9 +1,8 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { MemoryRouterProvider } from 'next-router-mock/dist/MemoryRouterProvider/MemoryRouterProvider-11.1'
 import React from 'react'
-import { headerMenuItems } from 'test-utils/storyblock-test-util'
+import { headerMenuItems } from '@/helpers/mockedData'
 import { MenuBlock } from './MenuBlock'
-
-
 
 export default {
   title: 'Market Web / Blocks / MenuBlock',
@@ -15,7 +14,13 @@ export default {
   },
 } as ComponentMeta<typeof MenuBlock>
 
-const Template: ComponentStory<typeof MenuBlock> = (args) =>
-<MenuBlock {...args} />
+const Template: ComponentStory<typeof MenuBlock> = (args) => (
+  <MemoryRouterProvider url="/initial-url">
+    <MenuBlock {...args} />
+  </MemoryRouterProvider>
+)
 
 export const Default = Template.bind({})
+Default.args = {
+  isOpen: true,
+}

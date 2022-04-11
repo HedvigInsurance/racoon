@@ -3,17 +3,16 @@ import { colorsV3, HedvigLogo, HedvigSymbol } from '@hedviginsurance/brand'
 import { useCurrentLocale } from 'lib/l10n/useCurrentLocale'
 import React, { useCallback, useEffect, useState } from 'react'
 import { StoryData } from 'storyblok-js-client'
-import { ButtonColors } from 'ui/src/components/Button/button'
-import { MenuItem } from 'ui/src/components/Menu/MenuItem'
+import { MenuTheme } from 'ui/src/components/Menu/Menu'
+import { useBreakpoint } from 'ui/src/lib/media-query'
+import { getColor } from 'ui/src/lib/theme'
 import { mq, ButtonVariant, LinkButton, BurgerButton } from 'ui'
 import { getStoryblokLinkUrl } from '@/services/storyblok/storyblok'
 import {
   LinkComponent,
   MinimalColorComponent,
-  minimalColorComponentColors,
   StoryblokBaseBlock,
 } from '@/services/storyblok/types'
-import { BannerBlock } from '../BannerBlock/BannerBlock'
 import { MenuBlock } from '../MenuBlock/MenuBlock'
 
 export const WRAPPER_HEIGHT = '5rem'
@@ -22,13 +21,13 @@ export const TOGGLE_TRANSITION_TIME = 250
 
 const isBelowScrollThreshold = () => typeof window !== 'undefined' && window.scrollY > 20
 
-const HeaderWrapper = styled('header')({
+const HeaderWrapper = styled.header({
   position: 'sticky',
   top: 0,
   zIndex: 100,
 })
 
-const HeaderBackgroundFiller = styled('div')<{ transparent: boolean }>(({ transparent }) => ({
+const HeaderBackgroundFiller = styled.div<{ transparent: boolean }>(({ transparent }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -56,9 +55,8 @@ const InnerHeaderWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0 0.75rem',
-
-  backgroundColor: colorsV3.gray900,
+  // The burger menu button has a padding of 0.75rem so add 1rem padding for logo
+  padding: '0 1rem 0 0.25rem',
 
   height: MOBILE_WRAPPER_HEIGHT,
   [mq.md]: {
@@ -67,14 +65,14 @@ const InnerHeaderWrapper = styled.div({
   },
 })
 
-const HideOnMobile = styled('div')({
+const HideOnMobile = styled.div({
   display: 'none',
   [mq.md]: {
     display: 'flex',
   },
 })
 
-const HideOnDesktop = styled('div')({
+const HideOnDesktop = styled.div({
   position: 'initial',
   zIndex: 102,
   [mq.md]: {
@@ -82,50 +80,33 @@ const HideOnDesktop = styled('div')({
   },
 })
 
-const LogoLink = styled('a')<{
-  inverse: boolean
-}>(({ inverse }) => ({
+const LogoLink = styled.a<{
+  color: MenuTheme
+}>(({ color }) => ({
   display: 'flex',
-  color: inverse ? colorsV3.gray100 : colorsV3.gray900,
+  color: getColor(color),
   transition: 'color 300ms',
-
+  ':hover': {
+    color: getColor(color),
+  },
   svg: {
     height: '100%',
   },
 }))
 
-const LeftContainer = styled('div')({
+const LeftContainer = styled.div({
   display: 'flex',
 })
-const RightContainer = styled('div')({
+const RightContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
 })
 
-const MobileButtonWrapper = styled('div')({
-  display: 'inline-block',
-  width: '100%',
-  marginBottom: '7rem',
-  [mq.md]: {
-    display: 'none',
-  },
-})
-
-const DesktopButtonWrapper = styled('div')({
-  display: 'none',
-  [mq.md]: {
-    display: 'inline-block',
-  },
-})
-
-const Wordmark = styled('a')({
+const Wordmark = styled.a({
   display: 'block',
   width: '1.75rem',
   height: '1.75rem',
   zIndex: 102,
-
-  // same as buttons
-  // padding: "0 0.75rem"
 })
 
 export interface PageHeaderBlockProps extends StoryblokBaseBlock {
@@ -143,13 +124,7 @@ export interface PageHeaderBlockProps extends StoryblokBaseBlock {
   mobile_header_cta_style?: ButtonVariant
 }
 
-enum InverseColors {
-  DEFAULT = 'standard-inverse',
-  INVERSE = 'standard',
-}
-
 export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockProps) => {
-  // console.log(props.story)
   const currentLocale = useCurrentLocale()
 
   const showBanner =
@@ -158,70 +133,54 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
   const [isBelowThreshold, setIsBelowThreshold] = useState<boolean>(false)
 
   const inverseColor = props.is_transparent && props.inverse_colors && !isBelowThreshold
+  const theme = (inverseColor ? 'light' : 'dark') as MenuTheme
+  const ctaLabel = props.override_cta_label || props.story.content.cta_label
 
-  const [buttonColor, setButtonColor] = useState<minimalColorComponentColors | undefined>(
-    inverseColor ? InverseColors.DEFAULT : props.cta_color?.color,
-  )
+  const isDesktop = useBreakpoint('md')
 
-  // console.log(props)
-  // console.log('inverseColor', inverseColor)
+  const [isOpen, setIsOpen] = useState(isDesktop)
 
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleScroll = useCallback(() => {
+  const onScroll = useCallback(() => {
     if (isBelowScrollThreshold()) {
       setIsBelowThreshold(true)
-      if (props.inverse_colors && props.is_transparent) {
-        setButtonColor(InverseColors.INVERSE)
-      }
       return
     }
 
     setIsBelowThreshold(false)
     if (props.inverse_colors && props.is_transparent) {
-      setButtonColor(InverseColors.DEFAULT)
     }
   }, [props.inverse_colors, props.is_transparent])
 
   useEffect(() => {
-    handleScroll()
-    window.addEventListener('scroll', handleScroll)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
 
     return () => {
       if (!props.is_transparent) {
         return
       }
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', onScroll)
     }
-  }, [handleScroll, props.is_transparent])
-
-  const ctaLabel = props.override_cta_label || props.story.content.cta_label
+  }, [onScroll, props.is_transparent])
 
   if (!props?.story?.content) return null
 
   return (
     <>
-      {showBanner && (
+      {/* {showBanner && (
         <BannerBlock
           color={props.story.content.banner_color}
           text={props.story.content.banner_text}
         />
-      )}
+      )} */}
       <HeaderWrapper>
-        {/* <HeaderMain
-          inverse={inverseColor}
-          open={true}
-          // open={isOpen || isClosing}
-          sticky={isBelowThreshold}
-        > */}
-
         <HeaderBackgroundFiller transparent={props.is_transparent && !isBelowThreshold} />
 
         <ContentWrapper>
           <InnerHeaderWrapper>
             <LeftContainer>
               <HideOnMobile>
-                <LogoLink inverse={inverseColor} href={'/' + currentLocale.marketLabel}>
+                <LogoLink color={theme} href={'/' + currentLocale.marketLabel}>
                   <HedvigLogo width={94} />
                 </LogoLink>
               </HideOnMobile>
@@ -241,12 +200,12 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
                 <MenuBlock
                   isOpen={isOpen}
                   items={props.story.content.header_menu_items}
-                  theme={inverseColor ? 'light' : 'dark'}
+                  theme={theme}
                   cta={
                     <LinkButton
-                      variant={props.cta_style}
-                      color={buttonColor as ButtonColors}
-                      // fullWidth={true}
+                      variant={props.cta_style || 'outlined'}
+                      color={theme}
+                      fullWidth={!isDesktop}
                       href={getStoryblokLinkUrl(props.override_cta_link)}
                     >
                       {ctaLabel}
@@ -257,8 +216,6 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
             </RightContainer>
           </InnerHeaderWrapper>
         </ContentWrapper>
-
-        {/* </HeaderMain> */}
       </HeaderWrapper>
     </>
   )
