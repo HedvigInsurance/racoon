@@ -1,5 +1,4 @@
 import { colorsV3, fonts } from '@hedviginsurance/brand'
-import '@emotion/react'
 
 export const theme = {
   fonts: {
@@ -14,13 +13,12 @@ export const theme = {
   },
 }
 
+type CustomTheme = typeof theme
+
 // Need to define Theme interface, since default is empty
 // https://emotion.sh/docs/typescript
 declare module '@emotion/react' {
-  export interface Theme {
-    fonts: typeof theme.fonts
-    colors: typeof theme.colors
-  }
+  export interface Theme extends CustomTheme {}
 }
 
 export const getColor = (color?: string) => {
