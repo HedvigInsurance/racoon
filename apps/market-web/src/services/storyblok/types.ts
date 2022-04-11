@@ -38,6 +38,7 @@ export type StoryblokComponentName =
   | 'headline_block'
   | 'spacer_block'
   | 'plain_text_block'
+  | 'hero'
 
 export interface StoryblokBaseBlock extends StoryblokComponent<StoryblokComponentName> {
   color?: MinimalColorComponent
@@ -99,3 +100,5 @@ export type MenuItem = {
   menu_items?: ReadonlyArray<MenuItem>
   menu_item_groups?: ReadonlyArray<MenuItemGroup>
 }
+
+export type Image = string

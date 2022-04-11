@@ -13,6 +13,14 @@ export const theme = {
   },
 }
 
+type CustomTheme = typeof theme
+
+// Need to define Theme interface, since default is empty
+// https://emotion.sh/docs/typescript
+declare module '@emotion/react' {
+  export interface Theme extends CustomTheme {}
+}
+
 export const getColor = (color?: string) => {
   return theme.colors[color as keyof typeof theme.colors] || 'currentColor'
 }
