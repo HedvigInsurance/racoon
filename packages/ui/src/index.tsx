@@ -16,7 +16,7 @@ export { Menu } from './components/Menu/Menu'
 export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
 
-export { theme } from './lib/theme'
+export { theme, getColor } from './lib/theme'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'

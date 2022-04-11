@@ -4,26 +4,24 @@ import { ReactNode, useCallback, useContext, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { ChevronIcon } from '../../icons/Chrevron'
 import { mq, useBreakpoint } from '../../lib/media-query'
-import { LinkButton, Button } from '../Button/button'
+import { Button } from '../Button/button'
 import { MenuThemeContext } from './Menu'
-import { MenuListItem } from './MenuItem'
+import { MenuItem } from './MenuItem'
+import { MenuLink } from './MenuLink'
 
 const TRANSITION_TIME = 150
 
-const DropdownMenuContainer = styled('div')<{
+const DropdownMenuContainer = styled.div<{
   isOpen: boolean
   hasMenuGroups?: boolean
 }>(({ isOpen }) => ({
   opacity: isOpen ? 1 : 0,
   transition: `opacity ${TRANSITION_TIME}ms`,
-  overflowY: 'hidden',
-  color: colorsV3.gray900,
-
   [mq.md]: {
     display: isOpen ? 'block' : 'none',
     position: 'absolute',
     left: '50%',
-    top: 'calc(100% + .125rem)',
+    top: 'calc(100%)',
     transform: 'translateX(-50%)',
 
     background: colorsV3.gray100,
@@ -32,10 +30,24 @@ const DropdownMenuContainer = styled('div')<{
   },
 }))
 
-const DropdownMenuItemList = styled.div({
+const DropdownMenuItemList = styled.ul({
   margin: 0,
   padding: '1rem 0',
   listStyle: 'none',
+  display: 'flex',
+  flexDirection: 'column',
+
+  // Prefer to use styling in MenuItem, but use this for nested MenuItems
+  li: {
+    fontSize: '1.2rem',
+    // indent sub-lists
+    padding: '1rem 1.5rem',
+  },
+  [mq.md]: {
+    li: {
+      fontSize: 'initial',
+    },
+  },
 })
 
 // This component makes sure that we close the menu when it loses
@@ -72,6 +84,8 @@ const ChildrenBlur = ({ children, onBlur, ...props }: ChildrenBlurProps) => {
 const SubMenuLabelWrapper = styled.span({
   display: 'flex',
   flexDirection: 'row',
+  // aligns text with chevron icon
+  alignItems: 'center',
 })
 
 type SubMenuProps = {
@@ -106,24 +120,23 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
   }
 
   return (
-    <MenuListItem>
+    <MenuItem>
       <SubMenuLabelWrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseOutForMenuItem}>
-        {href ? (
-          <LinkButton pr="0.125rem" size="sm" variant="text" href={href}>
-            {title}
-          </LinkButton>
-        ) : (
-          <LinkButton pr="0.125rem" size="sm" variant="text" as="span" href="">
-            {title}
-          </LinkButton>
-        )}
+        {href ? <MenuLink href={href}>{title}</MenuLink> : <>{title}</>}
 
         <Button
           onClick={() => setIsOpen(true)}
           size="sm"
-          px="0.125rem"
+          ps="0.5rem"
+          pe="0.5rem"
           variant="text"
-          icon={<ChevronIcon size="0.75rem" transform={isOpen ? 'rotate(-180)' : 'rotate(0)'} />}
+          color={theme}
+          icon={
+            <ChevronIcon
+              size={isLargeScreen ? '0.75rem' : '1.125rem'}
+              transform={isOpen ? 'rotate(-180)' : 'rotate(0)'}
+            />
+          }
         />
       </SubMenuLabelWrapper>
 
@@ -138,12 +151,12 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
               setIsOpen(false)
             }}
           >
-            <MenuThemeContext.Provider value={isLargeScreen ? "dark" : theme}>
-            <DropdownMenuItemList>{children}</DropdownMenuItemList>
+            <MenuThemeContext.Provider value={isLargeScreen ? 'dark' : theme}>
+              <DropdownMenuItemList>{children}</DropdownMenuItemList>
             </MenuThemeContext.Provider>
           </ChildrenBlur>
         </DropdownMenuContainer>
       </AnimateHeight>
-    </MenuListItem>
+    </MenuItem>
   )
 }

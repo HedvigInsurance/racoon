@@ -24,3 +24,12 @@ declare module '@emotion/react' {
 export const getColor = (color?: string) => {
   return theme.colors[color as keyof typeof theme.colors] || 'currentColor'
 }
+
+// Need to define Theme interface, since default is empty
+// https://emotion.sh/docs/typescript
+declare module '@emotion/react' {
+  export interface Theme {
+    fonts: typeof theme.fonts
+    colors: typeof theme.colors
+  }
+}

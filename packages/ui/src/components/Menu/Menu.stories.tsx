@@ -2,8 +2,9 @@ import styled from '@emotion/styled'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
 import AnimateHeight from 'react-animate-height'
-import { mq } from '../../lib/media-query'
+import { mq, useBreakpoint } from '../../lib/media-query'
 import { BurgerButton } from '../BurgerButton/BurgerButton'
+import { Button } from '../Button/button'
 import { Menu, MenuProps } from './Menu'
 
 export default {
@@ -21,49 +22,76 @@ const Container = styled.div({
   },
 })
 
-const defaultMenuItems = (
-  <>
-    <Menu.SubMenu title="Försäkringar" href="/forsakringar">
-      <Menu.GroupContainer>
-        <Menu.ItemGroup title="Hemförsäkringar" href="/hemforsakringar">
-          <Menu.Item href="/forsakringar">Hyresrätt</Menu.Item>
-          <Menu.Item href="/forsakringar">Bostadsrätt</Menu.Item>
-          <Menu.Item href="/forsakringar">Hus &amp; villa</Menu.Item>
-          <Menu.Item href="/forsakringar">Student</Menu.Item>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup title="Tillval">
-          <Menu.Item href="/olycksfall">Olycksfall</Menu.Item>
-        </Menu.ItemGroup>
-      </Menu.GroupContainer>
-    </Menu.SubMenu>
-    <Menu.SubMenu title="Varför Hedvig">
-      <Menu.Item href="/forsakringar">Byt till oss</Menu.Item>
-      <Menu.Item href="/forsakringar">Skadeanmälningar</Menu.Item>
-      <Menu.Item href="/forsakringar">Välgörenhet</Menu.Item>
-      <Menu.Item href="/forsakringar">Prissättning</Menu.Item>
-    </Menu.SubMenu>
-
-    <Menu.Item href="/appen">Hedvig-appen</Menu.Item>
-    <Menu.SubMenu title="Hjälp">
-      <Menu.Item href="/forsakringar">Kundservice</Menu.Item>
-      <Menu.Item href="/forsakringar">Teckna via telefon</Menu.Item>
-      <Menu.Item href="/forsakringar">FAQ</Menu.Item>
-    </Menu.SubMenu>
-  </>
-)
-
 const Template: ComponentStory<typeof Menu> = (props: MenuProps) => {
+  const isDesktop = useBreakpoint('md')
+
   return (
     <Container>
-      <Menu {...props} />
+      <Menu {...props}>
+        <Menu.SubMenu title="Försäkringar" href="/forsakringar">
+          <Menu.GroupContainer>
+            <Menu.ItemGroup title="Hemförsäkringar" href="/hemforsakringar">
+              <Menu.Item>
+                <Menu.Link href="/forsakringar">Hyresrätt</Menu.Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Menu.Link href="/forsakringar">Bostadsrätt</Menu.Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Menu.Link href="/forsakringar">Hus &amp; villa</Menu.Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Menu.Link href="/forsakringar">Student</Menu.Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
+            <Menu.ItemGroup title="Tillval">
+              <Menu.Item>
+                <Menu.Link href="/olycksfall">Olycksfall</Menu.Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
+          </Menu.GroupContainer>
+        </Menu.SubMenu>
+        <Menu.SubMenu title="Varför Hedvig">
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Byt till oss</Menu.Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Skadeanmälningar</Menu.Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Välgörenhet</Menu.Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Prissättning</Menu.Link>
+          </Menu.Item>
+        </Menu.SubMenu>
+
+        <Menu.Item>
+          <Menu.Link href="/appen">Hedvig-appen</Menu.Link>
+        </Menu.Item>
+        <Menu.SubMenu title="Hjälp">
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Kundservice</Menu.Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">Teckna via telefon</Menu.Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Link href="/forsakringar">FAQ</Menu.Link>
+          </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.Item>
+          <Button fullWidth={!isDesktop} variant="outlined">
+            Sign up!
+          </Button>
+        </Menu.Item>
+      </Menu>
     </Container>
   )
 }
 
 export const Default = Template.bind({})
-Default.args = {
-  children: defaultMenuItems,
-}
+Default.args = {}
 
 const CollapsibleTemplate: ComponentStory<typeof Menu> = (props: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -79,6 +107,4 @@ const CollapsibleTemplate: ComponentStory<typeof Menu> = (props: MenuProps) => {
 }
 
 export const Collapsible = CollapsibleTemplate.bind({})
-Collapsible.args = {
-  children: defaultMenuItems,
-}
+Collapsible.args = {}

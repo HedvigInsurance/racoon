@@ -61,9 +61,9 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
     border: '1px solid',
     maxWidth: '100%',
     transition: 'all ease-out 200ms',
-    display: 'inline-flex',
-    alignItems: 'center',
+    display: 'inline-block',
     whiteSpace: 'nowrap',
+    textAlign: 'center',
 
     ':focus': {
       outline: `5px auto ${theme.colors.purple700}`,
@@ -89,11 +89,11 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
 
     ...(variant === 'outlined' && {
       backgroundColor: 'transparent',
-      color: theme.colors.gray900,
-      borderColor: theme.colors.gray900,
+      color: color ? getColor(color) : theme.colors.gray900,
+      borderColor: color ? getColor(color) : theme.colors.gray900,
       ':hover, :focus': {
-        color: theme.colors.gray700,
-        borderColor: theme.colors.gray700,
+        color: color ? getColor(color) : theme.colors.gray700,
+        borderColor: color ? getColor(color) : theme.colors.gray700,
       },
       ':disabled': {
         color: theme.colors.gray500,

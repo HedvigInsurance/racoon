@@ -2,29 +2,42 @@ import styled from '@emotion/styled'
 import { ReactNode, useContext } from 'react'
 import { mq } from '../../lib/media-query'
 import { getColor } from '../../lib/theme'
-import { LinkButton } from '../Button/button'
 import { MenuThemeContext } from './Menu'
 
-export const MenuListItem = styled.li({
+const MenuItemElement = styled.li<MenuItemProps>(({ color }) => ({
   position: 'relative',
-  margin: 0,
-  padding: '0.25rem',
-})
+  display: 'inline-flex',
+  alignItems: 'start',
+  flexDirection: 'column',
+  boxSizing: 'border-box',
 
-type MenuLinkProps = {
-  href?: string
+  margin: 0,
+  padding: '0.625rem',
+  fontSize: '1.5rem',
+  whiteSpace: 'nowrap',
+  width: '100%',
+
+  color: getColor(color),
+  ':hover, :focus': {
+    color: getColor(color),
+  },
+
+  [mq.md]: {
+    fontSize: 'initial',
+    padding: '0.625rem',
+  },
+}))
+
+type MenuItemProps = {
   children: ReactNode
 }
 
-export const MenuItem = ({ href, children }: MenuLinkProps) => {
-
-  const theme = useContext(MenuThemeContext)
+export const MenuItem = ({ children, ...props }: MenuItemProps) => {
+  const color = useContext(MenuThemeContext)
 
   return (
-    <MenuListItem>
-      <LinkButton size="sm" variant="text" href={href || ''}>
-        {children}
-      </LinkButton>
-    </MenuListItem>
+    <MenuItemElement {...props} color={color}>
+      {children}
+    </MenuItemElement>
   )
 }

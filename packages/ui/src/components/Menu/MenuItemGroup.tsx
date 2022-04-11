@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
 import { ReactNode } from 'react'
 import { mq } from '../../lib/media-query'
-import { LinkButton } from '../Button/button'
+import { MenuLink } from './MenuLink'
 
 const Group = styled.div({
   display: 'inline-flex',
@@ -11,27 +11,18 @@ const Group = styled.div({
 
 const MenuGroupHeader = styled.span({
   fontSize: '0.75rem',
-  marginBottom: '0.625rem',
 
-  [mq.md]: {
-    marginBottom: '0.625rem',
-  },
-})
+  padding: '0.5rem 1.125rem',
 
-const MenuGroupLabel = styled.span({
   textTransform: 'uppercase',
   color: colorsV3.gray500,
-
-  fontSize: '0.75rem',
-
-  [mq.md]: {
-    color: colorsV3.gray700,
-  },
 })
 
 const MenuGroupList = styled.ul({
   listStyle: 'none',
   paddingInlineStart: 0,
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 type MenuItemGroupProps = {
@@ -44,15 +35,9 @@ export const MenuItemGroup = ({ title, href, children }: MenuItemGroupProps) => 
   return (
     <Group>
       <MenuGroupHeader>
-        {href ? (
-          <LinkButton variant="text" size="sm" href={href}>
-            <MenuGroupLabel>{title}</MenuGroupLabel>
-          </LinkButton>
-        ) : (
-          <LinkButton as="span" variant="text" size="sm">
-            <MenuGroupLabel>{title}</MenuGroupLabel>
-          </LinkButton>
-        )}
+        <MenuLink color={colorsV3.gray500} href={href}>
+          {title}
+        </MenuLink>
       </MenuGroupHeader>
       <MenuGroupList>{children}</MenuGroupList>
     </Group>
