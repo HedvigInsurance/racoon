@@ -1,6 +1,3 @@
-import accidentImg from '@/images/accident.jpg'
-import homeContentsImg from '@/images/home.jpg'
-import travelImg from '@/images/travel.jpg'
 import { LocaleLabel, locales, LOCALE_URL_PARAMS } from './locales'
 
 export type LocaleUrlParam = typeof LOCALE_URL_PARAMS[number]
@@ -8,7 +5,7 @@ export type LocaleUrlParam = typeof LOCALE_URL_PARAMS[number]
 export type MarketInsurance = {
   name: string
   description: string
-  img: StaticImageData
+  img: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
 }
@@ -23,25 +20,19 @@ export type MarketLabel = 'SE' | 'NO' | 'DK'
 const homeContentsInsurance = {
   name: 'MAIN_COVERAGE_TITLE_HOME',
   description: 'MAIN_COVERAGE_DESC_HOME',
-  img: homeContentsImg,
-}
-
-const houseInsurance = {
-  name: 'MAIN_COVERAGE_TITLE_HOUSE',
-  description: 'MAIN_COVERAGE_DESC_HOUSE',
-  img: homeContentsImg,
+  img: '/racoon-assets/home.jpg',
 }
 
 const accidentInsurance = {
   name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
   description: 'MAIN_COVERAGE_DESC_ACCIDENT',
-  img: accidentImg,
+  img: '/racoon-assets/accident.jpg',
 }
 
 const travelInsurance = {
   name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
   description: 'ADDITIONAL_COVERAGE_DESC_TRAVEL',
-  img: travelImg,
+  img: '/racoon-assets/travel.jpg',
 }
 
 export const markets: Record<MarketLabel, MarketData> = {
@@ -50,23 +41,7 @@ export const markets: Record<MarketLabel, MarketData> = {
       { urlParam: 'se', displayName: 'Sv' },
       { urlParam: 'se-en', displayName: 'En' },
     ],
-    insurances: [
-      {
-        ...homeContentsInsurance,
-        isPreselected: true,
-      },
-      {
-        ...houseInsurance,
-      },
-      {
-        ...travelInsurance,
-        isAdditionalCoverage: true,
-      },
-      {
-        ...accidentInsurance,
-        isAdditionalCoverage: true,
-      },
-    ],
+    insurances: [],
   },
   NO: {
     languages: [
@@ -82,7 +57,7 @@ export const markets: Record<MarketLabel, MarketData> = {
         ...travelInsurance,
         isAdditionalCoverage: true,
       },
-      ...(process.env.FEATURE_ACCIDENT_NO
+      ...(process.env.FEATURE_ACCIDENT_NO === 'true'
         ? [
             {
               ...accidentInsurance,
@@ -97,20 +72,7 @@ export const markets: Record<MarketLabel, MarketData> = {
       { urlParam: 'dk', displayName: 'Da' },
       { urlParam: 'dk-en', displayName: 'En' },
     ],
-    insurances: [
-      {
-        ...homeContentsInsurance,
-        isPreselected: true,
-      },
-      {
-        ...travelInsurance,
-        isAdditionalCoverage: true,
-      },
-      {
-        ...accidentInsurance,
-        isAdditionalCoverage: true,
-      },
-    ],
+    insurances: [],
   },
 }
 
