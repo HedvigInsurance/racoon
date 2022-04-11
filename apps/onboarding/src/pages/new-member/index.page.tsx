@@ -10,11 +10,14 @@ import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/additional'
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
+import {
+  getMarketFromLocaleLabel,
+  getEmbarkInitialStore,
+} from '@/components/new-member/new-member.helpers'
+import { Insurances } from '@/components/new-member/types'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { Market } from '@/lib/types'
-import { getMarketFromLocaleLabel, getEmbarkInitialStore } from './new-member.helpers'
-import { Insurances } from './types'
 
 const CardGrid = styled.div({
   display: 'grid',
