@@ -6,14 +6,13 @@ export type MarketInsurance = {
   name: string
   description: string
   img: string
-  embarkStoreKey: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
 }
 
 export type MarketData = {
   languages: Array<{ urlParam: LocaleUrlParam; displayName: string }>
-  insurances?: Array<MarketInsurance>
+  insurances: Array<MarketInsurance>
 }
 
 export type MarketLabel = 'SE' | 'NO' | 'DK'
@@ -42,6 +41,7 @@ export const markets: Record<MarketLabel, MarketData> = {
       { urlParam: 'se', displayName: 'Sv' },
       { urlParam: 'se-en', displayName: 'En' },
     ],
+    insurances: [],
   },
   NO: {
     languages: [
@@ -52,19 +52,16 @@ export const markets: Record<MarketLabel, MarketData> = {
       {
         ...homeContentsInsurance,
         isPreselected: true,
-        embarkStoreKey: 'isHomeContents',
       },
       {
         ...travelInsurance,
         isAdditionalCoverage: true,
-        embarkStoreKey: 'isTravel',
       },
       ...(process.env.FEATURE_ACCIDENT_NO === 'true'
         ? [
             {
               ...accidentInsurance,
               isAdditionalCoverage: true,
-              embarkStoreKey: 'isAccident',
             },
           ]
         : ([] as MarketInsurance[])),
@@ -75,6 +72,7 @@ export const markets: Record<MarketLabel, MarketData> = {
       { urlParam: 'dk', displayName: 'Da' },
       { urlParam: 'dk-en', displayName: 'En' },
     ],
+    insurances: [],
   },
 }
 
