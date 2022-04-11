@@ -1,5 +1,5 @@
 import StoryblokClient from 'storyblok-js-client'
-import type { ImageUrl, PageStoryData, StoryblokLinkItem } from './types'
+import type { ImageUrl, LinkComponent, PageStoryData, StoryblokLinkItem } from './types'
 
 interface FetchOptions {
   preview?: boolean
@@ -41,3 +41,12 @@ export const getStoryblokImage = (url?: ImageUrl) =>
   getPublicHost()
     ? (url || '').replace(/^(https?:)?\/\/a\.storyblok\.com\//, getPublicHost() + '/')
     : url
+
+export const getStoryblokLinkUrl = (link: LinkComponent) => {
+  const cachedLink =
+    link.linktype !== 'story' || /^\//.test(link.cached_url)
+      ? link.cached_url
+      : `/${link.cached_url}`
+  const publicHost = getPublicHost()
+  return publicHost ? cachedLink.replace('https://www.hedvig.com', publicHost) : cachedLink
+}

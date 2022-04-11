@@ -3,7 +3,9 @@ import SbEditable from 'storyblok-react'
 import { AccordionBlock } from '@/blocks/AccordionBlock/AccordionBlock'
 import { BannerBlock } from '@/blocks/BannerBlock/BannerBlock'
 import { BulletPointBlock } from '@/blocks/BulletPointBlock/BulletPointBlock'
+import { ColumnTextBlock } from '@/blocks/ColumnTextBlock/ColumnTextBlock'
 import { HeadlineBlock } from '@/blocks/HeadlineBlock/HeadlineBlock'
+import { HeroBlock } from '@/blocks/HeroBlock/HeroBlock'
 import { PlainTextBlock } from '@/blocks/PlainTextBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import type { StoryblokBaseBlock, StoryblokComponentName } from '@/services/storyblok/types'
@@ -16,9 +18,11 @@ export const BlockComponents: Record<StoryblokComponentName, React.FC<any>> = {
   accordion_block: AccordionBlock,
   banner_block: BannerBlock,
   bullet_point_block: BulletPointBlock,
+  column_text_block: ColumnTextBlock,
   headline_block: HeadlineBlock,
   spacer_block: SpacerBlock,
   plain_text_block: PlainTextBlock,
+  hero: HeroBlock,
 }
 
 const DynamicComponent = ({ block }: Props) => {

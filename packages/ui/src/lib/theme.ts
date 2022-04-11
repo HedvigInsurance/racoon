@@ -13,9 +13,12 @@ export const theme = {
   },
 }
 
-const simplifiedColorNames: Record<string, string> = {
-  lavender: theme.colors.purple500,
-  dark: theme.colors.gray900,
+type CustomTheme = typeof theme
+
+// Need to define Theme interface, since default is empty
+// https://emotion.sh/docs/typescript
+declare module '@emotion/react' {
+  export interface Theme extends CustomTheme {}
 }
 
 export const getColor = (color?: string) => {
