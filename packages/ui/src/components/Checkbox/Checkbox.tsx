@@ -1,8 +1,15 @@
 import styled from '@emotion/styled'
-import { ComponentPropsWithoutRef } from 'react'
 import { CheckIcon } from './CheckIcon'
 
-const Icon = styled(CheckIcon)<{ checked?: boolean; disabled?: boolean }>((props) => ({
+type ControlStateProps = { checked?: boolean; disabled?: boolean }
+
+export type ControlProps = {
+  label?: string
+  prependLabel?: boolean
+  onChange?: () => void
+} & ControlStateProps
+
+const Icon = styled(CheckIcon)<ControlStateProps>((props) => ({
   marginTop: '1.5px',
   visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
 }))
@@ -47,7 +54,7 @@ const ControlLabel = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-const StyledCheckbox = styled.div<{ checked?: boolean; disabled?: boolean }>(
+const StyledCheckbox = styled.div<ControlStateProps>(
   {
     position: 'relative',
     display: 'inline-flex',
@@ -87,24 +94,14 @@ const DisabledTick = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-export type CheckboxProps = ComponentPropsWithoutRef<'input'> & {
-  onChange: () => void
-  label?: string
-  prependLabel?: boolean
-}
-
-export const Checkbox = ({ label, prependLabel, ...nativeCheckboxProps }: CheckboxProps) => {
-  const { checked, onChange, disabled } = nativeCheckboxProps
-
-  return (
-    <ControlContainer>
-      {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-      <HiddenInput {...nativeCheckboxProps} type="checkbox" />
-      <StyledCheckbox checked={checked} onClick={onChange} disabled={disabled}>
-        <DisabledTick disabled={disabled} />
-        <Icon disabled={disabled} checked={checked} />
-      </StyledCheckbox>
-      {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-    </ControlContainer>
-  )
-}
+export const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: ControlProps) => (
+  <ControlContainer>
+    {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+    <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
+    <StyledCheckbox {...{ checked, onClick: onChange, disabled }}>
+      <DisabledTick disabled={disabled} />
+      <Icon disabled={disabled} checked={checked} />
+    </StyledCheckbox>
+    {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+  </ControlContainer>
+)
