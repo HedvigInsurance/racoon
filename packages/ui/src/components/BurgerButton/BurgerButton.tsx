@@ -65,10 +65,11 @@ const IconWrapper = styled.div({
 export type BurgerButtonProps = Pick<ButtonProps, 'color'> & {
   onClick?: (isOpen: boolean) => void
   color?: BurgerButtonColors
+  initialOpen?: boolean
 }
 
-export const BurgerButton = ({ color = 'dark', onClick }: BurgerButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const BurgerButton = ({ color = 'dark', onClick, initialOpen }: BurgerButtonProps) => {
+  const [isOpen, setIsOpen] = useState(initialOpen ?? false)
 
   const handleToggle = () => {
     setIsOpen((current) => !current)
