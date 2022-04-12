@@ -12,6 +12,8 @@ import { AdditionalCoverageCard } from '@/components/new-member/coverage-cards/a
 import { MainCoverageCard } from '@/components/new-member/coverage-cards/main'
 import {
   getMarketFromLocaleLabel,
+  getMainCoverageInsurances,
+  getAdditionalCoverageInsurances,
   getEmbarkInitialStore,
 } from '@/components/new-member/new-member.helpers'
 import { Insurances } from '@/components/new-member/types'
@@ -71,6 +73,7 @@ const ContentCard = styled.div({
 })
 
 type GridCardProps = { size: 'half' | 'full' }
+
 const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => ({
   gridColumn: '1 / span 2',
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
@@ -78,23 +81,22 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
 
 type NewMemberPageProps = {
-  insurances: Insurances
+  mainCoverageInsurances: Insurances
+  additionalCoverageInsurances: Insurances
   embarkInitialStore: Record<string, boolean>
 }
-const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitialStore }) => {
+
+const NewMemberPage: NextPage<NewMemberPageProps> = ({
+  mainCoverageInsurances,
+  additionalCoverageInsurances,
+  embarkInitialStore,
+}) => {
   const { t } = useTranslation()
   const locale = useCurrentLocale()
   const router = useRouter()
 
   const [embarkStore, setEmbarkStore] = useState(embarkInitialStore)
   const [redirecting, setRedirecting] = useState(false)
-
-  const mainCoverageInsurances = insurances.filter(
-    ({ isAdditionalCoverage }) => !isAdditionalCoverage,
-  )
-  const additionalCoverageInsurances = insurances.filter(
-    ({ isAdditionalCoverage }) => isAdditionalCoverage,
-  )
 
   return (
     <PageContainer>
@@ -236,7 +238,8 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
     return {
       props: {
         ...(await serverSideTranslations(locale)),
-        insurances: insurancesWithoutAccident,
+        mainCoverageInsurances: getMainCoverageInsurances(insurancesWithoutAccident),
+        additionalCoverageInsurances: getAdditionalCoverageInsurances(insurancesWithoutAccident),
         embarkInitialStore: getEmbarkInitialStore(insurancesWithoutAccident),
       },
     }
@@ -245,7 +248,8 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
   return {
     props: {
       ...(await serverSideTranslations(locale)),
-      insurances,
+      mainCoverageInsurances: getMainCoverageInsurances(insurances),
+      additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
       embarkInitialStore: getEmbarkInitialStore(insurances),
     },
   }

@@ -16,6 +16,14 @@ export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
   }
 }
 
+export const getMainCoverageInsurances = (insurances: Insurances) => {
+  return insurances.filter(({ isAdditionalCoverage }) => !isAdditionalCoverage)
+}
+
+export const getAdditionalCoverageInsurances = (insurances: Insurances) => {
+  return insurances.filter(({ isAdditionalCoverage }) => isAdditionalCoverage)
+}
+
 export const getEmbarkInitialStore = (insurances: Insurances) => {
   return insurances.reduce(
     (res, { embarkStoreKey, isPreselected }) => ({
