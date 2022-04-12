@@ -62,6 +62,7 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
     maxWidth: '100%',
     transition: 'all ease-out 200ms',
     display: 'inline-flex',
+    justifyContent: 'center',
     alignItems: 'center',
     whiteSpace: 'nowrap',
 
