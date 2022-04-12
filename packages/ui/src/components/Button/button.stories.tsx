@@ -42,5 +42,13 @@ const TemplateManyButtons: Template = ({ children, ...args }) => (
   </>
 )
 
-export const TwoButtons = TemplateManyButtons.bind({}).bind({})
+export const TwoButtons = TemplateManyButtons.bind({})
 TwoButtons.args = { icon: <MailIcon />, children: 'Send email' }
+
+const TemplateFullWidth: Template = ({ children, ...args }) => (
+  <div style={{ width: '512px', marginInline: 'auto' }}>
+    <Button {...args}>{children}</Button>
+  </div>
+)
+export const FullWidth = TemplateFullWidth.bind({})
+FullWidth.args = { fullWidth: true, children: `I'm full width!`, icon: <MailIcon /> }
