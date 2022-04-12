@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import type { ElementType, ComponentPropsWithoutRef, ReactNode } from 'react'
+import React, { ElementType } from 'react'
+import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
 import { getPaddings, Paddings } from '../../lib/paddings'
 import { getColor } from '../../lib/theme'
@@ -9,16 +10,17 @@ export type ButtonSize = 'sm' | 'lg'
 
 export type ButtonColors = 'dark' | 'light' | 'lavender'
 
-export type ButtonProps = ComponentPropsWithoutRef<'button'> &
-  Paddings &
+export type ButtonProps = Paddings &
   Margins & {
     variant?: ButtonVariant
     fullWidth?: boolean
     color?: ButtonColors
     size?: ButtonSize
+    children?: ReactNode
     icon?: ReactNode
     onClick?: () => void
     type?: 'button' | 'submit'
+    disabled?: boolean
   }
 
 type IconWrapperProps = {
