@@ -89,11 +89,11 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
 
     ...(variant === 'outlined' && {
       backgroundColor: 'transparent',
-      color: theme.colors.gray900,
-      borderColor: theme.colors.gray900,
+      color: color ? getColor(color) : theme.colors.gray900,
+      borderColor: color ? getColor(color) : theme.colors.gray900,
       ':hover, :focus': {
-        color: theme.colors.gray700,
-        borderColor: theme.colors.gray700,
+        color: color ? getColor(color) : theme.colors.gray700,
+        borderColor: color ? getColor(color) : theme.colors.gray700,
       },
       ':disabled': {
         color: theme.colors.gray500,
