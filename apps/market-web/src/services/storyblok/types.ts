@@ -102,3 +102,5 @@ export type MenuItem = {
 }
 
 export type Image = string
+// TODO: should be defined, but out of scope for now
+export type GlobalStory = any
