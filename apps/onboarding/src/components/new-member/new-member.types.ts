@@ -3,7 +3,7 @@ export type Insurance = {
   name: string
   description: string
   img: string
-  embarkStoreKey: string
+  fieldName: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
 }

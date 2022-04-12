@@ -14,7 +14,7 @@ import {
   getInsurancesByLocaleLabel,
   getMainCoverageInsurances,
   getAdditionalCoverageInsurances,
-  getEmbarkInitialStore,
+  getFormInitialState,
 } from '@/components/new-member/new-member.helpers'
 import { Insurances } from '@/components/new-member/new-member.types'
 import { useCurrentLocale } from '@/lib/l10n'
@@ -82,19 +82,19 @@ const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 's
 type NewMemberPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
-  embarkInitialStore: Record<string, boolean>
+  formInitialState: Record<string, boolean>
 }
 
 const NewMemberPage: NextPage<NewMemberPageProps> = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
-  embarkInitialStore,
+  formInitialState,
 }) => {
   const { t } = useTranslation()
   const locale = useCurrentLocale()
   const router = useRouter()
 
-  const [embarkStore, setEmbarkStore] = useState(embarkInitialStore)
+  const [formState, setFormState] = useState(formInitialState)
   const [redirecting, setRedirecting] = useState(false)
 
   return (
@@ -105,7 +105,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
           event.preventDefault()
 
           setRedirecting(true)
-          window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
+          window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(formState))
           router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
         }}
       >
@@ -124,20 +124,20 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
             </Heading>
           </TitleContainer>
 
-          {mainCoverageInsurances.map(({ name, description, img, embarkStoreKey }, index, arr) => {
+          {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
             const isLastItem = index === arr.length - 1
             const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
             const isSingleCard = arr.length === 1
             return (
               <GridMainCoverageCard
-                key={name}
-                selected={embarkStore[embarkStoreKey]}
+                key={id}
+                selected={formState[fieldName]}
                 onCheck={
                   !isSingleCard
                     ? () =>
-                        setEmbarkStore((prevState) => ({
+                        setFormState((prevState) => ({
                           ...prevState,
-                          [embarkStoreKey]: !prevState[embarkStoreKey],
+                          [fieldName]: !prevState[fieldName],
                         }))
                     : undefined
                 }
@@ -153,16 +153,16 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
               {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
             </Heading>
           </TitleContainer>
-          {additionalCoverageInsurances.map(({ name, description, img, embarkStoreKey }) => (
+          {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
             <GridAdditionalCoverageCard
-              key={name}
+              key={id}
               enableHover
               cardImg={img}
-              selected={embarkStore[embarkStoreKey]}
+              selected={formState[fieldName]}
               onCheck={() =>
-                setEmbarkStore((prevState) => ({
+                setFormState((prevState) => ({
                   ...prevState,
-                  [embarkStoreKey]: !prevState[embarkStoreKey],
+                  [fieldName]: !prevState[fieldName],
                 }))
               }
               title={t(name)}
@@ -201,7 +201,7 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
       ...(await serverSideTranslations(locale)),
       mainCoverageInsurances: getMainCoverageInsurances(insurances),
       additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
-      embarkInitialStore: getEmbarkInitialStore(insurances),
+      formInitialState: getFormInitialState(insurances),
     },
   }
 }

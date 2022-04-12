@@ -32,11 +32,11 @@ export const getInsurancesByLocaleLabel = (localeLabel: LocaleLabel) => {
   return insurances
 }
 
-export const getEmbarkInitialStore = (insurances: Insurances) => {
+export const getFormInitialState = (insurances: Insurances) => {
   return insurances.reduce(
-    (res, { embarkStoreKey, isPreselected }) => ({
+    (res, { fieldName, isPreselected }) => ({
       ...res,
-      [embarkStoreKey]: isPreselected ?? false,
+      [fieldName]: isPreselected ?? false,
     }),
     {},
   )

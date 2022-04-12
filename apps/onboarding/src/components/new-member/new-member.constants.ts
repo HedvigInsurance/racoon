@@ -14,7 +14,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: '/racoon-assets/home.jpg',
       isPreselected: true,
-      embarkStoreKey: 'isHomeContents',
+      fieldName: 'isHomeContents',
     },
     {
       id: 'no-travel',
@@ -22,7 +22,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       description: 'ADDITIONAL_COVERAGE_DESC_TRAVEL',
       img: '/racoon-assets/travel.jpg',
       isAdditionalCoverage: true,
-      embarkStoreKey: 'isTravel',
+      fieldName: 'isTravel',
     },
   ].concat(
     process.env.FEATURE_ACCIDENT_NO === 'true'
@@ -33,7 +33,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: '/racoon-assets/accident.jpg',
             isAdditionalCoverage: true,
-            embarkStoreKey: 'isAccident',
+            fieldName: 'isAccident',
           },
         ]
       : [],
