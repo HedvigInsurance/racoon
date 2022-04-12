@@ -4,7 +4,12 @@ const { exec } = require('child_process')
 const APPNAME = process.env.APPNAME || ''
 
 function isValidAppName() {
-  const validAppNames = ['racoon-onboarding', 'racoon-market-web']
+  const validAppNames = [
+    'racoon-onboarding',
+    'racoon-market-web',
+    'onboarding-shadow',
+    'racoon-production',
+  ]
   return validAppNames.includes(APPNAME)
 }
 
@@ -16,6 +21,8 @@ function main() {
   let filterPattern = null
   switch (APPNAME) {
     case 'racoon-onboarding':
+    case 'onboarding-shadow':
+    case 'racoon-production':
       filterPattern = 'onboarding'
       break
     case 'racoon-market-web':
