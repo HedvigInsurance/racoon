@@ -1,5 +1,6 @@
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { Market } from '@/lib/types'
+import { INSURANCES_BY_MARKET } from './new-member.constants'
 import { Insurances } from './new-member.types'
 
 export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
@@ -22,6 +23,13 @@ export const getMainCoverageInsurances = (insurances: Insurances) => {
 
 export const getAdditionalCoverageInsurances = (insurances: Insurances) => {
   return insurances.filter(({ isAdditionalCoverage }) => isAdditionalCoverage)
+}
+
+export const getInsurancesByLocaleLabel = (localeLabel: LocaleLabel) => {
+  const market = getMarketFromLocaleLabel(localeLabel)
+  const insurances = INSURANCES_BY_MARKET[market]
+
+  return insurances
 }
 
 export const getEmbarkInitialStore = (insurances: Insurances) => {
