@@ -17,6 +17,7 @@ import {
 import { Insurances } from '@/components/new-member/types'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
+import { PageLink } from '@/lib/page-link'
 import { Market } from '@/lib/types'
 
 const CardGrid = styled.div({
@@ -164,9 +165,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({ insurances, embarkInitial
           onClick={() => {
             setRedirecting(true)
             window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
-            router.push(
-              `${process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL}/${locale.path}/new-member/onboarding`,
-            )
+            router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
           }}
           color="dark"
           disabled={redirecting}
