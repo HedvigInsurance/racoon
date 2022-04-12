@@ -1,15 +1,17 @@
 import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
-import { ReactNode, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useContext, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { ChevronIcon } from '../../icons/Chrevron'
-import { mq } from '../../lib/media-query'
-import { LinkButton, Button } from '../Button/button'
-import { MenuListItem } from './MenuItem'
+import { mq, useBreakpoint } from '../../lib/media-query'
+import { Button } from '../Button/button'
+import { MenuThemeContext } from './Menu'
+import { MenuItem } from './MenuItem'
+import { MenuLink } from './MenuLink'
 
 const TRANSITION_TIME = 150
 
-const DropdownMenuContainer = styled('div')<{
+const DropdownMenuContainer = styled.div<{
   isOpen: boolean
   hasMenuGroups?: boolean
 }>(({ isOpen }) => ({
@@ -22,7 +24,7 @@ const DropdownMenuContainer = styled('div')<{
     display: isOpen ? 'block' : 'none',
     position: 'absolute',
     left: '50%',
-    top: 'calc(100% + .125rem)',
+    top: 'calc(100%)',
     transform: 'translateX(-50%)',
 
     background: colorsV3.gray100,
@@ -31,10 +33,24 @@ const DropdownMenuContainer = styled('div')<{
   },
 }))
 
-const DropdownMenuItemList = styled.div({
+const DropdownMenuItemList = styled.ul({
   margin: 0,
   padding: '1rem 0',
   listStyle: 'none',
+  display: 'flex',
+  flexDirection: 'column',
+
+  // Prefer to use styling in MenuItem, but use this for nested MenuItems
+  li: {
+    fontSize: '1.2rem',
+    // indent sub-lists
+    padding: '1rem 1.5rem',
+  },
+  [mq.md]: {
+    li: {
+      fontSize: 'initial',
+    },
+  },
 })
 
 // This component makes sure that we close the menu when it loses
@@ -71,6 +87,8 @@ const ChildrenBlur = ({ children, onBlur, ...props }: ChildrenBlurProps) => {
 const SubMenuLabelWrapper = styled.span({
   display: 'flex',
   flexDirection: 'row',
+  // aligns text with chevron icon
+  alignItems: 'center',
 })
 
 type SubMenuProps = {
@@ -82,6 +100,8 @@ type SubMenuProps = {
 export const SubMenu = ({ title, href, children }: SubMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [menuItemTimeout, setMenuItemTimeout] = useState<NodeJS.Timeout>()
+  const theme = useContext(MenuThemeContext)
+  const isLargeScreen = useBreakpoint('md')
 
   // Delay the closing of the sub-menu so that the user can move the cursor
   // over to that element
@@ -103,24 +123,22 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
   }
 
   return (
-    <MenuListItem>
+    <MenuItem>
       <SubMenuLabelWrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseOutForMenuItem}>
-        {href ? (
-          <LinkButton pr="0.125rem" size="sm" variant="text" href={href}>
-            {title}
-          </LinkButton>
-        ) : (
-          <LinkButton pr="0.125rem" size="sm" variant="text" as="span" href="">
-            {title}
-          </LinkButton>
-        )}
+        <MenuLink href={href}>{title}</MenuLink>
 
         <Button
           onClick={() => setIsOpen(true)}
           size="sm"
-          px="0.125rem"
+          px="0.5rem"
           variant="text"
-          icon={<ChevronIcon size="0.75rem" transform={isOpen ? 'rotate(-180)' : 'rotate(0)'} />}
+          color={theme}
+          icon={
+            <ChevronIcon
+              size={isLargeScreen ? '0.75rem' : '1.125rem'}
+              transform={isOpen ? 'rotate(-180)' : 'rotate(0)'}
+            />
+          }
         />
       </SubMenuLabelWrapper>
 
@@ -135,10 +153,12 @@ export const SubMenu = ({ title, href, children }: SubMenuProps) => {
               setIsOpen(false)
             }}
           >
-            <DropdownMenuItemList>{children}</DropdownMenuItemList>
+            <MenuThemeContext.Provider value={isLargeScreen ? 'dark' : theme}>
+              <DropdownMenuItemList>{children}</DropdownMenuItemList>
+            </MenuThemeContext.Provider>
           </ChildrenBlur>
         </DropdownMenuContainer>
       </AnimateHeight>
-    </MenuListItem>
+    </MenuItem>
   )
 }
