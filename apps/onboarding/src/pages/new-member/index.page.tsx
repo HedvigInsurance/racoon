@@ -16,7 +16,7 @@ import {
   getAdditionalCoverageInsurances,
   getEmbarkInitialStore,
 } from '@/components/new-member/new-member.helpers'
-import { Insurances } from '@/components/new-member/types'
+import { Insurances } from '@/components/new-member/new-member.types'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/page-link'

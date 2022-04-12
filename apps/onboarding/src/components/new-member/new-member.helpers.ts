@@ -1,6 +1,6 @@
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { Market } from '@/lib/types'
-import { Insurances } from './types'
+import { Insurances } from './new-member.types'
 
 export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
   switch (localeLabel) {
