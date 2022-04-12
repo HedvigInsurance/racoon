@@ -100,80 +100,82 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
   return (
     <PageContainer>
       <Header />
-      <CardGrid>
-        <ContentCard>
-          <Heading variant="m" headingLevel="h2" colorVariant="dark">
-            {t('LANDING_PAGE_HEADLINE')}
-          </Heading>
-          <BodyText variant={1} colorVariant="medium" displayBlock>
-            {t('LANDING_PAGE_SUBHEADING')}
-          </BodyText>
-        </ContentCard>
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-          </Heading>
-        </TitleContainer>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
 
-        {mainCoverageInsurances.map(({ name, description, img, embarkStoreKey }, index, arr) => {
-          const isLastItem = index === arr.length - 1
-          const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
-          const isSingleCard = arr.length === 1
-          return (
-            <GridMainCoverageCard
+          setRedirecting(true)
+          window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
+          router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
+        }}
+      >
+        <CardGrid>
+          <ContentCard>
+            <Heading variant="m" headingLevel="h2" colorVariant="dark">
+              {t('LANDING_PAGE_HEADLINE')}
+            </Heading>
+            <BodyText variant={1} colorVariant="medium" displayBlock>
+              {t('LANDING_PAGE_SUBHEADING')}
+            </BodyText>
+          </ContentCard>
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
+            </Heading>
+          </TitleContainer>
+
+          {mainCoverageInsurances.map(({ name, description, img, embarkStoreKey }, index, arr) => {
+            const isLastItem = index === arr.length - 1
+            const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+            const isSingleCard = arr.length === 1
+            return (
+              <GridMainCoverageCard
+                key={name}
+                selected={embarkStore[embarkStoreKey]}
+                onCheck={
+                  !isSingleCard
+                    ? () =>
+                        setEmbarkStore((prevState) => ({
+                          ...prevState,
+                          [embarkStoreKey]: !prevState[embarkStoreKey],
+                        }))
+                    : undefined
+                }
+                cardImg={img}
+                title={t(name)}
+                description={t(description)}
+                size={cardSize}
+              />
+            )
+          })}
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+            </Heading>
+          </TitleContainer>
+          {additionalCoverageInsurances.map(({ name, description, img, embarkStoreKey }) => (
+            <GridAdditionalCoverageCard
               key={name}
-              selected={embarkStore[embarkStoreKey]}
-              onCheck={
-                !isSingleCard
-                  ? () =>
-                      setEmbarkStore((prevState) => ({
-                        ...prevState,
-                        [embarkStoreKey]: !prevState[embarkStoreKey],
-                      }))
-                  : undefined
-              }
+              enableHover
               cardImg={img}
+              selected={embarkStore[embarkStoreKey]}
+              onCheck={() =>
+                setEmbarkStore((prevState) => ({
+                  ...prevState,
+                  [embarkStoreKey]: !prevState[embarkStoreKey],
+                }))
+              }
               title={t(name)}
               description={t(description)}
-              size={cardSize}
             />
-          )
-        })}
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-          </Heading>
-        </TitleContainer>
-        {additionalCoverageInsurances.map(({ name, description, img, embarkStoreKey }) => (
-          <GridAdditionalCoverageCard
-            key={name}
-            enableHover
-            cardImg={img}
-            selected={embarkStore[embarkStoreKey]}
-            onCheck={() =>
-              setEmbarkStore((prevState) => ({
-                ...prevState,
-                [embarkStoreKey]: !prevState[embarkStoreKey],
-              }))
-            }
-            title={t(name)}
-            description={t(description)}
-          />
-        ))}
-      </CardGrid>
-      <ResponsiveFooter>
-        <FooterButton
-          onClick={() => {
-            setRedirecting(true)
-            window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(embarkStore))
-            router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
-          }}
-          color="dark"
-          disabled={redirecting}
-        >
-          {t('START_SCREEN_SUBMIT_BUTTON')}
-        </FooterButton>
-      </ResponsiveFooter>
+          ))}
+        </CardGrid>
+        <ResponsiveFooter>
+          <FooterButton type="submit" color="dark" disabled={redirecting}>
+            {t('START_SCREEN_SUBMIT_BUTTON')}
+          </FooterButton>
+        </ResponsiveFooter>
+      </form>
     </PageContainer>
   )
 }
