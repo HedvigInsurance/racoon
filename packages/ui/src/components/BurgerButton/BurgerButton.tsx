@@ -68,8 +68,12 @@ export type BurgerButtonProps = Pick<ButtonProps, 'color'> & {
   initialOpen?: boolean
 }
 
-export const BurgerButton = ({ color = 'dark', onClick, initialOpen }: BurgerButtonProps) => {
-  const [isOpen, setIsOpen] = useState(initialOpen ?? false)
+export const BurgerButton = ({
+  color = 'dark',
+  onClick,
+  initialOpen = false,
+}: BurgerButtonProps) => {
+  const [isOpen, setIsOpen] = useState(initialOpen)
 
   const handleToggle = () => {
     setIsOpen((current) => !current)

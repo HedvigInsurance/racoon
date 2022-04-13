@@ -5,7 +5,6 @@ import { mq } from '../../lib/media-query'
 import { ConditionalWrapper } from '../ConditionalWrapper'
 import { MenuItem } from './MenuItem'
 import { MenuItemGroup, MenuItemGroupContainer } from './MenuItemGroup'
-import { MenuLink } from './MenuLink'
 import { SubMenu } from './SubMenu'
 
 const MenuList = styled.ul(({ theme }) => ({
@@ -43,8 +42,8 @@ const Menu = ({ children, collapsible, isOpen, theme = 'dark' }: MenuProps) => {
   return (
     <MenuThemeContext.Provider value={theme}>
       <ConditionalWrapper
-        if={collapsible}
-        with={(c) => <AnimateHeight height={isOpen ? '100vh' : 0}>{c}</AnimateHeight>}
+        condition={collapsible}
+        wrapWith={(c) => <AnimateHeight height={isOpen ? '100vh' : 0}>{c}</AnimateHeight>}
       >
         <MenuList>{children}</MenuList>
       </ConditionalWrapper>

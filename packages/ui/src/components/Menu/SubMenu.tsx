@@ -24,7 +24,7 @@ const DropdownMenuContainer = styled.div<{
     display: isOpen ? 'block' : 'none',
     position: 'absolute',
     left: '50%',
-    top: 'calc(100%)',
+    top: '100%',
     transform: 'translateX(-50%)',
 
     background: colorsV3.gray100,

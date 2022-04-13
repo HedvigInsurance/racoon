@@ -43,8 +43,8 @@ export const MenuItem = ({ children, href }: MenuItemProps) => {
   return (
     <MenuItemElement color={color}>
       <ConditionalWrapper
-        if={Boolean(href)}
-        with={(wrappedChildren) => <MenuLink href={href}>{wrappedChildren}</MenuLink>}
+        condition={Boolean(href)}
+        wrapWith={(wrappedChildren) => <MenuLink href={href}>{wrappedChildren}</MenuLink>}
       >
         {children}
       </ConditionalWrapper>
