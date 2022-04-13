@@ -1,32 +1,47 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
 import { mq } from '../../lib/media-query'
 import { getColor } from '../../lib/theme'
-import { LinkButton } from '../Button/button'
+import { MenuThemeContext } from './Menu'
+import { MenuLink, MenuLinkProps } from './MenuLink'
 
-export const MenuListItem = styled.li({
+const MenuItemElement = styled.li<MenuItemProps>(({ color }) => ({
   position: 'relative',
-  margin: 0,
-  padding: '0.25rem',
+  display: 'inline-flex',
+  alignItems: 'start',
+  flexDirection: 'column',
+  boxSizing: 'border-box',
 
-  color: getColor('light'),
+  margin: 0,
+  padding: '0.625rem',
+  fontSize: '1.5rem',
+  whiteSpace: 'nowrap',
+  width: '100%',
+
+  // This needs to be set both here and in MenuLink,
+  // since we do not know if `children` is a component
+  // that also picks up MenuThemeContext or just a text node
+  color: getColor(color),
+  ':hover, :focus': {
+    color: getColor(color),
+  },
 
   [mq.md]: {
-    color: getColor('dark'),
+    fontSize: 'initial',
+    padding: '0.625rem',
   },
-})
+}))
 
-type MenuLinkProps = {
-  href?: string
+type MenuItemProps = Pick<MenuLinkProps, 'href'> & {
   children: ReactNode
 }
 
-export const MenuItem = ({ href, children }: MenuLinkProps) => {
+export const MenuItem = ({ children, href }: MenuItemProps) => {
+  const color = useContext(MenuThemeContext)
+
   return (
-    <MenuListItem>
-      <LinkButton size="sm" variant="text" href={href || ''}>
-        {children}
-      </LinkButton>
-    </MenuListItem>
+    <MenuItemElement color={color}>
+      {href ? <MenuLink href={href}>{children}</MenuLink> : <>{children}</>}
+    </MenuItemElement>
   )
 }

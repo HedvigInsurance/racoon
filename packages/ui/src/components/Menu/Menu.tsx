@@ -1,43 +1,55 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { createContext, ReactNode } from 'react'
+import AnimateHeight from 'react-animate-height'
 import { mq } from '../../lib/media-query'
-import { getColor } from '../../lib/theme'
-import { ButtonColors } from '../Button/button'
+import { ConditionalWrapper } from '../ConditionalWrapper'
 import { MenuItem } from './MenuItem'
 import { MenuItemGroup, MenuItemGroupContainer } from './MenuItemGroup'
 import { SubMenu } from './SubMenu'
 
-const MenuContainer = styled.div({
-  backgroundColor: getColor('dark'),
-  [mq.md]: {
-    backgroundColor: 'transparent',
-  },
-})
+const MenuList = styled.ul(({ theme }) => ({
+  fontFamily: theme.fonts.body,
 
-const MenuList = styled.ul({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'start',
+  alignItems: 'flex-start',
+
   margin: 0,
   padding: 0,
   listStyle: 'none',
 
   [mq.md]: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
-})
+}))
+
+export const MenuThemeContext = createContext<MenuTheme>('dark')
+
+export type MenuTheme = 'dark' | 'light'
 
 export type MenuProps = {
   children?: ReactNode
-  theme?: ButtonColors
+  // `dark` or `light`. Sets the color of text and buttons. Default is "dark".
+  theme?: MenuTheme
+  // Set to `true` to render with an animated open/close
+  collapsible?: boolean
+  // Used when `collapsible` is set to `true` to indicate whether the menu is shown or not
+  isOpen?: boolean
 }
 
-const Menu = ({ children, theme }: MenuProps) => {
+const Menu = ({ children, collapsible, isOpen, theme = 'dark' }: MenuProps) => {
   return (
-    <MenuContainer>
-      <MenuList>{children}</MenuList>
-    </MenuContainer>
+    <MenuThemeContext.Provider value={theme}>
+      <ConditionalWrapper
+        condition={collapsible}
+        wrapWith={(wrappedChildren) => (
+          <AnimateHeight height={isOpen ? '100vh' : 0}>{wrappedChildren}</AnimateHeight>
+        )}
+      >
+        <MenuList>{children}</MenuList>
+      </ConditionalWrapper>
+    </MenuThemeContext.Provider>
   )
 }
 
