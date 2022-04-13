@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
@@ -19,7 +18,7 @@ import {
 import { Insurances } from '@/components/new-member/new-member.types'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { PageLink } from '@/lib/page-link'
+import { useEmbark } from '@/services/embark'
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -92,7 +91,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
 }) => {
   const { t } = useTranslation()
   const locale = useCurrentLocale()
-  const router = useRouter()
+  const { startEmbark } = useEmbark(locale)
 
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
@@ -105,8 +104,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
           event.preventDefault()
 
           setIsRedirecting(true)
-          window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(formState))
-          router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
+          startEmbark({ initialStore: formState })
         }}
       >
         <CardGrid>
