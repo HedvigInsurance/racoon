@@ -42,7 +42,7 @@ export const useBreakpoint = (level: Level) => {
 
   const breakpoint = breakpoints.find(([breakpointName]) => breakpointName === level)
 
-  if (!breakpoint) return false
+  if (!breakpoint) throw new Error(`Unknown breakpoint ${level}`)
 
   const [, breakpointWidth] = breakpoint
 
