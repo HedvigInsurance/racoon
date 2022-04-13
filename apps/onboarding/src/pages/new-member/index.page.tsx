@@ -95,7 +95,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
   const router = useRouter()
 
   const [formState, setFormState] = useState(formInitialState)
-  const [redirecting, setRedirecting] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   return (
     <PageContainer>
@@ -104,7 +104,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
         onSubmit={(event) => {
           event.preventDefault()
 
-          setRedirecting(true)
+          setIsRedirecting(true)
           window.sessionStorage.setItem('embark-store-onboarding-NO', JSON.stringify(formState))
           router.push(PageLink.embark({ locale: locale.path, storyName: 'onboarding' }))
         }}
@@ -171,7 +171,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
           ))}
         </CardGrid>
         <ResponsiveFooter>
-          <FooterButton type="submit" color="dark" disabled={redirecting}>
+          <FooterButton type="submit" color="dark" disabled={isRedirecting}>
             {t('START_SCREEN_SUBMIT_BUTTON')}
           </FooterButton>
         </ResponsiveFooter>
