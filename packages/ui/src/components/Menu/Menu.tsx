@@ -43,7 +43,9 @@ const Menu = ({ children, collapsible, isOpen, theme = 'dark' }: MenuProps) => {
     <MenuThemeContext.Provider value={theme}>
       <ConditionalWrapper
         condition={collapsible}
-        wrapWith={(c) => <AnimateHeight height={isOpen ? '100vh' : 0}>{c}</AnimateHeight>}
+        wrapWith={(wrappedChildren) => (
+          <AnimateHeight height={isOpen ? '100vh' : 0}>{wrappedChildren}</AnimateHeight>
+        )}
       >
         <MenuList>{children}</MenuList>
       </ConditionalWrapper>

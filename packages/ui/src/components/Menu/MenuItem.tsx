@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { ReactNode, useContext } from 'react'
 import { mq } from '../../lib/media-query'
 import { getColor } from '../../lib/theme'
-import { ConditionalWrapper } from '../ConditionalWrapper'
 import { MenuThemeContext } from './Menu'
 import { MenuLink, MenuLinkProps } from './MenuLink'
 
@@ -42,12 +41,7 @@ export const MenuItem = ({ children, href }: MenuItemProps) => {
 
   return (
     <MenuItemElement color={color}>
-      <ConditionalWrapper
-        condition={Boolean(href)}
-        wrapWith={(wrappedChildren) => <MenuLink href={href}>{wrappedChildren}</MenuLink>}
-      >
-        {children}
-      </ConditionalWrapper>
+      {href ? <MenuLink href={href}>{children}</MenuLink> : <>{children}</>}
     </MenuItemElement>
   )
 }
