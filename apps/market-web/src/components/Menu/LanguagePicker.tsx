@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
-import { useCurrentMarket } from 'lib/l10n/useCurrentMarket'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { MenuTheme } from 'ui/src/components/Menu/Menu'
 import { LinkButton, Separate } from 'ui'
+import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
 
 const Wrapper = styled(Separate)({
   display: 'flex',
