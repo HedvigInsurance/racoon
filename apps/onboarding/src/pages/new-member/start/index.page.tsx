@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { useState } from 'react'
 import { Button, Heading, Space, mq } from 'ui'
 import { HeroImage } from '@/components/hero-image'
@@ -172,6 +173,9 @@ const NewMemberStartPage: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{t('STARTPAGE_PAGE_TITLE')}</title>
+      </Head>
       <Global styles={scrollbarShiftFix} />
       <PageHeaderLayout headerVariant="light">
         <form {...form.formProps}>
