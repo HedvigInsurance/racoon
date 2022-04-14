@@ -142,10 +142,10 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
                   onCheck={
                     !isSingleCard
                       ? () =>
-                          setFormState((prevState) => ({
-                            ...prevState,
-                            [fieldName]: !prevState[fieldName],
-                          }))
+                          setFormState({
+                            ...formState,
+                            [fieldName]: !formState[fieldName],
+                          })
                       : undefined
                   }
                   cardImg={img}
@@ -167,10 +167,10 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
                 cardImg={img}
                 selected={formState[fieldName]}
                 onCheck={() =>
-                  setFormState((prevState) => ({
-                    ...prevState,
-                    [fieldName]: !prevState[fieldName],
-                  }))
+                  setFormState({
+                    ...formState,
+                    [fieldName]: !formState[fieldName],
+                  })
                 }
                 title={t(name)}
                 description={t(description)}
