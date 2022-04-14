@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Heading, mq } from 'ui'
@@ -99,86 +100,91 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
   const [isRedirecting, setIsRedirecting] = useState(false)
 
   return (
-    <PageContainer>
-      <Header />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
+    <>
+      <Head>
+        <title>{t('STARTPAGE_PAGE_TITLE')}</title>
+      </Head>
+      <PageContainer>
+        <Header />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
 
-          setIsRedirecting(true)
-          Embark.setStore(locale, formState)
-          const slug = Embark.getSlug(locale)
-          router.push(PageLink.embark({ locale: locale.path, slug }))
-        }}
-      >
-        <CardGrid>
-          <ContentCard>
-            <Heading variant="m" headingLevel="h2" colorVariant="dark">
-              {t('LANDING_PAGE_HEADLINE')}
-            </Heading>
-            <BodyText variant={1} colorVariant="medium" displayBlock>
-              {t('LANDING_PAGE_SUBHEADING')}
-            </BodyText>
-          </ContentCard>
-          <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-            </Heading>
-          </TitleContainer>
+            setIsRedirecting(true)
+            Embark.setStore(locale, formState)
+            const slug = Embark.getSlug(locale)
+            router.push(PageLink.embark({ locale: locale.path, slug }))
+          }}
+        >
+          <CardGrid>
+            <ContentCard>
+              <Heading variant="m" headingLevel="h2" colorVariant="dark">
+                {t('LANDING_PAGE_HEADLINE')}
+              </Heading>
+              <BodyText variant={1} colorVariant="medium" displayBlock>
+                {t('LANDING_PAGE_SUBHEADING')}
+              </BodyText>
+            </ContentCard>
+            <TitleContainer>
+              <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+                {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
+              </Heading>
+            </TitleContainer>
 
-          {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
-            const isLastItem = index === arr.length - 1
-            const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
-            const isSingleCard = arr.length === 1
-            return (
-              <GridMainCoverageCard
+            {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
+              const isLastItem = index === arr.length - 1
+              const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+              const isSingleCard = arr.length === 1
+              return (
+                <GridMainCoverageCard
+                  key={id}
+                  selected={formState[fieldName]}
+                  onCheck={
+                    !isSingleCard
+                      ? () =>
+                          setFormState((prevState) => ({
+                            ...prevState,
+                            [fieldName]: !prevState[fieldName],
+                          }))
+                      : undefined
+                  }
+                  cardImg={img}
+                  title={t(name)}
+                  description={t(description)}
+                  size={cardSize}
+                />
+              )
+            })}
+            <TitleContainer>
+              <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+                {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+              </Heading>
+            </TitleContainer>
+            {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
+              <GridAdditionalCoverageCard
                 key={id}
-                selected={formState[fieldName]}
-                onCheck={
-                  !isSingleCard
-                    ? () =>
-                        setFormState((prevState) => ({
-                          ...prevState,
-                          [fieldName]: !prevState[fieldName],
-                        }))
-                    : undefined
-                }
+                enableHover
                 cardImg={img}
+                selected={formState[fieldName]}
+                onCheck={() =>
+                  setFormState((prevState) => ({
+                    ...prevState,
+                    [fieldName]: !prevState[fieldName],
+                  }))
+                }
                 title={t(name)}
                 description={t(description)}
-                size={cardSize}
               />
-            )
-          })}
-          <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-            </Heading>
-          </TitleContainer>
-          {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
-            <GridAdditionalCoverageCard
-              key={id}
-              enableHover
-              cardImg={img}
-              selected={formState[fieldName]}
-              onCheck={() =>
-                setFormState((prevState) => ({
-                  ...prevState,
-                  [fieldName]: !prevState[fieldName],
-                }))
-              }
-              title={t(name)}
-              description={t(description)}
-            />
-          ))}
-        </CardGrid>
-        <ResponsiveFooter>
-          <FooterButton type="submit" color="dark" disabled={isRedirecting}>
-            {t('START_SCREEN_SUBMIT_BUTTON')}
-          </FooterButton>
-        </ResponsiveFooter>
-      </form>
-    </PageContainer>
+            ))}
+          </CardGrid>
+          <ResponsiveFooter>
+            <FooterButton type="submit" color="dark" disabled={isRedirecting}>
+              {t('START_SCREEN_SUBMIT_BUTTON')}
+            </FooterButton>
+          </ResponsiveFooter>
+        </form>
+      </PageContainer>
+    </>
   )
 }
 
