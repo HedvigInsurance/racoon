@@ -13,3 +13,9 @@ export enum Market {
   Norway = 'NORWAY',
   Denmark = 'DENMARK',
 }
+
+export enum MarketLabel {
+  SE = 'SE',
+  NO = 'NO',
+  DK = 'DK',
+}

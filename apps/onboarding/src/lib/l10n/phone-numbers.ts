@@ -1,4 +1,4 @@
-import { MarketLabel } from './locales'
+import { MarketLabel } from '@/lib/types'
 
 type PhoneNumbers = Partial<Record<MarketLabel, PhoneNumberData>>
 

@@ -2,49 +2,42 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
-import { BaseCardProps, Section, Wrapper } from './base'
+import { BaseCardProps, Section, Wrapper } from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
-  flex: '1 1 50%',
+  flex: '1 0 33%',
   overflow: 'hidden',
 
   [mq.sm]: {
-    flex: '1 0 30%',
+    flex: '1 1 100%',
+    maxHeight: '80%',
   },
 })
 
-const AdditionalWrapper = styled(Wrapper)({
-  height: '10rem',
-  flexDirection: 'column',
+const MainWrapper = styled(Wrapper)({
+  height: '8.125rem',
   [mq.sm]: {
-    height: '100%',
+    height: '22.5rem',
     borderRadius: '16px',
-    flexDirection: 'row',
-  },
-})
-
-const AdditionalSection = styled(Section)({
-  padding: '0.5em',
-  [mq.sm]: {
-    paddingLeft: '1em',
+    flexDirection: 'column',
   },
 })
 
 export const CheckboxContainer = styled.div({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  zIndex: 30,
-  padding: '0.625rem',
+  padding: 0,
+  position: 'static',
+  marginLeft: 'auto',
   [mq.sm]: {
-    padding: 0,
-    position: 'static',
-    marginLeft: 'auto',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 30,
+    padding: '0.625rem',
   },
 })
 
-export const AdditionalCoverageCard = ({
+export const MainCoverageCard = ({
   cardImg,
   title,
   description,
@@ -55,21 +48,16 @@ export const AdditionalCoverageCard = ({
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
   return (
-    <AdditionalWrapper
-      {...wrapperProps}
-      selected={selected}
-      isCheckable={isCheckable}
-      onClick={onCheck}
-    >
+    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
         <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
       </ImageFrame>
-      <AdditionalSection isCheckable={isCheckable}>
+      <Section isCheckable={isCheckable}>
         <Space y={0.5}>
-          <BodyText variant={1} colorVariant="dark" displayBlock fixedSize>
+          <BodyText variant={0} colorVariant="dark" displayBlock>
             {title}
           </BodyText>
-          <BodyText variant={3} colorVariant="medium" displayBlock>
+          <BodyText variant={2} colorVariant="medium" displayBlock>
             {description}
           </BodyText>
         </Space>
@@ -78,7 +66,7 @@ export const AdditionalCoverageCard = ({
             <Checkbox onChange={onCheck} checked={selected} />
           </CheckboxContainer>
         )}
-      </AdditionalSection>
-    </AdditionalWrapper>
+      </Section>
+    </MainWrapper>
   )
 }

@@ -8,6 +8,7 @@ type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type CartParams = BaseParams & { quoteCartId: string }
 type WOOfferParams = Required<CartParams> & { showEdit: boolean }
+type EmbarkParams = BaseParams & { slug: string }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -19,7 +20,7 @@ export const PageLink = {
   landing: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/landing`,
   old_checkout: ({ locale, quoteCartId }: WOCheckoutParams) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
-  embark: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/new`,
+  embark: ({ locale, slug }: EmbarkParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/${slug}`,
   privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
   cart: ({ locale, quoteCartId }: CartParams) =>
     `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}`,

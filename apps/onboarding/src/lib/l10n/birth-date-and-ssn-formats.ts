@@ -1,4 +1,4 @@
-import { MarketLabel } from './locales'
+import { MarketLabel } from '@/lib/types'
 
 export const ssnFormats: Record<MarketLabel, RegExp> = {
   SE: /^((19|20))([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])([0-9]{4})$/,
