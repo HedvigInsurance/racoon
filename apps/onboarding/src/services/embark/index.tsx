@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router'
 import { LocaleData } from '@/lib/l10n/locales'
-import { PageLink } from '@/lib/page-link'
 import { MarketLabel } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
@@ -17,23 +15,24 @@ const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
 
 type EmbarkStore = Record<string, string | number | boolean>
 
-export const useEmbark = (locale: LocaleData) => {
-  const router = useRouter()
-  const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
-  const slug = EMBARK_URL_SLUG_BY_MARKET[locale.marketLabel]
+export const Embark = {
+  setStore: (locale: LocaleData, initialStore: EmbarkStore) => {
+    const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
 
-  const startEmbark = (config?: { initialStore: EmbarkStore }) => {
-    if (!storyName || !slug) return
+    if (!storyName) return
 
-    if (config?.initialStore) {
-      window.sessionStorage.setItem(
-        `embark-story-${storyName}`,
-        JSON.stringify(config.initialStore),
-      )
-    }
+    const embarkStoryKey = `embark-story-${storyName}`
+    window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(initialStore))
+  },
+  getStore: (locale: LocaleData) => {
+    const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
 
-    router.push(PageLink.embark({ locale: locale.path, slug }))
-  }
+    if (!storyName) return
 
-  return { startEmbark }
+    const embarkStoryKey = `embark-story-${storyName}`
+    return window.sessionStorage.getItem(embarkStoryKey)
+  },
+  getSlug: (locale: LocaleData) => {
+    return EMBARK_URL_SLUG_BY_MARKET[locale.marketLabel]
+  },
 }
