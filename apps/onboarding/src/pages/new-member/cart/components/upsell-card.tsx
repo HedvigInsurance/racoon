@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { Button, theme } from 'ui'
-import AccidentImg from '../../assets/accident.jpg'
+import { theme } from 'ui'
 import { Arrow } from './icons/arrow'
 
 const Wrapper = styled.div({
@@ -56,7 +55,7 @@ export const UpsellCard = () => (
     <Title>Get more coverage</Title>
     <Card>
       <Header>
-        <Image src={AccidentImg} alt="Accident image" />
+        <Image src="/racoon-assets/accident.jpg" alt="Accident image" />
       </Header>
       <Content>
         <ListTitle>Accident insurance</ListTitle>
