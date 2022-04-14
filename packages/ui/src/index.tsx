@@ -17,6 +17,7 @@ export type { Level } from './lib/media-query'
 export { mq } from './lib/media-query'
 
 export { theme } from './lib/theme'
+export { globalStyles } from './lib/globalStyles'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'
