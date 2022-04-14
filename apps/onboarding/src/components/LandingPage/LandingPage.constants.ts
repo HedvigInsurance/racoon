@@ -1,5 +1,5 @@
 import { Market } from '@/lib/types'
-import { Insurances } from './new-member.types'
+import { Insurances } from './LandingPage.types'
 
 // TODO make usage of a proper API
 // This is being hardcoded at the moment but in the future that kind of information

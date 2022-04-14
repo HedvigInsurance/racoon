@@ -1,7 +1,7 @@
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { Market } from '@/lib/types'
-import { INSURANCES_BY_MARKET } from './new-member.constants'
-import { Insurances } from './new-member.types'
+import { INSURANCES_BY_MARKET } from './LandingPage.constants'
+import { Insurances } from './LandingPage.types'
 
 export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
   switch (localeLabel) {
