@@ -1,13 +1,13 @@
 import { EntryPoint } from '@/pages/new-member/start/shared'
 import { pushToGTMDataLayer } from './gtm'
 
-const FLOW_TYPE_COOKIE_KEY = '_hv_flow_type'
+const FLOW_TYPE_KEY = '_HEDVIG_EMBARK_STORY'
 
 type FlowTypeOption = 'ssn_input' | string
 
 export const FlowType = {
-  save: (option: FlowTypeOption) => window.sessionStorage.setItem(FLOW_TYPE_COOKIE_KEY, option),
-  get: () => window.sessionStorage.getItem(FLOW_TYPE_COOKIE_KEY),
+  save: (option: FlowTypeOption) => window.sessionStorage.setItem(FLOW_TYPE_KEY, option),
+  get: () => window.sessionStorage.getItem(FLOW_TYPE_KEY),
 }
 
 export type Event = 'begin_onboarding_flows' | 'ssn_fetching_failed'
