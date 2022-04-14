@@ -1,12 +1,15 @@
 import { css } from '@emotion/react'
 import { colorsV3, fonts, getCdnFontFaces } from '@hedviginsurance/brand'
 
-
 export const globalStyles = css`
   ${getCdnFontFaces()}
 
   * {
     box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
   }
 
   body {
