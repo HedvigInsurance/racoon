@@ -1,3 +1,4 @@
+import { setCookies } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
 import { PageLink } from '@/lib/page-link'
@@ -34,6 +35,8 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
   if (addedCampaign === null) {
     return res.status(400).json({ code: 'FOREVER_CODE_ERROR' })
   }
+
+  setCookies(QuoteCart.CAMPAIGN_CODE_COOKIE_KEY, addedCampaign.code, { req, res })
 
   return res.redirect(302, PageLink.foreverReady({ locale, code }))
 }
