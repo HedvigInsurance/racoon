@@ -16,10 +16,6 @@ type Options = {
   onSubmit?: (formData: FormData) => void
 }
 
-function urlIsExternal(url: string) {
-  return new URL(url).host !== window.location.host
-}
-
 export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
   const router = useRouter()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
@@ -29,8 +25,8 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
   // Safari somehow keeps the state even after the page is unmounted.
   useEffect(() => {
     const handleChangeRoute = () => setFormState({ state: 'idle', errors: null })
-    router.events.on('routeChangeStart', handleChangeRoute)
-    return () => router.events.off('routeChangeStart', handleChangeRoute)
+    router.events.on('routeChangeComplete', handleChangeRoute)
+    return () => router.events.off('routeChangeComplete', handleChangeRoute)
   }, [router])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -56,11 +52,7 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
       if (response.ok) {
         onSuccess?.({ redirectUrl: response.redirected ? response.url : undefined })
         if (response.redirected) {
-          if (urlIsExternal(response.url)) {
-            window.location.assign(response.url)
-          } else {
-            await router.push(response.url)
-          }
+          await router.push(response.url)
         } else {
           setFormState({ state: 'idle', errors: null })
         }

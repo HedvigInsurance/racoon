@@ -17,6 +17,8 @@ jest.mock('next-i18next', () => ({
   },
 }))
 
+jest.mock('next/router', () => require('next-router-mock'))
+
 // Establish API mocking before all tests.
 beforeAll(() => server.listen())
 // Reset any request handlers that we may add during the tests,
