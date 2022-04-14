@@ -21,6 +21,7 @@ export type ButtonProps = Paddings &
     onClick?: () => void
     type?: 'button' | 'submit'
     disabled?: boolean
+    form?: string
   }
 
 type IconWrapperProps = {

@@ -58,7 +58,7 @@ const PageContainer = styled.main((props) => ({
 
 const FooterButton = styled(Button)({
   width: '100%',
-  textAlign: 'center',
+  justifyContent: 'center',
   [mq.sm]: {
     width: 'auto',
     marginTop: '5rem',
@@ -107,6 +107,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
       <PageContainer>
         <Header />
         <form
+          id="landing-page-form"
           onSubmit={(event) => {
             event.preventDefault()
 
@@ -177,12 +178,17 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
               />
             ))}
           </CardGrid>
-          <ResponsiveFooter>
-            <FooterButton type="submit" color="dark" disabled={isRedirecting}>
-              {t('START_SCREEN_SUBMIT_BUTTON')}
-            </FooterButton>
-          </ResponsiveFooter>
         </form>
+        <ResponsiveFooter>
+          <FooterButton
+            type="submit"
+            form="landing-page-form"
+            color="dark"
+            disabled={isRedirecting}
+          >
+            {t('START_SCREEN_SUBMIT_BUTTON')}
+          </FooterButton>
+        </ResponsiveFooter>
       </PageContainer>
     </>
   )
