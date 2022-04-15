@@ -24,7 +24,7 @@ const MainWrapper = styled(Wrapper)({
   },
 })
 
-export const CheckboxContainer = styled.div({
+const CheckboxContainer = styled.div({
   padding: 0,
   position: 'static',
   marginLeft: 'auto',

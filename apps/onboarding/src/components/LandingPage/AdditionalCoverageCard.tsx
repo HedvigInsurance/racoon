@@ -31,7 +31,7 @@ const AdditionalSection = styled(Section)({
   },
 })
 
-export const CheckboxContainer = styled.div({
+const CheckboxContainer = styled.div({
   position: 'absolute',
   top: 0,
   right: 0,
