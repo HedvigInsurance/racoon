@@ -21,7 +21,7 @@ export const Embark = {
 
     if (!storyName) return
 
-    const embarkStoryKey = `embark-story-${storyName}`
+    const embarkStoryKey = `embark-store-${storyName}`
     window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(initialStore))
   },
   getStore: (locale: LocaleData) => {
@@ -29,7 +29,7 @@ export const Embark = {
 
     if (!storyName) return
 
-    const embarkStoryKey = `embark-story-${storyName}`
+    const embarkStoryKey = `embark-store-${storyName}`
     return window.sessionStorage.getItem(embarkStoryKey)
   },
   getSlug: (locale: LocaleData) => {
