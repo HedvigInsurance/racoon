@@ -6,6 +6,7 @@ import { ValidateQuoteCartParams, validateQuoteCart } from './validate-quote-car
 const client = createApolloClient()
 
 export const COOKIE_KEY = '_hv_onboarding_quote_cart'
+export const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
 
 type AddCampaignParams = Omit<AddCampaignCodeParams, 'client'>
 export const addCampaign = (params: AddCampaignParams) => addCampaignCode({ client, ...params })
