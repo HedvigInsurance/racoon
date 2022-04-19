@@ -21,8 +21,18 @@ export const Embark = {
 
     if (!storyName) return
 
+    const serialisedStore = Object.keys(initialStore).reduce((acc, key) => {
+      let value = initialStore[key]
+
+      if (typeof value === 'boolean') {
+        value = value ? 'true' : 'false'
+      }
+
+      return { ...acc, [key]: value }
+    }, {})
+
     const embarkStoryKey = `embark-store-${storyName}`
-    window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(initialStore))
+    window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(serialisedStore))
   },
   getStore: (locale: LocaleData) => {
     const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
