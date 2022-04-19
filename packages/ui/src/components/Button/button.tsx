@@ -41,7 +41,11 @@ export const UnstyledButton = styled.button({
   outline: 'none',
   appearance: 'none',
   cursor: 'pointer',
-  ':disabled': {
+
+  // opt out of double tap to zoom to immediately respond to taps
+  touchAction: 'manipulation',
+
+  '&:disabled': {
     cursor: 'default',
   },
 })
