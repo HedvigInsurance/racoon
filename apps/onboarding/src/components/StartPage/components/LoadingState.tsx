@@ -1,7 +1,30 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { PageHeaderLayout } from '@/components/page-header-layout'
+
+const AnimatedOverlay = styled(motion.div)(() => ({
+  position: 'fixed',
+  zIndex: 9999,
+  inset: 0,
+  display: 'none',
+}))
+
+AnimatedOverlay.defaultProps = {
+  variants: {
+    visible: {
+      opacity: 1,
+      display: 'block',
+    },
+    hidden: {
+      opacity: 0,
+      transitionEnd: {
+        display: 'none',
+      },
+    },
+  },
+}
 
 const Wrapper = styled.div({
   display: 'flex',
@@ -51,22 +74,28 @@ const Text = styled.p(({ theme }) => ({
   animation: `${fadeInUp} 5.5s cubic-bezier(0.39, 0.575, 0.565, 1) infinite`,
 }))
 
-export const LoadingState = () => {
+type Props = {
+  visible: boolean
+}
+
+export const LoadingState = ({ visible }: Props) => {
   const { t } = useTranslation()
   const lines = t('START_SCREEN_LOADER').split('\n')
 
   return (
-    <PageHeaderLayout>
-      <Wrapper>
-        <LoadingContent>
-          {lines.map((text, i) => (
-            <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
-              {text}
-            </Text>
-          ))}
-          <Overlay />
-        </LoadingContent>
-      </Wrapper>
-    </PageHeaderLayout>
+    <AnimatedOverlay animate={visible ? 'visible' : 'hidden'}>
+      <PageHeaderLayout>
+        <Wrapper>
+          <LoadingContent>
+            {lines.map((text, i) => (
+              <Text key={i} style={{ animationDelay: `${i * 150}ms` }}>
+                {text}
+              </Text>
+            ))}
+            <Overlay />
+          </LoadingContent>
+        </Wrapper>
+      </PageHeaderLayout>
+    </AnimatedOverlay>
   )
 }

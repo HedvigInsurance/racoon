@@ -1,4 +1,3 @@
-import { EntryPoint } from '@/pages/new-member/start/shared'
 import { pushToGTMDataLayer } from './gtm'
 
 const FLOW_TYPE_KEY = '_HEDVIG_EMBARK_STORY'
@@ -12,19 +11,7 @@ export const FlowType = {
 
 export type Event = 'begin_onboarding_flows' | 'ssn_fetching_failed'
 
-const entryPointToFlowType = (entryPoint: EntryPoint) => {
-  switch (entryPoint) {
-    case EntryPoint.Current:
-      return 'ssn_input'
-    case EntryPoint.New:
-      return 'needer'
-    case EntryPoint.Switch:
-      return 'switcher'
-  }
-}
-
-export const beginOnboarding = (entryPoint: EntryPoint) => {
-  const flowType = entryPointToFlowType(entryPoint)
+export const beginOnboarding = (flowType: FlowTypeOption) => {
   track('begin_onboarding_flows', { offerData: { flow_type: flowType } })
   FlowType.save(flowType)
 }
