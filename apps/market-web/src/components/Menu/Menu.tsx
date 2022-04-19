@@ -43,11 +43,13 @@ type MenuBlockProps = {
 export const MenuBlock = ({ items, theme, isOpen, cta }: MenuBlockProps) => {
   const isDesktop = useBreakpoint('md')
 
-  // Only scroll menu on mobile, not entire page
-  if (isOpen && !isDesktop) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = 'initial'
+  if (typeof document !== 'undefined') {
+    // Only scroll menu on mobile, not entire page
+    if (isOpen && !isDesktop) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'initial'
+    }
   }
 
   return (
