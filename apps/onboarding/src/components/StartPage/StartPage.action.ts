@@ -1,5 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getFormData } from '@/lib/get-form-data'
+import { Fields } from 'formidable'
 import { getLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/page-link'
@@ -12,13 +11,10 @@ import {
   CreateQuoteCartMutation,
   CreateQuoteCartMutationVariables,
 } from '@/services/apollo/types'
-import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
+import { EntryPoint, InputField } from './StartPage.constants'
+import { isEntryPoint } from './StartPage.helpers'
 
 const client = createApolloClient()
-
-const isEntryPoint = (entryPoint: unknown): entryPoint is EntryPoint => {
-  return Object.values(EntryPoint).includes(entryPoint as EntryPoint)
-}
 
 const isLocale = (locale: unknown): locale is LocaleLabel => {
   return typeof locale === 'string'
@@ -57,22 +53,27 @@ const createSwedishQuoteBundle = async (variables: CreateQuoteBundleMutationVari
   return data.quoteCart_createSwedishBundle
 }
 
-export const action = async (req: NextApiRequest, res: NextApiResponse) => {
+type Result = { type: 'ERROR'; json: Record<string, string> } | { type: 'SUCCESS'; url: string }
+
+export const handleStartPageForm = async (formData: Fields): Promise<Result> => {
   const {
-    [EntryPointField]: entryPoint,
-    [PersonalNumberField]: personalNumber,
-    [LocaleField]: locale,
-  } = await getFormData(req)
+    [InputField.EntryPoint]: entryPoint,
+    [InputField.PersonalNumber]: personalNumber,
+    [InputField.Locale]: locale,
+  } = formData
 
   if (!isEntryPoint(entryPoint) || !isLocale(locale)) {
-    return res.status(400).json({ form: 'GENERIC_ERROR_INPUT_REQUIRED' })
+    return { type: 'ERROR', json: { form: 'GENERIC_ERROR_INPUT_REQUIRED' } }
   }
 
   const { path, isoLocale, apiMarket } = getLocale(locale)
 
   if (entryPoint === EntryPoint.Current) {
     if (typeof personalNumber !== 'string') {
-      return res.status(400).json({ [PersonalNumberField]: 'GENERIC_ERROR_INPUT_REQUIRED' })
+      return {
+        type: 'ERROR',
+        json: { [InputField.PersonalNumber]: 'GENERIC_ERROR_INPUT_REQUIRED' },
+      }
     }
 
     try {
@@ -87,18 +88,30 @@ export const action = async (req: NextApiRequest, res: NextApiResponse) => {
         input: { ssn: personalNumber.replace('-', ''), isStudent: false },
       })
 
-      return res.redirect(302, PageLink.old_offer({ locale: path, quoteCartId, showEdit: true }))
+      return {
+        type: 'SUCCESS',
+        url: PageLink.old_offer({ locale: path, quoteCartId, showEdit: true }),
+      }
     } catch (error) {
       console.warn(error)
-      return res.redirect(302, PageLink.old_onboarding_se_needer({ locale: path }))
+      return {
+        type: 'SUCCESS',
+        url: PageLink.old_onboarding_se_needer({ locale: path }),
+      }
     }
   }
 
   switch (entryPoint) {
     case EntryPoint.New:
-      return res.redirect(302, PageLink.old_onboarding_se_needer({ locale: path }))
+      return {
+        type: 'SUCCESS',
+        url: PageLink.old_onboarding_se_needer({ locale: path }),
+      }
 
     case EntryPoint.Switch:
-      return res.redirect(302, PageLink.old_onboarding_se_switcher({ locale: path }))
+      return {
+        type: 'SUCCESS',
+        url: PageLink.old_onboarding_se_switcher({ locale: path }),
+      }
   }
 }

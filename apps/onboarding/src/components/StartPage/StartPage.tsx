@@ -1,149 +1,31 @@
 import { css, Global } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { motion } from 'framer-motion'
-import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 import { useState } from 'react'
-import { Button, Heading, Space, mq } from 'ui'
+import { Button, Heading, Space } from 'ui'
 import { HeroImage } from '@/components/hero-image'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/use-form'
 import { useCurrentLocale } from '@/lib/l10n'
+import { PageLink } from '@/lib/page-link'
 import * as Analytics from '@/services/analytics/analytics'
-import { replaceMarkdown } from '@/services/i18n'
-import { Bullet, BulletList } from './components/bullet-list'
+import { Bullet, BulletList } from './components/BulletList'
+import { CaptionText } from './components/CaptionText'
+import { ContentWrapper } from './components/ContentWrapper'
+import { Col, Grid } from './components/Grid'
+import { HighlightBlock } from './components/HighlightBlock'
 import { InputFieldWithHint } from './components/InputFieldWithHint'
-import { LoadingState } from './components/loading-state'
-import { RadioGroupItem } from './components/radio-group-item'
-import { EntryPoint, EntryPointField, LocaleField, PersonalNumberField } from './shared'
-
-const Grid = styled.div({
-  [mq.lg]: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    height: '100vh',
-  },
-})
-
-const Col = styled.div({
-  [mq.lg]: {
-    gridColumn: '2',
-    width: '50vw',
-  },
-})
-
-const Content = styled(Space)({
-  '--padding-x': '1rem',
-  padding: 'var(--padding-x)',
-  width: '100%',
-  maxWidth: 'calc(30rem + var(--padding-x) * 2)',
-  margin: '0 auto',
-  boxSizing: 'border-box',
-
-  [mq.md]: {
-    minHeight: 'initial',
-    paddingTop: '2rem',
-    paddingBottom: '2rem',
-  },
-
-  [mq.lg]: {
-    '--padding-x': '2rem',
-  },
-
-  [mq.xl]: {
-    paddingTop: '6rem',
-  },
-})
-
-const SubHeading = styled.p(({ theme }) => ({
-  lineHeight: '1.5rem',
-  fontSize: '1rem',
-  color: theme.colors.gray700,
-  margin: 0,
-  display: 'none',
-
-  [mq.lg]: {
-    display: 'block',
-  },
-}))
-
-const HighlightBlock = styled.div(({ theme }) => ({
-  backgroundColor: theme.colors.gray200,
-  padding: '1rem',
-  borderRadius: '0.25rem',
-}))
-
-const CaptionText = styled.div(({ theme }) => ({
-  fontFamily: theme.fonts.body,
-  color: theme.colors.gray500,
-  fontSize: '0.875rem',
-  textAlign: 'center',
-  maxWidth: '24rem',
-  margin: '0 auto',
-
-  a: {
-    color: theme.colors.gray500,
-    textDecoration: 'underline',
-  },
-}))
-
-const StickyFooter = styled.div(({ theme }) => ({
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  backgroundColor: theme.colors.white,
-  boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.05), 0px -8px 16px rgba(0, 0, 0, 0.05)',
-  display: 'flex',
-  justifyContent: 'stretch',
-
-  [mq.lg]: {
-    position: 'static',
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
-  },
-}))
-
-const FooterContent = styled.div({
-  width: '100%',
-  maxWidth: '600px',
-  margin: 'auto',
-  padding: '1rem',
-  paddingBottom: '2rem',
-
-  [mq.lg]: {
-    padding: 0,
-  },
-})
+import { LoadingState } from './components/LoadingState'
+import { RadioGroupItem } from './components/RadioGroupItem'
+import { StickyFooter } from './components/StickyFooter'
+import { SubHeading } from './components/SubHeading'
+import { EntryPoint, InputField } from './StartPage.constants'
+import { trackBeginOnboardingFlows } from './StartPage.helpers'
 
 const Spacer = styled.div({
   height: '6rem',
 })
-
-const Overlay = styled(motion.div)(() => ({
-  position: 'fixed',
-  zIndex: 9999,
-  inset: 0,
-  display: 'none',
-}))
-
-Overlay.defaultProps = {
-  variants: {
-    visible: {
-      opacity: 1,
-      display: 'block',
-    },
-    hidden: {
-      opacity: 0,
-      transitionEnd: {
-        display: 'none',
-      },
-    },
-  },
-}
 
 // Reference: https://stackoverflow.com/a/39289453
 const scrollbarShiftFix = css({
@@ -153,14 +35,14 @@ const scrollbarShiftFix = css({
   },
 })
 
-const NewMemberStartPage: NextPage = () => {
+export const StartPage = () => {
   const { path } = useCurrentLocale()
   const [entryPoint, setEntryPoint] = useState<EntryPoint>()
   const { t } = useTranslation()
 
   const form = useForm({
-    action: '/api/pages/start',
-    onSubmit: () => entryPoint && Analytics.beginOnboarding(entryPoint),
+    action: PageLink.startFormApi(),
+    onSubmit: (formData) => trackBeginOnboardingFlows(formData.get(InputField.EntryPoint)),
     onSuccess: ({ redirectUrl }) => {
       if (entryPoint === EntryPoint.Current && redirectUrl?.includes('/offer/') !== true) {
         Analytics.ssnFetchingFailed()
@@ -168,14 +50,11 @@ const NewMemberStartPage: NextPage = () => {
     },
   })
 
-  const personalNumberError = form.errors?.[PersonalNumberField]
+  const personalNumberError = form.errors?.[InputField.PersonalNumber]
   const showLoader = form.state === 'submitting' && entryPoint === EntryPoint.Current
 
   return (
     <>
-      <Head>
-        <title>{t('STARTPAGE_PAGE_TITLE')}</title>
-      </Head>
       <Global styles={scrollbarShiftFix} />
       <PageHeaderLayout headerVariant="light">
         <form {...form.formProps}>
@@ -185,7 +64,7 @@ const NewMemberStartPage: NextPage = () => {
               desktopImgSrc="/racoon-assets/hero_start_desktop.jpg"
             />
             <Col>
-              <Content y={2}>
+              <ContentWrapper y={2}>
                 <Space y={1}>
                   <Heading variant="s" headingLevel="h1" colorVariant="dark">
                     {t('START_SCREEN_HEADER')}
@@ -193,7 +72,7 @@ const NewMemberStartPage: NextPage = () => {
                   <SubHeading>{t('START_SCREEN_SUBHEADER')}</SubHeading>
                 </Space>
                 <RadioGroup.Root
-                  name={EntryPointField}
+                  name={InputField.EntryPoint}
                   value={entryPoint}
                   onValueChange={(value) => setEntryPoint(value as EntryPoint)}
                   required
@@ -211,7 +90,7 @@ const NewMemberStartPage: NextPage = () => {
                         required
                         min={10}
                         max={13}
-                        name={PersonalNumberField}
+                        name={InputField.PersonalNumber}
                         onKeyDown={(event) => event.key === 'Enter' && form.submitForm()}
                         // https://github.com/personnummer/js
                         pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
@@ -244,13 +123,11 @@ const NewMemberStartPage: NextPage = () => {
                   </Space>
                 </RadioGroup.Root>
                 <StickyFooter>
-                  <FooterContent>
-                    <input hidden readOnly name={LocaleField} value={path} />
-                    <Button fullWidth>{t('START_SCREEN_SUBMIT_BUTTON')}</Button>
-                  </FooterContent>
+                  <input hidden readOnly name={InputField.Locale} value={path} />
+                  <Button fullWidth>{t('START_SCREEN_SUBMIT_BUTTON')}</Button>
                 </StickyFooter>
                 <CaptionText dangerouslySetInnerHTML={{ __html: t('START_SCREEN_FOOTER_TOS') }} />
-              </Content>
+              </ContentWrapper>
 
               <Spacer />
             </Col>
@@ -258,18 +135,7 @@ const NewMemberStartPage: NextPage = () => {
         </form>
       </PageHeaderLayout>
 
-      <Overlay animate={showLoader ? 'visible' : 'hidden'}>
-        <LoadingState />
-      </Overlay>
+      <LoadingState visible={showLoader} />
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const translations = await replaceMarkdown(await serverSideTranslations(locale as string), [
-    'START_SCREEN_FOOTER_TOS',
-  ])
-  return { props: { ...translations } }
-}
-
-export default NewMemberStartPage

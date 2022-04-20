@@ -35,4 +35,6 @@ export const PageLink = {
     if (showEdit) searchParams.append('showEdit', 'true')
     return `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}?${searchParams.toString()}`
   },
+
+  startFormApi: () => '/api/pages/start',
 }
