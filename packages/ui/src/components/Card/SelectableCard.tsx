@@ -6,7 +6,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group'
 import { mq } from '../../lib/media-query'
 import { CardContent, CardProps, cardStyle } from './Card'
 
-type SelectableCardProps = CardProps & {
+export type SelectableCardProps = CardProps & {
   checked?: boolean
   as?: 'radio' | 'checkbox'
 

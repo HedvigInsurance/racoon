@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { QuotePriceCard } from '../QuotePriceCard/QuotePriceCard'
 import { SelectableCard } from './SelectableCard'
 
-type QuotePriceCardGroupProps = {
+type SelectableCardGroupProps = {
   onChange: (selectedId: string) => void
   name: string
   children: React.ReactNode
 }
 
+/**
+ * Apply a function to all children recursively
+ */
 const recursiveMap = (children: React.ReactNode, fn: (child: React.ReactNode) => void): any => {
   return React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) {
@@ -25,11 +28,18 @@ const recursiveMap = (children: React.ReactNode, fn: (child: React.ReactNode) =>
   })
 }
 
+/**
+ * Add `checked`, `onChange` and `as="radio"` to all child components that are either
+ * `SelectableCard` or `QuotePriceCard`. This is what makes the carsd behave as radio
+ * buttons, since only one can be selected at the time.
+ */
 const cloneChildren = (
   children: React.ReactNode,
   selectedId: string,
   callback: (id: string) => void,
 ) => {
+  // Apply recursively, otherwise cards will have to be direct descendants, and we want
+  // to be able to wrap cards in <Space> for example
   return recursiveMap(children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
     // error too.
@@ -51,7 +61,7 @@ const cloneChildren = (
   })
 }
 
-export const SelectableCardGroup = ({ children, onChange, name }: QuotePriceCardGroupProps) => {
+export const SelectableCardGroup = ({ children, onChange, name }: SelectableCardGroupProps) => {
   const [selectedCardId, setSelectedCardId] = useState('')
   const [clonedChildren, setClonedChildren] = useState(
     cloneChildren(children, selectedCardId, setSelectedCardId),
