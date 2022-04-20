@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { MenuTheme } from 'ui/src/components/Menu/Menu'
-import { useBreakpoint } from 'ui/src/lib/media-query'
-import { Menu, mq } from 'ui'
+import { Menu, MenuTheme, mq, useBreakpoint } from 'ui'
 import { MenuItem as StoryblokMenuItem } from '@/services/storyblok/types'
 import { LanguagePicker } from './LanguagePicker'
 

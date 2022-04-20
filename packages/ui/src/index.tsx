@@ -12,9 +12,10 @@ export type { InputFieldProps } from './components/input-field'
 export { InputStepper } from './components/input-stepper'
 export { Heading } from './components/heading'
 export { Menu } from './components/Menu/Menu'
+export type { MenuTheme } from './components/Menu/Menu'
 
 export type { Level } from './lib/media-query'
-export { mq } from './lib/media-query'
+export { mq, useBreakpoint } from './lib/media-query'
 
 export { theme } from './lib/theme'
 export { globalStyles } from './lib/globalStyles'
