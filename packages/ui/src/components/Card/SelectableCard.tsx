@@ -54,8 +54,8 @@ const StyledRadio = styled(RadioGroup.Item)<SelectableCardProps>((props) =>
   selectableCardStyles(props),
 )
 
-export const SelectableCard = ({ as, onChange, id, ...props }: SelectableCardProps) => {
-  if (as === 'radio') {
+export const SelectableCard = ({ as: asProp, onChange, id, ...props }: SelectableCardProps) => {
+  if (asProp === 'radio') {
     if (!id) {
       throw new Error('Id must be defined on SelectableCard when rendered as a radio')
     }
