@@ -1,30 +1,53 @@
 import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
-import { Card, CardContent, CardProps } from '../Card/Card'
+import { Card, CardContent } from '../Card/Card'
+import { SelectableCard, SelectableCardProps } from '../Card/SelectableCard'
+import { StyledCheckbox } from '../Checkbox/Checkbox'
 
 const HeaderElement = styled.div({
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
   width: '100%',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+  alignItems: 'end',
   fontSize: '1rem',
-  paddingTop: '3rem',
+  paddingTop: '1.75rem',
+  gap: '1rem',
 })
 
 const TitleElement = styled.div({})
 
 const ExtraElement = styled.div({
   color: colorsV3.gray500,
+  justifySelf: 'end',
 })
 
-export type QuotePriceCardProps = Omit<CardProps, 'bordered'> & {
-  children: React.ReactNode
+export type QuotePriceCardProps = SelectableCardProps & {
   title?: React.ReactNode
   price?: string
+  selectable?: boolean
 }
 
-export const QuotePriceCard = ({ children, title, price, ...props }: QuotePriceCardProps) => {
-  return (
+export const QuotePriceCard = ({
+  children,
+  title,
+  price,
+  selectable,
+  checked,
+
+  ...props
+}: QuotePriceCardProps) => {
+  return selectable ? (
+    <SelectableCard checked={checked} {...props}>
+      <CardContent>
+        <StyledCheckbox circle checked={checked}></StyledCheckbox>
+        <HeaderElement>
+          {title && <TitleElement>{title}</TitleElement>}
+          {price && <ExtraElement>{price}</ExtraElement>}
+        </HeaderElement>
+        {children}
+      </CardContent>
+    </SelectableCard>
+  ) : (
     <Card {...props} bordered>
       <CardContent>
         <HeaderElement>

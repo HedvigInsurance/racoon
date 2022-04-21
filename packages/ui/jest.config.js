@@ -4,4 +4,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   snapshotSerializers: ['@emotion/jest/serializer'],
   setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
+  transform: {
+    '^.+\\.[tj]sx?$': './jest.transform.js',
+  },
 }
