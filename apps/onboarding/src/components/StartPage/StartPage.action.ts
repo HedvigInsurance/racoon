@@ -1,7 +1,7 @@
 import { Fields } from 'formidable'
 import { getLocale } from '@/lib/l10n'
-import { LocaleLabel } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/page-link'
+import { isLocaleLabel } from '@/lib/utils'
 import { createApolloClient } from '@/services/apollo'
 import {
   CreateQuoteBundleDocument,
@@ -15,10 +15,6 @@ import { EntryPoint, InputField } from './StartPage.constants'
 import { isEntryPoint } from './StartPage.helpers'
 
 const client = createApolloClient()
-
-const isLocale = (locale: unknown): locale is LocaleLabel => {
-  return typeof locale === 'string'
-}
 
 const createQuoteCart = async (variables: CreateQuoteCartMutationVariables) => {
   const { data } = await client.mutate<CreateQuoteCartMutation, CreateQuoteCartMutationVariables>({
@@ -62,7 +58,7 @@ export const handleStartPageForm = async (formData: Fields): Promise<Result> => 
     [InputField.Locale]: locale,
   } = formData
 
-  if (!isEntryPoint(entryPoint) || !isLocale(locale)) {
+  if (!isEntryPoint(entryPoint) || !isLocaleLabel(locale)) {
     return { type: 'ERROR', json: { form: 'GENERIC_ERROR_INPUT_REQUIRED' } }
   }
 

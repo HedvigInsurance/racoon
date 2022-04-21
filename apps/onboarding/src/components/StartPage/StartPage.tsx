@@ -21,7 +21,7 @@ import { RadioGroupItem } from './components/RadioGroupItem'
 import { StickyFooter } from './components/StickyFooter'
 import { SubHeading } from './components/SubHeading'
 import { EntryPoint, InputField } from './StartPage.constants'
-import { trackBeginOnboardingFlows } from './StartPage.helpers'
+import { handleSubmitForm } from './StartPage.helpers'
 
 const Spacer = styled.div({
   height: '6rem',
@@ -42,7 +42,7 @@ export const StartPage = () => {
 
   const form = useForm({
     action: PageLink.startFormApi(),
-    onSubmit: (formData) => trackBeginOnboardingFlows(formData.get(InputField.EntryPoint)),
+    onSubmit: handleSubmitForm,
     onSuccess: ({ redirectUrl }) => {
       if (entryPoint === EntryPoint.Current && redirectUrl?.includes('/offer/') !== true) {
         Analytics.ssnFetchingFailed()
