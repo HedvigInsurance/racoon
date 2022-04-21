@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { useState } from 'react'
 import { mq, useBreakpoint } from '../../lib/media-query'
-import { BurgerButton } from '../BurgerButton/BurgerButton'
 import { Button } from '../Button/button'
 import { Menu, MenuProps } from './Menu'
 
@@ -62,14 +60,9 @@ const MenuItems = (props: MenuProps) => {
 }
 
 const Template: ComponentStory<typeof Menu> = (props: MenuProps) => {
-  const [isOpen, setIsOpen] = useState(true)
-
   return (
     <Container>
-      {props.collapsible && (
-        <BurgerButton color={props.theme} initialOpen={true} onClick={() => setIsOpen(!isOpen)} />
-      )}
-      <Menu {...props} isOpen={isOpen}>
+      <Menu {...props}>
         <MenuItems {...props} />
       </Menu>
     </Container>
@@ -78,8 +71,3 @@ const Template: ComponentStory<typeof Menu> = (props: MenuProps) => {
 
 export const Default = Template.bind({})
 Default.args = {}
-
-export const Collapsible = Template.bind({})
-Collapsible.args = {
-  collapsible: true,
-}
