@@ -25,7 +25,7 @@ There's no platform we would rather develop for than the web. Therefore we appro
 
 1. Use built-in web/browser solutions. How far can we get? (`<select>`, `<form>`)
 
-1. Use custom but W3C/WCAG compliant (probably 3rd party) solutio (`<form>` + `event.preventDefault()`)
+1. Use custom but W3C/WCAG compliant (probably 3rd party) solution (`<form>` + `event.preventDefault()`)
 
 1. Explore a custom solution (Embark)
 
