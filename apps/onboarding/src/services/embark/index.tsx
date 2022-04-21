@@ -17,11 +17,8 @@ type EmbarkStore = Record<string, string | number | boolean>
 
 export const Embark = {
   Story: {
-    SwedenNeeder: 'Web Onboarding SE - Needer',
-    SwedenSwitcher: 'Web Onboarding SE - Switcher',
-    SwedenSwitcherWithoutAccident: 'Web Onboarding SE - Switcher Without Accident',
-    SwedenQuoteCartNeeder: 'Web Onboarding SE - Quote Cart Needer',
-    SwedenQuoteCartSwitcher: 'Web Onboarding SE - Quote Cart Switcher',
+    SwedenNeeder: 'Web Onboarding SE - Quote Cart Needer',
+    SwedenSwitcher: 'Web Onboarding SE - Quote Cart Switcher',
   },
 
   setStoryStore: (storyName: string, initialStore: EmbarkStore) => {
