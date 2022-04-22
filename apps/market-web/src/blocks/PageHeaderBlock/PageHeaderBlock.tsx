@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { colorsV3, HedvigLogo, HedvigSymbol } from '@hedviginsurance/brand'
-import { useCurrentLocale } from 'lib/l10n/useCurrentLocale'
 import React, { useCallback, useEffect, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { StoryData } from 'storyblok-js-client'
@@ -9,6 +8,8 @@ import { useBreakpoint } from 'ui/src/lib/media-query'
 import { getColor } from 'ui/src/lib/theme'
 import { mq, ButtonVariant, LinkButton, BurgerButton } from 'ui'
 import { Menu, MOBILE_WRAPPER_HEIGHT, WRAPPER_HEIGHT } from '@/components/Menu/Menu'
+import { useOnScroll } from '@/hooks/useOnScroll'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { getStoryblokLinkUrl } from '@/services/storyblok/storyblok'
 import {
   LinkComponent,
@@ -150,18 +151,11 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
 
   const [isOpen, setIsOpen] = useState(isDesktop)
 
-  const onScroll = useCallback(() => {
+  const handleScroll = useCallback(() => {
     setIsBelowThreshold(isBelowScrollThreshold())
   }, [])
 
-  useEffect(() => {
-    onScroll()
-    window.addEventListener('scroll', onScroll)
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-    }
-  }, [onScroll])
+  useOnScroll(handleScroll)
 
   useEffect(() => {
     // Only scroll menu on mobile, not entire page
