@@ -16,9 +16,11 @@ import {
   StoryblokBaseBlock,
 } from '@/services/storyblok/types'
 
-export const TOGGLE_TRANSITION_TIME = 250
+// When user scrolls past this limit the transparent menu will get a colored background
+const SCROLL_THRESHOLD = 20
 
-const isBelowScrollThreshold = () => typeof window !== 'undefined' && window.scrollY > 20
+const isBelowScrollThreshold = () =>
+  typeof window !== 'undefined' && window.scrollY > SCROLL_THRESHOLD
 
 const HeaderWrapper = styled.header({
   position: 'sticky',
