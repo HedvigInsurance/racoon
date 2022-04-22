@@ -15,13 +15,13 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
 
   if (typeof quoteCartId !== 'string') {
     console.error('Missing quote cart session')
-    return res.status(400).json({ form: 'FOREVER_ERROR_GENERIC' })
+    return res.status(200).json({ form: 'FOREVER_ERROR_GENERIC' })
   }
 
   const { code, locale } = await getFormData(req)
 
   if (typeof code !== 'string' || typeof locale !== 'string') {
-    return res.status(400).json({ code: 'GENERIC_ERROR_INPUT_REQUIRED' })
+    return res.status(200).json({ code: 'GENERIC_ERROR_INPUT_REQUIRED' })
   }
 
   let addedCampaign: null | Awaited<ReturnType<typeof QuoteCart.addCampaign>> = null
@@ -29,11 +29,11 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
     addedCampaign = await QuoteCart.addCampaign({ id: quoteCartId, code })
   } catch (error) {
     console.error('Unknown error adding campaign code', error)
-    return res.status(500).json({ form: 'FOREVER_ERROR_GENERIC' })
+    return res.status(200).json({ form: 'FOREVER_ERROR_GENERIC' })
   }
 
   if (addedCampaign === null) {
-    return res.status(400).json({ code: 'FOREVER_CODE_ERROR' })
+    return res.status(200).json({ code: 'FOREVER_CODE_ERROR' })
   }
 
   setCookies(QuoteCart.CAMPAIGN_CODE_COOKIE_KEY, addedCampaign.code, { req, res })
