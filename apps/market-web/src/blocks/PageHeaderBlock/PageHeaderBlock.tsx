@@ -161,14 +161,18 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
     }
   }, [onScroll])
 
-  if (typeof document !== 'undefined') {
+  useEffect(() => {
     // Only scroll menu on mobile, not entire page
     if (isOpen && !isDesktop) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'initial'
     }
-  }
+
+    return () => {
+      document.body.style.overflow = 'initial'
+    }
+  }, [isOpen, isDesktop])
 
   if (!props?.story?.content) return null
 
