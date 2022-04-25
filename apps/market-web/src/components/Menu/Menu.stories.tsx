@@ -3,11 +3,11 @@ import { MemoryRouterProvider } from 'next-router-mock/dist/MemoryRouterProvider
 import React from 'react'
 import { Button } from 'ui'
 import { headerMenuItems } from '@/helpers/mockedData'
-import { MenuBlock } from './Menu'
+import { Menu } from './Menu'
 
 export default {
   title: 'Market Web / Components / Menu',
-  component: MenuBlock,
+  component: Menu,
   args: {
     _uid: '1234',
     component: 'banner_block',
@@ -23,22 +23,19 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof MenuBlock>
+} as ComponentMeta<typeof Menu>
 
-const Template: ComponentStory<typeof MenuBlock> = (args) => (
+const Template: ComponentStory<typeof Menu> = (args) => (
   <MemoryRouterProvider url="/initial-url">
-    <MenuBlock {...args} />
+    <Menu {...args} />
   </MemoryRouterProvider>
 )
 
 export const Default = Template.bind({})
-Default.args = {
-  isOpen: true,
-}
+Default.args = {}
 
 export const WithCTA = Template.bind({})
 WithCTA.args = {
-  isOpen: true,
   cta: (
     <Button fullWidth={true} variant="outlined" color={'light'}>
       Sign up!
