@@ -13,7 +13,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const result = await handleStartPageForm(formData)
 
   if (result.type === 'ERROR') {
-    return res.status(200).json(result.json)
+    return res.status(400).json(result.json)
   }
 
   return res.redirect(302, result.url)
