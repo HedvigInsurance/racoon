@@ -29,7 +29,7 @@ const handleForeverPageForm = async (req: NextApiRequest, res: NextApiResponse) 
     addedCampaign = await QuoteCart.addCampaign({ id: quoteCartId, code })
   } catch (error) {
     console.error('Unknown error adding campaign code', error)
-    return res.status(400).json({ form: 'FOREVER_ERROR_GENERIC' })
+    return res.status(500).json({ form: 'FOREVER_ERROR_GENERIC' })
   }
 
   if (addedCampaign === null) {
