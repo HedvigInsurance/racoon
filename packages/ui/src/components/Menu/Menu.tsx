@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import { createContext, ReactNode } from 'react'
-import AnimateHeight from 'react-animate-height'
 import { mq } from '../../lib/media-query'
-import { ConditionalWrapper } from '../ConditionalWrapper'
 import { MenuItem } from './MenuItem'
 import { MenuItemGroup, MenuItemGroupContainer } from './MenuItemGroup'
 import { SubMenu } from './SubMenu'
@@ -32,23 +30,12 @@ export type MenuProps = {
   children?: ReactNode
   // `dark` or `light`. Sets the color of text and buttons. Default is "dark".
   theme?: MenuTheme
-  // Set to `true` to render with an animated open/close
-  collapsible?: boolean
-  // Used when `collapsible` is set to `true` to indicate whether the menu is shown or not
-  isOpen?: boolean
 }
 
-const Menu = ({ children, collapsible, isOpen, theme = 'dark' }: MenuProps) => {
+const Menu = ({ children, theme = 'dark' }: MenuProps) => {
   return (
     <MenuThemeContext.Provider value={theme}>
-      <ConditionalWrapper
-        condition={collapsible}
-        wrapWith={(wrappedChildren) => (
-          <AnimateHeight height={isOpen ? '100vh' : 0}>{wrappedChildren}</AnimateHeight>
-        )}
-      >
-        <MenuList>{children}</MenuList>
-      </ConditionalWrapper>
+      <MenuList>{children}</MenuList>
     </MenuThemeContext.Provider>
   )
 }

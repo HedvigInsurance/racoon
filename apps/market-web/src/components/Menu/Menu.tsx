@@ -1,9 +1,11 @@
 import styled from '@emotion/styled'
+import { colorsV3 } from '@hedviginsurance/brand'
 import { ReactNode } from 'react'
-import { Menu, MenuTheme, mq, useBreakpoint } from 'ui'
+import { Menu as UiMenu, MenuTheme, mq } from 'ui'
 import { MenuItem as StoryblokMenuItem } from '@/services/storyblok/types'
 import { LanguagePicker } from './LanguagePicker'
 
+export const WRAPPER_HEIGHT = '5rem'
 export const MOBILE_WRAPPER_HEIGHT = '4.5rem'
 
 const MenuWrapper = styled.div({
@@ -12,11 +14,17 @@ const MenuWrapper = styled.div({
   flexDirection: 'column',
   justifyContent: 'flex-end',
 
+  width: '100%',
+  backgroundColor: colorsV3.gray900,
+
   [mq.md]: {
-    height: 'auto',
+    height: WRAPPER_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
+    width: 'auto',
+    backgroundColor: 'initial',
   },
 })
 
@@ -27,86 +35,76 @@ const ScrollableContainer = styled.div({
 
   [mq.md]: {
     overflow: 'initial',
+    padding: `0`,
   },
 })
 
-type MenuBlockProps = {
+type MenuProps = {
   theme: MenuTheme
   items: StoryblokMenuItem[]
-  isOpen?: boolean
 
   cta: ReactNode
+  id?: string
 }
 
-export const MenuBlock = ({ items, theme, isOpen, cta }: MenuBlockProps) => {
-  const isDesktop = useBreakpoint('md')
-
-  if (typeof document !== 'undefined') {
-    // Only scroll menu on mobile, not entire page
-    if (isOpen && !isDesktop) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'initial'
-    }
-  }
-
+export const Menu = ({ items, theme, cta, id }: MenuProps) => {
   return (
-    <MenuWrapper>
+    <MenuWrapper id={id}>
       <ScrollableContainer>
-        <Menu theme={theme} collapsible={!isDesktop} isOpen={isOpen}>
+        <UiMenu theme={theme}>
           {items.map((item) => {
             if (item.menu_items) {
               return (
-                <Menu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
+                <UiMenu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
                   {item.menu_items.map((subItem) => {
                     return (
-                      <Menu.Item key={subItem._uid} href={subItem.link.cached_url}>
+                      <UiMenu.Item key={subItem._uid} href={subItem.link.cached_url}>
                         {subItem.label}
-                      </Menu.Item>
+                      </UiMenu.Item>
                     )
                   })}
-                </Menu.SubMenu>
+                </UiMenu.SubMenu>
               )
             }
 
             if (item.menu_item_groups) {
               return (
-                <Menu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
-                  <Menu.GroupContainer>
+                <UiMenu.SubMenu key={item._uid} title={item.label} href={item?.link?.cached_url}>
+                  <UiMenu.GroupContainer>
                     {item.menu_item_groups.map((group) => {
                       return (
-                        <Menu.ItemGroup
+                        <UiMenu.ItemGroup
                           href={group.link?.cached_url}
                           title={group.label}
                           key={group._uid}
                         >
                           {group.menu_items.map((menuItem) => {
                             return (
-                              <Menu.Item key={menuItem._uid} href={menuItem.link.cached_url}>
+                              <UiMenu.Item key={menuItem._uid} href={menuItem.link.cached_url}>
                                 {menuItem.label}
-                              </Menu.Item>
+                              </UiMenu.Item>
                             )
                           })}
-                        </Menu.ItemGroup>
+                        </UiMenu.ItemGroup>
                       )
                     })}
-                  </Menu.GroupContainer>
-                </Menu.SubMenu>
+                  </UiMenu.GroupContainer>
+                </UiMenu.SubMenu>
               )
             }
 
             return (
-              <Menu.Item key={item._uid} href={item.link.cached_url}>
+              <UiMenu.Item key={item._uid} href={item.link.cached_url}>
                 {item.label}
-              </Menu.Item>
+              </UiMenu.Item>
             )
           })}
 
-          <Menu.Item>
+          <UiMenu.Item>
             <LanguagePicker theme={theme} />
-          </Menu.Item>
-          {cta && <Menu.Item>{cta}</Menu.Item>}
-        </Menu>
+          </UiMenu.Item>
+          {cta && <UiMenu.Item>{cta}</UiMenu.Item>}
+        </UiMenu>
       </ScrollableContainer>
     </MenuWrapper>
   )
