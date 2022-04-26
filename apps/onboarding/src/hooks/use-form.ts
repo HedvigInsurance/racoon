@@ -49,10 +49,13 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
         credentials: 'same-origin',
       })
 
-      if (response.ok && response.redirected) {
-        onSuccess?.({ redirectUrl: response.url })
-        await router.push(response.url)
-        if (window.location.href === response.url) {
+      if (response.ok) {
+        const redirectUrl = response.redirected ? response.url : router.asPath
+
+        onSuccess?.({ redirectUrl })
+        await router.push(redirectUrl)
+
+        if (!response.redirected) {
           setFormState({ state: 'idle', errors: null })
         }
       } else {
