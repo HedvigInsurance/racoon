@@ -13,7 +13,7 @@ export const globalStyles = css`
   }
 
   body {
-    font-family: ${fonts.FAVORIT}, sans-serif;
+    font-family: ${fonts.HEDVIG_LETTERS_STANDARD}, sans-serif;
     line-height: 1.5;
     margin: 0;
     padding: 0;

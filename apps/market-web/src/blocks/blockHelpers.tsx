@@ -162,11 +162,11 @@ const SectionWrapperComponentUnstyled = styled.section<SectionProps>(
   ({ colorComponent, size = 'lg' }) => ({
     position: 'relative',
     transition: 'background 300ms',
-    fontFamily: `${fonts.FAVORIT}, sans-serif`,
+    fontFamily: `${fonts.HEDVIG_LETTERS_STANDARD}, sans-serif`,
     ...getSectionSizeStyle(size),
     color: getMinimalColorStyles(colorComponent?.color ?? 'standard').color,
     'h1, h2, h3, h4': {
-      fontFamily: `${fonts.FAVORIT}, sans-serif`,
+      fontFamily: `${fonts.HEDVIG_LETTERS_STANDARD}, sans-serif`,
       fontWeight: 400,
     },
   }),
