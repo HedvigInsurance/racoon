@@ -28,7 +28,7 @@ const CardGrid = styled.div({
   justifyContent: 'center',
   padding: '0 1rem',
   margin: 'auto',
-  gap: 6,
+  gap: '1rem',
   maxWidth: '53rem',
   gridAutoColumns: '1fr 1fr',
   marginBottom: 'auto',
