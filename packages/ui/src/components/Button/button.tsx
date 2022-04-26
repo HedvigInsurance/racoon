@@ -3,7 +3,7 @@ import React, { ElementType } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
 import { getPaddings, Paddings } from '../../lib/paddings'
-import { getColor } from '../../lib/theme'
+import { getColor } from '../../lib/theme/theme'
 
 export type ButtonVariant = 'filled' | 'outlined' | 'text'
 export type ButtonSize = 'sm' | 'lg'

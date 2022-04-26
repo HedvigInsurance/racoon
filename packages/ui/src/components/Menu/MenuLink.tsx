@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ElementType, useContext } from 'react'
 import { ReactNode } from 'react'
-import { getColor } from '../../lib/theme'
+import { getColor } from '../../lib/theme/theme'
 import { MenuThemeContext } from './Menu'
 
 export type MenuLinkProps = {

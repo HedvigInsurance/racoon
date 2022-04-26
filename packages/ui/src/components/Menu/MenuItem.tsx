@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ReactNode, useContext } from 'react'
 import { mq } from '../../lib/media-query'
-import { getColor } from '../../lib/theme'
+import { getColor } from '../../lib/theme/theme'
 import { MenuThemeContext } from './Menu'
 import { MenuLink, MenuLinkProps } from './MenuLink'
 

@@ -46,7 +46,7 @@
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-operations": "^2.3.5",
     "@graphql-codegen/typescript-react-apollo": "^3.2.11",
-    "@hedviginsurance/brand": "5.0.0",
+    "@hedviginsurance/brand": "^5.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^8.0.0",
