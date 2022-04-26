@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
 import { mq, useBreakpoint } from '../../lib/media-query'
 import { BurgerButton } from '../BurgerButton/BurgerButton'
-import { Button } from '../Button/button'
+import { Button } from '../Button/Button'
 import { Menu, MenuProps } from './Menu'
 
 export default {

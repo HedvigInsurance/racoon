@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, ButtonProps } from '../Button/button'
+import { Button, ButtonProps } from '../Button/Button'
 
 export type ToggleButtonProps = Omit<ButtonProps, 'onClick'> & {
   initialActive?: boolean

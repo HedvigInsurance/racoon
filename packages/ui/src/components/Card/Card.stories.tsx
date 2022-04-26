@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Space } from '../space'
+import { Space } from '../Space'
 import { Card, CardContent, CardMedia } from './Card'
 
 export default {

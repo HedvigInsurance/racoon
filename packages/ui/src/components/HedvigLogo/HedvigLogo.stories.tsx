@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { HedvigLogo } from './hedvig-logo'
+import { HedvigLogo } from './HedvigLogo'
 
 export default {
   title: 'Hedvig Logo',
