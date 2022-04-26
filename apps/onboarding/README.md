@@ -2,8 +2,6 @@
 
 Next.js-based web app supping the web-based onboarding.
 
-> Supports only the Forever feature.
-
 ## Next.js
 
 Routes inside the `pages` folder are identified by suffixes `.page.tsx` or `.next.tsx`. This enables us to add any other files which won't be registered as routes.
