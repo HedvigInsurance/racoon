@@ -51,9 +51,8 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
 
       if (response.ok && response.redirected) {
         onSuccess?.({ redirectUrl: response.url })
-        if (window.location.href !== response.url) {
-          await router.push(response.url)
-        } else {
+        await router.push(response.url)
+        if (window.location.href === response.url) {
           setFormState({ state: 'idle', errors: null })
         }
       } else {
