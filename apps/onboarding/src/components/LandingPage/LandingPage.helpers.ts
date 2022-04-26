@@ -38,6 +38,6 @@ export const getFormInitialState = (insurances: Insurances) => {
       ...res,
       [fieldName]: isPreselected ?? false,
     }),
-    { isAccidentEnabled: process.env.FEATURE_ACCIDENT_NO === 'true' },
+    {},
   )
 }
