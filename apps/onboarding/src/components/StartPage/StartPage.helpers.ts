@@ -1,5 +1,6 @@
 import * as Analytics from '@/services/analytics/analytics'
-import { EntryPoint } from './StartPage.constants'
+import { Embark } from '@/services/embark'
+import { EntryPoint, InputField } from './StartPage.constants'
 
 const entryPointToFlowType = (entryPoint: EntryPoint) => {
   switch (entryPoint) {
@@ -12,9 +13,28 @@ const entryPointToFlowType = (entryPoint: EntryPoint) => {
   }
 }
 
-export const trackBeginOnboardingFlows = (entryPoint: unknown) => {
-  if (isEntryPoint(entryPoint)) {
-    Analytics.beginOnboarding(entryPointToFlowType(entryPoint))
+const entryPointToSwedishEmbarkStory = (entryPoint: EntryPoint) => {
+  switch (entryPoint) {
+    case EntryPoint.Current:
+      return Embark.Story.SwedenNeeder
+    case EntryPoint.New:
+      return Embark.Story.SwedenNeeder
+    case EntryPoint.Switch:
+      return Embark.Story.SwedenSwitcher
+  }
+}
+
+export const handleSubmitForm = (formData: FormData) => {
+  const entryPoint = formData.get(InputField.EntryPoint)
+
+  if (!isEntryPoint(entryPoint)) return
+
+  Analytics.beginOnboarding(entryPointToFlowType(entryPoint))
+
+  const personalNumber = formData.get(InputField.PersonalNumber)
+  if (typeof personalNumber === 'string') {
+    const swedishEmbarkStory = entryPointToSwedishEmbarkStory(entryPoint)
+    Embark.setStoryStore(swedishEmbarkStory, { personalNumber })
   }
 }
 

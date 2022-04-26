@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
 import { CheckIcon } from './CheckIcon'
 
-type ControlStateProps = { checked?: boolean; disabled?: boolean }
-
-export type ControlProps = {
-  label?: string
+export type CheckboxProps = {
+  label?: React.ReactNode
   prependLabel?: boolean
   onChange?: () => void
-} & ControlStateProps
+  checked?: boolean
+  disabled?: boolean
+  circle?: boolean
+}
 
-const Icon = styled(CheckIcon)<ControlStateProps>((props) => ({
+const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
   marginTop: '1.5px',
   visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
 }))
@@ -54,8 +55,17 @@ const ControlLabel = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-const StyledCheckbox = styled.div<ControlStateProps>(
-  {
+export const StyledCheckbox = ({ checked, onChange, disabled, circle }: CheckboxProps) => {
+  return (
+    <StyledCheckboxElement {...{ checked, onClick: onChange, disabled, circle }}>
+      <DisabledTick disabled={disabled} />
+      <Icon disabled={disabled} checked={checked} />
+    </StyledCheckboxElement>
+  )
+}
+
+const StyledCheckboxElement = styled.div<CheckboxProps>(
+  ({ circle }: CheckboxProps) => ({
     position: 'relative',
     display: 'inline-flex',
     justifyContent: 'center',
@@ -63,10 +73,10 @@ const StyledCheckbox = styled.div<ControlStateProps>(
     width: '1.25rem',
     height: '1.25rem',
     margin: '0.4rem',
-    borderRadius: '2px',
+    borderRadius: circle ? '100%' : '2px',
     boxSizing: 'border-box',
     transition: 'all 150ms',
-  },
+  }),
   (props) => ({
     background: props.disabled
       ? props.theme.colors.gray300
@@ -94,14 +104,11 @@ const DisabledTick = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-export const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: ControlProps) => (
+export const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: CheckboxProps) => (
   <ControlContainer>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
     <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
-    <StyledCheckbox {...{ checked, onClick: onChange, disabled }}>
-      <DisabledTick disabled={disabled} />
-      <Icon disabled={disabled} checked={checked} />
-    </StyledCheckbox>
+    <StyledCheckbox {...{ checked, onChange, disabled }} />
     {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
   </ControlContainer>
 )

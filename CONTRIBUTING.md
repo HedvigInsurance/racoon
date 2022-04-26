@@ -4,12 +4,30 @@ This document contains guidelines for how we write, organize and collaborate on 
 
 ## Table of contents
 
+- [Web standards](#web-standards-and-accessibility)
+- [Solving problems](#solving-problems)
 - [File and Directory structure](#file-and-directory-structure)
 - [Commits and Branches](#commits-and-branches)
 - [Pull Requests and Code Reviews](#pull-requests-and-code-reviews)
 - [Continuous Integration and Deployment](#continuous-integration-and-deployment)
 - [Code guidelines](#code-guidelines)
 - [Useful links](#useful-links)
+
+## Web standards and Accessibility
+
+One of our design principles is "Be inclusive". This means we should build accessible web sites. The easiest way to achieve this is to stay close to standards and write semantic HTML.
+
+No matter what, the end goal is **predictable web behaviour**. It should not matter which device, input method, or assistive technology a user uses to access our sites.
+
+## Solving problems
+
+There's no platform we would rather develop for than the web. Therefore we approach problems using this approach:
+
+1. Use built-in web/browser solutions. How far can we get? (`<select>`, `<form>`)
+
+1. Use custom but W3C/WCAG compliant (probably 3rd party) solution (`<form>` + `event.preventDefault()`)
+
+1. Explore a custom solution (Embark)
 
 ## File and Directory structure
 
