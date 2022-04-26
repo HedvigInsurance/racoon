@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useEffect, useRef } from 'react'
 import { useState } from 'react'
+import useRouterRefresh from './use-router-refresh'
 
 type TransitionState = 'idle' | 'submitting'
 
@@ -18,6 +19,7 @@ type Options = {
 
 export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
   const router = useRouter()
+  const refreshData = useRouterRefresh()
   const [formState, setFormState] = useState<FormState>({ state: 'idle', errors: null })
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -53,9 +55,11 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
         const redirectUrl = response.redirected ? response.url : router.asPath
 
         onSuccess?.({ redirectUrl })
-        await router.push(redirectUrl)
 
-        if (!response.redirected) {
+        if (response.redirected) {
+          await router.push(redirectUrl)
+        } else {
+          await refreshData()
           setFormState({ state: 'idle', errors: null })
         }
       } else {
