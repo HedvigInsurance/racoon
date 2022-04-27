@@ -13,6 +13,7 @@ import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { GTM_ID, pageview, useGTMUserProperties } from '@/services/analytics/gtm'
 import { useApollo } from '@/services/apollo'
 import * as Datadog from '@/services/datadog'
+import NextI18nextConfig from '../../next-i18next.config'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -72,4 +73,4 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(MyApp, NextI18nextConfig)

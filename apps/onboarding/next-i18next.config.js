@@ -1,4 +1,4 @@
-const path = require('path')
+const I18NextHttpBackend = require('i18next-http-backend')
 
 module.exports = {
   // Include "default" to prefix the default locale
@@ -7,10 +7,11 @@ module.exports = {
     locales: ['default', 'se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'],
     defaultLocale: 'default',
     localeDetection: false,
-  },
 
-  localePath: path.resolve('./public/locales'),
-  localeStructure: '{lng}/{ns}',
+    backend: {
+      loadPath: `${process.env.TRANSLATIONS_URL}/{lng}/{ns}.json`,
+    },
+  },
 
   lowerCaseLng: true,
 
@@ -18,4 +19,8 @@ module.exports = {
     prefix: '{',
     suffix: '}',
   },
+
+  serializeConfig: false,
+  use: [I18NextHttpBackend],
+  ns: ['common'],
 }
