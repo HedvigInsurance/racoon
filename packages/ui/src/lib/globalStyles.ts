@@ -9,10 +9,14 @@ export const globalStyles = css`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  **,
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
   *:before,
   *:after {
-    box-sizing: border-box;
+    box-sizing: inherit;
   }
 
   body {
