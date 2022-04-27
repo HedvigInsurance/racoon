@@ -4,7 +4,7 @@
   "pipeline": {
     "build": {
       "outputs": [".next/**", ".turbo/**", "dist/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["onboarding#download-translations", "^build"]
     },
     "test": {
       "outputs": ["covereage/**"],
@@ -33,6 +33,9 @@
     },
     "typecheck": {
       "outputs": []
+    },
+    "onboarding#download-translations": {
+      "outputs": ["public/locales/**"]
     }
   }
 }

@@ -5,3 +5,6 @@ cypress/videos/
 
 # TypeScript
 tsconfig.tsbuildinfo
+
+# translations
+public/locales/
