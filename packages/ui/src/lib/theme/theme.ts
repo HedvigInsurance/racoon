@@ -2,8 +2,8 @@ import { colorsV3, fonts } from '@hedviginsurance/brand'
 
 export const theme = {
   fonts: {
-    body: `'${fonts.FAVORIT}', sans-serif`,
-    heading: `'${fonts.FAVORIT}', sans-serif`,
+    body: `'${fonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
+    heading: `'${fonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
   },
   colors: {
     ...colorsV3,

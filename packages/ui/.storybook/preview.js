@@ -1,6 +1,4 @@
-import { ThemeProvider, Global } from '@emotion/react'
-import { theme } from '../src/lib/theme'
-import { globalStyles } from '../src/lib/globalStyles'
+import { theme, ThemeProvider } from 'ui'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -23,8 +21,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <>
-      <Global styles={globalStyles} />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <Story />
       </ThemeProvider>
     </>

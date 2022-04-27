@@ -2,7 +2,7 @@ import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { colorsV3 } from '@hedviginsurance/brand'
 import { mq } from '../../lib/media-query'
-import { getColor } from '../../lib/theme'
+import { getColor } from '../../lib/theme/theme'
 
 const CardSizes = {
   sm: '16rem',
