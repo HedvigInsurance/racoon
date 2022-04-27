@@ -1,0 +1,42 @@
+name: Download translations from Lokalise
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_translations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install
+        run: yarn
+
+      - name: Install Lokalise CLI
+        run: |
+          curl -sfL https://raw.githubusercontent.com/lokalise/lokalise-cli-2-go/master/install.sh | sh
+
+      - name: Download translations
+        run: yarn workspace onboarding download-translations
+        env:
+          LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: |
+            ci: update translations from Lokalise
+          title: |
+            Update / New translations from Lokalise
+          body: |
+            This PR was created automatically by the "Download translations from Lokalise" action.
+          branch: update-translations/${{ env.GITHUB_JOB }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
