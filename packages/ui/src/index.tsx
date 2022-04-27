@@ -17,7 +17,7 @@ export type { MenuTheme } from './components/Menu/Menu'
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'
 
-export { theme } from './lib/theme/theme'
+export { theme, getColor } from './lib/theme/theme'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
 
