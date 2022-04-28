@@ -11,6 +11,9 @@ const Wrapper = styled.div({
     maxHeight: 'none',
     width: '50vw',
     height: '100vh',
+    picture: {
+      height: '100vh',
+    },
   },
 })
 
