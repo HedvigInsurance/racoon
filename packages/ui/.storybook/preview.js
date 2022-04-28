@@ -1,4 +1,4 @@
-import { theme, ThemeProvider } from 'ui'
+import { theme, ThemeProvider } from '../src'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
