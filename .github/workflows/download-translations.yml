@@ -23,6 +23,8 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/lokalise/lokalise-cli-2-go/master/install.sh | sh
 
+      - run: echo "$HOME/bin" >> $GITHUB_PATH
+
       - name: Download translations
         run: yarn workspace onboarding download-translations
         env:
