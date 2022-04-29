@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { renderWithTheme } from '../../../test-helpers'
 import { MailIcon } from '../../icons/MailIcon'
-import { Button } from './button'
+import { Button } from './Button'
 
 describe('Button', () => {
   test('can render button with text content', () => {

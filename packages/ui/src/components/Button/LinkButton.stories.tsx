@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { LinkButton, LinkButtonProps } from './button'
+import { LinkButton, LinkButtonProps } from './Button'
 
 const storyMeta: Meta<LinkButtonProps> = {
   title: 'UI / Button / Link Button',

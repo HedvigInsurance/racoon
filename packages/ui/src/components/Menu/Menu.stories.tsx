@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { mq, useBreakpoint } from '../../lib/media-query'
-import { Button } from '../Button/button'
+import { Button } from '../Button/Button'
 import { Menu, MenuProps } from './Menu'
 
 export default {

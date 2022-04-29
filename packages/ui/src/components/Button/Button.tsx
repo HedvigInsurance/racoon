@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { ElementType } from 'react'
+import { ElementType } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
 import { getPaddings, Paddings } from '../../lib/paddings'
