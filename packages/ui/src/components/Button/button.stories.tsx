@@ -1,5 +1,4 @@
 import { Meta, Story } from '@storybook/react'
-import {  ReactElement } from 'react';
 import { MailIcon } from '../../icons/MailIcon'
 import { Button, ButtonProps, LinkButton as LB } from './Button'
 
