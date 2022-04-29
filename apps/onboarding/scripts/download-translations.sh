@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -eou pipefail
 
 echo "Attempting to download latest translations from Lokalise..."
