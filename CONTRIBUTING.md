@@ -63,6 +63,21 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 │  ├─ about.ts                  <-- Next.js page component
 ```
 
+#### Next.js-layer
+
+Aim to contain all Next.js specific logic under the `/pages` folder. This means that we should build things under e.g. `/components` in a way so they could be copied over to a non-Next.js based project without major changes.
+
+Examples:
+
+- Handle `req`, `res`, `context` objects directly inside `/pages`
+- Manage cookies inside `/pages`
+- Manage `<Head>` and meta-tags inside `/pages`
+- Style components inside `/components`
+
+Exceptions:
+
+- `useRouter`, `<Image>`, and other are used throughout the project.
+
 ## Commits and Branches
 
 ### Commits

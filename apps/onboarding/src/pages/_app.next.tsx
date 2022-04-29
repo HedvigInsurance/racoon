@@ -1,13 +1,10 @@
-import '@/styles/global.css'
-
 import { ApolloProvider } from '@apollo/client'
-import { ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { theme } from 'ui'
+import { ThemeProvider } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { GTM_ID, pageview, useGTMUserProperties } from '@/services/analytics/gtm'
@@ -45,7 +42,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </Head>
 
       <ApolloProvider client={apolloClient}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider>
           <Component {...pageProps} />
         </ThemeProvider>
       </ApolloProvider>

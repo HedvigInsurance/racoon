@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { getColor } from '../../lib/theme'
+import { getColor } from '../../lib/theme/theme'
 import { ButtonProps } from '../Button/Button'
 import { ToggleButton } from '../ToggleButton/ToggleButton'
 

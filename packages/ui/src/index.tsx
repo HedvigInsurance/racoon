@@ -17,7 +17,8 @@ export { Heading } from './components/Heading/Heading'
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'
 
-export { theme } from './lib/theme'
+export { theme, getColor } from './lib/theme/theme'
+export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
 
 export { MailIcon } from './icons/MailIcon'
