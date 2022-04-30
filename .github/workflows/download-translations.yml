@@ -39,7 +39,7 @@ jobs:
             Update / New translations from Lokalise
           body: |
             This PR was created automatically by the "Download translations from Lokalise" action.
-          branch: copy-update-translations/${{ github.run_id }}
+          branch: copy/update-translations/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HUSKY: 0
