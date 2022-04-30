@@ -42,3 +42,4 @@ jobs:
           branch: copy/update-translations/${{ env.GITHUB_JOB }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HUSKY: 0
