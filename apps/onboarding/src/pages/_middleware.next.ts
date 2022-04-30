@@ -37,7 +37,7 @@ const localeRedirectMiddleware = async (req: NextRequest) => {
   )
 }
 
-const quoteCartSessionMiddleware = async (req: NextRequest) => {
+const quoteCartSessionMiddleware = async (req: NextRequest, res: NextResponse) => {
   let onboardingQuoteCartId: string | undefined = req.cookies[QuoteCart.COOKIE_KEY]
   const { apiMarket, isoLocale } = getLocale(req.nextUrl.locale as LocaleLabel)
 
@@ -51,7 +51,14 @@ const quoteCartSessionMiddleware = async (req: NextRequest) => {
 
   if (onboardingQuoteCartId === undefined) {
     const id = await QuoteCart.create({ locale: isoLocale, market: apiMarket })
-    return NextResponse.next().cookie(QuoteCart.COOKIE_KEY, id)
+    res.cookie(QuoteCart.COOKIE_KEY, id)
+  }
+}
+
+const campaignCodeMiddleware = (req: NextRequest, res: NextResponse) => {
+  const campaignCode = req.nextUrl.searchParams.get(QuoteCart.CAMPAIGN_CODE_QUERY_PARAM)
+  if (campaignCode) {
+    res.cookie(QuoteCart.CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
   }
 }
 
@@ -63,7 +70,12 @@ export async function middleware(req: NextRequest) {
 
   try {
     if (shouldHandleLocale) return localeRedirectMiddleware(req)
-    if (isPageRoute) return await quoteCartSessionMiddleware(req)
+    if (isPageRoute) {
+      const response = NextResponse.next()
+      await quoteCartSessionMiddleware(req, response)
+      campaignCodeMiddleware(req, response)
+      return response
+    }
   } catch (error) {
     console.error('Unknown error', error)
   }
