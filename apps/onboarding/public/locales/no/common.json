@@ -335,7 +335,7 @@
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_LABEL": "Avslutt min nåværende  {INSURANCE_NAME} ",
   "INVALID_FIELD": "Dette feltet er ugyldig.",
   "CHECKOUT_YOUR_HOME_SECTION_TITLE": "Boligen din ",
-  "CHECKOUT_EDIT_INFORMATION_BUTTON": "",
+  "CHECKOUT_EDIT_INFORMATION_BUTTON": "Rediger informasjon",
   "GENERIC_ERROR_INPUT_REQUIRED": "Dette feltet er obligatorisk",
   "GENERIC_ERROR_INPUT_FORMAT": "Beklager, feil format.",
   "SIGN_FAIL_ERROR_HEADING": "Noe gikk galt",
@@ -396,7 +396,7 @@
   "ADDITIONAL_COVERAGE_DESC_ACCIDENT": "Ekstra sikkerhet hvis det skulle skje en ulykke",
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "Reiseforsikring",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "Sikkerhet for deg og familien din når du er på reise",
-  "SIDEBAR_TITLE": "Ditt Tilbud",
+  "SIDEBAR_TITLE": "Din pris",
   "CHECKOUT_CONTACT_US_CTA": "Trenger du hjelp? Kontakt oss",
   "CHECKOUT_ERROR_TEXT_PART_1": "Vennligst prøv igjen eller gå tilbake. Hvis feilen vedvarer, vennligst",
   "CHECKOUT_ERROR_TEXT_PART_2": "kontakt oss i chatten",
@@ -404,5 +404,11 @@
   "MAIN_COVERAGE_TITLE_HOUSE": "Husforsikring",
   "MAIN_COVERAGE_TITLE_ACCIDENT": "Ulykkeforsikring",
   "MAIN_COVERAGE_DESC_HOUSE": "Trygghet for huset og bygningene dine.",
-  "MAIN_COVERAGE_DESC_ACCIDENT": "Ekstra sikkerhet hvis det skulle skje en ulykke. "
+  "MAIN_COVERAGE_DESC_ACCIDENT": "Ekstra sikkerhet hvis det skulle skje en ulykke. ",
+  "CHECKOUT_DETAILS_REGISTRATION_NUMBER": "",
+  "CHECKOUT_DETAILS_MILEAGE": "",
+  "CHECKOUT_DETAILS_MILEAGE_VALUE": "",
+  "3D_SECURE_ERROR_DESCRIPTION": "Vennligst prøv å legge inn kortopplysningene dine på nytt. Hvis problemet vedvarer, prøv med et annet kort eller kontakt med banken din.",
+  "3D_SECURE_ERROR_BUTTON": "Ok",
+  "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres"
 }
