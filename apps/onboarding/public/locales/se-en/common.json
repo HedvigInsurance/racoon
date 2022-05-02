@@ -215,7 +215,7 @@
   "SIDEBAR_INSURANCE_TYPE_DK_CONTENTS_STUDENT_RENT": "",
   "FOREVER_CODE_ERROR": "This code doesn't exist.",
   "STARTPAGE_HEADLINE": "Get a price quote",
-  "STARTPAGE_PREAMBLE": "There´s a reason tens of thousands of people have Hedvig. See for yourself.",
+  "STARTPAGE_PREAMBLE": "There’s a reason tens of thousands of people have Hedvig. See for yourself.",
   "STARTPAGE_USP_1": "100% digital insurance",
   "STARTPAGE_USP_2": "Make a claim directly in the app",
   "STARTPAGE_USP_3": "Fast service",
@@ -396,7 +396,7 @@
   "ADDITIONAL_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident",
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "Travel Insurance",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "Covers you and your family when you’re travelling",
-  "SIDEBAR_TITLE": "Your Quote",
+  "SIDEBAR_TITLE": "Your price",
   "CHECKOUT_CONTACT_US_CTA": "Need help? Contact us",
   "CHECKOUT_ERROR_TEXT_PART_1": "Please try again or go back. If the error persists, please",
   "CHECKOUT_ERROR_TEXT_PART_2": "contact us in the chat",
@@ -404,5 +404,11 @@
   "MAIN_COVERAGE_TITLE_HOUSE": "House Insurance",
   "MAIN_COVERAGE_TITLE_ACCIDENT": "Accident Insurance",
   "MAIN_COVERAGE_DESC_HOUSE": "Coverage for your house and buildings",
-  "MAIN_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident"
+  "MAIN_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident",
+  "CHECKOUT_DETAILS_REGISTRATION_NUMBER": "Registration number",
+  "CHECKOUT_DETAILS_MILEAGE": "Annual mileage",
+  "CHECKOUT_DETAILS_MILEAGE_VALUE": "{VALUE} mil\/year",
+  "3D_SECURE_ERROR_DESCRIPTION": "Please try to enter your card details again. If the problem remains, try with another card or contact your credit card provider.",
+  "3D_SECURE_ERROR_BUTTON": "OK",
+  "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated"
 }

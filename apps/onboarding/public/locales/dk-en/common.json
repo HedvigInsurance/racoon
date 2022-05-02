@@ -363,7 +363,7 @@
   "CHECKOUT_CONTACT_INFO_SSN_LABEL": "CPR number",
   "CHECKOUT_CONTACT_INFO_EMAIL_HELPER": "For information from us. Or if discounts and other beneficial changes would appear after you’ve already received your offer.",
   "CHECKOUT_CONTACT_INFO_HEADING": "Contact information",
-  "CHECKOUT_CONTACT_INFO_CREDIT_CHECK_HELPER": "",
+  "CHECKOUT_CONTACT_INFO_CREDIT_CHECK_HELPER": " ",
   "CHECKOUT_PAGE_ERROR_MODAL_BODY": "Try again or start over. If the error persists, please contact us.",
   "CHECKOUT_PAGE_ERROR_MODAL_HEADING": "Something went wrong",
   "CHECKOUT_PAGE_ERROR_MODAL_BACK_TO_START_BUTTON": "Back to start",
@@ -396,7 +396,7 @@
   "ADDITIONAL_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident",
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "Travel Insurance",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "Covers you and your family when you’re travelling",
-  "SIDEBAR_TITLE": "Your Quote",
+  "SIDEBAR_TITLE": "Your price",
   "CHECKOUT_CONTACT_US_CTA": "Need help? Contact us",
   "CHECKOUT_ERROR_TEXT_PART_1": "Please try again or go back. If the error persists, please",
   "CHECKOUT_ERROR_TEXT_PART_2": "contact us in the chat",
@@ -404,5 +404,11 @@
   "MAIN_COVERAGE_TITLE_HOUSE": "House Insurance",
   "MAIN_COVERAGE_TITLE_ACCIDENT": "Accident Insurance",
   "MAIN_COVERAGE_DESC_HOUSE": "Coverage for your house and buildings",
-  "MAIN_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident"
+  "MAIN_COVERAGE_DESC_ACCIDENT": "Extra coverage in case of an accident",
+  "CHECKOUT_DETAILS_REGISTRATION_NUMBER": "Registration number",
+  "CHECKOUT_DETAILS_MILEAGE": "Annual mileage",
+  "CHECKOUT_DETAILS_MILEAGE_VALUE": "{VALUE} mil\/year",
+  "3D_SECURE_ERROR_DESCRIPTION": "Please try to enter your card details again. If the problem remains, try with another card or contact your credit card provider.",
+  "3D_SECURE_ERROR_BUTTON": "OK",
+  "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated"
 }
