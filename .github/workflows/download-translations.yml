@@ -23,7 +23,7 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/lokalise/lokalise-cli-2-go/master/install.sh | sh
 
-      - run: echo "$HOME/bin" >> $GITHUB_PATH
+      - run: echo "${GITHUB_WORKSPACE}/bin" >> $GITHUB_PATH
 
       - name: Download translations
         run: yarn workspace onboarding download-translations
@@ -39,6 +39,7 @@ jobs:
             Update / New translations from Lokalise
           body: |
             This PR was created automatically by the "Download translations from Lokalise" action.
-          branch: copy/update-translations/${{ env.GITHUB_JOB }}
+          branch: copy/update-translations/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HUSKY: 0
