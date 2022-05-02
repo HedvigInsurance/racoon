@@ -7,6 +7,7 @@ const client = createApolloClient()
 
 export const COOKIE_KEY = '_hv_onboarding_quote_cart'
 export const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
+export const CAMPAIGN_CODE_QUERY_PARAM = 'code'
 
 type AddCampaignParams = Omit<AddCampaignCodeParams, 'client'>
 export const addCampaign = (params: AddCampaignParams) => addCampaignCode({ client, ...params })
