@@ -396,13 +396,19 @@
   "ADDITIONAL_COVERAGE_DESC_ACCIDENT": "",
   "ADDITIONAL_COVERAGE_TITLE_TRAVEL": "",
   "ADDITIONAL_COVERAGE_DESC_TRAVEL": "",
-  "SIDEBAR_TITLE": "Din Offert",
-  "CHECKOUT_CONTACT_US_CTA": "",
+  "SIDEBAR_TITLE": "Ditt pris",
+  "CHECKOUT_CONTACT_US_CTA": "Behöver du hjälp? Kontakta oss",
   "CHECKOUT_ERROR_TEXT_PART_1": "Försök igen eller gå tillbaka. Om felet kvarstår",
   "CHECKOUT_ERROR_TEXT_PART_2": "hör av dig till oss i chatten",
   "CHECKOUT_ERROR_TEXT_PART_3": "eller mejla [hedvig@hedvig.com](mailto:hedvig@hedvig.com).",
   "MAIN_COVERAGE_TITLE_HOUSE": "",
   "MAIN_COVERAGE_TITLE_ACCIDENT": "",
   "MAIN_COVERAGE_DESC_HOUSE": "",
-  "MAIN_COVERAGE_DESC_ACCIDENT": ""
+  "MAIN_COVERAGE_DESC_ACCIDENT": "",
+  "CHECKOUT_DETAILS_REGISTRATION_NUMBER": "Registreringsnummer",
+  "CHECKOUT_DETAILS_MILEAGE": "Trolig körsträcka",
+  "CHECKOUT_DETAILS_MILEAGE_VALUE": "{VALUE} mil\/år",
+  "3D_SECURE_ERROR_DESCRIPTION": "",
+  "3D_SECURE_ERROR_BUTTON": "",
+  "3D_SECURE_ERROR_HEADING": ""
 }
