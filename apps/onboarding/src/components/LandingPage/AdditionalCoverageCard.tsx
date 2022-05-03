@@ -6,28 +6,26 @@ import { BaseCardProps, Section, Wrapper } from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
-  flex: '1 1 50%',
-  overflow: 'hidden',
-
-  [mq.sm]: {
-    flex: '1 0 30%',
-  },
 })
 
 const AdditionalWrapper = styled(Wrapper)({
-  height: '10rem',
-  flexDirection: 'column',
+  display: 'grid',
+  gridTemplateRows: '1.5fr 1fr',
+
   [mq.sm]: {
     height: '100%',
     borderRadius: '16px',
-    flexDirection: 'row',
+    gridTemplateColumns: '1fr 2fr',
+    gridTemplateRows: '1fr',
   },
 })
 
 const AdditionalSection = styled(Section)({
-  padding: '0.5em',
+  padding: '0.5rem',
+
   [mq.sm]: {
-    paddingLeft: '1em',
+    paddingLeft: '1rem',
+    alignItems: 'center',
   },
 })
 
@@ -37,6 +35,7 @@ const CheckboxContainer = styled.div({
   right: 0,
   zIndex: 30,
   padding: '0.625rem',
+
   [mq.sm]: {
     padding: 0,
     position: 'static',

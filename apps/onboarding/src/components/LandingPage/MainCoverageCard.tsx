@@ -6,21 +6,17 @@ import { BaseCardProps, Section, Wrapper } from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
-  flex: '1 0 33%',
-  overflow: 'hidden',
-
-  [mq.sm]: {
-    flex: '1 1 100%',
-    maxHeight: '80%',
-  },
 })
 
 const MainWrapper = styled(Wrapper)({
-  height: '8.125rem',
+  display: 'grid',
+  gridTemplateColumns: '1fr 2fr',
+  minHeight: '8rem',
+
   [mq.sm]: {
-    height: '22.5rem',
     borderRadius: '16px',
-    flexDirection: 'column',
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: '1.5fr 1fr',
   },
 })
 
@@ -28,6 +24,7 @@ const CheckboxContainer = styled.div({
   padding: 0,
   position: 'static',
   marginLeft: 'auto',
+
   [mq.sm]: {
     position: 'absolute',
     top: 0,
@@ -44,6 +41,7 @@ export const MainCoverageCard = ({
   onCheck,
   imgAlt,
   selected,
+  required,
   ...wrapperProps
 }: BaseCardProps) => {
   const isCheckable = onCheck !== undefined
@@ -53,7 +51,7 @@ export const MainCoverageCard = ({
         <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
       </ImageFrame>
       <Section isCheckable={isCheckable}>
-        <Space y={0.5}>
+        <Space y={0.25}>
           <BodyText variant={0} colorVariant="dark" displayBlock>
             {title}
           </BodyText>
@@ -63,7 +61,7 @@ export const MainCoverageCard = ({
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox onChange={onCheck} checked={selected} />
+            <Checkbox onChange={onCheck} checked={selected} required={required} />
           </CheckboxContainer>
         )}
       </Section>

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { Button, Heading, mq } from 'ui'
+import { useMemo, useState } from 'react'
+import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
@@ -20,29 +20,31 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
 }))
 
-const GridAdditionalCoverageCard = styled(AdditionalCoverageCard)({ gridArea: 'span 1' })
-
-const CardGrid = styled.div({
-  display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'center',
+const PageForm = styled.form({
   padding: '0 1rem',
   margin: 'auto',
-  gap: '1rem',
   maxWidth: '53rem',
-  gridAutoColumns: '1fr 1fr',
   marginBottom: 'auto',
   marginTop: 0,
   paddingBottom: '2rem',
+
   [mq.sm]: {
     paddingBottom: 0,
   },
+})
+
+const CoverageCardGrid = styled.div({
+  display: 'grid',
+  gap: '1rem',
+  gridTemplateColumns: '1fr 1fr',
+  width: '100%',
 })
 
 const TitleContainer = styled.div({
   gridColumn: '1 / span 2',
   marginBottom: '1rem',
   marginTop: '1.5rem',
+
   [mq.sm]: {
     marginTop: '3rem',
   },
@@ -58,6 +60,7 @@ const PageContainer = styled.main((props) => ({
 const FooterButton = styled(Button)({
   width: '100%',
   justifyContent: 'center',
+
   [mq.sm]: {
     width: 'auto',
     marginTop: '5rem',
@@ -66,8 +69,6 @@ const FooterButton = styled(Button)({
 })
 
 const ContentCard = styled.div({
-  gridColumn: '1 / span 2',
-  textAlign: 'start',
   margin: '1rem 1rem 0 0',
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
@@ -90,10 +91,15 @@ export const LandingPage = ({
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
+  const hasSelectedAtLeastOneMainInsurance = useMemo(
+    () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
+    [formState, mainCoverageInsurances],
+  )
+
   return (
     <PageContainer>
       <Header />
-      <form
+      <PageForm
         id="landing-page-form"
         onSubmit={(event) => {
           event.preventDefault()
@@ -104,21 +110,24 @@ export const LandingPage = ({
           router.push(PageLink.embark({ locale: locale.path, slug }))
         }}
       >
-        <CardGrid>
-          <ContentCard>
+        <ContentCard>
+          <Space y={1.5}>
             <Heading variant="m" headingLevel="h2" colorVariant="dark">
               {t('LANDING_PAGE_HEADLINE')}
             </Heading>
             <BodyText variant={1} colorVariant="medium" displayBlock>
               {t('LANDING_PAGE_SUBHEADING')}
             </BodyText>
-          </ContentCard>
-          <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-            </Heading>
-          </TitleContainer>
+          </Space>
+        </ContentCard>
 
+        <TitleContainer>
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+            {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
+          </Heading>
+        </TitleContainer>
+
+        <CoverageCardGrid>
           {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
             const isLastItem = index === arr.length - 1
             const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
@@ -127,6 +136,7 @@ export const LandingPage = ({
               <GridMainCoverageCard
                 key={id}
                 selected={formState[fieldName]}
+                required={!hasSelectedAtLeastOneMainInsurance}
                 onCheck={
                   !isSingleCard
                     ? () =>
@@ -143,13 +153,17 @@ export const LandingPage = ({
               />
             )
           })}
-          <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-            </Heading>
-          </TitleContainer>
+        </CoverageCardGrid>
+
+        <TitleContainer>
+          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+            {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+          </Heading>
+        </TitleContainer>
+
+        <CoverageCardGrid>
           {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
-            <GridAdditionalCoverageCard
+            <AdditionalCoverageCard
               key={id}
               enableHover
               cardImg={img}
@@ -164,8 +178,8 @@ export const LandingPage = ({
               description={t(description)}
             />
           ))}
-        </CardGrid>
-      </form>
+        </CoverageCardGrid>
+      </PageForm>
       <ResponsiveFooter>
         <FooterButton type="submit" form="landing-page-form" color="dark" disabled={isRedirecting}>
           {t('START_SCREEN_SUBMIT_BUTTON')}

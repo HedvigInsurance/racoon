@@ -1,4 +1,4 @@
-import { Market } from '@/lib/types'
+import { Market, MarketLabel } from '@/lib/types'
 import { Insurances } from './LandingPage.types'
 
 // TODO make usage of a proper API
@@ -16,6 +16,17 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       isPreselected: true,
       fieldName: 'isHomeContents',
     },
+    ...(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)
+      ? [
+          {
+            id: 'no-house',
+            name: 'MAIN_COVERAGE_TITLE_HOUSE',
+            description: 'MAIN_COVERAGE_DESC_HOUSE',
+            img: '/racoon-assets/house.jpg',
+            fieldName: 'isHouse',
+          },
+        ]
+      : []),
     {
       id: 'no-travel',
       name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
@@ -24,8 +35,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
-  ].concat(
-    process.env.FEATURE_ACCIDENT_NO === 'true'
+    ...(process.env.FEATURE_ACCIDENT_NO === 'true'
       ? [
           {
             id: 'no-accident',
@@ -36,6 +46,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             fieldName: 'isAccident',
           },
         ]
-      : [],
-  ),
+      : []),
+  ],
 }

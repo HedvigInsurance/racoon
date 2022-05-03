@@ -8,6 +8,7 @@ export type CheckboxProps = {
   checked?: boolean
   disabled?: boolean
   circle?: boolean
+  required?: boolean
 }
 
 const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
@@ -104,10 +105,17 @@ const DisabledTick = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-export const Checkbox = ({ disabled, checked, onChange, label, prependLabel }: CheckboxProps) => (
+export const Checkbox = ({
+  disabled,
+  checked,
+  onChange,
+  label,
+  prependLabel,
+  required,
+}: CheckboxProps) => (
   <ControlContainer>
     {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-    <HiddenInput {...{ checked, onChange, disabled }} type="checkbox" />
+    <HiddenInput {...{ checked, onChange, disabled, required }} type="checkbox" />
     <StyledCheckbox {...{ checked, onChange, disabled }} />
     {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
   </ControlContainer>
