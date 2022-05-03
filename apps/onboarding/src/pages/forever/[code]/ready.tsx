@@ -10,6 +10,6 @@ const ForeverPageReady: NextPage = () => {
   )
 }
 
-export { getServerSideProps } from './index.page'
+export { getServerSideProps } from '.'
 
 export default ForeverPageReady
