@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next'
-import { getStaticProps } from '../index.page'
+import { getStaticProps } from '..'
 
-export { default } from '../index.page'
+export { default } from '..'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return await getStaticProps(context)
