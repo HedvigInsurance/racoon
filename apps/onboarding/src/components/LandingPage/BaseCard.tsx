@@ -13,24 +13,25 @@ export type BaseCardProps = {
   description: string
   onCheck?: () => void
   imgAlt?: string
+  required?: boolean
 } & WrapperProps
 
 export const Section = styled.div<{ isCheckable?: boolean }>(
   {
-    padding: '1em 0.5em',
-    flexGrow: 1,
+    padding: '1rem',
     display: 'flex',
-    flexDirection: 'row',
     alignItems: 'center',
+
     [mq.sm]: {
       padding: '1.5rem',
+      alignItems: 'flex-start',
     },
   },
   ({ isCheckable }) => ({
     [mq.sm]: {
-      paddingRight: (isCheckable && '0.5em') || 'initial',
+      paddingRight: (isCheckable && '0.5rem') || 'initial',
     },
-    [mq.md]: { paddingRight: '1.5em' },
+    [mq.md]: { paddingRight: '1.5rem' },
   }),
 )
 
