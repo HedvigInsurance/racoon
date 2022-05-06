@@ -7,6 +7,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = () => {
   return new ApolloClient({
+    name: 'Web:Racoon:Onboarding',
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
       uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
