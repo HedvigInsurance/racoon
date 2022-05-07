@@ -4,6 +4,7 @@
   font-weight: 600;
   src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Bold.woff2') format('woff2'),
     url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Bold.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
@@ -12,6 +13,7 @@
   font-weight: 400;
   src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Book.woff2') format('woff2'),
     url('https://cdn.hedvig.com/identity/fonts/FavoritStd-Book.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +22,7 @@
   font-weight: 400;
   src: url('https://cdn.hedvig.com/identity/fonts/FavoritStd-BookItalic.woff2') format('woff2'),
     url('https://cdn.hedvig.com/identity/fonts/FavoritStd-BookItalic.woff') format('woff');
+  font-display: swap;
 }
 
 body {
