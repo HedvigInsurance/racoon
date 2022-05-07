@@ -1,3 +1,4 @@
+import { fonts } from '@hedviginsurance/brand'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { GTM_ID } from '@/services/analytics/gtm'
 
@@ -5,7 +6,18 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          {Object.values(fonts).map((fontName) => (
+            <link
+              key={fontName}
+              rel="preload"
+              href={`https://cdn.hedvig.com/identity/fonts/${fontName}.woff2`}
+              as="font"
+              type="font/woff2"
+              crossOrigin="anonymous"
+            />
+          ))}
+        </Head>
         <body>
           <noscript>
             <iframe
