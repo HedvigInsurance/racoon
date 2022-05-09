@@ -5,10 +5,10 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { ThemeProvider } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
+import { useApollo } from '@/hooks/useApollo'
 import { useTrackPageViews } from '@/hooks/useTrackPageViews'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { GTM_ID, useGTMUserProperties } from '@/services/analytics/gtm'
-import { useApollo } from '@/services/apollo'
 import * as Datadog from '@/services/datadog'
 
 // Enable API mocking
