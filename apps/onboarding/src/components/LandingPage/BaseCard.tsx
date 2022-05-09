@@ -9,6 +9,7 @@ export type WrapperProps = {
 
 export type BaseCardProps = {
   cardImg: string
+  blurDataURL: string
   title: string
   description: string
   onCheck?: () => void

@@ -128,27 +128,28 @@ export const LandingPage = ({
         </TitleContainer>
 
         <CoverageCardGrid>
-          {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
+          {mainCoverageInsurances.map((inrurance, index, arr) => {
             const isLastItem = index === arr.length - 1
             const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
             const isSingleCard = arr.length === 1
             return (
               <GridMainCoverageCard
-                key={id}
-                selected={formState[fieldName]}
+                key={inrurance.id}
+                selected={formState[inrurance.fieldName]}
                 required={!hasSelectedAtLeastOneMainInsurance}
                 onCheck={
                   !isSingleCard
                     ? () =>
                         setFormState({
                           ...formState,
-                          [fieldName]: !formState[fieldName],
+                          [inrurance.fieldName]: !formState[inrurance.fieldName],
                         })
                     : undefined
                 }
-                cardImg={img}
-                title={t(name)}
-                description={t(description)}
+                cardImg={inrurance.img}
+                blurDataURL={inrurance.blurDataURL}
+                title={t(inrurance.name)}
+                description={t(inrurance.description)}
                 size={cardSize}
               />
             )
@@ -162,20 +163,21 @@ export const LandingPage = ({
         </TitleContainer>
 
         <CoverageCardGrid>
-          {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
+          {additionalCoverageInsurances.map((insurance) => (
             <AdditionalCoverageCard
-              key={id}
+              key={insurance.id}
               enableHover
-              cardImg={img}
-              selected={formState[fieldName]}
+              cardImg={insurance.img}
+              blurDataURL={insurance.blurDataURL}
+              selected={formState[insurance.fieldName]}
               onCheck={() =>
                 setFormState({
                   ...formState,
-                  [fieldName]: !formState[fieldName],
+                  [insurance.fieldName]: !formState[insurance.fieldName],
                 })
               }
-              title={t(name)}
-              description={t(description)}
+              title={t(insurance.name)}
+              description={t(insurance.description)}
             />
           ))}
         </CoverageCardGrid>
