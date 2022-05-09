@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { colorsV3, fonts } from '@hedviginsurance/brand'
 import { match } from 'matchly'
 import React from 'react'
-import { mq, theme } from 'ui'
+import { mq } from 'ui'
 import { MinimalColorComponent, minimalColorComponentColors } from '@/services/storyblok/types'
 
 export const CONTENT_GUTTER = '2rem'
@@ -162,15 +162,11 @@ const SectionWrapperComponentUnstyled = styled.section<SectionProps>(
   ({ colorComponent, size = 'lg', theme }) => ({
     position: 'relative',
     transition: 'background 300ms',
-    fontFamily: `${theme.fonts.body}, sans-serif`,
     ...getSectionSizeStyle(size),
     color: getMinimalColorStyles(colorComponent?.color ?? 'standard').color,
-    'h1, h2, h3, h4': {
-      fontFamily: `${theme.fonts.body}, sans-serif`,
-      fontWeight: 400,
-    },
   }),
 )
+
 export const SectionWrapperComponent = styled(SectionWrapperComponentUnstyled)<SectionProps>`
   ${({ extraStyling = '' }) => String(extraStyling)}
 `
