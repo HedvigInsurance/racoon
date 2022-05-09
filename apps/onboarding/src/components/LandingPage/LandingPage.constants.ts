@@ -14,7 +14,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: '/racoon-assets/home.jpg',
       blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
-      isPreselected: true,
       fieldName: 'isHomeContents',
     },
     ...(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)

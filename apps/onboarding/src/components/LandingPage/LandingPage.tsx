@@ -24,13 +24,7 @@ const PageForm = styled.form({
   padding: '0 1rem',
   margin: 'auto',
   maxWidth: '53rem',
-  marginBottom: 'auto',
   marginTop: 0,
-  paddingBottom: '2rem',
-
-  [mq.sm]: {
-    paddingBottom: 0,
-  },
 })
 
 const CoverageCardGrid = styled.div({
@@ -55,6 +49,10 @@ const PageContainer = styled.main((props) => ({
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
+
+  [mq.sm]: {
+    display: 'block',
+  },
 }))
 
 const FooterButton = styled(Button)({
@@ -63,8 +61,7 @@ const FooterButton = styled(Button)({
 
   [mq.sm]: {
     width: 'auto',
-    marginTop: '5rem',
-    marginBottom: '3.5rem',
+    marginTop: '4rem',
   },
 })
 
@@ -170,6 +167,7 @@ export const LandingPage = ({
               cardImg={insurance.img}
               blurDataURL={insurance.blurDataURL}
               selected={formState[insurance.fieldName]}
+              disabled={!hasSelectedAtLeastOneMainInsurance}
               onCheck={() =>
                 setFormState({
                   ...formState,
