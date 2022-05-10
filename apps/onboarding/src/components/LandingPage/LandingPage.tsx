@@ -139,6 +139,7 @@ export const LandingPage = ({
                 key={inrurance.id}
                 selected={formState[inrurance.fieldName]}
                 required={!hasSelectedAtLeastOneMainInsurance}
+                errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                 onCheck={
                   !isSingleCard
                     ? () =>

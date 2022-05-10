@@ -16,6 +16,7 @@ export type BaseCardProps = {
   onCheck?: () => void
   imgAlt?: string
   required?: boolean
+  errorMessage?: string
 } & WrapperProps
 
 export const Section = styled.div<{ isCheckable?: boolean }>(

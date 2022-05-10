@@ -9,6 +9,7 @@ export type CheckboxProps = {
   disabled?: boolean
   circle?: boolean
   required?: boolean
+  errorMessage?: string
 }
 
 const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
@@ -112,11 +113,28 @@ export const Checkbox = ({
   label,
   prependLabel,
   required,
-}: CheckboxProps) => (
-  <ControlContainer>
-    {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-    <HiddenInput {...{ checked, onChange, disabled, required }} type="checkbox" />
-    <StyledCheckbox {...{ checked, onChange, disabled }} />
-    {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-  </ControlContainer>
-)
+  errorMessage,
+}: CheckboxProps) => {
+  const handleInvalid = errorMessage
+    ? (event: React.FormEvent<HTMLInputElement>) =>
+        event.currentTarget.setCustomValidity(errorMessage)
+    : undefined
+
+  return (
+    <ControlContainer>
+      {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+      <HiddenInput
+        {...{
+          checked,
+          onChange,
+          disabled,
+          required,
+          onInvalid: handleInvalid,
+        }}
+        type="checkbox"
+      />
+      <StyledCheckbox {...{ checked, onChange, disabled }} />
+      {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+    </ControlContainer>
+  )
+}

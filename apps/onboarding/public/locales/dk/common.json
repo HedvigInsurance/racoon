@@ -341,7 +341,7 @@
   "SIGN_FAIL_ERROR_HEADING": "Der opstod en uventet fejl",
   "CANCEL_ANYTIME": "Afmeld når som helst",
   "PRICE_SUFFIX_INTERVAL": "\/måned",
-  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Prøv venligst igen eller kontakt os i chatten eller send os en e-mail på [hedvig@hedvig.com](mailto:hedvig@hedvig.com), hvis problemet fortsætter.",
+  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Prøv venligst igen eller kontakt os i chatten eller send os en e-mail på [hallo@hedvig.com](mailto:hallo@hedvig.com), hvis problemet fortsætter.",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_PROVIDER_LABEL": "Opsig min nuværende  {INSURANCE_NAME} hos {INSURANCE_PROVIDER}",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_TOOLTIP": "Vi vil gerne hjælpe til med at opsige din nuværende {INSURANCE_NAME} for dig. Din nye forsikring hos Hedvig træder i kraft, samtidig med at den gamle ophører. Du modtager en mail med mere information.",
   "CHECKOUT_FOOTER_CANCELLATION_INFO": "Ingen bindingstid",
@@ -410,5 +410,7 @@
   "CHECKOUT_DETAILS_MILEAGE_VALUE": "",
   "3D_SECURE_ERROR_DESCRIPTION": "Prøv at indtaste dine kortoplysninger igen. Fortsætter problemet, så prøv med et andet kort eller kontakt din betalingskortudbyder.",
   "3D_SECURE_ERROR_BUTTON": "Okay",
-  "3D_SECURE_ERROR_HEADING": "Dit kort kunne ikke godkendes"
+  "3D_SECURE_ERROR_HEADING": "Dit kort kunne ikke godkendes",
+  "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Betaling er tilknyttet!",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": ""
 }
