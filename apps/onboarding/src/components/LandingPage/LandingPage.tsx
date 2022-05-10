@@ -22,9 +22,14 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 
 const PageForm = styled.form({
   padding: '0 1rem',
+  paddingBottom: '2rem',
   margin: 'auto',
   maxWidth: '53rem',
   marginTop: 0,
+
+  [mq.sm]: {
+    paddingBottom: 0,
+  },
 })
 
 const CoverageCardGrid = styled.div({
