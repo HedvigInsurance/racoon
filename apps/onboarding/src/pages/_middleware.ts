@@ -2,11 +2,18 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getLocale } from '@/lib/l10n'
 import type { LocaleLabel } from '@/lib/l10n/locales'
-import { QuoteCart } from '@/services/quote-cart'
+import { Market } from '@/lib/types'
+import { graphqlSdk } from '@/services/graphql/sdk'
 
 const PUBLIC_FILE = /\.(.*)$/
-
 const DEFAULT_PATH_LOCALE = 'se-en'
+
+const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
+if (!GRAPHQL_ENDPOINT) throw new Error('NEXT_PUBLIC_GRAPHQL_ENDPOINT is not set')
+
+const QUOTE_CART_COOKIE_KEY = '_hv_onboarding_quote_cart'
+const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
+const CAMPAIGN_CODE_QUERY_PARAM = 'code'
 
 // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 const SUPPORTED_MARKETS = ['se', 'dk', 'no']
@@ -37,28 +44,35 @@ const localeRedirectMiddleware = async (req: NextRequest) => {
   )
 }
 
+type ValidateQuoteCartParams = {
+  id: string
+  market: Market
+}
+
+export const validateQuoteCart = async ({ id, market }: ValidateQuoteCartParams) => {
+  const { quoteCart } = await graphqlSdk.QuoteCartStatus({ id })
+  return quoteCart.market === market && !quoteCart.checkout
+}
+
 const quoteCartSessionMiddleware = async (req: NextRequest, res: NextResponse) => {
-  let onboardingQuoteCartId: string | undefined = req.cookies[QuoteCart.COOKIE_KEY]
+  let quoteCartId: string | undefined = req.cookies[QUOTE_CART_COOKIE_KEY]
   const { apiMarket, isoLocale } = getLocale(req.nextUrl.locale as LocaleLabel)
 
-  if (onboardingQuoteCartId) {
-    const isValid = await QuoteCart.validate({
-      id: onboardingQuoteCartId,
-      market: apiMarket,
-    })
-    onboardingQuoteCartId = isValid ? onboardingQuoteCartId : undefined
+  if (quoteCartId) {
+    const isValid = await validateQuoteCart({ id: quoteCartId, market: apiMarket })
+    quoteCartId = isValid ? quoteCartId : undefined
   }
 
-  if (onboardingQuoteCartId === undefined) {
-    const id = await QuoteCart.create({ locale: isoLocale, market: apiMarket })
-    res.cookie(QuoteCart.COOKIE_KEY, id)
+  if (quoteCartId === undefined) {
+    const quoteCart = await graphqlSdk.CreateQuoteCart({ market: apiMarket, locale: isoLocale })
+    res.cookie(QUOTE_CART_COOKIE_KEY, quoteCart.onboardingQuoteCart_create.id)
   }
 }
 
 const campaignCodeMiddleware = (req: NextRequest, res: NextResponse) => {
-  const campaignCode = req.nextUrl.searchParams.get(QuoteCart.CAMPAIGN_CODE_QUERY_PARAM)
+  const campaignCode = req.nextUrl.searchParams.get(CAMPAIGN_CODE_QUERY_PARAM)
   if (campaignCode) {
-    res.cookie(QuoteCart.CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
+    res.cookie(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
   }
 }
 
