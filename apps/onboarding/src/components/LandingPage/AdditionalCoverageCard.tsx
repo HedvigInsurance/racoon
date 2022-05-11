@@ -33,7 +33,6 @@ const CheckboxContainer = styled.div({
   position: 'absolute',
   top: 0,
   right: 0,
-  zIndex: 30,
   padding: '0.625rem',
 
   [mq.sm]: {
