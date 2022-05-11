@@ -3,11 +3,11 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
-import { useEffect } from 'react'
 import { ThemeProvider } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
+import { useTrackPageViews } from '@/hooks/useTrackPageViews'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
-import { GTM_ID, pageview, useGTMUserProperties } from '@/services/analytics/gtm'
+import { GTM_ID, useGTMUserProperties } from '@/services/analytics/gtm'
 import { useApollo } from '@/services/apollo'
 import * as Datadog from '@/services/datadog'
 
@@ -18,15 +18,12 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
 Datadog.initRum()
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   const { adtractionScriptSrc } = useCurrentLocale()
   const apolloClient = useApollo(pageProps)
 
   useGTMUserProperties()
-  useEffect(() => {
-    router.events.on('routeChangeComplete', pageview)
-    return () => router.events.off('routeChangeComplete', pageview)
-  }, [router.events])
+  useTrackPageViews()
 
   return (
     <>
