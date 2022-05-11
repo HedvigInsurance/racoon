@@ -22,11 +22,10 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 
 const PageForm = styled.form({
   padding: '0 1rem',
+  paddingBottom: '2rem',
   margin: 'auto',
   maxWidth: '53rem',
-  marginBottom: 'auto',
   marginTop: 0,
-  paddingBottom: '2rem',
 
   [mq.sm]: {
     paddingBottom: 0,
@@ -55,6 +54,10 @@ const PageContainer = styled.main((props) => ({
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
+
+  [mq.sm]: {
+    display: 'block',
+  },
 }))
 
 const FooterButton = styled(Button)({
@@ -63,8 +66,7 @@ const FooterButton = styled(Button)({
 
   [mq.sm]: {
     width: 'auto',
-    marginTop: '5rem',
-    marginBottom: '3.5rem',
+    marginTop: '4rem',
   },
 })
 
@@ -137,6 +139,7 @@ export const LandingPage = ({
                 key={inrurance.id}
                 selected={formState[inrurance.fieldName]}
                 required={!hasSelectedAtLeastOneMainInsurance}
+                errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                 onCheck={
                   !isSingleCard
                     ? () =>
@@ -170,6 +173,7 @@ export const LandingPage = ({
               cardImg={insurance.img}
               blurDataURL={insurance.blurDataURL}
               selected={formState[insurance.fieldName]}
+              disabled={!hasSelectedAtLeastOneMainInsurance}
               onCheck={() =>
                 setFormState({
                   ...formState,

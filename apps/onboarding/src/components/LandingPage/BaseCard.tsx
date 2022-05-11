@@ -5,6 +5,7 @@ export type WrapperProps = {
   selected?: boolean
   enableHover?: boolean
   isCheckable?: boolean
+  disabled?: boolean
 }
 
 export type BaseCardProps = {
@@ -15,6 +16,7 @@ export type BaseCardProps = {
   onCheck?: () => void
   imgAlt?: string
   required?: boolean
+  errorMessage?: string
 } & WrapperProps
 
 export const Section = styled.div<{ isCheckable?: boolean }>(
@@ -36,17 +38,23 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-export const Wrapper = styled.div<WrapperProps>(
-  {
+export const Wrapper = styled.button<WrapperProps>(
+  ({ theme, isCheckable, selected, enableHover }) => ({
     transition: 'all 150ms',
     display: 'flex',
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',
-  },
-  ({ theme, isCheckable, selected, enableHover }) => ({
     cursor: isCheckable ? 'pointer' : 'initial',
-    border: selected ? `1px solid ${theme.colors.black}` : `1px solid ${theme.colors.gray300}`,
-    ':hover': (enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
+    border: '1px solid',
+    borderColor: selected ? theme.colors.black : theme.colors.gray300,
+    '&:hover:not([disabled])': {
+      border: enableHover ? `1px solid ${theme.colors.gray700}` : '',
+    },
+    '&:disabled': {
+      opacity: 0.5,
+    },
   }),
 )
+
+Wrapper.defaultProps = { type: 'button' }

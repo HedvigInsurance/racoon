@@ -341,7 +341,7 @@
   "SIGN_FAIL_ERROR_HEADING": "Something went wrong",
   "CANCEL_ANYTIME": "Cancel anytime",
   "PRICE_SUFFIX_INTERVAL": "\/month",
-  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Please try again or contact us in the chat or email us at [hedvig@hedvig.com](mailto:hedvig@hedvig.com) if the problem remains.",
+  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Please try again or contact us in the chat or email us at [hei@hedvig.com](mailto:hei@hedvig.com) if the problem remains.",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_PROVIDER_LABEL": "Cancel my current {INSURANCE_NAME} with {INSURANCE_PROVIDER}",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_TOOLTIP": "We will gladly help you cancel your current {INSURANCE_NAME} for you. Your new insurance with Hedvig will be activated when your old expires. You’ll receive more info via email.",
   "CHECKOUT_FOOTER_CANCELLATION_INFO": "Cancel anytime",
@@ -410,5 +410,7 @@
   "CHECKOUT_DETAILS_MILEAGE_VALUE": "{VALUE} mil\/year",
   "3D_SECURE_ERROR_DESCRIPTION": "Please try to enter your card details again. If the problem remains, try with another card or contact your credit card provider.",
   "3D_SECURE_ERROR_BUTTON": "OK",
-  "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated"
+  "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated",
+  "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Payment connected!",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "At least one main coverage must be selected to continue"
 }

@@ -341,7 +341,7 @@
   "SIGN_FAIL_ERROR_HEADING": "Noe gikk galt",
   "CANCEL_ANYTIME": "Avbryt når som helst",
   "PRICE_SUFFIX_INTERVAL": "\/mnd",
-  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Vennligst prøv igjen eller kontakt oss i chatten eller send oss en e-post på [hedvig@hedvig.com](mailto:hedvig@hedvig.com) hvis problemet vedvarer.",
+  "CHECKOUT_SIGN_FAIL_ERROR_TEXT": "Vennligst prøv igjen eller kontakt oss i chatten eller send oss en e-post på [hei@hedvig.com](mailto:hei@hedvig.com) hvis problemet vedvarer.",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_PROVIDER_LABEL": "Avslutt min nåværende  {INSURANCE_NAME} hos {INSURANCE_PROVIDER}",
   "SIDEBAR_REQUEST_CANCELLATION_INSURANCE_NAME_TOOLTIP": "Vi hjelper deg gjerne med å avslutte din nåværende {INSURANCE_NAME} for deg. Din nye forsikring hos Hedvig aktiveres når den gamle utløper. Du vil få mer informasjon på mail.",
   "CHECKOUT_FOOTER_CANCELLATION_INFO": "Ingen bindingstid",
@@ -410,5 +410,7 @@
   "CHECKOUT_DETAILS_MILEAGE_VALUE": "",
   "3D_SECURE_ERROR_DESCRIPTION": "Vennligst prøv å legge inn kortopplysningene dine på nytt. Hvis problemet vedvarer, prøv med et annet kort eller kontakt med banken din.",
   "3D_SECURE_ERROR_BUTTON": "Ok",
-  "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres"
+  "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres",
+  "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Betaling tilkoblet!",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Du må velge minst en hovedforsikring for å fortsette"
 }
