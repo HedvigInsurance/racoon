@@ -1,11 +1,10 @@
-import { gql } from '@apollo/client'
-import * as Apollo from '@apollo/client'
+import { DocumentNode } from 'graphql'
+import gql from 'graphql-tag'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
-const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -11839,47 +11838,6 @@ export const AddCampaignCodeDocument = gql`
     }
   }
 `
-export type AddCampaignCodeMutationFn = Apollo.MutationFunction<
-  AddCampaignCodeMutation,
-  AddCampaignCodeMutationVariables
->
-
-/**
- * __useAddCampaignCodeMutation__
- *
- * To run a mutation, you first call `useAddCampaignCodeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddCampaignCodeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addCampaignCodeMutation, { data, loading, error }] = useAddCampaignCodeMutation({
- *   variables: {
- *      id: // value for 'id'
- *      code: // value for 'code'
- *   },
- * });
- */
-export function useAddCampaignCodeMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddCampaignCodeMutation,
-    AddCampaignCodeMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<AddCampaignCodeMutation, AddCampaignCodeMutationVariables>(
-    AddCampaignCodeDocument,
-    options,
-  )
-}
-export type AddCampaignCodeMutationHookResult = ReturnType<typeof useAddCampaignCodeMutation>
-export type AddCampaignCodeMutationResult = Apollo.MutationResult<AddCampaignCodeMutation>
-export type AddCampaignCodeMutationOptions = Apollo.BaseMutationOptions<
-  AddCampaignCodeMutation,
-  AddCampaignCodeMutationVariables
->
 export const CreateQuoteBundleDocument = gql`
   mutation CreateQuoteBundle($id: ID!, $input: CreateSwedishBundleInput!) {
     quoteCart_createSwedishBundle(id: $id, input: $input) {
@@ -11894,47 +11852,6 @@ export const CreateQuoteBundleDocument = gql`
     }
   }
 `
-export type CreateQuoteBundleMutationFn = Apollo.MutationFunction<
-  CreateQuoteBundleMutation,
-  CreateQuoteBundleMutationVariables
->
-
-/**
- * __useCreateQuoteBundleMutation__
- *
- * To run a mutation, you first call `useCreateQuoteBundleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateQuoteBundleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createQuoteBundleMutation, { data, loading, error }] = useCreateQuoteBundleMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateQuoteBundleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateQuoteBundleMutation,
-    CreateQuoteBundleMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<CreateQuoteBundleMutation, CreateQuoteBundleMutationVariables>(
-    CreateQuoteBundleDocument,
-    options,
-  )
-}
-export type CreateQuoteBundleMutationHookResult = ReturnType<typeof useCreateQuoteBundleMutation>
-export type CreateQuoteBundleMutationResult = Apollo.MutationResult<CreateQuoteBundleMutation>
-export type CreateQuoteBundleMutationOptions = Apollo.BaseMutationOptions<
-  CreateQuoteBundleMutation,
-  CreateQuoteBundleMutationVariables
->
 export const CreateQuoteCartDocument = gql`
   mutation CreateQuoteCart($market: Market!, $locale: String!) {
     onboardingQuoteCart_create(input: { market: $market, locale: $locale }) {
@@ -11942,47 +11859,6 @@ export const CreateQuoteCartDocument = gql`
     }
   }
 `
-export type CreateQuoteCartMutationFn = Apollo.MutationFunction<
-  CreateQuoteCartMutation,
-  CreateQuoteCartMutationVariables
->
-
-/**
- * __useCreateQuoteCartMutation__
- *
- * To run a mutation, you first call `useCreateQuoteCartMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateQuoteCartMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createQuoteCartMutation, { data, loading, error }] = useCreateQuoteCartMutation({
- *   variables: {
- *      market: // value for 'market'
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useCreateQuoteCartMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateQuoteCartMutation,
-    CreateQuoteCartMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<CreateQuoteCartMutation, CreateQuoteCartMutationVariables>(
-    CreateQuoteCartDocument,
-    options,
-  )
-}
-export type CreateQuoteCartMutationHookResult = ReturnType<typeof useCreateQuoteCartMutation>
-export type CreateQuoteCartMutationResult = Apollo.MutationResult<CreateQuoteCartMutation>
-export type CreateQuoteCartMutationOptions = Apollo.BaseMutationOptions<
-  CreateQuoteCartMutation,
-  CreateQuoteCartMutationVariables
->
 export const QuoteCartQuotesDocument = gql`
   query QuoteCartQuotes($id: ID!) {
     quoteCart(id: $id) {
@@ -11995,47 +11871,6 @@ export const QuoteCartQuotesDocument = gql`
     }
   }
 `
-
-/**
- * __useQuoteCartQuotesQuery__
- *
- * To run a query within a React component, call `useQuoteCartQuotesQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuoteCartQuotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQuoteCartQuotesQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useQuoteCartQuotesQuery(
-  baseOptions: Apollo.QueryHookOptions<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>(
-    QuoteCartQuotesDocument,
-    options,
-  )
-}
-export function useQuoteCartQuotesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>(
-    QuoteCartQuotesDocument,
-    options,
-  )
-}
-export type QuoteCartQuotesQueryHookResult = ReturnType<typeof useQuoteCartQuotesQuery>
-export type QuoteCartQuotesLazyQueryHookResult = ReturnType<typeof useQuoteCartQuotesLazyQuery>
-export type QuoteCartQuotesQueryResult = Apollo.QueryResult<
-  QuoteCartQuotesQuery,
-  QuoteCartQuotesQueryVariables
->
 export const QuoteCartStatusDocument = gql`
   query QuoteCartStatus($id: ID!) {
     quoteCart(id: $id) {
@@ -12047,44 +11882,59 @@ export const QuoteCartStatusDocument = gql`
     }
   }
 `
-
-/**
- * __useQuoteCartStatusQuery__
- *
- * To run a query within a React component, call `useQuoteCartStatusQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuoteCartStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQuoteCartStatusQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useQuoteCartStatusQuery(
-  baseOptions: Apollo.QueryHookOptions<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>(
-    QuoteCartStatusDocument,
-    options,
-  )
+export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
+export function getSdk<C>(requester: Requester<C>) {
+  return {
+    AddCampaignCode(
+      variables: AddCampaignCodeMutationVariables,
+      options?: C,
+    ): Promise<AddCampaignCodeMutation> {
+      return requester<AddCampaignCodeMutation, AddCampaignCodeMutationVariables>(
+        AddCampaignCodeDocument,
+        variables,
+        options,
+      )
+    },
+    CreateQuoteBundle(
+      variables: CreateQuoteBundleMutationVariables,
+      options?: C,
+    ): Promise<CreateQuoteBundleMutation> {
+      return requester<CreateQuoteBundleMutation, CreateQuoteBundleMutationVariables>(
+        CreateQuoteBundleDocument,
+        variables,
+        options,
+      )
+    },
+    CreateQuoteCart(
+      variables: CreateQuoteCartMutationVariables,
+      options?: C,
+    ): Promise<CreateQuoteCartMutation> {
+      return requester<CreateQuoteCartMutation, CreateQuoteCartMutationVariables>(
+        CreateQuoteCartDocument,
+        variables,
+        options,
+      )
+    },
+    QuoteCartQuotes(
+      variables: QuoteCartQuotesQueryVariables,
+      options?: C,
+    ): Promise<QuoteCartQuotesQuery> {
+      return requester<QuoteCartQuotesQuery, QuoteCartQuotesQueryVariables>(
+        QuoteCartQuotesDocument,
+        variables,
+        options,
+      )
+    },
+    QuoteCartStatus(
+      variables: QuoteCartStatusQueryVariables,
+      options?: C,
+    ): Promise<QuoteCartStatusQuery> {
+      return requester<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>(
+        QuoteCartStatusDocument,
+        variables,
+        options,
+      )
+    },
+  }
 }
-export function useQuoteCartStatusLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<QuoteCartStatusQuery, QuoteCartStatusQueryVariables>(
-    QuoteCartStatusDocument,
-    options,
-  )
-}
-export type QuoteCartStatusQueryHookResult = ReturnType<typeof useQuoteCartStatusQuery>
-export type QuoteCartStatusLazyQueryHookResult = ReturnType<typeof useQuoteCartStatusLazyQuery>
-export type QuoteCartStatusQueryResult = Apollo.QueryResult<
-  QuoteCartStatusQuery,
-  QuoteCartStatusQueryVariables
->
+export type Sdk = ReturnType<typeof getSdk>

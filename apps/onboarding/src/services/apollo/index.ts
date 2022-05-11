@@ -1,5 +1,4 @@
 import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
-import { useMemo } from 'react'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -53,10 +52,4 @@ export const addApolloState = (
   }
 
   return pageProps
-}
-
-export const useApollo = (pageProps: any) => {
-  const state = pageProps[APOLLO_STATE_PROP_NAME]
-  const store = useMemo(() => initializeApollo(state), [state])
-  return store
 }
