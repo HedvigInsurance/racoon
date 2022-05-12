@@ -8,16 +8,16 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
   [Market.Sweden]: [],
   [Market.Denmark]: [],
   [Market.Norway]: [
-    {
-      id: 'no-home-contents',
-      name: 'MAIN_COVERAGE_TITLE_HOME',
-      description: 'MAIN_COVERAGE_DESC_HOME',
-      img: '/racoon-assets/home.jpg',
-      blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
-      fieldName: 'isHomeContents',
-    },
     ...(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)
       ? [
+          {
+            id: 'no-home-contents',
+            name: 'MAIN_COVERAGE_TITLE_HOME',
+            description: 'MAIN_COVERAGE_DESC_HOME',
+            img: '/racoon-assets/home.jpg',
+            blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
+            fieldName: 'isHomeContents',
+          },
           {
             id: 'no-house',
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
@@ -27,7 +27,17 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             fieldName: 'isHouse',
           },
         ]
-      : []),
+      : [
+          {
+            id: 'no-home-contents',
+            name: 'MAIN_COVERAGE_TITLE_HOME',
+            description: 'MAIN_COVERAGE_DESC_HOME',
+            img: '/racoon-assets/home.jpg',
+            blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
+            fieldName: 'isHomeContents',
+            isPreselected: true,
+          },
+        ]),
     {
       id: 'no-travel',
       name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
