@@ -2,8 +2,8 @@ import { LocaleData } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, Array<string>> = {
-  [MarketLabel.SE]: [''],
-  [MarketLabel.DK]: [''],
+  [MarketLabel.SE]: [],
+  [MarketLabel.DK]: [],
   [MarketLabel.NO]: ['onboarding-NO', 'onboarding-NOv2'],
 }
 
@@ -37,8 +37,6 @@ export const Embark = {
   },
   setStore: (locale: LocaleData, initialStore: EmbarkStore) => {
     const storyNames = EMBARK_STORY_BY_MARKET[locale.marketLabel]
-
-    if (!storyNames.length) return
 
     storyNames.forEach((storyName) => Embark.setStoryStore(storyName, initialStore))
   },
