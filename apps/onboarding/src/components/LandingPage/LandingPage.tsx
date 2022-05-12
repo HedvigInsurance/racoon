@@ -79,12 +79,14 @@ type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
+  isHouseEnabled?: boolean
 }
 
 export const LandingPage = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
+  isHouseEnabled = false,
 }: LandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -107,7 +109,7 @@ export const LandingPage = ({
           event.preventDefault()
 
           setIsRedirecting(true)
-          Embark.setStore(locale, formState)
+          Embark.setStore(locale, formState, isHouseEnabled)
           const slug = Embark.getSlug(locale)
           router.push(PageLink.embark({ locale: locale.path, slug }))
         }}

@@ -1,3 +1,4 @@
+import { MarketLabel } from 'lib/types'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -16,12 +17,14 @@ type NewMemberPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
+  isHouseEnabled: boolean
 }
 
 const NewMemberPage: NextPage<NewMemberPageProps> = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
+  isHouseEnabled,
 }) => {
   const { t } = useTranslation()
 
@@ -34,6 +37,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
         mainCoverageInsurances={mainCoverageInsurances}
         additionalCoverageInsurances={additionalCoverageInsurances}
         formInitialState={formInitialState}
+        isHouseEnabled={isHouseEnabled}
       />
     </>
   )
@@ -61,6 +65,7 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
       mainCoverageInsurances: getMainCoverageInsurances(insurances),
       additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
       formInitialState: getFormInitialState(insurances),
+      isHouseEnabled: Boolean(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)),
     },
   }
 }

@@ -1,12 +1,6 @@
 import { LocaleData } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 
-const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
-  [MarketLabel.SE]: '',
-  [MarketLabel.DK]: '',
-  [MarketLabel.NO]: 'onboarding-NO',
-}
-
 const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
   [MarketLabel.SE]: '',
   [MarketLabel.DK]: '',
@@ -14,6 +8,16 @@ const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
 }
 
 type EmbarkStore = Record<string, string | number | boolean>
+
+const getStoryName = (marketLabel: MarketLabel, isHouseEnabled: boolean = false) => {
+  const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
+    [MarketLabel.SE]: '',
+    [MarketLabel.DK]: '',
+    [MarketLabel.NO]: isHouseEnabled ? 'onboarding-NOV2' : 'onboarding-NO',
+  }
+
+  return EMBARK_STORY_BY_MARKET[marketLabel]
+}
 
 export const Embark = {
   Story: {
@@ -35,15 +39,15 @@ export const Embark = {
     const embarkStoryKey = `embark-store-${window.encodeURIComponent(storyName)}`
     window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(serialisedStore))
   },
-  setStore: (locale: LocaleData, initialStore: EmbarkStore) => {
-    const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
+  setStore: (locale: LocaleData, initialStore: EmbarkStore, isHouseEnabled = false) => {
+    const storyName = getStoryName(locale.marketLabel, isHouseEnabled)
 
     if (!storyName) return
 
     Embark.setStoryStore(storyName, initialStore)
   },
-  getStore: (locale: LocaleData) => {
-    const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
+  getStore: (locale: LocaleData, isHouseEnabled = false) => {
+    const storyName = getStoryName(locale.marketLabel, isHouseEnabled)
 
     if (!storyName) return
 
