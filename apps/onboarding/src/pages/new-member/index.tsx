@@ -1,4 +1,3 @@
-import { MarketLabel } from 'lib/types'
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -12,6 +11,7 @@ import {
 } from '@/components/LandingPage/LandingPage.helpers'
 import { Insurances } from '@/components/LandingPage/LandingPage.types'
 import { LocaleLabel } from '@/lib/l10n/locales'
+import { MarketLabel } from '@/lib/types'
 
 type NewMemberPageProps = {
   mainCoverageInsurances: Insurances
