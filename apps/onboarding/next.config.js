@@ -7,4 +7,7 @@ module.exports = {
   images: {
     domains: ['promise.hedvig.com'],
   },
+  experimental: {
+    emotion: true,
+  },
 }
