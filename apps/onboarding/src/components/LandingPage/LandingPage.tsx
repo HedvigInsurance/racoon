@@ -108,7 +108,6 @@ export const LandingPage = ({
         const slug = Embark.getSlug(locale)
         router.push(PageLink.embark({ locale: locale.path, slug }))
       }}
-      noValidate={hasSelectedAtLeastOneMainInsurance}
     >
       <PageContainer>
         <Header />
@@ -139,7 +138,7 @@ export const LandingPage = ({
                 <GridMainCoverageCard
                   key={inrurance.id}
                   selected={formState[inrurance.fieldName]}
-                  required={true}
+                  required={!hasSelectedAtLeastOneMainInsurance}
                   errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                   onCheck={
                     !isSingleCard

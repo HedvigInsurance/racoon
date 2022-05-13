@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useEffect, useRef } from 'react'
 import { CheckIcon } from './CheckIcon'
 
 export type CheckboxProps = {
@@ -115,22 +116,23 @@ export const Checkbox = ({
   required,
   errorMessage,
 }: CheckboxProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const handleInvalid = errorMessage
-    ? (event: React.FormEvent<HTMLInputElement>) =>
-        event.currentTarget.setCustomValidity(errorMessage)
+    ? () => inputRef.current?.setCustomValidity(errorMessage)
     : undefined
+
+  useEffect(() => {
+    inputRef.current?.setCustomValidity('')
+  }, [required, checked])
 
   return (
     <ControlContainer>
       {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
       <HiddenInput
-        {...{
-          checked,
-          onChange,
-          disabled,
-          required,
-          onInvalid: handleInvalid,
-        }}
+        {...{ checked, onChange, disabled, required }}
+        onInvalid={handleInvalid}
+        ref={inputRef}
         type="checkbox"
       />
       <StyledCheckbox {...{ checked, onChange, disabled }} />
