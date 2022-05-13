@@ -412,5 +412,17 @@
   "3D_SECURE_ERROR_BUTTON": "Ok",
   "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Betaling tilkoblet!",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Du må velge minst en hovedforsikring for å fortsette"
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Du må velge minst en hovedforsikring for å fortsette",
+  "OPEN_COMPARISON_MODAL": "Sammenlign forsikringsnivåer",
+  "COMPARISON_MODEL_HEADER": "Hvilket forsikringsnivå passer deg?",
+  "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "",
+  "DETAILS_MODULE_TABLE_REGISTRATION_NUMBER_CELL_LABEL": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_CELL_LABEL": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_10000": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_15000": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_20000": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000": "",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000_PLUS": "",
+  "CHECKOUT_BUTTON_CONNECT_CARD": "Koble til kredittkort",
+  "LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING": "Velg minst en hovedforsikring og de tilleggsforsikringene du ønsker for å komme i gang.I de neste stegene vil vi stille noen oppfølgingsspørsmål."
 }

@@ -79,12 +79,14 @@ type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
+  isHouseEnabled: boolean
 }
 
 export const LandingPage = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
+  isHouseEnabled,
 }: LandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -118,7 +120,11 @@ export const LandingPage = ({
               {t('LANDING_PAGE_HEADLINE')}
             </Heading>
             <BodyText variant={1} colorVariant="medium" displayBlock>
-              {t('LANDING_PAGE_SUBHEADING')}
+              {t(
+                isHouseEnabled
+                  ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
+                  : 'LANDING_PAGE_SUBHEADING',
+              )}
             </BodyText>
           </Space>
         </ContentCard>
