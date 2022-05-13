@@ -4,4 +4,7 @@ module.exports = {
   images: {
     domains: ['a.storyblok.com'],
   },
+  experimental: {
+    emotion: true,
+  },
 }
