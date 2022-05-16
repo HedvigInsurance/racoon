@@ -7,10 +7,9 @@ export { Feature } from '@/services/features'
 export const useFeature = (features: Array<Feature> = []) => {
   const { marketLabel } = useCurrentLocale()
 
-  const featureMap = useMemo(() => Features.getMarketBasedFlags(marketLabel), [marketLabel])
   const status = useMemo(
-    () => features.map((feature) => featureMap[feature]),
-    [features, featureMap],
+    () => features.map((feature) => Features.getFeature(feature, marketLabel)),
+    [features, marketLabel],
   )
 
   return status

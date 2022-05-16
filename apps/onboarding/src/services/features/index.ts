@@ -14,4 +14,7 @@ export const Features = {
       HOUSE_INSURANCE: normalize(process.env.NEXT_PUBLIC_FEATURE_HOUSE_INSURANCE),
     }
   },
+  getFeature(feature: Feature, marketLabel: MarketLabel) {
+    return this.getMarketBasedFlags(marketLabel)[feature]
+  },
 }
