@@ -8,7 +8,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
   [Market.Sweden]: [],
   [Market.Denmark]: [],
   [Market.Norway]: [
-    ...(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)
+    ...(process.env.NEXT_PUBLIC_FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)
       ? [
           {
             id: 'no-home-contents',
@@ -47,7 +47,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
-    ...(process.env.FEATURE_ACCIDENT_NO === 'true'
+    ...(process.env.NEXT_PUBLIC_FEATURE_ACCIDENT_INSURANCE?.includes(MarketLabel.NO)
       ? [
           {
             id: 'no-accident',
