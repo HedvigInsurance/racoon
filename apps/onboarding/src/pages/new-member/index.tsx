@@ -2,29 +2,19 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
-import { LandingPage } from '@/components/LandingPage/LandingPage'
+import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
 import {
   getInsurancesByLocaleLabel,
   getMainCoverageInsurances,
   getAdditionalCoverageInsurances,
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
-import { Insurances } from '@/components/LandingPage/LandingPage.types'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { MarketLabel } from '@/lib/types'
 
-type NewMemberPageProps = {
-  mainCoverageInsurances: Insurances
-  additionalCoverageInsurances: Insurances
-  formInitialState: Record<string, boolean>
-  isHouseEnabled: boolean
-}
-
-const NewMemberPage: NextPage<NewMemberPageProps> = ({
+const NewMemberPage: NextPage<LandingPageProps> = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
-  isHouseEnabled,
 }) => {
   const { t } = useTranslation()
 
@@ -37,13 +27,12 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
         mainCoverageInsurances={mainCoverageInsurances}
         additionalCoverageInsurances={additionalCoverageInsurances}
         formInitialState={formInitialState}
-        isHouseEnabled={isHouseEnabled}
       />
     </>
   )
 }
 
-export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context) => {
+export const getStaticProps: GetStaticProps<LandingPageProps> = async (context) => {
   // Skips prerendering this page for 'default' locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
   if (context.locale === 'default') {
@@ -65,7 +54,6 @@ export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context
       mainCoverageInsurances: getMainCoverageInsurances(insurances),
       additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
       formInitialState: getFormInitialState(insurances),
-      isHouseEnabled: Boolean(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)),
     },
   }
 }
