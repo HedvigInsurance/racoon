@@ -6,10 +6,10 @@ import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
+import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
 import { Embark } from '@/services/embark'
-import { Features } from '@/services/features'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
@@ -94,6 +94,8 @@ export const LandingPage = ({
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
+  const [IS_HOUSE_INSURANCE_ENABLED] = useFeature([Feature.HOUSE_INSURANCE])
+
   const hasSelectedAtLeastOneMainInsurance = useMemo(
     () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
     [formState, mainCoverageInsurances],
@@ -120,7 +122,7 @@ export const LandingPage = ({
               </Heading>
               <BodyText variant={1} colorVariant="medium" displayBlock>
                 {t(
-                  Features.isHouseEnabled(locale.marketLabel)
+                  IS_HOUSE_INSURANCE_ENABLED
                     ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
                     : 'LANDING_PAGE_SUBHEADING',
                 )}
