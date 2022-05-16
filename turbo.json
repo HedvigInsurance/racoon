@@ -21,7 +21,7 @@
         "$FEATURE_ACCIDENT_NO"
       ]
     },
-    "onboarding#market-web": {
+    "market-web#build": {
       "outputs": [".next/**"]
     },
     "test": {
