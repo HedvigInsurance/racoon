@@ -20,7 +20,7 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
 }))
 
-const PageForm = styled.form({
+const Main = styled.main({
   padding: '0 1rem',
   paddingBottom: '2rem',
   margin: 'auto',
@@ -101,102 +101,103 @@ export const LandingPage = ({
   )
 
   return (
-    <PageContainer>
-      <Header />
-      <PageForm
-        id="landing-page-form"
-        onSubmit={(event) => {
-          event.preventDefault()
+    <form
+      onSubmit={(event) => {
+        event.preventDefault()
 
-          setIsRedirecting(true)
-          Embark.setStore(locale, formState)
-          const slug = Embark.getSlug(locale)
-          router.push(PageLink.embark({ locale: locale.path, slug }))
-        }}
-      >
-        <ContentCard>
-          <Space y={1.5}>
-            <Heading variant="m" headingLevel="h2" colorVariant="dark">
-              {t('LANDING_PAGE_HEADLINE')}
+        setIsRedirecting(true)
+        Embark.setStore(locale, formState)
+        const slug = Embark.getSlug(locale)
+        router.push(PageLink.embark({ locale: locale.path, slug }))
+      }}
+    >
+      <PageContainer>
+        <Header />
+        <Main>
+          <ContentCard>
+            <Space y={1.5}>
+              <Heading variant="m" headingLevel="h2" colorVariant="dark">
+                {t('LANDING_PAGE_HEADLINE')}
+              </Heading>
+              <BodyText variant={1} colorVariant="medium" displayBlock>
+                {t(
+                  isHouseEnabled
+                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
+                    : 'LANDING_PAGE_SUBHEADING',
+                )}
+              </BodyText>
+            </Space>
+          </ContentCard>
+
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
             </Heading>
-            <BodyText variant={1} colorVariant="medium" displayBlock>
-              {t(
-                isHouseEnabled
-                  ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
-                  : 'LANDING_PAGE_SUBHEADING',
-              )}
-            </BodyText>
-          </Space>
-        </ContentCard>
+          </TitleContainer>
 
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-          </Heading>
-        </TitleContainer>
+          <CoverageCardGrid>
+            {mainCoverageInsurances.map((inrurance, index, arr) => {
+              const isLastItem = index === arr.length - 1
+              const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+              const isSingleCard = arr.length === 1
+              return (
+                <GridMainCoverageCard
+                  key={inrurance.id}
+                  selected={formState[inrurance.fieldName]}
+                  required={!hasSelectedAtLeastOneMainInsurance}
+                  errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
+                  onCheck={
+                    !isSingleCard
+                      ? () =>
+                          setFormState({
+                            ...formState,
+                            [inrurance.fieldName]: !formState[inrurance.fieldName],
+                          })
+                      : undefined
+                  }
+                  cardImg={inrurance.img}
+                  blurDataURL={inrurance.blurDataURL}
+                  title={t(inrurance.name)}
+                  description={t(inrurance.description)}
+                  size={cardSize}
+                />
+              )
+            })}
+          </CoverageCardGrid>
 
-        <CoverageCardGrid>
-          {mainCoverageInsurances.map((inrurance, index, arr) => {
-            const isLastItem = index === arr.length - 1
-            const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
-            const isSingleCard = arr.length === 1
-            return (
-              <GridMainCoverageCard
-                key={inrurance.id}
-                selected={formState[inrurance.fieldName]}
-                required={!hasSelectedAtLeastOneMainInsurance}
-                errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
-                onCheck={
-                  !isSingleCard
-                    ? () =>
-                        setFormState({
-                          ...formState,
-                          [inrurance.fieldName]: !formState[inrurance.fieldName],
-                        })
-                    : undefined
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+            </Heading>
+          </TitleContainer>
+
+          <CoverageCardGrid>
+            {additionalCoverageInsurances.map((insurance) => (
+              <AdditionalCoverageCard
+                key={insurance.id}
+                enableHover
+                cardImg={insurance.img}
+                blurDataURL={insurance.blurDataURL}
+                selected={formState[insurance.fieldName]}
+                disabled={!hasSelectedAtLeastOneMainInsurance}
+                onCheck={() =>
+                  setFormState({
+                    ...formState,
+                    [insurance.fieldName]: !formState[insurance.fieldName],
+                  })
                 }
-                cardImg={inrurance.img}
-                blurDataURL={inrurance.blurDataURL}
-                title={t(inrurance.name)}
-                description={t(inrurance.description)}
-                size={cardSize}
+                title={t(insurance.name)}
+                description={t(insurance.description)}
               />
-            )
-          })}
-        </CoverageCardGrid>
-
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-          </Heading>
-        </TitleContainer>
-
-        <CoverageCardGrid>
-          {additionalCoverageInsurances.map((insurance) => (
-            <AdditionalCoverageCard
-              key={insurance.id}
-              enableHover
-              cardImg={insurance.img}
-              blurDataURL={insurance.blurDataURL}
-              selected={formState[insurance.fieldName]}
-              disabled={!hasSelectedAtLeastOneMainInsurance}
-              onCheck={() =>
-                setFormState({
-                  ...formState,
-                  [insurance.fieldName]: !formState[insurance.fieldName],
-                })
-              }
-              title={t(insurance.name)}
-              description={t(insurance.description)}
-            />
-          ))}
-        </CoverageCardGrid>
-      </PageForm>
-      <ResponsiveFooter>
-        <FooterButton type="submit" form="landing-page-form" color="dark" disabled={isRedirecting}>
-          {t('START_SCREEN_SUBMIT_BUTTON')}
-        </FooterButton>
-      </ResponsiveFooter>
-    </PageContainer>
+            ))}
+          </CoverageCardGrid>
+        </Main>
+        <ResponsiveFooter>
+          <FooterButton color="dark" disabled={isRedirecting}>
+            {t('START_SCREEN_SUBMIT_BUTTON')}
+          </FooterButton>
+        </ResponsiveFooter>
+      </PageContainer>
+    </form>
   )
 }
