@@ -9,6 +9,7 @@ import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
 import { Embark } from '@/services/embark'
+import { Features } from '@/services/features'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
@@ -75,18 +76,16 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type LandingPageProps = {
+export type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
-  isHouseEnabled: boolean
 }
 
 export const LandingPage = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
-  isHouseEnabled,
 }: LandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -121,7 +120,7 @@ export const LandingPage = ({
               </Heading>
               <BodyText variant={1} colorVariant="medium" displayBlock>
                 {t(
-                  isHouseEnabled
+                  Features.isHouseEnabled(locale.marketLabel)
                     ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
                     : 'LANDING_PAGE_SUBHEADING',
                 )}
