@@ -1,4 +1,5 @@
 import { Market, MarketLabel } from '@/lib/types'
+import { Features, Feature } from '@/services/features'
 import { Insurances } from './LandingPage.types'
 
 // TODO make usage of a proper API
@@ -8,7 +9,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
   [Market.Sweden]: [],
   [Market.Denmark]: [],
   [Market.Norway]: [
-    ...(process.env.FEATURE_HOUSE_INSURANCE?.includes(MarketLabel.NO)
+    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO)
       ? [
           {
             id: 'no-home-contents',
@@ -47,7 +48,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
-    ...(process.env.FEATURE_ACCIDENT_NO === 'true'
+    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO)
       ? [
           {
             id: 'no-accident',

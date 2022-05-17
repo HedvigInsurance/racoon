@@ -6,6 +6,7 @@ import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
+import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
 import { Embark } from '@/services/embark'
@@ -75,7 +76,7 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type LandingPageProps = {
+export type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
@@ -92,6 +93,8 @@ export const LandingPage = ({
 
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
+
+  const [IS_HOUSE_INSURANCE_ENABLED] = useFeature([Feature.HOUSE_INSURANCE])
 
   const hasSelectedAtLeastOneMainInsurance = useMemo(
     () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
@@ -118,7 +121,11 @@ export const LandingPage = ({
                 {t('LANDING_PAGE_HEADLINE')}
               </Heading>
               <BodyText variant={1} colorVariant="medium" displayBlock>
-                {t('LANDING_PAGE_SUBHEADING')}
+                {t(
+                  IS_HOUSE_INSURANCE_ENABLED
+                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
+                    : 'LANDING_PAGE_SUBHEADING',
+                )}
               </BodyText>
             </Space>
           </ContentCard>

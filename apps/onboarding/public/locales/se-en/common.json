@@ -412,5 +412,17 @@
   "3D_SECURE_ERROR_BUTTON": "OK",
   "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Payment connected!",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "At least one main coverage must be selected to continue"
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "At least one main coverage must be selected to continue",
+  "OPEN_COMPARISON_MODAL": "Compare insurance levels",
+  "COMPARISON_MODEL_HEADER": "What insurance level suits you?",
+  "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "City",
+  "DETAILS_MODULE_TABLE_REGISTRATION_NUMBER_CELL_LABEL": "Registration number",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_CELL_LABEL": "Annual mileage",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_10000": "10,000 km per year",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_15000": "15,000 km per year",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_20000": "20,000 km per year",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000": "25,000 km per year",
+  "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000_PLUS": "25,000+ km per year",
+  "CHECKOUT_BUTTON_CONNECT_CARD": "Connect credit card",
+  "LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING": "Choose at least one main coverage and any additional coverage you’d like to get started. In the next step, we’ll ask you some follow-up questions."
 }
