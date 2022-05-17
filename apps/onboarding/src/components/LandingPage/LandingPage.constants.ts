@@ -5,7 +5,26 @@ import { Insurances } from './LandingPage.types'
 // This is being hardcoded at the moment but in the future that kind of information
 // will be retrieved from an proper API
 export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
-  [Market.Sweden]: [],
+  [Market.Sweden]: [
+    {
+      id: 'se-home',
+      name: 'MAIN_COVERAGE_TITLE_HOME',
+      description: 'MAIN_COVERAGE_DESC_HOME',
+      img: '/racoon-assets/home_se.jpg',
+      isPreselected: false,
+      fieldName: 'isHome',
+      slug: 'home-insurance',
+    },
+    {
+      id: 'se-car',
+      name: 'MAIN_COVERAGE_TITLE_CAR',
+      description: 'MAIN_COVERAGE_DESC_CAR',
+      img: '/racoon-assets/car_se.jpg',
+      isPreselected: false,
+      fieldName: 'isCar',
+      slug: 'car',
+    },
+  ],
   [Market.Denmark]: [],
   [Market.Norway]: [
     {

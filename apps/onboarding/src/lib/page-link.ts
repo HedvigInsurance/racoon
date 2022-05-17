@@ -8,7 +8,7 @@ type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type CartParams = BaseParams & { quoteCartId: string }
 type WOOfferParams = Required<CartParams> & { showEdit: boolean }
-type EmbarkParams = BaseParams & { slug: string }
+type EmbarkParams = BaseParams & { slug?: string }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
