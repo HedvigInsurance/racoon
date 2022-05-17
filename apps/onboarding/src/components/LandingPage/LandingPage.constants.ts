@@ -48,7 +48,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
-    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO)
+    ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.NO)
       ? [
           {
             id: 'no-accident',
