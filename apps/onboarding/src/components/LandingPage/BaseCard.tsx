@@ -1,20 +1,24 @@
 import styled from '@emotion/styled'
 import { mq } from 'ui'
 
-export type WrapperProps = {
+export type SelectableCardWrapperProps = {
   selected?: boolean
   enableHover?: boolean
+  required?: boolean
   isCheckable?: boolean
+  onCheck?: () => void
+}
+
+export type ClickableCardWrapperProps = {
+  href?: string
 }
 
 export type BaseCardProps = {
   cardImg: string
   title: string
   description: string
-  onCheck?: () => void
   imgAlt?: string
-  required?: boolean
-} & WrapperProps
+}
 
 export const Section = styled.div<{ isCheckable?: boolean }>(
   {
@@ -35,17 +39,24 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-export const Wrapper = styled.div<WrapperProps>(
-  {
-    transition: 'all 150ms',
-    display: 'flex',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    position: 'relative',
-  },
+const Wrapper = styled.div({
+  transition: 'all 150ms',
+  display: 'flex',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  position: 'relative',
+})
+
+export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
     cursor: isCheckable ? 'pointer' : 'initial',
     border: selected ? `1px solid ${theme.colors.black}` : `1px solid ${theme.colors.gray300}`,
     ':hover': (enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
   }),
 )
+
+export const ClickableCardWrapper = styled(Wrapper)<ClickableCardWrapperProps>(({ theme }) => ({
+  cursor: 'pointer',
+  border: `1px solid ${theme.colors.gray300}`,
+  ':hover': { transform: 'translateY(-6px)', color: `${theme.colors.gray900} ` },
+}))

@@ -7,7 +7,7 @@ import {
   Section,
   SelectableCardWrapperProps,
   SelectableCardWrapper,
-} from '../BaseCard'
+} from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',

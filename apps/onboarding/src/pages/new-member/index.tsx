@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { SwedishLandingPage } from '@/components/ClickableCardsLandingPage/SwedishLandingPage'
 import { LandingPage } from '@/components/LandingPage/LandingPage'
 import {
   getInsurancesByLocaleLabel,
@@ -10,7 +11,9 @@ import {
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
 import { Insurances } from '@/components/LandingPage/LandingPage.types'
+import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
+import { MarketLabel } from '@/lib/types'
 
 type NewMemberPageProps = {
   mainCoverageInsurances: Insurances
@@ -24,17 +27,22 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
   formInitialState,
 }) => {
   const { t } = useTranslation()
+  const { marketLabel } = useCurrentLocale()
 
   return (
     <>
       <Head>
         <title>{t('STARTPAGE_PAGE_TITLE')}</title>
       </Head>
-      <LandingPage
-        mainCoverageInsurances={mainCoverageInsurances}
-        additionalCoverageInsurances={additionalCoverageInsurances}
-        formInitialState={formInitialState}
-      />
+      {marketLabel === MarketLabel.SE ? (
+        <SwedishLandingPage mainCoverageInsurances={mainCoverageInsurances} />
+      ) : (
+        <LandingPage
+          mainCoverageInsurances={mainCoverageInsurances}
+          additionalCoverageInsurances={additionalCoverageInsurances}
+          formInitialState={formInitialState}
+        />
+      )}
     </>
   )
 }

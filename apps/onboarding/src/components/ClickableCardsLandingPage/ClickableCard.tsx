@@ -7,7 +7,7 @@ import {
   ClickableCardWrapperProps,
   Section,
   ClickableCardWrapper,
-} from '../BaseCard'
+} from '../LandingPage/BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
