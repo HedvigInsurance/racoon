@@ -1,12 +1,12 @@
-import { Global } from '@emotion/react'
 import type { AppProps } from 'next/app'
-import { globalStyles } from 'ui'
+import { ThemeProvider } from 'ui'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Global styles={globalStyles} />
-      <Component {...pageProps} />
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   )
 }

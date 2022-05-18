@@ -6,18 +6,22 @@ export type SelectableCardWrapperProps = {
   enableHover?: boolean
   required?: boolean
   isCheckable?: boolean
+  disabled?: boolean
   onCheck?: () => void
 }
 
 export type ClickableCardWrapperProps = {
   href?: string
+  disabled?: boolean
 }
 
 export type BaseCardProps = {
   cardImg: string
+  blurDataURL: string
   title: string
   description: string
   imgAlt?: string
+  errorMessage?: string
 }
 
 export const Section = styled.div<{ isCheckable?: boolean }>(
@@ -39,7 +43,7 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-const Wrapper = styled.div({
+const Wrapper = styled.button({
   transition: 'all 150ms',
   display: 'flex',
   borderRadius: '8px',
@@ -49,9 +53,20 @@ const Wrapper = styled.div({
 
 export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
+    transition: 'all 150ms',
+    display: 'flex',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    position: 'relative',
     cursor: isCheckable ? 'pointer' : 'initial',
-    border: selected ? `1px solid ${theme.colors.black}` : `1px solid ${theme.colors.gray300}`,
-    ':hover': (enableHover && { border: `1px solid ${theme.colors.gray700}` }) || {},
+    border: '1px solid',
+    borderColor: selected ? theme.colors.black : theme.colors.gray300,
+    '&:hover:not([disabled])': {
+      border: enableHover ? `1px solid ${theme.colors.gray700}` : '',
+    },
+    '&:disabled': {
+      opacity: 0.5,
+    },
   }),
 )
 

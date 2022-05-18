@@ -3,25 +3,18 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { SwedishLandingPage } from '@/components/ClickableCardsLandingPage/SwedishLandingPage'
-import { LandingPage } from '@/components/LandingPage/LandingPage'
+import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
 import {
   getInsurancesByLocaleLabel,
   getMainCoverageInsurances,
   getAdditionalCoverageInsurances,
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
-import { Insurances } from '@/components/LandingPage/LandingPage.types'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 
-type NewMemberPageProps = {
-  mainCoverageInsurances: Insurances
-  additionalCoverageInsurances: Insurances
-  formInitialState: Record<string, boolean>
-}
-
-const NewMemberPage: NextPage<NewMemberPageProps> = ({
+const NewMemberPage: NextPage<LandingPageProps> = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
@@ -47,7 +40,7 @@ const NewMemberPage: NextPage<NewMemberPageProps> = ({
   )
 }
 
-export const getStaticProps: GetStaticProps<NewMemberPageProps> = async (context) => {
+export const getStaticProps: GetStaticProps<LandingPageProps> = async (context) => {
   // Skips prerendering this page for 'default' locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
   if (context.locale === 'default') {

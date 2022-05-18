@@ -3,8 +3,26 @@
   "baseBranch": "origin/main",
   "pipeline": {
     "build": {
-      "outputs": [".next/**", ".turbo/**", "dist/**"],
+      "outputs": ["dist/**"],
       "dependsOn": ["^build"]
+    },
+    "onboarding#build": {
+      "outputs": [".next/**"],
+      "dependsOn": [
+        "^build",
+        "$NEXT_PUBLIC_GRAPHQL_ENDPOINT",
+        "$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION",
+        "$NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID",
+        "$NEXT_PUBLIC_WEB_ONBOARDING_URL",
+        "$NEXT_PUBLIC_DATADOG_APPLICATION_ID",
+        "$NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
+        "$NEXT_PUBLIC_DATADOG_ENV",
+        "$NEXT_PUBLIC_FEATURE_HOUSE_INSURANCE",
+        "$NEXT_PUBLIC_FEATURE_ACCIDENT_INSURANCE"
+      ]
+    },
+    "market-web#build": {
+      "outputs": [".next/**"]
     },
     "test": {
       "outputs": ["covereage/**"],

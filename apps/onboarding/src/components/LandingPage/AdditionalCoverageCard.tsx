@@ -38,7 +38,6 @@ const CheckboxContainer = styled.div({
   position: 'absolute',
   top: 0,
   right: 0,
-  zIndex: 30,
   padding: '0.625rem',
 
   [mq.sm]: {
@@ -55,6 +54,7 @@ export const AdditionalCoverageCard = ({
   onCheck,
   imgAlt,
   selected,
+  disabled,
   ...wrapperProps
 }: BaseCardProps & SelectableCardWrapperProps) => {
   const isCheckable = onCheck !== undefined
@@ -64,6 +64,7 @@ export const AdditionalCoverageCard = ({
       selected={selected}
       isCheckable={isCheckable}
       onClick={onCheck}
+      disabled={disabled}
     >
       <ImageFrame>
         <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
@@ -79,7 +80,7 @@ export const AdditionalCoverageCard = ({
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox onChange={onCheck} checked={selected} />
+            <Checkbox onChange={onCheck} checked={selected} disabled={disabled} />
           </CheckboxContainer>
         )}
       </AdditionalSection>

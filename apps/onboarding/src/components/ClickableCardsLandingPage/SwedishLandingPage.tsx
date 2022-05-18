@@ -71,21 +71,24 @@ export const SwedishLandingPage = ({ mainCoverageInsurances }: ClickableCardsLan
             </Space>
           </ContentCard>
           <CoverageCardGrid>
-            {mainCoverageInsurances.map(({ id, name, description, img, slug }, index, arr) => {
-              const isLastItem = index === arr.length - 1
-              const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+            {mainCoverageInsurances.map(
+              ({ id, name, description, img, slug, blurDataURL }, index, arr) => {
+                const isLastItem = index === arr.length - 1
+                const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
 
-              return (
-                <GridClickableCard
-                  key={id}
-                  cardImg={img}
-                  title={t(name)}
-                  description={t(description)}
-                  size={cardSize}
-                  href={PageLink.embark({ locale: locale.path, slug })}
-                />
-              )
-            })}
+                return (
+                  <GridClickableCard
+                    key={id}
+                    cardImg={img}
+                    title={t(name)}
+                    description={t(description)}
+                    size={cardSize}
+                    href={PageLink.embark({ locale: locale.path, slug })}
+                    blurDataURL={blurDataURL}
+                  />
+                )
+              },
+            )}
           </CoverageCardGrid>
         </Space>
       </PageWrapper>

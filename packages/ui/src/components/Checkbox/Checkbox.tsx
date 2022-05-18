@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useEffect, useRef } from 'react'
 import { CheckIcon } from './CheckIcon'
 
 export type CheckboxProps = {
@@ -9,6 +10,7 @@ export type CheckboxProps = {
   disabled?: boolean
   circle?: boolean
   required?: boolean
+  errorMessage?: string
 }
 
 const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
@@ -112,11 +114,29 @@ export const Checkbox = ({
   label,
   prependLabel,
   required,
-}: CheckboxProps) => (
-  <ControlContainer>
-    {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-    <HiddenInput {...{ checked, onChange, disabled, required }} type="checkbox" />
-    <StyledCheckbox {...{ checked, onChange, disabled }} />
-    {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-  </ControlContainer>
-)
+  errorMessage,
+}: CheckboxProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleInvalid = errorMessage
+    ? () => inputRef.current?.setCustomValidity(errorMessage)
+    : undefined
+
+  useEffect(() => {
+    inputRef.current?.setCustomValidity('')
+  }, [required, checked])
+
+  return (
+    <ControlContainer>
+      {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+      <HiddenInput
+        {...{ checked, onChange, disabled, required }}
+        onInvalid={handleInvalid}
+        ref={inputRef}
+        type="checkbox"
+      />
+      <StyledCheckbox {...{ checked, onChange, disabled }} />
+      {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+    </ControlContainer>
+  )
+}

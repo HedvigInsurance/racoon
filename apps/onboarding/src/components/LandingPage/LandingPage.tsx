@@ -6,6 +6,7 @@ import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
+import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
 import { Embark } from '@/services/embark'
@@ -20,13 +21,12 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
 }))
 
-const PageForm = styled.form({
+const Main = styled.main({
   padding: '0 1rem',
+  paddingBottom: '2rem',
   margin: 'auto',
   maxWidth: '53rem',
-  marginBottom: 'auto',
   marginTop: 0,
-  paddingBottom: '2rem',
 
   [mq.sm]: {
     paddingBottom: 0,
@@ -55,6 +55,10 @@ const PageContainer = styled.main((props) => ({
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
+
+  [mq.sm]: {
+    display: 'block',
+  },
 }))
 
 const FooterButton = styled(Button)({
@@ -63,8 +67,7 @@ const FooterButton = styled(Button)({
 
   [mq.sm]: {
     width: 'auto',
-    marginTop: '5rem',
-    marginBottom: '3.5rem',
+    marginTop: '4rem',
   },
 })
 
@@ -73,7 +76,7 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type LandingPageProps = {
+export type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
@@ -91,100 +94,111 @@ export const LandingPage = ({
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
+  const [IS_HOUSE_INSURANCE_ENABLED] = useFeature([Feature.HOUSE_INSURANCE])
+
   const hasSelectedAtLeastOneMainInsurance = useMemo(
     () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
     [formState, mainCoverageInsurances],
   )
 
   return (
-    <PageContainer>
-      <Header />
-      <PageForm
-        id="landing-page-form"
-        onSubmit={(event) => {
-          event.preventDefault()
+    <form
+      onSubmit={(event) => {
+        event.preventDefault()
 
-          setIsRedirecting(true)
-          Embark.setStore(locale, formState)
-          const slug = Embark.getSlug(locale)
-          router.push(PageLink.embark({ locale: locale.path, slug }))
-        }}
-      >
-        <ContentCard>
-          <Space y={1.5}>
-            <Heading variant="m" headingLevel="h2" colorVariant="dark">
-              {t('LANDING_PAGE_HEADLINE')}
+        setIsRedirecting(true)
+        Embark.setStore(locale, formState)
+        const slug = Embark.getSlug(locale)
+        router.push(PageLink.embark({ locale: locale.path, slug }))
+      }}
+    >
+      <PageContainer>
+        <Header />
+        <Main>
+          <ContentCard>
+            <Space y={1.5}>
+              <Heading variant="m" headingLevel="h2" colorVariant="dark">
+                {t('LANDING_PAGE_HEADLINE')}
+              </Heading>
+              <BodyText variant={1} colorVariant="medium" displayBlock>
+                {t(
+                  IS_HOUSE_INSURANCE_ENABLED
+                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
+                    : 'LANDING_PAGE_SUBHEADING',
+                )}
+              </BodyText>
+            </Space>
+          </ContentCard>
+
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
             </Heading>
-            <BodyText variant={1} colorVariant="medium" displayBlock>
-              {t('LANDING_PAGE_SUBHEADING')}
-            </BodyText>
-          </Space>
-        </ContentCard>
+          </TitleContainer>
 
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-          </Heading>
-        </TitleContainer>
+          <CoverageCardGrid>
+            {mainCoverageInsurances.map((inrurance, index, arr) => {
+              const isLastItem = index === arr.length - 1
+              const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
+              const isSingleCard = arr.length === 1
+              return (
+                <GridMainCoverageCard
+                  key={inrurance.id}
+                  selected={formState[inrurance.fieldName]}
+                  required={!hasSelectedAtLeastOneMainInsurance}
+                  errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
+                  onCheck={
+                    !isSingleCard
+                      ? () =>
+                          setFormState({
+                            ...formState,
+                            [inrurance.fieldName]: !formState[inrurance.fieldName],
+                          })
+                      : undefined
+                  }
+                  cardImg={inrurance.img}
+                  blurDataURL={inrurance.blurDataURL}
+                  title={t(inrurance.name)}
+                  description={t(inrurance.description)}
+                  size={cardSize}
+                />
+              )
+            })}
+          </CoverageCardGrid>
 
-        <CoverageCardGrid>
-          {mainCoverageInsurances.map(({ id, name, description, img, fieldName }, index, arr) => {
-            const isLastItem = index === arr.length - 1
-            const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
-            const isSingleCard = arr.length === 1
-            return (
-              <GridMainCoverageCard
-                key={id}
-                selected={formState[fieldName]}
-                required={!hasSelectedAtLeastOneMainInsurance}
-                onCheck={
-                  !isSingleCard
-                    ? () =>
-                        setFormState({
-                          ...formState,
-                          [fieldName]: !formState[fieldName],
-                        })
-                    : undefined
+          <TitleContainer>
+            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+            </Heading>
+          </TitleContainer>
+
+          <CoverageCardGrid>
+            {additionalCoverageInsurances.map((insurance) => (
+              <AdditionalCoverageCard
+                key={insurance.id}
+                enableHover
+                cardImg={insurance.img}
+                blurDataURL={insurance.blurDataURL}
+                selected={formState[insurance.fieldName]}
+                disabled={!hasSelectedAtLeastOneMainInsurance}
+                onCheck={() =>
+                  setFormState({
+                    ...formState,
+                    [insurance.fieldName]: !formState[insurance.fieldName],
+                  })
                 }
-                cardImg={img}
-                title={t(name)}
-                description={t(description)}
-                size={cardSize}
+                title={t(insurance.name)}
+                description={t(insurance.description)}
               />
-            )
-          })}
-        </CoverageCardGrid>
-
-        <TitleContainer>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h3">
-            {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-          </Heading>
-        </TitleContainer>
-
-        <CoverageCardGrid>
-          {additionalCoverageInsurances.map(({ id, name, description, img, fieldName }) => (
-            <AdditionalCoverageCard
-              key={id}
-              enableHover
-              cardImg={img}
-              selected={formState[fieldName]}
-              onCheck={() =>
-                setFormState({
-                  ...formState,
-                  [fieldName]: !formState[fieldName],
-                })
-              }
-              title={t(name)}
-              description={t(description)}
-            />
-          ))}
-        </CoverageCardGrid>
-      </PageForm>
-      <ResponsiveFooter>
-        <FooterButton type="submit" form="landing-page-form" color="dark" disabled={isRedirecting}>
-          {t('START_SCREEN_SUBMIT_BUTTON')}
-        </FooterButton>
-      </ResponsiveFooter>
-    </PageContainer>
+            ))}
+          </CoverageCardGrid>
+        </Main>
+        <ResponsiveFooter>
+          <FooterButton color="dark" disabled={isRedirecting}>
+            {t('START_SCREEN_SUBMIT_BUTTON')}
+          </FooterButton>
+        </ResponsiveFooter>
+      </PageContainer>
+    </form>
   )
 }
