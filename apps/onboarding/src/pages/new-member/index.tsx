@@ -2,7 +2,6 @@ import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
-import { SwedishLandingPage } from '@/components/ClickableCardsLandingPage/SwedishLandingPage'
 import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
 import {
   getInsurancesByLocaleLabel,
@@ -10,6 +9,7 @@ import {
   getAdditionalCoverageInsurances,
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
+import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'

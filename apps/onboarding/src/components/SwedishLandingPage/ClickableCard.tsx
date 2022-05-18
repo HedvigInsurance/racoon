@@ -13,8 +13,6 @@ const ImageFrame = styled.div({
   position: 'relative',
 })
 
-const Wrapper = styled.a({})
-
 const MainWrapper = styled(ClickableCardWrapper)({
   display: 'grid',
   gridTemplateColumns: '1fr 2fr',
@@ -41,7 +39,7 @@ export const ClickableCard = ({
   href,
 }: BaseCardProps & ClickableCardWrapperProps) => {
   return (
-    <Wrapper href={href}>
+    <a href={href}>
       <MainWrapper>
         <ImageFrame>
           <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
@@ -60,6 +58,6 @@ export const ClickableCard = ({
           </Space>
         </Section>
       </MainWrapper>
-    </Wrapper>
+    </a>
   )
 }
