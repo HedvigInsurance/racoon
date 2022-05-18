@@ -7,8 +7,8 @@ type BaseParams = { locale?: LocaleLabel | string }
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type CartParams = BaseParams & { quoteCartId: string }
-type WOOfferParams = Required<CartParams> & { showEdit: boolean }
 type EmbarkParams = BaseParams & { slug?: string }
+type WOOfferParams = Required<CartParams> & { showEdit?: boolean }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -37,4 +37,5 @@ export const PageLink = {
   },
 
   startFormApi: () => '/api/pages/start',
+  debuggerFormApi: () => '/api/pages/debugger',
 }

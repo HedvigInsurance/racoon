@@ -18,6 +18,7 @@ const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
 }))
 
 const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
+  backgroundColor: theme.colors.white,
   color: theme.colors.gray900,
   fontSize: '1.125rem',
   lineHeight: '1.75rem',
