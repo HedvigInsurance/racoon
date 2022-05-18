@@ -53,11 +53,6 @@ const Wrapper = styled.button({
 
 export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
-    transition: 'all 150ms',
-    display: 'flex',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    position: 'relative',
     cursor: isCheckable ? 'pointer' : 'initial',
     border: '1px solid',
     borderColor: selected ? theme.colors.black : theme.colors.gray300,
