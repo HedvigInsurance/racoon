@@ -23,3 +23,4 @@ export { globalStyles } from './lib/globalStyles'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'
+export { ArrowForwardIcon } from './icons/ArrowIcon'

@@ -2,13 +2,18 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { Checkbox, Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
-import { BaseCardProps, Section, Wrapper } from './BaseCard'
+import {
+  BaseCardProps,
+  Section,
+  SelectableCardWrapperProps,
+  SelectableCardWrapper,
+} from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
 })
 
-const MainWrapper = styled(Wrapper)({
+const MainWrapper = styled(SelectableCardWrapper)({
   display: 'grid',
   gridTemplateColumns: '1fr 2fr',
   minHeight: '8rem',
@@ -43,12 +48,12 @@ export const MainCoverageCard = ({
   imgAlt,
   selected,
   required,
+  isCheckable,
   errorMessage,
   ...wrapperProps
-}: BaseCardProps) => {
-  const isCheckable = onCheck !== undefined
+}: BaseCardProps & SelectableCardWrapperProps) => {
   return (
-    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
+    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable}>
       <ImageFrame>
         <Image
           src={cardImg}

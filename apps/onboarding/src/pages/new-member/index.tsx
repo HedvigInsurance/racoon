@@ -9,7 +9,10 @@ import {
   getAdditionalCoverageInsurances,
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
+import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
+import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
+import { MarketLabel } from '@/lib/types'
 
 const NewMemberPage: NextPage<LandingPageProps> = ({
   mainCoverageInsurances,
@@ -17,17 +20,22 @@ const NewMemberPage: NextPage<LandingPageProps> = ({
   formInitialState,
 }) => {
   const { t } = useTranslation()
+  const { marketLabel } = useCurrentLocale()
 
   return (
     <>
       <Head>
         <title>{t('STARTPAGE_PAGE_TITLE')}</title>
       </Head>
-      <LandingPage
-        mainCoverageInsurances={mainCoverageInsurances}
-        additionalCoverageInsurances={additionalCoverageInsurances}
-        formInitialState={formInitialState}
-      />
+      {marketLabel === MarketLabel.SE ? (
+        <SwedishLandingPage mainCoverageInsurances={mainCoverageInsurances} />
+      ) : (
+        <LandingPage
+          mainCoverageInsurances={mainCoverageInsurances}
+          additionalCoverageInsurances={additionalCoverageInsurances}
+          formInitialState={formInitialState}
+        />
+      )}
     </>
   )
 }

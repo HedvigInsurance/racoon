@@ -7,6 +7,7 @@ export type Insurance = {
   fieldName: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
+  slug?: string
 }
 
 export type Insurances = Array<Insurance>
