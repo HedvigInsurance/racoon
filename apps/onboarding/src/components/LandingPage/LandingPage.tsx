@@ -33,7 +33,7 @@ const Main = styled.main({
   },
 })
 
-const CoverageCardGrid = styled.div({
+export const CoverageCardGrid = styled.div({
   display: 'grid',
   gap: '1rem',
   gridTemplateColumns: '1fr 1fr',
@@ -50,7 +50,7 @@ const TitleContainer = styled.div({
   },
 })
 
-const PageContainer = styled.main((props) => ({
+export const PageContainer = styled.main((props) => ({
   backgroundColor: props.theme.colors.gray100,
   height: '100vh',
   display: 'flex',
@@ -71,7 +71,7 @@ const FooterButton = styled(Button)({
   },
 })
 
-const ContentCard = styled.div({
+export const ContentCard = styled.div({
   margin: '1rem 1rem 0 0',
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })

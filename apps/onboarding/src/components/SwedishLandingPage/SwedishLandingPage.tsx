@@ -5,6 +5,7 @@ import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/page-link'
+import { ContentCard, CoverageCardGrid, PageContainer } from '../LandingPage/LandingPage'
 import { Insurances } from '../LandingPage/LandingPage.types'
 import { ClickableCard } from './ClickableCard'
 
@@ -26,25 +27,6 @@ const PageWrapper = styled.div({
   [mq.sm]: {
     paddingBottom: 0,
   },
-})
-
-const CoverageCardGrid = styled.div({
-  display: 'grid',
-  gap: '1rem',
-  gridTemplateColumns: '1fr 1fr',
-  width: '100%',
-})
-
-const PageContainer = styled.main((props) => ({
-  backgroundColor: props.theme.colors.gray100,
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-}))
-
-const ContentCard = styled.div({
-  margin: '1rem 1rem 0 0',
-  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
 type ClickableCardsLandingPageProps = {
