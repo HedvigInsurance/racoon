@@ -43,14 +43,14 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
   }),
 )
 
-const Wrapper = styled.button({
+const Wrapper = styled.button(({ theme }) => ({
   transition: 'all 150ms',
   display: 'flex',
   borderRadius: '8px',
   overflow: 'hidden',
   position: 'relative',
-  border: '1px solid',
-})
+  border: `1px solid ${theme.colors.gray300}`,
+}))
 
 export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
