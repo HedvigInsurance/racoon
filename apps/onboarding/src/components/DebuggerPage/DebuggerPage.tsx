@@ -1,25 +1,37 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Button, InputBase, InputBaseProps, InputField, Space } from 'ui'
 import { useForm } from '@/hooks/use-form'
 import { PageLink } from '@/lib/page-link'
 import { Market } from '@/lib/types'
 import { FORMS_PER_MARKET, MARKETS, PageInput } from './DebuggerPage.constants'
 
+const PAGE_WIDTH = '600px'
+
 const PageWrapper = styled.div(({ theme }) => ({
-  padding: '0.5rem',
   backgroundColor: theme.colors.gray200,
   minHeight: '100vh',
 }))
 
 const Content = styled.div(() => ({
-  maxWidth: '600px',
+  maxWidth: PAGE_WIDTH,
   margin: '0 auto',
+  padding: '1rem 0.5rem',
 }))
 
 const Footer = styled.div(({ theme }) => ({
   position: 'sticky',
-  bottom: '1rem',
+  bottom: 0,
+  padding: '1rem 0.5rem',
+
+  display: 'flex',
+  justifyContent: 'center',
+  backgroundColor: theme.colors.white,
+  boxShadow: `0px -1px 10px rgba(0, 0, 0, 0.1)`,
+
+  [Button.name]: {
+    maxWidth: `calc(${PAGE_WIDTH} - 1rem)`,
+  },
 }))
 
 const InputGroup = styled.div(({ theme }) => ({
@@ -45,6 +57,7 @@ const InputSelect = ({
   defaultValue,
   ...rest
 }: InputSelectProps) => {
+  console.log('InputSelect', { value, defaultValue })
   return (
     <InputBase {...rest}>
       {() => (
@@ -56,7 +69,7 @@ const InputSelect = ({
           defaultValue={defaultValue}
         >
           {options.map(({ name, value }) => (
-            <option key={name} value={value}>
+            <option key={value} value={value}>
               {name}
             </option>
           ))}
@@ -67,15 +80,23 @@ const InputSelect = ({
 }
 
 export const DebuggerPage = () => {
-  const [market, setMarket] = useState(Market.Sweden)
-  const marketForms = FORMS_PER_MARKET[market]
-  const marketFormList = Object.entries(marketForms).map(([key, value]) => ({
-    name: key,
-    value,
-  }))
-  const [formType, setFormType] = useState(marketFormList[0])
+  const [market, setMarket] = useState(() => Market.Sweden)
+  const marketForms = useMemo(() => FORMS_PER_MARKET[market], [market])
+  const marketFormList = useMemo(
+    () =>
+      Object.entries(marketForms).map(([key, value]) => ({
+        name: key,
+        value,
+      })),
+    [marketForms],
+  )
+  const [formType, setFormType] = useState(() => marketFormList[0])
 
   const form = useForm({ action: PageLink.debuggerFormApi() })
+
+  useEffect(() => {
+    setFormType(marketFormList[0])
+  }, [marketFormList])
 
   const handleChangeMarket = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newMarket = event.target.value as Market
@@ -114,7 +135,7 @@ export const DebuggerPage = () => {
                   label="Insurance bundle"
                   name={PageInput.Bundle}
                   options={marketFormList.map(({ name }) => ({ name, value: name }))}
-                  value={formType?.name ?? ''}
+                  value={formType.name}
                   onChange={handleChangeFormType}
                 />
               </Space>
@@ -152,14 +173,14 @@ export const DebuggerPage = () => {
                 </InputGroup>
               ))}
             </Space>
-
-            <Footer>
-              <Button fullWidth disabled={form.state === 'submitting'}>
-                Submit
-              </Button>
-            </Footer>
           </Space>
         </Content>
+
+        <Footer>
+          <Button fullWidth disabled={form.state === 'submitting'}>
+            Submit
+          </Button>
+        </Footer>
       </PageWrapper>
     </form>
   )

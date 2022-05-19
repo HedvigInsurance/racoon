@@ -1,5 +1,6 @@
 mutation AddQuoteBundle($quoteCartId: ID!, $quotes: [JSON!]!) {
   quoteCart_createQuoteBundle(id: $quoteCartId, input: { payload: $quotes }) {
+    __typename
     ... on QuoteCart {
       id
       bundle {

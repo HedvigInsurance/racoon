@@ -3483,6 +3483,7 @@ export type EmbarkKeywords = {
 
 export type EmbarkLink = {
   __typename?: 'EmbarkLink'
+  hidden: Scalars['Boolean']
   label: Scalars['String']
   name: Scalars['String']
 }
@@ -7591,6 +7592,8 @@ export type Mutation = {
   editLastResponse: Scalars['Boolean']
   editQuote: CreateQuoteResult
   emailSign?: Maybe<Scalars['Boolean']>
+  /** Clear Embark translation cache. */
+  embarkClearTranslationCache?: Maybe<Scalars['Boolean']>
   exchangeToken: ExchangeTokenResponse
   externalInsuranceProvider?: Maybe<ExternalInsuranceProviderMutation>
   /** Initiate widget, widget should send requestId, locale, partner id */
@@ -8446,6 +8449,7 @@ export type Query = {
   selfChangeEligibility: SelfChangeEligibility
   signMethodForQuotes: SignMethod
   signStatus?: Maybe<SignStatus>
+  swedishCarInfo?: Maybe<SwedishCarInfo>
   /** Returns termsAndConditions from promise-cms */
   termsAndConditions: InsuranceTerm
   welcome: Array<Welcome>
@@ -8673,6 +8677,10 @@ export type QuerySignMethodForQuotesArgs = {
   input: Array<Scalars['ID']>
 }
 
+export type QuerySwedishCarInfoArgs = {
+  registrationNumber: Scalars['String']
+}
+
 export type QueryTermsAndConditionsArgs = {
   carrier?: InputMaybe<Scalars['String']>
   contractType: TypeOfContract
@@ -8760,6 +8768,8 @@ export type QuoteBundleInput = {
 export type QuoteBundleVariant = {
   __typename?: 'QuoteBundleVariant'
   bundle: QuoteBundle
+  /** A long description for this variant */
+  description?: Maybe<Scalars['String']>
   id: Scalars['ID']
   /** A describing tag of this variant, for example "Most popular" */
   tag?: Maybe<Scalars['String']>
@@ -8768,6 +8778,11 @@ export type QuoteBundleVariant = {
 /** A possible alternative bundling variant */
 export type QuoteBundleVariantBundleArgs = {
   locale?: InputMaybe<Locale>
+}
+
+/** A possible alternative bundling variant */
+export type QuoteBundleVariantDescriptionArgs = {
+  locale: Locale
 }
 
 /** A possible alternative bundling variant */
@@ -10211,6 +10226,7 @@ export type SwedishCarAgreement = AgreementCore & {
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
   inceptionDate?: Maybe<Scalars['LocalDate']>
+  info?: Maybe<SwedishCarInfo>
   mileage?: Maybe<Scalars['Int']>
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -10830,6 +10846,7 @@ export enum TypeOfContract {
   DkHomeContentRent = 'DK_HOME_CONTENT_RENT',
   DkHomeContentStudentOwn = 'DK_HOME_CONTENT_STUDENT_OWN',
   DkHomeContentStudentRent = 'DK_HOME_CONTENT_STUDENT_RENT',
+  DkHouse = 'DK_HOUSE',
   DkTravel = 'DK_TRAVEL',
   DkTravelStudent = 'DK_TRAVEL_STUDENT',
   NoAccident = 'NO_ACCIDENT',
@@ -11828,13 +11845,13 @@ export type AddQuoteBundleMutation = {
   __typename?: 'Mutation'
   quoteCart_createQuoteBundle:
     | {
-        __typename?: 'QuoteBundleError'
+        __typename: 'QuoteBundleError'
         message: string
         type: string
         limits?: Array<{ __typename?: 'UnderwritingLimit'; code: string }> | null
       }
     | {
-        __typename?: 'QuoteCart'
+        __typename: 'QuoteCart'
         id: string
         bundle?: {
           __typename?: 'QuoteBundle'
@@ -11922,6 +11939,7 @@ export const AddCampaignCodeDocument = gql`
 export const AddQuoteBundleDocument = gql`
   mutation AddQuoteBundle($quoteCartId: ID!, $quotes: [JSON!]!) {
     quoteCart_createQuoteBundle(id: $quoteCartId, input: { payload: $quotes }) {
+      __typename
       ... on QuoteCart {
         id
         bundle {
