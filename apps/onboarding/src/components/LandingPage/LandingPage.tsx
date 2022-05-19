@@ -157,7 +157,6 @@ export const LandingPage = ({
                       : undefined
                   }
                   cardImg={inrurance.img}
-                  blurDataURL={inrurance.blurDataURL}
                   title={t(inrurance.name)}
                   description={t(inrurance.description)}
                   size={cardSize}
@@ -178,7 +177,6 @@ export const LandingPage = ({
                 key={insurance.id}
                 enableHover
                 cardImg={insurance.img}
-                blurDataURL={insurance.blurDataURL}
                 selected={formState[insurance.fieldName]}
                 disabled={!hasSelectedAtLeastOneMainInsurance}
                 onCheck={() =>

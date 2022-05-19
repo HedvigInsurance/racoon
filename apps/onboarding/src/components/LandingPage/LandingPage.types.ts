@@ -1,9 +1,10 @@
+import { ImageProps } from 'next/image'
+
 export type Insurance = {
   id: string
   name: string
   description: string
-  img: string
-  blurDataURL: string
+  img: ImageProps
   fieldName: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean

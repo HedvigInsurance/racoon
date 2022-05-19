@@ -35,14 +35,19 @@ export const ClickableCard = ({
   cardImg,
   title,
   description,
-  imgAlt,
   href,
 }: BaseCardProps & ClickableCardWrapperProps) => {
   return (
     <a href={href}>
       <MainWrapper>
         <ImageFrame>
-          <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
+          <Image
+            {...cardImg}
+            alt={cardImg.alt ?? ''}
+            layout="fill"
+            objectFit="cover"
+            priority={true}
+          />
         </ImageFrame>
         <Section>
           <Space y={0.25}>

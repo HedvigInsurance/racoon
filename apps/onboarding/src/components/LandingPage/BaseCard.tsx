@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { ImageProps } from 'next/image'
 import { mq } from 'ui'
 
 export type SelectableCardWrapperProps = {
@@ -16,11 +17,9 @@ export type ClickableCardWrapperProps = {
 }
 
 export type BaseCardProps = {
-  cardImg: string
-  blurDataURL: string
+  cardImg: ImageProps
   title: string
   description: string
-  imgAlt?: string
   errorMessage?: string
 }
 
