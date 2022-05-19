@@ -51,17 +51,22 @@ const Wrapper = styled.button(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.colors.white,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-  border: '1px solid transparent',
 }))
 
 export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
     cursor: isCheckable ? 'pointer' : 'initial',
-    borderColor: selected ? theme.colors.black : 'transparent',
 
-    '&:hover:not([disabled])': enableHover && {
-      borderColor: !selected || !isCheckable ? theme.colors.gray600 : 'initial',
-    },
+    ...(selected && {
+      boxShadow: `0 0 0 1px ${theme.colors.black}, 0px 2px 2px rgba(0, 0, 0, 0.1)`,
+    }),
+
+    ...(enableHover &&
+      !selected && {
+        '&:hover:not([disabled])': {
+          boxShadow: `0 0 0 1px ${theme.colors.gray600}, 0px 2px 2px rgba(0, 0, 0, 0.1)`,
+        },
+      }),
 
     '&:disabled': {
       opacity: 0.5,
