@@ -48,12 +48,13 @@ export const MainCoverageCard = ({
   imgAlt,
   selected,
   required,
-  isCheckable,
   errorMessage,
   ...wrapperProps
 }: BaseCardProps & SelectableCardWrapperProps) => {
+  const isCheckable = onCheck !== undefined
+
   return (
-    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable}>
+    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
         <Image
           src={cardImg}

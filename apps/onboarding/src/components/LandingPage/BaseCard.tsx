@@ -65,6 +65,8 @@ export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>
   }),
 )
 
+SelectableCardWrapper.defaultProps = { type: 'button' }
+
 export const ClickableCardWrapper = styled(Wrapper)<ClickableCardWrapperProps>(({ theme }) => ({
   cursor: 'pointer',
   ':hover': { transform: 'translateY(-6px)', color: `${theme.colors.gray900} ` },
