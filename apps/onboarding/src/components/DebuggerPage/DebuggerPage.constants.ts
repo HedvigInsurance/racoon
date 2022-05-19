@@ -4,6 +4,7 @@ import { DENMARK_HOLDER } from './forms/denmarkHolder'
 import { DENMARK_HOME } from './forms/denmarkHome'
 import { NORWAY_HOLDER } from './forms/norwayHolder'
 import { NORWAY_HOME } from './forms/norwayHome'
+import { NORWAY_HOUSE } from './forms/norwayHouse'
 import { SWEDEN_APARTMENT } from './forms/swedenApartment'
 import { SWEDEN_CAR } from './forms/swedenCar'
 import { SWEDEN_HOLDER } from './forms/swedenHolder'
@@ -77,6 +78,53 @@ export const FORMS_PER_MARKET: Record<Market, Record<string, Form>> = {
         { 'data.type': 'NORWEGIAN_TRAVEL', 'data.isYouth': false },
       ],
       inputGroups: [NORWAY_HOLDER, NORWAY_HOME],
+    },
+    House: {
+      staticData: [
+        {
+          'data.type': 'NORWEGIAN_HOUSE',
+          'data.extraBuildings': [],
+          'data.isSubleted': false,
+          'data.waterLeakageDetector': true,
+        },
+      ],
+      inputGroups: [NORWAY_HOLDER, NORWAY_HOUSE],
+    },
+    'Home + House': {
+      staticData: [
+        {
+          'data.type': 'NORWEGIAN_HOME_CONTENT',
+          'data.isYouth': false,
+          'data.livingSpace': 44,
+          'data.subType': 'OWN',
+        },
+        {
+          'data.type': 'NORWEGIAN_HOUSE',
+          'data.extraBuildings': [],
+          'data.isSubleted': false,
+          'data.waterLeakageDetector': true,
+        },
+      ],
+      inputGroups: [NORWAY_HOLDER, NORWAY_HOUSE],
+    },
+    'Home + House + Accident + Travel': {
+      staticData: [
+        {
+          'data.type': 'NORWEGIAN_HOME_CONTENT',
+          'data.isYouth': false,
+          'data.livingSpace': 44,
+          'data.subType': 'OWN',
+        },
+        {
+          'data.type': 'NORWEGIAN_HOUSE',
+          'data.extraBuildings': [],
+          'data.isSubleted': false,
+          'data.waterLeakageDetector': true,
+        },
+        { 'data.type': 'NORWEGIAN_ACCIDENT', 'data.isYouth': false },
+        { 'data.type': 'NORWEGIAN_TRAVEL', 'data.isYouth': false },
+      ],
+      inputGroups: [NORWAY_HOLDER, NORWAY_HOUSE],
     },
   },
   [Market.Denmark]: {
