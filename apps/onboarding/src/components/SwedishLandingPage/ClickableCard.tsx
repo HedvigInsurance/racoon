@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { Space, mq, ArrowForwardIcon } from 'ui'
+import { Space, mq, ArrowForwardIcon, Heading } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import {
   BaseCardProps,
@@ -17,6 +17,7 @@ const MainWrapper = styled(ClickableCardWrapper)({
   display: 'grid',
   gridTemplateColumns: '1fr 2fr',
   minHeight: '8rem',
+  height: '100%',
 
   [mq.sm]: {
     borderRadius: '16px',
@@ -29,6 +30,26 @@ const Row = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+
+  [mq.sm]: {
+    paddingRight: '1.5rem',
+  },
+
+  [mq.md]: {
+    paddingRight: 0,
+  },
+})
+
+const BodyTextWrapper = styled.div({
+  paddingRight: '1.5rem',
+
+  [mq.sm]: {
+    paddingRight: '2.5rem',
+  },
+
+  [mq.md]: {
+    paddingRight: '2rem',
+  },
 })
 
 export const ClickableCard = ({
@@ -39,7 +60,7 @@ export const ClickableCard = ({
 }: BaseCardProps & ClickableCardWrapperProps) => {
   return (
     <a href={href}>
-      <MainWrapper>
+      <MainWrapper as="div">
         <ImageFrame>
           <Image
             {...cardImg}
@@ -52,14 +73,16 @@ export const ClickableCard = ({
         <Section>
           <Space y={0.25}>
             <Row>
-              <BodyText variant={0} colorVariant="dark" displayBlock>
+              <Heading variant="xs" headingLevel="h2" colorVariant="dark">
                 {title}
-              </BodyText>
-              <ArrowForwardIcon />
+              </Heading>
+              <ArrowForwardIcon size="1.25rem" />
             </Row>
-            <BodyText variant={2} colorVariant="medium" displayBlock>
-              {description}
-            </BodyText>
+            <BodyTextWrapper>
+              <BodyText variant={2} colorVariant="medium" displayBlock>
+                {description}
+              </BodyText>
+            </BodyTextWrapper>
           </Space>
         </Section>
       </MainWrapper>

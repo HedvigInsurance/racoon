@@ -12,13 +12,14 @@ type GridCardProps = { size: 'half' | 'full' }
 
 const GridClickableCard = styled(ClickableCard)<GridCardProps>((props) => ({
   gridColumn: '1 / span 2',
+
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
 }))
 
 const PageWrapper = styled.div({
   padding: '0 1rem',
   margin: 'auto',
-  maxWidth: '53rem',
+  maxWidth: '57rem',
   marginBottom: 'auto',
   marginTop: 0,
   paddingBottom: '2rem',
@@ -31,8 +32,11 @@ const PageWrapper = styled.div({
 const CoverageCardGrid = styled.div({
   display: 'grid',
   gap: '1rem',
-  gridTemplateColumns: '1fr 1fr',
   width: '100%',
+
+  [mq.sm]: {
+    gridTemplateColumns: '1fr 1fr',
+  },
 })
 
 const PageContainer = styled.main((props) => ({
@@ -59,10 +63,10 @@ export const SwedishLandingPage = ({ mainCoverageInsurances }: ClickableCardsLan
     <PageContainer>
       <Header />
       <PageWrapper>
-        <Space y={1.5}>
+        <Space y={{ base: 1.5, md: 5 }}>
           <ContentCard>
             <Space y={1.5}>
-              <Heading variant="m" headingLevel="h2" colorVariant="dark">
+              <Heading variant="m" headingLevel="h1" colorVariant="dark">
                 {t('LANDING_PAGE_HEADLINE')}
               </Heading>
               <BodyText variant={1} colorVariant="medium" displayBlock>
