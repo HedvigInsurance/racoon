@@ -46,19 +46,23 @@ export const Section = styled.div<{ isCheckable?: boolean }>(
 const Wrapper = styled.button(({ theme }) => ({
   transition: 'all 150ms',
   display: 'flex',
-  borderRadius: '8px',
+  borderRadius: 8,
   overflow: 'hidden',
   position: 'relative',
-  border: `1px solid ${theme.colors.gray300}`,
+  backgroundColor: theme.colors.white,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+  border: '1px solid transparent',
 }))
 
 export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>(
   ({ theme, isCheckable, selected, enableHover }) => ({
     cursor: isCheckable ? 'pointer' : 'initial',
-    borderColor: selected ? theme.colors.black : theme.colors.gray300,
-    '&:hover:not([disabled])': {
-      border: enableHover ? `1px solid ${theme.colors.gray700}` : '',
+    borderColor: selected ? theme.colors.black : 'transparent',
+
+    '&:hover:not([disabled])': enableHover && {
+      borderColor: !selected || !isCheckable ? theme.colors.gray600 : 'initial',
     },
+
     '&:disabled': {
       opacity: 0.5,
     },
@@ -69,5 +73,6 @@ SelectableCardWrapper.defaultProps = { type: 'button' }
 
 export const ClickableCardWrapper = styled(Wrapper)<ClickableCardWrapperProps>(({ theme }) => ({
   cursor: 'pointer',
+
   ':hover': { transform: 'translateY(-6px)', color: `${theme.colors.gray900} ` },
 }))
