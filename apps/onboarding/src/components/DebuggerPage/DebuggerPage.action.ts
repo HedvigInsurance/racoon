@@ -4,7 +4,9 @@ import { PageLink } from '@/lib/page-link'
 import { Market } from '@/lib/types'
 import { graphqlSdk } from '@/services/graphql/sdk'
 import { FORMS_PER_MARKET, PageInput } from './DebuggerPage.constants'
-import { isMarket } from './DebuggerPage.helpers'
+import { isMarket, QuoteBundleError } from './DebuggerPage.helpers'
+
+const PLACEHOLDER_LOCALE = 'en'
 
 const MARKET_TO_URL = {
   [Market.Sweden]: 'se-en',
@@ -18,7 +20,7 @@ export const handleDebuggerForm = async (formData: Fields) => {
   if (typeof bundle !== 'string') throw new Error(`Invalid bundle: ${bundle}`)
   if (!isMarket(market)) throw new Error(`Invalid market: ${market}`)
 
-  const quoteCart = await graphqlSdk.CreateQuoteCart({ market, locale: 'sv' })
+  const quoteCart = await graphqlSdk.CreateQuoteCart({ market, locale: PLACEHOLDER_LOCALE })
   const quoteCartId = quoteCart.onboardingQuoteCart_create.id
 
   const form = FORMS_PER_MARKET[market][bundle]
@@ -44,8 +46,10 @@ export const handleDebuggerForm = async (formData: Fields) => {
   const result = await graphqlSdk.AddQuoteBundle({ quoteCartId, quotes })
 
   if (result.quoteCart_createQuoteBundle.__typename === 'QuoteBundleError') {
-    const message = `${result.quoteCart_createQuoteBundle.type}: ${result.quoteCart_createQuoteBundle.message}`
-    throw new Error(message)
+    throw new QuoteBundleError(
+      result.quoteCart_createQuoteBundle.type,
+      result.quoteCart_createQuoteBundle.message,
+    )
   }
 
   return PageLink.old_offer({ locale: MARKET_TO_URL[market], quoteCartId })
