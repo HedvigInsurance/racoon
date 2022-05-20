@@ -10,6 +10,8 @@ import { SWEDEN_CAR } from './forms/swedenCar'
 import { SWEDEN_HOLDER } from './forms/swedenHolder'
 import { SWEDEN_HOUSE } from './forms/swedenHouse'
 
+export const PAGE_WIDTH = '600px'
+
 export enum PageInput {
   Market = 'market',
   Bundle = 'bundle',

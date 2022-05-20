@@ -7,9 +7,9 @@ import { FORMS_PER_MARKET, PageInput } from './DebuggerPage.constants'
 import { isMarket } from './DebuggerPage.helpers'
 
 const MARKET_TO_URL = {
-  [Market.Sweden]: 'se',
-  [Market.Norway]: 'no',
-  [Market.Denmark]: 'dk',
+  [Market.Sweden]: 'se-en',
+  [Market.Norway]: 'no-en',
+  [Market.Denmark]: 'dk-en',
 }
 
 export const handleDebuggerForm = async (formData: Fields) => {
@@ -20,7 +20,6 @@ export const handleDebuggerForm = async (formData: Fields) => {
 
   const quoteCart = await graphqlSdk.CreateQuoteCart({ market, locale: 'sv' })
   const quoteCartId = quoteCart.onboardingQuoteCart_create.id
-  console.log('quoteCartId', quoteCartId)
 
   const form = FORMS_PER_MARKET[market][bundle]
   if (form === undefined) throw new Error('Form not found')
@@ -35,25 +34,18 @@ export const handleDebuggerForm = async (formData: Fields) => {
   const quotes = staticData.map((data) => {
     const quote = JSON.parse(JSON.stringify(payload))
 
-    console.log('quote start', quote)
-
     Object.entries(data).forEach(([key, value]) => {
       _set(quote, key, value)
     })
 
-    console.log('quote end', quote)
     return quote
   })
 
-  console.log('quotes', quotes)
-
   const result = await graphqlSdk.AddQuoteBundle({ quoteCartId, quotes })
 
-  console.log('result', result)
-
-  console.log(result.quoteCart_createQuoteBundle.__typename)
   if (result.quoteCart_createQuoteBundle.__typename === 'QuoteBundleError') {
-    throw new Error(result.quoteCart_createQuoteBundle.message)
+    const message = `${result.quoteCart_createQuoteBundle.type}: ${result.quoteCart_createQuoteBundle.message}`
+    throw new Error(message)
   }
 
   return PageLink.old_offer({ locale: MARKET_TO_URL[market], quoteCartId })

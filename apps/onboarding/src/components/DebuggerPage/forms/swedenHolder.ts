@@ -5,7 +5,6 @@ export const SWEDEN_HOLDER: InputGroup = {
   inputs: [
     { name: 'firstName', label: 'First name', defaultValue: 'Sven', type: 'text' },
     { name: 'lastName', label: 'Last name', defaultValue: 'Svensson', type: 'text' },
-    { name: 'birthDate', label: 'Birth date', defaultValue: '1995-09-29', type: 'date' },
     { name: 'ssn', label: 'SSN', defaultValue: '199509291234', type: 'text' },
     {
       name: 'startDate',
