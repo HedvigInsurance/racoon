@@ -18,6 +18,8 @@ jobs:
           # otherwise, there would be errors pushing refs to the destination repository.
           fetch-depth: 0
 
+      - run: git show-ref
+
       - name: Sync branches
         run: |
-          git push origin main:staging
+          git push origin HEAD:staging
