@@ -58,7 +58,10 @@ export type AcceptedReferral = {
 
 export type ActionRequired = {
   __typename?: 'ActionRequired'
+  /** @deprecated use actionV2 */
   action: Scalars['CheckoutPaymentAction']
+  /** String-wrapped json of the Adyen action response, necessary for some clients' deserialization */
+  actionV2: Scalars['CheckoutPaymentAction']
   paymentTokenId: Scalars['ID']
 }
 
@@ -254,6 +257,7 @@ export type AgreementCore = {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
   status: AgreementStatus
@@ -2032,7 +2036,7 @@ export type Contract = {
   inception?: Maybe<Scalars['LocalDate']>
   insurableLimits: Array<InsurableLimit>
   insuranceTerms: Array<InsuranceTerm>
-  logo: Icon
+  logo?: Maybe<Icon>
   perils: Array<PerilV2>
   status: ContractStatus
   /** localised information about the current status of the contract */
@@ -2068,6 +2072,10 @@ export type ContractInsuranceTermsArgs = {
   date?: InputMaybe<Scalars['LocalDate']>
   locale: Locale
   partner?: InputMaybe<Scalars['String']>
+}
+
+export type ContractLogoArgs = {
+  locale: Locale
 }
 
 export type ContractPerilsArgs = {
@@ -2111,6 +2119,20 @@ export type ContractFaq = {
   __typename?: 'ContractFaq'
   body: Scalars['String']
   headline: Scalars['String']
+}
+
+export type ContractFaqResponse = {
+  __typename?: 'ContractFaqResponse'
+  contractType?: Maybe<TypeOfContract>
+  faqItems: Array<ContractFaq>
+}
+
+/** Query parameters for getting FAQs for multiple contracts */
+export type ContractFaqsQuery = {
+  /** An array of contract types */
+  contractTypes: Array<TypeOfContract>
+  /** Locale for PCMS */
+  locale: Locale
 }
 
 export type ContractHighlight = {
@@ -2602,7 +2624,6 @@ export type CreateOnboardingQuoteCartInput = {
 }
 
 export type CreateQuoteBundleInput = {
-  contractBundleId?: InputMaybe<Scalars['ID']>
   initiatedFrom?: InputMaybe<QuoteInitiatedFrom>
   numberCoInsured?: InputMaybe<Scalars['Int']>
   payload: Array<Scalars['JSON']>
@@ -2723,6 +2744,7 @@ export type CrossSellInfo = {
   __typename?: 'CrossSellInfo'
   aboutSection: Scalars['String']
   contractPerils: Array<PerilV2>
+  /** @deprecated use CrossSell.title instead */
   displayName: Scalars['String']
   faq: Array<ContractFaq>
   highlights: Array<ContractHighlight>
@@ -2772,6 +2794,7 @@ export type DanishAccidentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -2815,6 +2838,7 @@ export type DanishHomeContentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -2857,6 +2881,7 @@ export type DanishTravelAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -3458,6 +3483,7 @@ export type EmbarkKeywords = {
 
 export type EmbarkLink = {
   __typename?: 'EmbarkLink'
+  hidden: Scalars['Boolean']
   label: Scalars['String']
   name: Scalars['String']
 }
@@ -7566,6 +7592,8 @@ export type Mutation = {
   editLastResponse: Scalars['Boolean']
   editQuote: CreateQuoteResult
   emailSign?: Maybe<Scalars['Boolean']>
+  /** Clear Embark translation cache. */
+  embarkClearTranslationCache?: Maybe<Scalars['Boolean']>
   exchangeToken: ExchangeTokenResponse
   externalInsuranceProvider?: Maybe<ExternalInsuranceProviderMutation>
   /** Initiate widget, widget should send requestId, locale, partner id */
@@ -7622,6 +7650,11 @@ export type Mutation = {
   quoteCart_initWidget: CreateQuoteCartResult
   /** Remove the existing campaign. */
   quoteCart_removeCampaign: RemoveCampaignResult
+  /**
+   * Generate self change quotes for the member's insurances. The input is the new home address information,
+   * and the mutation generates new quotes for all the member's existing insurances.
+   */
+  quoteCart_selfChange: SelfChangeResult
   /**
    * Initiate checkout, optionally tagging a subset of the quotes if not all of them are wanted.
    *
@@ -7826,6 +7859,11 @@ export type MutationQuoteCart_RemoveCampaignArgs = {
   id: Scalars['ID']
 }
 
+export type MutationQuoteCart_SelfChangeArgs = {
+  id: Scalars['ID']
+  input: SelfChangeInput
+}
+
 export type MutationQuoteCart_StartCheckoutArgs = {
   id: Scalars['ID']
   quoteIds?: InputMaybe<Array<Scalars['ID']>>
@@ -7988,6 +8026,7 @@ export type NorwegianAccidentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -8026,6 +8065,7 @@ export type NorwegianHomeContentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -8065,6 +8105,7 @@ export type NorwegianHouseAgreement = AgreementCore & {
   certificateUrl?: Maybe<Scalars['String']>
   extraBuildings: Array<Maybe<ExtraBuilding>>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   isSubleted: Scalars['Boolean']
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
@@ -8080,7 +8121,6 @@ export type NorwegianHouseDetails = {
   extraBuildings: Array<ExtraBuilding>
   isSubleted: Scalars['Boolean']
   livingSpace: Scalars['Int']
-  numberOfBathrooms: Scalars['Int']
   numberOfWetUnits: Scalars['Int']
   street: Scalars['String']
   waterLeakageDetector?: Maybe<Scalars['Boolean']>
@@ -8096,6 +8136,7 @@ export type NorwegianTravelAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -8336,6 +8377,8 @@ export type Query = {
   commonClaims: Array<CommonClaim>
   /** Returns FAQ for TypeOfContract from promise-cms */
   contractFaq: Array<ContractFaq>
+  /** Returns FAQ for TypeOfContract from promise-cms */
+  contractFaqs: Array<ContractFaqResponse>
   /** Returns perils from promise-cms */
   contractPerils: Array<PerilV2>
   /** Returns all contracts the member currently holds, regardless of activation/termination status */
@@ -8406,6 +8449,7 @@ export type Query = {
   selfChangeEligibility: SelfChangeEligibility
   signMethodForQuotes: SignMethod
   signStatus?: Maybe<SignStatus>
+  swedishCarInfo?: Maybe<SwedishCarInfo>
   /** Returns termsAndConditions from promise-cms */
   termsAndConditions: InsuranceTerm
   welcome: Array<Welcome>
@@ -8456,6 +8500,10 @@ export type QueryCommonClaimsArgs = {
 export type QueryContractFaqArgs = {
   contractType: TypeOfContract
   locale: Locale
+}
+
+export type QueryContractFaqsArgs = {
+  input: ContractFaqsQuery
 }
 
 export type QueryContractPerilsArgs = {
@@ -8629,6 +8677,10 @@ export type QuerySignMethodForQuotesArgs = {
   input: Array<Scalars['ID']>
 }
 
+export type QuerySwedishCarInfoArgs = {
+  registrationNumber: Scalars['String']
+}
+
 export type QueryTermsAndConditionsArgs = {
   carrier?: InputMaybe<Scalars['String']>
   contractType: TypeOfContract
@@ -8716,6 +8768,8 @@ export type QuoteBundleInput = {
 export type QuoteBundleVariant = {
   __typename?: 'QuoteBundleVariant'
   bundle: QuoteBundle
+  /** A long description for this variant */
+  description?: Maybe<Scalars['String']>
   id: Scalars['ID']
   /** A describing tag of this variant, for example "Most popular" */
   tag?: Maybe<Scalars['String']>
@@ -8724,6 +8778,11 @@ export type QuoteBundleVariant = {
 /** A possible alternative bundling variant */
 export type QuoteBundleVariantBundleArgs = {
   locale?: InputMaybe<Locale>
+}
+
+/** A possible alternative bundling variant */
+export type QuoteBundleVariantDescriptionArgs = {
+  locale: Locale
 }
 
 /** A possible alternative bundling variant */
@@ -9902,6 +9961,13 @@ export type SelfChangeEligibility = {
   embarkStoryId?: Maybe<Scalars['ID']>
 }
 
+export type SelfChangeInput = {
+  payload: Scalars['JSON']
+  startDate: Scalars['LocalDate']
+}
+
+export type SelfChangeResult = QuoteBundleError | QuoteCart
+
 export type SessionInformation = {
   __typename?: 'SessionInformation'
   memberId: Scalars['String']
@@ -10077,6 +10143,7 @@ export type SwedishAccidentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -10107,6 +10174,7 @@ export type SwedishApartmentAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   numberCoInsured: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -10157,6 +10225,8 @@ export type SwedishCarAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
+  info?: Maybe<SwedishCarInfo>
   mileage?: Maybe<Scalars['Int']>
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -10195,6 +10265,7 @@ export type SwedishHouseAgreement = AgreementCore & {
   certificateUrl?: Maybe<Scalars['String']>
   extraBuildings: Array<Maybe<ExtraBuilding>>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   isSubleted: Scalars['Boolean']
   numberCoInsured: Scalars['Int']
   numberOfBathrooms: Scalars['Int']
@@ -10226,6 +10297,7 @@ export type SwedishQasaRentalAgreement = AgreementCore & {
   carrier?: Maybe<Scalars['String']>
   certificateUrl?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  inceptionDate?: Maybe<Scalars['LocalDate']>
   monthlyRentalAmount: Scalars['Int']
   partner?: Maybe<Scalars['String']>
   premium: MonetaryAmountV2
@@ -10774,6 +10846,7 @@ export enum TypeOfContract {
   DkHomeContentRent = 'DK_HOME_CONTENT_RENT',
   DkHomeContentStudentOwn = 'DK_HOME_CONTENT_STUDENT_OWN',
   DkHomeContentStudentRent = 'DK_HOME_CONTENT_STUDENT_RENT',
+  DkHouse = 'DK_HOUSE',
   DkTravel = 'DK_TRAVEL',
   DkTravelStudent = 'DK_TRAVEL_STUDENT',
   NoAccident = 'NO_ACCIDENT',
@@ -10799,6 +10872,7 @@ export enum TypeOfContract {
 }
 
 export enum TypeOfContractGradientOption {
+  GradientFive = 'GRADIENT_FIVE',
   GradientFour = 'GRADIENT_FOUR',
   GradientOne = 'GRADIENT_ONE',
   GradientThree = 'GRADIENT_THREE',
@@ -11762,6 +11836,30 @@ export type AddCampaignCodeMutation = {
       }
 }
 
+export type AddQuoteBundleMutationVariables = Exact<{
+  quoteCartId: Scalars['ID']
+  quotes: Array<Scalars['JSON']> | Scalars['JSON']
+}>
+
+export type AddQuoteBundleMutation = {
+  __typename?: 'Mutation'
+  quoteCart_createQuoteBundle:
+    | {
+        __typename: 'QuoteBundleError'
+        message: string
+        type: string
+        limits?: Array<{ __typename?: 'UnderwritingLimit'; code: string }> | null
+      }
+    | {
+        __typename: 'QuoteCart'
+        id: string
+        bundle?: {
+          __typename?: 'QuoteBundle'
+          quotes: Array<{ __typename?: 'BundledQuote'; id: string }>
+        } | null
+      }
+}
+
 export type CreateQuoteBundleMutationVariables = Exact<{
   id: Scalars['ID']
   input: CreateSwedishBundleInput
@@ -11838,6 +11936,28 @@ export const AddCampaignCodeDocument = gql`
     }
   }
 `
+export const AddQuoteBundleDocument = gql`
+  mutation AddQuoteBundle($quoteCartId: ID!, $quotes: [JSON!]!) {
+    quoteCart_createQuoteBundle(id: $quoteCartId, input: { payload: $quotes }) {
+      __typename
+      ... on QuoteCart {
+        id
+        bundle {
+          quotes {
+            id
+          }
+        }
+      }
+      ... on QuoteBundleError {
+        message
+        type
+        limits {
+          code
+        }
+      }
+    }
+  }
+`
 export const CreateQuoteBundleDocument = gql`
   mutation CreateQuoteBundle($id: ID!, $input: CreateSwedishBundleInput!) {
     quoteCart_createSwedishBundle(id: $id, input: $input) {
@@ -11891,6 +12011,16 @@ export function getSdk<C>(requester: Requester<C>) {
     ): Promise<AddCampaignCodeMutation> {
       return requester<AddCampaignCodeMutation, AddCampaignCodeMutationVariables>(
         AddCampaignCodeDocument,
+        variables,
+        options,
+      )
+    },
+    AddQuoteBundle(
+      variables: AddQuoteBundleMutationVariables,
+      options?: C,
+    ): Promise<AddQuoteBundleMutation> {
+      return requester<AddQuoteBundleMutation, AddQuoteBundleMutationVariables>(
+        AddQuoteBundleDocument,
         variables,
         options,
       )
