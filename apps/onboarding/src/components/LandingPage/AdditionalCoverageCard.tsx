@@ -52,7 +52,6 @@ export const AdditionalCoverageCard = ({
   title,
   description,
   onCheck,
-  imgAlt,
   selected,
   disabled,
   ...wrapperProps
@@ -67,7 +66,13 @@ export const AdditionalCoverageCard = ({
       disabled={disabled}
     >
       <ImageFrame>
-        <Image src={cardImg} alt={imgAlt} layout="fill" objectFit="cover" priority={true} />
+        <Image
+          {...cardImg}
+          alt={cardImg.alt ?? ''}
+          layout="fill"
+          objectFit="cover"
+          priority={true}
+        />
       </ImageFrame>
       <AdditionalSection isCheckable={isCheckable}>
         <Space y={0.5}>

@@ -41,11 +41,9 @@ const CheckboxContainer = styled.div({
 
 export const MainCoverageCard = ({
   cardImg,
-  blurDataURL,
   title,
   description,
   onCheck,
-  imgAlt,
   selected,
   required,
   errorMessage,
@@ -57,12 +55,11 @@ export const MainCoverageCard = ({
     <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
       <ImageFrame>
         <Image
-          src={cardImg}
-          alt={imgAlt}
+          {...cardImg}
+          alt={cardImg.alt ?? ''}
           layout="fill"
           objectFit="cover"
           placeholder="blur"
-          blurDataURL={blurDataURL}
           priority={true}
         />
       </ImageFrame>

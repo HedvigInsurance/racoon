@@ -2,8 +2,12 @@ export type Insurance = {
   id: string
   name: string
   description: string
-  img: string
-  blurDataURL: string
+  img: {
+    src: string
+    alt?: string
+    blurDataURL?: string
+    objectPosition?: string
+  }
   fieldName: string
   isPreselected?: boolean
   isAdditionalCoverage?: boolean
