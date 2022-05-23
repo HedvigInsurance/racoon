@@ -6,6 +6,7 @@ import Script from 'next/script'
 import { ThemeProvider } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
 import { useApollo } from '@/hooks/useApollo'
+import { useDebugTranslationKeys } from '@/hooks/useDebugTranslationsKeys'
 import { useTrackPageViews } from '@/hooks/useTrackPageViews'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { GTM_ID, useGTMUserProperties } from '@/services/analytics/gtm'
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useGTMUserProperties()
   useTrackPageViews()
+  useDebugTranslationKeys()
 
   return (
     <>

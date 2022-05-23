@@ -1,5 +1,5 @@
-import type { SSRConfig } from 'next-i18next'
 import { marked } from 'marked'
+import type { SSRConfig } from 'next-i18next'
 
 export const replaceMarkdown = async (translations: SSRConfig, fields: Array<string>) => {
   const { JSDOM } = await import('jsdom')
