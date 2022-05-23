@@ -20,4 +20,4 @@ jobs:
 
       - name: Sync branches
         run: |
-          git push origin HEAD:staging
+          git push --force-with-lease origin HEAD:staging
