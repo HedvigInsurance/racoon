@@ -1,12 +1,7 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import { mq } from 'ui'
+import { PropsWithChildren } from 'react'
 
-export type StickyFooterProps = {
-  children: React.ReactNode
-}
-
-const StickyContainer = styled.div((props) => ({
+const FixedContainer = styled.div((props) => ({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -21,6 +16,6 @@ const StickyContainer = styled.div((props) => ({
   padding: '0 1rem',
 }))
 
-export const StickyFooter = ({ children }: StickyFooterProps) => {
-  return <StickyContainer>{children}</StickyContainer>
+export const FixedFooter = ({ children }: PropsWithChildren<{}>) => {
+  return <FixedContainer>{children}</FixedContainer>
 }

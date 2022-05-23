@@ -10,9 +10,9 @@ import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
+import { FixedFooter } from './FixedFooter'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
-import { StickyFooter } from './StickyFooter'
 
 type GridCardProps = { size: 'half' | 'full' }
 
@@ -186,11 +186,11 @@ export const LandingPage = ({
             ))}
           </CoverageCardGrid>
         </Main>
-        <StickyFooter>
+        <FixedFooter>
           <FooterButton color="dark" disabled={isRedirecting}>
             {t('START_SCREEN_SUBMIT_BUTTON')}
           </FooterButton>
-        </StickyFooter>
+        </FixedFooter>
       </PageContainer>
     </form>
   )
