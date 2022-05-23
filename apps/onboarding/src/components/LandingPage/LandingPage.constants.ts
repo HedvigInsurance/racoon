@@ -43,6 +43,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       fieldName: 'isHomeContents',
+      isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO),
     },
     ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO)
       ? [
