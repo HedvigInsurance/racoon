@@ -5,7 +5,6 @@ import { useMemo, useState } from 'react'
 import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
-import { ResponsiveFooter } from '@/components/Nav/ResponsiveFooter'
 import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
@@ -13,6 +12,7 @@ import { Embark } from '@/services/embark'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
+import { StickyFooter } from './StickyFooter'
 
 type GridCardProps = { size: 'half' | 'full' }
 
@@ -21,16 +21,12 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
   [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
 }))
 
-const Main = styled.main({
+const Main = styled.div({
   padding: '0 1rem',
-  paddingBottom: '2rem',
+  paddingBottom: '7rem',
   margin: 'auto',
   maxWidth: '53rem',
   marginTop: 0,
-
-  [mq.sm]: {
-    paddingBottom: 0,
-  },
 })
 
 const CoverageCardGrid = styled.div({
@@ -67,7 +63,6 @@ const FooterButton = styled(Button)({
 
   [mq.sm]: {
     width: 'auto',
-    marginTop: '4rem',
   },
 })
 
@@ -191,11 +186,11 @@ export const LandingPage = ({
             ))}
           </CoverageCardGrid>
         </Main>
-        <ResponsiveFooter>
+        <StickyFooter>
           <FooterButton color="dark" disabled={isRedirecting}>
             {t('START_SCREEN_SUBMIT_BUTTON')}
           </FooterButton>
-        </ResponsiveFooter>
+        </StickyFooter>
       </PageContainer>
     </form>
   )

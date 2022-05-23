@@ -7,23 +7,20 @@ export type StickyFooterProps = {
 }
 
 const StickyContainer = styled.div((props) => ({
-  position: 'sticky',
+  position: 'fixed',
   bottom: 0,
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
+  left: 0,
+  right: 0,
   backgroundColor: props.theme.colors.white,
   boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
-  padding: '1rem',
-  paddingBottom: '2rem',
-  marginTop: 'auto',
-  [mq.sm]: {
-    position: 'static',
-    backgroundColor: 'inherit',
-    boxShadow: 'unset',
-  },
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '5rem',
+  padding: '0 1rem',
 }))
 
-export const ResponsiveFooter = ({ children }: StickyFooterProps) => {
+export const StickyFooter = ({ children }: StickyFooterProps) => {
   return <StickyContainer>{children}</StickyContainer>
 }
