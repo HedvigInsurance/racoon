@@ -66,6 +66,10 @@ You can run E2E tests using one of both commands:
 
 The app uses the built-in [Internationalized Routing](https://nextjs.org/docs/advanced-features/i18n-routing) feature of Next.js.
 
+### Debugging
+
+To know which text key is used where you can suffix the url anywhere with `?debug=textkeys` to show text keys instead of translations, and to disable the debug mode you can suffix the url with `?debug=none`.
+
 ### Geo-redirects
 
 We perform automatic geo-redirects using a global [middleware](https://nextjs.org/docs/middleware) `src/pages/_middleware.next.ts`. The `default` locale corresponds to URLs without any locale included. However, we don't support that so users are always redirected to a URL with an [prefixed locale](https://github.com/vercel/next.js/discussions/18419#discussioncomment-1561577).
