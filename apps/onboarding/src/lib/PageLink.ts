@@ -31,9 +31,15 @@ export const PageLink = {
   old_landing_page: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member`,
   old_offer: ({ locale, quoteCartId, showEdit }: WOOfferParams) => {
-    const searchParams = new URLSearchParams()
-    if (showEdit) searchParams.append('showEdit', 'true')
-    return `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}?${searchParams.toString()}`
+    const baseURL = `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}`
+
+    if (showEdit) {
+      const searchParams = new URLSearchParams()
+      searchParams.append('showEdit', 'true')
+      return `${baseURL}?${searchParams.toString()}`
+    }
+
+    return baseURL
   },
 
   startFormApi: () => '/api/pages/start',

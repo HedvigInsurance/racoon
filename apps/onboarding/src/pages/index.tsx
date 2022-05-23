@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 
 const Wrapper = styled.main({
   height: '100vh',

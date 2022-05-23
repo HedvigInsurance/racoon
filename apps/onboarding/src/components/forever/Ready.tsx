@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { LinkButton, Space } from 'ui'
 import { useCurrentLocale } from '@/lib/l10n'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 
 const fadeInUp = keyframes({
   from: {

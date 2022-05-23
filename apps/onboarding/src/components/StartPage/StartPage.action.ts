@@ -1,6 +1,6 @@
 import { Fields } from 'formidable'
 import { getLocale } from '@/lib/l10n'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 import { isLocaleLabel } from '@/lib/utils'
 import { createApolloClient } from '@/services/apollo'
 import {
