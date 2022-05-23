@@ -5,4 +5,11 @@ const NextDebuggerPage: NextPage = () => {
   return <DebuggerPage />
 }
 
+export const getStaticProps = () => {
+  return {
+    props: {},
+    notFound: process.env.VERCEL_ENV === 'production',
+  }
+}
+
 export default NextDebuggerPage
