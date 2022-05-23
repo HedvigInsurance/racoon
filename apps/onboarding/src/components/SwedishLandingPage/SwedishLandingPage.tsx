@@ -4,7 +4,7 @@ import { Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 import { Insurances } from '../LandingPage/LandingPage.types'
 import { ClickableCard } from './ClickableCard'
 

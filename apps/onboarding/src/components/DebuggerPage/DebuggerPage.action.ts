@@ -1,6 +1,6 @@
 import { Fields } from 'formidable'
 import { set as _set } from 'lodash-es'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 import { Market } from '@/lib/types'
 import { graphqlSdk } from '@/services/graphql/sdk'
 import { FORMS_PER_MARKET, PageInput } from './DebuggerPage.constants'

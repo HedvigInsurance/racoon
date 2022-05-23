@@ -1,7 +1,7 @@
 import { setCookies } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getFormData } from '@/lib/get-form-data'
-import { PageLink } from '@/lib/page-link'
+import { PageLink } from '@/lib/PageLink'
 import { QuoteCart } from '@/services/quote-cart'
 
 export const config = {
