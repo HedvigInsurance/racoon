@@ -7,7 +7,7 @@ const FixedContainer = styled.div((props) => ({
   left: 0,
   right: 0,
   backgroundColor: props.theme.colors.white,
-  boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
+  boxShadow: '0px -1px 10px rgba(0, 0, 0, 0.1)',
 
   display: 'flex',
   alignItems: 'center',
