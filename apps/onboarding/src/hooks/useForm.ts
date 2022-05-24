@@ -1,7 +1,14 @@
 import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useEffect, useRef } from 'react'
 import { useState } from 'react'
+import { LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import useRouterRefresh from './use-router-refresh'
+
+const PATH_PATTERN = new RegExp(`\/(${LOCALE_URL_PARAMS.join('|')})\/`)
+
+export const hasLocale = (url: string) => {
+  return PATH_PATTERN.test(url)
+}
 
 type TransitionState = 'idle' | 'submitting'
 
@@ -57,7 +64,9 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
         onSuccess?.({ redirectUrl })
 
         if (response.redirected) {
-          await router.push(redirectUrl)
+          await router.push(redirectUrl, undefined, {
+            locale: hasLocale(redirectUrl) ? false : undefined,
+          })
         } else {
           await refreshData()
           setFormState({ state: 'idle', errors: null })

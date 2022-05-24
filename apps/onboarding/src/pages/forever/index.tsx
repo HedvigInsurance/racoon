@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { Button, InputField, Space } from 'ui'
 import { PageLayout } from '@/components/forever/PageLayout'
 import { usePrintCodeEffect } from '@/components/forever/usePrintCodeEffect'
-import { useForm } from '@/hooks/use-form'
+import { useForm } from '@/hooks/useForm'
 import { replaceMarkdown } from '@/services/i18n'
 
 const UppercaseInputField = styled(InputField)({

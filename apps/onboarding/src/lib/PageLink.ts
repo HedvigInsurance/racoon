@@ -6,9 +6,8 @@ type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
-type CartParams = BaseParams & { quoteCartId: string }
 type EmbarkParams = BaseParams & { slug?: string }
-type WOOfferParams = Required<CartParams> & { showEdit?: boolean }
+type WOOfferParams = Required<BaseParams> & { quoteCartId: string; showEdit?: boolean }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -22,8 +21,6 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale, slug }: EmbarkParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/${slug}`,
   privacy_policy: ({ locale }: BaseParams) => `${WEB_ONBOARDING_URL}/${locale}/privacy-policy`,
-  cart: ({ locale, quoteCartId }: CartParams) =>
-    `${getOptionalPath(locale)}/new-member/cart/${quoteCartId}`,
   old_onboarding_se_needer: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-accident-needer`,
   old_onboarding_se_switcher: ({ locale }: Required<BaseParams>) =>
