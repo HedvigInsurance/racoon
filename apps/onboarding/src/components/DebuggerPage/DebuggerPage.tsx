@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Button, Space } from 'ui'
-import { useForm } from '@/hooks/use-form'
+import { FixedFooter } from '@/components/FixedFooter'
+import { useForm } from '@/hooks/useForm'
 import { PageLink } from '@/lib/PageLink'
 import { Market } from '@/lib/types'
 import { FORMS_PER_MARKET, MARKETS, PageInput, PAGE_WIDTH } from './DebuggerPage.constants'
 import { DynamicInput } from './DynamicInput'
 import { InputSelect } from './InputSelect'
-import { StickyFooter } from './StickyFooter'
 
 const PageWrapper = styled.div(({ theme }) => ({
   backgroundColor: theme.colors.gray200,
@@ -18,6 +18,7 @@ const Content = styled.div(() => ({
   maxWidth: PAGE_WIDTH,
   margin: '0 auto',
   padding: '1rem 0.5rem',
+  paddingBottom: `calc(${FixedFooter.HEIGHT} + 1rem)`,
 }))
 
 const InputGroup = styled.div(({ theme }) => ({
@@ -101,12 +102,14 @@ export const DebuggerPage = () => {
           </Space>
         </Content>
 
-        <StickyFooter y={0.5}>
-          <Button fullWidth disabled={pageForm.state === 'submitting'}>
-            Submit
-          </Button>
-          <ErrorText>{pageForm.errors?.form}</ErrorText>
-        </StickyFooter>
+        <FixedFooter>
+          <Space y={0.25}>
+            <Button fullWidth disabled={pageForm.state === 'submitting'}>
+              Submit
+            </Button>
+            <ErrorText>{pageForm.errors?.form}</ErrorText>
+          </Space>
+        </FixedFooter>
       </PageWrapper>
     </form>
   )

@@ -4,13 +4,13 @@ import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { Button, Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
+import { FixedFooter } from '@/components/FixedFooter'
 import { Header } from '@/components/Nav/Header'
 import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
-import { FixedFooter } from './FixedFooter'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
 
@@ -23,7 +23,7 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 
 const Main = styled.div({
   padding: '0 1rem',
-  paddingBottom: '7rem',
+  paddingBottom: `calc(${FixedFooter.HEIGHT} + 2rem)`,
   margin: 'auto',
   maxWidth: '53rem',
   marginTop: 0,
