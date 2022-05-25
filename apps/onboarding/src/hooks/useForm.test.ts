@@ -2,14 +2,13 @@ import { renderHook } from '@testing-library/react-hooks'
 import { hasLocale, useForm } from './useForm'
 
 describe('hasLocale', () => {
-  it('should detect when locale is/is not part of a URL', () => {
-    expect(hasLocale('https://www.dev.hedvigit.com/se/new-member/offer/adw8u-io123-j21io')).toBe(
-      true,
-    )
-    expect(hasLocale('/se-en/new-member/offer/adw8u-io123-j21io')).toBe(true)
-
-    expect(hasLocale('/new-member/offer/adw8u-io123-j21io')).toBe(false)
-    expect(hasLocale('https://www.dev.hedvigit.com/forever')).toBe(false)
+  it.each([
+    ['https://www.dev.hedvigit.com/se/new-member/offer/adw8u-io123-j21io', true],
+    ['/se-en/new-member/offer/adw8u-io123-j21io', true],
+    ['/new-member/offer/adw8u-io123-j21io', false],
+    ['https://www.dev.hedvigit.com/forever', false],
+  ])('should detect when locale is/is not part of a URL', (url, expected) => {
+    expect(hasLocale(url)).toBe(expected)
   })
 })
 
