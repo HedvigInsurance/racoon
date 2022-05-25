@@ -32,7 +32,60 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       slug: 'car',
     },
   ],
-  [Market.Denmark]: [],
+  [Market.Denmark]: [
+    {
+      id: 'dk-home-contents',
+      name: 'MAIN_COVERAGE_TITLE_HOME',
+      description: 'MAIN_COVERAGE_DESC_HOME',
+      img: {
+        src: '/racoon-assets/home.jpg',
+        blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
+      },
+      fieldName: 'isHomeContents',
+      isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK),
+    },
+    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK)
+      ? [
+          {
+            id: 'dk-house',
+            name: 'MAIN_COVERAGE_TITLE_HOUSE',
+            description: 'MAIN_COVERAGE_DESC_HOUSE',
+            img: {
+              src: '/racoon-assets/house.jpg',
+              blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
+              objectPosition: 'top left',
+            },
+            fieldName: 'isHouse',
+          },
+        ]
+      : []),
+    {
+      id: 'dk-travel',
+      name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
+      description: 'ADDITIONAL_COVERAGE_DESC_TRAVEL',
+      img: {
+        src: '/racoon-assets/travel.jpg',
+        blurDataURL: 'L8BMoT~VaxIoWC-:WBRkRjs:Rjt7',
+      },
+      isAdditionalCoverage: true,
+      fieldName: 'isTravel',
+    },
+    ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.DK)
+      ? [
+          {
+            id: 'dk-accident',
+            name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
+            description: 'MAIN_COVERAGE_DESC_ACCIDENT',
+            img: {
+              src: '/racoon-assets/accident.jpg',
+              blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
+            },
+            isAdditionalCoverage: true,
+            fieldName: 'isAccident',
+          },
+        ]
+      : []),
+  ],
   [Market.Norway]: [
     {
       id: 'no-home-contents',
