@@ -245,11 +245,6 @@
   "CHECKOUT_SIMPLE_SIGN_BUTTON_TEXT": "Fullfør kjøp",
   "ONBOARDING_DOWNLOAD_HEADLINE_PART_2": "for å komme i gang!",
   "ONBOARDING_DOWNLOAD_HEADLINE_PART_1": "Last ned Hedvig",
-  "LOGIN_APP_HEADING": "Logg inn",
-  "LOGIN_APP_BTN_LABEL": "Logg inn med BankID",
-  "LOGIN_APP_PAGE_TITLE": "Logg inn | Hedvig Forsikring",
-  "LOGIN_APP_INAVLID_SSN": "Det tallet ser ikke riktig ut. Prøv igjen.",
-  "LOGIN_APP_GENERIC_ERROR": "Noe gikk galt. Prøv igjen eller kontakt oss.",
   "STARTPAGE_DK_CONTENTS_ACCIDENT_HEADLINE": "",
   "STARTPAGE_DK_CONTENTS_HEADLINE": "",
   "STARTPAGE_DK_CONTENTS_ACCIDENT_TRAVEL_HEADLINE": "",
@@ -268,7 +263,7 @@
   "CHECKOUT_TERMS_HEADLINE": "Vilkår",
   "CHECKOUT_DETAILS_RESIDENCE_TYPE_RENT": "Leiebolig",
   "CHECKOUT_DETAILS_RESIDENCE_TYPE_OWN_UNSPECIFIED": "Bolig jeg eier",
-  "CHECKOUT_DETAILS_RESIDENCE_TYPE_OWN_HOUSE": "",
+  "CHECKOUT_DETAILS_RESIDENCE_TYPE_OWN_HOUSE": "Hus",
   "CHECKOUT_DETAILS_RESIDENCE_TYPE_OWN_APARTMENT": "Leilighet jeg eier",
   "SIDEBAR_INSURANCE_TYPE_DK_ACCIDENT": "",
   "SIDEBAR_INSURANCE_TYPE_DK_ACCIDENT_STUDENT": "",
@@ -407,7 +402,6 @@
   "MAIN_COVERAGE_DESC_ACCIDENT": "Ekstra sikkerhet hvis det skulle skje en ulykke",
   "CHECKOUT_DETAILS_REGISTRATION_NUMBER": "",
   "CHECKOUT_DETAILS_MILEAGE": "",
-  "CHECKOUT_DETAILS_MILEAGE_VALUE": "",
   "3D_SECURE_ERROR_DESCRIPTION": "Vennligst prøv å legge inn kortopplysningene dine på nytt. Hvis problemet vedvarer, prøv med et annet kort eller kontakt med banken din.",
   "3D_SECURE_ERROR_BUTTON": "Ok",
   "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres",
@@ -433,5 +427,7 @@
   "OFFER_SWITCH_PROMOTION_PARAGRAPH_CAR": "",
   "LANDING_PAGE_SUBHEADER_NO_ADDITIONAL_COVERAGE": "",
   "MAIN_COVERAGE_DESC_CAR": "",
-  "MAIN_COVERAGE_TITLE_CAR": ""
+  "MAIN_COVERAGE_TITLE_CAR": "",
+  "CHECKOUT_DETAILS_YEAR_OF_OWNERSHIP": "inInnflyttingsår",
+  "CHECKOUT_DETAILS_WATER_LEAKAGE": "Vannlekkasjesensor"
 }

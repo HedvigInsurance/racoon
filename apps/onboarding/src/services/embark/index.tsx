@@ -3,13 +3,13 @@ import { MarketLabel } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, Array<string>> = {
   [MarketLabel.SE]: [],
-  [MarketLabel.DK]: [],
+  [MarketLabel.DK]: ['onboarding-NO'],
   [MarketLabel.NO]: ['onboarding-NO', 'onboarding-NOv2'],
 }
 
 const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
   [MarketLabel.SE]: '',
-  [MarketLabel.DK]: '',
+  [MarketLabel.DK]: 'onboarding',
   [MarketLabel.NO]: 'onboarding',
 }
 
