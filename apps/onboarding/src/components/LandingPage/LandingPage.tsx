@@ -23,7 +23,7 @@ const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => 
 
 const Main = styled.div({
   padding: '0 1rem',
-  paddingBottom: '7rem',
+  paddingBottom: `calc(${FixedFooter.HEIGHT} + 2rem)`,
   margin: 'auto',
   maxWidth: '53rem',
   marginTop: 0,

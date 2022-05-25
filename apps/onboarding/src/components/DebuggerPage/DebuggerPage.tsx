@@ -18,7 +18,7 @@ const Content = styled.div(() => ({
   maxWidth: PAGE_WIDTH,
   margin: '0 auto',
   padding: '1rem 0.5rem',
-  paddingBottom: '6rem',
+  paddingBottom: `calc(${FixedFooter.HEIGHT} + 1rem)`,
 }))
 
 const InputGroup = styled.div(({ theme }) => ({

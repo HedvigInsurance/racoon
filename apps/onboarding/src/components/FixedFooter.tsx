@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { PropsWithChildren } from 'react'
 
+export const FIXED_FOOTER_HEIGHT = '5rem'
+
 const FixedContainer = styled.div((props) => ({
   position: 'fixed',
   bottom: 0,
@@ -12,10 +14,12 @@ const FixedContainer = styled.div((props) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '5rem',
+  height: FIXED_FOOTER_HEIGHT,
   padding: '0 1rem',
 }))
 
 export const FixedFooter = ({ children }: PropsWithChildren<{}>) => {
   return <FixedContainer>{children}</FixedContainer>
 }
+
+FixedFooter.HEIGHT = FIXED_FOOTER_HEIGHT
