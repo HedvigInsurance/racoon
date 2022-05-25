@@ -3,7 +3,7 @@ import { MarketLabel } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, Array<string>> = {
   [MarketLabel.SE]: [],
-  [MarketLabel.DK]: ['onboarding-NO'],
+  [MarketLabel.DK]: ['onboarding-DK'],
   [MarketLabel.NO]: ['onboarding-NO', 'onboarding-NOv2'],
 }
 
