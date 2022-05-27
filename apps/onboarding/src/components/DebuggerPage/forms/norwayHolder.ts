@@ -1,3 +1,4 @@
+import { randomEmail } from '../DebuggerPage.helpers'
 import { InputGroup } from '../DebuggerPage.types'
 
 export const NORWAY_HOLDER: InputGroup = {
@@ -15,7 +16,7 @@ export const NORWAY_HOLDER: InputGroup = {
     {
       name: 'email',
       label: 'Email',
-      defaultValue: 'sven.svensson@hedvig.com',
+      defaultValue: randomEmail(),
       type: 'email',
     },
   ],

@@ -11,3 +11,8 @@ export class QuoteBundleError extends Error {
     Object.setPrototypeOf(this, QuoteBundleError.prototype)
   }
 }
+
+export const randomEmail = () => {
+  const randomId = Math.random().toString(36).substring(2, 5)
+  return `sven.svensson.${randomId}@hedvig.com`
+}
