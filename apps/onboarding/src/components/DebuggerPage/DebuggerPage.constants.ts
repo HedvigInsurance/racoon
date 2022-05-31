@@ -2,6 +2,7 @@ import { Market } from '@/lib/types'
 import { Form } from './DebuggerPage.types'
 import { DENMARK_HOLDER } from './forms/denmarkHolder'
 import { DENMARK_HOME } from './forms/denmarkHome'
+import { DENMARK_HOUSE } from './forms/denmarkHouse'
 import { NORWAY_HOLDER } from './forms/norwayHolder'
 import { NORWAY_HOME } from './forms/norwayHome'
 import { NORWAY_HOUSE } from './forms/norwayHouse'
@@ -148,6 +149,50 @@ export const FORMS_PER_MARKET: Record<Market, Record<string, Form>> = {
         { 'data.type': 'DANISH_TRAVEL', 'data.isStudent': false },
       ],
       inputGroups: [DENMARK_HOLDER, DENMARK_HOME],
+    },
+    House: {
+      staticData: [
+        {
+          'data.type': 'DANISH_HOUSE',
+          'data.extraBuildings': [],
+          'data.isStudent': false,
+        },
+      ],
+      inputGroups: [DENMARK_HOLDER, DENMARK_HOUSE],
+    },
+    'Home + House': {
+      staticData: [
+        {
+          'data.type': 'DANISH_HOME_CONTENT',
+          'data.isStudent': false,
+          'data.livingSpace': 44,
+          'data.subType': 'OWN',
+        },
+        {
+          'data.type': 'DANISH_HOUSE',
+          'data.extraBuildings': [],
+          'data.isStudent': false,
+        },
+      ],
+      inputGroups: [DENMARK_HOLDER, DENMARK_HOUSE],
+    },
+    'Home + House + Accident + Travel': {
+      staticData: [
+        {
+          'data.type': 'DANISH_HOME_CONTENT',
+          'data.isStudent': false,
+          'data.livingSpace': 44,
+          'data.subType': 'OWN',
+        },
+        {
+          'data.type': 'DANISH_HOUSE',
+          'data.extraBuildings': [],
+          'data.isStudent': false,
+        },
+        { 'data.type': 'DANISH_ACCIDENT', 'data.isStudent': false },
+        { 'data.type': 'DANISH_TRAVEL', 'data.isStudent': false },
+      ],
+      inputGroups: [DENMARK_HOLDER, DENMARK_HOUSE],
     },
   },
 }
