@@ -2698,6 +2698,20 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@storyblok/js@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-1.2.1.tgz#58524378910f70644f6f61c2aa0a7fbd6d3f9b94"
+  integrity sha512-DBXKXQ+WJyIzZ9OHKN1IGpf2O3BnbBNuXi7EzIQal8hk1Ode2o1NxOtMTfTAUVCLDPmGaTWUDdhDMscm5Qa1ig==
+  dependencies:
+    storyblok-js-client "^4.5.2"
+
+"@storyblok/react@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-1.0.7.tgz#d516ad10fe203a1d86ce52c9c542884b8c89b07d"
+  integrity sha512-CoIAUVv8vbqEcuDHZttUgp/zzYeCQu23fxsqn5Q8GQYuMKUEJTwsMfDHe7xuZY3RpAG9sNfcfgv3bp1/7pd5NA==
+  dependencies:
+    "@storyblok/js" "^1.2.1"
+
 "@storybook/addon-actions@6.4.18":
   version "6.4.18"
   resolved "https://registry.npmjs.org/@storybook/addon-actions/-/addon-actions-6.4.18.tgz"
@@ -13789,6 +13803,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rollup-plugin-mjs-entry@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-mjs-entry/-/rollup-plugin-mjs-entry-0.1.1.tgz#b3ab47e8d49ddb1916e36ba2480dc8a62a22d533"
+  integrity sha512-uii0Txyrn4YCgP++fypLqsT3LgO3Fx0gAZLZlWRSwKCuZ+bdSzAzdVbJFATmCHcBNlO61i65EgemOVdVQYONHA==
+
 rollup@^2.60.0:
   version "2.67.2"
   resolved "https://registry.npmjs.org/rollup/-/rollup-2.67.2.tgz"
@@ -14457,6 +14476,14 @@ storyblok-js-client@^4.2.1:
   version "4.2.1"
   resolved "https://registry.npmjs.org/storyblok-js-client/-/storyblok-js-client-4.2.1.tgz"
   integrity sha512-TQfsyBJ6WcjpHFGKYXHy5kef4jXOI/j54wrJmw4Ld13e76dr81EvqZIrwehKPTcRID9+a4rbA0ykn3r3aBpArw==
+
+storyblok-js-client@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-4.5.2.tgz#f93ae4822fd5710737a516d474a5dd40ee80b96c"
+  integrity sha512-86On+EyREZdbTcYTV+0dRQ1E4Gy0hPWs43MxK5VOv6DRwbf1A7haXq6dUL8nm9i5+xgOB0GLJW0f3B9CHbq4sQ==
+  dependencies:
+    prettier "^2.5.1"
+    rollup-plugin-mjs-entry "^0.1.1"
 
 storyblok-react@^0.1.2:
   version "0.1.2"
