@@ -26,7 +26,10 @@ const HeaderMenu = styled.div({
 export const Header = () => {
   return (
     <HeaderContainer>
-      <HedvigLogo />
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+      <a href="/">
+        <HedvigLogo />
+      </a>
       <HeaderMenu>
         <LanguageSwitcher />
       </HeaderMenu>
