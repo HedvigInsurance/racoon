@@ -428,6 +428,11 @@
   "LANDING_PAGE_SUBHEADER_NO_ADDITIONAL_COVERAGE": "Välj en försäkring nedan för att få ett prisförslag skräddarsytt för just dig. Beslutsångest? Ingen panik – du kan alltid lägga till fler försäkringar eller ändra dina uppgifter efteråt i vår app.",
   "MAIN_COVERAGE_DESC_CAR": "En trygg, smidig försäkring med allt skydd du och din bil behöver. Ingen bindningstid.",
   "MAIN_COVERAGE_TITLE_CAR": "Bilförsäkring",
-  "CHECKOUT_DETAILS_YEAR_OF_OWNERSHIP": "",
-  "CHECKOUT_DETAILS_WATER_LEAKAGE": ""
+  "CHECKOUT_DETAILS_YEAR_OF_OWNERSHIP": "Inflyttningsår",
+  "CHECKOUT_DETAILS_WATER_LEAKAGE": "",
+  "CONFIRMATION_PAGE_TITLE": "Ny försäkring tecknad | Hedvig",
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "Eftersom du redan är medlem är det bara att logga in i appen för att komma åt allt som rör din nya försäkring.",
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "Som vanligt kan du spela in din skadeanmälan, chatta med ditt serviceteam och få obegränsad hjälp varje dag till klockan 22.",
+  "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "Tack för ditt köp!",
+  "ONBOARDING_CONFIRMATION_HEADLINE_PART_2": "Se försäkringen i appen."
 }
