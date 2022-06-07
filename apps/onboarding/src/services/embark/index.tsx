@@ -1,10 +1,10 @@
 import { LocaleData } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 
-const EMBARK_STORY_BY_MARKET: Record<MarketLabel, Array<string>> = {
-  [MarketLabel.SE]: [],
-  [MarketLabel.DK]: ['onboarding-DK'],
-  [MarketLabel.NO]: ['onboarding-NO', 'onboarding-NOv2'],
+const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
+  [MarketLabel.SE]: '',
+  [MarketLabel.DK]: 'onboarding-DK',
+  [MarketLabel.NO]: 'onboarding-NO',
 }
 
 const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
@@ -36,9 +36,11 @@ export const Embark = {
     window.sessionStorage.setItem(embarkStoryKey, JSON.stringify(serialisedStore))
   },
   setStore: (locale: LocaleData, initialStore: EmbarkStore) => {
-    const storyNames = EMBARK_STORY_BY_MARKET[locale.marketLabel]
+    const storyName = EMBARK_STORY_BY_MARKET[locale.marketLabel]
 
-    storyNames.forEach((storyName) => Embark.setStoryStore(storyName, initialStore))
+    if (!storyName) return
+
+    Embark.setStoryStore(storyName, initialStore)
   },
   getSlug: (locale: LocaleData) => {
     return EMBARK_URL_SLUG_BY_MARKET[locale.marketLabel]
