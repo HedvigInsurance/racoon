@@ -1,6 +1,6 @@
 import { fonts } from '@hedviginsurance/brand'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { GTM_ID } from '@/services/analytics/gtm'
+import { gtmDevScript, gtmProdScript } from '@/services/analytics/gtm'
 
 export default class MyDocument extends Document {
   render() {
@@ -21,7 +21,9 @@ export default class MyDocument extends Document {
         <body>
           <noscript>
             <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              src={
+                process.env.NEXT_PUBLIC_APP_ENV === 'prod' ? gtmProdScript.body : gtmDevScript.body
+              }
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }}
