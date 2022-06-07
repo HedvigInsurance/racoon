@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n'
 
-export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
-
 export const pageview = (url: string) => {
   pushToGTMDataLayer({
     event: 'virtual_page_view',
