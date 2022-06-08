@@ -1,11 +1,14 @@
 import { fonts } from '@hedviginsurance/brand'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import { LocaleLabel, locales } from '@/lib/l10n/locales'
 import { gtmDevScript, gtmProdScript } from '@/services/analytics/gtm'
 
 export default class MyDocument extends Document {
   render() {
+    const currentLocale = this.props.__NEXT_DATA__.locale
+    const htmlLang = locales[currentLocale as LocaleLabel].htmlLang
     return (
-      <Html>
+      <Html lang={htmlLang}>
         <Head>
           {Object.values(fonts).map((fontName) => (
             <link
