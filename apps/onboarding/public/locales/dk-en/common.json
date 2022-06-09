@@ -431,8 +431,8 @@
   "CHECKOUT_DETAILS_YEAR_OF_OWNERSHIP": "Year moved in",
   "CHECKOUT_DETAILS_WATER_LEAKAGE": "Water Leak Detector",
   "CONFIRMATION_PAGE_TITLE": "New insurance signed | Hedvig",
-  "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "Since you're already a member it's just to log in to the app to access everything related to your new insurance!",
-  "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "You can chat with your service team and get unlimited assistance every day till 10 PM, just as usual.",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "Purchase complete!",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_2": "See it in the app."
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "Since you're already a member it's just to log in to the app to access everything related to your new insurance.",
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "You can chat with your service team and get unlimited assistance till 10 PM, just as usual.",
+  "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "Thanks for your purchase",
+  "SIDEBAR_START_DATE_INFO_TEXT": "Already insured? Set your current policy’s expiry date as the start date. If you don’t know the expiry date, you can pick an approximate date and change it later in our app."
 }

@@ -431,8 +431,8 @@
   "CHECKOUT_DETAILS_YEAR_OF_OWNERSHIP": "Inflyttningsår",
   "CHECKOUT_DETAILS_WATER_LEAKAGE": "",
   "CONFIRMATION_PAGE_TITLE": "Ny försäkring tecknad | Hedvig",
-  "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "Eftersom du redan är medlem är det bara att logga in i appen för att komma åt allt som rör din nya försäkring.",
-  "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "Som vanligt kan du spela in din skadeanmälan, chatta med ditt serviceteam och få obegränsad hjälp varje dag till klockan 22.",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "Tack för ditt köp!",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_2": "Se försäkringen i appen."
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "Eftersom du redan är medlem hos Hedvig är det bara att logga in i appen för att komma igång med allt som rör din försäkring.",
+  "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "Som vanligt är det där du kan spela in din skadeanmälan, chatta med ditt serviceteam och få obegränsad hjälp fram till klockan 22.",
+  "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "Tack för ditt köp",
+  "SIDEBAR_START_DATE_INFO_TEXT": "Redan försäkrad? Välj din nuvarande försäkrings förfallodag som startdatum. Om du inte vet förfallodagen anger du ett ungefärligt datum och ändrar det via vår app senare."
 }
