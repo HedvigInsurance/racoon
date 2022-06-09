@@ -5,6 +5,7 @@ import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 export const LOCALE_URL_PARAMS = ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'] as const
 export type LocaleUrlParams = typeof LOCALE_URL_PARAMS
 export type LocaleLabel = LocaleUrlParams[number]
+export type HrefLanguage = 'en-se' | 'sv-se' | 'nb-no' | 'en-no' | 'da-dk' | 'en-dk'
 
 export type LocaleData = {
   path: LocaleLabel
@@ -12,6 +13,7 @@ export type LocaleData = {
   marketLabel: MarketLabel
   apiMarket: ApiMarket
   htmlLang: 'en' | 'sv' | 'no' | 'da'
+  hrefLang: HrefLanguage
   adtractionScriptSrc?: string
   ssn: {
     length: number
@@ -34,6 +36,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'sv',
+    hrefLang: 'sv-se',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
     ssn: {
       length: ssnLengths.SE,
@@ -54,6 +57,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'en',
+    hrefLang: 'en-se',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
     ssn: {
       length: ssnLengths.SE,
@@ -74,6 +78,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'no',
+    hrefLang: 'nb-no',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
     ssn: {
       length: ssnLengths.NO,
@@ -93,6 +98,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'en',
+    hrefLang: 'en-no',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
     ssn: {
       length: ssnLengths.NO,
@@ -112,6 +118,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'da',
+    hrefLang: 'da-dk',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
     ssn: {
       length: ssnLengths.DK,
@@ -131,6 +138,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'en',
+    hrefLang: 'en-dk',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
     ssn: {
       length: ssnLengths.DK,
