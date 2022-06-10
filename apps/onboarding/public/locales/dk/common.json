@@ -304,7 +304,7 @@
   "CHECKOUT_LASTNAME_LABEL": "Efternavn",
   "HERO_FIRSTNAME_PLACEHOLDER": "Dig",
   "PHONE_OPEN_TODAY": "Åbent i dag",
-  "PHONE_CLOSED_UNTIL": "Lukket indtil ",
+  "PHONE_CLOSED_UNTIL": "Lukket indtil",
   "CHECKOUT_EMAIL_LABEL": "E-mail",
   "PHONE_OPENS_MONDAY_AT": "",
   "ACCIDENT_SWEDEN_UPSELL_TITLE": "",
@@ -418,7 +418,7 @@
   "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000": "",
   "DETAILS_MODULE_TABLE_ANNUAL_MILEAGE_OPTION_25000_PLUS": "",
   "CHECKOUT_BUTTON_CONNECT_CARD": "Tilknyt betalingskort",
-  "LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING": "Vælg mindst en hovedforsikring og mulige ekstra forsikringer du gerne vil tegne. \nI de næste steps stiller vi dig nogle opfølgende spørgsmål.",
+  "LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING": "Vælg mindst en hovedforsikring og mulige ekstra forsikringer du gerne vil købe. I de næste steps stiller vi dig nogle opfølgende spørgsmål.",
   "OFFER_BUNDLE_SELECTOR_TITLE_CAR": "",
   "OFFER_BUNDLE_SELECTOR_DESCRIPTION_CAR": "",
   "OFFER_APP_PROMOTION_HEADING_CAR": "",
@@ -434,5 +434,5 @@
   "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "",
   "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "",
   "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_2": ""
+  "SIDEBAR_START_DATE_INFO_TEXT": "Allerede forsikret? Brug udløbsdatoen på din nuværende forsikring som startdato. Hvis ikke du kender den præcise dato, kan du vælge at angive et cirka-tidspunkt og ændre det senere i appen."
 }

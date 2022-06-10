@@ -303,14 +303,14 @@
   "CHECKOUT_FIRSTNAME_LABEL": "Fornavn",
   "CHECKOUT_LASTNAME_LABEL": "Etternavn",
   "HERO_FIRSTNAME_PLACEHOLDER": "Du",
-  "PHONE_OPEN_TODAY": "",
-  "PHONE_CLOSED_UNTIL": "",
+  "PHONE_OPEN_TODAY": "Åpent i dag",
+  "PHONE_CLOSED_UNTIL": "Stengt til kl",
   "CHECKOUT_EMAIL_LABEL": "E-postadresse",
-  "PHONE_OPENS_MONDAY_AT": "",
+  "PHONE_OPENS_MONDAY_AT": "Åpningstider er mandag–fredag: 09:00–16:00.",
   "ACCIDENT_SWEDEN_UPSELL_TITLE": "",
   "ACCIDENT_SWEDEN_UPSELL_DESCRIPTION": "",
   "ACCIDENT_SWEDEN_UPSELL_BUTTON": "",
-  "PHONE_OPENS_AT": "",
+  "PHONE_OPENS_AT": "Åpner kl",
   "CHECKOUT_SSN_LABEL_GLOBAL": "Fødselsnummer (DDMMÅÅXXXXX)",
   "SIDEBAR_ADD_CAMPAIGN_HEADLINE": "Legg til rabattkode",
   "SIDEBAR_ADD_CAMPAIGN_BODY": "Har du en rabattkode? Skriv den inn her.",
@@ -434,5 +434,5 @@
   "ONBOARDING_CONFIRMATION_PARAGRAPH_1": "",
   "ONBOARDING_CONFIRMATION_PARAGRAPH_2": "",
   "ONBOARDING_CONFIRMATION_HEADLINE_PART_1": "",
-  "ONBOARDING_CONFIRMATION_HEADLINE_PART_2": ""
+  "SIDEBAR_START_DATE_INFO_TEXT": "Har du allerede forsikring? Velg forfallsdagen for din nåværende forsikring som startdato. Hvis du ikke vet forfallsdagen angir du en nærliggende dato og endrer det i vår app senere."
 }
