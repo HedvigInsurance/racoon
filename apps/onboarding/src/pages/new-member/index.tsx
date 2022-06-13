@@ -11,8 +11,18 @@ import {
 } from '@/components/LandingPage/LandingPage.helpers'
 import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
 import { useCurrentLocale } from '@/lib/l10n'
-import { LocaleLabel } from '@/lib/l10n/locales'
+import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
+
+type MetaLinks = Pick<LocaleData, 'hrefLang' | 'path'> & {
+  href: string
+}
+
+const metaLinks: MetaLinks[] = LOCALE_URL_PARAMS.map((locale) => ({
+  hrefLang: locales[locale].hrefLang,
+  path: locales[locale].path,
+  href: `https://www.hedvig.com/${locales[locale].path}/new-member`,
+}))
 
 const NewMemberPage: NextPage<LandingPageProps> = ({
   mainCoverageInsurances,
@@ -20,12 +30,18 @@ const NewMemberPage: NextPage<LandingPageProps> = ({
   formInitialState,
 }) => {
   const { t } = useTranslation()
-  const { marketLabel } = useCurrentLocale()
+  const { marketLabel, path } = useCurrentLocale()
+
+  const canonicalLink = metaLinks.find((link) => link.path === path)?.href
 
   return (
     <>
       <Head>
         <title>{t('STARTPAGE_PAGE_TITLE')}</title>
+        {canonicalLink && <link rel="canonical" href={canonicalLink} />}
+        {metaLinks.map((link) => (
+          <link rel="alternative" key={link.hrefLang} hrefLang={link.hrefLang} href={link.href} />
+        ))}
       </Head>
       {marketLabel === MarketLabel.SE ? (
         <SwedishLandingPage mainCoverageInsurances={mainCoverageInsurances} />
