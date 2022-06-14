@@ -56,11 +56,12 @@ export const ClickableCard = ({
   cardImg,
   title,
   description,
+  onClick,
   href,
 }: BaseCardProps & ClickableCardWrapperProps) => {
   return (
     <a href={href}>
-      <MainWrapper as="div">
+      <MainWrapper as="div" onClick={onClick}>
         <ImageFrame>
           <Image
             {...cardImg}

@@ -14,6 +14,7 @@ export type SelectableCardWrapperProps = {
 export type ClickableCardWrapperProps = {
   href?: string
   disabled?: boolean
+  onClick?: () => void
 }
 
 export type BaseCardProps = {
@@ -75,7 +76,7 @@ export const SelectableCardWrapper = styled(Wrapper)<SelectableCardWrapperProps>
 
 SelectableCardWrapper.defaultProps = { type: 'button' }
 
-export const ClickableCardWrapper = styled(Wrapper)<ClickableCardWrapperProps>(({ theme }) => ({
+export const ClickableCardWrapper = styled(Wrapper)(({ theme }) => ({
   cursor: 'pointer',
 
   ':hover': { transform: 'translateY(-6px)', color: `${theme.colors.gray900} ` },

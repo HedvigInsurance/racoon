@@ -16,7 +16,7 @@ export const PageLink = {
     `${getOptionalPath(locale)}/forever${getOptionalPath(code)}`,
   foreverReady: ({ locale, code }: ForeverParams) =>
     `${getOptionalPath(locale)}/forever/${code}/ready`,
-  landing: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/landing`,
+  landing: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/new-member`,
   old_checkout: ({ locale, quoteCartId }: WOCheckoutParams) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale, slug }: EmbarkParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/${slug}`,

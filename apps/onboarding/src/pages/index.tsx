@@ -22,6 +22,9 @@ const Home: NextPage = () => {
       <Link href={PageLink.forever({ code: '8batky' })}>
         <a>Forever page</a>
       </Link>
+      <Link href={PageLink.landing()}>
+        <a>Landing page</a>
+      </Link>
     </Wrapper>
   )
 }

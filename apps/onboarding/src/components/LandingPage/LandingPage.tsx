@@ -75,6 +75,7 @@ export type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
   formInitialState: Record<string, boolean>
+  referer: string | null
 }
 
 export const LandingPage = ({
