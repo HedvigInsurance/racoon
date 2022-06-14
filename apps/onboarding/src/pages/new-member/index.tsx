@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
@@ -24,11 +24,7 @@ const metaLinks: MetaLinks[] = LOCALE_URL_PARAMS.map((locale) => ({
   href: `https://www.hedvig.com/${locales[locale].path}/new-member`,
 }))
 
-const NewMemberPage: NextPage<LandingPageProps> = ({
-  mainCoverageInsurances,
-  additionalCoverageInsurances,
-  formInitialState,
-}) => {
+const NewMemberPage = (props: LandingPageProps) => {
   const { t } = useTranslation()
   const { marketLabel, path } = useCurrentLocale()
 
@@ -44,19 +40,15 @@ const NewMemberPage: NextPage<LandingPageProps> = ({
         ))}
       </Head>
       {marketLabel === MarketLabel.SE ? (
-        <SwedishLandingPage mainCoverageInsurances={mainCoverageInsurances} />
+        <SwedishLandingPage {...props} />
       ) : (
-        <LandingPage
-          mainCoverageInsurances={mainCoverageInsurances}
-          additionalCoverageInsurances={additionalCoverageInsurances}
-          formInitialState={formInitialState}
-        />
+        <LandingPage {...props} />
       )}
     </>
   )
 }
 
-export const getStaticProps: GetStaticProps<LandingPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (context) => {
   // Skips prerendering this page for 'default' locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
   if (context.locale === 'default') {
@@ -78,6 +70,7 @@ export const getStaticProps: GetStaticProps<LandingPageProps> = async (context) 
       mainCoverageInsurances: getMainCoverageInsurances(insurances),
       additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
       formInitialState: getFormInitialState(insurances),
+      referer: context.req.headers.referer ?? null,
     },
   }
 }

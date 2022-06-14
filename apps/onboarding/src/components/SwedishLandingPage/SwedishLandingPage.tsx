@@ -1,11 +1,13 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react'
 import { Heading, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
+import { useTrackEvent } from '@/hooks/useTrackEvent'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
-import { Insurances } from '../LandingPage/LandingPage.types'
+import { LandingPageProps } from '../LandingPage/LandingPage'
 import { ClickableCard } from './ClickableCard'
 
 type GridCardProps = { size: 'half' | 'full' }
@@ -51,13 +53,28 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type ClickableCardsLandingPageProps = {
-  mainCoverageInsurances: Insurances
-}
+type SwedishLandingPageProps = Pick<LandingPageProps, 'mainCoverageInsurances' | 'referer'>
 
-export const SwedishLandingPage = ({ mainCoverageInsurances }: ClickableCardsLandingPageProps) => {
+export const SwedishLandingPage = ({
+  mainCoverageInsurances,
+  referer,
+}: SwedishLandingPageProps) => {
   const { t } = useTranslation()
   const locale = useCurrentLocale()
+
+  const trackPageView = useTrackEvent('begin_onboarding_page', {
+    begin_from: referer,
+  })
+
+  const trackSelectedCard = useTrackEvent('begin_onboarding_insurance_type_selected')
+
+  useEffect(() => {
+    trackPageView()
+  }, [trackPageView])
+
+  const handleClick = (type: string) => {
+    trackSelectedCard({ flow_type: type })
+  }
 
   return (
     <PageContainer>
@@ -87,6 +104,7 @@ export const SwedishLandingPage = ({ mainCoverageInsurances }: ClickableCardsLan
                   description={t(description)}
                   size={cardSize}
                   href={PageLink.embark({ locale: locale.path, slug })}
+                  onClick={() => handleClick(id)}
                 />
               )
             })}

@@ -25,6 +25,7 @@ type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
   offerData?: Record<string, string>
+  eventData?: Record<string, string>
   pageData?: GTMPageData
 }
 
