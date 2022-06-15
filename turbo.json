@@ -21,6 +21,9 @@
         "$NEXT_PUBLIC_FEATURE_ACCIDENT_INSURANCE"
       ]
     },
+    "store#build": {
+      "outputs": [".next/**"]
+    },
     "market-web#build": {
       "outputs": [".next/**"]
     },

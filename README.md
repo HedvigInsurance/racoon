@@ -38,6 +38,7 @@ This Turborepo includes the following packages and apps:
 ### Apps & Packages
 
 - `onboarding`: web-based onboarding using Next.js
+- `store`: Hedvig Coverage Store
 - `ui`: a dummy React UI library
 - `scripts`: ESLint configurations
 - `tsconfig`: TypeScript configs used throughout the monorepo

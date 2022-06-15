@@ -5,6 +5,7 @@ const WEB_ONBOARDING_URL = process.env.NEXT_PUBLIC_WEB_ONBOARDING_URL
 type BaseParams = { locale?: LocaleLabel | string }
 
 type ForeverParams = BaseParams & { code: string }
+type ProductPage = BaseParams & { id: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type EmbarkParams = BaseParams & { slug?: string }
 type WOOfferParams = Required<BaseParams> & { quoteCartId: string; showEdit?: boolean }
@@ -17,6 +18,13 @@ export const PageLink = {
   foreverReady: ({ locale, code }: ForeverParams) =>
     `${getOptionalPath(locale)}/forever/${code}/ready`,
   landing: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/new-member`,
+
+  store: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/store`,
+  product: ({ locale, id }: ProductPage) => `${getOptionalPath(locale)}/products/${id}`,
+  cart: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart`,
+  checkout: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout`,
+  confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/confirmation`,
+
   old_checkout: ({ locale, quoteCartId }: WOCheckoutParams) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member/sign/${quoteCartId}`,
   embark: ({ locale, slug }: EmbarkParams) => `${WEB_ONBOARDING_URL}/${locale}/new-member/${slug}`,

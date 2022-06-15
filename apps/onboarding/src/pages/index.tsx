@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import type { NextPage } from 'next'
 import Link from 'next/link'
 import { PageLink } from '@/lib/PageLink'
 
@@ -15,13 +14,15 @@ const Heading = styled.h1({
   fontWeight: 'bold',
 })
 
-const Home: NextPage = () => {
+const HomePage = () => {
   return (
     <Wrapper>
-      <Heading>This is a demo:</Heading>
+      <Heading>Racoon</Heading>
+
       <Link href={PageLink.forever({ code: '8batky' })}>
         <a>Forever page</a>
       </Link>
+
       <Link href={PageLink.landing()}>
         <a>Landing page</a>
       </Link>
@@ -29,4 +30,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default HomePage
