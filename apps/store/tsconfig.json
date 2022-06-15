@@ -11,7 +11,8 @@
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/services/*": ["services/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["hooks/*"],
+      "@/test/*": ["test/*"]
     },
     "incremental": true
   },
