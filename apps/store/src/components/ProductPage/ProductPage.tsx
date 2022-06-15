@@ -1,10 +1,10 @@
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { NextProductPageProps } from '@/pages/products/[product]'
 
-export const ProductPage = () => {
+export const ProductPage = ({ product }: NextProductPageProps) => {
   return (
     <div>
-      <h1>Product Page</h1>
-      <p>Not yet implemented</p>
+      <h1>Product Page for {product.name}</h1>
 
       <PriceCalculator />
     </div>

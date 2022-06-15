@@ -1,8 +1,10 @@
+import Link from 'next/link'
+
 export const LandingPage = () => {
   return (
     <div>
       <h1>Landing Page</h1>
-      <p>Not yet implemented</p>
+      <Link href="/store">Go to store</Link>
     </div>
   )
 }
