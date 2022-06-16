@@ -34,6 +34,14 @@ const CMS_PRODUCTS: CmsProduct[] = [
     product: 'SE_CAR',
     form: SWEDEN_CAR_FORM,
   },
+  {
+    name: 'SE_CAR',
+    market: MarketLabel.SE,
+    displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
+    slug: 'car',
+    pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
+    product: 'SE_CAR',
+  },
 ]
 
 export const getProductByMarketAndSlug = (market: MarketLabel, slug: string): CmsProduct | null => {
