@@ -4,6 +4,7 @@ export type Product = {
   market: Market
   name: string
   slug: string
+  pageTitle: string
 }
 
 const PRODUCTS: Product[] = [
@@ -11,6 +12,7 @@ const PRODUCTS: Product[] = [
     name: 'SE_HOME',
     market: 'se',
     slug: 'home',
+    pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key
   },
 ]
 

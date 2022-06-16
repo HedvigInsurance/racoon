@@ -1,17 +1,13 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
-import { getProductByMarketAndSlug, Product } from '@/services/mockProductService'
-import { StorePageProps } from '../store'
+import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
+import { getProductByMarketAndSlug } from '@/services/mockProductService'
 
-export type NextProductPageProps = {
-  product: Product
-}
-
-const NextProductPage: NextPage<NextProductPageProps> = (props: NextProductPageProps) => {
+const NextProductPage: NextPage<ProductPageProps> = (props: ProductPageProps) => {
   return <ProductPage {...props} />
 }
 
-export const getServerSideProps: GetServerSideProps<NextProductPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
   const market = 'se'
   const slugParam = context?.params?.product
 
