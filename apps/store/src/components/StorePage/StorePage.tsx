@@ -1,4 +1,6 @@
 import styled from '@emotion/styled'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { PageLink } from '@/lib/PageLink'
 import { StorePageProps } from '@/pages/store'
 
 const Wrapper = styled.main({
@@ -14,6 +16,8 @@ const Heading = styled.h1({
 })
 
 export const StorePage = ({ products }: StorePageProps) => {
+  const { locale } = useCurrentLocale()
+
   return (
     <Wrapper>
       <Heading>Store Page</Heading>
@@ -21,7 +25,7 @@ export const StorePage = ({ products }: StorePageProps) => {
         <ul>
           {products.map((product) => (
             <li key={product.name}>
-              <a href={`/products/${product.slug}`}>{product.name}</a>
+              <a href={PageLink.product({ locale, id: product.slug })}>{product.name}</a>
             </li>
           ))}
         </ul>
