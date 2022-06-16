@@ -1,16 +1,54 @@
-import { colorsV3, fonts } from '@hedviginsurance/brand'
+import { colorsV3, fonts as hedvigFonts } from '@hedviginsurance/brand'
+
+const colors: Record<string, string> = {
+  ...colorsV3,
+}
+colors.dark = colors.gray900
+colors.light = colors.gray100
+colors.lavender = colors.purple500
+
+const fonts: Record<string, string> = {
+  standard: `'${hedvigFonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
+  small: `'${hedvigFonts.HEDVIG_LETTERS_SMALL}', serif`,
+  big: `'${hedvigFonts.HEDVIG_LETTERS_BIG}', serif`,
+}
+fonts.body = fonts.standard
+fonts.heading = fonts.standard
+
+const fontSizes = [
+  '0.75rem',
+  '0.875rem',
+  '1rem',
+  '1.125rem',
+  '1.25rem',
+  '1.5rem',
+  '2rem',
+  '2.5rem',
+  '3rem',
+  '3.5rem',
+  '4.5rem',
+  '6rem',
+]
+
+const space = [
+  0,
+  '0.25rem',
+  '0.5rem',
+  '0.75rem',
+  '1rem',
+  '1.5rem',
+  '2rem',
+  '3rem',
+  '4rem',
+  '6rem',
+  '8rem',
+]
 
 export const theme = {
-  fonts: {
-    body: `'${fonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
-    heading: `'${fonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
-  },
-  colors: {
-    ...colorsV3,
-    dark: `${colorsV3.gray900}`,
-    light: `${colorsV3.gray100}`,
-    lavender: `${colorsV3.purple500}`,
-  },
+  colors,
+  fonts,
+  fontSizes,
+  space,
 }
 
 type CustomTheme = typeof theme
