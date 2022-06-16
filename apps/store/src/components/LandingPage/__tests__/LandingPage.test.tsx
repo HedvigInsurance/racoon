@@ -5,6 +5,6 @@ import { LandingPage } from '../LandingPage'
 describe('Landing Page', () => {
   test('can render', () => {
     render(<LandingPage />)
-    expect(screen.getByText('Not yet implemented')).toBeInTheDocument()
+    expect(screen.getByText('Landing Page')).toBeInTheDocument()
   })
 })

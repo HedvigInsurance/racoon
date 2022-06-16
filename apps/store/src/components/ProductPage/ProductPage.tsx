@@ -1,10 +1,14 @@
+import Head from 'next/head'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { ProductPageProps } from './ProductPage.types'
 
-export const ProductPage = () => {
+export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
   return (
     <div>
-      <h1>Product Page</h1>
-      <p>Not yet implemented</p>
+      <Head>
+        <title>{cmsProduct.pageTitle}</title>
+      </Head>
+      <h1>Product Page for {cmsProduct.displayName}</h1>
 
       <PriceCalculator />
     </div>
