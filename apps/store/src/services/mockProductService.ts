@@ -10,4 +10,8 @@ const PRODUCTS: Product[] = [
     name: 'SE_HOME',
     market: MarketLabel.SE,
   },
+  {
+    name: 'SE_CAR',
+    market: MarketLabel.SE,
+  },
 ]
