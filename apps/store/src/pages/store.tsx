@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { StorePage } from '@/components/StorePage/StorePage'
+import { getLocale } from '@/lib/l10n/getLocale'
 import { getProductsByMarket, Product } from '@/services/mockProductService'
 
 export type StorePageProps = {
@@ -10,9 +11,10 @@ const NextStorePage: NextPage<StorePageProps> = (props: StorePageProps) => {
   return <StorePage {...props} />
 }
 
-export const getServerSideProps: GetServerSideProps<StorePageProps> = async () => {
-  const market = 'se'
-  const products = getProductsByMarket(market)
+export const getServerSideProps: GetServerSideProps<StorePageProps> = async (context) => {
+  const localeData = getLocale(context.locale ?? context.defaultLocale)
+
+  const products = getProductsByMarket(localeData.marketLabel)
 
   return {
     props: {

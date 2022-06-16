@@ -21,7 +21,7 @@ export const StorePage = ({ products }: StorePageProps) => {
   return (
     <Wrapper>
       <Heading>Store Page</Heading>
-      {products?.length && (
+      {products.length && (
         <ul>
           {products.map((product) => (
             <li key={product.name}>

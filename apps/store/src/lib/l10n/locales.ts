@@ -2,6 +2,8 @@ import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-f
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 import { Market as ApiMarket, MarketLabel, HtmlLanguage, Locale } from './types'
 
+export const FALLBACK_LOCALE: Locale = Locale.EnSe
+
 export type LocaleData = {
   path: Locale
   locale: Locale
