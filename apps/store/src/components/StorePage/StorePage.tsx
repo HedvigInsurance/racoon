@@ -21,8 +21,8 @@ export const StorePage = ({ products }: StorePageProps) => {
       {products.length && (
         <ul>
           {products.map((product) => (
-            <li key={product.name}>
-              <a href={PageLink.product({ id: product.slug })}>{product.name}</a>
+            <li key={product.displayName}>
+              <a href={PageLink.product({ id: product.slug })}>{product.displayName}</a>
             </li>
           ))}
         </ul>

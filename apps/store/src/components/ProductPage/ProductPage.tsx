@@ -2,13 +2,13 @@ import Head from 'next/head'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { ProductPageProps } from './ProductPage.types'
 
-export const ProductPage = ({ product }: ProductPageProps) => {
+export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
   return (
     <div>
       <Head>
-        <title>{product.pageTitle}</title>
+        <title>{cmsProduct.pageTitle}</title>
       </Head>
-      <h1>Product Page for {product.name}</h1>
+      <h1>Product Page for {cmsProduct.displayName}</h1>
 
       <PriceCalculator />
     </div>

@@ -1,5 +1,5 @@
-import { Product } from '@/services/mockProductService'
+import { CmsProduct } from '@/services/mockCmsService'
 
 export type ProductPageProps = {
-  product: Product
+  cmsProduct: CmsProduct
 }
