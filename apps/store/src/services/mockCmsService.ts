@@ -1,3 +1,8 @@
+import {
+  SWEDEN_APARTMENT_FORM,
+  SWEDEN_CAR_FORM,
+} from '@/components/PriceCalculator/PriceCalculator.constants'
+import { PriceForm } from '@/components/PriceCalculator/PriceCalculator.types'
 import { MarketLabel } from '@/lib/l10n/types'
 
 export type CmsProduct = {
@@ -7,6 +12,7 @@ export type CmsProduct = {
   slug: string
   pageTitle: string
   product: string
+  form: PriceForm
 }
 
 const CMS_PRODUCTS: CmsProduct[] = [
@@ -17,6 +23,7 @@ const CMS_PRODUCTS: CmsProduct[] = [
     slug: 'home',
     pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
     product: 'SE_HOME',
+    form: SWEDEN_APARTMENT_FORM,
   },
   {
     name: 'SE_CAR',
@@ -25,6 +32,7 @@ const CMS_PRODUCTS: CmsProduct[] = [
     slug: 'car',
     pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
     product: 'SE_CAR',
+    form: SWEDEN_CAR_FORM,
   },
 ]
 

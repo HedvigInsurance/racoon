@@ -7,6 +7,7 @@ import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 import { CartList } from '../CartList/CartList'
+import { uuid } from '../PriceCalculator/uuid'
 import { ProductPageProps } from './ProductPage.types'
 
 const Wrapper = styled.main({
@@ -17,7 +18,7 @@ const Wrapper = styled.main({
   alignItems: 'center',
 })
 
-export const ProductPage = ({ cmsProduct, priceForm }: ProductPageProps) => {
+export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
   const cartContext = useContext(CartContext)
 
   if (!cartContext) {
@@ -26,7 +27,10 @@ export const ProductPage = ({ cmsProduct, priceForm }: ProductPageProps) => {
 
   const { addProductToCart, getItemsByProductType } = cartContext
 
-  const handleSubmit = (id: string, price: number) => {
+  const handleSubmit = () => {
+    // price and id should come from the calculator after price has been generated
+    const price = Math.round(100 + Math.random() * 100)
+    const id = uuid()
     addProductToCart(id, price, cmsProduct)
   }
 
@@ -41,7 +45,7 @@ export const ProductPage = ({ cmsProduct, priceForm }: ProductPageProps) => {
         Product Page for {cmsProduct.displayName}
       </Heading>
       <Space y={2}>
-        <PriceCalculator form={priceForm} onSubmit={handleSubmit} />
+        <PriceCalculator form={cmsProduct.form} onSubmit={handleSubmit} />
         {productsOfThisType.length > 0 && (
           <div>
             <Heading headingLevel="h2" colorVariant="dark" variant="s">

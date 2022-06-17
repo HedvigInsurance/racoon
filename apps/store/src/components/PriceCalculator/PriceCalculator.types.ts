@@ -20,14 +20,16 @@ export type Input = InputText | InputNumber | InputSelect
 
 type InputGroupState = 'IDLE' | 'INVALID' | 'VALID'
 
-type InputGroup = {
+export type GroupSummary = {
+  labels: Array<TextLabel>
+}
+
+export type InputGroup = {
   id: string
   title: TextLabel
   inputs: Array<Input>
   state: InputGroupState
-  summary: {
-    labels: Array<TextLabel>
-  }
+  summary: GroupSummary
 }
 
 export type PriceForm = {
