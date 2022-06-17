@@ -2,7 +2,11 @@ import Head from 'next/head'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { ProductPageProps } from './ProductPage.types'
 
-export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
+export const ProductPage = ({ cmsProduct, priceForm }: ProductPageProps) => {
+  const handleSubmit = () => {
+    console.log('handleSubmit')
+  }
+
   return (
     <div>
       <Head>
@@ -10,7 +14,7 @@ export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
       </Head>
       <h1>Product Page for {cmsProduct.displayName}</h1>
 
-      <PriceCalculator />
+      <PriceCalculator form={priceForm} onSubmit={handleSubmit} />
     </div>
   )
 }
