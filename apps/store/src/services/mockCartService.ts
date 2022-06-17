@@ -17,7 +17,10 @@ type Cart = {
 interface CartContextInterface {
   cart: Cart
   addProductToCart: (id: string, price: number, product: CmsProduct) => void
-  getItemsByProductType: (productName: string) => CartProduct[]
+  /**
+   * Returns cart items that matches on CmsProduct::name
+   */
+  getItemsByName: (productName: string) => CartProduct[]
   removeItem: (id: string) => void
 }
 
@@ -43,15 +46,15 @@ export const useCartContextStore = (): CartContextInterface => {
     setCartItems((current) => [...current, { cmsProduct: product, id, price }])
   }
 
-  const getItemsByProductType = (productName: string): CartProduct[] => {
-    return cart.items.filter((item) => item.cmsProduct.product === productName)
+  const getItemsByProductName = (name: string): CartProduct[] => {
+    return cart.items.filter((item) => item.cmsProduct.name === name)
   }
 
   const removeItem = (id: string): void => {
     setCartItems((current) => current.filter((item) => item.id !== id))
   }
 
-  return { cart, addProductToCart, getItemsByProductType, removeItem }
+  return { cart, addProductToCart, getItemsByName: getItemsByProductName, removeItem }
 }
 
 export const CartContext = React.createContext<CartContextInterface | null>(null)

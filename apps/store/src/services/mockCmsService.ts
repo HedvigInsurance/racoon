@@ -11,8 +11,8 @@ export type CmsProduct = {
   displayName: string
   slug: string
   pageTitle: string
-  product: string
   form: PriceForm
+  products: string[]
 }
 
 const CMS_PRODUCTS: CmsProduct[] = [
@@ -22,7 +22,7 @@ const CMS_PRODUCTS: CmsProduct[] = [
     displayName: 'Home insurance villa', // TODO: should be a translation key (or translated from BE)
     slug: 'home',
     pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    product: 'SE_HOME',
+    products: ['SE_HOME'],
     form: SWEDEN_APARTMENT_FORM,
   },
   {
@@ -31,16 +31,17 @@ const CMS_PRODUCTS: CmsProduct[] = [
     displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
     slug: 'car',
     pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    product: 'SE_CAR',
+    products: ['SE_CAR'],
     form: SWEDEN_CAR_FORM,
   },
   {
-    name: 'SE_CAR',
+    name: 'SE_HOME_ACCIDENT_BUNDLE',
     market: MarketLabel.SE,
-    displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
-    slug: 'car',
-    pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    product: 'SE_CAR',
+    displayName: 'Home and accident insurance', // TODO: should be a translation key (or translated from BE)
+    slug: 'home-accident',
+    pageTitle: 'Home & accident insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
+    products: ['SE_HOME', 'SE_ACCIDENT'],
+    form: SWEDEN_APARTMENT_FORM,
   },
 ]
 
