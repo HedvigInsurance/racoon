@@ -1,11 +1,15 @@
 import { ComponentMeta } from '@storybook/react'
 import React, { useState } from 'react'
-import { PriceCalculator } from './PriceCalculator'
+import { PriceCalculator, PriceCalculatorProps } from './PriceCalculator'
 import { SWEDEN_APARTMENT_FORM } from './PriceCalculator.constants'
+import { PriceForm } from './PriceCalculator.types'
 
 export default {
   title: 'Price Calculator',
   component: PriceCalculator,
+  argTypes: {
+    onSubmit: { action: 'onSubmit' },
+  },
 } as ComponentMeta<typeof PriceCalculator>
 
 export const Default = () => {
@@ -28,4 +32,31 @@ export const Default = () => {
   }
 
   return <PriceCalculator form={selectedForm} onSubmit={handleSubmit} />
+}
+
+export const OneGroupCompleted = ({ onSubmit }: PriceCalculatorProps) => {
+  const form: PriceForm = {
+    ...SWEDEN_APARTMENT_FORM,
+    groups: [
+      {
+        ...SWEDEN_APARTMENT_FORM.groups[0],
+        state: 'VALID',
+      },
+      ...SWEDEN_APARTMENT_FORM.groups.slice(1),
+    ],
+  }
+
+  return <PriceCalculator form={form} onSubmit={onSubmit} />
+}
+
+export const AllGroupsCompleted = ({ onSubmit }: PriceCalculatorProps) => {
+  const form: PriceForm = {
+    ...SWEDEN_APARTMENT_FORM,
+    groups: SWEDEN_APARTMENT_FORM.groups.map((group) => ({
+      ...group,
+      state: 'VALID',
+    })),
+  }
+
+  return <PriceCalculator form={form} onSubmit={onSubmit} />
 }

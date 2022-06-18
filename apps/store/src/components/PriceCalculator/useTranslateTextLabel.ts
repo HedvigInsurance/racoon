@@ -1,17 +1,31 @@
 import { useCallback } from 'react'
 import { TextLabel as TextLabelProps } from './PriceCalculator.types'
 
-const t = (key: string) => key
+const t = (key: string, _placeholders?: Record<string, string | number>) => key
 
-export const useTranslateTextLabel = () => {
-  return useCallback((label: TextLabelProps) => {
-    const { text, placeholders } = label
+type TranslateTextLabelParams = {
+  data: Record<string, string | number>
+}
 
-    if (!placeholders) return text
+export const useTranslateTextLabel = ({ data }: TranslateTextLabelParams) => {
+  return useCallback(
+    (label: TextLabelProps) => {
+      const { key, placeholders } = label
 
-    return placeholders.reduce(
-      (acc, placeholder) => acc.replace(placeholder.pattern, t(placeholder.key)),
-      text,
-    )
-  }, [])
+      return t(
+        key,
+        placeholders?.reduce((acc, placeholder) => {
+          const value = data[placeholder.key]
+
+          if (value === undefined) return acc
+
+          return {
+            ...acc,
+            [placeholder.pattern]: value,
+          }
+        }, {}),
+      )
+    },
+    [data],
+  )
 }

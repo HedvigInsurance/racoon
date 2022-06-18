@@ -1,5 +1,5 @@
 type Placeholder = { key: string; pattern: string }
-export type TextLabel = { text: string; placeholders?: Array<Placeholder> }
+export type TextLabel = { key: string; placeholders?: Array<Placeholder> }
 
 type InputBase = {
   name: string
@@ -25,6 +25,9 @@ type InputGroup = {
   title: TextLabel
   inputs: Array<Input>
   state: InputGroupState
+  summary: {
+    labels: Array<TextLabel>
+  }
 }
 
 export type PriceForm = {
