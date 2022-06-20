@@ -29,7 +29,18 @@ const Main = styled.div({
   marginTop: 0,
 })
 
-const CoverageCardGrid = styled.div({
+const MainCoverageCardGrid = styled.div({
+  display: 'grid',
+  gap: '1rem',
+  gridTemplateColumns: '1fr 1fr',
+  width: '100%',
+
+  [mq.md]: {
+    gridTemplateRows: '18.75rem',
+  },
+})
+
+const AdditionalCoverageCardGrid = styled.div({
   display: 'grid',
   gap: '1rem',
   gridTemplateColumns: '1fr 1fr',
@@ -132,7 +143,7 @@ export const LandingPage = ({
             </Heading>
           </TitleContainer>
 
-          <CoverageCardGrid>
+          <MainCoverageCardGrid>
             {mainCoverageInsurances.map((inrurance, index, arr) => {
               const isLastItem = index === arr.length - 1
               const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
@@ -159,7 +170,7 @@ export const LandingPage = ({
                 />
               )
             })}
-          </CoverageCardGrid>
+          </MainCoverageCardGrid>
 
           <TitleContainer>
             <Heading variant="xs" colorVariant="dark" headingLevel="h3">
@@ -167,7 +178,7 @@ export const LandingPage = ({
             </Heading>
           </TitleContainer>
 
-          <CoverageCardGrid>
+          <AdditionalCoverageCardGrid>
             {additionalCoverageInsurances.map((insurance) => (
               <AdditionalCoverageCard
                 key={insurance.id}
@@ -185,7 +196,7 @@ export const LandingPage = ({
                 description={t(insurance.description)}
               />
             ))}
-          </CoverageCardGrid>
+          </AdditionalCoverageCardGrid>
         </Main>
         <FixedFooter>
           <FooterButton color="dark" disabled={isRedirecting}>
