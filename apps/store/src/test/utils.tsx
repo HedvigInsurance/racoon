@@ -2,6 +2,7 @@ import { RenderOptions, render } from '@testing-library/react'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { NextRouter } from 'next/router'
 import { ReactElement, ReactNode } from 'react'
+import { ThemeProvider } from 'ui'
 
 const createRouterMock = (router?: Partial<NextRouter>): NextRouter => ({
   basePath: '',
@@ -32,7 +33,9 @@ const AllTheProviders =
   // eslint-disable-next-line react/display-name
   ({ children }: { children: ReactNode }) => {
     return (
-      <RouterContext.Provider value={createRouterMock(router)}>{children}</RouterContext.Provider>
+      <ThemeProvider>
+        <RouterContext.Provider value={createRouterMock(router)}>{children}</RouterContext.Provider>
+      </ThemeProvider>
     )
   }
 
@@ -41,5 +44,4 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'> & { router?: Partial<NextRouter> },
 ) => render(ui, { wrapper: AllTheProviders({ router: options?.router }), ...options })
 
-export * from '@testing-library/react'
 export { customRender as render }

@@ -1,20 +1,75 @@
+import styled from '@emotion/styled'
 import Head from 'next/head'
+import Link from 'next/link'
+import { useContext } from 'react'
+import { ArrowForwardIcon, Heading, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PageLink } from '@/lib/PageLink'
+import { CartContext } from '@/services/mockCartService'
+import { CartList } from '../CartList/CartList'
+import { uuid } from '../PriceCalculator/uuid'
 import { ProductPageProps } from './ProductPage.types'
 
-export const ProductPage = ({ cmsProduct, priceForm }: ProductPageProps) => {
-  const handleSubmit = () => {
-    console.log('handleSubmit')
+const Wrapper = styled.main({
+  height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
+  const cartContext = useContext(CartContext)
+
+  if (!cartContext) {
+    throw new Error('ProductPage cannot be rendered outside CartContext')
   }
 
+  const { addProductToCart, getItemsByProductType } = cartContext
+
+  const handleSubmit = () => {
+    // price and id should come from the calculator after price has been generated
+    const price = Math.round(100 + Math.random() * 100)
+    const id = uuid()
+    addProductToCart(id, price, cmsProduct)
+  }
+
+  const productsOfThisType = getItemsByProductType(cmsProduct.name)
+
   return (
-    <div>
+    <Wrapper>
       <Head>
         <title>{cmsProduct.pageTitle}</title>
       </Head>
-      <h1>Product Page for {cmsProduct.displayName}</h1>
+      <Heading variant="l" headingLevel="h1" colorVariant="dark">
+        Product Page for {cmsProduct.displayName}
+      </Heading>
+      <Space y={2}>
+        <PriceCalculator form={cmsProduct.form} onSubmit={handleSubmit} />
+        {productsOfThisType.length > 0 && (
+          <div>
+            <Heading headingLevel="h2" colorVariant="dark" variant="s">
+              Products of this type in cart
+            </Heading>
+            <CartList filterByProductName={cmsProduct.name} />
+          </div>
+        )}
 
-      <PriceCalculator form={priceForm} onSubmit={handleSubmit} />
-    </div>
+        <div>
+          <Link href={PageLink.cart()} passHref>
+            <a>
+              Go to cart <ArrowForwardIcon />
+            </a>
+          </Link>
+        </div>
+        <div>
+          <Link href={PageLink.store()} passHref>
+            <a>
+              Go to shop <ArrowForwardIcon />
+            </a>
+          </Link>
+        </div>
+      </Space>
+    </Wrapper>
   )
 }

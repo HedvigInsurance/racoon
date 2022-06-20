@@ -35,6 +35,10 @@
     "market-web#build": {
       "outputs": [".next/**"]
     },
+    "onboarding#test": {
+      "outputs": ["covereage/**"],
+      "dependsOn": ["build"]
+    },
     "test": {
       "outputs": ["covereage/**"],
       "dependsOn": []
