@@ -85,7 +85,7 @@ export const AdditionalCoverageCard = ({
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox onChange={onCheck} checked={selected} disabled={disabled} />
+            <Checkbox tabIndex={-1} onChange={onCheck} checked={selected} disabled={disabled} />
           </CheckboxContainer>
         )}
       </AdditionalSection>

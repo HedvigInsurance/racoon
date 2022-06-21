@@ -75,6 +75,7 @@ export const MainCoverageCard = ({
         {isCheckable && (
           <CheckboxContainer>
             <Checkbox
+              tabIndex={-1}
               onChange={onCheck}
               checked={selected}
               required={required}

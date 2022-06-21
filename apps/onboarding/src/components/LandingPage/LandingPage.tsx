@@ -156,6 +156,7 @@ export const LandingPage = ({
                   title={t(inrurance.name)}
                   description={t(inrurance.description)}
                   size={cardSize}
+                  enableHover={true}
                 />
               )
             })}
