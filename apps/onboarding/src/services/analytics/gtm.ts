@@ -47,7 +47,8 @@ export const useGTMUserProperties = () => {
 }
 
 export const pushToGTMDataLayer = (obj: DataLayerObject) => {
-  window.dataLayer?.push(obj)
+  if (!window.dataLayer) window.dataLayer = []
+  window.dataLayer.push(obj)
 }
 
 export const gtmDevScript = {

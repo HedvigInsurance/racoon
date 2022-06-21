@@ -73,7 +73,7 @@ export const SwedishLandingPage = ({
   }, [trackPageView])
 
   const handleClick = (type: string) => {
-    trackSelectedCard({ flow_type: type })
+    trackSelectedCard({ insurance_type: type })
   }
 
   return (
