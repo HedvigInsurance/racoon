@@ -4,12 +4,15 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
 import * as Datadog from '@/services/datadog'
+import { CartContext, useCartContextStore } from '@/services/mockCartService'
 
 Datadog.initRum()
 
 const cache = createCache({ key: 'next' })
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const cartStore = useCartContextStore()
+
   return (
     <>
       <Head>
@@ -18,7 +21,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
       <CacheProvider value={cache}>
         <ThemeProvider>
-          <Component {...pageProps} />
+          <CartContext.Provider value={cartStore}>
+            <Component {...pageProps} />
+          </CartContext.Provider>
         </ThemeProvider>
       </CacheProvider>
     </>

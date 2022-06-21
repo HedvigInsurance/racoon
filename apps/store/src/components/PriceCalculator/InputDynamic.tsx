@@ -6,7 +6,7 @@ import { useTranslateTextLabel } from './useTranslateTextLabel'
 type Props = Input
 
 export const InputDynamic = (props: Props) => {
-  const translateTextLabel = useTranslateTextLabel()
+  const translateTextLabel = useTranslateTextLabel({ data: {} })
 
   const baseProps = {
     name: props.name,

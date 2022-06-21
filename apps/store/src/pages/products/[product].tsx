@@ -1,5 +1,4 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { SWEDEN_APARTMENT_FORM } from '@/components/PriceCalculator/PriceCalculator.constants'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
@@ -32,7 +31,6 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
   return {
     props: {
       cmsProduct,
-      priceForm: SWEDEN_APARTMENT_FORM,
     },
   }
 }
