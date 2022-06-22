@@ -6,6 +6,7 @@ import { ArrowForwardIcon, Heading, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
+import { getProductByMarketAndName } from '@/services/mockProductService'
 import { CartList } from '../CartList/CartList'
 import { uuid } from '../PriceCalculator/uuid'
 import { ProductPageProps } from './ProductPage.types'
@@ -25,7 +26,7 @@ export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
     throw new Error('ProductPage cannot be rendered outside CartContext')
   }
 
-  const { addProductToCart, getItemsByProductType } = cartContext
+  const { addProductToCart, getItemsByName } = cartContext
 
   const handleSubmit = () => {
     // price and id should come from the calculator after price has been generated
@@ -34,7 +35,8 @@ export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
     addProductToCart(id, price, cmsProduct)
   }
 
-  const productsOfThisType = getItemsByProductType(cmsProduct.name)
+  const productsOfThisType = getItemsByName(cmsProduct.name)
+  const products = cmsProduct.products.map((p) => getProductByMarketAndName(cmsProduct.market, p))
 
   return (
     <Wrapper>
@@ -42,7 +44,7 @@ export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
         <title>{cmsProduct.pageTitle}</title>
       </Head>
       <Heading variant="l" headingLevel="h1" colorVariant="dark">
-        Product Page for {cmsProduct.displayName}
+        {cmsProduct.displayName}
       </Heading>
       <Space y={2}>
         <PriceCalculator form={cmsProduct.form} onSubmit={handleSubmit} />
@@ -54,6 +56,45 @@ export const ProductPage = ({ cmsProduct }: ProductPageProps) => {
             <CartList filterByProductName={cmsProduct.name} />
           </div>
         )}
+
+        {products.length > 1 && (
+          <div>
+            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+              Insurances included in this bundle
+            </Heading>
+            <ul>
+              {products.map((product) => (
+                <li key={product?.name} style={{ maxWidth: '400px' }}>
+                  <strong>{product?.displayName}</strong>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <Heading variant="s" headingLevel="h2" colorVariant="dark">
+          Perils
+        </Heading>
+        {cmsProduct.products
+          .map((p) => getProductByMarketAndName(cmsProduct.market, p))
+          .map((product) => (
+            <>
+              <Heading variant="xs" headingLevel="h3" colorVariant="dark">
+                {product?.displayName}
+              </Heading>
+              <ul>
+                {product?.perils.map((peril) => (
+                  <li key={peril.title} style={{ maxWidth: '400px' }}>
+                    <Heading variant="overline" headingLevel="h3" colorVariant="dark">
+                      {peril.title}
+                    </Heading>
+                    <br />
+                    {peril.body}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))}
 
         <div>
           <Link href={PageLink.cart()} passHref>
