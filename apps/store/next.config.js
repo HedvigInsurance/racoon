@@ -6,6 +6,7 @@ const nextConfig = {
   compiler: {
     emotion: true,
   },
+  productionBrowserSourceMaps: true,
   i18n,
 }
 
