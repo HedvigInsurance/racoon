@@ -1,20 +1,11 @@
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Heading, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 import { StorePageProps } from './StorePage.types'
 
-const Wrapper = styled.main({
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
 export const StorePage = ({ products }: StorePageProps) => {
   return (
-    <Wrapper>
+    <>
       <Heading headingLevel="h1" colorVariant="dark" variant="l">
         Store Page
       </Heading>
@@ -34,6 +25,6 @@ export const StorePage = ({ products }: StorePageProps) => {
           <Link href={PageLink.cart()}>Go to cart</Link>
         </div>
       </Space>
-    </Wrapper>
+    </>
   )
 }

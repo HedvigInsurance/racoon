@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -9,14 +8,6 @@ import { CartContext } from '@/services/mockCartService'
 import { CartList } from '../CartList/CartList'
 import { uuid } from '../PriceCalculator/uuid'
 import { ProductPageProps } from './ProductPage.types'
-
-const Wrapper = styled.main({
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
 
 export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
   const cartContext = useContext(CartContext)
@@ -37,7 +28,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
   const productsOfThisType = getItemsByName(product.name)
 
   return (
-    <Wrapper>
+    <>
       <Head>
         <title>{cmsProduct.pageTitle}</title>
       </Head>
@@ -98,6 +89,6 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
           <Link href={PageLink.store()}>Go to shop</Link>
         </div>
       </Space>
-    </Wrapper>
+    </>
   )
 }

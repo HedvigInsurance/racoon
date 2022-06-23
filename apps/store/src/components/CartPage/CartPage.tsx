@@ -6,14 +6,6 @@ import { CartList } from '@/components/CartList/CartList'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 
-const Wrapper = styled.main({
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
 export const CartPage = () => {
   const cartContext = useContext(CartContext)
 
@@ -24,7 +16,7 @@ export const CartPage = () => {
   const { cart } = cartContext
 
   return (
-    <Wrapper>
+    <>
       <Heading variant="l" headingLevel="h1" colorVariant="dark">
         Cart
       </Heading>
@@ -39,6 +31,6 @@ export const CartPage = () => {
           <Link href={PageLink.store()}>Go to shop</Link>
         </div>
       </Space>
-    </Wrapper>
+    </>
   )
 }
