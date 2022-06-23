@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { ArrowForwardIcon, Heading, Space } from 'ui'
+import { Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
@@ -29,18 +29,14 @@ export const CartPage = () => {
         Cart
       </Heading>
       <Space y={2}>
-        <CartList />
+        <CartList showBundles showLinks />
 
         <p>
           Items in cart: {cart.items.length}, total price: {cart.price}
         </p>
 
         <div>
-          <Link href={PageLink.store()} passHref>
-            <a>
-              Moar shop <ArrowForwardIcon />
-            </a>
-          </Link>
+          <Link href={PageLink.store()}>Go to shop</Link>
         </div>
       </Space>
     </Wrapper>

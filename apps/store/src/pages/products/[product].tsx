@@ -3,6 +3,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { getProductByMarketAndSlug } from '@/services/mockCmsService'
+import { getProductByMarketAndName } from '@/services/mockProductService'
 
 const NextProductPage: NextPage<ProductPageProps> = (props: ProductPageProps) => {
   return <ProductPage {...props} />
@@ -28,9 +29,18 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
     }
   }
 
+  const product = getProductByMarketAndName(cmsProduct.market, cmsProduct.product)
+
+  if (!product) {
+    return {
+      notFound: true,
+    }
+  }
+
   return {
     props: {
       cmsProduct,
+      product,
     },
   }
 }

@@ -4,43 +4,40 @@ import {
 } from '@/components/PriceCalculator/PriceCalculator.constants'
 import { PriceForm } from '@/components/PriceCalculator/PriceCalculator.types'
 import { MarketLabel } from '@/lib/l10n/types'
+import { ProductNames } from './mockProductService'
 
 export type CmsProduct = {
-  name: string
   market: MarketLabel
   displayName: string
   slug: string
   pageTitle: string
   form: PriceForm
-  products: string[]
+  product: ProductNames
 }
 
 const CMS_PRODUCTS: CmsProduct[] = [
   {
-    name: 'SE_HOME',
     market: MarketLabel.SE,
     displayName: 'Home insurance villa', // TODO: should be a translation key (or translated from BE)
     slug: 'home',
     pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    products: ['SE_HOME'],
+    product: ProductNames.SE_HOME,
     form: SWEDEN_APARTMENT_FORM,
   },
   {
-    name: 'SE_CAR',
     market: MarketLabel.SE,
     displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
     slug: 'car',
     pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    products: ['SE_CAR'],
+    product: ProductNames.SE_CAR,
     form: SWEDEN_CAR_FORM,
   },
   {
-    name: 'SE_HOME_ACCIDENT_BUNDLE',
     market: MarketLabel.SE,
     displayName: 'Home and accident insurance', // TODO: should be a translation key (or translated from BE)
     slug: 'home-accident',
     pageTitle: 'Home & accident insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
-    products: ['SE_HOME', 'SE_ACCIDENT'],
+    product: ProductNames.SE_ESSENTIAL_BUNDLE,
     form: SWEDEN_APARTMENT_FORM,
   },
 ]
@@ -51,4 +48,14 @@ export const getProductByMarketAndSlug = (market: MarketLabel, slug: string): Cm
 
 export const getProductsByMarket = (market: MarketLabel): CmsProduct[] => {
   return CMS_PRODUCTS.filter((product) => product.market === market)
+}
+
+export const getProductByMarketAndProduct = (
+  market: MarketLabel,
+  productName: ProductNames,
+): CmsProduct | null => {
+  return (
+    CMS_PRODUCTS.find((product) => product.market === market && product.product === productName) ??
+    null
+  )
 }

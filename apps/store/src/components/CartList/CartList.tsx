@@ -1,11 +1,21 @@
+import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { Button, Space, CrossIcon } from 'ui'
+import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
+import { getProductByMarketAndProduct } from '@/services/mockCmsService'
+import { ProductNames } from '@/services/mockProductService'
+
+const BundleWrapper = styled.div({
+  marginLeft: '0.5rem',
+})
 
 type CartListProps = {
-  filterByProductName?: string
+  filterByProductName?: ProductNames
+  showBundles?: boolean
+  showLinks?: boolean
 }
 
 /**
@@ -13,7 +23,7 @@ type CartListProps = {
  *
  * It can optionally filter by a CmsProduct name to only show relevant products.
  */
-export const CartList = ({ filterByProductName }: CartListProps) => {
+export const CartList = ({ filterByProductName, showBundles, showLinks }: CartListProps) => {
   const cartContext = useContext(CartContext)
 
   if (!cartContext) {
@@ -27,28 +37,52 @@ export const CartList = ({ filterByProductName }: CartListProps) => {
   }
 
   const items = filterByProductName
-    ? cart.items.filter((item) => item.cmsProduct.name === filterByProductName)
+    ? cart.items.filter((item) => item.product.name === filterByProductName)
     : cart.items
+
+  const itemsWithCmsProducts = items.map((item) => ({
+    ...item,
+    cmsProduct: getProductByMarketAndProduct(item.product.market, item.product.name),
+  }))
 
   if (items.length === 0) return null
 
   return (
     <ul>
-      <Space y={1}>
-        {items.map((item) => (
-          <li key={item.id}>
-            <Space x={0.5}>
-              <Link href={PageLink.product({ id: item.cmsProduct.slug })} passHref>
-                {item.cmsProduct.displayName}
-              </Link>
+      {itemsWithCmsProducts.map((item) => (
+        <li key={item.id}>
+          <Space x={0.5}>
+            <span>
+              {showLinks && item.cmsProduct?.slug ? (
+                <Link href={PageLink.product({ id: item.cmsProduct?.slug })}>
+                  {item.product.displayName}
+                </Link>
+              ) : (
+                <span>{item.product.displayName}</span>
+              )}
               , price: {item.price}
-              <Button onClick={() => handleClickRemove(item.id)} size="sm" icon={<CrossIcon />}>
-                Remove
-              </Button>
-            </Space>
-          </li>
-        ))}
-      </Space>
+            </span>
+            <Button
+              onClick={() => handleClickRemove(item.id)}
+              size="sm"
+              variant="text"
+              icon={<CrossIcon />}
+            ></Button>
+          </Space>
+          {item.product.insurances.length > 1 && showBundles && (
+            <BundleWrapper>
+              <Text size="s">
+                Included in this bundle:
+                <ul>
+                  {item.product.insurances.map((insurance) => (
+                    <li key={insurance.name}>{insurance.displayName}</li>
+                  ))}
+                </ul>
+              </Text>
+            </BundleWrapper>
+          )}
+        </li>
+      ))}
     </ul>
   )
 }

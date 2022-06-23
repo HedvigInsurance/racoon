@@ -3,6 +3,7 @@ import { CacheProvider } from '@emotion/react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
+import { GlobalStyles } from '@/lib/GlobalStyles'
 import * as Datadog from '@/services/datadog'
 import { CartContext, useCartContextStore } from '@/services/mockCartService'
 
@@ -18,7 +19,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
+      <GlobalStyles />
       <CacheProvider value={cache}>
         <ThemeProvider>
           <CartContext.Provider value={cartStore}>
