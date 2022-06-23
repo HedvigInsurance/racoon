@@ -5,49 +5,96 @@ type Peril = {
   body: string
 }
 
-export type Product = {
-  market: MarketLabel
-  name: string
+export enum InsuranceNames {
+  SE_HOME,
+  SE_CAR,
+  SE_ACCIDENT,
+}
+
+export enum ProductNames {
+  SE_HOME,
+  SE_CAR,
+  SE_ESSENTIAL_BUNDLE,
+}
+
+type Insurance = {
+  name: InsuranceNames
   displayName: string
   perils: Peril[]
 }
 
+export type Product = {
+  market: MarketLabel
+  name: ProductNames
+  displayName: string
+  insurances: Insurance[] // This is what we would get from PCMS today
+}
+
 const PRODUCTS: Product[] = [
   {
-    name: 'SE_HOME',
+    name: ProductNames.SE_HOME,
     displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
     market: MarketLabel.SE,
-    perils: [
+    insurances: [
       {
-        title: 'Some home peril',
-        body: 'Lorem ipsum dolor sit amet',
+        name: InsuranceNames.SE_HOME,
+        displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
+
+        perils: [
+          {
+            title: 'Some home peril',
+            body: 'Lorem ipsum dolor sit amet',
+          },
+        ],
       },
     ],
   },
   {
-    name: 'SE_CAR',
+    name: ProductNames.SE_CAR,
     displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
     market: MarketLabel.SE,
-    perils: [
+    insurances: [
       {
-        title: 'Some car peril',
-        body: 'Lorem ipsum dolor sit amet',
+        name: InsuranceNames.SE_CAR,
+        displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
+        perils: [
+          {
+            title: 'Some car peril',
+            body: 'Lorem ipsum dolor sit amet',
+          },
+        ],
       },
     ],
   },
   {
-    name: 'SE_ACCIDENT',
-    displayName: 'Accident insurance', // TODO: should be a translation key (or translated from BE)
+    name: ProductNames.SE_ESSENTIAL_BUNDLE,
+    displayName: 'Essentials bundle', // TODO: should be a translation key (or translated from BE)
     market: MarketLabel.SE,
-    perils: [
+    insurances: [
       {
-        title: 'Some accident peril',
-        body: 'Lorem ipsum dolor sit amet',
+        name: InsuranceNames.SE_HOME,
+        displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
+        perils: [
+          {
+            title: 'Some home peril',
+            body: 'Lorem ipsum dolor sit amet',
+          },
+        ],
+      },
+      {
+        name: InsuranceNames.SE_ACCIDENT,
+        displayName: 'Accident insurance', // TODO: should be a translation key (or translated from BE)
+        perils: [
+          {
+            title: 'Some accident peril',
+            body: 'Lorem ipsum dolor sit amet',
+          },
+        ],
       },
     ],
   },
 ]
 
-export const getProductByMarketAndName = (market: MarketLabel, name: string) => {
+export const getProductByMarketAndName = (market: MarketLabel, name: ProductNames) => {
   return PRODUCTS.find((product) => product.market === market && product.name === name) ?? null
 }
