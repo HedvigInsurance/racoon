@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { ArrowForwardIcon, Heading, Space } from 'ui'
+import { Heading, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 import { StorePageProps } from './StorePage.types'
 
@@ -24,22 +24,14 @@ export const StorePage = ({ products }: StorePageProps) => {
             <Space y={1}>
               {products.map((product) => (
                 <li key={product.slug}>
-                  <Link href={PageLink.product({ id: product.slug })} passHref>
-                    <a>
-                      {product.displayName} <ArrowForwardIcon />
-                    </a>
-                  </Link>
+                  <Link href={PageLink.product({ id: product.slug })}>{product.displayName}</Link>
                 </li>
               ))}
             </Space>
           </ul>
         )}
         <div>
-          <Link href={PageLink.cart()} passHref>
-            <a>
-              Go to cart <ArrowForwardIcon />
-            </a>
-          </Link>
+          <Link href={PageLink.cart()}>Go to cart</Link>
         </div>
       </Space>
     </Wrapper>
