@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { Separate } from 'ui'
 import { useCurrentMarket } from '@/lib/l10n'
 
+const FALLBACK_PATH = '/'
+
 const Wrapper = styled(Separate)({
   display: 'flex',
   height: '1.5rem',
@@ -32,7 +34,13 @@ export const LanguageSwitcher = () => {
   return (
     <Wrapper Separator={<Separator />}>
       {languages.map((language) => (
-        <Link key={language.urlParam} href={router.asPath} locale={language.urlParam} passHref>
+        <Link
+          key={language.urlParam}
+          // avoid using `asPath` until `isReady` field is `true` (https://nextjs.org/docs/api-reference/next/router)
+          href={router.isReady ? router.asPath : FALLBACK_PATH}
+          locale={language.urlParam}
+          passHref
+        >
           <Anchor active={router.locale === language.urlParam}>{language.displayName}</Anchor>
         </Link>
       ))}
