@@ -1,9 +1,7 @@
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
-import { NextPage } from 'next'
-import { AppProps } from 'next/app'
+import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
-import { ReactElement, ReactNode } from 'react'
 import { ThemeProvider } from 'ui'
 import { GlobalStyles } from '@/lib/GlobalStyles'
 import * as Datadog from '@/services/datadog'
@@ -12,14 +10,6 @@ import { CartContext, useCartContextStore } from '@/services/mockCartService'
 Datadog.initRum()
 
 const cache = createCache({ key: 'next' })
-
-export type NextPageWithLayout<T = {}> = NextPage<T> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const cartStore = useCartContextStore()

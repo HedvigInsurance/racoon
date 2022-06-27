@@ -1,11 +1,10 @@
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { getProductByMarketAndSlug } from '@/services/mockCmsService'
 import { getProductByMarketAndName } from '@/services/mockProductService'
-import { NextPageWithLayout } from '../_app'
 
 const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
   return <ProductPage {...props} />
