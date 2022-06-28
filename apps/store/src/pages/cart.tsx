@@ -1,8 +1,11 @@
-import type { NextPage } from 'next'
+import type { NextPageWithLayout } from 'next'
 import { CartPage } from '@/components/CartPage/CartPage'
+import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 
-const NextCartPage: NextPage = () => {
+const NextCartPage: NextPageWithLayout = () => {
   return <CartPage />
 }
+
+NextCartPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default NextCartPage

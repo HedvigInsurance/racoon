@@ -1,10 +1,12 @@
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { getProductByMarketAndSlug } from '@/services/mockCmsService'
+import { getProductByMarketAndName } from '@/services/mockProductService'
 
-const NextProductPage: NextPage<ProductPageProps> = (props: ProductPageProps) => {
+const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
   return <ProductPage {...props} />
 }
 
@@ -28,11 +30,22 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
     }
   }
 
+  const product = getProductByMarketAndName(cmsProduct.market, cmsProduct.product)
+
+  if (!product) {
+    return {
+      notFound: true,
+    }
+  }
+
   return {
     props: {
       cmsProduct,
+      product,
     },
   }
 }
+
+NextProductPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default NextProductPage

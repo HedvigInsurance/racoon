@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { CmsProduct } from './mockCmsService'
+import { Product, ProductNames } from './mockProductService'
 
 export type CartProduct = {
-  cmsProduct: CmsProduct
+  product: Product
   // this kinda represents a unique instance of this product with provided details
   id: string
   price: number
@@ -16,11 +16,11 @@ type Cart = {
 // This context mocks a BE data service
 interface CartContextInterface {
   cart: Cart
-  addProductToCart: (id: string, price: number, product: CmsProduct) => void
+  addProductToCart: (id: string, price: number, product: Product) => void
   /**
    * Returns cart items that matches on CmsProduct::name
    */
-  getItemsByName: (productName: string) => CartProduct[]
+  getItemsByName: (productName: ProductNames) => CartProduct[]
   removeItem: (id: string) => void
 }
 
@@ -40,14 +40,14 @@ export const useCartContextStore = (): CartContextInterface => {
     return !!cartItems.find((item) => item.id === id)
   }
 
-  const addProductToCart = (id: string, price: number, product: CmsProduct): void => {
+  const addProductToCart = (id: string, price: number, product: Product): void => {
     if (_isProductInCart(id)) return
 
-    setCartItems((current) => [...current, { cmsProduct: product, id, price }])
+    setCartItems((current) => [...current, { product, id, price }])
   }
 
-  const getItemsByProductName = (name: string): CartProduct[] => {
-    return cart.items.filter((item) => item.cmsProduct.name === name)
+  const getItemsByProductName = (name: ProductNames): CartProduct[] => {
+    return cart.items.filter((item) => item.product.name === name)
   }
 
   const removeItem = (id: string): void => {
