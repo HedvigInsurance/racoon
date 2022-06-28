@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { Fragment, useContext } from 'react'
 import { Heading, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PageLink } from '@/lib/PageLink'
@@ -65,7 +65,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
           Perils
         </Heading>
         {product.insurances.map((insurance) => (
-          <>
+          <Fragment key={insurance.name}>
             <Heading variant="xs" headingLevel="h3" colorVariant="dark">
               {insurance?.displayName}
             </Heading>
@@ -80,7 +80,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
                 </li>
               ))}
             </ul>
-          </>
+          </Fragment>
         ))}
 
         <div>
