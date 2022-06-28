@@ -11,6 +11,7 @@
     "lint:fix": "next lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "typecheck": "tsc --noEmit",
+    "codegen": "graphql-codegen && prettier --write ./src/services/apollo/types.ts && yarn lint --fix",
     "storybook": "start-storybook -p 6008",
     "build-storybook": "build-storybook"
   },
@@ -26,6 +27,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.5.1",
+    "@graphql-codegen/typescript-operations": "^2.4.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.16",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-links": "^6.5.9",
