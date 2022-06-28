@@ -1,4 +1,5 @@
 import { InputField } from 'ui'
+import { InputRadio } from './InputRadio'
 import { InputSelect } from './InputSelect'
 import { Input } from './PriceCalculator.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
@@ -30,6 +31,20 @@ export const InputDynamic = (props: Props) => {
 
     case 'number':
       return <InputField {...baseProps} type="number" min={props.min} max={props.max} />
+
+    case 'date':
+      return <InputField {...baseProps} type="date" />
+
+    case 'radio':
+      return (
+        <InputRadio
+          {...baseProps}
+          options={props.options.map((option) => ({
+            ...option,
+            label: translateTextLabel(option.label),
+          }))}
+        />
+      )
 
     default:
       return <InputField {...baseProps} type="text" pattern={props.pattern} />
