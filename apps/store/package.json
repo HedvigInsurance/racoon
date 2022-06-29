@@ -16,7 +16,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
     "@emotion/react": "11.8.1",
     "@emotion/styled": "11.8.1",
     "dd-trace": "2.9.1",
