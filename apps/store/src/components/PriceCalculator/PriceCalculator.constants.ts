@@ -6,7 +6,7 @@ const STREET_INPUT: Input = {
   placeholder: { key: 'Enter your street address' },
   type: 'text',
   required: true,
-  columnSpan: 2,
+  columnSpan: 4,
 }
 
 const ZIP_CODE_INPUT: Input = {
@@ -17,6 +17,7 @@ const ZIP_CODE_INPUT: Input = {
   required: true,
   // https://gist.github.com/jamesbar2/1c677c22df8f21e869cca7e439fc3f5b
   pattern: '^\\d{3}\\s*\\d{2}$',
+  columnSpan: 2,
 }
 
 const ADDRESS_SUMMARY: GroupSummary = {
@@ -47,6 +48,7 @@ export const SWEDEN_APARTMENT_FORM: PriceForm = {
           min: 20,
           max: 200,
           required: true,
+          columnSpan: 2,
         },
         {
           name: 'numberOfCoInsured',
@@ -62,6 +64,7 @@ export const SWEDEN_APARTMENT_FORM: PriceForm = {
             { name: { key: '6+' }, value: '6' },
           ],
           required: true,
+          columnSpan: 2,
         },
         {
           name: 'birthDate',
@@ -69,6 +72,7 @@ export const SWEDEN_APARTMENT_FORM: PriceForm = {
           placeholder: { key: '1999-08-21' },
           type: 'date',
           required: true,
+          columnSpan: 2,
         },
         {
           name: 'subType',
@@ -80,7 +84,6 @@ export const SWEDEN_APARTMENT_FORM: PriceForm = {
             { label: { key: 'I own' }, value: 'BRF' },
           ],
           required: true,
-          columnSpan: 3,
         },
       ],
       state: 'IDLE',
@@ -93,13 +96,6 @@ export const SWEDEN_CAR_FORM: PriceForm = {
   groups: [
     {
       id: 'group1',
-      title: { key: 'Your residence' },
-      inputs: [STREET_INPUT, ZIP_CODE_INPUT],
-      state: 'IDLE',
-      summary: ADDRESS_SUMMARY,
-    },
-    {
-      id: 'group2',
       title: { key: 'Your vehicle' },
       inputs: [
         {
@@ -108,6 +104,7 @@ export const SWEDEN_CAR_FORM: PriceForm = {
           placeholder: { key: 'ABC 123' },
           type: 'text',
           required: true,
+          columnSpan: 3,
         },
         {
           name: 'mileage',
@@ -117,6 +114,7 @@ export const SWEDEN_CAR_FORM: PriceForm = {
           min: 1000,
           max: 2500,
           required: true,
+          columnSpan: 3,
         },
       ],
       state: 'IDLE',

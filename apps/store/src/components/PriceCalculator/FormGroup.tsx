@@ -5,7 +5,7 @@ import { Input } from './PriceCalculator.types'
 
 const Grid = styled.div(({ theme }) => ({
   display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
+  gridTemplateColumns: 'repeat(6, 1fr)',
   gap: theme.space[2],
 }))
 
@@ -31,7 +31,7 @@ export const FormGroup = ({ inputs, onSubmit }: FormGroupProps) => {
     <form onSubmit={handleSubmit}>
       <Space y={2}>
         <Grid>
-          {inputs.map(({ columnSpan = 1, ...inputProps }) => (
+          {inputs.map(({ columnSpan = 6, ...inputProps }) => (
             <GridItem key={inputProps.name} columnSpan={columnSpan}>
               <InputDynamic {...inputProps} />
             </GridItem>
