@@ -49,8 +49,5 @@
     "tsconfig": "*",
     "typescript": "4.5.5",
     "whatwg-fetch": "3.6.2"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
