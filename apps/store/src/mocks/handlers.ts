@@ -1,1 +1,3 @@
-export const handlers = []
+import { mockCmsHandlers } from './cms/cms'
+
+export const handlers = [...mockCmsHandlers]
