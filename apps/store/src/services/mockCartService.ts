@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Product, ProductNames } from './mockProductService'
 
+type ProductWithSlug = Product & { slug: string }
+
 export type CartProduct = {
-  product: Product
+  product: ProductWithSlug
   // this kinda represents a unique instance of this product with provided details
   id: string
   price: number
@@ -16,7 +18,7 @@ type Cart = {
 // This context mocks a BE data service
 interface CartContextInterface {
   cart: Cart
-  addProductToCart: (id: string, price: number, product: Product) => void
+  addProductToCart: (id: string, price: number, product: ProductWithSlug) => void
   /**
    * Returns cart items that matches on CmsProduct::name
    */
@@ -40,7 +42,7 @@ export const useCartContextStore = (): CartContextInterface => {
     return !!cartItems.find((item) => item.id === id)
   }
 
-  const addProductToCart = (id: string, price: number, product: Product): void => {
+  const addProductToCart = (id: string, price: number, product: ProductWithSlug): void => {
     if (_isProductInCart(id)) return
 
     setCartItems((current) => [...current, { product, id, price }])

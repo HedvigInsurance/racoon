@@ -1,46 +1,30 @@
+import * as PriceCalculatorService from '@/services/mockPriceCalculatorService'
 import { FormGroup } from './FormGroup'
 import { PriceForm } from './PriceCalculator.types'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
 
-type OnSubmitParams = {
-  id: string
-  data: FormData
-}
+type OnSubmitParams = { data: Record<string, string> }
 
 export type PriceCalculatorProps = {
   form: PriceForm
   onSubmit: (params: OnSubmitParams) => void
 }
 
-const FORM_DATA = {}
+export const PriceCalculator = ({ form, onSubmit }: PriceCalculatorProps) => {
+  const handleSubmit = async (data: FormData) => {
+    const userData: Record<string, string> = {}
+    data.forEach((value, key) => {
+      if (typeof value !== 'string') return
+      userData[key] = value
+    })
 
-export const PriceCalculator = ({ onSubmit, form }: PriceCalculatorProps) => {
-  const translateTextLabel = useTranslateTextLabel({ data: FORM_DATA })
-  const activeGroup = form.groups.find((group) => group.state !== 'VALID')
+    onSubmit({ data: userData })
+  }
 
   return (
-    <div>
-      {form.groups.map(({ id, title, inputs, state, summary }) => (
-        <div key={id}>
-          <h2>{translateTextLabel(title)}</h2>
-          {activeGroup?.id === id ? (
-            <FormGroup onSubmit={(data) => onSubmit({ id, data })} inputs={inputs} />
-          ) : state === 'VALID' ? (
-            <div>
-              {summary.labels.map((label) => (
-                <p key={label.key}>{label.key}</p>
-              ))}
-            </div>
-          ) : null}
-        </div>
+    <>
+      {form.groups.map(({ id, inputs }) => (
+        <FormGroup key={id} onSubmit={handleSubmit} inputs={inputs} />
       ))}
-
-      <div>
-        <h2>Your price</h2>
-        <p>
-          <strong>Starting at 299 SEK/mth</strong>
-        </p>
-      </div>
-    </div>
+    </>
   )
 }

@@ -1,15 +1,17 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useContext } from 'react'
-import { Heading, Space } from 'ui'
+import { Fragment, useContext } from 'react'
+import { Button, Heading, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { usePriceCalculator } from '@/components/PriceCalculator/usePriceCalculator'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
+import type { PriceQuote } from '@/services/mockPriceCalculatorService'
 import { CartList } from '../CartList/CartList'
-import { uuid } from '../PriceCalculator/uuid'
 import { ProductPageProps } from './ProductPage.types'
 
 export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
+  const priceCalculator = usePriceCalculator()
   const cartContext = useContext(CartContext)
 
   if (!cartContext) {
@@ -18,11 +20,8 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
 
   const { addProductToCart, getItemsByName } = cartContext
 
-  const handleSubmit = () => {
-    // price and id should come from the calculator after price has been generated
-    const price = Math.round(100 + Math.random() * 100)
-    const id = uuid()
-    addProductToCart(id, price, product)
+  const handleSubmit = ({ id, price }: PriceQuote) => {
+    addProductToCart(id, price, { ...product, slug: cmsProduct.slug })
   }
 
   const productsOfThisType = getItemsByName(product.name)
@@ -36,7 +35,17 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
         {cmsProduct.displayName}
       </Heading>
       <Space y={2}>
-        <PriceCalculator form={cmsProduct.form} onSubmit={handleSubmit} />
+        {priceCalculator ? (
+          <PriceCalculator form={cmsProduct.form} onSubmit={priceCalculator.onSubmit} />
+        ) : null}
+        {priceCalculator?.quoteForm.priceQuote && (
+          <div>
+            <h2>SEK {priceCalculator.quoteForm.priceQuote.price}/month</h2>
+            <Button onClick={() => handleSubmit(priceCalculator.quoteForm.priceQuote!)}>
+              Add to cart
+            </Button>
+          </div>
+        )}
         {productsOfThisType.length > 0 && (
           <div>
             <Heading headingLevel="h2" colorVariant="dark" variant="s">
@@ -65,7 +74,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
           Perils
         </Heading>
         {product.insurances.map((insurance) => (
-          <>
+          <Fragment key={insurance.name}>
             <Heading variant="xs" headingLevel="h3" colorVariant="dark">
               {insurance?.displayName}
             </Heading>
@@ -80,7 +89,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
                 </li>
               ))}
             </ul>
-          </>
+          </Fragment>
         ))}
 
         <div>

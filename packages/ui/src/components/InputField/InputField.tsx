@@ -22,11 +22,14 @@ const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   color: theme.colors.gray900,
   fontSize: '1.125rem',
   lineHeight: '1.75rem',
-  padding: '1rem',
+  padding: '0 1rem',
   width: '100%',
   borderRadius: '0.5rem',
   borderWidth: '1px',
   borderStyle: 'solid',
+  display: 'flex',
+  alignItems: 'center',
+  height: '3.5rem',
 
   '::placeholder': {
     color: theme.colors.gray500,
