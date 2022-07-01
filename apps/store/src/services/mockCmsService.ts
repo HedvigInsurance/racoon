@@ -49,13 +49,3 @@ export const getProductByMarketAndSlug = (market: MarketLabel, slug: string): Cm
 export const getProductsByMarket = (market: MarketLabel): CmsProduct[] => {
   return CMS_PRODUCTS.filter((product) => product.market === market)
 }
-
-export const getProductByMarketAndProduct = (
-  market: MarketLabel,
-  productName: ProductNames,
-): CmsProduct | null => {
-  return (
-    CMS_PRODUCTS.find((product) => product.market === market && product.product === productName) ??
-    null
-  )
-}

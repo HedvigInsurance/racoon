@@ -5,7 +5,6 @@ import { Button, Space, CrossIcon } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
-import { getProductByMarketAndProduct } from '@/services/mockCmsService'
 import { ProductNames } from '@/services/mockProductService'
 
 const BundleWrapper = styled.div({
@@ -40,21 +39,16 @@ export const CartList = ({ filterByProductName, showBundles, showLinks }: CartLi
     ? cart.items.filter((item) => item.product.name === filterByProductName)
     : cart.items
 
-  const itemsWithCmsProducts = items.map((item) => ({
-    ...item,
-    cmsProduct: getProductByMarketAndProduct(item.product.market, item.product.name),
-  }))
-
   if (items.length === 0) return null
 
   return (
     <ul>
-      {itemsWithCmsProducts.map((item) => (
+      {items.map((item) => (
         <li key={item.id}>
           <Space x={0.5}>
             <span>
-              {showLinks && item.cmsProduct?.slug ? (
-                <Link href={PageLink.product({ id: item.cmsProduct?.slug })}>
+              {showLinks ? (
+                <Link href={PageLink.product({ id: item.product.slug })}>
                   {item.product.displayName}
                 </Link>
               ) : (

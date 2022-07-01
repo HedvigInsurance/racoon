@@ -21,7 +21,7 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
   const { addProductToCart, getItemsByName } = cartContext
 
   const handleSubmit = ({ id, price }: PriceQuote) => {
-    addProductToCart(id, price, product)
+    addProductToCart(id, price, { ...product, slug: cmsProduct.slug })
   }
 
   const productsOfThisType = getItemsByName(product.name)
