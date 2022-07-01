@@ -33,11 +33,12 @@
       ]
     },
     "market-web#build": {
-      "outputs": [".next/**"]
+      "outputs": [".next/**"],
+      "dependsOn": ["^build", "$STORYBLOK_API_KEY", "$STORYBLOK_PREVIEW_SECRET"]
     },
     "onboarding#test": {
       "outputs": ["covereage/**"],
-      "dependsOn": ["build"]
+      "dependsOn": ["^build"]
     },
     "test": {
       "outputs": ["covereage/**"],
