@@ -44,6 +44,7 @@
     "jest": "28.1.0",
     "jest-environment-jsdom": "28.1.0",
     "msw": "^0.42.3",
+    "next-page-tester": "^0.32.0",
     "next-router-mock": "0.7.4",
     "scripts": "*",
     "storybook-addon-next": "^1.6.6",
