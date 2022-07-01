@@ -19,7 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.10",
+    "@apollo/client": "3.6.9",
     "@datadog/browser-rum": "^4.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
@@ -30,7 +30,7 @@
     "dompurify": "^2.3.6",
     "formidable": "^2.0.1",
     "framer-motion": "^6.3.0",
-    "graphql": "^16.3.0",
+    "graphql": "16.3.0",
     "graphql-tag": "^2.12.6",
     "jsdom": "^19.0.0",
     "lodash-es": "^4.17.21",
