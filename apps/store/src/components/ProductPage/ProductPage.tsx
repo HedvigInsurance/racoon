@@ -1,28 +1,20 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { Button, Heading, Space } from 'ui'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
-import { usePriceCalculator } from '@/components/PriceCalculator/usePriceCalculator'
+import { Heading, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
-import type { PriceQuote } from '@/services/mockPriceCalculatorService'
 import { CartList } from '../CartList/CartList'
 import { ProductPageProps } from './ProductPage.types'
 
 export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
-  const priceCalculator = usePriceCalculator()
   const cartContext = useContext(CartContext)
 
   if (!cartContext) {
     throw new Error('ProductPage cannot be rendered outside CartContext')
   }
 
-  const { addProductToCart, getItemsByName } = cartContext
-
-  const handleSubmit = ({ id, price }: PriceQuote) => {
-    addProductToCart(id, price, { ...product, slug: cmsProduct.slug })
-  }
+  const { getItemsByName } = cartContext
 
   const productsOfThisType = getItemsByName(product.name)
 
@@ -35,17 +27,6 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
         {cmsProduct.displayName}
       </Heading>
       <Space y={2}>
-        {priceCalculator ? (
-          <PriceCalculator form={cmsProduct.form} onSubmit={priceCalculator.onSubmit} />
-        ) : null}
-        {priceCalculator?.quoteForm.priceQuote && (
-          <div>
-            <h2>SEK {priceCalculator.quoteForm.priceQuote.price}/month</h2>
-            <Button onClick={() => handleSubmit(priceCalculator.quoteForm.priceQuote!)}>
-              Add to cart
-            </Button>
-          </div>
-        )}
         {productsOfThisType.length > 0 && (
           <div>
             <Heading headingLevel="h2" colorVariant="dark" variant="s">

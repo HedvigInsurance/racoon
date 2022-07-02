@@ -17,31 +17,22 @@ const GridItem = styled.div<GridItemProps>(({ columnSpan }) => ({
 
 type FormGroupProps = {
   inputs: Array<Input>
-  onSubmit: (data: FormData) => void
 }
 
-export const FormGroup = ({ inputs, onSubmit }: FormGroupProps) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    onSubmit(data)
-  }
-
+export const FormGroup = ({ inputs }: FormGroupProps) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <Space y={2}>
-        <Grid>
-          {inputs.map(({ columnSpan = 6, ...inputProps }) => (
-            <GridItem key={inputProps.name} columnSpan={columnSpan}>
-              <InputDynamic {...inputProps} />
-            </GridItem>
-          ))}
-        </Grid>
+    <Space y={2}>
+      <Grid>
+        {inputs.map(({ columnSpan = 6, ...inputProps }) => (
+          <GridItem key={inputProps.name} columnSpan={columnSpan}>
+            <InputDynamic {...inputProps} />
+          </GridItem>
+        ))}
+      </Grid>
 
-        <Button type="submit" fullWidth>
-          Calculate
-        </Button>
-      </Space>
-    </form>
+      <Button type="submit" fullWidth>
+        Calculate
+      </Button>
+    </Space>
   )
 }
