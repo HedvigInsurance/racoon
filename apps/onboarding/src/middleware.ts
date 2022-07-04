@@ -8,6 +8,10 @@ const DEFAULT_PATH_LOCALE = 'se-en'
 const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
 const CAMPAIGN_CODE_QUERY_PARAM = 'code'
 
+const BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME
+const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD
+const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true'
+
 // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 const SUPPORTED_MARKETS = ['se', 'dk', 'no']
 
@@ -31,6 +35,14 @@ const guessLocale = (request: NextRequest) => {
 }
 
 const localeRedirectMiddleware = async (request: NextRequest) => {
+  const shouldHandleLocale =
+    !PUBLIC_FILE.test(request.nextUrl.pathname) &&
+    !INTERNAL_ROUTE.test(request.nextUrl.pathname) &&
+    !request.nextUrl.pathname.includes('/api/') &&
+    request.nextUrl.locale === 'default'
+
+  if (!shouldHandleLocale) return null
+
   const locale = guessLocale(request) || DEFAULT_PATH_LOCALE
 
   const url = request.nextUrl.clone()
@@ -39,24 +51,51 @@ const localeRedirectMiddleware = async (request: NextRequest) => {
   return NextResponse.redirect(url)
 }
 
-export async function middleware(request: NextRequest) {
-  const shouldHandleLocale =
-    !PUBLIC_FILE.test(request.nextUrl.pathname) &&
-    !INTERNAL_ROUTE.test(request.nextUrl.pathname) &&
-    !request.nextUrl.pathname.includes('/api/') &&
-    request.nextUrl.locale === 'default'
+const basicAuthMiddleware = (request: NextRequest) => {
+  if (PUBLIC_FILE.test(request.nextUrl.pathname) || INTERNAL_ROUTE.test(request.nextUrl.pathname)) {
+    return null
+  }
 
-  try {
-    if (shouldHandleLocale) return localeRedirectMiddleware(request)
-    const campaignCode = request.nextUrl.searchParams.get(CAMPAIGN_CODE_QUERY_PARAM)
-    if (campaignCode) {
-      const response = NextResponse.next()
-      response.cookies.set(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
-      return response
+  const basicAuth = request.headers.get('authorization')
+  if (basicAuth) {
+    const authValue = basicAuth.split(' ')[1]
+    const [username, password] = atob(authValue).split(':')
+
+    if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
+      return null
     }
+  }
+
+  const url = request.nextUrl.clone()
+  url.pathname = '/api/auth'
+  return NextResponse.rewrite(url)
+}
+
+const campaignCodeMiddleware = (request: NextRequest) => {
+  const campaignCode = request.nextUrl.searchParams.get(CAMPAIGN_CODE_QUERY_PARAM)
+
+  if (!campaignCode) return null
+
+  const response = NextResponse.next()
+  response.cookies.set(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
+  return response
+}
+
+export async function middleware(request: NextRequest) {
+  try {
+    if (BASIC_AUTH_ENABLED) {
+      const authResponse = basicAuthMiddleware(request)
+      if (authResponse) return authResponse
+    }
+
+    const localeResponse = localeRedirectMiddleware(request)
+    if (localeResponse) return localeResponse
+
+    const campaignCodeResponse = campaignCodeMiddleware(request)
+    if (campaignCodeResponse) return campaignCodeResponse
   } catch (error) {
     console.error('Unknown error', error)
   }
 
-  return undefined
+  return NextResponse.next()
 }
