@@ -5,7 +5,7 @@ const STREET_INPUT: Input = {
   label: { key: 'Address' },
   placeholder: { key: 'Enter your street address' },
   type: 'text',
-  columnSpan: 4,
+  columnSpan: 6,
 }
 
 const ZIP_CODE_INPUT: Input = {
@@ -15,7 +15,7 @@ const ZIP_CODE_INPUT: Input = {
   type: 'text',
   // https://gist.github.com/jamesbar2/1c677c22df8f21e869cca7e439fc3f5b
   pattern: '^\\d{3}\\s*\\d{2}$',
-  columnSpan: 2,
+  columnSpan: 3,
 }
 
 const ADDRESS_SUMMARY: GroupSummary = {
@@ -33,19 +33,16 @@ const ADDRESS_SUMMARY: GroupSummary = {
 export const SWEDEN_APARTMENT_FORM: PriceFormTemplate = {
   groups: [
     {
-      id: 'group1',
-      title: { key: 'Your residence' },
+      id: 'group0',
+      title: { key: 'Co-insured' },
+      cta: { key: 'Next step' },
       inputs: [
-        STREET_INPUT,
-        ZIP_CODE_INPUT,
         {
-          name: 'livingSpace',
-          label: { key: 'Apartment size' },
-          placeholder: { key: '34 m²' },
-          type: 'number',
-          min: 20,
-          max: 200,
-          columnSpan: 2,
+          name: 'birthDate',
+          label: { key: 'Your birthdate' },
+          placeholder: { key: '1999-08-21' },
+          type: 'date',
+          columnSpan: 3,
         },
         {
           name: 'numberOfCoInsured',
@@ -60,14 +57,27 @@ export const SWEDEN_APARTMENT_FORM: PriceFormTemplate = {
             { name: { key: '5' }, value: '5' },
             { name: { key: '6+' }, value: '6' },
           ],
-          columnSpan: 2,
+          columnSpan: 3,
         },
+      ],
+      state: 'INITIAL',
+      summary: { labels: [] },
+    },
+    {
+      id: 'group1',
+      title: { key: 'Your home' },
+      cta: { key: 'Calculate price' },
+      inputs: [
+        STREET_INPUT,
+        ZIP_CODE_INPUT,
         {
-          name: 'birthDate',
-          label: { key: 'Your birthdate' },
-          placeholder: { key: '1999-08-21' },
-          type: 'date',
-          columnSpan: 2,
+          name: 'livingSpace',
+          label: { key: 'Apartment size' },
+          placeholder: { key: '34 m²' },
+          type: 'number',
+          min: 20,
+          max: 200,
+          columnSpan: 3,
         },
         {
           name: 'subType',
@@ -80,7 +90,7 @@ export const SWEDEN_APARTMENT_FORM: PriceFormTemplate = {
           ],
         },
       ],
-      state: 'IDLE',
+      state: 'INITIAL',
       summary: ADDRESS_SUMMARY,
     },
   ],
@@ -91,6 +101,7 @@ export const SWEDEN_CAR_FORM: PriceFormTemplate = {
     {
       id: 'group1',
       title: { key: 'Your vehicle' },
+      cta: { key: 'Calculate price' },
       inputs: [
         {
           name: 'registrationNumber',
@@ -109,7 +120,7 @@ export const SWEDEN_CAR_FORM: PriceFormTemplate = {
           columnSpan: 3,
         },
       ],
-      state: 'IDLE',
+      state: 'INITIAL',
       summary: {
         labels: [
           {

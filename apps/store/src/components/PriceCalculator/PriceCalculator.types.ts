@@ -22,7 +22,7 @@ type InputRadio = InputBase & { type: 'radio'; options: Array<{ label: TextLabel
 
 export type Input = InputText | InputNumber | InputSelect | InputDate | InputRadio
 
-type InputGroupState = 'IDLE' | 'INVALID' | 'VALID'
+type InputGroupState = 'INITIAL' | 'INVALID' | 'VALID'
 
 export type GroupSummary = {
   labels: Array<TextLabel>
@@ -31,6 +31,7 @@ export type GroupSummary = {
 export type InputGroup = {
   id: string
   title: TextLabel
+  cta: TextLabel
   inputs: Array<Input>
   state: InputGroupState
   summary: GroupSummary
