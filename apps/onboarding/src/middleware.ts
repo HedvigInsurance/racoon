@@ -2,10 +2,8 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 const PUBLIC_FILE = /\.(.*)$/
+const INTERNAL_ROUTE = /_next\/(.*)$/
 const DEFAULT_PATH_LOCALE = 'se-en'
-
-const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
-if (!GRAPHQL_ENDPOINT) throw new Error('NEXT_PUBLIC_GRAPHQL_ENDPOINT is not set')
 
 const CAMPAIGN_CODE_COOKIE_KEY = '_hvcode'
 const CAMPAIGN_CODE_QUERY_PARAM = 'code'
@@ -32,26 +30,29 @@ const guessLocale = (request: NextRequest) => {
   return null
 }
 
-const localeRedirectMiddleware = async (req: NextRequest) => {
-  const locale = guessLocale(req) || DEFAULT_PATH_LOCALE
-  return NextResponse.redirect(
-    `${req.nextUrl.origin}/${locale}${req.nextUrl.pathname.replace('/default', '')}`,
-  )
+const localeRedirectMiddleware = async (request: NextRequest) => {
+  const locale = guessLocale(request) || DEFAULT_PATH_LOCALE
+
+  const url = request.nextUrl.clone()
+  url.pathname = `/${locale}${request.nextUrl.pathname}`
+
+  return NextResponse.redirect(url)
 }
 
-export async function middleware(req: NextRequest) {
-  const isPageRoute =
-    !PUBLIC_FILE.test(req.nextUrl.pathname) && !req.nextUrl.pathname.includes('/api/')
-
-  const shouldHandleLocale = isPageRoute && req.nextUrl.locale === 'default'
+export async function middleware(request: NextRequest) {
+  const shouldHandleLocale =
+    !PUBLIC_FILE.test(request.nextUrl.pathname) &&
+    !INTERNAL_ROUTE.test(request.nextUrl.pathname) &&
+    !request.nextUrl.pathname.includes('/api/') &&
+    request.nextUrl.locale === 'default'
 
   try {
-    if (shouldHandleLocale) return localeRedirectMiddleware(req)
-    if (isPageRoute) {
-      const campaignCode = req.nextUrl.searchParams.get(CAMPAIGN_CODE_QUERY_PARAM)
-      if (campaignCode) {
-        return NextResponse.next().cookie(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
-      }
+    if (shouldHandleLocale) return localeRedirectMiddleware(request)
+    const campaignCode = request.nextUrl.searchParams.get(CAMPAIGN_CODE_QUERY_PARAM)
+    if (campaignCode) {
+      const response = NextResponse.next()
+      response.cookies.set(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
+      return response
     }
   } catch (error) {
     console.error('Unknown error', error)
