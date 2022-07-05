@@ -3,12 +3,9 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Button, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
-import { SWEDEN_APARTMENT_FORM } from '@/components/PriceCalculator/PriceCalculator.constants'
-import type {
-  InputGroup,
-  PriceFormTemplate,
-} from '@/components/PriceCalculator/PriceCalculator.types'
 import useRouterRefresh from '@/hooks/useRouterRefresh'
+import { FormTemplateService } from '@/services/formTemplate/FormTemplate'
+import { FormTemplate, InputGroup } from '@/services/formTemplate/FormTemplate.types'
 import { CookiePersister } from '@/services/priceForm/CookiePersister'
 import { PriceForm } from '@/services/priceForm/priceForm.types'
 import { PriceFormService } from '@/services/priceForm/PriceFormService'
@@ -31,8 +28,12 @@ const ButtonInner = styled(Space)(() => ({
 
 type HandleSubmitParams = { data: Record<string, string> }
 
+type Params = {
+  id: string
+}
+
 type Props = {
-  template: PriceFormTemplate
+  template: FormTemplate
   form: PriceForm
 }
 
@@ -88,7 +89,7 @@ const fetchOrCreateForm = async (service: PriceFormService) => {
   return service.create({ product: 'car' })
 }
 
-const prePopulateTemplate = (template: PriceFormTemplate, form: PriceForm): PriceFormTemplate => {
+const prePopulateTemplate = (template: FormTemplate, form: PriceForm): FormTemplate => {
   return {
     groups: template.groups.map((group) => {
       const newGroup: InputGroup = {
@@ -109,14 +110,23 @@ const prePopulateTemplate = (template: PriceFormTemplate, form: PriceForm): Pric
   }
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
+  if (typeof context.params === 'undefined') throw new Error('No params')
+  const productId = context.params.id
+
   const serverPriceCalculator = new PriceFormService(
     new ServerCookiePersister(context.req, context.res),
   )
+  const formTemplate = new FormTemplateService()
 
-  const form = await fetchOrCreateForm(serverPriceCalculator)
+  const [form, emptyTemplate] = await Promise.all([
+    fetchOrCreateForm(serverPriceCalculator),
+    formTemplate.fetch({ id: productId }),
+  ])
 
-  const template = prePopulateTemplate(SWEDEN_APARTMENT_FORM, form)
+  if (emptyTemplate === null) return { notFound: true }
+
+  const template = prePopulateTemplate(emptyTemplate, form)
 
   return { props: { template, form } }
 }

@@ -1,40 +1,15 @@
-import styled from '@emotion/styled'
-import * as Accordion from '@radix-ui/react-accordion'
 import { forwardRef } from 'react'
-import { Button, ChevronIcon, Space } from 'ui'
+import { Button, Space } from 'ui'
+import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+import * as Accordion from './Accordion'
 import { FormGroup } from './FormGroup'
-import { PriceFormTemplate } from './PriceCalculator.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
-
-const AccordionHeader = styled(Accordion.Header)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: theme.space[4],
-  paddingRight: theme.space[5],
-  height: '4rem',
-
-  '&[data-state=closed]': {
-    borderBottom: `1px solid ${theme.colors.gray500}`,
-  },
-}))
-
-const AccordionChevron = styled(ChevronIcon)({
-  transition: 'transform 300ms',
-  '[data-state=open] &': { transform: 'rotate(180deg)' },
-})
-
-const AccordionContent = styled(Accordion.Content)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.colors.gray500}`,
-  padding: theme.space[4],
-  paddingTop: theme.space[0],
-}))
 
 type OnSubmitParams = { data: Record<string, string> }
 
 export type PriceCalculatorProps = {
-  form: PriceFormTemplate
+  form: FormTemplate
   onSubmit: (params: OnSubmitParams) => void
 }
 
@@ -59,19 +34,17 @@ export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>
 
     return (
       <form ref={ref} onSubmit={handleSubmit}>
-        <Accordion.Root type="single" value={selectedGroup?.id}>
+        <Accordion.Root type="single" value={selectedGroup?.id} collapsible={true}>
           {form.groups.map(({ id, title, cta, inputs, state }, index) => (
             <Accordion.Item key={id} value={id}>
-              <AccordionHeader>
+              <Accordion.Header>
                 <SpaceFlex space={1}>
                   {state === 'VALID' ? '✅' : state === 'INVALID' ? '❌' : `${index + 1}.`}
                   <h2>{translateTextLabel(title)}</h2>
                 </SpaceFlex>
-                <Accordion.Trigger>
-                  <AccordionChevron size="1rem" />
-                </Accordion.Trigger>
-              </AccordionHeader>
-              <AccordionContent>
+                <Accordion.Trigger />
+              </Accordion.Header>
+              <Accordion.Content>
                 <Space y={2}>
                   <FormGroup inputs={inputs} />
 
@@ -81,7 +54,7 @@ export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>
                     </Button>
                   </footer>
                 </Space>
-              </AccordionContent>
+              </Accordion.Content>
             </Accordion.Item>
           ))}
         </Accordion.Root>

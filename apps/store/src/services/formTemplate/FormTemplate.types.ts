@@ -1,6 +1,18 @@
 type Placeholder = { key: string; pattern: string }
 export type TextLabel = { key: string; placeholders?: Array<Placeholder> }
 
+export type FormTemplate = {
+  groups: Array<InputGroup>
+}
+
+export type InputGroup = {
+  id: string
+  title: TextLabel
+  cta: TextLabel
+  inputs: Array<Input>
+  state: InputGroupState
+}
+
 type InputBase = {
   name: string
   label: TextLabel
@@ -23,20 +35,3 @@ type InputRadio = InputBase & { type: 'radio'; options: Array<{ label: TextLabel
 export type Input = InputText | InputNumber | InputSelect | InputDate | InputRadio
 
 type InputGroupState = 'INITIAL' | 'INVALID' | 'VALID'
-
-export type GroupSummary = {
-  labels: Array<TextLabel>
-}
-
-export type InputGroup = {
-  id: string
-  title: TextLabel
-  cta: TextLabel
-  inputs: Array<Input>
-  state: InputGroupState
-  summary: GroupSummary
-}
-
-export type PriceFormTemplate = {
-  groups: Array<InputGroup>
-}

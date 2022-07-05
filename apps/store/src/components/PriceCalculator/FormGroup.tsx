@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
-import { Space } from 'ui'
+import { Input } from '@/services/formTemplate/FormTemplate.types'
 import { InputDynamic } from './InputDynamic'
-import { Input } from './PriceCalculator.types'
 
 const Grid = styled.div(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
-  gap: theme.space[2],
+  gap: theme.space[3],
 }))
 
 type GridItemProps = { columnSpan: number }
@@ -21,16 +20,12 @@ type FormGroupProps = {
 
 export const FormGroup = ({ inputs }: FormGroupProps) => {
   return (
-    <div>
-      <Space y={2}>
-        <Grid>
-          {inputs.map(({ columnSpan = 6, ...inputProps }) => (
-            <GridItem key={inputProps.name} columnSpan={columnSpan}>
-              <InputDynamic {...inputProps} />
-            </GridItem>
-          ))}
-        </Grid>
-      </Space>
-    </div>
+    <Grid>
+      {inputs.map(({ columnSpan = 6, ...inputProps }) => (
+        <GridItem key={inputProps.name} columnSpan={columnSpan}>
+          <InputDynamic {...inputProps} />
+        </GridItem>
+      ))}
+    </Grid>
   )
 }
