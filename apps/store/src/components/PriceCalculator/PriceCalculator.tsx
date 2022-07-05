@@ -1,30 +1,37 @@
-import * as PriceCalculatorService from '@/services/mockPriceCalculatorService'
+import { forwardRef } from 'react'
 import { FormGroup } from './FormGroup'
-import { PriceForm } from './PriceCalculator.types'
+import { PriceFormTemplate } from './PriceCalculator.types'
 
 type OnSubmitParams = { data: Record<string, string> }
 
 export type PriceCalculatorProps = {
-  form: PriceForm
+  form: PriceFormTemplate
   onSubmit: (params: OnSubmitParams) => void
 }
 
-export const PriceCalculator = ({ form, onSubmit }: PriceCalculatorProps) => {
-  const handleSubmit = async (data: FormData) => {
-    const userData: Record<string, string> = {}
-    data.forEach((value, key) => {
-      if (typeof value !== 'string') return
-      userData[key] = value
-    })
+export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>(
+  ({ form, onSubmit }, ref) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      const data = new FormData(event.currentTarget)
 
-    onSubmit({ data: userData })
-  }
+      const userData: Record<string, string> = {}
+      data.forEach((value, key) => {
+        if (typeof value !== 'string') return
+        userData[key] = value
+      })
 
-  return (
-    <>
-      {form.groups.map(({ id, inputs }) => (
-        <FormGroup key={id} onSubmit={handleSubmit} inputs={inputs} />
-      ))}
-    </>
-  )
-}
+      onSubmit({ data: userData })
+    }
+
+    return (
+      <form ref={ref} onSubmit={handleSubmit}>
+        {form.groups.map(({ id, inputs }) => (
+          <FormGroup key={id} inputs={inputs} />
+        ))}
+      </form>
+    )
+  },
+)
+
+PriceCalculator.displayName = 'PriceCalculator'

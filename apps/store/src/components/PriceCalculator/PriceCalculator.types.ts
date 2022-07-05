@@ -36,6 +36,6 @@ export type InputGroup = {
   summary: GroupSummary
 }
 
-export type PriceForm = {
+export type PriceFormTemplate = {
   groups: Array<InputGroup>
 }
