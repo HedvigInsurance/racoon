@@ -1,4 +1,4 @@
-import { PriceForm } from '@/components/PriceCalculator/PriceCalculator.types'
+import { PriceFormTemplate } from '@/components/PriceCalculator/PriceCalculator.types'
 import { MarketLabel } from '@/lib/l10n/types'
 import { ProductNames } from '@/services/mockProductService'
 
@@ -9,6 +9,6 @@ export type CmsProduct = {
   displayName: string
   slug: string
   pageTitle: string
-  form: PriceForm
+  form: PriceFormTemplate
   product: ProductNames
 }
