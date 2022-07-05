@@ -80,7 +80,7 @@ export const InputRadio = ({
           name={name}
           required={required}
         >
-          <SpaceFlex direction="vertical" space={0.5}>
+          <SpaceFlex direction="horizontal" space={0.5}>
             {options.map(({ label, value: optionValue }) => (
               <Item key={optionValue} value={optionValue}>
                 <InnerWrapper>

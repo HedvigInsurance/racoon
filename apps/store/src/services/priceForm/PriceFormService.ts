@@ -47,12 +47,15 @@ export class PriceFormService {
       throw new Error(`Price form with id ${id} not found`)
     }
 
+    const priceQuote =
+      'subType' in data ? { id: uuid(), price: Math.round(100 + Math.random() * 100) } : null
+
     this.persister.save({
       id,
       data: {
         ...priceForm,
         data: { ...priceForm.data, ...data },
-        priceQuote: { id: uuid(), price: Math.round(100 + Math.random() * 100) },
+        priceQuote,
       },
     })
   }
