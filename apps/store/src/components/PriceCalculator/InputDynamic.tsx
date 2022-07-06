@@ -1,7 +1,7 @@
 import { InputField } from 'ui'
+import { Input } from '@/services/formTemplate/FormTemplate.types'
 import { InputRadio } from './InputRadio'
 import { InputSelect } from './InputSelect'
-import { Input } from './PriceCalculator.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = Input

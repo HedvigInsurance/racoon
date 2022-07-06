@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react'
+import { SE_APARTMENT_TEMPLATE } from '@/services/formTemplate/data/SE_APARTMENT'
 import { PriceCalculator, PriceCalculatorProps } from './PriceCalculator'
-import { SWEDEN_APARTMENT_FORM } from './PriceCalculator.constants'
 
 export default {
   title: 'Price Calculator',
@@ -16,5 +16,5 @@ const Template: Story<PriceCalculatorProps> = (props: PriceCalculatorProps) => {
 
 export const Default = Template.bind({})
 Default.args = {
-  form: SWEDEN_APARTMENT_FORM,
+  form: SE_APARTMENT_TEMPLATE,
 }

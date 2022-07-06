@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { TextLabel as TextLabelProps } from './PriceCalculator.types'
+import { TextLabel as TextLabelProps } from '@/services/formTemplate/FormTemplate.types'
 
 const t = (key: string, _placeholders?: Record<string, string | number>) => key
 
