@@ -1,3 +1,5 @@
+import styled from '@emotion/styled'
+import * as RadixTabs from '@radix-ui/react-tabs'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
@@ -6,6 +8,33 @@ import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 import { CartList } from '../CartList/CartList'
 import { ProductPageProps } from './ProductPage.types'
+
+const Tabs = styled(RadixTabs.Root)({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+const TabsList = styled(RadixTabs.TabsList)({
+  flexShrink: 0,
+  display: 'flex',
+  borderBottom: '1px solid #e3e3e3',
+})
+
+const TabsTrigger = styled(RadixTabs.Trigger)({
+  flex: 1,
+  padding: '1rem',
+  cursor: 'pointer',
+  '&:hover': { color: 'mediumpurple' },
+  '&[data-state=active]': {
+    color: 'mediumpurple',
+    boxShadow: 'inset 0 -1px 0 0 mediumpurple, 0 1px 0 0 currentColor',
+  },
+  '&:focus-visible': {
+    boxShadow: '0 0 0 2px black',
+  },
+})
+
+const TabsContent = styled(RadixTabs.Content)({})
 
 export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
   const cartContext = useContext(CartContext)
@@ -51,27 +80,40 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
           </div>
         )}
 
-        <Heading variant="s" headingLevel="h2" colorVariant="dark">
-          Perils
-        </Heading>
-        {product.insurances.map((insurance) => (
-          <Fragment key={insurance.name}>
-            <Heading variant="xs" headingLevel="h3" colorVariant="dark">
-              {insurance?.displayName}
+        <Tabs defaultValue="overview" orientation="horizontal">
+          <TabsList aria-label="tabs example">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="coverage">Coverage</TabsTrigger>
+          </TabsList>
+          <TabsContent value="overview">
+            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+              Coverage Section Heading
             </Heading>
-            <ul>
-              {insurance?.perils.map((peril) => (
-                <li key={peril.title} style={{ maxWidth: '400px' }}>
-                  <Heading variant="overline" headingLevel="h3" colorVariant="dark">
-                    {peril.title}
-                  </Heading>
-                  <br />
-                  {peril.body}
-                </li>
-              ))}
-            </ul>
-          </Fragment>
-        ))}
+          </TabsContent>
+          <TabsContent value="coverage">
+            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+              Perils
+            </Heading>
+            {product.insurances.map((insurance) => (
+              <Fragment key={insurance.name}>
+                <Heading variant="xs" headingLevel="h3" colorVariant="dark">
+                  {insurance?.displayName}
+                </Heading>
+                <ul>
+                  {insurance?.perils.map((peril) => (
+                    <li key={peril.title} style={{ maxWidth: '400px' }}>
+                      <Heading variant="overline" headingLevel="h3" colorVariant="dark">
+                        {peril.title}
+                      </Heading>
+                      <br />
+                      {peril.body}
+                    </li>
+                  ))}
+                </ul>
+              </Fragment>
+            ))}
+          </TabsContent>
+        </Tabs>
 
         <div>
           <Link href={PageLink.cart()}>Go to cart</Link>
