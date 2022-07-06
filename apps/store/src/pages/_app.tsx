@@ -1,4 +1,5 @@
 import { ApolloProvider } from '@apollo/client'
+import { storyblokInit, apiPlugin } from '@storyblok/react'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
@@ -13,6 +14,11 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 }
 
 Datadog.initRum()
+
+storyblokInit({
+  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+  use: [apiPlugin],
+})
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)

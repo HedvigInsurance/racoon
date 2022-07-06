@@ -2918,6 +2918,20 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@storyblok/js@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-1.6.1.tgz#385c08e960d93a7463c414dbf30254f089e6e7fe"
+  integrity sha512-Umxi3rcIEK5waZNynS62AEsw3ygbFhyv0s0ZjFWVvBxJKNVEhqqg7Zx6Fa8fo+lW6vFsdlnXmvX7CfjI94RzrA==
+  dependencies:
+    storyblok-js-client "^4.5.2"
+
+"@storyblok/react@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-1.0.12.tgz#724ac69b7b802a24f9e5640b68999637621faecd"
+  integrity sha512-7VGggRvMQLW9d+rw+X0UfMl5mTJ/U6LQD4KdXlRVMdKEf5OSqzK/oKPeH+/QKMalv80BbnEU4G5dfygaWoLc5A==
+  dependencies:
+    "@storyblok/js" "^1.6.1"
+
 "@storybook/addon-actions@6.4.18":
   version "6.4.18"
   resolved "https://registry.npmjs.org/@storybook/addon-actions/-/addon-actions-6.4.18.tgz"
@@ -15822,6 +15836,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rollup-plugin-mjs-entry@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-mjs-entry/-/rollup-plugin-mjs-entry-0.1.1.tgz#b3ab47e8d49ddb1916e36ba2480dc8a62a22d533"
+  integrity sha512-uii0Txyrn4YCgP++fypLqsT3LgO3Fx0gAZLZlWRSwKCuZ+bdSzAzdVbJFATmCHcBNlO61i65EgemOVdVQYONHA==
+
 rollup@^2.60.0:
   version "2.67.2"
   resolved "https://registry.npmjs.org/rollup/-/rollup-2.67.2.tgz"
@@ -16512,6 +16531,14 @@ storyblok-js-client@^4.2.1:
   version "4.2.1"
   resolved "https://registry.npmjs.org/storyblok-js-client/-/storyblok-js-client-4.2.1.tgz"
   integrity sha512-TQfsyBJ6WcjpHFGKYXHy5kef4jXOI/j54wrJmw4Ld13e76dr81EvqZIrwehKPTcRID9+a4rbA0ykn3r3aBpArw==
+
+storyblok-js-client@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-4.5.2.tgz#f93ae4822fd5710737a516d474a5dd40ee80b96c"
+  integrity sha512-86On+EyREZdbTcYTV+0dRQ1E4Gy0hPWs43MxK5VOv6DRwbf1A7haXq6dUL8nm9i5+xgOB0GLJW0f3B9CHbq4sQ==
+  dependencies:
+    prettier "^2.5.1"
+    rollup-plugin-mjs-entry "^0.1.1"
 
 storyblok-react@^0.1.2:
   version "0.1.2"
