@@ -1,66 +1,65 @@
-import { UISchema } from '../FormTemplate.types'
+import { FormTemplateUISchema } from '../FormTemplate.types'
 
-export const SWEDISH_APARTMENT_UI: UISchema = {
+export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
   layout: {
-    groups: [
+    sections: [
       {
         id: 'autofill',
         title: { key: 'Your info' },
-        items: [
-          { field: 'isMover', columnSpan: 6 },
-          { field: 'personalNumber', columnSpan: 6 },
+        fields: [
+          { name: 'isMover', columnSpan: 6 },
+          { name: 'personalNumber', columnSpan: 6 },
         ],
-        cta: { key: 'Next step' },
+        submit: { key: 'Next step' },
       },
       {
         id: 'your-home',
         title: { key: 'Your home' },
-        items: [
-          { field: 'street', columnSpan: 6 },
-          { field: 'livingSpace', columnSpan: 3 },
-          { field: 'zipCode', columnSpan: 3 },
-          { field: 'subType', columnSpan: 6 },
+        fields: [
+          { name: 'street', columnSpan: 6 },
+          { name: 'livingSpace', columnSpan: 3 },
+          { name: 'zipCode', columnSpan: 3 },
+          { name: 'subType', columnSpan: 6 },
         ],
-        cta: { key: 'Next step' },
+        submit: { key: 'Next step' },
       },
       {
         id: 'insured-people',
         title: { key: 'Insured people' },
-        items: [
-          { field: 'birthDate', columnSpan: 3 },
-          { field: 'numberCoInsured', columnSpan: 3 },
+        fields: [
+          { name: 'birthDate', columnSpan: 3 },
+          { name: 'numberCoInsured', columnSpan: 3 },
         ],
-        cta: { key: 'Calculate price' },
+        submit: { key: 'Calculate price' },
       },
     ],
   },
 
   fields: {
     isMover: {
-      widget: 'radio',
-      title: { key: 'Are you moving?' },
+      type: 'radio',
       required: true,
       defaultValue: 'no',
       options: [
         {
-          label: { key: 'Yes' },
-          value: 'yes',
+          label: { key: 'Where I live' },
+          value: 'no',
         },
         {
-          label: { key: 'No' },
-          value: 'no',
+          label: { key: "Where I'm moving" },
+          value: 'yes',
         },
       ],
     },
     personalNumber: {
-      widget: 'text',
+      type: 'text',
       title: { key: 'Autofill with personal number (Optional)' },
     },
     birthDate: {
-      widget: 'date',
+      type: 'date',
     },
     subType: {
-      widget: 'radio',
+      type: 'radio',
       options: [
         {
           label: { key: 'I rent' },
