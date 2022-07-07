@@ -48,7 +48,9 @@ export class PriceFormService {
     }
 
     const priceQuote =
-      'subType' in data ? { id: uuid(), price: Math.round(100 + Math.random() * 100) } : null
+      'numberCoInsured' in data
+        ? { id: uuid(), price: Math.round(100 + Math.random() * 100) }
+        : null
 
     this.persister.save({
       id,

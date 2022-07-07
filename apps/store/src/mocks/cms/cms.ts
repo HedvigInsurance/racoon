@@ -1,8 +1,6 @@
 import { rest } from 'msw'
 import { CmsProduct, MarketLabel } from '@/services/cms/cms.types'
 import { CmsService } from '@/services/cms/CmsService'
-import { SE_APARTMENT_TEMPLATE } from '@/services/formTemplate/data/SE_APARTMENT'
-import { SE_CAR_TEMPLATE } from '@/services/formTemplate/data/SE_CAR'
 import { ProductNames } from '@/services/mockProductService'
 
 const CMS_BASE_URL = process.env.NEXT_PUBLIC_CMS_URL
@@ -15,7 +13,6 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'home',
       pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_HOME,
-      form: SE_APARTMENT_TEMPLATE,
     },
     {
       market: MarketLabel.SE,
@@ -23,7 +20,6 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'car',
       pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_CAR,
-      form: SE_CAR_TEMPLATE,
     },
     {
       market: MarketLabel.SE,
@@ -31,7 +27,6 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'home-accident',
       pageTitle: 'Home & accident insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_ESSENTIAL_BUNDLE,
-      form: SE_APARTMENT_TEMPLATE,
     },
   ],
   NO: [],

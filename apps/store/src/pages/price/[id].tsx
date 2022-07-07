@@ -82,11 +82,16 @@ const NextPricePage: NextPage<Props> = ({ template, form }) => {
   )
 }
 
-const fetchOrCreateForm = async (service: PriceFormService) => {
+type FetchOrCreateFormParams = {
+  service: PriceFormService
+  productId: string
+}
+
+const fetchOrCreateForm = async ({ service, productId }: FetchOrCreateFormParams) => {
   const existingForm = await service.fetchLatest()
   if (existingForm) return existingForm
 
-  return service.create({ product: 'car' })
+  return service.create({ product: productId })
 }
 
 const prePopulateTemplate = (template: FormTemplate, form: PriceForm): FormTemplate => {
@@ -96,12 +101,14 @@ const prePopulateTemplate = (template: FormTemplate, form: PriceForm): FormTempl
         ...group,
         inputs: group.inputs.map((input) => ({
           ...input,
-          defaultValue: form.data[input.name] ?? '',
+          defaultValue: form.data[input.name] ?? input.defaultValue ?? '',
         })),
         state: 'INITIAL',
       }
 
-      if (newGroup.inputs.every((input) => input.defaultValue)) {
+      if (
+        newGroup.inputs.filter((input) => input.required).every((input) => form.data[input.name])
+      ) {
         newGroup.state = 'VALID'
       }
 
@@ -111,17 +118,18 @@ const prePopulateTemplate = (template: FormTemplate, form: PriceForm): FormTempl
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
-  if (typeof context.params === 'undefined') throw new Error('No params')
+  if (context.params === undefined) return { notFound: true }
+
   const productId = context.params.id
 
   const serverPriceCalculator = new PriceFormService(
     new ServerCookiePersister(context.req, context.res),
   )
-  const formTemplate = new FormTemplateService()
+  const formTemplateService = new FormTemplateService()
 
   const [form, emptyTemplate] = await Promise.all([
-    fetchOrCreateForm(serverPriceCalculator),
-    formTemplate.fetch({ id: productId }),
+    fetchOrCreateForm({ service: serverPriceCalculator, productId }),
+    formTemplateService.fetch({ id: productId }),
   ])
 
   if (emptyTemplate === null) return { notFound: true }

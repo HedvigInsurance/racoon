@@ -10,8 +10,8 @@ export class ServerCookiePersister<Data> implements Persister<Data> {
 
   public async save({ id, data }: SaveParams<Data>) {
     this.response.setHeader('Set-Cookie', [
-      `${id}=${JSON.stringify(data)}`,
-      `${COOKIE_KEY_LATEST}=${id}`,
+      `${id}=${JSON.stringify(data)}; Path=/`,
+      `${COOKIE_KEY_LATEST}=${id}; Path=/`,
     ])
   }
 

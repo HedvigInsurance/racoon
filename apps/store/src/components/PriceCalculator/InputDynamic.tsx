@@ -12,7 +12,7 @@ export const InputDynamic = (props: Props) => {
   const baseProps = {
     name: props.name,
     label: translateTextLabel(props.label),
-    defaultValue: props.defaultValue,
+    defaultValue: String(props.defaultValue),
     required: props.required,
     placeholder: props.placeholder ? translateTextLabel(props.placeholder) : undefined,
   }
@@ -24,7 +24,7 @@ export const InputDynamic = (props: Props) => {
           {...baseProps}
           options={props.options.map((option) => ({
             ...option,
-            name: translateTextLabel(option.name),
+            name: translateTextLabel(option.label),
           }))}
         />
       )

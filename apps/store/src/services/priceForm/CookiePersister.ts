@@ -4,8 +4,8 @@ import { Persister, SaveParams } from './priceForm.types'
 
 export class CookiePersister<Data> implements Persister<Data> {
   public async save({ id, data }: SaveParams<Data>) {
-    Cookies.set(id, JSON.stringify(data))
-    Cookies.set(COOKIE_KEY_LATEST, id)
+    Cookies.set(id, JSON.stringify(data), { path: '/' })
+    Cookies.set(COOKIE_KEY_LATEST, id, { path: '/' })
   }
 
   public async fetch(id: string) {

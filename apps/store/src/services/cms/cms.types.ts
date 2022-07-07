@@ -1,5 +1,4 @@
 import { MarketLabel } from '@/lib/l10n/types'
-import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { ProductNames } from '@/services/mockProductService'
 
 export { MarketLabel } from '@/lib/l10n/types'
@@ -9,6 +8,5 @@ export type CmsProduct = {
   displayName: string
   slug: string
   pageTitle: string
-  form: FormTemplate
   product: ProductNames
 }
