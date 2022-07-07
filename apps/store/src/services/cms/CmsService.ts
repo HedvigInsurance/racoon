@@ -1,8 +1,8 @@
-import { CmsProduct, MarketLabel } from './types'
+import { CmsProduct, MarketLabel } from './cms.types'
 
-const CMS_BASE_URL = process.env.NEXT_PUBLIC_STORYBLOK_URL
+const CMS_BASE_URL = process.env.NEXT_PUBLIC_CMS_URL
 
-export const Cms = {
+export const CmsService = {
   async getProductByMarketAndSlug(market: MarketLabel, slug: string) {
     const response = await fetch(`${CMS_BASE_URL}/products/${market}/${slug}`)
     const product: CmsProduct | null = await response.json()

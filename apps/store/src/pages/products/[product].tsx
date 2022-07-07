@@ -3,7 +3,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
-import { Cms } from '@/services/cms'
+import { CmsService } from '@/services/cms/CmsService'
 import { getProductByMarketAndName } from '@/services/mockProductService'
 
 const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
     }
   }
 
-  const cmsProduct = await Cms.getProductByMarketAndSlug(localeData.marketLabel, slug)
+  const cmsProduct = await CmsService.getProductByMarketAndSlug(localeData.marketLabel, slug)
 
   if (!cmsProduct) {
     return {

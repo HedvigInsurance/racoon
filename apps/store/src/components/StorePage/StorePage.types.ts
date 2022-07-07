@@ -1,4 +1,4 @@
-import { CmsProduct } from '@/services/cms'
+import { CmsProduct } from '@/services/cms/cms.types'
 
 export type StorePageProps = {
   products: CmsProduct[]

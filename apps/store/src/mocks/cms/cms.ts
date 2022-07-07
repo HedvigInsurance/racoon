@@ -3,11 +3,11 @@ import {
   SWEDEN_APARTMENT_FORM,
   SWEDEN_CAR_FORM,
 } from '@/components/PriceCalculator/PriceCalculator.constants'
-import { Cms } from '@/services/cms'
-import { CmsProduct, MarketLabel } from '@/services/cms/types'
+import { CmsProduct, MarketLabel } from '@/services/cms/cms.types'
+import { CmsService } from '@/services/cms/CmsService'
 import { ProductNames } from '@/services/mockProductService'
 
-const CMS_BASE_URL = process.env.NEXT_PUBLIC_STORYBLOK_URL
+const CMS_BASE_URL = process.env.NEXT_PUBLIC_CMS_URL
 
 const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
   SE: [
@@ -44,7 +44,7 @@ export const mockCmsHandlers = [
   rest.get<
     {},
     { market: string; slug: string },
-    Awaited<ReturnType<typeof Cms.getProductByMarketAndSlug>>
+    Awaited<ReturnType<typeof CmsService.getProductByMarketAndSlug>>
   >(`${CMS_BASE_URL}/products/:market/:slug`, (req, res, ctx) => {
     const { market, slug } = req.params
 
@@ -58,7 +58,7 @@ export const mockCmsHandlers = [
 
     return res(ctx.json(null))
   }),
-  rest.get<{}, { market: string }, Awaited<ReturnType<typeof Cms.getProductsByMarket>>>(
+  rest.get<{}, { market: string }, Awaited<ReturnType<typeof CmsService.getProductsByMarket>>>(
     `${CMS_BASE_URL}/products/:market`,
     (req, res, ctx) => {
       const { market } = req.params
