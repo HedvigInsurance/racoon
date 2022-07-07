@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next'
-import { COOKIE_KEY_LATEST } from './priceForm.constants'
-import { Persister, SaveParams } from './priceForm.types'
+import { COOKIE_KEY_LATEST } from './priceIntent.constants'
+import { Persister, SaveParams } from './priceIntent.types'
 
 export class ServerCookiePersister<Data> implements Persister<Data> {
   constructor(

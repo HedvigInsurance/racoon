@@ -7,11 +7,10 @@ export interface Persister<Data> {
   reset(): Promise<void>
 }
 
-type PriceQuote = { id: string; price: number }
+type PriceIntentProduct = { id: string; price: number }
 
-export type PriceForm = {
+export type PriceIntent = {
   id: string
   data: Record<string, string>
-  product: { id: string }
-  priceQuote: null | PriceQuote
+  product: null | PriceIntentProduct
 }
