@@ -1,5 +1,5 @@
-import { uuid } from '@/components/PriceCalculator/uuid'
 import { Persister, PriceForm } from './priceForm.types'
+import { uuid } from './uuid'
 
 type CreateParams = {
   // can be a bundle/product id
