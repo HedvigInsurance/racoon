@@ -11,4 +11,6 @@ export const PageLink = {
   product: ({ locale, id }: ProductPage) => `${getOptionalPath(locale)}/products/${id}`,
   cart: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart`,
   checkout: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout`,
+  checkoutPayment: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/payment`,
+  confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/confirmation`,
 }
