@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { render } from '@/test/utils'
+import { render, screen } from '@/test/utils'
 import { LandingPage } from '../LandingPage'
 
 describe('Landing Page', () => {

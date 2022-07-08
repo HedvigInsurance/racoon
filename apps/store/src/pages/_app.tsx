@@ -7,6 +7,11 @@ import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { CartContext, useCartContextStore } from '@/services/mockCartService'
 
+// Enable API mocking
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  require('../mocks')
+}
+
 Datadog.initRum()
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
