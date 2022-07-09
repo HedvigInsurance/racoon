@@ -15,3 +15,23 @@ declare module 'next/app' {
     Component: PageWithLayout
   }
 }
+
+type TrustlyInitFunction = (
+  endUserID: string,
+  merchantUsername: string,
+  merchantCallback: MerchantCallbackFunction,
+  options?: TrustlyOptions,
+) => Promise<TrustlyInitStatus>
+type TrustlyInitStatus = 'FirstTimeUser' | 'ReturningUser'
+
+type MerchantCallbackFunction = (data: MerchantCallbackData) => void
+type MerchantCallbackData = { accountId: string }
+type TrustlyOptions = { locale: string }
+
+declare global {
+  interface Window {
+    TrustlyWidget: {
+      init: TrustlyInitFunction
+    }
+  }
+}
