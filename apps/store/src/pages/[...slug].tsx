@@ -1,5 +1,6 @@
-import { getStoryblokApi, StoryData, useStoryblokState } from '@storyblok/react'
+import { getStoryblokApi, StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
+import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 
 type Props = {
@@ -18,11 +19,15 @@ type Path = {
 
 const Page: NextPageWithLayout<Props> = ({ story: initialStory }) => {
   const story = useStoryblokState(initialStory)
-
   return (
-    <div>
-      <h1>{story.name}</h1>
-    </div>
+    <>
+      <Head>
+        <title>{story.name}</title>
+      </Head>
+      <div>
+        <StoryblokComponent blok={story.content} />
+      </div>
+    </>
   )
 }
 

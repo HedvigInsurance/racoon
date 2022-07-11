@@ -3,6 +3,8 @@ import { storyblokInit, apiPlugin } from '@storyblok/react'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
+import { HeadingBlock } from '@/blocks/HeadingBlock'
+import { PageBlock } from '@/blocks/PageBlock'
 import { GlobalStyles } from '@/lib/GlobalStyles'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
@@ -15,9 +17,15 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
 Datadog.initRum()
 
+const components = {
+  heading: HeadingBlock,
+  page: PageBlock,
+}
+
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
+  components,
 })
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
