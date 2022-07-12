@@ -31,11 +31,11 @@ const Page: NextPageWithLayout<Props> = ({ story: initialStory }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params, preview }) => {
   const slug = params?.slug ? params.slug.join('/') : 'home'
 
   const sbParams = {
-    version: 'draft',
+    version: preview ? 'draft' : 'published',
   }
 
   const storyblokApi = getStoryblokApi()
@@ -45,6 +45,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     props: {
       story: data ? data.story : false,
       key: data ? data.story.id : false,
+      preview: preview || false,
     },
     revalidate: 3600,
   }
