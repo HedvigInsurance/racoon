@@ -6,6 +6,7 @@ import { ChevronIcon, Heading, LinkButton, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { PageLink } from '@/lib/PageLink'
+import { TrustlyWidget } from '@/services/trustly/TrustlyWidget'
 import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
 
 export const CheckoutPaymentPage = ({
@@ -92,6 +93,10 @@ export const CheckoutPaymentPage = ({
               </p>
             </Space>
 
+            <TrustlyWidgetWrapper>
+              <TrustlyWidget />
+            </TrustlyWidgetWrapper>
+
             <Space y={0.5}>
               <LinkButton href={PageLink.confirmation()} fullWidth>
                 Complete purchase
@@ -169,4 +174,13 @@ const CollapsibleContent = styled(RadixCollapsible.Content)(({ theme }) => ({}))
 const CollapsibleDivider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
+}))
+
+const TrustlyWidgetWrapper = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  '#trustly-widget': {
+    margin: 0,
+    maxWidth: '100%',
+  },
 }))
