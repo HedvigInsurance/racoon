@@ -1,5 +1,5 @@
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok'
 
 type PageBlockProps = SbBaseBlockProps<{
   body: SbBlokData[]

@@ -1,5 +1,5 @@
 import { storyblokEditable } from '@storyblok/react'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok'
 
 type HeadingBlockProps = SbBaseBlockProps<{
   text: string
