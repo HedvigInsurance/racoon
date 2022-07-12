@@ -1,120 +1,47 @@
-import styled from '@emotion/styled'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Button, Space } from 'ui'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { TestPricePage } from '@/components/TestPricePage/TestPricePage'
+import {
+  fetchOrCreatePriceIntent,
+  prepopulateFormTemplate,
+} from '@/components/TestPricePage/TestPricePage.helpers'
+import { TestPricePageProps } from '@/components/TestPricePage/TestPricePage.types'
 import useRouterRefresh from '@/hooks/useRouterRefresh'
-import { FormTemplateService } from '@/services/formTemplate/FormTemplate'
-import { FormTemplate, InputGroup } from '@/services/formTemplate/FormTemplate.types'
-import { CookiePersister } from '@/services/priceForm/CookiePersister'
-import { PriceForm } from '@/services/priceForm/priceForm.types'
-import { PriceFormService } from '@/services/priceForm/PriceFormService'
-import { ServerCookiePersister } from '@/services/priceForm/ServerCookiePersister'
-
-const Section = styled.div(({ theme }) => ({
-  padding: theme.space[4],
-}))
-
-const CartButton = styled(Button)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: theme.space[4],
-}))
-
-const ButtonInner = styled(Space)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-}))
-
-type HandleSubmitParams = { data: Record<string, string> }
+import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
+import { CookiePersister } from '@/services/priceIntent/CookiePersister'
+import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
+import { ServerCookiePersister } from '@/services/priceIntent/ServerCookiePersister'
 
 type Params = {
   id: string
 }
 
-type Props = {
-  template: FormTemplate
-  form: PriceForm
-}
+type Props = Pick<TestPricePageProps, 'template' | 'intent'>
 
-const priceCalculator = new PriceFormService(new CookiePersister())
+const clientPriceIntentService = new PriceIntentService(new CookiePersister())
 
-const NextPricePage: NextPage<Props> = ({ template, form }) => {
+const NextTestPricePage: NextPage<Props> = ({ template, intent }) => {
   const refreshData = useRouterRefresh()
 
-  const handleSubmit = async (params: HandleSubmitParams) => {
-    await priceCalculator.addData({ id: form.id, data: params.data })
+  const handleSubmit: TestPricePageProps['onSubmit'] = async (params) => {
+    await clientPriceIntentService.addData({ id: intent.id, data: params.data })
     await refreshData()
   }
 
   const router = useRouter()
-  const handleClickReset = async () => {
-    await priceCalculator.reset()
+  const handleReset = async () => {
+    await clientPriceIntentService.reset()
     router.reload()
   }
 
   return (
-    <>
-      <Space y={3}>
-        <PriceCalculator form={template} onSubmit={handleSubmit} />
-
-        <Section>
-          {form.priceQuote && (
-            <div>
-              <CartButton fullWidth>
-                <p>SEK {form.priceQuote.price}/month</p>
-
-                <ButtonInner x={0.5}>
-                  <p>Add to cart</p>
-                </ButtonInner>
-              </CartButton>
-            </div>
-          )}
-        </Section>
-
-        <Section>
-          <Button onClick={handleClickReset} fullWidth>
-            Reset
-          </Button>
-        </Section>
-      </Space>
-    </>
+    <TestPricePage
+      template={template}
+      intent={intent}
+      onSubmit={handleSubmit}
+      onReset={handleReset}
+    />
   )
-}
-
-type FetchOrCreateFormParams = {
-  service: PriceFormService
-  productId: string
-}
-
-const fetchOrCreateForm = async ({ service, productId }: FetchOrCreateFormParams) => {
-  const existingForm = await service.fetchLatest()
-  if (existingForm) return existingForm
-
-  return service.create({ product: productId })
-}
-
-const prePopulateTemplate = (template: FormTemplate, form: PriceForm): FormTemplate => {
-  return {
-    groups: template.groups.map((group) => {
-      const newGroup: InputGroup = {
-        ...group,
-        inputs: group.inputs.map((input) => ({
-          ...input,
-          defaultValue: form.data[input.name] ?? input.defaultValue ?? '',
-        })),
-        state: 'INITIAL',
-      }
-
-      if (
-        newGroup.inputs.filter((input) => input.required).every((input) => form.data[input.name])
-      ) {
-        newGroup.state = 'VALID'
-      }
-
-      return newGroup
-    }),
-  }
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
@@ -122,21 +49,21 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const productId = context.params.id
 
-  const serverPriceCalculator = new PriceFormService(
+  const serverPriceIntentService = new PriceIntentService(
     new ServerCookiePersister(context.req, context.res),
   )
   const formTemplateService = new FormTemplateService()
 
-  const [form, emptyTemplate] = await Promise.all([
-    fetchOrCreateForm({ service: serverPriceCalculator, productId }),
+  const [intent, emptyTemplate] = await Promise.all([
+    fetchOrCreatePriceIntent({ service: serverPriceIntentService, productId }),
     formTemplateService.fetch({ id: productId }),
   ])
 
   if (emptyTemplate === null) return { notFound: true }
 
-  const template = prePopulateTemplate(emptyTemplate, form)
+  const template = prepopulateFormTemplate(emptyTemplate, intent)
 
-  return { props: { template, form } }
+  return { props: { template, intent } }
 }
 
-export default NextPricePage
+export default NextTestPricePage

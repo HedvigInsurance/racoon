@@ -3,39 +3,42 @@ import { Button, Space } from 'ui'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import * as Accordion from './Accordion'
-import { FormGroup } from './FormGroup'
+import { FormGroup } from './FormSection'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type OnSubmitParams = { data: Record<string, string> }
 
 export type PriceCalculatorProps = {
-  form: FormTemplate
+  template: FormTemplate
   onSubmit: (params: OnSubmitParams) => void
 }
 
+const createHandleSubmit =
+  (onSubmit: (params: OnSubmitParams) => void) => (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+
+    const userData: Record<string, string> = {}
+    data.forEach((value, key) => {
+      if (typeof value !== 'string') return
+      userData[key] = value
+    })
+
+    onSubmit({ data: userData })
+  }
+
 export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>(
-  ({ form, onSubmit }, ref) => {
+  ({ template, onSubmit }, ref) => {
     const translateTextLabel = useTranslateTextLabel({ data: {} })
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      const data = new FormData(event.currentTarget)
+    const handleSubmit = createHandleSubmit(onSubmit)
 
-      const userData: Record<string, string> = {}
-      data.forEach((value, key) => {
-        if (typeof value !== 'string') return
-        userData[key] = value
-      })
-
-      onSubmit({ data: userData })
-    }
-
-    const selectedGroup = form.groups.find((group) => group.state !== 'VALID')
+    const activeSection = template.sections.find(({ state }) => state !== 'VALID')
 
     return (
       <form ref={ref} onSubmit={handleSubmit}>
-        <Accordion.Root type="single" value={selectedGroup?.id} collapsible={true}>
-          {form.groups.map(({ id, title, cta, inputs, state }, index) => (
+        <Accordion.Root type="single" value={activeSection?.id} collapsible={true}>
+          {template.sections.map(({ id, title, submit, fields, state }, index) => (
             <Accordion.Item key={id} value={id}>
               <Accordion.Header>
                 <SpaceFlex space={1}>
@@ -46,11 +49,11 @@ export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>
               </Accordion.Header>
               <Accordion.Content>
                 <Space y={2}>
-                  <FormGroup inputs={inputs} />
+                  <FormGroup fields={fields} />
 
                   <footer>
                     <Button type="submit" fullWidth>
-                      {translateTextLabel(cta)}
+                      {translateTextLabel(submit)}
                     </Button>
                   </footer>
                 </Space>

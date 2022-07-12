@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
-import { COOKIE_KEY_LATEST } from './priceForm.constants'
-import { Persister, SaveParams } from './priceForm.types'
+import { COOKIE_KEY_LATEST } from './priceIntent.constants'
+import { Persister, SaveParams } from './priceIntent.types'
 
 export class CookiePersister<Data> implements Persister<Data> {
   public async save({ id, data }: SaveParams<Data>) {

@@ -1,9 +1,9 @@
-import { Persister, PriceForm } from './priceForm.types'
+import { Persister, PriceIntent } from './priceIntent.types'
 import { uuid } from './uuid'
 
 type CreateParams = {
   // can be a bundle/product id
-  product: string
+  productId: string
 }
 
 type FetchParams = {
@@ -15,15 +15,14 @@ type AddDataParams = {
   data: Record<string, string>
 }
 
-export class PriceFormService {
-  constructor(private readonly persister: Persister<PriceForm>) {}
+export class PriceIntentService {
+  constructor(private readonly persister: Persister<PriceIntent>) {}
 
-  public async create({ product }: CreateParams): Promise<PriceForm> {
-    const newPriceForm: PriceForm = {
+  public async create(_: CreateParams): Promise<PriceIntent> {
+    const newPriceForm: PriceIntent = {
       id: uuid(),
       data: {},
-      product: { id: product },
-      priceQuote: null,
+      product: null,
     }
 
     this.persister.save({ id: newPriceForm.id, data: newPriceForm })
@@ -31,7 +30,7 @@ export class PriceFormService {
     return newPriceForm
   }
 
-  public async fetch({ id }: FetchParams): Promise<PriceForm | null> {
+  public async fetch({ id }: FetchParams): Promise<PriceIntent | null> {
     return this.persister.fetch(id)
   }
 
@@ -47,7 +46,7 @@ export class PriceFormService {
       throw new Error(`Price form with id ${id} not found`)
     }
 
-    const priceQuote =
+    const product =
       'numberCoInsured' in data
         ? { id: uuid(), price: Math.round(100 + Math.random() * 100) }
         : null
@@ -57,7 +56,7 @@ export class PriceFormService {
       data: {
         ...priceForm,
         data: { ...priceForm.data, ...data },
-        priceQuote,
+        product,
       },
     })
   }
