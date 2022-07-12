@@ -6,15 +6,13 @@ import { ChevronIcon, Heading, LinkButton, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { PageLink } from '@/lib/PageLink'
-import { TrustlyWidget } from '@/services/trustly/TrustlyWidget'
 import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
 
-export const CheckoutPaymentPage = ({
-  currency,
-  cost,
-  products,
-  campaigns,
-}: CheckoutPaymentPageProps) => {
+type Props = CheckoutPaymentPageProps & {
+  children: React.ReactNode
+}
+
+export const CheckoutPaymentPage = ({ currency, cost, products, campaigns, children }: Props) => {
   const { currencyLocale } = useCurrentLocale()
   const currencyFormatter = useMemo(() => {
     return new Intl.NumberFormat(currencyLocale, {
@@ -93,9 +91,7 @@ export const CheckoutPaymentPage = ({
               </p>
             </Space>
 
-            <TrustlyWidgetWrapper>
-              <TrustlyWidget />
-            </TrustlyWidgetWrapper>
+            {children}
 
             <Space y={0.5}>
               <LinkButton href={PageLink.confirmation()} fullWidth>
@@ -174,13 +170,4 @@ const CollapsibleContent = styled(RadixCollapsible.Content)(({ theme }) => ({}))
 const CollapsibleDivider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
-}))
-
-const TrustlyWidgetWrapper = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  '#trustly-widget': {
-    margin: 0,
-    maxWidth: '100%',
-  },
 }))

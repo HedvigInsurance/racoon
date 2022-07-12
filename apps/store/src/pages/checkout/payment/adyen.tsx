@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { CheckoutPaymentPage } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage'
 import { CheckoutPaymentPageProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
+import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
 
-export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageProps> = async () => {
   return {
     props: {
       currency: 'SEK',
@@ -27,8 +27,8 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageProps> = 
   }
 }
 
-const NextCheckoutPaymentPage: NextPage<CheckoutPaymentPageProps> = (props) => {
-  return <CheckoutPaymentPage {...props} />
+const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageProps> = (props) => {
+  return <CheckoutPaymentPageAdyen {...props} />
 }
 
-export default NextCheckoutPaymentPage
+export default NextCheckoutPaymentPageAdyen
