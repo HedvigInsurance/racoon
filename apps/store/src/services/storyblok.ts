@@ -1,4 +1,4 @@
-import { apiPlugin, SbBlokData, storyblokInit } from '@storyblok/react'
+import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit } from '@storyblok/react'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 
@@ -17,4 +17,18 @@ export const initStoryblok = () => {
     use: [apiPlugin],
     components,
   })
+}
+
+export const getStoryBySlug = async (slug: string, preview = false) => {
+  const storyblokApi = getStoryblokApi()
+  const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+    version: preview ? 'draft' : 'published',
+  })
+  return data.story
+}
+
+export const getAllLinks = async () => {
+  const storyblokApi = getStoryblokApi()
+  const { data } = await storyblokApi.get('cdn/links/')
+  return data.links
 }
