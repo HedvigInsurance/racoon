@@ -1,7 +1,4 @@
 import { MarketLabel } from '@/lib/l10n/types'
-import { SE_APARTMENT_TEMPLATE } from './formTemplate/data/SE_APARTMENT'
-import { SE_CAR_TEMPLATE } from './formTemplate/data/SE_CAR'
-import { FormTemplate } from './formTemplate/FormTemplate.types'
 import { ProductNames } from './mockProductService'
 
 export type CmsProduct = {
@@ -9,7 +6,6 @@ export type CmsProduct = {
   displayName: string
   slug: string
   pageTitle: string
-  form: FormTemplate
   product: ProductNames
 }
 
@@ -20,7 +16,6 @@ const CMS_PRODUCTS: CmsProduct[] = [
     slug: 'home',
     pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
     product: ProductNames.SE_HOME,
-    form: SE_APARTMENT_TEMPLATE,
   },
   {
     market: MarketLabel.SE,
@@ -28,7 +23,6 @@ const CMS_PRODUCTS: CmsProduct[] = [
     slug: 'car',
     pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
     product: ProductNames.SE_CAR,
-    form: SE_CAR_TEMPLATE,
   },
   {
     market: MarketLabel.SE,
@@ -36,7 +30,6 @@ const CMS_PRODUCTS: CmsProduct[] = [
     slug: 'home-accident',
     pageTitle: 'Home & accident insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
     product: ProductNames.SE_ESSENTIAL_BUNDLE,
-    form: SE_APARTMENT_TEMPLATE,
   },
 ]
 
