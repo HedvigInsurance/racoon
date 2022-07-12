@@ -1,11 +1,29 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
-import { Button, ChevronIcon, Heading, LinkButton, Space } from 'ui'
+import { useMemo } from 'react'
+import { ChevronIcon, Heading, LinkButton, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { PageLink } from '@/lib/PageLink'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
 
-export const CheckoutPaymentPage = () => {
+export const CheckoutPaymentPage = ({
+  currency,
+  cost,
+  products,
+  campaigns,
+}: CheckoutPaymentPageProps) => {
+  const { currencyLocale } = useCurrentLocale()
+  const currencyFormatter = useMemo(() => {
+    return new Intl.NumberFormat(currencyLocale, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+  }, [currencyLocale, currency])
+
   return (
     <div>
       <Space y={3}>
@@ -24,21 +42,46 @@ export const CheckoutPaymentPage = () => {
             <Space y={0.5}>
               <Collapsible>
                 <CollapsibleContent>
-                  <Space y={0.5}>
-                    <DataRow>
-                      <Text size="m">Subtotal</Text>
-                      <Text size="m">299 kr</Text>
-                    </DataRow>
+                  <Space y={1.5}>
+                    <Space y={0.5}>
+                      <DataRow>
+                        <Text size="m">Subtotal</Text>
+                        <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+                      </DataRow>
+                      {products.map((product) => (
+                        <DataRow key={product.name}>
+                          <Text size="m">{product.name}</Text>
+                          <Text size="m">{currencyFormatter.format(product.cost)}</Text>
+                        </DataRow>
+                      ))}
+                    </Space>
+                    {campaigns ? (
+                      <Space y={0.5}>
+                        <Text size="m">Discount</Text>
+                        {campaigns.map((campaign) => (
+                          <DataRow key={campaign.name}>
+                            <Text size="m">{campaign.name}</Text>
+                            <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
+                          </DataRow>
+                        ))}
+                      </Space>
+                    ) : null}
                     <CollapsibleDivider />
                   </Space>
                 </CollapsibleContent>
                 <CollapsibleHeader>
                   <Text size="l">Total</Text>
-                  <SpaceFlex space={0.5}>
-                    <Text size="l">299 kr/mo.</Text>
-                    <RadixCollapsible.Trigger>
+                  <SpaceFlex x={0.25}>
+                    {cost.crossOut ? (
+                      <CrossOutText>
+                        <Text size="l">{currencyFormatter.format(cost.crossOut)}</Text>
+                      </CrossOutText>
+                    ) : null}
+
+                    <SpaceFlex x={0.5}>
+                      <Text size="l">{currencyFormatter.format(cost.total)}/mo.</Text>
                       <TriggerIcon size="1rem" />
-                    </RadixCollapsible.Trigger>
+                    </SpaceFlex>
                   </SpaceFlex>
                 </CollapsibleHeader>
               </Collapsible>
@@ -90,14 +133,30 @@ const Collapsible = styled(RadixCollapsible.Root)(({ theme }) => ({
   padding: theme.space[3],
 }))
 
-const DataRow = styled.div(({ theme }) => ({
+const DataRowStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+})
+
+const DataRow = styled.div(({ theme }) => ({}), DataRowStyles)
+
+const CollapsibleHeader = styled(RadixCollapsible.Trigger)(
+  ({ theme }) => ({
+    paddingRight: theme.space[1],
+    width: '100%',
+  }),
+  DataRowStyles,
+)
+
+const CrossOutText = styled.p(({ theme }) => ({
+  color: theme.colors.gray500,
+  textDecoration: 'line-through',
 }))
 
-const CollapsibleHeader = styled(DataRow)(({ theme }) => ({
-  paddingRight: theme.space[1],
+const SpaceFlex = styled(Space)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
 }))
 
 const TriggerIcon = styled(ChevronIcon)({

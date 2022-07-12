@@ -19,20 +19,16 @@ export const CheckoutPage = () => {
 
         <PageHeader>
           <Heading headingLevel="h1" colorVariant="dark" variant="m">
-            Account details
+            Contact details
           </Heading>
         </PageHeader>
 
         <Main>
-          <Space y={0.5}>
-            <Heading headingLevel="h1" colorVariant="dark" variant="s">
-              Contact information
-            </Heading>
-
-            <Space y={1}>
-              <InputField label="Personal number" name="personalNumber" required />
-              <InputField label="Email" name="email" type="email" required />
-            </Space>
+          <Space y={1}>
+            <InputField label="Personal number" name="personalNumber" required />
+            <InputField label="First name" name="firstName" required />
+            <InputField label="Last name" name="lastName" required />
+            <InputField label="Email" name="email" type="email" required />
           </Space>
         </Main>
       </Space>
