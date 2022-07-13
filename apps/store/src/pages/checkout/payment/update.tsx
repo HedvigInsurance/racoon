@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { CheckoutPaymentPageProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
-import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
+import { CheckoutUpdatePaymentPage } from '@/components/CheckoutPaymentPage/CheckoutUpdatePaymentPage'
 import { CheckoutService } from '@/services/checkout/CheckoutService'
 import { CookiePersister } from '@/services/checkout/CookiePersister'
 
@@ -21,8 +21,8 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageProps> = 
   }
 }
 
-const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageProps> = (props) => {
-  return <CheckoutPaymentPageAdyen {...props} />
+const NextCheckoutUpdatePaymentPage: NextPage<CheckoutPaymentPageProps> = (props) => {
+  return <CheckoutUpdatePaymentPage {...props} />
 }
 
-export default NextCheckoutPaymentPageAdyen
+export default NextCheckoutUpdatePaymentPage
