@@ -1,5 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { getCookie, setCookies } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
 import { useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n'
 import { QuoteCart } from '@/services/quote-cart'
@@ -24,7 +24,7 @@ export const useSetupQuoteCartEffect = () => {
       if (quoteCartId === undefined) {
         try {
           const newQuoteCartId = await QuoteCart.create({ market: apiMarket, locale: isoLocale })
-          setCookies(QuoteCart.COOKIE_KEY, newQuoteCartId)
+          setCookie(QuoteCart.COOKIE_KEY, newQuoteCartId)
         } catch (error) {
           datadogRum.addError(error, { apiMarket, isoLocale })
         }
