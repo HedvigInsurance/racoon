@@ -4,21 +4,12 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
   layout: {
     sections: [
       {
-        id: 'autofill',
-        title: { key: 'Your info' },
-        fields: [
-          { name: 'isMover', columnSpan: 6 },
-          { name: 'personalNumber', columnSpan: 6 },
-        ],
-        submit: { key: 'Next step' },
-      },
-      {
         id: 'your-home',
         title: { key: 'Your home' },
         fields: [
           { name: 'street', columnSpan: 6 },
-          { name: 'livingSpace', columnSpan: 3 },
           { name: 'zipCode', columnSpan: 3 },
+          { name: 'livingSpace', columnSpan: 3 },
           { name: 'subType', columnSpan: 6 },
         ],
         submit: { key: 'Next step' },
@@ -36,29 +27,21 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
   },
 
   fields: {
-    isMover: {
-      type: 'radio',
-      required: true,
-      defaultValue: 'no',
-      options: [
-        {
-          label: { key: 'Where I live' },
-          value: 'no',
-        },
-        {
-          label: { key: "Where I'm moving" },
-          value: 'yes',
-        },
-      ],
+    street: {
+      title: { key: 'Address' },
     },
-    personalNumber: {
-      type: 'text',
-      title: { key: 'Autofill with personal number (Optional)' },
+    zipCode: {
+      title: { key: 'Postal code' },
+    },
+    livingSpace: {
+      title: { key: 'Apartment size' },
     },
     birthDate: {
+      title: { key: 'Your birthdate' },
       type: 'date',
     },
     subType: {
+      title: { key: 'Ownership type' },
       type: 'radio',
       options: [
         {
@@ -72,6 +55,7 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
       ],
     },
     numberCoInsured: {
+      title: { key: 'No. of people' },
       defaultValue: 1,
     },
   },
