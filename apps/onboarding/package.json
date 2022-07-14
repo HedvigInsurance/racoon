@@ -21,8 +21,8 @@
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@datadog/browser-rum": "^4.7.1",
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": "11.9.3",
+    "@emotion/styled": "11.9.3",
     "@radix-ui/react-radio-group": "^0.1.5",
     "classnames": "^2.3.1",
     "cookies-next": "2.1.1",
