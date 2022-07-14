@@ -1,9 +1,12 @@
+import styled from '@emotion/styled'
 import { forwardRef } from 'react'
 import { Button, Space } from 'ui'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import * as Accordion from './Accordion'
 import { FormGroup } from './FormSection'
+import { StepIconDefault } from './StepIconDefault'
+import { StepIconValid } from './StepIconValid'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type OnSubmitParams = { data: Record<string, string> }
@@ -41,9 +44,13 @@ export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>
           {template.sections.map(({ id, title, submit, fields, state }, index) => (
             <Accordion.Item key={id} value={id}>
               <Accordion.Header>
-                <SpaceFlex space={1}>
-                  {state === 'VALID' ? '✅' : state === 'INVALID' ? '❌' : `${index + 1}.`}
-                  <h2>{translateTextLabel(title)}</h2>
+                <SpaceFlex space={1} align="center">
+                  {state === 'VALID' ? (
+                    <StepIconValid />
+                  ) : (
+                    <StepIconDefault>{index + 1}</StepIconDefault>
+                  )}
+                  <Title>{translateTextLabel(title)}</Title>
                 </SpaceFlex>
                 <Accordion.Trigger />
               </Accordion.Header>
@@ -67,3 +74,8 @@ export const PriceCalculator = forwardRef<HTMLFormElement, PriceCalculatorProps>
 )
 
 PriceCalculator.displayName = 'PriceCalculator'
+
+const Title = styled.h2(({ theme }) => ({
+  fontSize: theme.fontSizes[2],
+  color: theme.colors.gray900,
+}))
