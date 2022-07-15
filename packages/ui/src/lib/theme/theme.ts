@@ -1,4 +1,5 @@
-import { colorsV3, fonts as hedvigFonts } from '@hedviginsurance/brand'
+import { colorsV3 } from '@hedviginsurance/brand'
+import { fonts, fontSizes } from './typography'
 
 const colors: Record<string, string> = {
   ...colorsV3,
@@ -6,29 +7,6 @@ const colors: Record<string, string> = {
 colors.dark = colors.gray900
 colors.light = colors.gray100
 colors.lavender = colors.purple500
-
-const fonts: Record<string, string> = {
-  standard: `'${hedvigFonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
-  small: `'${hedvigFonts.HEDVIG_LETTERS_SMALL}', serif`,
-  big: `'${hedvigFonts.HEDVIG_LETTERS_BIG}', serif`,
-}
-fonts.body = fonts.standard
-fonts.heading = fonts.standard
-
-const fontSizes = [
-  '0.75rem',
-  '0.875rem',
-  '1rem',
-  '1.125rem',
-  '1.25rem',
-  '1.5rem',
-  '2rem',
-  '2.5rem',
-  '3rem',
-  '3.5rem',
-  '4.5rem',
-  '6rem',
-]
 
 const space = [
   0,
