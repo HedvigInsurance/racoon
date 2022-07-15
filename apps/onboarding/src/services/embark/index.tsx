@@ -2,9 +2,9 @@ import { LocaleData } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
-  [MarketLabel.SE]: '',
-  [MarketLabel.DK]: 'onboarding-DK',
-  [MarketLabel.NO]: 'onboarding-NO',
+  [MarketLabel.SE]: process.env.NEXT_PUBLIC_EMBARK_STORY_SE ?? '',
+  [MarketLabel.DK]: process.env.NEXT_PUBLIC_EMBARK_STORY_DK ?? 'onboarding-DK',
+  [MarketLabel.NO]: process.env.NEXT_PUBLIC_EMBARK_STORY_NO ?? 'onboarding-NO',
 }
 
 const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
