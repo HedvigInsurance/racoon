@@ -1,9 +1,17 @@
-import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit } from '@storyblok/react'
+import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
+}
+
+export type StoryblokPageProps = {
+  story: StoryData
+}
+
+export type StoryblokQueryParams = {
+  slug: string[]
 }
 
 export const initStoryblok = () => {

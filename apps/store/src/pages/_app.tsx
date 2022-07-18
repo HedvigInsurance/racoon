@@ -7,7 +7,7 @@ import { GlobalStyles } from '@/lib/GlobalStyles'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { CartContext, useCartContextStore } from '@/services/mockCartService'
-import { initStoryblok } from '@/services/storyblok'
+import { initStoryblok } from '@/services/storyblok/storyblok'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
