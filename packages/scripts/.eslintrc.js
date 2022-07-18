@@ -1,6 +1,7 @@
 module.exports = {
-  extends: ['next/core-web-vitals', 'prettier'],
-  plugins: ['import', 'testing-library', 'jest'],
+  parser: '@typescript-eslint/parser',
+  extends: ['next/core-web-vitals', 'prettier', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
   settings: {
     next: {
       rootDir: ['apps/*/', 'packages/*/'],
