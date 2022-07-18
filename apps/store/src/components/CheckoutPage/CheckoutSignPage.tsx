@@ -2,12 +2,12 @@ import { Button } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 import { CheckoutPageLayout } from './CheckoutPageLayout'
 
-export const CheckoutPage = () => {
+export const CheckoutSignPage = () => {
   return (
-    <form method="post" action={PageLink.apiCheckoutPersonCreate()}>
+    <form method="post" action={PageLink.apiCheckoutPersonSign()}>
       <CheckoutPageLayout>
         <Button type="submit" fullWidth>
-          Continue to payment
+          Sign with BankID
         </Button>
       </CheckoutPageLayout>
     </form>

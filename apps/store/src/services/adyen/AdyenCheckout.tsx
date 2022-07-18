@@ -4,7 +4,11 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import '@adyen/adyen-web/dist/adyen.css'
 
-export const AdyenCheckout = () => {
+type Props = {
+  onSuccess: (paymentConnection: unknown) => void
+}
+
+export const AdyenCheckout = ({ onSuccess }: Props) => {
   const { locale } = useCurrentLocale()
   const paymentContainer = useRef<HTMLDivElement>(null)
   const paymentMethodConfiguration = useAdyenPaymentMethodConfiguration()
@@ -15,6 +19,13 @@ export const AdyenCheckout = () => {
         ...configuration,
         paymentMethodConfiguration,
         locale,
+        onSubmit: (_state: any, dropinComponent: any) => {
+          dropinComponent.setStatus('loading')
+          setTimeout(() => {
+            dropinComponent.setStatus('success', { message: 'Connected!' })
+            onSuccess({ success: true })
+          }, 1000)
+        },
       })
 
       if (paymentContainer.current) {
@@ -27,7 +38,7 @@ export const AdyenCheckout = () => {
     }
 
     createCheckout()
-  }, [locale, paymentMethodConfiguration])
+  }, [locale, paymentMethodConfiguration, onSuccess])
 
   return <div ref={paymentContainer} />
 }

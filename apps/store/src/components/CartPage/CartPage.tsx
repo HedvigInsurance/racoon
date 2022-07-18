@@ -27,6 +27,10 @@ export const CartPage = () => {
           Items in cart: {cart.items.length}, total price: {cart.price}
         </p>
 
+        <footer>
+          <Link href={PageLink.cartReview()}>Check Out</Link>
+        </footer>
+
         <div>
           <Link href={PageLink.store()}>Go to shop</Link>
         </div>
