@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Button, mq, Space } from 'ui'
+import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TickIcon } from './TickIcon'
@@ -25,7 +26,7 @@ export const PriceCard = ({
 }: PriceCardProps) => {
   return (
     <Wrapper y={1}>
-      <Pillow fromColor={fromColor} toColor={toColor} />
+      <CenteredPillow fromColor={fromColor} toColor={toColor} />
 
       <CenteredText>
         <Text size="m">{name}</Text>
@@ -58,19 +59,9 @@ const Wrapper = styled(Space)(({ theme }) => ({
   padding: '1rem',
 }))
 
-type PillowProps = {
-  fromColor: string
-  toColor: string
-}
-
-const Pillow = styled.div<PillowProps>(({ fromColor, toColor }) => ({
-  height: '3.5rem',
-  width: '3.5rem',
-  background: `linear-gradient(180deg, ${fromColor} 0%, ${toColor} 100%)`,
-  borderRadius: 12,
-  backgroundClip: 'padding-box',
+const CenteredPillow = styled(Pillow)({
   margin: '0 auto',
-}))
+})
 
 const CustomButton = styled(Button)(({ theme }) => ({
   ':disabled': {
