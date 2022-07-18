@@ -1,16 +1,13 @@
-import { getStoryblokApi, StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { getAllLinks, getStoryBySlug } from '@/services/storyblok'
-
-type Props = {
-  story: StoryData
-}
-
-type Params = {
-  slug: string[]
-}
+import {
+  getAllLinks,
+  getStoryBySlug,
+  StoryblokPageProps,
+  StoryblokQueryParams,
+} from '@/services/storyblok/storyblok'
 
 type Path = {
   params: {
@@ -18,7 +15,7 @@ type Path = {
   }
 }
 
-const Page: NextPageWithLayout<Props> = ({ story: initialStory }) => {
+const Page: NextPageWithLayout<StoryblokPageProps> = ({ story: initialStory }) => {
   const story = useStoryblokState(initialStory)
   return (
     <>
@@ -32,7 +29,10 @@ const Page: NextPageWithLayout<Props> = ({ story: initialStory }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<Props, Params> = async ({ params, preview }) => {
+export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryParams> = async ({
+  params,
+  preview,
+}) => {
   const slug = params?.slug ? params.slug.join('/') : 'home'
   const story = await getStoryBySlug(slug, preview)
 

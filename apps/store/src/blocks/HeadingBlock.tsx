@@ -1,10 +1,15 @@
 import { storyblokEditable } from '@storyblok/react'
-import { SbBaseBlockProps } from '@/services/storyblok'
+import { Heading } from 'ui'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type HeadingBlockProps = SbBaseBlockProps<{
   text: string
 }>
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
-  return <h2 {...storyblokEditable(blok)}>{blok.text}</h2>
+  return (
+    <Heading headingLevel="h2" colorVariant="dark" variant="m" {...storyblokEditable(blok)}>
+      {blok.text}
+    </Heading>
+  )
 }
