@@ -1,0 +1,418 @@
+#
+# GLOBAL
+#
+
+type Query {
+  _empty: String
+}
+
+type Mutation {
+  _empty: String
+}
+
+type Product {
+  id: ID!
+  title: String!
+  variants: [ProductVariant!]!
+}
+
+type ProductVariant {
+  id: ID!
+  title: String!
+  product: Product!
+}
+
+type Money {
+  amount: Int!
+  currencyCode: CurrencyCode!
+}
+
+"""
+Represents an ISO 8601-encoded date and time string.
+For example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is represented as "2019-09-07T15:50:00Z".
+"""
+scalar DateTime
+
+"""
+A JSON object.
+"""
+scalar JSON
+
+"""
+The three-letter currency codes that represent the world currencies used in stores.
+These include standard ISO 4217 codes, legacy codes, and non-standard codes.
+"""
+enum CurrencyCode {
+  "Swedish Kronor (SEK)."
+  SEK
+  "Danish Kroner (DKK)."
+  DKK
+  "Norwegian Kroner (NOK)."
+  NOK
+}
+
+enum CountryCode {
+  SE
+  DK
+  NO
+}
+
+#
+# CART
+#
+
+extend type Query {
+  cart(id: ID!): Cart
+}
+
+extend type Mutation {
+  cartCreate(input: CartCreateInput!): CartCreatePayload!
+  cartLinesAdd(cartId: ID!, lineIds: [ID!]!): CartLinesAddPayload!
+  cartLinesRemove(cartId: ID!, lineIds: [ID!]!): CartLinesRemovePayload!
+}
+
+type Cart {
+  id: ID!
+  buyerIdentity: CartBuyerIdentity!
+
+  """
+  Explanation: https://docs.drupalcommerce.org/commerce1/user-guide/shopping-cart/shopping-carts-orders-and-line-items
+  """
+  lines: [CartLine!]!
+}
+
+input CartCreateInput {
+  buyerIdentity: CartBuyerIdentityInput!
+}
+
+input CartBuyerIdentityInput {
+  countryCode: CountryCode!
+}
+
+type CartBuyerIdentity {
+  countryCode: CountryCode!
+}
+
+type CartCreatePayload {
+  cart: Cart
+  userErrors: [CartUserError!]!
+}
+
+type CartLinesAddPayload {
+  cart: Cart
+  userErrors: [CartUserError!]!
+}
+
+type CartLinesRemovePayload {
+  cart: Cart
+  userErrors: [CartUserError!]!
+}
+
+type CartUserError {
+  "The error code."
+  code: CartErrorCode
+  "The path to the input field that caused the error."
+  field: [String!]
+  "The error message."
+  message: String!
+}
+
+enum CartErrorCode {
+  INVALID
+}
+
+type CartLine {
+  id: ID!
+  variant: ProductVariant!
+  price: Money!
+}
+
+#
+# SESSION
+#
+
+extend type Query {
+  session(id: ID!): Session
+}
+
+extend type Mutation {
+  session: SessionMutations
+}
+
+type SessionMutations {
+  "Creates a new session."
+  create(input: SessionCreateInput!): SessionCreatePayload!
+  dataUpdate(sessionId: ID!, data: JSON!): SessionDataUpdatePayload!
+  priceCreate(sessionId: ID!, productId: ID!): SessionPriceCreatePayload!
+}
+
+type Session {
+  id: ID!
+  "Submitted user form data."
+  data: JSON!
+}
+
+input SessionCreateInput {
+  countryCode: CountryCode!
+}
+
+type SessionCreatePayload {
+  "The new session object."
+  session: Session
+  userErrors: [SessionUserError!]!
+}
+
+type SessionPriceCreatePayload {
+  "The new session object."
+  session: Session
+  price: SessionPrice
+  userErrors: [SessionUserError!]!
+}
+
+type SessionDataUpdatePayload {
+  "The new session object."
+  session: Session
+  userErrors: [SessionUserError!]!
+}
+
+type SessionUserError {
+  "The error code."
+  code: SessionErrorCode
+  "The path to the input field that caused the error."
+  field: [String!]
+  "The error message."
+  message: String!
+}
+
+enum SessionErrorCode {
+  INVALID
+}
+
+type SessionPrice {
+  lines: [SessionPriceLine!]!
+}
+
+type SessionPriceLine {
+  id: ID!
+  variant: ProductVariant!
+  price: Money!
+}
+
+#
+# CHECKOUT
+#
+
+extend type Query {
+  checkout(id: ID!): Checkout
+}
+
+extend type Mutation {
+  "Creates a new checkout."
+  checkoutCreate(input: CheckoutCreateInput!): CheckoutCreatePayload!
+  checkoutPersonCreate(
+    checkoutId: ID!
+    person: CheckoutPersonCreateInput!
+  ): CheckoutPersonCreatePayload!
+  checkoutCompleteFree(checkoutId: ID!): CheckoutCompleteFreePayload!
+  checkoutCompleteWithPayment(
+    checkout: ID!
+    paymentConnectionId: ID!
+  ): CheckoutCompleteWithPaymentPayload!
+}
+
+input CheckoutCreateInput {
+  buyerIdentity: CheckoutBuyerIdentityInput!
+}
+
+input CheckoutBuyerIdentityInput {
+  countryCode: CountryCode!
+}
+
+type CheckoutCreatePayload {
+  "The new checkout object."
+  checkout: Checkout
+  "The list of errors that occurred from executing the mutation."
+  userErrors: [CheckoutUserError!]!
+}
+
+"""
+Represents an error that happens during execution of a checkout mutation.
+"""
+type CheckoutUserError {
+  "The error code."
+  code: CheckoutErrorCode
+  "The path to the input field that caused the error."
+  field: [String!]
+  "The error message."
+  message: String!
+}
+
+"""
+Possible error codes that can be returned by CheckoutUserError.
+"""
+enum CheckoutErrorCode {
+  "The input value is invalid."
+  INVALID
+}
+
+"""
+A container for all the information required to checkout items and pay.
+"""
+type Checkout {
+  id: ID!
+
+  "The date and time when the checkout was completed."
+  completedAt: DateTime
+  "The date and time when the checkout was created."
+  createdAt: DateTime!
+
+  "The currency code for the checkout."
+  currencyCode: CurrencyCode!
+
+  buyerIdentity: CheckoutBuyerIdentity!
+}
+
+type CheckoutCompleteFreePayload {
+  checkout: Checkout
+  userErrors: [CheckoutUserError!]!
+  memberAccessToken: String
+}
+
+type CheckoutCompleteWithPaymentPayload {
+  checkout: Checkout
+  userErrors: [CheckoutUserError!]!
+  memberAccessToken: String
+}
+
+input CheckoutPersonCreateInput {
+  "The customer's email."
+  email: String!
+  firstName: String!
+  lastName: String!
+  personalNumber: String!
+}
+
+type CheckoutPersonCreatePayload {
+  checkout: Checkout
+  userErrors: [CheckoutUserError!]!
+}
+
+type CheckoutPerson {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  personalNumber: String!
+}
+
+"""
+The identity of the customer associated with the checkout.
+"""
+type CheckoutBuyerIdentity {
+  """
+  The code designating a country/region, following ISO 3166-1 alpha-2 guidelines.
+  """
+  countryCode: CountryCode!
+
+  person: CheckoutPerson
+}
+
+#
+# PAYMENT CONNECTION
+#
+
+extend type Query {
+  paymentConnection(id: ID!): PaymentConnection
+}
+
+extend type Mutation {
+  paymentConnectionCreate(input: PaymentConnectionCreateInput!): PaymentConnectionCreatePayload!
+  paymentConnectionSubmitRedirection(
+    paymentConnectionId: ID!
+    input: PaymentConnectionSubmitRedirectionInput!
+  ): PaymentConnectionSubmitRedirectionPayload!
+  paymentConnectionSubmitAdditionalPaymentDetails(
+    paymentConnectionId: ID!
+    input: PaymentConnectionSubmitAdditionalPaymentDetailsInput!
+  ): PaymentConnectionSubmitAdditionalPaymentDetailsPayload!
+  paymentConnectionRegisterDirectDebit(
+    paymentConnectionId: ID!
+    input: PaymentConnectionRegisterDirectDebitInput!
+  ): PaymentConnectionRegisterDirectDebitPayload!
+}
+
+type PaymentConnection {
+  id: ID!
+  providers: [PaymentConnectionProvider!]!
+}
+
+type PaymentConnectionProviderAdyen {
+  type: PaymentConnectionProviderType
+  paymentMethodsResponse: AdyenPaymentMethodsResponse!
+}
+
+type PaymentConnectionProviderTrustly {
+  type: PaymentConnectionProviderType
+}
+
+union PaymentConnectionProvider = PaymentConnectionProviderAdyen | PaymentConnectionProviderTrustly
+
+scalar AdyenPaymentMethodsResponse
+
+enum PaymentConnectionProviderType {
+  ADYEN
+  TRUSTLY
+}
+
+input PaymentConnectionCreateInput {
+  countryCode: CountryCode!
+}
+
+type PaymentConnectionCreatePayload {
+  paymentConnection: PaymentConnection
+  userErrors: [PaymentConnectionUserError!]!
+}
+
+type PaymentConnectionUserError {
+  "The error code."
+  code: PaymentConnectionErrorCode
+  "The path to the input field that caused the error."
+  field: [String!]
+  "The error message."
+  message: String!
+}
+
+enum PaymentConnectionErrorCode {
+  INVALID
+}
+
+input PaymentConnectionSubmitRedirectionInput {
+  md: String!
+  pares: String!
+}
+
+type PaymentConnectionSubmitRedirectionPayload {
+  paymentConnection: PaymentConnection
+  userErrors: [PaymentConnectionUserError!]!
+}
+
+input PaymentConnectionSubmitAdditionalPaymentDetailsInput {
+  paymentDetailsInput: AdyenPaymentDetailsInput!
+}
+
+scalar AdyenPaymentDetailsInput
+
+type PaymentConnectionSubmitAdditionalPaymentDetailsPayload {
+  paymentConnection: PaymentConnection
+  userErrors: [PaymentConnectionUserError!]!
+}
+
+input PaymentConnectionRegisterDirectDebitInput {
+  successURL: String!
+  failureURL: String!
+}
+
+type PaymentConnectionRegisterDirectDebitPayload {
+  paymentConnection: PaymentConnection
+  userErrors: [PaymentConnectionUserError!]!
+}
