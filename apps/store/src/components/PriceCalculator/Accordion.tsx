@@ -9,9 +9,10 @@ export const Header = styled(Accordion.Header)(({ theme }) => ({
   padding: theme.space[4],
   paddingRight: theme.space[5],
   height: '4rem',
+  borderBottom: '1px solid transparent',
 
   '&[data-state=closed]': {
-    borderBottom: `1px solid ${theme.colors.gray500}`,
+    borderBottomColor: theme.colors.gray500,
   },
 }))
 

@@ -17,6 +17,11 @@ type FetchParams = {
 
 export class FormTemplateService {
   public async fetch({ id }: FetchParams): Promise<FormTemplate | null> {
-    return combineFormTemplate({ schema: SCHEMA[id], uiSchema: UI_SCHEMA[id] })
+    const schema = SCHEMA[id]
+    const uiSchema = UI_SCHEMA[id]
+
+    if (!schema || !uiSchema) return null
+
+    return combineFormTemplate({ schema, uiSchema })
   }
 }
