@@ -19,7 +19,7 @@ export const TestPricePage = ({ template, intent, onSubmit, onReset }: TestPrice
             name="Hedvig Home"
             cost={intent.product?.price}
             currency="SEK"
-            gradient={['#aaa', '#fff']}
+            gradient={['#AAAAAA', '#828282']}
             onClick={() => {}}
           />
         </Section>
