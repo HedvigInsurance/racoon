@@ -40,6 +40,10 @@
       "outputs": [".next/**"],
       "dependsOn": ["^build", "$STORYBLOK_API_KEY", "$STORYBLOK_PREVIEW_SECRET"]
     },
+    "fake-api#build": {
+      "outputs": [".next/**"],
+      "dependsOn": ["^build"]
+    },
     "onboarding#test": {
       "outputs": ["covereage/**"],
       "dependsOn": ["^build"]
