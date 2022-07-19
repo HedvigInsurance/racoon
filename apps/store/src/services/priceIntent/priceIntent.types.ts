@@ -1,3 +1,8 @@
+import type {
+  PriceIntentCreateMutationVariables,
+  PriceIntentDataUpdateMutationVariables,
+} from '@/services/graphql/generated'
+
 export type SaveParams<Data> = { id: string; data: Data }
 
 export interface Persister<Data> {
@@ -13,4 +18,13 @@ export type PriceIntent = {
   id: string
   data: Record<string, string>
   product: null | PriceIntentProduct
+}
+
+export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'>
+export type PriceIntentDataUpdateParams = PriceIntentDataUpdateMutationVariables
+
+export interface SimplePersister {
+  save(id: string): Promise<void>
+  fetch(): Promise<string | null>
+  reset(): Promise<void>
 }

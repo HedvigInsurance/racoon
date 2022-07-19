@@ -1,1 +1,2 @@
-export const COOKIE_KEY_LATEST = '_hv_quote_form_id'
+export const COOKIE_KEY_PRICE_INTENT = '_HEDVIG_PRICE_INTENT'
+export const COOKIE_KEY_SHOP_SESSION = '_HEDVIG_SHOP_SESSION'

@@ -591,6 +591,110 @@ export type SubmitReviewResponse = {
   success: Scalars['Boolean']
 }
 
+export type PriceIntentQueryVariables = Exact<{
+  priceIntentId: Scalars['ID']
+}>
+
+export type PriceIntentQuery = {
+  __typename?: 'Query'
+  priceIntent?: {
+    __typename?: 'PriceIntent'
+    id: string
+    data: any
+    lines?: Array<{
+      __typename?: 'PriceIntentLine'
+      id: string
+      price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+      variant: { __typename?: 'ProductVariant'; id: string; title: string }
+    }> | null
+  } | null
+}
+
+export type PriceIntentCreateMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  productId: Scalars['ID']
+}>
+
+export type PriceIntentCreateMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    create: {
+      __typename?: 'PriceIntentCreatePayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
+export type PriceIntentDataUpdateMutationVariables = Exact<{
+  priceIntentId: Scalars['ID']
+  data: Scalars['JSON']
+}>
+
+export type PriceIntentDataUpdateMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    dataUpdate: {
+      __typename?: 'PriceIntentDataUpdatePayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
+export type PriceIntentFragmentFragment = {
+  __typename?: 'PriceIntent'
+  id: string
+  data: any
+  lines?: Array<{
+    __typename?: 'PriceIntentLine'
+    id: string
+    price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+    variant: { __typename?: 'ProductVariant'; id: string; title: string }
+  }> | null
+}
+
+export type ShopSessionQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
+}>
+
+export type ShopSessionQuery = {
+  __typename?: 'Query'
+  shopSession: { __typename?: 'ShopSession'; id: string }
+}
+
 export type ShopSessionCreateMutationVariables = Exact<{ [key: string]: never }>
 
 export type ShopSessionCreateMutation = {
@@ -604,6 +708,72 @@ export type ShopSessionCreateMutation = {
   } | null
 }
 
+export const PriceIntentFragmentFragmentDoc = gql`
+  fragment PriceIntentFragment on PriceIntent {
+    id
+    data
+    lines {
+      id
+      price {
+        amount
+        currencyCode
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+`
+export const PriceIntentDocument = gql`
+  query PriceIntent($priceIntentId: ID!) {
+    priceIntent(id: $priceIntentId) {
+      ...PriceIntentFragment
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export const PriceIntentCreateDocument = gql`
+  mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
+    priceIntent {
+      create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export const PriceIntentDataUpdateDocument = gql`
+  mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: JSON!) {
+    priceIntent {
+      dataUpdate(priceIntentId: $priceIntentId, data: $data) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export const ShopSessionDocument = gql`
+  query ShopSession($shopSessionId: ID!) {
+    shopSession(id: $shopSessionId) {
+      id
+    }
+  }
+`
 export const ShopSessionCreateDocument = gql`
   mutation ShopSessionCreate {
     shopSession {
@@ -618,6 +788,40 @@ export const ShopSessionCreateDocument = gql`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    PriceIntent(variables: PriceIntentQueryVariables, options?: C): Promise<PriceIntentQuery> {
+      return requester<PriceIntentQuery, PriceIntentQueryVariables>(
+        PriceIntentDocument,
+        variables,
+        options,
+      )
+    },
+    PriceIntentCreate(
+      variables: PriceIntentCreateMutationVariables,
+      options?: C,
+    ): Promise<PriceIntentCreateMutation> {
+      return requester<PriceIntentCreateMutation, PriceIntentCreateMutationVariables>(
+        PriceIntentCreateDocument,
+        variables,
+        options,
+      )
+    },
+    PriceIntentDataUpdate(
+      variables: PriceIntentDataUpdateMutationVariables,
+      options?: C,
+    ): Promise<PriceIntentDataUpdateMutation> {
+      return requester<PriceIntentDataUpdateMutation, PriceIntentDataUpdateMutationVariables>(
+        PriceIntentDataUpdateDocument,
+        variables,
+        options,
+      )
+    },
+    ShopSession(variables: ShopSessionQueryVariables, options?: C): Promise<ShopSessionQuery> {
+      return requester<ShopSessionQuery, ShopSessionQueryVariables>(
+        ShopSessionDocument,
+        variables,
+        options,
+      )
+    },
     ShopSessionCreate(
       variables?: ShopSessionCreateMutationVariables,
       options?: C,

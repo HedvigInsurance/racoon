@@ -1,33 +1,22 @@
 import { GetServerSidePropsContext } from 'next'
-import { COOKIE_KEY_LATEST } from './priceIntent.constants'
-import { Persister, SaveParams } from './priceIntent.types'
+import { SimplePersister } from './priceIntent.types'
 
-export class ServerCookiePersister<Data> implements Persister<Data> {
+export class ServerCookiePersister implements SimplePersister {
   constructor(
+    private readonly cookieKey: string,
     private readonly request: GetServerSidePropsContext['req'],
     private readonly response: GetServerSidePropsContext['res'],
   ) {}
 
-  public async save({ id, data }: SaveParams<Data>) {
-    this.response.setHeader('Set-Cookie', [
-      `${id}=${JSON.stringify(data)}; Path=/`,
-      `${COOKIE_KEY_LATEST}=${id}; Path=/`,
-    ])
+  public async save(id: string) {
+    this.response.setHeader('Set-Cookie', [`${this.cookieKey}=${id}; Path=/`])
   }
 
-  public async fetch(id: string) {
-    const json = this.request.cookies[id]
-    return json ? (JSON.parse(json) as Data) : null
-  }
-
-  public async fetchLatest() {
-    const dataId = this.request.cookies[COOKIE_KEY_LATEST]
-    return dataId ?? null
+  public async fetch() {
+    return this.request.cookies[this.cookieKey] ?? null
   }
 
   public async reset() {
-    const dataId = await this.fetchLatest()
-    if (dataId) this.response.setHeader('Set-Cookie', [`${dataId}=; Max-Age=0`])
-    this.response.setHeader('Set-Cookie', [`${COOKIE_KEY_LATEST}=; Max-Age=0`])
+    this.response.setHeader('Set-Cookie', [`${this.cookieKey}=; Max-Age=0`])
   }
 }

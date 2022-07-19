@@ -592,6 +592,110 @@ export type SubmitReviewResponse = {
   success: Scalars['Boolean']
 }
 
+export type PriceIntentQueryVariables = Exact<{
+  priceIntentId: Scalars['ID']
+}>
+
+export type PriceIntentQuery = {
+  __typename?: 'Query'
+  priceIntent?: {
+    __typename?: 'PriceIntent'
+    id: string
+    data: any
+    lines?: Array<{
+      __typename?: 'PriceIntentLine'
+      id: string
+      price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+      variant: { __typename?: 'ProductVariant'; id: string; title: string }
+    }> | null
+  } | null
+}
+
+export type PriceIntentCreateMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  productId: Scalars['ID']
+}>
+
+export type PriceIntentCreateMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    create: {
+      __typename?: 'PriceIntentCreatePayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
+export type PriceIntentDataUpdateMutationVariables = Exact<{
+  priceIntentId: Scalars['ID']
+  data: Scalars['JSON']
+}>
+
+export type PriceIntentDataUpdateMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    dataUpdate: {
+      __typename?: 'PriceIntentDataUpdatePayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
+export type PriceIntentFragmentFragment = {
+  __typename?: 'PriceIntent'
+  id: string
+  data: any
+  lines?: Array<{
+    __typename?: 'PriceIntentLine'
+    id: string
+    price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+    variant: { __typename?: 'ProductVariant'; id: string; title: string }
+  }> | null
+}
+
+export type ShopSessionQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
+}>
+
+export type ShopSessionQuery = {
+  __typename?: 'Query'
+  shopSession: { __typename?: 'ShopSession'; id: string }
+}
+
 export type ShopSessionCreateMutationVariables = Exact<{ [key: string]: never }>
 
 export type ShopSessionCreateMutation = {
@@ -605,6 +709,227 @@ export type ShopSessionCreateMutation = {
   } | null
 }
 
+export const PriceIntentFragmentFragmentDoc = gql`
+  fragment PriceIntentFragment on PriceIntent {
+    id
+    data
+    lines {
+      id
+      price {
+        amount
+        currencyCode
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+`
+export const PriceIntentDocument = gql`
+  query PriceIntent($priceIntentId: ID!) {
+    priceIntent(id: $priceIntentId) {
+      ...PriceIntentFragment
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+
+/**
+ * __usePriceIntentQuery__
+ *
+ * To run a query within a React component, call `usePriceIntentQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePriceIntentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePriceIntentQuery({
+ *   variables: {
+ *      priceIntentId: // value for 'priceIntentId'
+ *   },
+ * });
+ */
+export function usePriceIntentQuery(
+  baseOptions: Apollo.QueryHookOptions<PriceIntentQuery, PriceIntentQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<PriceIntentQuery, PriceIntentQueryVariables>(PriceIntentDocument, options)
+}
+export function usePriceIntentLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<PriceIntentQuery, PriceIntentQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<PriceIntentQuery, PriceIntentQueryVariables>(
+    PriceIntentDocument,
+    options,
+  )
+}
+export type PriceIntentQueryHookResult = ReturnType<typeof usePriceIntentQuery>
+export type PriceIntentLazyQueryHookResult = ReturnType<typeof usePriceIntentLazyQuery>
+export type PriceIntentQueryResult = Apollo.QueryResult<PriceIntentQuery, PriceIntentQueryVariables>
+export const PriceIntentCreateDocument = gql`
+  mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
+    priceIntent {
+      create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export type PriceIntentCreateMutationFn = Apollo.MutationFunction<
+  PriceIntentCreateMutation,
+  PriceIntentCreateMutationVariables
+>
+
+/**
+ * __usePriceIntentCreateMutation__
+ *
+ * To run a mutation, you first call `usePriceIntentCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePriceIntentCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [priceIntentCreateMutation, { data, loading, error }] = usePriceIntentCreateMutation({
+ *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function usePriceIntentCreateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PriceIntentCreateMutation,
+    PriceIntentCreateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<PriceIntentCreateMutation, PriceIntentCreateMutationVariables>(
+    PriceIntentCreateDocument,
+    options,
+  )
+}
+export type PriceIntentCreateMutationHookResult = ReturnType<typeof usePriceIntentCreateMutation>
+export type PriceIntentCreateMutationResult = Apollo.MutationResult<PriceIntentCreateMutation>
+export type PriceIntentCreateMutationOptions = Apollo.BaseMutationOptions<
+  PriceIntentCreateMutation,
+  PriceIntentCreateMutationVariables
+>
+export const PriceIntentDataUpdateDocument = gql`
+  mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: JSON!) {
+    priceIntent {
+      dataUpdate(priceIntentId: $priceIntentId, data: $data) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export type PriceIntentDataUpdateMutationFn = Apollo.MutationFunction<
+  PriceIntentDataUpdateMutation,
+  PriceIntentDataUpdateMutationVariables
+>
+
+/**
+ * __usePriceIntentDataUpdateMutation__
+ *
+ * To run a mutation, you first call `usePriceIntentDataUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePriceIntentDataUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [priceIntentDataUpdateMutation, { data, loading, error }] = usePriceIntentDataUpdateMutation({
+ *   variables: {
+ *      priceIntentId: // value for 'priceIntentId'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function usePriceIntentDataUpdateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PriceIntentDataUpdateMutation,
+    PriceIntentDataUpdateMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<PriceIntentDataUpdateMutation, PriceIntentDataUpdateMutationVariables>(
+    PriceIntentDataUpdateDocument,
+    options,
+  )
+}
+export type PriceIntentDataUpdateMutationHookResult = ReturnType<
+  typeof usePriceIntentDataUpdateMutation
+>
+export type PriceIntentDataUpdateMutationResult =
+  Apollo.MutationResult<PriceIntentDataUpdateMutation>
+export type PriceIntentDataUpdateMutationOptions = Apollo.BaseMutationOptions<
+  PriceIntentDataUpdateMutation,
+  PriceIntentDataUpdateMutationVariables
+>
+export const ShopSessionDocument = gql`
+  query ShopSession($shopSessionId: ID!) {
+    shopSession(id: $shopSessionId) {
+      id
+    }
+  }
+`
+
+/**
+ * __useShopSessionQuery__
+ *
+ * To run a query within a React component, call `useShopSessionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopSessionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShopSessionQuery({
+ *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
+ *   },
+ * });
+ */
+export function useShopSessionQuery(
+  baseOptions: Apollo.QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ShopSessionQuery, ShopSessionQueryVariables>(ShopSessionDocument, options)
+}
+export function useShopSessionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ShopSessionQuery, ShopSessionQueryVariables>(
+    ShopSessionDocument,
+    options,
+  )
+}
+export type ShopSessionQueryHookResult = ReturnType<typeof useShopSessionQuery>
+export type ShopSessionLazyQueryHookResult = ReturnType<typeof useShopSessionLazyQuery>
+export type ShopSessionQueryResult = Apollo.QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
 export const ShopSessionCreateDocument = gql`
   mutation ShopSessionCreate {
     shopSession {

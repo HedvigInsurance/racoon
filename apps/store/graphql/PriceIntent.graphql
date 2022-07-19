@@ -1,0 +1,5 @@
+query PriceIntent($priceIntentId: ID!) {
+  priceIntent(id: $priceIntentId) {
+    ...PriceIntentFragment
+  }
+}

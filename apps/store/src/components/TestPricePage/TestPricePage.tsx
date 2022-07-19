@@ -1,33 +1,27 @@
 import styled from '@emotion/styled'
-import { Button, Space } from 'ui'
-import { PriceCalculator } from '../PriceCalculator/PriceCalculator'
-import { PriceCard } from '../PriceCard/PriceCard'
+import { Space } from 'ui'
+import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { TestPricePageProps } from './TestPricePage.types'
 
 const Section = styled.div(({ theme }) => ({
   padding: theme.space[4],
 }))
 
-export const TestPricePage = ({ template, intent, onSubmit, onReset }: TestPricePageProps) => {
+export const TestPricePage = ({ template, product }: TestPricePageProps) => {
   return (
     <>
       <Space y={3}>
-        <PriceCalculator template={template} onSubmit={onSubmit} />
+        <PriceCalculator template={template} />
 
         <Section>
           <PriceCard
-            name="Hedvig Home"
-            cost={intent.product?.price}
-            currency="SEK"
+            name={product.name}
+            cost={product.price}
+            currency={product.currentCode}
             gradient={['#AAAAAA', '#828282']}
             onClick={() => {}}
           />
-        </Section>
-
-        <Section>
-          <Button onClick={onReset} fullWidth>
-            Reset
-          </Button>
         </Section>
       </Space>
     </>
