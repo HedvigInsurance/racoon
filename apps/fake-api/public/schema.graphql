@@ -58,6 +58,44 @@ enum CountryCode {
 }
 
 #
+# SHOP SESSION
+#
+
+extend type Query {
+  shopSession(id: ID!): ShopSession!
+}
+
+type ShopSession {
+  id: ID!
+}
+
+extend type Mutation {
+  shopSession: ShopSessionMutations
+}
+
+type ShopSessionMutations {
+  create: ShopSessionCreatePayload!
+}
+
+type ShopSessionCreatePayload {
+  shopSession: ShopSession
+  userErrors: [ShopSessionUserError!]
+}
+
+type ShopSessionUserError {
+  "The error code."
+  code: ShopSessionErrorCode
+  "The path to the input field that caused the error."
+  field: [String!]
+  "The error message."
+  message: String!
+}
+
+enum ShopSessionErrorCode {
+  INVALID
+}
+
+#
 # CART
 #
 
@@ -128,74 +166,82 @@ type CartLine {
 }
 
 #
-# SESSION
+# Price Intent
 #
 
 extend type Query {
-  session(id: ID!): Session
+  "Get a price intent by its ID."
+  priceIntent(id: ID!): PriceIntent
 }
 
 extend type Mutation {
-  session: SessionMutations
+  priceIntent: PriceIntentMutations
 }
 
-type SessionMutations {
-  "Creates a new session."
-  create(input: SessionCreateInput!): SessionCreatePayload!
-  dataUpdate(sessionId: ID!, data: JSON!): SessionDataUpdatePayload!
-  priceCreate(sessionId: ID!, productId: ID!): SessionPriceCreatePayload!
+type PriceIntentMutations {
+  "Creates a new price intent."
+  create(input: PriceIntentCreateInput!): PriceIntentCreatePayload!
+  "Updates user form data."
+  dataUpdate(priceIntentId: ID!, data: JSON!): PriceIntentDataUpdatePayload!
+  "Generates line items with price based on user form data."
+  confirm(priceIntentId: ID!): PriceIntentConfirmPayload!
 }
 
-type Session {
+type PriceIntent {
+  "The id of the price intent."
   id: ID!
   "Submitted user form data."
   data: JSON!
+  "Line items added based on the data-field."
+  lines: [PriceIntentLine!]
 }
 
-input SessionCreateInput {
-  countryCode: CountryCode!
+type PriceIntentLine {
+  "The id of the line item, which can be used to add to cart."
+  id: ID!
+  "The relevant product variant (tier)."
+  variant: ProductVariant!
+  "The cost of the product variant."
+  price: Money!
 }
 
-type SessionCreatePayload {
-  "The new session object."
-  session: Session
-  userErrors: [SessionUserError!]!
+input PriceIntentCreateInput {
+  "The current shop session."
+  shopSessionId: ID!
+  "The product to calculate price for."
+  productId: ID!
 }
 
-type SessionPriceCreatePayload {
-  "The new session object."
-  session: Session
-  price: SessionPrice
-  userErrors: [SessionUserError!]!
+type PriceIntentCreatePayload {
+  "The new price intent object."
+  priceIntent: PriceIntent
+
+  "The list of errors that occurred from executing the mutation."
+  userErrors: [PriceIntentUserError!]!
 }
 
-type SessionDataUpdatePayload {
-  "The new session object."
-  session: Session
-  userErrors: [SessionUserError!]!
-}
-
-type SessionUserError {
+type PriceIntentUserError {
   "The error code."
-  code: SessionErrorCode
+  code: PriceIntentErrorCode
   "The path to the input field that caused the error."
   field: [String!]
   "The error message."
   message: String!
 }
 
-enum SessionErrorCode {
+enum PriceIntentErrorCode {
+  "The input value is invalid."
   INVALID
 }
 
-type SessionPrice {
-  lines: [SessionPriceLine!]!
+type PriceIntentDataUpdatePayload {
+  priceIntent: PriceIntent
+  userErrors: [PriceIntentUserError!]!
 }
 
-type SessionPriceLine {
-  id: ID!
-  variant: ProductVariant!
-  price: Money!
+type PriceIntentConfirmPayload {
+  priceIntent: PriceIntent
+  userErrors: [PriceIntentUserError!]!
 }
 
 #
