@@ -74,7 +74,10 @@ const Body3 = styled(TextBase)<StyleProps>(() => ({
   },
 }))
 
-type BodyTexts = Record<BodyTextProps['variant'], StyledComponent<{}, StyleProps, any>>
+type BodyTexts = Record<
+  BodyTextProps['variant'],
+  StyledComponent<Record<string, unknown>, StyleProps, any>
+>
 
 const textLevels: BodyTexts = {
   0: Body0,

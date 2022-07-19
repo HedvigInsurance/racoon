@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ElementType, useContext } from 'react'
+import { useContext } from 'react'
 import { ReactNode } from 'react'
 import { getColor } from '../../lib/theme/theme'
 import { MenuThemeContext } from './Menu'
@@ -12,7 +12,7 @@ export type MenuLinkProps = {
   href?: string
 }
 
-const MenuLinkElement = styled.a<MenuLinkProps>(({ as, theme, color }) => ({
+const MenuLinkElement = styled.a<MenuLinkProps>(({ theme, color }) => ({
   textDecoration: 'none',
   ':focus': {
     outline: `5px auto ${theme.colors.purple700}`,

@@ -1,4 +1,4 @@
-import { StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 export const getStaticPaths: GetStaticPaths = async () => {
   const links = await getAllLinks()
 
-  let paths: Path[] = []
+  const paths: Path[] = []
   Object.keys(links).forEach((linkKey) => {
     if (links[linkKey].is_folder) {
       return

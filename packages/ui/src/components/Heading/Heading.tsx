@@ -84,7 +84,10 @@ const HeadingOverline = styled(HeadingBase)<StyleProps>(() => ({
   },
 }))
 
-type Headings = Record<HeadingProps['variant'], StyledComponent<{}, StyleProps, any>>
+type Headings = Record<
+  HeadingProps['variant'],
+  StyledComponent<Record<string, unknown>, StyleProps, any>
+>
 
 const headings: Headings = {
   xl: HeadingXL,

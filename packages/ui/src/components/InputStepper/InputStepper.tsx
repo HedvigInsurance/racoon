@@ -53,10 +53,10 @@ const StepButton = styled(UnstyledButton)(({ theme }) => ({
   },
 }))
 
-const StepButtonRight = styled(StepButton)(({ theme }) => ({
+const StepButtonRight = styled(StepButton)({
   left: 'auto',
   right: '1rem',
-}))
+})
 
 const StyledInput = styled.input(({ theme }) => ({
   color: theme.colors.gray900,
