@@ -2,11 +2,11 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'next/core-web-vitals',
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'prettier',
+    'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
   ],
-  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint', 'prettier'],
+  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
   settings: {
     next: {
       rootDir: ['apps/*/', 'packages/*/'],
