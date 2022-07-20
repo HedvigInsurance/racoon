@@ -610,6 +610,37 @@ export type PriceIntentQuery = {
   } | null
 }
 
+export type PriceIntentConfirmMutationVariables = Exact<{
+  priceIntentId: Scalars['ID']
+}>
+
+export type PriceIntentConfirmMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    confirm: {
+      __typename?: 'PriceIntentConfirmPayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
 export type PriceIntentCreateMutationVariables = Exact<{
   shopSessionId: Scalars['ID']
   productId: Scalars['ID']
@@ -733,6 +764,23 @@ export const PriceIntentDocument = gql`
   }
   ${PriceIntentFragmentFragmentDoc}
 `
+export const PriceIntentConfirmDocument = gql`
+  mutation PriceIntentConfirm($priceIntentId: ID!) {
+    priceIntent {
+      confirm(priceIntentId: $priceIntentId) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
 export const PriceIntentCreateDocument = gql`
   mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
     priceIntent {
@@ -791,6 +839,16 @@ export function getSdk<C>(requester: Requester<C>) {
     PriceIntent(variables: PriceIntentQueryVariables, options?: C): Promise<PriceIntentQuery> {
       return requester<PriceIntentQuery, PriceIntentQueryVariables>(
         PriceIntentDocument,
+        variables,
+        options,
+      )
+    },
+    PriceIntentConfirm(
+      variables: PriceIntentConfirmMutationVariables,
+      options?: C,
+    ): Promise<PriceIntentConfirmMutation> {
+      return requester<PriceIntentConfirmMutation, PriceIntentConfirmMutationVariables>(
+        PriceIntentConfirmDocument,
         variables,
         options,
       )

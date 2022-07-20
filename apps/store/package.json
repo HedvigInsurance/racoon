@@ -42,6 +42,7 @@
     "@graphql-codegen/typescript-generic-sdk": "2.4.1",
     "@graphql-codegen/typescript-operations": "2.5.1",
     "@graphql-codegen/typescript-react-apollo": "3.3.1",
+    "@mswjs/data": "^0.10.1",
     "@storybook/addon-actions": "6.5.9",
     "@storybook/addon-essentials": "6.5.9",
     "@storybook/addon-links": "6.5.9",

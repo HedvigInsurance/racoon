@@ -10,20 +10,18 @@ const Section = styled.div(({ theme }) => ({
 
 export const TestPricePage = ({ template, product }: TestPricePageProps) => {
   return (
-    <>
-      <Space y={3}>
-        <PriceCalculator template={template} />
+    <Space y={3}>
+      <PriceCalculator template={template} />
 
-        <Section>
-          <PriceCard
-            name={product.name}
-            cost={product.price}
-            currency={product.currentCode}
-            gradient={['#AAAAAA', '#828282']}
-            onClick={() => {}}
-          />
-        </Section>
-      </Space>
-    </>
+      <Section>
+        <PriceCard
+          name={product.name}
+          cost={product.price ?? undefined}
+          currency={product.currencyCode}
+          gradient={product.gradient}
+          onClick={() => {}}
+        />
+      </Section>
+    </Space>
   )
 }

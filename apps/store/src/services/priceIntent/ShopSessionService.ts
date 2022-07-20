@@ -5,7 +5,7 @@ export class ShopSessionService {
   constructor(private readonly persister: SimplePersister) {}
 
   public async fetch() {
-    const shopSessionId = await this.persister.fetch()
+    const shopSessionId = this.persister.fetch()
 
     if (shopSessionId) {
       const response = await graphqlSdk.ShopSession({ shopSessionId })
@@ -21,7 +21,7 @@ export class ShopSessionService {
 
     if (!newSession) throw new Error('Could not create session')
 
-    await this.persister.save(newSession.id)
+    this.persister.save(newSession.id)
 
     return newSession
   }

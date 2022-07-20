@@ -4,15 +4,15 @@ import { SimplePersister } from './priceIntent.types'
 export class CookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}
 
-  public async save(id: string) {
+  public save(id: string) {
     Cookies.set(this.cookieKey, id, { path: '/' })
   }
 
-  public async fetch() {
+  public fetch() {
     return Cookies.get(this.cookieKey) ?? null
   }
 
-  public async reset() {
+  public reset() {
     Cookies.remove(this.cookieKey)
   }
 }
