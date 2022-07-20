@@ -7,6 +7,7 @@ module.exports = {
     'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
   ],
   plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
+  ignorePatterns: ['next.config.js'],
   settings: {
     next: {
       rootDir: ['apps/*/', 'packages/*/'],
