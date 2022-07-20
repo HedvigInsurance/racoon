@@ -4,6 +4,7 @@ import { TestPricePage } from '@/components/TestPricePage/TestPricePage'
 import { prepopulateFormTemplate } from '@/components/TestPricePage/TestPricePage.helpers'
 import { TestPricePageProps } from '@/components/TestPricePage/TestPricePage.types'
 import useRouterRefresh from '@/hooks/useRouterRefresh'
+import { PageLink } from '@/lib/PageLink'
 import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 
@@ -19,8 +20,17 @@ const NextTestPricePage: NextPage<Props> = ({ product, template }) => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-    await fetch(`/api/price/${product.id}`, { method: 'POST', body: JSON.stringify(data) })
+    const { intent, ...data } = Object.fromEntries(formData.entries())
+
+    const url = PageLink.apiPriceProduct({
+      productId: product.id,
+      intent: intent === 'confirm' ? 'confirm' : undefined,
+    })
+    await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    })
     await refreshData()
   }
 
@@ -57,8 +67,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       product: {
         id: productId,
         name: 'Hedvig Home',
-        price: lineItem?.price.amount,
-        currentCode: 'SEK',
+        price: lineItem?.price.amount ?? null,
+        currencyCode: 'SEK',
+        gradient: ['#00BFFF', '#00ff00'],
       },
     },
   }

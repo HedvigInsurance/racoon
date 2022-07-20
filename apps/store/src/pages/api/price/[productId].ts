@@ -1,10 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { PageLink } from '@/lib/PageLink'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { productId } = req.query
-  if (typeof productId !== 'string')
+  const { productId, intent } = req.query
+
+  if (typeof productId !== 'string') {
     return res.status(500).json({ message: 'Product ID is required' })
+  }
 
   const priceIntentService = priceIntentServiceInitServerSide(req, res)
 
@@ -12,7 +15,11 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   await priceIntentService.update({ priceIntentId: priceIntent.id, data: req.body })
 
-  return res.redirect(302, '/price/' + productId)
+  if (intent === 'confirm') {
+    await priceIntentService.confirm(priceIntent.id)
+  }
+
+  return res.redirect(302, PageLink.test_price({ productId }))
 }
 
 export default handler

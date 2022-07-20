@@ -27,6 +27,8 @@ class PriceIntentService {
     const priceIntent = response.priceIntent?.create.priceIntent
     if (!priceIntent) throw new Error('Could not create price intent')
 
+    this.persister.save(priceIntent.id)
+
     return priceIntent
   }
 
@@ -36,7 +38,7 @@ class PriceIntentService {
   }
 
   public async fetch(productId: string) {
-    const priceIntentId = await this.persister.fetch()
+    const priceIntentId = this.persister.fetch()
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
@@ -51,6 +53,13 @@ class PriceIntentService {
     const response = await graphqlSdk.PriceIntentDataUpdate({ priceIntentId, data })
     const priceIntent = response.priceIntent?.dataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
+    return priceIntent
+  }
+
+  public async confirm(priceIntentId: string) {
+    const response = await graphqlSdk.PriceIntentConfirm({ priceIntentId })
+    const priceIntent = response.priceIntent?.confirm.priceIntent
+    if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }
 

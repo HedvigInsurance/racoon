@@ -611,6 +611,37 @@ export type PriceIntentQuery = {
   } | null
 }
 
+export type PriceIntentConfirmMutationVariables = Exact<{
+  priceIntentId: Scalars['ID']
+}>
+
+export type PriceIntentConfirmMutation = {
+  __typename?: 'Mutation'
+  priceIntent?: {
+    __typename?: 'PriceIntentMutations'
+    confirm: {
+      __typename?: 'PriceIntentConfirmPayload'
+      priceIntent?: {
+        __typename?: 'PriceIntent'
+        id: string
+        data: any
+        lines?: Array<{
+          __typename?: 'PriceIntentLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }> | null
+      } | null
+      userErrors: Array<{
+        __typename?: 'PriceIntentUserError'
+        code?: PriceIntentErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
 export type PriceIntentCreateMutationVariables = Exact<{
   shopSessionId: Scalars['ID']
   productId: Scalars['ID']
@@ -769,6 +800,63 @@ export function usePriceIntentLazyQuery(
 export type PriceIntentQueryHookResult = ReturnType<typeof usePriceIntentQuery>
 export type PriceIntentLazyQueryHookResult = ReturnType<typeof usePriceIntentLazyQuery>
 export type PriceIntentQueryResult = Apollo.QueryResult<PriceIntentQuery, PriceIntentQueryVariables>
+export const PriceIntentConfirmDocument = gql`
+  mutation PriceIntentConfirm($priceIntentId: ID!) {
+    priceIntent {
+      confirm(priceIntentId: $priceIntentId) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${PriceIntentFragmentFragmentDoc}
+`
+export type PriceIntentConfirmMutationFn = Apollo.MutationFunction<
+  PriceIntentConfirmMutation,
+  PriceIntentConfirmMutationVariables
+>
+
+/**
+ * __usePriceIntentConfirmMutation__
+ *
+ * To run a mutation, you first call `usePriceIntentConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePriceIntentConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [priceIntentConfirmMutation, { data, loading, error }] = usePriceIntentConfirmMutation({
+ *   variables: {
+ *      priceIntentId: // value for 'priceIntentId'
+ *   },
+ * });
+ */
+export function usePriceIntentConfirmMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PriceIntentConfirmMutation,
+    PriceIntentConfirmMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<PriceIntentConfirmMutation, PriceIntentConfirmMutationVariables>(
+    PriceIntentConfirmDocument,
+    options,
+  )
+}
+export type PriceIntentConfirmMutationHookResult = ReturnType<typeof usePriceIntentConfirmMutation>
+export type PriceIntentConfirmMutationResult = Apollo.MutationResult<PriceIntentConfirmMutation>
+export type PriceIntentConfirmMutationOptions = Apollo.BaseMutationOptions<
+  PriceIntentConfirmMutation,
+  PriceIntentConfirmMutationVariables
+>
 export const PriceIntentCreateDocument = gql`
   mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
     priceIntent {

@@ -1,0 +1,14 @@
+mutation PriceIntentConfirm($priceIntentId: ID!) {
+  priceIntent {
+    confirm(priceIntentId: $priceIntentId) {
+      priceIntent {
+        ...PriceIntentFragment
+      }
+      userErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+}
