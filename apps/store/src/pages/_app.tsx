@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client'
-import { storyblokInit, apiPlugin } from '@storyblok/react'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'

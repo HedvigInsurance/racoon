@@ -2,9 +2,8 @@ import styled from '@emotion/styled'
 import { StoryblokComponent, StoryData } from '@storyblok/react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { ArrowForwardIcon, Heading } from 'ui'
+import { ArrowForwardIcon } from 'ui'
 import { PageLink } from '@/lib/PageLink'
-import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Wrapper = styled.main({
   height: '100vh',

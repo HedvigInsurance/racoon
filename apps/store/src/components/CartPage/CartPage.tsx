@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { Heading, Space } from 'ui'

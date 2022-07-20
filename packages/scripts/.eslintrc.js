@@ -1,6 +1,12 @@
 module.exports = {
-  extends: ['next/core-web-vitals', 'prettier'],
-  plugins: ['import', 'testing-library', 'jest'],
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'next/core-web-vitals',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
+  ],
+  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
   settings: {
     next: {
       rootDir: ['apps/*/', 'packages/*/'],
@@ -37,6 +43,11 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['internal'],
       },
     ],
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   overrides: [
     // Only uses Testing Library lint rules in test files
