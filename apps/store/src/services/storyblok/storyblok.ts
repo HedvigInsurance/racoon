@@ -1,5 +1,7 @@
 import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
+import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
+import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -14,9 +16,30 @@ export type StoryblokQueryParams = {
   slug: string[]
 }
 
+export type StoryblokImage = {
+  alt: string
+  copyright: string
+  fieldtype: 'asset'
+  filename: string
+  focus: string
+  id: number
+  is_external_url: boolean
+  name: string
+  title: string
+}
+
+export type LinkField = {
+  id: string
+  url: string
+  linktype: 'story' | 'url'
+  cached_url: string // use this
+}
+
 export const initStoryblok = () => {
   const components = {
+    button: ButtonBlock,
     heading: HeadingBlock,
+    hero: HeroBlock,
     page: PageBlock,
   }
 
