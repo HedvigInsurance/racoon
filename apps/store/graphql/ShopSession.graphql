@@ -1,0 +1,5 @@
+query ShopSession($shopSessionId: ID!) {
+  shopSession(id: $shopSessionId) {
+    id
+  }
+}

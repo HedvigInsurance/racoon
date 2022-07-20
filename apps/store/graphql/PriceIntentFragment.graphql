@@ -1,0 +1,15 @@
+fragment PriceIntentFragment on PriceIntent {
+  id
+  data
+  lines {
+    id
+    price {
+      amount
+      currencyCode
+    }
+    variant {
+      id
+      title
+    }
+  }
+}

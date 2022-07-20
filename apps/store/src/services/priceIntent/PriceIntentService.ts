@@ -1,67 +1,77 @@
-import { Persister, PriceIntent } from './priceIntent.types'
-import { uuid } from './uuid'
+import { GetServerSidePropsContext } from 'next'
+import { graphqlSdk } from '@/services/graphql/sdk'
+import { CookiePersister } from './CookiePersister'
+import { COOKIE_KEY_PRICE_INTENT, COOKIE_KEY_SHOP_SESSION } from './priceIntent.constants'
+import {
+  PriceIntentCreateParams,
+  PriceIntentDataUpdateParams,
+  SimplePersister,
+} from './priceIntent.types'
+import { ServerCookiePersister } from './ServerCookiePersister'
+import { ShopSessionService } from './ShopSessionService'
 
-type CreateParams = {
-  // can be a bundle/product id
-  productId: string
-}
+class PriceIntentService {
+  constructor(
+    private readonly persister: SimplePersister,
+    private readonly shopSessionService: ShopSessionService,
+  ) {}
 
-type FetchParams = {
-  id: string
-}
+  public async create({ productId }: PriceIntentCreateParams) {
+    const { id: shopSessionId } = await this.shopSessionService.fetch()
 
-type AddDataParams = {
-  id: string
-  data: Record<string, string>
-}
-
-export class PriceIntentService {
-  constructor(private readonly persister: Persister<PriceIntent>) {}
-
-  public async create(_: CreateParams): Promise<PriceIntent> {
-    const newPriceForm: PriceIntent = {
-      id: uuid(),
-      data: {},
-      product: null,
-    }
-
-    this.persister.save({ id: newPriceForm.id, data: newPriceForm })
-
-    return newPriceForm
-  }
-
-  public async fetch({ id }: FetchParams): Promise<PriceIntent | null> {
-    return this.persister.fetch(id)
-  }
-
-  public async fetchLatest() {
-    const formId = await this.persister.fetchLatest()
-    return formId ? this.fetch({ id: formId }) : null
-  }
-
-  public async addData({ id, data }: AddDataParams) {
-    const priceForm = await this.fetch({ id })
-
-    if (!priceForm) {
-      throw new Error(`Price form with id ${id} not found`)
-    }
-
-    const product =
-      'numberCoInsured' in data
-        ? { id: uuid(), price: Math.round(100 + Math.random() * 100) }
-        : null
-
-    this.persister.save({
-      id,
-      data: {
-        ...priceForm,
-        data: { ...priceForm.data, ...data },
-        product,
-      },
+    const response = await graphqlSdk.PriceIntentCreate({
+      shopSessionId,
+      productId,
     })
+
+    const priceIntent = response.priceIntent?.create.priceIntent
+    if (!priceIntent) throw new Error('Could not create price intent')
+
+    return priceIntent
+  }
+
+  private async get(priceIntentId: string) {
+    const { priceIntent } = await graphqlSdk.PriceIntent({ priceIntentId })
+    return priceIntent ?? null
+  }
+
+  public async fetch(productId: string) {
+    const priceIntentId = await this.persister.fetch()
+
+    if (priceIntentId) {
+      const priceIntent = await this.get(priceIntentId)
+      // @TODO: check if price intent is linked to the product
+      if (priceIntent) return priceIntent
+    }
+
+    return await this.create({ productId })
+  }
+
+  public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {
+    const response = await graphqlSdk.PriceIntentDataUpdate({ priceIntentId, data })
+    const priceIntent = response.priceIntent?.dataUpdate.priceIntent
+    if (!priceIntent) throw new Error('Could not update price intent')
+    return priceIntent
   }
 
   public async reset() {
     this.persister.reset()
   }
+}
+
+export const priceIntentServiceInitClientSide = () => {
+  return new PriceIntentService(
+    new CookiePersister(COOKIE_KEY_PRICE_INTENT),
+    new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION)),
+  )
+}
+
+export const priceIntentServiceInitServerSide = (
+  request: GetServerSidePropsContext['req'],
+  response: GetServerSidePropsContext['res'],
+) => {
+  return new PriceIntentService(
+    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
+    new ShopSessionService(new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response)),
+  )
 }

@@ -1,0 +1,14 @@
+mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: JSON!) {
+  priceIntent {
+    dataUpdate(priceIntentId: $priceIntentId, data: $data) {
+      priceIntent {
+        ...PriceIntentFragment
+      }
+      userErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+}

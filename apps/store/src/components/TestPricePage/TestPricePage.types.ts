@@ -1,11 +1,13 @@
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 
-type OnSubmitParams = { data: Record<string, string> }
+type Product = {
+  id: string
+  name: string
+  currentCode: string
+  price?: number
+}
 
 export type TestPricePageProps = {
   template: FormTemplate
-  intent: PriceIntent
-  onSubmit: (params: OnSubmitParams) => void
-  onReset: () => void
+  product: Product
 }
