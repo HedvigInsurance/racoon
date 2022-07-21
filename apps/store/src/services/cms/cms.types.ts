@@ -9,4 +9,5 @@ export type CmsProduct = {
   slug: string
   pageTitle: string
   product: ProductNames
+  productId: string
 }

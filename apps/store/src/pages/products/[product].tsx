@@ -1,8 +1,10 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { setupPriceCalculator } from '@/components/PriceCalculator/PriceCalculator.helpers'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
+import { CurrencyCode } from '@/services/apollo/generated'
 import { CmsService } from '@/services/cms/CmsService'
 import { getProductByMarketAndName } from '@/services/mockProductService'
 
@@ -26,11 +28,30 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
   if (!product) return { notFound: true }
 
-  return {
-    props: {
-      cmsProduct,
-      product,
-    },
+  try {
+    const { template, priceIntent } = await setupPriceCalculator({
+      productId: cmsProduct.productId,
+      request: context.req,
+      response: context.res,
+    })
+
+    const lineItem = priceIntent.lines?.[0]
+
+    return {
+      props: {
+        cmsProduct,
+        product: {
+          ...product,
+          price: lineItem?.price.amount ?? null,
+          currencyCode: CurrencyCode.Sek,
+          gradient: ['#00BFFF', '#00ff00'],
+        },
+        priceFormTemplate: template,
+      },
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
   }
 }
 
