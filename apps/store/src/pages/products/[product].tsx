@@ -16,27 +16,15 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam
 
-  if (!slug) {
-    return {
-      notFound: true,
-    }
-  }
+  if (!slug) return { notFound: true }
 
   const cmsProduct = await CmsService.getProductByMarketAndSlug(localeData.marketLabel, slug)
 
-  if (!cmsProduct) {
-    return {
-      notFound: true,
-    }
-  }
+  if (!cmsProduct) return { notFound: true }
 
   const product = getProductByMarketAndName(cmsProduct.market, cmsProduct.product)
 
-  if (!product) {
-    return {
-      notFound: true,
-    }
-  }
+  if (!product) return { notFound: true }
 
   return {
     props: {
