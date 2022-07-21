@@ -4,40 +4,17 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
 import { Heading, Space } from 'ui'
+import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 import { CartList } from '../CartList/CartList'
+import { useHandleSubmitPriceCalculator } from '../PriceCalculator/useHandleSubmitPriceCalculator'
 import { ProductPageProps } from './ProductPage.types'
 
-const Tabs = styled(RadixTabs.Root)({
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-const TabsList = styled(RadixTabs.TabsList)({
-  flexShrink: 0,
-  display: 'flex',
-  borderBottom: '1px solid #e3e3e3',
-})
-
-const TabsTrigger = styled(RadixTabs.Trigger)({
-  flex: 1,
-  padding: '1rem',
-  cursor: 'pointer',
-  '&:hover': { color: 'mediumpurple' },
-  '&[data-state=active]': {
-    color: 'mediumpurple',
-    boxShadow: 'inset 0 -1px 0 0 mediumpurple, 0 1px 0 0 currentColor',
-  },
-  '&:focus-visible': {
-    boxShadow: '0 0 0 2px black',
-  },
-})
-
-const TabsContent = styled(RadixTabs.Content)({})
-
-export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
+export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductPageProps) => {
   const cartContext = useContext(CartContext)
+  const { handleSubmit } = useHandleSubmitPriceCalculator({ productId: cmsProduct.productId })
 
   if (!cartContext) {
     throw new Error('ProductPage cannot be rendered outside CartContext')
@@ -79,6 +56,20 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
             </ul>
           </div>
         )}
+
+        <form onSubmit={handleSubmit}>
+          <PriceCalculator template={priceFormTemplate} />
+        </form>
+
+        <SectionWithPadding>
+          <PriceCard
+            name={product.displayName}
+            cost={product.price ?? undefined}
+            currency={product.currencyCode}
+            gradient={product.gradient}
+            onClick={() => {}}
+          />
+        </SectionWithPadding>
 
         <Tabs defaultValue="overview" orientation="horizontal">
           <TabsList aria-label="tabs example">
@@ -124,3 +115,35 @@ export const ProductPage = ({ cmsProduct, product }: ProductPageProps) => {
     </>
   )
 }
+
+const Tabs = styled(RadixTabs.Root)({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+const TabsList = styled(RadixTabs.TabsList)({
+  flexShrink: 0,
+  display: 'flex',
+  borderBottom: '1px solid #e3e3e3',
+})
+
+const TabsTrigger = styled(RadixTabs.Trigger)({
+  flex: 1,
+  padding: '1rem',
+  cursor: 'pointer',
+  '&:hover': { color: 'mediumpurple' },
+  '&[data-state=active]': {
+    color: 'mediumpurple',
+    boxShadow: 'inset 0 -1px 0 0 mediumpurple, 0 1px 0 0 currentColor',
+  },
+  '&:focus-visible': {
+    boxShadow: '0 0 0 2px black',
+  },
+})
+
+const TabsContent = styled(RadixTabs.Content)({})
+
+const SectionWithPadding = styled.div(({ theme }) => ({
+  paddingLeft: theme.space[3],
+  paddingRight: theme.space[3],
+}))

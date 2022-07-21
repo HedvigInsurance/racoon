@@ -13,6 +13,7 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'home',
       pageTitle: 'Home insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_HOME,
+      productId: 'SWEDISH_APARTMENT',
     },
     {
       market: MarketLabel.SE,
@@ -20,6 +21,7 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'car',
       pageTitle: 'Car insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_CAR,
+      productId: '',
     },
     {
       market: MarketLabel.SE,
@@ -27,6 +29,7 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
       slug: 'home-accident',
       pageTitle: 'Home & accident insurance | Hedvig', // TODO: should be a translation key (or translated from BE)
       product: ProductNames.SE_ESSENTIAL_BUNDLE,
+      productId: '',
     },
   ],
   NO: [],
@@ -35,7 +38,7 @@ const CMS_PRODUCTS: Record<MarketLabel, CmsProduct[]> = {
 
 export const mockCmsHandlers = [
   rest.get<
-    {},
+    Record<string, never>,
     { market: string; slug: string },
     Awaited<ReturnType<typeof CmsService.getProductByMarketAndSlug>>
   >(`${CMS_BASE_URL}/products/:market/:slug`, (req, res, ctx) => {
@@ -51,18 +54,19 @@ export const mockCmsHandlers = [
 
     return res(ctx.json(null))
   }),
-  rest.get<{}, { market: string }, Awaited<ReturnType<typeof CmsService.getProductsByMarket>>>(
-    `${CMS_BASE_URL}/products/:market`,
-    (req, res, ctx) => {
-      const { market } = req.params
-      const name = req.url.searchParams.get('name')
+  rest.get<
+    Record<string, never>,
+    { market: string },
+    Awaited<ReturnType<typeof CmsService.getProductsByMarket>>
+  >(`${CMS_BASE_URL}/products/:market`, (req, res, ctx) => {
+    const { market } = req.params
+    const name = req.url.searchParams.get('name')
 
-      let products = CMS_PRODUCTS[market as MarketLabel]
-      if (name) {
-        products = products.filter(({ product }) => name === product.toString())
-      }
+    let products = CMS_PRODUCTS[market as MarketLabel]
+    if (name) {
+      products = products.filter(({ product }) => name === product.toString())
+    }
 
-      return res(ctx.json(products))
-    },
-  ),
+    return res(ctx.json(products))
+  }),
 ]
