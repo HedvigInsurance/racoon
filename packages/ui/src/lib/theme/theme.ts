@@ -1,12 +1,5 @@
-import { colorsV3 } from '@hedviginsurance/brand'
+import { colors } from './colors'
 import { fonts, fontSizes } from './typography'
-
-const colors: Record<string, string> = {
-  ...colorsV3,
-}
-colors.dark = colors.gray900
-colors.light = colors.gray100
-colors.lavender = colors.purple500
 
 const space = [
   0,
