@@ -13,7 +13,7 @@ export const CheckoutPaymentPage = ({ children, Header }: Props) => {
         <HeaderWrapper>{Header ?? null}</HeaderWrapper>
 
         <PageHeader>
-          <Heading headingLevel="h1" colorVariant="dark" variant="m">
+          <Heading as="h1" variant="standard.32">
             Payment
           </Heading>
         </PageHeader>

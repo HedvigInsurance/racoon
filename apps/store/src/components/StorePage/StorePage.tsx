@@ -6,7 +6,7 @@ import { StorePageProps } from './StorePage.types'
 export const StorePage = ({ products }: StorePageProps) => {
   return (
     <>
-      <Heading headingLevel="h1" colorVariant="dark" variant="l">
+      <Heading as="h1" variant="standard.40">
         Store Page
       </Heading>
       <Space y={2}>

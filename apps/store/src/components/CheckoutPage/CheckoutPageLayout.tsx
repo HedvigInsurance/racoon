@@ -15,7 +15,7 @@ export const CheckoutPageLayout = ({ children }: Props) => {
         </Header>
 
         <PageHeader>
-          <Heading headingLevel="h1" colorVariant="dark" variant="m">
+          <Heading as="h1" variant="standard.32">
             Personal details
           </Heading>
         </PageHeader>

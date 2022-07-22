@@ -8,7 +8,7 @@ type HeadingBlockProps = SbBaseBlockProps<{
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
   return (
-    <Heading headingLevel="h2" colorVariant="dark" variant="m" {...storyblokEditable(blok)}>
+    <Heading as="h2" variant="standard.32" {...storyblokEditable(blok)}>
       {blok.text}
     </Heading>
   )

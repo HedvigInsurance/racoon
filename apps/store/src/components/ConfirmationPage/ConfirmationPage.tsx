@@ -15,7 +15,7 @@ export const ConfirmationPage = ({
     <Space y={2}>
       <header>
         <Space y={0.25}>
-          <Heading headingLevel="h1" colorVariant="dark" variant="s">
+          <Heading as="h1" variant="standard.24">
             Welcome, {firstName}
           </Heading>
           <p>
@@ -28,7 +28,7 @@ export const ConfirmationPage = ({
       </header>
 
       <main>
-        <Heading headingLevel="h2" colorVariant="dark" variant="xs">
+        <Heading as="h2" variant="standard.20">
           Purchase summary
         </Heading>
 

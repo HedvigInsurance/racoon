@@ -3,7 +3,7 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { Heading, Space } from 'ui'
+import { Heading, HeadingOLD, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PageLink } from '@/lib/PageLink'
@@ -29,13 +29,13 @@ export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductP
       <Head>
         <title>{cmsProduct.pageTitle}</title>
       </Head>
-      <Heading variant="l" headingLevel="h1" colorVariant="dark">
+      <Heading as="h1" variant="standard.40">
         {cmsProduct.displayName}
       </Heading>
       <Space y={2}>
         {productsOfThisType.length > 0 && (
           <div>
-            <Heading headingLevel="h2" colorVariant="dark" variant="s">
+            <Heading as="h2" variant="standard.24">
               Products of this type in cart
             </Heading>
             <CartList filterByProductName={product.name} />
@@ -44,7 +44,7 @@ export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductP
 
         {product?.insurances.length > 1 && (
           <div>
-            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+            <Heading as="h2" variant="standard.24">
               Insurances included in this bundle
             </Heading>
             <ul>
@@ -77,25 +77,25 @@ export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductP
             <TabsTrigger value="coverage">Coverage</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+            <Heading as="h2" variant="standard.24">
               Coverage Section Heading
             </Heading>
           </TabsContent>
           <TabsContent value="coverage">
-            <Heading variant="s" headingLevel="h2" colorVariant="dark">
+            <Heading as="h2" variant="standard.24">
               Perils
             </Heading>
             {product.insurances.map((insurance) => (
               <Fragment key={insurance.name}>
-                <Heading variant="xs" headingLevel="h3" colorVariant="dark">
+                <Heading as="h3" variant="standard.20">
                   {insurance?.displayName}
                 </Heading>
                 <ul>
                   {insurance?.perils.map((peril) => (
                     <li key={peril.title} style={{ maxWidth: '400px' }}>
-                      <Heading variant="overline" headingLevel="h3" colorVariant="dark">
+                      <HeadingOLD variant="overline" headingLevel="h3" colorVariant="dark">
                         {peril.title}
-                      </Heading>
+                      </HeadingOLD>
                       <br />
                       {peril.body}
                     </li>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import { Heading, mq, Space } from 'ui'
+import { HeadingOLD, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { useTrackEvent } from '@/hooks/useTrackEvent'
@@ -83,9 +83,9 @@ export const SwedishLandingPage = ({
         <Space y={{ base: 1.5, md: 5 }}>
           <ContentCard>
             <Space y={1.5}>
-              <Heading variant="m" headingLevel="h1" colorVariant="dark">
+              <HeadingOLD variant="m" headingLevel="h1" colorVariant="dark">
                 {t('LANDING_PAGE_HEADLINE')}
-              </Heading>
+              </HeadingOLD>
               <BodyText variant={1} colorVariant="medium" displayBlock>
                 {t('LANDING_PAGE_SUBHEADER_NO_ADDITIONAL_COVERAGE')}
               </BodyText>

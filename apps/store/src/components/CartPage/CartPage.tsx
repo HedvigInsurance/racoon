@@ -16,7 +16,7 @@ export const CartPage = () => {
 
   return (
     <>
-      <Heading variant="l" headingLevel="h1" colorVariant="dark">
+      <Heading as="h1" variant="standard.40">
         Cart
       </Heading>
       <Space y={2}>
