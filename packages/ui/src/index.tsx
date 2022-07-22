@@ -13,6 +13,7 @@ export { InputField } from './components/InputField/InputField'
 export type { InputFieldProps } from './components/InputField/InputField'
 export { InputStepper } from './components/InputStepper/InputStepper'
 export { Heading } from './components/Heading/Heading'
+export { Heading as HeadingNew } from './components/HeadingNew/HeadingNew'
 
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'

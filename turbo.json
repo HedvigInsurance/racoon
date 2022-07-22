@@ -71,7 +71,8 @@
       "cache": false
     },
     "storybook": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
     },
     "typecheck": {
       "outputs": []

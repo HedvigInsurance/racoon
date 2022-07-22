@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { getColor } from 'ui'
 import { getMargins, Margins } from '../../lib/margins'
+import { getColor } from '../../lib/theme/theme'
 import { getHeadingVariant, HeadingVariant } from './HeadingNew.helpers'
 
 export type HeadingProps = Margins & {
