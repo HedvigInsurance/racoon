@@ -99,14 +99,18 @@ enum ShopSessionErrorCode {
 # CART
 #
 
-extend type Query {
-  cart(id: ID!): Cart
+extend type ShopSession {
+  cart: Cart!
 }
 
-extend type Mutation {
-  cartCreate(input: CartCreateInput!): CartCreatePayload!
-  cartLinesAdd(cartId: ID!, lineIds: [ID!]!): CartLinesAddPayload!
-  cartLinesRemove(cartId: ID!, lineIds: [ID!]!): CartLinesRemovePayload!
+extend type ShopSessionMutations {
+  cart(shopSessionId: ID!): CartMutations
+}
+
+type CartMutations {
+  create(input: CartCreateInput!): CartCreatePayload!
+  linesAdd(lineIds: [ID!]!): CartLinesAddPayload!
+  linesRemove(lineIds: [ID!]!): CartLinesRemovePayload!
 }
 
 type Cart {
@@ -169,13 +173,13 @@ type CartLine {
 # Price Intent
 #
 
-extend type Query {
+extend type ShopSession {
   "Get a price intent by its ID."
   priceIntent(id: ID!): PriceIntent
 }
 
-extend type Mutation {
-  priceIntent: PriceIntentMutations
+extend type ShopSessionMutations {
+  priceIntent(shopSessionId: ID!): PriceIntentMutations
 }
 
 type PriceIntentMutations {
@@ -206,8 +210,6 @@ type PriceIntentLine {
 }
 
 input PriceIntentCreateInput {
-  "The current shop session."
-  shopSessionId: ID!
   "The product to calculate price for."
   productId: ID!
 }
