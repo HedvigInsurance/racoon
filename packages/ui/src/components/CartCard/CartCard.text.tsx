@@ -1,6 +1,6 @@
-import { CartCard } from './CartCard'
-import { renderWithTheme } from '../../../test-helpers'
 import { screen } from '@testing-library/react'
+import { renderWithTheme } from '../../../test-helpers'
+import { CartCard } from './CartCard'
 
 describe('CartCard', () => {
   test('can render card with title', () => {

@@ -1,8 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { CartCard } from './CartCard'
-import { SelectableCardGroup } from '../Card/SelectableCardGroup'
-import { Space } from '../Space'
-import { useState } from 'react'
 
 export default {
   title: 'UI / Card / Cart Card',
