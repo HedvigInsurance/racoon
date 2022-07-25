@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from 'next'
-import { SimplePersister } from './priceIntent.types'
+import { SimplePersister } from './Persister.types'
 
 export class ServerCookiePersister implements SimplePersister {
   constructor(

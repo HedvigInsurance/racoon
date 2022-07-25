@@ -1,5 +1,5 @@
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { SimplePersister } from './priceIntent.types'
+import { SimplePersister } from '@/services/persister/Persister.types'
 
 export class ShopSessionService {
   constructor(private readonly persister: SimplePersister) {}
