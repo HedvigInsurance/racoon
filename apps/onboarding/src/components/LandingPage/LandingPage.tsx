@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
-import { Button, Heading, mq, Space } from 'ui'
+import { Button, HeadingOLD, mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { FixedFooter } from '@/components/FixedFooter'
 import { Header } from '@/components/Nav/Header'
@@ -113,9 +113,9 @@ export const LandingPage = ({
         <Main>
           <ContentCard>
             <Space y={1.5}>
-              <Heading variant="m" headingLevel="h2" colorVariant="dark">
+              <HeadingOLD variant="m" headingLevel="h2" colorVariant="dark">
                 {t('LANDING_PAGE_HEADLINE')}
-              </Heading>
+              </HeadingOLD>
               <BodyText variant={1} colorVariant="medium" displayBlock>
                 {t(
                   IS_HOUSE_INSURANCE_ENABLED
@@ -127,9 +127,9 @@ export const LandingPage = ({
           </ContentCard>
 
           <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+            <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
               {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-            </Heading>
+            </HeadingOLD>
           </TitleContainer>
 
           <CoverageCardGrid>
@@ -163,9 +163,9 @@ export const LandingPage = ({
           </CoverageCardGrid>
 
           <TitleContainer>
-            <Heading variant="xs" colorVariant="dark" headingLevel="h3">
+            <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
               {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-            </Heading>
+            </HeadingOLD>
           </TitleContainer>
 
           <CoverageCardGrid>

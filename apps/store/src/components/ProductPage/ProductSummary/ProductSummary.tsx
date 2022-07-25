@@ -23,7 +23,7 @@ export const ProductSummary = ({
       <SpaceFlex space={1} align="center">
         <Pillow size="small" fromColor={fromColor} toColor={toColor} />
         <div>
-          <Heading variant="xs" colorVariant="dark" headingLevel="h2">
+          <Heading as="h2" variant="standard.20">
             {title}
           </Heading>
           <SmallGrayText>

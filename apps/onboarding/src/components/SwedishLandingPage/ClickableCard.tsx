@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { Space, mq, ArrowForwardIcon, Heading } from 'ui'
+import { Space, mq, ArrowForwardIcon, HeadingOLD } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import {
   BaseCardProps,
@@ -74,9 +74,9 @@ export const ClickableCard = ({
         <Section>
           <Space y={0.25}>
             <Row>
-              <Heading variant="xs" headingLevel="h2" colorVariant="dark">
+              <HeadingOLD variant="xs" headingLevel="h2" colorVariant="dark">
                 {title}
-              </Heading>
+              </HeadingOLD>
               <ArrowForwardIcon size="1.25rem" />
             </Row>
             <BodyTextWrapper>
