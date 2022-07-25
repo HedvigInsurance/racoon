@@ -597,6 +597,110 @@ export type SubmitReviewResponse = {
   success: Scalars['Boolean']
 }
 
+export type CartQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
+}>
+
+export type CartQuery = {
+  __typename?: 'Query'
+  shopSession: {
+    __typename?: 'ShopSession'
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
+}
+
+export type CartFragmentFragment = {
+  __typename?: 'Cart'
+  id: string
+  buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+  lines: Array<{
+    __typename?: 'CartLine'
+    id: string
+    price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+    variant: { __typename?: 'ProductVariant'; id: string; title: string }
+  }>
+}
+
+export type CartLinesAddMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesAddMutation = {
+  __typename?: 'Mutation'
+  shopSession?: {
+    __typename?: 'ShopSessionMutations'
+    cart?: {
+      __typename?: 'CartMutations'
+      linesAdd: {
+        __typename?: 'CartLinesAddPayload'
+        cart?: {
+          __typename?: 'Cart'
+          id: string
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
+    } | null
+  } | null
+}
+
+export type CartLinesRemoveMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesRemoveMutation = {
+  __typename?: 'Mutation'
+  shopSession?: {
+    __typename?: 'ShopSessionMutations'
+    cart?: {
+      __typename?: 'CartMutations'
+      linesRemove: {
+        __typename?: 'CartLinesRemovePayload'
+        cart?: {
+          __typename?: 'Cart'
+          id: string
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
+    } | null
+  } | null
+}
+
 export type PriceIntentQueryVariables = Exact<{
   shopSessionId: Scalars['ID']
   priceIntentId: Scalars['ID']
@@ -760,6 +864,25 @@ export type ShopSessionCreateMutation = {
   } | null
 }
 
+export const CartFragmentFragmentDoc = gql`
+  fragment CartFragment on Cart {
+    id
+    buyerIdentity {
+      countryCode
+    }
+    lines {
+      id
+      price {
+        amount
+        currencyCode
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+`
 export const PriceIntentFragmentFragmentDoc = gql`
   fragment PriceIntentFragment on PriceIntent {
     id
@@ -777,6 +900,163 @@ export const PriceIntentFragmentFragmentDoc = gql`
     }
   }
 `
+export const CartDocument = gql`
+  query Cart($shopSessionId: ID!) {
+    shopSession(id: $shopSessionId) {
+      cart {
+        ...CartFragment
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+
+/**
+ * __useCartQuery__
+ *
+ * To run a query within a React component, call `useCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCartQuery({
+ *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
+ *   },
+ * });
+ */
+export function useCartQuery(baseOptions: Apollo.QueryHookOptions<CartQuery, CartQueryVariables>) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<CartQuery, CartQueryVariables>(CartDocument, options)
+}
+export function useCartLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<CartQuery, CartQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<CartQuery, CartQueryVariables>(CartDocument, options)
+}
+export type CartQueryHookResult = ReturnType<typeof useCartQuery>
+export type CartLazyQueryHookResult = ReturnType<typeof useCartLazyQuery>
+export type CartQueryResult = Apollo.QueryResult<CartQuery, CartQueryVariables>
+export const CartLinesAddDocument = gql`
+  mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
+    shopSession {
+      cart(shopSessionId: $shopSessionId) {
+        linesAdd(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export type CartLinesAddMutationFn = Apollo.MutationFunction<
+  CartLinesAddMutation,
+  CartLinesAddMutationVariables
+>
+
+/**
+ * __useCartLinesAddMutation__
+ *
+ * To run a mutation, you first call `useCartLinesAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCartLinesAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cartLinesAddMutation, { data, loading, error }] = useCartLinesAddMutation({
+ *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
+ *      lineId: // value for 'lineId'
+ *   },
+ * });
+ */
+export function useCartLinesAddMutation(
+  baseOptions?: Apollo.MutationHookOptions<CartLinesAddMutation, CartLinesAddMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CartLinesAddMutation, CartLinesAddMutationVariables>(
+    CartLinesAddDocument,
+    options,
+  )
+}
+export type CartLinesAddMutationHookResult = ReturnType<typeof useCartLinesAddMutation>
+export type CartLinesAddMutationResult = Apollo.MutationResult<CartLinesAddMutation>
+export type CartLinesAddMutationOptions = Apollo.BaseMutationOptions<
+  CartLinesAddMutation,
+  CartLinesAddMutationVariables
+>
+export const CartLinesRemoveDocument = gql`
+  mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
+    shopSession {
+      cart(shopSessionId: $shopSessionId) {
+        linesRemove(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export type CartLinesRemoveMutationFn = Apollo.MutationFunction<
+  CartLinesRemoveMutation,
+  CartLinesRemoveMutationVariables
+>
+
+/**
+ * __useCartLinesRemoveMutation__
+ *
+ * To run a mutation, you first call `useCartLinesRemoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCartLinesRemoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cartLinesRemoveMutation, { data, loading, error }] = useCartLinesRemoveMutation({
+ *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
+ *      lineId: // value for 'lineId'
+ *   },
+ * });
+ */
+export function useCartLinesRemoveMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CartLinesRemoveMutation,
+    CartLinesRemoveMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CartLinesRemoveMutation, CartLinesRemoveMutationVariables>(
+    CartLinesRemoveDocument,
+    options,
+  )
+}
+export type CartLinesRemoveMutationHookResult = ReturnType<typeof useCartLinesRemoveMutation>
+export type CartLinesRemoveMutationResult = Apollo.MutationResult<CartLinesRemoveMutation>
+export type CartLinesRemoveMutationOptions = Apollo.BaseMutationOptions<
+  CartLinesRemoveMutation,
+  CartLinesRemoveMutationVariables
+>
 export const PriceIntentDocument = gql`
   query PriceIntent($shopSessionId: ID!, $priceIntentId: ID!) {
     shopSession(id: $shopSessionId) {

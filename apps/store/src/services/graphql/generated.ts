@@ -596,6 +596,110 @@ export type SubmitReviewResponse = {
   success: Scalars['Boolean']
 }
 
+export type CartQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
+}>
+
+export type CartQuery = {
+  __typename?: 'Query'
+  shopSession: {
+    __typename?: 'ShopSession'
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
+}
+
+export type CartFragmentFragment = {
+  __typename?: 'Cart'
+  id: string
+  buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+  lines: Array<{
+    __typename?: 'CartLine'
+    id: string
+    price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+    variant: { __typename?: 'ProductVariant'; id: string; title: string }
+  }>
+}
+
+export type CartLinesAddMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesAddMutation = {
+  __typename?: 'Mutation'
+  shopSession?: {
+    __typename?: 'ShopSessionMutations'
+    cart?: {
+      __typename?: 'CartMutations'
+      linesAdd: {
+        __typename?: 'CartLinesAddPayload'
+        cart?: {
+          __typename?: 'Cart'
+          id: string
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
+    } | null
+  } | null
+}
+
+export type CartLinesRemoveMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesRemoveMutation = {
+  __typename?: 'Mutation'
+  shopSession?: {
+    __typename?: 'ShopSessionMutations'
+    cart?: {
+      __typename?: 'CartMutations'
+      linesRemove: {
+        __typename?: 'CartLinesRemovePayload'
+        cart?: {
+          __typename?: 'Cart'
+          id: string
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
+    } | null
+  } | null
+}
+
 export type PriceIntentQueryVariables = Exact<{
   shopSessionId: Scalars['ID']
   priceIntentId: Scalars['ID']
@@ -759,6 +863,25 @@ export type ShopSessionCreateMutation = {
   } | null
 }
 
+export const CartFragmentFragmentDoc = gql`
+  fragment CartFragment on Cart {
+    id
+    buyerIdentity {
+      countryCode
+    }
+    lines {
+      id
+      price {
+        amount
+        currencyCode
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+`
 export const PriceIntentFragmentFragmentDoc = gql`
   fragment PriceIntentFragment on PriceIntent {
     id
@@ -775,6 +898,54 @@ export const PriceIntentFragmentFragmentDoc = gql`
       }
     }
   }
+`
+export const CartDocument = gql`
+  query Cart($shopSessionId: ID!) {
+    shopSession(id: $shopSessionId) {
+      cart {
+        ...CartFragment
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export const CartLinesAddDocument = gql`
+  mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
+    shopSession {
+      cart(shopSessionId: $shopSessionId) {
+        linesAdd(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export const CartLinesRemoveDocument = gql`
+  mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
+    shopSession {
+      cart(shopSessionId: $shopSessionId) {
+        linesRemove(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
 `
 export const PriceIntentDocument = gql`
   query PriceIntent($shopSessionId: ID!, $priceIntentId: ID!) {
@@ -864,6 +1035,29 @@ export const ShopSessionCreateDocument = gql`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    Cart(variables: CartQueryVariables, options?: C): Promise<CartQuery> {
+      return requester<CartQuery, CartQueryVariables>(CartDocument, variables, options)
+    },
+    CartLinesAdd(
+      variables: CartLinesAddMutationVariables,
+      options?: C,
+    ): Promise<CartLinesAddMutation> {
+      return requester<CartLinesAddMutation, CartLinesAddMutationVariables>(
+        CartLinesAddDocument,
+        variables,
+        options,
+      )
+    },
+    CartLinesRemove(
+      variables: CartLinesRemoveMutationVariables,
+      options?: C,
+    ): Promise<CartLinesRemoveMutation> {
+      return requester<CartLinesRemoveMutation, CartLinesRemoveMutationVariables>(
+        CartLinesRemoveDocument,
+        variables,
+        options,
+      )
+    },
     PriceIntent(variables: PriceIntentQueryVariables, options?: C): Promise<PriceIntentQuery> {
       return requester<PriceIntentQuery, PriceIntentQueryVariables>(
         PriceIntentDocument,
