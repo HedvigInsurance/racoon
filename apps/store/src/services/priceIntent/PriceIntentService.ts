@@ -1,9 +1,8 @@
 import { GetServerSidePropsContext } from 'next'
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
-import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
-import { COOKIE_KEY_PRICE_INTENT, COOKIE_KEY_SHOP_SESSION } from './priceIntent.constants'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { COOKIE_KEY_PRICE_INTENT } from './priceIntent.constants'
 import {
   PriceIntentCreateParams,
   PriceIntentDataUpdateParams,
@@ -13,18 +12,16 @@ import {
 class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
-    private readonly shopSessionService: ShopSessionService,
+    private readonly shopSession: ShopSession,
   ) {}
 
   public async create({ productId }: PriceIntentCreateParams) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-
     const response = await graphqlSdk.PriceIntentCreate({
-      shopSessionId,
+      shopSessionId: this.shopSession.id,
       productId,
     })
 
-    const priceIntent = response.shopSession?.priceIntent?.create.priceIntent
+    const priceIntent = response.priceIntent?.create
     if (!priceIntent) throw new Error('Could not create price intent')
 
     this.persister.save(priceIntent.id)
@@ -33,10 +30,9 @@ class PriceIntentService {
   }
 
   private async get(priceIntentId: string) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
     const {
       shopSession: { priceIntent },
-    } = await graphqlSdk.PriceIntent({ shopSessionId, priceIntentId })
+    } = await graphqlSdk.PriceIntent({ shopSessionId: this.shopSession.id, priceIntentId })
     return priceIntent ?? null
   }
 
@@ -53,17 +49,15 @@ class PriceIntentService {
   }
 
   public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-    const response = await graphqlSdk.PriceIntentDataUpdate({ shopSessionId, priceIntentId, data })
-    const priceIntent = response.shopSession?.priceIntent?.dataUpdate.priceIntent
+    const response = await graphqlSdk.PriceIntentDataUpdate({ priceIntentId, data })
+    const priceIntent = response.priceIntent?.dataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
     return priceIntent
   }
 
   public async confirm(priceIntentId: string) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-    const response = await graphqlSdk.PriceIntentConfirm({ shopSessionId, priceIntentId })
-    const priceIntent = response.shopSession?.priceIntent?.confirm.priceIntent
+    const response = await graphqlSdk.PriceIntentConfirm({ priceIntentId })
+    const priceIntent = response.priceIntent?.confirm.priceIntent
     if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }
@@ -73,19 +67,15 @@ class PriceIntentService {
   }
 }
 
-export const priceIntentServiceInitClientSide = () => {
+export const priceIntentServiceInitServerSide = ({ request, response, shopSession }: Params) => {
   return new PriceIntentService(
-    new CookiePersister(COOKIE_KEY_PRICE_INTENT),
-    new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION)),
+    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
+    shopSession,
   )
 }
 
-export const priceIntentServiceInitServerSide = (
-  request: GetServerSidePropsContext['req'],
-  response: GetServerSidePropsContext['res'],
-) => {
-  return new PriceIntentService(
-    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
-    new ShopSessionService(new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response)),
-  )
+type Params = {
+  request: GetServerSidePropsContext['req']
+  response: GetServerSidePropsContext['res']
+  shopSession: ShopSession
 }

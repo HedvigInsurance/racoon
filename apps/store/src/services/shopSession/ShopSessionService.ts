@@ -1,10 +1,14 @@
+import { GetServerSidePropsContext } from 'next'
+import { CountryCode } from '@/services/graphql/generated'
 import { graphqlSdk } from '@/services/graphql/sdk'
 import { SimplePersister } from '@/services/persister/Persister.types'
+import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
+import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
 
 export class ShopSessionService {
   constructor(private readonly persister: SimplePersister) {}
 
-  public async fetch() {
+  public async fetch(createParams: CreateParams) {
     const shopSessionId = this.persister.fetch()
 
     if (shopSessionId) {
@@ -12,12 +16,12 @@ export class ShopSessionService {
       if (response.shopSession) return response.shopSession
     }
 
-    return await this.create()
+    return await this.create(createParams)
   }
 
-  private async create() {
-    const response = await graphqlSdk.ShopSessionCreate()
-    const newSession = response.shopSession?.create.shopSession
+  private async create({ countryCode }: CreateParams) {
+    const response = await graphqlSdk.ShopSessionCreate({ countryCode })
+    const newSession = response.shopSession?.create
 
     if (!newSession) throw new Error('Could not create session')
 
@@ -25,4 +29,19 @@ export class ShopSessionService {
 
     return newSession
   }
+}
+
+type CreateParams = {
+  countryCode: CountryCode
+}
+
+export const shopSessionServiceInitServerSide = ({ request, response }: Params) => {
+  return new ShopSessionService(
+    new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response),
+  )
+}
+
+type Params = {
+  request: GetServerSidePropsContext['req']
+  response: GetServerSidePropsContext['res']
 }

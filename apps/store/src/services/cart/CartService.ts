@@ -1,47 +1,41 @@
-import { GetServerSidePropsContext } from 'next'
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { CookiePersister } from '@/services/persister/CookiePersister'
-import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
-import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
-import { COOKIE_KEY_SHOP_SESSION } from './../priceIntent/priceIntent.constants'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export class CartService {
-  constructor(private readonly shopSessionService: ShopSessionService) {}
+  constructor(private readonly shopSession: ShopSession) {}
 
   public async fetch() {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-    const { shopSession } = await graphqlSdk.Cart({ shopSessionId })
+    const { shopSession } = await graphqlSdk.Cart({ shopSessionId: this.shopSession.id })
     return shopSession.cart
   }
 
   public async lineAdd(lineId: string) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-    const { shopSession } = await graphqlSdk.CartLinesAdd({ shopSessionId, lineId })
+    const { cart } = await graphqlSdk.CartLinesAdd({
+      shopSessionId: this.shopSession.id,
+      lineId,
+    })
 
-    const cart = shopSession?.cart?.linesAdd.cart
-    if (!cart) throw new Error(`Could not add line item to cart: ${lineId}`)
-    return cart
+    const updatedCart = cart?.linesAdd.cart
+    if (!updatedCart) throw new Error(`Could not add line item to cart: ${lineId}`)
+    return updatedCart
   }
 
   public async lineRemove(lineId: string) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-    const { shopSession } = await graphqlSdk.CartLinesRemove({ shopSessionId, lineId })
+    const { cart } = await graphqlSdk.CartLinesRemove({
+      shopSessionId: this.shopSession.id,
+      lineId,
+    })
 
-    const cart = shopSession?.cart?.linesRemove.cart
-    if (!cart) throw new Error(`Could not remove line item from cart: ${lineId}`)
-    return cart
+    const updatedCart = cart?.linesRemove.cart
+    if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineId}`)
+    return updatedCart
   }
 }
 
-export const cartServiceInitClientSide = () => {
-  return new CartService(new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION)))
+export const cartServiceInit = ({ shopSession }: Params) => {
+  return new CartService(shopSession)
 }
 
-export const cartServiceInitServerSide = (
-  request: GetServerSidePropsContext['req'],
-  response: GetServerSidePropsContext['res'],
-) => {
-  return new CartService(
-    new ShopSessionService(new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response)),
-  )
+type Params = {
+  shopSession: ShopSession
 }

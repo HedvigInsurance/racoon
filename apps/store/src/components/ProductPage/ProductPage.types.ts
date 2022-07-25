@@ -11,4 +11,5 @@ export type ProductPageProps = {
     gradient: [string, string]
   }
   priceFormTemplate: FormTemplate
+  lineId: string | null
 }

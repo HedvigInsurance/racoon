@@ -1,16 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { cartServiceInitServerSide } from '@/services/cart/CartService'
+import { cartServiceInit } from '@/services/cart/CartService'
+import { shopSessionServiceInitServerSide } from '@/services/shopSession/ShopSessionService'
+import { isCountryCode } from '@/utils/isCountryCode'
 
-export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { lineId } = req.query
+export const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { lineId } = request.query
+  if (typeof lineId !== 'string')
+    return response.status(500).json({ message: 'Line ID is required' })
 
-  if (typeof lineId !== 'string') return res.status(500).json({ message: 'Line ID is required' })
+  const { countryCode } = request.body
+  if (!isCountryCode(countryCode)) {
+    return response.status(500).json({ message: 'Country Code is required' })
+  }
 
-  const cartService = cartServiceInitServerSide(req, res)
+  const shopSession = await shopSessionServiceInitServerSide({ request, response }).fetch({
+    countryCode,
+  })
+  const cartService = cartServiceInit({ shopSession })
 
   await cartService.lineAdd(lineId)
 
-  return res.redirect(302, req.headers.referer || '/')
+  return response.json({ message: 'Line added' })
 }
 
 export default handler
