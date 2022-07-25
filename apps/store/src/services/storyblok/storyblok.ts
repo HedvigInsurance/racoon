@@ -3,6 +3,8 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
+import { ProductCardBlock } from '@/blocks/ProductCardBlock'
+import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -41,6 +43,8 @@ export const initStoryblok = () => {
     heading: HeadingBlock,
     hero: HeroBlock,
     page: PageBlock,
+    productCard: ProductCardBlock,
+    productGrid: ProductGridBlock,
   }
 
   storyblokInit({
