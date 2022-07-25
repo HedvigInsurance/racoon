@@ -33,7 +33,7 @@
     ],
     "*.{js,jsx,ts,tsx}": [
       "prettier --ignore-unknown --write",
-      "eslint --fix"
+      "eslint --fix --ignore-pattern 'generated.ts'"
     ]
   }
 }
