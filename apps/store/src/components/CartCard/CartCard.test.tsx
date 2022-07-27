@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { renderWithTheme } from '../../../test-helpers'
+import { renderWithTheme } from 'ui/test-helpers'
 import { CartCard } from './CartCard'
 
 describe('CartCard', () => {
