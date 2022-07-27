@@ -1,14 +1,12 @@
+import styled from '@emotion/styled'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
-import { Button, ChevronIcon } from 'ui'
+import { useContext } from 'react'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
-import { CartList } from '../CartList/CartList'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const MiniCart = () => {
   const cartContext = useContext(CartContext)
-  const [isOpen, setIsOpen] = useState(false)
 
   if (!cartContext) {
     throw new Error('ProductPage cannot be rendered outside CartContext')
@@ -16,28 +14,51 @@ export const MiniCart = () => {
 
   const { cart } = cartContext
 
-  if (!cart.items.length) {
-    return <span>No items in cart!</span>
-  }
-
   return (
-    <div>
-      <Button size="sm" variant="text" onClick={() => setIsOpen(!isOpen)}>
-        <SpaceFlex space={0.5}>
-          <span>
-            Items in cart: {cart.items.length}, total price: {cart.price}
-          </span>
-          <ChevronIcon transform={isOpen ? 'rotate(-180)' : 'rotate(0)'} />
-        </SpaceFlex>
-      </Button>
-      {isOpen && (
-        <div>
-          <CartList showLinks />
-          <Link href={PageLink.cart()} passHref>
-            Go to cart
-          </Link>
-        </div>
-      )}
-    </div>
+    <Wrapper>
+      <Link href={PageLink.cart()}>
+        <StyledLink tabIndex={0} aria-label="shopping cart">
+          <ShoppingBagIcon />
+        </StyledLink>
+      </Link>
+      <Counter value={cart.items.length} />
+    </Wrapper>
   )
+}
+
+const Wrapper = styled.div({
+  position: 'relative',
+  lineHeight: 0,
+})
+
+const StyledLink = styled.a(({ theme }) => ({
+  display: 'inline-block',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
+}))
+
+const StyledCounter = styled.span(({ theme }) => ({
+  pointerEvents: 'none',
+  position: 'absolute',
+  bottom: -6,
+  left: -6,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 8,
+  height: 8,
+  padding: theme.space[2],
+  borderRadius: '50%',
+  backgroundColor: theme.colors.gray900,
+  color: theme.colors.gray200,
+  fontSize: theme.fontSizes[0],
+}))
+
+type CounterProps = { value: number }
+
+const Counter = ({ value }: CounterProps) => {
+  if (value <= 0) return null
+
+  return <StyledCounter>{value}</StyledCounter>
 }
