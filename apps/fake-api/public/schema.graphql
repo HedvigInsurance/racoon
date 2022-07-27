@@ -67,6 +67,11 @@ extend type Query {
 
 type ShopSession {
   id: ID!
+  buyerIdentity: ShopSessionBuyerIdentity!
+}
+
+type ShopSessionBuyerIdentity {
+  countryCode: CountryCode!
 }
 
 extend type Mutation {
@@ -74,25 +79,15 @@ extend type Mutation {
 }
 
 type ShopSessionMutations {
-  create: ShopSessionCreatePayload!
+  create(input: ShopSessionCreateInput!): ShopSession!
 }
 
-type ShopSessionCreatePayload {
-  shopSession: ShopSession
-  userErrors: [ShopSessionUserError!]
+input ShopSessionCreateInput {
+  buyerIdentity: ShopSessionBuyerIdentityInput!
 }
 
-type ShopSessionUserError {
-  "The error code."
-  code: ShopSessionErrorCode
-  "The path to the input field that caused the error."
-  field: [String!]
-  "The error message."
-  message: String!
-}
-
-enum ShopSessionErrorCode {
-  INVALID
+input ShopSessionBuyerIdentityInput {
+  countryCode: CountryCode!
 }
 
 #
@@ -103,14 +98,13 @@ extend type ShopSession {
   cart: Cart!
 }
 
-extend type ShopSessionMutations {
-  cart(shopSessionId: ID!): CartMutations
+extend type Mutation {
+  cart: CartMutations
 }
 
 type CartMutations {
-  create(input: CartCreateInput!): CartCreatePayload!
-  linesAdd(lineIds: [ID!]!): CartLinesAddPayload!
-  linesRemove(lineIds: [ID!]!): CartLinesRemovePayload!
+  linesAdd(shopSessionId: ID!, lineIds: [ID!]!): CartLinesAddPayload!
+  linesRemove(shopSessionId: ID!, lineIds: [ID!]!): CartLinesRemovePayload!
 }
 
 type Cart {
@@ -121,14 +115,6 @@ type Cart {
   Explanation: https://docs.drupalcommerce.org/commerce1/user-guide/shopping-cart/shopping-carts-orders-and-line-items
   """
   lines: [CartLine!]!
-}
-
-input CartCreateInput {
-  buyerIdentity: CartBuyerIdentityInput!
-}
-
-input CartBuyerIdentityInput {
-  countryCode: CountryCode!
 }
 
 type CartBuyerIdentity {
@@ -178,13 +164,13 @@ extend type ShopSession {
   priceIntent(id: ID!): PriceIntent
 }
 
-extend type ShopSessionMutations {
-  priceIntent(shopSessionId: ID!): PriceIntentMutations
+extend type Mutation {
+  priceIntent: PriceIntentMutations
 }
 
 type PriceIntentMutations {
   "Creates a new price intent."
-  create(input: PriceIntentCreateInput!): PriceIntentCreatePayload!
+  create(input: PriceIntentCreateInput!): PriceIntent!
   "Updates user form data."
   dataUpdate(priceIntentId: ID!, data: JSON!): PriceIntentDataUpdatePayload!
   "Generates line items with price based on user form data."
@@ -210,16 +196,10 @@ type PriceIntentLine {
 }
 
 input PriceIntentCreateInput {
+  "The id of the shop session."
+  shopSessionId: ID!
   "The product to calculate price for."
   productId: ID!
-}
-
-type PriceIntentCreatePayload {
-  "The new price intent object."
-  priceIntent: PriceIntent
-
-  "The list of errors that occurred from executing the mutation."
-  userErrors: [PriceIntentUserError!]!
 }
 
 type PriceIntentUserError {
