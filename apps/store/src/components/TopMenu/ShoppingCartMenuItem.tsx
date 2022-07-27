@@ -5,7 +5,7 @@ import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
-export const MiniCart = () => {
+export const ShoppingCartMenuItem = () => {
   const cartContext = useContext(CartContext)
 
   if (!cartContext) {

@@ -5,8 +5,8 @@ import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
 import { PageLink } from '@/lib/PageLink'
-import { MiniCart } from '../MiniCart/MiniCart'
 import { MenuIcon } from './MenuIcon'
+import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 const MENU_BAR_HEIGHT = '3.75rem'
 
@@ -99,7 +99,7 @@ export const TopMenu = () => {
         </DialogContent>
       </DialogPrimitive.Root>
 
-      <MiniCart />
+      <ShoppingCartMenuItem />
     </Wrapper>
   )
 }
