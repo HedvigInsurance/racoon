@@ -7,7 +7,7 @@ import { PageLink } from '@/lib/PageLink'
 import { MiniCart } from '../MiniCart/MiniCart'
 import { MenuIcon } from './MenuIcon'
 
-const MENU_BAR_HEIGHT = '60px'
+const MENU_BAR_HEIGHT = '3.75rem'
 
 export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
