@@ -1,5 +1,6 @@
-/** An enum representing explicitly endorsed Locales supported by our system. */
+export { CountryCode } from '@/services/graphql/generated'
 
+/** An enum representing explicitly endorsed Locales supported by our system. */
 export enum Locale {
   SvSe = 'sv-se',
   EnSe = 'en-se',
