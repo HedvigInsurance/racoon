@@ -24,7 +24,7 @@ class PriceIntentService {
       productId,
     })
 
-    const priceIntent = response.priceIntent?.create.priceIntent
+    const priceIntent = response.shopSession?.priceIntent?.create.priceIntent
     if (!priceIntent) throw new Error('Could not create price intent')
 
     this.persister.save(priceIntent.id)
@@ -33,7 +33,10 @@ class PriceIntentService {
   }
 
   private async get(priceIntentId: string) {
-    const { priceIntent } = await graphqlSdk.PriceIntent({ priceIntentId })
+    const { id: shopSessionId } = await this.shopSessionService.fetch()
+    const {
+      shopSession: { priceIntent },
+    } = await graphqlSdk.PriceIntent({ shopSessionId, priceIntentId })
     return priceIntent ?? null
   }
 
@@ -50,15 +53,17 @@ class PriceIntentService {
   }
 
   public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {
-    const response = await graphqlSdk.PriceIntentDataUpdate({ priceIntentId, data })
-    const priceIntent = response.priceIntent?.dataUpdate.priceIntent
+    const { id: shopSessionId } = await this.shopSessionService.fetch()
+    const response = await graphqlSdk.PriceIntentDataUpdate({ shopSessionId, priceIntentId, data })
+    const priceIntent = response.shopSession?.priceIntent?.dataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
     return priceIntent
   }
 
   public async confirm(priceIntentId: string) {
-    const response = await graphqlSdk.PriceIntentConfirm({ priceIntentId })
-    const priceIntent = response.priceIntent?.confirm.priceIntent
+    const { id: shopSessionId } = await this.shopSessionService.fetch()
+    const response = await graphqlSdk.PriceIntentConfirm({ shopSessionId, priceIntentId })
+    const priceIntent = response.shopSession?.priceIntent?.confirm.priceIntent
     if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }

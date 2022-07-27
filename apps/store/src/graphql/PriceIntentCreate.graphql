@@ -1,13 +1,15 @@
 mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
-  priceIntent {
-    create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
-      priceIntent {
-        ...PriceIntentFragment
-      }
-      userErrors {
-        code
-        field
-        message
+  shopSession {
+    priceIntent(shopSessionId: $shopSessionId) {
+      create(input: { productId: $productId }) {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
       }
     }
   }
