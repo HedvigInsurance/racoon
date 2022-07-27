@@ -1,21 +1,4 @@
-import { factory, manyOf, nullable, primaryKey } from '@mswjs/data'
-import { uuidv4 } from '../helpers'
-
-const db = factory({
-  priceIntentLine: {
-    id: primaryKey(() => uuidv4()),
-    priceAmount: () => Math.floor(Math.random() * (500 - 50) + 50),
-    currencyCode: () => 'SEK',
-    variantId: () => uuidv4(),
-    variantTitle: () => 'Hedvig Home',
-  },
-
-  priceIntent: {
-    id: primaryKey(() => uuidv4()),
-    data: () => '{}',
-    lines: nullable(manyOf('priceIntentLine')),
-  },
-})
+import { db } from '../db'
 
 export const priceIntentCreate = () => {
   return db.priceIntent.create()
@@ -37,15 +20,12 @@ export const priceIntentDataUpdate = (priceIntentId: string, data: Record<string
 }
 
 export const priceIntentConfirm = (priceIntentId: string) => {
-  const newPriceIntentLineItem = db.priceIntentLine.create()
-
-  const updatedPriceIntent = db.priceIntent.update({
+  return db.priceIntent.update({
     where: { id: { equals: priceIntentId } },
     data: {
-      lines: [newPriceIntentLineItem],
+      lines: [db.lineItem.create()],
     },
   })
-  return updatedPriceIntent
 }
 
 export const priceIntentToAPI = (priceIntent: ReturnType<typeof db.priceIntent.create>) => {
