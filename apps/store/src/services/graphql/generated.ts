@@ -489,6 +489,7 @@ export type Query = {
   paymentConnection?: Maybe<PaymentConnection>
   person: Person
   shopSession: ShopSession
+  shopSessionFindOrCreate: ShopSession
 }
 
 export type QueryCheckoutArgs = {
@@ -509,6 +510,10 @@ export type QueryPersonArgs = {
 
 export type QueryShopSessionArgs = {
   id: Scalars['ID']
+}
+
+export type QueryShopSessionFindOrCreateArgs = {
+  input: ShopSessionFindOrCreateInput
 }
 
 export type Review = {
@@ -548,6 +553,11 @@ export type ShopSessionCreateInput = {
   buyerIdentity: ShopSessionBuyerIdentityInput
 }
 
+export type ShopSessionFindOrCreateInput = {
+  buyerIdentity: ShopSessionBuyerIdentityInput
+  shopSessionId?: InputMaybe<Scalars['ID']>
+}
+
 export type ShopSessionMutations = {
   __typename?: 'ShopSessionMutations'
   create: ShopSession
@@ -567,28 +577,6 @@ export type SubmitReviewResponse = {
   message: Scalars['String']
   /** Indicates whether the mutation was successful */
   success: Scalars['Boolean']
-}
-
-export type CartQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type CartQuery = {
-  __typename?: 'Query'
-  shopSession: {
-    __typename?: 'ShopSession'
-    cart: {
-      __typename?: 'Cart'
-      id: string
-      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
-      lines: Array<{
-        __typename?: 'CartLine'
-        id: string
-        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-        variant: { __typename?: 'ProductVariant'; id: string; title: string }
-      }>
-    }
-  }
 }
 
 export type CartFragmentFragment = {
@@ -788,25 +776,28 @@ export type PriceIntentFragmentFragment = {
   }> | null
 }
 
-export type ShopSessionQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type ShopSessionQuery = {
-  __typename?: 'Query'
-  shopSession: { __typename?: 'ShopSession'; id: string }
-}
-
-export type ShopSessionCreateMutationVariables = Exact<{
+export type ShopSessionFindOrCreateQueryVariables = Exact<{
+  shopSessionId?: InputMaybe<Scalars['ID']>
   countryCode: CountryCode
 }>
 
-export type ShopSessionCreateMutation = {
-  __typename?: 'Mutation'
-  shopSession?: {
-    __typename?: 'ShopSessionMutations'
-    create: { __typename?: 'ShopSession'; id: string }
-  } | null
+export type ShopSessionFindOrCreateQuery = {
+  __typename?: 'Query'
+  shopSessionFindOrCreate: {
+    __typename?: 'ShopSession'
+    id: string
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
 }
 
 export const CartFragmentFragmentDoc = gql`
@@ -844,16 +835,6 @@ export const PriceIntentFragmentFragmentDoc = gql`
       }
     }
   }
-`
-export const CartDocument = gql`
-  query Cart($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
-      cart {
-        ...CartFragment
-      }
-    }
-  }
-  ${CartFragmentFragmentDoc}
 `
 export const CartLinesAddDocument = gql`
   mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
@@ -943,28 +924,22 @@ export const PriceIntentDataUpdateDocument = gql`
   }
   ${PriceIntentFragmentFragmentDoc}
 `
-export const ShopSessionDocument = gql`
-  query ShopSession($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
+export const ShopSessionFindOrCreateDocument = gql`
+  query ShopSessionFindOrCreate($shopSessionId: ID, $countryCode: CountryCode!) {
+    shopSessionFindOrCreate(
+      input: { shopSessionId: $shopSessionId, buyerIdentity: { countryCode: $countryCode } }
+    ) {
       id
-    }
-  }
-`
-export const ShopSessionCreateDocument = gql`
-  mutation ShopSessionCreate($countryCode: CountryCode!) {
-    shopSession {
-      create(input: { buyerIdentity: { countryCode: $countryCode } }) {
-        id
+      cart {
+        ...CartFragment
       }
     }
   }
+  ${CartFragmentFragmentDoc}
 `
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
-    Cart(variables: CartQueryVariables, options?: C): Promise<CartQuery> {
-      return requester<CartQuery, CartQueryVariables>(CartDocument, variables, options)
-    },
     CartLinesAdd(
       variables: CartLinesAddMutationVariables,
       options?: C,
@@ -1022,19 +997,12 @@ export function getSdk<C>(requester: Requester<C>) {
         options,
       )
     },
-    ShopSession(variables: ShopSessionQueryVariables, options?: C): Promise<ShopSessionQuery> {
-      return requester<ShopSessionQuery, ShopSessionQueryVariables>(
-        ShopSessionDocument,
-        variables,
-        options,
-      )
-    },
-    ShopSessionCreate(
-      variables: ShopSessionCreateMutationVariables,
+    ShopSessionFindOrCreate(
+      variables: ShopSessionFindOrCreateQueryVariables,
       options?: C,
-    ): Promise<ShopSessionCreateMutation> {
-      return requester<ShopSessionCreateMutation, ShopSessionCreateMutationVariables>(
-        ShopSessionCreateDocument,
+    ): Promise<ShopSessionFindOrCreateQuery> {
+      return requester<ShopSessionFindOrCreateQuery, ShopSessionFindOrCreateQueryVariables>(
+        ShopSessionFindOrCreateDocument,
         variables,
         options,
       )
