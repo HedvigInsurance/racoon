@@ -25,6 +25,26 @@ export const cartLinesAdd = (shopSessionId: string, lineId: string) => {
   return updatedCart
 }
 
+export const cartLinesRemove = (shopSessionId: string, lineId: string) => {
+  const lineItem = db.lineItem.findFirst({ where: { id: { equals: lineId } } })
+  const shopSession = db.shopSession.findFirst({ where: { id: { equals: shopSessionId } } })
+
+  if (!lineItem) throw new Error('Line item not found: ' + lineId)
+  if (!shopSession) throw new Error('Shop session not found: ' + shopSessionId)
+
+  const cart = shopSession.cart
+  if (!cart) throw new Error('Cart not found: ' + shopSessionId)
+
+  const updatedCart = db.cart.update({
+    where: { id: { equals: cart.id } },
+    data: {
+      lines: cart.lines.filter((line) => line.id !== lineId),
+    },
+  })
+
+  return updatedCart
+}
+
 export const dbToAPI = (cart: ReturnType<typeof db.cart.create>): CartFragmentFragment => {
   return {
     id: cart.id,

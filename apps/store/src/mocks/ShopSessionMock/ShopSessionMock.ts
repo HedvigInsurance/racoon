@@ -13,6 +13,6 @@ export const mockShopSessionHandlers = [
   }),
 
   api.mutation(SHOP_SESSION_CREATE, (_, res, ctx) => {
-    return res(ctx.data({ shopSession: { create: { shopSession: shopSessionCreate() } } }))
+    return res(ctx.data({ shopSession: { create: shopSessionCreate() } }))
   }),
 ]

@@ -7,20 +7,21 @@ import { getLocale } from '@/lib/l10n/getLocale'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { CmsService } from '@/services/cms/CmsService'
 import { getProductByMarketAndName } from '@/services/mockProductService'
+import { isCountryCode } from '@/utils/isCountryCode'
 
 const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
   return <ProductPage {...props} />
 }
 
 export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
-  const localeData = getLocale(context.locale ?? context.defaultLocale)
+  const { marketLabel: countryCode } = getLocale(context.locale ?? context.defaultLocale)
   const slugParam = context.params?.product
 
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam
 
   if (!slug) return { notFound: true }
 
-  const cmsProduct = await CmsService.getProductByMarketAndSlug(localeData.marketLabel, slug)
+  const cmsProduct = await CmsService.getProductByMarketAndSlug(countryCode, slug)
 
   if (!cmsProduct) return { notFound: true }
 
@@ -28,8 +29,11 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
   if (!product) return { notFound: true }
 
+  if (!isCountryCode(countryCode)) return { notFound: true }
+
   try {
     const { template, priceIntent } = await setupPriceCalculator({
+      countryCode,
       productId: cmsProduct.productId,
       request: context.req,
       response: context.res,
@@ -47,6 +51,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
           gradient: ['#00BFFF', '#00ff00'],
         },
         priceFormTemplate: template,
+        lineId: lineItem?.id ?? null,
       },
     }
   } catch (error) {
