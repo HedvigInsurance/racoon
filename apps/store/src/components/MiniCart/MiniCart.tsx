@@ -16,7 +16,7 @@ export const MiniCart = () => {
 
   return (
     <Wrapper>
-      <Link href={PageLink.cart()}>
+      <Link href={PageLink.cart()} passHref>
         <StyledLink tabIndex={0} aria-label="shopping cart">
           <ShoppingBagIcon />
         </StyledLink>
