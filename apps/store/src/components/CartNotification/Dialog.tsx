@@ -12,7 +12,7 @@ const contentShow = keyframes({
   '100%': { opacity: 1, transform: 'scale(1)' },
 })
 
-const StyledOverlay = styled(DialogPrimitive.Overlay)(({ theme }) => ({
+const StyledOverlay = styled(DialogPrimitive.Overlay)(() => ({
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   position: 'fixed',
   inset: 0,
