@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 
 const ProductCard = styled.div(({ theme }) => ({
-  paddingRight: theme.space[3],
-  paddingLeft: theme.space[3],
+  paddingRight: theme.space[4],
+  paddingLeft: theme.space[4],
   paddingBottom: theme.space[5],
 }))
 
