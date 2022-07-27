@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { SimplePersister } from './priceIntent.types'
+import { SimplePersister } from './Persister.types'
 
 export class CookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}

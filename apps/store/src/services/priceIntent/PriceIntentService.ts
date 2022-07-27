@@ -1,14 +1,14 @@
 import { GetServerSidePropsContext } from 'next'
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { CookiePersister } from './CookiePersister'
+import { CookiePersister } from '@/services/persister/CookiePersister'
+import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
+import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { COOKIE_KEY_PRICE_INTENT, COOKIE_KEY_SHOP_SESSION } from './priceIntent.constants'
 import {
   PriceIntentCreateParams,
   PriceIntentDataUpdateParams,
   SimplePersister,
 } from './priceIntent.types'
-import { ServerCookiePersister } from './ServerCookiePersister'
-import { ShopSessionService } from './ShopSessionService'
 
 class PriceIntentService {
   constructor(

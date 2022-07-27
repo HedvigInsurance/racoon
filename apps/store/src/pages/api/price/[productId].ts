@@ -19,7 +19,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await priceIntentService.confirm(priceIntent.id)
   }
 
-  return res.redirect(302, PageLink.test_price({ productId }))
+  return res.redirect(302, PageLink.product({ id: productId }))
 }
 
 export default handler
