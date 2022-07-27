@@ -5,6 +5,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
+import { SpacerBlock } from '@/blocks/SpacerBlock'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -45,6 +46,7 @@ export const initStoryblok = () => {
     page: PageBlock,
     productCard: ProductCardBlock,
     productGrid: ProductGridBlock,
+    spacer: SpacerBlock,
   }
 
   storyblokInit({
