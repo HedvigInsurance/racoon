@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
-import * as NavigationMenuNative from '@radix-ui/react-navigation-menu'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 import { MiniCart } from '../MiniCart/MiniCart'
@@ -13,116 +14,90 @@ export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
   const [open, setOpen] = useState(false)
 
-  const closeMenu = useCallback(() => {
+  const closeDialog = useCallback(() => {
     setOpen(false)
     setActiveItem('')
   }, [])
 
-  useEffect(
-    function closeOnEscape() {
-      const keyDownHandler = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          closeMenu()
-        }
-      }
-
-      document.addEventListener('keydown', keyDownHandler)
-
-      return () => {
-        document.removeEventListener('keydown', keyDownHandler)
-      }
-    },
-    [closeMenu],
-  )
-
-  useEffect(
-    function lockScrollWhenOpen() {
-      const originalStyle = window.getComputedStyle(document.body).overflow
-
-      if (open) {
-        document.body.style.overflow = 'hidden'
-      }
-
-      return () => {
-        document.body.style.overflow = originalStyle
-      }
-    },
-    [open],
-  )
-
   return (
     <Wrapper>
-      <ToggleMenu
-        aria-controls="primary-navigation"
-        aria-expanded={open}
-        onClick={() => setOpen((prevValue) => !prevValue)}
-      >
-        {open ? <CrossIcon /> : <MenuIcon />}
-      </ToggleMenu>
+      <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
+        <DialogPrimitive.Trigger asChild>
+          <ToggleMenu>
+            <MenuIcon />
+          </ToggleMenu>
+        </DialogPrimitive.Trigger>
 
-      {open && (
-        <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
-          <NavigationPrimaryList id="primary-navigation">
-            <NavigationMenuNative.Item value="insurances">
-              <NavigationTrigger>
-                Insurances{' '}
-                {activeItem === 'insurances' ? (
-                  <CrossIcon size="16px" />
-                ) : (
-                  <ArrowForwardIcon size="16px" />
-                )}
-              </NavigationTrigger>
-              <NavigationMenuNative.Content>
-                <NavigationMenuNative.Sub defaultValue="browseAll">
-                  <NavigationSecondaryList>
-                    <NavigationMenuNative.Item value="browseAll">
-                      <NavigationLink href={PageLink.store()} onSelect={closeMenu}>
-                        Browse All
-                      </NavigationLink>
-                    </NavigationMenuNative.Item>
+        <DialogContent>
+          <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
+            <NavigationPrimaryList>
+              <NavigationMenuPrimitive.Item value="insurances">
+                <NavigationTrigger>
+                  Insurances{' '}
+                  {activeItem === 'insurances' ? (
+                    <CrossIcon size="16px" />
+                  ) : (
+                    <ArrowForwardIcon size="16px" />
+                  )}
+                </NavigationTrigger>
+                <NavigationMenuPrimitive.Content>
+                  <NavigationMenuPrimitive.Sub defaultValue="browseAll">
+                    <NavigationSecondaryList>
+                      <NavigationMenuPrimitive.Item value="browseAll">
+                        <NavigationLink href={PageLink.store()} onSelect={closeDialog}>
+                          Browse All
+                        </NavigationLink>
+                      </NavigationMenuPrimitive.Item>
 
-                    <NavigationMenuNative.Item value="homeInsurance">
-                      <NavigationLink href="#" onSelect={closeMenu}>
-                        Home Insurances
-                      </NavigationLink>
-                    </NavigationMenuNative.Item>
+                      <NavigationMenuPrimitive.Item value="homeInsurance">
+                        <NavigationLink href="#" onSelect={closeDialog}>
+                          Home Insurances
+                        </NavigationLink>
+                      </NavigationMenuPrimitive.Item>
 
-                    <NavigationMenuNative.Item value="accidentInsurance">
-                      <NavigationLink href="#" onSelect={closeMenu}>
-                        Accident Insurance
-                      </NavigationLink>
-                    </NavigationMenuNative.Item>
+                      <NavigationMenuPrimitive.Item value="accidentInsurance">
+                        <NavigationLink href="#" onSelect={closeDialog}>
+                          Accident Insurance
+                        </NavigationLink>
+                      </NavigationMenuPrimitive.Item>
 
-                    <NavigationMenuNative.Item value="carInsurance">
-                      <NavigationLink href="#" onSelect={closeMenu}>
-                        Car Insurance
-                      </NavigationLink>
-                    </NavigationMenuNative.Item>
-                  </NavigationSecondaryList>
-                </NavigationMenuNative.Sub>
-              </NavigationMenuNative.Content>
-            </NavigationMenuNative.Item>
+                      <NavigationMenuPrimitive.Item value="carInsurance">
+                        <NavigationLink href="#" onSelect={closeDialog}>
+                          Car Insurance
+                        </NavigationLink>
+                      </NavigationMenuPrimitive.Item>
+                    </NavigationSecondaryList>
+                  </NavigationMenuPrimitive.Sub>
+                </NavigationMenuPrimitive.Content>
+              </NavigationMenuPrimitive.Item>
 
-            <NavigationMenuNative.Item value="onlyAtHedvig">
-              <NavigationLink href="#" onSelect={closeMenu}>
-                Only At Hedvig
-              </NavigationLink>
-            </NavigationMenuNative.Item>
+              <NavigationMenuPrimitive.Item value="onlyAtHedvig">
+                <NavigationLink href="#" onSelect={closeDialog}>
+                  Only At Hedvig
+                </NavigationLink>
+              </NavigationMenuPrimitive.Item>
 
-            <NavigationMenuNative.Item value="ourStory">
-              <NavigationLink href="#" onSelect={closeMenu}>
-                Our Story
-              </NavigationLink>
-            </NavigationMenuNative.Item>
+              <NavigationMenuPrimitive.Item value="ourStory">
+                <NavigationLink href="#" onSelect={closeDialog}>
+                  Our Story
+                </NavigationLink>
+              </NavigationMenuPrimitive.Item>
 
-            <NavigationMenuNative.Item value="support">
-              <NavigationLink href="#" onSelect={closeMenu}>
-                Support
-              </NavigationLink>
-            </NavigationMenuNative.Item>
-          </NavigationPrimaryList>
-        </Navigation>
-      )}
+              <NavigationMenuPrimitive.Item value="support">
+                <NavigationLink href="#" onSelect={closeDialog}>
+                  Support
+                </NavigationLink>
+              </NavigationMenuPrimitive.Item>
+            </NavigationPrimaryList>
+          </Navigation>
+
+          <DialogPrimitive.DialogClose asChild>
+            <IconButton>
+              <CrossIcon />
+            </IconButton>
+          </DialogPrimitive.DialogClose>
+        </DialogContent>
+      </DialogPrimitive.Root>
 
       <MiniCart />
     </Wrapper>
@@ -130,6 +105,7 @@ export const TopMenu = () => {
 }
 
 const focusableStyles = {
+  cursor: 'pointer',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },
@@ -146,28 +122,50 @@ const Wrapper = styled.div(({ theme }) => ({
   color: theme.colors.gray900,
 }))
 
-const ToggleMenu = styled.button({
-  cursor: 'pointer',
+const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
+  position: 'fixed',
+  inset: 0,
+})
+
+const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
+  return (
+    <DialogPrimitive.Portal>
+      <StyledDialogOverlay />
+      <DialogPrimitive.Content {...props} />
+    </DialogPrimitive.Portal>
+  )
+}
+
+const IconButton = styled.button({
+  position: 'absolute',
+  top: '1rem',
+  left: '1rem',
+  lineHeight: 0,
   ...focusableStyles,
 })
 
-const Navigation = styled(NavigationMenuNative.Root)({
+const ToggleMenu = styled.button({
+  ...focusableStyles,
+})
+
+const Navigation = styled(NavigationMenuPrimitive.Root)({
+  backgroundColor: theme.colors.gray200,
   fontSize: theme.fontSizes[5],
 })
 
-const NavigationPrimaryList = styled(NavigationMenuNative.List)(({ theme }) => ({
+const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+  all: 'unset',
   listStyle: 'none',
   position: 'fixed',
-  inset: `${MENU_BAR_HEIGHT} 0 0 0`,
+  inset: 0,
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space[5],
-  padding: `${theme.space[8]} ${theme.space[4]} 0`,
+  padding: `${theme.space[10]} ${theme.space[4]} 0`,
   backgroundColor: theme.colors.gray200,
-  zIndex: 9999,
 }))
 
-const NavigationSecondaryList = styled(NavigationMenuNative.List)({
+const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
   display: 'flex',
@@ -178,21 +176,20 @@ const NavigationSecondaryList = styled(NavigationMenuNative.List)({
   fontSize: theme.fontSizes[3],
 })
 
-const NavigationTrigger = styled(NavigationMenuNative.Trigger)({
-  cursor: 'pointer',
+const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
   ...focusableStyles,
 })
 
-const StyledNavigationLink = styled(NavigationMenuNative.Link)({
+const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   textDecoration: 'none',
   ...focusableStyles,
 })
 
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
-  Omit<NavigationMenuNative.NavigationMenuLinkProps, 'href'>
+  Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'>
 
 const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
   return (
