@@ -69,6 +69,7 @@ extend type Query {
 type ShopSession {
   id: ID!
   buyerIdentity: ShopSessionBuyerIdentity!
+  priceIntents: [PriceIntent!]!
 }
 
 type ShopSessionBuyerIdentity {
@@ -85,15 +86,11 @@ input ShopSessionBuyerIdentityInput {
 }
 
 extend type Mutation {
-  shopSession: ShopSessionMutations
+  shopSession(id: ID!): ShopSessionMutations!
 }
 
 type ShopSessionMutations {
-  create(input: ShopSessionCreateInput!): ShopSession!
-}
-
-input ShopSessionCreateInput {
-  buyerIdentity: ShopSessionBuyerIdentityInput!
+  _empty: String
 }
 
 #
@@ -104,13 +101,13 @@ extend type ShopSession {
   cart: Cart!
 }
 
-extend type Mutation {
-  cart: CartMutations
+extend type ShopSessionMutations {
+  cart: CartMutations!
 }
 
 type CartMutations {
-  linesAdd(shopSessionId: ID!, lineIds: [ID!]!): CartLinesAddPayload!
-  linesRemove(shopSessionId: ID!, lineIds: [ID!]!): CartLinesRemovePayload!
+  linesAdd(lineIds: [ID!]!): CartLinesAddPayload!
+  linesRemove(lineIds: [ID!]!): CartLinesRemovePayload!
 }
 
 type Cart {
@@ -170,17 +167,17 @@ extend type ShopSession {
   priceIntent(id: ID!): PriceIntent
 }
 
-extend type Mutation {
-  priceIntent: PriceIntentMutations
+extend type ShopSessionMutations {
+  "Creates a new price intent."
+  priceIntentCreate(input: PriceIntentCreateInput!): PriceIntent!
+  priceIntent(id: ID!): PriceIntentMutations!
 }
 
 type PriceIntentMutations {
-  "Creates a new price intent."
-  create(input: PriceIntentCreateInput!): PriceIntent!
   "Updates user form data."
-  dataUpdate(priceIntentId: ID!, data: JSON!): PriceIntentDataUpdatePayload!
+  dataUpdate(data: JSON!): PriceIntentDataUpdatePayload!
   "Generates line items with price based on user form data."
-  confirm(priceIntentId: ID!): PriceIntentConfirmPayload!
+  confirm: PriceIntentConfirmPayload!
 }
 
 type PriceIntent {
@@ -202,8 +199,6 @@ type PriceIntentLine {
 }
 
 input PriceIntentCreateInput {
-  "The id of the shop session."
-  shopSessionId: ID!
   "The product to calculate price for."
   productId: ID!
 }
