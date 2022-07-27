@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { CartCard } from './CartCard'
 
 export default {
-  title: 'UI / Card / Cart Card',
+  title: ' Cart Card',
   component: CartCard,
   args: {},
 } as ComponentMeta<typeof CartCard>
