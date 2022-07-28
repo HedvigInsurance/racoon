@@ -1,5 +1,5 @@
 type CostData = { crossOut?: number; total: number; subTotal: number }
-type ProductData = { name: string; cost: number }
+export type ProductData = { name: string; cost: number; currency: string }
 type CampaignData = { name: string; discount: number }
 
 export type CheckoutPaymentPageProps = {

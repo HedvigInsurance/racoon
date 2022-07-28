@@ -4,6 +4,7 @@ import { Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
+import { PriceBreakdown } from '../CheckoutPaymentPage/PriceBreakdown'
 
 export const CartPage = () => {
   const cartContext = useContext(CartContext)
@@ -14,17 +15,18 @@ export const CartPage = () => {
 
   const { cart } = cartContext
 
+  const products = [{ name: 'Home Insurance', cost: 250, currency: 'SEK' }, { name: 'Apartment Insurance', cost: 100, currency: 'SEK' }]
+  const cost = {total: 350, subTotal: 250}
+
   return (
     <>
       <Heading as="h1" variant="standard.40">
         Cart
       </Heading>
-      <Space y={2}>
-        <CartList showBundles showLinks />
+      <Space y={2}/>
+        <CartList products={products}/>
+      <PriceBreakdown currency="SEK" products={products} cost={cost}/>
 
-        <p>
-          Items in cart: {cart.items.length}, total price: {cart.price}
-        </p>
 
         <footer>
           <Link href={PageLink.cartReview()}>Check Out</Link>
@@ -33,7 +35,6 @@ export const CartPage = () => {
         <div>
           <Link href={PageLink.store()}>Go to shop</Link>
         </div>
-      </Space>
     </>
   )
 }
