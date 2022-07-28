@@ -1,15 +1,9 @@
-import { CmsProduct } from '@/services/cms/cms.types'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
-import { CurrencyCode } from '@/services/graphql/generated'
-import { Product } from '@/services/mockProductService'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ProductStory } from '@/services/storyblok/storyblok'
 
 export type ProductPageProps = {
-  cmsProduct: CmsProduct
-  product: Product & {
-    currencyCode: CurrencyCode
-    price: number | null
-    gradient: [string, string]
-  }
+  story: ProductStory
   priceFormTemplate: FormTemplate
-  lineId: string | null
+  priceIntent: PriceIntent
 }
