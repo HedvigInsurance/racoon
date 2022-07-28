@@ -28,7 +28,7 @@ export const cartLinesAdd = (shopSessionId: string, lineId: string) => {
   const updatedCart = db.cart.update({
     where: { id: { equals: cart.id } },
     data: {
-      lines: [lineItem],
+      lines: [...(shopSession.cart?.lines ?? []), lineItem],
     },
   })
 
@@ -74,6 +74,7 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
     id: cart.id,
     buyerIdentity: { countryCode: cart.countryCode as CountryCode },
     lines: cart.lines.map((line) => ({
+      __typename: 'CartLine',
       id: line.id,
       price: { amount: line.priceAmount, currencyCode: line.currencyCode as CurrencyCode },
       variant: { id: line.variantId, title: line.variantTitle },
