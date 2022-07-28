@@ -1,13 +1,15 @@
 mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
-  cart {
-    linesRemove(shopSessionId: $shopSessionId, lineIds: [$lineId]) {
-      cart {
-        ...CartFragment
-      }
-      userErrors {
-        code
-        field
-        message
+  shopSession(id: $shopSessionId) {
+    cart {
+      linesRemove(lineIds: [$lineId]) {
+        cart {
+          ...CartFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
       }
     }
   }

@@ -1,13 +1,15 @@
-mutation PriceIntentConfirm($priceIntentId: ID!) {
-  priceIntent {
-    confirm(priceIntentId: $priceIntentId) {
-      priceIntent {
-        ...PriceIntentFragment
-      }
-      userErrors {
-        code
-        field
-        message
+mutation PriceIntentConfirm($shopSessionId: ID!, $priceIntentId: ID!) {
+  shopSession(id: $shopSessionId) {
+    priceIntent(id: $priceIntentId) {
+      confirm {
+        priceIntent {
+          ...PriceIntentFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
       }
     }
   }
