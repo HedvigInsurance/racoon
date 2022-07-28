@@ -490,6 +490,7 @@ export type Query = {
   paymentConnection?: Maybe<PaymentConnection>
   person: Person
   shopSession: ShopSession
+  shopSessionFindOrCreate: ShopSession
 }
 
 export type QueryCheckoutArgs = {
@@ -510,6 +511,10 @@ export type QueryPersonArgs = {
 
 export type QueryShopSessionArgs = {
   id: Scalars['ID']
+}
+
+export type QueryShopSessionFindOrCreateArgs = {
+  input: ShopSessionFindOrCreateInput
 }
 
 export type Review = {
@@ -549,6 +554,11 @@ export type ShopSessionCreateInput = {
   buyerIdentity: ShopSessionBuyerIdentityInput
 }
 
+export type ShopSessionFindOrCreateInput = {
+  buyerIdentity: ShopSessionBuyerIdentityInput
+  shopSessionId?: InputMaybe<Scalars['ID']>
+}
+
 export type ShopSessionMutations = {
   __typename?: 'ShopSessionMutations'
   create: ShopSession
@@ -568,28 +578,6 @@ export type SubmitReviewResponse = {
   message: Scalars['String']
   /** Indicates whether the mutation was successful */
   success: Scalars['Boolean']
-}
-
-export type CartQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type CartQuery = {
-  __typename?: 'Query'
-  shopSession: {
-    __typename?: 'ShopSession'
-    cart: {
-      __typename?: 'Cart'
-      id: string
-      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
-      lines: Array<{
-        __typename?: 'CartLine'
-        id: string
-        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-        variant: { __typename?: 'ProductVariant'; id: string; title: string }
-      }>
-    }
-  }
 }
 
 export type CartFragmentFragment = {
@@ -789,25 +777,28 @@ export type PriceIntentFragmentFragment = {
   }> | null
 }
 
-export type ShopSessionQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type ShopSessionQuery = {
-  __typename?: 'Query'
-  shopSession: { __typename?: 'ShopSession'; id: string }
-}
-
-export type ShopSessionCreateMutationVariables = Exact<{
+export type ShopSessionFindOrCreateQueryVariables = Exact<{
+  shopSessionId?: InputMaybe<Scalars['ID']>
   countryCode: CountryCode
 }>
 
-export type ShopSessionCreateMutation = {
-  __typename?: 'Mutation'
-  shopSession?: {
-    __typename?: 'ShopSessionMutations'
-    create: { __typename?: 'ShopSession'; id: string }
-  } | null
+export type ShopSessionFindOrCreateQuery = {
+  __typename?: 'Query'
+  shopSessionFindOrCreate: {
+    __typename?: 'ShopSession'
+    id: string
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
 }
 
 export const CartFragmentFragmentDoc = gql`
@@ -846,46 +837,6 @@ export const PriceIntentFragmentFragmentDoc = gql`
     }
   }
 `
-export const CartDocument = gql`
-  query Cart($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
-      cart {
-        ...CartFragment
-      }
-    }
-  }
-  ${CartFragmentFragmentDoc}
-`
-
-/**
- * __useCartQuery__
- *
- * To run a query within a React component, call `useCartQuery` and pass it any options that fit your needs.
- * When your component renders, `useCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCartQuery({
- *   variables: {
- *      shopSessionId: // value for 'shopSessionId'
- *   },
- * });
- */
-export function useCartQuery(baseOptions: Apollo.QueryHookOptions<CartQuery, CartQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<CartQuery, CartQueryVariables>(CartDocument, options)
-}
-export function useCartLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<CartQuery, CartQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<CartQuery, CartQueryVariables>(CartDocument, options)
-}
-export type CartQueryHookResult = ReturnType<typeof useCartQuery>
-export type CartLazyQueryHookResult = ReturnType<typeof useCartLazyQuery>
-export type CartQueryResult = Apollo.QueryResult<CartQuery, CartQueryVariables>
 export const CartLinesAddDocument = gql`
   mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
     cart {
@@ -1214,94 +1165,68 @@ export type PriceIntentDataUpdateMutationOptions = Apollo.BaseMutationOptions<
   PriceIntentDataUpdateMutation,
   PriceIntentDataUpdateMutationVariables
 >
-export const ShopSessionDocument = gql`
-  query ShopSession($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
+export const ShopSessionFindOrCreateDocument = gql`
+  query ShopSessionFindOrCreate($shopSessionId: ID, $countryCode: CountryCode!) {
+    shopSessionFindOrCreate(
+      input: { shopSessionId: $shopSessionId, buyerIdentity: { countryCode: $countryCode } }
+    ) {
       id
+      cart {
+        ...CartFragment
+      }
     }
   }
+  ${CartFragmentFragmentDoc}
 `
 
 /**
- * __useShopSessionQuery__
+ * __useShopSessionFindOrCreateQuery__
  *
- * To run a query within a React component, call `useShopSessionQuery` and pass it any options that fit your needs.
- * When your component renders, `useShopSessionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useShopSessionFindOrCreateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopSessionFindOrCreateQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useShopSessionQuery({
+ * const { data, loading, error } = useShopSessionFindOrCreateQuery({
  *   variables: {
  *      shopSessionId: // value for 'shopSessionId'
- *   },
- * });
- */
-export function useShopSessionQuery(
-  baseOptions: Apollo.QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<ShopSessionQuery, ShopSessionQueryVariables>(ShopSessionDocument, options)
-}
-export function useShopSessionLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<ShopSessionQuery, ShopSessionQueryVariables>(
-    ShopSessionDocument,
-    options,
-  )
-}
-export type ShopSessionQueryHookResult = ReturnType<typeof useShopSessionQuery>
-export type ShopSessionLazyQueryHookResult = ReturnType<typeof useShopSessionLazyQuery>
-export type ShopSessionQueryResult = Apollo.QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
-export const ShopSessionCreateDocument = gql`
-  mutation ShopSessionCreate($countryCode: CountryCode!) {
-    shopSession {
-      create(input: { buyerIdentity: { countryCode: $countryCode } }) {
-        id
-      }
-    }
-  }
-`
-export type ShopSessionCreateMutationFn = Apollo.MutationFunction<
-  ShopSessionCreateMutation,
-  ShopSessionCreateMutationVariables
->
-
-/**
- * __useShopSessionCreateMutation__
- *
- * To run a mutation, you first call `useShopSessionCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useShopSessionCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [shopSessionCreateMutation, { data, loading, error }] = useShopSessionCreateMutation({
- *   variables: {
  *      countryCode: // value for 'countryCode'
  *   },
  * });
  */
-export function useShopSessionCreateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ShopSessionCreateMutation,
-    ShopSessionCreateMutationVariables
+export function useShopSessionFindOrCreateQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ShopSessionFindOrCreateQuery,
+    ShopSessionFindOrCreateQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<ShopSessionCreateMutation, ShopSessionCreateMutationVariables>(
-    ShopSessionCreateDocument,
+  return Apollo.useQuery<ShopSessionFindOrCreateQuery, ShopSessionFindOrCreateQueryVariables>(
+    ShopSessionFindOrCreateDocument,
     options,
   )
 }
-export type ShopSessionCreateMutationHookResult = ReturnType<typeof useShopSessionCreateMutation>
-export type ShopSessionCreateMutationResult = Apollo.MutationResult<ShopSessionCreateMutation>
-export type ShopSessionCreateMutationOptions = Apollo.BaseMutationOptions<
-  ShopSessionCreateMutation,
-  ShopSessionCreateMutationVariables
+export function useShopSessionFindOrCreateLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ShopSessionFindOrCreateQuery,
+    ShopSessionFindOrCreateQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ShopSessionFindOrCreateQuery, ShopSessionFindOrCreateQueryVariables>(
+    ShopSessionFindOrCreateDocument,
+    options,
+  )
+}
+export type ShopSessionFindOrCreateQueryHookResult = ReturnType<
+  typeof useShopSessionFindOrCreateQuery
+>
+export type ShopSessionFindOrCreateLazyQueryHookResult = ReturnType<
+  typeof useShopSessionFindOrCreateLazyQuery
+>
+export type ShopSessionFindOrCreateQueryResult = Apollo.QueryResult<
+  ShopSessionFindOrCreateQuery,
+  ShopSessionFindOrCreateQueryVariables
 >

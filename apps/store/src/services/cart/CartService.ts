@@ -4,11 +4,6 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 export class CartService {
   constructor(private readonly shopSession: ShopSession) {}
 
-  public async fetch() {
-    const { shopSession } = await graphqlSdk.Cart({ shopSessionId: this.shopSession.id })
-    return shopSession.cart
-  }
-
   public async lineAdd(lineId: string) {
     const { cart } = await graphqlSdk.CartLinesAdd({
       shopSessionId: this.shopSession.id,

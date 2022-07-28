@@ -1,7 +1,0 @@
-mutation ShopSessionCreate($countryCode: CountryCode!) {
-  shopSession {
-    create(input: { buyerIdentity: { countryCode: $countryCode } }) {
-      id
-    }
-  }
-}
