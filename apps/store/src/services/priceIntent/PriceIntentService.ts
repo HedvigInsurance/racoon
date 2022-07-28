@@ -1,30 +1,27 @@
 import { GetServerSidePropsContext } from 'next'
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { CookiePersister } from './CookiePersister'
-import { COOKIE_KEY_PRICE_INTENT, COOKIE_KEY_SHOP_SESSION } from './priceIntent.constants'
+import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { COOKIE_KEY_PRICE_INTENT } from './priceIntent.constants'
 import {
   PriceIntentCreateParams,
   PriceIntentDataUpdateParams,
   SimplePersister,
 } from './priceIntent.types'
-import { ServerCookiePersister } from './ServerCookiePersister'
-import { ShopSessionService } from './ShopSessionService'
 
 class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
-    private readonly shopSessionService: ShopSessionService,
+    private readonly shopSession: ShopSession,
   ) {}
 
   public async create({ productId }: PriceIntentCreateParams) {
-    const { id: shopSessionId } = await this.shopSessionService.fetch()
-
     const response = await graphqlSdk.PriceIntentCreate({
-      shopSessionId,
+      shopSessionId: this.shopSession.id,
       productId,
     })
 
-    const priceIntent = response.priceIntent?.create.priceIntent
+    const priceIntent = response.priceIntent?.create
     if (!priceIntent) throw new Error('Could not create price intent')
 
     this.persister.save(priceIntent.id)
@@ -33,7 +30,9 @@ class PriceIntentService {
   }
 
   private async get(priceIntentId: string) {
-    const { priceIntent } = await graphqlSdk.PriceIntent({ priceIntentId })
+    const {
+      shopSession: { priceIntent },
+    } = await graphqlSdk.PriceIntent({ shopSessionId: this.shopSession.id, priceIntentId })
     return priceIntent ?? null
   }
 
@@ -68,19 +67,15 @@ class PriceIntentService {
   }
 }
 
-export const priceIntentServiceInitClientSide = () => {
+export const priceIntentServiceInitServerSide = ({ request, response, shopSession }: Params) => {
   return new PriceIntentService(
-    new CookiePersister(COOKIE_KEY_PRICE_INTENT),
-    new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION)),
+    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
+    shopSession,
   )
 }
 
-export const priceIntentServiceInitServerSide = (
-  request: GetServerSidePropsContext['req'],
-  response: GetServerSidePropsContext['res'],
-) => {
-  return new PriceIntentService(
-    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
-    new ShopSessionService(new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response)),
-  )
+type Params = {
+  request: GetServerSidePropsContext['req']
+  response: GetServerSidePropsContext['res']
+  shopSession: ShopSession
 }

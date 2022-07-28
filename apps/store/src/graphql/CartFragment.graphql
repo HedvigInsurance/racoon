@@ -1,0 +1,17 @@
+fragment CartFragment on Cart {
+  id
+  buyerIdentity {
+    countryCode
+  }
+  lines {
+    id
+    price {
+      amount
+      currencyCode
+    }
+    variant {
+      id
+      title
+    }
+  }
+}

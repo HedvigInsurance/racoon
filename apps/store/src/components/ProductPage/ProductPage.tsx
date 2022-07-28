@@ -6,15 +6,24 @@ import { Fragment, useContext } from 'react'
 import { Heading, HeadingOLD, Space } from 'ui'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
 import { CartList } from '../CartList/CartList'
 import { useHandleSubmitPriceCalculator } from '../PriceCalculator/useHandleSubmitPriceCalculator'
 import { ProductPageProps } from './ProductPage.types'
+import { useHandleClickAddToCart } from './useHandleClickAddToCart'
 
-export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductPageProps) => {
+export const ProductPage = ({
+  cmsProduct,
+  product,
+  priceFormTemplate,
+  lineId,
+}: ProductPageProps) => {
+  const { marketLabel: countryCode } = useCurrentLocale()
   const cartContext = useContext(CartContext)
   const { handleSubmit } = useHandleSubmitPriceCalculator({ productId: cmsProduct.productId })
+  const [handleClickAddToCart] = useHandleClickAddToCart({ lineId })
 
   if (!cartContext) {
     throw new Error('ProductPage cannot be rendered outside CartContext')
@@ -59,6 +68,7 @@ export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductP
 
         <form onSubmit={handleSubmit}>
           <PriceCalculator template={priceFormTemplate} />
+          <input type="hidden" name="countryCode" value={countryCode} />
         </form>
 
         <SectionWithPadding>
@@ -67,7 +77,7 @@ export const ProductPage = ({ cmsProduct, product, priceFormTemplate }: ProductP
             cost={product.price ?? undefined}
             currency={product.currencyCode}
             gradient={product.gradient}
-            onClick={() => {}}
+            onClick={handleClickAddToCart}
           />
         </SectionWithPadding>
 

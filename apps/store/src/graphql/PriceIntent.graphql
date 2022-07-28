@@ -1,5 +1,7 @@
-query PriceIntent($priceIntentId: ID!) {
-  priceIntent(id: $priceIntentId) {
-    ...PriceIntentFragment
+query PriceIntent($shopSessionId: ID!, $priceIntentId: ID!) {
+  shopSession(id: $shopSessionId) {
+    priceIntent(id: $priceIntentId) {
+      ...PriceIntentFragment
+    }
   }
 }

@@ -4,7 +4,10 @@ import type {
 } from '@/services/graphql/generated'
 
 export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'>
-export type PriceIntentDataUpdateParams = PriceIntentDataUpdateMutationVariables
+export type PriceIntentDataUpdateParams = Omit<
+  PriceIntentDataUpdateMutationVariables,
+  'shopSessionId'
+>
 
 export interface SimplePersister {
   save(id: string): void

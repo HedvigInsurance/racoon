@@ -31,14 +31,6 @@ export type CartBuyerIdentity = {
   countryCode: CountryCode
 }
 
-export type CartBuyerIdentityInput = {
-  countryCode: CountryCode
-}
-
-export type CartCreateInput = {
-  buyerIdentity: CartBuyerIdentityInput
-}
-
 export type CartCreatePayload = {
   __typename?: 'CartCreatePayload'
   cart?: Maybe<Cart>
@@ -66,6 +58,22 @@ export type CartLinesRemovePayload = {
   __typename?: 'CartLinesRemovePayload'
   cart?: Maybe<Cart>
   userErrors: Array<CartUserError>
+}
+
+export type CartMutations = {
+  __typename?: 'CartMutations'
+  linesAdd: CartLinesAddPayload
+  linesRemove: CartLinesRemovePayload
+}
+
+export type CartMutationsLinesAddArgs = {
+  lineIds: Array<Scalars['ID']>
+  shopSessionId: Scalars['ID']
+}
+
+export type CartMutationsLinesRemoveArgs = {
+  lineIds: Array<Scalars['ID']>
+  shopSessionId: Scalars['ID']
 }
 
 export type CartUserError = {
@@ -221,9 +229,7 @@ export type Money = {
 export type Mutation = {
   __typename?: 'Mutation'
   _empty?: Maybe<Scalars['String']>
-  cartCreate: CartCreatePayload
-  cartLinesAdd: CartLinesAddPayload
-  cartLinesRemove: CartLinesRemovePayload
+  cart?: Maybe<CartMutations>
   checkoutCompleteFree: CheckoutCompleteFreePayload
   checkoutCompleteWithPayment: CheckoutCompleteWithPaymentPayload
   /** Creates a new checkout. */
@@ -238,20 +244,6 @@ export type Mutation = {
   priceIntent?: Maybe<PriceIntentMutations>
   shopSession?: Maybe<ShopSessionMutations>
   submitReview?: Maybe<SubmitReviewResponse>
-}
-
-export type MutationCartCreateArgs = {
-  input: CartCreateInput
-}
-
-export type MutationCartLinesAddArgs = {
-  cartId: Scalars['ID']
-  lineIds: Array<Scalars['ID']>
-}
-
-export type MutationCartLinesRemoveArgs = {
-  cartId: Scalars['ID']
-  lineIds: Array<Scalars['ID']>
 }
 
 export type MutationCheckoutCompleteFreeArgs = {
@@ -412,16 +404,8 @@ export type PriceIntentConfirmPayload = {
 export type PriceIntentCreateInput = {
   /** The product to calculate price for. */
   productId: Scalars['ID']
-  /** The current shop session. */
+  /** The id of the shop session. */
   shopSessionId: Scalars['ID']
-}
-
-export type PriceIntentCreatePayload = {
-  __typename?: 'PriceIntentCreatePayload'
-  /** The new price intent object. */
-  priceIntent?: Maybe<PriceIntent>
-  /** The list of errors that occurred from executing the mutation. */
-  userErrors: Array<PriceIntentUserError>
 }
 
 export type PriceIntentDataUpdatePayload = {
@@ -450,7 +434,7 @@ export type PriceIntentMutations = {
   /** Generates line items with price based on user form data. */
   confirm: PriceIntentConfirmPayload
   /** Creates a new price intent. */
-  create: PriceIntentCreatePayload
+  create: PriceIntent
   /** Updates user form data. */
   dataUpdate: PriceIntentDataUpdatePayload
 }
@@ -495,7 +479,6 @@ export type ProductVariant = {
 export type Query = {
   __typename?: 'Query'
   _empty?: Maybe<Scalars['String']>
-  cart?: Maybe<Cart>
   checkout?: Maybe<Checkout>
   /** The three latest reviews submitted for FlyBy's locations */
   latestReviews: Array<Review>
@@ -505,13 +488,7 @@ export type Query = {
   locations: Array<Location>
   paymentConnection?: Maybe<PaymentConnection>
   person: Person
-  /** Get a price intent by its ID. */
-  priceIntent?: Maybe<PriceIntent>
   shopSession: ShopSession
-}
-
-export type QueryCartArgs = {
-  id: Scalars['ID']
 }
 
 export type QueryCheckoutArgs = {
@@ -527,10 +504,6 @@ export type QueryPaymentConnectionArgs = {
 }
 
 export type QueryPersonArgs = {
-  id: Scalars['ID']
-}
-
-export type QueryPriceIntentArgs = {
   id: Scalars['ID']
 }
 
@@ -551,32 +524,37 @@ export type Review = {
 
 export type ShopSession = {
   __typename?: 'ShopSession'
+  buyerIdentity: ShopSessionBuyerIdentity
+  cart: Cart
+  id: Scalars['ID']
+  /** Get a price intent by its ID. */
+  priceIntent?: Maybe<PriceIntent>
+}
+
+export type ShopSessionPriceIntentArgs = {
   id: Scalars['ID']
 }
 
-export type ShopSessionCreatePayload = {
-  __typename?: 'ShopSessionCreatePayload'
-  shopSession?: Maybe<ShopSession>
-  userErrors?: Maybe<Array<ShopSessionUserError>>
+export type ShopSessionBuyerIdentity = {
+  __typename?: 'ShopSessionBuyerIdentity'
+  countryCode: CountryCode
 }
 
-export enum ShopSessionErrorCode {
-  Invalid = 'INVALID',
+export type ShopSessionBuyerIdentityInput = {
+  countryCode: CountryCode
+}
+
+export type ShopSessionCreateInput = {
+  buyerIdentity: ShopSessionBuyerIdentityInput
 }
 
 export type ShopSessionMutations = {
   __typename?: 'ShopSessionMutations'
-  create: ShopSessionCreatePayload
+  create: ShopSession
 }
 
-export type ShopSessionUserError = {
-  __typename?: 'ShopSessionUserError'
-  /** The error code. */
-  code?: Maybe<ShopSessionErrorCode>
-  /** The path to the input field that caused the error. */
-  field?: Maybe<Array<Scalars['String']>>
-  /** The error message. */
-  message: Scalars['String']
+export type ShopSessionMutationsCreateArgs = {
+  input: ShopSessionCreateInput
 }
 
 export type SubmitReviewResponse = {
@@ -591,23 +569,125 @@ export type SubmitReviewResponse = {
   success: Scalars['Boolean']
 }
 
+export type CartQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
+}>
+
+export type CartQuery = {
+  __typename?: 'Query'
+  shopSession: {
+    __typename?: 'ShopSession'
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
+}
+
+export type CartFragmentFragment = {
+  __typename?: 'Cart'
+  id: string
+  buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+  lines: Array<{
+    __typename?: 'CartLine'
+    id: string
+    price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+    variant: { __typename?: 'ProductVariant'; id: string; title: string }
+  }>
+}
+
+export type CartLinesAddMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesAddMutation = {
+  __typename?: 'Mutation'
+  cart?: {
+    __typename?: 'CartMutations'
+    linesAdd: {
+      __typename?: 'CartLinesAddPayload'
+      cart?: {
+        __typename?: 'Cart'
+        id: string
+        buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+        lines: Array<{
+          __typename?: 'CartLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }>
+      } | null
+      userErrors: Array<{
+        __typename?: 'CartUserError'
+        code?: CartErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
+export type CartLinesRemoveMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
+  lineId: Scalars['ID']
+}>
+
+export type CartLinesRemoveMutation = {
+  __typename?: 'Mutation'
+  cart?: {
+    __typename?: 'CartMutations'
+    linesRemove: {
+      __typename?: 'CartLinesRemovePayload'
+      cart?: {
+        __typename?: 'Cart'
+        id: string
+        buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+        lines: Array<{
+          __typename?: 'CartLine'
+          id: string
+          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+        }>
+      } | null
+      userErrors: Array<{
+        __typename?: 'CartUserError'
+        code?: CartErrorCode | null
+        field?: Array<string> | null
+        message: string
+      }>
+    }
+  } | null
+}
+
 export type PriceIntentQueryVariables = Exact<{
+  shopSessionId: Scalars['ID']
   priceIntentId: Scalars['ID']
 }>
 
 export type PriceIntentQuery = {
   __typename?: 'Query'
-  priceIntent?: {
-    __typename?: 'PriceIntent'
-    id: string
-    data: any
-    lines?: Array<{
-      __typename?: 'PriceIntentLine'
+  shopSession: {
+    __typename?: 'ShopSession'
+    priceIntent?: {
+      __typename?: 'PriceIntent'
       id: string
-      price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-      variant: { __typename?: 'ProductVariant'; id: string; title: string }
-    }> | null
-  } | null
+      data: any
+      lines?: Array<{
+        __typename?: 'PriceIntentLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }> | null
+    } | null
+  }
 }
 
 export type PriceIntentConfirmMutationVariables = Exact<{
@@ -651,24 +731,15 @@ export type PriceIntentCreateMutation = {
   priceIntent?: {
     __typename?: 'PriceIntentMutations'
     create: {
-      __typename?: 'PriceIntentCreatePayload'
-      priceIntent?: {
-        __typename?: 'PriceIntent'
+      __typename?: 'PriceIntent'
+      id: string
+      data: any
+      lines?: Array<{
+        __typename?: 'PriceIntentLine'
         id: string
-        data: any
-        lines?: Array<{
-          __typename?: 'PriceIntentLine'
-          id: string
-          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-          variant: { __typename?: 'ProductVariant'; id: string; title: string }
-        }> | null
-      } | null
-      userErrors: Array<{
-        __typename?: 'PriceIntentUserError'
-        code?: PriceIntentErrorCode | null
-        field?: Array<string> | null
-        message: string
-      }>
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }> | null
     }
   } | null
 }
@@ -726,19 +797,37 @@ export type ShopSessionQuery = {
   shopSession: { __typename?: 'ShopSession'; id: string }
 }
 
-export type ShopSessionCreateMutationVariables = Exact<{ [key: string]: never }>
+export type ShopSessionCreateMutationVariables = Exact<{
+  countryCode: CountryCode
+}>
 
 export type ShopSessionCreateMutation = {
   __typename?: 'Mutation'
   shopSession?: {
     __typename?: 'ShopSessionMutations'
-    create: {
-      __typename?: 'ShopSessionCreatePayload'
-      shopSession?: { __typename?: 'ShopSession'; id: string } | null
-    }
+    create: { __typename?: 'ShopSession'; id: string }
   } | null
 }
 
+export const CartFragmentFragmentDoc = gql`
+  fragment CartFragment on Cart {
+    id
+    buyerIdentity {
+      countryCode
+    }
+    lines {
+      id
+      price {
+        amount
+        currencyCode
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+`
 export const PriceIntentFragmentFragmentDoc = gql`
   fragment PriceIntentFragment on PriceIntent {
     id
@@ -756,10 +845,56 @@ export const PriceIntentFragmentFragmentDoc = gql`
     }
   }
 `
+export const CartDocument = gql`
+  query Cart($shopSessionId: ID!) {
+    shopSession(id: $shopSessionId) {
+      cart {
+        ...CartFragment
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export const CartLinesAddDocument = gql`
+  mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
+    cart {
+      linesAdd(shopSessionId: $shopSessionId, lineIds: [$lineId]) {
+        cart {
+          ...CartFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
+export const CartLinesRemoveDocument = gql`
+  mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
+    cart {
+      linesRemove(shopSessionId: $shopSessionId, lineIds: [$lineId]) {
+        cart {
+          ...CartFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+  ${CartFragmentFragmentDoc}
+`
 export const PriceIntentDocument = gql`
-  query PriceIntent($priceIntentId: ID!) {
-    priceIntent(id: $priceIntentId) {
-      ...PriceIntentFragment
+  query PriceIntent($shopSessionId: ID!, $priceIntentId: ID!) {
+    shopSession(id: $shopSessionId) {
+      priceIntent(id: $priceIntentId) {
+        ...PriceIntentFragment
+      }
     }
   }
   ${PriceIntentFragmentFragmentDoc}
@@ -785,14 +920,7 @@ export const PriceIntentCreateDocument = gql`
   mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
     priceIntent {
       create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
-        priceIntent {
-          ...PriceIntentFragment
-        }
-        userErrors {
-          code
-          field
-          message
-        }
+        ...PriceIntentFragment
       }
     }
   }
@@ -823,12 +951,10 @@ export const ShopSessionDocument = gql`
   }
 `
 export const ShopSessionCreateDocument = gql`
-  mutation ShopSessionCreate {
+  mutation ShopSessionCreate($countryCode: CountryCode!) {
     shopSession {
-      create {
-        shopSession {
-          id
-        }
+      create(input: { buyerIdentity: { countryCode: $countryCode } }) {
+        id
       }
     }
   }
@@ -836,6 +962,29 @@ export const ShopSessionCreateDocument = gql`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    Cart(variables: CartQueryVariables, options?: C): Promise<CartQuery> {
+      return requester<CartQuery, CartQueryVariables>(CartDocument, variables, options)
+    },
+    CartLinesAdd(
+      variables: CartLinesAddMutationVariables,
+      options?: C,
+    ): Promise<CartLinesAddMutation> {
+      return requester<CartLinesAddMutation, CartLinesAddMutationVariables>(
+        CartLinesAddDocument,
+        variables,
+        options,
+      )
+    },
+    CartLinesRemove(
+      variables: CartLinesRemoveMutationVariables,
+      options?: C,
+    ): Promise<CartLinesRemoveMutation> {
+      return requester<CartLinesRemoveMutation, CartLinesRemoveMutationVariables>(
+        CartLinesRemoveDocument,
+        variables,
+        options,
+      )
+    },
     PriceIntent(variables: PriceIntentQueryVariables, options?: C): Promise<PriceIntentQuery> {
       return requester<PriceIntentQuery, PriceIntentQueryVariables>(
         PriceIntentDocument,
@@ -881,7 +1030,7 @@ export function getSdk<C>(requester: Requester<C>) {
       )
     },
     ShopSessionCreate(
-      variables?: ShopSessionCreateMutationVariables,
+      variables: ShopSessionCreateMutationVariables,
       options?: C,
     ): Promise<ShopSessionCreateMutation> {
       return requester<ShopSessionCreateMutation, ShopSessionCreateMutationVariables>(
