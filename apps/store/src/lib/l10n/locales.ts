@@ -1,6 +1,6 @@
 import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
-import { Market as ApiMarket, MarketLabel, HtmlLanguage, Locale } from './types'
+import { Market as ApiMarket, MarketLabel, HtmlLanguage, Locale, CountryCode } from './types'
 
 export const FALLBACK_LOCALE: Locale = Locale.EnSe
 
@@ -23,6 +23,7 @@ export type LocaleData = {
   }
   phoneNumber?: PhoneNumberData
   currencyLocale: Locale
+  countryCode: CountryCode
 }
 
 export const locales: Record<Locale, LocaleData> = {
@@ -45,6 +46,7 @@ export const locales: Record<Locale, LocaleData> = {
     },
     phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.SvSe,
+    countryCode: CountryCode.Se,
   },
   'en-se': {
     path: Locale.EnSe,
@@ -65,6 +67,7 @@ export const locales: Record<Locale, LocaleData> = {
     },
     phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.EnSe,
+    countryCode: CountryCode.Se,
   },
   'nb-no': {
     path: Locale.NbNo,
@@ -84,6 +87,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
     currencyLocale: Locale.NbNo,
+    countryCode: CountryCode.No,
   },
   'en-no': {
     path: Locale.EnNo,
@@ -103,6 +107,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'YYYY-MM-DD',
     },
     currencyLocale: Locale.EnNo,
+    countryCode: CountryCode.No,
   },
   'da-dk': {
     path: Locale.DaDk,
@@ -122,6 +127,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
     currencyLocale: Locale.DaDk,
+    countryCode: CountryCode.Dk,
   },
   'en-dk': {
     path: Locale.DaDk,
@@ -141,5 +147,6 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'YYYY-MM-DD',
     },
     currencyLocale: Locale.EnDk,
+    countryCode: CountryCode.Dk,
   },
 }

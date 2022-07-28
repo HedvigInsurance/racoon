@@ -70,6 +70,7 @@ export const dbShopSessionToAPI = (
 
 export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
   return {
+    __typename: 'Cart',
     id: cart.id,
     buyerIdentity: { countryCode: cart.countryCode as CountryCode },
     lines: cart.lines.map((line) => ({
