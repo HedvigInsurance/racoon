@@ -50,16 +50,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const links = await getAllLinks()
 
   const paths: Path[] = []
-  Object.keys(links).forEach((linkKey) => {
-    if (links[linkKey].is_folder) {
-      return
-    }
+  Object.keys(links)
+    .filter((linkKey) => !links[linkKey].is_folder)
+    .filter((linkKey) => !links[linkKey].slug.startsWith('products/'))
+    .forEach((linkKey) => {
+      const slug = links[linkKey].slug
+      const splittedSlug = slug.split('/')
 
-    const slug = links[linkKey].slug
-    const splittedSlug = slug.split('/')
-
-    paths.push({ params: { slug: splittedSlug } })
-  })
+      paths.push({ params: { slug: splittedSlug } })
+    })
 
   return {
     paths: paths,
