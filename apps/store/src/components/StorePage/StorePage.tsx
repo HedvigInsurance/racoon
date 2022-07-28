@@ -15,7 +15,7 @@ export const StorePage = ({ products }: StorePageProps) => {
             <Space y={1}>
               {products.map((product) => (
                 <li key={product.slug}>
-                  <Link href={PageLink.product({ id: product.slug })}>{product.displayName}</Link>
+                  <Link href={PageLink.product({ slug: product.slug })}>{product.displayName}</Link>
                 </li>
               ))}
             </Space>

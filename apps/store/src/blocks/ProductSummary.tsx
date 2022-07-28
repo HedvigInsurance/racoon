@@ -3,11 +3,14 @@ import { storyblokEditable } from '@storyblok/react'
 import { ProductSummary } from '@/components/ProductPage/ProductSummary/ProductSummary'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type Props = {
+export type ProductSummaryBlockContext = {
   title: string
+  gradient: readonly [string, string]
+}
+
+type Props = ProductSummaryBlockContext & {
   description: string
   starScore: number
-  gradient: readonly [string, string]
 }
 
 type ProductSummaryBlockProps = SbBaseBlockProps<Props>
