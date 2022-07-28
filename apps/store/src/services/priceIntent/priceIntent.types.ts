@@ -1,6 +1,7 @@
 import type {
   PriceIntentCreateMutationVariables,
   PriceIntentDataUpdateMutationVariables,
+  PriceIntentQuery,
 } from '@/services/graphql/generated'
 
 export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'>
@@ -14,3 +15,5 @@ export interface SimplePersister {
   fetch(): string | null
   reset(): void
 }
+
+export type PriceIntent = Exclude<PriceIntentQuery['shopSession']['priceIntent'], null | undefined>

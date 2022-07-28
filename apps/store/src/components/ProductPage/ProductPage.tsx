@@ -1,159 +1,50 @@
-import styled from '@emotion/styled'
-import * as RadixTabs from '@radix-ui/react-tabs'
-import Head from 'next/head'
-import Link from 'next/link'
-import { Fragment, useContext } from 'react'
-import { Heading, HeadingOLD, Space } from 'ui'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
-import { PriceCard } from '@/components/PriceCard/PriceCard'
+import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { useMemo } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { PageLink } from '@/lib/PageLink'
-import { CartContext } from '@/services/mockCartService'
-import { CartList } from '../CartList/CartList'
-import { useHandleSubmitPriceCalculator } from '../PriceCalculator/useHandleSubmitPriceCalculator'
+import { CurrencyCode } from '@/services/graphql/generated'
+import { ProductStory, StoryblokBlockName } from '@/services/storyblok/storyblok'
 import { ProductPageProps } from './ProductPage.types'
-import { useHandleClickAddToCart } from './useHandleClickAddToCart'
+
+const productGradient = ['#00BFFF', '#00ff00'] as const
 
 export const ProductPage = ({
-  cmsProduct,
-  product,
+  story: initalStory,
   priceFormTemplate,
-  lineId,
+  priceIntent,
 }: ProductPageProps) => {
-  const { marketLabel: countryCode } = useCurrentLocale()
-  const cartContext = useContext(CartContext)
-  const { handleSubmit } = useHandleSubmitPriceCalculator({ productId: cmsProduct.productId })
-  const [handleClickAddToCart] = useHandleClickAddToCart({ lineId })
+  const { countryCode } = useCurrentLocale()
+  const productStory = useStoryblokState(initalStory)
 
-  if (!cartContext) {
-    throw new Error('ProductPage cannot be rendered outside CartContext')
-  }
+  const story = useMemo(() => {
+    const lineItem = priceIntent.lines?.[0]
 
-  const { getItemsByName } = cartContext
+    return {
+      ...productStory,
+      content: {
+        ...productStory.content,
+        body: (productStory as unknown as ProductStory).content.body.map((block) => {
+          const extraProps: Record<string, unknown> = {}
+          if (block.component === StoryblokBlockName.ProductSummary) {
+            extraProps.gradient = productGradient
+            extraProps.title = block.title || productStory.content.name
+          } else if (block.component === StoryblokBlockName.PriceCalculator) {
+            extraProps.productId = productStory.content.productId
+            extraProps.lineId = lineItem?.id ?? null
+            extraProps.priceFormTemplate = priceFormTemplate
+            extraProps.countryCode = countryCode
+            extraProps.product = {
+              name: productStory.content.name,
+              price: lineItem?.price.amount ?? null,
+              currencyCode: CurrencyCode.Sek,
+              gradient: productGradient,
+            }
+          }
 
-  const productsOfThisType = getItemsByName(product.name)
+          return { ...block, ...extraProps }
+        }),
+      },
+    }
+  }, [productStory, priceIntent, priceFormTemplate, countryCode])
 
-  return (
-    <>
-      <Head>
-        <title>{cmsProduct.pageTitle}</title>
-      </Head>
-      <Heading as="h1" variant="standard.40">
-        {cmsProduct.displayName}
-      </Heading>
-      <Space y={2}>
-        {productsOfThisType.length > 0 && (
-          <div>
-            <Heading as="h2" variant="standard.24">
-              Products of this type in cart
-            </Heading>
-            <CartList filterByProductName={product.name} />
-          </div>
-        )}
-
-        {product?.insurances.length > 1 && (
-          <div>
-            <Heading as="h2" variant="standard.24">
-              Insurances included in this bundle
-            </Heading>
-            <ul>
-              {product.insurances.map((insurance) => (
-                <li key={insurance?.name} style={{ maxWidth: '400px' }}>
-                  <strong>{insurance?.displayName}</strong>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <PriceCalculator template={priceFormTemplate} />
-          <input type="hidden" name="countryCode" value={countryCode} />
-        </form>
-
-        <SectionWithPadding>
-          <PriceCard
-            name={product.displayName}
-            cost={product.price ?? undefined}
-            currency={product.currencyCode}
-            gradient={product.gradient}
-            onClick={handleClickAddToCart}
-          />
-        </SectionWithPadding>
-
-        <Tabs defaultValue="overview" orientation="horizontal">
-          <TabsList aria-label="tabs example">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="coverage">Coverage</TabsTrigger>
-          </TabsList>
-          <TabsContent value="overview">
-            <Heading as="h2" variant="standard.24">
-              Coverage Section Heading
-            </Heading>
-          </TabsContent>
-          <TabsContent value="coverage">
-            <Heading as="h2" variant="standard.24">
-              Perils
-            </Heading>
-            {product.insurances.map((insurance) => (
-              <Fragment key={insurance.name}>
-                <Heading as="h3" variant="standard.20">
-                  {insurance?.displayName}
-                </Heading>
-                <ul>
-                  {insurance?.perils.map((peril) => (
-                    <li key={peril.title} style={{ maxWidth: '400px' }}>
-                      <HeadingOLD variant="overline" headingLevel="h3" colorVariant="dark">
-                        {peril.title}
-                      </HeadingOLD>
-                      <br />
-                      {peril.body}
-                    </li>
-                  ))}
-                </ul>
-              </Fragment>
-            ))}
-          </TabsContent>
-        </Tabs>
-
-        <div>
-          <Link href={PageLink.cart()}>Go to cart</Link>
-          <br />
-          <Link href={PageLink.store()}>Go to shop</Link>
-        </div>
-      </Space>
-    </>
-  )
+  return <StoryblokComponent blok={story.content} />
 }
-
-const Tabs = styled(RadixTabs.Root)({
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-const TabsList = styled(RadixTabs.TabsList)({
-  flexShrink: 0,
-  display: 'flex',
-  borderBottom: '1px solid #e3e3e3',
-})
-
-const TabsTrigger = styled(RadixTabs.Trigger)({
-  flex: 1,
-  padding: '1rem',
-  cursor: 'pointer',
-  '&:hover': { color: 'mediumpurple' },
-  '&[data-state=active]': {
-    color: 'mediumpurple',
-    boxShadow: 'inset 0 -1px 0 0 mediumpurple, 0 1px 0 0 currentColor',
-  },
-  '&:focus-visible': {
-    boxShadow: '0 0 0 2px black',
-  },
-})
-
-const TabsContent = styled(RadixTabs.Content)({})
-
-const SectionWithPadding = styled.div(({ theme }) => ({
-  paddingLeft: theme.space[3],
-  paddingRight: theme.space[3],
-}))

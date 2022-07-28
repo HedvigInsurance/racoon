@@ -12,14 +12,14 @@ const contentShow = keyframes({
   '100%': { opacity: 1, transform: 'scale(1)' },
 })
 
-const StyledOverlay = styled(DialogPrimitive.Overlay)(() => ({
+const StyledOverlay = styled(DialogPrimitive.Overlay)({
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   position: 'fixed',
   inset: 0,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
   },
-}))
+})
 
 const StyledContent = styled(DialogPrimitive.Content)(({ theme }) => ({
   backgroundColor: theme.colors.white,

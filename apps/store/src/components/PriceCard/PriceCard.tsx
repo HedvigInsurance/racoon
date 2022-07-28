@@ -7,7 +7,7 @@ import { TickIcon } from './TickIcon'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
 
-type Gradient = [string, string]
+type Gradient = readonly [string, string]
 
 export type PriceCardProps = {
   name: string
