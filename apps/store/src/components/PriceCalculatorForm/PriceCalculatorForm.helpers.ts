@@ -5,19 +5,19 @@ import { CountryCode } from '@/services/graphql/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { shopSessionServiceInitServerSide } from '@/services/shopSession/ShopSessionService'
 
-type SetupPriceCalculatorParams = {
+type SetupPriceCalculatorFormParams = {
   countryCode: CountryCode
   productId: string
   request: GetServerSidePropsContext['req']
   response: GetServerSidePropsContext['res']
 }
 
-export const setupPriceCalculator = async ({
+export const setupPriceCalculatorForm = async ({
   countryCode,
   productId,
   request,
   response,
-}: SetupPriceCalculatorParams) => {
+}: SetupPriceCalculatorFormParams) => {
   const shopSession = await shopSessionServiceInitServerSide({ request, response }).fetch({
     countryCode,
   })
