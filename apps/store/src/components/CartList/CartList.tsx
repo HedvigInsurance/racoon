@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { Space } from 'ui'
-import { CartCard } from '../CartCard/CartCard'
+import { CartCard } from '@/components/CartCard/CartCard'
 import { ProductData } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
+import { CartPageProps } from '../CartPage/CartPageProps.types'
 
 const CartUl = styled.ul(({theme}) => ({
   paddingLeft: '0',
@@ -14,12 +14,12 @@ const CartUl = styled.ul(({theme}) => ({
  *
  * It can optionally filter by a CmsProduct name to only show relevant products.
  */
-export const CartList = ( {products} : Array<ProductData>) => {
-  console.log(products)
+
+ type Props = CartPageProps
+export const CartList = ( {products} : Props) => {
   const handleClickRemove = (id: string) => {
     //send BE request to remove item from cart
   }
-
 
   return (
     <CartUl>

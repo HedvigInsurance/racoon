@@ -4,7 +4,7 @@ import { Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PageLink } from '@/lib/PageLink'
 import { CartContext } from '@/services/mockCartService'
-import { PriceBreakdown } from '../CheckoutPaymentPage/PriceBreakdown'
+import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 
 export const CartPage = () => {
   const cartContext = useContext(CartContext)

@@ -5,7 +5,7 @@ import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
-import { PriceBreakdown } from './PriceBreakdown'
+import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 
 export const CheckoutPaymentPageAdyen = (props: CheckoutPaymentPageProps) => {
   const [paymentConnection, setPaymentConnection] = useState<unknown | null>(null)

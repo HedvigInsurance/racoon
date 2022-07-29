@@ -4,7 +4,7 @@ import { Text } from '@/components/Text/Text'
 import { TrustlyWidget } from '@/services/trustly/TrustlyWidget'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
-import { PriceBreakdown } from './PriceBreakdown'
+import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 
 const TRUSTLY_WIDGET_HEIGHT = 171.33
 
