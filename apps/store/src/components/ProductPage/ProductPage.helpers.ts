@@ -1,6 +1,6 @@
 import { SbBlokData } from '@storyblok/react'
-import { PriceCalculatorBlockProps } from '@/blocks/PriceCalculator'
-import { ProductSummaryBlockContext } from '@/blocks/ProductSummary'
+import { PriceCalculatorBlockProps } from '@/blocks/PriceCalculatorBlock'
+import { ProductSummaryBlockContext } from '@/blocks/ProductSummaryBlock'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { CountryCode } from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
