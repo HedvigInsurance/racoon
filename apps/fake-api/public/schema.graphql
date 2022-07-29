@@ -68,20 +68,13 @@ extend type Query {
 
 type ShopSession {
   id: ID!
-  buyerIdentity: ShopSessionBuyerIdentity!
-  priceIntents: [PriceIntent!]!
-}
-
-type ShopSessionBuyerIdentity {
   countryCode: CountryCode!
+  currencyCode: CurrencyCode!
+  priceIntents: [PriceIntent!]!
 }
 
 input ShopSessionFindOrCreateInput {
   shopSessionId: ID
-  buyerIdentity: ShopSessionBuyerIdentityInput!
-}
-
-input ShopSessionBuyerIdentityInput {
   countryCode: CountryCode!
 }
 
