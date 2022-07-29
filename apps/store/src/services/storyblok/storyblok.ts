@@ -3,10 +3,10 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
-import { PriceCalculatorBlock } from '@/blocks/PriceCalculator'
+import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
-import { ProductSummaryBlock } from '@/blocks/ProductSummary'
+import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 
 export type SbBaseBlockProps<T> = {
