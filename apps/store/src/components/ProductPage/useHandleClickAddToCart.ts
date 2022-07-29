@@ -5,9 +5,10 @@ import { PageLink } from '@/lib/PageLink'
 
 type Params = {
   lineId: string | null
+  onSuccess: () => void
 }
 
-export const useHandleClickAddToCart = ({ lineId }: Params) => {
+export const useHandleClickAddToCart = ({ lineId, onSuccess }: Params) => {
   const { marketLabel: countryCode } = useCurrentLocale()
   const refreshData = useRefreshData()
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
@@ -24,6 +25,7 @@ export const useHandleClickAddToCart = ({ lineId }: Params) => {
         body: JSON.stringify({ countryCode }),
         headers: { 'Content-Type': 'application/json' },
       })
+      onSuccess()
       await refreshData()
     } finally {
       setStatus('idle')

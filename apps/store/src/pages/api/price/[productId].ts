@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
-import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isCountryCode } from '@/utils/isCountryCode'
 

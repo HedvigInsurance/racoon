@@ -32,3 +32,15 @@ export const getShopSessionIdClientSide = (apolloClient: Params['apolloClient'])
 
   return shopSessionService.shopSessionId
 }
+
+export const getShopSessionClientSide = async ({
+  apolloClient,
+  countryCode,
+}: Omit<GetShopSessionParams, 'req' | 'res'>) => {
+  const shopSessionService = new ShopSessionService(
+    new CookiePersister(COOKIE_KEY_SHOP_SESSION),
+    apolloClient,
+  )
+
+  return await shopSessionService.fetch({ countryCode })
+}

@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next'
 import { FormSection, FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
-import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type SetupPriceCalculatorFormParams = {

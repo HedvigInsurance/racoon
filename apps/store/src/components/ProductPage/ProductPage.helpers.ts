@@ -1,5 +1,5 @@
 import { SbBlokData } from '@storyblok/react'
-import { PriceCalculatorBlockProps } from '@/blocks/PriceCalculatorBlock'
+import { PriceCalculatorBlockContext } from '@/blocks/PriceCalculatorBlock'
 import { ProductSummaryBlockContext } from '@/blocks/ProductSummaryBlock'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { CountryCode } from '@/services/graphql/generated'
@@ -16,37 +16,46 @@ type Params = {
   countryCode: CountryCode
 }
 
-export const getBlockContext = ({
-  block,
-  productStory,
-  priceIntent,
-  countryCode,
-  priceFormTemplate,
-}: Params) => {
-  const lineItem = priceIntent.lines?.[0]
-
-  switch (block.component) {
+export const getBlockContext = (params: Params) => {
+  switch (params.block.component) {
     case StoryblokBlockName.ProductSummary:
-      return {
-        title: block.title || productStory.content.name,
-        gradient: productGradient,
-      } as ProductSummaryBlockContext
+      return getProductSummaryBlockContext(params)
 
     case StoryblokBlockName.PriceCalculator:
-      return {
-        lineId: lineItem?.id ?? null,
-        priceFormTemplate,
-        countryCode,
-        product: {
-          slug: productStory.slug,
-          name: productStory.content.name,
-          price: lineItem?.price.amount ?? null,
-          currencyCode: productStory.content.currencyCode,
-          gradient: productGradient,
-        },
-      } as PriceCalculatorBlockProps
+      return getPriceCalculatorBlockContext(params)
 
     default:
       return {}
+  }
+}
+
+const getProductSummaryBlockContext = ({
+  block,
+  productStory,
+}: Params): ProductSummaryBlockContext => {
+  return {
+    title: typeof block.title === 'string' ? block.title : productStory.content.name,
+    gradient: productGradient,
+  }
+}
+
+const getPriceCalculatorBlockContext = ({
+  productStory,
+  countryCode,
+  priceIntent,
+  priceFormTemplate,
+}: Params): PriceCalculatorBlockContext => {
+  const lineItem = priceIntent.lines?.[0]
+
+  return {
+    lineId: lineItem?.id ?? null,
+    priceFormTemplate,
+    countryCode,
+    product: {
+      slug: productStory.slug,
+      name: productStory.content.name,
+      price: lineItem?.price.amount ?? null,
+      gradient: productGradient,
+    },
   }
 }
