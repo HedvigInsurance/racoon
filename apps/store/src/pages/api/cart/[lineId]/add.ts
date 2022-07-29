@@ -1,26 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { initializeApollo } from '@/services/apollo/client'
 import { cartServiceInit } from '@/services/cart/CartService'
-import { shopSessionServiceInitServerSide } from '@/services/shopSession/ShopSessionService'
+import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isCountryCode } from '@/utils/isCountryCode'
 
-export const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { lineId } = request.query
-  if (typeof lineId !== 'string')
-    return response.status(500).json({ message: 'Line ID is required' })
+export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { lineId } = req.query
+  if (typeof lineId !== 'string') return res.status(500).json({ message: 'Line ID is required' })
 
-  const { countryCode } = request.body
+  const { countryCode } = req.body
   if (!isCountryCode(countryCode)) {
-    return response.status(500).json({ message: 'Country Code is required' })
+    return res.status(500).json({ message: 'Country Code is required' })
   }
 
-  const shopSession = await shopSessionServiceInitServerSide({ request, response }).fetch({
-    countryCode,
-  })
+  const apolloClient = initializeApollo()
+  const shopSession = await getShopSessionServerSide({ req, res, apolloClient, countryCode })
   const cartService = cartServiceInit({ shopSession })
 
   await cartService.lineAdd(lineId)
 
-  return response.json({ message: 'Line added' })
+  return res.json({ message: 'Line added' })
 }
 
 export default handler

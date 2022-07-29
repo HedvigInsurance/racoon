@@ -1,27 +1,27 @@
 import { GetServerSidePropsContext } from 'next'
 import { FormSection, FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
-import { CountryCode } from '@/services/graphql/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
-import { shopSessionServiceInitServerSide } from '@/services/shopSession/ShopSessionService'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type SetupPriceCalculatorFormParams = {
-  countryCode: CountryCode
+  shopSession: ShopSession
   productId: string
   request: GetServerSidePropsContext['req']
   response: GetServerSidePropsContext['res']
 }
 
 export const setupPriceCalculatorForm = async ({
-  countryCode,
+  shopSession,
   productId,
   request,
   response,
 }: SetupPriceCalculatorFormParams) => {
-  const shopSession = await shopSessionServiceInitServerSide({ request, response }).fetch({
-    countryCode,
+  const priceIntentService = priceIntentServiceInitServerSide({
+    req: request,
+    res: response,
+    shopSession,
   })
-  const priceIntentService = priceIntentServiceInitServerSide({ request, response, shopSession })
   const formTemplateService = new FormTemplateService()
 
   const [emptyTemplate, priceIntent] = await Promise.all([

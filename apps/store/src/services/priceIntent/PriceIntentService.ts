@@ -68,15 +68,15 @@ class PriceIntentService {
   }
 }
 
-export const priceIntentServiceInitServerSide = ({ request, response, shopSession }: Params) => {
+export const priceIntentServiceInitServerSide = ({ req, res, shopSession }: Params) => {
   return new PriceIntentService(
-    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, request, response),
+    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, req, res),
     shopSession,
   )
 }
 
 type Params = {
-  request: GetServerSidePropsContext['req']
-  response: GetServerSidePropsContext['res']
+  req: GetServerSidePropsContext['req']
+  res: GetServerSidePropsContext['res']
   shopSession: ShopSession
 }
