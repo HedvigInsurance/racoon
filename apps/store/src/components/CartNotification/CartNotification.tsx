@@ -1,6 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+export { Header } from './Header'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -37,13 +38,16 @@ const StyledContent = styled(DialogPrimitive.Content)(({ theme }) => ({
 type ContentProps = {
   children: React.ReactNode
   Title: React.ReactNode
+  onClose?: () => void
 }
 
-export const Content = ({ children, Title }: ContentProps) => {
+export const Content = ({ children, Title, onClose }: ContentProps) => {
+  const handleClose = () => onClose?.()
+
   return (
     <DialogPrimitive.Portal>
       <StyledOverlay />
-      <StyledContent>
+      <StyledContent onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
         <DialogPrimitive.Title asChild>{Title}</DialogPrimitive.Title>
         <DialogPrimitive.Description asChild>{children}</DialogPrimitive.Description>
       </StyledContent>

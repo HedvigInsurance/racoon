@@ -3,6 +3,7 @@ import { Button, mq, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { TickIcon } from './TickIcon'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
@@ -11,7 +12,6 @@ type Gradient = readonly [string, string]
 
 export type PriceCardProps = {
   name: string
-  currency: string
   cost?: number
   onClick: () => void
   gradient: Gradient
@@ -20,10 +20,11 @@ export type PriceCardProps = {
 export const PriceCard = ({
   name,
   gradient: [fromColor, toColor],
-  currency,
   cost,
   onClick,
 }: PriceCardProps) => {
+  const { currencyCode } = useCurrentLocale()
+
   return (
     <Wrapper y={1}>
       <CenteredPillow fromColor={fromColor} toColor={toColor} />
@@ -33,7 +34,7 @@ export const PriceCard = ({
       </CenteredText>
 
       <PreviewText aria-disabled={cost === undefined}>
-        {currency} {cost ?? '—'} /mth.
+        {currencyCode} {cost ?? '—'} /mth.
       </PreviewText>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">

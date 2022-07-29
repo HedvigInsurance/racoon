@@ -23,6 +23,7 @@ export type LocaleData = {
   }
   phoneNumber?: PhoneNumberData
   currencyLocale: Locale
+  currencyCode: string
   countryCode: CountryCode
 }
 
@@ -46,6 +47,7 @@ export const locales: Record<Locale, LocaleData> = {
     },
     phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.SvSe,
+    currencyCode: 'SEK',
     countryCode: CountryCode.Se,
   },
   'en-se': {
@@ -67,6 +69,7 @@ export const locales: Record<Locale, LocaleData> = {
     },
     phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.EnSe,
+    currencyCode: 'SEK',
     countryCode: CountryCode.Se,
   },
   'nb-no': {
@@ -87,6 +90,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
     currencyLocale: Locale.NbNo,
+    currencyCode: 'NOK',
     countryCode: CountryCode.No,
   },
   'en-no': {
@@ -107,6 +111,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'YYYY-MM-DD',
     },
     currencyLocale: Locale.EnNo,
+    currencyCode: 'NOK',
     countryCode: CountryCode.No,
   },
   'da-dk': {
@@ -127,6 +132,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
     currencyLocale: Locale.DaDk,
+    currencyCode: 'DKK',
     countryCode: CountryCode.Dk,
   },
   'en-dk': {
@@ -147,6 +153,7 @@ export const locales: Record<Locale, LocaleData> = {
       backendFormatExample: 'YYYY-MM-DD',
     },
     currencyLocale: Locale.EnDk,
+    currencyCode: 'DKK',
     countryCode: CountryCode.Dk,
   },
 }

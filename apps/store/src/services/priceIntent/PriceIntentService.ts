@@ -1,21 +1,20 @@
-import { GetServerSidePropsContext } from 'next'
 import { graphqlSdk } from '@/services/graphql/sdk'
-import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { COOKIE_KEY_PRICE_INTENT } from './priceIntent.constants'
 import {
   PriceIntentCreateParams,
   PriceIntentDataUpdateParams,
   SimplePersister,
 } from './priceIntent.types'
 
-class PriceIntentService {
+export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
-    private readonly shopSession: ShopSession,
+    private readonly shopSession?: ShopSession,
   ) {}
 
   public async create({ productId }: PriceIntentCreateParams) {
+    if (!this.shopSession) throw new Error('No shop session found')
+
     const response = await graphqlSdk.PriceIntentCreate({
       shopSessionId: this.shopSession.id,
       productId,
@@ -29,6 +28,8 @@ class PriceIntentService {
   }
 
   private async get(priceIntentId: string) {
+    if (!this.shopSession) throw new Error('No shop session found')
+
     const {
       shopSession: { priceIntent },
     } = await graphqlSdk.PriceIntent({ shopSessionId: this.shopSession.id, priceIntentId })
@@ -48,6 +49,8 @@ class PriceIntentService {
   }
 
   public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {
+    if (!this.shopSession) throw new Error('No shop session found')
+
     const shopSessionId = this.shopSession.id
     const response = await graphqlSdk.PriceIntentDataUpdate({ shopSessionId, priceIntentId, data })
     const priceIntent = response.shopSession.priceIntent.dataUpdate.priceIntent
@@ -56,6 +59,8 @@ class PriceIntentService {
   }
 
   public async confirm(priceIntentId: string) {
+    if (!this.shopSession) throw new Error('No shop session found')
+
     const shopSessionId = this.shopSession.id
     const response = await graphqlSdk.PriceIntentConfirm({ shopSessionId, priceIntentId })
     const priceIntent = response.shopSession.priceIntent.confirm.priceIntent
@@ -63,20 +68,7 @@ class PriceIntentService {
     return priceIntent
   }
 
-  public async reset() {
+  public reset() {
     this.persister.reset()
   }
-}
-
-export const priceIntentServiceInitServerSide = ({ req, res, shopSession }: Params) => {
-  return new PriceIntentService(
-    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, req, res),
-    shopSession,
-  )
-}
-
-type Params = {
-  req: GetServerSidePropsContext['req']
-  res: GetServerSidePropsContext['res']
-  shopSession: ShopSession
 }

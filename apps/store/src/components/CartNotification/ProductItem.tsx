@@ -2,10 +2,10 @@ import styled from '@emotion/styled'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
-type ProductItemProps = {
+export type ProductItemProps = {
   name: string
   price: string
-  gradient: [string, string]
+  gradient: readonly [string, string]
 }
 
 export const ProductItem = ({ name, price, gradient: [fromColor, toColor] }: ProductItemProps) => {

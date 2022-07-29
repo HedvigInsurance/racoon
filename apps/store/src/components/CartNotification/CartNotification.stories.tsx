@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import { Button, Space } from 'ui'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import * as Dialog from './Dialog'
+import * as CartNotification from './CartNotification'
 import { Header } from './Header'
 import { Main } from './Main'
 import { ProductItem } from './ProductItem'
@@ -39,16 +39,16 @@ Content.args = {
 
 const TemplateWithDialog: Story<Props> = (props) => {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
+    <CartNotification.Root>
+      <CartNotification.Trigger asChild>
         <Button>Open notification</Button>
-      </Dialog.Trigger>
-      <Dialog.Content Title={<Header>Insurance added to cart</Header>}>
+      </CartNotification.Trigger>
+      <CartNotification.Content Title={<Header>Insurance added to cart</Header>}>
         <Main y={1.5}>
           <NotificationContent {...props} />
         </Main>
-      </Dialog.Content>
-    </Dialog.Root>
+      </CartNotification.Content>
+    </CartNotification.Root>
   )
 }
 
