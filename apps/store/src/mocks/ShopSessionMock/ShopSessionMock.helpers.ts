@@ -12,7 +12,7 @@ export const shopSessionFind = (sessionId: string) => {
 }
 
 export const shopSessionCreate = (countryCode: string) => {
-  return db.shopSession.create({ cart: db.cart.create({ countryCode }) })
+  return db.shopSession.create({ cart: db.cart.create(), countryCode, currencyCode: 'SEK' })
 }
 
 export const cartLinesAdd = (shopSessionId: string, lineId: string) => {
@@ -64,6 +64,8 @@ export const dbShopSessionToAPI = (
 
   return {
     id: shopSession.id,
+    countryCode: shopSession.countryCode as CountryCode,
+    currencyCode: shopSession.currencyCode as CurrencyCode,
     cart: dbCartToAPI(cart),
   }
 }
@@ -72,7 +74,6 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
   return {
     __typename: 'Cart',
     id: cart.id,
-    buyerIdentity: { countryCode: cart.countryCode as CountryCode },
     lines: cart.lines.map((line) => ({
       __typename: 'CartLine',
       id: line.id,

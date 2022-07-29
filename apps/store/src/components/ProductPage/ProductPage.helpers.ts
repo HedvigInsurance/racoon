@@ -2,8 +2,8 @@ import { SbBlokData } from '@storyblok/react'
 import { PriceCalculatorBlockContext } from '@/blocks/PriceCalculatorBlock'
 import { ProductSummaryBlockContext } from '@/blocks/ProductSummaryBlock'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
-import { CountryCode } from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { ProductStory, StoryblokBlockName } from '@/services/storyblok/storyblok'
 
 const productGradient = ['#00BFFF', '#00ff00'] as const
@@ -13,7 +13,7 @@ type Params = {
   productStory: ProductStory
   priceIntent: PriceIntent
   priceFormTemplate: FormTemplate
-  countryCode: CountryCode
+  shopSession: ShopSession
 }
 
 export const getBlockContext = (params: Params) => {
@@ -33,15 +33,17 @@ const getProductSummaryBlockContext = ({
   block,
   productStory,
 }: Params): ProductSummaryBlockContext => {
+  const blockTitle = typeof block.title === 'string' ? block.title : undefined
+
   return {
-    title: typeof block.title === 'string' ? block.title : productStory.content.name,
+    title: blockTitle || productStory.content.name,
     gradient: productGradient,
   }
 }
 
 const getPriceCalculatorBlockContext = ({
   productStory,
-  countryCode,
+  shopSession,
   priceIntent,
   priceFormTemplate,
 }: Params): PriceCalculatorBlockContext => {
@@ -50,11 +52,12 @@ const getPriceCalculatorBlockContext = ({
   return {
     lineId: lineItem?.id ?? null,
     priceFormTemplate,
-    countryCode,
+    countryCode: shopSession.countryCode,
     product: {
       slug: productStory.slug,
       name: productStory.content.name,
       price: lineItem?.price.amount ?? null,
+      currencyCode: shopSession.currencyCode,
       gradient: productGradient,
     },
   }

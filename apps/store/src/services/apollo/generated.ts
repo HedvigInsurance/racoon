@@ -517,8 +517,9 @@ export type Review = {
 
 export type ShopSession = {
   __typename?: 'ShopSession'
-  buyerIdentity: ShopSessionBuyerIdentity
   cart: Cart
+  countryCode: CountryCode
+  currencyCode: CurrencyCode
   id: Scalars['ID']
   /** Get a price intent by its ID. */
   priceIntent?: Maybe<PriceIntent>
@@ -529,17 +530,8 @@ export type ShopSessionPriceIntentArgs = {
   id: Scalars['ID']
 }
 
-export type ShopSessionBuyerIdentity = {
-  __typename?: 'ShopSessionBuyerIdentity'
-  countryCode: CountryCode
-}
-
-export type ShopSessionBuyerIdentityInput = {
-  countryCode: CountryCode
-}
-
 export type ShopSessionFindOrCreateInput = {
-  buyerIdentity: ShopSessionBuyerIdentityInput
+  countryCode: CountryCode
   shopSessionId?: InputMaybe<Scalars['ID']>
 }
 
@@ -575,7 +567,6 @@ export type SubmitReviewResponse = {
 export type CartFragmentFragment = {
   __typename?: 'Cart'
   id: string
-  buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
   lines: Array<{
     __typename?: 'CartLine'
     id: string
@@ -600,7 +591,6 @@ export type CartLinesAddMutation = {
         cart?: {
           __typename?: 'Cart'
           id: string
-          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
           lines: Array<{
             __typename?: 'CartLine'
             id: string
@@ -635,7 +625,6 @@ export type CartLinesRemoveMutation = {
         cart?: {
           __typename?: 'Cart'
           id: string
-          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
           lines: Array<{
             __typename?: 'CartLine'
             id: string
@@ -793,10 +782,11 @@ export type ShopSessionFindOrCreateQuery = {
   shopSessionFindOrCreate: {
     __typename?: 'ShopSession'
     id: string
+    countryCode: CountryCode
+    currencyCode: CurrencyCode
     cart: {
       __typename?: 'Cart'
       id: string
-      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
       lines: Array<{
         __typename?: 'CartLine'
         id: string
@@ -810,9 +800,6 @@ export type ShopSessionFindOrCreateQuery = {
 export const CartFragmentFragmentDoc = gql`
   fragment CartFragment on Cart {
     id
-    buyerIdentity {
-      countryCode
-    }
     lines {
       id
       price {
@@ -1183,10 +1170,10 @@ export type PriceIntentDataUpdateMutationOptions = Apollo.BaseMutationOptions<
 >
 export const ShopSessionFindOrCreateDocument = gql`
   query ShopSessionFindOrCreate($shopSessionId: ID, $countryCode: CountryCode!) {
-    shopSessionFindOrCreate(
-      input: { shopSessionId: $shopSessionId, buyerIdentity: { countryCode: $countryCode } }
-    ) {
+    shopSessionFindOrCreate(input: { shopSessionId: $shopSessionId, countryCode: $countryCode }) {
       id
+      countryCode
+      currencyCode
       cart {
         ...CartFragment
       }

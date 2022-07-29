@@ -18,11 +18,13 @@ export const Disabled = Template.bind({})
 Disabled.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
   gradient: ['#aaaaaa', '#828282'],
+  currencyCode: 'SEK',
 }
 
 export const ShowingPrice = Template.bind({})
 ShowingPrice.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
   cost: 112,
+  currencyCode: 'SEK',
   gradient: ['#aaaaaa', '#828282'],
 }

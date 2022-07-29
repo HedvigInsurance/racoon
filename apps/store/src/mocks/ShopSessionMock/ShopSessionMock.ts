@@ -20,7 +20,7 @@ export const mockShopSessionHandlers = [
 
     const existingShopSession = shopSessionFind(req.variables.shopSessionId)
     const shopSession =
-      existingShopSession && existingShopSession.cart?.countryCode === countryCode
+      existingShopSession && existingShopSession.countryCode === countryCode
         ? existingShopSession
         : shopSessionCreate(countryCode)
 
