@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useRouterRefresh from '@/hooks/useRouterRefresh'
+import { useRefreshData } from '@/hooks/useRefreshData'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { PageLink } from '@/lib/PageLink'
 
@@ -9,8 +9,8 @@ type Params = {
 
 export const useHandleClickAddToCart = ({ lineId }: Params) => {
   const { marketLabel: countryCode } = useCurrentLocale()
+  const refreshData = useRefreshData()
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
-  const refreshData = useRouterRefresh()
 
   const handleClick = async () => {
     if (status === 'submitting') return
