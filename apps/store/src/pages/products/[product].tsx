@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { setupPriceCalculator } from '@/components/PriceCalculator/PriceCalculator.helpers'
+import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
   try {
     const story = await getProductStory(slug, context.preview)
-    const { template, priceIntent } = await setupPriceCalculator({
+    const { template, priceIntent } = await setupPriceCalculatorForm({
       countryCode,
       productId: story.content.productId,
       request: context.req,

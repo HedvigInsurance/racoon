@@ -8,11 +8,11 @@ import { StepIconDefault } from './StepIconDefault'
 import { StepIconValid } from './StepIconValid'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
-export type PriceCalculatorProps = {
+export type PriceCalculatorFormProps = {
   template: FormTemplate
 }
 
-export const PriceCalculator = ({ template }: PriceCalculatorProps) => {
+export const PriceCalculatorForm = ({ template }: PriceCalculatorFormProps) => {
   const translateTextLabel = useTranslateTextLabel({ data: {} })
 
   const activeSection = template.sections.find(({ state }) => state !== 'VALID')

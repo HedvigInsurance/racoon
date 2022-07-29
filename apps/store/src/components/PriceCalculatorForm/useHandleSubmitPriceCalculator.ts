@@ -6,7 +6,7 @@ type Params = {
   productSlug: string
 }
 
-export const useHandleSubmitPriceCalculator = ({ productSlug }: Params) => {
+export const useHandleSubmitPriceCalculatorForm = ({ productSlug }: Params) => {
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
   const refreshData = useRouterRefresh()
 

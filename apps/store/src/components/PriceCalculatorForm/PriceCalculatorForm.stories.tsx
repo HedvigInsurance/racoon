@@ -1,16 +1,16 @@
 import { ComponentMeta, Story } from '@storybook/react'
-import { PriceCalculator, PriceCalculatorProps } from './PriceCalculator'
+import { PriceCalculatorForm, PriceCalculatorFormProps } from './PriceCalculatorForm'
 
 export default {
-  title: 'Price Calculator',
-  component: PriceCalculator,
+  title: 'Price Calculator Form',
+  component: PriceCalculatorForm,
   argTypes: {
     onSubmit: { action: 'onSubmit' },
   },
-} as ComponentMeta<typeof PriceCalculator>
+} as ComponentMeta<typeof PriceCalculatorForm>
 
-const Template: Story<PriceCalculatorProps> = (props: PriceCalculatorProps) => {
-  return <PriceCalculator {...props} />
+const Template: Story<PriceCalculatorFormProps> = (props: PriceCalculatorFormProps) => {
+  return <PriceCalculatorForm {...props} />
 }
 
 export const Default = Template.bind({})

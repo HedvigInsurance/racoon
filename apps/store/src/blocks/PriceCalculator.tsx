@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { Heading, Space } from 'ui'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
-import { useHandleSubmitPriceCalculator } from '@/components/PriceCalculator/useHandleSubmitPriceCalculator'
+import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
+import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { useHandleClickAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -32,7 +32,7 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockP
 export const PriceCalculatorBlock = ({
   blok: { title, lineId, priceFormTemplate, countryCode, product },
 }: StoryblokPriceCalculatorBlockProps) => {
-  const { handleSubmit } = useHandleSubmitPriceCalculator({ productSlug: product.slug })
+  const { handleSubmit } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
   const [handleClickAddToCart] = useHandleClickAddToCart({ lineId })
 
   return (
@@ -45,7 +45,7 @@ export const PriceCalculatorBlock = ({
         </SpaceFlex>
 
         <form onSubmit={handleSubmit}>
-          <PriceCalculator template={priceFormTemplate} />
+          <PriceCalculatorForm template={priceFormTemplate} />
           <input type="hidden" name="countryCode" value={countryCode} />
         </form>
       </Space>
