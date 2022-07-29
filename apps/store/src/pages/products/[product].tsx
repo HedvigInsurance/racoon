@@ -5,6 +5,8 @@ import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/Price
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
+import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getProductStory } from '@/services/storyblok/storyblok'
 import { isCountryCode } from '@/utils/isCountryCode'
 
@@ -20,6 +22,8 @@ const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPag
 }
 
 export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
+  const { req, res } = context
+
   const { marketLabel: countryCode } = getLocale(context.locale ?? context.defaultLocale)
   const slug = context.params?.product
 
@@ -27,16 +31,27 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
   if (!isCountryCode(countryCode)) return { notFound: true }
 
   try {
-    const story = await getProductStory(slug, context.preview)
+    const apolloClient = initializeApollo()
+
+    const [shopSession, story] = await Promise.all([
+      getShopSessionServerSide({ req, res, apolloClient, countryCode }),
+      getProductStory(slug, context.preview),
+    ])
+
     const { template, priceIntent } = await setupPriceCalculatorForm({
-      countryCode,
+      shopSession,
       productId: story.content.productId,
       request: context.req,
       response: context.res,
     })
 
     return {
-      props: { story, priceFormTemplate: template, priceIntent },
+      props: {
+        story,
+        priceFormTemplate: template,
+        priceIntent,
+        [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
+      },
     }
   } catch (error) {
     console.error(error)

@@ -1,13 +1,16 @@
-import { GetServerSidePropsContext } from 'next'
-import { ShopSessionFindOrCreateQueryVariables } from '@/services/graphql/generated'
-import { graphqlSdk } from '@/services/graphql/sdk'
-import { CookiePersister } from '@/services/persister/CookiePersister'
+import { ApolloClient, ApolloQueryResult } from '@apollo/client'
+import {
+  ShopSessionFindOrCreateDocument,
+  ShopSessionFindOrCreateQuery,
+  ShopSessionFindOrCreateQueryVariables,
+} from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
-import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
-import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
 
 export class ShopSessionService {
-  constructor(private readonly persister: SimplePersister) {}
+  constructor(
+    private readonly persister: SimplePersister,
+    private readonly apolloClient: ApolloClient<unknown>,
+  ) {}
 
   public get shopSessionId() {
     return this.persister.fetch()
@@ -15,28 +18,26 @@ export class ShopSessionService {
 
   public async fetch(createParams: FetchParams) {
     const shopSessionId = this.persister.fetch()
-    const { shopSessionFindOrCreate: shopSession } = await graphqlSdk.ShopSessionFindOrCreate({
+
+    const {
+      data: { shopSessionFindOrCreate: shopSession },
+    } = await this.shopSessionFindOrCreate({
       shopSessionId,
       ...createParams,
     })
+
     this.persister.save(shopSession.id)
     return shopSession
+  }
+
+  private async shopSessionFindOrCreate(
+    variables: ShopSessionFindOrCreateQueryVariables,
+  ): Promise<ApolloQueryResult<ShopSessionFindOrCreateQuery>> {
+    return await this.apolloClient.query({
+      query: ShopSessionFindOrCreateDocument,
+      variables,
+    })
   }
 }
 
 type FetchParams = Omit<ShopSessionFindOrCreateQueryVariables, 'shopSessionId'>
-
-export const shopSessionServiceInitServerSide = ({ request, response }: Params) => {
-  return new ShopSessionService(
-    new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response),
-  )
-}
-
-export const shopSessionServiceInitClientSide = () => {
-  return new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION))
-}
-
-type Params = {
-  request: GetServerSidePropsContext['req']
-  response: GetServerSidePropsContext['res']
-}

@@ -76,8 +76,16 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
     lines: cart.lines.map((line) => ({
       __typename: 'CartLine',
       id: line.id,
-      price: { amount: line.priceAmount, currencyCode: line.currencyCode as CurrencyCode },
-      variant: { id: line.variantId, title: line.variantTitle },
+      price: {
+        __typename: 'Money',
+        amount: line.priceAmount,
+        currencyCode: line.currencyCode as CurrencyCode,
+      },
+      variant: {
+        __typename: 'ProductVariant',
+        id: line.variantId,
+        title: line.variantTitle,
+      },
     })),
   }
 }
