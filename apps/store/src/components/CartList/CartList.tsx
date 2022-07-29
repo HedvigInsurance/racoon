@@ -48,7 +48,7 @@ export const CartList = ({ filterByProductName, showBundles, showLinks }: CartLi
           <Space x={0.5}>
             <span>
               {showLinks ? (
-                <Link href={PageLink.product({ id: item.product.slug })}>
+                <Link href={PageLink.product({ slug: item.product.slug })}>
                   {item.product.displayName}
                 </Link>
               ) : (

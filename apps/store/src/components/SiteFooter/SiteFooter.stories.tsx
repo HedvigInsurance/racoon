@@ -20,7 +20,7 @@ Default.parameters = {
   layout: 'fullscreen',
   nextRouter: {
     path: '/products/[product]',
-    asPath: PageLink.product({ locale: Locale.SvSe, id: 'home' }),
+    asPath: PageLink.product({ locale: Locale.SvSe, slug: 'home' }),
     locale: Locale.SvSe,
   },
 }

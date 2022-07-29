@@ -10,13 +10,12 @@ import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { CountryCode } from '@/services/graphql/generated'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type Props = {
-  title: string
-  productId: string
+export type PriceCalculatorBlockContext = {
   lineId: string | null
   priceFormTemplate: FormTemplate
   countryCode: CountryCode
   product: {
+    slug: string
     name: string
     price: number | null
     currencyCode: string
@@ -24,12 +23,16 @@ type Props = {
   }
 }
 
-type PriceCalculatorBlockProps = SbBaseBlockProps<Props>
+export type PriceCalculatorBlockProps = PriceCalculatorBlockContext & {
+  title: string
+}
+
+type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockProps>
 
 export const PriceCalculatorBlock = ({
-  blok: { productId, title, lineId, priceFormTemplate, countryCode, product },
-}: PriceCalculatorBlockProps) => {
-  const { handleSubmit } = useHandleSubmitPriceCalculator({ productId })
+  blok: { title, lineId, priceFormTemplate, countryCode, product },
+}: StoryblokPriceCalculatorBlockProps) => {
+  const { handleSubmit } = useHandleSubmitPriceCalculator({ productSlug: product.slug })
   const [handleClickAddToCart] = useHandleClickAddToCart({ lineId })
 
   return (
