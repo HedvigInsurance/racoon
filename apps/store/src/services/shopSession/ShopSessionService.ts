@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next'
-import { CountryCode } from '@/services/graphql/generated'
+import { ShopSessionFindOrCreateQueryVariables } from '@/services/graphql/generated'
 import { graphqlSdk } from '@/services/graphql/sdk'
+import { CookiePersister } from '@/services/persister/CookiePersister'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
 import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
@@ -8,37 +9,31 @@ import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
 export class ShopSessionService {
   constructor(private readonly persister: SimplePersister) {}
 
-  public async fetch(createParams: CreateParams) {
+  public get shopSessionId() {
+    return this.persister.fetch()
+  }
+
+  public async fetch(createParams: FetchParams) {
     const shopSessionId = this.persister.fetch()
-
-    if (shopSessionId) {
-      const response = await graphqlSdk.ShopSession({ shopSessionId })
-      if (response.shopSession) return response.shopSession
-    }
-
-    return await this.create(createParams)
-  }
-
-  private async create({ countryCode }: CreateParams) {
-    const response = await graphqlSdk.ShopSessionCreate({ countryCode })
-    const newSession = response.shopSession?.create
-
-    if (!newSession) throw new Error('Could not create session')
-
-    this.persister.save(newSession.id)
-
-    return newSession
+    const { shopSessionFindOrCreate: shopSession } = await graphqlSdk.ShopSessionFindOrCreate({
+      shopSessionId,
+      ...createParams,
+    })
+    this.persister.save(shopSession.id)
+    return shopSession
   }
 }
 
-type CreateParams = {
-  countryCode: CountryCode
-}
+type FetchParams = Omit<ShopSessionFindOrCreateQueryVariables, 'shopSessionId'>
 
 export const shopSessionServiceInitServerSide = ({ request, response }: Params) => {
   return new ShopSessionService(
     new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, request, response),
   )
+}
+
+export const shopSessionServiceInitClientSide = () => {
+  return new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION))
 }
 
 type Params = {

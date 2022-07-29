@@ -69,12 +69,10 @@ export type CartMutations = {
 
 export type CartMutationsLinesAddArgs = {
   lineIds: Array<Scalars['ID']>
-  shopSessionId: Scalars['ID']
 }
 
 export type CartMutationsLinesRemoveArgs = {
   lineIds: Array<Scalars['ID']>
-  shopSessionId: Scalars['ID']
 }
 
 export type CartUserError = {
@@ -230,7 +228,6 @@ export type Money = {
 export type Mutation = {
   __typename?: 'Mutation'
   _empty?: Maybe<Scalars['String']>
-  cart?: Maybe<CartMutations>
   checkoutCompleteFree: CheckoutCompleteFreePayload
   checkoutCompleteWithPayment: CheckoutCompleteWithPaymentPayload
   /** Creates a new checkout. */
@@ -242,8 +239,7 @@ export type Mutation = {
   paymentConnectionSubmitRedirection: PaymentConnectionSubmitRedirectionPayload
   personAddFriends: Scalars['Boolean']
   personCreate: Person
-  priceIntent?: Maybe<PriceIntentMutations>
-  shopSession?: Maybe<ShopSessionMutations>
+  shopSession: ShopSessionMutations
   submitReview?: Maybe<SubmitReviewResponse>
 }
 
@@ -291,6 +287,10 @@ export type MutationPersonAddFriendsArgs = {
 
 export type MutationPersonCreateArgs = {
   name: Scalars['String']
+}
+
+export type MutationShopSessionArgs = {
+  id: Scalars['ID']
 }
 
 export type MutationSubmitReviewArgs = {
@@ -405,8 +405,6 @@ export type PriceIntentConfirmPayload = {
 export type PriceIntentCreateInput = {
   /** The product to calculate price for. */
   productId: Scalars['ID']
-  /** The id of the shop session. */
-  shopSessionId: Scalars['ID']
 }
 
 export type PriceIntentDataUpdatePayload = {
@@ -434,23 +432,12 @@ export type PriceIntentMutations = {
   __typename?: 'PriceIntentMutations'
   /** Generates line items with price based on user form data. */
   confirm: PriceIntentConfirmPayload
-  /** Creates a new price intent. */
-  create: PriceIntent
   /** Updates user form data. */
   dataUpdate: PriceIntentDataUpdatePayload
 }
 
-export type PriceIntentMutationsConfirmArgs = {
-  priceIntentId: Scalars['ID']
-}
-
-export type PriceIntentMutationsCreateArgs = {
-  input: PriceIntentCreateInput
-}
-
 export type PriceIntentMutationsDataUpdateArgs = {
   data: Scalars['JSON']
-  priceIntentId: Scalars['ID']
 }
 
 export type PriceIntentUserError = {
@@ -490,6 +477,7 @@ export type Query = {
   paymentConnection?: Maybe<PaymentConnection>
   person: Person
   shopSession: ShopSession
+  shopSessionFindOrCreate: ShopSession
 }
 
 export type QueryCheckoutArgs = {
@@ -512,6 +500,10 @@ export type QueryShopSessionArgs = {
   id: Scalars['ID']
 }
 
+export type QueryShopSessionFindOrCreateArgs = {
+  input: ShopSessionFindOrCreateInput
+}
+
 export type Review = {
   __typename?: 'Review'
   /** Written text */
@@ -530,6 +522,7 @@ export type ShopSession = {
   id: Scalars['ID']
   /** Get a price intent by its ID. */
   priceIntent?: Maybe<PriceIntent>
+  priceIntents: Array<PriceIntent>
 }
 
 export type ShopSessionPriceIntentArgs = {
@@ -545,17 +538,26 @@ export type ShopSessionBuyerIdentityInput = {
   countryCode: CountryCode
 }
 
-export type ShopSessionCreateInput = {
+export type ShopSessionFindOrCreateInput = {
   buyerIdentity: ShopSessionBuyerIdentityInput
+  shopSessionId?: InputMaybe<Scalars['ID']>
 }
 
 export type ShopSessionMutations = {
   __typename?: 'ShopSessionMutations'
-  create: ShopSession
+  _empty?: Maybe<Scalars['String']>
+  cart: CartMutations
+  priceIntent: PriceIntentMutations
+  /** Creates a new price intent. */
+  priceIntentCreate: PriceIntent
 }
 
-export type ShopSessionMutationsCreateArgs = {
-  input: ShopSessionCreateInput
+export type ShopSessionMutationsPriceIntentArgs = {
+  id: Scalars['ID']
+}
+
+export type ShopSessionMutationsPriceIntentCreateArgs = {
+  input: PriceIntentCreateInput
 }
 
 export type SubmitReviewResponse = {
@@ -568,28 +570,6 @@ export type SubmitReviewResponse = {
   message: Scalars['String']
   /** Indicates whether the mutation was successful */
   success: Scalars['Boolean']
-}
-
-export type CartQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type CartQuery = {
-  __typename?: 'Query'
-  shopSession: {
-    __typename?: 'ShopSession'
-    cart: {
-      __typename?: 'Cart'
-      id: string
-      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
-      lines: Array<{
-        __typename?: 'CartLine'
-        id: string
-        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-        variant: { __typename?: 'ProductVariant'; id: string; title: string }
-      }>
-    }
-  }
 }
 
 export type CartFragmentFragment = {
@@ -611,29 +591,32 @@ export type CartLinesAddMutationVariables = Exact<{
 
 export type CartLinesAddMutation = {
   __typename?: 'Mutation'
-  cart?: {
-    __typename?: 'CartMutations'
-    linesAdd: {
-      __typename?: 'CartLinesAddPayload'
-      cart?: {
-        __typename?: 'Cart'
-        id: string
-        buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
-        lines: Array<{
-          __typename?: 'CartLine'
+  shopSession: {
+    __typename?: 'ShopSessionMutations'
+    cart: {
+      __typename?: 'CartMutations'
+      linesAdd: {
+        __typename?: 'CartLinesAddPayload'
+        cart?: {
+          __typename?: 'Cart'
           id: string
-          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
         }>
-      } | null
-      userErrors: Array<{
-        __typename?: 'CartUserError'
-        code?: CartErrorCode | null
-        field?: Array<string> | null
-        message: string
-      }>
+      }
     }
-  } | null
+  }
 }
 
 export type CartLinesRemoveMutationVariables = Exact<{
@@ -643,29 +626,32 @@ export type CartLinesRemoveMutationVariables = Exact<{
 
 export type CartLinesRemoveMutation = {
   __typename?: 'Mutation'
-  cart?: {
-    __typename?: 'CartMutations'
-    linesRemove: {
-      __typename?: 'CartLinesRemovePayload'
-      cart?: {
-        __typename?: 'Cart'
-        id: string
-        buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
-        lines: Array<{
-          __typename?: 'CartLine'
+  shopSession: {
+    __typename?: 'ShopSessionMutations'
+    cart: {
+      __typename?: 'CartMutations'
+      linesRemove: {
+        __typename?: 'CartLinesRemovePayload'
+        cart?: {
+          __typename?: 'Cart'
           id: string
-          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-          variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+          lines: Array<{
+            __typename?: 'CartLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }>
+        } | null
+        userErrors: Array<{
+          __typename?: 'CartUserError'
+          code?: CartErrorCode | null
+          field?: Array<string> | null
+          message: string
         }>
-      } | null
-      userErrors: Array<{
-        __typename?: 'CartUserError'
-        code?: CartErrorCode | null
-        field?: Array<string> | null
-        message: string
-      }>
+      }
     }
-  } | null
+  }
 }
 
 export type PriceIntentQueryVariables = Exact<{
@@ -692,34 +678,38 @@ export type PriceIntentQuery = {
 }
 
 export type PriceIntentConfirmMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
   priceIntentId: Scalars['ID']
 }>
 
 export type PriceIntentConfirmMutation = {
   __typename?: 'Mutation'
-  priceIntent?: {
-    __typename?: 'PriceIntentMutations'
-    confirm: {
-      __typename?: 'PriceIntentConfirmPayload'
-      priceIntent?: {
-        __typename?: 'PriceIntent'
-        id: string
-        data: any
-        lines?: Array<{
-          __typename?: 'PriceIntentLine'
+  shopSession: {
+    __typename?: 'ShopSessionMutations'
+    priceIntent: {
+      __typename?: 'PriceIntentMutations'
+      confirm: {
+        __typename?: 'PriceIntentConfirmPayload'
+        priceIntent?: {
+          __typename?: 'PriceIntent'
           id: string
-          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-          variant: { __typename?: 'ProductVariant'; id: string; title: string }
-        }> | null
-      } | null
-      userErrors: Array<{
-        __typename?: 'PriceIntentUserError'
-        code?: PriceIntentErrorCode | null
-        field?: Array<string> | null
-        message: string
-      }>
+          data: any
+          lines?: Array<{
+            __typename?: 'PriceIntentLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }> | null
+        } | null
+        userErrors: Array<{
+          __typename?: 'PriceIntentUserError'
+          code?: PriceIntentErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
     }
-  } | null
+  }
 }
 
 export type PriceIntentCreateMutationVariables = Exact<{
@@ -729,9 +719,9 @@ export type PriceIntentCreateMutationVariables = Exact<{
 
 export type PriceIntentCreateMutation = {
   __typename?: 'Mutation'
-  priceIntent?: {
-    __typename?: 'PriceIntentMutations'
-    create: {
+  shopSession: {
+    __typename?: 'ShopSessionMutations'
+    priceIntentCreate: {
       __typename?: 'PriceIntent'
       id: string
       data: any
@@ -742,39 +732,43 @@ export type PriceIntentCreateMutation = {
         variant: { __typename?: 'ProductVariant'; id: string; title: string }
       }> | null
     }
-  } | null
+  }
 }
 
 export type PriceIntentDataUpdateMutationVariables = Exact<{
+  shopSessionId: Scalars['ID']
   priceIntentId: Scalars['ID']
   data: Scalars['JSON']
 }>
 
 export type PriceIntentDataUpdateMutation = {
   __typename?: 'Mutation'
-  priceIntent?: {
-    __typename?: 'PriceIntentMutations'
-    dataUpdate: {
-      __typename?: 'PriceIntentDataUpdatePayload'
-      priceIntent?: {
-        __typename?: 'PriceIntent'
-        id: string
-        data: any
-        lines?: Array<{
-          __typename?: 'PriceIntentLine'
+  shopSession: {
+    __typename?: 'ShopSessionMutations'
+    priceIntent: {
+      __typename?: 'PriceIntentMutations'
+      dataUpdate: {
+        __typename?: 'PriceIntentDataUpdatePayload'
+        priceIntent?: {
+          __typename?: 'PriceIntent'
           id: string
-          price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
-          variant: { __typename?: 'ProductVariant'; id: string; title: string }
-        }> | null
-      } | null
-      userErrors: Array<{
-        __typename?: 'PriceIntentUserError'
-        code?: PriceIntentErrorCode | null
-        field?: Array<string> | null
-        message: string
-      }>
+          data: any
+          lines?: Array<{
+            __typename?: 'PriceIntentLine'
+            id: string
+            price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+            variant: { __typename?: 'ProductVariant'; id: string; title: string }
+          }> | null
+        } | null
+        userErrors: Array<{
+          __typename?: 'PriceIntentUserError'
+          code?: PriceIntentErrorCode | null
+          field?: Array<string> | null
+          message: string
+        }>
+      }
     }
-  } | null
+  }
 }
 
 export type PriceIntentFragmentFragment = {
@@ -789,25 +783,28 @@ export type PriceIntentFragmentFragment = {
   }> | null
 }
 
-export type ShopSessionQueryVariables = Exact<{
-  shopSessionId: Scalars['ID']
-}>
-
-export type ShopSessionQuery = {
-  __typename?: 'Query'
-  shopSession: { __typename?: 'ShopSession'; id: string }
-}
-
-export type ShopSessionCreateMutationVariables = Exact<{
+export type ShopSessionFindOrCreateQueryVariables = Exact<{
+  shopSessionId?: InputMaybe<Scalars['ID']>
   countryCode: CountryCode
 }>
 
-export type ShopSessionCreateMutation = {
-  __typename?: 'Mutation'
-  shopSession?: {
-    __typename?: 'ShopSessionMutations'
-    create: { __typename?: 'ShopSession'; id: string }
-  } | null
+export type ShopSessionFindOrCreateQuery = {
+  __typename?: 'Query'
+  shopSessionFindOrCreate: {
+    __typename?: 'ShopSession'
+    id: string
+    cart: {
+      __typename?: 'Cart'
+      id: string
+      buyerIdentity: { __typename?: 'CartBuyerIdentity'; countryCode: CountryCode }
+      lines: Array<{
+        __typename?: 'CartLine'
+        id: string
+        price: { __typename?: 'Money'; amount: number; currencyCode: CurrencyCode }
+        variant: { __typename?: 'ProductVariant'; id: string; title: string }
+      }>
+    }
+  }
 }
 
 export const CartFragmentFragmentDoc = gql`
@@ -846,57 +843,19 @@ export const PriceIntentFragmentFragmentDoc = gql`
     }
   }
 `
-export const CartDocument = gql`
-  query Cart($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
-      cart {
-        ...CartFragment
-      }
-    }
-  }
-  ${CartFragmentFragmentDoc}
-`
-
-/**
- * __useCartQuery__
- *
- * To run a query within a React component, call `useCartQuery` and pass it any options that fit your needs.
- * When your component renders, `useCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCartQuery({
- *   variables: {
- *      shopSessionId: // value for 'shopSessionId'
- *   },
- * });
- */
-export function useCartQuery(baseOptions: Apollo.QueryHookOptions<CartQuery, CartQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<CartQuery, CartQueryVariables>(CartDocument, options)
-}
-export function useCartLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<CartQuery, CartQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<CartQuery, CartQueryVariables>(CartDocument, options)
-}
-export type CartQueryHookResult = ReturnType<typeof useCartQuery>
-export type CartLazyQueryHookResult = ReturnType<typeof useCartLazyQuery>
-export type CartQueryResult = Apollo.QueryResult<CartQuery, CartQueryVariables>
 export const CartLinesAddDocument = gql`
   mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
-    cart {
-      linesAdd(shopSessionId: $shopSessionId, lineIds: [$lineId]) {
-        cart {
-          ...CartFragment
-        }
-        userErrors {
-          code
-          field
-          message
+    shopSession(id: $shopSessionId) {
+      cart {
+        linesAdd(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
         }
       }
     }
@@ -943,15 +902,17 @@ export type CartLinesAddMutationOptions = Apollo.BaseMutationOptions<
 >
 export const CartLinesRemoveDocument = gql`
   mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
-    cart {
-      linesRemove(shopSessionId: $shopSessionId, lineIds: [$lineId]) {
-        cart {
-          ...CartFragment
-        }
-        userErrors {
-          code
-          field
-          message
+    shopSession(id: $shopSessionId) {
+      cart {
+        linesRemove(lineIds: [$lineId]) {
+          cart {
+            ...CartFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
         }
       }
     }
@@ -1046,16 +1007,18 @@ export type PriceIntentQueryHookResult = ReturnType<typeof usePriceIntentQuery>
 export type PriceIntentLazyQueryHookResult = ReturnType<typeof usePriceIntentLazyQuery>
 export type PriceIntentQueryResult = Apollo.QueryResult<PriceIntentQuery, PriceIntentQueryVariables>
 export const PriceIntentConfirmDocument = gql`
-  mutation PriceIntentConfirm($priceIntentId: ID!) {
-    priceIntent {
-      confirm(priceIntentId: $priceIntentId) {
-        priceIntent {
-          ...PriceIntentFragment
-        }
-        userErrors {
-          code
-          field
-          message
+  mutation PriceIntentConfirm($shopSessionId: ID!, $priceIntentId: ID!) {
+    shopSession(id: $shopSessionId) {
+      priceIntent(id: $priceIntentId) {
+        confirm {
+          priceIntent {
+            ...PriceIntentFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
         }
       }
     }
@@ -1080,6 +1043,7 @@ export type PriceIntentConfirmMutationFn = Apollo.MutationFunction<
  * @example
  * const [priceIntentConfirmMutation, { data, loading, error }] = usePriceIntentConfirmMutation({
  *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
  *      priceIntentId: // value for 'priceIntentId'
  *   },
  * });
@@ -1104,8 +1068,8 @@ export type PriceIntentConfirmMutationOptions = Apollo.BaseMutationOptions<
 >
 export const PriceIntentCreateDocument = gql`
   mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
-    priceIntent {
-      create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
+    shopSession(id: $shopSessionId) {
+      priceIntentCreate(input: { productId: $productId }) {
         ...PriceIntentFragment
       }
     }
@@ -1154,16 +1118,18 @@ export type PriceIntentCreateMutationOptions = Apollo.BaseMutationOptions<
   PriceIntentCreateMutationVariables
 >
 export const PriceIntentDataUpdateDocument = gql`
-  mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: JSON!) {
-    priceIntent {
-      dataUpdate(priceIntentId: $priceIntentId, data: $data) {
-        priceIntent {
-          ...PriceIntentFragment
-        }
-        userErrors {
-          code
-          field
-          message
+  mutation PriceIntentDataUpdate($shopSessionId: ID!, $priceIntentId: ID!, $data: JSON!) {
+    shopSession(id: $shopSessionId) {
+      priceIntent(id: $priceIntentId) {
+        dataUpdate(data: $data) {
+          priceIntent {
+            ...PriceIntentFragment
+          }
+          userErrors {
+            code
+            field
+            message
+          }
         }
       }
     }
@@ -1188,6 +1154,7 @@ export type PriceIntentDataUpdateMutationFn = Apollo.MutationFunction<
  * @example
  * const [priceIntentDataUpdateMutation, { data, loading, error }] = usePriceIntentDataUpdateMutation({
  *   variables: {
+ *      shopSessionId: // value for 'shopSessionId'
  *      priceIntentId: // value for 'priceIntentId'
  *      data: // value for 'data'
  *   },
@@ -1214,94 +1181,68 @@ export type PriceIntentDataUpdateMutationOptions = Apollo.BaseMutationOptions<
   PriceIntentDataUpdateMutation,
   PriceIntentDataUpdateMutationVariables
 >
-export const ShopSessionDocument = gql`
-  query ShopSession($shopSessionId: ID!) {
-    shopSession(id: $shopSessionId) {
+export const ShopSessionFindOrCreateDocument = gql`
+  query ShopSessionFindOrCreate($shopSessionId: ID, $countryCode: CountryCode!) {
+    shopSessionFindOrCreate(
+      input: { shopSessionId: $shopSessionId, buyerIdentity: { countryCode: $countryCode } }
+    ) {
       id
+      cart {
+        ...CartFragment
+      }
     }
   }
+  ${CartFragmentFragmentDoc}
 `
 
 /**
- * __useShopSessionQuery__
+ * __useShopSessionFindOrCreateQuery__
  *
- * To run a query within a React component, call `useShopSessionQuery` and pass it any options that fit your needs.
- * When your component renders, `useShopSessionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useShopSessionFindOrCreateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopSessionFindOrCreateQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useShopSessionQuery({
+ * const { data, loading, error } = useShopSessionFindOrCreateQuery({
  *   variables: {
  *      shopSessionId: // value for 'shopSessionId'
- *   },
- * });
- */
-export function useShopSessionQuery(
-  baseOptions: Apollo.QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<ShopSessionQuery, ShopSessionQueryVariables>(ShopSessionDocument, options)
-}
-export function useShopSessionLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<ShopSessionQuery, ShopSessionQueryVariables>(
-    ShopSessionDocument,
-    options,
-  )
-}
-export type ShopSessionQueryHookResult = ReturnType<typeof useShopSessionQuery>
-export type ShopSessionLazyQueryHookResult = ReturnType<typeof useShopSessionLazyQuery>
-export type ShopSessionQueryResult = Apollo.QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
-export const ShopSessionCreateDocument = gql`
-  mutation ShopSessionCreate($countryCode: CountryCode!) {
-    shopSession {
-      create(input: { buyerIdentity: { countryCode: $countryCode } }) {
-        id
-      }
-    }
-  }
-`
-export type ShopSessionCreateMutationFn = Apollo.MutationFunction<
-  ShopSessionCreateMutation,
-  ShopSessionCreateMutationVariables
->
-
-/**
- * __useShopSessionCreateMutation__
- *
- * To run a mutation, you first call `useShopSessionCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useShopSessionCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [shopSessionCreateMutation, { data, loading, error }] = useShopSessionCreateMutation({
- *   variables: {
  *      countryCode: // value for 'countryCode'
  *   },
  * });
  */
-export function useShopSessionCreateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ShopSessionCreateMutation,
-    ShopSessionCreateMutationVariables
+export function useShopSessionFindOrCreateQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ShopSessionFindOrCreateQuery,
+    ShopSessionFindOrCreateQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<ShopSessionCreateMutation, ShopSessionCreateMutationVariables>(
-    ShopSessionCreateDocument,
+  return Apollo.useQuery<ShopSessionFindOrCreateQuery, ShopSessionFindOrCreateQueryVariables>(
+    ShopSessionFindOrCreateDocument,
     options,
   )
 }
-export type ShopSessionCreateMutationHookResult = ReturnType<typeof useShopSessionCreateMutation>
-export type ShopSessionCreateMutationResult = Apollo.MutationResult<ShopSessionCreateMutation>
-export type ShopSessionCreateMutationOptions = Apollo.BaseMutationOptions<
-  ShopSessionCreateMutation,
-  ShopSessionCreateMutationVariables
+export function useShopSessionFindOrCreateLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ShopSessionFindOrCreateQuery,
+    ShopSessionFindOrCreateQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ShopSessionFindOrCreateQuery, ShopSessionFindOrCreateQueryVariables>(
+    ShopSessionFindOrCreateDocument,
+    options,
+  )
+}
+export type ShopSessionFindOrCreateQueryHookResult = ReturnType<
+  typeof useShopSessionFindOrCreateQuery
+>
+export type ShopSessionFindOrCreateLazyQueryHookResult = ReturnType<
+  typeof useShopSessionFindOrCreateLazyQuery
+>
+export type ShopSessionFindOrCreateQueryResult = Apollo.QueryResult<
+  ShopSessionFindOrCreateQuery,
+  ShopSessionFindOrCreateQueryVariables
 >

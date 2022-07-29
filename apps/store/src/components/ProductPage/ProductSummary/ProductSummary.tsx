@@ -9,7 +9,7 @@ export type ProductSummaryProps = {
   title: string
   starScore: number
   children: React.ReactNode
-  gradient: [string, string]
+  gradient: readonly [string, string]
 }
 
 export const ProductSummary = ({

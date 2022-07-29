@@ -1,6 +1,6 @@
 mutation PriceIntentCreate($shopSessionId: ID!, $productId: ID!) {
-  priceIntent {
-    create(input: { shopSessionId: $shopSessionId, productId: $productId }) {
+  shopSession(id: $shopSessionId) {
+    priceIntentCreate(input: { productId: $productId }) {
       ...PriceIntentFragment
     }
   }
