@@ -1,6 +1,5 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { useMemo } from 'react'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { ProductStory } from '@/services/storyblok/storyblok'
 import { getBlockContext } from './ProductPage.helpers'
 import { ProductPageProps } from './ProductPage.types'
@@ -9,8 +8,8 @@ export const ProductPage = ({
   story: initalStory,
   priceFormTemplate,
   priceIntent,
+  shopSession,
 }: ProductPageProps) => {
-  const { countryCode } = useCurrentLocale()
   const storyblokStory = useStoryblokState(initalStory)
 
   const story = useMemo(() => {
@@ -25,14 +24,14 @@ export const ProductPage = ({
           ...getBlockContext({
             block,
             productStory,
-            countryCode,
+            shopSession,
             priceFormTemplate,
             priceIntent,
           }),
         })),
       },
     }
-  }, [storyblokStory, priceIntent, priceFormTemplate, countryCode])
+  }, [storyblokStory, priceIntent, priceFormTemplate, shopSession])
 
   return <StoryblokComponent blok={story.content} />
 }

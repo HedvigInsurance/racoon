@@ -1,14 +1,14 @@
 import { useMemo } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 
-export const useCurrencyFormatter = (currencyCode?: string) => {
-  const { currencyLocale, currencyCode: defaultCurrencyCode } = useCurrentLocale()
+export const useCurrencyFormatter = (currencyCode: string) => {
+  const { currencyLocale } = useCurrentLocale()
   return useMemo(() => {
     return new Intl.NumberFormat(currencyLocale, {
       style: 'currency',
-      currency: currencyCode ?? defaultCurrencyCode,
+      currency: currencyCode,
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })
-  }, [currencyLocale, currencyCode, defaultCurrencyCode])
+  }, [currencyLocale, currencyCode])
 }

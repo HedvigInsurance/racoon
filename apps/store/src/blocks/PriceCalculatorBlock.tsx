@@ -8,8 +8,8 @@ import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculator
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { useHandleClickAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { CurrencyCode, CountryCode } from '@/services/apollo/generated'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
-import { CountryCode } from '@/services/graphql/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
@@ -22,6 +22,7 @@ export type PriceCalculatorBlockContext = {
     slug: string
     name: string
     price: number | null
+    currencyCode: CurrencyCode
     gradient: readonly [string, string]
   }
 }
@@ -36,7 +37,7 @@ export const PriceCalculatorBlock = ({
   blok: { title, lineId, priceFormTemplate, countryCode, product },
 }: StoryblokPriceCalculatorBlockProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const formatter = useCurrencyFormatter()
+  const formatter = useCurrencyFormatter(product.currencyCode)
   const { handleSubmit } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
 
   const [handleClickAddToCart] = useHandleClickAddToCart({
@@ -71,6 +72,7 @@ export const PriceCalculatorBlock = ({
           <PriceCard
             name={product.name}
             cost={product.price ?? undefined}
+            currencyCode={product.currencyCode}
             gradient={product.gradient}
             onClick={handleClickAddToCart}
           />

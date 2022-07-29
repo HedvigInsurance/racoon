@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
         story,
         priceFormTemplate: template,
         priceIntent,
+        shopSession,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
       },
     }
