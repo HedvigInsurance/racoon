@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { TextLabel as TextLabelProps } from '@/services/formTemplate/FormTemplate.types'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const t = (key: string, _placeholders?: Record<string, string | number>) => key
 
 type TranslateTextLabelParams = {
