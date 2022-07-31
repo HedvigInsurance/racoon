@@ -3,8 +3,10 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
+import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
+import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -38,15 +40,40 @@ export type LinkField = {
   cached_url: string // use this
 }
 
+export type ProductStory = StoryData & {
+  content: StoryData['content'] & {
+    name: string
+    productId: string
+    priceFormTemplateId: string
+    body: Array<SbBlokData>
+  }
+}
+
+export enum StoryblokBlockName {
+  Button = 'button',
+  Heading = 'heading',
+  Hero = 'hero',
+  Page = 'page',
+  Product = 'product',
+  ProductCard = 'productCard',
+  ProductGrid = 'productGrid',
+  ProductSummary = 'productSummary',
+  Spacer = 'spacer',
+  PriceCalculator = 'priceCalculator',
+}
+
 export const initStoryblok = () => {
   const components = {
-    button: ButtonBlock,
-    heading: HeadingBlock,
-    hero: HeroBlock,
-    page: PageBlock,
-    productCard: ProductCardBlock,
-    productGrid: ProductGridBlock,
-    spacer: SpacerBlock,
+    [StoryblokBlockName.Button]: ButtonBlock,
+    [StoryblokBlockName.Heading]: HeadingBlock,
+    [StoryblokBlockName.Hero]: HeroBlock,
+    [StoryblokBlockName.Page]: PageBlock,
+    [StoryblokBlockName.Product]: PageBlock,
+    [StoryblokBlockName.ProductCard]: ProductCardBlock,
+    [StoryblokBlockName.ProductGrid]: ProductGridBlock,
+    [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
+    [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
+    [StoryblokBlockName.Spacer]: SpacerBlock,
   }
 
   storyblokInit({
@@ -68,4 +95,9 @@ export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
   const { data } = await storyblokApi.get('cdn/links/')
   return data.links
+}
+
+export const getProductStory = async (slug: string, preview = false) => {
+  const story = await getStoryBySlug(`/products/${slug}`, preview)
+  return story as ProductStory
 }

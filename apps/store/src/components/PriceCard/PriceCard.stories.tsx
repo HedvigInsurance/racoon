@@ -17,14 +17,14 @@ const Template: Story<PriceCardProps> = (props) => {
 export const Disabled = Template.bind({})
 Disabled.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
-  currency: 'SEK',
   gradient: ['#aaaaaa', '#828282'],
+  currencyCode: 'SEK',
 }
 
 export const ShowingPrice = Template.bind({})
 ShowingPrice.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
-  currency: 'SEK',
   cost: 112,
+  currencyCode: 'SEK',
   gradient: ['#aaaaaa', '#828282'],
 }

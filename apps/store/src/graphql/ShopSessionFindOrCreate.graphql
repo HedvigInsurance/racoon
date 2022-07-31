@@ -1,0 +1,10 @@
+query ShopSessionFindOrCreate($shopSessionId: ID, $countryCode: CountryCode!) {
+  shopSessionFindOrCreate(input: { shopSessionId: $shopSessionId, countryCode: $countryCode }) {
+    id
+    countryCode
+    currencyCode
+    cart {
+      ...CartFragment
+    }
+  }
+}

@@ -3,6 +3,8 @@ import { factory, manyOf, nullable, oneOf, primaryKey } from '@mswjs/data'
 export const db = factory({
   shopSession: {
     id: primaryKey(() => uuidv4()),
+    countryCode: String,
+    currencyCode: String,
     cart: oneOf('cart'),
   },
 
@@ -22,7 +24,6 @@ export const db = factory({
 
   cart: {
     id: primaryKey(() => uuidv4()),
-    countryCode: String,
     lines: manyOf('lineItem'),
   },
 })

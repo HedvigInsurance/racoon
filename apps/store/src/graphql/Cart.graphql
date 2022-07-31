@@ -1,7 +1,0 @@
-query Cart($shopSessionId: ID!) {
-  shopSession(id: $shopSessionId) {
-    cart {
-      ...CartFragment
-    }
-  }
-}

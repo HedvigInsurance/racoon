@@ -3,10 +3,10 @@ import useRouterRefresh from '@/hooks/useRouterRefresh'
 import { PageLink } from '@/lib/PageLink'
 
 type Params = {
-  productId: string
+  productSlug: string
 }
 
-export const useHandleSubmitPriceCalculator = ({ productId }: Params) => {
+export const useHandleSubmitPriceCalculatorForm = ({ productSlug }: Params) => {
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
   const refreshData = useRouterRefresh()
 
@@ -17,7 +17,7 @@ export const useHandleSubmitPriceCalculator = ({ productId }: Params) => {
     const { intent, ...data } = Object.fromEntries(formData.entries())
 
     const url = PageLink.apiPriceProduct({
-      productId,
+      productSlug,
       intent: intent === 'confirm' ? 'confirm' : 'update',
     })
 

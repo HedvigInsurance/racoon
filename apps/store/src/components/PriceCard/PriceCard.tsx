@@ -7,12 +7,12 @@ import { TickIcon } from './TickIcon'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
 
-type Gradient = [string, string]
+type Gradient = readonly [string, string]
 
 export type PriceCardProps = {
   name: string
-  currency: string
   cost?: number
+  currencyCode: string
   onClick: () => void
   gradient: Gradient
 }
@@ -20,8 +20,8 @@ export type PriceCardProps = {
 export const PriceCard = ({
   name,
   gradient: [fromColor, toColor],
-  currency,
   cost,
+  currencyCode,
   onClick,
 }: PriceCardProps) => {
   return (
@@ -33,7 +33,7 @@ export const PriceCard = ({
       </CenteredText>
 
       <PreviewText aria-disabled={cost === undefined}>
-        {currency} {cost ?? '—'} /mth.
+        {currencyCode} {cost ?? '—'} /mth.
       </PreviewText>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
