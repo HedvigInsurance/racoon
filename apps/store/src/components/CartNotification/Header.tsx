@@ -1,16 +1,20 @@
 import styled from '@emotion/styled'
+import React from 'react'
 
 type HeaderProps = {
   children: string
 }
 
-export const Header = ({ children }: HeaderProps) => {
-  return (
-    <Wrapper>
-      <StyledTitle>{children}</StyledTitle>
-    </Wrapper>
-  )
-}
+export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
+  ({ children }, forwardedRef) => {
+    return (
+      <Wrapper ref={forwardedRef}>
+        <StyledTitle>{children}</StyledTitle>
+      </Wrapper>
+    )
+  },
+)
+Header.displayName = 'Header'
 
 const ROW_HEIGHT = '4.5rem'
 
