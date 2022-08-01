@@ -9,7 +9,7 @@
     "test": "jest --passWithNoTests",
     "e2e": "start-server-and-test 'yarn start 3001' http://localhost:3001 cypress",
     "e2e:headless": "start-server-and-test 'yarn start 3001' http://localhost:3001 cypress:headless",
-    "lint": "next lint",
+    "lint": "TIMING=1 next lint",
     "lint:fix": "next lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
