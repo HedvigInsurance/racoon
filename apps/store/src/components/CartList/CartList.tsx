@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { CartCard } from '@/components/CartCard/CartCard'
-import { CartPageProps } from '../CartPage/CartPageProps.types'
-import { ProductData } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
+import { CartPageProps, ProductData } from '../CartPage/CartPageProps.types'
 
 const CartUl = styled.ul(({ theme }) => ({
   paddingLeft: '0',
