@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+import { theme } from 'ui'
 import { SiteFooter, SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
 import { TopMenu } from '../TopMenu/TopMenu'
 
@@ -37,4 +38,5 @@ const FixedHeader = styled.header({
   top: 0,
   left: 0,
   right: 0,
+  backgroundColor: theme.colors.white,
 })
