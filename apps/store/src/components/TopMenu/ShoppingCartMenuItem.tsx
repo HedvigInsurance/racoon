@@ -1,18 +1,13 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { useContext } from 'react'
 import { PageLink } from '@/lib/PageLink'
-import { CartContext } from '@/services/mockCartService'
+import { useCart } from '@/services/cart/useCart'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const cartContext = useContext(CartContext)
+  const { data } = useCart()
 
-  if (!cartContext) {
-    throw new Error('ProductPage cannot be rendered outside CartContext')
-  }
-
-  const { cart } = cartContext
+  const cartLineCount = data?.lines.length ?? 0
 
   return (
     <Wrapper>
@@ -21,7 +16,7 @@ export const ShoppingCartMenuItem = () => {
           <ShoppingBagIcon />
         </StyledLink>
       </Link>
-      <Counter value={cart.items.length} />
+      <Counter value={cartLineCount} />
     </Wrapper>
   )
 }
@@ -38,23 +33,6 @@ const StyledLink = styled.a(({ theme }) => ({
   },
 }))
 
-const StyledCounter = styled.span(({ theme }) => ({
-  pointerEvents: 'none',
-  position: 'absolute',
-  bottom: -6,
-  left: -6,
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 8,
-  height: 8,
-  padding: theme.space[2],
-  borderRadius: '50%',
-  backgroundColor: theme.colors.gray900,
-  color: theme.colors.gray200,
-  fontSize: theme.fontSizes[0],
-}))
-
 type CounterProps = { value: number }
 
 const Counter = ({ value }: CounterProps) => {
@@ -62,3 +40,20 @@ const Counter = ({ value }: CounterProps) => {
 
   return <StyledCounter>{value}</StyledCounter>
 }
+
+const StyledCounter = styled.span(({ theme }) => ({
+  pointerEvents: 'none',
+  position: 'absolute',
+  top: 1,
+  right: -6,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 14,
+  height: 14,
+  borderRadius: '50%',
+  backgroundColor: theme.colors.gray900,
+  color: theme.colors.gray200,
+  fontSize: 10,
+  fontWeight: 'bold',
+}))

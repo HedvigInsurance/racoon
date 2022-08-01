@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button, LinkButton, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
+import { useCart } from '@/services/cart/useCart'
 import * as CartNotification from './CartNotification'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
@@ -34,6 +35,10 @@ type Props = ProductItemProps & {
 }
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
+  const { data } = useCart()
+
+  const cartLineCount = data?.lines.length ?? 1
+
   return (
     <CartNotification.Content
       onClose={onClose}
@@ -44,7 +49,7 @@ const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
 
         <Space y={0.5}>
           <Link href={PageLink.cart()} passHref>
-            <LinkButton fullWidth>Proceed to cart</LinkButton>
+            <LinkButton fullWidth>Proceed to cart ({cartLineCount})</LinkButton>
           </Link>
 
           <Button onClick={onClose} variant="outlined" fullWidth>
