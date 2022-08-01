@@ -26,6 +26,7 @@
       "outputs": [".next/**"],
       "dependsOn": [
         "^build",
+        "codegen",
         "$NEXT_PUBLIC_DATADOG_APPLICATION_ID",
         "$NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
         "$NEXT_PUBLIC_DATADOG_VERSION",
@@ -49,8 +50,11 @@
       "dependsOn": ["^build"]
     },
     "test": {
+      "outputs": ["covereage/**"]
+    },
+    "store#test": {
       "outputs": ["covereage/**"],
-      "dependsOn": []
+      "dependsOn": ["codegen"]
     },
     "e2e": {
       "dependsOn": ["build"]
@@ -67,6 +71,10 @@
     "dev": {
       "cache": false
     },
+    "store#dev": {
+      "cache": false,
+      "dependsOn": ["codegen"]
+    },
     "clean": {
       "cache": false
     },
@@ -76,6 +84,13 @@
     },
     "typecheck": {
       "outputs": []
+    },
+    "store#typecheck": {
+      "dependsOn": ["codegen"],
+      "outputs": []
+    },
+    "store#codegen": {
+      "outputs": ["./src/services/**/generated.ts"]
     }
   }
 }
