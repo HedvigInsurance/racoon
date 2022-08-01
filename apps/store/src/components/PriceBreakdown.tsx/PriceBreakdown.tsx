@@ -4,7 +4,7 @@ import * as RadixCollapsible from '@radix-ui/react-collapsible'
 import { ChevronIcon, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
+import { CheckoutPaymentPageProps } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
 
 type Props = CheckoutPaymentPageProps
 

@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Button, Space } from 'ui'
+import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
-import { PriceBreakdown } from './PriceBreakdown'
 
 export const CheckoutPaymentPageAdyen = (props: CheckoutPaymentPageProps) => {
   const [paymentConnection, setPaymentConnection] = useState<unknown | null>(null)
