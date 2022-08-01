@@ -23,9 +23,18 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
 
   return (
     <Wrapper>
-      <TopMenu />
+      <FixedHeader>
+        <TopMenu />
+      </FixedHeader>
       {children}
       <SiteFooter onChangeLocale={handleChangeLocale} />
     </Wrapper>
   )
 }
+
+const FixedHeader = styled.header({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+})
