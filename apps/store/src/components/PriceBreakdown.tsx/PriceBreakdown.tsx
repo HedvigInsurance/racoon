@@ -65,6 +65,7 @@ const Collapsible = styled(RadixCollapsible.Root)(({ theme }) => ({
   boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.1)',
   borderRadius: 8,
   padding: theme.space[3],
+  width: '100%',
 }))
 
 const DataRowStyles = css({

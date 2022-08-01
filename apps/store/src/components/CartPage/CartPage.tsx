@@ -1,20 +1,10 @@
 import Link from 'next/link'
-import { useContext } from 'react'
-import { Heading, Space } from 'ui'
+import { Button, Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { PageLink } from '@/lib/PageLink'
-import { CartContext } from '@/services/mockCartService'
 
 export const CartPage = () => {
-  const cartContext = useContext(CartContext)
-
-  if (!cartContext) {
-    throw new Error('ProductPage cannot be rendered outside CartContext')
-  }
-
-  const { cart } = cartContext
-
   const products = [
     { name: 'Home Insurance', cost: 250, currency: 'SEK' },
     { name: 'Apartment Insurance', cost: 100, currency: 'SEK' },
@@ -29,14 +19,9 @@ export const CartPage = () => {
       <Space y={2} />
       <CartList products={products} />
       <PriceBreakdown currency="SEK" products={products} cost={cost} />
-
-      <footer>
+      <Button fullWidth={true}>
         <Link href={PageLink.cartReview()}>Check Out</Link>
-      </footer>
-
-      <div>
-        <Link href={PageLink.store()}>Go to shop</Link>
-      </div>
+      </Button>
     </>
   )
 }
