@@ -118,8 +118,6 @@ const Wrapper = styled.div(({ theme }) => ({
   width: '100%',
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
-  backgroundColor: theme.colors.gray200,
-  color: theme.colors.gray900,
 }))
 
 const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
