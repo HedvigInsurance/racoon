@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 const ProductCard = styled.div(({ theme }) => ({
   paddingRight: theme.space[3],
@@ -42,10 +43,14 @@ const RemoveButton = styled.button({
 
 export type CartCardProps = {
   title: string
-  price?: string
+  price?: number
+  currency: string
 }
 
-export const CartCard = ({ title, price }: CartCardProps) => {
+export const CartCard = ({ title, price, currency }: CartCardProps) => {
+
+  const currencyFormatter = useCurrencyFormatter(currency)
+
   return (
     <ProductCard>
       <Content>
@@ -54,7 +59,9 @@ export const CartCard = ({ title, price }: CartCardProps) => {
           {title && <TitleElement>{title}</TitleElement>}
           <RemoveButton>Remove</RemoveButton>
         </HeaderElement>
-        {price && <ExtraElement>{price}</ExtraElement>}
+        {price &&
+          <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
+}
       </Content>
     </ProductCard>
   )
