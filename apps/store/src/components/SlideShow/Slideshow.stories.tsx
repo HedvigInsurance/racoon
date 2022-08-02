@@ -1,20 +1,20 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
-import { ProductCardSnap } from './ProductCardSnap'
+import { Slideshow } from './Slideshow'
 
 export default {
-  title: 'ProductCardSnap',
-  component: ProductCardSnap,
+  title: 'Slideshow',
+  component: Slideshow,
   parameters: {
     viewport: {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof ProductCardSnap>
+} as ComponentMeta<typeof Slideshow>
 
-const Template: ComponentStory<typeof ProductCardSnap> = (props) => <ProductCardSnap {...props} />
+const Template: ComponentStory<typeof Slideshow> = (props) => <Slideshow {...props} />
 
 export const Default = Template.bind({})
 Default.args = {
@@ -26,13 +26,13 @@ Default.args = {
       image={{ src: 'https://via.placeholder.com/327x400' }}
     />,
     <ProductCard
-      key="home"
+      key="house"
       title="Hedvig House"
       subtitle="Complete coverage for your house"
       image={{ src: 'https://via.placeholder.com/327x400' }}
     />,
     <ProductCard
-      key="home"
+      key="car"
       title="Hedvig Car"
       subtitle="Complete coverage for your car"
       image={{ src: 'https://via.placeholder.com/327x400' }}

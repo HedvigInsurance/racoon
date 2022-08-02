@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
 
-export type ProductCardSnapProps = {
+export type SlideshowProps = {
   children: React.ReactNode | Array<React.ReactNode>
 }
 
-export const ProductCardSnap = ({ children }: ProductCardSnapProps) => {
+export const Slideshow = ({ children }: SlideshowProps) => {
   return (
     <ScollableContainer>
       {React.Children.map(children, (child, index) => (
