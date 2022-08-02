@@ -3,8 +3,6 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
 import { ProductCardSnap } from './ProductCardSnap'
 
-console.log(INITIAL_VIEWPORTS)
-
 export default {
   title: 'ProductCardSnap',
   component: ProductCardSnap,
