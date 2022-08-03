@@ -48,7 +48,6 @@ export type CartCardProps = {
 }
 
 export const CartCard = ({ title, price, currency }: CartCardProps) => {
-
   const currencyFormatter = useCurrencyFormatter(currency)
 
   return (
@@ -59,9 +58,7 @@ export const CartCard = ({ title, price, currency }: CartCardProps) => {
           {title && <TitleElement>{title}</TitleElement>}
           <RemoveButton>Remove</RemoveButton>
         </HeaderElement>
-        {price &&
-          <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
-}
+        {price && <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>}
       </Content>
     </ProductCard>
   )
