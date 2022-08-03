@@ -71,7 +71,7 @@
     "scripts": "*",
     "storybook-addon-next": "1.6.7",
     "subscriptions-transport-ws": "^0.11.0",
-    "ts-jest": "28.0.6",
+    "ts-jest": "28.0.7",
     "tsconfig": "*",
     "typescript": "4.7.4",
     "whatwg-fetch": "3.6.2"
