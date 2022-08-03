@@ -47,7 +47,7 @@ const ImageWrapper = styled.div(() => ({
   width: '100%',
 }))
 
-const Title = styled.p(({ theme }) => ({
+const Title = styled.h1(({ theme }) => ({
   fontSize: theme.fontSizes[2],
 }))
 
