@@ -1,24 +1,15 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { ProductCard, ProductCardProps } from './ProductCard'
-
-type ProductData = {
-  title: ProductCardProps['title']
-  subtitle: ProductCardProps['subtitle']
-  image: ProductCardProps['image']
-}
 
 export type SlideshowProps = {
-  products: Array<ProductData>
+  children: React.ReactNode | Array<React.ReactNode>
 }
 
-export const Slideshow = ({ products }: SlideshowProps) => {
+export const Slideshow = ({ children }: SlideshowProps) => {
   return (
     <ScollableContainer>
-      {products.map(({ title, subtitle, image }, index) => (
-        <ScrollableItem key={`${title}-${index}`}>
-          <ProductCard title={title} subtitle={subtitle} image={image} />
-        </ScrollableItem>
+      {React.Children.map(children, (child, index) => (
+        <ScrollableItem key={index}>{child}</ScrollableItem>
       ))}
     </ScollableContainer>
   )
