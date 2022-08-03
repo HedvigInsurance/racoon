@@ -43,11 +43,11 @@
     "ui": "*"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/typescript": "^2.4.8",
-    "@graphql-codegen/typescript-generic-sdk": "^2.3.10",
-    "@graphql-codegen/typescript-operations": "^2.3.5",
-    "@graphql-codegen/typescript-react-apollo": "^3.2.11",
+    "@graphql-codegen/cli": "2.11.3",
+    "@graphql-codegen/typescript": "2.7.2",
+    "@graphql-codegen/typescript-generic-sdk": "2.5.0",
+    "@graphql-codegen/typescript-operations": "2.5.2",
+    "@graphql-codegen/typescript-react-apollo": "3.3.2",
     "@hedviginsurance/brand": "^5.0.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.5",
