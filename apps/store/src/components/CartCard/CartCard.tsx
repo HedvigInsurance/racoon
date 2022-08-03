@@ -44,7 +44,7 @@ const RemoveButton = styled.button({
 
 export type CartCardProps = {
   title: string
-  price?: number
+  price: number
   currency: string
 }
 
@@ -59,10 +59,10 @@ export const CartCard = ({ title, price, currency }: CartCardProps) => {
       <Content>
         <IconElement />
         <HeaderElement>
-          {title && <TitleElement>{title}</TitleElement>}
+          <TitleElement>{title}</TitleElement>
           <RemoveButton onClick={() => handleRemoveProduct()}>Remove</RemoveButton>
         </HeaderElement>
-        {price && <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>}
+        <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
       </Content>
     </ProductCard>
   )

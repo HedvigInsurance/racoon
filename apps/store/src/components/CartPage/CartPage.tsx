@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button, Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/lib/PageLink'
 
 export const CartPage = () => {
@@ -13,11 +14,13 @@ export const CartPage = () => {
   const cost = { total: 350, subTotal: 250 }
 
   return (
-    <CartLayout>
-      <Heading as="h1" variant="standard.24">
-        Cart (2)
-      </Heading>
-      <Space y={2} />
+    <Space y={3}>
+      <div></div>
+      <PageHeader>
+        <Heading as="h1" variant="standard.24">
+          Cart (2)
+        </Heading>
+      </PageHeader>
       <CartList products={products} />
       <Footer>
         <PriceBreakdown currency="SEK" products={products} cost={cost} />
@@ -25,23 +28,19 @@ export const CartPage = () => {
           <Link href={PageLink.cartReview()}>Check Out</Link>
         </Button>
       </Footer>
-    </CartLayout>
+    </Space>
   )
 }
 
-const CartLayout = styled.div(({ theme }) => ({
-  marginTop: theme.space[8],
-  backgroundColor: theme.colors.white,
-  h1: {
-    textAlign: 'center',
-  },
+const PageHeader = styled.header(({ theme }) => ({
+  textAlign: 'center',
 }))
 
 const Footer = styled.footer(({ theme }) => ({
   position: 'fixed',
   bottom: 0,
   width: '100%',
-  padding: `0 ${theme.space[6]} ${theme.space[3]} ${theme.space[3]}`,
+  padding: `0 ${theme.space[3]} ${theme.space[6]} ${theme.space[3]}`,
   a: {
     textDecoration: 'none',
   },
