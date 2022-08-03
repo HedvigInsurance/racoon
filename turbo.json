@@ -86,6 +86,9 @@
       "outputs": ["storybook-static/**"],
       "dependsOn": ["^build", "codegen"]
     },
+    "chromatic": {
+      "dependsOn": ["storybook:build"]
+    },
     "typecheck": {
       "outputs": []
     },

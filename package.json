@@ -19,7 +19,8 @@
     "prepare": "husky install",
     "typecheck": "turbo run typecheck",
     "storybook": "turbo run storybook",
-    "storybook:build": "turbo run storybook:build"
+    "storybook:build": "turbo run storybook:build",
+    "chromatic": "turbo run chromatic"
   },
   "devDependencies": {
     "husky": "^7.0.4",
