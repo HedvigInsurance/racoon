@@ -6,8 +6,10 @@ import { PageBlock } from '@/blocks/PageBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
+import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
+import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -60,6 +62,8 @@ export enum StoryblokBlockName {
   ProductSummary = 'productSummary',
   Spacer = 'spacer',
   PriceCalculator = 'priceCalculator',
+  TopPickCard = 'topPickCard',
+  ProductSlideshow = 'productSlideshow',
 }
 
 export const initStoryblok = () => {
@@ -74,6 +78,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
     [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
     [StoryblokBlockName.Spacer]: SpacerBlock,
+    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
+    [StoryblokBlockName.ProductSlideshow]: ProductSlideshowBlock,
   }
 
   storyblokInit({
