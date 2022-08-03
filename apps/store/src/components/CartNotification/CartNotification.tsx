@@ -57,3 +57,4 @@ export const Content = ({ children, Title, onClose }: ContentProps) => {
 
 export const Root = DialogPrimitive.Root
 export const Trigger = DialogPrimitive.Trigger
+export const Close = DialogPrimitive.Close
