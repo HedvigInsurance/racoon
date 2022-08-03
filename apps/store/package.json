@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "node --require ./server-preload.js ./node_modules/.bin/next start -p $PORT",
     "test": "jest --passWithNoTests --coverage",
-    "lint": " next lint",
+    "lint": "TIMING=1 next lint",
     "lint:fix": "next lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "typecheck": "tsc --noEmit",
