@@ -17,11 +17,16 @@ export default {
   },
 } as ComponentMeta<typeof Slideshow>
 
-export const Default: ComponentStory<typeof Slideshow> = () => (
-  <Slideshow>
+const Template: ComponentStory<typeof Slideshow> = (props) => (
+  <Slideshow {...props}>
     <Item />
     <Item />
     <Item />
     <Item />
   </Slideshow>
 )
+
+export const Default = Template.bind({})
+Default.args = {
+  title: 'Top picks',
+}
