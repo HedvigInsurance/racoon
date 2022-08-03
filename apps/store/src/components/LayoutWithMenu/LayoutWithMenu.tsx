@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
-import { theme } from 'ui'
 import { SiteFooter, SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
 import { TopMenu } from '../TopMenu/TopMenu'
 

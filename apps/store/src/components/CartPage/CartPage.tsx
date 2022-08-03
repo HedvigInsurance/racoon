@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Button, Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/lib/PageLink'
 
 export const CartPage = () => {
@@ -32,7 +31,7 @@ export const CartPage = () => {
   )
 }
 
-const PageHeader = styled.header(({ theme }) => ({
+const PageHeader = styled.header(() => ({
   textAlign: 'center',
 }))
 
