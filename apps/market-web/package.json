@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
-    "@types/react": "17.0.40",
+    "@types/react": "17.0.48",
     "config": "*",
     "eslint": "8.11.0",
     "next-router-mock": "^0.6.5",
