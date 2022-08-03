@@ -12,7 +12,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6008",
-    "build-storybook": "build-storybook",
+    "storybook:build": "build-storybook",
     "codegen": "graphql-codegen -r dotenv/config && prettier --write ./src/services/**/generated.ts && yarn lint --fix"
   },
   "dependencies": {

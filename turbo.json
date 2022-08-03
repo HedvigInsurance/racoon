@@ -82,6 +82,10 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
+    "storybook:build": {
+      "outputs": ["storybook-static/**"],
+      "dependsOn": ["^build", "codegen"]
+    },
     "typecheck": {
       "outputs": []
     },
