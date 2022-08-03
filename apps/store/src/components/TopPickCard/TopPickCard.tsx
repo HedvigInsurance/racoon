@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import ImageProps from 'next/image'
 import { Space } from 'ui'
 
-export const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
-export const PRODUCT_CARD_IMAGE_HEIGHT_SMALL = '25rem'
+const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
+const PRODUCT_CARD_IMAGE_HEIGHT_SMALL = '25rem'
 
 type ImageProps = {
   src: string
@@ -12,17 +12,17 @@ type ImageProps = {
   objectPosition?: string
 }
 
-export type ProductCardProps = {
+export type TopPickCardProps = {
   title: string
   subtitle: string
   image: ImageProps
 }
 
-export const ProductCard = ({
+export const TopPickCard = ({
   title,
   subtitle,
   image: { alt = '', ...imageProps },
-}: ProductCardProps) => {
+}: TopPickCardProps) => {
   return (
     <Wrapper y={0.25}>
       <ImageWrapper>
