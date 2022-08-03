@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
 import { ReactNode, useContext } from 'react'
 import { mq } from '../../lib/media-query'
+import { UIColor } from '../../lib/theme/colors'
 import { getColor } from '../../lib/theme/theme'
 import { MenuThemeContext } from './Menu'
 import { MenuLink, MenuLinkProps } from './MenuLink'
 
-const MenuItemElement = styled.li<MenuItemProps>(({ color }) => ({
+const MenuItemElement = styled.li<MenuItemElementProps>(({ color }) => ({
   position: 'relative',
   display: 'inline-flex',
   alignItems: 'start',
@@ -31,6 +32,10 @@ const MenuItemElement = styled.li<MenuItemProps>(({ color }) => ({
     padding: '0.625rem',
   },
 }))
+
+type MenuItemElementProps = {
+  color: UIColor
+}
 
 type MenuItemProps = Pick<MenuLinkProps, 'href'> & {
   children: ReactNode

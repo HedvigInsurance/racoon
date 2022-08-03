@@ -109,7 +109,7 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
 
     ...(variant === 'text' && {
       backgroundColor: 'transparent',
-      color: getColor(color),
+      color: color ? getColor(color) : 'currentcolor',
       border: 'none',
       ':disabled': {
         color: theme.colors.gray500,
