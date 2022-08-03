@@ -14,7 +14,6 @@ module.exports = {
         ...config.resolve,
         alias: {
           ...config.resolve.alias,
-          '@emotion/core': emotionReactEleven,
           '@emotion/styled': emotionStyledEleven,
         },
       },

@@ -507,7 +507,7 @@ We use [Emotion](https://emotion.sh/docs/introduction) to style our components, 
 
 ```tsx
 import styled from '@emotion/styled'
-import { keyframes } from '@emotion/core'
+import { keyframes } from '@emotion/react'
 ```
 
 ```tsx

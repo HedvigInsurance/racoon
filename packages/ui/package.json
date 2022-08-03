@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@babel/core": "7.18.10",
-    "@emotion/babel-plugin": "11.9.2",
-    "@emotion/jest": "11.9.4",
+    "@emotion/babel-plugin": "11.10.0",
+    "@emotion/jest": "11.10.0",
     "@storybook/addon-actions": "6.5.9",
     "@storybook/addon-essentials": "6.5.9",
     "@storybook/addon-links": "6.5.9",
@@ -41,17 +41,17 @@
     "scripts": "*",
     "ts-jest": "28.0.7",
     "tsconfig": "*",
-    "tsup": "^5.11.13",
+    "tsup": "5.12.9",
     "typescript": "4.7.4"
   },
   "dependencies": {
-    "@emotion/react": "11.9.3",
-    "@emotion/styled": "11.9.3",
+    "@emotion/react": "11.10.0",
+    "@emotion/styled": "11.10.0",
     "@hedviginsurance/brand": "^5.0.0",
     "@radix-ui/react-checkbox": "^0.1.5",
     "@radix-ui/react-radio-group": "^0.1.5",
     "react": "17.0.2",
-    "react-animate-height": "^2.0.23",
+    "react-animate-height": "2.1.2",
     "react-dom": "17.0.2"
   }
 }
