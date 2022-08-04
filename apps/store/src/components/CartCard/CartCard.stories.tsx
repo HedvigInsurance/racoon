@@ -15,4 +15,5 @@ export const Default = Template.bind({})
 Default.args = {
   price: 149,
   title: 'Hedvig Home',
+  currency: 'SEK',
 }
