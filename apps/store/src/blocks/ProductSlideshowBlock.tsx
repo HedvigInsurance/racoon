@@ -11,7 +11,7 @@ type ProductSlideshowBlockProps = SbBaseBlockProps<{
 export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <Slideshow>
+      <Slideshow title={blok.title}>
         {blok.items.map((nestedBlock) => (
           <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
         ))}

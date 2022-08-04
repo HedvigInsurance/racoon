@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/core'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { HedvigSymbol } from '@hedviginsurance/brand'
 import { FontSizes, Heading } from 'components/Heading/Heading'

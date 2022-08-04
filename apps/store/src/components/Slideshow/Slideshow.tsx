@@ -30,6 +30,7 @@ const Title = styled.h2(({ theme }) => ({
 const ScollableContainer = styled.div(({ theme }) => ({
   display: 'flex',
   gap: theme.space[2],
+  paddingBottom: theme.space[4],
   scrollSnapType: 'x mandatory',
   overflowX: 'auto',
 }))
