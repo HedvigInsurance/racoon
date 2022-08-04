@@ -107,3 +107,8 @@ export const getProductStory = async (slug: string, preview = false) => {
   const story = await getStoryBySlug(`/products/${slug}`, preview)
   return story as ProductStory
 }
+
+export const getStoreStory = async (preview = false) => {
+  const story = await getStoryBySlug('/store', preview)
+  return story as StoryData
+}
