@@ -26,6 +26,7 @@ const Wrappper = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   paddingBottom: theme.space[5],
+  width: '100%',
 }))
 
 const StyledPillButton = styled.button(({ theme }) => ({
