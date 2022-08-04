@@ -12,7 +12,6 @@ const NextStorePage: NextPageWithLayout<StoryblokPageProps> = ({ story: initialS
 
 export const getServerSideProps: GetServerSideProps<StoryblokPageProps> = async (context) => {
   const story = await getStoreStory(context.preview)
-  console.log(story)
 
   return {
     props: {
