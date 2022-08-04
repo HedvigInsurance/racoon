@@ -1,18 +1,22 @@
 import { ComponentMeta, Story } from '@storybook/react'
-import { PriceFooter, PriceFooterProps } from './PriceFooter'
+import * as PriceFooter from './PriceFooter'
 
 export default {
   title: 'Product Page / Price Footer',
-  component: PriceFooter,
-  argTypes: {},
-} as ComponentMeta<typeof PriceFooter>
+  component: PriceFooter.Footer,
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
+} as ComponentMeta<typeof PriceFooter.Footer>
 
-const Template: Story<PriceFooterProps> = (props) => {
+const Template: Story<PriceFooter.ButtonProps> = (props) => {
   return (
-    <PriceFooter {...props}>
-      <span>SEK 149/mp.</span>
-      <span>Add to cart</span>
-    </PriceFooter>
+    <PriceFooter.Footer {...props}>
+      <PriceFooter.Button onClick={props.onClick}>
+        <span>SEK 149/mp.</span>
+        <span>Add to cart</span>
+      </PriceFooter.Button>
+    </PriceFooter.Footer>
   )
 }
 

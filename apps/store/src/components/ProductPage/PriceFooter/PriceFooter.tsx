@@ -1,27 +1,35 @@
 import styled from '@emotion/styled'
-import { Button, Separate, Space } from 'ui'
+import { Button as UIButton, Separate, Space } from 'ui'
 
-export type PriceFooterProps = {
+export type FooterProps = {
   children: React.ReactNode
 }
 
-export const PriceFooter = ({ children }: PriceFooterProps) => {
-  return (
-    <Wrapper y={1}>
-      <FlexButton fullWidth>
-        <Separate Separator={<Separator />}>{children}</Separate>
-      </FlexButton>
-    </Wrapper>
-  )
+export const Footer = ({ children }: FooterProps) => {
+  return <Wrapper y={1}>{children}</Wrapper>
 }
 
 const Wrapper = styled(Space)(({ theme }) => ({
   backgroundColor: theme.colors.white,
   boxShadow: '0px -1px 1px rgba(0, 0, 0, 0.1), 0px -4px 8px rgba(0, 0, 0, 0.1)',
   padding: `${theme.space[3]} ${theme.space[4]}`,
+  width: '100%',
 }))
 
-const FlexButton = styled(Button)(() => ({
+export type ButtonProps = {
+  children: React.ReactNode
+  onClick: () => void
+}
+
+export const Button = ({ onClick, children }: ButtonProps) => {
+  return (
+    <FlexButton fullWidth onClick={onClick}>
+      <Separate Separator={<Separator />}>{children}</Separate>
+    </FlexButton>
+  )
+}
+
+const FlexButton = styled(UIButton)(() => ({
   display: 'flex',
 }))
 

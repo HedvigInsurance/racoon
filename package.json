@@ -19,13 +19,8 @@
     "prepare": "husky install",
     "typecheck": "turbo run typecheck",
     "storybook": "turbo run storybook",
-    "storybook:build": "turbo run storybook:build"
-  },
-  "devDependencies": {
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "^2.5.1",
-    "turbo": "^1.2.1"
+    "storybook:build": "turbo run storybook:build",
+    "chromatic": "turbo run chromatic"
   },
   "packageManager": "yarn@1.22.17",
   "lint-staged": {
@@ -36,5 +31,14 @@
       "prettier --ignore-unknown --write",
       "eslint --fix --ignore-pattern 'generated.ts'"
     ]
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "2.7.1",
+    "turbo": "^1.2.1"
+  },
+  "resolutions": {
+    "next-i18next/@types/react": "17.0.48"
   }
 }

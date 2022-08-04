@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { HedvigLogo, mq } from 'ui'
 
-
 const Container = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
