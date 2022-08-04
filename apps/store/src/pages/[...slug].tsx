@@ -22,9 +22,7 @@ const Page: NextPageWithLayout<StoryblokPageProps> = ({ story: initialStory }) =
       <Head>
         <title>{story.name}</title>
       </Head>
-      <div>
-        <StoryblokComponent blok={story.content} />
-      </div>
+      <StoryblokComponent blok={story.content} />
     </>
   )
 }
