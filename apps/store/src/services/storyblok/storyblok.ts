@@ -1,4 +1,6 @@
 import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
+import { AccordionBlock } from '@/blocks/AccordionBlock'
+import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
@@ -64,6 +66,8 @@ export enum StoryblokBlockName {
   PriceCalculator = 'priceCalculator',
   TopPickCard = 'topPickCard',
   ProductSlideshow = 'productSlideshow',
+  Accordion = 'accordion',
+  AccordionItem = 'accordionItem',
 }
 
 export const initStoryblok = () => {
@@ -80,6 +84,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
     [StoryblokBlockName.ProductSlideshow]: ProductSlideshowBlock,
+    [StoryblokBlockName.Accordion]: AccordionBlock,
+    [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
   }
 
   storyblokInit({
