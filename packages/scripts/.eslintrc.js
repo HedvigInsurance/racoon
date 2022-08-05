@@ -44,8 +44,9 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['internal'],
       },
     ],
+    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
+    '@typescript-eslint/no-unused-vars': 'error', // Also covers unused import
     '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',

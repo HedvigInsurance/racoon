@@ -30,7 +30,7 @@ export const cardStyle = ({
   width: size ? CardSizes[size] : 'auto',
 })
 
-// @ts-ignore - Doesn't seem to work with passing a function that returns styling object
+// @ts-expect-error - Doesn't seem to work with passing a function that returns styling object
 const CardElement = styled.div<Omit<CardProps, 'children' | 'cover'>>((props) => ({
   ...cardStyle(props),
 }))
