@@ -63,7 +63,8 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "lint:fix": {
       "outputs": []
