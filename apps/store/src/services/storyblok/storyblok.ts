@@ -1,4 +1,6 @@
 import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
+import { AccordionBlock } from '@/blocks/AccordionBlock'
+import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
@@ -9,6 +11,7 @@ import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
+import { TabsBlock } from '@/blocks/TabsBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -64,6 +67,11 @@ export enum StoryblokBlockName {
   PriceCalculator = 'priceCalculator',
   TopPickCard = 'topPickCard',
   ProductSlideshow = 'productSlideshow',
+  Accordion = 'accordion',
+  AccordionItem = 'accordionItem',
+  Tabs = 'tabs',
+  // Used only inside TabsBlock
+  Tab = 'tab',
 }
 
 export const initStoryblok = () => {
@@ -80,6 +88,9 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
     [StoryblokBlockName.ProductSlideshow]: ProductSlideshowBlock,
+    [StoryblokBlockName.Accordion]: AccordionBlock,
+    [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
+    [StoryblokBlockName.Tabs]: TabsBlock,
   }
 
   storyblokInit({
