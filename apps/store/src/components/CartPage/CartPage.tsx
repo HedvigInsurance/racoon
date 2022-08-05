@@ -38,6 +38,7 @@ const PageHeader = styled.header(() => ({
 const Footer = styled.footer(({ theme }) => ({
   position: 'fixed',
   bottom: 0,
+  left: 0,
   width: '100%',
   padding: `0 ${theme.space[3]} ${theme.space[6]} ${theme.space[3]}`,
   a: {
