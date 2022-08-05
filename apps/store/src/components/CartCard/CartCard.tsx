@@ -39,26 +39,30 @@ const RemoveButton = styled.button({
   marginTop: '2rem',
   textDecoration: 'underline',
   fontSize: '0.925rem',
+  cursor: 'pointer',
 })
 
 export type CartCardProps = {
   title: string
-  price?: number
+  price: number
   currency: string
 }
 
 export const CartCard = ({ title, price, currency }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
 
+  const handleRemoveProduct = () => {
+    //open toast to ask for confirmation.
+  }
   return (
     <ProductCard>
       <Content>
         <IconElement />
         <HeaderElement>
-          {title && <TitleElement>{title}</TitleElement>}
-          <RemoveButton>Remove</RemoveButton>
+          <TitleElement>{title}</TitleElement>
+          <RemoveButton onClick={() => handleRemoveProduct()}>Remove</RemoveButton>
         </HeaderElement>
-        {price && <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>}
+        <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
       </Content>
     </ProductCard>
   )
