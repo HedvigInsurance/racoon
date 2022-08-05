@@ -14,35 +14,39 @@ type AnimatedToggleButtonProps = {
   color?: BurgerButtonColors
 }
 
-const CrossBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => ({
-  '&::before, &::after': {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    content: '" "',
-    width: BURGER_LINE_WIDTH,
-    height: 2,
-    backgroundColor: getColor(color),
-    transition: `background-color ${TRANSITION_TIME}ms, transform ${TRANSITION_TIME}ms, top ${TRANSITION_TIME}ms, bottom ${TRANSITION_TIME}ms`,
-  },
+const CrossBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => {
+  const backgroundColor = color ? getColor(color) : 'currentColor'
 
-  '&::before': {
-    top: 2,
-    ...(isActive && {
-      transform: 'translateY(-1px) rotate(45deg)',
-      top: '50%',
-      backgroundColor: getColor(color),
-    }),
-  },
-  '&::after': {
-    bottom: 2,
-    ...(isActive && {
-      bottom: '50%',
-      transform: 'translateY(1px) rotate(-45deg)',
-      backgroundColor: getColor(color),
-    }),
-  },
-}))
+  return {
+    '&::before, &::after': {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      content: '" "',
+      width: BURGER_LINE_WIDTH,
+      height: 2,
+      backgroundColor,
+      transition: `background-color ${TRANSITION_TIME}ms, transform ${TRANSITION_TIME}ms, top ${TRANSITION_TIME}ms, bottom ${TRANSITION_TIME}ms`,
+    },
+
+    '&::before': {
+      top: 2,
+      ...(isActive && {
+        transform: 'translateY(-1px) rotate(45deg)',
+        top: '50%',
+        backgroundColor,
+      }),
+    },
+    '&::after': {
+      bottom: 2,
+      ...(isActive && {
+        bottom: '50%',
+        transform: 'translateY(1px) rotate(-45deg)',
+        backgroundColor,
+      }),
+    },
+  }
+})
 
 const MiddleBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => ({
   width: BURGER_LINE_WIDTH,
@@ -51,7 +55,7 @@ const MiddleBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color })
   left: 0,
   right: 0,
   height: 2,
-  backgroundColor: isActive ? getColor(color) : 'transparent',
+  backgroundColor: isActive ? (color ? getColor(color) : 'currentcolor') : 'transparent',
   transition: `background-color ${TRANSITION_TIME}ms`,
   transform: 'translateY(-1px)',
 }))

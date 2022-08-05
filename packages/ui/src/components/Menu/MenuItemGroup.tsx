@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { ReactNode } from 'react'
 import { mq } from '../../lib/media-query'
+import { getColor } from '../../lib/theme/theme'
 import { MenuLink } from './MenuLink'
 
 const Group = styled.div({
@@ -15,7 +15,7 @@ const MenuGroupHeader = styled.span({
   padding: '0.5rem 1.125rem',
 
   textTransform: 'uppercase',
-  color: colorsV3.gray500,
+  color: getColor('gray500'),
 })
 
 const MenuGroupList = styled.ul({
@@ -35,7 +35,7 @@ export const MenuItemGroup = ({ title, href, children }: MenuItemGroupProps) => 
   return (
     <Group>
       <MenuGroupHeader>
-        <MenuLink color={colorsV3.gray500} href={href}>
+        <MenuLink color="gray500" href={href}>
           {title}
         </MenuLink>
       </MenuGroupHeader>

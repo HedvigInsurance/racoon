@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
+import { getColor } from '../../lib/theme/theme'
 import { Card, CardContent } from '../Card/Card'
 import { SelectableCard, SelectableCardProps } from '../Card/SelectableCard'
 import { StyledCheckbox } from '../Checkbox/Checkbox'
@@ -17,7 +17,7 @@ const HeaderElement = styled.div({
 const TitleElement = styled.div({})
 
 const ExtraElement = styled.div({
-  color: colorsV3.gray500,
+  color: getColor('gray500'),
   justifySelf: 'end',
 })
 

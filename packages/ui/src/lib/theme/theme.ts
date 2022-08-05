@@ -1,4 +1,4 @@
-import { colors } from './colors'
+import { colors, UIColor } from './colors'
 import { fonts, fontSizes } from './typography'
 
 const space = [
@@ -30,6 +30,6 @@ declare module '@emotion/react' {
   export interface Theme extends CustomTheme {}
 }
 
-export const getColor = (color?: string) => {
-  return theme.colors[color as keyof typeof theme.colors] || 'currentColor'
+export const getColor = (color: UIColor) => {
+  return theme.colors[color]
 }
