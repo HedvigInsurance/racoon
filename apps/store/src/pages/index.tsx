@@ -19,7 +19,6 @@ export const getStaticProps: GetStaticProps = async ({ preview }) => {
       key: story ? story.id : false,
       preview: preview || false,
     },
-    revalidate: 3600,
   }
 }
 
