@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { Button, Space } from 'ui'
 import * as CartNotification from '@/components/CartNotification/CartNotification'
 import { Header } from '@/components/CartNotification/CartNotification'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { Main } from '../CartNotification/Main'
 
@@ -40,12 +39,18 @@ const ExtraElement = styled.div({
   justifySelf: 'end',
 })
 
-const RemoveButton = styled.button({
-  marginTop: '2rem',
+const RemoveButton = styled.button(({ theme }) => ({
+  marginTop: theme.space[6],
   textDecoration: 'underline',
   fontSize: '0.925rem',
   cursor: 'pointer',
-})
+}))
+
+const ButtonContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  marginTop: theme.space[4],
+}))
 
 export type CartCardProps = {
   title: string
@@ -56,7 +61,7 @@ export type CartCardProps = {
 export const CartCard = ({ title, price, currency }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
 
-  const handleRemove = (title: string) => {
+  const handleRemove = () => {
     //send request to backend to remove product
   }
 
@@ -66,7 +71,6 @@ export const CartCard = ({ title, price, currency }: CartCardProps) => {
         <IconElement />
         <HeaderElement>
           <TitleElement>{title}</TitleElement>
-
           <CartNotification.Root>
             <CartNotification.Trigger asChild>
               <RemoveButton>Remove</RemoveButton>
@@ -77,14 +81,14 @@ export const CartCard = ({ title, price, currency }: CartCardProps) => {
                   <ExtraElement>
                     You will lose the discount applied if you remove the insurance.
                   </ExtraElement>
-                  <SpaceFlex>
+                  <ButtonContainer>
                     <CartNotification.Close>
                       <Button variant="outlined">Dont remove</Button>
                     </CartNotification.Close>
                     <CartNotification.Close>
-                      <Button onClick={() => handleRemove(title)}>Remove</Button>
+                      <Button onClick={() => handleRemove()}>Remove</Button>
                     </CartNotification.Close>
-                  </SpaceFlex>
+                  </ButtonContainer>
                 </Space>
               </Main>
             </CartNotification.Content>
