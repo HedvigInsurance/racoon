@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
       key: story ? story.id : false,
       preview: preview || false,
     },
-    revalidate: 3600,
   }
 }
 
