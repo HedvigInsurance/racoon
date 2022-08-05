@@ -34,7 +34,7 @@ const selectableCardStyles = (props: SelectableCardProps & { theme: Theme }) => 
   // Adjust padding so that content doesn't shift
   borderWidth: props.checked ? '2px' : '1px',
 
-  // @ts-ignore TS doesn't like to use component name for selectors, but it works
+  // @ts-expect-error TS doesn't like to use component name for selectors, but it works
   [CardContent]: {
     padding: props.checked ? 'calc(1rem - 1px) calc(0.5rem - 1px)' : '1rem 0.5rem',
 
@@ -44,12 +44,12 @@ const selectableCardStyles = (props: SelectableCardProps & { theme: Theme }) => 
   },
 })
 
-// @ts-ignore TS doesn't like passing a function to return a CSS object
+// @ts-expect-error TS doesn't like passing a function to return a CSS object
 const StyledCheckbox = styled(Checkbox.Root)<SelectableCardProps>((props) =>
   selectableCardStyles(props),
 )
 
-// @ts-ignore TS doesn't like passing a function to return a CSS object
+// @ts-expect-error TS doesn't like passing a function to return a CSS object
 const StyledRadio = styled(RadioGroup.Item)<SelectableCardProps>((props) =>
   selectableCardStyles(props),
 )

@@ -13,7 +13,7 @@
     "test": "jest --passWithNoTests",
     "build": "tsup src/index.tsx --dts --external react --inject ./react-shim.js",
     "dev": "tsup src/index.tsx --watch --dts --external react --inject ./react-shim.js",
-    "lint": "TIMING=1 eslint src",
+    "lint": "TIMING=1 eslint --cache --cache-location node_modules/.cache/eslint src",
     "lint:fix": "eslint src --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "storybook": "start-storybook --ci -p 6006",
