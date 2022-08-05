@@ -33,7 +33,8 @@
         "$NEXT_PUBLIC_DATADOG_ENV",
         "$NEXT_PUBLIC_API_MOCKING",
         "$NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN",
-        "$NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN"
+        "$NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN",
+        "$NEXT_PUBLIC_GRAPHQL_ENDPOINT"
       ]
     },
     "market-web#build": {
@@ -89,6 +90,7 @@
       "dependsOn": ["storybook:build"]
     },
     "typecheck": {
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "store#typecheck": {
@@ -96,7 +98,9 @@
       "outputs": []
     },
     "store#codegen": {
-      "outputs": ["./src/services/**/generated.ts"]
+      "outputs": ["src/services/**/generated.ts"],
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
+      "inputs": ["src/graphql/*.graphql"]
     }
   }
 }

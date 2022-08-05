@@ -1,12 +1,28 @@
-import { fonts as hedvigFonts } from '@hedviginsurance/brand'
-
-export const fonts: Record<string, string> = {
-  standard: `'${hedvigFonts.HEDVIG_LETTERS_STANDARD}', sans-serif`,
-  small: `'${hedvigFonts.HEDVIG_LETTERS_SMALL}', serif`,
-  big: `'${hedvigFonts.HEDVIG_LETTERS_BIG}', serif`,
+enum HedvigFont {
+  HEDVIG_LETTERS_BIG = 'HedvigLetters-Big',
+  HEDVIG_LETTERS_SMALL = 'HedvigLetters-Small',
+  HEDVIG_LETTERS_STANDARD = 'HedvigLetters-Standard',
 }
-fonts.body = fonts.standard
-fonts.heading = fonts.standard
+
+const FONT_STANDARD = `'${HedvigFont.HEDVIG_LETTERS_STANDARD}', sans-serif`
+export const fonts = {
+  standard: FONT_STANDARD,
+  small: `'${HedvigFont.HEDVIG_LETTERS_SMALL}', serif`,
+  big: `'${HedvigFont.HEDVIG_LETTERS_BIG}', serif`,
+
+  body: FONT_STANDARD,
+  heading: FONT_STANDARD,
+}
+
+export const getCDNFonts = () => {
+  return Object.values(HedvigFont).map((fontName) => ({
+    family: fontName,
+    style: 'normal',
+    weight: 400,
+    src: `https://cdn.hedvig.com/identity/fonts/${fontName}.woff2`,
+    format: 'woff2',
+  }))
+}
 
 export const fontSizes: Record<number | string, string> = {
   0: '0.75rem',

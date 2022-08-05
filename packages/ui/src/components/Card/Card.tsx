@@ -1,6 +1,5 @@
 import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { mq } from '../../lib/media-query'
 import { getColor } from '../../lib/theme/theme'
 
@@ -24,7 +23,7 @@ export const cardStyle = ({
 
   backgroundColor: getColor('light'),
   border: `1px solid transparent`,
-  borderColor: bordered ? colorsV3.gray500 : 'transparent',
+  borderColor: bordered ? getColor('gray500') : 'transparent',
 
   boxShadow: 'rgb(0 0 0 / 10%) 0px 1px 2px',
   minWidth: '16rem',

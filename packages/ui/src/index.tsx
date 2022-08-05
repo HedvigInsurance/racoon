@@ -18,6 +18,7 @@ export { Heading } from './components/HeadingNew/HeadingNew'
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'
 
+export { getCDNFonts, fonts } from './lib/theme/typography'
 export { theme, getColor } from './lib/theme/theme'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'

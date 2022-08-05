@@ -15,7 +15,7 @@ type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant'> & Margins
 
 const HeadingBase = styled.h2<HeadingBaseProps>(
   ({ theme, color, variant = 'standard.32', ...props }) => ({
-    color: getColor(color),
+    color: color ? getColor(color) : 'currentColor',
     fontFamily: theme.fonts.heading,
     fontWeight: 400,
     lineHeight: 1.2,

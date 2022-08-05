@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { MenuTheme } from 'ui/src/components/Menu/Menu'
-import { LinkButton, Separate } from 'ui'
+import { getColor, LinkButton, Separate } from 'ui'
 import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
 
 const Wrapper = styled(Separate)({
@@ -14,7 +13,7 @@ const Wrapper = styled(Separate)({
 const Separator = styled.div(() => ({
   width: 1,
   height: '1rem',
-  backgroundColor: colorsV3.gray700,
+  backgroundColor: getColor('gray700'),
 }))
 
 type LanguagePickerProps = {

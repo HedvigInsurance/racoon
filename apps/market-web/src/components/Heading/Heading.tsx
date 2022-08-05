@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { fonts } from '@hedviginsurance/brand'
+import { fonts } from 'ui'
 import { mq } from 'ui'
 import { getMinimalColorStyles } from '@/blocks/blockHelpers'
 import { TextPosition } from '@/helpers/textPosition'
@@ -41,8 +41,7 @@ export const Heading = styled.h1<HeadingProps>`
   font-size: ${(props) => headingSizeMapMobile[props.mobileSize ?? props.size]};
   text-align: ${(props) => props.textPosition};
   text-transform: ${(props) => (props.capitalize ? 'uppercase' : undefined)};
-  font-family: ${(props) =>
-    props.useDisplayFont ? `${fonts.HEDVIG_LETTERS_BIG}, serif !important` : undefined};
+  font-family: ${(props) => (props.useDisplayFont ? `${fonts.big} !important` : undefined)};
   line-height: 1.2;
 
   ${mq.md} {

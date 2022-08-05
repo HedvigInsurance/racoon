@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import { colorsV3, fonts } from '@hedviginsurance/brand'
 import { match } from 'matchly'
 import React from 'react'
-import { mq } from 'ui'
+import { getColor, mq } from 'ui'
 import { MinimalColorComponent, minimalColorComponentColors } from '@/services/storyblok/types'
 
 export const CONTENT_GUTTER = '2rem'
@@ -82,8 +81,8 @@ export type ColorSetGetter<TColors> = (
 
 export const getMinimalColorStyles: ColorSetGetter<minimalColorComponentColors> = (
   color,
-  standardColor = colorsV3.gray100,
-  standardInverseColor = colorsV3.gray900,
+  standardColor = getColor('gray100'),
+  standardInverseColor = getColor('gray900'),
 ) =>
   match([
     [
@@ -91,7 +90,7 @@ export const getMinimalColorStyles: ColorSetGetter<minimalColorComponentColors> 
       {
         background: standardColor,
         color: standardInverseColor,
-        secondaryColor: colorsV3.gray700,
+        secondaryColor: getColor('gray700'),
       },
     ],
     [
@@ -99,23 +98,23 @@ export const getMinimalColorStyles: ColorSetGetter<minimalColorComponentColors> 
       {
         background: standardInverseColor,
         color: standardColor,
-        secondaryColor: colorsV3.gray500,
+        secondaryColor: getColor('gray500'),
       },
     ],
-    ['gray700', { background: standardColor, color: colorsV3.gray700 }],
-    ['gray500-inverse', { background: colorsV3.gray900, color: colorsV3.gray500 }],
+    ['gray700', { background: standardColor, color: getColor('gray700') }],
+    ['gray500-inverse', { background: getColor('gray900'), color: getColor('gray500') }],
     [
       'purple300',
       {
-        background: colorsV3.purple300,
-        color: colorsV3.gray900,
+        background: getColor('purple300'),
+        color: getColor('gray900'),
       },
     ],
     [
       'purple500',
       {
-        background: colorsV3.purple500,
-        color: colorsV3.gray900,
+        background: getColor('purple500'),
+        color: getColor('gray900'),
       },
     ],
     [match.any(), { background: standardColor, color: standardInverseColor }],
@@ -159,7 +158,7 @@ type SectionProps = {
 }
 
 const SectionWrapperComponentUnstyled = styled.section<SectionProps>(
-  ({ colorComponent, size = 'lg', theme }) => ({
+  ({ colorComponent, size = 'lg' }) => ({
     position: 'relative',
     transition: 'background 300ms',
     ...getSectionSizeStyle(size),
@@ -252,7 +251,6 @@ export type ContentWrapperProps = {
 }
 
 export const ContentWrapper = ({
-  index = 0,
   contentWidth = false,
   children,
   fullWidth = false,
