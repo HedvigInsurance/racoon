@@ -1,17 +1,20 @@
-import styled from '@emotion/styled'
+import { getStoryblokApi, Richtext } from '@storyblok/react'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type Props = SbBaseBlockProps<{
   title: string
-  body: string
+  body: Richtext
 }>
 
 export const AccordionItemBlock = ({ blok }: Props) => {
+  const contentHtml = getStoryblokApi().richTextResolver.render(blok.body)
   return (
     <Accordion.Item value={blok._uid}>
       <Accordion.HeaderWithTrigger>{blok.title}</Accordion.HeaderWithTrigger>
-      <Accordion.Content>{blok.body}</Accordion.Content>
+      <Accordion.Content>
+        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      </Accordion.Content>
     </Accordion.Item>
   )
 }
