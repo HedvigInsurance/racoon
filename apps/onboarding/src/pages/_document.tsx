@@ -1,5 +1,5 @@
-import { fonts } from '@hedviginsurance/brand'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import { getCDNFonts } from 'ui'
 import { locales, LocaleLabel } from '@/lib/l10n/locales'
 import { gtmDevScript, gtmProdScript } from '@/services/analytics/gtm'
 
@@ -18,13 +18,13 @@ export default class MyDocument extends Document {
     return (
       <Html lang={this.lang()}>
         <Head>
-          {Object.values(fonts).map((fontName) => (
+          {getCDNFonts().map((font) => (
             <link
-              key={fontName}
+              key={font.src}
               rel="preload"
-              href={`https://cdn.hedvig.com/identity/fonts/${fontName}.woff2`}
+              href={font.src}
               as="font"
-              type="font/woff2"
+              type={`font/${font.format}`}
               crossOrigin="anonymous"
             />
           ))}

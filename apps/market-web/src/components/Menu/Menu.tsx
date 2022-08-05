@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { ReactNode } from 'react'
-import { Menu as UiMenu, MenuTheme, mq } from 'ui'
+import { getColor, Menu as UiMenu, MenuTheme, mq } from 'ui'
 import { MenuItem as StoryblokMenuItem } from '@/services/storyblok/types'
 import { LanguagePicker } from './LanguagePicker'
 
@@ -15,7 +14,7 @@ const MenuWrapper = styled.div({
   justifyContent: 'flex-end',
 
   width: '100%',
-  backgroundColor: colorsV3.gray900,
+  backgroundColor: getColor('gray900'),
 
   [mq.md]: {
     height: WRAPPER_HEIGHT,
