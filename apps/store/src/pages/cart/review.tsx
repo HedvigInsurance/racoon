@@ -1,23 +1,34 @@
-import type { NextPageWithLayout } from 'next'
-import { Button } from 'ui'
-import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import type { GetServerSideProps, NextPage } from 'next'
+import CartReviewPage from '@/components/CartReviewPage/CartReviewPage'
+import type { CartReviewPageProps } from '@/components/CartReviewPage/CartReviewPage.types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { PageLink } from '@/lib/PageLink'
 
-const NextCartReviewPage: NextPageWithLayout = () => {
-  const { apiMarket, locale } = useCurrentLocale()
+const NextCartReviewPage: NextPage<CartReviewPageProps> = (props) => {
+  const { locale } = useCurrentLocale()
 
   return (
-    <div>
-      <form method="post" action={PageLink.apiCheckoutCreate()}>
-        <input type="hidden" name="market" value={apiMarket} />
-        <input type="hidden" name="locale" value={locale} />
-        <Button>Continue to personal details</Button>
-      </form>
-    </div>
+    <form method="post" action={'TODO'}>
+      <input type="hidden" name="locale" value={locale} />
+
+      <CartReviewPage {...props} />
+    </form>
   )
 }
 
-NextCartReviewPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async () => {
+  return {
+    props: {
+      products: PRODUCTS,
+      cost: COST,
+      currency: 'SEK',
+    },
+  }
+}
+
+const PRODUCTS = [
+  { name: 'Home Insurance', cost: 250, currency: 'SEK' },
+  { name: 'Apartment Insurance', cost: 100, currency: 'SEK' },
+]
+const COST = { total: 350, subTotal: 250 }
 
 export default NextCartReviewPage
