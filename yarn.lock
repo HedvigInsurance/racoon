@@ -12633,6 +12633,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     scripts: "*"
+    typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
@@ -19830,6 +19831,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "racoon@workspace:."
   dependencies:
+    eslint: 8.21.0
     husky: ^7.0.4
     lint-staged: ^12.3.7
     prettier: 2.7.1
@@ -21055,8 +21057,6 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     typescript: 4.7.4
-  bin:
-    eslint: ./node_modules/.bin/eslint
   languageName: unknown
   linkType: soft
 
