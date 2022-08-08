@@ -95,7 +95,7 @@
       "outputs": []
     },
     "store#typecheck": {
-      "dependsOn": ["codegen"],
+      "dependsOn": ["codegen", "^build"],
       "outputs": []
     },
     "store#codegen": {
