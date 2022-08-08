@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CoverageList } from './CoverageList'
@@ -22,14 +22,12 @@ type PerilsProps = {
 export const Perils = ({ perils }: PerilsProps) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
+  const handleValueChange = useCallback((value: Array<string>) => {
+    setOpenedItems(value)
+  }, [])
+
   return (
-    <Accordion.Root
-      type="multiple"
-      value={openedItems}
-      onValueChange={(value) => {
-        setOpenedItems(value)
-      }}
-    >
+    <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       {perils.map(({ id, icon, name, description, covered, notCovered }) => {
         const isOpened = openedItems?.includes(name)
 
