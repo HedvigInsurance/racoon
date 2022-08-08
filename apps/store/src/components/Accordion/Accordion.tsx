@@ -21,10 +21,14 @@ const Trigger = styled(AccordionPrimitives.Trigger)(() => ({
   justifyContent: 'space-between',
 }))
 
+type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
+  icon?: ReactElement
+}
+
 export const HeaderWithTrigger = ({
   children,
   icon = <TriggerIcon size="1rem" />,
-}: PropsWithChildren<unknown> & { icon?: ReactElement }) => {
+}: HeaderWithTriggerProps) => {
   return (
     <Header>
       <Trigger>
