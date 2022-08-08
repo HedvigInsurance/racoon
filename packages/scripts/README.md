@@ -9,7 +9,7 @@ Add a new dependency to your app/package in your `package.json`:
 ```json
 {
   "devDependencies": {
-    "scripts": "*"
+    "scripts": "workspace:"
   }
 }
 ```
