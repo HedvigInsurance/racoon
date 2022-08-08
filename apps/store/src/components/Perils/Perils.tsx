@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CoverageList } from './CoverageList'
@@ -26,10 +26,12 @@ export const Perils = ({ perils }: PerilsProps) => {
     setOpenedItems(value)
   }, [])
 
+  const openedItemsSet = useMemo(() => new Set(openedItems), [openedItems])
+
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       {perils.map(({ id, icon, name, description, covered, notCovered }) => {
-        const isOpened = openedItems?.includes(name)
+        const isOpened = openedItemsSet.has(name)
 
         return (
           <Accordion.Item key={id} value={name}>
