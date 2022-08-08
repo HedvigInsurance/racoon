@@ -1,10 +1,10 @@
 import { getOperationName } from '@apollo/client/utilities'
 import {
+  ShopSessionDocument,
   CartLinesAddDocument,
   CartLinesRemoveDocument,
   ShopSessionCreateDocument,
-  ShopSessionDocument,
-} from '@/services/graphql/generated'
+} from '@/services/apollo/generated'
 
 const SHOP_SESSION_CREATE = getOperationName(ShopSessionCreateDocument)
 if (SHOP_SESSION_CREATE === null) throw new Error('Can not find ShopSessionCreate operation name')

@@ -16,26 +16,31 @@ export class ShopSessionService {
   ) {}
 
   public async getOrCreate(params: ShopSessionCreateMutationVariables) {
-    const existingShopSession = await this.get()
+    const existingShopSession = await this.fetch()
 
     if (existingShopSession) return existingShopSession
 
     return await this.create(params)
   }
 
-  public async get() {
+  public async fetch() {
     const shopSessionId = this.persister.fetch()
     if (!shopSessionId) return null
 
-    const { data: shopSession } = await this.apolloClient.query<
-      ShopSession,
-      ShopSessionQueryVariables
-    >({
-      query: ShopSessionDocument,
-      variables: { shopSessionId },
-    })
+    try {
+      const { data: shopSession } = await this.apolloClient.query<
+        ShopSession,
+        ShopSessionQueryVariables
+      >({
+        query: ShopSessionDocument,
+        variables: { shopSessionId },
+      })
 
-    return shopSession
+      return shopSession
+    } catch (error) {
+      console.log('ShopSession not found: ', shopSessionId)
+      return null
+    }
   }
 
   private async create(variables: ShopSessionCreateMutationVariables) {
@@ -49,7 +54,7 @@ export class ShopSessionService {
 
     const shopSession = result.data?.shopSessionCreate
 
-    if (!shopSession) throw new Error('Shop session not found')
+    if (!shopSession) throw new Error('Unable to create ShopSession')
 
     this.persister.save(shopSession.id)
 
