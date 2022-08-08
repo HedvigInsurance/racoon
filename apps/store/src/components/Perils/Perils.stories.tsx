@@ -20,6 +20,7 @@ export const Default = Template.bind({})
 Default.args = {
   perils: [
     {
+      id: 'waterLeaks',
       icon: <ShieldIcon size="22px" />,
       name: 'Water leaks',
       description:
@@ -33,6 +34,7 @@ Default.args = {
       notCovered: ['Morbi vitae elit sapien', 'Duis sed viverra nibh'],
     },
     {
+      id: 'fire',
       icon: <ShieldIcon size="22px" />,
       name: 'Fire',
       description:
@@ -46,6 +48,7 @@ Default.args = {
       ],
     },
     {
+      id: 'storms',
       icon: <ShieldIcon size="22px" />,
       name: 'Storms',
       description:

@@ -7,6 +7,7 @@ import { MinusIcon } from './MinusIcon'
 import { PlusIcon } from './PlusIcon'
 
 type Peril = {
+  id: string
   icon: React.ReactNode
   name: string
   description: string
@@ -29,11 +30,11 @@ export const Perils = ({ perils }: PerilsProps) => {
         setOpenedItems(value)
       }}
     >
-      {perils.map(({ icon, name, description, covered, notCovered }) => {
+      {perils.map(({ id, icon, name, description, covered, notCovered }) => {
         const isOpened = openedItems?.includes(name)
 
         return (
-          <Accordion.Item key={name} value={name}>
+          <Accordion.Item key={id} value={name}>
             <Accordion.HeaderWithTrigger icon={isOpened ? <MinusIcon /> : <PlusIcon />}>
               <SpaceFlex space={0.5}>
                 {icon}
