@@ -4,7 +4,7 @@ import { MarketLabel } from '@/lib/types'
 const EMBARK_STORY_BY_MARKET: Record<MarketLabel, string> = {
   [MarketLabel.SE]: process.env.NEXT_PUBLIC_EMBARK_STORY_SE ?? '',
   [MarketLabel.DK]: process.env.NEXT_PUBLIC_EMBARK_STORY_DK ?? 'onboarding-DK',
-  [MarketLabel.NO]: process.env.NEXT_PUBLIC_EMBARK_STORY_NO ?? 'onboarding-NO',
+  [MarketLabel.NO]: process.env.NEXT_PUBLIC_EMBARK_STORY_NO ?? 'onboarding-NO-v2',
 }
 
 const EMBARK_URL_SLUG_BY_MARKET: Record<MarketLabel, string> = {
