@@ -26,10 +26,16 @@ export class CartService {
     return updatedCart
   }
 
-  // @TODO: implement when schema is decided
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async startDateUpdate(_lineId: string, _startDate: Date | null) {
-    return await graphqlSdk.ShopSession({ shopSessionId: this.shopSession.id })
+  public async startDateUpdate(lineId: string, startDate: Date | null) {
+    const { shopSession } = await graphqlSdk.StartDateUpdate({
+      shopSessionId: this.shopSession.id,
+      lineId,
+      startDate: startDate ? startDate.toISOString().substring(0, 10) : null,
+    })
+
+    const updatedCart = shopSession.cart
+    if (!updatedCart) throw new Error(`Could not update start date for line item: ${lineId}`)
+    return updatedCart
   }
 }
 
