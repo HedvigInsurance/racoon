@@ -10,23 +10,28 @@ import {
   shopSessionFind,
 } from './ShopSessionMock.helpers'
 
-const { SHOP_SESSION_FIND_OR_CREATE, CART_LINES_ADD, CART_LINES_REMOVE } = getConstants()
+const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_LINES_ADD, CART_LINES_REMOVE } = getConstants()
 
 const api = graphql.link(graphqlConstants().GRAPHQL_ENDPOINT)
 
 export const mockShopSessionHandlers = [
-  api.query(SHOP_SESSION_FIND_OR_CREATE, (req, res, ctx) => {
+  api.mutation(SHOP_SESSION_CREATE, (req, res, ctx) => {
     const countryCode = req.variables.countryCode
-
-    const existingShopSession = shopSessionFind(req.variables.shopSessionId)
-    const shopSession =
-      existingShopSession && existingShopSession.countryCode === countryCode
-        ? existingShopSession
-        : shopSessionCreate(countryCode)
+    const shopSession = shopSessionCreate(countryCode)
 
     return res(
       ctx.data({
-        shopSessionFindOrCreate: dbShopSessionToAPI(shopSession),
+        shopSessionCreate: dbShopSessionToAPI(shopSession),
+      }),
+    )
+  }),
+
+  api.query(SHOP_SESSION, (req, res, ctx) => {
+    const shopSession = shopSessionFind(req.variables.shopSessionId)
+
+    return res(
+      ctx.data({
+        shopSession: shopSession ? dbShopSessionToAPI(shopSession) : null,
       }),
     )
   }),

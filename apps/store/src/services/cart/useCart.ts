@@ -1,23 +1,19 @@
 import { useApolloClient } from '@apollo/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { useShopSessionFindOrCreateQuery } from '@/services/apollo/generated'
-import { getShopSessionIdClientSide } from '@/services/shopSession/ShopSession.helpers'
+import { getShopSessionClientSide } from '@/services/shopSession/ShopSession.helpers'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export const useCart = () => {
   const { countryCode } = useCurrentLocale()
-
+  const [shopSession, setShopSession] = useState<ShopSession>()
   const apolloClient = useApolloClient()
-  const [shopSessionId, setShopSessionId] = useState(() => getShopSessionIdClientSide(apolloClient))
 
-  const result = useShopSessionFindOrCreateQuery({
-    variables: { shopSessionId, countryCode },
-    onCompleted(data) {
-      if (data.shopSessionFindOrCreate.id !== shopSessionId) {
-        setShopSessionId(data.shopSessionFindOrCreate.id)
-      }
-    },
-  })
+  useEffect(() => {
+    ;(async () => {
+      setShopSession(await getShopSessionClientSide({ apolloClient, countryCode }))
+    })()
+  }, [apolloClient, countryCode])
 
-  return { ...result, data: result.data?.shopSessionFindOrCreate.cart }
+  return shopSession?.cart
 }
