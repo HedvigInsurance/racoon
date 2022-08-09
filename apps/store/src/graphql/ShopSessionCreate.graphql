@@ -1,0 +1,10 @@
+mutation ShopSessionCreate($countryCode: CountryCode!) {
+  shopSessionCreate(input: { countryCode: $countryCode }) {
+    id
+    countryCode
+    currencyCode
+    cart {
+      ...CartFragment
+    }
+  }
+}

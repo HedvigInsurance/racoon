@@ -35,9 +35,8 @@ type Props = ProductItemProps & {
 }
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
-  const { data } = useCart()
-
-  const cartLineCount = data?.lines.length ?? 1
+  const cart = useCart()
+  const cartLineCount = cart?.lines.length ?? 1
 
   return (
     <CartNotification.Content

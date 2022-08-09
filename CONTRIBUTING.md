@@ -169,13 +169,7 @@ export default DynamicComponent
 
 ### Imports
 
-We explicitly import React hooks as well as React (since we haven't yet upgraded to React 17).
-
-```tsx
-import React, { useState, useEffect } from 'react'
-```
-
-We don't however import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
+We don't import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
 The reason for this is that the types from React are not always named in a way that makes super clear that's where they come from.
 
 ```tsx
