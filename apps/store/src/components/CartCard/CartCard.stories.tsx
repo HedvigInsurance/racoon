@@ -13,6 +13,7 @@ const Template: ComponentStory<typeof CartCard> = (args) => {
 
 export const Default = Template.bind({})
 Default.args = {
-  price: '149 kr/mo.',
+  price: 149,
   title: 'Hedvig Home',
+  currency: 'SEK',
 }

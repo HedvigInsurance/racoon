@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import { ReactNode, useCallback, useContext, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { ChevronIcon } from '../../icons/Chevron'
 import { mq, useBreakpoint } from '../../lib/media-query'
+import { getColor } from '../../lib/theme/theme'
 import { Button } from '../Button/Button'
 import { MenuThemeContext } from './Menu'
 import { MenuItem } from './MenuItem'
@@ -18,7 +18,7 @@ const DropdownMenuContainer = styled.div<{
   opacity: isOpen ? 1 : 0,
   transition: `opacity ${TRANSITION_TIME}ms`,
   overflowY: 'hidden',
-  color: colorsV3.gray900,
+  color: getColor('gray900'),
 
   [mq.md]: {
     display: isOpen ? 'block' : 'none',
@@ -27,7 +27,7 @@ const DropdownMenuContainer = styled.div<{
     top: '100%',
     transform: 'translateX(-50%)',
 
-    background: colorsV3.gray100,
+    background: getColor('gray100'),
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1), 0px 2px 5px rgba(0, 0, 0, 0.1);',
     borderRadius: '0.5rem',
   },

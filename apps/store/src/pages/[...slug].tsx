@@ -22,9 +22,7 @@ const Page: NextPageWithLayout<StoryblokPageProps> = ({ story: initialStory }) =
       <Head>
         <title>{story.name}</title>
       </Head>
-      <div>
-        <StoryblokComponent blok={story.content} />
-      </div>
+      <StoryblokComponent blok={story.content} />
     </>
   )
 }
@@ -42,7 +40,6 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
       key: story ? story.id : false,
       preview: preview || false,
     },
-    revalidate: 3600,
   }
 }
 

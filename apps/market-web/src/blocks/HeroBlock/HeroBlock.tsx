@@ -1,6 +1,5 @@
-import { css, keyframes } from '@emotion/core'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { HedvigSymbol } from '@hedviginsurance/brand'
 import { FontSizes, Heading } from 'components/Heading/Heading'
 import React from 'react'
 import { ButtonColors } from 'ui'
@@ -194,11 +193,7 @@ export const HeroBlock = ({
             textPosition={text_position}
             dangerouslySetInnerHTML={{ __html: headline }}
           />
-          {show_hedvig_wordmark && (
-            <Wordmark>
-              <HedvigSymbol />
-            </Wordmark>
-          )}
+          {show_hedvig_wordmark && <Wordmark />}
         </HeadlineWrapper>
         {text && (
           <Text

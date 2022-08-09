@@ -1,39 +1,47 @@
+import styled from '@emotion/styled'
 import Link from 'next/link'
-import { useContext } from 'react'
-import { Heading, Space } from 'ui'
+import { Button, Heading, Space } from 'ui'
 import { CartList } from '@/components/CartList/CartList'
+import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { PageLink } from '@/lib/PageLink'
-import { CartContext } from '@/services/mockCartService'
 
 export const CartPage = () => {
-  const cartContext = useContext(CartContext)
-
-  if (!cartContext) {
-    throw new Error('ProductPage cannot be rendered outside CartContext')
-  }
-
-  const { cart } = cartContext
+  const products = [
+    { name: 'Home Insurance', cost: 250, currency: 'SEK' },
+    { name: 'Apartment Insurance', cost: 100, currency: 'SEK' },
+  ]
+  const cost = { total: 350, subTotal: 250 }
 
   return (
-    <>
-      <Heading as="h1" variant="standard.40">
-        Cart
-      </Heading>
-      <Space y={2}>
-        <CartList showBundles showLinks />
-
-        <p>
-          Items in cart: {cart.items.length}, total price: {cart.price}
-        </p>
-
-        <footer>
+    <Space y={3}>
+      <div></div>
+      <PageHeader>
+        <Heading as="h1" variant="standard.24">
+          Cart (2)
+        </Heading>
+      </PageHeader>
+      <CartList products={products} />
+      <Footer>
+        <PriceBreakdown currency="SEK" products={products} cost={cost} />
+        <Button fullWidth={true}>
           <Link href={PageLink.cartReview()}>Check Out</Link>
-        </footer>
-
-        <div>
-          <Link href={PageLink.store()}>Go to shop</Link>
-        </div>
-      </Space>
-    </>
+        </Button>
+      </Footer>
+    </Space>
   )
 }
+
+const PageHeader = styled.header(() => ({
+  textAlign: 'center',
+}))
+
+const Footer = styled.footer(({ theme }) => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  width: '100%',
+  padding: `0 ${theme.space[3]} ${theme.space[6]} ${theme.space[3]}`,
+  a: {
+    textDecoration: 'none',
+  },
+}))

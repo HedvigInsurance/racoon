@@ -1,9 +1,9 @@
 import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { colorsV3 } from '@hedviginsurance/brand'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { mq } from '../../lib/media-query'
+import { getColor } from '../../lib/theme/theme'
 import { CardContent, CardProps, cardStyle } from './Card'
 
 export type SelectableCardProps = CardProps & {
@@ -27,14 +27,14 @@ const selectableCardStyles = (props: SelectableCardProps & { theme: Theme }) => 
 
   ...cardStyle({ ...props, bordered: true }),
 
-  ':hover': { borderColor: colorsV3.gray700 },
-  ':focus': { borderColor: colorsV3.gray700 },
+  ':hover': { borderColor: getColor('gray500') },
+  ':focus': { borderColor: getColor('gray700') },
   cursor: 'pointer',
   // Make border thicker when checked
   // Adjust padding so that content doesn't shift
   borderWidth: props.checked ? '2px' : '1px',
 
-  // @ts-ignore TS doesn't like to use component name for selectors, but it works
+  // @ts-expect-error TS doesn't like to use component name for selectors, but it works
   [CardContent]: {
     padding: props.checked ? 'calc(1rem - 1px) calc(0.5rem - 1px)' : '1rem 0.5rem',
 
@@ -44,12 +44,12 @@ const selectableCardStyles = (props: SelectableCardProps & { theme: Theme }) => 
   },
 })
 
-// @ts-ignore TS doesn't like passing a function to return a CSS object
+// @ts-expect-error TS doesn't like passing a function to return a CSS object
 const StyledCheckbox = styled(Checkbox.Root)<SelectableCardProps>((props) =>
   selectableCardStyles(props),
 )
 
-// @ts-ignore TS doesn't like passing a function to return a CSS object
+// @ts-expect-error TS doesn't like passing a function to return a CSS object
 const StyledRadio = styled(RadioGroup.Item)<SelectableCardProps>((props) =>
   selectableCardStyles(props),
 )

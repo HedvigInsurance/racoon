@@ -31,6 +31,8 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+For deployment, pulling translations, using CMS, etc you will need access tokens. Refer to Notion for setup details
+
 ## What's inside?
 
 This Turborepo includes the following packages and apps:

@@ -6,6 +6,7 @@ import { CartToast, CartToastAttributes } from '@/components/CartNotification/Ca
 import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
+import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
 import { useHandleClickAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CurrencyCode, CountryCode } from '@/services/apollo/generated'
@@ -36,6 +37,7 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockP
 export const PriceCalculatorBlock = ({
   blok: { title, lineId, priceFormTemplate, countryCode, product },
 }: StoryblokPriceCalculatorBlockProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
   const { handleSubmit } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
@@ -54,7 +56,7 @@ export const PriceCalculatorBlock = ({
 
   return (
     <>
-      <Space y={2} {...storyblokEditable}>
+      <Space y={2} ref={wrapperRef} {...storyblokEditable}>
         <Space y={1}>
           <SpaceFlex align="center" direction="vertical">
             <Heading as="h3" variant="standard.18">
@@ -78,6 +80,13 @@ export const PriceCalculatorBlock = ({
           />
         </SectionWithPadding>
       </Space>
+
+      <PriceCalculatorFooter
+        targetRef={wrapperRef}
+        currencyCode={product.currencyCode}
+        price={product.price ?? undefined}
+        onClickAddToCart={handleClickAddToCart}
+      />
 
       <CartToast ref={toastRef} />
     </>
