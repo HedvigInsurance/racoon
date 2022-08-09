@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Heading, Button, Space } from 'ui'
+import { Heading, Button, Space, useBreakpoint } from 'ui'
 
 const Main = styled.main(({ theme }) => ({
   width: '100%',
@@ -19,6 +19,7 @@ const AvailabilityText = styled.p(({ theme }) => ({
 }))
 
 export const SupportBlock = () => {
+  const isLargeScreen = useBreakpoint('xs')
   return (
     <Main>
       <Space y={1.5}>
@@ -26,10 +27,18 @@ export const SupportBlock = () => {
           Need help? Ask a specialist.
         </Heading>
         <Space x={0.5}>
-          <Button variant="outlined" onClick={() => console.log('chat')}>
+          <Button
+            size={!isLargeScreen ? 'sm' : 'lg'}
+            variant="outlined"
+            onClick={() => console.log('chat')}
+          >
             Chat with us
           </Button>
-          <Button variant="outlined" onClick={() => console.log('call')}>
+          <Button
+            size={!isLargeScreen ? 'sm' : 'lg'}
+            variant="outlined"
+            onClick={() => console.log('call')}
+          >
             Schedule a call
           </Button>
         </Space>
