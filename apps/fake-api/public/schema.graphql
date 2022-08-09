@@ -33,6 +33,8 @@ For example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated U
 """
 scalar DateTime
 
+scalar Date
+
 """
 A JSON object.
 """
@@ -101,6 +103,7 @@ extend type ShopSessionMutations {
 type CartMutations {
   linesAdd(lineIds: [ID!]!): CartLinesAddPayload!
   linesRemove(lineIds: [ID!]!): CartLinesRemovePayload!
+  startDateUpdate(input: StartDateUpdateInput!): StartDateUpdatePayload!
 }
 
 type Cart {
@@ -132,6 +135,16 @@ type CartLinesRemovePayload {
   userErrors: [CartUserError!]!
 }
 
+input StartDateUpdateInput {
+  lineId: ID!
+  startDate: Date
+}
+
+type StartDateUpdatePayload {
+  cart: Cart
+  userErrors: [CartUserError!]!
+}
+
 type CartUserError {
   "The error code."
   code: CartErrorCode
@@ -149,6 +162,7 @@ type CartLine {
   id: ID!
   variant: ProductVariant!
   price: Money!
+  startDate: Date
 }
 
 #

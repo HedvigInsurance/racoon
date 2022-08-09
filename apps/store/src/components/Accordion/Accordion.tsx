@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactElement } from 'react'
 import { ChevronIcon } from 'ui'
 
 export const Root = AccordionPrimitives.Root
@@ -21,12 +21,19 @@ const Trigger = styled(AccordionPrimitives.Trigger)(() => ({
   justifyContent: 'space-between',
 }))
 
-export const HeaderWithTrigger = ({ children }: PropsWithChildren<unknown>) => {
+type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
+  icon?: ReactElement
+}
+
+export const HeaderWithTrigger = ({
+  children,
+  icon = <TriggerIcon size="1rem" />,
+}: HeaderWithTriggerProps) => {
   return (
     <Header>
       <Trigger>
         {children}
-        <TriggerIcon size="1rem" />
+        {icon}
       </Trigger>
     </Header>
   )

@@ -16,10 +16,6 @@ const CartUl = styled.ul(({ theme }) => ({
 
 type Props = CartPageProps
 export const CartList = ({ products }: Props) => {
-  // const handleClickRemove = (id: string) => {
-  //send BE request to remove item from cart
-  // }
-
   return (
     <CartUl>
       {products.map((item: ProductData, id: number) => (
