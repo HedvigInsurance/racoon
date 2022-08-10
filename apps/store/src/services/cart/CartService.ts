@@ -25,6 +25,12 @@ export class CartService {
     if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineId}`)
     return updatedCart
   }
+
+  // @TODO: implement when schema is decided
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async startDateUpdate(_lineId: string, _startDate: Date | null) {
+    return await graphqlSdk.ShopSession({ shopSessionId: this.shopSession.id })
+  }
 }
 
 export const cartServiceInit = ({ shopSession }: Params) => {

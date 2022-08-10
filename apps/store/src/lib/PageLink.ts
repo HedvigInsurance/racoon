@@ -29,4 +29,5 @@ export const PageLink = {
     `/api/price/${productSlug}?intent=${intent ?? 'update'}`,
   apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,
   apiCartLinesRemove: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/remove`,
+  apiCartReview: () => '/api/cart/review',
 }

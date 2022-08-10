@@ -1,5 +1,5 @@
 type CostData = { crossOut?: number; total: number; subTotal: number }
-type ProductData = { name: string; cost: number; startDate?: string }
+type ProductData = { lineId: string; name: string; cost: number; startDate?: string }
 type CampaignData = { name: string; discount: number }
 
 export type CartReviewPageProps = {

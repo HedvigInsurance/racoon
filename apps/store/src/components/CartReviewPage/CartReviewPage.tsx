@@ -4,6 +4,7 @@ import { ArrowForwardIcon, Button, Heading, InputField, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/lib/PageLink'
+import { LINE_PREFIX } from './CartReviewPage.constants'
 import { CartReviewPageProps } from './CartReviewPage.types'
 import { useResizeObserver } from './useResizeObserver'
 
@@ -35,17 +36,18 @@ const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageP
             </MainTop>
 
             <Space y={1}>
-              {products.map(({ name, startDate }) => (
-                <Card key={name}>
+              {products.map((product) => (
+                <Card key={product.lineId}>
                   <Space y={0.5}>
                     <Heading as="h2" variant="standard.18">
-                      {name}
+                      {product.name}
                     </Heading>
 
                     <InputField
                       label="Start date"
                       type="date"
-                      defaultValue={startDate ?? DATE_TODAY}
+                      name={[LINE_PREFIX, product.lineId].join('')}
+                      defaultValue={product.startDate ?? DATE_TODAY}
                     />
                   </Space>
                 </Card>
