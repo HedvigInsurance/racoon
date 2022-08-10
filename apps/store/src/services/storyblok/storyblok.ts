@@ -2,6 +2,7 @@ import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
+import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -72,6 +73,7 @@ export enum StoryblokBlockName {
   Tabs = 'tabs',
   // Used only inside TabsBlock
   Tab = 'tab',
+  ContactSupport = 'contactSupport',
 }
 
 export const initStoryblok = () => {
@@ -91,6 +93,7 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Accordion]: AccordionBlock,
     [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
+    [StoryblokBlockName.ContactSupport]: ContactSupportBlock,
   }
 
   storyblokInit({

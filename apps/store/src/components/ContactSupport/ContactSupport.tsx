@@ -1,6 +1,12 @@
 import styled from '@emotion/styled'
 import { Heading, Button, Space, useBreakpoint } from 'ui'
 
+export type ContactSupportProps = {
+  title: string
+  showCallButton: boolean
+  availabilityText?: string
+}
+
 const Main = styled.main(({ theme }) => ({
   width: '100%',
   backgroundColor: theme.colors.purple500,
@@ -18,13 +24,17 @@ const AvailabilityText = styled.p(({ theme }) => ({
   marginTop: '1rem',
 }))
 
-export const SupportBlock = () => {
+export const ContactSupport = ({
+  title,
+  showCallButton,
+  availabilityText,
+}: ContactSupportProps) => {
   const isLargeScreen = useBreakpoint('xs')
   return (
     <Main>
       <Space y={1.5}>
         <Heading as="h2" color="dark" variant="standard.24">
-          Need help? Ask a specialist.
+          {title}
         </Heading>
         <Space x={0.5}>
           <Button
@@ -34,16 +44,18 @@ export const SupportBlock = () => {
           >
             Chat with us
           </Button>
-          <Button
-            size={!isLargeScreen ? 'sm' : 'lg'}
-            variant="outlined"
-            onClick={() => console.log('call')}
-          >
-            Schedule a call
-          </Button>
+          {showCallButton && (
+            <Button
+              size={!isLargeScreen ? 'sm' : 'lg'}
+              variant="outlined"
+              onClick={() => console.log('call')}
+            >
+              Schedule a call
+            </Button>
+          )}
         </Space>
       </Space>
-      <AvailabilityText>Peter is available today 9-18.</AvailabilityText>
+      <AvailabilityText>{availabilityText}</AvailabilityText>
     </Main>
   )
 }
