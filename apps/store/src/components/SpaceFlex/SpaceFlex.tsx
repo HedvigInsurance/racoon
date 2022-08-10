@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
 type SpaceFlexProps = {
   children?: ReactNode
@@ -15,13 +15,11 @@ const SpaceFlexWrapper = styled.div(({ space, direction, align }: SpaceFlexProps
   alignItems: align,
 }))
 
-export const SpaceFlex = ({
-  children,
-  space = 1,
-  direction = 'horizontal',
-  align = 'start',
-}: SpaceFlexProps) => (
-  <SpaceFlexWrapper space={space} direction={direction} align={align}>
-    {children}
-  </SpaceFlexWrapper>
+export const SpaceFlex = forwardRef<HTMLDivElement, SpaceFlexProps>(
+  ({ children, space = 1, direction = 'horizontal', align = 'start' }, ref) => (
+    <SpaceFlexWrapper ref={ref} space={space} direction={direction} align={align}>
+      {children}
+    </SpaceFlexWrapper>
+  ),
 )
+SpaceFlex.displayName = 'SpaceFlex'

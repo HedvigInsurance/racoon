@@ -1,9 +1,9 @@
 import { ENTITY_TYPE, PRIMARY_KEY } from '@mswjs/data'
 import {
-  ShopSessionFindOrCreateQuery,
   CountryCode,
   CurrencyCode,
   CartFragmentFragment,
+  ShopSessionQuery,
 } from '@/services/graphql/generated'
 import { db } from '../db'
 
@@ -57,7 +57,7 @@ export const cartLinesRemove = (shopSessionId: string, lineId: string) => {
 
 export const dbShopSessionToAPI = (
   shopSession: ReturnType<typeof db.shopSession.create>,
-): ShopSessionFindOrCreateQuery['shopSessionFindOrCreate'] => {
+): ShopSessionQuery['shopSession'] => {
   const cart = shopSession.cart
 
   if (cart === undefined) throw new Error('Cart not found: ' + shopSession.id)

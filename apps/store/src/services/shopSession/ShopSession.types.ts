@@ -1,5 +1,3 @@
-import { graphqlSdk } from '@/services/graphql/sdk'
+import { ShopSessionQuery } from '@/services/apollo/generated'
 
-export type ShopSession = Awaited<
-  ReturnType<typeof graphqlSdk.ShopSessionFindOrCreate>
->['shopSessionFindOrCreate']
+export type ShopSession = ShopSessionQuery['shopSession']

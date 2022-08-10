@@ -65,7 +65,6 @@ enum CountryCode {
 
 extend type Query {
   shopSession(id: ID!): ShopSession!
-  shopSessionFindOrCreate(input: ShopSessionFindOrCreateInput!): ShopSession!
 }
 
 type ShopSession {
@@ -75,17 +74,17 @@ type ShopSession {
   priceIntents: [PriceIntent!]!
 }
 
-input ShopSessionFindOrCreateInput {
-  shopSessionId: ID
-  countryCode: CountryCode!
-}
-
 extend type Mutation {
   shopSession(id: ID!): ShopSessionMutations!
+  shopSessionCreate(input: ShopSessionCreateInput!): ShopSession!
 }
 
 type ShopSessionMutations {
   _empty: String
+}
+
+input ShopSessionCreateInput {
+  countryCode: CountryCode!
 }
 
 #
