@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "start": "node --require ./server-preload.js ./node_modules/.bin/next start -p $PORT",
+    "start": "node --require ./server-preload.js ./node_modules/.bin/next start",
     "test": "jest --passWithNoTests",
-    "e2e": "start-server-and-test 'yarn start 3001' http://localhost:3001 cypress",
-    "e2e:headless": "start-server-and-test 'yarn start 3001' http://localhost:3001 cypress:headless",
+    "e2e": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress",
+    "e2e:headless": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress:headless",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
