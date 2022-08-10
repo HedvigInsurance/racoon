@@ -12,6 +12,20 @@ type Params = {
   apolloClient: ApolloClient<unknown>
 }
 
+export const getCurrentShopSessionServerSide = async (params: Params) => {
+  const { req, res, apolloClient } = params
+  const shopSessionService = new ShopSessionService(
+    new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res),
+    apolloClient,
+  )
+
+  const shopSession = await shopSessionService.fetch()
+
+  if (shopSession === null) throw new Error('Current ShopSession not found')
+
+  return shopSession
+}
+
 export const getShopSessionServerSide = async (params: GetShopSessionParams) => {
   const { countryCode, req, res, apolloClient } = params
   const shopSessionService = new ShopSessionService(

@@ -11,6 +11,7 @@ import {
 } from './ShopSessionMock.helpers'
 
 const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_LINES_ADD, CART_LINES_REMOVE } = getConstants()
+getConstants()
 
 const api = graphql.link(graphqlConstants().GRAPHQL_ENDPOINT)
 
@@ -29,11 +30,9 @@ export const mockShopSessionHandlers = [
   api.query(SHOP_SESSION, (req, res, ctx) => {
     const shopSession = shopSessionFind(req.variables.shopSessionId)
 
-    return res(
-      ctx.data({
-        shopSession: shopSession ? dbShopSessionToAPI(shopSession) : null,
-      }),
-    )
+    if (shopSession === null) return res(ctx.status(404))
+
+    return res(ctx.data({ shopSession: dbShopSessionToAPI(shopSession) }))
   }),
 
   api.mutation(CART_LINES_ADD, (req, res, ctx) => {
