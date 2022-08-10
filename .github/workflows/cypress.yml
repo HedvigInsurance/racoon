@@ -21,4 +21,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
+          install-command: yarn install --immutable
           command: yarn e2e-onboarding:headless

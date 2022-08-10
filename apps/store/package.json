@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 8040",
     "build": "next build",
-    "start": "node --require ./server-preload.js ./node_modules/.bin/next start -p $PORT",
+    "start": "node --require ./server-preload.js $(yarn bin next) start",
     "test": "jest --passWithNoTests --coverage",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
