@@ -1,13 +1,14 @@
 import { ApolloClient } from '@apollo/client'
 import {
-  ShopSessionCreateMutationVariables,
   ShopSessionCreateDocument,
+  ShopSessionCreateMutation,
+  ShopSessionCreateMutationVariables,
   ShopSessionDocument,
   ShopSessionQuery,
-  ShopSessionCreateMutation,
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
+import type { ShopSession } from './ShopSession.types'
 
 export class ShopSessionService {
   constructor(
@@ -15,10 +16,20 @@ export class ShopSessionService {
     private readonly apolloClient: ApolloClient<unknown>,
   ) {}
 
+  public shopSessionId() {
+    return this.persister.fetch()
+  }
+
+  public save(shopSession: ShopSession) {
+    this.persister.save(shopSession.id)
+  }
+
   public async getOrCreate(params: ShopSessionCreateMutationVariables) {
     const existingShopSession = await this.fetch()
 
-    if (existingShopSession) return existingShopSession
+    if (existingShopSession?.countryCode === params.countryCode) {
+      return existingShopSession
+    }
 
     return await this.create(params)
   }
@@ -53,7 +64,7 @@ export class ShopSessionService {
 
     if (!shopSession) throw new Error('Unable to create ShopSession')
 
-    this.persister.save(shopSession.id)
+    this.save(shopSession)
 
     return shopSession
   }
