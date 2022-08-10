@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button, LinkButton, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
-import { useCart } from '@/services/cart/useCart'
+import { useShopSession } from '@/services/shopSession/useShopSession'
 import * as CartNotification from './CartNotification'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
@@ -35,8 +35,8 @@ type Props = ProductItemProps & {
 }
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
-  const cart = useCart()
-  const cartLineCount = cart?.lines.length ?? 1
+  const { data } = useShopSession()
+  const cartLineCount = data?.cart.lines.length ?? 1
 
   return (
     <CartNotification.Content

@@ -1,13 +1,14 @@
 import { ApolloClient } from '@apollo/client'
 import {
-  ShopSessionCreateMutationVariables,
   ShopSessionCreateDocument,
-  ShopSessionDocument,
-  ShopSession,
   ShopSessionCreateMutation,
+  ShopSessionCreateMutationVariables,
+  ShopSessionDocument,
+  ShopSessionQuery,
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
+import type { ShopSession } from './ShopSession.types'
 
 export class ShopSessionService {
   constructor(
@@ -15,10 +16,20 @@ export class ShopSessionService {
     private readonly apolloClient: ApolloClient<unknown>,
   ) {}
 
+  public shopSessionId() {
+    return this.persister.fetch()
+  }
+
+  public save(shopSession: ShopSession) {
+    this.persister.save(shopSession.id)
+  }
+
   public async getOrCreate(params: ShopSessionCreateMutationVariables) {
     const existingShopSession = await this.fetch()
 
-    if (existingShopSession) return existingShopSession
+    if (existingShopSession?.countryCode === params.countryCode) {
+      return existingShopSession
+    }
 
     return await this.create(params)
   }
@@ -28,15 +39,12 @@ export class ShopSessionService {
     if (!shopSessionId) return null
 
     try {
-      const { data: shopSession } = await this.apolloClient.query<
-        ShopSession,
-        ShopSessionQueryVariables
-      >({
+      const { data } = await this.apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
         query: ShopSessionDocument,
         variables: { shopSessionId },
       })
 
-      return shopSession
+      return data.shopSession
     } catch (error) {
       console.log('ShopSession not found: ', shopSessionId)
       return null
