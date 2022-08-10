@@ -5,9 +5,8 @@ import { useCart } from '@/services/cart/useCart'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const { data } = useCart()
-
-  const cartLineCount = data?.lines.length ?? 0
+  const cart = useCart()
+  const cartLineCount = cart?.lines.length ?? 0
 
   return (
     <Wrapper>
