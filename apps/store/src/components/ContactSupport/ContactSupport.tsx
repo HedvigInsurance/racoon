@@ -17,6 +17,14 @@ const Main = styled.main(({ theme }) => ({
   textAlign: 'center',
 }))
 
+const AvatarImagePlaceholder = styled.div(({ theme }) => ({
+  borderRadius: '100%',
+  border: `1px solid ${theme.colors.black}`,
+  height: '48px',
+  width: '48px',
+  margin: '0 auto',
+}))
+
 const AvailabilityText = styled.p(({ theme }) => ({
   color: theme.colors.gray600,
   fontSize: '0.75rem',
@@ -36,6 +44,7 @@ export const ContactSupport = ({
         <Heading as="h2" color="dark" variant="standard.24">
           {title}
         </Heading>
+        <AvatarImagePlaceholder />
         <Space x={0.5}>
           <Button
             size={!isLargeScreen ? 'sm' : 'lg'}

@@ -13,7 +13,7 @@ const Template: Story<ContactSupportProps> = (props) => {
 
 export const Default = Template.bind({})
 Default.args = {
-  title: 'Need help? Ask a soecialist.',
+  title: 'Need help? Ask a specialist.',
   showCallButton: true,
   availabilityText: 'Peter is available today 9-18.',
 }
