@@ -10,6 +10,7 @@
       "outputs": [".next/**"],
       "dependsOn": [
         "^build",
+        "codegen",
         "$NEXT_PUBLIC_GRAPHQL_ENDPOINT",
         "$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION",
         "$NEXT_PUBLIC_WEB_ONBOARDING_URL",
@@ -43,7 +44,7 @@
     },
     "fake-api#build": {
       "outputs": [".next/**"],
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["^build"]
     },
     "onboarding#test": {
       "outputs": ["coverage/**"],
