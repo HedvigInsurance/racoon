@@ -6,6 +6,7 @@ import { GlobalStyles } from '@/lib/GlobalStyles'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { CartContext, useCartContextStore } from '@/services/mockCartService'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 
 // Enable API mocking
@@ -32,9 +33,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
           <GlobalStyles />
-          <CartContext.Provider value={cartStore}>
-            {getLayout(<Component {...pageProps} />)}
-          </CartContext.Provider>
+          <ShopSessionProvider>
+            <CartContext.Provider value={cartStore}>
+              {getLayout(<Component {...pageProps} />)}
+            </CartContext.Provider>
+          </ShopSessionProvider>
         </ThemeProvider>
       </ApolloProvider>
     </>
