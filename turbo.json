@@ -43,7 +43,7 @@
     },
     "fake-api#build": {
       "outputs": [".next/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "codegen"]
     },
     "onboarding#test": {
       "outputs": ["coverage/**"],
