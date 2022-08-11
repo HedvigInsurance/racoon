@@ -7,5 +7,6 @@ cypress/videos/
 tsconfig.tsbuildinfo
 
 # codegen
-/src/services/**/generated.ts
-/src/services/apollo/types.ts
+src/services/**/generated.ts
+src/services/apollo/types.ts
+
