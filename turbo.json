@@ -72,6 +72,10 @@
     "dev": {
       "cache": false
     },
+    "onboarding#dev": {
+      "cache": false,
+      "dependsOn": ["codegen"]
+    },
     "store#dev": {
       "cache": false,
       "dependsOn": ["codegen"]
@@ -98,10 +102,15 @@
       "dependsOn": ["codegen", "^build"],
       "outputs": []
     },
-    "store#codegen": {
+    "onboarding#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
       "outputs": ["src/services/**/generated.ts"],
-      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
-      "inputs": ["src/graphql/*.graphql"]
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
+    },
+    "store#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
+      "outputs": ["src/services/**/generated.ts"],
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     }
   }
 }
