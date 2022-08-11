@@ -23,3 +23,38 @@ export enum Field {
   Market = 'market',
   Language = 'language',
 }
+
+export const SECTIONS = [
+  {
+    title: 'Our insurances',
+    links: [
+      { title: 'Hedvig Home', href: '/products/home' },
+      { title: 'Hedvig House', href: '/products/house' },
+      { title: 'Hedvig Car', href: '/products/car' },
+      { title: 'Hedvig Accident', href: '/products/accident' },
+      { title: 'Hedvig Travel', href: '/products/travel' },
+      { title: 'Hedvig Student', href: '/products/home-student' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { title: 'Our story', href: '/story' },
+      { title: 'The Hedvig app', href: '/app' },
+      { title: 'Claims', href: '/claims' },
+      { title: 'Careers', href: '/careers' },
+      { title: 'Press', href: '/press' },
+    ],
+  },
+  {
+    title: 'Support',
+    links: [
+      { title: 'Customer service', href: '/support' },
+      { title: 'FAQ', href: '/faq' },
+      { title: 'Terms & conditions', href: '/terms' },
+      { title: 'Insurance glossary', href: '/glossary' },
+      { title: 'Privacy', href: '/privacy' },
+      { title: 'Legal safety', href: '/legal' },
+    ],
+  },
+]
