@@ -104,7 +104,7 @@
     },
     "onboarding#codegen": {
       "inputs": ["src/graphql/*.graphql"],
-      "outputs": ["src/services/**/generated.ts"],
+      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
       "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     },
     "store#codegen": {
