@@ -46,14 +46,14 @@
       "dependsOn": ["^build"]
     },
     "onboarding#test": {
-      "outputs": ["covereage/**"],
+      "outputs": ["coverage/**"],
       "dependsOn": ["^build"]
     },
     "test": {
-      "outputs": ["covereage/**"]
+      "outputs": ["coverage/**"]
     },
     "store#test": {
-      "outputs": ["covereage/**"],
+      "outputs": ["coverage/**"],
       "dependsOn": ["codegen"]
     },
     "e2e": {
