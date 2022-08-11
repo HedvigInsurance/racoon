@@ -4,6 +4,8 @@ import CartReviewPage from '@/components/CartReviewPage/CartReviewPage'
 import type { CartReviewPageProps } from '@/components/CartReviewPage/CartReviewPage.types'
 import { useHandleSubmitCartReview } from '@/components/CartReviewPage/useHandleSubmitCartReview'
 import { PageLink } from '@/lib/PageLink'
+import { initializeApollo } from '@/services/apollo/client'
+import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 const NextCartReviewPage: NextPage<CartReviewPageProps> = (props) => {
   const router = useRouter()
@@ -17,20 +19,39 @@ const NextCartReviewPage: NextPage<CartReviewPageProps> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async () => {
-  return {
-    props: {
-      products: PRODUCTS,
-      cost: COST,
-      currency: 'SEK',
-    },
+export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async ({ req, res }) => {
+  try {
+    const apolloClient = initializeApollo()
+    const shopSession = await getCurrentShopSessionServerSide({
+      req,
+      res,
+      apolloClient,
+    })
+
+    const totalCost = shopSession.cart.lines
+      .map((line) => line.price.amount)
+      .reduce((a, b) => a + b, 0)
+
+    return {
+      props: {
+        products: shopSession.cart.lines.map((line) => ({
+          lineId: line.id,
+          name: line.variant.title,
+          cost: line.price.amount,
+          startDate: line.startDate,
+        })),
+        cost: {
+          total: totalCost,
+          subTotal: totalCost,
+        },
+        currency: shopSession.currencyCode,
+      },
+    }
+  } catch (error) {
+    console.error('Failed to get server side props for cart review page')
+    console.error(error)
+    return { notFound: true }
   }
 }
-
-const PRODUCTS = [
-  { lineId: '1', name: 'Home Insurance', cost: 250, currency: 'SEK' },
-  { lineId: '2', name: 'Apartment Insurance', cost: 100, currency: 'SEK' },
-]
-const COST = { total: 350, subTotal: 250 }
 
 export default NextCartReviewPage

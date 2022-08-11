@@ -19,12 +19,14 @@ export const useHandleSubmitCartReview = ({ onSuccess }: Params) => {
     setStatus('submitting')
 
     try {
-      await fetch(PageLink.apiCartReview(), {
+      const response = await fetch(PageLink.apiCartReview(), {
         method: 'PATCH',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       })
-      onSuccess()
+      if (response.ok) {
+        onSuccess()
+      }
     } finally {
       setStatus('idle')
     }

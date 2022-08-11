@@ -8,10 +8,11 @@ import {
   dbShopSessionToAPI,
   shopSessionCreate,
   shopSessionFind,
+  startDateUpdate,
 } from './ShopSessionMock.helpers'
 
-const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_LINES_ADD, CART_LINES_REMOVE } = getConstants()
-getConstants()
+const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_LINES_ADD, CART_LINES_REMOVE, START_DATE_UPDATE } =
+  getConstants()
 
 const api = graphql.link(graphqlConstants().GRAPHQL_ENDPOINT)
 
@@ -57,6 +58,21 @@ export const mockShopSessionHandlers = [
         shopSession: {
           cart: {
             linesRemove: { cart: cart ? dbCartToAPI(cart) : null },
+          },
+        },
+      }),
+    )
+  }),
+
+  api.mutation(START_DATE_UPDATE, (req, res, ctx) => {
+    const startDate = new Date(req.variables.startDate)
+    const cart = startDateUpdate(req.variables.shopSessionId, req.variables.lineId, startDate)
+
+    return res(
+      ctx.data({
+        shopSession: {
+          cart: {
+            startDateUpdate: { cart: cart ? dbCartToAPI(cart) : null },
           },
         },
       }),

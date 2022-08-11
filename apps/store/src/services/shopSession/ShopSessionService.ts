@@ -3,7 +3,7 @@ import {
   ShopSessionCreateMutationVariables,
   ShopSessionCreateDocument,
   ShopSessionDocument,
-  ShopSession,
+  ShopSessionQuery,
   ShopSessionCreateMutation,
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
@@ -28,15 +28,12 @@ export class ShopSessionService {
     if (!shopSessionId) return null
 
     try {
-      const { data: shopSession } = await this.apolloClient.query<
-        ShopSession,
-        ShopSessionQueryVariables
-      >({
+      const { data } = await this.apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
         query: ShopSessionDocument,
         variables: { shopSessionId },
       })
 
-      return shopSession
+      return data.shopSession
     } catch (error) {
       console.log('ShopSession not found: ', shopSessionId)
       return null
