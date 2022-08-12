@@ -17,7 +17,6 @@ type Path = {
 
 const Page: NextPageWithLayout<StoryblokPageProps> = ({ story: initialStory }) => {
   const story = useStoryblokState(initialStory)
-
   return (
     <>
       <Head>
