@@ -3,6 +3,7 @@ import { Button, mq, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { LoadingDots } from '../LoadingDots/LoadingDots'
 import { TickIcon } from './TickIcon'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
@@ -15,6 +16,7 @@ export type PriceCardProps = {
   currencyCode: string
   onClick: () => void
   gradient: Gradient
+  loading: boolean
 }
 
 export const PriceCard = ({
@@ -23,6 +25,7 @@ export const PriceCard = ({
   cost,
   currencyCode,
   onClick,
+  loading = false,
 }: PriceCardProps) => {
   return (
     <Wrapper y={1}>
@@ -32,9 +35,15 @@ export const PriceCard = ({
         <Text size="m">{name}</Text>
       </CenteredText>
 
-      <PreviewText aria-disabled={cost === undefined}>
-        {currencyCode} {cost ?? '—'} /mth.
-      </PreviewText>
+      {!loading ? (
+        <PreviewText aria-disabled={cost === undefined}>
+          {currencyCode} {cost ?? '—'} /mth.
+        </PreviewText>
+      ) : (
+        <LoadingWrapper>
+          <LoadingDots />
+        </LoadingWrapper>
+      )}
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
         <CustomButton fullWidth disabled={cost === undefined} onClick={onClick}>
@@ -52,6 +61,10 @@ export const PriceCard = ({
     </Wrapper>
   )
 }
+
+const LoadingWrapper = styled.div(({ theme }) => ({
+  minHeight: `${theme.space[6]}`,
+}))
 
 const Wrapper = styled(Space)(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
