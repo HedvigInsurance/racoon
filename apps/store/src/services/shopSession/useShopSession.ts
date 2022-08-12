@@ -2,7 +2,6 @@ import { useApolloClient } from '@apollo/client'
 import { useMemo, useState } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
-  ShopSessionCreateMutation,
   ShopSessionQuery,
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
@@ -13,8 +12,9 @@ export const useShopSession = () => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
 
-  const createShopSession = useCreateShopSession({
-    onCompleted: ({ shopSessionCreate }) => {
+  const [createShopSession] = useShopSessionCreateMutation({
+    variables: { countryCode },
+    onCompleted({ shopSessionCreate }) {
       setShopSessionId(shopSessionCreate.id)
       shopSessionService.save(shopSessionCreate)
     },
@@ -40,19 +40,6 @@ export const useShopSession = () => {
       data: shopSessionCountryCode !== countryCode ? undefined : result.data?.shopSession,
     }
   }, [result, countryCode])
-}
-
-const useCreateShopSession = ({ onCompleted }: ShopSessionOperationParams) => {
-  const { countryCode } = useCurrentLocale()
-  const [createShopSession] = useShopSessionCreateMutation({
-    variables: { countryCode },
-    onCompleted,
-  })
-  return createShopSession
-}
-
-type ShopSessionOperationParams = {
-  onCompleted: (data: ShopSessionCreateMutation) => void
 }
 
 const useShopSessionQuery = ({ shopSessionId, onCompleted }: UseShopSessionParams) => {
