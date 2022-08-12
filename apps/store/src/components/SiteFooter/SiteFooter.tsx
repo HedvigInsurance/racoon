@@ -1,11 +1,13 @@
 import styled from '@emotion/styled'
+import Link from 'next/link'
 import { ChangeEvent, useRef } from 'react'
 import { Space } from 'ui'
+import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { Field, MARKET_MAP, TEMP_TRANSLATIONS } from './SiteFooter.constants'
+import { Field, MARKET_MAP, SECTIONS, TEMP_TRANSLATIONS } from './SiteFooter.constants'
 import { findLocale } from './SiteFooter.helpers'
 
 export type SiteFooterProps = {
@@ -37,6 +39,25 @@ export const SiteFooter = ({ onChangeLocale }: SiteFooterProps) => {
 
   return (
     <Wrapper y={2}>
+      <Accordion.Root type="multiple">
+        {SECTIONS.map((section, index) => (
+          <Accordion.Item key={index} value={index.toString()}>
+            <Accordion.HeaderWithTrigger>{section.title}</Accordion.HeaderWithTrigger>
+            <StyledAccordionContent>
+              <Space y={1}>
+                {section.links.map((link) => (
+                  <div key={link.href}>
+                    <Link href={link.href}>
+                      <StyledLink>{link.title}</StyledLink>
+                    </Link>
+                  </div>
+                ))}
+              </Space>
+            </StyledAccordionContent>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>
+
       <form ref={formRef} onSubmit={handleSubmit}>
         <SpaceFlex>
           <Flex>
@@ -76,3 +97,12 @@ const TextMuted = styled.p(({ theme }) => ({
   color: theme.colors.gray600,
   fontSize: theme.fontSizes[1],
 }))
+
+const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => ({
+  padding: theme.space[4],
+  paddingTop: theme.space[2],
+}))
+
+const StyledLink = styled.a({
+  textDecoration: 'none',
+})
