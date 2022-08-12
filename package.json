@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "eslint": "8.21.0",
+    "eslint-import-resolver-typescript": "3.4.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "2.7.1",
