@@ -18,11 +18,13 @@ const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageP
       <Space y={1}>
         <Header>
           <nav>
-            <Link href={PageLink.cart()}>
-              <SpaceFlex align="center" space={0.5}>
-                <ArrowBackIcon size="1rem" />
-                <div>Return to cart</div>
-              </SpaceFlex>
+            <Link href={PageLink.cart()} passHref>
+              <StyledLink>
+                <SpaceFlex align="center" space={0.5}>
+                  <ArrowBackIcon size="1rem" />
+                  <div>Return to cart</div>
+                </SpaceFlex>
+              </StyledLink>
             </Link>
           </nav>
         </Header>
@@ -65,7 +67,9 @@ const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageP
             cost={cost}
             campaigns={campaigns}
           />
-          <Button fullWidth>Continue to contact details</Button>
+          <Button fullWidth disabled={products.length === 0}>
+            Continue to contact details
+          </Button>
         </Space>
       </Footer>
     </>
@@ -77,8 +81,12 @@ const Header = styled.header(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.space[4],
-  lineHeight: '3.75rem',
 }))
+
+const StyledLink = styled.a({
+  lineHeight: '3.75rem',
+  textDecoration: 'none',
+})
 
 const ArrowBackIcon = styled(ArrowForwardIcon)({
   transform: 'rotate(180deg)',
