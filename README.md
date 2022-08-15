@@ -7,7 +7,7 @@ Proof of concept monorepo to support all purchase journey related projects.
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
-- [Yarn v1](https://yarnpkg.com)
+- [Yarn v3](https://yarnpkg.com)
 
 ### Install Node.js with `nvm`
 
