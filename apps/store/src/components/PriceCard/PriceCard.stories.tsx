@@ -5,6 +5,9 @@ import { HEDVIG_LOGO_SYMBOL } from './PriceCard.constants'
 export default {
   title: 'Price Card',
   component: PriceCard,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     onClick: { action: 'clicked' },
   },

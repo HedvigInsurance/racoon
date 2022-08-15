@@ -11,8 +11,6 @@ export default {
   },
 } as ComponentMeta<typeof LoadingDots>
 
-const Template: Story<LoadingDotsProps> = (props) => {
+export const Default: Story<LoadingDotsProps> = (props) => {
   return <LoadingDots {...props} />
 }
-
-export const Default = Template.bind({})
