@@ -1,6 +1,5 @@
 import { ComponentMeta, Story } from '@storybook/react'
 import React from 'react'
-import { theme } from 'ui'
 import { LoadingDots, LoadingDotsProps } from './LoadingDots'
 
 export default {
@@ -17,6 +16,3 @@ const Template: Story<LoadingDotsProps> = (props) => {
 }
 
 export const Default = Template.bind({})
-Default.args = {
-  color: theme.colors.gray800,
-}
