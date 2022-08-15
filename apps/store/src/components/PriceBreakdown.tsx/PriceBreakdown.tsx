@@ -14,7 +14,6 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
   return (
     <Collapsible>
       <CollapsibleContent>
-        <Space y={1.5}>
           <Space y={0.5}>
             <DataRow>
               <Text size="m">Subtotal</Text>
@@ -23,7 +22,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             {products.map((product) => (
               <DataRow key={product.name}>
                 <Text size="m">{product.name}</Text>
-                <Text size="m">{currencyFormatter.format(product.cost)}</Text>
+                <Price>{currencyFormatter.format(product.cost)}</Price>
               </DataRow>
             ))}
           </Space>
@@ -39,7 +38,6 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             </Space>
           ) : null}
           <CollapsibleDivider />
-        </Space>
       </CollapsibleContent>
       <CollapsibleHeader>
         <Text size="l">Total</Text>
@@ -66,16 +64,21 @@ const DataRowStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginLeft: '0.5rem',
+  '&:first-child': {
+    marginLeft: 0,
+  },
 })
 
 const DataRow = styled.div(() => ({}), DataRowStyles)
 
 const CollapsibleHeader = styled(RadixCollapsible.Trigger)(
+  DataRowStyles,
   ({ theme }) => ({
     paddingRight: theme.space[1],
     width: '100%',
+    marginLeft: 0
   }),
-  DataRowStyles,
 )
 
 const CrossOutText = styled.p(({ theme }) => ({
@@ -98,4 +101,11 @@ const CollapsibleContent = styled(RadixCollapsible.Content)(() => ({}))
 const CollapsibleDivider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
+  marginTop: '0.75rem',
+  marginBottom: theme.space[3]
+}))
+
+const Price = styled.p(({ theme }) => ({
+  fontSize: '0.875rem',
+  color: theme.colors.gray600
 }))
