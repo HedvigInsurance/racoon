@@ -7,6 +7,7 @@ import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { ImageBlock } from '@/blocks/ImageBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
@@ -80,6 +81,7 @@ export enum StoryblokBlockName {
   Content = 'content',
   CheckList = 'checkList',
   Text = 'text',
+  Image = 'image',
 }
 
 export const initStoryblok = () => {
@@ -103,6 +105,7 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Content]: ContentBlock,
     [StoryblokBlockName.CheckList]: CheckListBlock,
     [StoryblokBlockName.Text]: TextBlock,
+    [StoryblokBlockName.Image]: ImageBlock,
   }
 
   storyblokInit({
