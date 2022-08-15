@@ -7,6 +7,7 @@ import { ThemeProvider } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
 import { useApollo } from '@/hooks/useApollo'
 import { useDebugTranslationKeys } from '@/hooks/useDebugTranslationsKeys'
+import { useSetupQuoteCartEffect } from '@/hooks/useSetupQuoteCartEffect'
 import { useTrackPageViews } from '@/hooks/useTrackPageViews'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { gtmDevScript, gtmProdScript, useGTMUserProperties } from '@/services/analytics/gtm'
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useGTMUserProperties()
   useTrackPageViews()
   useDebugTranslationKeys()
+  useSetupQuoteCartEffect()
 
   return (
     <>

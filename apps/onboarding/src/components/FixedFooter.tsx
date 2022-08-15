@@ -18,7 +18,7 @@ const FixedContainer = styled.div((props) => ({
   padding: '0 1rem',
 }))
 
-export const FixedFooter = ({ children }: PropsWithChildren<{}>) => {
+export const FixedFooter = ({ children }: PropsWithChildren<unknown>) => {
   return <FixedContainer>{children}</FixedContainer>
 }
 

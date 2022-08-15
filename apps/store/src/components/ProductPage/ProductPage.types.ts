@@ -1,5 +1,11 @@
-import { CmsProduct } from '@/services/mockCmsService'
+import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { ProductStory } from '@/services/storyblok/storyblok'
 
 export type ProductPageProps = {
-  cmsProduct: CmsProduct
+  story: ProductStory
+  priceFormTemplate: FormTemplate
+  priceIntent: PriceIntent
+  shopSession: ShopSession
 }

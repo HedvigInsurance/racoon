@@ -1,8 +1,15 @@
+import { Button } from 'ui'
+import { PageLink } from '@/lib/PageLink'
+import { CheckoutPageLayout } from './CheckoutPageLayout'
+
 export const CheckoutPage = () => {
   return (
-    <div>
-      <h1>Checkout Page</h1>
-      <p>Not yet implemented</p>
-    </div>
+    <form method="post" action={PageLink.apiCheckoutPersonCreate()}>
+      <CheckoutPageLayout>
+        <Button type="submit" fullWidth>
+          Continue to payment
+        </Button>
+      </CheckoutPageLayout>
+    </form>
   )
 }

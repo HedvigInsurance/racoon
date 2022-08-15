@@ -1,12 +1,11 @@
-name: ci
+name: CI
 
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    types: [opened, synchronize]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -14,46 +13,33 @@ jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
+    # Configure Turborepo Remote Caching
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       # report general machine parameters
       - run: node -p 'os.cpus()'
 
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Get Yarn cache
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Use Yarn cache
-        uses: actions/cache@v3
-        id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          fetch-depth: 2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
 
       - name: Install
-        run: yarn install --prefer-offline --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint
         run: yarn lint
 
+      - name: Typecheck
+        run: yarn typecheck
+
       - name: Unit Test
         run: yarn test
-
-      - name: 'E2E - Chrome: onboarding'
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          command: yarn e2e-onboarding:headless
-          browser: chrome
-        env:
-          NODE_ENV: test
-          NEXT_PUBLIC_GRAPHQL_ENDPOINT: https://graphql.dev.hedvigit.com/graphql
-          NEXT_PUBLIC_WEB_ONBOARDING_URL: https://www.dev.hedvigit.com
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          STORYBLOK_API_KEY: ${{ secrets.STORYBLOK_API_KEY }}
-          STORYBLOK_PREVIEW_SECRET: ${{ secrets.STORYBLOK_PREVIEW_SECRET }}

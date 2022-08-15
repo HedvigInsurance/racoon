@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { colorsV3, HedvigLogo, HedvigSymbol } from '@hedviginsurance/brand'
 import React, { useCallback, useEffect, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
 import { StoryData } from 'storyblok-js-client'
@@ -36,13 +35,13 @@ const HeaderBackgroundFiller = styled.div<{ transparent: boolean }>(({ transpare
   zIndex: -1,
   height: MOBILE_WRAPPER_HEIGHT,
   opacity: transparent ? 0 : 1,
-  backgroundColor: colorsV3.gray900,
+  backgroundColor: getColor('gray900'),
   transitionDuration: '300ms',
   transitionProperty: 'opacity, background-color',
 
   [mq.md]: {
     height: WRAPPER_HEIGHT,
-    backgroundColor: colorsV3.gray100,
+    backgroundColor: getColor('gray100'),
   },
 }))
 
@@ -138,9 +137,6 @@ export interface PageHeaderBlockProps extends StoryblokBaseBlock {
 export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockProps) => {
   const currentLocale = useCurrentLocale()
 
-  const showBanner =
-    props.story.content.show_banner && props.story.content.banner_text && !props.hide_global_banner
-
   const [isBelowThreshold, setIsBelowThreshold] = useState<boolean>(false)
   const isDesktop = useBreakpoint('md')
 
@@ -173,12 +169,6 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
 
   return (
     <>
-      {/* {showBanner && (
-        <BannerBlock
-          color={props.story.content.banner_color}
-          text={props.story.content.banner_text}
-        />
-      )} */}
       <HeaderWrapper>
         <HeaderBackgroundFiller transparent={props.is_transparent && !isBelowThreshold} />
 
@@ -186,7 +176,7 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
           <LeftContainer>
             <HideOnMobile>
               <LogoLink color={theme} href={'/' + currentLocale.marketLabel}>
-                <HedvigLogo width={94} />
+                H
               </LogoLink>
             </HideOnMobile>
 
@@ -201,9 +191,7 @@ export const PageHeaderBlock = (props: { story: StoryData } & PageHeaderBlockPro
           </LeftContainer>
           <RightContainer>
             <HideOnDesktop>
-              <Wordmark href={'/' + currentLocale.marketLabel}>
-                <HedvigSymbol size={28} color={colorsV3.gray100} />
-              </Wordmark>
+              <Wordmark href={'/' + currentLocale.marketLabel} />
             </HideOnDesktop>
 
             {!props.hide_menu && (

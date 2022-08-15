@@ -15,7 +15,7 @@ Add a new dependency to your app/package in your `package.json`:
 ```json
 {
   "dependencies": {
-    "ui": "*"
+    "ui": "workspace:"
   }
 }
 ```

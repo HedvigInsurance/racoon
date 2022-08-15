@@ -1,31 +1,45 @@
-import createCache from '@emotion/cache'
-import { CacheProvider } from '@emotion/react'
-import { AppProps } from 'next/app'
+import { ApolloProvider } from '@apollo/client'
+import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
+import { GlobalStyles } from '@/lib/GlobalStyles'
+import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { CartContext, useCartContextStore } from '@/services/mockCartService'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
+import { initStoryblok } from '@/services/storyblok/storyblok'
+
+// Enable API mocking
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  require('../mocks')
+}
 
 Datadog.initRum()
 
-const cache = createCache({ key: 'next' })
+initStoryblok()
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const apolloClient = useApollo(pageProps)
+
   const cartStore = useCartContextStore()
+
+  const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <CacheProvider value={cache}>
+      <ApolloProvider client={apolloClient}>
         <ThemeProvider>
-          <CartContext.Provider value={cartStore}>
-            <Component {...pageProps} />
-          </CartContext.Provider>
+          <GlobalStyles />
+          <ShopSessionProvider>
+            <CartContext.Provider value={cartStore}>
+              {getLayout(<Component {...pageProps} />)}
+            </CartContext.Provider>
+          </ShopSessionProvider>
         </ThemeProvider>
-      </CacheProvider>
+      </ApolloProvider>
     </>
   )
 }

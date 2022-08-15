@@ -7,7 +7,8 @@ module.exports = {
   images: {
     domains: ['promise.hedvig.com'],
   },
-  experimental: {
+  compiler: {
     emotion: true,
   },
+  productionBrowserSourceMaps: true,
 }

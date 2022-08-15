@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { CmsProduct } from './mockCmsService'
+import { Product, ProductNames } from './mockProductService'
+
+type ProductWithSlug = Product & { slug: string }
 
 export type CartProduct = {
-  cmsProduct: CmsProduct
+  product: ProductWithSlug
   // this kinda represents a unique instance of this product with provided details
   id: string
   price: number
@@ -16,8 +18,11 @@ type Cart = {
 // This context mocks a BE data service
 interface CartContextInterface {
   cart: Cart
-  addProductToCart: (id: string, price: number, product: CmsProduct) => void
-  getItemsByProductType: (productName: string) => CartProduct[]
+  addProductToCart: (id: string, price: number, product: ProductWithSlug) => void
+  /**
+   * Returns cart items that matches on CmsProduct::name
+   */
+  getItemsByName: (productName: ProductNames) => CartProduct[]
   removeItem: (id: string) => void
 }
 
@@ -37,21 +42,21 @@ export const useCartContextStore = (): CartContextInterface => {
     return !!cartItems.find((item) => item.id === id)
   }
 
-  const addProductToCart = (id: string, price: number, product: CmsProduct): void => {
+  const addProductToCart = (id: string, price: number, product: ProductWithSlug): void => {
     if (_isProductInCart(id)) return
 
-    setCartItems((current) => [...current, { cmsProduct: product, id, price }])
+    setCartItems((current) => [...current, { product, id, price }])
   }
 
-  const getItemsByProductType = (productName: string): CartProduct[] => {
-    return cart.items.filter((item) => item.cmsProduct.product === productName)
+  const getItemsByProductName = (name: ProductNames): CartProduct[] => {
+    return cart.items.filter((item) => item.product.name === name)
   }
 
   const removeItem = (id: string): void => {
     setCartItems((current) => current.filter((item) => item.id !== id))
   }
 
-  return { cart, addProductToCart, getItemsByProductType, removeItem }
+  return { cart, addProductToCart, getItemsByName: getItemsByProductName, removeItem }
 }
 
 export const CartContext = React.createContext<CartContextInterface | null>(null)

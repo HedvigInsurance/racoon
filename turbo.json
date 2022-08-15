@@ -10,6 +10,7 @@
       "outputs": [".next/**"],
       "dependsOn": [
         "^build",
+        "codegen",
         "$NEXT_PUBLIC_GRAPHQL_ENDPOINT",
         "$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION",
         "$NEXT_PUBLIC_WEB_ONBOARDING_URL",
@@ -26,22 +27,35 @@
       "outputs": [".next/**"],
       "dependsOn": [
         "^build",
+        "codegen",
         "$NEXT_PUBLIC_DATADOG_APPLICATION_ID",
         "$NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
         "$NEXT_PUBLIC_DATADOG_VERSION",
-        "$NEXT_PUBLIC_DATADOG_ENV"
+        "$NEXT_PUBLIC_DATADOG_ENV",
+        "$NEXT_PUBLIC_API_MOCKING",
+        "$NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN",
+        "$NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN",
+        "$NEXT_PUBLIC_GRAPHQL_ENDPOINT"
       ]
     },
     "market-web#build": {
-      "outputs": [".next/**"]
+      "outputs": [".next/**"],
+      "dependsOn": ["^build", "$STORYBLOK_API_KEY", "$STORYBLOK_PREVIEW_SECRET"]
+    },
+    "fake-api#build": {
+      "outputs": [".next/**"],
+      "dependsOn": ["^build"]
     },
     "onboarding#test": {
-      "outputs": ["covereage/**"],
-      "dependsOn": ["build"]
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^build"]
     },
     "test": {
-      "outputs": ["covereage/**"],
-      "dependsOn": []
+      "outputs": ["coverage/**"]
+    },
+    "store#test": {
+      "outputs": ["coverage/**"],
+      "dependsOn": ["codegen"]
     },
     "e2e": {
       "dependsOn": ["build"]
@@ -50,7 +64,8 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "lint:fix": {
       "outputs": []
@@ -58,14 +73,45 @@
     "dev": {
       "cache": false
     },
+    "onboarding#dev": {
+      "cache": false,
+      "dependsOn": ["codegen"]
+    },
+    "store#dev": {
+      "cache": false,
+      "dependsOn": ["codegen"]
+    },
     "clean": {
       "cache": false
     },
     "storybook": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "storybook:build": {
+      "outputs": ["storybook-static/**"],
+      "dependsOn": ["^build", "codegen"]
+    },
+    "chromatic": {
+      "dependsOn": ["storybook:build"]
     },
     "typecheck": {
+      "dependsOn": ["^build"],
       "outputs": []
+    },
+    "store#typecheck": {
+      "dependsOn": ["codegen", "^build"],
+      "outputs": []
+    },
+    "onboarding#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
+      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
+    },
+    "store#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
+      "outputs": ["src/services/**/generated.ts"],
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     }
   }
 }

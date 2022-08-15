@@ -124,13 +124,11 @@ Prefixing the branch name with the issue number will link it to the ticket in Ji
 
 Read the full PR & Code review guide in [Notion](https://www.notion.so/hedviginsurance/Pull-Requests-Code-Review-b7c1787988c944678b989de8a68c147a)
 
-### Review apps
+### Preview deployments
 
-For every branch with an open PR there's the possibility to create a review app, to preview the changes in a deployed state.
+A preview deployment will be created for each open PR. They are configured in the same way as the staging environment.
 
-This is a great way to make code review easier for your peers, and also if you need to sync regarding the changes with a none-coder, like a designer or stakeholder.
-
-Read the [guide n Notion](https://www.notion.so/hedviginsurance/Review-apps-886358fb864d42f4b7dd66d49fd8aef4) on how you create a review app on Heroku
+This is the main way to review that the code is working before merging into `main` and making a production deploy. You can also share the link with other stakeholders like designers to review your work.
 
 ## Continuous Integration and Deployment
 
@@ -140,10 +138,7 @@ All PR's and subsequent commits to a PR will trigger our CI build pipeline which
 
 ### Deployment strategy
 
-When a PR is merged to the main branch:
-
-- `Market Web` will be deployed to `staging`, deployment to `production` is manual in Heroku
-- `Web Onboarding` will be deployed to `staging`, deployment to `production` is manual in Heroku
+When a PR is merged to the `main` branch it will be automatically deployed to production.
 
 ## Code guidelines
 
@@ -174,13 +169,7 @@ export default DynamicComponent
 
 ### Imports
 
-We explicitly import React hooks as well as React (since we haven't yet upgraded to React 17).
-
-```tsx
-import React, { useState, useEffect } from 'react'
-```
-
-We don't however import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
+We don't import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
 The reason for this is that the types from React are not always named in a way that makes super clear that's where they come from.
 
 ```tsx
@@ -512,7 +501,7 @@ We use [Emotion](https://emotion.sh/docs/introduction) to style our components, 
 
 ```tsx
 import styled from '@emotion/styled'
-import { keyframes } from '@emotion/core'
+import { keyframes } from '@emotion/react'
 ```
 
 ```tsx

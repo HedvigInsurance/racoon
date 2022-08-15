@@ -19,7 +19,7 @@ const HeadingBase = styled.span<ColorProp>(({ theme, colorVariant }) => ({
   color: colorVariant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
   margin: 0,
   padding: 0,
-  fontFamily: theme.fonts.heading,
+  fontFamily: theme.fonts.body,
   fontWeight: 400,
 }))
 
@@ -84,7 +84,10 @@ const HeadingOverline = styled(HeadingBase)<StyleProps>(() => ({
   },
 }))
 
-type Headings = Record<HeadingProps['variant'], StyledComponent<{}, StyleProps, any>>
+type Headings = Record<
+  HeadingProps['variant'],
+  StyledComponent<Record<string, unknown>, StyleProps, any>
+>
 
 const headings: Headings = {
   xl: HeadingXL,

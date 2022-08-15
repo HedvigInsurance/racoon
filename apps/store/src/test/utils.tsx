@@ -44,4 +44,5 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'> & { router?: Partial<NextRouter> },
 ) => render(ui, { wrapper: AllTheProviders({ router: options?.router }), ...options })
 
+export * from '@testing-library/react'
 export { customRender as render }

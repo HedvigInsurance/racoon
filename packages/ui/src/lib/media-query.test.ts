@@ -28,11 +28,13 @@ describe('media-query', () => {
       // align
       const breakpoint = 'smurf'
 
+      // Suppress log
+      jest.spyOn(global.console, 'error').mockImplementationOnce(() => {})
+
       // act
       const { result } = renderHook(() => useBreakpoint(breakpoint as Level))
-
       // assert
-      expect(result.error?.message).toBe(`Unknown breakpoint ${breakpoint}`)
+      expect(result.error).toEqual(new Error(`Unknown breakpoint ${breakpoint}`))
     })
   })
 })

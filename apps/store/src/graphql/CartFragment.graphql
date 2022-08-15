@@ -1,0 +1,15 @@
+fragment CartFragment on Cart {
+  id
+  lines {
+    id
+    startDate
+    price {
+      amount
+      currencyCode
+    }
+    variant {
+      id
+      title
+    }
+  }
+}

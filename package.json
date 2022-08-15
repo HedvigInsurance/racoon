@@ -18,23 +18,29 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "typecheck": "turbo run typecheck",
-    "heroku-postbuild": "node packages/scripts/heroku.build.js",
-    "storybook": "turbo run storybook"
+    "storybook": "turbo run storybook",
+    "storybook:build": "turbo run storybook:build",
+    "chromatic": "turbo run chromatic"
   },
-  "devDependencies": {
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "^2.5.1",
-    "turbo": "^1.2.1"
-  },
-  "packageManager": "yarn@1.22.17",
+  "packageManager": "yarn@3.2.2",
   "lint-staged": {
     "*.md": [
       "prettier --ignore-unknown --write"
     ],
     "*.{js,jsx,ts,tsx}": [
       "prettier --ignore-unknown --write",
-      "eslint --fix"
+      "eslint --fix --ignore-pattern 'generated.ts'"
     ]
+  },
+  "devDependencies": {
+    "eslint": "8.21.0",
+    "eslint-import-resolver-typescript": "3.4.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "2.7.1",
+    "turbo": "1.4.2"
+  },
+  "resolutions": {
+    "next-i18next/@types/react": "17.0.48"
   }
 }

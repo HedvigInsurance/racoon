@@ -1,0 +1,16 @@
+mutation CartLinesAdd($shopSessionId: ID!, $lineId: ID!) {
+  shopSession(id: $shopSessionId) {
+    cart {
+      linesAdd(lineIds: [$lineId]) {
+        cart {
+          ...CartFragment
+        }
+        userErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  }
+}

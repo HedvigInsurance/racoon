@@ -7,7 +7,7 @@ export enum Feature {
 
 export const Features = {
   getMarketBasedFlags(marketLabel: MarketLabel): Record<Feature, boolean> {
-    const normalize = (marketList: string = '') => marketList.includes(marketLabel)
+    const normalize = (marketList = '') => marketList.includes(marketLabel)
 
     return {
       ACCIDENT_INSURANCE: normalize(process.env.NEXT_PUBLIC_FEATURE_ACCIDENT_INSURANCE),

@@ -1,0 +1,13 @@
+schema: ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+documents: './src/graphql/*.graphql'
+generates:
+  ./src/services/apollo/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  ./src/services/graphql/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-generic-sdk

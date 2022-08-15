@@ -6,6 +6,10 @@ const nextConfig = {
   compiler: {
     emotion: true,
   },
+  images: {
+    domains: ['a.storyblok.com'],
+  },
+  productionBrowserSourceMaps: true,
   i18n,
 }
 

@@ -11,6 +11,7 @@ export type CheckboxProps = {
   circle?: boolean
   required?: boolean
   errorMessage?: string
+  tabIndex?: number
 }
 
 const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
@@ -115,6 +116,7 @@ export const Checkbox = ({
   prependLabel,
   required,
   errorMessage,
+  tabIndex,
 }: CheckboxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -130,7 +132,7 @@ export const Checkbox = ({
     <ControlContainer>
       {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
       <HiddenInput
-        {...{ checked, onChange, disabled, required }}
+        {...{ tabIndex, checked, onChange, disabled, required }}
         onInvalid={handleInvalid}
         ref={inputRef}
         type="checkbox"
