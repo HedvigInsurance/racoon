@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { PageLink } from '@/lib/PageLink'
-import { useCart } from '@/services/cart/useCart'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const cart = useCart()
-  const cartLineCount = cart?.lines.length ?? 0
+  const { shopSession } = useShopSession()
+  const cartLineCount = shopSession?.cart.lines.length ?? 0
 
   return (
     <Wrapper>

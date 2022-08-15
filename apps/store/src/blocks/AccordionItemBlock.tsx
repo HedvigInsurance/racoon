@@ -1,4 +1,4 @@
-import { getStoryblokApi, Richtext } from '@storyblok/react'
+import { getStoryblokApi, Richtext, storyblokEditable } from '@storyblok/react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -10,7 +10,7 @@ export type Props = SbBaseBlockProps<{
 export const AccordionItemBlock = ({ blok }: Props) => {
   const contentHtml = getStoryblokApi().richTextResolver.render(blok.body)
   return (
-    <Accordion.Item value={blok._uid}>
+    <Accordion.Item value={blok._uid} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>{blok.title}</Accordion.HeaderWithTrigger>
       <Accordion.Content>
         <div dangerouslySetInnerHTML={{ __html: contentHtml }} />

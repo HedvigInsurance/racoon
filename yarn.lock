@@ -22523,12 +22523,12 @@ __metadata:
   linkType: hard
 
 "synckit@npm:^0.8.1":
-  version: 0.8.3
-  resolution: "synckit@npm:0.8.3"
+  version: 0.8.2
+  resolution: "synckit@npm:0.8.2"
   dependencies:
     "@pkgr/utils": ^2.3.0
     tslib: ^2.4.0
-  checksum: ba6baa7c32e69b38eebb322a8eb1712a117f7f1eaa42e75623c7d6da43f0e61d3ac33fa962c2c58a8b37742f1e0ae9d21f04c9da0dbf34d618a8780055e9e1fa
+  checksum: ec5b94a12dc222efffb99707d5db651a012bcf75001c3c5c774cbab8f569188dcba77b2bb96059f0f05a0e70682ef8ad6ff6a612c704fb8d3d7a7caa40ed7b70
   languageName: node
   linkType: hard
 
