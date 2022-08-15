@@ -2,6 +2,9 @@ import { useContext } from 'react'
 import { ShopSessionContext } from './ShopSession.context'
 
 export const useShopSession = () => {
-  const { querySession } = useContext(ShopSessionContext)
-  return querySession()
+  const contextValue = useContext(ShopSessionContext)
+  if (!contextValue) {
+    throw new Error('useShopSession must be used inside ShopSessionContextProvider')
+  }
+  return contextValue.querySession()
 }

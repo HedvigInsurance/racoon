@@ -1,10 +1,11 @@
-import { useApolloClient } from '@apollo/client'
+import { QueryResult, ServerError, useApolloClient } from '@apollo/client'
 import { ReactNode, createContext, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
+import { ShopSessionQuery, ShopSessionQueryVariables } from '../graphql/generated'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 export function ShopSessionContextProvider({ children }: { children: ReactNode }) {
@@ -12,11 +13,22 @@ export function ShopSessionContextProvider({ children }: { children: ReactNode }
   return <ShopSessionContext.Provider value={value}>{children}</ShopSessionContext.Provider>
 }
 
-// FIXME: Move to custom App component, extract to own module
-export const ShopSessionContext = createContext(null as any)
+type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
+type ShopSessionContextValue = {
+  querySession: () => ShopSessionQueryResult
+}
+// FIXME: Move to custom App component
+export const ShopSessionContext = createContext<ShopSessionContextValue | null>(null)
 
 function useShopSessionContextProvider() {
-  const resultRef = useRef({ called: false } as any)
+  const resultRef = useRef<{
+    called: boolean
+    value: ShopSessionContextValue
+    result?: ShopSessionQueryResult
+  }>({
+    called: false,
+    value: null as unknown as ShopSessionContextValue, // Sync initialized before return
+  })
 
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
@@ -24,9 +36,7 @@ function useShopSessionContextProvider() {
   const [createShopSession] = useShopSessionCreateMutation({
     variables: { countryCode },
     onCompleted({ shopSessionCreate }) {
-      console.log('created', shopSessionCreate, resultRef.current.id)
-      // DEBUG: Comment for local development
-      // shopSessionService.save(shopSessionCreate)
+      shopSessionService.save(shopSessionCreate)
     },
   })
 
@@ -35,8 +45,13 @@ function useShopSessionContextProvider() {
   const queryResult = useShopSessionApolloQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
-    onCompleted: ({ shopSession }: any) => {
+    onCompleted: ({ shopSession }) => {
       if (shopSession.countryCode !== countryCode) {
+        createShopSession()
+      }
+    },
+    onError(error) {
+      if ((error.networkError as ServerError)?.statusCode === 404) {
         createShopSession()
       }
     },
@@ -46,11 +61,11 @@ function useShopSessionContextProvider() {
     () => ({
       // Lazy so that we don't create session until it's first needed
       querySession() {
-        if (!resultRef.current.result) {
+        if (resultRef.current.result != null) {
           resultRef.current.result = queryResult
-          // FIXME: Re-create session on countryCode mismatch
           if (!shopSessionService.shopSessionId()) {
-            setTimeout(() => createShopSession(), 0)
+            // setTimeout avoids update loops when rendering
+            setTimeout(() => createShopSession())
           }
         }
         return resultRef.current.result

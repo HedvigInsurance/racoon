@@ -36,6 +36,7 @@ type Props = ProductItemProps & {
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
   const { data } = useShopSession()
+  // @ts-ignore FIXME
   const cartLineCount = data?.cart.lines.length ?? 1
 
   return (
