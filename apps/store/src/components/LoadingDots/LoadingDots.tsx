@@ -23,7 +23,7 @@ const Dots = styled.div<LoadingDotsProps>(({ color }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: `${color}`,
+  color,
 }))
 
 const Dot = styled.span({
