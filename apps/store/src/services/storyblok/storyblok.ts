@@ -2,8 +2,12 @@ import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
+import { CheckListBlock } from '@/blocks/CheckListBlock'
+import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
+import { ContentBlock } from '@/blocks/ContentBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { ImageBlock } from '@/blocks/ImageBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
@@ -12,6 +16,7 @@ import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
+import { TextBlock } from '@/blocks/TextBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -72,6 +77,11 @@ export enum StoryblokBlockName {
   Tabs = 'tabs',
   // Used only inside TabsBlock
   Tab = 'tab',
+  ContactSupport = 'contactSupport',
+  Content = 'content',
+  CheckList = 'checkList',
+  Text = 'text',
+  Image = 'image',
 }
 
 export const initStoryblok = () => {
@@ -91,6 +101,11 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Accordion]: AccordionBlock,
     [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
+    [StoryblokBlockName.ContactSupport]: ContactSupportBlock,
+    [StoryblokBlockName.Content]: ContentBlock,
+    [StoryblokBlockName.CheckList]: CheckListBlock,
+    [StoryblokBlockName.Text]: TextBlock,
+    [StoryblokBlockName.Image]: ImageBlock,
   }
 
   storyblokInit({

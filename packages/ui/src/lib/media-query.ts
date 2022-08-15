@@ -29,7 +29,9 @@ function getWindowDimensions() {
  * @returns `true` if window size is at or above breakpoint, `false` otherwise
  */
 export const useBreakpoint = (level: Level) => {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions)
+  const [windowDimensions, setWindowDimensions] = useState(() =>
+    typeof window === 'undefined' ? { width: 0, height: 0 } : getWindowDimensions(),
+  )
 
   useEffect(() => {
     function handleResize() {

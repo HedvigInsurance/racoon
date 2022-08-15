@@ -14,6 +14,7 @@ export const db = factory({
     currencyCode: () => 'SEK',
     variantId: () => uuidv4(),
     variantTitle: () => 'Hedvig Home',
+    startDate: nullable(() => new Date()),
   },
 
   priceIntent: {

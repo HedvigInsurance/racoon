@@ -64,7 +64,7 @@ export class ShopSessionService {
 
     if (!shopSession) throw new Error('Unable to create ShopSession')
 
-    this.persister.save(shopSession.id)
+    this.save(shopSession)
 
     return shopSession
   }

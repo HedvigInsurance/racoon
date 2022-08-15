@@ -10,6 +10,7 @@
       "outputs": [".next/**"],
       "dependsOn": [
         "^build",
+        "codegen",
         "$NEXT_PUBLIC_GRAPHQL_ENDPOINT",
         "$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION",
         "$NEXT_PUBLIC_WEB_ONBOARDING_URL",
@@ -46,14 +47,14 @@
       "dependsOn": ["^build"]
     },
     "onboarding#test": {
-      "outputs": ["covereage/**"],
+      "outputs": ["coverage/**"],
       "dependsOn": ["^build"]
     },
     "test": {
-      "outputs": ["covereage/**"]
+      "outputs": ["coverage/**"]
     },
     "store#test": {
-      "outputs": ["covereage/**"],
+      "outputs": ["coverage/**"],
       "dependsOn": ["codegen"]
     },
     "e2e": {
@@ -71,6 +72,10 @@
     },
     "dev": {
       "cache": false
+    },
+    "onboarding#dev": {
+      "cache": false,
+      "dependsOn": ["codegen"]
     },
     "store#dev": {
       "cache": false,
@@ -98,10 +103,15 @@
       "dependsOn": ["codegen", "^build"],
       "outputs": []
     },
+    "onboarding#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
+      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
+    },
     "store#codegen": {
+      "inputs": ["src/graphql/*.graphql"],
       "outputs": ["src/services/**/generated.ts"],
-      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
-      "inputs": ["src/graphql/*.graphql"]
+      "dependsOn": ["$NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     }
   }
 }

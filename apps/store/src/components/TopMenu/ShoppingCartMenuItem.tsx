@@ -5,9 +5,8 @@ import { useShopSession } from '@/services/shopSession/useShopSession'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const r = useShopSession()
-  // @ts-ignore FIXME
-  const cartLineCount = r.data?.cart.lines.length ?? 0
+  const { data } = useShopSession()
+  const cartLineCount = data?.shopSession.cart.lines.length ?? 0
 
   return (
     <Wrapper>

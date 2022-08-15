@@ -55,6 +55,24 @@ export const cartLinesRemove = (shopSessionId: string, lineId: string) => {
   return updatedCart
 }
 
+export const startDateUpdate = (shopSessionId: string, lineId: string, startDate: Date | null) => {
+  const lineItem = db.lineItem.findFirst({ where: { id: { equals: lineId } } })
+  if (!lineItem) throw new Error('Line item not found: ' + lineId)
+
+  const updatedLineItem = db.lineItem.update({
+    where: { id: { equals: lineId } },
+    data: { startDate },
+  })
+
+  if (!updatedLineItem) throw new Error('Could not update start date for line item: ' + lineId)
+
+  const shopSession = db.shopSession.findFirst({ where: { id: { equals: shopSessionId } } })
+  const updatedCart = shopSession?.cart
+  if (!updatedCart) throw new Error('Cart not found: ' + shopSessionId)
+
+  return updatedCart
+}
+
 export const dbShopSessionToAPI = (
   shopSession: ReturnType<typeof db.shopSession.create>,
 ): ShopSessionQuery['shopSession'] => {
@@ -77,6 +95,7 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
     lines: cart.lines.map((line) => ({
       __typename: 'CartLine',
       id: line.id,
+      startDate: line.startDate?.toISOString().substring(0, 10) ?? null,
       price: {
         __typename: 'Money',
         amount: line.priceAmount,

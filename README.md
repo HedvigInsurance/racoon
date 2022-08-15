@@ -4,16 +4,15 @@ Proof of concept monorepo to support all purchase journey related projects.
 
 ## Getting Started
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/en/)
-- [Yarn v1](https://yarnpkg.com)
-
 ### Install Node.js with `nvm`
 
 1. Install `nvm` [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
 1. `nvm install` (installs the node version specified in `.nvmrc`)
 1. `nvm use` (use version from `.nvmrc`)
+
+### Packaga manager
+
+We use `yarn` as package manager. [Corepack](https://github.com/nodejs/corepack) installs the specified version defined in `package.json`
 
 ### Install dependencies
 
