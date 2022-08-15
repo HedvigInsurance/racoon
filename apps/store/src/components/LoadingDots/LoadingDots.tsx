@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { theme } from 'ui'
 
-type DotsProps = {
+export type LoadingDotsProps = {
   className?: string
   color?: string
 }
@@ -21,12 +21,12 @@ const spin = keyframes`
   }
 `
 
-const Dots = styled.div<DotsProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) => props.color};
-`
+const Dots = styled.div<LoadingDotsProps>(({ color }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: `${color}`,
+}))
 
 const Dot = styled.span`
   width: 0.375rem;
@@ -45,7 +45,7 @@ const Dot = styled.span`
   }
 `
 
-export const LoadingDots = ({ className, color = theme.colors.gray100 }: DotsProps) => {
+export const LoadingDots = ({ className, color = theme.colors.gray100 }: LoadingDotsProps) => {
   return (
     <Dots className={className} color={color}>
       <Dot />
