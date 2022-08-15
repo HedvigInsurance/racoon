@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ShopSessionContext } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { ShopSessionContext } from './ShopSession.context'
 
 export const useShopSession = () => {
   const { querySession } = useContext(ShopSessionContext)
