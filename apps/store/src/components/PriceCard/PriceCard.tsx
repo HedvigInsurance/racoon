@@ -16,7 +16,7 @@ export type PriceCardProps = {
   currencyCode: string
   onClick: () => void
   gradient: Gradient
-  loading: boolean
+  loading?: boolean
 }
 
 export const PriceCard = ({
@@ -35,15 +35,15 @@ export const PriceCard = ({
         <Text size="m">{name}</Text>
       </CenteredText>
 
-      {!loading ? (
-        <PreviewText aria-disabled={cost === undefined}>
-          {currencyCode} {cost ?? '—'} /mth.
-        </PreviewText>
-      ) : (
-        <LoadingWrapper>
+      <PricePreviewContainer>
+        {!loading ? (
+          <PreviewText aria-disabled={cost === undefined}>
+            {currencyCode} {cost ?? '—'} /mth.
+          </PreviewText>
+        ) : (
           <LoadingDots />
-        </LoadingWrapper>
-      )}
+        )}
+      </PricePreviewContainer>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
         <CustomButton fullWidth disabled={cost === undefined} onClick={onClick}>
@@ -62,8 +62,10 @@ export const PriceCard = ({
   )
 }
 
-const LoadingWrapper = styled.div(({ theme }) => ({
-  minHeight: `${theme.space[6]}`,
+const PricePreviewContainer = styled.div(({ theme }) => ({
+  display: 'grid',
+  justifyContent: 'center',
+  minHeight: theme.space[6],
 }))
 
 const Wrapper = styled(Space)(({ theme }) => ({
