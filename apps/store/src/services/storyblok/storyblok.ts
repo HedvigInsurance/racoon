@@ -18,6 +18,7 @@ import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { TopMenu } from '@/components/TopMenu/TopMenu'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -63,52 +64,53 @@ export type ProductStory = StoryData & {
 type GlobalStory = StoryData
 
 export enum StoryblokBlockName {
+  Accordion = 'accordion',
+  AccordionItem = 'accordionItem',
   Button = 'button',
+  CheckList = 'checkList',
+  ContactSupport = 'contactSupport',
+  Content = 'content',
   Heading = 'heading',
   Hero = 'hero',
+  Image = 'image',
   Page = 'page',
+  PriceCalculator = 'priceCalculator',
   Product = 'product',
   ProductCard = 'productCard',
   ProductGrid = 'productGrid',
+  ProductSlideshow = 'productSlideshow',
   ProductSummary = 'productSummary',
   Spacer = 'spacer',
-  PriceCalculator = 'priceCalculator',
-  TopPickCard = 'topPickCard',
-  ProductSlideshow = 'productSlideshow',
-  Accordion = 'accordion',
-  AccordionItem = 'accordionItem',
+  Tab = 'tab', // Used only inside TabsBlock
   Tabs = 'tabs',
-  // Used only inside TabsBlock
-  Tab = 'tab',
-  ContactSupport = 'contactSupport',
-  Content = 'content',
-  CheckList = 'checkList',
   Text = 'text',
-  Image = 'image',
+  TopMenu = 'topMenu',
+  TopPickCard = 'topPickCard',
 }
 
 export const initStoryblok = () => {
   const components = {
+    [StoryblokBlockName.Accordion]: AccordionBlock,
+    [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
     [StoryblokBlockName.Button]: ButtonBlock,
+    [StoryblokBlockName.CheckList]: CheckListBlock,
+    [StoryblokBlockName.ContactSupport]: ContactSupportBlock,
+    [StoryblokBlockName.Content]: ContentBlock,
     [StoryblokBlockName.Heading]: HeadingBlock,
     [StoryblokBlockName.Hero]: HeroBlock,
+    [StoryblokBlockName.Image]: ImageBlock,
     [StoryblokBlockName.Page]: PageBlock,
+    [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
     [StoryblokBlockName.Product]: PageBlock,
     [StoryblokBlockName.ProductCard]: ProductCardBlock,
     [StoryblokBlockName.ProductGrid]: ProductGridBlock,
-    [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
-    [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
-    [StoryblokBlockName.Spacer]: SpacerBlock,
-    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
     [StoryblokBlockName.ProductSlideshow]: ProductSlideshowBlock,
-    [StoryblokBlockName.Accordion]: AccordionBlock,
-    [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
+    [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
+    [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
-    [StoryblokBlockName.ContactSupport]: ContactSupportBlock,
-    [StoryblokBlockName.Content]: ContentBlock,
-    [StoryblokBlockName.CheckList]: CheckListBlock,
     [StoryblokBlockName.Text]: TextBlock,
-    [StoryblokBlockName.Image]: ImageBlock,
+    [StoryblokBlockName.TopMenu]: TopMenu,
+    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
   }
 
   storyblokInit({
