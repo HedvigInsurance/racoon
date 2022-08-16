@@ -54,12 +54,18 @@ export class PriceIntentService {
     if (!this.shopSession) throw new Error('No shop session found')
     if (!this.apolloClient) throw new Error('No Apollo Client found')
 
-    const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
-      query: PriceIntentDocument,
-      variables: { shopSessionId: this.shopSession.id, priceIntentId },
-    })
+    try {
+      const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
+        query: PriceIntentDocument,
+        variables: { shopSessionId: this.shopSession.id, priceIntentId },
+      })
+      return result.data?.shopSession.priceIntent ?? null
+    } catch (error) {
+      console.warn(`Unable to get price intent: ${priceIntentId}`)
+      console.warn(error)
+    }
 
-    return result.data?.shopSession.priceIntent ?? null
+    return null
   }
 
   public async fetch(productId: string) {
@@ -95,18 +101,22 @@ export class PriceIntentService {
     if (!this.shopSession) throw new Error('No shop session found')
     if (!this.apolloClient) throw new Error('No Apollo Client found')
 
-    const shopSessionId = this.shopSession.id
-    const result = await this.apolloClient.mutate<
-      PriceIntentConfirmMutation,
-      PriceIntentConfirmMutationVariables
-    >({
-      mutation: PriceIntentConfirmDocument,
-      variables: { shopSessionId, priceIntentId },
-    })
+    try {
+      const result = await this.apolloClient.mutate<
+        PriceIntentConfirmMutation,
+        PriceIntentConfirmMutationVariables
+      >({
+        mutation: PriceIntentConfirmDocument,
+        variables: { shopSessionId: this.shopSession.id, priceIntentId },
+      })
 
-    const priceIntent = result.data?.shopSession.priceIntent.confirm.priceIntent
-    if (!priceIntent) throw new Error('Could not confirm price intent')
-    return priceIntent
+      const priceIntent = result.data?.shopSession.priceIntent.confirm.priceIntent
+      if (!priceIntent) throw new Error('Could not confirm price intent')
+      return priceIntent
+    } catch (error) {
+      console.warn(`Unable to confirm price intent: ${priceIntentId}`)
+      throw error
+    }
   }
 
   public reset() {
