@@ -17,7 +17,6 @@ type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVari
 type ShopSessionContextValue = {
   querySession: () => ShopSessionQueryResult
 }
-// FIXME: Move to custom App component
 export const ShopSessionContext = createContext<ShopSessionContextValue | null>(null)
 
 function useShopSessionContextProvider() {

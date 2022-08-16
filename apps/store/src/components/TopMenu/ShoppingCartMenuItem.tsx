@@ -1,12 +1,14 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { PageLink } from '@/lib/PageLink'
-import { useShopSession } from '@/services/shopSession/useShopSession'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const { data } = useShopSession()
-  const cartLineCount = data?.shopSession.cart.lines.length ?? 0
+  const { shopSession } = useShopSession()
+  const cartLineCount = shopSession?.cart.lines.length ?? 0
+  // DEBUG: Check for duplicate creation
+  useShopSession()
 
   return (
     <Wrapper>

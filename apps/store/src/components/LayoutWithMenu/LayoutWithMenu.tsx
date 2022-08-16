@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { SiteFooter, SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
-import { ShopSessionContextProvider } from '@/services/shopSession/ShopSession.context'
 import { TopMenu } from '../TopMenu/TopMenu'
 
 const Wrapper = styled.main({
@@ -23,15 +22,13 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
   }
 
   return (
-    <ShopSessionContextProvider>
-      <Wrapper>
-        <FixedHeader>
-          <TopMenu />
-        </FixedHeader>
-        {children}
-        <SiteFooter onChangeLocale={handleChangeLocale} />
-      </Wrapper>
-    </ShopSessionContextProvider>
+    <Wrapper>
+      <FixedHeader>
+        <TopMenu />
+      </FixedHeader>
+      {children}
+      <SiteFooter onChangeLocale={handleChangeLocale} />
+    </Wrapper>
   )
 }
 
