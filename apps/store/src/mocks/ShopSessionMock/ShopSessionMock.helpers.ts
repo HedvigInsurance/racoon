@@ -98,7 +98,7 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
       startDate: line.startDate?.toISOString().substring(0, 10) ?? null,
       price: {
         __typename: 'Money',
-        amount: line.priceAmount,
+        amount: line.priceAmount.toString(),
         currencyCode: line.currencyCode as CurrencyCode,
       },
       variant: {
