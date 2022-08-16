@@ -2,7 +2,6 @@ import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
-  ShopSessionCreateMutation,
   ShopSessionQuery,
   ShopSessionQueryVariables,
   useShopSessionCreateMutation,
@@ -19,7 +18,8 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
   const shopSessionService = useShopSessionService()
   const shopSessionId = shopSessionService.shopSessionId()
 
-  const [createShopSession, mutationResult] = useCreateShopSession({
+  const [createShopSession, mutationResult] = useShopSessionCreateMutation({
+    variables: { countryCode },
     onCompleted: ({ shopSessionCreate }) => {
       shopSessionService.save(shopSessionCreate)
     },
@@ -62,18 +62,6 @@ export const useShopSession = () => {
     )
   }
   return queryResult
-}
-
-const useCreateShopSession = ({ onCompleted }: ShopSessionOperationParams) => {
-  const { countryCode } = useCurrentLocale()
-  return useShopSessionCreateMutation({
-    variables: { countryCode },
-    onCompleted,
-  })
-}
-
-type ShopSessionOperationParams = {
-  onCompleted: (data: ShopSessionCreateMutation) => void
 }
 
 const useShopSessionQuery = ({ shopSessionId, ...rest }: UseShopSessionParams) => {
