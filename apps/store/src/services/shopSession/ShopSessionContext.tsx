@@ -9,7 +9,10 @@ import {
 } from '@/services/apollo/generated'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
-type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
+type ShopSessionQueryResult = Omit<
+  QueryResult<ShopSessionQuery, ShopSessionQueryVariables>,
+  'data'
+> & { shopSession?: ShopSessionQuery['shopSession'] }
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
@@ -65,13 +68,17 @@ export const useShopSession = () => {
 }
 
 const useShopSessionQuery = ({ shopSessionId, ...rest }: UseShopSessionParams) => {
-  return useShopSessionApolloQuery({
+  const { data, ...other } = useShopSessionApolloQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
     // Only intended to run client-side, prefetch and pass to Apollo Cache if fetched on server.
     ssr: false,
     ...rest,
   })
+  return {
+    ...other,
+    shopSession: data?.shopSession,
+  }
 }
 
 type ShopSessionQueryHookOption = QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>
