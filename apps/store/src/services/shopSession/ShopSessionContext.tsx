@@ -2,7 +2,6 @@ import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
-  Exact,
   ShopSessionCreateMutation,
   ShopSessionQuery,
   ShopSessionQueryVariables,
@@ -44,7 +43,7 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
   // FIXME: Ensure we don't return incorrect country data.  Perhaps remove session from apolloCache
   // shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
 
-  // Has to be wrapped to prevent duplicate execution (Apollo)
+  // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
   useEffect(() => {
     // TODO: isBrowser() and ensure code splitting does not break
     if (typeof window !== 'undefined' && !shopSessionId && !mutationResult.called) {
@@ -81,14 +80,16 @@ const useShopSessionQuery = ({ shopSessionId, ...rest }: UseShopSessionParams) =
   return useShopSessionApolloQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
+    // Only intended to run client-side, prefetch and pass to Apollo Cache if fetched on server.
     ssr: false,
     ...rest,
   })
 }
 
-type UseShopSessionParams = {
+type ShopSessionQueryHookOption = QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>
+type UseShopSessionParams = Omit<ShopSessionQueryHookOption, 'variables'> & {
   shopSessionId: string | null
-} & Omit<QueryHookOptions<ShopSessionQuery, Exact<{ shopSessionId: string }>>, 'variables'>
+}
 
 const useShopSessionService = () => {
   const apolloClient = useApolloClient()
