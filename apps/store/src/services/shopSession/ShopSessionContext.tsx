@@ -15,9 +15,14 @@ type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVari
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
-export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) => {
+export const ShopSessionProvider = ({
+  children,
+  initialShopSessionId = null,
+}: PropsWithChildren<{ initialShopSessionId: string | null }>) => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
+  // NOTE: initialShopSessionId is used on server side where we don't have access to shopSessionService deep in react tree
+  const shopSessionId = shopSessionService.shopSessionId() || initialShopSessionId
 
   const [createShopSession, mutationResult] = useCreateShopSession({
     onCompleted: ({ shopSessionCreate }) => {
@@ -25,10 +30,6 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
     },
   })
 
-  const shopSessionId = shopSessionService.shopSessionId()
-
-  console.log(typeof window, shopSessionId)
-  // FIXME: Does not run on server, find out why
   const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
@@ -45,7 +46,7 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
   })
 
   // const shopSessionCountryCode = result.data?.shopSession?.countryCode
-  // FIXME: Ensure we don't return incorrect country data
+  // FIXME: Ensure we don't return incorrect country data.  Perhaps remove session from apolloCache
   // shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
 
   // Has to be wrapped to prevent duplicate execution (Apollo)
