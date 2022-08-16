@@ -1,4 +1,18 @@
-import { graphqlSdk } from '@/services/graphql/sdk'
+import { ApolloClient } from '@apollo/client'
+import {
+  PriceIntentConfirmDocument,
+  PriceIntentConfirmMutation,
+  PriceIntentConfirmMutationVariables,
+  PriceIntentCreateDocument,
+  PriceIntentCreateMutation,
+  PriceIntentCreateMutationVariables,
+  PriceIntentDataUpdateDocument,
+  PriceIntentDataUpdateMutation,
+  PriceIntentDataUpdateMutationVariables,
+  PriceIntentDocument,
+  PriceIntentQuery,
+  PriceIntentQueryVariables,
+} from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import {
   PriceIntentCreateParams,
@@ -9,33 +23,43 @@ import {
 export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
+    private readonly apolloClient?: ApolloClient<unknown>,
     private readonly shopSession?: ShopSession,
   ) {}
 
   public async create({ productId }: PriceIntentCreateParams) {
     if (!this.shopSession) throw new Error('No shop session found')
+    if (!this.apolloClient) throw new Error('No Apollo Client found')
 
-    const response = await graphqlSdk.PriceIntentCreate({
-      shopSessionId: this.shopSession.id,
-      productId,
+    const result = await this.apolloClient.mutate<
+      PriceIntentCreateMutation,
+      PriceIntentCreateMutationVariables
+    >({
+      mutation: PriceIntentCreateDocument,
+      variables: {
+        shopSessionId: this.shopSession.id,
+        productId,
+      },
     })
 
-    if (!response.shopSession.priceIntentCreate) throw new Error('Could not create price intent')
+    const priceIntent = result.data?.shopSession.priceIntentCreate
+    if (!priceIntent) throw new Error('Could not create price intent')
 
-    this.persister.save(response.shopSession.priceIntentCreate.id)
+    this.persister.save(priceIntent.id)
 
-    return response.shopSession.priceIntentCreate
+    return priceIntent
   }
 
   private async get(priceIntentId: string) {
     if (!this.shopSession) throw new Error('No shop session found')
+    if (!this.apolloClient) throw new Error('No Apollo Client found')
 
-    const result = await graphqlSdk.PriceIntent({
-      shopSessionId: this.shopSession.id,
-      priceIntentId,
+    const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
+      query: PriceIntentDocument,
+      variables: { shopSessionId: this.shopSession.id, priceIntentId },
     })
 
-    return result?.shopSession.priceIntent ?? null
+    return result.data?.shopSession.priceIntent ?? null
   }
 
   public async fetch(productId: string) {
@@ -52,22 +76,35 @@ export class PriceIntentService {
 
   public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {
     if (!this.shopSession) throw new Error('No shop session found')
+    if (!this.apolloClient) throw new Error('No Apollo Client found')
 
-    const shopSessionId = this.shopSession.id
-    const response = await graphqlSdk.PriceIntentDataUpdate({ shopSessionId, priceIntentId, data })
+    const result = await this.apolloClient.mutate<
+      PriceIntentDataUpdateMutation,
+      PriceIntentDataUpdateMutationVariables
+    >({
+      mutation: PriceIntentDataUpdateDocument,
+      variables: { shopSessionId: this.shopSession.id, priceIntentId, data },
+    })
 
-    const priceIntent = response?.shopSession.priceIntent.dataUpdate.priceIntent
+    const priceIntent = result.data?.shopSession.priceIntent.dataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
     return priceIntent
   }
 
   public async confirm(priceIntentId: string) {
     if (!this.shopSession) throw new Error('No shop session found')
+    if (!this.apolloClient) throw new Error('No Apollo Client found')
 
     const shopSessionId = this.shopSession.id
-    const response = await graphqlSdk.PriceIntentConfirm({ shopSessionId, priceIntentId })
+    const result = await this.apolloClient.mutate<
+      PriceIntentConfirmMutation,
+      PriceIntentConfirmMutationVariables
+    >({
+      mutation: PriceIntentConfirmDocument,
+      variables: { shopSessionId, priceIntentId },
+    })
 
-    const priceIntent = response?.shopSession.priceIntent.confirm.priceIntent
+    const priceIntent = result.data?.shopSession.priceIntent.confirm.priceIntent
     if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }

@@ -19,7 +19,12 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const apolloClient = initializeApollo()
   const shopSession = await getShopSessionServerSide({ req, res, apolloClient, countryCode })
-  const priceIntentService = priceIntentServiceInitServerSide({ req, res, shopSession })
+  const priceIntentService = priceIntentServiceInitServerSide({
+    req,
+    res,
+    shopSession,
+    apolloClient,
+  })
   const priceIntent = await priceIntentService.fetch(productId)
 
   await priceIntentService.update({ priceIntentId: priceIntent.id, data })

@@ -1,3 +1,4 @@
+import { ApolloClient } from '@apollo/client'
 import { GetServerSidePropsContext } from 'next'
 import { FormSection, FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
@@ -6,6 +7,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type SetupPriceCalculatorFormParams = {
   shopSession: ShopSession
+  apolloClient: ApolloClient<unknown>
   productId: string
   request: GetServerSidePropsContext['req']
   response: GetServerSidePropsContext['res']
@@ -13,6 +15,7 @@ type SetupPriceCalculatorFormParams = {
 
 export const setupPriceCalculatorForm = async ({
   shopSession,
+  apolloClient,
   productId,
   request,
   response,
@@ -21,6 +24,7 @@ export const setupPriceCalculatorForm = async ({
     req: request,
     res: response,
     shopSession,
+    apolloClient,
   })
   const formTemplateService = new FormTemplateService()
 

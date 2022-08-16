@@ -40,6 +40,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
     const { template, priceIntent } = await setupPriceCalculatorForm({
       shopSession,
+      apolloClient,
       productId: story.content.productId,
       request: context.req,
       response: context.res,
