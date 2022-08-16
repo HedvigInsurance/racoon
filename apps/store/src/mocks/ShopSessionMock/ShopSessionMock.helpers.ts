@@ -4,7 +4,7 @@ import {
   CurrencyCode,
   CartFragmentFragment,
   ShopSessionQuery,
-} from '@/services/graphql/generated'
+} from '@/services/apollo/generated'
 import { db } from '../db'
 
 export const shopSessionFind = (sessionId: string) => {
