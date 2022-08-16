@@ -30,10 +30,12 @@ export class PriceIntentService {
   private async get(priceIntentId: string) {
     if (!this.shopSession) throw new Error('No shop session found')
 
-    const {
-      shopSession: { priceIntent },
-    } = await graphqlSdk.PriceIntent({ shopSessionId: this.shopSession.id, priceIntentId })
-    return priceIntent ?? null
+    const result = await graphqlSdk.PriceIntent({
+      shopSessionId: this.shopSession.id,
+      priceIntentId,
+    })
+
+    return result?.shopSession.priceIntent ?? null
   }
 
   public async fetch(productId: string) {
@@ -53,7 +55,8 @@ export class PriceIntentService {
 
     const shopSessionId = this.shopSession.id
     const response = await graphqlSdk.PriceIntentDataUpdate({ shopSessionId, priceIntentId, data })
-    const priceIntent = response.shopSession.priceIntent.dataUpdate.priceIntent
+
+    const priceIntent = response?.shopSession.priceIntent.dataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
     return priceIntent
   }
@@ -63,7 +66,8 @@ export class PriceIntentService {
 
     const shopSessionId = this.shopSession.id
     const response = await graphqlSdk.PriceIntentConfirm({ shopSessionId, priceIntentId })
-    const priceIntent = response.shopSession.priceIntent.confirm.priceIntent
+
+    const priceIntent = response?.shopSession.priceIntent.confirm.priceIntent
     if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }

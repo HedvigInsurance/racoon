@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async
     })
 
     const totalCost = shopSession.cart.lines
-      .map((line) => line.price.amount)
+      .map((line) => parseInt(line.price.amount, 10) || 0)
       .reduce((a, b) => a + b, 0)
 
     return {
@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async
         products: shopSession.cart.lines.map((line) => ({
           lineId: line.id,
           name: line.variant.title,
-          cost: line.price.amount,
+          cost: parseInt(line.price.amount, 10) || 0,
           startDate: line.startDate,
         })),
         cost: {
