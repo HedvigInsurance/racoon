@@ -1,4 +1,4 @@
-import { CountryCode } from '@/services/graphql/generated'
+import { CountryCode } from '@/services/apollo/generated'
 
 const VALID_VALUES = Object.values(CountryCode)
 

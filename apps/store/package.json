@@ -43,7 +43,6 @@
     "@babel/core": "7.18.10",
     "@graphql-codegen/cli": "2.11.3",
     "@graphql-codegen/typescript": "2.7.2",
-    "@graphql-codegen/typescript-generic-sdk": "2.5.0",
     "@graphql-codegen/typescript-operations": "2.5.2",
     "@graphql-codegen/typescript-react-apollo": "3.3.2",
     "@mswjs/data": "0.10.1",

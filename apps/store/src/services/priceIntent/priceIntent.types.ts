@@ -2,7 +2,7 @@ import type {
   PriceIntentCreateMutationVariables,
   PriceIntentDataUpdateMutationVariables,
   PriceIntentQuery,
-} from '@/services/graphql/generated'
+} from '@/services/apollo/generated'
 
 export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'>
 export type PriceIntentDataUpdateParams = Omit<

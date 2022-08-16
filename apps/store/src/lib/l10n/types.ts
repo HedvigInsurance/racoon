@@ -1,4 +1,4 @@
-export { CountryCode } from '@/services/graphql/generated'
+export { CountryCode } from '@/services/apollo/generated'
 
 /** An enum representing explicitly endorsed Locales supported by our system. */
 export enum Locale {
