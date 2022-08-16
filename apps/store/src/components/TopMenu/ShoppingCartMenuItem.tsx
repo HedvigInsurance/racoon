@@ -7,8 +7,6 @@ import { ShoppingBagIcon } from './ShoppingBagIcon'
 export const ShoppingCartMenuItem = () => {
   const { data } = useShopSession()
   const cartLineCount = data?.shopSession.cart.lines.length ?? 0
-  // DEBUG: Check for duplicate creation
-  useShopSession()
 
   return (
     <Wrapper>

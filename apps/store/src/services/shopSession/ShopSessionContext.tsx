@@ -15,14 +15,10 @@ type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVari
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
-export const ShopSessionProvider = ({
-  children,
-  initialShopSessionId = null,
-}: PropsWithChildren<{ initialShopSessionId: string | null }>) => {
+export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
-  // NOTE: initialShopSessionId is used on server side where we don't have access to shopSessionService deep in react tree
-  const shopSessionId = shopSessionService.shopSessionId() || initialShopSessionId
+  const shopSessionId = shopSessionService.shopSessionId()
 
   const [createShopSession, mutationResult] = useCreateShopSession({
     onCompleted: ({ shopSessionCreate }) => {
@@ -33,7 +29,6 @@ export const ShopSessionProvider = ({
   const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
-      // FIXME: Check for duplicate client fetch if this runs on the server
       if (shopSession.countryCode !== countryCode) {
         console.warn('ShopSession CountryCode does not match')
         createShopSession()
