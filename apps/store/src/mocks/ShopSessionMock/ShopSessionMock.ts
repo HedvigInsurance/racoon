@@ -31,7 +31,13 @@ export const mockShopSessionHandlers = [
   api.query(SHOP_SESSION, (req, res, ctx) => {
     const shopSession = shopSessionFind(req.variables.shopSessionId)
 
-    if (shopSession === null) return res(ctx.status(404))
+    if (shopSession === null)
+      return res(
+        ctx.data({
+          data: null,
+          errors: [{ message: 'Subgraph errors redacted', locations: [], path: null }],
+        }),
+      )
 
     return res(ctx.data({ shopSession: dbShopSessionToAPI(shopSession) }))
   }),
