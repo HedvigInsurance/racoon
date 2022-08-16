@@ -17,7 +17,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const apolloClient = initializeApollo()
   const shopSession = await getShopSessionServerSide({ req, res, apolloClient, countryCode })
-  const cartService = cartServiceInit({ shopSession })
+  const cartService = cartServiceInit({ shopSession, apolloClient })
 
   await cartService.lineRemove(lineId)
 
