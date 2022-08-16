@@ -50,6 +50,10 @@
       "outputs": ["coverage/**"],
       "dependsOn": ["^build"]
     },
+    "onboarding#lint": {
+      "outputs": [],
+      "dependsOn": ["codegen"]
+    },
     "test": {
       "outputs": ["coverage/**"]
     },
