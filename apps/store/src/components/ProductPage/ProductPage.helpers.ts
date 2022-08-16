@@ -56,7 +56,7 @@ const getPriceCalculatorBlockContext = ({
     product: {
       slug: productStory.slug,
       name: productStory.content.name,
-      price: lineItem?.price.amount ?? null,
+      price: parseInt(lineItem?.price.amount, 10) || null,
       currencyCode: shopSession.currencyCode,
       gradient: productGradient,
     },
