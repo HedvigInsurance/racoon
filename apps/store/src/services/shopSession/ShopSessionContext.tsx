@@ -1,101 +1,80 @@
-import { QueryHookOptions, useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useEffect, useRef } from 'react'
+import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
+import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
   Exact,
   ShopSessionCreateMutation,
   ShopSessionQuery,
+  ShopSessionQueryVariables,
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
-import { ShopSession } from './ShopSession.types'
 
-type ShopSessionContextValue = {
-  shopSession: ShopSession | null
-  loading: boolean
-  creating?: boolean
-}
+type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
 
-export const ShopSessionContext = createContext<ShopSessionContextValue>({
-  shopSession: null,
-  loading: true,
-})
+export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
 export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
-  const resultRef = useRef<ShopSessionContextValue>()
 
-  const createShopSession = useCreateShopSession({
+  const [createShopSession, mutationResult] = useCreateShopSession({
     onCompleted: ({ shopSessionCreate }) => {
       shopSessionService.save(shopSessionCreate)
     },
   })
 
-  // FIXME: Duplicate state, not neede
-  // const [shopSessionId, setShopSessionId] = useState(() => {
-  //   const shopSessionId = shopSessionService.shopSessionId()
-  //   console.log('.', typeof resultRef.current)
-  //   if (!shopSessionId && typeof window !== 'undefined' && !resultRef.current) {
-  //     console.log('isc', typeof resultRef.current)
-  //     createShopSession()
-  //   }
-  //   return shopSessionId
-  // })
   const shopSessionId = shopSessionService.shopSessionId()
 
-  const result = useShopSessionQuery({
+  console.log(typeof window, shopSessionId)
+  // FIXME: Does not run on server, find out why
+  const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
+      // FIXME: Check for duplicate client fetch if this runs on the server
       if (shopSession.countryCode !== countryCode) {
         console.warn('ShopSession CountryCode does not match')
         createShopSession()
       }
     },
     onError: (error) => {
-      // FIXME: Check with Robin
-      // if ((error.networkError as ServerError)?.statusCode === 404) {
-      //   createShopSession()
-      // }
       console.warn('ShopSession not found: ', shopSessionId, error)
       createShopSession()
     },
   })
 
-  const shopSessionCountryCode = result.data?.shopSession?.countryCode
-  resultRef.current = Object.assign(resultRef.current ?? {}, {
-    shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
-    loading: result.loading,
-    creating: false,
-  })
+  // const shopSessionCountryCode = result.data?.shopSession?.countryCode
+  // FIXME: Ensure we don't return incorrect country data
+  // shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
 
-  // Has to be wrapped to prevent duplicate execution
+  // Has to be wrapped to prevent duplicate execution (Apollo)
   useEffect(() => {
-    // FIXME: isBrowser()
-    if (typeof window !== 'undefined' && !shopSessionId && !resultRef.current?.creating) {
+    // TODO: isBrowser() and ensure code splitting does not break
+    if (typeof window !== 'undefined' && !shopSessionId && !mutationResult.called) {
       createShopSession()
     }
-    // Only run on init, ignore dependencies
-    // eslint-disable-next-line
-  }, [])
+  }, [createShopSession, mutationResult.called, shopSessionId])
 
-  return (
-    <ShopSessionContext.Provider value={resultRef.current}>{children}</ShopSessionContext.Provider>
-  )
+  return <ShopSessionContext.Provider value={queryResult}>{children}</ShopSessionContext.Provider>
 }
 
 export const useShopSession = () => {
-  return useContext(ShopSessionContext)
+  const queryResult = useContext(ShopSessionContext)
+  if (!queryResult) {
+    throw new Error(
+      'useShopSession called from outside ShopSessionContextProvider, no value in context',
+    )
+  }
+  return queryResult
 }
 
 const useCreateShopSession = ({ onCompleted }: ShopSessionOperationParams) => {
   const { countryCode } = useCurrentLocale()
-  const [createShopSession] = useShopSessionCreateMutation({
+  return useShopSessionCreateMutation({
     variables: { countryCode },
     onCompleted,
   })
-  return createShopSession
 }
 
 type ShopSessionOperationParams = {

@@ -35,8 +35,8 @@ type Props = ProductItemProps & {
 }
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
-  const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.lines.length ?? 1
+  const { data } = useShopSession()
+  const cartLineCount = data?.shopSession?.cart.lines.length ?? 1
 
   return (
     <CartNotification.Content

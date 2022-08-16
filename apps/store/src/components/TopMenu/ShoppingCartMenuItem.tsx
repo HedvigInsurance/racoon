@@ -5,8 +5,8 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
-  const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.lines.length ?? 0
+  const { data } = useShopSession()
+  const cartLineCount = data?.shopSession.cart.lines.length ?? 0
   // DEBUG: Check for duplicate creation
   useShopSession()
 
