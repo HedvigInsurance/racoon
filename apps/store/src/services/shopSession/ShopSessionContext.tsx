@@ -42,10 +42,6 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
     },
   })
 
-  // const shopSessionCountryCode = result.data?.shopSession?.countryCode
-  // FIXME: Ensure we don't return incorrect country data.  Perhaps remove session from apolloCache
-  // shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
-
   // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
   useEffect(() => {
     // TODO: isBrowser() and ensure code splitting does not break
