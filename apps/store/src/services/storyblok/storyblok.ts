@@ -23,12 +23,13 @@ export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
 }
 
-export type StoryblokPageProps = {
-  story: StoryData
-}
-
 export type StoryblokQueryParams = {
   slug: string[]
+}
+
+export type StoryblokPageProps = {
+  story: StoryData
+  globalStory: StoryData | boolean
 }
 
 export type StoryblokImage = {
@@ -58,6 +59,8 @@ export type ProductStory = StoryData & {
     body: Array<SbBlokData>
   }
 }
+
+type GlobalStory = StoryData
 
 export enum StoryblokBlockName {
   Button = 'button',
@@ -127,6 +130,15 @@ export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
   const { data } = await storyblokApi.get('cdn/links/')
   return data.links
+}
+
+export const getGlobalStory = async (preview = false) => {
+  try {
+    const story = await getStoryBySlug('global', preview)
+    return story as GlobalStory
+  } catch {
+    return null
+  }
 }
 
 export const getProductStory = async (slug: string, preview = false) => {
