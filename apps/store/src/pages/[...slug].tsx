@@ -1,7 +1,7 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { Page } from '@/components/Page/Page'
 import {
   getAllLinks,
   getStoryBySlug,
@@ -15,14 +15,13 @@ type Path = {
   }
 }
 
-const Page: NextPageWithLayout<StoryblokPageProps> = ({ story: initialStory }) => {
-  const story = useStoryblokState(initialStory)
+const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
   return (
     <>
       <Head>
-        <title>{story.name}</title>
+        <title>{props.story.content.name}</title>
       </Head>
-      <StoryblokComponent blok={story.content} />
+      <Page {...props} />
     </>
   )
 }
@@ -63,6 +62,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-Page.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+NextPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
-export default Page
+export default NextPage
