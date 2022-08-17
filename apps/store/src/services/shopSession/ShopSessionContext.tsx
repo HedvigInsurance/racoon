@@ -1,43 +1,31 @@
-import { ApolloError, useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react'
+import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
+import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import {
-  ShopSessionCreateMutation,
   ShopSessionQuery,
+  ShopSessionQueryVariables,
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
-import { ShopSession } from './ShopSession.types'
 
-type ShopSessionContextValue = {
-  shopSession: ShopSession | null
-  loading: boolean
-}
+type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
 
-export const ShopSessionContext = createContext<ShopSessionContextValue>({
-  shopSession: null,
-  loading: true,
-})
+export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
 export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
+  const shopSessionId = shopSessionService.shopSessionId()
 
-  const createShopSession = useCreateShopSession({
+  const [createShopSession, mutationResult] = useShopSessionCreateMutation({
+    variables: { countryCode },
     onCompleted: ({ shopSessionCreate }) => {
-      setShopSessionId(shopSessionCreate.id)
       shopSessionService.save(shopSessionCreate)
     },
   })
 
-  const [shopSessionId, setShopSessionId] = useState(() => {
-    const shopSessionId = shopSessionService.shopSessionId()
-    if (!shopSessionId && typeof window !== 'undefined') createShopSession()
-    return shopSessionId
-  })
-
-  const result = useShopSessionQuery({
+  const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
       if (shopSession.countryCode !== countryCode) {
@@ -46,54 +34,49 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
       }
     },
     onError: (error) => {
-      console.warn('ShopSession not found: ', shopSessionId)
-      console.warn(error)
+      console.warn('ShopSession not found: ', shopSessionId, error)
       createShopSession()
     },
   })
 
-  const value = useMemo<ShopSessionContextValue>(() => {
-    const shopSessionCountryCode = result.data?.shopSession?.countryCode
-    return {
-      shopSession: shopSessionCountryCode !== countryCode ? null : result.data?.shopSession ?? null,
-      loading: result.loading,
+  // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
+  useEffect(() => {
+    // TODO: isBrowser() and ensure code splitting does not break
+    if (typeof window !== 'undefined' && !shopSessionId && !mutationResult.called) {
+      createShopSession()
     }
-  }, [result, countryCode])
+  }, [createShopSession, mutationResult.called, shopSessionId])
 
-  return <ShopSessionContext.Provider value={value}>{children}</ShopSessionContext.Provider>
+  return <ShopSessionContext.Provider value={queryResult}>{children}</ShopSessionContext.Provider>
 }
 
 export const useShopSession = () => {
-  return useContext(ShopSessionContext)
+  const queryResult = useContext(ShopSessionContext)
+  if (!queryResult) {
+    throw new Error(
+      'useShopSession called from outside ShopSessionContextProvider, no value in context',
+    )
+  }
+  const { data, ...other } = queryResult
+  return {
+    ...other,
+    shopSession: data?.shopSession,
+  }
 }
 
-const useCreateShopSession = ({ onCompleted }: ShopSessionOperationParams) => {
-  const { countryCode } = useCurrentLocale()
-  const [createShopSession] = useShopSessionCreateMutation({
-    variables: { countryCode },
-    onCompleted,
-  })
-  return createShopSession
-}
-
-type ShopSessionOperationParams = {
-  onCompleted: (data: ShopSessionCreateMutation) => void
-}
-
-const useShopSessionQuery = ({ shopSessionId, onCompleted, onError }: UseShopSessionParams) => {
+const useShopSessionQuery = ({ shopSessionId, ...rest }: UseShopSessionParams) => {
   return useShopSessionApolloQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
-    onCompleted,
-    onError,
+    // Only intended to run client-side, prefetch and pass to Apollo Cache if fetched on server.
     ssr: false,
+    ...rest,
   })
 }
 
-type UseShopSessionParams = {
+type ShopSessionQueryHookOption = QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>
+type UseShopSessionParams = Omit<ShopSessionQueryHookOption, 'variables'> & {
   shopSessionId: string | null
-  onCompleted: (data: ShopSessionQuery) => void
-  onError: (error: ApolloError) => void
 }
 
 const useShopSessionService = () => {
