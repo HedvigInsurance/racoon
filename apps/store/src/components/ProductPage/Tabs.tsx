@@ -6,24 +6,31 @@ export const Tabs = styled(RadixTabs.Root)({
   flexDirection: 'column',
 })
 
-export const TabsList = styled(RadixTabs.TabsList)({
-  flexShrink: 0,
+export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
   display: 'flex',
-  borderBottom: '1px solid #e3e3e3',
-})
+  borderBottom: `1px solid ${theme.colors.gray500}`,
+}))
 
-export const TabsTrigger = styled(RadixTabs.Trigger)({
-  flex: 1,
-  padding: '1rem',
+export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
+  flexGrow: 1,
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  textAlign: 'center',
+  paddingInline: theme.space[2],
+  paddingBlock: theme.space[4],
   cursor: 'pointer',
-  '&:hover': { color: 'mediumpurple' },
+
+  '&:hover': { color: theme.colors.purple900 },
+
   '&[data-state=active]': {
-    color: 'mediumpurple',
-    boxShadow: 'inset 0 -1px 0 0 mediumpurple, 0 1px 0 0 currentColor',
+    color: theme.colors.purple900,
+    boxShadow: `inset 0 -1px 0 0 ${theme.colors.purple900}, 0 1px 0 0 currentColor`,
   },
+
   '&:focus-visible': {
-    boxShadow: '0 0 0 2px black',
+    boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
   },
-})
+}))
 
 export const TabsContent = styled(RadixTabs.Content)({})
