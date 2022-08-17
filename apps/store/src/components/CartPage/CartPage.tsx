@@ -22,7 +22,7 @@ export const CartPage = () => {
       <Footer>
         <Space y={1}>
           <PriceBreakdown currency="SEK" products={products} cost={cost} />
-          <Button fullWidth={true}>
+          <Button fullWidth>
             <Link href={PageLink.cartReview()}>Check Out</Link>
           </Button>
         </Space>
