@@ -4,7 +4,7 @@ import {
   PriceIntentCreateDocument,
   PriceIntentDataUpdateDocument,
   PriceIntentConfirmDocument,
-} from '@/services/graphql/generated'
+} from '@/services/apollo/generated'
 
 const PRICE_INTENT = getOperationName(PriceIntentDocument)
 if (PRICE_INTENT === null) throw new Error('Can not find PriceIntent operation name')

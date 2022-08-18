@@ -4,7 +4,7 @@ import {
   CurrencyCode,
   CartFragmentFragment,
   ShopSessionQuery,
-} from '@/services/graphql/generated'
+} from '@/services/apollo/generated'
 import { db } from '../db'
 
 export const shopSessionFind = (sessionId: string) => {
@@ -98,7 +98,7 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
       startDate: line.startDate?.toISOString().substring(0, 10) ?? null,
       price: {
         __typename: 'Money',
-        amount: line.priceAmount,
+        amount: line.priceAmount.toString(),
         currencyCode: line.currencyCode as CurrencyCode,
       },
       variant: {

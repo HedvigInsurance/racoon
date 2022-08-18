@@ -7,6 +7,7 @@ import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { ImageBlock } from '@/blocks/ImageBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
@@ -22,12 +23,13 @@ export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
 }
 
-export type StoryblokPageProps = {
-  story: StoryData
-}
-
 export type StoryblokQueryParams = {
   slug: string[]
+}
+
+export type StoryblokPageProps = {
+  story: StoryData
+  globalStory: StoryData | boolean
 }
 
 export type StoryblokImage = {
@@ -58,6 +60,8 @@ export type ProductStory = StoryData & {
   }
 }
 
+type GlobalStory = StoryData
+
 export enum StoryblokBlockName {
   Button = 'button',
   Heading = 'heading',
@@ -80,6 +84,7 @@ export enum StoryblokBlockName {
   Content = 'content',
   CheckList = 'checkList',
   Text = 'text',
+  Image = 'image',
 }
 
 export const initStoryblok = () => {
@@ -103,6 +108,7 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Content]: ContentBlock,
     [StoryblokBlockName.CheckList]: CheckListBlock,
     [StoryblokBlockName.Text]: TextBlock,
+    [StoryblokBlockName.Image]: ImageBlock,
   }
 
   storyblokInit({
@@ -124,6 +130,15 @@ export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
   const { data } = await storyblokApi.get('cdn/links/')
   return data.links
+}
+
+export const getGlobalStory = async (preview = false) => {
+  try {
+    const story = await getStoryBySlug('global', preview)
+    return story as GlobalStory
+  } catch {
+    return null
+  }
 }
 
 export const getProductStory = async (slug: string, preview = false) => {

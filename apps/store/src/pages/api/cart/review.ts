@@ -8,7 +8,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const apolloClient = initializeApollo()
     const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
-    const cartService = cartServiceInit({ shopSession })
+    const cartService = cartServiceInit({ shopSession, apolloClient })
 
     await Promise.all(
       Object.entries(req.body)

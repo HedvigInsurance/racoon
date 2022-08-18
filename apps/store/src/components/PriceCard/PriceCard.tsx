@@ -4,6 +4,7 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TickIcon } from '@/components/TickIcon/TickIcon'
+import { LoadingDots } from '../LoadingDots/LoadingDots'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
 
@@ -15,6 +16,7 @@ export type PriceCardProps = {
   currencyCode: string
   onClick: () => void
   gradient: Gradient
+  loading?: boolean
 }
 
 export const PriceCard = ({
@@ -23,6 +25,7 @@ export const PriceCard = ({
   cost,
   currencyCode,
   onClick,
+  loading = false,
 }: PriceCardProps) => {
   return (
     <Wrapper y={1}>
@@ -32,9 +35,15 @@ export const PriceCard = ({
         <Text size="m">{name}</Text>
       </CenteredText>
 
-      <PreviewText aria-disabled={cost === undefined}>
-        {currencyCode} {cost ?? '—'} /mth.
-      </PreviewText>
+      <PricePreviewContainer>
+        {!loading ? (
+          <PreviewText aria-disabled={cost === undefined}>
+            {currencyCode} {cost ?? '—'} /mth.
+          </PreviewText>
+        ) : (
+          <LoadingDots />
+        )}
+      </PricePreviewContainer>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
         <CustomButton fullWidth disabled={cost === undefined} onClick={onClick}>
@@ -52,6 +61,12 @@ export const PriceCard = ({
     </Wrapper>
   )
 }
+
+const PricePreviewContainer = styled.div(({ theme }) => ({
+  display: 'grid',
+  justifyContent: 'center',
+  minHeight: theme.space[6],
+}))
 
 const Wrapper = styled(Space)(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
