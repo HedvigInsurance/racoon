@@ -14,20 +14,20 @@ export const CartPage = () => {
 
   return (
     <Wrapper>
-    <Space y={3}>
-      <Heading as="h1" variant="standard.24">
-        Cart (2)
-      </Heading>
-      <CartList products={products} />
-      <Footer>
-        <Space y={1}>
-          <PriceBreakdown currency="SEK" products={products} cost={cost} />
-          <Button fullWidth>
-            <Link href={PageLink.cartReview()}>Check Out</Link>
-          </Button>
-        </Space>
-      </Footer>
-    </Space>
+      <Space y={3}>
+        <StyledHeading as="h1" variant="standard.24">
+          Cart (2)
+        </StyledHeading>
+        <CartList products={products} />
+        <Footer>
+          <Space y={1.5}>
+            <PriceBreakdown currency="SEK" products={products} cost={cost} />
+            <Button fullWidth>
+              <Link href={PageLink.cartReview()}>Check Out</Link>
+            </Button>
+          </Space>
+        </Footer>
+      </Space>
     </Wrapper>
 
   )
@@ -36,10 +36,11 @@ export const CartPage = () => {
 const Wrapper = styled.div(({ theme }) => ({
   marginTop: theme.space[7],
   height: '100vh',
-  h1:{
-    textAlign: 'center'
-  }
 }))
+
+const StyledHeading = styled(Heading)({
+  textAlign: 'center'
+})
 
 const Footer = styled.footer(({ theme }) => ({
   position: 'absolute',
@@ -50,9 +51,4 @@ const Footer = styled.footer(({ theme }) => ({
   a: {
     textDecoration: 'none',
   },
-  button: {
-    '&:first-child':{
-      marginTop: theme.space[5]
-    }
-  }
 }))

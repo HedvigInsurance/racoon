@@ -14,30 +14,30 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
   return (
     <Collapsible>
       <CollapsibleContent>
-          <Space y={0.5}>
-            <DataRow>
-              <Text size="m">Subtotal</Text>
-              <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+        <Space y={0.5}>
+          <DataRow>
+            <Text size="m">Subtotal</Text>
+            <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+          </DataRow>
+          {products.map((product) => (
+            <DataRow key={product.name}>
+              <Text size="m">{product.name}</Text>
+              <Price>{currencyFormatter.format(product.cost)}</Price>
             </DataRow>
-            {products.map((product) => (
-              <DataRow key={product.name}>
-                <Text size="m">{product.name}</Text>
-                <Price>{currencyFormatter.format(product.cost)}</Price>
+          ))}
+        </Space>
+        {campaigns ? (
+          <Space y={0.5}>
+            <Text size="m">Discount</Text>
+            {campaigns.map((campaign) => (
+              <DataRow key={campaign.name}>
+                <Text size="m">{campaign.name}</Text>
+                <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
               </DataRow>
             ))}
           </Space>
-          {campaigns ? (
-            <Space y={0.5}>
-              <Text size="m">Discount</Text>
-              {campaigns.map((campaign) => (
-                <DataRow key={campaign.name}>
-                  <Text size="m">{campaign.name}</Text>
-                  <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
-                </DataRow>
-              ))}
-            </Space>
-          ) : null}
-          <CollapsibleDivider />
+        ) : null}
+        <CollapsibleDivider />
       </CollapsibleContent>
       <CollapsibleHeader>
         <Text size="l">Total</Text>
@@ -106,6 +106,6 @@ const CollapsibleDivider = styled.div(({ theme }) => ({
 }))
 
 const Price = styled.p(({ theme }) => ({
-  fontSize: '0.875rem',
+  fontSize: theme.fontSizes[1],
   color: theme.colors.gray600
 }))
