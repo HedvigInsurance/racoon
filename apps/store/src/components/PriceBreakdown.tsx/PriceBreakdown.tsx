@@ -10,7 +10,6 @@ type Props = CheckoutPaymentPageProps
 
 export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) => {
   const currencyFormatter = useCurrencyFormatter(currency)
-
   return (
     <Collapsible>
       <CollapsibleContent>
@@ -23,7 +22,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             {products.map((product) => (
               <DataRow key={product.name}>
                 <Text size="m">{product.name}</Text>
-                <Text size="m">{currencyFormatter.format(product.cost)}</Text>
+                <Text size="m">{currencyFormatter.format(parseInt(product.cost))}</Text>
               </DataRow>
             ))}
           </Space>

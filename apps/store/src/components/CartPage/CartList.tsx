@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { CartCard } from '@/components/CartCard/CartCard'
-import { CartPageProps, ProductData } from '../CartPage/CartPageProps.types'
+import { CartPageProps, ProductData } from './CartPageProps.types'
 
 const CartUl = styled.ul(({ theme }) => ({
   paddingLeft: '0',
@@ -14,7 +14,7 @@ const CartUl = styled.ul(({ theme }) => ({
  * It can optionally filter by a CmsProduct name to only show relevant products.
  */
 
-type Props = CartPageProps
+type Props = Pick<CartPageProps, 'products'>
 export const CartList = ({ products }: Props) => {
   return (
     <CartUl>
