@@ -73,6 +73,8 @@ export enum StoryblokBlockName {
   Heading = 'heading',
   Hero = 'hero',
   Image = 'image',
+  NavItemBlock = 'nav_item', // Used within TopMenu
+  NestedNavContainerBlock = 'nested_nav_container', // Used within TopMenu
   Page = 'page',
   PriceCalculator = 'priceCalculator',
   Product = 'product',
@@ -84,11 +86,8 @@ export enum StoryblokBlockName {
   Tab = 'tab',
   Tabs = 'tabs',
   Text = 'text',
-  TopPickCard = 'topPickCard',
-  ////
   TopMenu = 'top_menu',
-  NestedNavContainerBlock = 'nested_nav_container',
-  NavItemBlock = 'nav_item',
+  TopPickCard = 'topPickCard',
 }
 
 export const initStoryblok = () => {
@@ -102,6 +101,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Heading]: HeadingBlock,
     [StoryblokBlockName.Hero]: HeroBlock,
     [StoryblokBlockName.Image]: ImageBlock,
+    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within TopMenu
+    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within TopMenu
     [StoryblokBlockName.Page]: PageBlock,
     [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
     [StoryblokBlockName.Product]: PageBlock,
@@ -112,10 +113,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
     [StoryblokBlockName.Text]: TextBlock,
-    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
     [StoryblokBlockName.TopMenu]: TopMenuBlock,
-    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within TopMenu
-    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within TopMenu
+    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
   }
 
   storyblokInit({
