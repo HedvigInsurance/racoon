@@ -1,44 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PageLink } from '@/lib/PageLink'
-import { getFormData } from '@/services/checkout/Checkout.helpers'
+import { initializeApollo } from '@/services/apollo/client'
 import { CheckoutService } from '@/services/checkout/CheckoutService'
-import { CookiePersister } from '@/services/checkout/CookiePersister'
-import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const formData = await getFormData(req)
-
-  const checkoutService = new CheckoutService(new CookiePersister(req, res))
-  const checkout = await checkoutService.checkout()
-
-  if (checkout === null) {
-    return res.status(500).json({ error: 'Unable to find checkout' })
-  }
+  const apolloClient = initializeApollo()
+  const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
+  const checkoutService = new CheckoutService(shopSession, apolloClient)
 
   try {
-    const postPersonCheckout = await checkoutService.personCreate({
-      checkout,
-      person: {
-        personalNumber: getOrThrowFormValue(formData, 'personalNumber'),
-        firstName: getOrThrowFormValue(formData, 'firstName'),
-        lastName: getOrThrowFormValue(formData, 'lastName'),
-        email: getOrThrowFormValue(formData, 'email'),
-      },
-    })
-
-    if (postPersonCheckout.type === 'CONNECT_PAYMENT') {
-      return res.redirect(302, PageLink.checkoutPaymentAdyen())
-    } else {
-      return res
-        .status(500)
-        .json({ error: `Unexpected checkout state: ${postPersonCheckout.type}` })
-    }
+    await checkoutService.personCreate()
+    return res.redirect(302, PageLink.checkoutPaymentAdyen())
   } catch (error) {
     return res.status(500).json({ form: 'Unable to update personal details', error })
   }

@@ -21870,7 +21870,6 @@ __metadata:
     dd-trace: 2.10.0
     eslint: 8.21.0
     eslint-plugin-cypress: 2.12.1
-    formidable: ^2.0.1
     framer-motion: 6.5.1
     graphql: 16.5.0
     graphql-sse: 1.3.0
