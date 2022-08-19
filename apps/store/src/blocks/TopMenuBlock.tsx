@@ -11,20 +11,7 @@ import { ShoppingCartMenuItem } from '../components/TopMenu/ShoppingCartMenuItem
 
 const MENU_BAR_HEIGHT = '3.75rem'
 
-type ConfigBlokProps = SbBaseBlockProps<{
-  top_menu: SbBlokData[]
-}>
-export const Config = ({ blok }: ConfigBlokProps) => {
-  return (
-    <div {...storyblokEditable(blok)}>
-      {blok.top_menu.map((nestedBlok) => (
-        <StoryblokComponent className="" blok={nestedBlok} key={nestedBlok._uid} />
-      ))}
-    </div>
-  )
-}
-
-type NextedNavContainerBlokProps = SbBaseBlockProps<{
+type NestedNavContainerBlokProps = SbBaseBlockProps<{
   name: string
   nav_item: SbBlokData[]
 }> & {
@@ -32,13 +19,8 @@ type NextedNavContainerBlokProps = SbBaseBlockProps<{
   closeDialog: () => void
 }
 
-export const NestedNavContainerBlok = ({
-  activeItem,
-  closeDialog,
-  blok,
-}: NextedNavContainerBlokProps) => {
-  console.log('nested nav container 🍒', blok, activeItem)
-
+export const NestedNavContainerBlock = ({ blok, ...rest }: NestedNavContainerBlokProps) => {
+  const { activeItem } = rest
   return (
     <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name}>
       <NavigationTrigger>
@@ -50,15 +32,11 @@ export const NestedNavContainerBlok = ({
         )}
       </NavigationTrigger>
       <NavigationMenuPrimitive.Content>
-        <NavigationMenuPrimitive.Sub defaultValue="browseAll">
+        <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>
             {blok.nav_item &&
               blok.nav_item.map((nestedBlok) => (
-                <StoryblokComponent
-                  onSelect={closeDialog}
-                  blok={nestedBlok}
-                  key={nestedBlok._uid}
-                />
+                <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} {...rest} />
               ))}
           </NavigationSecondaryList>
         </NavigationMenuPrimitive.Sub>
@@ -67,42 +45,27 @@ export const NestedNavContainerBlok = ({
   )
 }
 
-type NavItemBlokProps = SbBaseBlockProps<{
+type NavItemBlockProps = SbBaseBlockProps<{
   name: string
+  link?: string
 }> & {
   closeDialog: () => void
 }
 
-export const NavItemBlok = ({ blok, closeDialog }: NavItemBlokProps) => {
-  console.log('NAV-ITEM', { blok, CLOSE: closeDialog })
+export const NavItemBlock = ({ blok, ...rest }: NavItemBlockProps) => {
+  const { closeDialog } = rest
+
   return (
     <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name}>
-      <NavigationLink href="#" onSelect={() => closeDialog()}>
+      <NavigationLink href="#" onSelect={closeDialog}>
         {blok.name}
       </NavigationLink>
     </NavigationMenuPrimitive.Item>
   )
 }
 
-type NavMenuContainerBlokProps = SbBaseBlockProps<{
-  nav_item: SbBlokData[]
-  rest: any
-}>
-
-export const NavMenuContainerBlok = ({ blok, ...rest }: NavMenuContainerBlokProps) => {
-  return (
-    <div {...storyblokEditable(blok)}>
-      {blok.nav_item.map((nestedBlok) => (
-        <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} {...rest} />
-      ))}
-    </div>
-  )
-}
-
 type TopMenuBlockProps = SbBaseBlockProps<{
-  nav_items: SbBlokData[]
   nav_menu_container: SbBlokData[]
-  nested_nav_item: SbBlokData[]
 }>
 export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
   const [activeItem, setActiveItem] = useState('')
@@ -113,10 +76,8 @@ export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
     setActiveItem('')
   }, [])
 
-  // console.log('🇸🇪🇸🇪🇸🇪 TOPMENU!', blok)
-
   return (
-    <Wrapper style={{ marginTop: '4rem' }}>
+    <Wrapper>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
         <DialogPrimitive.Trigger asChild>
           <ToggleMenu>
@@ -127,19 +88,16 @@ export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
         <DialogContent>
           <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
             <NavigationPrimaryList>
-              {blok.nav_menu_container.map((nestedBlok) => (
-                <StoryblokComponent blok={nestedBlok} key={blok._uid} closeDialog={closeDialog} />
-              ))}
-
-              {blok.nested_nav_item &&
-                blok.nested_nav_item.map((nestedBlok: SbBlokData) => {
+              {blok?.nav_menu_container &&
+                blok.nav_menu_container.map((nestedBlok: SbBlokData) => {
                   return (
-                    <StoryblokComponent
-                      activeItem={null}
-                      closeDialog={closeDialog}
-                      blok={nestedBlok}
-                      key={blok._uid}
-                    />
+                    <div key={blok._uid} {...storyblokEditable(blok)}>
+                      <StoryblokComponent
+                        activeItem={activeItem}
+                        closeDialog={closeDialog}
+                        blok={nestedBlok}
+                      />
+                    </div>
                   )
                 })}
             </NavigationPrimaryList>

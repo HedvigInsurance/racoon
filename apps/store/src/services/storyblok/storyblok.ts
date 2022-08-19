@@ -17,13 +17,7 @@ import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
-import {
-  NavItemBlok,
-  NavMenuContainerBlok,
-  Config,
-  TopMenuBlock,
-  NestedNavContainerBlok,
-} from '@/blocks/TopMenuBlock'
+import { NavItemBlock, NestedNavContainerBlock, TopMenuBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -92,15 +86,9 @@ export enum StoryblokBlockName {
   Text = 'text',
   TopPickCard = 'topPickCard',
   ////
-  // MenuLink = 'menu_link',
-  // HeaderMenu = 'header_menu',
-  // LinkItem = 'link_item',
-  ////
-  Config = 'config',
   TopMenu = 'top_menu',
-  NavMenuContainerBlok = 'nav_menu_container',
-  NavItemBlok = 'nav_item',
-  NestedNavContainerBlok = 'nested_nav_container',
+  NestedNavContainerBlock = 'nested_nav_container',
+  NavItemBlock = 'nav_item',
 }
 
 export const initStoryblok = () => {
@@ -125,12 +113,9 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Tabs]: TabsBlock,
     [StoryblokBlockName.Text]: TextBlock,
     [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
-    ////
-    [StoryblokBlockName.Config]: Config,
-    [StoryblokBlockName.NavMenuContainerBlok]: NavMenuContainerBlok,
     [StoryblokBlockName.TopMenu]: TopMenuBlock,
-    [StoryblokBlockName.NavItemBlok]: NavItemBlok,
-    [StoryblokBlockName.NestedNavContainerBlok]: NestedNavContainerBlok,
+    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within TopMenu
+    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within TopMenu
   }
 
   storyblokInit({
