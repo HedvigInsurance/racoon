@@ -11,7 +11,7 @@ import { ShoppingCartMenuItem } from '../components/TopMenu/ShoppingCartMenuItem
 
 const MENU_BAR_HEIGHT = '3.75rem'
 
-type NestedNavContainerBlokProps = SbBaseBlockProps<{
+type NestedNavContainerBlockProps = SbBaseBlockProps<{
   name: string
   nav_item: SbBlokData[]
 }> & {
@@ -19,7 +19,7 @@ type NestedNavContainerBlokProps = SbBaseBlockProps<{
   closeDialog: () => void
 }
 
-export const NestedNavContainerBlock = ({ blok, ...rest }: NestedNavContainerBlokProps) => {
+export const NestedNavContainerBlock = ({ blok, ...rest }: NestedNavContainerBlockProps) => {
   const { activeItem } = rest
   return (
     <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name}>
@@ -84,7 +84,6 @@ export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
             <MenuIcon />
           </ToggleMenu>
         </DialogPrimitive.Trigger>
-
         <DialogContent>
           <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
             <NavigationPrimaryList>
@@ -102,7 +101,6 @@ export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
                 })}
             </NavigationPrimaryList>
           </Navigation>
-
           <DialogPrimitive.DialogClose asChild>
             <IconButton>
               <CrossIcon />
