@@ -5,7 +5,7 @@ import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/re
 import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { MenuIcon } from '../components/TopMenu/MenuIcon'
 import { ShoppingCartMenuItem } from '../components/TopMenu/ShoppingCartMenuItem'
 
@@ -47,7 +47,7 @@ export const NestedNavContainerBlock = ({ blok, ...rest }: NestedNavContainerBlo
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
-  link?: string
+  link: LinkField
 }> & {
   closeDialog: () => void
 }
@@ -57,7 +57,7 @@ export const NavItemBlock = ({ blok, ...rest }: NavItemBlockProps) => {
 
   return (
     <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name}>
-      <NavigationLink href="#" onSelect={closeDialog}>
+      <NavigationLink href={blok.link?.url} onSelect={closeDialog}>
         {blok.name}
       </NavigationLink>
     </NavigationMenuPrimitive.Item>
