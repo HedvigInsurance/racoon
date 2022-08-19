@@ -1,7 +1,7 @@
 import type { NextPageWithLayout, GetServerSideProps } from 'next'
 import { CartPage } from '@/components/CartPage/CartPage'
-import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
+import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
