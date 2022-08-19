@@ -11,6 +11,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
+import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
@@ -112,6 +113,7 @@ export const initStoryblok = () => {
     TimelineItemBlock,
     TextBlock,
     TopPickCardBlock,
+    PerilsBlock,
   ]
   const blockAliases = { product: PageBlock }
   const components = {

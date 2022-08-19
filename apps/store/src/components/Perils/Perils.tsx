@@ -2,11 +2,12 @@ import styled from '@emotion/styled'
 import React, { useState, useMemo, useCallback } from 'react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Product, PRODUCTS } from '@/services/mockProductService'
 import { CoverageList } from './CoverageList'
 import { MinusIcon } from './MinusIcon'
 import { PlusIcon } from './PlusIcon'
 
-type Peril = {
+export type Peril = {
   id: string
   icon: React.ReactNode
   name: string
@@ -18,6 +19,12 @@ type Peril = {
 type PerilsProps = {
   perils: Array<Peril>
 }
+
+const perils = (Product: Product) => {
+  return Product.insurances.map((insurance) => insurance.perils)
+}
+
+console.log(perils(PRODUCTS[1]))
 
 export const Perils = ({ perils }: PerilsProps) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()

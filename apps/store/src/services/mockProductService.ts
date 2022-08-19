@@ -1,8 +1,12 @@
 import { MarketLabel } from '@/lib/l10n/types'
 
 type Peril = {
-  title: string
-  body: string
+  id: string
+  icon: React.ReactNode
+  name: string
+  description: string
+  covered: Array<string>
+  notCovered: Array<string>
 }
 
 export enum InsuranceNames {
@@ -30,7 +34,7 @@ export type Product = {
   insurances: Insurance[] // This is what we would get from PCMS today
 }
 
-const PRODUCTS: Product[] = [
+export const PRODUCTS: Product[] = [
   {
     name: ProductNames.SE_HOME,
     displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
@@ -42,8 +46,12 @@ const PRODUCTS: Product[] = [
 
         perils: [
           {
-            title: 'Some home peril',
-            body: 'Lorem ipsum dolor sit amet',
+            id: 'peril1',
+            icon: 'Icon',
+            name: 'Some home peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
           },
         ],
       },
@@ -59,8 +67,12 @@ const PRODUCTS: Product[] = [
         displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
         perils: [
           {
-            title: 'Some car peril',
-            body: 'Lorem ipsum dolor sit amet',
+            id: 'carPeril1',
+            icon: 'Icon',
+            name: 'Some car peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
           },
         ],
       },
@@ -76,8 +88,12 @@ const PRODUCTS: Product[] = [
         displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
         perils: [
           {
-            title: 'Some home peril',
-            body: 'Lorem ipsum dolor sit amet',
+            id: 'peril2',
+            icon: 'Icon',
+            name: 'Some home peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
           },
         ],
       },
@@ -86,8 +102,12 @@ const PRODUCTS: Product[] = [
         displayName: 'Accident insurance', // TODO: should be a translation key (or translated from BE)
         perils: [
           {
-            title: 'Some accident peril',
-            body: 'Lorem ipsum dolor sit amet',
+            id: 'accidentPeril1',
+            icon: 'Icon',
+            name: 'Some accident peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
           },
         ],
       },
