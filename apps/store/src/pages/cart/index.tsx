@@ -3,7 +3,7 @@ import { CartPage } from '@/components/CartPage/CartPage'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { initializeApollo } from '@/services/apollo/client'
-import { getShopSessionServerSide, getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 const NextCartPage: NextPageWithLayout<CartPageProps> = (props) => {
 
@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
     return {
       props: {
         products: shopSession.cart.lines.map((item) => {
-          return { name: item.variant.title, cost: item.price.amount, currency: item.price.currencyCode }
+          return { name: item.variant.title, cost: parseFloat(item.price.amount), currency: item.price.currencyCode }
         }),
         cost: {
           total: totalCost,

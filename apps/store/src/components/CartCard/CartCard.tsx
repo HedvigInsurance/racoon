@@ -54,7 +54,7 @@ const ButtonContainer = styled.div(({ theme }) => ({
 
 export type CartCardProps = {
   title: string
-  price: string
+  price: number
   currency: string
 }
 

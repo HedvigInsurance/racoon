@@ -6,9 +6,8 @@ import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { PageLink } from '@/lib/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 
-export const CartPage = (props: CartPageProps) => {
+export const CartPage = ({ products, cost }: CartPageProps) => {
 
-  const { products, cost } = props
 
   return (
     <Wrapper>

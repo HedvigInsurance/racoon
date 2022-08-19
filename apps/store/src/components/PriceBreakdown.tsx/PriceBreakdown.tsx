@@ -21,7 +21,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
           {products.map((product) => (
             <DataRow key={product.name}>
               <Text size="m">{product.name}</Text>
-              <Price>{currencyFormatter.format(parseInt(product.cost))}</Price>
+              <Price>{currencyFormatter.format((product.cost))}</Price>
             </DataRow>
           ))}
         </Space>
