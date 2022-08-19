@@ -58,6 +58,7 @@ export type ProductStory = StoryData & {
     productId: string
     priceFormTemplateId: string
     body: Array<SbBlokData>
+    global: Array<SbBlokData>
   }
 }
 
