@@ -14,32 +14,30 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
   return (
     <Collapsible>
       <CollapsibleContent>
-        <Space y={1.5}>
-          <Space y={0.5}>
-            <DataRow>
-              <Text size="m">Subtotal</Text>
-              <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+        <Space y={0.5}>
+          <DataRow>
+            <Text size="m">Subtotal</Text>
+            <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+          </DataRow>
+          {products.map((product) => (
+            <DataRow key={product.name}>
+              <Text size="m">{product.name}</Text>
+              <Price>{currencyFormatter.format(product.cost)}</Price>
             </DataRow>
-            {products.map((product) => (
-              <DataRow key={product.name}>
-                <Text size="m">{product.name}</Text>
-                <Text size="m">{currencyFormatter.format(product.cost)}</Text>
+          ))}
+        </Space>
+        {campaigns ? (
+          <Space y={0.5}>
+            <Text size="m">Discount</Text>
+            {campaigns.map((campaign) => (
+              <DataRow key={campaign.name}>
+                <Text size="m">{campaign.name}</Text>
+                <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
               </DataRow>
             ))}
           </Space>
-          {campaigns ? (
-            <Space y={0.5}>
-              <Text size="m">Discount</Text>
-              {campaigns.map((campaign) => (
-                <DataRow key={campaign.name}>
-                  <Text size="m">{campaign.name}</Text>
-                  <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
-                </DataRow>
-              ))}
-            </Space>
-          ) : null}
-          <CollapsibleDivider />
-        </Space>
+        ) : null}
+        <CollapsibleDivider />
       </CollapsibleContent>
       <CollapsibleHeader>
         <Text size="l">Total</Text>
@@ -66,16 +64,21 @@ const DataRowStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginLeft: '0.5rem',
+  '&:first-child': {
+    marginLeft: 0,
+  },
 })
 
 const DataRow = styled.div(() => ({}), DataRowStyles)
 
 const CollapsibleHeader = styled(RadixCollapsible.Trigger)(
+  DataRowStyles,
   ({ theme }) => ({
     paddingRight: theme.space[1],
     width: '100%',
+    marginLeft: 0
   }),
-  DataRowStyles,
 )
 
 const CrossOutText = styled.p(({ theme }) => ({
@@ -98,4 +101,11 @@ const CollapsibleContent = styled(RadixCollapsible.Content)(() => ({}))
 const CollapsibleDivider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
+  marginTop: '0.75rem',
+  marginBottom: theme.space[3]
+}))
+
+const Price = styled.p(({ theme }) => ({
+  fontSize: theme.fontSizes[1],
+  color: theme.colors.gray600
 }))

@@ -13,30 +13,37 @@ export const CartPage = () => {
   const cost = { total: 350, subTotal: 250 }
 
   return (
-    <Space y={3}>
-      <div></div>
-      <PageHeader>
-        <Heading as="h1" variant="standard.24">
+    <Wrapper>
+      <Space y={3}>
+        <StyledHeading as="h1" variant="standard.24">
           Cart (2)
-        </Heading>
-      </PageHeader>
-      <CartList products={products} />
-      <Footer>
-        <PriceBreakdown currency="SEK" products={products} cost={cost} />
-        <Button fullWidth={true}>
-          <Link href={PageLink.cartReview()}>Check Out</Link>
-        </Button>
-      </Footer>
-    </Space>
+        </StyledHeading>
+        <CartList products={products} />
+        <Footer>
+          <Space y={1.5}>
+            <PriceBreakdown currency="SEK" products={products} cost={cost} />
+            <Button fullWidth>
+              <Link href={PageLink.cartReview()}>Check Out</Link>
+            </Button>
+          </Space>
+        </Footer>
+      </Space>
+    </Wrapper>
+
   )
 }
 
-const PageHeader = styled.header(() => ({
-  textAlign: 'center',
+const Wrapper = styled.div(({ theme }) => ({
+  marginTop: theme.space[7],
+  height: '100vh',
 }))
 
+const StyledHeading = styled(Heading)({
+  textAlign: 'center'
+})
+
 const Footer = styled.footer(({ theme }) => ({
-  position: 'fixed',
+  position: 'absolute',
   bottom: 0,
   left: 0,
   width: '100%',
