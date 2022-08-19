@@ -21,10 +21,7 @@ export const PageLink = {
   checkoutSign: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/sign`,
   confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/confirmation`,
 
-  apiCheckoutCreate: () => '/api/checkout',
   apiCheckoutPersonCreate: () => '/api/checkout/person',
-  apiCheckoutPersonSign: () => '/api/checkout/person-sign',
-  apiCheckoutPaymentSign: () => '/api/checkout/payment-sign',
   apiPriceProduct: ({ productSlug, intent }: PriceProductAPI) =>
     `/api/price/${productSlug}?intent=${intent ?? 'update'}`,
   apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,
