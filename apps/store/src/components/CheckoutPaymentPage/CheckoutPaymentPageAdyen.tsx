@@ -23,11 +23,9 @@ export const CheckoutPaymentPageAdyen = (props: CheckoutPaymentPageProps) => {
         </Space>
         <AdyenCheckout onSuccess={(connection) => setPaymentConnection(connection)} />
         <Space y={0.5}>
-          <form method="post" action={PageLink.apiCheckoutPaymentSign()}>
-            <Button disabled={paymentConnection === null} fullWidth>
-              Complete purchase
-            </Button>
-          </form>
+          <Button disabled={paymentConnection === null} fullWidth>
+            Complete purchase
+          </Button>
           <p>
             <Text size="s">
               By clicking &quot;Complete purchase&quot; I confirm that I have read and understood
