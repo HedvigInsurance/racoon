@@ -1,18 +1,15 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-type RemoveBoolean<TType> = TType extends boolean ? never : TType
-type StoryDataType = RemoveBoolean<StoryblokPageProps['globalStory']>
-
-const removeBooleanType = (data: StoryblokPageProps['globalStory']): StoryDataType =>
-  data as StoryDataType
+const isStoryData = (global: StoryData | boolean): global is StoryData => {
+  return (global as StoryData).content !== undefined
+}
 
 export const Page = ({ story: initialStory, globalStory }: StoryblokPageProps) => {
-  const globalStoryWithData = removeBooleanType(globalStory)
   const story = useStoryblokState(initialStory)
   return (
     <>
-      {<StoryblokComponent blok={globalStoryWithData.content} />}
+      {isStoryData(globalStory) && <StoryblokComponent blok={globalStory.content} />}
       <StoryblokComponent blok={story.content} />
     </>
   )
