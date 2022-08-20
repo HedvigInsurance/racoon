@@ -74,8 +74,8 @@ export enum StoryblokBlockName {
   Heading = 'heading',
   Hero = 'hero',
   Image = 'image',
-  NavItemBlock = 'nav_item', // Used within TopMenu
-  NestedNavContainerBlock = 'nested_nav_container', // Used within TopMenu
+  NavItemBlock = 'navItem', // Used within TopMenu
+  NestedNavContainerBlock = 'nestedNavContainer', // Used within TopMenu
   Page = 'page',
   PriceCalculator = 'priceCalculator',
   Product = 'product',
@@ -87,7 +87,7 @@ export enum StoryblokBlockName {
   Tab = 'tab',
   Tabs = 'tabs',
   Text = 'text',
-  TopMenu = 'top_menu',
+  TopMenu = 'topMenu',
   TopPickCard = 'topPickCard',
 }
 
