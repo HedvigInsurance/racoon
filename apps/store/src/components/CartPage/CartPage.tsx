@@ -29,7 +29,6 @@ export const CartPage = () => {
         </Footer>
       </Space>
     </Wrapper>
-
   )
 }
 
@@ -39,7 +38,7 @@ const Wrapper = styled.div(({ theme }) => ({
 }))
 
 const StyledHeading = styled(Heading)({
-  textAlign: 'center'
+  textAlign: 'center',
 })
 
 const Footer = styled.footer(({ theme }) => ({
