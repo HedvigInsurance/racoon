@@ -30,7 +30,7 @@ const guessLocale = (request: NextRequest) => {
   return null
 }
 
-const localeRedirectMiddleware = async (request: NextRequest) => {
+const localeRedirectMiddleware = (request: NextRequest) => {
   const shouldHandleLocale =
     !PUBLIC_FILE.test(request.nextUrl.pathname) &&
     !INTERNAL_ROUTE.test(request.nextUrl.pathname) &&
@@ -52,12 +52,13 @@ const campaignCodeMiddleware = (request: NextRequest) => {
 
   if (!campaignCode) return null
 
+  console.info('Adding campaign code from URL:', campaignCode)
   const response = NextResponse.next()
   response.cookies.set(CAMPAIGN_CODE_COOKIE_KEY, campaignCode)
   return response
 }
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest): NextResponse {
   try {
     const localeResponse = localeRedirectMiddleware(request)
     if (localeResponse) return localeResponse
