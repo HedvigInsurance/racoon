@@ -1,16 +1,12 @@
-mutation StartDateUpdate($shopSessionId: ID!, $lineId: ID!, $startDate: Date) {
-  shopSession(id: $shopSessionId) {
+mutation StartDateUpdate($lineItemId: ID!, $startDate: Date) {
+  cartLineStartDateUpdate(input: { lineItemId: $lineItemId, startDate: $startDate }) {
     cart {
-      startDateUpdate(input: { lineId: $lineId, startDate: $startDate }) {
-        cart {
-          ...CartFragment
-        }
-        userErrors {
-          code
-          field
-          message
-        }
-      }
+      ...CartFragment
+    }
+    userErrors {
+      code
+      field
+      message
     }
   }
 }

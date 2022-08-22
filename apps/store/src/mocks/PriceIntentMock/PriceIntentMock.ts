@@ -30,9 +30,7 @@ export const mockPriceIntentHandlers = [
     const priceIntent = priceIntentCreate()
     return res(
       ctx.data({
-        shopSession: {
-          priceIntentCreate: priceIntentToAPI(priceIntent),
-        },
+        priceIntentCreate: priceIntentToAPI(priceIntent),
       }),
     )
   }),
@@ -41,11 +39,7 @@ export const mockPriceIntentHandlers = [
     const priceIntent = priceIntentDataUpdate(req.variables.priceIntentId, req.variables.data)
     return res(
       ctx.data({
-        shopSession: {
-          priceIntent: {
-            dataUpdate: { priceIntent: priceIntent ? priceIntentToAPI(priceIntent) : null },
-          },
-        },
+        priceIntentDataUpdate: { priceIntent: priceIntent ? priceIntentToAPI(priceIntent) : null },
       }),
     )
   }),
@@ -54,11 +48,7 @@ export const mockPriceIntentHandlers = [
     const priceIntent = priceIntentConfirm(req.variables.priceIntentId)
     return res(
       ctx.data({
-        shopSession: {
-          priceIntent: {
-            confirm: { priceIntent: priceIntent ? priceIntentToAPI(priceIntent) : null },
-          },
-        },
+        priceIntentConfirm: { priceIntent: priceIntent ? priceIntentToAPI(priceIntent) : null },
       }),
     )
   }),

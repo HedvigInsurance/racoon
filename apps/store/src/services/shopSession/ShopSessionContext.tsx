@@ -51,16 +51,25 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
 }
 
 export const useShopSession = () => {
+  const { countryCode } = useCurrentLocale()
+
   const queryResult = useContext(ShopSessionContext)
   if (!queryResult) {
     throw new Error(
       'useShopSession called from outside ShopSessionContextProvider, no value in context',
     )
   }
+
   const { data, ...other } = queryResult
+
+  let shopSession = data?.shopSession
+  if (shopSession?.countryCode !== countryCode) {
+    // Ignore session from different country.  This probably means old session was fetched and new one is being created
+    shopSession = undefined
+  }
   return {
     ...other,
-    shopSession: data?.shopSession,
+    shopSession,
   }
 }
 
