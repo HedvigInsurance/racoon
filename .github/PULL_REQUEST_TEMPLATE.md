@@ -22,4 +22,3 @@ A link to that issue will automatically be created.
 ## Checklist before requesting a review
 
 - [ ] I have performed a self-review of my code
-- [ ] Will this be part of a product update? If yes, please write one phrase about this update.
