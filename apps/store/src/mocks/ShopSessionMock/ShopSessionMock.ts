@@ -43,11 +43,7 @@ export const mockShopSessionHandlers = [
 
     return res(
       ctx.data({
-        shopSession: {
-          cart: {
-            linesAdd: { cart: cart ? dbCartToAPI(cart) : null },
-          },
-        },
+        cartLinesAdd: { cart: cart ? dbCartToAPI(cart) : null },
       }),
     )
   }),
@@ -57,11 +53,7 @@ export const mockShopSessionHandlers = [
 
     return res(
       ctx.data({
-        shopSession: {
-          cart: {
-            linesRemove: { cart: cart ? dbCartToAPI(cart) : null },
-          },
-        },
+        cartLinesRemove: { cart: cart ? dbCartToAPI(cart) : null },
       }),
     )
   }),
@@ -72,11 +64,7 @@ export const mockShopSessionHandlers = [
 
     return res(
       ctx.data({
-        shopSession: {
-          cart: {
-            startDateUpdate: { cart: cart ? dbCartToAPI(cart) : null },
-          },
-        },
+        cartLineStartDateUpdate: { cart: cart ? dbCartToAPI(cart) : null },
       }),
     )
   }),

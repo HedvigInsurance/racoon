@@ -42,7 +42,7 @@ export class PriceIntentService {
       },
     })
 
-    const priceIntent = result.data?.shopSession.priceIntentCreate
+    const priceIntent = result.data?.priceIntentCreate
     if (!priceIntent) throw new Error('Could not create price intent')
 
     this.persister.save(priceIntent.id)
@@ -89,10 +89,10 @@ export class PriceIntentService {
       PriceIntentDataUpdateMutationVariables
     >({
       mutation: PriceIntentDataUpdateDocument,
-      variables: { shopSessionId: this.shopSession.id, priceIntentId, data },
+      variables: { priceIntentId, data },
     })
 
-    const priceIntent = result.data?.shopSession.priceIntent.dataUpdate.priceIntent
+    const priceIntent = result.data?.priceIntentDataUpdate.priceIntent
     if (!priceIntent) throw new Error('Could not update price intent')
     return priceIntent
   }
@@ -107,10 +107,10 @@ export class PriceIntentService {
         PriceIntentConfirmMutationVariables
       >({
         mutation: PriceIntentConfirmDocument,
-        variables: { shopSessionId: this.shopSession.id, priceIntentId },
+        variables: { priceIntentId },
       })
 
-      const priceIntent = result.data?.shopSession.priceIntent.confirm.priceIntent
+      const priceIntent = result.data?.priceIntentConfirm.priceIntent
       if (!priceIntent) throw new Error('Could not confirm price intent')
       return priceIntent
     } catch (error) {
