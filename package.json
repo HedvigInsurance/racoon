@@ -15,7 +15,7 @@
     "e2e-onboarding": "turbo run e2e --filter=onboarding",
     "e2e-onboarding:headless": "turbo run e2e:headless --filter=onboarding",
     "clean": "turbo run clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,mjs,cjs,ts,tsx,md,graphql}\"",
     "prepare": "husky install",
     "typecheck": "turbo run typecheck",
     "storybook": "turbo run storybook",
