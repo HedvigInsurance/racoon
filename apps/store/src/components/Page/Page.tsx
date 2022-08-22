@@ -1,8 +1,8 @@
 import { StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-const isStoryData = (global: StoryData | boolean): global is StoryData => {
-  return (global as StoryData).content !== undefined
+const isStoryData = (value: unknown): value is StoryData => {
+  return (value as any).content !== undefined
 }
 
 export const Page = ({ story: initialStory, globalStory }: StoryblokPageProps) => {
