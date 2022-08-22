@@ -18,55 +18,54 @@ export class CartService {
     private readonly apolloClient: ApolloClient<unknown>,
   ) {}
 
-  public async lineAdd(lineId: string) {
+  public async lineAdd(lineItemId: string) {
     const result = await this.apolloClient.mutate<
       CartLinesAddMutation,
       CartLinesAddMutationVariables
     >({
       mutation: CartLinesAddDocument,
       variables: {
-        shopSessionId: this.shopSession.id,
-        lineId,
+        cartId: this.shopSession.cart.id,
+        lineItemId,
       },
     })
 
-    const updatedCart = result.data?.shopSession.cart.linesAdd.cart
-    if (!updatedCart) throw new Error(`Could not add line item to cart: ${lineId}`)
+    const updatedCart = result.data?.cartLinesAdd.cart
+    if (!updatedCart) throw new Error(`Could not add line item to cart: ${lineItemId}`)
     return updatedCart
   }
 
-  public async lineRemove(lineId: string) {
+  public async lineRemove(lineItemId: string) {
     const result = await this.apolloClient.mutate<
       CartLinesRemoveMutation,
       CartLinesRemoveMutationVariables
     >({
       mutation: CartLinesRemoveDocument,
       variables: {
-        shopSessionId: this.shopSession.id,
-        lineId,
+        cartId: this.shopSession.cart.id,
+        lineItemId,
       },
     })
 
-    const updatedCart = result.data?.shopSession.cart.linesRemove.cart
-    if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineId}`)
+    const updatedCart = result.data?.cartLinesRemove.cart
+    if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineItemId}`)
     return updatedCart
   }
 
-  public async startDateUpdate(lineId: string, startDate: Date | null) {
+  public async startDateUpdate(lineItemId: string, startDate: Date | null) {
     const result = await this.apolloClient.mutate<
       StartDateUpdateMutation,
       StartDateUpdateMutationVariables
     >({
       mutation: StartDateUpdateDocument,
       variables: {
-        shopSessionId: this.shopSession.id,
-        lineId,
+        lineItemId,
         startDate: startDate ? startDate.toISOString().substring(0, 10) : null,
       },
     })
 
-    const updatedCart = result.data?.shopSession.cart
-    if (!updatedCart) throw new Error(`Could not update start date for line item: ${lineId}`)
+    const updatedCart = result.data?.cartLineStartDateUpdate.cart
+    if (!updatedCart) throw new Error(`Could not update start date for line item: ${lineItemId}`)
     return updatedCart
   }
 }
