@@ -1,6 +1,10 @@
-# Racoon
+# Racoon 🦝
 
 Proof of concept monorepo to support all purchase journey related projects.
+
+### Why Racoon?
+
+Raccoons can eat just about anything, making them ideal urban dwellers. They love big city life! Today there are 20 times more of them in cities compared to 70 years ago. They can now be found across the globe.
 
 ## Getting Started
 
@@ -22,7 +26,7 @@ yarn
 
 ### Development
 
-Run the development server:
+#### Run the development server:
 
 ```sh
 yarn dev
@@ -31,6 +35,13 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 For deployment, pulling translations, using CMS, etc you will need access tokens. Refer to Notion for setup details
+
+#### Running a specific package:
+```sh
+yarn dev --filter=store
+```
+
+Read more about package filtering in turboreo [here](https://turborepo.org/docs/core-concepts/filtering).
 
 ## What's inside?
 
@@ -53,7 +64,3 @@ Below is an up-to-date visualization of the files and folders that make up the r
 ### Setup reference
 
 The setup is based on the Turborepo [`kitchen-sink` template](https://github.com/vercel/turborepo/tree/main/examples/kitchen-sink).
-
-## The name
-
-Raccoons can eat just about anything, making them ideal urban dwellers. They love big city life! Today there are 20 times more of them in cities compared to 70 years ago. They can now be found across the globe.
