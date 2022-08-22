@@ -13,6 +13,7 @@ import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandi
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
+import logger from '@/services/logger'
 
 type MetaLinks = Pick<LocaleData, 'hrefLang' | 'path'> & {
   href: string
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
   const insurances = getInsurancesByLocaleLabel(locale)
 
   if (insurances.length === 0) {
+    logger.error('Cannot render new-member page, no insurances found')
     return {
       notFound: true,
     }
