@@ -16,7 +16,7 @@ Raccoons can eat just about anything, making them ideal urban dwellers. They lov
 
 ### Package manager
 
-We use `yarn` as package manager. [Corepack](https://github.com/nodejs/corepack) installs the specified version defined in `package.json`.
+We use `yarn` as package manager. [Corepack](https://github.com/nodejs/corepack) installs the specified version defined in `package.json` so you do not need to install it yourself.
 
 ### Install project
 
@@ -31,7 +31,9 @@ yarn
 
 #### Environment variables
 
-If you are part of the Vercel team you can run:
+Ask someone from the Purchase Journey team to help you out :)
+
+If you're already part of the Vercel-team you can run:
 
 ```sh
 vercel --scope hedvig link --project racoon --yes
@@ -40,8 +42,6 @@ vercel env pull apps/onboarding/.env.local
 vercel --scope hedvig link --project racoon-store --yes
 vercel env pull apps/store/.env.local
 ```
-
-...otherwise, ask someone from the Purchase Journey team and they will help you out!
 
 #### Run the development server
 
