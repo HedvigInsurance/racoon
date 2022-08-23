@@ -1,0 +1,4 @@
+.yarn
+.next
+coverage
+dist

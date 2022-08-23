@@ -72,14 +72,11 @@ const DataRowStyles = css({
 
 const DataRow = styled.div(() => ({}), DataRowStyles)
 
-const CollapsibleHeader = styled(RadixCollapsible.Trigger)(
-  DataRowStyles,
-  ({ theme }) => ({
-    paddingRight: theme.space[1],
-    width: '100%',
-    marginLeft: 0
-  }),
-)
+const CollapsibleHeader = styled(RadixCollapsible.Trigger)(DataRowStyles, ({ theme }) => ({
+  paddingRight: theme.space[1],
+  width: '100%',
+  marginLeft: 0,
+}))
 
 const CrossOutText = styled.p(({ theme }) => ({
   color: theme.colors.gray500,
@@ -102,10 +99,10 @@ const CollapsibleDivider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
   marginTop: '0.75rem',
-  marginBottom: theme.space[3]
+  marginBottom: theme.space[3],
 }))
 
 const Price = styled.p(({ theme }) => ({
   fontSize: theme.fontSizes[1],
-  color: theme.colors.gray600
+  color: theme.colors.gray600,
 }))

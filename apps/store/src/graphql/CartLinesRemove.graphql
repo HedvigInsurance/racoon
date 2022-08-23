@@ -1,5 +1,5 @@
 mutation CartLinesRemove($cartId: ID!, $lineItemId: ID!) {
-  cartLinesRemove(input: {cartId: $cartId, lineItemIds: [$lineItemId]}) {
+  cartLinesRemove(input: { cartId: $cartId, lineItemIds: [$lineItemId] }) {
     cart {
       ...CartFragment
     }

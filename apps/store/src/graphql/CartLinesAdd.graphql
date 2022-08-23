@@ -1,5 +1,5 @@
 mutation CartLinesAdd($cartId: ID!, $lineItemId: ID!) {
-  cartLinesAdd(input: {cartId: $cartId, lineItemIds: [$lineItemId]}) {
+  cartLinesAdd(input: { cartId: $cartId, lineItemIds: [$lineItemId] }) {
     cart {
       ...CartFragment
     }
