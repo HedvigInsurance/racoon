@@ -19,6 +19,7 @@ export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
     </Wrapper>
   )
 }
+ProductSlideshowBlock.blockName = 'productSlideshow'
 
 const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[3],

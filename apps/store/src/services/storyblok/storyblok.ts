@@ -19,6 +19,7 @@ import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { ReactNode } from 'react'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -64,58 +65,40 @@ export type ProductStory = StoryData & {
 
 type GlobalStory = StoryData
 
-export enum StoryblokBlockName {
-  Accordion = 'accordion',
-  AccordionItem = 'accordionItem',
-  Button = 'button',
-  CheckList = 'checkList',
-  ContactSupport = 'contactSupport',
-  Content = 'content',
-  Heading = 'heading',
-  Hero = 'hero',
-  Image = 'image',
-  NavItemBlock = 'navItem', // Used within header
-  NestedNavContainerBlock = 'nestedNavContainer', // Used within header
-  Page = 'page',
-  PriceCalculator = 'priceCalculator',
-  Product = 'product',
-  ProductCard = 'productCard',
-  ProductGrid = 'productGrid',
-  ProductSlideshow = 'productSlideshow',
-  ProductSummary = 'productSummary',
-  Spacer = 'spacer',
-  Tab = 'tab',
-  Tabs = 'tabs',
-  Text = 'text',
-  TopMenu = 'header',
-  TopPickCard = 'topPickCard',
-}
+type NamedBlock = {
+  blockName: string
+} & React.ElementType
 
 export const initStoryblok = () => {
+  const blockComponents: Array<NamedBlock> = [
+    AccordionBlock,
+    AccordionItemBlock,
+    ButtonBlock,
+    CheckListBlock,
+    ContactSupportBlock,
+    ContentBlock,
+    // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
+    HeaderBlock,
+    HeadingBlock,
+    HeroBlock,
+    ImageBlock,
+    NavItemBlock,
+    NestedNavContainerBlock,
+    PageBlock,
+    PriceCalculatorBlock,
+    ProductCardBlock,
+    ProductGridBlock,
+    ProductSlideshowBlock,
+    ProductSummaryBlock,
+    SpacerBlock,
+    TabsBlock,
+    TextBlock,
+    TopPickCardBlock,
+  ]
+  const blockAliases = { product: PageBlock }
   const components = {
-    [StoryblokBlockName.Accordion]: AccordionBlock,
-    [StoryblokBlockName.AccordionItem]: AccordionItemBlock,
-    [StoryblokBlockName.Button]: ButtonBlock,
-    [StoryblokBlockName.CheckList]: CheckListBlock,
-    [StoryblokBlockName.ContactSupport]: ContactSupportBlock,
-    [StoryblokBlockName.Content]: ContentBlock,
-    [StoryblokBlockName.Heading]: HeadingBlock,
-    [StoryblokBlockName.Hero]: HeroBlock,
-    [StoryblokBlockName.Image]: ImageBlock,
-    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within header
-    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within header
-    [StoryblokBlockName.Page]: PageBlock,
-    [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
-    [StoryblokBlockName.Product]: PageBlock,
-    [StoryblokBlockName.ProductCard]: ProductCardBlock,
-    [StoryblokBlockName.ProductGrid]: ProductGridBlock,
-    [StoryblokBlockName.ProductSlideshow]: ProductSlideshowBlock,
-    [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
-    [StoryblokBlockName.Spacer]: SpacerBlock,
-    [StoryblokBlockName.Tabs]: TabsBlock,
-    [StoryblokBlockName.Text]: TextBlock,
-    [StoryblokBlockName.TopMenu]: HeaderBlock,
-    [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
+    ...Object.fromEntries(blockComponents.map((x) => [x.blockName, x])),
+    ...blockAliases,
   }
 
   storyblokInit({

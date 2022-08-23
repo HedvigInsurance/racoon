@@ -11,6 +11,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     <Space {...storyblokEditable(blok)} y={1} dangerouslySetInnerHTML={{ __html: contentHtml }} />
   )
 }
+TextBlock.blockName = 'text'
 
 const useRichText = (body: Richtext) => {
   return useMemo(() => getStoryblokApi().richTextResolver.render(body), [body])

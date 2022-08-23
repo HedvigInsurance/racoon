@@ -24,6 +24,7 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
     </Link>
   )
 }
+ProductCardBlock.blockName = 'productCard'
 
 const StyledAnchor = styled.a({
   textDecoration: 'none',

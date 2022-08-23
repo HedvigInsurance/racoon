@@ -3,13 +3,14 @@ import { SbBlokData, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { TextBlock, TextBlockProps } from '@/blocks/TextBlock'
 import * as CheckList from '@/components/CheckList/CheckList'
-import { SbBaseBlockProps, StoryblokBlockName } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type CheckListBlockProps = SbBaseBlockProps<{
   items: Array<SbBlokData>
 }>
 
 export const CheckListBlock = ({ blok }: CheckListBlockProps) => {
+  // TODO: Ensure on storyblok level (acceptable child type)
   const items = useMemo(() => blok.items.filter(isTextBlock), [blok.items])
 
   return (
@@ -24,9 +25,10 @@ export const CheckListBlock = ({ blok }: CheckListBlockProps) => {
     </Wrapper>
   )
 }
+CheckListBlock.blockName = 'checkList'
 
 const isTextBlock = (blok: SbBlokData): blok is TextBlockProps['blok'] => {
-  return blok.component === StoryblokBlockName.Text
+  return blok.component === TextBlock.blockName
 }
 
 const Wrapper = styled.div(({ theme }) => ({

@@ -11,6 +11,7 @@ type SpacerBlockProps = SbBaseBlockProps<Props>
 export const SpacerBlock = ({ blok }: SpacerBlockProps) => {
   return <Spacer size={blok.size} {...storyblokEditable} />
 }
+SpacerBlock.blockName = 'spacer'
 
 const Spacer = styled.div<Props>(({ theme, size }) => ({
   height: theme.space[size] ?? size,
