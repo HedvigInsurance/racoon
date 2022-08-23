@@ -133,8 +133,6 @@ export const initStoryblok = () => {
 
 export const getStoryBySlug = async (slug: string, preview = false) => {
   const storyblokApi = getStoryblokApi()
-  // FIXME: Fix this, should only use preview locally
-  preview = true
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
   })
@@ -159,10 +157,4 @@ export const getGlobalStory = async (preview = false) => {
 export const getProductStory = async (slug: string, preview = false) => {
   const story = await getStoryBySlug(`/products/${slug}`, preview)
   return story as ProductStory
-}
-
-// FIXME: why unused?
-export const getStoreStory = async (preview = false) => {
-  const story = await getStoryBySlug('/store', preview)
-  return story as StoryData
 }
