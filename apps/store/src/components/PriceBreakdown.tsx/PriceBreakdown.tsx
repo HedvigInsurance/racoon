@@ -10,7 +10,6 @@ type Props = CheckoutPaymentPageProps
 
 export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) => {
   const currencyFormatter = useCurrencyFormatter(currency)
-
   return (
     <Collapsible>
       <CollapsibleContent>
@@ -26,17 +25,19 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             </DataRow>
           ))}
         </Space>
-        {campaigns ? (
-          <Space y={0.5}>
-            <Text size="m">Discount</Text>
-            {campaigns.map((campaign) => (
-              <DataRow key={campaign.name}>
-                <Text size="m">{campaign.name}</Text>
-                <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
-              </DataRow>
-            ))}
-          </Space>
-        ) : null}
+        {
+          campaigns ? (
+            <Space y={0.5} >
+              <Text size="m">Discount</Text>
+              {campaigns.map((campaign) => (
+                <DataRow key={campaign.name}>
+                  <Text size="m">{campaign.name}</Text>
+                  <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
+                </DataRow>
+              ))
+              }
+            </Space>
+          ) : null}
         <CollapsibleDivider />
       </CollapsibleContent>
       <CollapsibleHeader>
