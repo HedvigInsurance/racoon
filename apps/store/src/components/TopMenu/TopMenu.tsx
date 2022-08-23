@@ -8,7 +8,7 @@ import { PageLink } from '@/lib/PageLink'
 import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
-const MENU_BAR_HEIGHT = '3.75rem'
+export const MENU_BAR_HEIGHT = '3.75rem'
 
 export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
@@ -104,14 +104,14 @@ export const TopMenu = () => {
   )
 }
 
-const focusableStyles = {
+export const focusableStyles = {
   cursor: 'pointer',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },
 }
 
-const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -120,12 +120,12 @@ const Wrapper = styled.div(({ theme }) => ({
   padding: theme.space[4],
 }))
 
-const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
+export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
   position: 'fixed',
   inset: 0,
 })
 
-const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
+export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
   return (
     <DialogPrimitive.Portal>
       <StyledDialogOverlay />
@@ -134,7 +134,7 @@ const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
   )
 }
 
-const IconButton = styled.button({
+export const IconButton = styled.button({
   position: 'absolute',
   top: '1rem',
   left: '1rem',
@@ -142,16 +142,16 @@ const IconButton = styled.button({
   ...focusableStyles,
 })
 
-const ToggleMenu = styled.button({
+export const ToggleMenu = styled.button({
   ...focusableStyles,
 })
 
-const Navigation = styled(NavigationMenuPrimitive.Root)({
+export const Navigation = styled(NavigationMenuPrimitive.Root)({
   backgroundColor: theme.colors.gray200,
   fontSize: theme.fontSizes[5],
 })
 
-const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
   all: 'unset',
   listStyle: 'none',
   position: 'fixed',
@@ -163,7 +163,7 @@ const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) =
   backgroundColor: theme.colors.gray200,
 }))
 
-const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
+export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
   display: 'flex',
@@ -174,14 +174,14 @@ const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   fontSize: theme.fontSizes[3],
 })
 
-const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
   ...focusableStyles,
 })
 
-const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
+export const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   textDecoration: 'none',
   ...focusableStyles,
 })
@@ -189,7 +189,7 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'>
 
-const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
+export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
   return (
     <Link href={href} passHref>
       <StyledNavigationLink {...rest} />

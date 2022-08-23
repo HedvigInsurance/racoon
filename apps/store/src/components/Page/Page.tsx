@@ -1,7 +1,16 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent, StoryData, useStoryblokState } from '@storyblok/react'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-export const Page = ({ story: initialStory }: StoryblokPageProps) => {
+const isStoryData = (value: unknown): value is StoryData => {
+  return (value as any).content !== undefined
+}
+
+export const Page = ({ story: initialStory, globalStory }: StoryblokPageProps) => {
   const story = useStoryblokState(initialStory)
-  return <StoryblokComponent blok={story.content} />
+  return (
+    <>
+      {isStoryData(globalStory) && <StoryblokComponent blok={globalStory.content} />}
+      <StoryblokComponent blok={story.content} />
+    </>
+  )
 }
