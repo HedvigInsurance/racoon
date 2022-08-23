@@ -3,6 +3,8 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon } from 'ui'
+import { MenuIcon } from '@/components/TopMenu/MenuIcon'
+import { ShoppingCartMenuItem } from '@/components/TopMenu/ShoppingCartMenuItem'
 import {
   DialogContent,
   IconButton,
@@ -15,8 +17,6 @@ import {
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { MenuIcon } from '../components/TopMenu/MenuIcon'
-import { ShoppingCartMenuItem } from '../components/TopMenu/ShoppingCartMenuItem'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
@@ -52,9 +52,9 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
       <NavigationTrigger>
         {blok.name}
         {activeItem === `${blok.name}` ? (
-          <CrossIcon size="16px" />
+          <CrossIcon size="1rem" />
         ) : (
-          <ArrowForwardIcon size="16px" />
+          <ArrowForwardIcon size="1rem" />
         )}
       </NavigationTrigger>
       <NavigationMenuPrimitive.Content>
