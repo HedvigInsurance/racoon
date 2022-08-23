@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "start": "node --require ./server-preload.js $(yarn bin next) start",
+    "start": "next start",
     "test": "jest --passWithNoTests",
     "e2e": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress",
     "e2e:headless": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress:headless",
@@ -26,7 +26,6 @@
     "@radix-ui/react-radio-group": "^0.1.5",
     "classnames": "2.3.1",
     "cookies-next": "2.1.1",
-    "dd-trace": "2.9.1",
     "dompurify": "2.3.10",
     "formidable": "^2.0.1",
     "framer-motion": "6.5.1",
@@ -37,7 +36,8 @@
     "marked": "4.0.18",
     "next": "12.2.2",
     "next-i18next": "^11.0.0",
-    "pino": "^7.10.0",
+    "pino-datadog": "https://github.com/simonauner/pino-datadog#rename-hostname-to-host",
+    "pino-multi-stream": "6.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "ui": "workspace:"

@@ -128,7 +128,7 @@ self.addEventListener('fetch', function (event) {
       // At this point, any exception indicates an issue with the original request/response.
       console.error(
         `\
-[MSW] Caught an exception from the "%s %s" request (%s). This is probably not a problem with Mock Service Worker. There is likely an additional logging output above.`,
+ [MSW] Caught an exception from the "%s %s" request (%s). This is probably not a problem with Mock Service Worker. There is likely an additional logging output above.`,
         request.method,
         request.url,
         `${error.name}: ${error.message}`,
@@ -284,12 +284,12 @@ async function getResponse(event, client, requestId) {
 
       console.error(
         `\
-[MSW] Uncaught exception in the request handler for "%s %s":
+ [MSW] Uncaught exception in the request handler for "%s %s":
 
-${parsedBody.location}
+ ${parsedBody.location}
 
-This exception has been gracefully handled as a 500 response, however, it's strongly recommended to resolve this error, as it indicates a mistake in your code. If you wish to mock an error response, please see this guide: https://mswjs.io/docs/recipes/mocking-error-responses\
-`,
+ This exception has been gracefully handled as a 500 response, however, it's strongly recommended to resolve this error, as it indicates a mistake in your code. If you wish to mock an error response, please see this guide: https://mswjs.io/docs/recipes/mocking-error-responses\
+ `,
         request.method,
         request.url,
       )
