@@ -29,8 +29,8 @@ export const NavItemBlock = ({ blok, ...props }: NavItemBlockProps) => {
   const { closeDialog } = props
 
   return (
-    <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationLink href={blok.link.url} onSelect={closeDialog}>
+    <NavigationMenuPrimitive.Item value={blok.name} {...storyblokEditable(blok)}>
+      <NavigationLink href={blok.link.cached_url} onSelect={closeDialog}>
         {blok.name}
       </NavigationLink>
     </NavigationMenuPrimitive.Item>
@@ -48,7 +48,7 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBlockProps) => {
   const { activeItem } = props
   return (
-    <NavigationMenuPrimitive.Item key={blok._uid} value={blok.name}>
+    <NavigationMenuPrimitive.Item value={blok.name}>
       <NavigationTrigger>
         {blok.name}
         {activeItem === `${blok.name}` ? (
@@ -98,7 +98,7 @@ export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
               {blok.navMenuContainer.map((nestedBlok) => (
                 <StoryblokComponent
                   blok={nestedBlok}
-                  key={blok._uid}
+                  key={nestedBlok._uid}
                   {...storyblokEditable(blok)}
                   activeItem={activeItem}
                   closeDialog={closeDialog}
