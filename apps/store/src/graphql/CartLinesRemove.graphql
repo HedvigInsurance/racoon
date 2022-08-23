@@ -1,16 +1,12 @@
-mutation CartLinesRemove($shopSessionId: ID!, $lineId: ID!) {
-  shopSession(id: $shopSessionId) {
+mutation CartLinesRemove($cartId: ID!, $lineItemId: ID!) {
+  cartLinesRemove(input: { cartId: $cartId, lineItemIds: [$lineItemId] }) {
     cart {
-      linesRemove(lineIds: [$lineId]) {
-        cart {
-          ...CartFragment
-        }
-        userErrors {
-          code
-          field
-          message
-        }
-      }
+      ...CartFragment
+    }
+    userErrors {
+      code
+      field
+      message
     }
   }
 }
