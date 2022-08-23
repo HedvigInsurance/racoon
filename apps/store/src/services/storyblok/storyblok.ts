@@ -17,6 +17,8 @@ import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
+import { TimelineBlock } from '@/blocks/TimelineBlock'
+import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
@@ -86,6 +88,8 @@ export enum StoryblokBlockName {
   Spacer = 'spacer',
   Tab = 'tab',
   Tabs = 'tabs',
+  Timeline = 'timeline',
+  TimelineItem = 'timelineItem',
   Text = 'text',
   TopMenu = 'header',
   TopPickCard = 'topPickCard',
@@ -113,6 +117,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.ProductSummary]: ProductSummaryBlock,
     [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
+    [StoryblokBlockName.Timeline]: TimelineBlock,
+    [StoryblokBlockName.TimelineItem]: TimelineItemBlock,
     [StoryblokBlockName.Text]: TextBlock,
     [StoryblokBlockName.TopMenu]: HeaderBlock,
     [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
@@ -127,6 +133,8 @@ export const initStoryblok = () => {
 
 export const getStoryBySlug = async (slug: string, preview = false) => {
   const storyblokApi = getStoryblokApi()
+  // FIXME: Fix this, should only use preview locally
+  preview = true
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
   })
@@ -153,6 +161,7 @@ export const getProductStory = async (slug: string, preview = false) => {
   return story as ProductStory
 }
 
+// FIXME: why unused?
 export const getStoreStory = async (preview = false) => {
   const story = await getStoryBySlug('/store', preview)
   return story as StoryData
