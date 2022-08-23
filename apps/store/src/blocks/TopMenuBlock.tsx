@@ -72,10 +72,11 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
   )
 }
 
-type TopMenuBlockProps = SbBaseBlockProps<{
+type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: SbBlokData[]
 }>
-export const TopMenuBlock = ({ blok }: TopMenuBlockProps) => {
+
+export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   const [activeItem, setActiveItem] = useState('')
   const [open, setOpen] = useState(false)
 

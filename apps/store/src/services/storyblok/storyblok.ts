@@ -17,7 +17,7 @@ import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
-import { NavItemBlock, NestedNavContainerBlock, TopMenuBlock } from '@/blocks/TopMenuBlock'
+import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
 export type SbBaseBlockProps<T> = {
@@ -74,8 +74,8 @@ export enum StoryblokBlockName {
   Heading = 'heading',
   Hero = 'hero',
   Image = 'image',
-  NavItemBlock = 'navItem', // Used within TopMenu
-  NestedNavContainerBlock = 'nestedNavContainer', // Used within TopMenu
+  NavItemBlock = 'navItem', // Used within header
+  NestedNavContainerBlock = 'nestedNavContainer', // Used within header
   Page = 'page',
   PriceCalculator = 'priceCalculator',
   Product = 'product',
@@ -87,7 +87,7 @@ export enum StoryblokBlockName {
   Tab = 'tab',
   Tabs = 'tabs',
   Text = 'text',
-  TopMenu = 'topMenu',
+  TopMenu = 'header',
   TopPickCard = 'topPickCard',
 }
 
@@ -102,8 +102,8 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Heading]: HeadingBlock,
     [StoryblokBlockName.Hero]: HeroBlock,
     [StoryblokBlockName.Image]: ImageBlock,
-    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within TopMenu
-    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within TopMenu
+    [StoryblokBlockName.NavItemBlock]: NavItemBlock, // Used within header
+    [StoryblokBlockName.NestedNavContainerBlock]: NestedNavContainerBlock, // Used within header
     [StoryblokBlockName.Page]: PageBlock,
     [StoryblokBlockName.PriceCalculator]: PriceCalculatorBlock,
     [StoryblokBlockName.Product]: PageBlock,
@@ -114,7 +114,7 @@ export const initStoryblok = () => {
     [StoryblokBlockName.Spacer]: SpacerBlock,
     [StoryblokBlockName.Tabs]: TabsBlock,
     [StoryblokBlockName.Text]: TextBlock,
-    [StoryblokBlockName.TopMenu]: TopMenuBlock,
+    [StoryblokBlockName.TopMenu]: HeaderBlock,
     [StoryblokBlockName.TopPickCard]: TopPickCardBlock,
   }
 
