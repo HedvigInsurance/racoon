@@ -36,8 +36,9 @@
     "marked": "4.0.18",
     "next": "12.2.2",
     "next-i18next": "^11.0.0",
-    "pino-datadog": "https://github.com/simonauner/pino-datadog#rename-hostname-to-host",
-    "pino-multi-stream": "6.0.0",
+    "pino": "8.4.2",
+    "pino-datadog-transport": "1.2.2",
+    "pino-pretty": "9.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "ui": "workspace:"

@@ -66,6 +66,8 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
     }
   }
 
+  logger.info('log loggely log')
+
   return {
     props: {
       ...(await serverSideTranslations(locale)),
