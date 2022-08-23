@@ -8,10 +8,10 @@ export type FormTemplateUISchema = {
 
 type FieldConfig = {
   title?: TextLabel
-  type?: 'date' | 'stepper' | 'select' | 'radio' | 'text'
+  type?: FormTemplateField['type']
 
   required?: boolean
-  defaultValue?: unknown
+  defaultValue?: string
 
   options?: Array<FieldOption>
 }
@@ -31,7 +31,6 @@ type LayoutSection = {
 
 type LayoutField = {
   name: string
-
   columnSpan?: number
 }
 
@@ -50,12 +49,18 @@ export type FormSection = {
 
 type InputGroupState = 'INITIAL' | 'INVALID' | 'VALID'
 
-export type FormTemplateField = TextField | NumberField | SelectField | DateField | RadioField
+export type FormTemplateField =
+  | TextField
+  | NumberField
+  | SelectField
+  | DateField
+  | RadioField
+  | HiddenField
 
 type FieldBase = LayoutField & {
   label?: TextLabel
   placeholder?: TextLabel
-  defaultValue?: unknown
+  defaultValue?: string
   required?: boolean
 }
 
@@ -64,3 +69,4 @@ type NumberField = FieldBase & { type: 'number'; min?: number; max?: number }
 type SelectField = FieldBase & { type: 'select'; options: Array<FieldOption> }
 type DateField = FieldBase & { type: 'date' }
 type RadioField = FieldBase & { type: 'radio'; options: Array<FieldOption> }
+type HiddenField = FieldBase & { type: 'hidden' }

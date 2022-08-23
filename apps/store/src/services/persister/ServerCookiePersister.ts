@@ -9,7 +9,9 @@ export class ServerCookiePersister implements SimplePersister {
   ) {}
 
   public save(id: string) {
-    this.response.setHeader('Set-Cookie', [`${this.cookieKey}=${id}; Path=/`])
+    const rawHeader = this.response.getHeader('Set-Cookie')
+    const existingHeaders = Array.isArray(rawHeader) ? rawHeader : []
+    this.response.setHeader('Set-Cookie', [...existingHeaders, `${this.cookieKey}=${id}; Path=/`])
   }
 
   public fetch() {

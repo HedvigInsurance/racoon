@@ -107,7 +107,7 @@ Default.args = {
               key: 'Number Co-Insured',
             },
             required: true,
-            defaultValue: 1,
+            defaultValue: '1',
           },
         ],
         submit: {

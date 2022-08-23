@@ -42,7 +42,7 @@ export const setupPriceCalculatorForm = async ({
 
 const prepopulateFormTemplate = (
   template: FormTemplate,
-  data: Record<string, unknown>,
+  data: Record<string, string>,
 ): FormTemplate => {
   return {
     sections: template.sections.map((section) => {
