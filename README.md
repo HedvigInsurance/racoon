@@ -2,7 +2,7 @@
 
 Proof of concept monorepo to support all purchase journey related projects.
 
-### Why Racoon?
+## Why Racoon?
 
 Raccoons can eat just about anything, making them ideal urban dwellers. They love big city life! Today there are 20 times more of them in cities compared to 70 years ago. They can now be found across the globe.
 
@@ -14,19 +14,36 @@ Raccoons can eat just about anything, making them ideal urban dwellers. They lov
 1. `nvm install` (installs the node version specified in `.nvmrc`)
 1. `nvm use` (use version from `.nvmrc`)
 
-### Packaga manager
+### Package manager
 
-We use `yarn` as package manager. [Corepack](https://github.com/nodejs/corepack) installs the specified version defined in `package.json`
+We use `yarn` as package manager. [Corepack](https://github.com/nodejs/corepack) installs the specified version defined in `package.json` so you do not need to install it yourself.
 
-### Install dependencies
+### Install project
 
 ```sh
+git clone https://github.com/HedvigInsurance/racoon
+cd racoon
+nvm use
 yarn
 ```
 
 ### Development
 
-#### Run the development server:
+#### Environment variables
+
+Ask someone from the Purchase Journey team to help you out :)
+
+If you're already part of the Vercel-team you can run:
+
+```sh
+vercel --scope hedvig link --project racoon --yes
+vercel env pull apps/onboarding/.env.local
+
+vercel --scope hedvig link --project racoon-store --yes
+vercel env pull apps/store/.env.local
+```
+
+#### Run the development server
 
 ```sh
 yarn dev
@@ -36,7 +53,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 For deployment, pulling translations, using CMS, etc you will need access tokens. Refer to Notion for setup details
 
-#### Running a specific package:
+#### Running a specific package
+
 ```sh
 yarn dev --filter=store
 ```
@@ -51,7 +69,7 @@ This Turborepo includes the following packages and apps:
 
 - `onboarding`: web-based onboarding using Next.js
 - `store`: Hedvig Coverage Store
-- `ui`: a dummy React UI library
+- `ui`: Hedvig React UI library
 - `scripts`: ESLint configurations
 - `tsconfig`: TypeScript configs used throughout the monorepo
 
