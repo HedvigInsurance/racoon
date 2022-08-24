@@ -1,28 +1,22 @@
 import styled from '@emotion/styled'
 import { CartCard } from '@/components/CartCard/CartCard'
-import { CartPageProps, ProductData } from './CartPageProps.types'
-
-const CartUl = styled.ul(({ theme }) => ({
-  paddingLeft: '0',
-  listStyleType: 'none',
-  marginTop: theme.space[5],
-}))
-
-/**
- * This component shows all items currently in the cart.
- *
- * It can optionally filter by a CmsProduct name to only show relevant products.
- */
+import { CartPageProps } from './CartPageProps.types'
 
 type Props = Pick<CartPageProps, 'products'>
 export const CartList = ({ products }: Props) => {
   return (
-    <CartUl>
-      {products.map((item: ProductData, id: number) => (
+    <StyledCartList>
+      {products.map((item, id) => (
         <li key={id}>
           <CartCard title={item.name} price={item.cost} currency={item.currency} />
         </li>
       ))}
-    </CartUl>
+    </StyledCartList>
   )
 }
+
+const StyledCartList = styled.ul({
+  padding: 0,
+  listStyleType: 'none',
+  width: '100%',
+})

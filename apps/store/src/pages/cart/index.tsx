@@ -6,7 +6,6 @@ import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 const NextCartPage: NextPageWithLayout<CartPageProps> = (props) => {
-
   return <CartPage {...props} />
 }
 
@@ -15,8 +14,7 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
   try {
     const apolloClient = initializeApollo()
 
-    const shopSession = await
-      getCurrentShopSessionServerSide({ req, res, apolloClient })
+    const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
 
     const totalCost = shopSession.cart.lines
       .map((line) => parseInt(line.price.amount, 10) || 0)
@@ -25,13 +23,17 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
     return {
       props: {
         products: shopSession.cart.lines.map((item) => {
-          return { name: item.variant.title, cost: parseFloat(item.price.amount), currency: item.price.currencyCode }
+          return {
+            name: item.variant.title,
+            cost: parseFloat(item.price.amount),
+            currency: item.price.currencyCode,
+          }
         }),
         cost: {
           total: totalCost,
           subTotal: totalCost,
         },
-      }
+      },
     }
   } catch (error) {
     console.error(error)
