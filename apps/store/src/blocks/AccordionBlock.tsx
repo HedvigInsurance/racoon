@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import { Heading, Space } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { blocksOfType } from '@/services/storyblok/blocksOfType'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { blocksOfType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
   title?: string
