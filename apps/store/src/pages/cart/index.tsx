@@ -28,6 +28,7 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
       props: {
         products: shopSession.cart.lines.map((item) => {
           return {
+            id: item.id,
             name: item.variant.title,
             cost: parseFloat(item.price.amount),
             currency: item.price.currencyCode,

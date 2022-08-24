@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Button, Heading, Space } from 'ui'
-import { CartList } from '@/components/CartPage/CartList'
+import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { PageLink } from '@/lib/PageLink'
@@ -18,7 +18,18 @@ export const CartPage = ({ products, cost }: CartPageProps) => {
         <StyledHeading as="h1" variant="standard.24">
           Cart ({products.length})
         </StyledHeading>
-        <CartList products={products} />
+        <ProductList>
+          {products.map((item) => (
+            <li key={item.id}>
+              <CartCard
+                lineId={item.id}
+                title={item.name}
+                price={item.cost}
+                currency={item.currency}
+              />
+            </li>
+          ))}
+        </ProductList>
         <Footer>
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
@@ -60,6 +71,12 @@ const Wrapper = styled.div(({ theme }) => ({
 
 const StyledHeading = styled(Heading)({ textAlign: 'center' })
 const CenteredParagraph = styled.p({ textAlign: 'center' })
+
+const ProductList = styled.ul({
+  padding: 0,
+  listStyleType: 'none',
+  width: '100%',
+})
 
 const Footer = styled.footer(({ theme }) => ({
   position: 'absolute',
