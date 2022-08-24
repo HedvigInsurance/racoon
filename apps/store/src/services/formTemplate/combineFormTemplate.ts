@@ -31,7 +31,12 @@ export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTe
 
           // TODO: refactor this function to be more type safe
           // @ts-expect-error we fill in the rest of the fields later
-          const formField: FormTemplateField = { ...field, type: fieldType ?? 'text' }
+          const formField: FormTemplateField = {
+            ...field,
+            type: uiField?.type ?? fieldType ?? 'text',
+          }
+
+          const isOptionField = formField.type === 'select' || formField.type === 'radio'
 
           if (schemaField) {
             if (schemaField.title) formField.label = { key: schemaField.title }
@@ -45,7 +50,7 @@ export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTe
 
             if (schemaField.defaultValue) formField.defaultValue = schemaField.defaultValue
 
-            if (formField.type === 'select' && schemaField.enum) {
+            if (isOptionField && schemaField.enum) {
               formField.options = schemaField.enum.map((option: string) => ({
                 value: option,
                 label: option,
@@ -54,15 +59,13 @@ export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTe
           }
 
           if (uiField) {
-            formField.type = uiField.type ?? formField.type
-
             if (uiField.title) formField.label = uiField.title
 
             formField.required = uiField.required ?? formField.required ?? false
 
             if (uiField.defaultValue) formField.defaultValue = uiField.defaultValue
 
-            if (formField.type === 'select' && uiField.options) {
+            if (isOptionField && uiField.options) {
               formField.options = uiField.options
             }
           }
