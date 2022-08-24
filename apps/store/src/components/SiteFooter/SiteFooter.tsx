@@ -85,24 +85,24 @@ export const SiteFooter = ({ onChangeLocale }: SiteFooterProps) => {
   )
 }
 
-const Wrapper = styled(Space)(({ theme }) => ({
+export const Wrapper = styled(Space)(({ theme }) => ({
   width: '100%',
   backgroundColor: theme.colors.gray200,
   padding: `${theme.space[6]} ${theme.space[4]}`,
 }))
 
-const Flex = styled.div({ flex: 1 })
+export const Flex = styled.div({ flex: 1 })
 
-const TextMuted = styled.p(({ theme }) => ({
+export const TextMuted = styled.p(({ theme }) => ({
   color: theme.colors.gray600,
   fontSize: theme.fontSizes[1],
 }))
 
-const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => ({
+export const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => ({
   padding: theme.space[4],
   paddingTop: theme.space[2],
 }))
 
-const StyledLink = styled.a({
+export const StyledLink = styled.a({
   textDecoration: 'none',
 })
