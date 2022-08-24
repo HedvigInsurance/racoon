@@ -97,7 +97,7 @@ export const initStoryblok = () => {
   ]
   const blockAliases = { product: PageBlock }
   const components = {
-    ...Object.fromEntries(blockComponents.map((x) => [x.blockName, x])),
+    ...Object.fromEntries(blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent])),
     ...blockAliases,
   }
 
