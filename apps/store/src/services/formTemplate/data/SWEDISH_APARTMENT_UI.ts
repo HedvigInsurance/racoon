@@ -18,8 +18,9 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
         id: 'insured-people',
         title: { key: 'Insured people' },
         fields: [
-          { name: 'birthDate', columnSpan: 3 },
-          { name: 'numberCoInsured', columnSpan: 3 },
+          { name: 'ssn', columnSpan: 6 },
+          { name: 'numberCoInsured', columnSpan: 6 },
+          { name: 'type', columnSpan: 6 },
         ],
         submit: { key: 'Calculate price' },
       },
@@ -36,9 +37,12 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
     livingSpace: {
       title: { key: 'Apartment size' },
     },
-    birthDate: {
-      title: { key: 'Your birthdate' },
-      type: 'date',
+    ssn: {
+      title: { key: 'Personal number' },
+    },
+    type: {
+      type: 'hidden',
+      defaultValue: 'SWEDISH_APARTMENT',
     },
     subType: {
       title: { key: 'Ownership type' },
@@ -50,13 +54,13 @@ export const SWEDISH_APARTMENT_UI: FormTemplateUISchema = {
         },
         {
           label: { key: 'I own' },
-          value: 'OWN',
+          value: 'BRF',
         },
       ],
     },
     numberCoInsured: {
       title: { key: 'No. of people' },
-      defaultValue: 1,
+      defaultValue: '1',
     },
   },
 }
