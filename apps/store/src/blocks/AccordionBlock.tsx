@@ -27,6 +27,7 @@ export const AccordionBlock = ({ blok }: Props) => {
     </StyledRoot>
   )
 }
+AccordionBlock.blockName = 'accordion'
 
 const StyledRoot = styled(Accordion.Root)(({ theme }) => ({
   padding: theme.space[4],

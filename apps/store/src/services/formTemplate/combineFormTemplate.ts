@@ -28,23 +28,29 @@ export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTe
           const uiField = uiSchema.fields[field.name]
 
           const fieldType = shemaTypeToFieldType(schemaField?.type)
-          // @ts-ignore
-          const formField: FormTemplateField = { ...field, type: fieldType ?? 'text' }
+
+          // TODO: refactor this function to be more type safe
+          // @ts-expect-error we fill in the rest of the fields later
+          const formField: FormTemplateField = {
+            ...field,
+            type: uiField?.type ?? fieldType ?? 'text',
+          }
+
+          const isOptionField = formField.type === 'select' || formField.type === 'radio'
 
           if (schemaField) {
             if (schemaField.title) formField.label = { key: schemaField.title }
 
             formField.required = schema.required.includes(field.name)
 
-            // @ts-ignore we should be able to re-assign the type
-            if (schemaField.minimum) formField.min = schemaField.minimum
-            // @ts-ignore we should be able to re-assign the type
-            if (schemaField.maximum) formField.max = schemaField.maximum
+            if (formField.type === 'number') {
+              if (schemaField.minimum) formField.min = schemaField.minimum
+              if (schemaField.maximum) formField.max = schemaField.maximum
+            }
 
             if (schemaField.defaultValue) formField.defaultValue = schemaField.defaultValue
 
-            if (schemaField.enum) {
-              // @ts-ignore we should be able to re-assign the type
+            if (isOptionField && schemaField.enum) {
               formField.options = schemaField.enum.map((option: string) => ({
                 value: option,
                 label: option,
@@ -53,17 +59,13 @@ export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTe
           }
 
           if (uiField) {
-            // @ts-ignore we should be able to re-assign the type
-            formField.type = uiField.type ?? formField.type
-
             if (uiField.title) formField.label = uiField.title
 
             formField.required = uiField.required ?? formField.required ?? false
 
             if (uiField.defaultValue) formField.defaultValue = uiField.defaultValue
 
-            if (uiField.options) {
-              // @ts-ignore we should be able to re-assign the type
+            if (isOptionField && uiField.options) {
               formField.options = uiField.options
             }
           }

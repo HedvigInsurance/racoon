@@ -46,6 +46,9 @@ export const DynamicField = (props: Props) => {
         />
       )
 
+    case 'hidden':
+      return <input type="hidden" name={props.name} value={props.defaultValue} />
+
     default:
       return <InputField {...baseProps} type="text" pattern={props.pattern} />
   }

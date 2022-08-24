@@ -24,3 +24,4 @@ export const TimelineBlock = ({ blok }: Props) => {
     </Timeline.Root>
   )
 }
+TimelineBlock.blockName = 'timeline'

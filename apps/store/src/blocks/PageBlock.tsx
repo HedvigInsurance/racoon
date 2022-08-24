@@ -16,6 +16,8 @@ export const PageBlock = ({ blok }: PageBlockProps) => {
   )
 }
 
+PageBlock.blockName = 'page'
+
 const Main = styled.main({
   width: '100%',
 })

@@ -92,6 +92,7 @@ export const PriceCalculatorBlock = ({
     </>
   )
 }
+PriceCalculatorBlock.blockName = 'priceCalculator'
 
 const SectionWithPadding = styled.div(({ theme }) => ({
   paddingLeft: theme.space[3],

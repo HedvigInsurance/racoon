@@ -18,3 +18,4 @@ export const ContactSupportBlock = ({ blok }: ContactSupportBlockProps) => {
     />
   )
 }
+ContactSupportBlock.blockName = 'contactSupport'

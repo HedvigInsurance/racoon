@@ -30,6 +30,7 @@ export const TimelineItemBlock = ({ blok, isFirst, isLast }: Props) => {
     </Timeline.Item>
   )
 }
+TimelineItemBlock.blockName = 'timelineItem'
 
 const StyledBody = styled.div(({ theme }) => ({
   color: theme.colors.gray600,

@@ -20,6 +20,7 @@ export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
     </Wrapper>
   )
 }
+ProductGridBlock.blockName = 'productGrid'
 
 const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[3],

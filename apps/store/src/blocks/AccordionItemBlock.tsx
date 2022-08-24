@@ -18,3 +18,4 @@ export const AccordionItemBlock = ({ blok }: Props) => {
     </Accordion.Item>
   )
 }
+AccordionItemBlock.blockName = 'accordionItem'

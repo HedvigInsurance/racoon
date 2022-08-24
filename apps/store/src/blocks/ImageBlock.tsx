@@ -23,6 +23,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
     </Wrapper>
   )
 }
+ImageBlock.blockName = 'image'
 
 const Wrapper = styled.div<{ margins: boolean }>(({ theme, margins = true }) => ({
   paddingLeft: margins ? theme.space[4] : 0,
