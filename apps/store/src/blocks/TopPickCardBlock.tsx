@@ -24,6 +24,7 @@ export const TopPickCardBlock = ({ blok }: TopPickCardBlockProps) => {
     </Link>
   )
 }
+TopPickCardBlock.blockName = 'topPickCard'
 
 const StyledAnchor = styled.a({
   textDecoration: 'none',

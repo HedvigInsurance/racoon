@@ -22,6 +22,7 @@ export const ProductSummaryBlock = (props: ProductSummaryBlockProps) => {
     </Wrapper>
   )
 }
+ProductSummaryBlock.blockName = 'productSummary'
 
 const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[4],

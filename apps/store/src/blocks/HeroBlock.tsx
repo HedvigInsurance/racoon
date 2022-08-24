@@ -24,6 +24,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
     </HeroSection>
   )
 }
+HeroBlock.blockName = 'hero'
 
 const HeroSection = styled.section<{ bgImage: string }>(({ theme, bgImage }) => ({
   display: 'flex',

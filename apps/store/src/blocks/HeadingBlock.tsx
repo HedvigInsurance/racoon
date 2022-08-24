@@ -24,3 +24,4 @@ export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
     </Wrapper>
   )
 }
+HeadingBlock.blockName = 'heading'

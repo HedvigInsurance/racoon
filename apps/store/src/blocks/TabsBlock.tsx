@@ -1,7 +1,7 @@
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import * as Tabs from '@/components/ProductPage/Tabs'
-import { SbBaseBlockProps, StoryblokBlockName } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type TabsBlockProps = SbBaseBlockProps<{
   items: Array<SbBlokData>
@@ -17,6 +17,7 @@ type TabBlockData = SbBlokData & TabBlockFields
 type TabBlockProps = SbBaseBlockProps<TabBlockFields>
 
 export const TabsBlock = ({ blok }: TabsBlockProps) => {
+  // TODO: Use storyblok-level filter to ensure all items are tabs instead of filtering here
   const tabBlocks = useMemo(() => blok.items.filter(isTabBlock), [blok.items])
   const firstTabValue = blok.items[0]?._uid
 
@@ -35,6 +36,7 @@ export const TabsBlock = ({ blok }: TabsBlockProps) => {
     </Tabs.Tabs>
   )
 }
+TabsBlock.blockName = 'tabs'
 
 const TabBlock = ({ blok }: TabBlockProps) => {
   return (
@@ -47,5 +49,5 @@ const TabBlock = ({ blok }: TabBlockProps) => {
 }
 
 const isTabBlock = (blok: SbBlokData): blok is TabBlockData => {
-  return blok.component === StoryblokBlockName.Tab
+  return blok.component === 'tab'
 }

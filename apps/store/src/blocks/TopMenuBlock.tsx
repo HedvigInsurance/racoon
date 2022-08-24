@@ -36,6 +36,7 @@ export const NavItemBlock = ({ blok, ...props }: NavItemBlockProps) => {
     </NavigationMenuPrimitive.Item>
   )
 }
+NavItemBlock.blockName = 'navItem'
 
 type NestedNavContainerBlockProps = SbBaseBlockProps<{
   name: string
@@ -71,6 +72,7 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
     </NavigationMenuPrimitive.Item>
   )
 }
+NestedNavContainerBlock.blockName = 'nestedNavContainer'
 
 type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: SbBlokData[]
@@ -118,3 +120,4 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
     </Wrapper>
   )
 }
+HeaderBlock.blockName = 'header'

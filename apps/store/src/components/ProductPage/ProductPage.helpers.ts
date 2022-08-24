@@ -1,10 +1,10 @@
 import { SbBlokData } from '@storyblok/react'
-import { PriceCalculatorBlockContext } from '@/blocks/PriceCalculatorBlock'
-import { ProductSummaryBlockContext } from '@/blocks/ProductSummaryBlock'
+import { PriceCalculatorBlock, PriceCalculatorBlockContext } from '@/blocks/PriceCalculatorBlock'
+import { ProductSummaryBlock, ProductSummaryBlockContext } from '@/blocks/ProductSummaryBlock'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { ProductStory, StoryblokBlockName } from '@/services/storyblok/storyblok'
+import { ProductStory } from '@/services/storyblok/storyblok'
 
 const productGradient = ['#00BFFF', '#00ff00'] as const
 
@@ -18,10 +18,10 @@ type Params = {
 
 export const getBlockContext = (params: Params) => {
   switch (params.block.component) {
-    case StoryblokBlockName.ProductSummary:
+    case ProductSummaryBlock.blockName:
       return getProductSummaryBlockContext(params)
 
-    case StoryblokBlockName.PriceCalculator:
+    case PriceCalculatorBlock.blockName:
       return getPriceCalculatorBlockContext(params)
 
     default:

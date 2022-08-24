@@ -16,6 +16,7 @@ export const ContentBlock = ({ blok }: Props) => {
     </Wrapper>
   )
 }
+ContentBlock.blockName = 'content'
 
 const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[4],
