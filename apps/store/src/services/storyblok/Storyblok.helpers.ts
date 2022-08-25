@@ -1,9 +1,9 @@
 import { SbBlokData } from '@storyblok/react'
 
-export function blocksOfType<BlockData extends SbBlokData>(
+export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: BlockData[],
   targetType: string,
-): BlockData[] {
+): BlockData[] => {
   const result: BlockData[] = []
   for (const block of blocks) {
     if (block.component !== targetType) {

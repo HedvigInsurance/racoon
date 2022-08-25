@@ -3,7 +3,7 @@ import { Heading, Space } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { blocksOfType } from '@/services/storyblok/Storyblok.helpers'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
   title?: string
@@ -11,6 +11,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const AccordionBlock = ({ blok }: Props) => {
+  const accordions = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   return (
     <StyledRoot type="multiple">
       <Space y={1}>
@@ -20,7 +21,7 @@ export const AccordionBlock = ({ blok }: Props) => {
           </StyledHeading>
         )}
         <div>
-          {blocksOfType(blok.items, AccordionItemBlock.blockName).map((nestedBlock) => (
+          {accordions.map((nestedBlock) => (
             <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
         </div>
