@@ -19,7 +19,6 @@ import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { ReactNode } from 'react'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
