@@ -21,7 +21,7 @@ import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
-  title: string
+  name: string
 }>
 export const FooterLink = ({ blok }: FooterLinkProps) => {
   return (
