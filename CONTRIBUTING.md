@@ -11,6 +11,7 @@ This document contains guidelines for how we write, organize and collaborate on 
 - [Pull Requests and Code Reviews](#pull-requests-and-code-reviews)
 - [Continuous Integration and Deployment](#continuous-integration-and-deployment)
 - [Code guidelines](#code-guidelines)
+- [Storyblok](#storyblok)
 - [Useful links](#useful-links)
 
 ## Web standards and Accessibility
@@ -529,6 +530,36 @@ const NotSoCoolDiv = styled('div')`
 const AnotherNotCoolDiv = styled.div`
   background: peachpuff;
 `
+```
+
+## Storyblok
+
+Our CMS.
+
+### Allowing only specific nested blocks
+
+In some cases we only support a single nested block type for a certain field. The `Accordion`-block has an "items" field that only supports `AccordionItem`-blocks.
+
+Always do the following:
+
+- Storyblok: use the "Allow only specific component to be inserted"
+- React: filter out unsupported blocks by using the "component"-field
+- React: explicitly use the block-component instead of `<StoryblokComponent>`
+
+Do:
+
+```javascript
+export const AccordionBlock = ({ blok }: Props) => {
+  const items = blok.items.filter((block) => block.component === 'accordionItem')
+
+  return (
+    <div>
+      {blok.items.map((nestedBlock) => (
+        <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+      ))}
+    </div>
+  )
+}
 ```
 
 ## Useful links
