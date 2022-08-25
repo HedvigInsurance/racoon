@@ -1,4 +1,4 @@
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { ChangeEvent, useRef } from 'react'
 import { Space } from 'ui'
@@ -25,17 +25,17 @@ type FooterLinkProps = SbBaseBlockProps<{
 }>
 export const FooterLink = ({ blok }: FooterLinkProps) => {
   return (
-    <Link {...storyblokEditable(blok)} href={blok.link.cached_url} passHref>
+    <Link href={blok.link.cached_url} passHref {...storyblokEditable(blok)}>
       <StyledLink>{blok.title}</StyledLink>
     </Link>
   )
 }
+FooterLink.blockName = 'footerLink'
 
 type FooterSectionProps = SbBaseBlockProps<{
+  footerLinks: FooterLinkProps['blok'][]
   title: string
-  footerLinks: SbBlokData[]
-}> &
-  SiteFooterProps
+}>
 
 export const FooterSection = ({ blok }: FooterSectionProps) => {
   return (
@@ -45,7 +45,7 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
         <Space y={1}>
           {blok.footerLinks.map((nestedBlock) => (
             <div key={nestedBlock._uid}>
-              <StoryblokComponent blok={nestedBlock} />
+              <FooterLink blok={nestedBlock} />
             </div>
           ))}
         </Space>
@@ -53,10 +53,12 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
     </Accordion.Item>
   )
 }
+FooterSection.blockName = 'footerSection'
 
 type FooterBlockProps = SbBaseBlockProps<{
-  sections: SbBlokData[]
-}>
+  sections: FooterSectionProps['blok'][]
+}> &
+  SiteFooterProps
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { marketLabel: currentMarket, htmlLang: currentLanguage } = useCurrentLocale()
@@ -87,7 +89,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     <Wrapper y={2}>
       <Accordion.Root type="multiple">
         {blok.sections.map((nestedBlok) => (
-          <StoryblokComponent key={nestedBlok._uid} blok={nestedBlok} />
+          <FooterSection key={nestedBlok._uid} blok={nestedBlok} />
         ))}
       </Accordion.Root>
       <form ref={formRef} onSubmit={handleSubmit}>
@@ -116,7 +118,4 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     </Wrapper>
   )
 }
-
-FooterLink.blockName = 'footerLink'
-FooterSection.blockName = 'footerSection'
 FooterBlock.blockName = 'footer'
