@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
+import { HeaderBlock } from '@/blocks/TopMenuBlock'
 import { SiteFooter, SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
 
 const Wrapper = styled.main({
@@ -11,10 +12,11 @@ const Wrapper = styled.main({
 })
 
 type LayoutWithMenuProps = {
-  children: ReactNode
+  children: ReactElement
 }
 
 export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
+  const globalStory = children.props.globalStory
   const router = useRouter()
   const handleChangeLocale: SiteFooterProps['onChangeLocale'] = (locale) => {
     router.push(router.asPath, undefined, { locale })
@@ -22,6 +24,7 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
 
   return (
     <Wrapper>
+      <HeaderBlock blok={globalStory.content} />
       {children}
       <SiteFooter onChangeLocale={handleChangeLocale} />
     </Wrapper>
