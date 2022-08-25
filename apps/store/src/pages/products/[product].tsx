@@ -8,7 +8,6 @@ import { getLocale } from '@/lib/l10n/getLocale'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getProductStory } from '@/services/storyblok/storyblok'
-import { isCountryCode } from '@/utils/isCountryCode'
 
 const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
   return (
@@ -23,12 +22,10 @@ const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPag
 
 export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
   const { req, res } = context
+  const { countryCode } = getLocale(context.locale)
 
-  const { marketLabel: countryCode } = getLocale(context.locale ?? context.defaultLocale)
   const slug = context.params?.product
-
   if (typeof slug !== 'string') return { notFound: true }
-  if (!isCountryCode(countryCode)) return { notFound: true }
 
   try {
     const apolloClient = initializeApollo()
