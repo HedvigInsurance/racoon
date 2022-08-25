@@ -32,7 +32,7 @@ export type StoryblokQueryParams = {
 
 export type StoryblokPageProps = {
   story: StoryData
-  globalStory: StoryData | boolean
+  globalStory: GlobalStory | boolean
 }
 
 export type StoryblokImage = {
@@ -64,7 +64,11 @@ export type ProductStory = StoryData & {
   }
 }
 
-type GlobalStory = StoryData
+type GlobalStory = StoryData & {
+  content: StoryData['content'] & {
+    navMenuContainer: Array<SbBlokData>
+  }
+}
 
 type NamedBlock = {
   blockName: string
@@ -130,7 +134,7 @@ export const getAllLinks = async () => {
 export const getGlobalStory = async (preview = false) => {
   try {
     const story = await getStoryBySlug('global', preview)
-    return story as GlobalStory
+    return story
   } catch {
     return null
   }
