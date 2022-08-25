@@ -33,7 +33,7 @@ export type StoryblokQueryParams = {
 
 export type StoryblokPageProps = {
   story: StoryData
-  globalStory: GlobalStory | boolean
+  globalStory: GlobalStory
 }
 
 export type StoryblokImage = {
@@ -126,7 +126,7 @@ export const getStoryBySlug = async (slug: string, preview = false) => {
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
   })
-  return data.story
+  return data.story as StoryData
 }
 
 export const getAllLinks = async () => {
@@ -136,12 +136,8 @@ export const getAllLinks = async () => {
 }
 
 export const getGlobalStory = async (preview = false) => {
-  try {
-    const story = await getStoryBySlug('global', preview)
-    return story
-  } catch {
-    return null
-  }
+  const story = await getStoryBySlug('global', preview)
+  return story as GlobalStory
 }
 
 export const getProductStory = async (slug: string, preview = false) => {

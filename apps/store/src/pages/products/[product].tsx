@@ -7,7 +7,7 @@ import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getProductStory } from '@/services/storyblok/storyblok'
+import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
 
 const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
   return (
@@ -30,9 +30,10 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
   try {
     const apolloClient = initializeApollo()
 
-    const [shopSession, story] = await Promise.all([
+    const [shopSession, story, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
       getProductStory(slug, context.preview),
+      getGlobalStory(context.preview),
     ])
 
     const { template, priceIntent } = await setupPriceCalculatorForm({
@@ -46,6 +47,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
     return {
       props: {
         story,
+        globalStory,
         priceFormTemplate: template,
         priceIntent,
         shopSession,
