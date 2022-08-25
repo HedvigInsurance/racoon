@@ -1,19 +1,21 @@
-import { SbBlokData, StoryblokComponent } from '@storyblok/react'
+import { TimelineItemBlock, TimelineItemBlockProps } from '@/blocks/TimelineItemBlock'
 import * as Timeline from '@/components//Timeline/Timeline'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
-  items: Array<SbBlokData>
+  items: Array<TimelineItemBlockProps['blok']>
 }>
 
 export const TimelineBlock = ({ blok }: Props) => {
+  const timelineItems = filterByBlockType(blok.items, TimelineItemBlock.blockName)
   return (
     <Timeline.Root>
-      {blok.items.map((nestedBlock, i) => {
+      {timelineItems.map((nestedBlock, i) => {
         const isFirst = i === 0
         const isLast = i === blok.items.length - 1
         return (
-          <StoryblokComponent
+          <TimelineItemBlock
             key={nestedBlock._uid}
             blok={nestedBlock}
             isFirst={isFirst}

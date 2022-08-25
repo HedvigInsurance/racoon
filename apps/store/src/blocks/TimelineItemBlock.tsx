@@ -4,7 +4,7 @@ import { Heading } from 'ui'
 import * as Timeline from '@/components/Timeline/Timeline'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export type Props = SbBaseBlockProps<{
+export type TimelineItemBlockProps = SbBaseBlockProps<{
   title: string
   body: Richtext
 }> & {
@@ -12,7 +12,7 @@ export type Props = SbBaseBlockProps<{
   isLast: boolean
 }
 
-export const TimelineItemBlock = ({ blok, isFirst, isLast }: Props) => {
+export const TimelineItemBlock = ({ blok, isFirst, isLast }: TimelineItemBlockProps) => {
   const contentHtml = getStoryblokApi().richTextResolver.render(blok.body)
   return (
     <Timeline.Item>
