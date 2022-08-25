@@ -6,6 +6,7 @@ import { ArrowForwardIcon, CrossIcon } from 'ui'
 import { MenuIcon } from '@/components/TopMenu/MenuIcon'
 import { ShoppingCartMenuItem } from '@/components/TopMenu/ShoppingCartMenuItem'
 import {
+  DialogCloseIcon,
   DialogContent,
   IconButton,
   Navigation,
@@ -91,9 +92,7 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
     <Wrapper>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
         <DialogPrimitive.Trigger asChild>
-          <ToggleMenu>
-            <MenuIcon />
-          </ToggleMenu>
+          <ToggleMenu>{open ? null : <MenuIcon />}</ToggleMenu>
         </DialogPrimitive.Trigger>
         <DialogContent>
           <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
@@ -109,11 +108,11 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
               ))}
             </NavigationPrimaryList>
           </Navigation>
-          <DialogPrimitive.DialogClose asChild>
+          <DialogCloseIcon asChild>
             <IconButton>
               <CrossIcon />
             </IconButton>
-          </DialogPrimitive.DialogClose>
+          </DialogCloseIcon>
         </DialogContent>
       </DialogPrimitive.Root>
       <ShoppingCartMenuItem />

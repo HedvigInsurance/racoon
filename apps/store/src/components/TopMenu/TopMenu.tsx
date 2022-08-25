@@ -91,11 +91,11 @@ export const TopMenu = () => {
             </NavigationPrimaryList>
           </Navigation>
 
-          <DialogPrimitive.DialogClose asChild>
+          <DialogCloseIcon asChild>
             <IconButton>
               <CrossIcon />
             </IconButton>
-          </DialogPrimitive.DialogClose>
+          </DialogCloseIcon>
         </DialogContent>
       </DialogPrimitive.Root>
 
@@ -118,6 +118,8 @@ export const Wrapper = styled.div(({ theme }) => ({
   width: '100%',
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
+  position: 'fixed',
+  zIndex: '1000',
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
@@ -196,3 +198,7 @@ export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
     </Link>
   )
 }
+
+export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
+  position: 'fixed',
+})
