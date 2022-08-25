@@ -5,6 +5,7 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
+import { FooterBlock, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
@@ -82,6 +83,9 @@ export const initStoryblok = () => {
     CheckListBlock,
     ContactSupportBlock,
     ContentBlock,
+    FooterBlock,
+    FooterLink,
+    FooterSection,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
