@@ -11,7 +11,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const AccordionBlock = ({ blok }: Props) => {
-  const accordions = filterByBlockType(blok.items, AccordionItemBlock.blockName)
+  const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   return (
     <StyledRoot type="multiple">
       <Space y={1}>
@@ -21,7 +21,7 @@ export const AccordionBlock = ({ blok }: Props) => {
           </StyledHeading>
         )}
         <div>
-          {accordions.map((nestedBlock) => (
+          {accordionItems.map((nestedBlock) => (
             <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
         </div>
