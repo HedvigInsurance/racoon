@@ -5,7 +5,6 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { initializeApollo } from '@/services/apollo/client'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { isCountryCode } from '@/utils/isCountryCode'
 
 const NextCartPage: NextPageWithLayout<CartPageProps> = (props) => {
   return <CartPage {...props} />
@@ -13,8 +12,7 @@ const NextCartPage: NextPageWithLayout<CartPageProps> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<CartPageProps> = async (context) => {
   const { req, res } = context
-  const { marketLabel: countryCode } = getLocale(context.locale ?? context.defaultLocale)
-  if (!isCountryCode(countryCode)) return { notFound: true }
+  const { countryCode } = getLocale(context.locale)
 
   try {
     const apolloClient = initializeApollo()
