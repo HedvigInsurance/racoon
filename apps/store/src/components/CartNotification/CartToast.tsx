@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Button, LinkButton, Space } from 'ui'
+import { Button, Heading, LinkButton, Space } from 'ui'
+import * as Dialog from '@/components/Dialog/Dialog'
 import { PageLink } from '@/lib/PageLink'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import * as CartNotification from './CartNotification'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -22,9 +22,9 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
   }))
 
   return (
-    <CartNotification.Root open={isOpen}>
+    <Dialog.Root open={isOpen}>
       {product && <CartNotificationContent onClose={handleClose} {...product} />}
-    </CartNotification.Root>
+    </Dialog.Root>
   )
 })
 
@@ -39,11 +39,11 @@ const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
   const cartLineCount = shopSession?.cart.lines.length ?? 1
 
   return (
-    <CartNotification.Content
-      onClose={onClose}
-      Title={<CartNotification.Header>Insurance added to cart</CartNotification.Header>}
-    >
+    <Dialog.Content onClose={onClose}>
       <DialogContentWrapper y={1.5}>
+        <Heading as="h2" variant="standard.18">
+          Insurance added to cart
+        </Heading>
         <ProductItem name={name} price={price} gradient={gradient} />
 
         <Space y={0.5}>
@@ -56,13 +56,15 @@ const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
           </Button>
         </Space>
       </DialogContentWrapper>
-    </CartNotification.Content>
+    </Dialog.Content>
   )
 }
 
 const DialogContentWrapper = styled(Space)(({ theme }) => ({
+  paddingTop: theme.space[5],
   paddingLeft: theme.space[3],
   paddingRight: theme.space[3],
   paddingBottom: theme.space[3],
   backgroundColor: theme.colors.white,
+  textAlign: 'center',
 }))

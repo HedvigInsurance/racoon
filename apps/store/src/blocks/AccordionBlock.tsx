@@ -1,15 +1,17 @@
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { Heading, Space } from 'ui'
+import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
   title?: string
-  items: Array<SbBlokData>
+  items: Array<AccordionItemBlockProps['blok']>
 }>
 
 export const AccordionBlock = ({ blok }: Props) => {
+  const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   return (
     <StyledRoot type="multiple">
       <Space y={1}>
@@ -19,8 +21,8 @@ export const AccordionBlock = ({ blok }: Props) => {
           </StyledHeading>
         )}
         <div>
-          {blok.items.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+          {accordionItems.map((nestedBlock) => (
+            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
         </div>
       </Space>

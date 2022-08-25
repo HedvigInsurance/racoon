@@ -3,12 +3,11 @@ import Link from 'next/link'
 import { Button, Heading, Space } from 'ui'
 import { CartList } from '@/components/CartPage/CartList'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
+import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { PageLink } from '@/lib/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ products, cost }: CartPageProps) => {
-
-
   return (
     <Wrapper>
       <Space y={3}>
@@ -30,8 +29,11 @@ export const CartPage = ({ products, cost }: CartPageProps) => {
 }
 
 const Wrapper = styled.div(({ theme }) => ({
-  marginTop: theme.space[7],
-  height: '100vh',
+  minHeight: '100vh',
+  width: '100%',
+  paddingLeft: theme.space[4],
+  paddingRight: theme.space[4],
+  paddingTop: MENU_BAR_HEIGHT,
 }))
 
 const StyledHeading = styled(Heading)({
