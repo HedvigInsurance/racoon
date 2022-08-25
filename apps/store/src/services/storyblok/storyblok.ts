@@ -17,6 +17,8 @@ import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
+import { TimelineBlock } from '@/blocks/TimelineBlock'
+import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 
@@ -91,12 +93,16 @@ export const initStoryblok = () => {
     ProductSummaryBlock,
     SpacerBlock,
     TabsBlock,
+    TimelineBlock,
+    TimelineItemBlock,
     TextBlock,
     TopPickCardBlock,
   ]
   const blockAliases = { product: PageBlock }
   const components = {
-    ...Object.fromEntries(blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent])),
+    ...Object.fromEntries(
+      blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent]),
+    ),
     ...blockAliases,
   }
 
@@ -133,9 +139,4 @@ export const getGlobalStory = async (preview = false) => {
 export const getProductStory = async (slug: string, preview = false) => {
   const story = await getStoryBySlug(`/products/${slug}`, preview)
   return story as ProductStory
-}
-
-export const getStoreStory = async (preview = false) => {
-  const story = await getStoryBySlug('/store', preview)
-  return story as StoryData
 }
