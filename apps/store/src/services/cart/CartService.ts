@@ -36,20 +36,25 @@ export class CartService {
   }
 
   public async lineRemove(lineItemId: string) {
-    const result = await this.apolloClient.mutate<
-      CartLinesRemoveMutation,
-      CartLinesRemoveMutationVariables
-    >({
-      mutation: CartLinesRemoveDocument,
-      variables: {
-        cartId: this.shopSession.cart.id,
-        lineItemId,
-      },
-    })
+    const variables = { cartId: this.shopSession.cart.id, lineItemId }
+    try {
+      const result = await this.apolloClient.mutate<
+        CartLinesRemoveMutation,
+        CartLinesRemoveMutationVariables
+      >({
+        mutation: CartLinesRemoveDocument,
+        variables,
+      })
 
-    const updatedCart = result.data?.cartLinesRemove.cart
-    if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineItemId}`)
-    return updatedCart
+      const updatedCart = result.data?.cartLinesRemove.cart
+      if (!updatedCart) throw new Error(`Could not remove line item from cart: ${lineItemId}`)
+      return updatedCart
+    } catch (error) {
+      console.error('Unable to remove line item from cart')
+      console.error(CartLinesRemoveDocument.loc?.source.body)
+      console.error(JSON.stringify(variables))
+      throw error
+    }
   }
 
   public async startDateUpdate(lineItemId: string, startDate: Date | null) {

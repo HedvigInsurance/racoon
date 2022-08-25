@@ -1,20 +1,18 @@
 import styled from '@emotion/styled'
 import { Button, Heading, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
+import { PageLink } from '@/lib/PageLink'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 export type CartCardProps = {
+  lineId: string
   title: string
   price: number
   currency: string
 }
 
-export const CartCard = ({ title, price, currency }: CartCardProps) => {
+export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
-
-  const handleRemove = () => {
-    //send request to backend to remove product
-  }
 
   return (
     <Dialog.Root>
@@ -38,17 +36,20 @@ export const CartCard = ({ title, price, currency }: CartCardProps) => {
             <Heading as="h2" variant="standard.20">
               Remove insurance?
             </Heading>
-            <Space y={1.5}>
-              <p>You will lose the discount applied if you remove the insurance.</p>
-              <ButtonContainer>
-                <StyledDialogClose asChild>
-                  <Button variant="outlined">Dont remove</Button>
-                </StyledDialogClose>
-                <StyledDialogClose asChild>
-                  <Button onClick={() => handleRemove()}>Remove</Button>
-                </StyledDialogClose>
-              </ButtonContainer>
-            </Space>
+            <form method="post" action={PageLink.apiCartLinesRemove({ lineId })}>
+              <Space y={1.5}>
+                <p>You will lose the discount applied if you remove the insurance.</p>
+                <ButtonContainer>
+                  <Dialog.Close asChild>
+                    <Button fullWidth variant="outlined">
+                      Dont remove
+                    </Button>
+                  </Dialog.Close>
+
+                  <Button fullWidth>Remove</Button>
+                </ButtonContainer>
+              </Space>
+            </form>
           </Space>
         </DialogContentWrapper>
       </StyledDialogContent>
@@ -98,10 +99,6 @@ const ButtonContainer = styled.div(({ theme }) => ({
   display: 'flex',
   gap: theme.space[3],
 }))
-
-const StyledDialogClose = styled(Dialog.Close)({
-  flex: 1,
-})
 
 const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
   paddingLeft: theme.space[4],
