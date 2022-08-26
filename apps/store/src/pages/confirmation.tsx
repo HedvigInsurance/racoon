@@ -7,13 +7,19 @@ import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { CheckoutService } from '@/services/checkout/CheckoutService'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getGlobalStory } from '@/services/storyblok/storyblok'
 
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = async ({
   req,
   res,
 }) => {
   const apolloClient = initializeApollo()
-  const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
+
+  const [shopSession, globalStory] = await Promise.all([
+    getCurrentShopSessionServerSide({ req, res, apolloClient }),
+    getGlobalStory(),
+  ])
+
   const checkoutService = new CheckoutService(shopSession, apolloClient)
 
   const checkout = checkoutService.checkout()
@@ -23,6 +29,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
 
   return {
     props: {
+      globalStory,
       currency: shopSession.currencyCode,
       cost: { total: 0 },
       products: shopSession.cart.lines.map((item) => {

@@ -9,7 +9,7 @@ const NextHomePage: NextPageWithLayout<StoryblokPageProps> = ({ story: initialSt
   return <HomePage {...story} />
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview }) => {
+export const getStaticProps: GetStaticProps<StoryblokPageProps> = async ({ preview }) => {
   const slug = 'home'
   const [story, globalStory] = await Promise.all([
     getStoryBySlug(slug, preview),
@@ -17,12 +17,7 @@ export const getStaticProps: GetStaticProps = async ({ preview }) => {
   ])
 
   return {
-    props: {
-      story: story ?? false,
-      globalStory: globalStory ?? false,
-      key: story ? story.id : false,
-      preview: preview || false,
-    },
+    props: { story, globalStory },
   }
 }
 

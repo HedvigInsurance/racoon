@@ -5,6 +5,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { getLocale } from '@/lib/l10n/getLocale'
 import { initializeApollo } from '@/services/apollo/client'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getGlobalStory } from '@/services/storyblok/storyblok'
 
 const NextCartPage: NextPageWithLayout<CartPageProps> = (props) => {
   return <CartPage {...props} />
@@ -16,7 +17,10 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
 
   try {
     const apolloClient = initializeApollo()
-    const shopSession = await getShopSessionServerSide({ req, res, apolloClient, countryCode })
+    const [shopSession, globalStory] = await Promise.all([
+      getShopSessionServerSide({ req, res, apolloClient, countryCode }),
+      getGlobalStory(context.preview),
+    ])
 
     const totalCost = shopSession.cart.lines
       .map((line) => parseInt(line.price.amount, 10) || 0)
@@ -24,6 +28,7 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
 
     return {
       props: {
+        globalStory,
         products: shopSession.cart.lines.map((item) => {
           return {
             id: item.id,

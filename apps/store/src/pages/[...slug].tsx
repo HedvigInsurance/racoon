@@ -37,14 +37,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
     getGlobalStory(preview),
   ])
 
-  return {
-    props: {
-      story: story ?? false,
-      globalStory: globalStory ?? false,
-      key: story ? story.id : false,
-      preview: preview || false,
-    },
-  }
+  return { props: { story, globalStory } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
