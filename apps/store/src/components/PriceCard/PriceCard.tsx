@@ -4,7 +4,6 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TickIcon } from '@/components/TickIcon/TickIcon'
-import { LoadingDots } from '../LoadingDots/LoadingDots'
 
 const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
 
@@ -36,17 +35,13 @@ export const PriceCard = ({
       </CenteredText>
 
       <PricePreviewContainer>
-        {!loading ? (
-          <PreviewText aria-disabled={cost === undefined}>
-            {currencyCode} {cost ?? '—'} /mth.
-          </PreviewText>
-        ) : (
-          <LoadingDots />
-        )}
+        <PreviewText aria-disabled={cost === undefined}>
+          {currencyCode} {cost ?? '—'} /mth.
+        </PreviewText>
       </PricePreviewContainer>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
-        <CustomButton fullWidth disabled={cost === undefined} onClick={onClick}>
+        <CustomButton fullWidth disabled={cost === undefined || loading} onClick={onClick}>
           Add to cart
         </CustomButton>
         <HorizontalList>

@@ -10,9 +10,10 @@ import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 export type PriceCalculatorFormProps = {
   template: FormTemplate
+  loading: boolean
 }
 
-export const PriceCalculatorForm = ({ template }: PriceCalculatorFormProps) => {
+export const PriceCalculatorForm = ({ template, loading }: PriceCalculatorFormProps) => {
   const translateTextLabel = useTranslateTextLabel({ data: {} })
 
   const activeSection = template.sections.find(({ state }) => state !== 'VALID')
@@ -40,7 +41,7 @@ export const PriceCalculatorForm = ({ template }: PriceCalculatorFormProps) => {
 
               <footer>
                 {isFinalSection && <input type="hidden" name="intent" value="confirm" />}
-                <Button type="submit" fullWidth>
+                <Button type="submit" fullWidth disabled={loading}>
                   {translateTextLabel(submit)}
                 </Button>
               </footer>
