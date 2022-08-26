@@ -3,10 +3,11 @@ import { CheckCircleIcon } from './CheckCircleIcon'
 
 const ICON_SIZE = '2.5rem'
 
-export const Root = styled.ul({
+export const Root = styled.ul(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-})
+  paddingRight: theme.space[4],
+}))
 
 export const Item = styled.li(({ theme }) => ({
   position: 'relative',
