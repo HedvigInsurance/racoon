@@ -18,7 +18,7 @@ export const CartPage = ({ products, cost }: CartPageProps) => {
         <StyledHeading as="h1" variant="standard.24">
           Cart ({products.length})
         </StyledHeading>
-        <ProductList>
+        <ProductList as="ul" y={1.5}>
           {products.map((item) => (
             <li key={item.id}>
               <CartCard
@@ -72,7 +72,7 @@ const Wrapper = styled.div(({ theme }) => ({
 const StyledHeading = styled(Heading)({ textAlign: 'center' })
 const CenteredParagraph = styled.p({ textAlign: 'center' })
 
-const ProductList = styled.ul({
+const ProductList = styled(Space)({
   padding: 0,
   listStyleType: 'none',
   width: '100%',
