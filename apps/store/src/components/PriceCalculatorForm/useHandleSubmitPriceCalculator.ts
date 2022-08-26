@@ -4,9 +4,10 @@ import { PageLink } from '@/lib/PageLink'
 
 type Params = {
   productSlug: string
+  formTemplateId: string
 }
 
-export const useHandleSubmitPriceCalculatorForm = ({ productSlug }: Params) => {
+export const useHandleSubmitPriceCalculatorForm = ({ productSlug, formTemplateId }: Params) => {
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
   const refreshData = useRouterRefresh()
 
@@ -14,12 +15,9 @@ export const useHandleSubmitPriceCalculatorForm = ({ productSlug }: Params) => {
     event.preventDefault()
     setStatus('submitting')
     const formData = new FormData(event.currentTarget)
-    const { intent, ...data } = Object.fromEntries(formData.entries())
+    const data = Object.fromEntries(formData.entries())
 
-    const url = PageLink.apiPriceProduct({
-      productSlug,
-      intent: intent === 'confirm' ? 'confirm' : 'update',
-    })
+    const url = PageLink.apiPriceProduct({ productSlug, formTemplateId })
 
     try {
       await fetch(url, {

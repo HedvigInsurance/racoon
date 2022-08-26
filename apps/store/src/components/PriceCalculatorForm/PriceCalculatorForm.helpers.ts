@@ -40,11 +40,12 @@ export const setupPriceCalculatorForm = async ({
   return { template, priceIntent }
 }
 
-const prepopulateFormTemplate = (
+export const prepopulateFormTemplate = (
   template: FormTemplate,
   data: Record<string, string>,
 ): FormTemplate => {
   return {
+    id: template.id,
     sections: template.sections.map((section) => {
       const newSection: FormSection = {
         ...section,
