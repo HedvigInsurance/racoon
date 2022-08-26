@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
+import { useRefreshData } from '@/hooks/useRefreshData'
 import { PageLink } from '@/lib/PageLink'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useForm } from './useForm'
@@ -16,7 +17,13 @@ export type CartCardProps = {
 export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
   const [open, setOpen] = useState(false)
-  const { state, formProps } = useForm({ onComplete: () => setOpen(false) })
+  const refreshData = useRefreshData()
+  const { state, formProps } = useForm({
+    onComplete: () => {
+      setOpen(false)
+      refreshData()
+    },
+  })
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>

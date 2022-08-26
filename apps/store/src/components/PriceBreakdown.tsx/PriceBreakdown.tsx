@@ -25,19 +25,17 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             </DataRow>
           ))}
         </Space>
-        {
-          campaigns ? (
-            <Space y={0.5} >
-              <Text size="m">Discount</Text>
-              {campaigns.map((campaign) => (
-                <DataRow key={campaign.name}>
-                  <Text size="m">{campaign.name}</Text>
-                  <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
-                </DataRow>
-              ))
-              }
-            </Space>
-          ) : null}
+        {campaigns ? (
+          <Space y={0.5}>
+            <Text size="m">Discount</Text>
+            {campaigns.map((campaign) => (
+              <DataRow key={campaign.name}>
+                <Text size="m">{campaign.name}</Text>
+                <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
+              </DataRow>
+            ))}
+          </Space>
+        ) : null}
         <CollapsibleDivider />
       </CollapsibleContent>
       <CollapsibleHeader>
@@ -65,10 +63,8 @@ const DataRowStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginLeft: '0.5rem',
-  '&:first-child': {
-    marginLeft: 0,
-  },
+
+  '&:not(:first-of-type)': { paddingLeft: '0.5rem' },
 })
 
 const DataRow = styled.div(() => ({}), DataRowStyles)
@@ -76,7 +72,6 @@ const DataRow = styled.div(() => ({}), DataRowStyles)
 const CollapsibleHeader = styled(RadixCollapsible.Trigger)(DataRowStyles, ({ theme }) => ({
   paddingRight: theme.space[1],
   width: '100%',
-  marginLeft: 0,
 }))
 
 const CrossOutText = styled.p(({ theme }) => ({
