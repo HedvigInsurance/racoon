@@ -4,6 +4,7 @@ export type ProductData = { id: string; name: string; cost: number; currency: st
 type CostData = { crossOut?: number; total: number; subTotal: number }
 
 export type CartPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
+  cartId: string
   products: Array<ProductData>
   cost: CostData
 }

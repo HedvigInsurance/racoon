@@ -31,7 +31,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
     .reduce((a, b) => a + b, 0)
   const cost = { total: totalCost, subTotal: totalCost }
 
-  return <CartPage products={products} cost={cost} {...props} />
+  return <CartPage cartId={data.shopSession.cart.id} products={products} cost={cost} {...props} />
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
