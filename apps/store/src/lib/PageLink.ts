@@ -25,6 +25,5 @@ export const PageLink = {
   apiPriceProduct: ({ productSlug, formTemplateId }: PriceProductAPI) =>
     `/api/price/${productSlug}/${formTemplateId}`,
   apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,
-  apiCartLinesRemove: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/remove`,
   apiCartReview: () => '/api/cart/review',
 }

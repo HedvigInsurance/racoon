@@ -2,10 +2,8 @@ import styled from '@emotion/styled'
 import { useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
-import { useRefreshData } from '@/hooks/useRefreshData'
-import { PageLink } from '@/lib/PageLink'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { useForm } from './useForm'
+import { useHandleSubmitRemoveFromCart } from './useHandleSubmitRemoveFromCart'
 
 export type CartCardProps = {
   lineId: string
@@ -17,11 +15,11 @@ export type CartCardProps = {
 export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
   const [open, setOpen] = useState(false)
-  const refreshData = useRefreshData()
-  const { state, formProps } = useForm({
-    onComplete: () => {
+
+  const [handleSubmit, { loading }] = useHandleSubmitRemoveFromCart({
+    lineId,
+    onSuccess() {
       setOpen(false)
-      refreshData()
     },
   })
 
@@ -47,7 +45,7 @@ export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
             <Heading as="h2" variant="standard.20">
               Remove insurance?
             </Heading>
-            <form {...formProps} method="POST" action={PageLink.apiCartLinesRemove({ lineId })}>
+            <form onSubmit={handleSubmit}>
               <Space y={1.5}>
                 <p>You will lose the discount applied if you remove the insurance.</p>
                 <ButtonContainer>
@@ -55,7 +53,7 @@ export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
                     Dont remove
                   </Button>
 
-                  <Button type="submit" fullWidth disabled={state === 'submitting'}>
+                  <Button type="submit" fullWidth disabled={loading}>
                     Remove
                   </Button>
                 </ButtonContainer>
