@@ -119,7 +119,6 @@ export const Wrapper = styled.div(({ theme }) => ({
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
   position: 'fixed',
-  zIndex: '1000',
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
