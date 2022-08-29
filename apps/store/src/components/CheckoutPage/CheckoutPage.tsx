@@ -1,15 +1,46 @@
-import { Button } from 'ui'
-import { PageLink } from '@/lib/PageLink'
+import { Button, InputField, Space } from 'ui'
+import { CheckoutPageProps } from './CheckoutPage.types'
 import { CheckoutPageLayout } from './CheckoutPageLayout'
 
-export const CheckoutPage = () => {
+export const CheckoutPage = ({ prefilledData }: CheckoutPageProps) => {
   return (
-    <form method="post" action={PageLink.apiCheckoutPersonCreate()}>
-      <CheckoutPageLayout>
+    <CheckoutPageLayout
+      Footer={
         <Button type="submit" fullWidth>
           Continue to payment
         </Button>
-      </CheckoutPageLayout>
-    </form>
+      }
+    >
+      <Space y={1}>
+        <InputField
+          label="National identity number (DDMMYYXXXXX)"
+          name="personalNumber"
+          required
+          defaultValue={prefilledData.personalNumber ?? undefined}
+          infoMessage={
+            'We credit assess all new customers. Those who have payment remarks will in some cases be asked to pay in advance.'
+          }
+        />
+        <InputField
+          label="First name"
+          name="firstName"
+          required
+          defaultValue={prefilledData.firstName ?? undefined}
+        />
+        <InputField
+          label="Last name"
+          name="lastName"
+          required
+          defaultValue={prefilledData.lastName ?? undefined}
+        />
+        <InputField
+          label="Email"
+          name="email"
+          type="email"
+          required
+          defaultValue={prefilledData.email ?? undefined}
+        />
+      </Space>
+    </CheckoutPageLayout>
   )
 }

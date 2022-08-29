@@ -6,5 +6,8 @@ mutation ShopSessionCreate($countryCode: CountryCode!) {
     cart {
       ...CartFragment
     }
+    checkout {
+      ...Checkout
+    }
   }
 }

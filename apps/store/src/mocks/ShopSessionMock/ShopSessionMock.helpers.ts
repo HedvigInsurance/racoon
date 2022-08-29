@@ -4,6 +4,7 @@ import {
   CurrencyCode,
   CartFragmentFragment,
   ShopSessionQuery,
+  PaymentConnectionFlow,
 } from '@/services/apollo/generated'
 import { db } from '../db'
 
@@ -85,6 +86,11 @@ export const dbShopSessionToAPI = (
     countryCode: shopSession.countryCode as CountryCode,
     currencyCode: shopSession.currencyCode as CurrencyCode,
     cart: dbCartToAPI(cart),
+    checkout: {
+      id: 'test',
+      paymentConnectionFlow: PaymentConnectionFlow.BeforeSign,
+      contactDetails: {},
+    },
   }
 }
 

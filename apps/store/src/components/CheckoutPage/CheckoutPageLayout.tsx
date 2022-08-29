@@ -1,12 +1,13 @@
 import styled from '@emotion/styled'
-import { Heading, InputField, Space } from 'ui'
+import { Heading, Space } from 'ui'
 import { PageLink } from '@/lib/PageLink'
 
 type Props = {
   children: React.ReactNode
+  Footer: React.ReactNode
 }
 
-export const CheckoutPageLayout = ({ children }: Props) => {
+export const CheckoutPageLayout = ({ children, Footer }: Props) => {
   return (
     <>
       <Space y={3}>
@@ -20,17 +21,10 @@ export const CheckoutPageLayout = ({ children }: Props) => {
           </Heading>
         </PageHeader>
 
-        <Main>
-          <Space y={1}>
-            <InputField label="Personal number" name="personalNumber" required />
-            <InputField label="First name" name="firstName" required />
-            <InputField label="Last name" name="lastName" required />
-            <InputField label="Email" name="email" type="email" required />
-          </Space>
-        </Main>
+        <Main>{children}</Main>
       </Space>
 
-      <Footer>{children}</Footer>
+      <FooterWrapper>{Footer}</FooterWrapper>
     </>
   )
 }
@@ -50,7 +44,7 @@ const Main = styled.main(({ theme }) => ({
   padding: theme.space[3],
 }))
 
-const Footer = styled.footer(({ theme }) => ({
+const FooterWrapper = styled.footer(({ theme }) => ({
   backgroundColor: theme.colors.white,
   padding: theme.space[3],
   paddingBottom: theme.space[5],

@@ -1,0 +1,12 @@
+mutation ContactDetailsUpdate($input: CheckoutContactDetailsUpdateInput) {
+  checkoutContactDetailsUpdate(input: $input) {
+    checkout {
+      ...Checkout
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}

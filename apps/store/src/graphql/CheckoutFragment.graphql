@@ -1,0 +1,12 @@
+fragment Checkout on Checkout {
+  id
+  completedAt
+  contactDetails {
+    email
+    firstName
+    lastName
+    personalNumber
+    phoneNumber
+  }
+  paymentConnectionFlow
+}
