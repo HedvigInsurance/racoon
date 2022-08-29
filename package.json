@@ -41,6 +41,6 @@
     "turbo": "1.4.2"
   },
   "resolutions": {
-    "next-i18next/@types/react": "17.0.48"
+    "next-i18next/@types/react": "18.0.17"
   }
 }
