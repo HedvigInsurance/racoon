@@ -24,8 +24,8 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
 
   return (
     <Wrapper>
-      <HeaderBlock blok={globalStory.content} />
       {children}
+      <HeaderBlock blok={globalStory.content} />
       <SiteFooter onChangeLocale={handleChangeLocale} />
     </Wrapper>
   )
