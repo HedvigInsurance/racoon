@@ -1,12 +1,13 @@
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import Image from 'next/image'
+import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
 
 type ImageBlockProps = SbBaseBlockProps<{
   image: StoryblokImage
   fullBleed?: boolean
-  body?: Array<SbBlokData>
+  body?: Array<HeadingBlockProps['blok']>
 }>
 
 export const ImageBlock = ({ blok }: ImageBlockProps) => {
@@ -17,7 +18,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
       <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
       <BodyWrapper>
         {blok.body?.map((nestedBlock) => (
-          <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+          <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
       </BodyWrapper>
     </Wrapper>
