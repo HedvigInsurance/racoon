@@ -52,7 +52,6 @@ const DropdownMenuItemList = styled.ul({
     },
   },
 })
-
 // This component makes sure that we close the menu when it loses
 // focus. It's hopefully useful when navigating with keyboard.
 //
@@ -63,7 +62,7 @@ type ChildrenBlurProps = {
 }
 const ChildrenBlur = ({ children, onBlur, ...props }: ChildrenBlurProps) => {
   const handleBlur = useCallback(
-    (e) => {
+    (e: React.FocusEvent<HTMLDivElement, Element>) => {
       const currentTarget = e.currentTarget
 
       // Give browser time to focus the next element
