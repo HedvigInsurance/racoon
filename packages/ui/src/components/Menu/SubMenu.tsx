@@ -62,8 +62,8 @@ type ChildrenBlurProps = {
 }
 const ChildrenBlur = ({ children, onBlur, ...props }: ChildrenBlurProps) => {
   const handleBlur = useCallback(
-    (e: React.FocusEvent<HTMLDivElement, Element>) => {
-      const currentTarget = e.currentTarget
+    (event: React.FocusEvent<HTMLElement>) => {
+      const currentTarget = event.currentTarget
 
       // Give browser time to focus the next element
       requestAnimationFrame(() => {
