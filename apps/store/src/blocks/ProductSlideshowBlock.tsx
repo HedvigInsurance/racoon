@@ -10,8 +10,6 @@ type ProductSlideshowBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
-  console.log({ blok })
-
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <Slideshow title={blok.title}>

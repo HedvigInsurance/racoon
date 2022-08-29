@@ -12,8 +12,6 @@ type ProductGridBlockProps = SbBaseBlockProps<{
 
 export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
   const items = useMemo(() => blok.items.map((item) => ({ key: item._uid, ...item })), [blok.items])
-  console.log({ blok })
-
   return (
     <Wrapper>
       <ProductGrid title={blok.title} items={items} {...storyblokEditable(blok)}>
