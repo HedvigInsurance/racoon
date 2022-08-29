@@ -40,9 +40,9 @@ export const PriceCalculatorBlock = ({
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
-  const { handleSubmit } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
+  const { handleSubmit, status } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
 
-  const [handleClickAddToCart] = useHandleClickAddToCart({
+  const [handleClickAddToCart, addToCartStatus] = useHandleClickAddToCart({
     lineId,
     onSuccess: () => {
       toastRef.current?.publish({
@@ -65,7 +65,7 @@ export const PriceCalculatorBlock = ({
           </SpaceFlex>
 
           <form onSubmit={handleSubmit}>
-            <PriceCalculatorForm template={priceFormTemplate} />
+            <PriceCalculatorForm template={priceFormTemplate} loading={status === 'submitting'} />
             <input type="hidden" name="countryCode" value={countryCode} />
           </form>
         </Space>
@@ -77,6 +77,7 @@ export const PriceCalculatorBlock = ({
             currencyCode={product.currencyCode}
             gradient={product.gradient}
             onClick={handleClickAddToCart}
+            loading={addToCartStatus === 'submitting'}
           />
         </SectionWithPadding>
       </Space>
