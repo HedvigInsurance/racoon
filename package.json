@@ -39,8 +39,5 @@
     "lint-staged": "^12.3.7",
     "prettier": "2.7.1",
     "turbo": "1.4.2"
-  },
-  "resolutions": {
-    "next-i18next/@types/react": "18.0.17"
   }
 }
