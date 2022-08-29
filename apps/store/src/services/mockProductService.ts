@@ -1,6 +1,6 @@
 import { MarketLabel } from '@/lib/l10n/types'
 
-type Peril = {
+export type Peril = {
   id: string
   icon: React.ReactNode
   name: string
@@ -21,7 +21,7 @@ export enum ProductNames {
   SE_ESSENTIAL_BUNDLE,
 }
 
-type Insurance = {
+export type Insurance = {
   name: InsuranceNames
   displayName: string
   perils: Peril[]
@@ -43,7 +43,6 @@ export const PRODUCTS: Product[] = [
       {
         name: InsuranceNames.SE_HOME,
         displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
-
         perils: [
           {
             id: 'peril1',
@@ -68,6 +67,22 @@ export const PRODUCTS: Product[] = [
         perils: [
           {
             id: 'carPeril1',
+            icon: 'Icon',
+            name: 'Some car peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
+          },
+          {
+            id: 'carPeril2',
+            icon: 'Icon',
+            name: 'Some car peril',
+            description: 'Lorem ipsum dolor sit amet',
+            covered: ['everything', 'anything'],
+            notCovered: ['nothing', 'something'],
+          },
+          {
+            id: 'carPeril3',
             icon: 'Icon',
             name: 'Some car peril',
             description: 'Lorem ipsum dolor sit amet',
