@@ -1,6 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon } from 'ui'
 import { MenuIcon } from '@/components/TopMenu/MenuIcon'
@@ -41,7 +41,7 @@ NavItemBlock.blockName = 'navItem'
 
 type NestedNavContainerBlockProps = SbBaseBlockProps<{
   name: string
-  navItems: SbBlokData[]
+  navItems: Array<NavItemBlockProps['blok']>
 }> & {
   activeItem: string
   closeDialog: () => void
@@ -64,7 +64,7 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
           <NavigationSecondaryList>
             {blok.navItems
               ? blok.navItems.map((nestedBlock) => (
-                  <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} {...props} />
+                  <NavItemBlock blok={nestedBlock} key={nestedBlock._uid} {...props} />
                 ))
               : null}
           </NavigationSecondaryList>
@@ -76,7 +76,7 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
 
 type HeaderBlockProps = SbBaseBlockProps<{
-  navMenuContainer: SbBlokData[]
+  navMenuContainer: Array<NestedNavContainerBlockProps['blok']>
 }>
 
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
@@ -98,7 +98,7 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
           <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
             <NavigationPrimaryList>
               {blok.navMenuContainer.map((nestedBlok) => (
-                <StoryblokComponent
+                <NestedNavContainerBlock
                   blok={nestedBlok}
                   key={nestedBlok._uid}
                   {...storyblokEditable(blok)}
