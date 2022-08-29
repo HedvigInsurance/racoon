@@ -1,24 +1,26 @@
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
+import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
+import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
 
 type HeroBlockProps = SbBaseBlockProps<{
-  content: SbBlokData[]
+  content: Array<HeadingBlockProps['blok']>
   background: StoryblokImage
-  buttons: SbBlokData[]
+  buttons: Array<ButtonBlockProps['blok']>
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
   return (
     <HeroSection {...storyblokEditable(blok)} bgImage={blok.background.filename}>
       <div>
-        {blok.content.map((nestedBlock) => (
-          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-        ))}
+        {blok.content.map((nestedBlock) => {
+          return <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
+        })}
       </div>
       <div>
-        {blok.buttons.map((button) => (
-          <StoryblokComponent blok={button} key={button._uid} />
+        {blok.buttons.map((nestedBlock) => (
+          <ButtonBlock blok={nestedBlock} key={nestedBlock._uid} />
         ))}
       </div>
     </HeroSection>
