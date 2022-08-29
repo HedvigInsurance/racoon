@@ -35,6 +35,7 @@ type LayoutField = {
 }
 
 export type FormTemplate = {
+  id: string
   sections: Array<FormSection>
 }
 

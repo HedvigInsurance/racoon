@@ -17,8 +17,6 @@ export const PriceCalculatorForm = ({ template, loading }: PriceCalculatorFormPr
   const translateTextLabel = useTranslateTextLabel({ data: {} })
 
   const activeSection = template.sections.find(({ state }) => state !== 'VALID')
-  const isFinalSection =
-    activeSection && template.sections.indexOf(activeSection) === template.sections.length - 1
 
   return (
     <Accordion.Root type="single" value={activeSection?.id} collapsible={true}>
@@ -40,7 +38,6 @@ export const PriceCalculatorForm = ({ template, loading }: PriceCalculatorFormPr
               <FormGroup fields={fields} />
 
               <footer>
-                {isFinalSection && <input type="hidden" name="intent" value="confirm" />}
                 <Button type="submit" fullWidth disabled={loading}>
                   {translateTextLabel(submit)}
                 </Button>

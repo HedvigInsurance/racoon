@@ -1,16 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { prepopulateFormTemplate } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
+import { FormTemplateService } from '@/services/formTemplate/FormTemplateService'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isCountryCode } from '@/utils/isCountryCode'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { productId, intent } = req.query
+  const { productId, formTemplateId } = req.query
   const { countryCode, ...data } = req.body
 
-  if (typeof productId !== 'string') {
-    return res.status(500).json({ message: 'Product ID is required' })
+  if (typeof productId !== 'string' || typeof formTemplateId !== 'string') {
+    throw new Error('Malformed product price API URL')
   }
 
   if (!isCountryCode(countryCode)) {
@@ -18,7 +20,17 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const apolloClient = initializeApollo()
-  const shopSession = await getShopSessionServerSide({ req, res, apolloClient, countryCode })
+  const formTemplateService = new FormTemplateService()
+
+  const [shopSession, formTemplate] = await Promise.all([
+    getShopSessionServerSide({ req, res, apolloClient, countryCode }),
+    formTemplateService.fetch({ id: formTemplateId }),
+  ])
+
+  if (formTemplate === null) {
+    return res.status(404).json({ message: `Form Template not found: ${formTemplateId}` })
+  }
+
   const priceIntentService = priceIntentServiceInitServerSide({
     req,
     res,
@@ -27,9 +39,11 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   const priceIntent = await priceIntentService.fetch(productId)
 
-  await priceIntentService.update({ priceIntentId: priceIntent.id, data })
+  const response = await priceIntentService.update({ priceIntentId: priceIntent.id, data })
 
-  if (intent === 'confirm') {
+  const populatedTemplate = prepopulateFormTemplate(formTemplate, response.data)
+
+  if (populatedTemplate.sections.every((section) => section.state === 'VALID')) {
     await priceIntentService.confirm(priceIntent.id)
   }
 

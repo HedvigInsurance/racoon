@@ -22,6 +22,9 @@ export class FormTemplateService {
 
     if (!schema || !uiSchema) return null
 
-    return combineFormTemplate({ schema, uiSchema })
+    return {
+      id,
+      ...combineFormTemplate({ schema, uiSchema }),
+    }
   }
 }

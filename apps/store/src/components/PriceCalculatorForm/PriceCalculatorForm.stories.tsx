@@ -16,6 +16,7 @@ const Template: Story<PriceCalculatorFormProps> = (props: PriceCalculatorFormPro
 export const Default = Template.bind({})
 Default.args = {
   template: {
+    id: 'test-id',
     sections: [
       {
         id: 'your-home',

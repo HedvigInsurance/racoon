@@ -40,7 +40,10 @@ export const PriceCalculatorBlock = ({
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
-  const { handleSubmit, status } = useHandleSubmitPriceCalculatorForm({ productSlug: product.slug })
+  const { handleSubmit, status } = useHandleSubmitPriceCalculatorForm({
+    productSlug: product.slug,
+    formTemplateId: priceFormTemplate.id,
+  })
 
   const [handleClickAddToCart, addToCartStatus] = useHandleClickAddToCart({
     lineId,

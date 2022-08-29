@@ -17,7 +17,10 @@ const shemaTypeToFieldType = (schemaType: string): FormTemplateField['type'] | n
   }
 }
 
-export const combineFormTemplate = ({ schema, uiSchema }: CombineParams): FormTemplate => {
+export const combineFormTemplate = ({
+  schema,
+  uiSchema,
+}: CombineParams): Omit<FormTemplate, 'id'> => {
   return {
     sections: uiSchema.layout.sections.map((section) => {
       return {

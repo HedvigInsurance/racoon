@@ -3,7 +3,7 @@ import { Locale } from './l10n/types'
 type BaseParams = { locale?: Locale }
 
 type ProductPage = BaseParams & { slug: string }
-type PriceProductAPI = { productSlug: string; intent?: 'confirm' | 'update' }
+type PriceProductAPI = { productSlug: string; formTemplateId: string }
 type CartLinesAPI = { lineId: string }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
@@ -22,8 +22,8 @@ export const PageLink = {
   confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/confirmation`,
 
   apiCheckoutPersonCreate: () => '/api/checkout/person',
-  apiPriceProduct: ({ productSlug, intent }: PriceProductAPI) =>
-    `/api/price/${productSlug}?intent=${intent ?? 'update'}`,
+  apiPriceProduct: ({ productSlug, formTemplateId }: PriceProductAPI) =>
+    `/api/price/${productSlug}/${formTemplateId}`,
   apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,
   apiCartLinesRemove: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/remove`,
   apiCartReview: () => '/api/cart/review',
