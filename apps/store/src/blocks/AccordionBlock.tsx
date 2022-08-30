@@ -2,12 +2,12 @@ import styled from '@emotion/styled'
 import { Heading, Space } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
   title?: string
-  items: Array<AccordionItemBlockProps['blok']>
+  items: ExpectedBlockType<AccordionItemBlockProps>
 }>
 
 export const AccordionBlock = ({ blok }: Props) => {

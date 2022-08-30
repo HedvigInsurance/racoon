@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { TopPickCardBlock, TopPickCardBlockProps } from './TopPickCardBlock'
 
 type ProductSlideshowBlockProps = SbBaseBlockProps<{
   title?: string
-  items: Array<TopPickCardBlockProps['blok']>
+  items: ExpectedBlockType<TopPickCardBlockProps>
 }>
 
 export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {

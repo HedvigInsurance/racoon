@@ -17,7 +17,7 @@ import { findLocale } from '@/components/SiteFooter/SiteFooter.helpers'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -33,7 +33,7 @@ export const FooterLink = ({ blok }: FooterLinkProps) => {
 FooterLink.blockName = 'footerLink'
 
 type FooterSectionProps = SbBaseBlockProps<{
-  footerLinks: FooterLinkProps['blok'][]
+  footerLinks: ExpectedBlockType<FooterLinkProps>
   title: string
 }>
 
@@ -56,7 +56,7 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
 FooterSection.blockName = 'footerSection'
 
 type FooterBlockProps = SbBaseBlockProps<{
-  sections: FooterSectionProps['blok'][]
+  sections: ExpectedBlockType<FooterSectionProps>
 }> &
   SiteFooterProps
 export const FooterBlock = ({ blok }: FooterBlockProps) => {

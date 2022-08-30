@@ -17,7 +17,7 @@ import {
   ToggleMenu,
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
-import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
@@ -41,7 +41,7 @@ NavItemBlock.blockName = 'navItem'
 
 type NestedNavContainerBlockProps = SbBaseBlockProps<{
   name: string
-  navItems: Array<NavItemBlockProps['blok']>
+  navItems: ExpectedBlockType<NavItemBlockProps>
 }> & {
   activeItem: string
   closeDialog: () => void
@@ -76,7 +76,7 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
 
 type HeaderBlockProps = SbBaseBlockProps<{
-  navMenuContainer: Array<NestedNavContainerBlockProps['blok']>
+  navMenuContainer: ExpectedBlockType<NestedNavContainerBlockProps>
 }>
 
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {

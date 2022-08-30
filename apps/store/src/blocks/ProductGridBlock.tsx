@@ -3,11 +3,11 @@ import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { ProductCardBlock, ProductCardBlockProps } from '@/blocks/ProductCardBlock'
 import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ProductGridBlockProps = SbBaseBlockProps<{
   title?: string
-  items: Array<ProductCardBlockProps['blok']>
+  items: ExpectedBlockType<ProductCardBlockProps>
 }>
 
 export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {

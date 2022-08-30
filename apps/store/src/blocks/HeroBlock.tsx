@@ -2,12 +2,12 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
-import { SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
 
 type HeroBlockProps = SbBaseBlockProps<{
-  content: Array<HeadingBlockProps['blok']>
+  content: ExpectedBlockType<HeadingBlockProps>
   background: StoryblokImage
-  buttons: Array<ButtonBlockProps['blok']>
+  buttons: ExpectedBlockType<ButtonBlockProps>
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {

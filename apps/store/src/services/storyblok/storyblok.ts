@@ -65,6 +65,11 @@ export type ProductStory = StoryData & {
   }
 }
 
+export type ExpectedBlockType<T> = T extends { blok: SbBlokData }
+  ? T['blok'][]
+  : `ExpectedBlock expects an argument which extends SbBlockData.
+     These are likely the props of the block you are looking to render`
+
 type GlobalStory = StoryData & {
   content: StoryData['content'] & {
     navMenuContainer: Array<SbBlokData>
