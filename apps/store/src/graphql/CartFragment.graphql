@@ -1,5 +1,15 @@
 fragment CartFragment on Cart {
   id
+  cost {
+    subtotal {
+      amount
+      currencyCode
+    }
+    total {
+      amount
+      currencyCode
+    }
+  }
   lines {
     id
     startDate

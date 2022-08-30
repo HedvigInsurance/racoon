@@ -89,9 +89,15 @@ export const dbShopSessionToAPI = (
 }
 
 export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
+  const totalCost = cart.lines.reduce((a, b) => a + b.priceAmount, 0)
+
   return {
     __typename: 'Cart',
     id: cart.id,
+    cost: {
+      total: { amount: totalCost.toString(), currencyCode: CurrencyCode.Sek },
+      subtotal: { amount: totalCost.toString(), currencyCode: CurrencyCode.Sek },
+    },
     lines: cart.lines.map((line) => ({
       __typename: 'CartLine',
       id: line.id,

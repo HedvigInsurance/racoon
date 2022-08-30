@@ -26,12 +26,23 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
     }
   })
 
-  const totalCost = data.shopSession.cart.lines
-    .map((line) => parseInt(line.price.amount, 10) || 0)
-    .reduce((a, b) => a + b, 0)
-  const cost = { total: totalCost, subTotal: totalCost }
+  const cartCost = data.shopSession.cart.cost
+  const total = parseInt(cartCost.total.amount, 10)
+  const subTotal = parseInt(cartCost.subtotal.amount, 10)
+  const crossOut = total !== subTotal ? subTotal : undefined
 
-  return <CartPage cartId={data.shopSession.cart.id} products={products} cost={cost} {...props} />
+  return (
+    <CartPage
+      cartId={data.shopSession.cart.id}
+      products={products}
+      cost={{
+        total,
+        subTotal,
+        crossOut,
+      }}
+      {...props}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
