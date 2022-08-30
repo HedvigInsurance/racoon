@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { hasLocale, useForm } from './useForm'
 
 describe('hasLocale', () => {

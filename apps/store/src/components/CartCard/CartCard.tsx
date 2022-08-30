@@ -1,32 +1,22 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
-import { Button, Heading, Space } from 'ui'
+import { FormEvent } from 'react'
+import { Button, Heading, LinkButton, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
-import { useRefreshData } from '@/hooks/useRefreshData'
-import { PageLink } from '@/lib/PageLink'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { useForm } from './useForm'
 
 export type CartCardProps = {
-  lineId: string
   title: string
   price: number
   currency: string
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  loading: boolean
 }
 
-export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
+export const CartCard = ({ title, price, currency, onSubmit, loading }: CartCardProps) => {
   const currencyFormatter = useCurrencyFormatter(currency)
-  const [open, setOpen] = useState(false)
-  const refreshData = useRefreshData()
-  const { state, formProps } = useForm({
-    onComplete: () => {
-      setOpen(false)
-      refreshData()
-    },
-  })
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root>
       <ProductCard>
         <IconElement />
         <Content>
@@ -47,15 +37,17 @@ export const CartCard = ({ lineId, title, price, currency }: CartCardProps) => {
             <Heading as="h2" variant="standard.20">
               Remove insurance?
             </Heading>
-            <form {...formProps} method="POST" action={PageLink.apiCartLinesRemove({ lineId })}>
+            <form onSubmit={onSubmit}>
               <Space y={1.5}>
                 <p>You will lose the discount applied if you remove the insurance.</p>
                 <ButtonContainer>
-                  <Button type="button" fullWidth variant="outlined" onClick={() => setOpen(false)}>
-                    Dont remove
-                  </Button>
+                  <Dialog.Trigger>
+                    <LinkButton as="span" fullWidth variant="outlined">
+                      Dont remove
+                    </LinkButton>
+                  </Dialog.Trigger>
 
-                  <Button type="submit" fullWidth disabled={state === 'submitting'}>
+                  <Button type="submit" fullWidth disabled={loading}>
                     Remove
                   </Button>
                 </ButtonContainer>

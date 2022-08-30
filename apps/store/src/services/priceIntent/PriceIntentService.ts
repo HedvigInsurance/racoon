@@ -27,7 +27,7 @@ export class PriceIntentService {
     private readonly shopSession?: ShopSession,
   ) {}
 
-  public async create({ productId }: PriceIntentCreateParams) {
+  public async create({ productName }: PriceIntentCreateParams) {
     if (!this.shopSession) throw new Error('No shop session found')
     if (!this.apolloClient) throw new Error('No Apollo Client found')
 
@@ -38,7 +38,7 @@ export class PriceIntentService {
       mutation: PriceIntentCreateDocument,
       variables: {
         shopSessionId: this.shopSession.id,
-        productId,
+        productName,
       },
     })
 
@@ -68,7 +68,7 @@ export class PriceIntentService {
     return null
   }
 
-  public async fetch(productId: string) {
+  public async fetch(productName: string) {
     const priceIntentId = this.persister.fetch()
 
     if (priceIntentId) {
@@ -77,7 +77,7 @@ export class PriceIntentService {
       if (priceIntent) return priceIntent
     }
 
-    return await this.create({ productId })
+    return await this.create({ productName })
   }
 
   public async update({ priceIntentId, data }: PriceIntentDataUpdateParams) {

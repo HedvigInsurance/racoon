@@ -7,4 +7,5 @@ export type CartReviewPageProps = {
   cost: CostData
   products: Array<ProductData>
   campaigns?: Array<CampaignData>
+  loading: boolean
 }

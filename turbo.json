@@ -47,7 +47,8 @@
     },
     "onboarding#lint": {
       "outputs": [],
-      "dependsOn": ["codegen"]
+      "dependsOn": ["codegen"],
+      "cache": false
     },
     "test": {
       "outputs": ["coverage/**"]
@@ -64,6 +65,11 @@
     },
     "lint": {
       "outputs": [],
+      "cache": false
+    },
+    "store#lint": {
+      "outputs": [],
+      "dependsOn": ["codegen"],
       "cache": false
     },
     "lint:fix": {

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { Level, useBreakpoint } from './media-query'
 
 describe('media-query', () => {
@@ -28,13 +28,23 @@ describe('media-query', () => {
       // align
       const breakpoint = 'smurf'
 
-      // Suppress log
-      jest.spyOn(global.console, 'error').mockImplementationOnce(() => {})
+      // prevent writing to stderr during this render
+      const err = console.error
+      console.error = jest.fn()
 
       // act
-      const { result } = renderHook(() => useBreakpoint(breakpoint as Level))
+      let exception: unknown
+      try {
+        renderHook(() => useBreakpoint(breakpoint as Level))
+      } catch (error) {
+        exception = error
+      }
+
       // assert
-      expect(result.error).toEqual(new Error(`Unknown breakpoint ${breakpoint}`))
+      expect(exception).toEqual(new Error(`Unknown breakpoint ${breakpoint}`))
+
+      // restore writing to stderr
+      console.error = err
     })
   })
 })

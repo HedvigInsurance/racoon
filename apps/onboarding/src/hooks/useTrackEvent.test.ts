@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { useTrackEvent } from './useTrackEvent'
 
 const mockPushToGTMDataLayer = jest.fn()
