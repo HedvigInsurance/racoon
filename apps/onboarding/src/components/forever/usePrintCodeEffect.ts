@@ -8,27 +8,20 @@ type PrintCodeEffectParams = {
 
 export const usePrintCodeEffect = ({ initialCode }: PrintCodeEffectParams) => {
   const [code, setCode] = useState('')
+  const [charIndex, setCharIndex] = useState(0)
 
   useEffect(() => {
-    let charIndex = 0
-    setCode('')
+    if (charIndex >= initialCode.length) return
 
-    const handle = window.setInterval(() => {
-      if (charIndex < initialCode.length) {
-        setCode((codePiece) => codePiece + initialCode[charIndex])
-        charIndex++
-      } else {
-        window.clearInterval(handle)
-      }
-    }, LOAD_CHAR_INTERVAL)
-
-    return () => {
-      window.clearInterval(handle)
+    const tick = () => {
+      setCode(initialCode.slice(0, charIndex + 1))
+      setCharIndex(charIndex + 1)
     }
 
-    // only run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const handle = window.setTimeout(tick, LOAD_CHAR_INTERVAL)
+
+    return () => window.clearTimeout(handle)
+  }, [initialCode, charIndex])
 
   return code
 }
