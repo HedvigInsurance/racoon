@@ -1,4 +1,5 @@
 import { ApolloProvider } from '@apollo/client'
+import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
@@ -44,4 +45,4 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

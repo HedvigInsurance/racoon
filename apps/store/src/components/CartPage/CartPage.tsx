@@ -99,7 +99,7 @@ const Footer = styled.footer(({ theme }) => ({
   bottom: 0,
   left: 0,
   width: '100%',
-  padding: `0 ${theme.space[4]} ${theme.space[6]} ${theme.space[4]}`,
+  padding: `0 ${theme.space[3]} ${theme.space[6]} ${theme.space[3]}`,
   a: {
     textDecoration: 'none',
   },

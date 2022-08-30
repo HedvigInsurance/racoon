@@ -133,7 +133,7 @@ export const getStoryBySlug = async (slug: string, preview = false) => {
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
   })
-  return data.story as StoryData
+  return data.story as StoryData | undefined
 }
 
 export const getAllLinks = async () => {

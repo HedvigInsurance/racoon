@@ -35,7 +35,7 @@
     "lodash-es": "4.17.21",
     "marked": "4.0.18",
     "next": "12.2.2",
-    "next-i18next": "^11.0.0",
+    "next-i18next": "12.0.0",
     "pino-datadog": "https://github.com/simonauner/pino-datadog#rename-hostname-to-host",
     "pino-multi-stream": "6.0.0",
     "react": "18.2.0",
