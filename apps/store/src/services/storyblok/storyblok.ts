@@ -9,6 +9,7 @@ import { FooterBlock, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
+import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
@@ -91,6 +92,7 @@ export const initStoryblok = () => {
     HeadingBlock,
     HeroBlock,
     ImageBlock,
+    InsurableLimitsBlock,
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
