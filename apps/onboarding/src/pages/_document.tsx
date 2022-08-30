@@ -35,6 +35,7 @@ export default class MyDocument extends Document {
               src={
                 process.env.NEXT_PUBLIC_APP_ENV === 'prod' ? gtmProdScript.body : gtmDevScript.body
               }
+              title="gtm"
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }}

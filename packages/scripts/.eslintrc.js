@@ -5,8 +5,9 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
+    'plugin:jsx-a11y/recommended',
   ],
-  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
+  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint', 'jsx-a11y'],
   ignorePatterns: ['next.config.js'],
   settings: {
     'import/parsers': {
