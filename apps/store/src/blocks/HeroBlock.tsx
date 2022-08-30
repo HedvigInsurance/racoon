@@ -14,7 +14,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
   return (
     <HeroSection {...storyblokEditable(blok)} bgImage={blok.background.filename}>
       <div>
-        {blok.content.map((nestedBlock) => {
+        {blok.content.map((nestedBlock) => <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />)}
           return <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
         })}
       </div>
