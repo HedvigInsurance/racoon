@@ -18,6 +18,7 @@ import {
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
@@ -49,6 +50,8 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 
 export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBlockProps) => {
   const { activeItem } = props
+
+  const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
   return (
     <NavigationMenuPrimitive.Item value={blok.name}>
       <NavigationTrigger>
@@ -62,8 +65,8 @@ export const NestedNavContainerBlock = ({ blok, ...props }: NestedNavContainerBl
       <NavigationMenuPrimitive.Content>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>
-            {blok.navItems
-              ? blok.navItems.map((nestedBlock) => (
+            {filteredNavItems
+              ? filteredNavItems.map((nestedBlock) => (
                   <NavItemBlock blok={nestedBlock} key={nestedBlock._uid} {...props} />
                 ))
               : null}

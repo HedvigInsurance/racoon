@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type HeroBlockProps = SbBaseBlockProps<{
   content: ExpectedBlockType<HeadingBlockProps>
@@ -11,15 +12,18 @@ type HeroBlockProps = SbBaseBlockProps<{
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
+  const headingBlocks = filterByBlockType(blok.content, HeadingBlock.blockName)
+  const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
+
   return (
     <HeroSection {...storyblokEditable(blok)} bgImage={blok.background.filename}>
       <div>
-        {blok.content.map((nestedBlock) => <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />)}
-          return <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
-        })}
+        {headingBlocks.map((nestedBlock) => (
+          <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
       </div>
       <div>
-        {blok.buttons.map((nestedBlock) => (
+        {buttonBlocks.map((nestedBlock) => (
           <ButtonBlock blok={nestedBlock} key={nestedBlock._uid} />
         ))}
       </div>

@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import Image from 'next/image'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type ImageBlockProps = SbBaseBlockProps<{
   image: StoryblokImage
@@ -12,12 +13,13 @@ type ImageBlockProps = SbBaseBlockProps<{
 
 export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const sizeProps = getSizeFromURL(blok.image.filename)
+  const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
     <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ? false : true}>
       <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
       <BodyWrapper>
-        {blok.body?.map((nestedBlock) => (
+        {headingBlocks.map((nestedBlock) => (
           <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
       </BodyWrapper>
