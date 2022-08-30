@@ -1,13 +1,28 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
+import { FormEvent, useCallback } from 'react'
 import { Button, Heading, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { PageLink } from '@/lib/PageLink'
+import { useCartLinesRemoveMutation } from '@/services/apollo/generated'
 import { CartPageProps } from './CartPageProps.types'
 
-export const CartPage = ({ products, cost }: CartPageProps) => {
+export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
+  const [removeLineItem, { loading }] = useCartLinesRemoveMutation({
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
+  })
+
+  const handleSubmit = useCallback(
+    async (event: FormEvent<HTMLFormElement>, lineItemId: string) => {
+      event.preventDefault()
+      await removeLineItem({ variables: { lineItemId, cartId } })
+    },
+    [removeLineItem, cartId],
+  )
+
   if (products.length === 0) {
     return <EmptyState />
   }
@@ -22,10 +37,11 @@ export const CartPage = ({ products, cost }: CartPageProps) => {
           {products.map((item) => (
             <li key={item.id}>
               <CartCard
-                lineId={item.id}
                 title={item.name}
                 price={item.cost}
                 currency={item.currency}
+                onSubmit={(event) => handleSubmit(event, item.id)}
+                loading={loading}
               />
             </li>
           ))}
