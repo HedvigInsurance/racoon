@@ -2,24 +2,30 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import CartReviewPage from '@/components/CartReviewPage/CartReviewPage'
 import type { CartReviewPageProps } from '@/components/CartReviewPage/CartReviewPage.types'
-import { useHandleSubmitCartReview } from '@/components/CartReviewPage/useHandleSubmitCartReview'
+import { useHandleSubmitStartDates } from '@/components/CartReviewPage/useHandleSubmitStartDates'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
-const NextCartReviewPage: NextPage<CartReviewPageProps> = (props) => {
+type NextPageProps = Omit<CartReviewPageProps, 'loading'>
+
+const NextCartReviewPage: NextPage<NextPageProps> = (props) => {
   const router = useRouter()
-  const handleSuccess = async () => await router.push(PageLink.checkout())
-  const [handleSubmit] = useHandleSubmitCartReview({ onSuccess: handleSuccess })
+  const [handleSubmit, { loading }] = useHandleSubmitStartDates({
+    products: props.products,
+    onSuccess() {
+      router.push(PageLink.checkout())
+    },
+  })
 
   return (
     <form onSubmit={handleSubmit}>
-      <CartReviewPage {...props} />
+      <CartReviewPage {...props} loading={loading} />
     </form>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<CartReviewPageProps> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ req, res }) => {
   try {
     const apolloClient = initializeApollo()
     const shopSession = await getCurrentShopSessionServerSide({

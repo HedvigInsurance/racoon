@@ -4,13 +4,12 @@ import { ArrowForwardIcon, Button, Heading, InputField, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/lib/PageLink'
-import { LINE_PREFIX } from './CartReviewPage.constants'
 import { CartReviewPageProps } from './CartReviewPage.types'
 import { useResizeObserver } from './useResizeObserver'
 
 const DATE_TODAY = new Date().toISOString().substring(0, 10)
 
-const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageProps) => {
+const CartReviewPage = ({ currency, cost, products, campaigns, loading }: CartReviewPageProps) => {
   const [ref, { height: footerHeight }] = useResizeObserver()
 
   return (
@@ -48,7 +47,7 @@ const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageP
                     <InputField
                       label="Start date"
                       type="date"
-                      name={[LINE_PREFIX, product.lineId].join('')}
+                      name={product.lineId}
                       defaultValue={product.startDate ?? DATE_TODAY}
                     />
                   </Space>
@@ -60,14 +59,14 @@ const CartReviewPage = ({ currency, cost, products, campaigns }: CartReviewPageP
       </Space>
 
       <Footer ref={ref}>
-        <Space y={1}>
+        <Space y={1.5}>
           <PriceBreakdown
             currency={currency}
             products={products}
             cost={cost}
             campaigns={campaigns}
           />
-          <Button fullWidth disabled={products.length === 0}>
+          <Button fullWidth disabled={loading || products.length === 0}>
             Continue to contact details
           </Button>
         </Space>
