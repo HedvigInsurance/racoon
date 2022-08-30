@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { Statistic } from '../Statistic/Statistic'
 
 const Wrapper = styled.div(({ theme }) => ({
   display: 'grid',
@@ -8,21 +7,11 @@ const Wrapper = styled.div(({ theme }) => ({
   gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 }))
 
-type InsurableLimit = {
-  value: string
-  label: string
-}
-
 type InsurableLimitsProps = {
-  limits: InsurableLimit[]
+  children: React.ReactNode
+  className?: string
 }
 
-export const InsurableLimits = ({ limits }: InsurableLimitsProps) => {
-  return (
-    <Wrapper>
-      {limits.map((limit) => (
-        <Statistic key={limit.label} label={limit.label} value={limit.value} />
-      ))}
-    </Wrapper>
-  )
+export const InsurableLimits = ({ children, className }: InsurableLimitsProps) => {
+  return <Wrapper className={className}>{children}</Wrapper>
 }
