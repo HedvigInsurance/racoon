@@ -8,18 +8,14 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 type SetupPriceCalculatorFormParams = {
   shopSession: ShopSession
   apolloClient: ApolloClient<unknown>
-  productId: string
+  productName: string
+  templateId: string
   request: GetServerSidePropsContext['req']
   response: GetServerSidePropsContext['res']
 }
 
-export const setupPriceCalculatorForm = async ({
-  shopSession,
-  apolloClient,
-  productId,
-  request,
-  response,
-}: SetupPriceCalculatorFormParams) => {
+export const setupPriceCalculatorForm = async (params: SetupPriceCalculatorFormParams) => {
+  const { shopSession, apolloClient, productName, templateId, request, response } = params
   const priceIntentService = priceIntentServiceInitServerSide({
     req: request,
     res: response,
@@ -29,11 +25,11 @@ export const setupPriceCalculatorForm = async ({
   const formTemplateService = new FormTemplateService()
 
   const [emptyTemplate, priceIntent] = await Promise.all([
-    formTemplateService.fetch({ id: productId }),
-    priceIntentService.fetch(productId),
+    formTemplateService.fetch({ id: templateId }),
+    priceIntentService.fetch(productName),
   ])
 
-  if (emptyTemplate === null) throw new Error(`No template found for productId: ${productId}`)
+  if (emptyTemplate === null) throw new Error(`No template found for productId: ${productName}`)
 
   const template = prepopulateFormTemplate(emptyTemplate, priceIntent.data)
 
