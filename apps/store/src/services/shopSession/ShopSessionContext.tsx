@@ -13,10 +13,12 @@ type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVari
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
-export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) => {
+type Props = PropsWithChildren<{ shopSessionId?: string }>
+
+export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
   const { countryCode } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
-  const shopSessionId = shopSessionService.shopSessionId()
+  const shopSessionId = initialShopSessionId ?? shopSessionService.shopSessionId()
 
   const [createShopSession, mutationResult] = useShopSessionCreateMutation({
     variables: { countryCode },
@@ -37,6 +39,7 @@ export const ShopSessionProvider = ({ children }: PropsWithChildren<unknown>) =>
       console.warn('ShopSession not found: ', shopSessionId, error)
       createShopSession()
     },
+    ssr: typeof window === 'undefined',
   })
 
   // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
