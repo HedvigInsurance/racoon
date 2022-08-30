@@ -74,6 +74,5 @@ const Img = styled.img({
 })
 
 export const CardMedia = ({ image, height, alt }: CardMediaProps) => {
-  // eslint-disable-next-line @next/next/no-img-element
   return <Img src={image} height={height} alt={alt} />
 }
