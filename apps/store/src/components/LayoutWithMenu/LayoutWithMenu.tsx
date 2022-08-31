@@ -16,6 +16,7 @@ type LayoutWithMenuProps = {
 }
 
 export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
+  const story = children.props.story
   const globalStory = children.props.globalStory
   const router = useRouter()
   const handleChangeLocale: SiteFooterProps['onChangeLocale'] = (locale) => {
@@ -25,7 +26,7 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
   return (
     <Wrapper>
       {children}
-      <HeaderBlock blok={globalStory.content} />
+      {!story.content.hideMenu && <HeaderBlock blok={globalStory.content} />}
       <SiteFooter onChangeLocale={handleChangeLocale} />
     </Wrapper>
   )
