@@ -34,9 +34,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ re
       apolloClient,
     })
 
-    const totalCost = shopSession.cart.lines
-      .map((line) => parseInt(line.price.amount, 10) || 0)
-      .reduce((a, b) => a + b, 0)
+    const cartCost = shopSession.cart.cost
+    const total = parseInt(cartCost.total.amount, 10)
+    const subTotal = parseInt(cartCost.subtotal.amount, 10)
+    const crossOut = total !== subTotal ? subTotal : undefined
 
     return {
       props: {
@@ -46,10 +47,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ re
           cost: parseInt(line.price.amount, 10) || 0,
           startDate: line.startDate,
         })),
-        cost: {
-          total: totalCost,
-          subTotal: totalCost,
-        },
+        cost: { total, subTotal, crossOut },
         currency: shopSession.currencyCode,
       },
     }
