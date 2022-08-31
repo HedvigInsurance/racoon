@@ -1,7 +1,7 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
-    'next/core-web-vitals',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
@@ -9,9 +9,6 @@ module.exports = {
   plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
   ignorePatterns: ['next.config.js'],
   settings: {
-    next: {
-      rootDir: ['apps/*/', 'packages/*/'],
-    },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
