@@ -33,7 +33,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
           <GlobalStyles />
-          <ShopSessionProvider>
+          <ShopSessionProvider shopSessionId={pageProps.shopSessionId}>
             <CartContext.Provider value={cartStore}>
               {getLayout(<Component {...pageProps} />)}
             </CartContext.Provider>
