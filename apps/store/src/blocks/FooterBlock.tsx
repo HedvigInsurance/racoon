@@ -17,7 +17,8 @@ import { findLocale } from '@/components/SiteFooter/SiteFooter.helpers'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -33,17 +34,19 @@ export const FooterLink = ({ blok }: FooterLinkProps) => {
 FooterLink.blockName = 'footerLink'
 
 type FooterSectionProps = SbBaseBlockProps<{
-  footerLinks: FooterLinkProps['blok'][]
+  footerLinks: ExpectedBlockType<FooterLinkProps>
   title: string
 }>
 
 export const FooterSection = ({ blok }: FooterSectionProps) => {
+  const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLink.blockName)
+
   return (
     <Accordion.Item key={blok._uid} value={blok.title.toString()} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>{blok.title}</Accordion.HeaderWithTrigger>
       <StyledAccordionContent>
         <Space y={1}>
-          {blok.footerLinks.map((nestedBlock) => (
+          {filteredFooterLinks.map((nestedBlock) => (
             <div key={nestedBlock._uid}>
               <FooterLink blok={nestedBlock} />
             </div>
@@ -56,7 +59,7 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
 FooterSection.blockName = 'footerSection'
 
 type FooterBlockProps = SbBaseBlockProps<{
-  sections: FooterSectionProps['blok'][]
+  sections: ExpectedBlockType<FooterSectionProps>
 }> &
   SiteFooterProps
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
@@ -84,11 +87,11 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     event.preventDefault()
     onChangeLocale(findLocale(event.target[Field.Market].value, event.target[Field.Language].value))
   }
-
+  const footerSection = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
     <Wrapper y={2}>
       <Accordion.Root type="multiple">
-        {blok.sections.map((nestedBlok) => (
+        {footerSection.map((nestedBlok) => (
           <FooterSection key={nestedBlok._uid} blok={nestedBlok} />
         ))}
       </Accordion.Root>

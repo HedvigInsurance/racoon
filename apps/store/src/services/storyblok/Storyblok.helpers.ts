@@ -1,7 +1,7 @@
 import { SbBlokData } from '@storyblok/react'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
-  blocks: BlockData[],
+  blocks: BlockData[] = [],
   targetType: string,
 ): BlockData[] => {
   const result: BlockData[] = []

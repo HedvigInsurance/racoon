@@ -1,19 +1,23 @@
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { TopPickCardBlock, TopPickCardBlockProps } from './TopPickCardBlock'
 
 type ProductSlideshowBlockProps = SbBaseBlockProps<{
   title?: string
-  items: Array<SbBlokData>
+  items: ExpectedBlockType<TopPickCardBlockProps>
 }>
 
 export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
+  const topPickCardItems = filterByBlockType(blok.items, TopPickCardBlock.blockName)
+
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <Slideshow title={blok.title}>
-        {blok.items.map((nestedBlock) => (
-          <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+        {topPickCardItems.map((nestedBlock) => (
+          <TopPickCardBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
       </Slideshow>
     </Wrapper>

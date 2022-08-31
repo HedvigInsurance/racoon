@@ -9,7 +9,7 @@ const Wrapper = styled.div(({ theme }) => ({
   textAlign: 'center',
 }))
 
-type HeadingBlockProps = SbBaseBlockProps<{
+export type HeadingBlockProps = SbBaseBlockProps<{
   text: string
   variant: HeadingProps['variant']
   as: HeadingProps['as']

@@ -1,10 +1,10 @@
 import { TimelineItemBlock, TimelineItemBlockProps } from '@/blocks/TimelineItemBlock'
 import * as Timeline from '@/components//Timeline/Timeline'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = SbBaseBlockProps<{
-  items: Array<TimelineItemBlockProps['blok']>
+  items: ExpectedBlockType<TimelineItemBlockProps>
 }>
 
 export const TimelineBlock = ({ blok }: Props) => {

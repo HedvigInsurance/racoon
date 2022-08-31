@@ -3,7 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { ButtonVariant, LinkButton } from 'ui'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type ButtonBlockProps = SbBaseBlockProps<{
+export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
   link: LinkField
   variant: ButtonVariant

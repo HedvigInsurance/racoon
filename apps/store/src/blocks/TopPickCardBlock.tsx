@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { TopPickCard } from '@/components/TopPickCard/TopPickCard'
 import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
 
-type TopPickCardBlockProps = SbBaseBlockProps<{
+export type TopPickCardBlockProps = SbBaseBlockProps<{
   title: string
   subtitle: string
   image: StoryblokImage
