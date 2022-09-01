@@ -111,7 +111,7 @@ export const focusableStyles = {
   },
 }
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.header(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
