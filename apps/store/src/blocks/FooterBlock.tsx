@@ -22,16 +22,15 @@ import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
-  name: string
+  linkText: string
 }>
-export const FooterLink = ({ blok }: FooterLinkProps) => {
-  return (
-    <Link href={blok.link.cached_url} passHref {...storyblokEditable(blok)}>
-      <StyledLink>{blok.name}</StyledLink>
-    </Link>
-  )
-}
-FooterLink.blockName = 'footerLink'
+
+export const FooterLink = ({ blok }: FooterLinkProps) => (
+  <Link href={blok.link.cached_url} passHref {...storyblokEditable(blok)}>
+    <StyledLink>{blok.linkText}</StyledLink>
+  </Link>
+)
+FooterLink.blockName = 'footerLink' as const
 
 type FooterSectionProps = SbBaseBlockProps<{
   footerLinks: ExpectedBlockType<FooterLinkProps>
@@ -40,7 +39,6 @@ type FooterSectionProps = SbBaseBlockProps<{
 
 export const FooterSection = ({ blok }: FooterSectionProps) => {
   const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLink.blockName)
-
   return (
     <Accordion.Item key={blok._uid} value={blok.title.toString()} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>{blok.title}</Accordion.HeaderWithTrigger>
@@ -56,12 +54,13 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
     </Accordion.Item>
   )
 }
-FooterSection.blockName = 'footerSection'
+FooterSection.blockName = 'footerSection' as const
 
 type FooterBlockProps = SbBaseBlockProps<{
-  sections: ExpectedBlockType<FooterSectionProps>
+  footerSections: ExpectedBlockType<FooterSectionProps>
 }> &
   SiteFooterProps
+
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { marketLabel: currentMarket, htmlLang: currentLanguage } = useCurrentLocale()
@@ -87,11 +86,13 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     event.preventDefault()
     onChangeLocale(findLocale(event.target[Field.Market].value, event.target[Field.Language].value))
   }
-  const footerSection = filterByBlockType(blok.sections, FooterSection.blockName)
+
+  const footerSections = filterByBlockType(blok.footerSections, FooterSection.blockName)
+
   return (
     <Wrapper y={2}>
       <Accordion.Root type="multiple">
-        {footerSection.map((nestedBlok) => (
+        {footerSections.map((nestedBlok) => (
           <FooterSection key={nestedBlok._uid} blok={nestedBlok} />
         ))}
       </Accordion.Root>
@@ -121,4 +122,4 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     </Wrapper>
   )
 }
-FooterBlock.blockName = 'footer'
+FooterBlock.blockName = 'footer' as const

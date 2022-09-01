@@ -2,8 +2,9 @@ import styled from '@emotion/styled'
 import { StoryData } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
+import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/TopMenuBlock'
-import { SiteFooter, SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
+import { SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
 
 const Wrapper = styled.main({
   minHeight: '100vh',
