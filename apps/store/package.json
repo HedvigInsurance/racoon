@@ -14,7 +14,8 @@
     "storybook": "start-storybook -p 6008",
     "storybook:build": "build-storybook",
     "chromatic": "npx chromatic --exit-zero-on-changes --storybook-build-dir ./storybook-static",
-    "codegen": "graphql-codegen -r dotenv/config && prettier --write ./src/services/**/generated.ts && yarn lint --fix"
+    "codegen": "graphql-codegen -r dotenv/config && prettier --write ./src/services/**/generated.ts && yarn lint --fix",
+    "download-translations": "./scripts/download-translations.sh"
   },
   "dependencies": {
     "@adyen/adyen-web": "5.18.0",
@@ -34,6 +35,7 @@
     "graphql": "16.5.0",
     "js-cookie": "3.0.1",
     "next": "12.2.2",
+    "next-i18next": "12.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "ui": "workspace:"

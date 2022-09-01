@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import CartReviewPage from '@/components/CartReviewPage/CartReviewPage'
 import type { CartReviewPageProps } from '@/components/CartReviewPage/CartReviewPage.types'
@@ -25,7 +26,11 @@ const NextCartReviewPage: NextPage<NextPageProps> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
+  const { req, res, locale } = context
+
+  if (!locale || locale === 'default') return { notFound: true }
+
   try {
     const apolloClient = initializeApollo()
     const shopSession = await getCurrentShopSessionServerSide({
@@ -41,6 +46,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ re
 
     return {
       props: {
+        ...(await serverSideTranslations(locale)),
         products: shopSession.cart.lines.map((line) => ({
           lineId: line.id,
           name: line.variant.title,

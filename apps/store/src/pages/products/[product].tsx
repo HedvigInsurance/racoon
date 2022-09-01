@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
@@ -21,19 +22,20 @@ const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPag
 }
 
 export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
-  const { req, res } = context
-  const { countryCode } = getLocale(context.locale)
+  const { locale, req, res, params: { product: slug } = {}, preview } = context
 
-  const slug = context.params?.product
+  if (!locale || locale === 'default') return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
+
+  const { countryCode } = getLocale(context.locale)
 
   try {
     const apolloClient = initializeApollo()
 
     const [shopSession, story, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
-      getProductStory(slug, context.preview),
-      getGlobalStory(context.preview),
+      getProductStory(slug, preview),
+      getGlobalStory(preview),
     ])
 
     const { template, priceIntent } = await setupPriceCalculatorForm({
@@ -41,12 +43,13 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
       apolloClient,
       productName: story.content.productId,
       templateId: story.content.priceFormTemplateId,
-      request: context.req,
-      response: context.res,
+      request: req,
+      response: res,
     })
 
     return {
       props: {
+        ...(await serverSideTranslations(locale)),
         story,
         globalStory,
         priceFormTemplate: template,

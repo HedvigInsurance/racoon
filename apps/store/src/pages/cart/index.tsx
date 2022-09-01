@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
@@ -46,7 +47,10 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { req, res } = context
+  const { req, res, locale } = context
+
+  if (!locale || locale === 'default') return { notFound: true }
+
   const { countryCode } = getLocale(context.locale)
 
   try {
@@ -58,6 +62,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
     return {
       props: {
+        ...(await serverSideTranslations(locale)),
         globalStory,
         shopSessionId: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),

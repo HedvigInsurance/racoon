@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPage.helpers'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
@@ -12,7 +13,10 @@ import { getGlobalStory } from '@/services/storyblok/storyblok'
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = async ({
   req,
   res,
+  locale,
 }) => {
+  if (!locale || locale === 'default') return { notFound: true }
+
   const apolloClient = initializeApollo()
 
   const [shopSession, globalStory] = await Promise.all([
@@ -29,6 +33,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
 
   return {
     props: {
+      ...(await serverSideTranslations(locale)),
       globalStory,
       currency: shopSession.currencyCode,
       cost: { total: 0 },

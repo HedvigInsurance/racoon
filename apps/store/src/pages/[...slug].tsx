@@ -1,4 +1,5 @@
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { Page } from '@/components/Page/Page'
@@ -27,20 +28,27 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   )
 }
 
-export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryParams> = async ({
-  params,
-  preview,
-}) => {
+export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryParams> = async (
+  context,
+) => {
+  const { params, preview, locale } = context
+  if (!locale || locale === 'default') return { notFound: true }
+
   const slug = params?.slug ? params.slug.join('/') : 'home'
   const [story, globalStory] = await Promise.all([
     getStoryBySlug(slug, preview),
     getGlobalStory(preview),
   ])
 
-  return { props: { story, globalStory } }
+  if (story === undefined) {
+    console.warn(`Page not found: ${slug}, locale: ${locale}`)
+    return { notFound: true }
+  }
+
+  return { props: { ...(await serverSideTranslations(locale)), story, globalStory } }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const links = await getAllLinks()
 
   const paths: Path[] = []
@@ -55,7 +63,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     })
 
   return {
-    paths: paths,
+    paths: paths.flatMap((path) =>
+      locales.map((locale) => ({
+        ...path,
+        locale,
+      })),
+    ),
     fallback: false,
   }
 }
