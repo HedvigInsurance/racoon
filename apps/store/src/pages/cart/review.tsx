@@ -44,6 +44,9 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     const subTotal = parseInt(cartCost.subtotal.amount, 10)
     const crossOut = total !== subTotal ? subTotal : undefined
 
+    const cost: CartReviewPageProps['cost'] = { total, subTotal }
+    if (crossOut) cost.crossOut = crossOut
+
     return {
       props: {
         ...(await serverSideTranslations(locale)),
@@ -53,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
           cost: parseInt(line.price.amount, 10) || 0,
           startDate: line.startDate,
         })),
-        cost: { total, subTotal, crossOut },
+        cost,
         currency: shopSession.currencyCode,
       },
     }
