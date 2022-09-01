@@ -10,18 +10,28 @@ import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSess
 
 type NextPageProps = Omit<CartReviewPageProps, 'loading'>
 
-const NextCartReviewPage: NextPage<NextPageProps> = (props) => {
+const NextCartReviewPage: NextPage<NextPageProps> = ({ products, ...props }) => {
   const router = useRouter()
-  const [handleSubmit, { loading }] = useHandleSubmitStartDates({
-    products: props.products,
+  const [handleSubmit, { loading, data }] = useHandleSubmitStartDates({
+    products,
     onSuccess() {
       router.push(PageLink.checkout())
     },
   })
 
+  const { userErrors } = data?.cartLinesStartDateUpdate ?? {}
+
+  const productsWithErrors = products.map((product) => {
+    const error = userErrors?.find((error) => product.lineId === error.lineItemId)
+    return {
+      errorMessage: error?.message,
+      ...product,
+    }
+  })
+
   return (
     <form onSubmit={handleSubmit}>
-      <CartReviewPage {...props} loading={loading} />
+      <CartReviewPage {...props} loading={loading} products={productsWithErrors} />
     </form>
   )
 }
