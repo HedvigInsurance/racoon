@@ -30,7 +30,9 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
     <Wrapper>
       {children}
       {(!story || !story.content.hideMenu) && <HeaderBlock blok={globalStory.content} />}
-      <SiteFooter onChangeLocale={handleChangeLocale} />
+      {(!story || !story.content.hideMenu) && (
+        <FooterBlock blok={globalStory.content} onChangeLocale={handleChangeLocale} />
+      )}
     </Wrapper>
   )
 }
