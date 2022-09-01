@@ -1,4 +1,5 @@
 import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
+import { i18n } from 'next-i18next'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
@@ -130,12 +131,15 @@ export const initStoryblok = () => {
 
 export const getStoryBySlug = async (slug: string, preview = false) => {
   const storyblokApi = getStoryblokApi()
+
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
+    language: getCurrentLanguage(),
   })
   return data.story as StoryData | undefined
 }
 
+// FIXME: Do we need locale here?
 export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
   const { data } = await storyblokApi.get('cdn/links/')
@@ -150,4 +154,14 @@ export const getGlobalStory = async (preview = false) => {
 export const getProductStory = async (slug: string, preview = false) => {
   const story = await getStoryBySlug(`/products/${slug}`, preview)
   return story as ProductStory
+}
+
+// FIXME: Discuss right way to get current language
+const getCurrentLanguage = (): string => {
+  const localeParts = i18n!.language.split('-')
+  if (localeParts?.length !== 2) {
+    return ''
+  }
+  localeParts[1] = localeParts[1].toUpperCase()
+  return localeParts.join('-')
 }
