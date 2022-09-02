@@ -90,7 +90,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const footerSections = filterByBlockType(blok.footerSections, FooterSection.blockName)
 
   return (
-    <Wrapper y={2}>
+    <Wrapper as="footer" y={2}>
       <Accordion.Root type="multiple">
         {footerSections.map((nestedBlok) => (
           <FooterSection key={nestedBlok._uid} blok={nestedBlok} />

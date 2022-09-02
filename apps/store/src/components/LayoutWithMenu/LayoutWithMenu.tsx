@@ -6,7 +6,7 @@ import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/TopMenuBlock'
 import { SiteFooterProps } from '@/components/SiteFooter/SiteFooter'
 
-const Wrapper = styled.main({
+const Wrapper = styled.div({
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
@@ -28,8 +28,8 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
 
   return (
     <Wrapper>
-      {children}
       {(!story || !story.content.hideMenu) && <HeaderBlock blok={globalStory.content} />}
+      {children}
       {(!story || !story.content.hideMenu) && (
         <FooterBlock blok={globalStory.content} onChangeLocale={handleChangeLocale} />
       )}

@@ -38,7 +38,7 @@ export const SiteFooter = ({ onChangeLocale }: SiteFooterProps) => {
   }
 
   return (
-    <Wrapper y={2}>
+    <Wrapper as="footer" y={2}>
       <Accordion.Root type="multiple">
         {SECTIONS.map((section, index) => (
           <Accordion.Item key={index} value={index.toString()}>

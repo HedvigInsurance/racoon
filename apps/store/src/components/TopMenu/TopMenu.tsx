@@ -9,6 +9,7 @@ import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
+const Z_INDEX_TOP_MENU = 1000
 
 export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
@@ -111,7 +112,7 @@ export const focusableStyles = {
   },
 }
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.header(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -119,6 +120,7 @@ export const Wrapper = styled.div(({ theme }) => ({
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
   position: 'fixed',
+  zIndex: Z_INDEX_TOP_MENU,
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
