@@ -49,6 +49,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   return { props: { ...(await serverSideTranslations(locale)), story, globalStory } }
 }
 
+// FIXME: Apply market + locale permutations, remove market prefix
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const paths: Path[] = [
     // Index page needs to be added separately, it's not a CMS link

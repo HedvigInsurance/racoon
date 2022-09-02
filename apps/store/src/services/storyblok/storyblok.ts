@@ -23,6 +23,8 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { getLocale } from '@/lib/l10n/getLocale'
+import { LocaleData } from '@/lib/l10n/locales'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -134,11 +136,10 @@ type StoryOptions = {
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
-  const storyblokApi = getStoryblokApi()
-
-  const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+  const localeData = getLocale(locale)
+  const { data } = await getStoryblokApi().get(`cdn/stories/${localeData.marketLabel}/${slug}`, {
     version: preview ? 'draft' : 'published',
-    language: localeToLanguage(locale),
+    language: localeToLanguage(localeData),
   })
   return data.story as StoryData | undefined
 }
@@ -159,8 +160,8 @@ export const getProductStory = async (slug: string, options: StoryOptions) => {
   return story as ProductStory
 }
 
-const localeToLanguage = (locale: string) => {
-  const localeParts = locale.split('-')
+const localeToLanguage = (locale: LocaleData) => {
+  const localeParts = locale.locale.split('-')
   if (localeParts?.length !== 2) {
     throw new Error(`Unexpected locale format: ${locale}`)
   }
