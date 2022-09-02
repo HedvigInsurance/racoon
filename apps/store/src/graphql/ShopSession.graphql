@@ -6,5 +6,8 @@ query ShopSession($shopSessionId: ID!) {
     cart {
       ...CartFragment
     }
+    checkout {
+      ...Checkout
+    }
   }
 }
