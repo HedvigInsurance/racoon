@@ -2,12 +2,16 @@ import styled from '@emotion/styled'
 import React, { useState, useMemo, useCallback } from 'react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Insurance, Product } from '@/services/mockProductService'
 import { CoverageList } from './CoverageList'
 import { MinusIcon } from './MinusIcon'
+import { Peril } from './Perils.types'
 import { PlusIcon } from './PlusIcon'
 
-export const Perils = ({ product }: { product: Product }) => {
+type Props = {
+  items: Array<Peril>
+}
+
+export const Perils = ({ items }: Props) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
@@ -16,11 +20,9 @@ export const Perils = ({ product }: { product: Product }) => {
 
   const openedItemsSet = useMemo(() => new Set(openedItems), [openedItems])
 
-  const perils = product.insurances.flatMap((insurance: Insurance) => insurance.perils)
-
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ id, icon, name, description, covered, notCovered }) => {
+      {items.map(({ id, icon, name, description, covered, notCovered }) => {
         const isOpened = openedItemsSet.has(name)
 
         return (
