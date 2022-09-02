@@ -17,8 +17,8 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps> = async ({ previ
 
   const slug = 'home'
   const [story, globalStory] = await Promise.all([
-    getStoryBySlug(slug, preview),
-    getGlobalStory(preview),
+    getStoryBySlug(slug, { locale, preview }),
+    getGlobalStory({ locale, preview }),
   ])
 
   if (story === undefined) throw new Error('Unable to find home page story')

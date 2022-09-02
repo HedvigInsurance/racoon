@@ -34,8 +34,8 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
 
     const [shopSession, story, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
-      getProductStory(slug, preview),
-      getGlobalStory(preview),
+      getProductStory(slug, { locale, preview }),
+      getGlobalStory({ locale, preview }),
     ])
 
     const { template, priceIntent } = await setupPriceCalculatorForm({

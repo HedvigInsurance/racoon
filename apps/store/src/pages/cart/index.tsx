@@ -47,7 +47,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { req, res, locale } = context
+  const { req, res, locale, preview } = context
 
   if (!locale || locale === 'default') return { notFound: true }
 
@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     const apolloClient = initializeApollo()
     const [shopSession, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
-      getGlobalStory(context.preview),
+      getGlobalStory({ locale, preview }),
     ])
 
     return {

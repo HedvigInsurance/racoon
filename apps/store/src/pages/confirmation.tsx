@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
 
   const [shopSession, globalStory] = await Promise.all([
     getCurrentShopSessionServerSide({ req, res, apolloClient }),
-    getGlobalStory(),
+    getGlobalStory({ locale }),
   ])
 
   const checkoutService = new CheckoutService(shopSession, apolloClient)

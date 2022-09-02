@@ -36,8 +36,8 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 
   const slug = params?.slug ? params.slug.join('/') : 'home'
   const [story, globalStory] = await Promise.all([
-    getStoryBySlug(slug, preview),
-    getGlobalStory(preview),
+    getStoryBySlug(slug, { preview, locale }),
+    getGlobalStory({ preview, locale }),
   ])
 
   if (story === undefined) {
