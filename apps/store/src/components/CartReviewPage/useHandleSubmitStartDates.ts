@@ -31,7 +31,7 @@ export const useHandleSubmitStartDates = ({ products, onSuccess }: Params) => {
       }
     })
 
-    await Promise.all(inputs.map((variables) => updateStartDate({ variables })))
+    await updateStartDate({ variables: { input: { lines: inputs } } })
     onSuccess()
   }
 

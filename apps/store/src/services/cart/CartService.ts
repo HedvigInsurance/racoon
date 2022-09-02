@@ -6,9 +6,6 @@ import {
   CartLinesRemoveDocument,
   CartLinesRemoveMutation,
   CartLinesRemoveMutationVariables,
-  StartDateUpdateDocument,
-  StartDateUpdateMutation,
-  StartDateUpdateMutationVariables,
 } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
@@ -55,23 +52,6 @@ export class CartService {
       console.error(JSON.stringify(variables))
       throw error
     }
-  }
-
-  public async startDateUpdate(lineItemId: string, startDate: Date | null) {
-    const result = await this.apolloClient.mutate<
-      StartDateUpdateMutation,
-      StartDateUpdateMutationVariables
-    >({
-      mutation: StartDateUpdateDocument,
-      variables: {
-        lineItemId,
-        startDate: startDate ? startDate.toISOString().substring(0, 10) : null,
-      },
-    })
-
-    const updatedCart = result.data?.cartLineStartDateUpdate.cart
-    if (!updatedCart) throw new Error(`Could not update start date for line item: ${lineItemId}`)
-    return updatedCart
   }
 }
 

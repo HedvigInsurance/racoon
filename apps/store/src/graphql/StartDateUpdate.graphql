@@ -1,11 +1,10 @@
-mutation StartDateUpdate($lineItemId: ID!, $startDate: Date) {
-  cartLineStartDateUpdate(input: { lineItemId: $lineItemId, startDate: $startDate }) {
+mutation StartDateUpdate($input: CartLinesStartDateUpdateInput!) {
+  cartLinesStartDateUpdate(input: $input) {
     cart {
       ...CartFragment
     }
     userErrors {
-      code
-      field
+      lineItemId
       message
     }
   }

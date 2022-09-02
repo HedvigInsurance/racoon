@@ -10,18 +10,28 @@ import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSess
 
 type NextPageProps = Omit<CartReviewPageProps, 'loading'>
 
-const NextCartReviewPage: NextPage<NextPageProps> = (props) => {
+const NextCartReviewPage: NextPage<NextPageProps> = ({ products, ...props }) => {
   const router = useRouter()
-  const [handleSubmit, { loading }] = useHandleSubmitStartDates({
-    products: props.products,
+  const [handleSubmit, { loading, data }] = useHandleSubmitStartDates({
+    products,
     onSuccess() {
       router.push(PageLink.checkout())
     },
   })
 
+  const { userErrors } = data?.cartLinesStartDateUpdate ?? {}
+
+  const productsWithErrors = products.map((product) => {
+    const error = userErrors?.find((error) => product.lineId === error.lineItemId)
+    return {
+      errorMessage: error?.message,
+      ...product,
+    }
+  })
+
   return (
     <form onSubmit={handleSubmit}>
-      <CartReviewPage {...props} loading={loading} />
+      <CartReviewPage {...props} loading={loading} products={productsWithErrors} />
     </form>
   )
 }
@@ -44,6 +54,9 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     const subTotal = parseInt(cartCost.subtotal.amount, 10)
     const crossOut = total !== subTotal ? subTotal : undefined
 
+    const cost: CartReviewPageProps['cost'] = { total, subTotal }
+    if (crossOut) cost.crossOut = crossOut
+
     return {
       props: {
         ...(await serverSideTranslations(locale)),
@@ -53,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
           cost: parseInt(line.price.amount, 10) || 0,
           startDate: line.startDate,
         })),
-        cost: { total, subTotal, crossOut },
+        cost,
         currency: shopSession.currencyCode,
       },
     }

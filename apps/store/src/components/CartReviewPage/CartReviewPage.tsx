@@ -47,6 +47,7 @@ const CartReviewPage = ({ currency, cost, products, campaigns, loading }: CartRe
                     <InputField
                       label="Start date"
                       type="date"
+                      errorMessage={product.errorMessage}
                       name={product.lineId}
                       defaultValue={product.startDate ?? DATE_TODAY}
                     />
