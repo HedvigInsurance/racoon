@@ -32,6 +32,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   context,
 ) => {
   const { params, preview, locale } = context
+  // TODO: Redirect to default market + language
   if (!locale || locale === 'default') return { notFound: true }
 
   const slug = params?.slug ? params.slug.join('/') : 'home'
@@ -51,7 +52,10 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const links = await getAllLinks()
 
-  const paths: Path[] = []
+  const paths: Path[] = [
+    // Index page
+    { params: { slug: [''] } },
+  ]
   Object.keys(links)
     .filter((linkKey) => !links[linkKey].is_folder)
     .filter((linkKey) => !links[linkKey].slug.startsWith('products/'))
