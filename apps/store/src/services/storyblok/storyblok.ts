@@ -1,5 +1,4 @@
 import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
-import { i18n } from 'next-i18next'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
@@ -144,7 +143,6 @@ export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOpt
   return data.story as StoryData | undefined
 }
 
-// FIXME: Do we need locale here?
 export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
   const { data } = await storyblokApi.get('cdn/links/')
@@ -161,7 +159,6 @@ export const getProductStory = async (slug: string, options: StoryOptions) => {
   return story as ProductStory
 }
 
-// FIXME: Discuss locale format with team
 const localeToLanguage = (locale: string) => {
   const localeParts = locale.split('-')
   if (localeParts?.length !== 2) {
