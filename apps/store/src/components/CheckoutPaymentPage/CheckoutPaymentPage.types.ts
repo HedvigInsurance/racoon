@@ -8,3 +8,7 @@ export type CheckoutPaymentPageProps = {
   products: Array<ProductData>
   campaigns?: Array<CampaignData>
 }
+
+export type CheckoutPaymentPageAdyenProps = CheckoutPaymentPageProps & {
+  paymentMethods: object
+}
