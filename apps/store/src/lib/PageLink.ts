@@ -15,6 +15,7 @@ export const PageLink = {
   product: ({ locale, slug }: ProductPage) => `${getOptionalPath(locale)}/products/${slug}`,
   cart: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart`,
   cartReview: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart/review`,
+  countrySelect: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/country-selector`,
   checkout: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout`,
   checkoutPayment: ({ locale, authStatus }: CheckoutPaymentPage = {}) => {
     const authStatusQueryParam = authStatus ? `authStatus=${authStatus}` : null

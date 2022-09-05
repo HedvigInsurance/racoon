@@ -3,6 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { Page } from '@/components/Page/Page'
+import { PageLink } from '@/lib/PageLink'
 import {
   getAllLinks,
   getGlobalStory,
