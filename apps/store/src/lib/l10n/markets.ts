@@ -3,13 +3,13 @@ import { CountryCode, Locale, Market, MarketLabel } from './types'
 
 export type MarketData = {
   id: MarketLabel
+  // Unused.  Do we need it?
   apiMarket: Market
   adtractionScriptSrc?: string
   countryCode: CountryCode
   defaultLocale: Locale
   locales: Locale[]
-  // TODO: Move currency, apiMarket, tracker URLs, etc
-  // TODO: Discuss moving SSNs, birth dates, etc here
+  // TODO: Discuss moving language-independent parts of SSNs, birth dates here
 }
 
 export const markets: Record<MarketLabel, MarketData> = {

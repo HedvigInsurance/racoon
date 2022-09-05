@@ -11,6 +11,7 @@ export type PhoneNumberData = {
   lunchEndsAt: string
 }
 
+// TODO: Unused. Do we need it?
 export const phoneNumbers: PhoneNumbers = {
   SE: {
     displayNumber: '075-101 20 00',

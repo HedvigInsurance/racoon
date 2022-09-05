@@ -1,5 +1,4 @@
 import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
-import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 import { HtmlLanguage, Locale } from './types'
 
 export const FALLBACK_LOCALE: Locale = Locale.EnSe
@@ -18,7 +17,6 @@ export type LocaleData = {
     formatRegex: RegExp
     backendFormatExample: string
   }
-  phoneNumber?: PhoneNumberData
   currencyLocale: Locale
 }
 
@@ -37,7 +35,6 @@ export const locales: Record<Locale, LocaleData> = {
       formatRegex: birthDateFormats.SE,
       backendFormatExample: 'ÅÅÅÅ-MM-DD',
     },
-    phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.SvSe,
   },
   'en-se': {
@@ -54,7 +51,6 @@ export const locales: Record<Locale, LocaleData> = {
       formatRegex: birthDateFormats.SE,
       backendFormatExample: 'YYYY-MM-DD',
     },
-    phoneNumber: phoneNumbers.SE,
     currencyLocale: Locale.EnSe,
   },
   'nb-no': {
