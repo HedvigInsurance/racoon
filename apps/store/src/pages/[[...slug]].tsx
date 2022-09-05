@@ -50,12 +50,11 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-  const links = await getAllLinks()
-
   const paths: Path[] = [
-    // Index page
+    // Index page needs to be added separately, it's not a CMS link
     { params: { slug: [''] } },
   ]
+  const links = await getAllLinks()
   Object.keys(links)
     .filter((linkKey) => !links[linkKey].is_folder)
     .filter((linkKey) => !links[linkKey].slug.startsWith('products/'))
