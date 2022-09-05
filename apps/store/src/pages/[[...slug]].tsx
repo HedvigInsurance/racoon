@@ -32,12 +32,13 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   context,
 ) => {
   const { params, preview, locale } = context
+  // TODO: Redirect to default market + language
   if (!locale || locale === 'default') return { notFound: true }
 
   const slug = params?.slug ? params.slug.join('/') : 'home'
   const [story, globalStory] = await Promise.all([
-    getStoryBySlug(slug, preview),
-    getGlobalStory(preview),
+    getStoryBySlug(slug, { preview, locale }),
+    getGlobalStory({ preview, locale }),
   ])
 
   if (story === undefined) {
@@ -49,9 +50,11 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
+  const paths: Path[] = [
+    // Index page needs to be added separately, it's not a CMS link
+    { params: { slug: [''] } },
+  ]
   const links = await getAllLinks()
-
-  const paths: Path[] = []
   Object.keys(links)
     .filter((linkKey) => !links[linkKey].is_folder)
     .filter((linkKey) => !links[linkKey].slug.startsWith('products/'))

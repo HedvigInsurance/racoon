@@ -128,10 +128,17 @@ export const initStoryblok = () => {
   })
 }
 
-export const getStoryBySlug = async (slug: string, preview = false) => {
+type StoryOptions = {
+  locale: string
+  preview?: boolean
+}
+
+export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const storyblokApi = getStoryblokApi()
+
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
+    language: localeToLanguage(locale),
   })
   return data.story as StoryData | undefined
 }
@@ -142,12 +149,21 @@ export const getAllLinks = async () => {
   return data.links
 }
 
-export const getGlobalStory = async (preview = false) => {
-  const story = await getStoryBySlug('global', preview)
+export const getGlobalStory = async (options: StoryOptions) => {
+  const story = await getStoryBySlug('global', options)
   return story as GlobalStory
 }
 
-export const getProductStory = async (slug: string, preview = false) => {
-  const story = await getStoryBySlug(`/products/${slug}`, preview)
+export const getProductStory = async (slug: string, options: StoryOptions) => {
+  const story = await getStoryBySlug(`/products/${slug}`, options)
   return story as ProductStory
+}
+
+const localeToLanguage = (locale: string) => {
+  const localeParts = locale.split('-')
+  if (localeParts?.length !== 2) {
+    throw new Error(`Unexpected locale format: ${locale}`)
+  }
+  localeParts[1] = localeParts[1].toUpperCase()
+  return localeParts.join('-')
 }
