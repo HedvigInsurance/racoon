@@ -10,8 +10,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps> = async ({
   preview,
   locale = Locale.SvSe,
 }) => {
-  // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
-
+  // Can be removed when we handle default locals
   const getLocation = locale === 'default' ? Locale.SvSe : locale
 
   const slug = 'home'
