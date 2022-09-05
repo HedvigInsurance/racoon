@@ -5,7 +5,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
-import { getLocale } from '@/lib/l10n/locales'
+import { getMarketByLocale } from '@/lib/l10n/markets'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
   if (!locale || locale === 'default') return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
 
-  const { countryCode } = getLocale(context.locale)
+  const { countryCode } = getMarketByLocale(context.locale)
 
   try {
     const apolloClient = initializeApollo()

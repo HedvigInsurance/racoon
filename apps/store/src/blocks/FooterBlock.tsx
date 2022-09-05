@@ -7,9 +7,11 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { LocaleField, MARKET_MAP, TEMP_TRANSLATIONS, findLocale } from '@/lib/l10n/locales'
+import { LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { findMarketLocale, markets } from '@/lib/l10n/markets'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -54,17 +56,21 @@ type FooterBlockProps = SbBaseBlockProps<{
 }>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { marketLabel: currentMarket, htmlLang: currentLanguage } = useCurrentLocale()
+  const { htmlLang: currentLanguage } = useCurrentLocale()
+  const currentMarket = useCurrentMarket()
 
-  const marketList = Object.keys(MARKET_MAP).map((market) => ({
+  const marketList = Object.keys(markets).map((market) => ({
     name: TEMP_TRANSLATIONS[`MARKET_LABEL_${market}`],
     value: market,
   }))
 
-  const languageList = MARKET_MAP[currentMarket].map((language) => ({
-    name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
-    value: language,
-  }))
+  const languageList = currentMarket.locales.map((locale) => {
+    const language = locale.split('-')[0]
+    return {
+      name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
+      value: language,
+    }
+  })
 
   const handleSelectChange = () => {
     formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
@@ -77,7 +83,10 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
     onChangeLocale(
-      findLocale(event.target[LocaleField.Market].value, event.target[LocaleField.Language].value),
+      findMarketLocale(
+        event.target[LocaleField.Market].value,
+        event.target[LocaleField.Language].value,
+      ),
     )
   }
 
@@ -96,7 +105,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
             <InputSelect
               name={LocaleField.Market}
               onChange={handleSelectChange}
-              value={currentMarket}
+              value={currentMarket.id}
               options={marketList}
             />
           </Flex>
