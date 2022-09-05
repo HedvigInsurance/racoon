@@ -150,3 +150,36 @@ export const locales: Record<Locale, LocaleData> = {
     countryCode: CountryCode.Dk,
   },
 }
+
+export const TEMP_TRANSLATIONS: Record<string, string> = {
+  MARKET_LABEL_SE: 'Sweden',
+  MARKET_LABEL_NO: 'Norway',
+  MARKET_LABEL_DK: 'Denmark',
+
+  LANGUAGE_LABEL_sv: 'Swedish',
+  LANGUAGE_LABEL_en: 'English',
+  LANGUAGE_LABEL_no: 'Norwegian',
+  LANGUAGE_LABEL_da: 'Danish',
+}
+
+export const MARKET_MAP = Object.values(locales).reduce((markets, { marketLabel, htmlLang }) => {
+  if (marketLabel in markets) {
+    return { ...markets, [marketLabel]: [...markets[marketLabel], htmlLang] }
+  }
+  return { ...markets, [marketLabel]: [htmlLang] }
+}, {} as Record<MarketLabel, Array<Locale>>)
+
+export enum LocaleField {
+  Market = 'market',
+  Language = 'language',
+}
+
+export const getLocale = (locale: Locale | string | undefined) => {
+  return locales[locale as Locale] ?? locales[FALLBACK_LOCALE]
+}
+
+export const findLocale = (market: string, language: string): Locale | undefined => {
+  const marketLocales = Object.values(locales).filter(({ marketLabel }) => marketLabel === market)
+  const result = marketLocales.find(({ htmlLang }) => htmlLang === language)
+  return result?.locale ?? marketLocales[0]?.locale ?? undefined
+}
