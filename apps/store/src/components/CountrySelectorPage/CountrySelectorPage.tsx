@@ -20,26 +20,28 @@ const CountryOptionContainer = styled.div({
   gap: 5,
 })
 
-const AvailableMarkets = {
+const SupportedMarkets = {
   Sweden: 'Sweden',
   Norway: 'Norway',
   Denmark: 'Denmark',
 } as const
 
 const MarketsMap = new Map([
-  [AvailableMarkets.Denmark, Locale.DaDk],
-  [AvailableMarkets.Norway, Locale.NbNo],
-  [AvailableMarkets.Sweden, Locale.SvSe],
+  [SupportedMarkets.Denmark, Locale.DaDk],
+  [SupportedMarkets.Norway, Locale.NbNo],
+  [SupportedMarkets.Sweden, Locale.SvSe],
 ])
 
-const getLocaleFromMarket = (market: keyof typeof AvailableMarkets) => MarketsMap.get(market)
+type SupportedMarketsKeys = keyof typeof SupportedMarkets
+
+const getLocaleFromMarket = (market: SupportedMarketsKeys) => MarketsMap.get(market)
 
 export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
   return (
     <Container {...props}>
       <h1>Select Country</h1>
       <CountryOptionContainer>
-        {ObjectKeys(AvailableMarkets).map((market) => {
+        {ObjectKeys(SupportedMarkets).map((market) => {
           return (
             <Link
               key={market}
