@@ -1,16 +1,18 @@
 import AdyenCheckoutAPI from '@adyen/adyen-web'
-import { useTheme } from '@emotion/react'
+import { useTranslation } from 'next-i18next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import '@adyen/adyen-web/dist/adyen.css'
 import { PageLink } from '@/lib/PageLink'
+import { localeToAdyenLocale, usePaymentMethodConfiguration } from './Adyen.helpers'
+import { AdyenDropinStyles } from './DropinStyles'
 
 type Props = {
-  paymentMethods: object
+  paymentMethodsResponse: object
   onSuccess: (paymentConnection: unknown) => void
 }
 
-export const AdyenCheckout = ({ onSuccess, paymentMethods }: Props) => {
+export const AdyenCheckout = ({ onSuccess, paymentMethodsResponse }: Props) => {
   const paymentContainer = useRef<HTMLDivElement>(null)
   const configuration = useAdyenConfiguration()
 
@@ -18,7 +20,7 @@ export const AdyenCheckout = ({ onSuccess, paymentMethods }: Props) => {
     const createCheckout = async () => {
       const checkout = await AdyenCheckoutAPI({
         ...configuration,
-        paymentMethodsResponse: paymentMethods,
+        paymentMethodsResponse,
         onSubmit: (_state: any, dropinComponent: any) => {
           dropinComponent.setStatus('loading')
           setTimeout(() => {
@@ -38,14 +40,21 @@ export const AdyenCheckout = ({ onSuccess, paymentMethods }: Props) => {
     }
 
     createCheckout()
-  }, [paymentMethods, configuration, onSuccess])
+  }, [paymentMethodsResponse, configuration, onSuccess])
 
-  return <div ref={paymentContainer} />
+  return (
+    <AdyenDropinStyles>
+      <div ref={paymentContainer} />
+    </AdyenDropinStyles>
+  )
 }
 
 const useAdyenConfiguration = () => {
   const { locale } = useCurrentLocale()
-  const theme = useTheme()
+  const { t } = useTranslation()
+  const paymentMethodConfiguration = usePaymentMethodConfiguration()
+
+  const payButtonText = t('CHECKOUT_BUTTON_CONNECT_CARD')
 
   return useMemo(
     () => ({
@@ -60,26 +69,17 @@ const useAdyenConfiguration = () => {
       },
       openFirstStoredPaymentMethod: false,
       enableStoreDetails: true,
-      locale,
+
+      locale: localeToAdyenLocale(locale),
+      translations: {
+        'no-NO': { payButton: payButtonText },
+        'da-DK': { payButton: payButtonText },
+        'en-US': { payButton: payButtonText },
+      },
       returnUrl: PageLink.apiPaymentAdyenCallback({ locale }),
 
-      paymentMethodConfiguration: {
-        card: {
-          styles: {
-            base: {
-              color: theme.colors.gray700,
-              background: theme.colors.gray100,
-            },
-            placeholder: {
-              color: theme.colors.gray700,
-            },
-            error: {
-              color: theme.colors.gray700,
-            },
-          },
-        },
-      },
+      paymentMethodConfiguration,
     }),
-    [theme, locale],
+    [locale, payButtonText, paymentMethodConfiguration],
   )
 }

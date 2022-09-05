@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
     const apolloClient = initializeApollo()
     const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
 
-    const paymentMethods = await fetchAvailablePaymentMethods({
+    const paymentMethodsResponse = await fetchAvailablePaymentMethods({
       apolloClient,
       countryCode: shopSession.countryCode,
     })
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
         shopSessionId: shopSession.id,
         isPaymentConnected: context.query.authStatus === AuthStatus.Success,
 
-        paymentMethods,
+        paymentMethodsResponse,
         currency: shopSession.currencyCode,
         cost: {
           total: parseInt(shopSession.cart.cost.total.amount, 10),

@@ -8,7 +8,7 @@ import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageAdyenProps } from './CheckoutPaymentPage.types'
 
 export const CheckoutPaymentPageAdyen = ({
-  paymentMethods,
+  paymentMethodsResponse,
   isPaymentConnected,
   ...props
 }: CheckoutPaymentPageAdyenProps) => {
@@ -25,7 +25,7 @@ export const CheckoutPaymentPageAdyen = ({
             </Text>
           </p>
         </Space>
-        <AdyenCheckout paymentMethods={paymentMethods} onSuccess={() => {}} />
+        <AdyenCheckout paymentMethodsResponse={paymentMethodsResponse} onSuccess={() => {}} />
         <Space y={0.5}>
           <Button disabled={!isPaymentConnected} fullWidth>
             Complete purchase
