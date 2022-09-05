@@ -30,8 +30,16 @@ export const SWEDEN_APARTMENT: InputGroup = {
       options: [
         { name: 'BRF', value: 'BRF' },
         { name: 'Rent', value: 'RENT' },
-        { name: 'Student BRF', value: 'STUDENT_BRF' },
-        { name: 'Student Rent', value: 'STUDENT_RENT' },
+      ],
+    },
+    {
+      name: 'data.isStudent',
+      label: 'Is student',
+      defaultValue: 'false',
+      type: 'select',
+      options: [
+        { name: 'Yes', value: 'true' },
+        { name: 'No', value: 'false' },
       ],
     },
     { name: 'data.currentInsurer', label: 'Current insurer (optional)', type: 'text' },
