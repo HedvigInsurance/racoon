@@ -1,5 +1,6 @@
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useRef } from 'react'
 import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
@@ -79,9 +80,10 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
   }
 
-  // todo: connect to locale / market
-  const onChangeLocale = (value: Locale | undefined) => console.log('Location changed:', value)
-
+  const router = useRouter()
+  const onChangeLocale = (locale: Locale | undefined) => {
+    router.push(router.asPath, undefined, { locale })
+  }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
     onChangeLocale(findLocale(event.target[Field.Market].value, event.target[Field.Language].value))
