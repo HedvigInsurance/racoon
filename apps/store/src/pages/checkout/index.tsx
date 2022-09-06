@@ -60,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     return {
       props: {
         ...(await serverSideTranslations(locale)),
+        shopSessionId: shopSession.id,
         products: shopSession.cart.lines.map((line) => ({
           lineId: line.id,
           name: line.variant.title,
