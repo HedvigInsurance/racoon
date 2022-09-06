@@ -1,30 +1,18 @@
 // import { useStoryblokState } from '@storyblok/react'
-import type { GetStaticProps, NextPageWithLayout } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { CountrySelectorPage } from '@/components/CountrySelectorPage/CountrySelectorPage'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { Locale } from '@/lib/l10n/types'
-import { getGlobalStory, getStoryBySlug, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-export const getStaticProps: GetStaticProps<StoryblokPageProps> = async ({
-  preview,
-  locale = Locale.SvSe,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale = Locale.EnSe }) => {
   // Can be removed when we handle default locals
-  const getLocation = locale === 'default' ? Locale.SvSe : locale
+  const getLocation = () => (locale === 'default' ? Locale.EnSe : locale)
 
-  const slug = 'home'
-  const [story, globalStory] = await Promise.all([
-    getStoryBySlug(slug, { locale: getLocation as string, preview }),
-    getGlobalStory({ locale: getLocation as string, preview }),
-  ])
-
-  if (story === undefined) throw new Error('Unable to find page story')
+  const [globalStory] = await Promise.all([getGlobalStory({ locale: getLocation() })])
 
   return {
     props: {
-      ...(await serverSideTranslations('sv-se')),
-      story,
       globalStory,
     },
   }
