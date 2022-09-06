@@ -44,9 +44,8 @@ const localeMarkets = Object.fromEntries(
   ),
 ) as Record<Locale, MarketLabel>
 
-export const getMarketByLocale = (locale: string | undefined | null): MarketData => {
-  const marketId = localeMarkets[locale as Locale]
-  const marketData = markets[marketId]
+export const getMarketByLocale = (locale: string): MarketData => {
+  const marketData = markets[localeMarkets[locale as Locale]]
   if (!marketData) {
     throw new Error(`Failed to find market by locale=${locale}`)
   }

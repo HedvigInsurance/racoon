@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
   if (!locale || locale === 'default') return { notFound: true }
 
-  const { countryCode } = getMarketByLocale(context.locale)
+  const { countryCode } = getMarketByLocale(locale)
 
   try {
     const apolloClient = initializeApollo()
