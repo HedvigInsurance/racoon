@@ -13,7 +13,9 @@ export const CheckoutPaymentPageAdyen = ({
   ...props
 }: CheckoutPaymentPageAdyenProps) => {
   return (
-    <CheckoutPaymentPage Header={<a href={PageLink.checkout()}>Return to personal details</a>}>
+    <CheckoutPaymentPage
+      Header={<a href={PageLink.checkoutContactDetails()}>Return to personal details</a>}
+    >
       <Space y={1.5}>
         <Space y={0.5}>
           <PriceBreakdownWrapper>

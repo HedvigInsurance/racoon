@@ -1,9 +1,9 @@
 import { FormEventHandler } from 'react'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
-import { CartReviewPageProps } from './CartReviewPage.types'
+import { CheckoutPageProps } from './CheckoutPage.types'
 
 type Params = {
-  products: CartReviewPageProps['products']
+  products: CheckoutPageProps['products']
   onSuccess: () => void
 }
 
