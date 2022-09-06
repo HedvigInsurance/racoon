@@ -7,13 +7,12 @@ import { PageLink } from '@/lib/PageLink'
 
 type CountrySelectorPageProps = any
 
-const Container = styled.div(({ theme }) => ({
+const Container = styled.div({
   height: 400,
   display: 'grid',
   alignContent: 'center',
   textAlign: 'center',
-  background: theme.colors.gray100,
-}))
+})
 
 const CountryOptionContainer = styled.div({
   display: 'grid',
