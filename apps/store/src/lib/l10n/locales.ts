@@ -43,9 +43,9 @@ export const locales: Record<Locale, LocaleData> = {
 
 // TODO: Move to Lokalise
 export const TEMP_TRANSLATIONS: Record<string, string> = {
-  MARKET_LABEL_SE: 'Sweden',
-  MARKET_LABEL_NO: 'Norway',
-  MARKET_LABEL_DK: 'Denmark',
+  COUNTRY_LABEL_SE: 'Sweden',
+  COUNTRY_LABEL_NO: 'Norway',
+  COUNTRY_LABEL_DK: 'Denmark',
 
   LANGUAGE_LABEL_sv: 'Swedish',
   LANGUAGE_LABEL_en: 'English',
@@ -54,7 +54,7 @@ export const TEMP_TRANSLATIONS: Record<string, string> = {
 }
 
 export enum LocaleField {
-  Market = 'market',
+  Country = 'country',
   Language = 'language',
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRefreshData } from '@/hooks/useRefreshData'
-import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { PageLink } from '@/lib/PageLink'
 
 type Params = {
@@ -9,7 +9,7 @@ type Params = {
 }
 
 export const useHandleClickAddToCart = ({ lineId, onSuccess }: Params) => {
-  const { countryCode } = useCurrentMarket()
+  const { countryCode } = useCurrentCountry()
   const refreshData = useRefreshData()
   const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
 

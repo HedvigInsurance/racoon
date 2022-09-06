@@ -17,13 +17,7 @@ export enum Language {
   Da = 'da',
 }
 
-export enum Market {
-  Sweden = 'SWEDEN',
-  Norway = 'NORWAY',
-  Denmark = 'DENMARK',
-}
-
-export enum MarketLabel {
+export enum CountryLabel {
   SE = 'SE',
   NO = 'NO',
   DK = 'DK',
