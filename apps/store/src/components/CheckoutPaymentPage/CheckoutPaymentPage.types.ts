@@ -10,6 +10,6 @@ export type CheckoutPaymentPageProps = {
 }
 
 export type CheckoutPaymentPageAdyenProps = CheckoutPaymentPageProps & {
-  paymentMethods: object
+  paymentMethodsResponse: object
   isPaymentConnected: boolean
 }
