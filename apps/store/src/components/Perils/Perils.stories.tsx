@@ -18,7 +18,7 @@ const Template: ComponentStory<typeof Perils> = (props) => <Perils {...props} />
 
 export const Default = Template.bind({})
 Default.args = {
-  perils: [
+  items: [
     {
       id: 'waterLeaks',
       icon: <ShieldIcon size="22px" />,
