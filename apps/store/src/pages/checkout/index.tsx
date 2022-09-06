@@ -21,7 +21,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const [handleSubmit] = useHandleSubmitContactDetails({
     checkoutId,
     onSuccess() {
-      router.push(PageLink.checkoutPaymentAdyen())
+      router.push(PageLink.checkoutPayment())
     },
   })
 

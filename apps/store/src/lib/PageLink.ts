@@ -14,14 +14,10 @@ export const PageLink = {
   cart: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart`,
   cartReview: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/cart/review`,
   checkout: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout`,
-  checkoutPaymentAdyen: ({ locale }: BaseParams = {}) =>
-    `${getOptionalPath(locale)}/checkout/payment/adyen`,
-  checkoutPaymentUpdate: ({ locale }: BaseParams = {}) =>
-    `${getOptionalPath(locale)}/checkout/payment/update`,
+  checkoutPayment: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/payment`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/sign`,
   confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/confirmation`,
 
-  apiCheckoutPersonCreate: () => '/api/checkout/person',
   apiPriceProduct: ({ productSlug, formTemplateId }: PriceProductAPI) =>
     `/api/price/${productSlug}/${formTemplateId}`,
   apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,

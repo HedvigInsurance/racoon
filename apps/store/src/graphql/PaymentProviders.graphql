@@ -1,0 +1,10 @@
+query PaymentProviders($countryCode: CountryCode!) {
+  paymentProviders(countryCode: $countryCode) {
+    ... on PaymentProviderTrustly {
+      _
+    }
+    ... on PaymentProviderAdyen {
+      availablePaymentMethods
+    }
+  }
+}
