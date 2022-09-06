@@ -9,7 +9,6 @@ export type MarketData = {
   countryCode: CountryCode
   defaultLocale: Locale
   locales: Locale[]
-  // TODO: Discuss moving language-independent parts of SSNs, birth dates here
 }
 
 export const markets: Record<MarketLabel, MarketData> = {
@@ -39,9 +38,15 @@ export const markets: Record<MarketLabel, MarketData> = {
   },
 }
 
+const localeMarkets = Object.fromEntries(
+  Object.entries(markets).flatMap(([marketId, marketData]) =>
+    marketData.locales.map((locale) => [locale, marketId]),
+  ),
+) as Record<Locale, MarketLabel>
+
 export const getMarketByLocale = (locale: string | undefined | null): MarketData => {
-  const marketId = (locale?.split('-')[1] ?? '').toUpperCase()
-  const marketData = markets[marketId as MarketLabel]
+  const marketId = localeMarkets[locale as Locale]
+  const marketData = markets[marketId]
   if (!marketData) {
     throw new Error(`Failed to find market by locale=${locale}`)
   }
