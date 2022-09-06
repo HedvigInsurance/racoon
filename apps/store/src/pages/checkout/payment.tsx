@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { fetchAvailablePaymentMethods } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.helpers'
 import { CheckoutPaymentPageAdyenProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
 import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
@@ -30,6 +31,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       props: {
         ...(await serverSideTranslations(locale)),
         shopSessionId: shopSession.id,
+        isPaymentConnected: context.query.authStatus === AuthStatus.Success,
 
         paymentMethods,
         currency: shopSession.currencyCode,

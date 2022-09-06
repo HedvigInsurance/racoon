@@ -3,6 +3,7 @@ import { useTheme } from '@emotion/react'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import '@adyen/adyen-web/dist/adyen.css'
+import { PageLink } from '@/lib/PageLink'
 
 type Props = {
   paymentMethods: object
@@ -60,6 +61,7 @@ const useAdyenConfiguration = () => {
       openFirstStoredPaymentMethod: false,
       enableStoreDetails: true,
       locale,
+      returnUrl: PageLink.apiPaymentAdyenCallback({ locale }),
 
       paymentMethodConfiguration: {
         card: {

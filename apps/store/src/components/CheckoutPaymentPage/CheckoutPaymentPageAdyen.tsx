@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
 import { Button, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
@@ -10,10 +9,9 @@ import { CheckoutPaymentPageAdyenProps } from './CheckoutPaymentPage.types'
 
 export const CheckoutPaymentPageAdyen = ({
   paymentMethods,
+  isPaymentConnected,
   ...props
 }: CheckoutPaymentPageAdyenProps) => {
-  const [paymentConnection, setPaymentConnection] = useState<unknown | null>(null)
-
   return (
     <CheckoutPaymentPage Header={<a href={PageLink.checkout()}>Return to personal details</a>}>
       <Space y={1.5}>
@@ -27,12 +25,9 @@ export const CheckoutPaymentPageAdyen = ({
             </Text>
           </p>
         </Space>
-        <AdyenCheckout
-          paymentMethods={paymentMethods}
-          onSuccess={(connection) => setPaymentConnection(connection)}
-        />
+        <AdyenCheckout paymentMethods={paymentMethods} onSuccess={() => {}} />
         <Space y={0.5}>
-          <Button disabled={paymentConnection === null} fullWidth>
+          <Button disabled={!isPaymentConnected} fullWidth>
             Complete purchase
           </Button>
           <p>
