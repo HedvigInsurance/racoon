@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { Button, InputField, Space } from 'ui'
-import { CheckoutPageProps } from './CheckoutPage.types'
-import { CheckoutPageLayout } from './CheckoutPageLayout'
+import { CheckoutContactDetailsPageProps } from './CheckoutContactDetails.types'
+import { CheckoutContactDetailsPageLayout } from './CheckoutContactDetailsPageLayout'
 
-export const CheckoutSignPage = ({ prefilledData }: CheckoutPageProps) => {
+export const CheckoutSignPage = ({ prefilledData }: CheckoutContactDetailsPageProps) => {
   return (
-    <CheckoutPageLayout
+    <CheckoutContactDetailsPageLayout
       Footer={
         <Space y={1.5}>
           <MutedText>
@@ -45,7 +45,7 @@ export const CheckoutSignPage = ({ prefilledData }: CheckoutPageProps) => {
           defaultValue={prefilledData.email ?? undefined}
         />
       </Space>
-    </CheckoutPageLayout>
+    </CheckoutContactDetailsPageLayout>
   )
 }
 

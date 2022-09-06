@@ -7,7 +7,8 @@ type ProductData = {
   startDate?: string
   errorMessage?: string
 }
-export type CartReviewPageProps = {
+
+export type CheckoutPageProps = {
   currency: string
   cost: CostData
   products: Array<ProductData>

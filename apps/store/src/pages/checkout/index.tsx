@@ -1,51 +1,73 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { CheckoutPage } from '@/components/CheckoutPage/CheckoutPage'
-import { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
-import { CheckoutSignPage } from '@/components/CheckoutPage/CheckoutSignPage'
-import { useHandleSubmitContactDetails } from '@/components/CheckoutPage/useHandleSubmitContactDetails'
+import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
+import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
+import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSubmitStartDates'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
-import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
-type NextPageProps = CheckoutPageProps & {
-  checkoutId: string
-  flow: PaymentConnectionFlow
-}
+type NextPageProps = Omit<CheckoutPageProps, 'loading'>
 
-const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
-  const { flow, checkoutId, ...pageProps } = props
-
+const NextCheckoutPage: NextPage<NextPageProps> = ({ products, ...props }) => {
   const router = useRouter()
-  const [handleSubmit] = useHandleSubmitContactDetails({
-    checkoutId,
+  const [handleSubmit, { loading, data }] = useHandleSubmitStartDates({
+    products,
     onSuccess() {
-      router.push(PageLink.checkoutPayment())
+      router.push(PageLink.checkoutContactDetails())
     },
+  })
+
+  const { userErrors } = data?.cartLinesStartDateUpdate ?? {}
+
+  const productsWithErrors = products.map((product) => {
+    const error = userErrors?.find((error) => product.lineId === error.lineItemId)
+    return {
+      errorMessage: error?.message,
+      ...product,
+    }
   })
 
   return (
     <form onSubmit={handleSubmit}>
-      {flow === PaymentConnectionFlow.BeforeSign ? (
-        <CheckoutPage {...pageProps} />
-      ) : (
-        <CheckoutSignPage {...pageProps} />
-      )}
+      <CheckoutPage {...props} loading={loading} products={productsWithErrors} />
     </form>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
+  const { req, res, locale } = context
+
+  if (!locale || locale === 'default') return { notFound: true }
+
   try {
     const apolloClient = initializeApollo()
-    const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
+    const shopSession = await getCurrentShopSessionServerSide({
+      req,
+      res,
+      apolloClient,
+    })
+
+    const cartCost = shopSession.cart.cost
+    const total = parseInt(cartCost.total.amount, 10)
+    const subTotal = parseInt(cartCost.subtotal.amount, 10)
+    const crossOut = total !== subTotal ? subTotal : undefined
+
+    const cost: CheckoutPageProps['cost'] = { total, subTotal }
+    if (crossOut) cost.crossOut = crossOut
 
     return {
       props: {
-        checkoutId: shopSession.checkout.id,
-        prefilledData: shopSession.checkout.contactDetails,
-        flow: shopSession.checkout.paymentConnectionFlow,
+        ...(await serverSideTranslations(locale)),
+        products: shopSession.cart.lines.map((line) => ({
+          lineId: line.id,
+          name: line.variant.title,
+          cost: parseInt(line.price.amount, 10) || 0,
+          startDate: line.startDate,
+        })),
+        cost,
+        currency: shopSession.currencyCode,
       },
     }
   } catch (error) {

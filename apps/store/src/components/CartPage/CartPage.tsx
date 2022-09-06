@@ -50,7 +50,7 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
             <Button fullWidth>
-              <Link href={PageLink.cartReview()}>Check Out</Link>
+              <Link href={PageLink.checkout()}>Check Out</Link>
             </Button>
           </Space>
         </Footer>
