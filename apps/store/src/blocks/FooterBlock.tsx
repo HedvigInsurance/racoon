@@ -7,7 +7,7 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { getLocale, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { findMarketLocale, markets } from '@/lib/l10n/markets'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
@@ -56,7 +56,7 @@ type FooterBlockProps = SbBaseBlockProps<{
 }>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { htmlLang: currentLanguage } = useCurrentLocale()
+  const { language: currentLanguage } = useCurrentLocale()
   const currentMarket = useCurrentMarket()
 
   const marketList = Object.keys(markets).map((market) => ({
@@ -65,7 +65,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }))
 
   const languageList = currentMarket.locales.map((locale) => {
-    const language = locale.split('-')[0]
+    const { language } = getLocale(locale)
     return {
       name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
       value: language,

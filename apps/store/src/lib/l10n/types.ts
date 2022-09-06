@@ -10,7 +10,7 @@ export enum Locale {
   EnDk = 'en-dk',
 }
 
-export enum HtmlLanguage {
+export enum Language {
   Sv = 'sv',
   En = 'en',
   No = 'no',

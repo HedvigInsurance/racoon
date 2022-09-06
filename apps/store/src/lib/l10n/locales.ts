@@ -1,43 +1,43 @@
-import { HtmlLanguage, Locale } from './types'
+import { Language, Locale } from './types'
 
 export const FALLBACK_LOCALE: Locale = Locale.EnSe
 
 export type LocaleData = {
   path: Locale
   locale: Locale
-  htmlLang: HtmlLanguage
+  language: Language
 }
 
 export const locales: Record<Locale, LocaleData> = {
   'sv-se': {
     path: Locale.SvSe,
     locale: Locale.SvSe,
-    htmlLang: HtmlLanguage.Sv,
+    language: Language.Sv,
   },
   'en-se': {
     path: Locale.EnSe,
     locale: Locale.EnSe,
-    htmlLang: HtmlLanguage.En,
+    language: Language.En,
   },
   'nb-no': {
     path: Locale.NbNo,
     locale: Locale.NbNo,
-    htmlLang: HtmlLanguage.No,
+    language: Language.No,
   },
   'en-no': {
     path: Locale.EnNo,
     locale: Locale.EnNo,
-    htmlLang: HtmlLanguage.En,
+    language: Language.En,
   },
   'da-dk': {
     path: Locale.DaDk,
     locale: Locale.DaDk,
-    htmlLang: HtmlLanguage.Da,
+    language: Language.Da,
   },
   'en-dk': {
     path: Locale.EnDk,
     locale: Locale.EnDk,
-    htmlLang: HtmlLanguage.En,
+    language: Language.En,
   },
 }
 

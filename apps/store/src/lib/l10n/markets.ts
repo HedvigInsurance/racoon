@@ -54,7 +54,7 @@ export const findMarketLocale = (market: string, language: string): Locale | und
     throw new Error(`Failed to find market id=${market}`)
   }
   return (
-    marketData.locales.find((locale) => getLocale(locale).htmlLang === language) ||
+    marketData.locales.find((locale) => getLocale(locale).language === language) ||
     marketData.defaultLocale
   )
 }
