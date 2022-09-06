@@ -35,7 +35,7 @@ export const locales: Record<Locale, LocaleData> = {
     htmlLang: HtmlLanguage.Da,
   },
   'en-dk': {
-    path: Locale.DaDk,
+    path: Locale.EnDk,
     locale: Locale.EnDk,
     htmlLang: HtmlLanguage.En,
   },
