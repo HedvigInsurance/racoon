@@ -1,5 +1,5 @@
 import { getLocale } from './locales'
-import { CountryCode, Locale, Market, MarketLabel } from './types'
+import { CountryCode, Language, Locale, Market, MarketLabel } from './types'
 
 export type MarketData = {
   id: MarketLabel
@@ -52,7 +52,7 @@ export const getMarketByLocale = (locale: string): MarketData => {
   return marketData
 }
 
-export const findMarketLocale = (market: string, language: string): Locale | undefined => {
+export const getMarketLocale = (market: MarketLabel, language: Language): Locale => {
   const marketData = markets[market as MarketLabel]
   if (!marketData) {
     throw new Error(`Failed to find market id=${market}`)

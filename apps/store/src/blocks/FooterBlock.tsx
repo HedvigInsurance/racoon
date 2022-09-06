@@ -8,7 +8,7 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getLocale, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
-import { findMarketLocale, markets } from '@/lib/l10n/markets'
+import { getMarketLocale, markets } from '@/lib/l10n/markets'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
@@ -83,7 +83,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
     onChangeLocale(
-      findMarketLocale(
+      getMarketLocale(
         event.target[LocaleField.Market].value,
         event.target[LocaleField.Language].value,
       ),
