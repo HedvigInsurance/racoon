@@ -1,4 +1,4 @@
-import { MarketLabel } from '@/lib/l10n/types'
+import { CountryLabel } from '@/lib/l10n/types'
 
 type Peril = {
   title: string
@@ -24,7 +24,7 @@ type Insurance = {
 }
 
 export type Product = {
-  market: MarketLabel
+  market: CountryLabel
   name: ProductNames
   displayName: string
   insurances: Insurance[] // This is what we would get from PCMS today
@@ -34,7 +34,7 @@ const PRODUCTS: Product[] = [
   {
     name: ProductNames.SE_HOME,
     displayName: 'Home insurance', // TODO: should be a translation key (or translated from BE)
-    market: MarketLabel.SE,
+    market: CountryLabel.SE,
     insurances: [
       {
         name: InsuranceNames.SE_HOME,
@@ -52,7 +52,7 @@ const PRODUCTS: Product[] = [
   {
     name: ProductNames.SE_CAR,
     displayName: 'Car insurance', // TODO: should be a translation key (or translated from BE)
-    market: MarketLabel.SE,
+    market: CountryLabel.SE,
     insurances: [
       {
         name: InsuranceNames.SE_CAR,
@@ -69,7 +69,7 @@ const PRODUCTS: Product[] = [
   {
     name: ProductNames.SE_ESSENTIAL_BUNDLE,
     displayName: 'Essentials bundle', // TODO: should be a translation key (or translated from BE)
-    market: MarketLabel.SE,
+    market: CountryLabel.SE,
     insurances: [
       {
         name: InsuranceNames.SE_HOME,
@@ -95,6 +95,6 @@ const PRODUCTS: Product[] = [
   },
 ]
 
-export const getProductByMarketAndName = (market: MarketLabel, name: ProductNames) => {
+export const getProductByMarketAndName = (market: CountryLabel, name: ProductNames) => {
   return PRODUCTS.find((product) => product.market === market && product.name === name) ?? null
 }

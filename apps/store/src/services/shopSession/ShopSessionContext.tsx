@@ -1,6 +1,6 @@
 import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
-import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import {
   ShopSessionQuery,
   ShopSessionQueryVariables,
@@ -16,7 +16,7 @@ export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(n
 type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
-  const { countryCode } = useCurrentMarket()
+  const { countryCode } = useCurrentCountry()
   const shopSessionService = useShopSessionService()
   const shopSessionId = initialShopSessionId ?? shopSessionService.shopSessionId()
 
@@ -54,7 +54,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
 }
 
 export const useShopSession = () => {
-  const { countryCode } = useCurrentMarket()
+  const { countryCode } = useCurrentCountry()
 
   const queryResult = useContext(ShopSessionContext)
   if (!queryResult) {

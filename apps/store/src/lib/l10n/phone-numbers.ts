@@ -1,6 +1,6 @@
-import { MarketLabel } from './types'
+import { CountryLabel } from './types'
 
-type PhoneNumbers = Partial<Record<MarketLabel, PhoneNumberData>>
+type PhoneNumbers = Partial<Record<CountryLabel, PhoneNumberData>>
 
 export type PhoneNumberData = {
   displayNumber: string

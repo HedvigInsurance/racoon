@@ -8,10 +8,10 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getLocale, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
-import { getMarketLocale, markets } from '@/lib/l10n/markets'
+import { getCountryLocale, countries } from '@/lib/l10n/countries'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { useCurrentMarket } from '@/lib/l10n/useCurrentMarket'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -57,14 +57,14 @@ type FooterBlockProps = SbBaseBlockProps<{
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
-  const currentMarket = useCurrentMarket()
+  const currentCountry = useCurrentCountry()
 
-  const marketList = Object.keys(markets).map((market) => ({
-    name: TEMP_TRANSLATIONS[`MARKET_LABEL_${market}`],
-    value: market,
+  const countryList = Object.keys(countries).map((country) => ({
+    name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
+    value: country,
   }))
 
-  const languageList = currentMarket.locales.map((locale) => {
+  const languageList = currentCountry.locales.map((locale) => {
     const { language } = getLocale(locale)
     return {
       name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
@@ -83,8 +83,8 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
     onChangeLocale(
-      getMarketLocale(
-        event.target[LocaleField.Market].value,
+      getCountryLocale(
+        event.target[LocaleField.Country].value,
         event.target[LocaleField.Language].value,
       ),
     )
@@ -103,10 +103,10 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
         <SpaceFlex>
           <Flex>
             <InputSelect
-              name={LocaleField.Market}
+              name={LocaleField.Country}
               onChange={handleSelectChange}
-              value={currentMarket.id}
-              options={marketList}
+              value={currentCountry.id}
+              options={countryList}
             />
           </Flex>
 
