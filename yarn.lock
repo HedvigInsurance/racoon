@@ -1857,6 +1857,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datadog/browser-core@npm:4.18.1":
+  version: 4.18.1
+  resolution: "@datadog/browser-core@npm:4.18.1"
+  checksum: ba303a8821b813c622e0a13f2050c4c8aa724e0c6b3a007b06cce8ffbc2c98c53b5fb07a5a1fcc981a06ec6fb3473d19b965bf96a80d6106e691d919cdbebfae
+  languageName: node
+  linkType: hard
+
+"@datadog/browser-logs@npm:4.18.1":
+  version: 4.18.1
+  resolution: "@datadog/browser-logs@npm:4.18.1"
+  dependencies:
+    "@datadog/browser-core": 4.18.1
+  peerDependencies:
+    "@datadog/browser-rum": 4.18.1
+  peerDependenciesMeta:
+    "@datadog/browser-rum":
+      optional: true
+  checksum: 36814f6a0e6173b994837d9a8d0c61d2e2ace32a7e8c75c034f1ccbd8b6a00f7060593bfb945f36cf8626246f7a7d073af38e8d660c0b8826d8c9adc008fbb9a
+  languageName: node
+  linkType: hard
+
 "@datadog/browser-rum-core@npm:4.16.0":
   version: 4.16.0
   resolution: "@datadog/browser-rum-core@npm:4.16.0"
@@ -20420,6 +20441,7 @@ __metadata:
     "@adyen/adyen-web": 5.18.0
     "@apollo/client": 3.6.9
     "@babel/core": 7.19.0
+    "@datadog/browser-logs": 4.18.1
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
     "@graphql-codegen/cli": 2.12.0
