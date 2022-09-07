@@ -3,9 +3,9 @@ import { isLocale } from './isLocale'
 describe('isLocale', () => {
   it.each([
     ['en', false],
-    ['en-se', true],
-    ['en-dk', true],
-    ['sv-se', true],
+    ['en-SE', true],
+    ['en-DK', true],
+    ['sv-SE', true],
     ['sv', false],
     ['', false],
     [undefined, false],
