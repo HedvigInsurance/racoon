@@ -4,7 +4,6 @@ import { Locale } from './l10n/types'
 type BaseParams = { locale?: Locale }
 
 type ProductPage = BaseParams & { slug: string }
-type PriceProductAPI = { productSlug: string; formTemplateId: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
@@ -24,8 +23,6 @@ export const PageLink = {
   checkoutSign: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/checkout/sign`,
   confirmation: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/confirmation`,
 
-  apiPriceProduct: ({ productSlug, formTemplateId }: PriceProductAPI) =>
-    `/api/price/${productSlug}/${formTemplateId}`,
   apiPaymentAdyenCallback: ({ locale }: Required<BaseParams>) =>
     `/api/payment/adyen-callback/${locale}`,
 }
