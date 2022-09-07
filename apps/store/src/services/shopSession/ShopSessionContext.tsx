@@ -1,5 +1,4 @@
 import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
-import { datadogLogs } from '@datadog/browser-logs'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import {
@@ -8,6 +7,7 @@ import {
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
+import { Track } from '@/services/Track/Track'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
@@ -31,7 +31,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
   const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
-      datadogLogs.logger.addContext('shopSessionId', shopSession.id)
+      Track.addContext('shopSessionId', shopSession.id)
       if (shopSession.countryCode !== countryCode) {
         console.warn('ShopSession CountryCode does not match')
         createShopSession()
