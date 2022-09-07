@@ -1,5 +1,5 @@
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QuotePriceCard } from '../QuotePriceCard/QuotePriceCard'
 import { SelectableCard } from './SelectableCard'
 
@@ -19,7 +19,9 @@ const recursiveMap = (children: React.ReactNode, fn: (child: React.ReactNode) =>
     }
 
     if (child.props.children) {
-      child = React.cloneElement(child as ReactElement, {
+      child = React.cloneElement(child, {
+        // @ts-expect-error child: ReactElement is enforced with isValidElement above,
+        // remove casting when TypeScript stops complaining
         children: recursiveMap(child.props.children, fn),
       })
     }
@@ -51,7 +53,9 @@ const cloneChildren = (
         throw new Error('Id must be defined on child components for SelectableCardGroup')
       }
 
-      return React.cloneElement(child as ReactElement, {
+      return React.cloneElement(child, {
+        // @ts-expect-error child: ReactElement is enforced with isValidElement above,
+        // remove casting when TypeScript stops complaining
         checked: child.props.id === selectedId,
         onChange: () => callback(child.props.id),
         as: 'radio',
