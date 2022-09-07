@@ -51,6 +51,14 @@ export enum LocaleField {
   Language = 'language',
 }
 
+export const normalizeLocale = (locale: string | undefined): string | undefined => {
+  if (!locale?.includes('-')) {
+    return locale
+  }
+  const parts = locale.split('-', 2)
+  return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}`
+}
+
 export const getLocale = (locale: Locale | string | undefined) => {
-  return locales[locale as Locale] ?? locales[FALLBACK_LOCALE]
+  return locales[normalizeLocale(locale) as Locale] ?? locales[FALLBACK_LOCALE]
 }
