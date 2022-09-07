@@ -9,7 +9,7 @@ import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { CurrencyCode, CountryCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/apollo/generated'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -18,8 +18,8 @@ import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 export type PriceCalculatorBlockContext = {
   cartId: string
   lineId: string | null
+  priceIntentId: string
   priceFormTemplate: FormTemplate
-  countryCode: CountryCode
   product: {
     slug: string
     name: string
@@ -36,14 +36,14 @@ export type PriceCalculatorBlockProps = PriceCalculatorBlockContext & {
 type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockProps>
 
 export const PriceCalculatorBlock = ({
-  blok: { title, cartId, lineId, priceFormTemplate, countryCode, product },
+  blok: { title, cartId, lineId, priceIntentId, priceFormTemplate, product },
 }: StoryblokPriceCalculatorBlockProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
-  const { handleSubmit, status } = useHandleSubmitPriceCalculatorForm({
-    productSlug: product.slug,
-    formTemplateId: priceFormTemplate.id,
+  const [handleSubmit, { loading: loadingUpdate }] = useHandleSubmitPriceCalculatorForm({
+    priceIntentId,
+    formTemplate: priceFormTemplate,
   })
 
   const [handleSubmitAddToCart, { loading: loadingAddToCart }] = useHandleSubmitAddToCart({
@@ -69,8 +69,7 @@ export const PriceCalculatorBlock = ({
           </SpaceFlex>
 
           <form onSubmit={handleSubmit}>
-            <PriceCalculatorForm template={priceFormTemplate} loading={status === 'submitting'} />
-            <input type="hidden" name="countryCode" value={countryCode} />
+            <PriceCalculatorForm template={priceFormTemplate} loading={loadingUpdate} />
           </form>
         </Space>
 
