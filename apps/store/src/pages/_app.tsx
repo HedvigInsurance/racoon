@@ -3,7 +3,6 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
-import { GlobalStyles } from '@/lib/GlobalStyles'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -30,7 +29,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
-          <GlobalStyles />
           <ShopSessionProvider shopSessionId={pageProps.shopSessionId}>
             {getLayout(<Component {...pageProps} />)}
           </ShopSessionProvider>
