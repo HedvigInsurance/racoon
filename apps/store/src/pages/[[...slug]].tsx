@@ -3,6 +3,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { Page } from '@/components/Page/Page'
+import { countries } from '@/lib/l10n/countries'
+import { CountryLabel } from '@/lib/l10n/types'
 import {
   getAllLinks,
   getGlobalStory,
@@ -48,30 +50,25 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   return { props: { ...(await serverSideTranslations(locale)), story, globalStory } }
 }
 
-// FIXME: Apply market + locale permutations, remove market prefix
-export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-  const paths: Path[] = [
-    // Index page needs to be added separately, it's not a CMS link
-    { params: { slug: [''] } },
-  ]
-  const links = await getAllLinks()
-  Object.keys(links)
-    .filter((linkKey) => !links[linkKey].is_folder)
-    .filter((linkKey) => !links[linkKey].slug.startsWith('products/'))
-    .forEach((linkKey) => {
-      const slug = links[linkKey].slug
-      const splitSlug = slug.split('/')
-
-      paths.push({ params: { slug: splitSlug } })
+export const getStaticPaths: GetStaticPaths = async () => {
+  // FIXME: Add link type
+  const links: any[] = await getAllLinks()
+  const paths: Path[] = []
+  Object.values(links)
+    .filter((link) => !link.is_folder)
+    .filter((link) => !link.slug.includes('/products/') && !link.slug.endsWith('/global'))
+    .forEach((link) => {
+      const [countryCode, ...pathFragments] = link.slug.split('/')
+      const country = countries[countryCode as CountryLabel]
+      if (!country) {
+        return
+      }
+      country.locales.forEach((locale) => {
+        paths.push({ params: { slug: [locale, ...pathFragments] } })
+      })
     })
-
   return {
-    paths: paths.flatMap((path) =>
-      locales.map((locale) => ({
-        ...path,
-        locale,
-      })),
-    ),
+    paths,
     fallback: false,
   }
 }

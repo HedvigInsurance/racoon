@@ -150,7 +150,10 @@ export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOpt
 
 export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
-  const { data } = await storyblokApi.get('cdn/links/')
+  const { data } = await storyblokApi.get('cdn/links/', {
+    // Uncomment for local debug
+    // version: 'draft',
+  })
   return data.links
 }
 
