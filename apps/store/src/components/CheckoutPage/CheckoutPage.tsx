@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, InputField, Space } from 'ui'
-import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
+import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/lib/PageLink'
 import { CheckoutPageProps } from './CheckoutPage.types'
