@@ -5833,7 +5833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:^4.0.3":
+"@types/marked@npm:4.0.3":
   version: 4.0.3
   resolution: "@types/marked@npm:4.0.3"
   checksum: 2fc409a6291cb770688731a444f54e7eab6257c9b565dea4e9d2f3b6654b606e9dd8ea4a924e306b2d2f581dedcb7a27f10f2ca7aed828b11642ab85955341f1
@@ -5887,10 +5887,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:17.0.24, @types/node@npm:^17.0.24":
-  version: 17.0.24
-  resolution: "@types/node@npm:17.0.24"
-  checksum: 9e7c4f863601b2430b4c2429a89935f22eba692956f5013c90a4c7fb0e1401ed8add8c4307453c5d6b8b985384500f8c3f644427ab88632640cc396159af479a
+"@types/node@npm:18.7.15":
+  version: 18.7.15
+  resolution: "@types/node@npm:18.7.15"
+  checksum: 1435fc7fe44744467a3ba8ace646455be228516530dbb3db64a03cca6abcfdc5ba2e48a3eafc71f25f836d2ca871132361c58a5e760237a53674cb09151147d9
   languageName: node
   linkType: hard
 
@@ -9601,7 +9601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^9.5.4":
+"cypress@npm:9.5.4":
   version: 9.5.4
   resolution: "cypress@npm:9.5.4"
   dependencies:
@@ -11987,7 +11987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^2.0.1":
+"formidable@npm:2.0.1":
   version: 2.0.1
   resolution: "formidable@npm:2.0.1"
   dependencies:
@@ -16492,6 +16492,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-router-mock@npm:0.6.5":
+  version: 0.6.5
+  resolution: "next-router-mock@npm:0.6.5"
+  peerDependencies:
+    next: ">=10.0.0"
+    react: ">=17.0.0"
+  checksum: b3a097228a4197557fa7fde588cf311b5df2dca47c1fe58c2cf4abe9c2b016001331f31fa9c06f5ead048f0123a090905ca7dca29be8c01b4b3cc43eb949eadd
+  languageName: node
+  linkType: hard
+
 "next-router-mock@npm:0.7.4":
   version: 0.7.4
   resolution: "next-router-mock@npm:0.7.4"
@@ -16499,16 +16509,6 @@ __metadata:
     next: ">=10.0.0"
     react: ">=17.0.0"
   checksum: 0014def3dd61b1ee7d324cef757fccbca72d2df61d17745d78bc7969fde4e5e1614a7401cc9f40735af86fe5699ec5610270a982252e1ef2c9761d24ac187fb7
-  languageName: node
-  linkType: hard
-
-"next-router-mock@npm:^0.6.5":
-  version: 0.6.5
-  resolution: "next-router-mock@npm:0.6.5"
-  peerDependencies:
-    next: ">=10.0.0"
-    react: ">=17.0.0"
-  checksum: b3a097228a4197557fa7fde588cf311b5df2dca47c1fe58c2cf4abe9c2b016001331f31fa9c06f5ead048f0123a090905ca7dca29be8c01b4b3cc43eb949eadd
   languageName: node
   linkType: hard
 
@@ -16999,15 +16999,15 @@ __metadata:
     "@types/formidable": 2.0.5
     "@types/jsdom": 20.0.0
     "@types/lodash-es": 4.17.6
-    "@types/marked": ^4.0.3
-    "@types/node": ^17.0.24
+    "@types/marked": 4.0.3
+    "@types/node": 18.7.15
     "@types/react": 18.0.17
     classnames: 2.3.1
     cookies-next: 2.1.1
-    cypress: ^9.5.4
+    cypress: 9.5.4
     dompurify: 2.3.10
     eslint-plugin-cypress: 2.12.1
-    formidable: ^2.0.1
+    formidable: 2.0.1
     framer-motion: 7.2.1
     graphql: 16.6.0
     graphql-tag: 2.12.6
@@ -17018,7 +17018,7 @@ __metadata:
     msw: 0.44.2
     next: 12.2.2
     next-i18next: 12.0.0
-    next-router-mock: ^0.6.5
+    next-router-mock: 0.6.5
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
     prettier: 2.7.1
@@ -20356,7 +20356,7 @@ __metadata:
     "@testing-library/react": 13.3.0
     "@testing-library/user-event": 14.4.1
     "@types/js-cookie": 3.0.2
-    "@types/node": 17.0.24
+    "@types/node": 18.7.15
     "@types/react": 18.0.17
     ajv: ^8.11.0
     babel-loader: 8.2.5
