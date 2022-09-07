@@ -4166,24 +4166,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@storyblok/js@npm:1.6.1"
+"@storyblok/js@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@storyblok/js@npm:1.8.0"
   dependencies:
-    storyblok-js-client: ^4.5.2
-  checksum: 9f9d177fe71d55fcb2622f1051adc57a85f7c681e12490e21cb784e83d894eb7b6cf1f59d746e74eb022bdfc11e645e33061e6a766755501b4c035b368cb8553
+    storyblok-js-client: ^4.5.6
+  checksum: f7ec6378b9c5c5a8d9d723a6d37436b88cedf6ee90d68edd54388c6d78ce8c43b6bb69606c1e1ecb664d8ce85a55f335e7e40c8488c0afe28f26295175fa90ee
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:^1.0.12":
-  version: 1.0.12
-  resolution: "@storyblok/react@npm:1.0.12"
+"@storyblok/react@npm:1.1.6":
+  version: 1.1.6
+  resolution: "@storyblok/react@npm:1.1.6"
   dependencies:
-    "@storyblok/js": ^1.6.1
+    "@storyblok/js": ^1.8.0
   peerDependencies:
-    react: 18.1.0
-    react-dom: 18.1.0
-  checksum: f0b0d8547fc90fd55bd4d4722285fdba20465c291aeddb67e9164a1180a19f13dd60b9c5d639155147c8dd064715ebcc6610f7e4bdb4afae990c9fccdbbad276
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: 8db1d3896a965a8856ab622dcfc1e6a5cc54d73a385c6d13e905de114126540834a5c4de9c000f2ed3d80baab03fd7076b78320374ba93079f7dd99887c50225
   languageName: node
   linkType: hard
 
@@ -18057,7 +18057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.7.1, prettier@npm:^2.5.1":
+"prettier@npm:2.7.1":
   version: 2.7.1
   resolution: "prettier@npm:2.7.1"
   bin:
@@ -19352,13 +19352,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-mjs-entry@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "rollup-plugin-mjs-entry@npm:0.1.1"
-  checksum: 82c397297ea9f31320673d5ef0e2ae5e7c9326ef6f18b8013ba2959268b549412ea7918e184227496b154308f1f38810a33c840010954fb85f093525d33d4438
-  languageName: node
-  linkType: hard
-
 "rollup@npm:^2.74.1":
   version: 2.77.2
   resolution: "rollup@npm:2.77.2"
@@ -20327,7 +20320,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": 1.0.0
     "@radix-ui/react-radio-group": 1.0.0
     "@radix-ui/react-tabs": 1.0.0
-    "@storyblok/react": ^1.0.12
+    "@storyblok/react": 1.1.6
     "@storybook/addon-actions": 6.5.9
     "@storybook/addon-essentials": 6.5.9
     "@storybook/addon-links": 6.5.9
@@ -20371,15 +20364,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^4.5.2":
-  version: 4.5.2
-  resolution: "storyblok-js-client@npm:4.5.2"
-  dependencies:
-    prettier: ^2.5.1
-    rollup-plugin-mjs-entry: ^0.1.1
+"storyblok-js-client@npm:^4.5.6":
+  version: 4.5.6
+  resolution: "storyblok-js-client@npm:4.5.6"
   peerDependencies:
-    axios: ^0.21.1
-  checksum: 413f9d7680e0b6de053aee6cceb2b67868031c6c228fe7550674edff7738fefa6349e59f2c055e6fb9ee3426b20887dee734f273bb5dea33aebed65b8ecf5e12
+    axios: ^0.27.2
+  checksum: c0875d95e6faa8ebfe39882ba5a5a5055c98de05b7c9afbff0eed4555e84f9fd9d8cd56e9d7d476c215b80f4690bc7570135a2a89a1b99c1e248fdf0df7e5cf3
   languageName: node
   linkType: hard
 
