@@ -5,7 +5,6 @@ type BaseParams = { locale?: Locale }
 
 type ProductPage = BaseParams & { slug: string }
 type PriceProductAPI = { productSlug: string; formTemplateId: string }
-type CartLinesAPI = { lineId: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
@@ -27,7 +26,6 @@ export const PageLink = {
 
   apiPriceProduct: ({ productSlug, formTemplateId }: PriceProductAPI) =>
     `/api/price/${productSlug}/${formTemplateId}`,
-  apiCartLinesAdd: ({ lineId }: CartLinesAPI) => `/api/cart/${lineId}/add`,
   apiPaymentAdyenCallback: ({ locale }: Required<BaseParams>) =>
     `/api/payment/adyen-callback/${locale}`,
 }

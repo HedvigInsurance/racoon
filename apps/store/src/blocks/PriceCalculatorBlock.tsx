@@ -7,7 +7,7 @@ import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalcu
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
-import { useHandleClickAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
+import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CurrencyCode, CountryCode } from '@/services/apollo/generated'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
@@ -16,6 +16,7 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 export type PriceCalculatorBlockContext = {
+  cartId: string
   lineId: string | null
   priceFormTemplate: FormTemplate
   countryCode: CountryCode
@@ -35,7 +36,7 @@ export type PriceCalculatorBlockProps = PriceCalculatorBlockContext & {
 type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockProps>
 
 export const PriceCalculatorBlock = ({
-  blok: { title, lineId, priceFormTemplate, countryCode, product },
+  blok: { title, cartId, lineId, priceFormTemplate, countryCode, product },
 }: StoryblokPriceCalculatorBlockProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
@@ -45,8 +46,8 @@ export const PriceCalculatorBlock = ({
     formTemplateId: priceFormTemplate.id,
   })
 
-  const [handleClickAddToCart, addToCartStatus] = useHandleClickAddToCart({
-    lineId,
+  const [handleSubmitAddToCart, { loading: loadingAddToCart }] = useHandleSubmitAddToCart({
+    cartId,
     onSuccess: () => {
       toastRef.current?.publish({
         name: product.name,
@@ -74,23 +75,28 @@ export const PriceCalculatorBlock = ({
         </Space>
 
         <SectionWithPadding>
-          <PriceCard
-            name={product.name}
-            cost={product.price ?? undefined}
-            currencyCode={product.currencyCode}
-            gradient={product.gradient}
-            onClick={handleClickAddToCart}
-            loading={addToCartStatus === 'submitting'}
-          />
+          <form onSubmit={handleSubmitAddToCart}>
+            {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
+            <PriceCard
+              name={product.name}
+              cost={product.price ?? undefined}
+              currencyCode={product.currencyCode}
+              gradient={product.gradient}
+              loading={loadingAddToCart}
+            />
+          </form>
         </SectionWithPadding>
       </Space>
 
-      <PriceCalculatorFooter
-        targetRef={wrapperRef}
-        currencyCode={product.currencyCode}
-        price={product.price ?? undefined}
-        onClickAddToCart={handleClickAddToCart}
-      />
+      <form onSubmit={handleSubmitAddToCart}>
+        {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
+        <PriceCalculatorFooter
+          targetRef={wrapperRef}
+          currencyCode={product.currencyCode}
+          price={product.price ?? undefined}
+          loading={loadingAddToCart}
+        />
+      </form>
 
       <CartToast ref={toastRef} />
     </>
