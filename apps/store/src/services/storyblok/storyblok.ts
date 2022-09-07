@@ -80,6 +80,11 @@ type GlobalStory = StoryData & {
   }
 }
 
+type LinkData = Pick<
+  StoryData,
+  'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
+> & { is_folder: boolean; path: string; published: boolean; real_path: string }
+
 type NamedBlock = {
   blockName: string
 } & React.ElementType
@@ -154,7 +159,7 @@ export const getAllLinks = async () => {
     // Uncomment for local debug
     // version: 'draft',
   })
-  return data.links
+  return data.links as LinkData[]
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {

@@ -51,8 +51,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // FIXME: Add link type
-  const links: any[] = await getAllLinks()
+  const links = await getAllLinks()
   const paths: Path[] = []
   Object.values(links)
     .filter((link) => !link.is_folder)
