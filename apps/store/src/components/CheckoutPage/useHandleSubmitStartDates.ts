@@ -1,9 +1,10 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
-import { CartReviewPageProps } from './CartReviewPage.types'
+import { CheckoutPageProps } from './CheckoutPage.types'
 
 type Params = {
-  products: CartReviewPageProps['products']
+  products: CheckoutPageProps['products']
   onSuccess: () => void
 }
 
@@ -12,6 +13,7 @@ export const useHandleSubmitStartDates = ({ products, onSuccess }: Params) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
+    datadogLogs.logger.info('Checkout | Submit user start dates')
 
     const inputs = products.map((product) => {
       const inputElement = event.currentTarget.elements.namedItem(product.lineId)

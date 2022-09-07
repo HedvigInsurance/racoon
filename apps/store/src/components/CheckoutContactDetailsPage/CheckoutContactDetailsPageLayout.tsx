@@ -7,7 +7,7 @@ type Props = {
   Footer: React.ReactNode
 }
 
-export const CheckoutPageLayout = ({ children, Footer }: Props) => {
+export const CheckoutContactDetailsPageLayout = ({ children, Footer }: Props) => {
   return (
     <>
       <Space y={3}>

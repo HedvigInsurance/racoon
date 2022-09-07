@@ -1,5 +1,5 @@
 import { CheckoutFragment } from '@/services/apollo/generated'
 
-export type CheckoutPageProps = {
+export type CheckoutContactDetailsPageProps = {
   prefilledData: CheckoutFragment['contactDetails']
 }

@@ -1,6 +1,6 @@
-import { MarketLabel } from './types'
+import { CountryLabel } from './types'
 
-type PhoneNumbers = Partial<Record<MarketLabel, PhoneNumberData>>
+type PhoneNumbers = Partial<Record<CountryLabel, PhoneNumberData>>
 
 export type PhoneNumberData = {
   displayNumber: string
@@ -11,6 +11,7 @@ export type PhoneNumberData = {
   lunchEndsAt: string
 }
 
+// TODO: Unused. Do we need it?
 export const phoneNumbers: PhoneNumbers = {
   SE: {
     displayNumber: '075-101 20 00',

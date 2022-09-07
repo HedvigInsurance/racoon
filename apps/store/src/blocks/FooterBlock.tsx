@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -5,19 +6,12 @@ import { ChangeEvent, useRef } from 'react'
 import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import {
-  Flex,
-  SiteFooterProps,
-  StyledAccordionContent,
-  StyledLink,
-  TextMuted,
-  Wrapper,
-} from '@/components/SiteFooter/SiteFooter'
-import { Field, MARKET_MAP, TEMP_TRANSLATIONS } from '@/components/SiteFooter/SiteFooter.constants'
-import { findLocale } from '@/components/SiteFooter/SiteFooter.helpers'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { getLocale, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { getCountryLocale, countries } from '@/lib/l10n/countries'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -59,22 +53,24 @@ FooterSection.blockName = 'footerSection' as const
 
 type FooterBlockProps = SbBaseBlockProps<{
   footerSections: ExpectedBlockType<FooterSectionProps>
-}> &
-  SiteFooterProps
-
+}>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { marketLabel: currentMarket, htmlLang: currentLanguage } = useCurrentLocale()
+  const { language: currentLanguage } = useCurrentLocale()
+  const currentCountry = useCurrentCountry()
 
-  const marketList = Object.keys(MARKET_MAP).map((market) => ({
-    name: TEMP_TRANSLATIONS[`MARKET_LABEL_${market}`],
-    value: market,
+  const countryList = Object.keys(countries).map((country) => ({
+    name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
+    value: country,
   }))
 
-  const languageList = MARKET_MAP[currentMarket].map((language) => ({
-    name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
-    value: language,
-  }))
+  const languageList = currentCountry.locales.map((locale) => {
+    const { language } = getLocale(locale)
+    return {
+      name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
+      value: language,
+    }
+  })
 
   const handleSelectChange = () => {
     formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
@@ -86,7 +82,12 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onChangeLocale(findLocale(event.target[Field.Market].value, event.target[Field.Language].value))
+    onChangeLocale(
+      getCountryLocale(
+        event.target[LocaleField.Country].value,
+        event.target[LocaleField.Language].value,
+      ),
+    )
   }
 
   const footerSections = filterByBlockType(blok.footerSections, FooterSection.blockName)
@@ -102,16 +103,16 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
         <SpaceFlex>
           <Flex>
             <InputSelect
-              name={Field.Market}
+              name={LocaleField.Country}
               onChange={handleSelectChange}
-              value={currentMarket}
-              options={marketList}
+              value={currentCountry.id}
+              options={countryList}
             />
           </Flex>
 
           <Flex>
             <InputSelect
-              name={Field.Language}
+              name={LocaleField.Language}
               onChange={handleSelectChange}
               value={currentLanguage}
               options={languageList}
@@ -125,3 +126,25 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   )
 }
 FooterBlock.blockName = 'footer' as const
+
+export const Wrapper = styled(Space)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.colors.gray200,
+  padding: `${theme.space[6]} ${theme.space[4]}`,
+}))
+
+export const Flex = styled.div({ flex: 1 })
+
+export const TextMuted = styled.p(({ theme }) => ({
+  color: theme.colors.gray600,
+  fontSize: theme.fontSizes[1],
+}))
+
+export const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => ({
+  padding: theme.space[4],
+  paddingTop: theme.space[2],
+}))
+
+export const StyledLink = styled.a({
+  textDecoration: 'none',
+})

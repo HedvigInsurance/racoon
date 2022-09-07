@@ -11,6 +11,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
+import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
@@ -23,8 +24,8 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { getLocale } from '@/lib/l10n/getLocale'
-import { LocaleData } from '@/lib/l10n/locales'
+import { getCountryByLocale } from '@/lib/l10n/countries'
+import { getLocale } from '@/lib/l10n/locales'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -114,6 +115,7 @@ export const initStoryblok = () => {
     TimelineItemBlock,
     TextBlock,
     TopPickCardBlock,
+    PerilsBlock,
   ]
   const blockAliases = { product: PageBlock }
   const components = {
@@ -137,9 +139,11 @@ type StoryOptions = {
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const localeData = getLocale(locale)
-  const { data } = await getStoryblokApi().get(`cdn/stories/${localeData.marketLabel}/${slug}`, {
+  const country = getCountryByLocale(locale)
+  const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, {
     version: preview ? 'draft' : 'published',
-    language: localeToLanguage(localeData),
+    // FIXME: Discuss using same locale everywhere
+    language: localeData.currencyLocale,
   })
   return data.story as StoryData | undefined
 }
@@ -158,13 +162,4 @@ export const getGlobalStory = async (options: StoryOptions) => {
 export const getProductStory = async (slug: string, options: StoryOptions) => {
   const story = await getStoryBySlug(`/products/${slug}`, options)
   return story as ProductStory
-}
-
-const localeToLanguage = (locale: LocaleData) => {
-  const localeParts = locale.locale.split('-')
-  if (localeParts?.length !== 2) {
-    throw new Error(`Unexpected locale format: ${locale}`)
-  }
-  localeParts[1] = localeParts[1].toUpperCase()
-  return localeParts.join('-')
 }

@@ -10,20 +10,14 @@ export enum Locale {
   EnDk = 'en-dk',
 }
 
-export enum HtmlLanguage {
+export enum Language {
   Sv = 'sv',
   En = 'en',
   No = 'no',
   Da = 'da',
 }
 
-export enum Market {
-  Sweden = 'SWEDEN',
-  Norway = 'NORWAY',
-  Denmark = 'DENMARK',
-}
-
-export enum MarketLabel {
+export enum CountryLabel {
   SE = 'SE',
   NO = 'NO',
   DK = 'DK',

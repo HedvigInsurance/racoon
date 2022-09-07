@@ -1,152 +1,70 @@
-import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
-import { PhoneNumberData, phoneNumbers } from './phone-numbers'
-import { Market as ApiMarket, MarketLabel, HtmlLanguage, Locale, CountryCode } from './types'
+import { Language, Locale } from './types'
 
 export const FALLBACK_LOCALE: Locale = Locale.EnSe
 
 export type LocaleData = {
   path: Locale
   locale: Locale
-  marketLabel: MarketLabel
-  apiMarket: ApiMarket
-  htmlLang: HtmlLanguage
-  adtractionScriptSrc?: string
-  ssn: {
-    length: number
-    formatExample: string
-    formatRegex: RegExp
-  }
-  birthDate: {
-    formatExample: string
-    formatRegex: RegExp
-    backendFormatExample: string
-  }
-  phoneNumber?: PhoneNumberData
-  currencyLocale: Locale
-  countryCode: CountryCode
+  language: Language
+  currencyLocale: 'en-SE' | 'sv-SE' | 'en-NO' | 'nb-NO' | 'en-DK' | 'da-DK'
 }
 
 export const locales: Record<Locale, LocaleData> = {
   'sv-se': {
     path: Locale.SvSe,
     locale: Locale.SvSe,
-    marketLabel: MarketLabel.SE,
-    apiMarket: ApiMarket.Sweden,
-    htmlLang: HtmlLanguage.Sv,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
-    ssn: {
-      length: ssnLengths.SE,
-      formatExample: 'ÅÅÅÅMMDDXXXX',
-      formatRegex: ssnFormats.SE,
-    },
-    birthDate: {
-      formatExample: 'ÅÅÅÅ-MM-DD',
-      formatRegex: birthDateFormats.SE,
-      backendFormatExample: 'ÅÅÅÅ-MM-DD',
-    },
-    phoneNumber: phoneNumbers.SE,
-    currencyLocale: Locale.SvSe,
-    countryCode: CountryCode.Se,
+    language: Language.Sv,
+    currencyLocale: 'sv-SE',
   },
   'en-se': {
     path: Locale.EnSe,
     locale: Locale.EnSe,
-    marketLabel: MarketLabel.SE,
-    apiMarket: ApiMarket.Sweden,
-    htmlLang: HtmlLanguage.En,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1412531808',
-    ssn: {
-      length: ssnLengths.SE,
-      formatExample: 'YYYYMMDDXXXX',
-      formatRegex: ssnFormats.SE,
-    },
-    birthDate: {
-      formatExample: 'YYYY-MM-DD',
-      formatRegex: birthDateFormats.SE,
-      backendFormatExample: 'YYYY-MM-DD',
-    },
-    phoneNumber: phoneNumbers.SE,
-    currencyLocale: Locale.EnSe,
-    countryCode: CountryCode.Se,
+    language: Language.En,
+    currencyLocale: 'en-SE',
   },
   'nb-no': {
     path: Locale.NbNo,
     locale: Locale.NbNo,
-    marketLabel: MarketLabel.NO,
-    apiMarket: ApiMarket.Norway,
-    htmlLang: HtmlLanguage.No,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
-    ssn: {
-      length: ssnLengths.NO,
-      formatExample: 'DDMMÅÅXXXXX',
-      formatRegex: ssnFormats.NO,
-    },
-    birthDate: {
-      formatExample: 'DD-MM-ÅÅÅÅ',
-      formatRegex: birthDateFormats.NO,
-      backendFormatExample: 'ÅÅÅÅ-MM-DD',
-    },
-    currencyLocale: Locale.NbNo,
-    countryCode: CountryCode.No,
+    language: Language.No,
+    currencyLocale: 'nb-NO',
   },
   'en-no': {
     path: Locale.EnNo,
     locale: Locale.EnNo,
-    marketLabel: MarketLabel.NO,
-    apiMarket: ApiMarket.Norway,
-    htmlLang: HtmlLanguage.En,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
-    ssn: {
-      length: ssnLengths.NO,
-      formatExample: 'DDMMYYXXXXX',
-      formatRegex: ssnFormats.NO,
-    },
-    birthDate: {
-      formatExample: 'DD-MM-YYYY',
-      formatRegex: birthDateFormats.NO,
-      backendFormatExample: 'YYYY-MM-DD',
-    },
-    currencyLocale: Locale.EnNo,
-    countryCode: CountryCode.No,
+    language: Language.En,
+    currencyLocale: 'en-NO',
   },
   'da-dk': {
     path: Locale.DaDk,
     locale: Locale.DaDk,
-    marketLabel: MarketLabel.DK,
-    apiMarket: ApiMarket.Denmark,
-    htmlLang: HtmlLanguage.Da,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
-    ssn: {
-      length: ssnLengths.DK,
-      formatExample: 'DDMMÅÅSSSS',
-      formatRegex: ssnFormats.DK,
-    },
-    birthDate: {
-      formatExample: 'DD-MM-ÅÅÅÅ',
-      formatRegex: birthDateFormats.DK,
-      backendFormatExample: 'ÅÅÅÅ-MM-DD',
-    },
-    currencyLocale: Locale.DaDk,
-    countryCode: CountryCode.Dk,
+    language: Language.Da,
+    currencyLocale: 'da-DK',
   },
   'en-dk': {
-    path: Locale.DaDk,
+    path: Locale.EnDk,
     locale: Locale.EnDk,
-    marketLabel: MarketLabel.DK,
-    apiMarket: ApiMarket.Denmark,
-    htmlLang: HtmlLanguage.En,
-    adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1589794294',
-    ssn: {
-      length: ssnLengths.DK,
-      formatExample: 'DDMMYYSSSS',
-      formatRegex: ssnFormats.DK,
-    },
-    birthDate: {
-      formatExample: 'DD-MM-YYYY',
-      formatRegex: birthDateFormats.DK,
-      backendFormatExample: 'YYYY-MM-DD',
-    },
-    currencyLocale: Locale.EnDk,
-    countryCode: CountryCode.Dk,
+    language: Language.En,
+    currencyLocale: 'en-DK',
   },
+}
+
+// TODO: Move to Lokalise
+export const TEMP_TRANSLATIONS: Record<string, string> = {
+  COUNTRY_LABEL_SE: 'Sweden',
+  COUNTRY_LABEL_NO: 'Norway',
+  COUNTRY_LABEL_DK: 'Denmark',
+
+  LANGUAGE_LABEL_sv: 'Swedish',
+  LANGUAGE_LABEL_en: 'English',
+  LANGUAGE_LABEL_no: 'Norwegian',
+  LANGUAGE_LABEL_da: 'Danish',
+}
+
+export enum LocaleField {
+  Country = 'country',
+  Language = 'language',
+}
+
+export const getLocale = (locale: Locale | string | undefined) => {
+  return locales[locale as Locale] ?? locales[FALLBACK_LOCALE]
 }

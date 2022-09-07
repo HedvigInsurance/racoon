@@ -4,22 +4,14 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CoverageList } from './CoverageList'
 import { MinusIcon } from './MinusIcon'
+import { Peril } from './Perils.types'
 import { PlusIcon } from './PlusIcon'
 
-type Peril = {
-  id: string
-  icon: React.ReactNode
-  name: string
-  description: string
-  covered: Array<string>
-  notCovered: Array<string>
+type Props = {
+  items: Array<Peril>
 }
 
-type PerilsProps = {
-  perils: Array<Peril>
-}
-
-export const Perils = ({ perils }: PerilsProps) => {
+export const Perils = ({ items }: Props) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
@@ -30,7 +22,7 @@ export const Perils = ({ perils }: PerilsProps) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ id, icon, name, description, covered, notCovered }) => {
+      {items.map(({ id, icon, name, description, covered, notCovered }) => {
         const isOpened = openedItemsSet.has(name)
 
         return (

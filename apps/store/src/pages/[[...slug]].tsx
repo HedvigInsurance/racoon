@@ -32,7 +32,6 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   context,
 ) => {
   const { params, preview, locale } = context
-  // TODO: Redirect to default market + language
   if (!locale || locale === 'default') return { notFound: true }
 
   const slug = params?.slug ? params.slug.join('/') : 'home'

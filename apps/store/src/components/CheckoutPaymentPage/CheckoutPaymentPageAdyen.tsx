@@ -1,29 +1,35 @@
-import { useState } from 'react'
+import styled from '@emotion/styled'
 import { Button, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
-import { CheckoutPaymentPageProps } from './CheckoutPaymentPage.types'
+import { CheckoutPaymentPageAdyenProps } from './CheckoutPaymentPage.types'
 
-export const CheckoutPaymentPageAdyen = (props: CheckoutPaymentPageProps) => {
-  const [paymentConnection, setPaymentConnection] = useState<unknown | null>(null)
-
+export const CheckoutPaymentPageAdyen = ({
+  paymentMethodsResponse,
+  isPaymentConnected,
+  ...props
+}: CheckoutPaymentPageAdyenProps) => {
   return (
-    <CheckoutPaymentPage Header={<a href={PageLink.checkout()}>Return to personal details</a>}>
+    <CheckoutPaymentPage
+      Header={<a href={PageLink.checkoutContactDetails()}>Return to personal details</a>}
+    >
       <Space y={1.5}>
         <Space y={0.5}>
-          <PriceBreakdown {...props} />
+          <PriceBreakdownWrapper>
+            <PriceBreakdown {...props} />
+          </PriceBreakdownWrapper>
           <p>
             <Text size="s">
               Money is withdrawn the end of each month. We handle payments securely with Adyen.
             </Text>
           </p>
         </Space>
-        <AdyenCheckout onSuccess={(connection) => setPaymentConnection(connection)} />
+        <AdyenCheckout paymentMethodsResponse={paymentMethodsResponse} onSuccess={() => {}} />
         <Space y={0.5}>
-          <Button disabled={paymentConnection === null} fullWidth>
+          <Button disabled={!isPaymentConnected} fullWidth>
             Complete purchase
           </Button>
           <p>
@@ -38,3 +44,13 @@ export const CheckoutPaymentPageAdyen = (props: CheckoutPaymentPageProps) => {
     </CheckoutPaymentPage>
   )
 }
+
+const PriceBreakdownWrapper = styled.div(({ theme }) => ({
+  borderRadius: 8,
+  backgroundColor: theme.colors.white,
+  borderWidth: 1,
+  borderColor: theme.colors.gray300,
+  borderStyle: 'solid',
+  padding: theme.space[2],
+  paddingLeft: theme.space[3],
+}))

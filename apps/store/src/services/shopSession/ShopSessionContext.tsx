@@ -1,12 +1,13 @@
 import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import {
   ShopSessionQuery,
   ShopSessionQueryVariables,
   useShopSessionCreateMutation,
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
+import { Track } from '@/services/Track/Track'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
@@ -16,7 +17,7 @@ export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(n
 type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
-  const { countryCode } = useCurrentLocale()
+  const { countryCode } = useCurrentCountry()
   const shopSessionService = useShopSessionService()
   const shopSessionId = initialShopSessionId ?? shopSessionService.shopSessionId()
 
@@ -30,6 +31,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
   const queryResult = useShopSessionQuery({
     shopSessionId,
     onCompleted: ({ shopSession }) => {
+      Track.addContext('shopSessionId', shopSession.id)
       if (shopSession.countryCode !== countryCode) {
         console.warn('ShopSession CountryCode does not match')
         createShopSession()
@@ -54,7 +56,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
 }
 
 export const useShopSession = () => {
-  const { countryCode } = useCurrentLocale()
+  const { countryCode } = useCurrentCountry()
 
   const queryResult = useContext(ShopSessionContext)
   if (!queryResult) {
