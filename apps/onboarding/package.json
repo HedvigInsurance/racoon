@@ -21,8 +21,8 @@
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@datadog/browser-rum": "4.16.0",
-    "@emotion/react": "11.10.0",
-    "@emotion/styled": "11.10.0",
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
     "@radix-ui/react-radio-group": "^0.1.5",
     "classnames": "2.3.1",
     "cookies-next": "2.1.1",
@@ -68,7 +68,7 @@
     "scripts": "workspace:",
     "serve": "^13.0.2",
     "start-server-and-test": "1.14.0",
-    "ts-jest": "28.0.7",
+    "ts-jest": "28.0.8",
     "tsconfig": "workspace:",
     "typescript": "4.7.4",
     "whatwg-fetch": "3.6.2"
