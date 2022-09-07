@@ -57,7 +57,7 @@
     "@types/jsdom": "20.0.0",
     "@types/lodash-es": "4.17.6",
     "@types/marked": "^4.0.3",
-    "@types/node": "^17.0.24",
+    "@types/node": "^18.7.15",
     "@types/react": "18.0.17",
     "cypress": "^9.5.4",
     "eslint-plugin-cypress": "2.12.1",

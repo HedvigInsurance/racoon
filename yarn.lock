@@ -5887,10 +5887,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:17.0.24, @types/node@npm:^17.0.24":
-  version: 17.0.24
-  resolution: "@types/node@npm:17.0.24"
-  checksum: 9e7c4f863601b2430b4c2429a89935f22eba692956f5013c90a4c7fb0e1401ed8add8c4307453c5d6b8b985384500f8c3f644427ab88632640cc396159af479a
+"@types/node@npm:18.7.15, @types/node@npm:^18.7.15":
+  version: 18.7.15
+  resolution: "@types/node@npm:18.7.15"
+  checksum: 1435fc7fe44744467a3ba8ace646455be228516530dbb3db64a03cca6abcfdc5ba2e48a3eafc71f25f836d2ca871132361c58a5e760237a53674cb09151147d9
   languageName: node
   linkType: hard
 
@@ -17000,7 +17000,7 @@ __metadata:
     "@types/jsdom": 20.0.0
     "@types/lodash-es": 4.17.6
     "@types/marked": ^4.0.3
-    "@types/node": ^17.0.24
+    "@types/node": ^18.7.15
     "@types/react": 18.0.17
     classnames: 2.3.1
     cookies-next: 2.1.1
@@ -20356,7 +20356,7 @@ __metadata:
     "@testing-library/react": 13.3.0
     "@testing-library/user-event": 14.4.1
     "@types/js-cookie": 3.0.2
-    "@types/node": 17.0.24
+    "@types/node": 18.7.15
     "@types/react": 18.0.17
     ajv: ^8.11.0
     babel-loader: 8.2.5
