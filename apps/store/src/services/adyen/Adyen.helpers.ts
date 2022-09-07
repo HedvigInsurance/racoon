@@ -5,7 +5,7 @@ import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 
 export const usePaymentMethodConfiguration = () => {
-  const { currencyLocale } = useCurrentLocale()
+  const { locale } = useCurrentLocale()
   const { countryCode } = useCurrentCountry()
   const theme = useTheme()
 
@@ -29,7 +29,7 @@ export const usePaymentMethodConfiguration = () => {
       applepay: {
         amount: {
           value: 0,
-          currency: currencyLocale,
+          currency: locale,
         },
         buttonType: 'subscribe',
         countryCode,
@@ -38,25 +38,23 @@ export const usePaymentMethodConfiguration = () => {
       googlepay: {
         amount: {
           value: 0,
-          currency: currencyLocale,
+          currency: locale,
         },
         countryCode,
         environment: process.env.NEXT_PUBLIC_ADYEN_ENVIRONMENT === 'live' ? 'PRODUCTION' : 'TEST',
         buttonType: 'subscribe',
       },
     }),
-    [theme, currencyLocale, countryCode],
+    [theme, locale, countryCode],
   )
 }
 
 export const localeToAdyenLocale = (locale: Locale) => {
   switch (locale) {
     case Locale.DaDk:
-      return 'da-DK'
     case Locale.NbNo:
-      return 'no-NO'
     case Locale.SvSe:
-      return 'sv-SE'
+      return locale
     default:
       return 'en-US'
   }

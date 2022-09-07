@@ -3,48 +3,34 @@ import { Language, Locale } from './types'
 export const FALLBACK_LOCALE: Locale = Locale.EnSe
 
 export type LocaleData = {
-  path: Locale
   locale: Locale
   language: Language
-  currencyLocale: 'en-SE' | 'sv-SE' | 'en-NO' | 'nb-NO' | 'en-DK' | 'da-DK'
 }
 
 export const locales: Record<Locale, LocaleData> = {
-  'sv-se': {
-    path: Locale.SvSe,
+  [Locale.SvSe]: {
     locale: Locale.SvSe,
     language: Language.Sv,
-    currencyLocale: 'sv-SE',
   },
-  'en-se': {
-    path: Locale.EnSe,
+  [Locale.EnSe]: {
     locale: Locale.EnSe,
     language: Language.En,
-    currencyLocale: 'en-SE',
   },
-  'nb-no': {
-    path: Locale.NbNo,
+  [Locale.NbNo]: {
     locale: Locale.NbNo,
     language: Language.No,
-    currencyLocale: 'nb-NO',
   },
-  'en-no': {
-    path: Locale.EnNo,
+  [Locale.EnNo]: {
     locale: Locale.EnNo,
     language: Language.En,
-    currencyLocale: 'en-NO',
   },
-  'da-dk': {
-    path: Locale.DaDk,
+  [Locale.DaDk]: {
     locale: Locale.DaDk,
     language: Language.Da,
-    currencyLocale: 'da-DK',
   },
-  'en-dk': {
-    path: Locale.EnDk,
+  [Locale.EnDk]: {
     locale: Locale.EnDk,
     language: Language.En,
-    currencyLocale: 'en-DK',
   },
 }
 
