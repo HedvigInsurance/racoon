@@ -28,7 +28,7 @@
     "cookies-next": "2.1.1",
     "dompurify": "2.3.10",
     "formidable": "^2.0.1",
-    "framer-motion": "6.5.1",
+    "framer-motion": "7.2.1",
     "graphql": "16.6.0",
     "graphql-tag": "2.12.6",
     "jsdom": "20.0.0",
