@@ -6,7 +6,6 @@ import { ThemeProvider } from 'ui'
 import { GlobalStyles } from '@/lib/GlobalStyles'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
-import { CartContext, useCartContextStore } from '@/services/mockCartService'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 
@@ -22,8 +21,6 @@ initStoryblok()
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
 
-  const cartStore = useCartContextStore()
-
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
@@ -35,9 +32,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <ThemeProvider>
           <GlobalStyles />
           <ShopSessionProvider shopSessionId={pageProps.shopSessionId}>
-            <CartContext.Provider value={cartStore}>
-              {getLayout(<Component {...pageProps} />)}
-            </CartContext.Provider>
+            {getLayout(<Component {...pageProps} />)}
           </ShopSessionProvider>
         </ThemeProvider>
       </ApolloProvider>
