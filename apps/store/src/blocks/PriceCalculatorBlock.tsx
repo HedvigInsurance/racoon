@@ -10,7 +10,6 @@ import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorF
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
@@ -35,12 +34,12 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
-  const [handleSubmit, { loading: loadingUpdate }] = useHandleSubmitPriceCalculatorForm({
+  const [handleSubmit, loadingUpdate] = useHandleSubmitPriceCalculatorForm({
     priceIntentId: priceIntent.id,
     formTemplate: priceFormTemplate,
   })
 
-  const [handleSubmitAddToCart, { loading: loadingAddToCart }] = useHandleSubmitAddToCart({
+  const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
     onSuccess: () => {
       toastRef.current?.publish({
@@ -48,7 +47,6 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
         price: formatter.format(product.price ?? 0),
         gradient: product.gradient,
       })
-      priceIntentServiceInitClientSide().reset()
     },
   })
 

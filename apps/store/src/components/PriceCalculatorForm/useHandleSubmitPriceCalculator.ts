@@ -4,6 +4,7 @@ import {
   usePriceIntentDataUpdateMutation,
 } from '@/services/apollo/generated'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
+import { useRefreshData } from '@/utils/useRefreshData'
 import { prepopulateFormTemplate } from './PriceCalculatorForm.helpers'
 
 type Params = {
@@ -12,15 +13,11 @@ type Params = {
 }
 
 export const useHandleSubmitPriceCalculatorForm = ({ formTemplate, priceIntentId }: Params) => {
-  const [updateData, updateResult] = usePriceIntentDataUpdateMutation({
-    refetchQueries: 'active',
-    awaitRefetchQueries: true,
-  })
+  const [refreshData, loadingData] = useRefreshData()
+  const [updateData, { loading: loadingUpdate }] = usePriceIntentDataUpdateMutation()
 
-  const [confirmPriceIntent, confirmResult] = usePriceIntentConfirmMutation({
+  const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId },
-    refetchQueries: 'active',
-    awaitRefetchQueries: true,
   })
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -38,8 +35,11 @@ export const useHandleSubmitPriceCalculatorForm = ({ formTemplate, priceIntentId
         await confirmPriceIntent()
       }
     }
+
+    // Refresh route since data is fetched server-side (product page)
+    await refreshData()
   }
 
-  const result = confirmResult.loading ? confirmResult : updateResult
-  return [handleSubmit, result] as const
+  const loading = loadingData || loadingConfirm || loadingUpdate
+  return [handleSubmit, loading] as const
 }
