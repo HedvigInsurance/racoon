@@ -1,20 +1,20 @@
 import { ComponentMeta, Story } from '@storybook/react'
-import { PriceCard, PriceCardProps } from './PriceCard'
-import { HEDVIG_LOGO_SYMBOL } from './PriceCard.constants'
+import { PriceCardForm, PriceCardFormProps } from './PriceCardForm'
+import { HEDVIG_LOGO_SYMBOL } from './PriceCardForm.constants'
 
 export default {
-  title: 'Price Card',
-  component: PriceCard,
+  title: 'Price Card Form',
+  component: PriceCardForm,
   parameters: {
     layout: 'centered',
   },
   argTypes: {
     onClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof PriceCard>
+} as ComponentMeta<typeof PriceCardForm>
 
-const Template: Story<PriceCardProps> = (props) => {
-  return <PriceCard {...props} />
+const Template: Story<PriceCardFormProps> = (props) => {
+  return <PriceCardForm {...props} />
 }
 
 export const Disabled = Template.bind({})

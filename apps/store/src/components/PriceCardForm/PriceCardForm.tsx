@@ -9,49 +9,52 @@ const USP_LIST = ['No binding time', 'Pay monthly', 'Pick start date']
 
 type Gradient = readonly [string, string]
 
-export type PriceCardProps = {
-  name: string
+export type PriceCardFormProps = {
+  title: string
   cost?: number
   currencyCode: string
   gradient: Gradient
   loading?: boolean
-}
+} & React.ComponentPropsWithoutRef<'form'>
 
-export const PriceCard = ({
-  name,
+export const PriceCardForm = ({
+  title,
   gradient: [fromColor, toColor],
   cost,
   currencyCode,
   loading = false,
-}: PriceCardProps) => {
+  ...formProps
+}: PriceCardFormProps) => {
   return (
-    <Wrapper y={1}>
-      <CenteredPillow fromColor={fromColor} toColor={toColor} />
+    <form {...formProps}>
+      <Wrapper y={1}>
+        <CenteredPillow fromColor={fromColor} toColor={toColor} />
 
-      <CenteredText>
-        <Text size="m">{name}</Text>
-      </CenteredText>
+        <CenteredText>
+          <Text size="m">{title}</Text>
+        </CenteredText>
 
-      <PricePreviewContainer>
-        <PreviewText aria-disabled={cost === undefined}>
-          {currencyCode} {cost ?? '—'} /mth.
-        </PreviewText>
-      </PricePreviewContainer>
+        <PricePreviewContainer>
+          <PreviewText aria-disabled={cost === undefined}>
+            {currencyCode} {cost ?? '—'} /mth.
+          </PreviewText>
+        </PricePreviewContainer>
 
-      <SpaceFlex space={0.5} direction="vertical" align="center">
-        <CustomButton fullWidth disabled={cost === undefined || loading}>
-          Add to cart
-        </CustomButton>
-        <HorizontalList>
-          {USP_LIST.map((usp) => (
-            <HorizontalListItem key={usp} space={0.25} align="center">
-              <TickIcon />
-              <OneLineText>{usp}</OneLineText>
-            </HorizontalListItem>
-          ))}
-        </HorizontalList>
-      </SpaceFlex>
-    </Wrapper>
+        <SpaceFlex space={0.5} direction="vertical" align="center">
+          <CustomButton fullWidth disabled={cost === undefined || loading}>
+            Add to cart
+          </CustomButton>
+          <HorizontalList>
+            {USP_LIST.map((usp) => (
+              <HorizontalListItem key={usp} space={0.25} align="center">
+                <TickIcon />
+                <OneLineText>{usp}</OneLineText>
+              </HorizontalListItem>
+            ))}
+          </HorizontalList>
+        </SpaceFlex>
+      </Wrapper>
+    </form>
   )
 }
 
