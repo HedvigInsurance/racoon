@@ -24,7 +24,7 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { getLocale } from '@/lib/l10n/locales'
+import { getLocaleOrFallback } from '@/lib/l10n/locales'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -141,7 +141,7 @@ export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOpt
 
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
     version: preview ? 'draft' : 'published',
-    language: getLocale(locale).language,
+    language: getLocaleOrFallback(locale).language,
   })
   return data.story as StoryData | undefined
 }

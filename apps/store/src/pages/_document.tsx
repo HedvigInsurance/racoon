@@ -1,10 +1,10 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { getCDNFonts } from 'ui'
-import { getLocale } from '@/lib/l10n/locales'
+import { getLocaleOrFallback } from '@/lib/l10n/locales'
 
 export default class MyDocument extends Document {
   lang(): string {
-    return getLocale(this.props.locale).language
+    return getLocaleOrFallback(this.props.locale).language
   }
 
   render() {
