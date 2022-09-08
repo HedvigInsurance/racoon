@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Button, Space } from 'ui'
-import { PriceBreakdown } from '@/components/PriceBreakdown.tsx/PriceBreakdown'
+import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
