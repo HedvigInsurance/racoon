@@ -3,16 +3,17 @@ import { ChevronIcon } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 export type ScrollToButtonProps = {
+  type: 'button' | 'submit'
   targetRef: React.RefObject<HTMLElement>
   children: string
 }
 
-export const ScrollToButton = ({ children, targetRef }: ScrollToButtonProps) => {
+export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProps) => {
   const handleClick = () => targetRef.current?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <Wrappper>
-      <StyledPillButton onClick={handleClick}>
+      <StyledPillButton type={type} onClick={handleClick}>
         <SpaceFlex space={0.5} align="center">
           <TextLabel>{children}</TextLabel>
           <ChevronUp size="0.75rem" />

@@ -13,7 +13,6 @@ export type PriceCardProps = {
   name: string
   cost?: number
   currencyCode: string
-  onClick: () => void
   gradient: Gradient
   loading?: boolean
 }
@@ -23,7 +22,6 @@ export const PriceCard = ({
   gradient: [fromColor, toColor],
   cost,
   currencyCode,
-  onClick,
   loading = false,
 }: PriceCardProps) => {
   return (
@@ -41,7 +39,7 @@ export const PriceCard = ({
       </PricePreviewContainer>
 
       <SpaceFlex space={0.5} direction="vertical" align="center">
-        <CustomButton fullWidth disabled={cost === undefined || loading} onClick={onClick}>
+        <CustomButton fullWidth disabled={cost === undefined || loading}>
           Add to cart
         </CustomButton>
         <HorizontalList>

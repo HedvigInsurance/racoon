@@ -17,13 +17,14 @@ const Wrapper = styled(Space)(({ theme }) => ({
 }))
 
 export type ButtonProps = {
+  type?: 'button' | 'submit'
   children: React.ReactNode
   onClick: () => void
 }
 
-export const Button = ({ onClick, children }: ButtonProps) => {
+export const Button = ({ onClick, type = 'submit', children }: ButtonProps) => {
   return (
-    <FlexButton fullWidth onClick={onClick}>
+    <FlexButton fullWidth type={type} onClick={onClick}>
       <Separate Separator={<Separator />}>{children}</Separate>
     </FlexButton>
   )
