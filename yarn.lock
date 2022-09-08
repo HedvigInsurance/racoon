@@ -4184,24 +4184,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@storyblok/js@npm:1.6.1"
+"@storyblok/js@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@storyblok/js@npm:1.8.0"
   dependencies:
-    storyblok-js-client: ^4.5.2
-  checksum: 9f9d177fe71d55fcb2622f1051adc57a85f7c681e12490e21cb784e83d894eb7b6cf1f59d746e74eb022bdfc11e645e33061e6a766755501b4c035b368cb8553
+    storyblok-js-client: ^4.5.6
+  checksum: f7ec6378b9c5c5a8d9d723a6d37436b88cedf6ee90d68edd54388c6d78ce8c43b6bb69606c1e1ecb664d8ce85a55f335e7e40c8488c0afe28f26295175fa90ee
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:^1.0.12":
-  version: 1.0.12
-  resolution: "@storyblok/react@npm:1.0.12"
+"@storyblok/react@npm:1.1.6":
+  version: 1.1.6
+  resolution: "@storyblok/react@npm:1.1.6"
   dependencies:
-    "@storyblok/js": ^1.6.1
+    "@storyblok/js": ^1.8.0
   peerDependencies:
-    react: 18.1.0
-    react-dom: 18.1.0
-  checksum: f0b0d8547fc90fd55bd4d4722285fdba20465c291aeddb67e9164a1180a19f13dd60b9c5d639155147c8dd064715ebcc6610f7e4bdb4afae990c9fccdbbad276
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: 8db1d3896a965a8856ab622dcfc1e6a5cc54d73a385c6d13e905de114126540834a5c4de9c000f2ed3d80baab03fd7076b78320374ba93079f7dd99887c50225
   languageName: node
   linkType: hard
 
@@ -5833,7 +5833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:^4.0.3":
+"@types/marked@npm:4.0.3":
   version: 4.0.3
   resolution: "@types/marked@npm:4.0.3"
   checksum: 2fc409a6291cb770688731a444f54e7eab6257c9b565dea4e9d2f3b6654b606e9dd8ea4a924e306b2d2f581dedcb7a27f10f2ca7aed828b11642ab85955341f1
@@ -5887,10 +5887,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:17.0.24, @types/node@npm:^17.0.24":
-  version: 17.0.24
-  resolution: "@types/node@npm:17.0.24"
-  checksum: 9e7c4f863601b2430b4c2429a89935f22eba692956f5013c90a4c7fb0e1401ed8add8c4307453c5d6b8b985384500f8c3f644427ab88632640cc396159af479a
+"@types/node@npm:16.11.57":
+  version: 16.11.57
+  resolution: "@types/node@npm:16.11.57"
+  checksum: 7c34f5e50e38460fd0f18ae939ad62d5ecf992be7b9db7b1b86b9cc76a4d153b55bf3a94c6379da23df0803c11ad1a96be54c45d3ce612206cb8a18ce433028b
   languageName: node
   linkType: hard
 
@@ -8767,7 +8767,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.1, classnames@npm:^2.2.5, classnames@npm:^2.3.1":
+"classnames@npm:2.3.1, classnames@npm:^2.3.1":
   version: 2.3.1
   resolution: "classnames@npm:2.3.1"
   checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
@@ -9601,7 +9601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^9.5.4":
+"cypress@npm:9.5.4":
   version: 9.5.4
   resolution: "cypress@npm:9.5.4"
   dependencies:
@@ -11987,7 +11987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^2.0.1":
+"formidable@npm:2.0.1":
   version: 2.0.1
   resolution: "formidable@npm:2.0.1"
   dependencies:
@@ -16492,6 +16492,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-router-mock@npm:0.6.5":
+  version: 0.6.5
+  resolution: "next-router-mock@npm:0.6.5"
+  peerDependencies:
+    next: ">=10.0.0"
+    react: ">=17.0.0"
+  checksum: b3a097228a4197557fa7fde588cf311b5df2dca47c1fe58c2cf4abe9c2b016001331f31fa9c06f5ead048f0123a090905ca7dca29be8c01b4b3cc43eb949eadd
+  languageName: node
+  linkType: hard
+
 "next-router-mock@npm:0.7.4":
   version: 0.7.4
   resolution: "next-router-mock@npm:0.7.4"
@@ -16499,16 +16509,6 @@ __metadata:
     next: ">=10.0.0"
     react: ">=17.0.0"
   checksum: 0014def3dd61b1ee7d324cef757fccbca72d2df61d17745d78bc7969fde4e5e1614a7401cc9f40735af86fe5699ec5610270a982252e1ef2c9761d24ac187fb7
-  languageName: node
-  linkType: hard
-
-"next-router-mock@npm:^0.6.5":
-  version: 0.6.5
-  resolution: "next-router-mock@npm:0.6.5"
-  peerDependencies:
-    next: ">=10.0.0"
-    react: ">=17.0.0"
-  checksum: b3a097228a4197557fa7fde588cf311b5df2dca47c1fe58c2cf4abe9c2b016001331f31fa9c06f5ead048f0123a090905ca7dca29be8c01b4b3cc43eb949eadd
   languageName: node
   linkType: hard
 
@@ -16999,15 +16999,15 @@ __metadata:
     "@types/formidable": 2.0.5
     "@types/jsdom": 20.0.0
     "@types/lodash-es": 4.17.6
-    "@types/marked": ^4.0.3
-    "@types/node": ^17.0.24
+    "@types/marked": 4.0.3
+    "@types/node": 16.11.57
     "@types/react": 18.0.17
     classnames: 2.3.1
     cookies-next: 2.1.1
-    cypress: ^9.5.4
+    cypress: 9.5.4
     dompurify: 2.3.10
     eslint-plugin-cypress: 2.12.1
-    formidable: ^2.0.1
+    formidable: 2.0.1
     framer-motion: 7.2.1
     graphql: 16.6.0
     graphql-tag: 2.12.6
@@ -17018,7 +17018,7 @@ __metadata:
     msw: 0.44.2
     next: 12.2.2
     next-i18next: 12.0.0
-    next-router-mock: ^0.6.5
+    next-router-mock: 0.6.5
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
     prettier: 2.7.1
@@ -18075,7 +18075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.7.1, prettier@npm:^2.5.1":
+"prettier@npm:2.7.1":
   version: 2.7.1
   resolution: "prettier@npm:2.7.1"
   bin:
@@ -18246,7 +18246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.6.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18569,16 +18569,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-animate-height@npm:2.1.2":
-  version: 2.1.2
-  resolution: "react-animate-height@npm:2.1.2"
+"react-animate-height@npm:3.0.4":
+  version: 3.0.4
+  resolution: "react-animate-height@npm:3.0.4"
   dependencies:
-    classnames: ^2.2.5
-    prop-types: ^15.6.1
+    classnames: ^2.3.1
   peerDependencies:
-    react: ">=15.6.2"
-    react-dom: ">=15.6.2"
-  checksum: 56f0db8a8a53a8e115cc9d38ce290aad4bb989e83b573a1b5a01d4b33bddf28810ae6b60cb95cd870fb11bf83eae3ef33ffd4bfd58c578e8c2a28b410e3e9885
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 3efa212b41bb1c424c4b5390c1b0e34e85eec799f5ca76fab3223ccb0dff215febc5fd95a07188db85e5a06661ed9f6f3f9b8c68de744d8daad912f298d1bfc2
   languageName: node
   linkType: hard
 
@@ -19367,13 +19366,6 @@ __metadata:
     hash-base: ^3.0.0
     inherits: ^2.0.1
   checksum: 006accc40578ee2beae382757c4ce2908a826b27e2b079efdcd2959ee544ddf210b7b5d7d5e80467807604244e7388427330f5c6d4cd61e6edaddc5773ccc393
-  languageName: node
-  linkType: hard
-
-"rollup-plugin-mjs-entry@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "rollup-plugin-mjs-entry@npm:0.1.1"
-  checksum: 82c397297ea9f31320673d5ef0e2ae5e7c9326ef6f18b8013ba2959268b549412ea7918e184227496b154308f1f38810a33c840010954fb85f093525d33d4438
   languageName: node
   linkType: hard
 
@@ -20345,7 +20337,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": 1.0.0
     "@radix-ui/react-radio-group": 1.0.0
     "@radix-ui/react-tabs": 1.0.0
-    "@storyblok/react": ^1.0.12
+    "@storyblok/react": 1.1.6
     "@storybook/addon-actions": 6.5.9
     "@storybook/addon-essentials": 6.5.9
     "@storybook/addon-links": 6.5.9
@@ -20357,7 +20349,7 @@ __metadata:
     "@testing-library/react": 13.3.0
     "@testing-library/user-event": 14.4.1
     "@types/js-cookie": 3.0.2
-    "@types/node": 17.0.24
+    "@types/node": 16.11.57
     "@types/react": 18.0.17
     ajv: ^8.11.0
     babel-loader: 8.2.5
@@ -20389,15 +20381,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^4.5.2":
-  version: 4.5.2
-  resolution: "storyblok-js-client@npm:4.5.2"
-  dependencies:
-    prettier: ^2.5.1
-    rollup-plugin-mjs-entry: ^0.1.1
+"storyblok-js-client@npm:^4.5.6":
+  version: 4.5.6
+  resolution: "storyblok-js-client@npm:4.5.6"
   peerDependencies:
-    axios: ^0.21.1
-  checksum: 413f9d7680e0b6de053aee6cceb2b67868031c6c228fe7550674edff7738fefa6349e59f2c055e6fb9ee3426b20887dee734f273bb5dea33aebed65b8ecf5e12
+    axios: ^0.27.2
+  checksum: c0875d95e6faa8ebfe39882ba5a5a5055c98de05b7c9afbff0eed4555e84f9fd9d8cd56e9d7d476c215b80f4690bc7570135a2a89a1b99c1e248fdf0df7e5cf3
   languageName: node
   linkType: hard
 
@@ -21869,7 +21858,7 @@ __metadata:
     babel-loader: 8.2.5
     jest: 28.1.3
     react: 18.2.0
-    react-animate-height: 2.1.2
+    react-animate-height: 3.0.4
     react-dom: 18.2.0
     scripts: "workspace:"
     ts-jest: 28.0.8

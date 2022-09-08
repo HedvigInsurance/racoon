@@ -8,15 +8,10 @@ type TypographyProps = {
   children: ReactNode
 }
 
-const fontSizes: Record<FontSize, string> = {
-  s: '0.875rem',
-  m: '1rem',
-  l: '1.125rem',
-  xl: '1.25rem',
-}
+const fontSizeMap = { s: 1, m: 2, l: 3, xl: 4 }
 
-const TextElement = styled.span(({ size }: TypographyProps) => ({
-  fontSize: fontSizes[size],
+const TextElement = styled.span<TypographyProps>(({ theme, size }) => ({
+  fontSize: theme.fontSizes[fontSizeMap[size]],
 }))
 
 export const Text = ({ size = 'm', children }: TypographyProps) => {

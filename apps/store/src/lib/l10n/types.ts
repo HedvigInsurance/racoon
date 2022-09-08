@@ -2,12 +2,12 @@ export { CountryCode } from '@/services/apollo/generated'
 
 /** An enum representing explicitly endorsed Locales supported by our system. */
 export enum Locale {
-  SvSe = 'sv-se',
-  EnSe = 'en-se',
-  NbNo = 'nb-no',
-  EnNo = 'en-no',
-  DaDk = 'da-dk',
-  EnDk = 'en-dk',
+  SvSe = 'sv-SE',
+  EnSe = 'en-SE',
+  NbNo = 'nb-NO',
+  EnNo = 'en-NO',
+  DaDk = 'da-DK',
+  EnDk = 'en-DK',
 }
 
 export enum Language {

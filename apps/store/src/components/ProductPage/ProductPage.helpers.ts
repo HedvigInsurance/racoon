@@ -50,9 +50,10 @@ const getPriceCalculatorBlockContext = ({
   const lineItem = priceIntent.lines?.[0]
 
   return {
+    cartId: shopSession.cart.id,
     lineId: lineItem?.id ?? null,
     priceFormTemplate,
-    countryCode: shopSession.countryCode,
+    priceIntentId: priceIntent.id,
     product: {
       slug: productStory.slug,
       name: productStory.content.name,

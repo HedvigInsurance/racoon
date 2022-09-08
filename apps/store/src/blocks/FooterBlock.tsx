@@ -7,7 +7,7 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { getLocale, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { getLocaleOrFallback, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { getCountryLocale, countries } from '@/lib/l10n/countries'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
@@ -65,7 +65,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }))
 
   const languageList = currentCountry.locales.map((locale) => {
-    const { language } = getLocale(locale)
+    const { language } = getLocaleOrFallback(locale)
     return {
       name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
       value: language,

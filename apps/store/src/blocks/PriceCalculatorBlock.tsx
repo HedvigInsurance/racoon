@@ -7,18 +7,19 @@ import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalcu
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
-import { useHandleClickAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
+import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { CurrencyCode, CountryCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/apollo/generated'
 import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 export type PriceCalculatorBlockContext = {
+  cartId: string
   lineId: string | null
+  priceIntentId: string
   priceFormTemplate: FormTemplate
-  countryCode: CountryCode
   product: {
     slug: string
     name: string
@@ -35,18 +36,18 @@ export type PriceCalculatorBlockProps = PriceCalculatorBlockContext & {
 type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockProps>
 
 export const PriceCalculatorBlock = ({
-  blok: { title, lineId, priceFormTemplate, countryCode, product },
+  blok: { title, cartId, lineId, priceIntentId, priceFormTemplate, product },
 }: StoryblokPriceCalculatorBlockProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
-  const { handleSubmit, status } = useHandleSubmitPriceCalculatorForm({
-    productSlug: product.slug,
-    formTemplateId: priceFormTemplate.id,
+  const [handleSubmit, { loading: loadingUpdate }] = useHandleSubmitPriceCalculatorForm({
+    priceIntentId,
+    formTemplate: priceFormTemplate,
   })
 
-  const [handleClickAddToCart, addToCartStatus] = useHandleClickAddToCart({
-    lineId,
+  const [handleSubmitAddToCart, { loading: loadingAddToCart }] = useHandleSubmitAddToCart({
+    cartId,
     onSuccess: () => {
       toastRef.current?.publish({
         name: product.name,
@@ -68,29 +69,33 @@ export const PriceCalculatorBlock = ({
           </SpaceFlex>
 
           <form onSubmit={handleSubmit}>
-            <PriceCalculatorForm template={priceFormTemplate} loading={status === 'submitting'} />
-            <input type="hidden" name="countryCode" value={countryCode} />
+            <PriceCalculatorForm template={priceFormTemplate} loading={loadingUpdate} />
           </form>
         </Space>
 
         <SectionWithPadding>
-          <PriceCard
-            name={product.name}
-            cost={product.price ?? undefined}
-            currencyCode={product.currencyCode}
-            gradient={product.gradient}
-            onClick={handleClickAddToCart}
-            loading={addToCartStatus === 'submitting'}
-          />
+          <form onSubmit={handleSubmitAddToCart}>
+            {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
+            <PriceCard
+              name={product.name}
+              cost={product.price ?? undefined}
+              currencyCode={product.currencyCode}
+              gradient={product.gradient}
+              loading={loadingAddToCart}
+            />
+          </form>
         </SectionWithPadding>
       </Space>
 
-      <PriceCalculatorFooter
-        targetRef={wrapperRef}
-        currencyCode={product.currencyCode}
-        price={product.price ?? undefined}
-        onClickAddToCart={handleClickAddToCart}
-      />
+      <form onSubmit={handleSubmitAddToCart}>
+        {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
+        <PriceCalculatorFooter
+          targetRef={wrapperRef}
+          currencyCode={product.currencyCode}
+          price={product.price ?? undefined}
+          loading={loadingAddToCart}
+        />
+      </form>
 
       <CartToast ref={toastRef} />
     </>

@@ -7,33 +7,29 @@ type Props = {
   currencyCode: string
   price?: number
   targetRef: React.RefObject<HTMLElement>
-  onClickAddToCart: () => void
+  loading: boolean
 }
 
-export const PriceCalculatorFooter = ({
-  price,
-  currencyCode,
-  targetRef,
-  onClickAddToCart,
-}: Props) => {
+export const PriceCalculatorFooter = ({ price, currencyCode, targetRef }: Props) => {
   const formatter = useCurrencyFormatter(currencyCode)
 
   const handleClick = () => {
     targetRef.current?.scrollIntoView({ behavior: 'smooth' })
-    onClickAddToCart()
   }
 
   return (
     <ScrollPast targetRef={targetRef}>
       {price ? (
         <PriceFooter.Footer>
-          <PriceFooter.Button onClick={handleClick}>
+          <PriceFooter.Button type="submit" onClick={handleClick}>
             <span>{formatter.format(price)}</span>
             <span>Add to cart</span>
           </PriceFooter.Button>
         </PriceFooter.Footer>
       ) : (
-        <ScrollToButton targetRef={targetRef}>Calculate your price</ScrollToButton>
+        <ScrollToButton targetRef={targetRef} type="button">
+          Calculate your price
+        </ScrollToButton>
       )}
     </ScrollPast>
   )

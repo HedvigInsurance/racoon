@@ -25,7 +25,7 @@ import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { getCountryByLocale } from '@/lib/l10n/countries'
-import { getLocale } from '@/lib/l10n/locales'
+import { getLocaleOrFallback } from '@/lib/l10n/locales'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -143,12 +143,10 @@ type StoryOptions = {
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
-  const localeData = getLocale(locale)
   const country = getCountryByLocale(locale)
   const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, {
     version: preview ? 'draft' : 'published',
-    // FIXME: Discuss using same locale everywhere
-    language: localeData.currencyLocale,
+    language: getLocaleOrFallback(locale).language,
   })
   return data.story as StoryData | undefined
 }

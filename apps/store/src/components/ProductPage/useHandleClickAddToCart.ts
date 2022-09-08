@@ -1,36 +1,24 @@
-import { useState } from 'react'
-import { useRefreshData } from '@/hooks/useRefreshData'
-import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
-import { PageLink } from '@/lib/PageLink'
+import { FormEventHandler } from 'react'
+import { useCartLinesAddMutation } from '@/services/apollo/generated'
+import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 
 type Params = {
-  lineId: string | null
+  cartId: string
   onSuccess: () => void
 }
 
-export const useHandleClickAddToCart = ({ lineId, onSuccess }: Params) => {
-  const { countryCode } = useCurrentCountry()
-  const refreshData = useRefreshData()
-  const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
+export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
+  const [addLineItems, result] = useCartLinesAddMutation()
 
-  const handleClick = async () => {
-    if (status === 'submitting') return
-    if (lineId === null) throw new Error('Trying to submit without lineId')
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault()
 
-    setStatus('submitting')
+    const formData = new FormData(event.currentTarget)
+    const lineItemId = getOrThrowFormValue(formData, 'lineItemId')
 
-    try {
-      await fetch(PageLink.apiCartLinesAdd({ lineId }), {
-        method: 'PATCH',
-        body: JSON.stringify({ countryCode }),
-        headers: { 'Content-Type': 'application/json' },
-      })
-      onSuccess()
-      await refreshData()
-    } finally {
-      setStatus('idle')
-    }
+    await addLineItems({ variables: { cartId, lineItemId } })
+    onSuccess()
   }
 
-  return [handleClick, status] as const
+  return [handleSubmit, result] as const
 }
