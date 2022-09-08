@@ -68,9 +68,11 @@ export const PriceCalculatorBlock = ({
             </Heading>
           </SpaceFlex>
 
-          <form onSubmit={handleSubmit}>
-            <PriceCalculatorForm template={priceFormTemplate} loading={loadingUpdate} />
-          </form>
+          <PriceCalculatorForm
+            template={priceFormTemplate}
+            onSubmit={handleSubmit}
+            loading={loadingUpdate}
+          />
         </Space>
 
         <SectionWithPadding>
