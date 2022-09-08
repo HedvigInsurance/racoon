@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { Market, MarketLabel } from '@/lib/types'
 import { Features, Feature } from '@/services/features'
 import { Insurances } from './LandingPage.types'

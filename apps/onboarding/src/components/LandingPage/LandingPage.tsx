@@ -97,11 +97,6 @@ export const LandingPage = ({
     [formState, mainCoverageInsurances],
   )
 
-  let subheading = t('LANDING_PAGE_SUBHEADING')
-  if (IS_HOUSE_INSURANCE_ENABLED) {
-    subheading = t('LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING')
-  }
-
   return (
     <form
       onSubmit={(event) => {
@@ -122,7 +117,11 @@ export const LandingPage = ({
                 {t('LANDING_PAGE_HEADLINE')}
               </HeadingOLD>
               <BodyText variant={1} colorVariant="medium" displayBlock>
-                {subheading}
+                {t(
+                  IS_HOUSE_INSURANCE_ENABLED
+                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
+                    : 'LANDING_PAGE_SUBHEADING',
+                )}
               </BodyText>
             </Space>
           </ContentCard>
