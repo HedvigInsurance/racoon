@@ -6,7 +6,7 @@ import { CartToast, CartToastAttributes } from '@/components/CartNotification/Ca
 import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
-import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
+import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CurrencyCode } from '@/services/apollo/generated'
@@ -76,9 +76,6 @@ export const PriceCalculatorBlock = ({
         </Space>
 
         <SectionWithPadding>
-          {lineId && (
-            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
-          )}
           <PriceCardForm
             id="price-card-form"
             title={product.name}
@@ -88,18 +85,23 @@ export const PriceCalculatorBlock = ({
             onSubmit={handleSubmitAddToCart}
             loading={loadingAddToCart}
           />
+          {lineId && (
+            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
+          )}
         </SectionWithPadding>
       </Space>
 
-      <form onSubmit={handleSubmitAddToCart}>
-        {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
-        <PriceCalculatorFooter
-          targetRef={wrapperRef}
-          currencyCode={product.currencyCode}
-          price={product.price ?? undefined}
-          loading={loadingAddToCart}
-        />
-      </form>
+      <PriceCalculatorFooterForm
+        id="price-calculator-footer-form"
+        targetRef={wrapperRef}
+        currencyCode={product.currencyCode}
+        price={product.price ?? undefined}
+        onSubmit={handleSubmitAddToCart}
+        loading={loadingAddToCart}
+      />
+      {lineId && (
+        <input form="price-calculator-footer-form" type="hidden" name="lineItemId" value={lineId} />
+      )}
 
       <CartToast ref={toastRef} />
     </>
