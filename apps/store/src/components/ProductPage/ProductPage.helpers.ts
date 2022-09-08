@@ -53,7 +53,7 @@ const getPriceCalculatorBlockContext = ({
     cartId: shopSession.cart.id,
     lineId: lineItem?.id ?? null,
     priceFormTemplate,
-    countryCode: shopSession.countryCode,
+    priceIntentId: priceIntent.id,
     product: {
       slug: productStory.slug,
       name: productStory.content.name,

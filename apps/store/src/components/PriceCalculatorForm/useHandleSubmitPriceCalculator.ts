@@ -1,36 +1,45 @@
-import { FormEvent, useState } from 'react'
-import useRouterRefresh from '@/hooks/useRouterRefresh'
-import { PageLink } from '@/lib/PageLink'
+import { FormEventHandler } from 'react'
+import {
+  usePriceIntentConfirmMutation,
+  usePriceIntentDataUpdateMutation,
+} from '@/services/apollo/generated'
+import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
+import { prepopulateFormTemplate } from './PriceCalculatorForm.helpers'
 
 type Params = {
-  productSlug: string
-  formTemplateId: string
+  priceIntentId: string
+  formTemplate: FormTemplate
 }
 
-export const useHandleSubmitPriceCalculatorForm = ({ productSlug, formTemplateId }: Params) => {
-  const [status, setStatus] = useState<'idle' | 'submitting'>('idle')
-  const refreshData = useRouterRefresh()
+export const useHandleSubmitPriceCalculatorForm = ({ formTemplate, priceIntentId }: Params) => {
+  const [updateData, updateResult] = usePriceIntentDataUpdateMutation({
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
+  })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const [confirmPriceIntent, confirmResult] = usePriceIntentConfirmMutation({
+    variables: { priceIntentId },
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
+  })
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
-    setStatus('submitting')
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData.entries())
 
-    const url = PageLink.apiPriceProduct({ productSlug, formTemplateId })
+    const result = await updateData({ variables: { priceIntentId, data } })
 
-    try {
-      await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      })
+    if (result.data && result.data.priceIntentDataUpdate.priceIntent) {
+      const updatedData = result.data.priceIntentDataUpdate.priceIntent.data
+      const populatedTemplate = prepopulateFormTemplate(formTemplate, updatedData)
 
-      await refreshData()
-    } finally {
-      setStatus('idle')
+      if (populatedTemplate.sections.every((section) => section.state === 'VALID')) {
+        await confirmPriceIntent()
+      }
     }
   }
 
-  return { status, handleSubmit }
+  const result = confirmResult.loading ? confirmResult : updateResult
+  return [handleSubmit, result] as const
 }
