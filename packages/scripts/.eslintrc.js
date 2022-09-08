@@ -18,6 +18,9 @@ module.exports = {
     },
   },
   rules: {
+    'no-unneeded-ternary': 'error',
+    'no-nested-ternary': 'error',
+    'multiline-ternary': ['error', 'never'],
     'import/order': [
       'error',
       {
