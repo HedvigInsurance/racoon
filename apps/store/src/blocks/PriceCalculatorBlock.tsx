@@ -5,7 +5,7 @@ import { Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
-import { PriceCard } from '@/components/PriceCard/PriceCard'
+import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
 import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -74,16 +74,18 @@ export const PriceCalculatorBlock = ({
         </Space>
 
         <SectionWithPadding>
-          <form onSubmit={handleSubmitAddToCart}>
-            {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
-            <PriceCard
-              name={product.name}
-              cost={product.price ?? undefined}
-              currencyCode={product.currencyCode}
-              gradient={product.gradient}
-              loading={loadingAddToCart}
-            />
-          </form>
+          {lineId && (
+            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
+          )}
+          <PriceCardForm
+            id="price-card-form"
+            title={product.name}
+            cost={product.price ?? undefined}
+            currencyCode={product.currencyCode}
+            gradient={product.gradient}
+            onSubmit={handleSubmitAddToCart}
+            loading={loadingAddToCart}
+          />
         </SectionWithPadding>
       </Space>
 
