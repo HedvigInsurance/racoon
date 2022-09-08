@@ -97,6 +97,11 @@ export const LandingPage = ({
     [formState, mainCoverageInsurances],
   )
 
+  let subheading = t('LANDING_PAGE_SUBHEADING')
+  if (IS_HOUSE_INSURANCE_ENABLED) {
+    subheading = t('LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING')
+  }
+
   return (
     <form
       onSubmit={(event) => {
@@ -117,11 +122,7 @@ export const LandingPage = ({
                 {t('LANDING_PAGE_HEADLINE')}
               </HeadingOLD>
               <BodyText variant={1} colorVariant="medium" displayBlock>
-                {t(
-                  IS_HOUSE_INSURANCE_ENABLED
-                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
-                    : 'LANDING_PAGE_SUBHEADING',
-                )}
+                {subheading}
               </BodyText>
             </Space>
           </ContentCard>
@@ -143,15 +144,14 @@ export const LandingPage = ({
                   selected={formState[inrurance.fieldName]}
                   required={!hasSelectedAtLeastOneMainInsurance}
                   errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
-                  onCheck={
-                    !isSingleCard
-                      ? () =>
-                          setFormState({
-                            ...formState,
-                            [inrurance.fieldName]: !formState[inrurance.fieldName],
-                          })
-                      : undefined
-                  }
+                  onCheck={() => {
+                    if (!isSingleCard) {
+                      setFormState({
+                        ...formState,
+                        [inrurance.fieldName]: !formState[inrurance.fieldName],
+                      })
+                    }
+                  }}
                   cardImg={inrurance.img}
                   title={t(inrurance.name)}
                   description={t(inrurance.description)}

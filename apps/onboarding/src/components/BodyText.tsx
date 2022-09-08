@@ -19,24 +19,27 @@ type StyleProps = {
   fixedSize: BodyTextProps['fixedSize']
 } & ColorProp
 
-const TextBase = styled.p<StyleProps>(({ theme, colorVariant, displayBlock, fixedSize }) => ({
-  color:
-    colorVariant === 'light'
-      ? theme.colors.gray100
-      : colorVariant === 'medium'
-      ? theme.colors.gray700
-      : theme.colors.gray900,
-  display: displayBlock ? 'block' : 'initial',
-  margin: 0,
-  padding: 0,
-  fontFamily: theme.fonts.body,
-  fontWeight: 400,
-  letterSpacing: '-0.02em',
-  [mq.md]: fixedSize && {
-    fontSize: 'initial!important',
-    lineHeight: 'initial!important',
-  },
-}))
+const TextBase = styled.p<StyleProps>(({ theme, colorVariant, displayBlock, fixedSize }) => {
+  let color = theme.colors.gray900
+  if (colorVariant === 'light') {
+    color = theme.colors.gray100
+  } else if (colorVariant === 'medium') {
+    color = theme.colors.gray700
+  }
+  return {
+    color,
+    display: displayBlock ? 'block' : 'initial',
+    margin: 0,
+    padding: 0,
+    fontFamily: theme.fonts.body,
+    fontWeight: 400,
+    letterSpacing: '-0.02em',
+    [mq.md]: fixedSize && {
+      fontSize: 'initial!important',
+      lineHeight: 'initial!important',
+    },
+  }
+})
 
 const Body0 = styled(TextBase)<StyleProps>(() => ({
   fontSize: '1.125rem',
