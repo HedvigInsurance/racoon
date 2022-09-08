@@ -24,6 +24,7 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { getCountryByLocale } from '@/lib/l10n/countries'
 import { getLocaleOrFallback } from '@/lib/l10n/locales'
 
 export type SbBaseBlockProps<T> = {
@@ -78,6 +79,11 @@ type GlobalStory = StoryData & {
     navMenuContainer: Array<SbBlokData>
   }
 }
+
+type LinkData = Pick<
+  StoryData,
+  'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
+> & { is_folder: boolean; path: string; published: boolean; real_path: string }
 
 type NamedBlock = {
   blockName: string
@@ -137,9 +143,8 @@ type StoryOptions = {
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
-  const storyblokApi = getStoryblokApi()
-
-  const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+  const country = getCountryByLocale(locale)
+  const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, {
     version: preview ? 'draft' : 'published',
     language: getLocaleOrFallback(locale).language,
   })
@@ -148,8 +153,11 @@ export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOpt
 
 export const getAllLinks = async () => {
   const storyblokApi = getStoryblokApi()
-  const { data } = await storyblokApi.get('cdn/links/')
-  return data.links
+  const { data } = await storyblokApi.get('cdn/links/', {
+    // Uncomment for local debug
+    // version: 'draft',
+  })
+  return data.links as LinkData[]
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {
