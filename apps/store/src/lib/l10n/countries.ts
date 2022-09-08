@@ -1,4 +1,4 @@
-import { getLocale, normalizeLocale } from './locales'
+import { getLocaleOrFallback, normalizeLocale } from './locales'
 import { CountryCode, Language, Locale, CountryLabel } from './types'
 
 export type CountryData = {
@@ -53,7 +53,7 @@ export const getCountryLocale = (country: CountryLabel, language: Language): Loc
     throw new Error(`Failed to find country id=${country}`)
   }
   return (
-    countryData.locales.find((locale) => getLocale(locale).language === language) ||
+    countryData.locales.find((locale) => getLocaleOrFallback(locale).language === language) ||
     countryData.defaultLocale
   )
 }

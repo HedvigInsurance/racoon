@@ -59,6 +59,7 @@ export const normalizeLocale = (locale: string | undefined): string | undefined 
   return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}`
 }
 
-export const getLocale = (locale: Locale | string | undefined) => {
+// TODO: Make fallback market-specific
+export const getLocaleOrFallback = (locale: Locale | string | undefined): LocaleData => {
   return locales[normalizeLocale(locale) as Locale] ?? locales[FALLBACK_LOCALE]
 }
