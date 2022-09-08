@@ -1,8 +1,8 @@
+import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { Page } from '@/components/Page/Page'
 import {
   getAllLinks,
   getGlobalStory,
@@ -18,12 +18,14 @@ type Path = {
 }
 
 const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
+  const story = useStoryblokState(props.story)
+
   return (
     <>
       <Head>
         <title>{props.story.content.name}</title>
       </Head>
-      <Page {...props} />
+      <StoryblokComponent blok={story.content} />
     </>
   )
 }
