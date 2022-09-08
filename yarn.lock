@@ -5887,10 +5887,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.7.15":
-  version: 18.7.15
-  resolution: "@types/node@npm:18.7.15"
-  checksum: 1435fc7fe44744467a3ba8ace646455be228516530dbb3db64a03cca6abcfdc5ba2e48a3eafc71f25f836d2ca871132361c58a5e760237a53674cb09151147d9
+"@types/node@npm:16.11.57":
+  version: 16.11.57
+  resolution: "@types/node@npm:16.11.57"
+  checksum: 7c34f5e50e38460fd0f18ae939ad62d5ecf992be7b9db7b1b86b9cc76a4d153b55bf3a94c6379da23df0803c11ad1a96be54c45d3ce612206cb8a18ce433028b
   languageName: node
   linkType: hard
 
@@ -17000,7 +17000,7 @@ __metadata:
     "@types/jsdom": 20.0.0
     "@types/lodash-es": 4.17.6
     "@types/marked": 4.0.3
-    "@types/node": 18.7.15
+    "@types/node": 16.11.57
     "@types/react": 18.0.17
     classnames: 2.3.1
     cookies-next: 2.1.1
@@ -20349,7 +20349,7 @@ __metadata:
     "@testing-library/react": 13.3.0
     "@testing-library/user-event": 14.4.1
     "@types/js-cookie": 3.0.2
-    "@types/node": 18.7.15
+    "@types/node": 16.11.57
     "@types/react": 18.0.17
     ajv: ^8.11.0
     babel-loader: 8.2.5
