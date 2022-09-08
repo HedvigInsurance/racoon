@@ -6,7 +6,6 @@ import { ConfirmationPageProps } from '@/components/ConfirmationPage/Confirmatio
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
-import { CheckoutService } from '@/services/checkout/CheckoutService'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 
@@ -24,10 +23,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
     getGlobalStory({ locale }),
   ])
 
-  const checkoutService = new CheckoutService(shopSession, apolloClient)
-
-  const checkout = checkoutService.checkout()
-  if (checkout.completedAt === null) {
+  if (shopSession.checkout.completedAt === null) {
     return { redirect: { destination: PageLink.store(), permanent: false } }
   }
 
