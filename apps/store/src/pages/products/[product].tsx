@@ -10,7 +10,11 @@ import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/clie
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
 
-const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPageProps) => {
+type NextPageProps = ProductPageProps & {
+  shopSessionId: string
+}
+
+const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
   return (
     <>
       <Head>
@@ -21,7 +25,7 @@ const NextProductPage: NextPageWithLayout<ProductPageProps> = (props: ProductPag
   )
 }
 
-export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
   const { locale, req, res, params: { product: slug } = {}, preview } = context
 
   if (!locale || locale === 'default') return { notFound: true }
@@ -54,6 +58,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (c
         globalStory,
         priceFormTemplate: template,
         priceIntent,
+        shopSessionId: shopSession.id,
         shopSession,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
       },
