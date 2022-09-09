@@ -81,19 +81,23 @@ const StyledCheckboxElement = styled.div<CheckboxProps>(
     boxSizing: 'border-box',
     transition: 'all 150ms',
   }),
-  (props) => ({
-    background: props.disabled
-      ? props.theme.colors.gray300
-      : props.checked
-      ? props.theme.colors.gray900
-      : props.theme.colors.white,
-    border:
-      (!props.checked && !props.disabled && `1px solid ${props.theme.colors.gray500};`) ||
-      'initial',
-    '&:hover': {
-      border: (!props.checked && `2px solid ${props.theme.colors.gray900};`) || 'initial',
-    },
-  }),
+  (props) => {
+    let background = props.theme.colors.white
+    if (props.disabled) {
+      background = props.theme.colors.gray300
+    } else if (props.checked) {
+      background = props.theme.colors.gray900
+    }
+    return {
+      background,
+      border:
+        (!props.checked && !props.disabled && `1px solid ${props.theme.colors.gray500};`) ||
+        'initial',
+      '&:hover': {
+        border: (!props.checked && `2px solid ${props.theme.colors.gray900};`) || 'initial',
+      },
+    }
+  },
 )
 
 const DisabledTick = styled.div<{ disabled?: boolean }>(
@@ -120,9 +124,11 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleInvalid = errorMessage
-    ? () => inputRef.current?.setCustomValidity(errorMessage)
-    : undefined
+  const handleInvalid = () => {
+    if (errorMessage) {
+      inputRef.current?.setCustomValidity(errorMessage)
+    }
+  }
 
   useEffect(() => {
     inputRef.current?.setCustomValidity('')

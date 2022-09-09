@@ -48,17 +48,23 @@ const CrossBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) 
   }
 })
 
-const MiddleBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => ({
-  width: BURGER_LINE_WIDTH,
-  position: 'absolute',
-  top: '50%',
-  left: 0,
-  right: 0,
-  height: 2,
-  backgroundColor: isActive ? (color ? getColor(color) : 'currentcolor') : 'transparent',
-  transition: `background-color ${TRANSITION_TIME}ms`,
-  transform: 'translateY(-1px)',
-}))
+const MiddleBurger = styled.div<AnimatedToggleButtonProps>(({ isActive, color }) => {
+  let backgroundColor = 'transparent'
+  if (isActive) {
+    backgroundColor = color ? getColor(color) : 'currentColor'
+  }
+  return {
+    width: BURGER_LINE_WIDTH,
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor,
+    transition: `background-color ${TRANSITION_TIME}ms`,
+    transform: 'translateY(-1px)',
+  }
+})
 
 const IconWrapper = styled.div({
   position: 'relative',

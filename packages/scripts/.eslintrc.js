@@ -18,6 +18,8 @@ module.exports = {
     },
   },
   rules: {
+    'no-unneeded-ternary': 'error',
+    'no-nested-ternary': 'error',
     'import/order': [
       'error',
       {
