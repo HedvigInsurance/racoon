@@ -1,5 +1,5 @@
-import { QueryHookOptions, QueryResult, useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
+import { QueryResult, useApolloClient } from '@apollo/client'
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import {
   ShopSessionQuery,
@@ -28,8 +28,10 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
     },
   })
 
-  const queryResult = useShopSessionQuery({
-    shopSessionId,
+  const queryResult = useShopSessionApolloQuery({
+    variables: shopSessionId ? { shopSessionId } : undefined,
+    skip: !shopSessionId,
+    ssr: typeof window === 'undefined',
     onCompleted: ({ shopSession }) => {
       Track.addContext('shopSessionId', shopSession.id)
       if (shopSession.countryCode !== countryCode) {
@@ -41,7 +43,6 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
       console.warn('ShopSession not found: ', shopSessionId, error)
       createShopSession()
     },
-    ssr: typeof window === 'undefined',
   })
 
   // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
@@ -65,32 +66,15 @@ export const useShopSession = () => {
     )
   }
 
-  const { data, ...other } = queryResult
-
-  let shopSession = data?.shopSession
-  if (shopSession?.countryCode !== countryCode) {
-    // Ignore session from different country.  This probably means old session was fetched and new one is being created
-    shopSession = undefined
-  }
-  return {
-    ...other,
-    shopSession,
-  }
-}
-
-const useShopSessionQuery = ({ shopSessionId, ...rest }: UseShopSessionParams) => {
-  return useShopSessionApolloQuery({
-    variables: shopSessionId ? { shopSessionId } : undefined,
-    skip: !shopSessionId,
-    // Only intended to run client-side, prefetch and pass to Apollo Cache if fetched on server.
-    ssr: false,
-    ...rest,
-  })
-}
-
-type ShopSessionQueryHookOption = QueryHookOptions<ShopSessionQuery, ShopSessionQueryVariables>
-type UseShopSessionParams = Omit<ShopSessionQueryHookOption, 'variables'> & {
-  shopSessionId: string | null
+  return useMemo(() => {
+    const shopSession = queryResult.data?.shopSession
+    return {
+      ...queryResult,
+      // Ignore session from different country.
+      // This probably means old session was fetched and new one is being created
+      shopSession: shopSession?.countryCode === countryCode ? shopSession : undefined,
+    }
+  }, [queryResult, countryCode])
 }
 
 const useShopSessionService = () => {
