@@ -19,6 +19,7 @@ import {
   ToggleMenu,
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
@@ -32,9 +33,10 @@ type NavItemBlockProps = SbBaseBlockProps<{
 }>
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
+  const locale = useCurrentLocale()
   return (
     <NavigationMenuPrimitive.Item value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationLink href={getLinkFieldURL(blok.link)}>{blok.name}</NavigationLink>
+      <NavigationLink href={getLinkFieldURL(blok.link, locale)}>{blok.name}</NavigationLink>
     </NavigationMenuPrimitive.Item>
   )
 }

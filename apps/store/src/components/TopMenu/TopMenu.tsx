@@ -11,6 +11,7 @@ import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 export const MENU_BAR_HEIGHT = '3.75rem'
 const Z_INDEX_TOP_MENU = 1000
 
+// FIXME: Remove, never unused
 export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
   const [open, setOpen] = useState(false)
