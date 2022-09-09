@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import NextLink from 'next/link'
 import { ButtonVariant, LinkButton } from 'ui'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
@@ -11,9 +13,10 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 }>
 
 export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
+  const locale = useCurrentLocale()
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <NextLink href={blok.link.cached_url} passHref>
+      <NextLink href={getLinkFieldURL(blok.link, locale)} passHref>
         <LinkButton variant={blok.variant} color="dark" size="lg">
           {blok.text}
         </LinkButton>
