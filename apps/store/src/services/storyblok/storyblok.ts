@@ -144,10 +144,15 @@ type StoryOptions = {
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const country = getCountryByLocale(locale)
-  const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, {
+  const params: Record<string, string> = {
     version: preview ? 'draft' : 'published',
-    language: getLocaleOrFallback(locale).language,
-  })
+  }
+  // Special case: in Storyblok default language means country default, ie Swedish in Sweden, Danish in Denmark, etc
+  // Therefore we're not passing language code from NextJs locale here
+  if (locale !== country.defaultLocale) {
+    params.language = getLocaleOrFallback(locale).language
+  }
+  const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, params)
   return data.story as StoryData | undefined
 }
 
