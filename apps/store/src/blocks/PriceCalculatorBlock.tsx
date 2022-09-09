@@ -5,8 +5,8 @@ import { Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
-import { PriceCard } from '@/components/PriceCard/PriceCard'
-import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
+import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
+import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -60,34 +60,40 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
             </Heading>
           </SpaceFlex>
 
-          <form onSubmit={handleSubmit}>
-            <PriceCalculatorForm template={priceFormTemplate} loading={loadingUpdate} />
-          </form>
+          <PriceCalculatorForm
+            template={priceFormTemplate}
+            onSubmit={handleSubmit}
+            loading={loadingUpdate}
+          />
         </Space>
 
         <SectionWithPadding>
-          <form onSubmit={handleSubmitAddToCart}>
-            {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
-            <PriceCard
-              name={product.name}
-              cost={product.price ?? undefined}
-              currencyCode={product.currencyCode}
-              gradient={product.gradient}
-              loading={loadingAddToCart}
-            />
-          </form>
+          <PriceCardForm
+            id="price-card-form"
+            title={product.name}
+            cost={product.price ?? undefined}
+            currencyCode={product.currencyCode}
+            gradient={product.gradient}
+            onSubmit={handleSubmitAddToCart}
+            loading={loadingAddToCart}
+          />
+          {lineId && (
+            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
+          )}
         </SectionWithPadding>
       </Space>
 
-      <form onSubmit={handleSubmitAddToCart}>
-        {lineId && <input type="hidden" name="lineItemId" value={lineId} />}
-        <PriceCalculatorFooter
-          targetRef={wrapperRef}
-          currencyCode={product.currencyCode}
-          price={product.price ?? undefined}
-          loading={loadingAddToCart}
-        />
-      </form>
+      <PriceCalculatorFooterForm
+        id="price-calculator-footer-form"
+        targetRef={wrapperRef}
+        currencyCode={product.currencyCode}
+        price={product.price ?? undefined}
+        onSubmit={handleSubmitAddToCart}
+        loading={loadingAddToCart}
+      />
+      {lineId && (
+        <input form="price-calculator-footer-form" type="hidden" name="lineItemId" value={lineId} />
+      )}
 
       <CartToast ref={toastRef} />
     </>
