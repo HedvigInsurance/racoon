@@ -1,6 +1,8 @@
 import { FormEventHandler } from 'react'
 import { useCartLinesAddMutation } from '@/services/apollo/generated'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
+import { useRefreshData } from '@/utils/useRefreshData'
 
 type Params = {
   cartId: string
@@ -8,7 +10,8 @@ type Params = {
 }
 
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
-  const [addLineItems, result] = useCartLinesAddMutation()
+  const [addLineItems, { loading }] = useCartLinesAddMutation()
+  const [refreshData, loadingData] = useRefreshData()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -17,8 +20,13 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     const lineItemId = getOrThrowFormValue(formData, 'lineItemId')
 
     await addLineItems({ variables: { cartId, lineItemId } })
+
+    priceIntentServiceInitClientSide().reset()
+    // Refresh route since data is fetched server-side (product page)
+    await refreshData()
+
     onSuccess()
   }
 
-  return [handleSubmit, result] as const
+  return [handleSubmit, loadingData || loading] as const
 }
