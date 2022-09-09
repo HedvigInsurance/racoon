@@ -20,12 +20,11 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const [countryLabel, ...slugFragments] = story.full_slug.split('/')
 
-  // Convert default => English if applicable
-  let locale = req.query._storyblok_lang
-  if (locale === 'default') {
-    const country = countries[countryLabel as CountryLabel]
-    locale = country.locales.find((locale) => locale.startsWith('en')) ?? country.defaultLocale
-  }
+  // Convert storyblok language to locale
+  const storyblokLang = req.query._storyblok_lang as string
+  const country = countries[countryLabel as CountryLabel]
+  const locale =
+    country.locales.find((locale) => locale.startsWith(storyblokLang)) ?? country.defaultLocale
 
   res.setPreviewData({})
   // Set cookie to None, so it can be read in the Storyblok iframe
