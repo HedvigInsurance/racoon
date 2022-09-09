@@ -2,109 +2,11 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
-import React, { useState, useCallback } from 'react'
-import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
-import { PageLink } from '@/lib/PageLink'
-import { MenuIcon } from './MenuIcon'
-import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
+import React from 'react'
+import { theme } from 'ui'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
 const Z_INDEX_TOP_MENU = 1000
-
-// FIXME: Remove, never unused
-export const TopMenu = () => {
-  const [activeItem, setActiveItem] = useState('')
-  const [open, setOpen] = useState(false)
-
-  const closeDialog = useCallback(() => {
-    setOpen(false)
-    setActiveItem('')
-  }, [])
-
-  return (
-    <Wrapper>
-      <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogPrimitive.Trigger asChild>
-          <ToggleMenu>
-            <MenuIcon />
-          </ToggleMenu>
-        </DialogPrimitive.Trigger>
-
-        <DialogContent>
-          <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
-            <NavigationPrimaryList>
-              <NavigationMenuPrimitive.Item value="insurances">
-                <NavigationTrigger>
-                  Insurances{' '}
-                  {activeItem === 'insurances' ? (
-                    <CrossIcon size="16px" />
-                  ) : (
-                    <ArrowForwardIcon size="16px" />
-                  )}
-                </NavigationTrigger>
-                <NavigationMenuPrimitive.Content>
-                  <NavigationMenuPrimitive.Sub defaultValue="browseAll">
-                    <NavigationSecondaryList>
-                      <NavigationMenuPrimitive.Item value="browseAll">
-                        <NavigationLink href={PageLink.store()} onSelect={closeDialog}>
-                          Browse All
-                        </NavigationLink>
-                      </NavigationMenuPrimitive.Item>
-
-                      <NavigationMenuPrimitive.Item value="homeInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
-                          Home Insurances
-                        </NavigationLink>
-                      </NavigationMenuPrimitive.Item>
-
-                      <NavigationMenuPrimitive.Item value="accidentInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
-                          Accident Insurance
-                        </NavigationLink>
-                      </NavigationMenuPrimitive.Item>
-
-                      <NavigationMenuPrimitive.Item value="carInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
-                          Car Insurance
-                        </NavigationLink>
-                      </NavigationMenuPrimitive.Item>
-                    </NavigationSecondaryList>
-                  </NavigationMenuPrimitive.Sub>
-                </NavigationMenuPrimitive.Content>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="onlyAtHedvig">
-                <NavigationLink href="#" onSelect={closeDialog}>
-                  Only At Hedvig
-                </NavigationLink>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="ourStory">
-                <NavigationLink href="#" onSelect={closeDialog}>
-                  Our Story
-                </NavigationLink>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="support">
-                <NavigationLink href="#" onSelect={closeDialog}>
-                  Support
-                </NavigationLink>
-              </NavigationMenuPrimitive.Item>
-            </NavigationPrimaryList>
-          </Navigation>
-
-          <DialogCloseIcon asChild>
-            <IconButton>
-              <CrossIcon />
-            </IconButton>
-          </DialogCloseIcon>
-        </DialogContent>
-      </DialogPrimitive.Root>
-
-      <ShoppingCartMenuItem />
-    </Wrapper>
-  )
-}
 
 export const focusableStyles = {
   cursor: 'pointer',
