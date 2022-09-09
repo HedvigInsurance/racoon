@@ -39,10 +39,10 @@ export const getLinkFieldURL = (link: LinkField, locale: LocaleData) => {
     fragments.shift()
   }
 
-  // SE/page => sv-SE/page
-  fragments[0] = locale.locale
+  // SE/page => page
+  fragments.shift()
 
-  // sv-SE/home => sv-SE, sv-SE/products/home => unchanged
+  // home => '', products/home => unchanged
   if (fragments.length === 2 && link.story.slug === 'home') {
     fragments.pop()
   }
