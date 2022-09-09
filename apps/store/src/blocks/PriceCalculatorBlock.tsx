@@ -7,47 +7,41 @@ import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalcu
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCard } from '@/components/PriceCard/PriceCard'
 import { PriceCalculatorFooter } from '@/components/ProductPage/PriceCalculatorFooter/PriceCalculatorFooter'
+import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { CurrencyCode } from '@/services/apollo/generated'
-import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
-export type PriceCalculatorBlockContext = {
-  cartId: string
-  lineId: string | null
-  priceIntentId: string
-  priceFormTemplate: FormTemplate
-  product: {
-    slug: string
-    name: string
-    price: number | null
-    currencyCode: CurrencyCode
-    gradient: readonly [string, string]
-  }
-}
+const PLACEHOLDER_GRADIENT = ['#00BFFF', '#00ff00'] as const
 
-export type PriceCalculatorBlockProps = PriceCalculatorBlockContext & {
+type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
   title: string
-}
+}>
 
-type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<PriceCalculatorBlockProps>
+export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
+  const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
+  const lineItem = priceIntent.lines?.[0]
+  const lineId = lineItem?.id ?? null
+  const product = {
+    slug: story.slug,
+    name: story.content.name,
+    price: parseInt(lineItem?.price.amount, 10) || null,
+    currencyCode: shopSession.currencyCode,
+    gradient: PLACEHOLDER_GRADIENT,
+  }
 
-export const PriceCalculatorBlock = ({
-  blok: { title, cartId, lineId, priceIntentId, priceFormTemplate, product },
-}: StoryblokPriceCalculatorBlockProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const formatter = useCurrencyFormatter(product.currencyCode)
   const [handleSubmit, { loading: loadingUpdate }] = useHandleSubmitPriceCalculatorForm({
-    priceIntentId,
+    priceIntentId: priceIntent.id,
     formTemplate: priceFormTemplate,
   })
 
   const [handleSubmitAddToCart, { loading: loadingAddToCart }] = useHandleSubmitAddToCart({
-    cartId,
+    cartId: shopSession.cart.id,
     onSuccess: () => {
       toastRef.current?.publish({
         name: product.name,
