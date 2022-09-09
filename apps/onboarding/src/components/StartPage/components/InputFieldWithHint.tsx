@@ -32,16 +32,17 @@ export const InputFieldWithHint = ({ onChange, ...props }: InputFieldProps) => {
 
   const currentValue = stringValue ?? internalValue
   const hasStartedTyping = currentValue ? currentValue.length > 0 : false
-  const visisblePlaceholder = currentValue
-    ? props.placeholder?.slice(currentValue.length)
-    : undefined
+  let visiblePlaceholder
+  if (currentValue) {
+    visiblePlaceholder = props.placeholder?.slice(currentValue.length)
+  }
 
   return (
     <InputField {...props} onChange={handleChange}>
       {hasStartedTyping && (
         <OverlayPlaceholder aria-hidden={true}>
           <HiddenText>{currentValue}</HiddenText>
-          {visisblePlaceholder}
+          {visiblePlaceholder}
         </OverlayPlaceholder>
       )}
     </InputField>
