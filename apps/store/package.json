@@ -61,6 +61,7 @@
     "@types/js-cookie": "3.0.2",
     "@types/node": "16.11.57",
     "@types/react": "18.0.17",
+    "@welldone-software/why-did-you-render": "7.0.1",
     "babel-loader": "8.2.5",
     "eslint": "8.23.0",
     "eslint-plugin-cypress": "2.12.1",
