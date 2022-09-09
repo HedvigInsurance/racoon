@@ -143,15 +143,14 @@ export const LandingPage = ({
                   selected={formState[inrurance.fieldName]}
                   required={!hasSelectedAtLeastOneMainInsurance}
                   errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
-                  onCheck={
-                    !isSingleCard
-                      ? () =>
-                          setFormState({
-                            ...formState,
-                            [inrurance.fieldName]: !formState[inrurance.fieldName],
-                          })
-                      : undefined
-                  }
+                  onCheck={() => {
+                    if (!isSingleCard) {
+                      setFormState({
+                        ...formState,
+                        [inrurance.fieldName]: !formState[inrurance.fieldName],
+                      })
+                    }
+                  }}
                   cardImg={inrurance.img}
                   title={t(inrurance.name)}
                   description={t(inrurance.description)}
