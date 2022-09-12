@@ -90,7 +90,10 @@ export const LandingPage = ({
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
-  const [IS_HOUSE_INSURANCE_ENABLED] = useFeature([Feature.HOUSE_INSURANCE])
+  const [IS_HOUSE_INSURANCE_ENABLED, IS_CROSS_SELL_ENABLED] = useFeature([
+    Feature.HOUSE_INSURANCE,
+    Feature.CROSS_SELL,
+  ])
 
   const hasSelectedAtLeastOneMainInsurance = useMemo(
     () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
@@ -123,6 +126,11 @@ export const LandingPage = ({
                     : 'LANDING_PAGE_SUBHEADING',
                 )}
               </BodyText>
+              {IS_CROSS_SELL_ENABLED && (
+                <BodyText variant={1} colorVariant="medium" displayBlock>
+                  {t('LANDING_PAGE_UPDATE_CHOICES_SUBHEADING')}
+                </BodyText>
+              )}
             </Space>
           </ContentCard>
 
