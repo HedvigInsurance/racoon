@@ -8,7 +8,11 @@ type ForeverParams = BaseParams & { code: string }
 type ProductPage = BaseParams & { id: string }
 type WOCheckoutParams = Required<BaseParams> & { quoteCartId: string }
 type EmbarkParams = BaseParams & { slug?: string }
-type WOOfferParams = Required<BaseParams> & { quoteCartId: string; showEdit?: boolean }
+type WOOfferParams = Required<BaseParams> & {
+  quoteCartId: string
+  search?: string
+  showEdit?: boolean
+}
 
 const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
 
@@ -35,8 +39,10 @@ export const PageLink = {
     `${WEB_ONBOARDING_URL}/${locale}/new-member/home-switcher`,
   old_landing_page: ({ locale }: Required<BaseParams>) =>
     `${WEB_ONBOARDING_URL}/${locale}/new-member`,
-  old_offer: ({ locale, quoteCartId, showEdit }: WOOfferParams) => {
-    const baseURL = `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}`
+  old_offer: ({ locale, quoteCartId, search, showEdit }: WOOfferParams) => {
+    const baseURL = `${WEB_ONBOARDING_URL}/${locale}/new-member/offer/${quoteCartId}${
+      search ? '?' + search : ''
+    }`
 
     if (showEdit) {
       const searchParams = new URLSearchParams()
