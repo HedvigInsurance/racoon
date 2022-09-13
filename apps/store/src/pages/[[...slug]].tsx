@@ -13,10 +13,11 @@ import {
   StoryblokQueryParams,
 } from '@/services/storyblok/storyblok'
 
-type Path = {
+type RoutingPath = {
   params: {
     slug: string[]
   }
+  locale?: string
 }
 
 const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
@@ -54,18 +55,23 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const links = await getAllLinks()
-  const paths: Path[] = []
+  const paths: RoutingPath[] = []
   Object.values(links)
     .filter((link) => !link.is_folder)
     .filter((link) => !link.slug.includes('/products/') && !link.slug.endsWith('/global'))
     .forEach((link) => {
-      const [countryCode, ...pathFragments] = link.slug.split('/')
+      const [countryCode, ...slug] = link.slug.split('/')
       const country = countries[countryCode as CountryLabel]
       if (!country) {
         return
       }
+      if (slug.length === 1 && slug[0] === 'home') {
+        slug[0] = ''
+      }
       country.locales.forEach((locale) => {
-        paths.push({ params: { slug: [locale, ...pathFragments] } })
+        // We use en-SE ISO format for settings but downcase it for routing to get nicer URLs
+        const routingLocale = locale.toLowerCase()
+        paths.push({ params: { slug }, locale: routingLocale })
       })
     })
   return {
