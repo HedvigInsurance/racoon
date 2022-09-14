@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import NextLink from 'next/link'
 import { ButtonVariant, LinkButton } from 'ui'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useStroryblokLinkURL } from '@/utils/useStroryblokLinkURL'
 
 export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
@@ -11,9 +12,10 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 }>
 
 export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
+  const href = useStroryblokLinkURL(blok.link)
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <NextLink href={blok.link.cached_url} passHref>
+      <NextLink href={href} passHref>
         <LinkButton variant={blok.variant} color="dark" size="lg">
           {blok.text}
         </LinkButton>
