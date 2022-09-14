@@ -4,7 +4,7 @@ import { PageLink } from '@/lib/PageLink'
 import { Market } from '@/lib/types'
 import { graphqlSdk } from '@/services/graphql/sdk'
 import { FORMS_PER_MARKET, PageInput } from './DebuggerPage.constants'
-import { isMarket, QuoteBundleError } from './DebuggerPage.helpers'
+import { isMarket, getMarketLabelFromMarket, QuoteBundleError } from './DebuggerPage.helpers'
 
 const PLACEHOLDER_LOCALE = 'en'
 
@@ -52,5 +52,16 @@ export const handleDebuggerForm = async (formData: Fields) => {
     )
   }
 
-  return PageLink.old_offer({ locale: MARKET_TO_URL[market], quoteCartId })
+  const marketLabel = getMarketLabelFromMarket(market)
+  const searchParams = new URLSearchParams()
+  const isCrossSellEnabled = process.env.NEXT_PUBLIC_FEATURE_CROSS_SELL?.includes(marketLabel)
+  if (isCrossSellEnabled) {
+    quotes.forEach((quote) => searchParams.append('type', quote.data.type))
+  }
+
+  return PageLink.old_offer({
+    locale: MARKET_TO_URL[market],
+    quoteCartId,
+    search: searchParams.toString(),
+  })
 }
