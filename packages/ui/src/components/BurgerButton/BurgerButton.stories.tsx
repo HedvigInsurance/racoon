@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { BurgerButton, BurgerButtonProps } from './BurgerButton'
 
 export default {
-  title: 'UI / Button / BurgerButton',
+  title: 'Button / BurgerButton',
   component: BurgerButton,
   argsTypes: { onClick: { action: 'clicked' } },
 } as ComponentMeta<typeof BurgerButton>

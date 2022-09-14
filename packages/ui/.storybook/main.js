@@ -1,5 +1,11 @@
 module.exports = {
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: [
+    {
+      directory: '../src',
+      titlePrefix: 'UI',
+      files: '**/*.stories.*',
+    },
+  ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: '@storybook/react',
   features: {

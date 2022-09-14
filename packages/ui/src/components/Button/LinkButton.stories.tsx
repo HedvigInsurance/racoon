@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react'
 import { LinkButton, LinkButtonProps } from './Button'
 
 const storyMeta: Meta<LinkButtonProps> = {
-  title: 'UI / Button / Link Button',
+  title: 'Button / Link Button',
   component: LinkButton,
 }
 
