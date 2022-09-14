@@ -59,6 +59,9 @@ export const normalizeLocale = (locale: string | undefined): string | undefined 
   return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}`
 }
 
+// We use en-SE ISO format for settings but downcase it for routing to get nicer URLs
+export const routingLocale = (locale: string) => locale.toLowerCase()
+
 // TODO: Make fallback market-specific
 export const getLocaleOrFallback = (locale: Locale | string | undefined): LocaleData => {
   return locales[normalizeLocale(locale) as Locale] ?? locales[FALLBACK_LOCALE]

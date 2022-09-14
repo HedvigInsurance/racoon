@@ -8,7 +8,12 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getCountryLocale, countries } from '@/lib/l10n/countries'
-import { getLocaleOrFallback, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import {
+  getLocaleOrFallback,
+  LocaleField,
+  routingLocale,
+  TEMP_TRANSLATIONS,
+} from '@/lib/l10n/locales'
 import { Locale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
@@ -81,8 +86,8 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }
 
   const router = useRouter()
-  const onChangeLocale = (locale: Locale | undefined) => {
-    router.push(router.asPath, undefined, { locale })
+  const onChangeLocale = (locale: Locale) => {
+    router.push(router.asPath, undefined, { locale: routingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
