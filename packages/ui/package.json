@@ -16,7 +16,7 @@
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint src",
     "lint:fix": "eslint src --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "storybook": "start-storybook --ci -p 6006",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook --quiet -o dist",
     "typecheck": "tsc --noEmit"
   },
