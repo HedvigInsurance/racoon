@@ -16,6 +16,13 @@ if [ -z "$token" ]; then
   exit 1
 fi
 
+if ! command -v lokalise2 &> /dev/null
+then
+    echo "lokalise2 CLI could not be found, please install:"
+    echo "https://github.com/lokalise/lokalise-cli-2-go#installation"
+    exit
+fi
+
 lokalise2 \
   -t "$token" \
   --project-id 743091915e9da969db9340.20943733 \
