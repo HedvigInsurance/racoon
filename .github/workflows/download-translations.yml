@@ -3,9 +3,15 @@ name: Download translations from Lokalise
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   update_translations:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
