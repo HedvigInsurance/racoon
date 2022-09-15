@@ -1,4 +1,6 @@
 import { SbBlokData } from '@storyblok/react'
+import { getCountryByLocale } from '@/lib/l10n/countries'
+import { LocaleData } from '@/lib/l10n/locales'
 import { LinkField } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -27,6 +29,18 @@ export const checkBlockType = <BlockData extends SbBlokData>(
   else return null
 }
 
-export const getLinkFieldURL = (link: LinkField) => {
-  return link.cached_url === 'home' ? '/' : `/${link.cached_url}`
+export const getLinkFieldURL = (link: LinkField, locale: LocaleData) => {
+  const fragments = link.story.full_slug.split('/')
+
+  // en/SE/page => SE/page, SE/page => unchanged
+  const country = getCountryByLocale(locale.locale)
+  const hasLangPrefix = locale.locale !== country.defaultLocale
+  if (hasLangPrefix) {
+    fragments.shift()
+  }
+
+  // SE/page => /page
+  fragments.shift()
+
+  return `/${fragments.join('/')}`
 }

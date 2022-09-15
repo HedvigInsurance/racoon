@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { countries } from '@/lib/l10n/countries'
+import { routingLocale } from '@/lib/l10n/locales'
 import {
   getPageLinks,
   getGlobalStory,
@@ -61,9 +62,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       return
     }
     countries[countryId].locales.forEach((locale) => {
-      // We use en-SE ISO format for settings but downcase it for routing to get nicer URLs
-      const routingLocale = locale.toLowerCase()
-      paths.push({ params: { slug: slugParts }, locale: routingLocale })
+      paths.push({ params: { slug: slugParts }, locale: routingLocale(locale) })
     })
   })
   return {

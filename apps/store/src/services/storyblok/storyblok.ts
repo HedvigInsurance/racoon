@@ -62,7 +62,15 @@ export type LinkField = {
   id: string
   url: string
   linktype: 'story' | 'url'
-  cached_url: string // use this
+  // Assumes we're using resolve_links=url
+  story: {
+    id: number
+    uuid: string
+    name: string
+    slug: string
+    url: string
+    full_slug: string
+  }
 }
 
 export type ProductStory = StoryData & {
@@ -153,6 +161,7 @@ export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOpt
   const country = getCountryByLocale(locale)
   const params: Record<string, string> = {
     version: preview ? 'draft' : 'published',
+    resolve_links: 'url',
   }
   // Special case: in Storyblok default language means country default, ie Swedish in Sweden, Danish in Denmark, etc
   // Therefore we're not passing language code from NextJs locale here
