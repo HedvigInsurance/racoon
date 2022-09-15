@@ -3,7 +3,7 @@ import { Space } from '../Space'
 import { Card, CardContent, CardMedia } from './Card'
 
 export default {
-  title: 'UI / Card',
+  title: 'Card',
   component: Card,
   args: {},
 } as ComponentMeta<typeof Card>

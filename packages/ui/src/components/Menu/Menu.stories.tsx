@@ -5,7 +5,7 @@ import { Button } from '../Button/Button'
 import { Menu, MenuProps } from './Menu'
 
 export default {
-  title: 'UI / Menu',
+  title: 'Menu',
   component: Menu,
   parameters: {
     layout: 'fullscreen',

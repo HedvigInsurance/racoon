@@ -5,7 +5,7 @@ import { Button, ButtonProps } from './Button'
 type StoryProps = ButtonProps & { disabled: boolean }
 
 const storyMeta: Meta<StoryProps> = {
-  title: 'UI / Button',
+  title: 'Button',
   component: Button,
   args: {
     color: 'lavender',

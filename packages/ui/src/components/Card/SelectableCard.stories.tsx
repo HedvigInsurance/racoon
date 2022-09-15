@@ -5,7 +5,7 @@ import { Card, CardContent } from './Card'
 import { SelectableCard as SelectableCardComponent } from './SelectableCard'
 
 export default {
-  title: 'UI / Card / Selectable Card',
+  title: 'Card / Selectable Card',
   component: Card,
   args: {},
   argsTypes: { onChange: { action: 'onChange' } },
