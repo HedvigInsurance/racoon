@@ -3319,9 +3319,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/data@npm:0.10.1":
-  version: 0.10.1
-  resolution: "@mswjs/data@npm:0.10.1"
+"@mswjs/data@npm:0.10.2":
+  version: 0.10.2
+  resolution: "@mswjs/data@npm:0.10.2"
   dependencies:
     "@types/lodash": ^4.14.172
     "@types/md5": ^2.3.0
@@ -3340,7 +3340,7 @@ __metadata:
   dependenciesMeta:
     msw:
       optional: true
-  checksum: 333415c2c445b34870496825f718ca44f6a9143810648cf6c047c5855b014ea0be8d3a31cfc2e8a7b7a96164a214bfae2030400df7041c8976236e3eb8b9659d
+  checksum: ec932a5068cca8019ec795aedf03b8f8b34a0e3600a0b7421d198f56a035cc1ecb84b40c4c1cbe8812244ddf44dfc828513a40d32bca7ab0852a047880c5efb8
   languageName: node
   linkType: hard
 
@@ -20412,7 +20412,7 @@ __metadata:
     "@graphql-codegen/typescript": 2.7.3
     "@graphql-codegen/typescript-operations": 2.5.3
     "@graphql-codegen/typescript-react-apollo": 3.3.3
-    "@mswjs/data": 0.10.1
+    "@mswjs/data": 0.10.2
     "@radix-ui/react-accordion": 1.0.0
     "@radix-ui/react-collapsible": 1.0.0
     "@radix-ui/react-dialog": 1.0.0
