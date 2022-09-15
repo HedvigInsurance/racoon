@@ -7,6 +7,7 @@ import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalcu
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
 import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
+import { FormElement } from '@/components/ProductPage/ProductPage.constants'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -78,22 +79,25 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
             loading={loadingAddToCart}
           />
           {lineId && (
-            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
+            <input
+              form="price-card-form"
+              type="hidden"
+              name={FormElement.LineItem}
+              value={lineId}
+            />
           )}
         </SectionWithPadding>
       </Space>
 
-      <PriceCalculatorFooterForm
-        id="price-calculator-footer-form"
-        targetRef={wrapperRef}
-        currencyCode={product.currencyCode}
-        price={product.price ?? undefined}
-        onSubmit={handleSubmitAddToCart}
-        loading={loadingAddToCart}
-      />
-      {lineId && (
-        <input form="price-calculator-footer-form" type="hidden" name="lineItemId" value={lineId} />
-      )}
+      <form onSubmit={handleSubmitAddToCart}>
+        {lineId && <input type="hidden" name={FormElement.LineItem} value={lineId} />}
+        <PriceCalculatorFooterForm
+          targetRef={wrapperRef}
+          currencyCode={product.currencyCode}
+          price={product.price ?? undefined}
+          loading={loadingAddToCart}
+        />
+      </form>
 
       <CartToast ref={toastRef} />
     </>

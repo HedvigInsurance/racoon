@@ -1,5 +1,6 @@
 import { Button, InputField, Space } from 'ui'
 import { CheckoutContactDetailsPageProps } from './CheckoutContactDetails.types'
+import { FormElement } from './CheckoutContactDetailsPage.constants'
 import { CheckoutContactDetailsPageLayout } from './CheckoutContactDetailsPageLayout'
 
 export const CheckoutContactDetailsPage = ({ prefilledData }: CheckoutContactDetailsPageProps) => {
@@ -14,7 +15,7 @@ export const CheckoutContactDetailsPage = ({ prefilledData }: CheckoutContactDet
       <Space y={1}>
         <InputField
           label="National identity number (DDMMYYXXXXX)"
-          name="personalNumber"
+          name={FormElement.PersonalNumber}
           required
           defaultValue={prefilledData.personalNumber ?? undefined}
           infoMessage={
@@ -23,19 +24,19 @@ export const CheckoutContactDetailsPage = ({ prefilledData }: CheckoutContactDet
         />
         <InputField
           label="First name"
-          name="firstName"
+          name={FormElement.FirstName}
           required
           defaultValue={prefilledData.firstName ?? undefined}
         />
         <InputField
           label="Last name"
-          name="lastName"
+          name={FormElement.LastName}
           required
           defaultValue={prefilledData.lastName ?? undefined}
         />
         <InputField
           label="Email"
-          name="email"
+          name={FormElement.Email}
           type="email"
           required
           defaultValue={prefilledData.email ?? undefined}
