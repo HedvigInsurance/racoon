@@ -3,6 +3,7 @@ import { useCartLinesAddMutation } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { useRefreshData } from '@/utils/useRefreshData'
+import { FormElement } from './ProductPage.constants'
 
 type Params = {
   cartId: string
@@ -17,7 +18,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const lineItemId = getOrThrowFormValue(formData, 'lineItemId')
+    const lineItemId = getOrThrowFormValue(formData, FormElement.LineItem)
 
     await addLineItems({ variables: { cartId, lineItemId } })
 

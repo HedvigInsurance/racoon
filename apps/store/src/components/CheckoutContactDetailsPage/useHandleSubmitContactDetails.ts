@@ -1,6 +1,7 @@
 import { FormEventHandler } from 'react'
 import { useContactDetailsUpdateMutation } from '@/services/apollo/generated'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
+import { FormElement } from './CheckoutContactDetailsPage.constants'
 
 type Params = {
   checkoutId: string
@@ -21,10 +22,10 @@ export const useHandleSubmitContactDetails = (params: Params) => {
       variables: {
         input: {
           checkoutId,
-          email: getOrThrowFormValue(formData, 'email'),
-          firstName: getOrThrowFormValue(formData, 'firstName'),
-          lastName: getOrThrowFormValue(formData, 'lastName'),
-          personalNumber: getOrThrowFormValue(formData, 'personalNumber'),
+          email: getOrThrowFormValue(formData, FormElement.Email),
+          firstName: getOrThrowFormValue(formData, FormElement.FirstName),
+          lastName: getOrThrowFormValue(formData, FormElement.LastName),
+          personalNumber: getOrThrowFormValue(formData, FormElement.PersonalNumber),
         },
       },
     })
