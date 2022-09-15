@@ -7,7 +7,6 @@ import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalcu
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
 import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
-import { FormElement } from '@/components/ProductPage/ProductPage.constants'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -23,7 +22,6 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
 export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
   const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
   const lineItem = priceIntent.lines?.[0]
-  const lineId = lineItem?.id ?? null
   const product = {
     slug: story.slug,
     name: story.content.name,
@@ -70,34 +68,25 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
 
         <SectionWithPadding>
           <PriceCardForm
-            id="price-card-form"
             title={product.name}
             cost={product.price ?? undefined}
             currencyCode={product.currencyCode}
             gradient={product.gradient}
             onSubmit={handleSubmitAddToCart}
             loading={loadingAddToCart}
+            lineItemId={lineItem?.id}
           />
-          {lineId && (
-            <input
-              form="price-card-form"
-              type="hidden"
-              name={FormElement.LineItem}
-              value={lineId}
-            />
-          )}
         </SectionWithPadding>
       </Space>
 
-      <form onSubmit={handleSubmitAddToCart}>
-        {lineId && <input type="hidden" name={FormElement.LineItem} value={lineId} />}
-        <PriceCalculatorFooterForm
-          targetRef={wrapperRef}
-          currencyCode={product.currencyCode}
-          price={product.price ?? undefined}
-          loading={loadingAddToCart}
-        />
-      </form>
+      <PriceCalculatorFooterForm
+        targetRef={wrapperRef}
+        currencyCode={product.currencyCode}
+        price={product.price ?? undefined}
+        loading={loadingAddToCart}
+        onSubmit={handleSubmitAddToCart}
+        lineItemId={lineItem?.id}
+      />
 
       <CartToast ref={toastRef} />
     </>

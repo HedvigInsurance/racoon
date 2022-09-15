@@ -1,5 +1,6 @@
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import * as PriceFooter from '../PriceFooter/PriceFooter'
+import { FormElement } from '../ProductPage.constants'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { ScrollToButton } from '../ScrollToButton/ScrollToButton'
 
@@ -8,12 +9,15 @@ type Props = {
   price?: number
   targetRef: React.RefObject<HTMLElement>
   loading: boolean
+  lineItemId?: string
 } & React.ComponentPropsWithRef<'form'>
 
 export const PriceCalculatorFooterForm = ({
   price,
   currencyCode,
   targetRef,
+  lineItemId,
+  loading,
   ...formProps
 }: Props) => {
   const formatter = useCurrencyFormatter(currencyCode)
@@ -24,20 +28,22 @@ export const PriceCalculatorFooterForm = ({
 
   return (
     <ScrollPast targetRef={targetRef}>
-      <form {...formProps}>
-        {price ? (
-          <PriceFooter.Footer>
-            <PriceFooter.Button type="submit" onClick={handleClick}>
+      {price ? (
+        <PriceFooter.Footer>
+          <form {...formProps}>
+            <PriceFooter.Button type="submit" onClick={handleClick} disabled={loading}>
               <span>{formatter.format(price)}</span>
               <span>Add to cart</span>
             </PriceFooter.Button>
-          </PriceFooter.Footer>
-        ) : (
-          <ScrollToButton targetRef={targetRef} type="button">
-            Calculate your price
-          </ScrollToButton>
-        )}
-      </form>
+
+            <input type="hidden" name={FormElement.LineItem} value={lineItemId} />
+          </form>
+        </PriceFooter.Footer>
+      ) : (
+        <ScrollToButton targetRef={targetRef} type="button">
+          Calculate your price
+        </ScrollToButton>
+      )}
     </ScrollPast>
   )
 }
