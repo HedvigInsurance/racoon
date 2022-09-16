@@ -1,8 +1,8 @@
 if (typeof window === 'undefined') {
-  const { server } = require('mocks/server')
+  const { server } = require('./server')
   server.listen({ onUnhandledRequest: 'bypass' })
 } else {
-  const { worker } = require('mocks/browser')
+  const { worker } = require('./browser')
   worker.start({ onUnhandledRequest: 'bypass' })
 }
 export {}
