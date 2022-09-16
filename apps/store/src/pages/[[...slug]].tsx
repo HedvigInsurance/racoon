@@ -6,11 +6,11 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { countries } from '@/lib/l10n/countries'
 import { routingLocale } from '@/lib/l10n/locales'
 import {
-  getPageLinks,
   getGlobalStory,
   getStoryBySlug,
   StoryblokPageProps,
   StoryblokQueryParams,
+  getNonProductPageLinks,
 } from '@/services/storyblok/storyblok'
 
 type RoutingPath = {
@@ -54,13 +54,9 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pageLinks = await getPageLinks()
+  const pageLinks = await getNonProductPageLinks()
   const paths: RoutingPath[] = []
   pageLinks.forEach(({ countryId, slugParts }) => {
-    // Product pages have their own entry point
-    if (slugParts[0] === 'products') {
-      return
-    }
     countries[countryId].locales.forEach((locale) => {
       paths.push({ params: { slug: slugParts }, locale: routingLocale(locale) })
     })
