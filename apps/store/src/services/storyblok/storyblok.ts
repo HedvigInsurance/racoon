@@ -201,6 +201,12 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
   return pageLinks
 }
 
+const PRODUCTS_SLUG = 'products'
+export const getNonProductPageLinks = async () => {
+  const allLinks = await getPageLinks()
+  return allLinks.filter(({ slugParts }) => slugParts[0] !== PRODUCTS_SLUG)
+}
+
 export const getGlobalStory = async (options: StoryOptions) => {
   const story = await getStoryBySlug('global', options)
   return story as GlobalStory
