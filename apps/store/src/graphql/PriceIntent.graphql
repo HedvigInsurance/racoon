@@ -1,5 +1,6 @@
 query PriceIntent($shopSessionId: ID!, $priceIntentId: ID!) {
   shopSession(id: $shopSessionId) {
+    id
     priceIntent(id: $priceIntentId) {
       ...PriceIntentFragment
     }
