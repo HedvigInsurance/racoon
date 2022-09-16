@@ -6,7 +6,7 @@ type PillowProps = {
   size?: 'small' | 'medium' | 'large'
 }
 
-export const Pillow = styled.div<PillowProps>(({ fromColor, toColor, size = 'medium' }) => ({
+export const Pillow = styled.div<PillowProps>(({ fromColor, toColor, size = 'small' }) => ({
   height: getSize(size),
   width: getSize(size),
   background: `linear-gradient(180deg, ${fromColor} 0%, ${toColor} 100%)`,
