@@ -12,7 +12,7 @@ export default {
 const Template: Story<PriceFooter.ButtonProps> = (props) => {
   return (
     <PriceFooter.Footer {...props}>
-      <PriceFooter.Button onClick={props.onClick}>
+      <PriceFooter.Button onClick={props.onClick} disabled={props.disabled}>
         <span>SEK 149/mp.</span>
         <span>Add to cart</span>
       </PriceFooter.Button>
