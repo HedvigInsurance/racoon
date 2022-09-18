@@ -51,7 +51,7 @@
     "@testing-library/dom": "8.17.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.3.0",
-    "@testing-library/user-event": "14.4.1",
+    "@testing-library/user-event": "14.4.3",
     "@types/dompurify": "2.3.3",
     "@types/formidable": "2.0.5",
     "@types/jsdom": "20.0.0",
