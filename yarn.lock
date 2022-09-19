@@ -5635,12 +5635,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:14.4.1":
-  version: 14.4.1
-  resolution: "@testing-library/user-event@npm:14.4.1"
+"@testing-library/user-event@npm:14.4.3":
+  version: 14.4.3
+  resolution: "@testing-library/user-event@npm:14.4.3"
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: 01f2318097d64ab99c400a2825680b241451c7d87e69fbda9135b7c896d4205afff46b55b25fcfff47542732d38918c6ca49d2e937892931f6f93346ccbc1950
+  checksum: 852c48ea6db1c9471b18276617c84fec4320771e466cd58339a732ca3fd73ad35e5a43ae14f51af51a8d0a150dcf60fcaab049ef367871207bea8f92c4b8195e
   languageName: node
   linkType: hard
 
@@ -17171,7 +17171,7 @@ __metadata:
     "@testing-library/dom": 8.17.1
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 13.3.0
-    "@testing-library/user-event": 14.4.1
+    "@testing-library/user-event": 14.4.3
     "@types/dompurify": 2.3.3
     "@types/formidable": 2.0.5
     "@types/jsdom": 20.0.0
@@ -20474,7 +20474,7 @@ __metadata:
     "@testing-library/dom": 8.17.1
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 13.3.0
-    "@testing-library/user-event": 14.4.1
+    "@testing-library/user-event": 14.4.3
     "@types/js-cookie": 3.0.2
     "@types/node": 16.11.57
     "@types/react": 18.0.20
@@ -21997,7 +21997,7 @@ __metadata:
     "@testing-library/dom": 8.17.1
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 13.3.0
-    "@testing-library/user-event": 14.4.1
+    "@testing-library/user-event": 14.4.3
     "@types/jest": 28.1.6
     "@types/react": 18.0.20
     "@types/react-dom": 18.0.6
