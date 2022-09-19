@@ -132,7 +132,7 @@
   "FOREVER_INTRO_READY_CTA": "Ja, ge mig ett prisförslag",
   "FOREVER_LANDINGPAGE_INPUT_TEXT": "Fyll i koden",
   "FOREVER_LANDINGPAGE_BTN_LABEL": "Nästa",
-  "FOREVER_LANDINGPAGE_INFO_TEXT": "Denna sida är avsedd för inbjudna personer. Om du inte har en kod kan du fortsätta till [Hemförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/hemforsakring), [Studentförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/hemforsakring\/student) eller [Bilförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/bilforsakring) på vår vanliga webbplats.",
+  "FOREVER_LANDINGPAGE_INFO_TEXT": "Denna sida är avsedd för inbjudna personer. Om du inte har en kod kan du fortsätta till [hemförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/hemforsakring), [studentförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/hemforsakring\/student) eller [bilförsäkring](https:\/\/www.hedvig.com\/se\/forsakringar\/bilforsakring) på vår vanliga webbplats.",
   "FOREVER_LANDINGPAGE_DESCRIPTION": "Grattis! Du har blivit inbjuden till Hedvig Forever. Använd min kod {CODE} för att sänka din månadskostnad. ",
   "FOREVER_DOWNLOAD_HEADING": "Välkommen {FIRST_NAME}!",
   "FOREVER_DOWNLOAD_PARAGRAPH": "Du är nu Hedvigmedlem. Ladda ner appen för att komma igång, och glöm inte att bjuda in dina vänner!",
@@ -438,8 +438,8 @@
   "OFFER_PAGE_SECTION_TITLE_MAIN": "Huvudförsäkring",
   "OFFER_PAGE_SECTION_TITLE_ADDITIONAL": "Tilläggsskydd",
   "ONBOARDING_CROSS_SELL_HEADER": "Andra köpte även",
-  "SIDEBAR_SWITCHING_NOTICE_HEADING": "Redan försäkrad? Att byta kan inte vara enklare",
-  "SIDEBAR_SWITCHING_NOTICE_BODY": "Efter att du tecknat Hedvig, följ bara länken vi mejlar till dig för att enkelt säga upp din tidigare försäkring med BankID.",
+  "SIDEBAR_SWITCHING_NOTICE_HEADING": "Redan försäkrad? Att byta är enkelt",
+  "SIDEBAR_SWITCHING_NOTICE_BODY": "Efter att du tecknat Hedvig, följ bara länken vi mejlar till dig och godkänn bytet med BankID.",
   "SIDEBAR_SWITCHING_NOTICE_LINK": "Läs mer",
   "DOWNLOAD_PAGE_CAR_SWITCHER_SECTION_HEADING": "Din tidigare försäkring",
   "DOWNLOAD_PAGE_CAR_SWITCHER_HEADING": "Så säger du upp din tidigare försäkring",
@@ -448,6 +448,8 @@
   "CAR_SWITCHER_TOO_SOON_HEADING": "För din information",
   "CAR_SWITCHER_TOO_SOON_BODY": "Eftersom din nuvarande försäkring verkar gå ut ganska snart behöver du själv kontakta försäkringsbolaget för att säga upp den. Oroa dig inte, det är enkelt.\n\n1. Teckna en försäkring med Hedvig\n2. Kontakta försäkringsbolaget och säg att du vill säga upp din tidigare försäkring\n3. Din försäkring med Hedvig aktiveras på ditt valda startdatum. ",
   "CAR_SWITCHER_TOO_SOON_CONFIRM": "Ok, jag förstår",
-  "START_DATE_SELECT_DATE": "Välj datum",
-  "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": ""
+  "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": "",
+  "OFFER_SWITCH_PROMOTION_PARAGRAPH_CAR_V2": "Vi ser att din bil redan är försäkrad med ett annat försäkringsbolag. Oroa dig inte, det är enkelt att byta.\n\n1. Teckna en bilförsäkring med Hedvig\n2. Du får ett mejl med en länk till att säga upp din tidigare försäkring med BankID.\n3. Vi kontaktar ditt tidigare försäkringsbolag och säger upp din försäkring åt dig.\n4. Klart! Din nya bilförsäkring med Hedvig aktiveras automatiskt samma dag som din tidigare går ut.\n\nObservera: om din tidigare bilförsäkring går ut inom 1 vecka behöver du själv kontakta ditt försäkringsbolag för att säga upp den.",
+  "SIDEBAR_SWITCHING_NOTICE_ADDENDUM": "Om din tidigare försäkring förfaller inom 1 vecka får du själv kontakta ditt försäkringsbolag och säga upp den.",
+  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": "Startdatum (när din tidigare försäkring går ut)"
 }
