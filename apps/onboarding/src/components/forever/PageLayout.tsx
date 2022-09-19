@@ -99,6 +99,7 @@ export const PageLayout = ({ children, className, code }: PageLayoutProps) => {
           property="og:image"
           content="https://www.hedvig.com/new-member-assets/social/forever-notifications.jpg"
         />
+        <meta name="robots" content="noindex, follow" />
       </Head>
 
       <Wrapper>
