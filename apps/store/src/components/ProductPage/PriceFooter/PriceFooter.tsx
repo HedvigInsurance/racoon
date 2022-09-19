@@ -20,11 +20,12 @@ export type ButtonProps = {
   type?: 'button' | 'submit'
   children: React.ReactNode
   onClick: () => void
+  disabled: boolean
 }
 
-export const Button = ({ onClick, type = 'submit', children }: ButtonProps) => {
+export const Button = ({ onClick, disabled, type = 'submit', children }: ButtonProps) => {
   return (
-    <FlexButton fullWidth type={type} onClick={onClick}>
+    <FlexButton fullWidth type={type} onClick={onClick} disabled={disabled}>
       <Separate Separator={<Separator />}>{children}</Separate>
     </FlexButton>
   )

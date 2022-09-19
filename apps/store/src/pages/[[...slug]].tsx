@@ -4,13 +4,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { countries } from '@/lib/l10n/countries'
-import { CountryLabel } from '@/lib/l10n/types'
+import { routingLocale } from '@/lib/l10n/locales'
 import {
-  getAllLinks,
   getGlobalStory,
   getStoryBySlug,
   StoryblokPageProps,
   StoryblokQueryParams,
+  getNonProductPageLinks,
 } from '@/services/storyblok/storyblok'
 
 type RoutingPath = {
@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
   const { params, preview, locale } = context
   if (!locale || locale === 'default') return { notFound: true }
 
-  const slug = params?.slug ? params.slug.join('/') : 'home'
+  const slug = (params?.slug ?? []).join('/')
   const [story, globalStory] = await Promise.all([
     getStoryBySlug(slug, { preview, locale }),
     getGlobalStory({ preview, locale }),
@@ -54,26 +54,13 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const links = await getAllLinks()
+  const pageLinks = await getNonProductPageLinks()
   const paths: RoutingPath[] = []
-  Object.values(links)
-    .filter((link) => !link.is_folder)
-    .filter((link) => !link.slug.includes('/products/') && !link.slug.endsWith('/global'))
-    .forEach((link) => {
-      const [countryCode, ...slug] = link.slug.split('/')
-      const country = countries[countryCode as CountryLabel]
-      if (!country) {
-        return
-      }
-      if (slug.length === 1 && slug[0] === 'home') {
-        slug[0] = ''
-      }
-      country.locales.forEach((locale) => {
-        // We use en-SE ISO format for settings but downcase it for routing to get nicer URLs
-        const routingLocale = locale.toLowerCase()
-        paths.push({ params: { slug }, locale: routingLocale })
-      })
+  pageLinks.forEach(({ countryId, slugParts }) => {
+    countries[countryId].locales.forEach((locale) => {
+      paths.push({ params: { slug: slugParts }, locale: routingLocale(locale) })
     })
+  })
   return {
     paths,
     fallback: false,

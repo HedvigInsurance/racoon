@@ -5,7 +5,7 @@ import { Space } from '../Space'
 import { QuotePriceCard } from './QuotePriceCard'
 
 export default {
-  title: 'UI / Card / Quote Price Card',
+  title: 'Card / Quote Price Card',
   component: QuotePriceCard,
   args: {},
 } as ComponentMeta<typeof QuotePriceCard>

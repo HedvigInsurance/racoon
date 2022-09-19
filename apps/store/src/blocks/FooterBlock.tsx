@@ -7,24 +7,33 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { getLocaleOrFallback, LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { getCountryLocale, countries } from '@/lib/l10n/countries'
+import {
+  getLocaleOrFallback,
+  LocaleField,
+  routingLocale,
+  TEMP_TRANSLATIONS,
+} from '@/lib/l10n/locales'
 import { Locale } from '@/lib/l10n/types'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
+import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { useStroryblokLinkURL } from '@/utils/useStroryblokLinkURL'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
   linkText: string
 }>
 
-export const FooterLink = ({ blok }: FooterLinkProps) => (
-  <Link href={blok.link.cached_url} passHref {...storyblokEditable(blok)}>
-    <StyledLink>{blok.linkText}</StyledLink>
-  </Link>
-)
+export const FooterLink = ({ blok }: FooterLinkProps) => {
+  const href = useStroryblokLinkURL(blok.link)
+  return (
+    <Link href={href} passHref {...storyblokEditable(blok)}>
+      <StyledLink>{blok.linkText}</StyledLink>
+    </Link>
+  )
+}
 FooterLink.blockName = 'footerLink' as const
 
 type FooterSectionProps = SbBaseBlockProps<{
@@ -77,8 +86,8 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }
 
   const router = useRouter()
-  const onChangeLocale = (locale: Locale | undefined) => {
-    router.push(router.asPath, undefined, { locale })
+  const onChangeLocale = (locale: Locale) => {
+    router.push(router.asPath, undefined, { locale: routingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()

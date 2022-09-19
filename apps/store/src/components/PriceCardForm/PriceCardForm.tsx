@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Button, mq, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
+import { FormElement } from '@/components/ProductPage/ProductPage.constants'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TickIcon } from '@/components/TickIcon/TickIcon'
@@ -15,6 +16,7 @@ export type PriceCardFormProps = {
   currencyCode: string
   gradient: Gradient
   loading?: boolean
+  lineItemId?: string
 } & React.ComponentPropsWithoutRef<'form'>
 
 export const PriceCardForm = ({
@@ -23,10 +25,12 @@ export const PriceCardForm = ({
   cost,
   currencyCode,
   loading = false,
+  lineItemId,
   ...formProps
 }: PriceCardFormProps) => {
   return (
     <form {...formProps}>
+      <input type="hidden" name={FormElement.LineItem} value={lineItemId} />
       <Wrapper y={1}>
         <CenteredPillow fromColor={fromColor} toColor={toColor} />
 

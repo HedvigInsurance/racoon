@@ -22,7 +22,6 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
 export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
   const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
   const lineItem = priceIntent.lines?.[0]
-  const lineId = lineItem?.id ?? null
   const product = {
     slug: story.slug,
     name: story.content.name,
@@ -69,31 +68,25 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
 
         <SectionWithPadding>
           <PriceCardForm
-            id="price-card-form"
             title={product.name}
             cost={product.price ?? undefined}
             currencyCode={product.currencyCode}
             gradient={product.gradient}
             onSubmit={handleSubmitAddToCart}
             loading={loadingAddToCart}
+            lineItemId={lineItem?.id}
           />
-          {lineId && (
-            <input form="price-card-form" type="hidden" name="lineItemId" value={lineId} />
-          )}
         </SectionWithPadding>
       </Space>
 
       <PriceCalculatorFooterForm
-        id="price-calculator-footer-form"
         targetRef={wrapperRef}
         currencyCode={product.currencyCode}
         price={product.price ?? undefined}
-        onSubmit={handleSubmitAddToCart}
         loading={loadingAddToCart}
+        onSubmit={handleSubmitAddToCart}
+        lineItemId={lineItem?.id}
       />
-      {lineId && (
-        <input form="price-calculator-footer-form" type="hidden" name="lineItemId" value={lineId} />
-      )}
 
       <CartToast ref={toastRef} />
     </>

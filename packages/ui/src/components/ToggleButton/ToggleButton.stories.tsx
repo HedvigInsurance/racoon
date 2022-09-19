@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ToggleButton, ToggleButtonProps } from './ToggleButton'
 
 const config = {
-  title: 'UI / Button / ToggleButton',
+  title: 'Button / ToggleButton',
   component: ToggleButton,
 }
 export default config
