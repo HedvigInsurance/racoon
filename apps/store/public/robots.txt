@@ -1,7 +1,0 @@
-# Block all crawlers for /forever
-User-agent: *
-Disallow: /forever/
-
-# Allow all crawlers
-User-agent: *
-Allow: /
