@@ -1,5 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { getCDNFonts } from 'ui'
+import { GTMBodyScript } from '@/lib/gtm'
 import { getLocaleOrFallback } from '@/lib/l10n/locales'
 
 export default class MyDocument extends Document {
@@ -23,6 +24,7 @@ export default class MyDocument extends Document {
           ))}
         </Head>
         <body>
+          <GTMBodyScript />
           <Main />
           <NextScript />
         </body>
