@@ -27,6 +27,7 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { countries, getCountryByLocale } from '@/lib/l10n/countries'
 import { getLocaleOrFallback } from '@/lib/l10n/locales'
 import { CountryCode } from '@/lib/l10n/types'
+import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -159,17 +160,15 @@ type StoryOptions = {
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const country = getCountryByLocale(locale)
-  const params: Record<string, string> = {
+  const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
-    resolve_links: 'url',
   }
   // Special case: in Storyblok default language means country default, ie Swedish in Sweden, Danish in Denmark, etc
   // Therefore we're not passing language code from NextJs locale here
   if (locale !== country.defaultLocale) {
     params.language = getLocaleOrFallback(locale).language
   }
-  const { data } = await getStoryblokApi().get(`cdn/stories/${country.id}/${slug}`, params)
-  return data.story as StoryData | undefined
+  return await fetchStory(getStoryblokApi(), `${country.id}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {

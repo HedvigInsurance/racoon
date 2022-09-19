@@ -1,6 +1,8 @@
-import { SbBlokData } from '@storyblok/react'
+import { StoryblokClient } from '@storyblok/js'
+import { SbBlokData, StoryData } from '@storyblok/react'
 import { getCountryByLocale } from '@/lib/l10n/countries'
 import { LocaleData } from '@/lib/l10n/locales'
+import { Language } from '@/lib/l10n/types'
 import { LinkField } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -29,7 +31,28 @@ export const checkBlockType = <BlockData extends SbBlokData>(
   else return null
 }
 
+export type StoryblokFetchParams = {
+  version: 'draft' | 'published'
+  language?: Language
+}
+
+export const fetchStory = async (
+  storyblokClient: StoryblokClient,
+  slug: string,
+  params: StoryblokFetchParams,
+): Promise<StoryData | undefined> => {
+  const {
+    data: { story },
+  } = await storyblokClient.get(`cdn/stories/${slug}`, { ...params, resolve_links: 'url' })
+  return story
+}
+
 export const getLinkFieldURL = (link: LinkField, locale: LocaleData) => {
+  if (!link.story) {
+    // Should never happen, but let's simplify debugging when it does
+    console.error('Did not see story field in link, returning empty URL', link)
+    return '/'
+  }
   const fragments = link.story.full_slug.split('/')
 
   // en/SE/page => SE/page, SE/page => unchanged
