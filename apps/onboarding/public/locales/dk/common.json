@@ -132,7 +132,7 @@
   "FOREVER_INTRO_READY_CTA": "Ja, giv mig et pristilbud",
   "FOREVER_LANDINGPAGE_INPUT_TEXT": "Indtast koden",
   "FOREVER_LANDINGPAGE_BTN_LABEL": "Næste",
-  "FOREVER_LANDINGPAGE_INFO_TEXT": "Denne side er for inviterede personer. Hvis du ikke har en kode, kan du fortsætte til [Indboforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/indboforsikring), [Husforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/husforsikring) eller [Studenterforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/studenterforsikring) på vores almindelige hjemmeside.",
+  "FOREVER_LANDINGPAGE_INFO_TEXT": "Denne side er for inviterede personer. Hvis du ikke har en kode, kan du fortsætte til [indboforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/indboforsikring), [husforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/husforsikring) eller [studenterforsikring](https:\/\/www.hedvig.com\/dk\/forsikringer\/studenterforsikring) på vores almindelige hjemmeside.",
   "FOREVER_LANDINGPAGE_DESCRIPTION": "Tillykke! Du er blevet inviteret til Hedvig Forever. Brug min kode {CODE} til at sænke din månedlige pris. ",
   "FOREVER_DOWNLOAD_HEADING": "Velkommen {FIRST_NAME}!",
   "FOREVER_DOWNLOAD_PARAGRAPH": "Du er nu Hedvig-medlem. Download appen for at komme i gang, og husk at invitere dine venner!",
@@ -448,6 +448,8 @@
   "CAR_SWITCHER_TOO_SOON_HEADING": "",
   "CAR_SWITCHER_TOO_SOON_BODY": "",
   "CAR_SWITCHER_TOO_SOON_CONFIRM": "",
-  "START_DATE_SELECT_DATE": "",
-  "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": "Du kan altid opdatere dine valg senere."
+  "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": "Du kan altid ændre dine valg senere.",
+  "OFFER_SWITCH_PROMOTION_PARAGRAPH_CAR_V2": "",
+  "SIDEBAR_SWITCHING_NOTICE_ADDENDUM": "",
+  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": ""
 }
