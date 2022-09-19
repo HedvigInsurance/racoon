@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
 import { countries } from '@/lib/l10n/countries'
 import { CountryLabel } from '@/lib/l10n/types'
+import { fetchStory } from '@/services/storyblok/Storyblok.helpers'
 
 const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   // Check the secret and next parameters
@@ -10,13 +11,14 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  const pageId = req.query._storyblok
+  const pageId = req.query._storyblok as string
   const storyblokClient = new StoryblokClient({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   })
-  const {
-    data: { story },
-  } = await storyblokClient.get(`cdn/stories/${pageId}`, { version: 'draft' })
+  const story = await fetchStory(storyblokClient, pageId, { version: 'draft' })
+  if (!story) {
+    throw new Error(`Couldn't find preview story slug=${pageId}`)
+  }
 
   const [countryLabel, ...slugFragments] = story.full_slug.split('/')
 
