@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "numberCoInsured": {
+      "type": "integer",
+      "title": "Number Co-Insured",
+      "minimum": 0
+    },
+    "isYouth": {
+      "type": "boolean",
+      "title": "Is Youth"
+    },
+    "isStudent": {
+      "type": "boolean",
+      "title": "Is Student"
+    }
+  },
+  "required": ["numberCoInsured"],
+  "$id": "NORWEGIAN_TRAVEL"
+}
