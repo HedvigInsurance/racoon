@@ -26,6 +26,7 @@ type DataLayerObject = {
   pageData?: GTMPageData
 }
 
+// Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
 const pushToGTMDataLayer = (obj: DataLayerObject) => {
   if (!window.dataLayer) window.dataLayer = []
   window.dataLayer.push(obj)
