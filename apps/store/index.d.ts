@@ -2,12 +2,12 @@ import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 
-type PageWithLayout<T = {}> = NextPage<T> & {
+type PageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 
 declare module 'next' {
-  export type NextPageWithLayout<T = {}> = PageWithLayout<T>
+  export type NextPageWithLayout<T = Record<string, unknown>> = PageWithLayout<T>
 }
 
 declare module 'next/app' {
@@ -33,5 +33,6 @@ declare global {
     TrustlyWidget: {
       init: TrustlyInitFunction
     }
+    dataLayer: DataLayerObject[]
   }
 }
