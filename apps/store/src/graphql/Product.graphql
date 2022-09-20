@@ -1,0 +1,6 @@
+query Product($name: String!) {
+  product(productName: $name) {
+    name
+    schema
+  }
+}
