@@ -22,10 +22,10 @@ export const setupPriceCalculatorForm = async (params: SetupPriceCalculatorFormP
     shopSession,
     apolloClient,
   })
-  const formTemplateService = new FormTemplateService()
+  const formTemplateService = new FormTemplateService(apolloClient)
 
   const [emptyTemplate, priceIntent] = await Promise.all([
-    formTemplateService.fetch({ id: templateId }),
+    formTemplateService.fetch({ id: templateId, productName }),
     priceIntentService.fetch(productName),
   ])
 
