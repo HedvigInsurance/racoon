@@ -1,5 +1,7 @@
 import { JSONSchemaType } from 'ajv'
 import { combineFormTemplate } from './combineFormTemplate'
+import NO_ACCIDENT_SCHEMA from './data/NO_ACCIDENT.json'
+import { NO_ACCIDENT_UI } from './data/NO_ACCIDENT_UI'
 import NO_HOME_CONTENT_SCHEMA from './data/NO_HOME_CONTENT.json'
 import { NO_HOME_CONTENT_UI } from './data/NO_HOME_CONTENT_UI'
 import NO_TRAVEL from './data/NO_TRAVEL.json'
@@ -18,12 +20,14 @@ const SCHEMA: Record<string, Schema> = {
   SE_ACCIDENT: SE_ACCIDENT_SCHEMA as unknown as Schema,
   NO_HOME_CONTENT: NO_HOME_CONTENT_SCHEMA as unknown as Schema,
   NO_TRAVEL: NO_TRAVEL as unknown as Schema,
+  NO_ACCIDENT: NO_ACCIDENT_SCHEMA as unknown as Schema,
 }
 const UI_SCHEMA: Record<string, FormTemplateUISchema> = {
   SWEDISH_APARTMENT: SWEDISH_APARTMENT_UI,
   SE_ACCIDENT: SE_ACCIDENT_UI,
   NO_HOME_CONTENT: NO_HOME_CONTENT_UI,
   NO_TRAVEL: NO_TRAVEL_UI,
+  NO_ACCIDENT: NO_ACCIDENT_UI,
 }
 
 type FetchParams = {

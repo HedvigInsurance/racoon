@@ -50,6 +50,14 @@ export const DynamicField = (props: Props) => {
       return <input type="hidden" name={props.name} value={props.defaultValue} />
 
     default:
-      return <InputField {...baseProps} type="text" pattern={props.pattern} />
+      return (
+        <InputField
+          {...baseProps}
+          type="text"
+          pattern={props.pattern}
+          minLength={props.minLength}
+          maxLength={props.maxLength}
+        />
+      )
   }
 }
