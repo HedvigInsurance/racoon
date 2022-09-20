@@ -1,10 +1,10 @@
-mutation StartDateUpdate($input: CartLinesStartDateUpdateInput!) {
-  cartLinesStartDateUpdate(input: $input) {
+mutation StartDateUpdate($input: CartEntriesStartDateUpdateInput!) {
+  cartEntriesStartDateUpdate(input: $input) {
     cart {
       ...CartFragment
     }
     userErrors {
-      lineItemId
+      pricedVariantId: productVariantId
       message
     }
   }

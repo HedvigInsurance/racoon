@@ -8,21 +8,24 @@ import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
-type NextPageProps = Omit<CheckoutPageProps, 'loading'>
+type NextPageProps = Omit<CheckoutPageProps, 'loading'> & {
+  cartId: string
+}
 
-const NextCheckoutPage: NextPage<NextPageProps> = ({ products, ...props }) => {
+const NextCheckoutPage: NextPage<NextPageProps> = ({ cartId, products, ...props }) => {
   const router = useRouter()
   const [handleSubmit, { loading, data }] = useHandleSubmitStartDates({
+    cartId,
     products,
     onSuccess() {
       router.push(PageLink.checkoutContactDetails())
     },
   })
 
-  const { userErrors } = data?.cartLinesStartDateUpdate ?? {}
+  const { userErrors } = data?.cartEntriesStartDateUpdate ?? {}
 
   const productsWithErrors = products.map((product) => {
-    const error = userErrors?.find((error) => product.lineId === error.lineItemId)
+    const error = userErrors?.find((error) => product.pricedVariantId === error.pricedVariantId)
     return {
       errorMessage: error?.message,
       ...product,
@@ -61,11 +64,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       props: {
         ...(await serverSideTranslations(locale)),
         shopSessionId: shopSession.id,
-        products: shopSession.cart.entries.map((line) => ({
-          lineId: line.id,
-          name: line.title,
-          cost: parseInt(line.price.amount, 10) || 0,
-          startDate: line.startDate,
+        cartId: shopSession.cart.id,
+        products: shopSession.cart.entries.map((pricedVariant) => ({
+          pricedVariantId: pricedVariant.id,
+          name: pricedVariant.title,
+          cost: parseInt(pricedVariant.price.amount, 10) || 0,
+          startDate: pricedVariant.startDate,
         })),
         cost,
         currency: shopSession.currencyCode,
