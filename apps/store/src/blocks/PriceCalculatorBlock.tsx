@@ -21,12 +21,12 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
 
 export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
   const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
-  const lineItem = priceIntent.variants[0] || undefined
+  const pricedVariant = priceIntent.variants[0] || undefined
   const product = {
     slug: story.slug,
     name: story.content.productId,
     displayName: story.content.name,
-    price: parseInt(lineItem?.price.amount, 10) || null,
+    price: parseInt(pricedVariant?.price.amount, 10) || null,
     currencyCode: shopSession.currencyCode,
     gradient: PLACEHOLDER_GRADIENT,
   }
@@ -77,7 +77,7 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
             gradient={product.gradient}
             onSubmit={handleSubmitAddToCart}
             loading={loadingAddToCart}
-            lineItemId={lineItem?.id}
+            pricedVariantId={pricedVariant?.id}
           />
         </SectionWithPadding>
       </Space>
@@ -88,7 +88,7 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
         price={product.price ?? undefined}
         loading={loadingAddToCart}
         onSubmit={handleSubmitAddToCart}
-        lineItemId={lineItem?.id}
+        pricedVariantId={pricedVariant?.id}
       />
 
       <CartToast ref={toastRef} />

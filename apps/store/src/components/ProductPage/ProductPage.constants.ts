@@ -1,3 +1,3 @@
 export enum FormElement {
-  LineItem = 'lineItemId',
+  PricedVariant = 'pricedVariantId',
 }

@@ -16,7 +16,7 @@ export const shopSessionCreate = (countryCode: string) => {
   return db.shopSession.create({ cart: db.cart.create(), countryCode, currencyCode: 'SEK' })
 }
 
-export const cartLinesAdd = (shopSessionId: string, lineId: string) => {
+export const cartEntryAdd = (shopSessionId: string, lineId: string) => {
   const lineItem = db.lineItem.findFirst({ where: { id: { equals: lineId } } })
   const shopSession = db.shopSession.findFirst({ where: { id: { equals: shopSessionId } } })
 
