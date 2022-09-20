@@ -1,5 +1,7 @@
 export interface SimplePersister {
-  save(id: string): void
-  fetch(): string | null
-  reset(): void
+  save(id: string, key?: string): void
+
+  fetch(key?: string): string | null
+
+  reset(key?: string): void
 }

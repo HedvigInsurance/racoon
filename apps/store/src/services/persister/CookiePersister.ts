@@ -4,15 +4,15 @@ import { SimplePersister } from './Persister.types'
 export class CookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}
 
-  public save(id: string) {
-    Cookies.set(this.cookieKey, id, { path: '/' })
+  public save(id: string, cookieKey = this.cookieKey) {
+    Cookies.set(cookieKey, id, { path: '/' })
   }
 
-  public fetch() {
-    return Cookies.get(this.cookieKey) ?? null
+  public fetch(cookieKey = this.cookieKey) {
+    return Cookies.get(cookieKey) ?? null
   }
 
-  public reset() {
-    Cookies.remove(this.cookieKey)
+  public reset(cookieKey = this.cookieKey) {
+    Cookies.remove(cookieKey)
   }
 }

@@ -7,20 +7,18 @@ import {
   PriceIntentQuery,
   PriceIntentQueryVariables,
 } from '@/services/apollo/generated'
+import { SimplePersister } from '@/services/persister/Persister.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { PriceIntentCreateParams, SimplePersister } from './priceIntent.types'
+import { PriceIntentCreateParams } from './priceIntent.types'
 
 export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
-    private readonly apolloClient?: ApolloClient<unknown>,
-    private readonly shopSession?: ShopSession,
+    private readonly apolloClient: ApolloClient<unknown>,
+    private readonly shopSession: ShopSession,
   ) {}
 
   public async create({ productName }: PriceIntentCreateParams) {
-    if (!this.shopSession) throw new Error('No shop session found')
-    if (!this.apolloClient) throw new Error('No Apollo Client found')
-
     const result = await this.apolloClient.mutate<
       PriceIntentCreateMutation,
       PriceIntentCreateMutationVariables
@@ -35,15 +33,12 @@ export class PriceIntentService {
     const priceIntent = result.data?.priceIntentCreate
     if (!priceIntent) throw new Error('Could not create price intent')
 
-    this.persister.save(priceIntent.id)
+    this.persister.save(priceIntent.id, this.getPriceIntentKey(productName))
 
     return priceIntent
   }
 
   private async get(priceIntentId: string) {
-    if (!this.shopSession) throw new Error('No shop session found')
-    if (!this.apolloClient) throw new Error('No Apollo Client found')
-
     try {
       const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
         query: PriceIntentDocument,
@@ -59,7 +54,7 @@ export class PriceIntentService {
   }
 
   public async fetch(productName: string) {
-    const priceIntentId = this.persister.fetch()
+    const priceIntentId = this.persister.fetch(this.getPriceIntentKey(productName))
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
@@ -70,7 +65,11 @@ export class PriceIntentService {
     return await this.create({ productName })
   }
 
-  public reset() {
-    this.persister.reset()
+  private getPriceIntentKey(productName: string) {
+    return `HEDVIG_${this.shopSession.id}_${productName}`
+  }
+
+  public clear(productName: string) {
+    this.persister.reset(this.getPriceIntentKey(productName))
   }
 }

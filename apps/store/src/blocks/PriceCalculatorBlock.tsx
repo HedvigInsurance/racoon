@@ -24,7 +24,8 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
   const lineItem = priceIntent.lines?.[0]
   const product = {
     slug: story.slug,
-    name: story.content.name,
+    name: story.content.productId,
+    displayName: story.content.name,
     price: parseInt(lineItem?.price.amount, 10) || null,
     currencyCode: shopSession.currencyCode,
     gradient: PLACEHOLDER_GRADIENT,
@@ -39,10 +40,12 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
   })
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
+    shopSession,
     cartId: shopSession.cart.id,
+    productName: product.name,
     onSuccess: () => {
       toastRef.current?.publish({
-        name: product.name,
+        name: product.displayName,
         price: formatter.format(product.price ?? 0),
         gradient: product.gradient,
       })
@@ -68,7 +71,7 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
 
         <SectionWithPadding>
           <PriceCardForm
-            title={product.name}
+            title={product.displayName}
             cost={product.price ?? undefined}
             currencyCode={product.currencyCode}
             gradient={product.gradient}

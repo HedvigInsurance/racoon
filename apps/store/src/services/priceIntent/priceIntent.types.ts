@@ -10,10 +10,4 @@ export type PriceIntentDataUpdateParams = Omit<
   'shopSessionId'
 >
 
-export interface SimplePersister {
-  save(id: string): void
-  fetch(): string | null
-  reset(): void
-}
-
 export type PriceIntent = Exclude<PriceIntentQuery['shopSession']['priceIntent'], null | undefined>
