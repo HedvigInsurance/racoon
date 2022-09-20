@@ -8,17 +8,17 @@ export class ServerCookiePersister implements SimplePersister {
     private readonly response: GetServerSidePropsContext['res'],
   ) {}
 
-  public save(id: string) {
+  public save(id: string, cookieKey = this.cookieKey) {
     const rawHeader = this.response.getHeader('Set-Cookie')
     const existingHeaders = Array.isArray(rawHeader) ? rawHeader : []
-    this.response.setHeader('Set-Cookie', [...existingHeaders, `${this.cookieKey}=${id}; Path=/`])
+    this.response.setHeader('Set-Cookie', [...existingHeaders, `${cookieKey}=${id}; Path=/`])
   }
 
-  public fetch() {
-    return this.request.cookies[this.cookieKey] ?? null
+  public fetch(cookieKey = this.cookieKey) {
+    return this.request.cookies[cookieKey] ?? null
   }
 
-  public reset() {
-    this.response.setHeader('Set-Cookie', [`${this.cookieKey}=; Max-Age=0`])
+  public reset(cookieKey = this.cookieKey) {
+    this.response.setHeader('Set-Cookie', [`${cookieKey}=; Max-Age=0`])
   }
 }

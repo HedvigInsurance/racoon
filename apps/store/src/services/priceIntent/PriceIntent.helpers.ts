@@ -19,8 +19,15 @@ export const priceIntentServiceInitServerSide = ({
   )
 }
 
-export const priceIntentServiceInitClientSide = () => {
-  return new PriceIntentService(new CookiePersister(COOKIE_KEY_PRICE_INTENT))
+export const priceIntentServiceInitClientSide = ({
+  shopSession,
+  apolloClient,
+}: Omit<Params, 'req' | 'res'>) => {
+  return new PriceIntentService(
+    new CookiePersister(COOKIE_KEY_PRICE_INTENT),
+    apolloClient,
+    shopSession,
+  )
 }
 
 type Params = {
