@@ -7,7 +7,7 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
-  const country = (req.geo && req.geo.country) || 'SE'
+  const country = req.geo && req.geo.country
 
   switch (country) {
     case countries.NO.id:
