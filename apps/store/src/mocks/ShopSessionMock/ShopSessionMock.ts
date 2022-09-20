@@ -3,7 +3,7 @@ import { graphqlConstants } from '../helpers'
 import { getConstants } from './ShopSessionMock.constants'
 import {
   cartEntryAdd,
-  cartLinesRemove,
+  cartEntryRemove,
   dbCartToAPI,
   dbShopSessionToAPI,
   shopSessionCreate,
@@ -11,7 +11,7 @@ import {
   startDateUpdate,
 } from './ShopSessionMock.helpers'
 
-const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_ENTRY_ADD, CART_LINES_REMOVE, START_DATE_UPDATE } =
+const { SHOP_SESSION_CREATE, SHOP_SESSION, CART_ENTRY_ADD, CART_ENTRY_REMOVE, START_DATE_UPDATE } =
   getConstants()
 
 const api = graphql.link(graphqlConstants().GRAPHQL_ENDPOINT)
@@ -39,7 +39,7 @@ export const mockShopSessionHandlers = [
   }),
 
   api.mutation(CART_ENTRY_ADD, (req, res, ctx) => {
-    const cart = cartEntryAdd(req.variables.shopSessionId, req.variables.lineId)
+    const cart = cartEntryAdd(req.variables.shopSessionId, req.variables.pricedVariantId)
 
     return res(
       ctx.data({
@@ -48,12 +48,12 @@ export const mockShopSessionHandlers = [
     )
   }),
 
-  api.mutation(CART_LINES_REMOVE, (req, res, ctx) => {
-    const cart = cartLinesRemove(req.variables.shopSessionId, req.variables.lineId)
+  api.mutation(CART_ENTRY_REMOVE, (req, res, ctx) => {
+    const cart = cartEntryRemove(req.variables.shopSessionId, req.variables.pricedVariantId)
 
     return res(
       ctx.data({
-        cartLinesRemove: { cart: cart ? dbCartToAPI(cart) : null },
+        cartEntriesRemove: { cart: cart ? dbCartToAPI(cart) : null },
       }),
     )
   }),

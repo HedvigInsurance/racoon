@@ -1,0 +1,12 @@
+mutation CartEntryRemove($cartId: ID!, $pricedVariantId: ID!) {
+  cartEntriesRemove(input: { cartId: $cartId, productVariantIds: [$pricedVariantId] }) {
+    cart {
+      ...CartFragment
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}

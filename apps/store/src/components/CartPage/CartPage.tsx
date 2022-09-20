@@ -6,21 +6,21 @@ import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { PageLink } from '@/lib/PageLink'
-import { useCartLinesRemoveMutation } from '@/services/apollo/generated'
+import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
-  const [removeLineItem, { loading }] = useCartLinesRemoveMutation({
+  const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
     refetchQueries: 'active',
     awaitRefetchQueries: true,
   })
 
   const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>, lineItemId: string) => {
+    async (event: FormEvent<HTMLFormElement>, pricedVariantId: string) => {
       event.preventDefault()
-      await removeLineItem({ variables: { lineItemId, cartId } })
+      await removeCartEntry({ variables: { cartId, pricedVariantId } })
     },
-    [removeLineItem, cartId],
+    [removeCartEntry, cartId],
   )
 
   if (products.length === 0) {
