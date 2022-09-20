@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "street": {
+      "type": "string",
+      "title": "Street"
+    },
+    "zipCode": {
+      "type": "string",
+      "title": "Zip Code",
+      "minLength": 4,
+      "maxLength": 4
+    },
+    "city": {
+      "type": "string",
+      "title": "City"
+    },
+    "numberCoInsured": {
+      "type": "integer",
+      "title": "Number Co-Insured",
+      "minimum": 0
+    },
+    "squareMeters": {
+      "type": "integer",
+      "title": "Square Meters"
+    },
+    "yearOfConstruction": {
+      "type": "integer",
+      "title": "Year of construction"
+    },
+    "yearOfOwnership": {
+      "type": "integer",
+      "title": "Year becoming owner"
+    },
+    "isSubleted": {
+      "type": "boolean",
+      "title": "Is Subleted"
+    },
+    "waterLeakageDetector": {
+      "type": "boolean",
+      "title": "Any FG-approved water leakage device (null if unknown)"
+    },
+    "numberOfWetUnits": {
+      "type": "integer",
+      "title": "How many wet units (bathroom, laundry room, etc.)",
+      "minimum": 0
+    },
+    "extraBuildings": {
+      "title": "Extra buildings",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "GARAGE",
+              "CARPORT",
+              "SHED",
+              "STOREHOUSE",
+              "FRIGGEBOD",
+              "ATTEFALL",
+              "OUTHOUSE",
+              "GUESTHOUSE",
+              "GAZEBO",
+              "GREENHOUSE",
+              "SAUNA",
+              "BARN",
+              "BOATHOUSE",
+              "OTHER"
+            ],
+            "title": "Type"
+          },
+          "area": {
+            "type": "integer",
+            "title": "Area",
+            "minimum": 0
+          },
+          "hasWaterConnected": {
+            "type": "boolean",
+            "title": "Has Water Connected",
+            "default": false
+          }
+        },
+        "required": ["type", "area"],
+        "title": "Extra buildings"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "street",
+    "zipCode",
+    "numberCoInsured",
+    "squareMeters",
+    "yearOfConstruction",
+    "numberOfWetUnits"
+  ],
+  "$id": "NORWEGIAN_HOUSE"
+}
