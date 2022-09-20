@@ -20515,7 +20515,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     scripts: "workspace:"
-    storybook-addon-next: 1.6.7
+    storybook-addon-next: 1.6.9
     subscriptions-transport-ws: 0.11.0
     ts-jest: 28.0.8
     tsconfig: "workspace:"
@@ -20534,9 +20534,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook-addon-next@npm:1.6.7":
-  version: 1.6.7
-  resolution: "storybook-addon-next@npm:1.6.7"
+"storybook-addon-next@npm:1.6.9":
+  version: 1.6.9
+  resolution: "storybook-addon-next@npm:1.6.9"
   dependencies:
     "@storybook/addons": ^6.4.10
     image-size: ^1.0.0
@@ -20546,14 +20546,14 @@ __metadata:
     sass-loader: ^12.4.0
     semver: ^7.3.5
     tsconfig-paths: ^4.0.0
-    tsconfig-paths-webpack-plugin: ^3.5.2
+    tsconfig-paths-webpack-plugin: ^4.0.0
   peerDependencies:
     "@storybook/addon-actions": ^6.0.0
     "@storybook/addons": ^6.0.0
     next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 6fc2fd813cdf60c678d7d8798f7722c414d51f6f336edb487a7c69f9e53d23ebab7d8866d4dc840de9728ad3bb7dcbc1642c01e91a622e6c3afc4eec5b07669d
+  checksum: 040cc66a835b51449267eb339303635dd0f88f8dcb49e198a3fadd2ef220acd80e778ad55827d64bc372db7a470d58a8c68bf68e32608adef97780ce59f9900c
   languageName: node
   linkType: hard
 
@@ -21579,7 +21579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths-webpack-plugin@npm:4.0.0":
+"tsconfig-paths-webpack-plugin@npm:4.0.0, tsconfig-paths-webpack-plugin@npm:^4.0.0":
   version: 4.0.0
   resolution: "tsconfig-paths-webpack-plugin@npm:4.0.0"
   dependencies:
@@ -21590,18 +21590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths-webpack-plugin@npm:^3.5.2":
-  version: 3.5.2
-  resolution: "tsconfig-paths-webpack-plugin@npm:3.5.2"
-  dependencies:
-    chalk: ^4.1.0
-    enhanced-resolve: ^5.7.0
-    tsconfig-paths: ^3.9.0
-  checksum: e7872f45b10684204d4a6cbc7989073d885c99e0c9eb5222de6b2b83d2e1594bccb647f52d2f8e00c53da5b9a3084e47a2de44f41c6f7a607ec2b17330a8d9e9
-  languageName: node
-  linkType: hard
-
-"tsconfig-paths@npm:^3.14.1, tsconfig-paths@npm:^3.9.0":
+"tsconfig-paths@npm:^3.14.1":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
   dependencies:
