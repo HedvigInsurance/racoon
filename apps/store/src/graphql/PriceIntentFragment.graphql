@@ -1,15 +1,12 @@
 fragment PriceIntentFragment on PriceIntent {
   id
   data
-  lines {
+  variants {
     id
+    title
     price {
       amount
       currencyCode
-    }
-    variant {
-      id
-      title
     }
   }
 }

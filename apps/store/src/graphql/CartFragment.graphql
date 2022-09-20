@@ -10,16 +10,13 @@ fragment CartFragment on Cart {
       currencyCode
     }
   }
-  lines {
+  entries {
     id
+    title
     startDate
     price {
       amount
       currencyCode
-    }
-    variant {
-      id
-      title
     }
   }
 }

@@ -104,19 +104,15 @@ export const dbCartToAPI = (cart: DbCart): CartFragmentFragment => {
       total: { amount: totalCost.toString(), currencyCode: CurrencyCode.Sek },
       subtotal: { amount: totalCost.toString(), currencyCode: CurrencyCode.Sek },
     },
-    lines: cart.lines.map((line) => ({
-      __typename: 'CartLine',
+    entries: cart.lines.map((line) => ({
+      __typename: 'PricedProductVariant',
       id: line.id,
+      title: line.variantTitle,
       startDate: line.startDate?.toISOString().substring(0, 10) ?? null,
       price: {
         __typename: 'Money',
         amount: line.priceAmount.toString(),
         currencyCode: line.currencyCode as CurrencyCode,
-      },
-      variant: {
-        __typename: 'ProductVariant',
-        id: line.variantId,
-        title: line.variantTitle,
       },
     })),
   }

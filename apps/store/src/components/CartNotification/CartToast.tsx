@@ -36,7 +36,7 @@ type Props = ProductItemProps & {
 
 const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
   const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.lines.length ?? 1
+  const cartLineCount = shopSession?.cart.entries.length ?? 1
 
   return (
     <Dialog.Content onClose={onClose}>

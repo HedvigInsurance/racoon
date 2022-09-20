@@ -6,7 +6,7 @@ import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {
   const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.lines.length ?? 0
+  const cartLineCount = shopSession?.cart.entries.length ?? 0
 
   return (
     <Wrapper>

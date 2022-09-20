@@ -33,13 +33,13 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
       globalStory,
       currency: shopSession.currencyCode,
       cost: { total: 0 },
-      products: shopSession.cart.lines.map((item) => {
+      products: shopSession.cart.entries.map((item) => {
         const startDate = item.startDate
 
         if (startDate === null) throw new Error('startDate is null')
 
         return {
-          name: item.variant.title,
+          name: item.title,
           startDate: item.startDate,
         }
       }),
