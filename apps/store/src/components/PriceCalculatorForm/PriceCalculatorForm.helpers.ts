@@ -45,10 +45,22 @@ export const prepopulateFormTemplate = (
     sections: template.sections.map((section) => {
       const newSection: FormSection = {
         ...section,
-        fields: section.fields.map((field) => ({
-          ...field,
-          defaultValue: data[field.name] ?? field.defaultValue ?? '',
-        })),
+        fields: section.fields.map((field) => {
+          const fieldData = {
+            ...field,
+            defaultValue: data[field.name] ?? field.defaultValue ?? '',
+          }
+
+          // @TODO: implemented proper recursion or throw error if array is nested under array
+          if (field.type === 'array') {
+            fieldData.fields = field.fields.map((nestedField) => ({
+              ...nestedField,
+              defaultValue: data[field.name] ?? field.defaultValue ?? '',
+            }))
+          }
+
+          return fieldData
+        }),
         state: 'INITIAL',
       }
 

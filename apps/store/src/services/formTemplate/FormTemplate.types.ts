@@ -29,9 +29,10 @@ type LayoutSection = {
   submit: TextLabel
 }
 
-type LayoutField = {
+export type LayoutField = {
   name: string
   columnSpan?: number
+  fields?: Array<Omit<LayoutField, 'fields'>>
 }
 
 export type FormTemplate = {
@@ -57,6 +58,7 @@ export type FormTemplateField =
   | DateField
   | RadioField
   | HiddenField
+  | ArrayField
 
 type FieldBase = LayoutField & {
   label?: TextLabel
@@ -76,3 +78,8 @@ type SelectField = FieldBase & { type: 'select'; options: Array<FieldOption> }
 type DateField = FieldBase & { type: 'date' }
 type RadioField = FieldBase & { type: 'radio'; options: Array<FieldOption> }
 type HiddenField = FieldBase & { type: 'hidden' }
+type ArrayField = FieldBase & {
+  type: 'array'
+  label: TextLabel
+  fields: Array<FormTemplateField>
+}

@@ -23,7 +23,16 @@ export const SE_HOUSE_UI: FormTemplateUISchema = {
           { name: 'yearOfConstruction', columnSpan: 3 },
 
           { name: 'isSubleted', columnSpan: 6 },
-          { name: 'extraBuildings' },
+
+          {
+            name: 'extraBuildings',
+            columnSpan: 6,
+            fields: [
+              { name: 'type', columnSpan: 3 },
+              { name: 'area', columnSpan: 3 },
+              { name: 'hasWaterConnected', columnSpan: 6 },
+            ],
+          },
         ],
         submit: { key: 'Next step' },
       },
@@ -73,10 +82,16 @@ export const SE_HOUSE_UI: FormTemplateUISchema = {
         },
       ],
     },
-    extraBuildings: {
-      type: 'hidden',
-      defaultValue: '',
+    extraBuildings: { title: { key: 'Add extra building' } },
+    type: {
+      title: { key: 'Building type' },
+      options: [
+        { label: { key: 'Garage' }, value: 'GARAGE' },
+        { label: { key: 'Carport' }, value: 'CARPORT' },
+      ],
     },
+    area: { title: { key: 'Size' } },
+    hasWaterConnected: { title: { key: 'Water connected' } },
 
     numberCoInsured: {
       title: { key: 'No. of people' },

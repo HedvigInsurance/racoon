@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { ReactNode } from 'react'
 import { FormTemplateField } from '@/services/formTemplate/FormTemplate.types'
-import { DynamicField } from './DynamicField'
 
 const Grid = styled.div(({ theme }) => ({
   display: 'grid',
@@ -16,14 +16,15 @@ const GridItem = styled.div<GridItemProps>(({ columnSpan }) => ({
 
 type FormSectionProps = {
   fields: Array<FormTemplateField>
+  children(fieldProps: FormTemplateField): ReactNode
 }
 
-export const FormGroup = ({ fields }: FormSectionProps) => {
+export const FormGroup = ({ fields, children }: FormSectionProps) => {
   return (
     <Grid>
       {fields.map(({ columnSpan = 6, ...fieldProps }) => (
         <GridItem key={fieldProps.name} columnSpan={columnSpan}>
-          <DynamicField {...fieldProps} />
+          {children(fieldProps)}
         </GridItem>
       ))}
     </Grid>

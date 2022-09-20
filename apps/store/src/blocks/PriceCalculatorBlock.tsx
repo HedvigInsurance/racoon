@@ -3,6 +3,8 @@ import { storyblokEditable } from '@storyblok/react'
 import { useRef } from 'react'
 import { Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
+import { DynamicField } from '@/components/PriceCalculatorForm/DynamicField'
+import { FormGroup } from '@/components/PriceCalculatorForm/FormSection'
 import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
 import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
@@ -66,7 +68,15 @@ export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculat
             template={priceFormTemplate}
             onSubmit={handleSubmit}
             loading={loadingUpdate}
-          />
+          >
+            {(sectionFields) => (
+              <FormGroup fields={sectionFields}>
+                {(fieldProps) => (
+                  <DynamicField {...fieldProps} onSubmit={handleSubmit} loading={loadingUpdate} />
+                )}
+              </FormGroup>
+            )}
+          </PriceCalculatorForm>
         </Space>
 
         <SectionWithPadding>

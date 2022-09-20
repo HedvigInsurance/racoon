@@ -1,12 +1,19 @@
-import { InputField } from 'ui'
+import { FormEventHandler } from 'react'
+import { Button, InputField } from 'ui'
+import * as Dialog from '@/components/Dialog/Dialog'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { FormTemplateField } from '@/services/formTemplate/FormTemplate.types'
+import { FormGroup } from './FormSection'
 import { InputRadio } from './InputRadio'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
-type Props = FormTemplateField
+type Props = FormTemplateField & {
+  onSubmit: FormEventHandler
+  loading: boolean
+}
 
-export const DynamicField = (props: Props) => {
+export const DynamicField = ({ onSubmit, loading, ...props }: Props) => {
   const translateTextLabel = useTranslateTextLabel({ data: {} })
 
   const baseProps = {
@@ -48,6 +55,38 @@ export const DynamicField = (props: Props) => {
 
     case 'hidden':
       return <input type="hidden" name={props.name} value={props.defaultValue} />
+
+    case 'array':
+      return (
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <Button type="button">{translateTextLabel(props.label)}</Button>
+          </Dialog.Trigger>
+
+          <Dialog.Content>
+            <h3>{translateTextLabel(props.label)}</h3>
+
+            <form onSubmit={onSubmit}>
+              <FormGroup fields={props.fields}>
+                {(fieldProps) => (
+                  <DynamicField {...fieldProps} onSubmit={onSubmit} loading={loading} />
+                )}
+              </FormGroup>
+
+              <SpaceFlex space={1}>
+                <Dialog.Close asChild>
+                  <Button type="button" variant="text">
+                    Close
+                  </Button>
+                </Dialog.Close>
+                <Button type="submit" disabled={loading}>
+                  Add
+                </Button>
+              </SpaceFlex>
+            </form>
+          </Dialog.Content>
+        </Dialog.Root>
+      )
 
     default:
       return (

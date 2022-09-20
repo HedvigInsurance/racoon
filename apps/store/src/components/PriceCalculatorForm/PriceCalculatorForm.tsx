@@ -1,21 +1,23 @@
 import styled from '@emotion/styled'
+import { ReactNode } from 'react'
 import { Button, Space } from 'ui'
-import { FormTemplate } from '@/services/formTemplate/FormTemplate.types'
+import { FormTemplate, FormTemplateField } from '@/services/formTemplate/FormTemplate.types'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import * as Accordion from './Accordion'
-import { FormGroup } from './FormSection'
 import { StepIconDefault } from './StepIconDefault'
 import { StepIconValid } from './StepIconValid'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
-export type PriceCalculatorFormProps = {
+export type PriceCalculatorFormProps = Omit<React.ComponentPropsWithoutRef<'form'>, 'children'> & {
   template: FormTemplate
   loading: boolean
-} & React.ComponentPropsWithoutRef<'form'>
+  children(fields: Array<FormTemplateField>): ReactNode
+}
 
 export const PriceCalculatorForm = ({
   template,
   loading,
+  children,
   ...formProps
 }: PriceCalculatorFormProps) => {
   const translateTextLabel = useTranslateTextLabel({ data: {} })
@@ -40,7 +42,7 @@ export const PriceCalculatorForm = ({
             </Accordion.Header>
             <Accordion.Content>
               <Space y={2}>
-                <FormGroup fields={fields} />
+                {children(fields)}
 
                 <footer>
                   <Button type="submit" fullWidth disabled={loading}>
