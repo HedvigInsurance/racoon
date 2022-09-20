@@ -26,7 +26,7 @@ type DataLayerObject = {
   pageData?: GTMPageData
 }
 
-export const pushToGTMDataLayer = (obj: DataLayerObject) => {
+const pushToGTMDataLayer = (obj: DataLayerObject) => {
   if (!window.dataLayer) window.dataLayer = []
   window.dataLayer.push(obj)
 }
