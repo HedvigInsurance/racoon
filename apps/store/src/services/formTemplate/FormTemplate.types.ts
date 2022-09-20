@@ -65,7 +65,12 @@ type FieldBase = LayoutField & {
   required?: boolean
 }
 
-type TextField = FieldBase & { type: 'text'; pattern?: string }
+type TextField = FieldBase & {
+  type: 'text'
+  pattern?: string
+  minLength?: number
+  maxLength?: number
+}
 type NumberField = FieldBase & { type: 'number'; min?: number; max?: number }
 type SelectField = FieldBase & { type: 'select'; options: Array<FieldOption> }
 type DateField = FieldBase & { type: 'date' }

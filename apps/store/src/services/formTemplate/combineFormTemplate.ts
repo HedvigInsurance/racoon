@@ -51,6 +51,11 @@ export const combineFormTemplate = ({
               if (schemaField.maximum) formField.max = schemaField.maximum
             }
 
+            if (formField.type === 'text') {
+              if (schemaField.minLength) formField.minLength = schemaField.minLength
+              if (schemaField.maxLength) formField.maxLength = schemaField.maxLength
+            }
+
             if (schemaField.defaultValue) formField.defaultValue = schemaField.defaultValue
 
             if (isOptionField && schemaField.enum) {
