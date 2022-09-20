@@ -3,6 +3,7 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
+import { GTMAppScript, useGTMRouteEvents } from '@/lib/gtm'
 import { useApollo } from '@/services/apollo/client'
 import * as Datadog from '@/services/datadog'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -22,8 +23,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || ((page) => page)
 
+  useGTMRouteEvents()
+
   return (
     <>
+      <GTMAppScript />
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
