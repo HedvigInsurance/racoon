@@ -38,7 +38,7 @@ const CheckoutPage = ({ currency, cost, products, campaigns, loading }: Checkout
 
             <Space y={1}>
               {products.map((product) => (
-                <Card key={product.lineId}>
+                <Card key={product.pricedVariantId}>
                   <Space y={0.5}>
                     <Heading as="h2" variant="standard.18">
                       {product.name}
@@ -48,7 +48,7 @@ const CheckoutPage = ({ currency, cost, products, campaigns, loading }: Checkout
                       label="Start date"
                       type="date"
                       errorMessage={product.errorMessage}
-                      name={product.lineId}
+                      name={product.pricedVariantId}
                       defaultValue={product.startDate ?? DATE_TODAY}
                     />
                   </Space>

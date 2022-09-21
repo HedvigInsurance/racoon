@@ -1,7 +1,7 @@
 type CostData = { crossOut?: number; total: number; subTotal: number }
 type CampaignData = { name: string; discount: number }
 type ProductData = {
-  lineId: string
+  pricedVariantId: string
   name: string
   cost: number
   startDate?: string
