@@ -14,3 +14,9 @@ Requirements:
 
 - [lokalise2 CLI](https://github.com/lokalise/lokalise-cli-2-go)
 - `LOKALISE_TOKEN` environment variable (not loaded automatically from `.env`)
+
+## VS Code extension: [Apollo GraphQL](https://marketplace.visualstudio.com/items?itemName=apollographql.vscode-apollo)
+
+Requirements:
+
+- Add `APOLLO_KEY` to `.env.local` (see Vercel)
