@@ -36,7 +36,7 @@ export const cartEntryAdd = (shopSessionId: string, lineId: string) => {
   return updatedCart
 }
 
-export const cartLinesRemove = (shopSessionId: string, lineId: string) => {
+export const cartEntryRemove = (shopSessionId: string, lineId: string) => {
   const lineItem = db.lineItem.findFirst({ where: { id: { equals: lineId } } })
   const shopSession = db.shopSession.findFirst({ where: { id: { equals: shopSessionId } } })
 
