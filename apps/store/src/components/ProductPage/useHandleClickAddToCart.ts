@@ -1,6 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { FormEventHandler } from 'react'
-import { useCartLinesAddMutation } from '@/services/apollo/generated'
+import { useCartEntryAddMutation } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
@@ -20,7 +20,7 @@ export const useHandleSubmitAddToCart = ({
   productName,
   onSuccess,
 }: Params) => {
-  const [addLineItems, { loading }] = useCartLinesAddMutation()
+  const [addEntry, { loading }] = useCartEntryAddMutation()
   const [refreshData, loadingData] = useRefreshData()
   const apolloClient = useApolloClient()
 
@@ -28,9 +28,9 @@ export const useHandleSubmitAddToCart = ({
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const lineItemId = getOrThrowFormValue(formData, FormElement.LineItem)
+    const pricedVariantId = getOrThrowFormValue(formData, FormElement.PricedVariant)
 
-    await addLineItems({ variables: { cartId, lineItemId } })
+    await addEntry({ variables: { cartId, pricedVariantId } })
 
     priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(productName)
     // Refresh route since data is fetched server-side (product page)

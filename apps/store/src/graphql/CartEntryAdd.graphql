@@ -1,0 +1,12 @@
+mutation CartEntryAdd($cartId: ID!, $pricedVariantId: ID!) {
+  cartEntriesAdd(input: { cartId: $cartId, productVariantIds: [$pricedVariantId] }) {
+    cart {
+      ...CartFragment
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
