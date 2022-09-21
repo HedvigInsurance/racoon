@@ -61,9 +61,9 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       props: {
         ...(await serverSideTranslations(locale)),
         shopSessionId: shopSession.id,
-        products: shopSession.cart.lines.map((line) => ({
+        products: shopSession.cart.entries.map((line) => ({
           lineId: line.id,
-          name: line.variant.title,
+          name: line.title,
           cost: parseInt(line.price.amount, 10) || 0,
           startDate: line.startDate,
         })),

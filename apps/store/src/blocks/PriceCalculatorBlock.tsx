@@ -21,7 +21,7 @@ type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
 
 export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
   const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
-  const lineItem = priceIntent.lines?.[0]
+  const lineItem = priceIntent.variants[0] || undefined
   const product = {
     slug: story.slug,
     name: story.content.productId,
