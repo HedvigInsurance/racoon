@@ -20,3 +20,17 @@ Requirements:
 Requirements:
 
 - Add `APOLLO_KEY` to `.env.local` (see Vercel)
+
+## Using the Storyblok editor
+
+To preview your Storyblok blocks that you have developed locally, use
+
+```
+<server url>/editor.html
+```
+
+by default:
+
+```
+http://localhost:8040/editor.html
+```
