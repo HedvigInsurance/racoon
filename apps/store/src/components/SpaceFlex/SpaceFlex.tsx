@@ -6,19 +6,19 @@ type SpaceFlexProps = {
   space?: number
   direction?: 'horizontal' | 'vertical'
   align?: 'start' | 'center' | 'end'
-  wrap?: boolean
+  wrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
 }
 
 const SpaceFlexWrapper = styled.div(({ space, direction, align, wrap }: SpaceFlexProps) => ({
   display: 'flex',
-  flexWrap: wrap ? 'wrap' : 'initial',
+  flexWrap: wrap,
   gap: `${space}rem`,
   flexDirection: direction === 'horizontal' ? 'row' : 'column',
   alignItems: align,
 }))
 
 export const SpaceFlex = forwardRef<HTMLDivElement, SpaceFlexProps>(
-  ({ children, space = 1, direction = 'horizontal', align = 'start', wrap = false }, ref) => (
+  ({ children, space = 1, direction = 'horizontal', align = 'start', wrap }, ref) => (
     <SpaceFlexWrapper ref={ref} space={space} direction={direction} align={align} wrap={wrap}>
       {children}
     </SpaceFlexWrapper>
