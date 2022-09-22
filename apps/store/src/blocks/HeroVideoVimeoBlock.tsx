@@ -1,31 +1,28 @@
-import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { HeroVideoVimeo } from '@/components/HeroVideoVimeo/HeroVideoVimeo'
+import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { HeadingBlockProps, HeadingBlock } from './HeadingBlock'
 
 type HeroVideoBlockProps = SbBaseBlockProps<{
-  video: StoryblokImage
-  format: string
-  height: number
-  poster: StoryblokImage
+  videoId: string
+  height: string
   headingsPadding: string
   headings: ExpectedBlockType<HeadingBlockProps>
 }>
 
-export const HeroVideoBlock = ({ blok }: HeroVideoBlockProps) => {
+export const HeroVideoVimeoBlock = ({ blok }: HeroVideoBlockProps) => {
   const headingBlocks = filterByBlockType(blok.headings, HeadingBlock.blockName)
 
   return (
-    <HeroVideo
-      sources={[{ url: blok.video.filename, format: blok.format }]}
+    <HeroVideoVimeo
+      videoId={blok.videoId}
       height={blok.height}
-      poster={blok.poster.filename}
       childrenPadding={blok.headingsPadding}
     >
       {headingBlocks.map((nestedBlock) => (
         <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
       ))}
-    </HeroVideo>
+    </HeroVideoVimeo>
   )
 }
-HeroVideoBlock.blockName = 'heroVideoOnStoryblok'
+HeroVideoVimeoBlock.blockName = 'heroVideoOnVimeo'

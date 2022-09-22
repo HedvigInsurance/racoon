@@ -8,7 +8,7 @@ import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
-import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
+import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -128,7 +128,7 @@ export const initStoryblok = () => {
     HeaderBlock,
     HeadingBlock,
     HeroBlock,
-    HeroVideoBlock,
+    HeroVideoVimeoBlock,
     ImageBlock,
     InsurableLimitsBlock,
     NavItemBlock,
