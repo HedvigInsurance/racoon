@@ -6,6 +6,7 @@ import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
+import { GlobalReferenceBlock } from '@/blocks/GlobalReferenceBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
@@ -125,6 +126,7 @@ export const initStoryblok = () => {
     FooterBlock,
     FooterLink,
     FooterSection,
+    GlobalReferenceBlock,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
@@ -167,11 +169,13 @@ export const initStoryblok = () => {
 type StoryOptions = {
   locale: string
   preview?: boolean
+  resolve_relations?: string
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
+    resolve_relations: 'reusableBlockReference.reference',
   }
   return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
 }
