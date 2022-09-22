@@ -5,7 +5,7 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
-import { FooterBlock, FooterLink, FooterSection } from '@/blocks/FooterBlock'
+import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
@@ -22,7 +22,12 @@ import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
-import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
+import {
+  NavItemBlock,
+  NestedNavContainerBlock,
+  HeaderBlock,
+  HeaderBlockProps,
+} from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { countries, getCountryByLocale } from '@/lib/l10n/countries'
 import { getLocaleOrFallback } from '@/lib/l10n/locales'
@@ -84,9 +89,10 @@ export type ProductStory = StoryData & {
   }
 }
 
-type GlobalStory = StoryData & {
+export type GlobalStory = StoryData & {
   content: StoryData['content'] & {
-    navMenuContainer: Array<SbBlokData>
+    header: ExpectedBlockType<HeaderBlockProps>
+    footer: ExpectedBlockType<FooterBlockProps>
   }
 }
 
