@@ -1,13 +1,13 @@
 import { Language, Locale, LocaleValue, RoutingLocale } from './types'
 
-export const FALLBACK_LOCALE: Locale = Locale.EnSe
+export const FALLBACK_LOCALE = Locale.EnSe
 
 export type LocaleData = {
-  locale: Locale
+  locale: LocaleValue
   language: Language
 }
 
-export const locales: Record<LocaleValue, LocaleData> = {
+export const locales = {
   [Locale.SvSe]: {
     locale: Locale.SvSe,
     language: Language.Sv,
@@ -63,6 +63,6 @@ export const normalizeLocale = (locale: string | undefined): string | undefined 
 export const routingLocale = (locale: LocaleValue) => locale.toLowerCase() as RoutingLocale
 
 // TODO: Make fallback market-specific
-export const getLocaleOrFallback = (locale: Locale | string | undefined): LocaleData => {
-  return locales[normalizeLocale(locale) as Locale] ?? locales[FALLBACK_LOCALE]
+export const getLocaleOrFallback = (locale: LocaleValue | string | undefined): LocaleData => {
+  return locales[normalizeLocale(locale) as LocaleValue] ?? locales[FALLBACK_LOCALE]
 }
