@@ -20,7 +20,7 @@ export const LocaleObject = {
 } as const
 
 export type LocaleValues = typeof LocaleObject[keyof typeof LocaleObject]
-export type RoutingLocale = Lowercase<LocaleValues>
+export type RoutingLocale = Lowercase<Locale>
 
 export enum Language {
   Sv = 'sv',
