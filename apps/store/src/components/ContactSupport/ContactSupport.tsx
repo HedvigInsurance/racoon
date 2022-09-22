@@ -21,7 +21,7 @@ export const ContactSupport = ({
         </Heading>
         <AvatarImagePlaceholder />
         <Space y={1}>
-          <SpaceFlex space={0.5}>
+          <SpaceFlex space={0.5} wrap>
             <FlexButton variant="outlined" onClick={() => console.log('chat')}>
               Chat with us
             </FlexButton>
