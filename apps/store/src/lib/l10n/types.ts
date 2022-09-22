@@ -10,6 +10,18 @@ export enum Locale {
   EnDk = 'en-DK',
 }
 
+export const LocaleObject = {
+  SvSe: 'sv-SE',
+  EnSe: 'en-SE',
+  NbNo: 'nb-NO',
+  EnNo: 'en-NO',
+  DaDk: 'da-DK',
+  EnDk: 'en-DK',
+} as const
+
+export type LocaleValues = typeof LocaleObject[keyof typeof LocaleObject]
+export type RoutingLocale = Lowercase<LocaleValues>
+
 export enum Language {
   Sv = 'sv',
   En = 'en',
