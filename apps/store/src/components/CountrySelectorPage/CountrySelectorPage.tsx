@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { routingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/PageLink'
 
 type CountrySelectorPageProps = any
@@ -28,7 +28,7 @@ export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
           <Link
             key={country}
             href={PageLink.store({
-              locale: countries[country as keyof typeof countries].defaultLocale,
+              locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
             })}
             passHref
           >
