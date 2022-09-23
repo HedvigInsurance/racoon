@@ -6183,14 +6183,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.0.20":
-  version: 18.0.20
-  resolution: "@types/react@npm:18.0.20"
+"@types/react@npm:18.0.21":
+  version: 18.0.21
+  resolution: "@types/react@npm:18.0.21"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: f67f5b16efd89e237bf0e40d133218c398cf2a2f81166ce1e9fa32d0df6b869106740983396c51df9708a1b79b2a9d725eda1230cc3064c92d86d9ea6a4b714c
+  checksum: 36c1a7c9d507e81e2e629c1ad3db51d7b84d8b010c2d5008da411874286c6a5ccc711ae1d4c470efc0bdc77153cc8804a40e927e929e5164c669ca41b84b846d
   languageName: node
   linkType: hard
 
@@ -17210,7 +17210,7 @@ __metadata:
     "@types/lodash-es": 4.17.6
     "@types/marked": 4.0.3
     "@types/node": 16.11.57
-    "@types/react": 18.0.20
+    "@types/react": 18.0.21
     classnames: 2.3.1
     cookies-next: 2.1.1
     cypress: 9.5.4
@@ -20509,7 +20509,7 @@ __metadata:
     "@testing-library/user-event": 14.4.3
     "@types/js-cookie": 3.0.2
     "@types/node": 16.11.57
-    "@types/react": 18.0.20
+    "@types/react": 18.0.21
     ajv: 8.11.0
     babel-loader: 8.2.5
     dd-trace: 2.10.0
@@ -22020,7 +22020,7 @@ __metadata:
     "@testing-library/react": 13.3.0
     "@testing-library/user-event": 14.4.3
     "@types/jest": 28.1.8
-    "@types/react": 18.0.20
+    "@types/react": 18.0.21
     "@types/react-dom": 18.0.6
     babel-jest: 28.1.3
     babel-loader: 8.2.5
