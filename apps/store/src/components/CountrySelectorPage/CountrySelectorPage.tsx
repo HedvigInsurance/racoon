@@ -19,7 +19,7 @@ const CountryOptionsContainer = styled.div({
   gap: 8,
 })
 
-export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
+export const CountrySelectorPage = (props: StoryblokPageProps) => {
   return (
     <Container {...props}>
       <Space y={3}>
@@ -31,7 +31,7 @@ export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
             <Link
               key={country}
               href={PageLink.store({
-                locale: countries[country as keyof typeof countries].defaultLocale,
+                locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
               })}
               passHref
             >
