@@ -19,10 +19,6 @@ const CountryOptionsContainer = styled.div({
   gap: 8,
 })
 
-const Button = styled(LinkButton)(({ theme }) => ({
-  borderRadius: theme.space[1],
-}))
-
 export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
   return (
     <Container {...props}>
@@ -39,7 +35,7 @@ export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
               })}
               passHref
             >
-              <Button>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</Button>
+              <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
             </Link>
           ))}
         </CountryOptionsContainer>
