@@ -2,10 +2,9 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { routingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/PageLink'
-
-type CountrySelectorPageProps = any
+import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Container = styled.div({
   height: 400,
@@ -19,7 +18,7 @@ const CountryOptionContainer = styled.div({
   gap: 5,
 })
 
-export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
+export const CountrySelectorPage = (props: StoryblokPageProps) => {
   return (
     <Container {...props}>
       <h1>Select Country</h1>
@@ -28,7 +27,7 @@ export const CountrySelectorPage = (props: CountrySelectorPageProps) => {
           <Link
             key={country}
             href={PageLink.store({
-              locale: countries[country as keyof typeof countries].defaultLocale,
+              locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
             })}
             passHref
           >
