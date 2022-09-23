@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { LinkButton } from 'ui'
+import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
 import { routingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/PageLink'
@@ -11,30 +11,35 @@ const Container = styled.div({
   display: 'grid',
   alignContent: 'center',
   textAlign: 'center',
+  margin: '4rem 1rem',
 })
 
-const CountryOptionContainer = styled.div({
+const CountryOptionsContainer = styled.div({
   display: 'grid',
-  gap: 5,
+  gap: 8,
 })
 
 export const CountrySelectorPage = (props: StoryblokPageProps) => {
   return (
     <Container {...props}>
-      <h1>Select Country</h1>
-      <CountryOptionContainer>
-        {Object.keys(countries).map((country) => (
-          <Link
-            key={country}
-            href={PageLink.store({
-              locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
-            })}
-            passHref
-          >
-            <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
-          </Link>
-        ))}
-      </CountryOptionContainer>
+      <Space y={3}>
+        <Heading as="h1">
+          We’re not quite sure where you’re visiting us from. Select your country below.
+        </Heading>
+        <CountryOptionsContainer>
+          {Object.keys(countries).map((country) => (
+            <Link
+              key={country}
+              href={PageLink.store({
+                locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
+              })}
+              passHref
+            >
+              <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
+            </Link>
+          ))}
+        </CountryOptionsContainer>
+      </Space>
     </Container>
   )
 }
