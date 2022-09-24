@@ -24,7 +24,7 @@
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@radix-ui/react-radio-group": "1.0.0",
-    "classnames": "2.3.1",
+    "classnames": "2.3.2",
     "cookies-next": "2.1.1",
     "dompurify": "2.3.10",
     "formidable": "2.0.1",
