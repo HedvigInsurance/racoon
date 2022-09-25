@@ -8,9 +8,11 @@ import { useEffect } from 'react'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
+type AppEnvironment = 'development' | 'staging' | 'production'
+
 type GTMUserProperties = {
   market: string
-  environment: 'development' | 'production' | 'test'
+  environment: AppEnvironment
 }
 
 type GTMPageData = {
