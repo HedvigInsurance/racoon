@@ -1,12 +1,12 @@
 import { getLocaleOrFallback, normalizeLocale } from './locales'
-import { CountryCode, Language, Locale, CountryLabel } from './types'
+import { CountryCode, Language, Locale, CountryLabel, LocaleValue } from './types'
 
 export type CountryData = {
   id: CountryLabel
   adtractionScriptSrc?: string
   countryCode: CountryCode
-  defaultLocale: Locale
-  locales: Locale[]
+  defaultLocale: LocaleValue
+  locales: LocaleValue[]
 }
 
 export const countries: Record<CountryLabel, CountryData> = {
@@ -37,17 +37,17 @@ const localeCountries = Object.fromEntries(
   Object.entries(countries).flatMap(([countryId, countryData]) =>
     countryData.locales.map((locale) => [locale, countryId]),
   ),
-) as Record<Locale, CountryLabel>
+) as Record<LocaleValue, CountryLabel>
 
 export const getCountryByLocale = (locale: string): CountryData => {
-  const countryData = countries[localeCountries[normalizeLocale(locale) as Locale]]
+  const countryData = countries[localeCountries[normalizeLocale(locale) as LocaleValue]]
   if (!countryData) {
     throw new Error(`Failed to find country by locale=${locale}`)
   }
   return countryData
 }
 
-export const getCountryLocale = (country: CountryLabel, language: Language): Locale => {
+export const getCountryLocale = (country: CountryLabel, language: Language): LocaleValue => {
   const countryData = countries[country as CountryLabel]
   if (!countryData) {
     throw new Error(`Failed to find country id=${country}`)
