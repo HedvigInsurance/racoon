@@ -16700,9 +16700,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-i18next@npm:12.0.0":
-  version: 12.0.0
-  resolution: "next-i18next@npm:12.0.0"
+"next-i18next@npm:12.0.1":
+  version: 12.0.1
+  resolution: "next-i18next@npm:12.0.1"
   dependencies:
     "@babel/runtime": ^7.18.9
     "@types/hoist-non-react-statics": ^3.3.1
@@ -16714,7 +16714,7 @@ __metadata:
   peerDependencies:
     next: ">= 10.0.0"
     react: ">= 16.8.0"
-  checksum: 8e9d7ce335b215ed50910eb2d377ff2025161879c3c413045e22646c39f266dc1b4d62c09d0ebc01858f1d2cad4a314dadd2c8cc829399bb0547a3f27120187b
+  checksum: 9f8e86748abeac49caeca03d48d632b66ea0765792acdbcb18abe80d6e886252208a8e0ada818ccbe2cd09e2925ce240534eb587027dcb8392e5e157a4579933
   languageName: node
   linkType: hard
 
@@ -17233,7 +17233,7 @@ __metadata:
     marked: 4.0.18
     msw: 0.47.3
     next: 12.2.2
-    next-i18next: 12.0.0
+    next-i18next: 12.0.1
     next-router-mock: 0.7.4
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
@@ -20531,7 +20531,7 @@ __metadata:
     js-cookie: 3.0.1
     msw: 0.44.2
     next: 12.2.2
-    next-i18next: 12.0.0
+    next-i18next: 12.0.1
     next-router-mock: 0.7.4
     prettier: 2.7.1
     react: 18.2.0
