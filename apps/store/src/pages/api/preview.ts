@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
-import { countries } from '@/lib/l10n/countries'
-import { CountryLabel } from '@/lib/l10n/types'
 import { fetchStory } from '@/services/storyblok/Storyblok.helpers'
 
 const preview = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -19,15 +17,6 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!story) {
     throw new Error(`Couldn't find preview story slug=${pageId}`)
   }
-
-  const [countryLabel, ...slugFragments] = story.full_slug.split('/')
-
-  // Convert storyblok language to locale
-  const storyblokLang = req.query._storyblok_lang as string
-  const country = countries[countryLabel as CountryLabel]
-  const locale =
-    country.locales.find((locale) => locale.startsWith(storyblokLang)) ?? country.defaultLocale
-
   res.setPreviewData({})
   // Set cookie to None, so it can be read in the Storyblok iframe
   const cookies = res.getHeader('Set-Cookie') ?? []
@@ -37,9 +26,9 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
       cookies.map((cookie) => cookie.replace('SameSite=Lax', 'SameSite=None;Secure')),
     )
   }
-  const targetSlug = `/${locale}/${slugFragments.join('/')}`
-  console.debug(`Previewing ${targetSlug}`)
-  res.redirect(targetSlug)
+  const targetUrl = `/${story.full_slug}`
+  console.debug(`Previewing ${targetUrl}`)
+  res.redirect(targetUrl)
 }
 
 export default preview
