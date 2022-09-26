@@ -1,15 +1,18 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { countries } from '@/lib/l10n/countries'
-import { routingLocale } from '@/lib/l10n/locales'
+import { normalizeLocale, routingLocale } from '@/lib/l10n/locales'
+import { isLocale } from '@/utils/isLocale'
 
 export const config = {
   matcher: '/',
 }
 
 export function middleware(req: NextRequest) {
-  const country = req.geo && req.geo.country
-
+  if (isLocale(normalizeLocale(firstPathFragment(req.url)))) {
+    return
+  }
+  const country = req.geo?.country
   switch (country) {
     case countries.NO.id:
       req.nextUrl.pathname = routingLocale(countries.NO.defaultLocale)
@@ -24,7 +27,12 @@ export function middleware(req: NextRequest) {
       req.nextUrl.pathname = '/country-selector'
   }
 
-  console.info(`Routing visitor from ${country} to ${req.nextUrl}`)
+  console.debug(`Routing visitor from ${country} to ${req.nextUrl}`)
 
   return NextResponse.rewrite(req.nextUrl)
+}
+
+const firstPathFragment = (url: string): string => {
+  const fragments = new URL(url).pathname.split('/').filter(Boolean)
+  return fragments[0]
 }
