@@ -1,9 +1,11 @@
+import { SE_APARTMENT } from './data/SE_APARTMENT'
 import { SE_HOUSE } from './data/SE_HOUSE'
 import { InputField } from './Field.types'
 import { Form, FormSection, JSONData, Template } from './PriceForm.types'
 
 const TEMPLATES: Record<string, Template | undefined> = {
-  SE_HOUSE: SE_HOUSE,
+  SE_HOUSE,
+  SE_APARTMENT,
 }
 
 export const fetchPriceTemplate = (id: string) => {
