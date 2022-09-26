@@ -7,33 +7,11 @@
     },
     "onboarding#build": {
       "outputs": [".next/**"],
-      "dependsOn": ["^build", "codegen"],
-      "env": [
-        "NEXT_PUBLIC_GRAPHQL_ENDPOINT",
-        "NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION",
-        "NEXT_PUBLIC_WEB_ONBOARDING_URL",
-        "NEXT_PUBLIC_DATADOG_APPLICATION_ID",
-        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_DATADOG_VERSION",
-        "NEXT_PUBLIC_DATADOG_ENV",
-        "NEXT_PUBLIC_APP_ENV",
-        "NEXT_PUBLIC_FEATURE_HOUSE_INSURANCE",
-        "NEXT_PUBLIC_FEATURE_ACCIDENT_INSURANCE"
-      ]
+      "dependsOn": ["^build", "codegen"]
     },
     "store#build": {
       "outputs": [".next/**"],
-      "dependsOn": ["^build", "codegen"],
-      "env": [
-        "NEXT_PUBLIC_DATADOG_APPLICATION_ID",
-        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_DATADOG_VERSION",
-        "NEXT_PUBLIC_DATADOG_ENV",
-        "NEXT_PUBLIC_API_MOCKING",
-        "NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN",
-        "NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN",
-        "NEXT_PUBLIC_GRAPHQL_ENDPOINT"
-      ]
+      "dependsOn": ["^build", "codegen"]
     },
     "onboarding#test": {
       "outputs": ["coverage/**"],
@@ -109,13 +87,11 @@
     "onboarding#codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
-      "dependsOn": [],
       "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     },
     "store#codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts"],
-      "dependsOn": [],
       "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
     }
   }
