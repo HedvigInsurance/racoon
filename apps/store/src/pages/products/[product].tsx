@@ -2,11 +2,12 @@ import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getCountryByLocale } from '@/lib/l10n/countries'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
 
@@ -42,21 +43,25 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       getGlobalStory({ locale, preview }),
     ])
 
-    const { template, priceIntent } = await setupPriceCalculatorForm({
+    const priceIntentService = priceIntentServiceInitServerSide({
+      req,
+      res,
       shopSession,
       apolloClient,
-      productName: story.content.productId,
-      templateId: story.content.priceFormTemplateId,
-      request: req,
-      response: res,
     })
+    const priceIntent = await priceIntentService.fetch(story.content.productId)
+
+    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
+    if (priceTemplate === undefined) {
+      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
+    }
 
     return {
       props: {
         ...(await serverSideTranslations(locale)),
         story,
         globalStory,
-        priceFormTemplate: template,
+        priceTemplate,
         priceIntent,
         shopSessionId: shopSession.id,
         shopSession,
