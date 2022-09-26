@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { STEP_ICON_SIZE } from './PriceCalculatorForm.constants'
+import { STEP_ICON_SIZE } from './PriceForm.constants'
 import { TickIcon } from './TickIcon'
 
 const StyledStep = styled.div(({ theme }) => ({
