@@ -53,9 +53,8 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pageLinks = await getNonProductPageLinks()
-  const paths: RoutingPath[] = []
-  pageLinks.forEach(({ locale, slugParts }) => {
-    paths.push({ params: { slug: slugParts }, locale })
+  const paths: RoutingPath[] = pageLinks.map(({ locale, slugParts }) => {
+    return { params: { slug: slugParts }, locale }
   })
   return {
     paths,
