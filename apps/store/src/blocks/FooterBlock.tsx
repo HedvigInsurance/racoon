@@ -60,8 +60,8 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
 }
 FooterSection.blockName = 'footerSection' as const
 
-type FooterBlockProps = SbBaseBlockProps<{
-  footerSections: ExpectedBlockType<FooterSectionProps>
+export type FooterBlockProps = SbBaseBlockProps<{
+  sections: ExpectedBlockType<FooterSectionProps>
 }>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
@@ -98,9 +98,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
       ),
     )
   }
-
-  const footerSections = filterByBlockType(blok.footerSections, FooterSection.blockName)
-
+  const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
     <Wrapper as="footer" y={2}>
       <Accordion.Root type="multiple">

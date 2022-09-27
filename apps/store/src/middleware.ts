@@ -13,23 +13,25 @@ export function middleware(req: NextRequest) {
     return
   }
   const country = req.geo?.country
+  const nextURL = req.nextUrl.clone()
   switch (country) {
     case countries.NO.id:
-      req.nextUrl.pathname = routingLocale(countries.NO.defaultLocale)
+      nextURL.pathname = routingLocale(countries.NO.defaultLocale)
       break
     case countries.DK.id:
-      req.nextUrl.pathname = routingLocale(countries.DK.defaultLocale)
+      nextURL.pathname = routingLocale(countries.DK.defaultLocale)
       break
     case countries.SE.id:
-      req.nextUrl.pathname = routingLocale(countries.SE.defaultLocale)
+      nextURL.pathname = routingLocale(countries.SE.defaultLocale)
       break
     default:
-      req.nextUrl.pathname = '/country-selector'
+      console.debug(`Routing visitor from ${country} to country selector`)
+      nextURL.pathname = '/country-selector'
+      return NextResponse.rewrite(nextURL)
   }
 
-  console.debug(`Routing visitor from ${country} to ${req.nextUrl}`)
-
-  return NextResponse.rewrite(req.nextUrl)
+  console.debug(`Routing visitor from ${country} to ${nextURL}`)
+  return NextResponse.redirect(nextURL)
 }
 
 const firstPathFragment = (url: string): string => {
