@@ -5,7 +5,7 @@
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { useCurrentLocale } from './l10n/useCurrentLocale'
+import { useCurrentLocale } from '../lib/l10n/useCurrentLocale'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
