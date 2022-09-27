@@ -4,28 +4,32 @@ import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage
 import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPage.helpers'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { PageLink } from '@/lib/PageLink'
+import { normalizeLocale } from '@/lib/l10n/locales'
+// import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
+import { isLocale } from '@/utils/isLocale'
 
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = async ({
   req,
   res,
-  locale,
+  locale: rawLocale,
 }) => {
-  if (!locale || locale === 'default') return { notFound: true }
+  const locale = normalizeLocale(rawLocale)
+  if (!isLocale(locale)) return { notFound: true }
 
   const apolloClient = initializeApollo()
 
   const [shopSession, globalStory] = await Promise.all([
     getCurrentShopSessionServerSide({ req, res, apolloClient }),
-    getGlobalStory({ locale }),
+    getGlobalStory({ locale: locale.toLocaleLowerCase() }),
   ])
 
-  if (shopSession.checkout.completedAt === null) {
-    return { redirect: { destination: PageLink.store(), permanent: false } }
-  }
+  // @TODO: uncomment after implementing signing
+  // if (shopSession.checkout.completedAt === null) {
+  //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
+  // }
 
   return {
     props: {

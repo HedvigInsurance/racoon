@@ -6,7 +6,7 @@ type BaseParams = { locale?: LocaleValue | RoutingLocale }
 type ProductPage = BaseParams & { slug: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
 
-const getOptionalPath = (segment?: string) => (segment ? `/${segment}` : '')
+const getOptionalPath = (segment?: string) => (segment ? `/${segment.toLowerCase()}` : '')
 
 export const PageLink = {
   store: ({ locale }: BaseParams = {}) => `${getOptionalPath(locale)}/store`,
