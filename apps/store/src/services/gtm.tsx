@@ -11,7 +11,7 @@ import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
 type GTMUserProperties = {
-  market: CountryCode
+  country: CountryCode
   environment?: string
 }
 
@@ -68,7 +68,7 @@ export const useGTMRouteEvents = () => {
     pushToGTMDataLayer({
       userProperties: {
         environment: process.env.NEXT_PUBLIC_GTM_ENV,
-        market: countryCode,
+        country: countryCode,
       },
     })
   }, [countryCode])
