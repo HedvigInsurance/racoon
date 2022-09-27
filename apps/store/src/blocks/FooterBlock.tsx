@@ -18,8 +18,7 @@ import { LocaleValue } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { useStroryblokLinkURL } from '@/utils/useStroryblokLinkURL'
+import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -27,9 +26,8 @@ type FooterLinkProps = SbBaseBlockProps<{
 }>
 
 export const FooterLink = ({ blok }: FooterLinkProps) => {
-  const href = useStroryblokLinkURL(blok.link)
   return (
-    <Link href={href} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
       <StyledLink>{blok.linkText}</StyledLink>
     </Link>
   )

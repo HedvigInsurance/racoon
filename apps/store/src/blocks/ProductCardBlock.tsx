@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
 import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
+import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type ProductCardBlockProps = SbBaseBlockProps<{
   title: string
@@ -13,7 +14,7 @@ export type ProductCardBlockProps = SbBaseBlockProps<{
 
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   return (
-    <Link href={blok.link.url} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
       <StyledAnchor>
         <ProductCard
           title={blok.title}
