@@ -29,10 +29,10 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { countries, getCountryByLocale } from '@/lib/l10n/countries'
-import { getLocaleOrFallback } from '@/lib/l10n/locales'
-import { CountryCode } from '@/lib/l10n/types'
+import { normalizeLocale, routingLocale } from '@/lib/l10n/locales'
+import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { isLocale } from '@/utils/isLocale'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -103,7 +103,7 @@ type LinkData = Pick<
 
 type PageLink = {
   link: LinkData
-  countryId: CountryCode
+  locale: RoutingLocale
   slugParts: string[]
 }
 
@@ -165,16 +165,10 @@ type StoryOptions = {
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
-  const country = getCountryByLocale(locale)
   const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
   }
-  // Special case: in Storyblok default language means country default, ie Swedish in Sweden, Danish in Denmark, etc
-  // Therefore we're not passing language code from NextJs locale here
-  if (locale !== country.defaultLocale) {
-    params.language = getLocaleOrFallback(locale).language
-  }
-  return await fetchStory(getStoryblokApi(), `${country.id}/${slug}`, params)
+  return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {
@@ -190,8 +184,9 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     if (link.is_folder) {
       return
     }
-    const [countryId, ...slugParts] = link.slug.split('/')
-    if (!(countryId in countries)) {
+    const [firstFragment, ...slugParts] = link.slug.split('/')
+    const locale = normalizeLocale(firstFragment)
+    if (!isLocale(locale)) {
       return
     }
     if (slugParts[0] === 'global') {
@@ -199,7 +194,7 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     }
     pageLinks.push({
       link,
-      countryId: countryId as CountryCode,
+      locale: routingLocale(locale),
       slugParts,
     })
   })

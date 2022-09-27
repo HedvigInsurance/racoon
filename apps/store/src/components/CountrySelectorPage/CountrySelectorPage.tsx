@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
 import { routingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
-import { PageLink } from '@/lib/PageLink'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Container = styled.div({
@@ -30,9 +29,7 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
           {Object.keys(countries).map((country) => (
             <Link
               key={country}
-              href={PageLink.store({
-                locale: routingLocale(countries[country as keyof typeof countries].defaultLocale),
-              })}
+              href={`/${routingLocale(countries[country as keyof typeof countries].defaultLocale)}`}
               passHref
             >
               <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
