@@ -6,6 +6,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getCountryByLocale } from '@/lib/l10n/countries'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -69,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       },
     }
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return { notFound: true }
   }
 }

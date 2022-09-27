@@ -46,6 +46,9 @@ export class PriceIntentService {
       })
       return result.data?.shopSession.priceIntent ?? null
     } catch (error) {
+      // TODO: should probably be logged by DD-logger, but we don't want to include it in
+      // the client bundle. This function is only called from the server but the class is
+      // included also in client code. Something to investigate. // siau 2022-09-27
       console.warn(`Unable to get price intent: ${priceIntentId}`)
       console.warn(error)
     }

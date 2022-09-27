@@ -1,6 +1,7 @@
 import path from 'path'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
+import logger from '@/services/logger/server'
 
 type Payload = {
   action: 'published' | 'unpublished' | 'deleted'
@@ -24,18 +25,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { action, story_id } = req.body as Payload
 
-  console.log(`Revalidate: ${action} story ${story_id}`)
+  logger.info(`Revalidate: ${action} story ${story_id}`)
 
   try {
     const { data } = await STORYBLOK_API.getStory(`${story_id}`)
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug
     const pathToRevalidate = path.join('/', route)
 
-    console.log(`Revalidating ${pathToRevalidate}`)
+    logger.info(`Revalidating ${pathToRevalidate}`)
     await res.revalidate(pathToRevalidate)
     return res.json({ revalidated: true })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return res.status(500).json('Error revalidating')
   }
 }
