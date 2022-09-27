@@ -10,11 +10,9 @@ import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
-type AppEnvironment = 'development' | 'staging' | 'production'
-
 type GTMUserProperties = {
   market: CountryCode
-  environment: AppEnvironment
+  environment?: string
 }
 
 type GTMPageData = {
@@ -69,7 +67,7 @@ export const useGTMRouteEvents = () => {
   useEffect(() => {
     pushToGTMDataLayer({
       userProperties: {
-        environment: 'development',
+        environment: process.env.NEXT_PUBLIC_GTM_ENV,
         market: countryCode,
       },
     })
