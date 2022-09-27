@@ -1,101 +1,97 @@
+import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
-import { storyblokEditable } from '@storyblok/react'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
-import { PriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm'
-import { useHandleSubmitPriceCalculatorForm } from '@/components/PriceCalculatorForm/useHandleSubmitPriceCalculator'
-import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
-import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
+import { PriceForm } from '@/components/PriceForm/PriceForm'
+import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleClickAddToCart'
+import { TierSelector } from '@/components/ProductPage/TierSelector/TierSelector'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { PricedProductVariant } from '@/services/apollo/generated'
+import { setupForm } from '@/services/PriceForm/PriceForm.helpers'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useRefreshData } from '@/utils/useRefreshData'
 
+// TODO: get from API
 const PLACEHOLDER_GRADIENT = ['#00BFFF', '#00ff00'] as const
 
-type StoryblokPriceCalculatorBlockProps = SbBaseBlockProps<{
+type Props = SbBaseBlockProps<{
   title: string
 }>
 
-export const PriceCalculatorBlock = ({ blok: { title } }: StoryblokPriceCalculatorBlockProps) => {
-  const { shopSession, priceIntent, story, priceFormTemplate } = useProductPageContext()
-  const pricedVariant = priceIntent.variants[0] || undefined
-  const product = {
-    slug: story.slug,
-    name: story.content.productId,
-    displayName: story.content.name,
-    price: parseInt(pricedVariant?.price.amount, 10) || null,
-    currencyCode: shopSession.currencyCode,
-    gradient: PLACEHOLDER_GRADIENT,
-  }
-
-  const wrapperRef = useRef<HTMLDivElement>(null)
+export const PriceCalculatorBlock = ({ blok }: Props) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const formatter = useCurrencyFormatter(product.currencyCode)
-  const [handleSubmit, loadingUpdate] = useHandleSubmitPriceCalculatorForm({
-    priceIntentId: priceIntent.id,
-    formTemplate: priceFormTemplate,
-  })
 
-  const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
-    shopSession,
-    cartId: shopSession.cart.id,
-    productName: product.name,
-    onSuccess: () => {
-      toastRef.current?.publish({
-        name: product.displayName,
-        price: formatter.format(product.price ?? 0),
-        gradient: product.gradient,
-      })
-    },
-  })
+  const { priceTemplate, priceIntent, shopSession } = useProductPageContext()
+  const product = usePriceFormProduct()
+
+  const [refreshData, isLoadingData] = useRefreshData()
+  const handleSuccess = refreshData
+
+  const form = useMemo(() => {
+    return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
+  }, [priceTemplate, priceIntent])
+
+  const apolloClient = useApolloClient()
+  const formatter = useCurrencyFormatter(shopSession.currencyCode)
+  const handleAddedToCart = (pricedVariant: PricedProductVariant) => {
+    toastRef.current?.publish({
+      name: product.displayName,
+      price: formatter.format(parseInt(pricedVariant.price.amount, 10)),
+      gradient: product.gradient,
+    })
+
+    priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(product.name)
+    refreshData()
+  }
 
   return (
     <>
-      <Space y={2} ref={wrapperRef} {...storyblokEditable}>
-        <Space y={1}>
-          <SpaceFlex align="center" direction="vertical">
-            <Heading as="h3" variant="standard.18">
-              {title}
-            </Heading>
-          </SpaceFlex>
+      <Space y={1}>
+        <SpaceFlex align="center" direction="vertical">
+          <Heading as="h2" variant="standard.18">
+            {blok.title}
+          </Heading>
+        </SpaceFlex>
 
-          <PriceCalculatorForm
-            template={priceFormTemplate}
-            onSubmit={handleSubmit}
-            loading={loadingUpdate}
-          />
-        </Space>
+        <PriceForm
+          form={form}
+          priceIntent={priceIntent}
+          onSuccess={handleSuccess}
+          loading={isLoadingData}
+        />
 
         <SectionWithPadding>
-          <PriceCardForm
-            title={product.displayName}
-            cost={product.price ?? undefined}
-            currencyCode={product.currencyCode}
-            gradient={product.gradient}
-            onSubmit={handleSubmitAddToCart}
-            loading={loadingAddToCart}
-            pricedVariantId={pricedVariant?.id}
+          <TierSelector
+            product={product}
+            cartId={shopSession.cart.id}
+            priceIntent={priceIntent}
+            onAddedToCart={handleAddedToCart}
           />
         </SectionWithPadding>
+
+        <CartToast ref={toastRef} />
       </Space>
-
-      <PriceCalculatorFooterForm
-        targetRef={wrapperRef}
-        currencyCode={product.currencyCode}
-        price={product.price ?? undefined}
-        loading={loadingAddToCart}
-        onSubmit={handleSubmitAddToCart}
-        pricedVariantId={pricedVariant?.id}
-      />
-
-      <CartToast ref={toastRef} />
     </>
   )
 }
 PriceCalculatorBlock.blockName = 'priceCalculator'
+
+const usePriceFormProduct = () => {
+  const { story, shopSession } = useProductPageContext()
+
+  return useMemo<PriceFormProduct>(() => {
+    return {
+      name: story.content.productId,
+      displayName: story.content.name,
+      currencyCode: shopSession.currencyCode,
+      gradient: PLACEHOLDER_GRADIENT,
+    }
+  }, [story.content, shopSession.currencyCode])
+}
 
 const SectionWithPadding = styled.div(({ theme }) => ({
   paddingLeft: theme.space[3],
