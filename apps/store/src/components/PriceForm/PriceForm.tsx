@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const PriceForm = ({ form, priceIntent, onSuccess, loading }: Props) => {
-  const [confirmPriceIntent] = usePriceIntentConfirmMutation({
+  const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
   })
 
@@ -30,7 +30,7 @@ export const PriceForm = ({ form, priceIntent, onSuccess, loading }: Props) => {
     },
   })
 
-  const isLoading = loadingUpdate || loading
+  const isLoading = loadingUpdate || loadingConfirm || loading
 
   return (
     <PriceFormAccordion form={form}>
