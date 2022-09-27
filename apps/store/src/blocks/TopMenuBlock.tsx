@@ -79,7 +79,7 @@ const StyledNavigationTrigger = styled(NavigationTrigger)({
   },
 })
 
-type HeaderBlockProps = SbBaseBlockProps<{
+export type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: ExpectedBlockType<NestedNavContainerBlockProps | NavItemBlockProps>
 }>
 
