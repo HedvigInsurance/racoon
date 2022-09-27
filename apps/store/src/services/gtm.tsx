@@ -5,14 +5,15 @@
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { useCurrentLocale } from '../lib/l10n/useCurrentLocale'
+import { CountryCode } from '@/lib/l10n/types'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
-type AppEnvironment = 'development' | 'production' | 'test'
+type AppEnvironment = 'development' | 'staging' | 'production'
 
 type GTMUserProperties = {
-  market: string
+  market: CountryCode
   environment: AppEnvironment
 }
 
@@ -63,7 +64,16 @@ export const GTMBodyScript = () => (
 
 export const useGTMRouteEvents = () => {
   const router = useRouter()
-  const { countryLabel } = useCurrentLocale()
+  const { countryCode } = useCurrentCountry()
+
+  useEffect(() => {
+    pushToGTMDataLayer({
+      userProperties: {
+        environment: 'development',
+        market: countryCode,
+      },
+    })
+  }, [countryCode])
 
   useEffect(() => {
     const pageview = (url: string) => {
@@ -73,10 +83,6 @@ export const useGTMRouteEvents = () => {
           page: url,
           title: document.title,
         },
-        userProperties: {
-          market: countryLabel,
-          environment: process.env.NODE_ENV,
-        },
       })
     }
 
@@ -85,5 +91,5 @@ export const useGTMRouteEvents = () => {
     return () => {
       router.events.off('routeChangeComplete', pageview)
     }
-  }, [countryLabel, router.events])
+  }, [router.events])
 }
