@@ -9,9 +9,10 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
-  if (isLocale(normalizeLocale(firstPathFragment(req.url)))) {
+  if (isLocale(normalizeLocale(req.nextUrl.locale))) {
     return
   }
+
   const country = req.geo?.country
   const nextURL = req.nextUrl.clone()
   switch (country) {
@@ -32,9 +33,4 @@ export function middleware(req: NextRequest) {
 
   console.debug(`Routing visitor from ${country} to ${nextURL}`)
   return NextResponse.redirect(nextURL)
-}
-
-const firstPathFragment = (url: string): string => {
-  const fragments = new URL(url).pathname.split('/').filter(Boolean)
-  return fragments[0]
 }
