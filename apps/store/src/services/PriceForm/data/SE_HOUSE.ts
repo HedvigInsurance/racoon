@@ -45,7 +45,7 @@ export const SE_HOUSE: Template = {
           field: {
             type: 'extra-buildings',
             name: 'extraBuildings',
-            label: { key: 'Add extra building' },
+            label: { key: 'Extra buildings' },
             defaultValue: [],
           },
           layout: { columnSpan: 6 },

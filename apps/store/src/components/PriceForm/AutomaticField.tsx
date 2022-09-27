@@ -8,7 +8,7 @@ import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = {
   field: InputFieldType
-  onSubmit: (data: JSONData) => void
+  onSubmit: (data: JSONData) => Promise<void>
   loading: boolean
 }
 

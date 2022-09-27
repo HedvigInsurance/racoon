@@ -4093,6 +4093,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-switch@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@radix-ui/react-switch@npm:1.0.0"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-label": 1.0.0
+    "@radix-ui/react-primitive": 1.0.0
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-previous": 1.0.0
+    "@radix-ui/react-use-size": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: 7b5096c11e07062acce6e37bd6fcdd65adf1e7f468c67b61d9691c786e0d2b3775c389f32a37fd65d57cef9ed00cd98499806be64ab564cc4e984eb484e477f7
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-tabs@npm:1.0.0":
   version: 1.0.0
   resolution: "@radix-ui/react-tabs@npm:1.0.0"
@@ -20502,6 +20522,7 @@ __metadata:
     "@radix-ui/react-dialog": 1.0.0
     "@radix-ui/react-navigation-menu": 1.0.0
     "@radix-ui/react-radio-group": 1.0.0
+    "@radix-ui/react-switch": 1.0.0
     "@radix-ui/react-tabs": 1.0.0
     "@storyblok/react": 1.1.6
     "@storybook/addon-actions": 6.5.12
