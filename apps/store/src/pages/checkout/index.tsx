@@ -6,6 +6,7 @@ import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.t
 import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSubmitStartDates'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
+import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 type NextPageProps = Omit<CheckoutPageProps, 'loading'> & {
@@ -76,8 +77,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       },
     }
   } catch (error) {
-    console.error('Failed to get server side props for checkout page')
-    console.error(error)
+    logger.error(error, 'Failed to get server side props for checkout page')
     return { notFound: true }
   }
 }

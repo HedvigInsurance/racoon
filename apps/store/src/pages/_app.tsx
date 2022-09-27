@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { ThemeProvider } from 'ui'
 import { GTMAppScript, useGTMRouteEvents } from '@/lib/gtm'
 import { useApollo } from '@/services/apollo/client'
-import * as Datadog from '@/services/datadog'
+import * as Datadog from '@/services/logger/client'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 

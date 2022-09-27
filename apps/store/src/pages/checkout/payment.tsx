@@ -5,6 +5,7 @@ import { fetchAvailablePaymentMethods } from '@/components/CheckoutPaymentPage/C
 import { CheckoutPaymentPageAdyenProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
 import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
 import { initializeApollo } from '@/services/apollo/client'
+import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageAdyenProps> = (props) => {
@@ -46,8 +47,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       },
     }
   } catch (error) {
-    console.error('Failed to get server side props for checkout page')
-    console.error(error)
+    logger.error(error, 'Failed to get server side props for checkout page')
     return { notFound: true }
   }
 }

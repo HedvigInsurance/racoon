@@ -30,6 +30,8 @@ export function middleware(req: NextRequest) {
       return NextResponse.rewrite(nextURL)
   }
 
+  // DD logger cannot be used in middleware since Pino isn't support in Edge runtime (2022-09-27//siau)
+  // Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime
   console.debug(`Routing visitor from ${country} to ${nextURL}`)
   return NextResponse.redirect(nextURL)
 }
