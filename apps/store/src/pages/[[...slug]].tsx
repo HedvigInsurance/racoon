@@ -48,7 +48,10 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
     return { notFound: true }
   }
 
-  return { props: { ...(await serverSideTranslations(locale)), story, globalStory } }
+  return {
+    props: { ...(await serverSideTranslations(locale)), story, globalStory },
+    revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
+  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
