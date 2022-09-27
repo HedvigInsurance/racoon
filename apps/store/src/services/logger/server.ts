@@ -8,6 +8,10 @@ const isLocalDev = ['dev', 'local'].includes(SERVER_CONFIG.env)
 
 const pinoConf: LoggerOptions = {
   level: 'info',
+  // base object attached to all logs. For some reason host can be added here but not in `options` in target object below...
+  base: {
+    host: SERVER_CONFIG.host,
+  },
 }
 
 const targets = [
