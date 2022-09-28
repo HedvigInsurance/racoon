@@ -5,7 +5,7 @@ export type MenuIconProps = {
   size?: string
 }
 
-export const MenuIcon = ({ color = theme.colors.gray900, size = '24px' }: MenuIconProps) => (
+export const MenuIcon = ({ color = theme.colors.gray900, size = '1.5rem' }: MenuIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"

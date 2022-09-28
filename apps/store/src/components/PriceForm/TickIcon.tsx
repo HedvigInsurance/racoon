@@ -2,10 +2,10 @@ import { theme } from 'ui'
 
 export type TickIconProps = {
   color?: string
-  size?: number
+  size?: number | string
 }
 
-export const TickIcon = ({ color = theme.colors.gray100, size = 26 }: TickIconProps) => (
+export const TickIcon = ({ color = theme.colors.gray100, size = '1.5rem' }: TickIconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 26 26">
     <g transform="translate(1 1)" fill="none" fillRule="evenodd">
       <path

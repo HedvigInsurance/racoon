@@ -6,7 +6,7 @@ import { ShieldIcon } from '@/components/Perils/ShieldIcon'
 const ITEMS = [
   {
     id: 'waterLeaks',
-    icon: <ShieldIcon size="22px" />,
+    icon: <ShieldIcon size="1.25rem" />,
     name: 'Water leaks',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -20,7 +20,7 @@ const ITEMS = [
   },
   {
     id: 'fire',
-    icon: <ShieldIcon size="22px" />,
+    icon: <ShieldIcon size="1.25rem" />,
     name: 'Fire',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -34,7 +34,7 @@ const ITEMS = [
   },
   {
     id: 'storms',
-    icon: <ShieldIcon size="22px" />,
+    icon: <ShieldIcon size="1.25rem" />,
     name: 'Storms',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
