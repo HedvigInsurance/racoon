@@ -1,52 +1,63 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { CheckoutContactDetailsPage } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetails'
 import { CheckoutContactDetailsPageProps } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetails.types'
+import { fetchCurrentCheckoutSigning } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetailsPage.helpers'
 import { CheckoutSignPage } from '@/components/CheckoutContactDetailsPage/CheckoutSignPage'
-import { useHandleSubmitContactDetails } from '@/components/CheckoutContactDetailsPage/useHandleSubmitContactDetails'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
-import { initializeApollo } from '@/services/apollo/client'
+import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
-type NextPageProps = CheckoutContactDetailsPageProps & {
-  checkoutId: string
+type NextPageProps = Omit<CheckoutContactDetailsPageProps, 'onSuccess'> & {
   flow: PaymentConnectionFlow
 }
 
-const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
-  const { flow, checkoutId, ...pageProps } = props
+const NextCheckoutContactDetailsPage: NextPage<NextPageProps> = (props) => {
+  const { flow, ...pageProps } = props
 
   const router = useRouter()
-  const [handleSubmit] = useHandleSubmitContactDetails({
-    checkoutId,
-    onSuccess() {
-      router.push(PageLink.checkoutPayment())
-    },
-  })
+  const handleSuccess = () => router.push(PageLink.checkoutPayment())
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {flow === PaymentConnectionFlow.BeforeSign ? (
-        <CheckoutContactDetailsPage {...pageProps} />
-      ) : (
-        <CheckoutSignPage {...pageProps} />
-      )}
-    </form>
+  return flow === PaymentConnectionFlow.BeforeSign ? (
+    <CheckoutContactDetailsPage onSuccess={handleSuccess} {...pageProps} />
+  ) : (
+    <CheckoutSignPage onSuccess={handleSuccess} {...pageProps} />
   )
 }
 
-export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<NextPageProps> = async (params) => {
+  const { req, res, locale } = params
+  if (!isRoutingLocale(locale)) return { notFound: true }
+
   try {
     const apolloClient = initializeApollo()
+
     const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
+    const checkoutId = shopSession.checkout.id
+    if (shopSession.checkout.completedAt) {
+      // @TODO: confirmation page should have a unique link in the future
+      return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
+    }
+
+    const checkoutSigning = await fetchCurrentCheckoutSigning({ req, apolloClient, checkoutId })
+    if (checkoutSigning?.completion) {
+      return { redirect: { destination: PageLink.checkoutPayment({ locale }), permanent: false } }
+    }
 
     return {
       props: {
-        checkoutId: shopSession.checkout.id,
+        checkoutId,
         prefilledData: shopSession.checkout.contactDetails,
         flow: shopSession.checkout.paymentConnectionFlow,
+        checkoutSigningId: checkoutSigning?.id ?? null,
+
+        ...(await serverSideTranslations(locale)),
+        shopSessionId: shopSession.id,
+        [APOLLO_STATE_PROP_NAME]: apolloClient.extract(),
       },
     }
   } catch (error) {
@@ -55,4 +66,4 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async ({ re
   }
 }
 
-export default NextCheckoutPage
+export default NextCheckoutContactDetailsPage
