@@ -7,6 +7,7 @@ export const COMMON_CONFIG = {
 export const SERVER_CONFIG = {
   ...COMMON_CONFIG,
   apiKey: process.env.DATADOG_API_KEY,
+  host: process.env.VERCEL_URL,
 }
 
 export const CLIENT_CONFIG = {
