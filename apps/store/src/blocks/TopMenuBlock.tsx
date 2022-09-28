@@ -20,8 +20,11 @@ import {
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { checkBlockType, filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { useStroryblokLinkURL } from '@/utils/useStroryblokLinkURL'
+import {
+  checkBlockType,
+  filterByBlockType,
+  getLinkFieldURL,
+} from '@/services/storyblok/Storyblok.helpers'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
@@ -29,10 +32,9 @@ type NavItemBlockProps = SbBaseBlockProps<{
 }>
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
-  const url = useStroryblokLinkURL(blok.link)
   return (
     <NavigationMenuPrimitive.Item value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationLink href={url}>{blok.name}</NavigationLink>
+      <NavigationLink href={getLinkFieldURL(blok.link)}>{blok.name}</NavigationLink>
     </NavigationMenuPrimitive.Item>
   )
 }

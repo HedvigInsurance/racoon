@@ -1,7 +1,5 @@
 import { StoryblokClient } from '@storyblok/js'
 import { SbBlokData, StoryData } from '@storyblok/react'
-import { getCountryByLocale } from '@/lib/l10n/countries'
-import { LocaleData } from '@/lib/l10n/locales'
 import { Language } from '@/lib/l10n/types'
 import { LinkField } from './storyblok'
 
@@ -47,23 +45,12 @@ export const fetchStory = async (
   return story
 }
 
-export const getLinkFieldURL = (link: LinkField, locale: LocaleData) => {
-  if (!link.story) {
-    // Should never happen, but let's simplify debugging when it does
-    console.error('Did not see story field in link, returning empty URL', link)
-    return '/'
-  }
-  const fragments = link.story.full_slug.split('/')
+export const getLinkFieldURL = (link: LinkField) => {
+  if (link.story) return link.story.url
 
-  // en/SE/page => SE/page, SE/page => unchanged
-  const country = getCountryByLocale(locale.locale)
-  const hasLangPrefix = locale.locale !== country.defaultLocale
-  if (hasLangPrefix) {
-    fragments.shift()
-  }
+  if (link.linktype === 'url') return link.url
 
-  // SE/page => /page
-  fragments.shift()
-
-  return `/${fragments.join('/')}`
+  // Should never happen, but let's simplify debugging when it does
+  console.warn('Did not see story field in link, returning empty URL', link)
+  return '/'
 }

@@ -67,13 +67,14 @@ export type StoryblokImage = {
 export type LinkField = {
   id: string
   url: string
-  linktype: 'story' | 'url'
-  // Assumes we're using resolve_links=url
-  story: {
+  linktype: 'multilink' | 'story' | 'url'
+  story?: {
     id: number
     uuid: string
     name: string
     slug: string
+    // Same as "full_slug" by default.
+    // Can be overridden in Storyblok editor: "Entry configuration" > "Real path".
     url: string
     full_slug: string
   }
@@ -186,12 +187,8 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     }
     const [firstFragment, ...slugParts] = link.slug.split('/')
     const locale = normalizeLocale(firstFragment)
-    if (!isLocale(locale)) {
-      return
-    }
-    if (slugParts[0] === 'global') {
-      return
-    }
+    if (!isLocale(locale)) return
+    if (slugParts[0] === 'global') return
     pageLinks.push({
       link,
       locale: routingLocale(locale),
