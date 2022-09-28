@@ -9,7 +9,7 @@ import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = {
   form: Form
-  children(section: FormSection): ReactNode
+  children(section: FormSection, index: number): ReactNode
 }
 
 export const PriceFormAccordion = ({ form, children }: Props) => {
@@ -33,7 +33,7 @@ export const PriceFormAccordion = ({ form, children }: Props) => {
             </SpaceFlex>
             <Accordion.Trigger />
           </Accordion.Header>
-          <Accordion.Content>{children(section)}</Accordion.Content>
+          <Accordion.Content>{children(section, index)}</Accordion.Content>
         </Accordion.Item>
       ))}
     </Accordion.Root>

@@ -17,15 +17,15 @@ const GridItem = styled.div<GridItemProps>(({ columnSpan }) => ({
 
 type FormSectionProps = {
   items: Array<SectionItem>
-  children(field: InputField): ReactNode
+  children(field: InputField, index: number): ReactNode
 }
 
 export const FormGrid = ({ items, children }: FormSectionProps) => {
   return (
     <Grid>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <GridItem key={item.field.name} columnSpan={item.layout.columnSpan}>
-          {children(item.field)}
+          {children(item.field, index)}
         </GridItem>
       ))}
     </Grid>

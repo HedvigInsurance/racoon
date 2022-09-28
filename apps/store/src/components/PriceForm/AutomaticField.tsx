@@ -10,9 +10,10 @@ type Props = {
   field: InputFieldType
   onSubmit: (data: JSONData) => Promise<void>
   loading: boolean
+  autoFocus?: boolean
 }
 
-export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
+export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
 
   switch (field.type) {
@@ -27,6 +28,7 @@ export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
           maxLength={field.maxLength}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
+          autoFocus={autoFocus}
         />
       )
 
@@ -40,6 +42,7 @@ export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
           max={field.max}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
+          autoFocus={autoFocus}
         />
       )
 
@@ -53,6 +56,7 @@ export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
           defaultValue={field.value ?? field.defaultValue}
           min={field.min}
           max={field.max}
+          autoFocus={autoFocus}
         />
       )
 
@@ -67,6 +71,7 @@ export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
             ...option,
             label: translateLabel(option.label),
           }))}
+          autoFocus={autoFocus}
         />
       )
 
@@ -81,6 +86,7 @@ export const AutomaticField = ({ field, onSubmit, loading }: Props) => {
             ...option,
             name: translateLabel(option.label),
           }))}
+          autoFocus={autoFocus}
         />
       )
 

@@ -34,11 +34,20 @@ export const PriceForm = ({ form, priceIntent, onSuccess, loading }: Props) => {
 
   return (
     <PriceFormAccordion form={form}>
-      {(section) => (
+      {(section, sectionIndex) => (
         <PriceFormSection section={section} onSubmit={handleSubmit} loading={isLoading}>
           <FormGrid items={section.items}>
-            {(field) => (
-              <AutomaticField field={field} onSubmit={handleSubmit} loading={isLoading} />
+            {(field, index) => (
+              <AutomaticField
+                field={field}
+                onSubmit={handleSubmit}
+                loading={isLoading}
+                // We don't want to mess up focusing for the user by setting autoFocus on the
+                // first item in the form, since that would make it unintuitive to navigate our
+                // site. But when the user is in the form editing, even having submitted the first
+                // section, we want to set autoFocus for the next section. Hence sectionIndex > 0
+                autoFocus={sectionIndex > 0 && index === 0}
+              />
             )}
           </FormGrid>
         </PriceFormSection>
