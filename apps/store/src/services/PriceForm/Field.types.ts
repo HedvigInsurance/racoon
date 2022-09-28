@@ -15,6 +15,10 @@ export type TextField = BaseField<string> & {
   maxLength?: number
 }
 
+export type SsnSeField = BaseField<string> & {
+  type: 'ssn-se'
+}
+
 export type NumberField = BaseField<number> & {
   type: 'number'
   min?: number
@@ -59,3 +63,4 @@ export type InputField =
   | RadioField
   | SelectField
   | ExtraBuildingsField
+  | SsnSeField

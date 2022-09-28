@@ -4,6 +4,7 @@ import { InputField as InputFieldType } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import { InputRadio } from './InputRadio'
+import { SsnSeField } from './SsnSeField'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = {
@@ -89,6 +90,9 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           autoFocus={autoFocus}
         />
       )
+
+    case 'ssn-se':
+      return <SsnSeField field={field} />
 
     case 'extra-buildings':
       return <ExtraBuildingsField field={field} onSubmit={onSubmit} loading={loading} />

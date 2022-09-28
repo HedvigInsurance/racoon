@@ -18059,6 +18059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"personnummer@npm:3.1.4":
+  version: 3.1.4
+  resolution: "personnummer@npm:3.1.4"
+  checksum: 25bd050637e42ba6db1cd9fb5bdfb2fdfbe04fe3d44225bf6514cc5b08f62d9ce68db3b8c79444bd0b2d67601eba888307459b037310eb45e3b0b631a0f61889
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^0.2.1":
   version: 0.2.1
   resolution: "picocolors@npm:0.2.1"
@@ -20872,6 +20879,7 @@ __metadata:
     next: 12.2.2
     next-i18next: 12.0.1
     next-router-mock: 0.7.4
+    personnummer: 3.1.4
     pino: 8.6.0
     pino-datadog-transport: 1.2.2
     pino-pretty: 9.1.0

@@ -13,7 +13,7 @@ export const SE_STUDENT_APARTMENT: Template = {
       items: [
         {
           field: {
-            type: 'text',
+            type: 'ssn-se',
             name: 'ssn',
             label: { key: 'Personal number' },
             required: true,
