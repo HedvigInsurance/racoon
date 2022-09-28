@@ -5,7 +5,7 @@ import {
   PriceIntentQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
-import { JSONData } from '@/services/PriceForm/PriceForm.types'
+import { Template } from '@/services/PriceForm/PriceForm.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { createPriceIntent, updatePriceIntentData } from './PriceIntent.helpers'
 import { PriceIntentCreateParams } from './priceIntent.types'
@@ -17,20 +17,20 @@ export class PriceIntentService {
     private readonly shopSession: ShopSession,
   ) {}
 
-  public async create({ productName, initialData }: PriceIntentCreateParams) {
+  public async create({ productName, priceTemplate }: PriceIntentCreateParams) {
     const priceIntent = await createPriceIntent({
       apolloClient: this.apolloClient,
       shopSessionId: this.shopSession.id,
       productName,
     })
 
-    this.persister.save(priceIntent.id, this.getPriceIntentKey(productName))
+    this.persister.save(priceIntent.id, this.getPriceIntentKey(priceTemplate.name))
 
-    if (initialData) {
+    if (priceTemplate.initialData) {
       return await updatePriceIntentData({
         apolloClient: this.apolloClient,
         priceIntentId: priceIntent.id,
-        data: initialData,
+        data: priceTemplate.initialData,
       })
     }
 
@@ -55,8 +55,8 @@ export class PriceIntentService {
     return null
   }
 
-  public async fetch(productName: string, initialData?: JSONData) {
-    const priceIntentId = this.persister.fetch(this.getPriceIntentKey(productName))
+  public async fetch({ productName, priceTemplate }: FetchParams) {
+    const priceIntentId = this.persister.fetch(this.getPriceIntentKey(priceTemplate.name))
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
@@ -64,14 +64,19 @@ export class PriceIntentService {
       if (priceIntent) return priceIntent
     }
 
-    return await this.create({ productName, initialData })
+    return await this.create({ productName, priceTemplate })
   }
 
-  private getPriceIntentKey(productName: string) {
-    return `HEDVIG_${this.shopSession.id}_${productName}`
+  private getPriceIntentKey(templateName: string) {
+    return `HEDVIG_${this.shopSession.id}_${templateName}`
   }
 
-  public clear(productName: string) {
-    this.persister.reset(this.getPriceIntentKey(productName))
+  public clear(templateName: string) {
+    this.persister.reset(this.getPriceIntentKey(templateName))
   }
+}
+
+type FetchParams = {
+  productName: string
+  priceTemplate: Template
 }

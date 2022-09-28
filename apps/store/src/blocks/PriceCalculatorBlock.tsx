@@ -44,7 +44,7 @@ export const PriceCalculatorBlock = ({ blok }: Props) => {
       gradient: product.gradient,
     })
 
-    priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(product.name)
+    priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(priceTemplate.name)
     refreshData()
   }
 
