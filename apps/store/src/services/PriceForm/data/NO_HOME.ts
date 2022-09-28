@@ -1,6 +1,7 @@
 import { Template } from '../PriceForm.types'
 
 export const NO_HOME: Template = {
+  name: 'NO_HOME',
   sections: [
     {
       id: 'your-info',
