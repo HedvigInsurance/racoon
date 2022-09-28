@@ -10,9 +10,12 @@ export const Locale = {
   EnDk: 'en-DK',
 } as const
 
-export type LocaleType = typeof Locale
-export type LocaleValue = typeof Locale[keyof typeof Locale]
-export type RoutingLocale = Lowercase<LocaleValue>
+export type IsoLocale = typeof Locale[keyof typeof Locale]
+// Would be different in the future - 'se' for Sweden+Swedish, for example
+export type RoutingLocale = Lowercase<IsoLocale>
+export type NextLocale = RoutingLocale | 'default'
+// Make all locale-taking functions accept this:
+export type SomeLocale = IsoLocale | NextLocale
 
 export enum Language {
   Sv = 'sv',
