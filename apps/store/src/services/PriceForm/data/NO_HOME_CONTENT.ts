@@ -1,7 +1,10 @@
 import { Template } from '../PriceForm.types'
 
-export const NO_HOME: Template = {
-  name: 'NO_HOME',
+export const NO_HOME_CONTENT: Template = {
+  name: 'NO_HOME_CONTENT',
+  initialData: {
+    isStudent: false,
+  },
   sections: [
     {
       id: 'your-info',
@@ -10,26 +13,8 @@ export const NO_HOME: Template = {
       items: [
         {
           field: {
-            type: 'text',
-            name: 'firstName',
-            label: { key: 'First name' },
-            required: true,
-          },
-          layout: { columnSpan: 6 },
-        },
-        {
-          field: {
-            type: 'text',
-            name: 'lastName',
-            label: { key: 'Last name' },
-            required: true,
-          },
-          layout: { columnSpan: 6 },
-        },
-        {
-          field: {
             type: 'date',
-            name: 'dateOfBirth',
+            name: 'birthDate',
             label: { key: 'Date of birth' },
             required: true,
           },
@@ -54,7 +39,7 @@ export const NO_HOME: Template = {
               },
               {
                 label: { key: 'I own' },
-                value: 'BRF',
+                value: 'OWN',
               },
             ],
             required: true,
@@ -75,8 +60,8 @@ export const NO_HOME: Template = {
             type: 'text',
             name: 'zipCode',
             label: { key: 'Postal code' },
-            minLength: 5,
-            maxLength: 5,
+            minLength: 4,
+            maxLength: 4,
             required: true,
           },
           layout: { columnSpan: 3 },
