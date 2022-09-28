@@ -13,4 +13,4 @@ export type PriceIntentDataUpdateParams = Omit<
   'shopSessionId'
 >
 
-export type PriceIntent = Exclude<PriceIntentQuery['shopSession']['priceIntent'], null | undefined>
+export type PriceIntent = Exclude<PriceIntentQuery['priceIntent'], null | undefined>

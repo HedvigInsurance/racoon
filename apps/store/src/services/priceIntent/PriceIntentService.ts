@@ -41,9 +41,9 @@ export class PriceIntentService {
     try {
       const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
         query: PriceIntentDocument,
-        variables: { shopSessionId: this.shopSession.id, priceIntentId },
+        variables: { priceIntentId },
       })
-      return result.data?.shopSession.priceIntent ?? null
+      return result.data?.priceIntent ?? null
     } catch (error) {
       // TODO: should probably be logged by DD-logger, but we don't want to include it in
       // the client bundle. This function is only called from the server but the class is
