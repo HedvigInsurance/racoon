@@ -55,10 +55,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       shopSession,
       apolloClient,
     })
-    const priceIntent = await priceIntentService.fetch(
-      story.content.productId,
-      priceTemplate.initialData,
-    )
+    const priceIntent = await priceIntentService.fetch({
+      productName: story.content.productId,
+      priceTemplate,
+    })
 
     return {
       props: {
