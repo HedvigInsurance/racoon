@@ -1,5 +1,13 @@
 import { ApolloClient } from '@apollo/client'
 import { GetServerSidePropsContext } from 'next'
+import {
+  PriceIntentCreateDocument,
+  PriceIntentCreateMutation,
+  PriceIntentCreateMutationVariables,
+  PriceIntentDataUpdateDocument,
+  PriceIntentDataUpdateMutation,
+  PriceIntentDataUpdateMutationVariables,
+} from '@/services/apollo/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -35,4 +43,48 @@ type Params = {
   res: GetServerSidePropsContext['res']
   shopSession: ShopSession
   apolloClient: ApolloClient<unknown>
+}
+
+type UpdatePriceIntentDataParams = PriceIntentDataUpdateMutationVariables & {
+  apolloClient: ApolloClient<unknown>
+}
+
+export const updatePriceIntentData = async (params: UpdatePriceIntentDataParams) => {
+  const { apolloClient, priceIntentId, data } = params
+
+  const updatedResult = await apolloClient.mutate<
+    PriceIntentDataUpdateMutation,
+    PriceIntentDataUpdateMutationVariables
+  >({
+    mutation: PriceIntentDataUpdateDocument,
+    variables: { priceIntentId, data },
+  })
+
+  const updatedPriceIntent = updatedResult.data?.priceIntentDataUpdate.priceIntent
+  if (!updatedPriceIntent) {
+    throw new Error('Could not update price intent with initial data')
+  }
+
+  return updatedPriceIntent
+}
+
+type CreatePriceIntentParams = PriceIntentCreateMutationVariables & {
+  apolloClient: ApolloClient<unknown>
+}
+
+export const createPriceIntent = async (params: CreatePriceIntentParams) => {
+  const { apolloClient, shopSessionId, productName } = params
+
+  const result = await apolloClient.mutate<
+    PriceIntentCreateMutation,
+    PriceIntentCreateMutationVariables
+  >({
+    mutation: PriceIntentCreateDocument,
+    variables: { shopSessionId, productName },
+  })
+
+  const priceIntent = result.data?.priceIntentCreate
+  if (!priceIntent) throw new Error('Could not create price intent')
+
+  return priceIntent
 }

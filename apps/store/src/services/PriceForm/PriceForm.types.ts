@@ -25,6 +25,7 @@ export type Label = {
 }
 
 export type Template = {
+  initialData?: JSONData
   sections: Array<TemplateSection>
 }
 

@@ -44,18 +44,21 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       getGlobalStory({ locale, preview }),
     ])
 
+    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
+    if (priceTemplate === undefined) {
+      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
+    }
+
     const priceIntentService = priceIntentServiceInitServerSide({
       req,
       res,
       shopSession,
       apolloClient,
     })
-    const priceIntent = await priceIntentService.fetch(story.content.productId)
-
-    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
-    if (priceTemplate === undefined) {
-      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
-    }
+    const priceIntent = await priceIntentService.fetch(
+      story.content.productId,
+      priceTemplate.initialData,
+    )
 
     return {
       props: {

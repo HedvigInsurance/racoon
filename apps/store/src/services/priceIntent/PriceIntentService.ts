@@ -1,14 +1,13 @@
 import { ApolloClient } from '@apollo/client'
 import {
-  PriceIntentCreateDocument,
-  PriceIntentCreateMutation,
-  PriceIntentCreateMutationVariables,
   PriceIntentDocument,
   PriceIntentQuery,
   PriceIntentQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
+import { JSONData } from '@/services/PriceForm/PriceForm.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { createPriceIntent, updatePriceIntentData } from './PriceIntent.helpers'
 import { PriceIntentCreateParams } from './priceIntent.types'
 
 export class PriceIntentService {
@@ -18,22 +17,22 @@ export class PriceIntentService {
     private readonly shopSession: ShopSession,
   ) {}
 
-  public async create({ productName }: PriceIntentCreateParams) {
-    const result = await this.apolloClient.mutate<
-      PriceIntentCreateMutation,
-      PriceIntentCreateMutationVariables
-    >({
-      mutation: PriceIntentCreateDocument,
-      variables: {
-        shopSessionId: this.shopSession.id,
-        productName,
-      },
+  public async create({ productName, initialData }: PriceIntentCreateParams) {
+    const priceIntent = await createPriceIntent({
+      apolloClient: this.apolloClient,
+      shopSessionId: this.shopSession.id,
+      productName,
     })
 
-    const priceIntent = result.data?.priceIntentCreate
-    if (!priceIntent) throw new Error('Could not create price intent')
-
     this.persister.save(priceIntent.id, this.getPriceIntentKey(productName))
+
+    if (initialData) {
+      return await updatePriceIntentData({
+        apolloClient: this.apolloClient,
+        priceIntentId: priceIntent.id,
+        data: initialData,
+      })
+    }
 
     return priceIntent
   }
@@ -56,7 +55,7 @@ export class PriceIntentService {
     return null
   }
 
-  public async fetch(productName: string) {
+  public async fetch(productName: string, initialData?: JSONData) {
     const priceIntentId = this.persister.fetch(this.getPriceIntentKey(productName))
 
     if (priceIntentId) {
@@ -65,7 +64,7 @@ export class PriceIntentService {
       if (priceIntent) return priceIntent
     }
 
-    return await this.create({ productName })
+    return await this.create({ productName, initialData })
   }
 
   private getPriceIntentKey(productName: string) {
