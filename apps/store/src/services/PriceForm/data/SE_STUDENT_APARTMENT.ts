@@ -1,6 +1,7 @@
 import { Template } from '../PriceForm.types'
 
 export const SE_STUDENT_APARTMENT: Template = {
+  name: 'SE_STUDENT_APARTMENT',
   initialData: {
     isStudent: true,
   },
