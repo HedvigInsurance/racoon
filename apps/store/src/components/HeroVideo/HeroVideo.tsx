@@ -60,7 +60,7 @@ export const HeroVideo = ({
     */}
     <StyledVideo playsInline autoPlay muted loop preload="auto" poster={poster} height={height}>
       {sources.map((source) => (
-        <source key={source.format} src={source.url} type={source.format} />
+        <source key={source.format || source.url} src={source.url} type={source.format} />
       ))}
     </StyledVideo>
     <ChildrenWrapper childrenPadding={childrenPadding}>{children}</ChildrenWrapper>
