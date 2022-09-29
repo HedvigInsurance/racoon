@@ -1,4 +1,4 @@
-import { isoLocale, locales } from '@/lib/l10n/locales'
+import { toIsoLocale, locales } from '@/lib/l10n/locales'
 import { CountryCode, Language, Locale, CountryLabel, UiLocale, IsoLocale } from './types'
 
 export type CountryData = {
@@ -40,8 +40,8 @@ const localeCountries = Object.fromEntries(
 ) as Record<IsoLocale, CountryLabel>
 
 export const getCountryByLocale = (locale: UiLocale): CountryData => {
-  locale = isoLocale(locale)
-  const countryData = countries[localeCountries[isoLocale(locale)]]
+  locale = toIsoLocale(locale)
+  const countryData = countries[localeCountries[toIsoLocale(locale)]]
   if (!countryData) {
     throw new Error(`Failed to find country by locale=${locale}`)
   }

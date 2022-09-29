@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { countries } from '@/lib/l10n/countries'
-import { routingLocale } from '@/lib/l10n/locales'
-import { NextLocale } from '@/lib/l10n/types'
+import { toRoutingLocale } from '@/lib/l10n/locales'
 import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 export const config = {
@@ -10,8 +9,7 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
-  const locale = req.nextUrl.locale as NextLocale
-  if (isSupportedLocale(locale)) {
+  if (isSupportedLocale(req.nextUrl.locale)) {
     return
   }
 
@@ -19,13 +17,13 @@ export function middleware(req: NextRequest) {
   const nextURL = req.nextUrl.clone()
   switch (country) {
     case countries.NO.id:
-      nextURL.pathname = routingLocale(countries.NO.defaultLocale)
+      nextURL.pathname = toRoutingLocale(countries.NO.defaultLocale)
       break
     case countries.DK.id:
-      nextURL.pathname = routingLocale(countries.DK.defaultLocale)
+      nextURL.pathname = toRoutingLocale(countries.DK.defaultLocale)
       break
     case countries.SE.id:
-      nextURL.pathname = routingLocale(countries.SE.defaultLocale)
+      nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
       break
     default:
       console.debug(`Routing visitor from ${country} to country selector`)

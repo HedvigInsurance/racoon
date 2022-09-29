@@ -11,7 +11,7 @@ import { getCountryLocale, countries } from '@/lib/l10n/countries'
 import {
   getLocaleOrFallback,
   LocaleField,
-  routingLocale,
+  toRoutingLocale,
   TEMP_TRANSLATIONS,
 } from '@/lib/l10n/locales'
 import { IsoLocale } from '@/lib/l10n/types'
@@ -85,7 +85,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
-    router.push(router.asPath, undefined, { locale: routingLocale(locale) })
+    router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()

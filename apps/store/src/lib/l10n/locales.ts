@@ -52,17 +52,17 @@ export enum LocaleField {
   Language = 'language',
 }
 
-export const isoLocale = (locale: UiLocale): IsoLocale => {
+export const toIsoLocale = (locale: UiLocale): IsoLocale => {
   const parts = locale.split('-', 2)
   return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}` as IsoLocale
 }
 
-export const routingLocale = (locale: UiLocale) => locale.toLowerCase() as RoutingLocale
+export const toRoutingLocale = (locale: UiLocale) => locale.toLowerCase() as RoutingLocale
 
 // TODO: Make fallback market-specific
 export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {
   if (!isSupportedLocale(locale)) {
     return locales[FALLBACK_LOCALE]
   }
-  return locales[isoLocale(locale)]
+  return locales[toIsoLocale(locale)]
 }

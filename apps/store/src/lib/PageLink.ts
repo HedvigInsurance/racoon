@@ -1,5 +1,5 @@
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
-import { routingLocale } from '@/lib/l10n/locales'
+import { toRoutingLocale } from '@/lib/l10n/locales'
 import { UiLocale } from '@/lib/l10n/types'
 
 type BaseParams = { locale?: UiLocale }
@@ -7,7 +7,7 @@ type BaseParams = { locale?: UiLocale }
 type ProductPage = BaseParams & { slug: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
 
-const localePrefix = (locale?: UiLocale) => (locale ? `/${routingLocale(locale)}` : '')
+const localePrefix = (locale?: UiLocale) => (locale ? `/${toRoutingLocale(locale)}` : '')
 
 // TODO: Check if nextjs would add locales for us automatically
 export const PageLink = {

@@ -29,7 +29,7 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { routingLocale } from '@/lib/l10n/locales'
+import { toRoutingLocale } from '@/lib/l10n/locales'
 import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isSupportedLocale } from '@/utils/isSupportedLocale'
@@ -190,7 +190,7 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     if (slugParts[0] === 'global') return
     pageLinks.push({
       link,
-      locale: routingLocale(localeFragment),
+      locale: toRoutingLocale(localeFragment),
       slugParts,
     })
   })
