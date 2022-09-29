@@ -50,6 +50,7 @@ type InputSelectProps = InputBaseProps & {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
   required?: boolean
   placeholder?: string
+  autoFocus?: boolean
 }
 
 export const InputSelect = ({

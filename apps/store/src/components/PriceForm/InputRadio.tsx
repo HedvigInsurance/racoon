@@ -59,6 +59,7 @@ type InputRadioProps = InputBaseProps & {
   onValueChange?: (value: string) => void
   required?: boolean
   placeholder?: string
+  autoFocus?: boolean
 }
 
 export const InputRadio = ({
@@ -68,6 +69,7 @@ export const InputRadio = ({
   value,
   defaultValue,
   required,
+  autoFocus,
   ...rest
 }: InputRadioProps) => {
   return (
@@ -81,8 +83,8 @@ export const InputRadio = ({
           required={required}
         >
           <SpaceFlex direction="horizontal" space={0.5}>
-            {options.map(({ label, value: optionValue }) => (
-              <Item key={optionValue} value={optionValue}>
+            {options.map(({ label, value: optionValue }, index) => (
+              <Item key={optionValue} value={optionValue} autoFocus={autoFocus && index === 0}>
                 <InnerWrapper>
                   <IndicatorWrapper>
                     <Indicator>
