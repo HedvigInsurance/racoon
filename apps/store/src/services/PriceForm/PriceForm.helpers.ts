@@ -1,4 +1,5 @@
 import { NO_HOME_CONTENT } from './data/NO_HOME_CONTENT'
+import { NO_TRAVEL } from './data/NO_TRAVEL'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
 import { SE_APARTMENT } from './data/SE_APARTMENT'
 import { SE_HOUSE } from './data/SE_HOUSE'
@@ -12,6 +13,7 @@ const TEMPLATES: Record<string, Template | undefined> = {
   SE_ACCIDENT,
   SE_STUDENT_APARTMENT,
   NO_HOME_CONTENT,
+  NO_TRAVEL,
 }
 
 export const fetchPriceTemplate = (id: string) => {
