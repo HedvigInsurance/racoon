@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = asy
 }) => {
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo(undefined, req, res)
 
   const [shopSession, globalStory] = await Promise.all([
     getCurrentShopSessionServerSide({ req, res, apolloClient }),

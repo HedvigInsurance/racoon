@@ -1,9 +1,13 @@
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
+import { getCookie } from 'cookies-next'
+import { GetServerSidePropsContext } from 'next'
 import { useMemo } from 'react'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
+export const AUTH_COOKIE_KEY = 'HEDVIG_ACCESS_TOKEN'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
@@ -15,22 +19,40 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-  credentials: 'same-origin',
+const authLink = setContext((_, { headers }) => {
+  const accessToken = getCookie(AUTH_COOKIE_KEY)
+
+  return {
+    headers: {
+      ...headers,
+      authorization: accessToken ?? '',
+    },
+  }
 })
 
-const createApolloClient = () => {
+const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
+
+const createApolloClient = (accessToken?: string) => {
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, httpLink]),
+    link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
+    headers: { authorization: accessToken ?? '' },
   })
 }
 
-export const initializeApollo = (initialState: unknown = null) => {
-  const _apolloClient = apolloClient ?? createApolloClient()
+export const initializeApollo = (
+  initialState: unknown = null,
+  req?: GetServerSidePropsContext['req'],
+  res?: GetServerSidePropsContext['res'],
+) => {
+  const _apolloClient =
+    apolloClient ??
+    (() => {
+      const accessToken = getCookie(AUTH_COOKIE_KEY, { req, res })
+      return createApolloClient(typeof accessToken === 'string' ? accessToken : undefined)
+    })()
 
   if (initialState) {
     const existingCache = _apolloClient.extract()

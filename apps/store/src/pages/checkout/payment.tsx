@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo()
+    const apolloClient = initializeApollo(undefined, req, res)
     const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
 
     // @TODO: remove after implementing After Sign connection flow

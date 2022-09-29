@@ -1,8 +1,12 @@
 import styled from '@emotion/styled'
+import { setCookie } from 'cookies-next'
 import { Button, InputField, Space } from 'ui'
+import { AUTH_COOKIE_KEY } from '@/services/apollo/client'
 import { CheckoutContactDetailsPageProps } from './CheckoutContactDetails.types'
 import { CheckoutContactDetailsPageLayout } from './CheckoutContactDetailsPageLayout'
 import { useHandleSubmitContactDetailsAndSign } from './useHandleSubmitContactDetailsAndSign'
+
+const MAX_AGE = 60 * 60 * 24 // 24 hours
 
 export const CheckoutSignPage = ({
   checkoutId,
@@ -13,8 +17,14 @@ export const CheckoutSignPage = ({
   const [handleSubmit, loading] = useHandleSubmitContactDetailsAndSign({
     checkoutId,
     checkoutSigningId,
-    onSuccess() {
-      // @TODO: add access token to session
+    onSuccess(accessToken) {
+      setCookie(AUTH_COOKIE_KEY, accessToken, {
+        maxAge: MAX_AGE,
+        expires: new Date(Date.now() + MAX_AGE * 1000),
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+      })
       onSignSuccess()
     },
   })

@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   if (!locale || locale === 'default') return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo()
+    const apolloClient = initializeApollo(undefined, req, res)
     const shopSession = await getCurrentShopSessionServerSide({
       req,
       res,
