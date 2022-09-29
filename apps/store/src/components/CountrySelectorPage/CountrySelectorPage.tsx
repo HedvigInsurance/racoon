@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { routingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { toRoutingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Container = styled.div({
@@ -26,12 +26,8 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
           We’re not quite sure where you’re visiting us from. Select your country below.
         </Heading>
         <CountryOptionsContainer>
-          {Object.keys(countries).map((country) => (
-            <Link
-              key={country}
-              href={`/${routingLocale(countries[country as keyof typeof countries].defaultLocale)}`}
-              passHref
-            >
+          {Object.entries(countries).map(([country, countryData]) => (
+            <Link key={country} href={`/${toRoutingLocale(countryData.defaultLocale)}`} passHref>
               <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
             </Link>
           ))}

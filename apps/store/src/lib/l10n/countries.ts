@@ -1,12 +1,12 @@
-import { getLocaleOrFallback, normalizeLocale } from './locales'
-import { CountryCode, Language, Locale, CountryLabel, LocaleValue } from './types'
+import { toIsoLocale, locales } from '@/lib/l10n/locales'
+import { CountryCode, Language, Locale, CountryLabel, UiLocale, IsoLocale } from './types'
 
 export type CountryData = {
   id: CountryLabel
   adtractionScriptSrc?: string
   countryCode: CountryCode
-  defaultLocale: LocaleValue
-  locales: LocaleValue[]
+  defaultLocale: IsoLocale
+  locales: IsoLocale[]
 }
 
 export const countries: Record<CountryLabel, CountryData> = {
@@ -37,23 +37,24 @@ const localeCountries = Object.fromEntries(
   Object.entries(countries).flatMap(([countryId, countryData]) =>
     countryData.locales.map((locale) => [locale, countryId]),
   ),
-) as Record<LocaleValue, CountryLabel>
+) as Record<IsoLocale, CountryLabel>
 
-export const getCountryByLocale = (locale: string): CountryData => {
-  const countryData = countries[localeCountries[normalizeLocale(locale) as LocaleValue]]
+export const getCountryByLocale = (locale: UiLocale): CountryData => {
+  locale = toIsoLocale(locale)
+  const countryData = countries[localeCountries[toIsoLocale(locale)]]
   if (!countryData) {
     throw new Error(`Failed to find country by locale=${locale}`)
   }
   return countryData
 }
 
-export const getCountryLocale = (country: CountryLabel, language: Language): LocaleValue => {
+export const getCountryLocale = (country: CountryLabel, language: Language): IsoLocale => {
   const countryData = countries[country as CountryLabel]
   if (!countryData) {
     throw new Error(`Failed to find country id=${country}`)
   }
   return (
-    countryData.locales.find((locale) => getLocaleOrFallback(locale).language === language) ||
+    countryData.locales.find((locale) => locales[locale].language === language) ||
     countryData.defaultLocale
   )
 }

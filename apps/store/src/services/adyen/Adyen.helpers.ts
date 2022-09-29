@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import { useMemo } from 'react'
-import { Locale, LocaleValue } from '@/lib/l10n/types'
+import { IsoLocale, Locale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 
@@ -49,7 +49,7 @@ export const usePaymentMethodConfiguration = () => {
   )
 }
 
-export const localeToAdyenLocale = (locale: LocaleValue) => {
+export const localeToAdyenLocale = (locale: IsoLocale) => {
   switch (locale) {
     case Locale.DaDk:
     case Locale.NbNo:

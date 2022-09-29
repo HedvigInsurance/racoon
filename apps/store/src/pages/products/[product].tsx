@@ -11,6 +11,7 @@ import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
+import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string
@@ -30,7 +31,7 @@ const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
   const { locale, req, res, params: { product: slug } = {}, preview } = context
 
-  if (!locale || locale === 'default') return { notFound: true }
+  if (!isSupportedLocale(locale)) return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)

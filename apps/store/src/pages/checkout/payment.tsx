@@ -4,13 +4,12 @@ import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage
 import { fetchAvailablePaymentMethods } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.helpers'
 import { CheckoutPaymentPageAdyenProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
 import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
-import { normalizeLocale } from '@/lib/l10n/locales'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { isLocale } from '@/utils/isLocale'
+import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageAdyenProps> = (props) => {
   return <CheckoutPaymentPageAdyen {...props} />
@@ -19,10 +18,9 @@ const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageAdyenProps> = (p
 export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProps> = async (
   context,
 ) => {
-  const { req, res, locale: rawLocale } = context
+  const { req, res, locale } = context
 
-  const locale = normalizeLocale(rawLocale)
-  if (!isLocale(locale)) return { notFound: true }
+  if (!isSupportedLocale(locale)) return { notFound: true }
 
   try {
     const apolloClient = initializeApollo()

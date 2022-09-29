@@ -11,10 +11,10 @@ import { getCountryLocale, countries } from '@/lib/l10n/countries'
 import {
   getLocaleOrFallback,
   LocaleField,
-  routingLocale,
+  toRoutingLocale,
   TEMP_TRANSLATIONS,
 } from '@/lib/l10n/locales'
-import { LocaleValue } from '@/lib/l10n/types'
+import { IsoLocale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -84,8 +84,8 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }
 
   const router = useRouter()
-  const onChangeLocale = (locale: LocaleValue) => {
-    router.push(router.asPath, undefined, { locale: routingLocale(locale) })
+  const onChangeLocale = (locale: IsoLocale) => {
+    router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
