@@ -10,7 +10,7 @@ export const SE_HOUSE: Template = {
       items: [
         {
           field: {
-            type: 'text',
+            type: 'ssn-se',
             name: 'ssn',
             label: { key: 'Personal number' },
             required: true,
