@@ -2,11 +2,13 @@ import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { setupPriceCalculatorForm } from '@/components/PriceCalculatorForm/PriceCalculatorForm.helpers'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { getCountryByLocale } from '@/lib/l10n/countries'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import logger from '@/services/logger/server'
+import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
 
@@ -42,13 +44,20 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       getGlobalStory({ locale, preview }),
     ])
 
-    const { template, priceIntent } = await setupPriceCalculatorForm({
+    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
+    if (priceTemplate === undefined) {
+      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
+    }
+
+    const priceIntentService = priceIntentServiceInitServerSide({
+      req,
+      res,
       shopSession,
       apolloClient,
+    })
+    const priceIntent = await priceIntentService.fetch({
       productName: story.content.productId,
-      templateId: story.content.priceFormTemplateId,
-      request: req,
-      response: res,
+      priceTemplate,
     })
 
     return {
@@ -56,7 +65,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         ...(await serverSideTranslations(locale)),
         story,
         globalStory,
-        priceFormTemplate: template,
+        priceTemplate,
         priceIntent,
         shopSessionId: shopSession.id,
         shopSession,
@@ -64,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       },
     }
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return { notFound: true }
   }
 }

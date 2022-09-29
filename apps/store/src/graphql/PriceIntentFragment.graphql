@@ -1,6 +1,7 @@
 fragment PriceIntentFragment on PriceIntent {
   id
   data
+  suggestedData
   variants {
     id
     title

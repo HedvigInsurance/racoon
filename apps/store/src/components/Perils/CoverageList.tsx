@@ -18,9 +18,9 @@ export const CoverageList = ({ heading, items, variant }: CoverageListProps) => 
         {items.map((item, index) => (
           <Item key={index}>
             {variant === 'covered' ? (
-              <CheckIcon color="currentColor" size="10px" />
+              <CheckIcon color="currentColor" size="0.75rem" />
             ) : (
-              <CrossIcon color="currentColor" size="10px" />
+              <CrossIcon color="currentColor" size="0.75rem" />
             )}
             {item}
           </Item>

@@ -5,7 +5,7 @@ export type MinusIconProps = {
   size?: string
 }
 
-export const MinusIcon = ({ color = theme.colors.gray900, size = '24px' }: MinusIconProps) => {
+export const MinusIcon = ({ color = theme.colors.gray900, size = '1.5rem' }: MinusIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

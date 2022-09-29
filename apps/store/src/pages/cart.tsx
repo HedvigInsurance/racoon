@@ -6,6 +6,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { getCountryByLocale } from '@/lib/l10n/countries'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
+import logger from '@/services/logger/server'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 
@@ -69,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
       },
     }
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return { notFound: true }
   }
 }

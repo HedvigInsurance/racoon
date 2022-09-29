@@ -5,7 +5,7 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
-import { FooterBlock, FooterLink, FooterSection } from '@/blocks/FooterBlock'
+import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
@@ -22,12 +22,17 @@ import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
-import { NavItemBlock, NestedNavContainerBlock, HeaderBlock } from '@/blocks/TopMenuBlock'
+import {
+  NavItemBlock,
+  NestedNavContainerBlock,
+  HeaderBlock,
+  HeaderBlockProps,
+} from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { countries, getCountryByLocale } from '@/lib/l10n/countries'
-import { getLocaleOrFallback } from '@/lib/l10n/locales'
-import { CountryCode } from '@/lib/l10n/types'
+import { normalizeLocale, routingLocale } from '@/lib/l10n/locales'
+import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { isLocale } from '@/utils/isLocale'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -62,13 +67,14 @@ export type StoryblokImage = {
 export type LinkField = {
   id: string
   url: string
-  linktype: 'story' | 'url'
-  // Assumes we're using resolve_links=url
-  story: {
+  linktype: 'multilink' | 'story' | 'url'
+  story?: {
     id: number
     uuid: string
     name: string
     slug: string
+    // Same as "full_slug" by default.
+    // Can be overridden in Storyblok editor: "Entry configuration" > "Real path".
     url: string
     full_slug: string
   }
@@ -84,9 +90,10 @@ export type ProductStory = StoryData & {
   }
 }
 
-type GlobalStory = StoryData & {
+export type GlobalStory = StoryData & {
   content: StoryData['content'] & {
-    navMenuContainer: Array<SbBlokData>
+    header: ExpectedBlockType<HeaderBlockProps>
+    footer: ExpectedBlockType<FooterBlockProps>
   }
 }
 
@@ -97,7 +104,7 @@ type LinkData = Pick<
 
 type PageLink = {
   link: LinkData
-  countryId: CountryCode
+  locale: RoutingLocale
   slugParts: string[]
 }
 
@@ -159,16 +166,10 @@ type StoryOptions = {
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
-  const country = getCountryByLocale(locale)
   const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
   }
-  // Special case: in Storyblok default language means country default, ie Swedish in Sweden, Danish in Denmark, etc
-  // Therefore we're not passing language code from NextJs locale here
-  if (locale !== country.defaultLocale) {
-    params.language = getLocaleOrFallback(locale).language
-  }
-  return await fetchStory(getStoryblokApi(), `${country.id}/${slug}`, params)
+  return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {
@@ -184,16 +185,13 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     if (link.is_folder) {
       return
     }
-    const [countryId, ...slugParts] = link.slug.split('/')
-    if (!(countryId in countries)) {
-      return
-    }
-    if (slugParts[0] === 'global') {
-      return
-    }
+    const [firstFragment, ...slugParts] = link.slug.split('/')
+    const locale = normalizeLocale(firstFragment)
+    if (!isLocale(locale)) return
+    if (slugParts[0] === 'global') return
     pageLinks.push({
       link,
-      countryId: countryId as CountryCode,
+      locale: routingLocale(locale),
       slugParts,
     })
   })

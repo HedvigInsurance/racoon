@@ -3,8 +3,6 @@ import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { countries } from '@/lib/l10n/countries'
-import { routingLocale } from '@/lib/l10n/locales'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -50,16 +48,16 @@ export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryPa
     return { notFound: true }
   }
 
-  return { props: { ...(await serverSideTranslations(locale)), story, globalStory } }
+  return {
+    props: { ...(await serverSideTranslations(locale)), story, globalStory },
+    revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
+  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pageLinks = await getNonProductPageLinks()
-  const paths: RoutingPath[] = []
-  pageLinks.forEach(({ countryId, slugParts }) => {
-    countries[countryId].locales.forEach((locale) => {
-      paths.push({ params: { slug: slugParts }, locale: routingLocale(locale) })
-    })
+  const paths: RoutingPath[] = pageLinks.map(({ locale, slugParts }) => {
+    return { params: { slug: slugParts }, locale }
   })
   return {
     paths,

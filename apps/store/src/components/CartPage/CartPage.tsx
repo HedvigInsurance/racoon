@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { FormEvent, useCallback } from 'react'
-import { Button, Heading, Space } from 'ui'
+import { Button, Heading, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
@@ -49,9 +49,9 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
         <Footer>
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
-            <Button fullWidth>
-              <Link href={PageLink.checkout()}>Check Out</Link>
-            </Button>
+            <Link href={PageLink.checkout()} passHref>
+              <LinkButton fullWidth>Check Out</LinkButton>
+            </Link>
           </Space>
         </Footer>
       </Space>

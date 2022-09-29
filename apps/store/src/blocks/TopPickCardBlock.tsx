@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { TopPickCard } from '@/components/TopPickCard/TopPickCard'
 import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
+import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type TopPickCardBlockProps = SbBaseBlockProps<{
   title: string
@@ -13,7 +14,7 @@ export type TopPickCardBlockProps = SbBaseBlockProps<{
 
 export const TopPickCardBlock = ({ blok }: TopPickCardBlockProps) => {
   return (
-    <Link href={blok.link.url} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
       <StyledAnchor>
         <TopPickCard
           title={blok.title}

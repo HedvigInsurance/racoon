@@ -22,7 +22,7 @@
     "storybook:build": "turbo run storybook:build",
     "chromatic": "turbo run chromatic"
   },
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "yarn@3.2.3",
   "lint-staged": {
     "*.md": [
       "prettier --ignore-unknown --write"
@@ -38,6 +38,6 @@
     "husky": "8.0.1",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
-    "turbo": "1.4.7"
+    "turbo": "1.5.4"
   }
 }
