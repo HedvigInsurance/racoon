@@ -13,12 +13,13 @@ export type HeadingBlockProps = SbBaseBlockProps<{
   text: string
   variant: HeadingProps['variant']
   as: HeadingProps['as']
+  color: HeadingProps['color']
 }>
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
   return (
     <Wrapper>
-      <Heading as={blok.as} variant={blok.variant} {...storyblokEditable(blok)}>
+      <Heading as={blok.as} variant={blok.variant} color={blok.color} {...storyblokEditable(blok)}>
         {blok.text}
       </Heading>
     </Wrapper>
