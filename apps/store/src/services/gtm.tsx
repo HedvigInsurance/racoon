@@ -10,9 +10,21 @@ import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
+type GTMEnvironment = 'local' | 'staging' | 'prod'
+
+const getGtmEnvironment = (): GTMEnvironment => {
+  const env = process.env.NEXT_PUBLIC_GTM_ENV
+
+  if (env && ['local', 'staging', 'prod'].includes(env)) {
+    return env as GTMEnvironment
+  }
+
+  throw new Error(`Invalid environment ${env}, expected <local|staging|prod>`)
+}
+
 type GTMUserProperties = {
   country: CountryCode
-  environment?: string
+  environment: GTMEnvironment
 }
 
 type GTMPageData = {
@@ -60,14 +72,14 @@ export const GTMBodyScript = () => (
   </noscript>
 )
 
-export const useGTMRouteEvents = () => {
+export const useGTMEvents = () => {
   const router = useRouter()
   const { countryCode } = useCurrentCountry()
 
   useEffect(() => {
     pushToGTMDataLayer({
       userProperties: {
-        environment: process.env.NEXT_PUBLIC_GTM_ENV,
+        environment: getGtmEnvironment(),
         country: countryCode,
       },
     })

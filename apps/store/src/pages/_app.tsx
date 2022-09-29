@@ -4,7 +4,7 @@ import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
 import { useApollo } from '@/services/apollo/client'
-import { GTMAppScript, useGTMRouteEvents } from '@/services/gtm'
+import { GTMAppScript, useGTMEvents } from '@/services/gtm'
 import * as Datadog from '@/services/logger/client'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -23,7 +23,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || ((page) => page)
 
-  useGTMRouteEvents()
+  useGTMEvents()
 
   return (
     <>
