@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { SSRConfig } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 
@@ -10,8 +11,12 @@ declare module 'next' {
   export type NextPageWithLayout<T = Record<string, unknown>> = PageWithLayout<T>
 }
 
+type GlobalAppProps = SSRConfig & {
+  shopSessionId?: string
+}
+
 declare module 'next/app' {
-  export type AppPropsWithLayout = AppProps & {
+  export type AppPropsWithLayout = AppProps<GlobalAppProps> & {
     Component: PageWithLayout
   }
 }
