@@ -91,6 +91,7 @@ export const SE_STUDENT_APARTMENT: Template = {
             name: 'numberCoInsured',
             label: { key: 'Number of co-insured' },
             required: true,
+            defaultValue: 0,
           },
           layout: { columnSpan: 6 },
         },
