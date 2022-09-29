@@ -1,15 +1,17 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { countries } from '@/lib/l10n/countries'
-import { normalizeLocale, routingLocale } from '@/lib/l10n/locales'
-import { isLocale } from '@/utils/isLocale'
+import { routingLocale } from '@/lib/l10n/locales'
+import { NextLocale } from '@/lib/l10n/types'
+import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 export const config = {
   matcher: '/',
 }
 
 export function middleware(req: NextRequest) {
-  if (isLocale(normalizeLocale(req.nextUrl.locale))) {
+  const locale = req.nextUrl.locale as NextLocale
+  if (isSupportedLocale(locale)) {
     return
   }
 

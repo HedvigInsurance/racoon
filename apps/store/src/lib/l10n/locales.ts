@@ -1,13 +1,14 @@
-import { Language, Locale, LocaleValue, RoutingLocale } from './types'
+import { isSupportedLocale } from '@/utils/isSupportedLocale'
+import { IsoLocale, Language, Locale, RoutingLocale, UiLocale } from './types'
 
 export const FALLBACK_LOCALE = Locale.EnSe
 
 export type LocaleData = {
-  locale: LocaleValue
+  locale: IsoLocale
   language: Language
 }
 
-export const locales = {
+export const locales: Record<IsoLocale, LocaleData> = {
   [Locale.SvSe]: {
     locale: Locale.SvSe,
     language: Language.Sv,
@@ -51,18 +52,17 @@ export enum LocaleField {
   Language = 'language',
 }
 
-export const normalizeLocale = (locale: string | undefined): string | undefined => {
-  if (!locale?.includes('-')) {
-    return locale
-  }
+export const isoLocale = (locale: UiLocale): IsoLocale => {
   const parts = locale.split('-', 2)
-  return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}`
+  return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}` as IsoLocale
 }
 
-// We use en-SE ISO format for settings but downcase it for routing to get nicer URLs
-export const routingLocale = (locale: LocaleValue) => locale.toLowerCase() as RoutingLocale
+export const routingLocale = (locale: UiLocale) => locale.toLowerCase() as RoutingLocale
 
 // TODO: Make fallback market-specific
-export const getLocaleOrFallback = (locale: LocaleValue | string | undefined): LocaleData => {
-  return locales[normalizeLocale(locale) as LocaleValue] ?? locales[FALLBACK_LOCALE]
+export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {
+  if (!isSupportedLocale(locale)) {
+    return locales[FALLBACK_LOCALE]
+  }
+  return locales[isoLocale(locale)]
 }

@@ -9,6 +9,7 @@ import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 type Props = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string
@@ -50,7 +51,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   const { req, res, locale, preview } = context
 
-  if (!locale || locale === 'default') return { notFound: true }
+  if (!isSupportedLocale(locale)) return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)
 

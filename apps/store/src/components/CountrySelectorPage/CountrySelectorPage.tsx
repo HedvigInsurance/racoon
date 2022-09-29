@@ -26,12 +26,8 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
           We’re not quite sure where you’re visiting us from. Select your country below.
         </Heading>
         <CountryOptionsContainer>
-          {Object.keys(countries).map((country) => (
-            <Link
-              key={country}
-              href={`/${routingLocale(countries[country as keyof typeof countries].defaultLocale)}`}
-              passHref
-            >
+          {Object.entries(countries).map(([country, countryData]) => (
+            <Link key={country} href={`/${routingLocale(countryData.defaultLocale)}`} passHref>
               <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
             </Link>
           ))}

@@ -14,8 +14,8 @@ export type IsoLocale = typeof Locale[keyof typeof Locale]
 // Would be different in the future - 'se' for Sweden+Swedish, for example
 export type RoutingLocale = Lowercase<IsoLocale>
 export type NextLocale = RoutingLocale | 'default'
-// Make all locale-taking functions accept this:
-export type SomeLocale = IsoLocale | NextLocale
+// TODO: Make all locale-taking functions accept this:
+export type UiLocale = IsoLocale | RoutingLocale
 
 export enum Language {
   Sv = 'sv',
