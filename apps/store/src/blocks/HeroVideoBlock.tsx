@@ -7,7 +7,7 @@ type HeroVideoBlockProps = SbBaseBlockProps<{
   video: StoryblokImage
   format: string
   height: number
-  poster: StoryblokImage
+  poster?: StoryblokImage
   headingsPadding: string
   headings: ExpectedBlockType<HeadingBlockProps>
 }>
@@ -19,7 +19,7 @@ export const HeroVideoBlock = ({ blok }: HeroVideoBlockProps) => {
     <HeroVideo
       sources={[{ url: blok.video.filename, format: blok.format }]}
       height={blok.height}
-      poster={blok.poster.filename}
+      poster={blok.poster?.filename}
       childrenPadding={blok.headingsPadding}
     >
       {headingBlocks.map((nestedBlock) => (
