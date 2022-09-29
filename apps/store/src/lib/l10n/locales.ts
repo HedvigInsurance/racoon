@@ -1,43 +1,36 @@
-import { CountryCode, Language, Locale, LocaleValue, RoutingLocale } from './types'
+import { Language, Locale, LocaleValue, RoutingLocale } from './types'
 
 export const FALLBACK_LOCALE = Locale.EnSe
 
 export type LocaleData = {
   locale: LocaleValue
   language: Language
-  country: CountryCode
 }
 
 export const locales = {
   [Locale.SvSe]: {
     locale: Locale.SvSe,
     language: Language.Sv,
-    country: CountryCode.Se,
   },
   [Locale.EnSe]: {
     locale: Locale.EnSe,
     language: Language.En,
-    country: CountryCode.Se,
   },
   [Locale.NbNo]: {
     locale: Locale.NbNo,
     language: Language.No,
-    country: CountryCode.No,
   },
   [Locale.EnNo]: {
     locale: Locale.EnNo,
     language: Language.En,
-    country: CountryCode.No,
   },
   [Locale.DaDk]: {
     locale: Locale.DaDk,
     language: Language.Da,
-    country: CountryCode.Dk,
   },
   [Locale.EnDk]: {
     locale: Locale.EnDk,
     language: Language.En,
-    country: CountryCode.Dk,
   },
 }
 
