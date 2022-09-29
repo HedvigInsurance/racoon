@@ -36,6 +36,11 @@ export const HeroVideoVimeo = ({ videoId, height, children, childrenPadding }: H
   return (
     <HeroVideoWrapper height={height}>
       <StyledIframe
+        // NOTE that only certain videos will allow background=1..
+        // Maybe only our own videos which we allow to be so? Haven't researched.
+        // Read more here: https://vimeo.zendesk.com/hc/en-us/articles/115011183028-Embed-background-and-chromeless-videos
+        // This video works: 76979871 (a demo video from Vimeo), but this one doesn't: 22439234 (most viewed, the one I use in the screenshot).
+        // When videos don't allow background=1 the controls, logo, title etc will be overlayed anyway.
         src={`https://player.vimeo.com/video/${videoId}?background=1`}
         height={height}
         frameBorder="0"
