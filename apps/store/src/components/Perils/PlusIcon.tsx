@@ -5,7 +5,7 @@ export type PlusIconProps = {
   size?: string
 }
 
-export const PlusIcon = ({ color = theme.colors.gray900, size = '24px' }: PlusIconProps) => {
+export const PlusIcon = ({ color = theme.colors.gray900, size = '1.5rem' }: PlusIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

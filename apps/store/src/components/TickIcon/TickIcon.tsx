@@ -7,7 +7,11 @@ export type TickIconProps = {
   width?: number
 }
 
-export const TickIcon = ({ color = theme.colors.gray900, size = 24, width = 2 }: TickIconProps) => (
+export const TickIcon = ({
+  color = theme.colors.gray900,
+  size = '1.5rem',
+  width = 2,
+}: TickIconProps) => (
   <StyledSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" size={size}>
     <g transform="translate(1 1)" fill="none" fillRule="evenodd">
       <path

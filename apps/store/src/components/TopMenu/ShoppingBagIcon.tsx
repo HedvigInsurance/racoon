@@ -7,7 +7,7 @@ export type ShoppingBagIconProps = {
 
 export const ShoppingBagIcon = ({
   color = theme.colors.gray900,
-  size = '24px',
+  size = '1.5rem',
 }: ShoppingBagIconProps) => {
   return (
     <svg

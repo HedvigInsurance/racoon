@@ -86,7 +86,7 @@ export const InputRadio = ({
                 <InnerWrapper>
                   <IndicatorWrapper>
                     <Indicator>
-                      <TickIcon size={20} />
+                      <TickIcon size={'1.25rem'} />
                     </Indicator>
                   </IndicatorWrapper>
 

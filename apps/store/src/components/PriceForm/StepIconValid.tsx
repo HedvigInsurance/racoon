@@ -5,7 +5,7 @@ import { TickIcon } from './TickIcon'
 
 const StyledStep = styled.div(({ theme }) => ({
   width: STEP_ICON_SIZE,
-  height: 22,
+  height: STEP_ICON_SIZE,
   borderRadius: '50%',
   backgroundColor: theme.colors.purple500,
   display: 'flex',
@@ -18,7 +18,7 @@ export const StepIconValid = () => {
 
   return (
     <StyledStep>
-      <TickIcon size={16} color={theme.colors.gray900} />
+      <TickIcon size="1rem" color={theme.colors.gray900} />
     </StyledStep>
   )
 }
