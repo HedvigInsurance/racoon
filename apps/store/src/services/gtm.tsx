@@ -5,12 +5,26 @@
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
+import { CountryCode } from '@/lib/l10n/types'
+import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
+type GTMEnvironment = 'local' | 'staging' | 'prod'
+
+const getGtmEnvironment = (): GTMEnvironment => {
+  const env = process.env.NEXT_PUBLIC_GTM_ENV
+
+  if (env && ['local', 'staging', 'prod'].includes(env)) {
+    return env as GTMEnvironment
+  }
+
+  throw new Error(`Invalid environment ${env}, expected <local|staging|prod>`)
+}
+
 type GTMUserProperties = {
-  market: string
-  environment: 'development' | 'production' | 'test'
+  country: CountryCode
+  environment: GTMEnvironment
 }
 
 type GTMPageData = {
@@ -30,16 +44,6 @@ type DataLayerObject = {
 const pushToGTMDataLayer = (obj: DataLayerObject) => {
   if (!window.dataLayer) window.dataLayer = []
   window.dataLayer.push(obj)
-}
-
-export const pageview = (url: string) => {
-  pushToGTMDataLayer({
-    event: 'virtual_page_view',
-    pageData: {
-      page: url,
-      title: document.title,
-    },
-  })
 }
 
 export const GTMAppScript = () => (
@@ -68,10 +72,30 @@ export const GTMBodyScript = () => (
   </noscript>
 )
 
-export const useGTMRouteEvents = () => {
+export const useGTMEvents = () => {
   const router = useRouter()
+  const { countryCode } = useCurrentCountry()
 
   useEffect(() => {
+    pushToGTMDataLayer({
+      userProperties: {
+        environment: getGtmEnvironment(),
+        country: countryCode,
+      },
+    })
+  }, [countryCode])
+
+  useEffect(() => {
+    const pageview = (url: string) => {
+      pushToGTMDataLayer({
+        event: 'virtual_page_view',
+        pageData: {
+          page: url,
+          title: document.title,
+        },
+      })
+    }
+
     router.events.on('routeChangeComplete', pageview)
 
     return () => {
