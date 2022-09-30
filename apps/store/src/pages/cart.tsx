@@ -3,13 +3,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { getCountryByLocale } from '@/lib/l10n/countries'
+import { getCountryByLocale } from '@/lib/l10n/countryUtils'
+import { isSupportedLocale } from '@/lib/l10n/localeUtils'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 type Props = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string

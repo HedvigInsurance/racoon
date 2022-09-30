@@ -5,10 +5,10 @@ import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPag
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
+import { isSupportedLocale } from '@/lib/l10n/localeUtils'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = async ({
   req,

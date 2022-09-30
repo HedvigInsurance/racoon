@@ -1,4 +1,4 @@
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
+import { isSupportedLocale } from './localeUtils'
 
 describe('isSupportedLocale', () => {
   it.each([

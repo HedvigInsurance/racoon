@@ -1,5 +1,5 @@
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
-import { toRoutingLocale } from '@/lib/l10n/locales'
+import { toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { UiLocale } from '@/lib/l10n/types'
 
 type BaseParams = { locale?: UiLocale }

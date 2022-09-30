@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { CountrySelectorPage } from '@/components/CountrySelectorPage/CountrySelectorPage'
-import { FALLBACK_LOCALE, toRoutingLocale } from '@/lib/l10n/locales'
+import { FALLBACK_LOCALE } from '@/lib/l10n/locales'
+import { isSupportedLocale, toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (!isSupportedLocale(locale)) {

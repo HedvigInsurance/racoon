@@ -2,7 +2,8 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { toRoutingLocale, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Container = styled.div({
