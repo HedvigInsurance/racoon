@@ -8,6 +8,7 @@ import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
+import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
@@ -26,8 +27,11 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
     const apolloClient = initializeApollo(undefined, req, res)
     const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
 
+    const isPaymentBeforeSign =
+      shopSession.checkout.paymentConnectionFlow === PaymentConnectionFlow.BeforeSign
+
     // @TODO: remove after implementing After Sign connection flow
-    if (shopSession.checkout.paymentConnectionFlow === PaymentConnectionFlow.AfterSign) {
+    if (!isPaymentBeforeSign) {
       return { redirect: { destination: PageLink.confirmation({ locale }), permanent: false } }
     }
 
@@ -36,12 +40,23 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       countryCode: shopSession.countryCode,
     })
 
+    const checkoutSigning = await fetchCurrentCheckoutSigning({
+      req,
+      apolloClient,
+      checkoutId: shopSession.checkout.id,
+    })
+
+    if (checkoutSigning?.completion) {
+      return { redirect: { destination: PageLink.confirmation({ locale }), permanent: false } }
+    }
+
     return {
       props: {
         ...(await serverSideTranslations(locale)),
         shopSessionId: shopSession.id,
         isPaymentConnected: context.query.authStatus === AuthStatus.Success,
-
+        checkoutId: shopSession.checkout.id,
+        checkoutSigningId: checkoutSigning?.id ?? null,
         paymentMethodsResponse,
         currency: shopSession.currencyCode,
         cost: {

@@ -1,17 +1,34 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { Button, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
+import * as Auth from '@/services/Auth/Auth'
+import { useHandleSignCheckout } from '@/services/Checkout/useHandleSignCheckout'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageAdyenProps } from './CheckoutPaymentPage.types'
 
 export const CheckoutPaymentPageAdyen = ({
   paymentMethodsResponse,
   isPaymentConnected,
+  checkoutId,
+  checkoutSigningId,
   ...props
 }: CheckoutPaymentPageAdyenProps) => {
+  const router = useRouter()
+  const [startSign, loadingSign] = useHandleSignCheckout({
+    checkoutId,
+    checkoutSigningId,
+    onSuccess(accessToken) {
+      Auth.save(accessToken)
+      router.push(PageLink.confirmation())
+    },
+  })
+
+  const isCompleteButtonDisabled = !isPaymentConnected || loadingSign
+
   return (
     <CheckoutPaymentPage
       Header={<a href={PageLink.checkoutContactDetails()}>Return to personal details</a>}
@@ -29,7 +46,7 @@ export const CheckoutPaymentPageAdyen = ({
         </Space>
         <AdyenCheckout paymentMethodsResponse={paymentMethodsResponse} onSuccess={() => {}} />
         <Space y={0.5}>
-          <Button disabled={!isPaymentConnected} fullWidth>
+          <Button onClick={startSign} disabled={isCompleteButtonDisabled} fullWidth>
             Complete purchase
           </Button>
           <p>

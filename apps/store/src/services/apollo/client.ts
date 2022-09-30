@@ -2,12 +2,11 @@ import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } fr
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
-import { getCookie } from 'cookies-next'
 import { GetServerSidePropsContext } from 'next'
 import { useMemo } from 'react'
+import * as Auth from '@/services/Auth/Auth'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
-export const AUTH_COOKIE_KEY = 'HEDVIG_ACCESS_TOKEN'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
@@ -20,7 +19,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const authLink = setContext((_, { headers }) => {
-  const accessToken = getCookie(AUTH_COOKIE_KEY)
+  const accessToken = Auth.getAccessToken()
 
   return {
     headers: {
@@ -47,12 +46,7 @@ export const initializeApollo = (
   req?: GetServerSidePropsContext['req'],
   res?: GetServerSidePropsContext['res'],
 ) => {
-  const _apolloClient =
-    apolloClient ??
-    (() => {
-      const accessToken = getCookie(AUTH_COOKIE_KEY, { req, res })
-      return createApolloClient(typeof accessToken === 'string' ? accessToken : undefined)
-    })()
+  const _apolloClient = apolloClient ?? createApolloClient(Auth.getAccessToken(req, res))
 
   if (initialState) {
     const existingCache = _apolloClient.extract()
