@@ -17,4 +17,7 @@ module.exports = {
     config.experiments.topLevelAwait = true
     return config
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }

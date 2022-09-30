@@ -16,7 +16,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
-    <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ? false : true}>
+    <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ?? false}>
       <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
