@@ -2,6 +2,7 @@
  * Based on https://github.com/vercel/next.js/tree/canary/examples/with-google-tag-manager
  */
 
+import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
@@ -10,21 +11,27 @@ import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 
-type GTMEnvironment = 'local' | 'staging' | 'prod'
+const GTM_ENVIRONMENTS = ['local', 'staging', 'prod'] as const
+type GTMEnvironment = typeof GTM_ENVIRONMENTS[number]
 
-const getGtmEnvironment = (): GTMEnvironment => {
+const getGtmEnvironment = () => {
   const env = process.env.NEXT_PUBLIC_GTM_ENV
 
-  if (env && ['local', 'staging', 'prod'].includes(env)) {
+  if (GTM_ENVIRONMENTS.includes(env as GTMEnvironment)) {
     return env as GTMEnvironment
   }
 
-  throw new Error(`Invalid environment ${env}, expected <local|staging|prod>`)
+  const message = `Unknown GTM environment ${env}, expected <${GTM_ENVIRONMENTS.join('|')}>`
+  if (GTM_ID) {
+    throw new Error(message)
+  } else {
+    datadogLogs.logger.warn(message)
+  }
 }
 
 type GTMUserProperties = {
   country: CountryCode
-  environment: GTMEnvironment
+  environment?: GTMEnvironment
 }
 
 type GTMPageData = {
@@ -46,31 +53,39 @@ const pushToGTMDataLayer = (obj: DataLayerObject) => {
   window.dataLayer.push(obj)
 }
 
-export const GTMAppScript = () => (
-  <Script
-    id="gtag-base"
-    strategy="afterInteractive"
-    dangerouslySetInnerHTML={{
-      __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+export const GTMAppScript = () => {
+  if (!GTM_ID) return null
+
+  return (
+    <Script
+      id="gtag-base"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer', '${GTM_ID}');`,
-    }}
-  />
-)
-
-export const GTMBodyScript = () => (
-  <noscript>
-    <iframe
-      src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-      height="0"
-      width="0"
-      style={{ display: 'none', visibility: 'hidden' }}
-      title="GTM"
+      }}
     />
-  </noscript>
-)
+  )
+}
+
+export const GTMBodyScript = () => {
+  if (!GTM_ID) return null
+
+  return (
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+        height="0"
+        width="0"
+        style={{ display: 'none', visibility: 'hidden' }}
+        title="GTM"
+      />
+    </noscript>
+  )
+}
 
 export const useGTMEvents = () => {
   const router = useRouter()
