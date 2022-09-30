@@ -1,5 +1,7 @@
+import { countries } from '@/lib/l10n/countries'
 import { isSupportedLocale } from '@/utils/isSupportedLocale'
-import { IsoLocale, Language, Locale, RoutingLocale, UiLocale } from './types'
+import routingLocales from '../../routingLocales'
+import { CountryLabel, IsoLocale, Language, Locale, RoutingLocale, UiLocale } from './types'
 
 export const FALLBACK_LOCALE = Locale.EnSe
 
@@ -52,12 +54,43 @@ export enum LocaleField {
   Language = 'language',
 }
 
+const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
+const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
+routingLocales.forEach((routingLocale) => {
+  let isoLocale: IsoLocale
+  if (routingLocale.length === 2) {
+    const countryData = countries[routingLocale.toUpperCase() as CountryLabel]
+    if (countryData) {
+      isoLocale = countryData.defaultLocale
+    } else {
+      throw new Error(
+        `Incorrect configuration, failed to find country by routing locale <${routingLocale}>`,
+      )
+    }
+  }
+  const localeParts = routingLocale.split('-', 2)
+  isoLocale = `${localeParts[0].toLowerCase()}-${localeParts[1].toUpperCase()}` as IsoLocale
+  routingToIsoLocales[routingLocale] = isoLocale
+  isoToRoutingLocales[isoLocale] = routingLocale
+})
+
 export const toIsoLocale = (locale: UiLocale): IsoLocale => {
-  const parts = locale.split('-', 2)
-  return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}` as IsoLocale
+  if (isRoutingLocale(locale)) return routingToIsoLocales[locale]
+  return locale
 }
 
-export const toRoutingLocale = (locale: UiLocale) => locale.toLowerCase() as RoutingLocale
+export const toRoutingLocale = (locale: UiLocale): RoutingLocale => {
+  if (isIsoLocale(locale)) return isoToRoutingLocales[locale]
+  return locale
+}
+
+export const isIsoLocale = (locale: string): locale is IsoLocale => {
+  return locale in isoToRoutingLocales
+}
+
+export const isRoutingLocale = (locale: string): locale is RoutingLocale => {
+  return locale in routingToIsoLocales
+}
 
 // TODO: Make fallback market-specific
 export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {

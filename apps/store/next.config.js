@@ -11,6 +11,9 @@ const nextConfig = {
   },
   productionBrowserSourceMaps: true,
   i18n,
+  publicRuntimeConfig: {
+    routingLocales: i18n.locales.filter((locale) => locale !== 'default'),
+  },
 }
 
 module.exports = nextConfig
