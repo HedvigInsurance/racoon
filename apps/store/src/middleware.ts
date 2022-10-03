@@ -12,8 +12,17 @@ export function middleware(req: NextRequest) {
     return
   }
 
-  const country = req.geo?.country
   const nextURL = req.nextUrl.clone()
+  const cookiePath = req.cookies.get('HEDVIG_LOCALE')
+
+  if (cookiePath) {
+    nextURL.pathname = cookiePath
+    console.log(`Found user preference in cookies: ${cookiePath}`)
+    return NextResponse.redirect(nextURL)
+  }
+
+  const country = req.geo?.country
+
   switch (country) {
     case countries.NO.id:
       nextURL.pathname = toRoutingLocale(countries.NO.defaultLocale)
@@ -25,13 +34,13 @@ export function middleware(req: NextRequest) {
       nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
       break
     default:
-      console.debug(`Routing visitor from ${country} to country selector`)
+      console.log(`Routing visitor from ${country} to country selector`)
       nextURL.pathname = '/country-selector'
       return NextResponse.rewrite(nextURL)
   }
 
   // DD logger cannot be used in middleware since Pino isn't support in Edge runtime (2022-09-27//siau)
   // Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime
-  console.debug(`Routing visitor from ${country} to ${nextURL}`)
+  console.log(`Routing visitor from ${country} to ${nextURL}`)
   return NextResponse.redirect(nextURL)
 }

@@ -14,6 +14,7 @@ import { getLocaleOrFallback, toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { IsoLocale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -62,6 +63,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
+  const cookiePersister = new CookiePersister('HEDVIG_LOCALE')
 
   const countryList = Object.keys(countries).map((country) => ({
     name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
@@ -82,6 +84,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
+    cookiePersister.save(toRoutingLocale(locale))
     router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
