@@ -32,6 +32,7 @@ export const checkBlockType = <BlockData extends SbBlokData>(
 export type StoryblokFetchParams = {
   version: 'draft' | 'published'
   language?: Language
+  resolve_relations?: string
 }
 
 export const fetchStory = async (

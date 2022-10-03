@@ -19,6 +19,7 @@ import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
+import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
@@ -99,6 +100,12 @@ export type GlobalStory = StoryData & {
   }
 }
 
+export type ReferenceStory = StoryData & {
+  content: StoryData['content'] & {
+    body: Array<SbBlokData>
+  }
+}
+
 type LinkData = Pick<
   StoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -125,6 +132,7 @@ export const initStoryblok = () => {
     FooterBlock,
     FooterLink,
     FooterSection,
+    ReusableBlockReference,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
@@ -172,6 +180,7 @@ type StoryOptions = {
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
+    resolve_relations: 'reusableBlockReference.reference',
   }
   return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
 }
