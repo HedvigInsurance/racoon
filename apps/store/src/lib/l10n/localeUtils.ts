@@ -4,7 +4,7 @@ import { IsoLocale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
 Object.values(locales).forEach((localeData) => {
-  const { locale: isoLocale, routingPath: routingLocale } = localeData
+  const { locale: isoLocale, routingLocale } = localeData
   routingToIsoLocales[routingLocale] = isoLocale
   isoToRoutingLocales[isoLocale] = routingLocale
 })

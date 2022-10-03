@@ -50,7 +50,7 @@ export const AdyenCheckout = ({ onSuccess, paymentMethodsResponse }: Props) => {
 }
 
 const useAdyenConfiguration = () => {
-  const { locale, routingPath } = useCurrentLocale()
+  const { locale, routingLocale } = useCurrentLocale()
   const { t } = useTranslation()
   const paymentMethodConfiguration = usePaymentMethodConfiguration()
 
@@ -76,10 +76,10 @@ const useAdyenConfiguration = () => {
         'da-DK': { payButton: payButtonText },
         'en-US': { payButton: payButtonText },
       },
-      returnUrl: PageLink.apiPaymentAdyenCallback({ locale: routingPath }),
+      returnUrl: PageLink.apiPaymentAdyenCallback({ locale: routingLocale }),
 
       paymentMethodConfiguration,
     }),
-    [locale, routingPath, payButtonText, paymentMethodConfiguration],
+    [locale, routingLocale, payButtonText, paymentMethodConfiguration],
   )
 }
