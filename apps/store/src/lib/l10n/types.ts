@@ -11,7 +11,6 @@ export const Locale = {
 } as const
 
 export type IsoLocale = typeof Locale[keyof typeof Locale]
-// Would be different in the future - 'se' for Sweden+Swedish, for example
 export type RoutingLocale = Lowercase<CountryLabel> | Lowercase<IsoLocale>
 export type NextLocale = RoutingLocale | 'default'
 export type UiLocale = IsoLocale | RoutingLocale

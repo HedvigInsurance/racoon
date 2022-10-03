@@ -1,26 +1,10 @@
-import { countries } from '@/lib/l10n/countries'
 import { FALLBACK_LOCALE, LocaleData, locales } from '@/lib/l10n/locales'
-import { CountryLabel, IsoLocale, Locale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
-import routingLocales from '../../routingLocales'
+import { IsoLocale, Locale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
-
-routingLocales.forEach((routingLocale) => {
-  let isoLocale: IsoLocale
-  if (routingLocale.length === 2) {
-    const countryData = countries[routingLocale.toUpperCase() as CountryLabel]
-    if (countryData) {
-      isoLocale = countryData.defaultLocale
-    } else {
-      throw new Error(
-        `Incorrect configuration, failed to find country by routing locale <${routingLocale}>`,
-      )
-    }
-  } else {
-    const localeParts = routingLocale.split('-', 2)
-    isoLocale = `${localeParts[0].toLowerCase()}-${localeParts[1].toUpperCase()}` as IsoLocale
-  }
+Object.values(locales).forEach((localeData) => {
+  const { locale: isoLocale, routingPath: routingLocale } = localeData
   routingToIsoLocales[routingLocale] = isoLocale
   isoToRoutingLocales[isoLocale] = routingLocale
 })
