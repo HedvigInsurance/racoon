@@ -1,17 +1,26 @@
-import { isSupportedLocale } from './localeUtils'
+import { isIsoLocale, isRoutingLocale } from './localeUtils'
 
-describe('isSupportedLocale', () => {
+describe('isIsoLocale', () => {
   it.each([
     ['en', false],
-    ['default', false],
     ['en-SE', true],
-    ['en-DK', true],
     ['sv-SE', true],
     ['SV-se', false],
-    ['sv', false],
-    ['', false],
     [undefined, false],
   ])('asserts %p expecting %p', (locale, expected) => {
-    expect(isSupportedLocale(locale)).toBe(expected)
+    expect(isIsoLocale(locale)).toBe(expected)
+  })
+})
+
+describe('isRoutingLocale', () => {
+  it.each([
+    ['se', true],
+    ['en-se', true],
+    ['en-SE', false],
+    ['sv-dk', false],
+    ['default', false],
+    [undefined, false],
+  ])('asserts %p expecting %p', (locale, expected) => {
+    expect(isRoutingLocale(locale)).toBe(expected)
   })
 })

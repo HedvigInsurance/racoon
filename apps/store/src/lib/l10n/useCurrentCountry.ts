@@ -4,5 +4,5 @@ import { getLocaleOrFallback } from '@/lib/l10n/localeUtils'
 
 export const useCurrentCountry = () => {
   const router = useRouter()
-  return getCountryByLocale(getLocaleOrFallback(router.locale).locale)
+  return getCountryByLocale(getLocaleOrFallback(router.locale).routingPath)
 }

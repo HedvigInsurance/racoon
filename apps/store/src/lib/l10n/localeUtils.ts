@@ -1,5 +1,5 @@
 import { FALLBACK_LOCALE, LocaleData, locales } from '@/lib/l10n/locales'
-import { IsoLocale, Locale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
+import { IsoLocale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
@@ -19,24 +19,17 @@ export const toRoutingLocale = (locale: UiLocale): RoutingLocale => {
   return locale
 }
 
-export const isIsoLocale = (locale: string): locale is IsoLocale => {
-  return locale in isoToRoutingLocales
+export const isIsoLocale = (locale: unknown): locale is IsoLocale => {
+  return typeof locale === 'string' && locale in isoToRoutingLocales
 }
 
-export const isRoutingLocale = (locale: string): locale is RoutingLocale => {
-  return locale in routingToIsoLocales
+export const isRoutingLocale = (locale: unknown): locale is RoutingLocale => {
+  return typeof locale === 'string' && locale in routingToIsoLocales
 }
 
-export const isSupportedLocale = (locale: unknown): locale is UiLocale => {
-  return (
-    typeof locale === 'string' &&
-    Object.values(Locale).some((x) => x === locale || toRoutingLocale(x) === locale)
-  )
-}
-
-// TODO: Make fallback market-specific
+// Fallback is global, use country.defaultLocale for country-specific fallback
 export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {
-  if (!isSupportedLocale(locale)) {
+  if (!isRoutingLocale(locale) && !isIsoLocale(locale)) {
     return locales[FALLBACK_LOCALE]
   }
   return locales[toIsoLocale(locale)]

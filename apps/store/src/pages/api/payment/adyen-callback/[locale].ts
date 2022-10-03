@@ -1,13 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
-import { isSupportedLocale } from '@/lib/l10n/localeUtils'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { MD: md, PaRes: pares } = req.body
 
-  if (!isSupportedLocale(req.query.locale))
-    return res.status(400).json({ message: 'Invalid locale' })
+  if (!isRoutingLocale(req.query.locale)) return res.status(400).json({ message: 'Invalid locale' })
 
   const locale = req.query.locale
 
