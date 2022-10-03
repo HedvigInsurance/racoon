@@ -32,10 +32,9 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { toRoutingLocale } from '@/lib/l10n/locales'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -198,12 +197,12 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     if (link.is_folder) {
       return
     }
-    const [localeFragment, ...slugParts] = link.slug.split('/')
-    if (!isSupportedLocale(localeFragment)) return
+    const [locale, ...slugParts] = link.slug.split('/')
+    if (!isRoutingLocale(locale)) return
     if (slugParts[0] === 'global') return
     pageLinks.push({
       link,
-      locale: toRoutingLocale(localeFragment),
+      locale,
       slugParts,
     })
   })

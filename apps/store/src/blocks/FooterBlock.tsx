@@ -7,13 +7,10 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { getCountryLocale, countries } from '@/lib/l10n/countries'
-import {
-  getLocaleOrFallback,
-  LocaleField,
-  toRoutingLocale,
-  TEMP_TRANSLATIONS,
-} from '@/lib/l10n/locales'
+import { countries } from '@/lib/l10n/countries'
+import { getCountryLocale } from '@/lib/l10n/countryUtils'
+import { LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { getLocaleOrFallback, toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { IsoLocale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'

@@ -1,37 +1,43 @@
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
-import { IsoLocale, Language, Locale, RoutingLocale, UiLocale } from './types'
+import { IsoLocale, Language, Locale, RoutingLocale } from './types'
 
 export const FALLBACK_LOCALE = Locale.EnSe
 
 export type LocaleData = {
   locale: IsoLocale
   language: Language
+  routingLocale: RoutingLocale
 }
 
 export const locales: Record<IsoLocale, LocaleData> = {
   [Locale.SvSe]: {
     locale: Locale.SvSe,
     language: Language.Sv,
+    routingLocale: 'se',
   },
   [Locale.EnSe]: {
     locale: Locale.EnSe,
     language: Language.En,
+    routingLocale: 'en-se',
   },
   [Locale.NbNo]: {
     locale: Locale.NbNo,
     language: Language.No,
+    routingLocale: 'no',
   },
   [Locale.EnNo]: {
     locale: Locale.EnNo,
     language: Language.En,
+    routingLocale: 'en-no',
   },
   [Locale.DaDk]: {
     locale: Locale.DaDk,
     language: Language.Da,
+    routingLocale: 'dk',
   },
   [Locale.EnDk]: {
     locale: Locale.EnDk,
     language: Language.En,
+    routingLocale: 'en-dk',
   },
 }
 
@@ -50,19 +56,4 @@ export const TEMP_TRANSLATIONS: Record<string, string> = {
 export enum LocaleField {
   Country = 'country',
   Language = 'language',
-}
-
-export const toIsoLocale = (locale: UiLocale): IsoLocale => {
-  const parts = locale.split('-', 2)
-  return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}` as IsoLocale
-}
-
-export const toRoutingLocale = (locale: UiLocale) => locale.toLowerCase() as RoutingLocale
-
-// TODO: Make fallback market-specific
-export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {
-  if (!isSupportedLocale(locale)) {
-    return locales[FALLBACK_LOCALE]
-  }
-  return locales[toIsoLocale(locale)]
 }

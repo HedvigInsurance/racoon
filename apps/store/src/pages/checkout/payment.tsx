@@ -4,12 +4,12 @@ import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage
 import { fetchAvailablePaymentMethods } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.helpers'
 import { CheckoutPaymentPageAdyenProps } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.types'
 import { CheckoutPaymentPageAdyen } from '@/components/CheckoutPaymentPage/CheckoutPaymentPageAdyen'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { isSupportedLocale } from '@/utils/isSupportedLocale'
 
 const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageAdyenProps> = (props) => {
   return <CheckoutPaymentPageAdyen {...props} />
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
 ) => {
   const { req, res, locale } = context
 
-  if (!isSupportedLocale(locale)) return { notFound: true }
+  if (!isRoutingLocale(locale)) return { notFound: true }
 
   try {
     const apolloClient = initializeApollo()

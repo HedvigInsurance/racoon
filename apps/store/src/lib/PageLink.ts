@@ -1,15 +1,14 @@
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
-import { toRoutingLocale } from '@/lib/l10n/locales'
-import { UiLocale } from '@/lib/l10n/types'
+import { RoutingLocale } from '@/lib/l10n/types'
 
-type BaseParams = { locale?: UiLocale }
+type BaseParams = { locale?: RoutingLocale }
 
 type ProductPage = BaseParams & { slug: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
 
-const localePrefix = (locale?: UiLocale) => (locale ? `/${toRoutingLocale(locale)}` : '')
+// We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
+const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
-// TODO: Check if nextjs would add locales for us automatically
 export const PageLink = {
   store: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/store`,
   product: ({ locale, slug }: ProductPage) => `${localePrefix(locale)}/products/${slug}`,
@@ -27,4 +26,4 @@ export const PageLink = {
 
   apiPaymentAdyenCallback: ({ locale }: Required<BaseParams>) =>
     `/api/payment/adyen-callback/${locale}`,
-}
+} as const
