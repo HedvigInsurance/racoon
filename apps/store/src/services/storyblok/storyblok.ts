@@ -6,7 +6,6 @@ import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
-import { GlobalReferenceBlock } from '@/blocks/GlobalReferenceBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
@@ -20,6 +19,7 @@ import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
+import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
@@ -100,6 +100,12 @@ export type GlobalStory = StoryData & {
   }
 }
 
+export type ReferenceStory = StoryData & {
+  content: StoryData['content'] & {
+    body: Array<SbBlokData>
+  }
+}
+
 type LinkData = Pick<
   StoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -126,7 +132,7 @@ export const initStoryblok = () => {
     FooterBlock,
     FooterLink,
     FooterSection,
-    GlobalReferenceBlock,
+    ReusableBlockReference,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
@@ -169,7 +175,6 @@ export const initStoryblok = () => {
 type StoryOptions = {
   locale: string
   preview?: boolean
-  resolve_relations?: string
 }
 
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
