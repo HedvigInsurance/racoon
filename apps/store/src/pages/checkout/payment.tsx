@@ -32,7 +32,12 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
 
     // @TODO: remove after implementing After Sign connection flow
     if (!isPaymentBeforeSign) {
-      return { redirect: { destination: PageLink.confirmation({ locale }), permanent: false } }
+      return {
+        redirect: {
+          destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
+          permanent: false,
+        },
+      }
     }
 
     const paymentMethodsResponse = await fetchAvailablePaymentMethods({
@@ -47,7 +52,12 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
     })
 
     if (checkoutSigning?.completion) {
-      return { redirect: { destination: PageLink.confirmation({ locale }), permanent: false } }
+      return {
+        redirect: {
+          destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
+          permanent: false,
+        },
+      }
     }
 
     return {
