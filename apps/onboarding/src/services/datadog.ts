@@ -15,6 +15,10 @@ export const initRum = () => {
       sampleRate: 100,
       trackInteractions: true,
       defaultPrivacyLevel: 'mask-user-input',
+
+      allowedTracingOrigins: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
+        ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
+        : undefined,
     })
 
     datadogRum.startSessionReplayRecording()
