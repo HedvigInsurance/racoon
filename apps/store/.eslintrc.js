@@ -2,6 +2,7 @@
 const config = require('scripts/eslint-preset-next')
 module.exports = {
   ...config,
+  ignorePatterns: ['src/services/graphql/*'],
   rules: {
     ...config.rules,
     // This allows us to use to auto-focus attribute on input elements (or all elements, really)
