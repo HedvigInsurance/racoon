@@ -31,7 +31,7 @@
     "framer-motion": "7.2.1",
     "graphql": "16.6.0",
     "graphql-tag": "2.12.6",
-    "jsdom": "20.0.0",
+    "jsdom": "20.0.1",
     "lodash-es": "4.17.21",
     "marked": "4.0.18",
     "next": "12.3.1",
