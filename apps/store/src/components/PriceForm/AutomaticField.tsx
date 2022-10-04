@@ -95,6 +95,16 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
       return <SsnSeField field={field} />
 
     case 'extra-buildings':
-      return <ExtraBuildingsField field={field} onSubmit={onSubmit} loading={loading} />
+      return (
+        <ExtraBuildingsField
+          field={field}
+          buildingOptions={field.buildingOptions.map((buildingOption) => ({
+            ...buildingOption,
+            name: buildingOption.label,
+          }))}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
+      )
   }
 }
