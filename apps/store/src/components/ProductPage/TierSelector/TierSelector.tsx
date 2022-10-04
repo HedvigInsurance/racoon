@@ -31,7 +31,7 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
     },
   })
 
-  const variantPrice = pricedVariant ? parseInt(pricedVariant.price.amount, 10) : undefined
+  const variantPrice = pricedVariant ? pricedVariant.price.amount : undefined
 
   return (
     <>

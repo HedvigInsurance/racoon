@@ -45,12 +45,12 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
         paymentMethodsResponse,
         currency: shopSession.currencyCode,
         cost: {
-          total: parseInt(shopSession.cart.cost.total.amount, 10),
-          subTotal: parseInt(shopSession.cart.cost.subtotal.amount, 10),
+          total: shopSession.cart.cost.total.amount,
+          subTotal: shopSession.cart.cost.subtotal.amount,
         },
         products: shopSession.cart.entries.map((line) => ({
           name: line.title,
-          cost: parseInt(line.price.amount, 10),
+          cost: line.price.amount,
         })),
       },
     }
