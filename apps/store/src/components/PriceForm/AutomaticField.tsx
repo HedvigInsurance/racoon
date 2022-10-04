@@ -100,7 +100,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           field={field}
           buildingOptions={field.buildingOptions.map((buildingOption) => ({
             ...buildingOption,
-            name: translateLabel(buildingOption.label),
+            name: buildingOption.label,
           }))}
           onSubmit={onSubmit}
           loading={loading}

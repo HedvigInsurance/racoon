@@ -36,7 +36,7 @@ type RadioField = BaseField<string> & {
   options: Array<FieldOption>
 }
 
-type FieldOption = {
+export type FieldOption = {
   label: Label
   value: string
 }
@@ -51,11 +51,7 @@ export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
   buildingOptions: Array<FieldOption>
 }
 
-export type ExtraBuilding = {
-  area: number
-  type: string
-  hasWaterConnected: boolean
-}
+export type ExtraBuilding = { area: number; type: string; hasWaterConnected: boolean }
 
 export type InputField =
   | TextField
