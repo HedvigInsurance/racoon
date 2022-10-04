@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { Space } from 'ui'
-import { PRODUCT_CARD_IMAGE_WIDTH_SMALL } from '@/components/ProductCard/ProductCard'
+import { Fragment } from 'react'
+import { mq, Space } from 'ui'
 
 export type ProductGridProps<Item> = {
   title?: string
@@ -18,7 +18,7 @@ export const ProductGrid = <ItemType extends { key: string }>({
       {title && <Title>{title}</Title>}
       <Grid>
         {items.map((item) => (
-          <GridItem key={item.key}>{children(item)}</GridItem>
+          <Fragment key={item.key}>{children(item)}</Fragment>
         ))}
       </Grid>
     </Wrapper>
@@ -38,11 +38,11 @@ const Title = styled.p(({ theme }) => ({
 
 const Grid = styled.div({
   display: 'grid',
-  gridTemplateColumns: `repeat(auto-fill, minmax(${PRODUCT_CARD_IMAGE_WIDTH_SMALL}, 1fr))`,
+  gridTemplateColumns: `repeat(2, 1fr)`,
   gap: '1.5rem 0.5rem',
-})
 
-const GridItem = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
+  [mq.md]: {
+    gridTemplateColumns: `repeat(4, 1fr)`,
+    gap: '2.5rem 1.5rem',
+  },
 })
