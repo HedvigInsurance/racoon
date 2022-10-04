@@ -4,7 +4,8 @@ import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
-import { getCountryByLocale } from '@/lib/l10n/countries'
+import { getCountryByLocale } from '@/lib/l10n/countryUtils'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
@@ -30,7 +31,7 @@ const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
   const { locale, req, res, params: { product: slug } = {}, preview } = context
 
-  if (!locale || locale === 'default') return { notFound: true }
+  if (!isRoutingLocale(locale)) return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)
@@ -46,7 +47,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
     if (priceTemplate === undefined) {
-      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
+      logger.error(new Error(`Unknown price template: ${story.content.priceFormTemplateId}`))
+      return { notFound: true }
     }
 
     const priceIntentService = priceIntentServiceInitServerSide({

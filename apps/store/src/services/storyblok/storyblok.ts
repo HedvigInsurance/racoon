@@ -8,6 +8,8 @@ import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
+import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -17,6 +19,7 @@ import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
+import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
@@ -29,10 +32,9 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { normalizeLocale, routingLocale } from '@/lib/l10n/locales'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
-import { isLocale } from '@/utils/isLocale'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -97,6 +99,12 @@ export type GlobalStory = StoryData & {
   }
 }
 
+export type ReferenceStory = StoryData & {
+  content: StoryData['content'] & {
+    body: Array<SbBlokData>
+  }
+}
+
 type LinkData = Pick<
   StoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -123,10 +131,13 @@ export const initStoryblok = () => {
     FooterBlock,
     FooterLink,
     FooterSection,
+    ReusableBlockReference,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
     HeroBlock,
+    HeroVideoBlock,
+    HeroVideoVimeoBlock,
     ImageBlock,
     InsurableLimitsBlock,
     NavItemBlock,
@@ -168,6 +179,7 @@ type StoryOptions = {
 export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
   const params: StoryblokFetchParams = {
     version: preview ? 'draft' : 'published',
+    resolve_relations: 'reusableBlockReference.reference',
   }
   return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
 }
@@ -185,13 +197,12 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     if (link.is_folder) {
       return
     }
-    const [firstFragment, ...slugParts] = link.slug.split('/')
-    const locale = normalizeLocale(firstFragment)
-    if (!isLocale(locale)) return
+    const [locale, ...slugParts] = link.slug.split('/')
+    if (!isRoutingLocale(locale)) return
     if (slugParts[0] === 'global') return
     pageLinks.push({
       link,
-      locale: routingLocale(locale),
+      locale,
       slugParts,
     })
   })

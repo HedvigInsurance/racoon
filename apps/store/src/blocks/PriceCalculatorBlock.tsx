@@ -40,7 +40,7 @@ export const PriceCalculatorBlock = ({ blok }: Props) => {
   const handleAddedToCart = (pricedVariant: PricedProductVariant) => {
     toastRef.current?.publish({
       name: product.displayName,
-      price: formatter.format(parseInt(pricedVariant.price.amount, 10)),
+      price: formatter.format(pricedVariant.price.amount),
       gradient: product.gradient,
     })
 

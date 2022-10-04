@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import useRouterRefresh from './use-router-refresh'
 
-const PATH_PATTERN = new RegExp(`\/(${LOCALE_URL_PARAMS.join('|')})\/`)
+const PATH_PATTERN = new RegExp(`/(${LOCALE_URL_PARAMS.join('|')})/`)
 
 export const hasLocale = (url: string) => {
   return PATH_PATTERN.test(url)
@@ -46,9 +46,9 @@ export const useForm = ({ action, method, onSuccess, onSubmit }: Options) => {
       const formData = new FormData(event.currentTarget)
       onSubmit?.(formData)
 
-      // @ts-ignore doesn't know about submitter
+      // @ts-expect-error React types doesn't know about "submitter"
       if (event.nativeEvent.submitter) {
-        // @ts-ignore
+        // @ts-expect-error React types doesn't know about "submitter"
         formData.append(event.nativeEvent.submitter.name, event.nativeEvent.submitter.value)
       }
 

@@ -54,12 +54,14 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     })
 
     const cartCost = shopSession.cart.cost
-    const total = parseInt(cartCost.total.amount, 10)
-    const subTotal = parseInt(cartCost.subtotal.amount, 10)
-    const crossOut = total !== subTotal ? subTotal : undefined
 
-    const cost: CheckoutPageProps['cost'] = { total, subTotal }
-    if (crossOut) cost.crossOut = crossOut
+    const cost: CheckoutPageProps['cost'] = {
+      total: cartCost.total.amount,
+      subTotal: cartCost.subtotal.amount,
+    }
+    if (cartCost.total.amount !== cartCost.subtotal.amount) {
+      cost.crossOut = cartCost.subtotal.amount
+    }
 
     return {
       props: {
@@ -69,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         products: shopSession.cart.entries.map((pricedVariant) => ({
           pricedVariantId: pricedVariant.id,
           name: pricedVariant.title,
-          cost: parseInt(pricedVariant.price.amount, 10) || 0,
+          cost: pricedVariant.price.amount,
           startDate: pricedVariant.startDate,
         })),
         cost,

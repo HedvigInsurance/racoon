@@ -7,16 +7,19 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { getCountryLocale, countries } from '@/lib/l10n/countries'
+import { countries } from '@/lib/l10n/countries'
+import { getCountryLocale } from '@/lib/l10n/countryUtils'
 import {
-  getLocaleOrFallback,
   LocaleField,
-  routingLocale,
+  LOCALE_COOKIE_EXPIRY,
+  LOCALE_COOKIE_KEY,
   TEMP_TRANSLATIONS,
 } from '@/lib/l10n/locales'
-import { LocaleValue } from '@/lib/l10n/types'
+import { getLocaleOrFallback, toRoutingLocale } from '@/lib/l10n/localeUtils'
+import { IsoLocale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -65,6 +68,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
+  const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
 
   const countryList = Object.keys(countries).map((country) => ({
     name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
@@ -84,8 +88,9 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   }
 
   const router = useRouter()
-  const onChangeLocale = (locale: LocaleValue) => {
-    router.push(router.asPath, undefined, { locale: routingLocale(locale) })
+  const onChangeLocale = (locale: IsoLocale) => {
+    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
+    router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()

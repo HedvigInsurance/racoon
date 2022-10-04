@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image'
-import { Locale, LocaleValue } from '@/lib/l10n/types'
+import { IsoLocale, Locale } from '@/lib/l10n/types'
 import { AppleDaDk } from './AppleDaDk'
 import { AppleEn } from './AppleEn'
 import { AppleNbNo } from './AppleNbNo'
@@ -11,10 +11,10 @@ import GoogleSvSe from './images/google-sv-se.png'
 
 export type AppStoreBadgeProps = {
   type: 'apple' | 'google'
-  locale: LocaleValue
+  locale: IsoLocale
 }
 
-const APPLE_BADGE: Record<LocaleValue, () => JSX.Element> = {
+const APPLE_BADGE: Record<IsoLocale, () => JSX.Element> = {
   [Locale.SvSe]: AppleSvSe,
   [Locale.EnSe]: AppleEn,
   [Locale.DaDk]: AppleDaDk,
@@ -23,7 +23,7 @@ const APPLE_BADGE: Record<LocaleValue, () => JSX.Element> = {
   [Locale.EnNo]: AppleEn,
 }
 
-const GOOGLE_BADGE_SRC: Record<LocaleValue, StaticImageData> = {
+const GOOGLE_BADGE_SRC: Record<IsoLocale, StaticImageData> = {
   [Locale.SvSe]: GoogleSvSe,
   [Locale.EnSe]: GoogleEn,
   [Locale.DaDk]: GoogleDaDk,

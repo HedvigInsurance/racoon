@@ -20,9 +20,10 @@ export const useHandleSubmitStartDates = ({ cartId, products, onSuccess }: Param
       const inputElement = event.currentTarget.elements.namedItem(product.pricedVariantId)
 
       if (!isDateInputElement(inputElement)) {
-        console.log('Unable to update start dates')
-        console.log('Input element', inputElement)
-        console.log('All elements', event.currentTarget.elements)
+        datadogLogs.logger.warn('Unable to update start dates', {
+          input: inputElement,
+          elements: event.currentTarget.elements,
+        })
         throw new Error(`No date input for ${product.pricedVariantId}`)
       }
 
@@ -34,8 +35,12 @@ export const useHandleSubmitStartDates = ({ cartId, products, onSuccess }: Param
       }
     })
 
-    await updateStartDate({ variables: { input: { cartId, updates } } })
-    onSuccess()
+    const result = await updateStartDate({ variables: { input: { cartId, updates } } })
+
+    const data = result.data
+    if (data && data.cartEntriesStartDateUpdate.userErrors.length === 0) {
+      onSuccess()
+    }
   }
 
   return [handleSubmit, result] as const

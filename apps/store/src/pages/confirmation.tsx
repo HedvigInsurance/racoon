@@ -4,26 +4,24 @@ import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage
 import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPage.helpers'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { normalizeLocale } from '@/lib/l10n/locales'
 // import { PageLink } from '@/lib/PageLink'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { initializeApollo } from '@/services/apollo/client'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
-import { isLocale } from '@/utils/isLocale'
 
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps> = async ({
   req,
   res,
-  locale: rawLocale,
+  locale,
 }) => {
-  const locale = normalizeLocale(rawLocale)
-  if (!isLocale(locale)) return { notFound: true }
+  if (!isRoutingLocale(locale)) return { notFound: true }
 
   const apolloClient = initializeApollo()
 
   const [shopSession, globalStory] = await Promise.all([
     getCurrentShopSessionServerSide({ req, res, apolloClient }),
-    getGlobalStory({ locale: locale.toLocaleLowerCase() }),
+    getGlobalStory({ locale }),
   ])
 
   // @TODO: uncomment after implementing signing

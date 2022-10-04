@@ -1,5 +1,5 @@
 export const COMMON_CONFIG = {
-  service: process.env.DD_SERVICE,
+  service: process.env.DD_SERVICE || process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
   site: 'datadoghq.eu',
   env: process.env.NEXT_PUBLIC_DATADOG_ENV || 'dev',
 }

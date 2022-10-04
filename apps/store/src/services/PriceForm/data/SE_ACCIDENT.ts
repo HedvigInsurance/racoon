@@ -10,7 +10,7 @@ export const SE_ACCIDENT: Template = {
       items: [
         {
           field: {
-            type: 'text',
+            type: 'ssn-se',
             name: 'ssn',
             label: { key: 'Personal number' },
             required: true,
@@ -69,6 +69,7 @@ export const SE_ACCIDENT: Template = {
             name: 'numberCoInsured',
             label: { key: 'Number of co-insured' },
             required: true,
+            defaultValue: 0,
           },
           layout: { columnSpan: 6 },
         },
