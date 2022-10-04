@@ -1,6 +1,8 @@
 import { IsoLocale, Language, Locale, RoutingLocale } from './types'
 
 export const FALLBACK_LOCALE = Locale.EnSe
+export const LOCALE_COOKIE_KEY = 'NEXT_LOCALE'
+export const LOCALE_COOKIE_EXPIRY = 365 // js-cookies expects a number which is interpreted as days
 
 export type LocaleData = {
   locale: IsoLocale

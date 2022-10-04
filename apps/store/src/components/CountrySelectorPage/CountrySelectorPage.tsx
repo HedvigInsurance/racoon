@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { LOCALE_COOKIE_EXPIRY, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { IsoLocale } from '@/lib/l10n/types'
 import { CookiePersister } from '@/services/persister/CookiePersister'
@@ -22,9 +22,10 @@ const CountryOptionsContainer = styled.div({
 })
 
 export const CountrySelectorPage = (props: StoryblokPageProps) => {
-  const cookiePersister = new CookiePersister('HEDVIG_LOCALE')
+  const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
 
-  const onHandleClick = (locale: IsoLocale) => cookiePersister.save(toRoutingLocale(locale))
+  const onHandleClick = (locale: IsoLocale) =>
+    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
 
   return (
     <Container {...props}>

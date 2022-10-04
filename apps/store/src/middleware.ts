@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { countries } from '@/lib/l10n/countries'
 import { isRoutingLocale, toRoutingLocale } from '@/lib/l10n/localeUtils'
+import { LOCALE_COOKIE_KEY } from './lib/l10n/locales'
 
 export const config = {
   matcher: '/',
@@ -13,11 +14,11 @@ export function middleware(req: NextRequest) {
   }
 
   const nextURL = req.nextUrl.clone()
-  const cookiePath = req.cookies.get('HEDVIG_LOCALE')
+  const cookiePath = req.cookies.get(LOCALE_COOKIE_KEY)
 
   if (cookiePath) {
     nextURL.pathname = cookiePath
-    console.log(`Found user preference in cookies: ${cookiePath}`)
+    console.log(`Found user preference in cookies: ${cookiePath}, redirecting`)
     return NextResponse.redirect(nextURL)
   }
 

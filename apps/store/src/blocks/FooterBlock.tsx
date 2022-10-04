@@ -9,7 +9,12 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { countries } from '@/lib/l10n/countries'
 import { getCountryLocale } from '@/lib/l10n/countryUtils'
-import { LocaleField, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import {
+  LocaleField,
+  LOCALE_COOKIE_EXPIRY,
+  LOCALE_COOKIE_KEY,
+  TEMP_TRANSLATIONS,
+} from '@/lib/l10n/locales'
 import { getLocaleOrFallback, toRoutingLocale } from '@/lib/l10n/localeUtils'
 import { IsoLocale } from '@/lib/l10n/types'
 import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
@@ -63,7 +68,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
-  const cookiePersister = new CookiePersister('HEDVIG_LOCALE')
+  const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
 
   const countryList = Object.keys(countries).map((country) => ({
     name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
@@ -84,7 +89,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
-    cookiePersister.save(toRoutingLocale(locale))
+    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
     router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
