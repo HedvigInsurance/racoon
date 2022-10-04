@@ -1,17 +1,40 @@
+import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { Button, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { Text } from '@/components/Text/Text'
 import { PageLink } from '@/lib/PageLink'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
+import * as Auth from '@/services/Auth/Auth'
+import { useHandleSignCheckout } from '@/services/Checkout/useHandleSignCheckout'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { CheckoutPaymentPage } from './CheckoutPaymentPage'
 import { CheckoutPaymentPageAdyenProps } from './CheckoutPaymentPage.types'
 
 export const CheckoutPaymentPageAdyen = ({
   paymentMethodsResponse,
   isPaymentConnected,
+  shopSessionId,
+  checkoutId,
+  checkoutSigningId,
   ...props
 }: CheckoutPaymentPageAdyenProps) => {
+  const apolloClient = useApolloClient()
+  const router = useRouter()
+  const [startSign, loadingSign] = useHandleSignCheckout({
+    checkoutId,
+    checkoutSigningId,
+    onSuccess(accessToken) {
+      Auth.save(accessToken)
+      setupShopSessionServiceClientSide(apolloClient).reset()
+
+      router.push(PageLink.confirmation({ shopSessionId }))
+    },
+  })
+
+  const isCompleteButtonDisabled = !isPaymentConnected || loadingSign
+
   return (
     <CheckoutPaymentPage
       Header={<a href={PageLink.checkoutContactDetails()}>Return to personal details</a>}
@@ -29,7 +52,7 @@ export const CheckoutPaymentPageAdyen = ({
         </Space>
         <AdyenCheckout paymentMethodsResponse={paymentMethodsResponse} onSuccess={() => {}} />
         <Space y={0.5}>
-          <Button disabled={!isPaymentConnected} fullWidth>
+          <Button onClick={startSign} disabled={isCompleteButtonDisabled} fullWidth>
             Complete purchase
           </Button>
           <p>

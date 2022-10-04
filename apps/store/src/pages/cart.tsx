@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   const { countryCode } = getCountryByLocale(locale)
 
   try {
-    const apolloClient = initializeApollo()
+    const apolloClient = initializeApollo(undefined, req, res)
     const [shopSession, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
       getGlobalStory({ locale, preview }),

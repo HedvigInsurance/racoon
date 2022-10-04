@@ -32,6 +32,7 @@
     "@radix-ui/react-tabs": "1.0.0",
     "@storyblok/react": "1.1.6",
     "ajv": "8.11.0",
+    "cookies-next": "2.1.1",
     "dd-trace": "2.10.0",
     "framer-motion": "7.2.1",
     "graphql": "16.6.0",

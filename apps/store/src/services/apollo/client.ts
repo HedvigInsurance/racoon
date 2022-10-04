@@ -1,7 +1,10 @@
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
+import { GetServerSidePropsContext } from 'next'
 import { useMemo } from 'react'
+import * as Auth from '@/services/Auth/Auth'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -15,22 +18,35 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-  credentials: 'same-origin',
+const authLink = setContext((_, { headers }) => {
+  const accessToken = Auth.getAccessToken()
+
+  return {
+    headers: {
+      ...headers,
+      authorization: accessToken ?? '',
+    },
+  }
 })
 
-const createApolloClient = () => {
+const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
+
+const createApolloClient = (accessToken?: string) => {
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, httpLink]),
+    link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
+    headers: { authorization: accessToken ?? '' },
   })
 }
 
-export const initializeApollo = (initialState: unknown = null) => {
-  const _apolloClient = apolloClient ?? createApolloClient()
+export const initializeApollo = (
+  initialState: unknown = null,
+  req?: GetServerSidePropsContext['req'],
+  res?: GetServerSidePropsContext['res'],
+) => {
+  const _apolloClient = apolloClient ?? createApolloClient(Auth.getAccessToken(req, res))
 
   if (initialState) {
     const existingCache = _apolloClient.extract()

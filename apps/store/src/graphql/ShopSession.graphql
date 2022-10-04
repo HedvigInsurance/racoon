@@ -1,13 +1,5 @@
 query ShopSession($shopSessionId: ID!) {
   shopSession(id: $shopSessionId) {
-    id
-    countryCode
-    currencyCode
-    cart {
-      ...CartFragment
-    }
-    checkout {
-      ...Checkout
-    }
+    ...ShopSession
   }
 }

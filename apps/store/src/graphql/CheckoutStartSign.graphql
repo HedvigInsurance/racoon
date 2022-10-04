@@ -1,0 +1,7 @@
+mutation CheckoutStartSign($checkoutId: ID!) {
+  checkoutStartSign(checkoutId: $checkoutId) {
+    signing {
+      ...CheckoutSigning
+    }
+  }
+}
