@@ -101,7 +101,7 @@ export const SE_HOUSE: Template = {
             name: 'extraBuildings',
             label: { key: 'Extra buildings' },
             defaultValue: [],
-            options: [
+            buildingOptions: [
               { label: { key: 'Garage' }, value: 'garage' },
               { label: { key: 'Carport' }, value: 'carport' },
               { label: { key: 'Shed' }, value: 'shed' },

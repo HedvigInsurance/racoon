@@ -116,7 +116,7 @@ export const NO_HOUSE: Template = {
             type: 'extra-buildings',
             name: 'extraBuildings',
             label: { key: 'Extra buildings' },
-            options: [
+            buildingOptions: [
               { label: { key: 'Garage' }, value: 'garage' },
               { label: { key: 'Carport' }, value: 'carport' },
               { label: { key: 'Shed' }, value: 'shed' },

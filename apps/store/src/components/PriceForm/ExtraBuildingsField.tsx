@@ -17,14 +17,14 @@ type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
   onSubmit: (data: JSONData) => Promise<void>
   loading: boolean
-  options: Array<{ name: string; value: string }>
+  buildingOptions: Array<{ name: string; value: string }>
 }
 
 export const ExtraBuildingsField = ({
   field,
   onSubmit,
   loading,
-  options,
+  buildingOptions,
 }: ExtraBuildingsFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -62,11 +62,13 @@ export const ExtraBuildingsField = ({
         <Space y={0.5} as="ul">
           {field.value?.map((item) => {
             const identifier = JSON.stringify(item)
+            const buildingOption = buildingOptions.find((option) => option.value === item.type)
+            const buildingOptionName = buildingOption?.name ?? item.type
 
             return (
               <Preview key={identifier}>
                 <SpaceFlex space={0.25} align="end">
-                  <p>{item.type}</p>
+                  <p>{buildingOptionName}</p>
                   <MutedText>
                     {item.area} m<Sup>2</Sup>
                   </MutedText>
@@ -103,7 +105,7 @@ export const ExtraBuildingsField = ({
                       <InputSelect
                         name="type"
                         label="Building type"
-                        options={options}
+                        options={buildingOptions}
                         required={true}
                       />
                     </Flex>
