@@ -20819,6 +20819,7 @@ __metadata:
     "@types/react": 18.0.21
     ajv: 8.11.0
     babel-loader: 8.2.5
+    cookies-next: 2.1.1
     dd-trace: 2.10.0
     eslint: 8.23.1
     eslint-plugin-cypress: 2.12.1
