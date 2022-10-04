@@ -1,5 +1,7 @@
+import Cookies from 'js-cookie'
+
 export interface SimplePersister {
-  save(id: string, key?: string): void
+  save(value: string, key?: string, options?: Cookies.CookieAttributes): void
 
   fetch(key?: string): string | null
 

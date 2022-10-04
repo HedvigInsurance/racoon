@@ -21,7 +21,7 @@ export const priceIntentServiceInitServerSide = ({
   apolloClient,
 }: Params) => {
   return new PriceIntentService(
-    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, req, res),
+    new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, req, res), // FIXME: it makes no sense to pass in this key anymore since it's always overridden
     apolloClient,
     shopSession,
   )
@@ -32,7 +32,7 @@ export const priceIntentServiceInitClientSide = ({
   apolloClient,
 }: Omit<Params, 'req' | 'res'>) => {
   return new PriceIntentService(
-    new CookiePersister(COOKIE_KEY_PRICE_INTENT),
+    new CookiePersister(COOKIE_KEY_PRICE_INTENT), // FIXME: it makes no sense to pass in this key anymore since it's always overridden
     apolloClient,
     shopSession,
   )
