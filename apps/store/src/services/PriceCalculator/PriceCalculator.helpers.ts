@@ -7,7 +7,6 @@ import { SE_APARTMENT } from './data/SE_APARTMENT'
 import { SE_CAR } from './data/SE_CAR'
 import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
-import { InputField } from './Field.types'
 import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
 const TEMPLATES: Record<string, Template | undefined> = {
@@ -90,21 +89,5 @@ const calculateSectionState = (section: FormSection): FormSection => {
   return {
     ...section,
     state: isCompleted ? 'valid' : 'initial',
-  }
-}
-
-export const deserializeField = (field: InputField, value: string) => {
-  switch (field.type) {
-    case 'text':
-    case 'radio':
-    case 'select':
-    case 'date':
-      return value
-
-    case 'number':
-      return parseInt(value, 10)
-
-    default:
-      return value
   }
 }

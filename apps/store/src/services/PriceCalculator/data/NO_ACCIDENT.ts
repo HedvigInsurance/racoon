@@ -1,3 +1,4 @@
+import { getIntegerField } from '../Field.helpers'
 import { Template } from '../PriceCalculator.types'
 
 export const NO_ACCIDENT: Template = {
@@ -41,13 +42,12 @@ export const NO_ACCIDENT: Template = {
           layout: { columnSpan: 3 },
         },
         {
-          field: {
-            type: 'number',
+          field: getIntegerField({
             name: 'livingSpace',
             label: { key: 'Apartment size' },
             required: true,
             min: 0,
-          },
+          }),
           layout: { columnSpan: 3 },
         },
       ],
@@ -60,12 +60,12 @@ export const NO_ACCIDENT: Template = {
         {
           field: {
             type: 'number',
-            min: 0,
-            max: 5,
             name: 'numberCoInsured',
-            label: { key: 'Number of co-insured' },
+            label: { key: 'Household size' },
+            min: 1,
+            max: 6,
             required: true,
-            defaultValue: 0,
+            defaultValue: 1,
           },
           layout: { columnSpan: 6 },
         },

@@ -1,6 +1,6 @@
 import { FormEventHandler, ReactNode } from 'react'
 import { Button, Space } from 'ui'
-import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { deserializeField } from '@/services/PriceCalculator/Field.helpers'
 import { FormSection, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
