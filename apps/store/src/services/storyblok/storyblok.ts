@@ -54,8 +54,10 @@ export type StoryblokPageProps = {
   globalStory: GlobalStory
 }
 
+export type StoryblokVersion = 'draft' | 'published'
+
 export type StoryblokPreviewData = {
-  version?: 'draft' | 'published'
+  version?: StoryblokVersion
 }
 
 export type StoryblokImage = {
@@ -177,7 +179,7 @@ export const initStoryblok = () => {
 
 type StoryOptions = {
   locale: string
-  version?: 'draft' | 'published'
+  version?: StoryblokVersion
 }
 
 export const getStoryBySlug = async (slug: string, { version, locale }: StoryOptions) => {

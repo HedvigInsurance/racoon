@@ -1,7 +1,7 @@
 import { StoryblokClient } from '@storyblok/js'
 import { SbBlokData, StoryData } from '@storyblok/react'
 import { Language } from '@/lib/l10n/types'
-import { LinkField } from './storyblok'
+import { LinkField, StoryblokVersion } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: BlockData[] = [],
@@ -30,7 +30,7 @@ export const checkBlockType = <BlockData extends SbBlokData>(
 }
 
 export type StoryblokFetchParams = {
-  version: 'draft' | 'published'
+  version: StoryblokVersion
   language?: Language
   resolve_relations?: string
 }
