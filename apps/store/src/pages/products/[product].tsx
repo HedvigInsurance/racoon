@@ -11,10 +11,18 @@ import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getGlobalStory, getProductStory } from '@/services/storyblok/storyblok'
+import {
+  getGlobalStory,
+  getProductStory,
+  StoryblokPreviewData,
+} from '@/services/storyblok/storyblok'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string
+}
+
+type PageQueryParams = {
+  product: string[]
 }
 
 const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
@@ -28,8 +36,18 @@ const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
-  const { locale, req, res, params: { product: slug } = {}, preview } = context
+export const getServerSideProps: GetServerSideProps<
+  NextPageProps,
+  PageQueryParams,
+  StoryblokPreviewData
+> = async (context) => {
+  const {
+    locale,
+    req,
+    res,
+    params: { product: slug } = {},
+    previewData: { version } = {},
+  } = context
 
   if (!isRoutingLocale(locale)) return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
@@ -41,8 +59,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
     const [shopSession, story, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
-      getProductStory(slug, { locale, preview }),
-      getGlobalStory({ locale, preview }),
+      getProductStory(slug, { locale, version }),
+      getGlobalStory({ locale, version }),
     ])
 
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
