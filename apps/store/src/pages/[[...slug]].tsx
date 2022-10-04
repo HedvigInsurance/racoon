@@ -9,6 +9,7 @@ import {
   StoryblokPageProps,
   StoryblokQueryParams,
   getNonProductPageLinks,
+  StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 
 type RoutingPath = {
@@ -31,16 +32,18 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   )
 }
 
-export const getStaticProps: GetStaticProps<StoryblokPageProps, StoryblokQueryParams> = async (
-  context,
-) => {
-  const { params, preview, locale } = context
+export const getStaticProps: GetStaticProps<
+  StoryblokPageProps,
+  StoryblokQueryParams,
+  StoryblokPreviewData
+> = async (context) => {
+  const { params, locale, previewData: { version } = {} } = context
   if (!locale || locale === 'default') return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
   const [story, globalStory] = await Promise.all([
-    getStoryBySlug(slug, { preview, locale }),
-    getGlobalStory({ preview, locale }),
+    getStoryBySlug(slug, { version, locale }),
+    getGlobalStory({ version, locale }),
   ])
 
   if (story === undefined) {
