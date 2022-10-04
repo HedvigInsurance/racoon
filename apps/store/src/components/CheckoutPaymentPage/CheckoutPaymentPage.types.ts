@@ -13,6 +13,7 @@ export type CheckoutPaymentPageAdyenProps = CheckoutPaymentPageProps & {
   paymentMethodsResponse: object
   isPaymentConnected: boolean
 
+  shopSessionId: string
   checkoutId: string
   checkoutSigningId: string | null
 }

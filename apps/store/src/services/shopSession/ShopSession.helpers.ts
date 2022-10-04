@@ -33,7 +33,7 @@ export const setupShopSessionServiceClientSide = (apolloClient: ApolloClient<unk
   return new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION), apolloClient)
 }
 
-const setupShopSessionServiceServerSide = (params: Params) => {
+export const setupShopSessionServiceServerSide = (params: Params) => {
   const { req, res, apolloClient } = params
   return new ShopSessionService(
     new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res),

@@ -5,6 +5,7 @@ type BaseParams = { locale?: RoutingLocale }
 
 type ProductPage = BaseParams & { slug: string }
 type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
+type ConfirmationPage = BaseParams & { shopSessionId: string }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
@@ -22,7 +23,8 @@ export const PageLink = {
     return `${localePrefix(locale)}/checkout/payment${queryString}`
   },
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
-  confirmation: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/confirmation`,
+  confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
+    `${localePrefix(locale)}/confirmation/${shopSessionId}`,
 
   apiPaymentAdyenCallback: ({ locale }: Required<BaseParams>) =>
     `/api/payment/adyen-callback/${locale}`,
