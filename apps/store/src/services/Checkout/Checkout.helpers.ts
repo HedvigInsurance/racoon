@@ -5,6 +5,7 @@ import {
   CheckoutSigningQuery,
   CheckoutSigningQueryVariables,
 } from '@/services/apollo/generated'
+import logger from '@/services/logger/server'
 
 type FetchParams = CheckoutSigningQueryVariables & {
   apolloClient: ApolloClient<unknown>
@@ -31,8 +32,12 @@ export const fetchCurrentCheckoutSigning = async ({
 }: FetchCurrentParams) => {
   const checkoutSigningId = req.cookies[checkoutId]
 
-  if (checkoutSigningId) {
-    return await fetchCheckoutSigning({ ...params, checkoutSigningId })
+  try {
+    if (checkoutSigningId) {
+      return await fetchCheckoutSigning({ ...params, checkoutSigningId })
+    }
+  } catch (error) {
+    logger.warn('Unable to fetch checkout signing', { checkoutSigningId, error })
   }
 
   return null
