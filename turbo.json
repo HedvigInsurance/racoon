@@ -87,12 +87,14 @@
     "onboarding#codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
-      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
+      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
+      "cache": false
     },
     "store#codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts"],
-      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"]
+      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
+      "cache": false
     }
   }
 }
