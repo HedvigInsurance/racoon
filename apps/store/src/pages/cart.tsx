@@ -9,7 +9,12 @@ import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/clie
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import {
+  getGlobalStory,
+  StoryblokPageProps,
+  StoryblokPreviewData,
+  StoryblokQueryParams,
+} from '@/services/storyblok/storyblok'
 
 type Props = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string
@@ -44,8 +49,12 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { req, res, locale, preview } = context
+export const getServerSideProps: GetServerSideProps<
+  Props,
+  StoryblokQueryParams,
+  StoryblokPreviewData
+> = async (context) => {
+  const { req, res, locale, previewData: { version } = {} } = context
 
   if (!isRoutingLocale(locale)) return { notFound: true }
 
@@ -55,7 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     const apolloClient = initializeApollo(undefined, req, res)
     const [shopSession, globalStory] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
-      getGlobalStory({ locale, preview }),
+      getGlobalStory({ locale, version }),
     ])
 
     return {

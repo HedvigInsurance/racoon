@@ -54,6 +54,12 @@ export type StoryblokPageProps = {
   globalStory: GlobalStory
 }
 
+export type StoryblokVersion = 'draft' | 'published'
+
+export type StoryblokPreviewData = {
+  version?: StoryblokVersion
+}
+
 export type StoryblokImage = {
   alt: string
   copyright: string
@@ -173,12 +179,12 @@ export const initStoryblok = () => {
 
 type StoryOptions = {
   locale: string
-  preview?: boolean
+  version?: StoryblokVersion
 }
 
-export const getStoryBySlug = async (slug: string, { preview, locale }: StoryOptions) => {
+export const getStoryBySlug = async (slug: string, { version, locale }: StoryOptions) => {
   const params: StoryblokFetchParams = {
-    version: preview ? 'draft' : 'published',
+    version: version ?? 'published',
     resolve_relations: 'reusableBlockReference.reference',
   }
   return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
