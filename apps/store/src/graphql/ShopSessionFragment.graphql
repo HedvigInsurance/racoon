@@ -1,0 +1,11 @@
+fragment ShopSession on ShopSession {
+  id
+  countryCode
+  currencyCode
+  cart {
+    ...CartFragment
+  }
+  checkout {
+    ...Checkout
+  }
+}
