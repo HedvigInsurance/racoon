@@ -17,9 +17,15 @@ type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
   onSubmit: (data: JSONData) => Promise<void>
   loading: boolean
+  options: Array<{ name: string; value: string }>
 }
 
-export const ExtraBuildingsField = ({ field, onSubmit, loading }: ExtraBuildingsFieldProps) => {
+export const ExtraBuildingsField = ({
+  field,
+  onSubmit,
+  loading,
+  options,
+}: ExtraBuildingsFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const translateLabel = useTranslateTextLabel({ data: {} })
@@ -97,7 +103,7 @@ export const ExtraBuildingsField = ({ field, onSubmit, loading }: ExtraBuildings
                       <InputSelect
                         name="type"
                         label="Building type"
-                        options={BUILDING_TYPES}
+                        options={options}
                         required={true}
                       />
                     </Flex>
@@ -126,17 +132,6 @@ export const ExtraBuildingsField = ({ field, onSubmit, loading }: ExtraBuildings
     </Dialog.Root>
   )
 }
-
-const BUILDING_TYPES = [
-  {
-    name: 'Garage',
-    value: 'GARAGE',
-  },
-  {
-    name: 'Carport',
-    value: 'CARPORT',
-  },
-]
 
 const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBuilding => {
   if (typeof data.type !== 'string') {

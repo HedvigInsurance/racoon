@@ -48,6 +48,7 @@ type SelectField = BaseField<string> & {
 
 export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
   type: 'extra-buildings'
+  options: Array<FieldOption>
 }
 
 export type ExtraBuilding = {
