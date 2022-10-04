@@ -2,8 +2,10 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
 import { countries } from '@/lib/l10n/countries'
-import { TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
+import { LOCALE_COOKIE_EXPIRY, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
 import { toRoutingLocale } from '@/lib/l10n/localeUtils'
+import { IsoLocale } from '@/lib/l10n/types'
+import { CookiePersister } from '@/services/persister/CookiePersister'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 const Container = styled.div({
@@ -20,6 +22,11 @@ const CountryOptionsContainer = styled.div({
 })
 
 export const CountrySelectorPage = (props: StoryblokPageProps) => {
+  const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
+
+  const onHandleClick = (locale: IsoLocale) =>
+    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
+
   return (
     <Container {...props}>
       <Space y={3}>
@@ -29,7 +36,9 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
         <CountryOptionsContainer>
           {Object.entries(countries).map(([country, countryData]) => (
             <Link key={country} href={`/${toRoutingLocale(countryData.defaultLocale)}`} passHref>
-              <LinkButton>{TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}</LinkButton>
+              <LinkButton onClick={() => onHandleClick(countryData.defaultLocale)}>
+                {TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}
+              </LinkButton>
             </Link>
           ))}
         </CountryOptionsContainer>
