@@ -19,25 +19,27 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const authLink = setContext((_, { headers }) => {
-  const accessToken = Auth.getAccessToken()
+  const newHeaders = { ...(headers ?? {}) }
 
-  return {
-    headers: {
-      ...headers,
-      authorization: accessToken ?? '',
-    },
+  const accessToken = Auth.getAccessToken()
+  if (accessToken) {
+    newHeaders.authorization = accessToken
   }
+
+  return newHeaders
 })
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
 
 const createApolloClient = (accessToken?: string) => {
+  const headers = accessToken ? { authorization: accessToken } : undefined
+
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
     link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
-    headers: { authorization: accessToken ?? '' },
+    headers,
   })
 }
 
