@@ -16985,9 +16985,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-i18next@npm:12.0.1":
-  version: 12.0.1
-  resolution: "next-i18next@npm:12.0.1"
+"next-i18next@npm:12.1.0":
+  version: 12.1.0
+  resolution: "next-i18next@npm:12.1.0"
   dependencies:
     "@babel/runtime": ^7.18.9
     "@types/hoist-non-react-statics": ^3.3.1
@@ -16999,7 +16999,7 @@ __metadata:
   peerDependencies:
     next: ">= 10.0.0"
     react: ">= 16.8.0"
-  checksum: 9f8e86748abeac49caeca03d48d632b66ea0765792acdbcb18abe80d6e886252208a8e0ada818ccbe2cd09e2925ce240534eb587027dcb8392e5e157a4579933
+  checksum: 8c0e2f976437b222f32fdfdae604f6c247fae698f3c66feef7f9f663dfaa5bc86dcc5fcbf130b9fbb8651364d0df67c943eb2f0b24896adac132a5eee315d459
   languageName: node
   linkType: hard
 
@@ -17532,7 +17532,7 @@ __metadata:
     marked: 4.0.18
     msw: 0.47.3
     next: 12.3.1
-    next-i18next: 12.0.1
+    next-i18next: 12.1.0
     next-router-mock: 0.7.4
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
@@ -20997,7 +20997,7 @@ __metadata:
     js-cookie: 3.0.1
     msw: 0.44.2
     next: 12.3.1
-    next-i18next: 12.0.1
+    next-i18next: 12.1.0
     next-router-mock: 0.7.4
     personnummer: 3.1.4
     pino: 8.6.1
