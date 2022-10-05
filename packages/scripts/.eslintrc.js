@@ -61,5 +61,15 @@ module.exports = {
         'testing-library/no-container': 'off',
       },
     },
+    // Allow requires in node js modules (assuming we don't have JS on frontend side)
+    {
+      files: ['**/*.js'],
+      env: {
+        node: true,
+      },
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
   ],
 }

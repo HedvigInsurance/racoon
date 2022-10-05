@@ -1,4 +1,3 @@
-/* eslint-env node */
 // OK to use require in node context
 // eslint-disable-next-line
 const babel = require('babel-jest')
