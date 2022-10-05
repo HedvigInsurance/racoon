@@ -44,9 +44,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (para
     }
 
     const checkoutSigning = await fetchCurrentCheckoutSigning({ req, apolloClient, checkoutId })
-    if (checkoutSigning?.completion) {
-      return { redirect: { destination: PageLink.checkoutPayment({ locale }), permanent: false } }
-    }
 
     return {
       props: {

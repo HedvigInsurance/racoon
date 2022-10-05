@@ -17,8 +17,7 @@ export const useHandleSignCheckout = (params: Params) => {
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
     onCompleted(data) {
-      // @TODO: investigate which status codes are sent from backend
-      if (data.checkoutSigning.completion) {
+      if (data.checkoutSigning.status === 'SIGNED' && data.checkoutSigning.completion) {
         onSuccess(data.checkoutSigning.completion.accessToken)
 
         setCheckoutSigningId(null)
