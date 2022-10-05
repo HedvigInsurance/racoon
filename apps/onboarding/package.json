@@ -19,7 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apollo/client": "3.6.10",
+    "@apollo/client": "3.7.0",
     "@datadog/browser-rum": "4.16.0",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
@@ -35,7 +35,7 @@
     "lodash-es": "4.17.21",
     "marked": "4.0.18",
     "next": "12.3.1",
-    "next-i18next": "12.0.1",
+    "next-i18next": "12.1.0",
     "pino-datadog": "https://github.com/simonauner/pino-datadog#rename-hostname-to-host",
     "pino-multi-stream": "6.0.0",
     "react": "18.2.0",
@@ -57,7 +57,7 @@
     "@types/jsdom": "20.0.0",
     "@types/lodash-es": "4.17.6",
     "@types/marked": "4.0.3",
-    "@types/node": "16.11.57",
+    "@types/node": "16.11.64",
     "@types/react": "18.0.21",
     "cypress": "9.5.4",
     "eslint-plugin-cypress": "2.12.1",
