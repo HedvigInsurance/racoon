@@ -19,13 +19,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const authLink = setContext((_, { headers }) => {
-  const accessToken = Auth.getAccessToken()
+  const newHeaders = { ...(headers ?? {}) }
 
+  const accessToken = Auth.getAccessToken()
   if (accessToken) {
-    headers.authorization = accessToken
+    newHeaders.authorization = accessToken
   }
 
-  return headers
+  return newHeaders
 })
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
