@@ -2,9 +2,6 @@ import styled from '@emotion/styled'
 import ImageProps from 'next/image'
 import { Space } from 'ui'
 
-export const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '10.5rem'
-const PRODUCT_CARD_IMAGE_HEIGHT_SMALL = '12.5rem'
-
 type ImageProps = {
   src: string
   alt?: string
@@ -38,13 +35,17 @@ export const ProductCard = ({
 
 const Wrapper = styled(Space)({
   height: '100%',
-  width: PRODUCT_CARD_IMAGE_WIDTH_SMALL,
 })
 
 const ImageWrapper = styled.div(() => ({
   position: 'relative',
-  height: PRODUCT_CARD_IMAGE_HEIGHT_SMALL,
-  width: '100%',
+  aspectRatio: '5 / 6',
+
+  '@supports not (aspect-ratio)': {
+    height: '0',
+    paddingTop: 'calc((6/5 * 100%))',
+    overflow: 'hidden',
+  },
 }))
 
 const Title = styled.p(({ theme }) => ({
