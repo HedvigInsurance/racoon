@@ -1,6 +1,10 @@
 import { setCookie, deleteCookie } from 'cookies-next'
 import { useState } from 'react'
-import { useCheckoutSigningQuery, useCheckoutStartSignMutation } from '@/services/apollo/generated'
+import {
+  CheckoutSigningStatus,
+  useCheckoutSigningQuery,
+  useCheckoutStartSignMutation,
+} from '@/services/apollo/generated'
 
 type Params = {
   checkoutId: string
@@ -17,7 +21,8 @@ export const useHandleSignCheckout = (params: Params) => {
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
     onCompleted(data) {
-      if (data.checkoutSigning.status === 'SIGNED' && data.checkoutSigning.completion) {
+      const isSigned = data.checkoutSigning.status === CheckoutSigningStatus.Signed
+      if (isSigned && data.checkoutSigning.completion) {
         onSuccess(data.checkoutSigning.completion.accessToken)
 
         setCheckoutSigningId(null)
