@@ -105,7 +105,7 @@ export type GlobalStory = StoryData & {
   }
 }
 
-export type ReferenceStory = StoryData & {
+export type ReusableStory = StoryData & {
   content: StoryData['content'] & {
     body: Array<SbBlokData>
   }
@@ -162,7 +162,7 @@ export const initStoryblok = () => {
     TopPickCardBlock,
     PerilsBlock,
   ]
-  const blockAliases = { product: PageBlock }
+  const blockAliases = { product: PageBlock, reusableBlock: PageBlock }
   const components = {
     ...Object.fromEntries(
       blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent]),
