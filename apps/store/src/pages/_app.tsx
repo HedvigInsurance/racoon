@@ -22,7 +22,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
 
   const getLayout = Component.getLayout || ((page) => page)
-
+  //TODO
   useGTMEvents()
 
   return (

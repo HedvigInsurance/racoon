@@ -19110,6 +19110,7 @@ __metadata:
     husky: 8.0.1
     lint-staged: 13.0.3
     prettier: 2.7.1
+    react-use-intercom: 2.0.0
     turbo: 1.5.5
   languageName: unknown
   linkType: soft
@@ -19346,6 +19347,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-use-intercom@npm:2.0.0":
+  version: 2.0.0
+  resolution: "react-use-intercom@npm:2.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 1cc2d3d4ded72371ab9c5a62f6cff5b3d4a6e35db59ef2a153cdba228d13b009c1adfddc0d2b26c9ffe8c189b31c0c8792ccd12f0f22afdc3cbc31a15b5bd793
   languageName: node
   linkType: hard
 

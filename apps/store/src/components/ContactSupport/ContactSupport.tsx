@@ -1,18 +1,11 @@
 import styled from '@emotion/styled'
+import { IntercomProvider, useIntercom } from 'react-use-intercom'
 import { Heading, Button, Space } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
-export type ContactSupportProps = {
-  title: string
-  showCallButton: boolean
-  availabilityText?: string
-}
+const ContactSupportInner = ({ title, showCallButton, availabilityText }: ContactSupportProps) => {
+  const { show } = useIntercom()
 
-export const ContactSupport = ({
-  title,
-  showCallButton,
-  availabilityText,
-}: ContactSupportProps) => {
   return (
     <Main>
       <Space y={1.5}>
@@ -22,7 +15,7 @@ export const ContactSupport = ({
         <AvatarImagePlaceholder />
         <Space y={1}>
           <SpaceFlex space={0.5} wrap="wrap">
-            <FlexButton variant="outlined" onClick={() => console.log('chat')}>
+            <FlexButton variant="outlined" onClick={show}>
               Chat with us
             </FlexButton>
             {showCallButton && (
@@ -36,6 +29,30 @@ export const ContactSupport = ({
         </Space>
       </Space>
     </Main>
+  )
+}
+
+export type ContactSupportProps = {
+  title: string
+  showCallButton: boolean
+  availabilityText?: string
+}
+
+export const ContactSupport = ({
+  title,
+  showCallButton,
+  availabilityText,
+}: ContactSupportProps) => {
+  const INTERCOM_APP_ID = '123'
+
+  return (
+    <IntercomProvider appId={INTERCOM_APP_ID} autoBoot={true}>
+      <ContactSupportInner
+        title={title}
+        showCallButton={showCallButton}
+        availabilityText={availabilityText}
+      />
+    </IntercomProvider>
   )
 }
 
