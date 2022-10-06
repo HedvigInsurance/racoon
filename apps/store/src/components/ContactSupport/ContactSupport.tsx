@@ -3,6 +3,12 @@ import { IntercomProvider, useIntercom } from 'react-use-intercom'
 import { Heading, Button, Space } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
+export type ContactSupportProps = {
+  title: string
+  showCallButton: boolean
+  availabilityText?: string
+}
+
 const ContactSupportInner = ({ title, showCallButton, availabilityText }: ContactSupportProps) => {
   const { show } = useIntercom()
 
@@ -32,10 +38,10 @@ const ContactSupportInner = ({ title, showCallButton, availabilityText }: Contac
   )
 }
 
-export type ContactSupportProps = {
-  title: string
-  showCallButton: boolean
-  availabilityText?: string
+const getIntercomAppId = (): string => {
+  const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
+  if (appId) return appId
+  throw new Error('Expected env variable INTERCOM_APP_ID to be defined')
 }
 
 export const ContactSupport = ({
@@ -43,11 +49,8 @@ export const ContactSupport = ({
   showCallButton,
   availabilityText,
 }: ContactSupportProps) => {
-  //TODO
-  const INTERCOM_APP_ID = '123'
-
   return (
-    <IntercomProvider appId={INTERCOM_APP_ID} autoBoot={true}>
+    <IntercomProvider appId={getIntercomAppId()} autoBoot={true}>
       <ContactSupportInner
         title={title}
         showCallButton={showCallButton}
