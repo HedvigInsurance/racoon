@@ -22,6 +22,13 @@ export const Content = styled(Accordion.Content)(({ theme }) => ({
   paddingTop: theme.space[0],
 }))
 
+const StyledTrigger = styled(Accordion.Trigger)(({ theme }) => ({
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+    outlineOffset: 2,
+  },
+}))
+
 export const Root = Accordion.Root
 export const Item = Accordion.Item
 
@@ -32,8 +39,8 @@ const TriggerIcon = styled(ChevronIcon)({
 
 export const Trigger = () => {
   return (
-    <Accordion.Trigger>
+    <StyledTrigger>
       <TriggerIcon size="1rem" />
-    </Accordion.Trigger>
+    </StyledTrigger>
   )
 }
