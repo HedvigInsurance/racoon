@@ -49,9 +49,11 @@ type InitializeApolloParams = {
   res?: GetServerSidePropsContext['res']
 }
 
-export const initializeApollo = (
-  { initialState, req, res }: InitializeApolloParams = { initialState: null },
-) => {
+export const initializeApollo = ({
+  initialState = null,
+  req,
+  res,
+}: InitializeApolloParams = {}) => {
   const _apolloClient = apolloClient ?? createApolloClient(Auth.getAccessToken(req, res))
 
   if (initialState) {
