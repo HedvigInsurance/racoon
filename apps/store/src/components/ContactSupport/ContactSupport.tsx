@@ -50,7 +50,11 @@ export const ContactSupport = ({
   availabilityText,
 }: ContactSupportProps) => {
   return (
-    <IntercomProvider appId={getIntercomAppId()} autoBoot={true}>
+    <IntercomProvider
+      appId={getIntercomAppId()}
+      autoBoot
+      autoBootProps={{ hideDefaultLauncher: true }}
+    >
       <ContactSupportInner
         title={title}
         showCallButton={showCallButton}
