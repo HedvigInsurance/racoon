@@ -1,15 +1,18 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { FormEvent, useCallback } from 'react'
 import { Button, Heading, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
+import { I18nNamespace } from '@/lib/l10n/types'
 import { PageLink } from '@/lib/PageLink'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
+  const { t } = useTranslation(I18nNamespace.Cart)
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
     refetchQueries: 'active',
     awaitRefetchQueries: true,
@@ -50,7 +53,7 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
             <Link href={PageLink.checkout()} passHref>
-              <LinkButton fullWidth>Check Out</LinkButton>
+              <LinkButton fullWidth>{t('CHECKOUT_BUTTON')}</LinkButton>
             </Link>
           </Space>
         </Footer>
@@ -60,13 +63,14 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
 }
 
 const EmptyState = () => {
+  const { t } = useTranslation(I18nNamespace.Cart)
   return (
     <Wrapper>
       <Space y={3}>
         <StyledHeading as="h1" variant="standard.24">
           Cart (0)
         </StyledHeading>
-        <CenteredParagraph>Your cart is empty.</CenteredParagraph>
+        <CenteredParagraph>{t('CART_EMPTY_SUMMARY')}</CenteredParagraph>
         <Footer>
           <Button fullWidth>
             <Link href={PageLink.store()}>Go to Store</Link>
