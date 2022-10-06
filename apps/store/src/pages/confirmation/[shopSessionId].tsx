@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo(undefined, req, res)
+  const apolloClient = initializeApollo({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
   try {
