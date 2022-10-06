@@ -24,13 +24,11 @@ export const convertRoutingLocale = (locale: RoutingLocale) => {
 
 type Params = {
   locale: RoutingLocale
-  accessToken: string
 }
 
-export const getWebOnboardingPaymentURL = ({ locale, accessToken }: Params) => {
+export const getWebOnboardingPaymentURL = ({ locale }: Params) => {
   if (PAYMENT_URL_TEMPLATE) {
-    const baseURL = PAYMENT_URL_TEMPLATE.replace('{LOCALE}', convertRoutingLocale(locale))
-    return `${baseURL}?accessToken=${accessToken}`
+    return PAYMENT_URL_TEMPLATE.replace('{LOCALE}', convertRoutingLocale(locale))
   }
 
   return null
