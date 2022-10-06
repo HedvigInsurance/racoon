@@ -74,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
           subTotal: shopSession.cart.cost.subtotal.amount,
         },
         products: shopSession.cart.entries.map((line) => ({
-          name: line.title,
+          name: line.variant.title,
           cost: line.price.amount,
         })),
       },

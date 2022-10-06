@@ -4,7 +4,7 @@ mutation StartDateUpdate($input: CartEntriesStartDateUpdateInput!) {
       ...CartFragment
     }
     userErrors {
-      pricedVariantId: productVariantId
+      offerId
       message
     }
   }

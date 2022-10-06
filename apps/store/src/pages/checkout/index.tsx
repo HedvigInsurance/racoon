@@ -26,7 +26,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = ({ cartId, products, ...props 
   const { userErrors } = data?.cartEntriesStartDateUpdate ?? {}
 
   const productsWithErrors = products.map((product) => {
-    const error = userErrors?.find((error) => product.pricedVariantId === error.pricedVariantId)
+    const error = userErrors?.find((error) => product.offerId === error.offerId)
     return {
       errorMessage: error?.message,
       ...product,
@@ -68,11 +68,11 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         ...(await serverSideTranslations(locale)),
         shopSessionId: shopSession.id,
         cartId: shopSession.cart.id,
-        products: shopSession.cart.entries.map((pricedVariant) => ({
-          pricedVariantId: pricedVariant.id,
-          name: pricedVariant.title,
-          cost: pricedVariant.price.amount,
-          startDate: pricedVariant.startDate,
+        products: shopSession.cart.entries.map((offer) => ({
+          offerId: offer.id,
+          name: offer.variant.title,
+          cost: offer.price.amount,
+          startDate: offer.startDate,
         })),
         cost,
         currency: shopSession.currencyCode,

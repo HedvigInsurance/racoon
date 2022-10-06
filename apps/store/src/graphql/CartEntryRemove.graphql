@@ -1,5 +1,5 @@
-mutation CartEntryRemove($cartId: ID!, $pricedVariantId: ID!) {
-  cartEntriesRemove(input: { cartId: $cartId, productVariantIds: [$pricedVariantId] }) {
+mutation CartEntryRemove($cartId: ID!, $offerId: ID!) {
+  cartEntriesRemove(input: { cartId: $cartId, offerIds: [$offerId] }) {
     cart {
       ...CartFragment
     }

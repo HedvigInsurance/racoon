@@ -1,5 +1,5 @@
-mutation CartEntryAdd($cartId: ID!, $pricedVariantId: ID!) {
-  cartEntriesAdd(input: { cartId: $cartId, productVariantIds: [$pricedVariantId] }) {
+mutation CartEntryAdd($cartId: ID!, $offerId: ID!) {
+  cartEntriesAdd(input: { cartId: $cartId, offerIds: [$offerId] }) {
     cart {
       ...CartFragment
     }

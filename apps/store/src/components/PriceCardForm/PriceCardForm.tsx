@@ -30,7 +30,7 @@ export const PriceCardForm = ({
 }: PriceCardFormProps) => {
   return (
     <form {...formProps}>
-      <input type="hidden" name={FormElement.PricedVariant} value={pricedVariantId} />
+      <input type="hidden" name={FormElement.ProductOfferId} value={pricedVariantId} />
       <Wrapper y={1}>
         <CenteredPillow fromColor={fromColor} toColor={toColor} />
 

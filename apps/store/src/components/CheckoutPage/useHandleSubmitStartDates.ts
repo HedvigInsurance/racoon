@@ -17,20 +17,20 @@ export const useHandleSubmitStartDates = ({ cartId, products, onSuccess }: Param
     datadogLogs.logger.info('Checkout | Submit user start dates')
 
     const updates = products.map((product) => {
-      const inputElement = event.currentTarget.elements.namedItem(product.pricedVariantId)
+      const inputElement = event.currentTarget.elements.namedItem(product.offerId)
 
       if (!isDateInputElement(inputElement)) {
         datadogLogs.logger.warn('Unable to update start dates', {
           input: inputElement,
           elements: event.currentTarget.elements,
         })
-        throw new Error(`No date input for ${product.pricedVariantId}`)
+        throw new Error(`No date input for ${product.offerId}`)
       }
 
       const startDate = inputElement.valueAsDate?.toISOString().substring(0, 10) ?? null
 
       return {
-        productVariantId: product.pricedVariantId,
+        offerId: product.offerId,
         startDate,
       }
     })

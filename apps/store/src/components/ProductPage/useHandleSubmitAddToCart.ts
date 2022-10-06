@@ -1,10 +1,11 @@
 import { FormEventHandler } from 'react'
 import { useCartEntryAddMutation } from '@/services/apollo/generated'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
+import { FormElement } from './ProductPage.constants'
 
 type Params = {
   cartId: string
-  onSuccess: (pricedVariantId: string) => void
+  onSuccess: (productOfferId: string) => void
 }
 
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
@@ -14,13 +15,13 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const pricedVariantId = getOrThrowFormValue(formData, 'pricedVariantId')
+    const productOfferId = getOrThrowFormValue(formData, FormElement.ProductOfferId)
 
-    const result = await addEntry({ variables: { cartId, pricedVariantId } })
+    const result = await addEntry({ variables: { cartId, offerId: productOfferId } })
 
     // @TODO: expose and handle errors from this mutation
     if (result.data?.cartEntriesAdd.cart) {
-      onSuccess(pricedVariantId)
+      onSuccess(productOfferId)
     }
   }
 

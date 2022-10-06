@@ -16,9 +16,9 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
   })
 
   const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>, pricedVariantId: string) => {
+    async (event: FormEvent<HTMLFormElement>, offerId: string) => {
       event.preventDefault()
-      await removeCartEntry({ variables: { cartId, pricedVariantId } })
+      await removeCartEntry({ variables: { cartId, offerId } })
     },
     [removeCartEntry, cartId],
   )
