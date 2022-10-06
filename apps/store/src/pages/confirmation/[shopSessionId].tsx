@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
           if (startDate === null) throw new Error('startDate is null')
 
           return {
-            name: item.title,
+            name: item.variant.title,
             startDate: item.startDate,
           }
         }),

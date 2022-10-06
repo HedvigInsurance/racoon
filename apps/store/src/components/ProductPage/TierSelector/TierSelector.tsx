@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
 import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
 import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
-import { PricedProductVariant } from '@/services/apollo/generated'
+import { ProductOffer } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useHandleSubmitAddToCart } from '../useHandleSubmitAddToCart'
 
@@ -10,28 +10,28 @@ type Props = {
   cartId: string
   product: PriceFormProduct
   priceIntent: PriceIntent
-  onAddedToCart: (pricedVariant: PricedProductVariant) => void
+  onAddedToCart: (pricedVariant: ProductOffer) => void
 }
 
 export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
-  // TODO: implement variant selector
-  const pricedVariant = priceIntent.variants.find((item) => item.id)
+  // TODO: implement offer selector
+  const productOffer = priceIntent.offers.find((item) => item.id)
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId,
-    onSuccess(pricedVariantId) {
-      const pricedVariant = priceIntent.variants.find((variant) => variant.id === pricedVariantId)
+    onSuccess(productOfferId) {
+      const addedProdutOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 
-      if (pricedVariant === undefined) {
-        throw new Error(`Unknown priced variant added to cart: ${pricedVariantId}`)
+      if (addedProdutOffer === undefined) {
+        throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
-      onAddedToCart(pricedVariant)
+      onAddedToCart(addedProdutOffer)
     },
   })
 
-  const variantPrice = pricedVariant ? pricedVariant.price.amount : undefined
+  const variantPrice = productOffer ? productOffer.price.amount : undefined
 
   return (
     <>
@@ -43,7 +43,7 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
           onSubmit={handleSubmitAddToCart}
           loading={loadingAddToCart}
           cost={variantPrice}
-          pricedVariantId={pricedVariant?.id}
+          pricedVariantId={productOffer?.id}
         />
       </div>
 
@@ -53,7 +53,7 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
         price={variantPrice}
         loading={loadingAddToCart}
         onSubmit={handleSubmitAddToCart}
-        pricedVariantId={pricedVariant?.id}
+        pricedVariantId={productOffer?.id}
       />
     </>
   )

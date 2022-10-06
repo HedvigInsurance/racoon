@@ -2,9 +2,12 @@ fragment PriceIntentFragment on PriceIntent {
   id
   data
   suggestedData
-  variants {
+  offers {
     id
-    title
+    variant {
+      id
+      title
+    }
     price {
       amount
       currencyCode

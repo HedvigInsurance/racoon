@@ -28,7 +28,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
   const products: CartPageProps['products'] = data.shopSession.cart.entries.map((item) => {
     return {
       id: item.id,
-      name: item.title,
+      name: item.variant.title,
       cost: item.price.amount,
       currency: item.price.currencyCode,
     }

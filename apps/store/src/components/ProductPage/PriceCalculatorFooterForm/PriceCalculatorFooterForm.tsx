@@ -36,7 +36,7 @@ export const PriceCalculatorFooterForm = ({
               <span>Add to cart</span>
             </PriceFooter.Button>
 
-            <input type="hidden" name={FormElement.PricedVariant} value={pricedVariantId} />
+            <input type="hidden" name={FormElement.ProductOfferId} value={pricedVariantId} />
           </form>
         </PriceFooter.Footer>
       ) : (
