@@ -1917,48 +1917,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/browser-core@npm:4.21.1":
-  version: 4.21.1
-  resolution: "@datadog/browser-core@npm:4.21.1"
-  checksum: 412bf750dba33796e4a53ca7edf63b2c5d5384d471bb0353c2e7c58eeda04eafc15b17566c289e6fb581dc5063c2c4155b6a9ba15aa0e5f08b602b0b85222c87
+"@datadog/browser-core@npm:4.21.2":
+  version: 4.21.2
+  resolution: "@datadog/browser-core@npm:4.21.2"
+  checksum: b74c91fbec41edf587d372bcf9a6ad7e50a921177079ced23f896719b3d258d071ecded7f175b69d0ad42efe54e489a7bee192e15c1570cf19f7f9f1df65e874
   languageName: node
   linkType: hard
 
-"@datadog/browser-logs@npm:4.21.1":
-  version: 4.21.1
-  resolution: "@datadog/browser-logs@npm:4.21.1"
+"@datadog/browser-logs@npm:4.21.2":
+  version: 4.21.2
+  resolution: "@datadog/browser-logs@npm:4.21.2"
   dependencies:
-    "@datadog/browser-core": 4.21.1
+    "@datadog/browser-core": 4.21.2
   peerDependencies:
-    "@datadog/browser-rum": 4.21.1
+    "@datadog/browser-rum": 4.21.2
   peerDependenciesMeta:
     "@datadog/browser-rum":
       optional: true
-  checksum: 346a9964d1a204b6fdbb515757a7267c719505a4813eb4b784a77ae68a95adf948f27b15b44a41fecfa99910be42970dbdde83a363ef46ae6c08d54b0ab24969
+  checksum: b715628bfd24d2cdd75ae1ab0dcfc82b75052cb586bdc62da88051e8c299a9e905e94b6c8f7cdf9a370698654ebab35936434fe2f822be79010cae1a4cf035ff
   languageName: node
   linkType: hard
 
-"@datadog/browser-rum-core@npm:4.21.1":
-  version: 4.21.1
-  resolution: "@datadog/browser-rum-core@npm:4.21.1"
+"@datadog/browser-rum-core@npm:4.21.2":
+  version: 4.21.2
+  resolution: "@datadog/browser-rum-core@npm:4.21.2"
   dependencies:
-    "@datadog/browser-core": 4.21.1
-  checksum: 61a9ee778ff5744bdebabaf594cc9beba996bb7878592eff9dc2fe6ac23522ed6aa0534dfe4a4ff7fe5c83f57061e1afb5fe8411f6ab4a55ecf416abc877b26e
+    "@datadog/browser-core": 4.21.2
+  checksum: 3afa6bade271d765ee2b845a7a9d6436e4acf9a69a23f9b7a2e98252f723abaa2f5761113cf40ec03330640425293bb679ec1b8f4163c71029376055f5d41487
   languageName: node
   linkType: hard
 
-"@datadog/browser-rum@npm:4.21.1":
-  version: 4.21.1
-  resolution: "@datadog/browser-rum@npm:4.21.1"
+"@datadog/browser-rum@npm:4.21.2":
+  version: 4.21.2
+  resolution: "@datadog/browser-rum@npm:4.21.2"
   dependencies:
-    "@datadog/browser-core": 4.21.1
-    "@datadog/browser-rum-core": 4.21.1
+    "@datadog/browser-core": 4.21.2
+    "@datadog/browser-rum-core": 4.21.2
   peerDependencies:
-    "@datadog/browser-logs": 4.21.1
+    "@datadog/browser-logs": 4.21.2
   peerDependenciesMeta:
     "@datadog/browser-logs":
       optional: true
-  checksum: ccb92b188ef21d75b333fd2b172d7cbf4386f5a33e5661009bf52781b8bb47a62b1cb91642a317614750099fe3dbdb48963f54731bf7538220952bbb9d2f4707
+  checksum: 39dd9364b5c4b1dce18b734a388943738bdf63bc2068fe98851079f491166b1c44707823be245c28c11a57a89e32cd0754d2846b2d0d334446bdd14810d81816
   languageName: node
   linkType: hard
 
@@ -17499,7 +17499,7 @@ __metadata:
   resolution: "onboarding@workspace:apps/onboarding"
   dependencies:
     "@apollo/client": 3.7.0
-    "@datadog/browser-rum": 4.21.1
+    "@datadog/browser-rum": 4.21.2
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
     "@graphql-codegen/cli": 2.13.3
@@ -20963,7 +20963,7 @@ __metadata:
     "@adyen/adyen-web": 5.18.0
     "@apollo/client": 3.7.0
     "@babel/core": 7.19.3
-    "@datadog/browser-logs": 4.21.1
+    "@datadog/browser-logs": 4.21.2
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
     "@graphql-codegen/cli": 2.13.3
@@ -22401,11 +22401,11 @@ __metadata:
 
 "typescript@patch:typescript@4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=a1c5e5"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 563a0ef47abae6df27a9a3ab38f75fc681f633ccf1a3502b1108e252e187787893de689220f4544aaf95a371a4eb3141e4a337deb9895de5ac3c1ca76430e5f0
+  checksum: 301459fc3eb3b1a38fe91bf96d98eb55da88a9cb17b4ef80b4d105d620f4d547ba776cc27b44cc2ef58b66eda23fe0a74142feb5e79a6fb99f54fc018a696afa
   languageName: node
   linkType: hard
 
