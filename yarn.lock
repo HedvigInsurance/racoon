@@ -12,18 +12,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.18.0":
-  version: 5.18.0
-  resolution: "@adyen/adyen-web@npm:5.18.0"
+"@adyen/adyen-web@npm:5.27.0":
+  version: 5.27.0
+  resolution: "@adyen/adyen-web@npm:5.27.0"
   dependencies:
     "@babel/runtime": ^7.15.4
-    "@babel/runtime-corejs3": ^7.16.3
+    "@babel/runtime-corejs3": ^7.19.1
     "@types/applepayjs": ^3.0.4
     "@types/googlepay": ^0.6.2
     classnames: ^2.3.1
-    core-js-pure: ^3.18.1
+    core-js-pure: ^3.25.3
     preact: ^10.5.13
-  checksum: 350f9c86d50165bad789493d08c23e890d1121673ba9ef9cb4a953736b782b1b3df7a4e31d92efeb94bef3d5ca7e080a75564cfc5df504ee791f9d5935929afe
+  checksum: 87da50ccfb7c68a46f23dd130c69ce4a323b6ed285517c4e7e4071020b2d0104adc8364e7290802c31eae1c8084275b15c5a45cb08e7460e9e1bf4f6d7094c7a
   languageName: node
   linkType: hard
 
@@ -1720,13 +1720,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:^7.10.2, @babel/runtime-corejs3@npm:^7.16.3":
+"@babel/runtime-corejs3@npm:^7.10.2":
   version: 7.18.6
   resolution: "@babel/runtime-corejs3@npm:7.18.6"
   dependencies:
     core-js-pure: ^3.20.2
     regenerator-runtime: ^0.13.4
   checksum: 55a5315b2e2541aa0dcb6193b72f8f339045d1121ff08ca87b48cbcb89447bc4550a4658e8f149c05305edd75704176ba388d780f7f0461b1b8d956a00fcf123
+  languageName: node
+  linkType: hard
+
+"@babel/runtime-corejs3@npm:^7.19.1":
+  version: 7.19.1
+  resolution: "@babel/runtime-corejs3@npm:7.19.1"
+  dependencies:
+    core-js-pure: ^3.25.1
+    regenerator-runtime: ^0.13.4
+  checksum: 38a1e8fcd2ba1f76c951259c98a5a11052123923adbf30ec8b2fec202dbbe38c6db61658ef9398e00c30f799e2e54ea036e56a09f43229261918bf5ec1b7d03a
   languageName: node
   linkType: hard
 
@@ -9695,10 +9705,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js-pure@npm:^3.18.1, core-js-pure@npm:^3.20.2, core-js-pure@npm:^3.8.1":
+"core-js-pure@npm:^3.20.2, core-js-pure@npm:^3.8.1":
   version: 3.23.3
   resolution: "core-js-pure@npm:3.23.3"
   checksum: 09a477a56963ca4409ca383d36429ea3b51b658ff85e94331a510543c77c4d1b44cb6b305b0f185d729eb059c71f1289c62fdec6371ff46ce838a16988cdcb2e
+  languageName: node
+  linkType: hard
+
+"core-js-pure@npm:^3.25.1, core-js-pure@npm:^3.25.3":
+  version: 3.25.5
+  resolution: "core-js-pure@npm:3.25.5"
+  checksum: e48799a8ab28f00ef3db18377142ff2c578574ab2b18ebddde6cbf12823e0181a57c80e3caa6046ce2a2e439d603a252be767583ddc54248e3d1060bc5012127
   languageName: node
   linkType: hard
 
@@ -20949,7 +20966,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.18.0
+    "@adyen/adyen-web": 5.27.0
     "@apollo/client": 3.7.0
     "@babel/core": 7.19.3
     "@datadog/browser-logs": 4.21.2
