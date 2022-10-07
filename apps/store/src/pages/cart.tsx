@@ -67,9 +67,10 @@ export const getServerSideProps: GetServerSideProps<
       getGlobalStory({ locale, version }),
     ])
 
+    const translations = await serverSideTranslations(locale)
     return {
       props: {
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         globalStory,
         shopSessionId: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),

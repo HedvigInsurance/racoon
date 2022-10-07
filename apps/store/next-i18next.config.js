@@ -1,5 +1,7 @@
 const path = require('path')
 
+const englishFallback = ['default']
+
 module.exports = {
   // 1. Include "default" to prefix the default locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale
@@ -12,6 +14,12 @@ module.exports = {
     defaultLocale: 'default',
     localeDetection: false,
   },
+  fallbackLng: {
+    'en-se': englishFallback,
+    'en-dk': englishFallback,
+    'en-no': englishFallback,
+  },
+  fallbackNS: 'common',
   localePath: path.resolve('./public/locales'),
   localeStructure: '{lng}/{ns}',
   lowerCaseLng: true,

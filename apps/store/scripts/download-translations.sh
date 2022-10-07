@@ -29,12 +29,12 @@ lokalise2 \
   file download \
   --format json \
   --export-sort first_added \
+  --export-empty-as skip \
   --add-newline-eof \
   --replace-breaks=false \
-  --original-filenames=false \
-  --bundle-structure 'public/locales/%LANG_ISO%/common.json' \
+  --directory-prefix 'public/locales/%LANG_ISO%' \
   --placeholder-format icu \
-  --include-tags web-onboarding \
+  --include-tags hedvig-com \
   --indentation 2sp \
   --filter-langs 'en,da_DK,en_DK,sv_SE,en_SE,nb_NO,en_NO' \
   --language-mapping '[
