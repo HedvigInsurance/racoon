@@ -19110,7 +19110,6 @@ __metadata:
     husky: 8.0.1
     lint-staged: 13.0.3
     prettier: 2.7.1
-    react-use-intercom: 2.0.0
     turbo: 1.5.5
   languageName: unknown
   linkType: soft
@@ -21015,6 +21014,7 @@ __metadata:
     prettier: 2.7.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-use-intercom: 2.0.0
     scripts: "workspace:"
     storybook-addon-next: 1.6.9
     subscriptions-transport-ws: 0.11.0
