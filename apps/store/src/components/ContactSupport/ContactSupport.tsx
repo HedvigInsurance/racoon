@@ -3,15 +3,33 @@ import { IntercomProvider, useIntercom } from 'react-use-intercom'
 import { Heading, Button, Space } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
+const getIntercomAppId = (): string => {
+  const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
+  if (appId) return appId
+  throw new Error('Expected env variable INTERCOM_APP_ID to be defined')
+}
+
+const IntercomChatButton = () => {
+  const { show } = useIntercom()
+
+  return (
+    <FlexButton variant="outlined" onClick={show}>
+      Chat with us
+    </FlexButton>
+  )
+}
+
 export type ContactSupportProps = {
   title: string
   showCallButton: boolean
   availabilityText?: string
 }
 
-const ContactSupportInner = ({ title, showCallButton, availabilityText }: ContactSupportProps) => {
-  const { show } = useIntercom()
-
+export const ContactSupport = ({
+  title,
+  showCallButton,
+  availabilityText,
+}: ContactSupportProps) => {
   return (
     <Main>
       <Space y={1.5}>
@@ -21,9 +39,13 @@ const ContactSupportInner = ({ title, showCallButton, availabilityText }: Contac
         <AvatarImagePlaceholder />
         <Space y={1}>
           <SpaceFlex space={0.5} wrap="wrap">
-            <FlexButton variant="outlined" onClick={show}>
-              Chat with us
-            </FlexButton>
+            <IntercomProvider
+              appId={getIntercomAppId()}
+              autoBoot
+              autoBootProps={{ hideDefaultLauncher: true }}
+            >
+              <IntercomChatButton />
+            </IntercomProvider>
             {showCallButton && (
               <FlexButton variant="outlined" onClick={() => console.log('call')}>
                 Schedule a call
@@ -35,32 +57,6 @@ const ContactSupportInner = ({ title, showCallButton, availabilityText }: Contac
         </Space>
       </Space>
     </Main>
-  )
-}
-
-const getIntercomAppId = (): string => {
-  const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
-  if (appId) return appId
-  throw new Error('Expected env variable INTERCOM_APP_ID to be defined')
-}
-
-export const ContactSupport = ({
-  title,
-  showCallButton,
-  availabilityText,
-}: ContactSupportProps) => {
-  return (
-    <IntercomProvider
-      appId={getIntercomAppId()}
-      autoBoot
-      autoBootProps={{ hideDefaultLauncher: true }}
-    >
-      <ContactSupportInner
-        title={title}
-        showCallButton={showCallButton}
-        availabilityText={availabilityText}
-      />
-    </IntercomProvider>
   )
 }
 
