@@ -1,4 +1,5 @@
 import AdyenCheckoutAPI from '@adyen/adyen-web'
+import { PaymentMethodsResponseObject } from '@adyen/adyen-web/dist/types/core/ProcessResponse/PaymentMethodsResponse/types'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
@@ -8,7 +9,7 @@ import { localeToAdyenLocale, usePaymentMethodConfiguration } from './Adyen.help
 import { AdyenDropinStyles } from './DropinStyles'
 
 type Props = {
-  paymentMethodsResponse: object
+  paymentMethodsResponse: PaymentMethodsResponseObject
   onSuccess: (paymentConnection: unknown) => void
 }
 
