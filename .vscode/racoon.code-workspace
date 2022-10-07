@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../"
+    },
+    {
+      "name": "apps/onboarding",
+      "path": "../apps/onboarding"
+    },
+    {
+      "name": "apps/store",
+      "path": "../apps/store"
+    },
+    {
+      "name": "packages/ui",
+      "path": "../packages/ui"
+    },
+    {
+      "name": "packages/scripts",
+      "path": "../packages/scripts"
+    },
+    {
+      "name": "packages/tsconfig",
+      "path": "../packages/tsconfig"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["ROOT", "packages/scripts", "packages/tsconfig"],
+    "jest.jestCommandLine": "yarn test",
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
+}
