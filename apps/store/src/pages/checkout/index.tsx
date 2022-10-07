@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         cartId: shopSession.cart.id,
         products: shopSession.cart.entries.map((offer) => ({
           offerId: offer.id,
-          name: offer.variant.title,
+          name: offer.variant.displayName,
           cost: offer.price.amount,
           startDate: offer.startDate,
         })),

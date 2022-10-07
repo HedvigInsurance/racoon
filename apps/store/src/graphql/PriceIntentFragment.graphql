@@ -3,14 +3,6 @@ fragment PriceIntentFragment on PriceIntent {
   data
   suggestedData
   offers {
-    id
-    variant {
-      id
-      title
-    }
-    price {
-      amount
-      currencyCode
-    }
+    ...ProductOffer
   }
 }

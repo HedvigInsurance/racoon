@@ -1,0 +1,12 @@
+fragment ProductOffer on ProductOffer {
+  id
+  variant {
+    id
+    displayName
+  }
+  price {
+    amount
+    currencyCode
+  }
+  startDate
+}
