@@ -36,7 +36,10 @@ export const getServerSideProps: GetServerSideProps<
   if (typeof slug !== 'string') return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const story = await getStoryBySlug(`/reusable-blocks/${slug}`, { locale, version })
+  const story = (await getStoryBySlug(`/reusable-blocks/${slug}`, {
+    locale,
+    version,
+  })) as ReusableStory
 
   if (story === undefined) {
     console.warn(`Page not found: /reusable-blocks/${slug}, locale: ${locale}`)
