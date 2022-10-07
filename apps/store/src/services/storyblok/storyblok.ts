@@ -216,9 +216,12 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
 }
 
 const PRODUCTS_SLUG = 'products'
-export const getNonProductPageLinks = async () => {
+const REUSABLE_BLOCK = 'reusable-blocks'
+export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => slugParts[0] !== PRODUCTS_SLUG)
+  return allLinks.filter(
+    ({ slugParts }) => slugParts[0] !== PRODUCTS_SLUG && slugParts[0] !== REUSABLE_BLOCK,
+  )
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {
