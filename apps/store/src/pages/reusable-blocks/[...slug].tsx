@@ -2,6 +2,7 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
+import logger from '@/services/logger/server'
 import {
   getStoryBySlug,
   ReusableStory,
@@ -31,25 +32,25 @@ export const getServerSideProps: GetServerSideProps<
   StoryblokPreviewData
 > = async (context) => {
   const { locale, params, previewData: { version } = {} } = context
-  const slug = (params?.slug ?? []).join('/')
 
-  if (typeof slug !== 'string') return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const story = (await getStoryBySlug(`/reusable-blocks/${slug}`, {
-    locale,
-    version,
-  })) as ReusableStory
+  const slug = (params?.slug ?? []).join('/')
 
-  if (story === undefined) {
-    console.warn(`Page not found: /reusable-blocks/${slug}, locale: ${locale}`)
+  try {
+    const story = (await getStoryBySlug(`/reusable-blocks/${slug}`, {
+      locale,
+      version,
+    })) as ReusableStory
+
+    return {
+      props: {
+        story,
+      },
+    }
+  } catch (error) {
+    logger.error(error)
     return { notFound: true }
-  }
-
-  return {
-    props: {
-      story,
-    },
   }
 }
 
