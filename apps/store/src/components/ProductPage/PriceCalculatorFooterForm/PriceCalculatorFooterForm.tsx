@@ -9,14 +9,14 @@ type Props = {
   price?: number
   targetRef: React.RefObject<HTMLElement>
   loading: boolean
-  pricedVariantId?: string
+  productOfferId?: string
 } & React.ComponentPropsWithRef<'form'>
 
 export const PriceCalculatorFooterForm = ({
   price,
   currencyCode,
   targetRef,
-  pricedVariantId,
+  productOfferId,
   loading,
   ...formProps
 }: Props) => {
@@ -36,7 +36,7 @@ export const PriceCalculatorFooterForm = ({
               <span>Add to cart</span>
             </PriceFooter.Button>
 
-            <input type="hidden" name={FormElement.ProductOfferId} value={pricedVariantId} />
+            <input type="hidden" name={FormElement.ProductOfferId} value={productOfferId} />
           </form>
         </PriceFooter.Footer>
       ) : (

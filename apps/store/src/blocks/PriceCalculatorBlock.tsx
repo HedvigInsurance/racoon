@@ -8,7 +8,7 @@ import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { TierSelector } from '@/components/ProductPage/TierSelector/TierSelector'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { ProductOffer } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { setupForm } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -37,7 +37,7 @@ export const PriceCalculatorBlock = ({ blok }: Props) => {
 
   const apolloClient = useApolloClient()
   const formatter = useCurrencyFormatter(shopSession.currencyCode)
-  const handleAddedToCart = (productOffer: ProductOffer) => {
+  const handleAddedToCart = (productOffer: ProductOfferFragment) => {
     toastRef.current?.publish({
       name: product.displayName,
       price: formatter.format(productOffer.price.amount),
