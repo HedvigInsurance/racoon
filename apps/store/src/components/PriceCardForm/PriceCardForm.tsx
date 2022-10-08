@@ -16,7 +16,7 @@ export type PriceCardFormProps = {
   currencyCode: string
   gradient: Gradient
   loading?: boolean
-  pricedVariantId?: string
+  productOfferId?: string
 } & React.ComponentPropsWithoutRef<'form'>
 
 export const PriceCardForm = ({
@@ -25,12 +25,12 @@ export const PriceCardForm = ({
   cost,
   currencyCode,
   loading = false,
-  pricedVariantId,
+  productOfferId,
   ...formProps
 }: PriceCardFormProps) => {
   return (
     <form {...formProps}>
-      <input type="hidden" name={FormElement.ProductOfferId} value={pricedVariantId} />
+      <input type="hidden" name={FormElement.ProductOfferId} value={productOfferId} />
       <Wrapper y={1}>
         <CenteredPillow fromColor={fromColor} toColor={toColor} />
 

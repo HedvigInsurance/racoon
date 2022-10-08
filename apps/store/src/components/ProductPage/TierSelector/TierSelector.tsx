@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { PriceCardForm } from '@/components/PriceCardForm/PriceCardForm'
 import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
 import { PriceCalculatorFooterForm } from '@/components/ProductPage/PriceCalculatorFooterForm/PriceCalculatorFooterForm'
-import { ProductOffer } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useHandleSubmitAddToCart } from '../useHandleSubmitAddToCart'
 
@@ -10,7 +10,7 @@ type Props = {
   cartId: string
   product: PriceFormProduct
   priceIntent: PriceIntent
-  onAddedToCart: (pricedVariant: ProductOffer) => void
+  onAddedToCart: (offer: ProductOfferFragment) => void
 }
 
 export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Props) => {
@@ -43,7 +43,7 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
           onSubmit={handleSubmitAddToCart}
           loading={loadingAddToCart}
           cost={variantPrice}
-          pricedVariantId={productOffer?.id}
+          productOfferId={productOffer?.id}
         />
       </div>
 
@@ -53,7 +53,7 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
         price={variantPrice}
         loading={loadingAddToCart}
         onSubmit={handleSubmitAddToCart}
-        pricedVariantId={productOffer?.id}
+        productOfferId={productOffer?.id}
       />
     </>
   )

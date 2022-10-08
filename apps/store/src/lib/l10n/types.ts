@@ -27,3 +27,8 @@ export enum CountryLabel {
   NO = 'NO',
   DK = 'DK',
 }
+
+export enum I18nNamespace {
+  Common = 'common',
+  Cart = 'cart',
+}

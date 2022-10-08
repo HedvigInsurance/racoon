@@ -8,9 +8,11 @@ import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
+import * as Auth from '@/services/Auth/Auth'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
 
 const NextCheckoutPaymentPageAdyen: NextPage<CheckoutPaymentPageAdyenProps> = (props) => {
   return <CheckoutPaymentPageAdyen {...props} />
@@ -38,6 +40,12 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
           permanent: false,
         },
       }
+    }
+
+    const accessToken = Auth.getAccessToken(req, res)
+    const woPaymentURL = accessToken ? getWebOnboardingPaymentURL({ locale, accessToken }) : null
+    if (woPaymentURL) {
+      return { redirect: { destination: woPaymentURL, permanent: false } }
     }
 
     const paymentMethodsResponse = await fetchAvailablePaymentMethods({
@@ -74,7 +82,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
           subTotal: shopSession.cart.cost.subtotal.amount,
         },
         products: shopSession.cart.entries.map((line) => ({
-          name: line.variant.title,
+          name: line.variant.displayName,
           cost: line.price.amount,
         })),
       },

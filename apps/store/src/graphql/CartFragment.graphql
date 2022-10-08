@@ -11,15 +11,6 @@ fragment CartFragment on Cart {
     }
   }
   entries {
-    id
-    startDate
-    price {
-      amount
-      currencyCode
-    }
-    variant {
-      id
-      title
-    }
+    ...ProductOffer
   }
 }
