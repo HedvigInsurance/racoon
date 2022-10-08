@@ -1,27 +1,46 @@
 import { getCookie, setCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
 
-const AUTH_COOKIE_KEY = 'HEDVIG_ACCESS_TOKEN'
+const COOKIE_KEY = '_hvsession'
+const ACCESS_TOKEN_SESSION_FIELD = 'token'
 const MAX_AGE = 60 * 60 * 24 // 24 hours
 
 export const save = (accessToken: string) => {
-  setCookie(AUTH_COOKIE_KEY, accessToken, {
+  setCookie(COOKIE_KEY, serialize(accessToken), {
     maxAge: MAX_AGE,
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
     path: '/',
+    ...(process.env.NODE_ENV === 'production' && {
+      sameSite: 'none',
+      secure: true,
+    }),
   })
 }
 
 type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
 const getAccessToken = ({ req, res }: CookieParams) => {
-  const value = getCookie(AUTH_COOKIE_KEY, { req, res })
-  return typeof value === 'string' ? value : undefined
+  const cookieValue = getCookie(COOKIE_KEY, { req, res })
+  if (cookieValue !== 'string') return undefined
+  return deserialize(cookieValue)
 }
 
 export const getAuthHeader = (params: CookieParams = {}): Record<string, string> => {
   const accessToken = getAccessToken(params)
   if (accessToken) return { authorization: accessToken }
   return {}
+}
+
+const serialize = (accessToken: string) => {
+  return JSON.stringify({ [ACCESS_TOKEN_SESSION_FIELD]: accessToken })
+}
+
+const deserialize = (value: string) => {
+  try {
+    const data = JSON.parse(value)
+    const accessToken = data[ACCESS_TOKEN_SESSION_FIELD]
+    return typeof accessToken === 'string' ? accessToken : undefined
+  } catch (error) {
+    console.warn('Unable to deserialize session')
+    return undefined
+  }
 }
