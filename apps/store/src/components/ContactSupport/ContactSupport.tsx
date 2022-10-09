@@ -1,23 +1,7 @@
 import styled from '@emotion/styled'
-import { IntercomProvider, useIntercom } from 'react-use-intercom'
 import { Heading, Button, Space } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-
-const getIntercomAppId = (): string => {
-  const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
-  if (appId) return appId
-  throw new Error('Expected env variable INTERCOM_APP_ID to be defined')
-}
-
-const IntercomChatButton = () => {
-  const { show } = useIntercom()
-
-  return (
-    <FlexButton variant="outlined" onClick={show}>
-      Chat with us
-    </FlexButton>
-  )
-}
+import { IntercomChatButton } from './IntercomChatButton'
 
 export type ContactSupportProps = {
   title: string
@@ -39,13 +23,7 @@ export const ContactSupport = ({
         <AvatarImagePlaceholder />
         <Space y={1}>
           <SpaceFlex space={0.5} wrap="wrap">
-            <IntercomProvider
-              appId={getIntercomAppId()}
-              autoBoot
-              autoBootProps={{ hideDefaultLauncher: true }}
-            >
-              <IntercomChatButton />
-            </IntercomProvider>
+            <IntercomChatButton />
             {showCallButton && (
               <FlexButton variant="outlined" onClick={() => console.log('call')}>
                 Schedule a call
