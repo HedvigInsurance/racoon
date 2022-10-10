@@ -18,7 +18,7 @@
     "download-translations": "./scripts/download-translations.sh"
   },
   "dependencies": {
-    "@adyen/adyen-web": "5.18.0",
+    "@adyen/adyen-web": "5.27.0",
     "@apollo/client": "3.7.0",
     "@datadog/browser-logs": "4.21.2",
     "@emotion/react": "11.10.4",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.19.3",
-    "@graphql-codegen/cli": "2.13.3",
+    "@graphql-codegen/cli": "2.13.5",
     "@graphql-codegen/typescript": "2.7.3",
     "@graphql-codegen/typescript-operations": "2.5.3",
     "@graphql-codegen/typescript-react-apollo": "3.3.3",

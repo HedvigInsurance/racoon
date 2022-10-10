@@ -52,7 +52,7 @@
   "STARTPAGE_INSURED_HEADLINE": "Compare your home insurance",
   "STARTPAGE_INSURED_BODY": "See price comparison and switch",
   "STARTPAGE_INSURED_BUTTON": "Compare Hedvig",
-  "STARTPAGE_PAGE_TITLE": "Get a price quote | Hedvig",
+  "STARTPAGE_PAGE_TITLE": "Get a price quote in Norway | Hedvig",
   "SIDEBAR_OLD_PRICE": "{PRICE} NOK\/month",
   "SIDEBAR_PRICE_SUFFIX_INTERVAL": "\/month",
   "SIDEBAR_ADD_DISCOUNT_FINEPRINT_LINK_TEXT": "terms & conditions",
@@ -199,7 +199,7 @@
   "FOREVER_ERROR_MEMBER_IS_NOT_ELIGIBLE_FOR_CAMPAIGN": "Not eligible for campaign.",
   "FOREVER_ERROR_CAMPAIGN_DOES_NOT_EXIST": "This code doesn't exist.",
   "FOREVER_ERROR_CANNOT_REDEEM_CAMPAIGN_FROM_DIFFERENT_MARKET": "This code doesn't exist.",
-  "START_PAGE_TITLE": "Get a price quote | Hedvig",
+  "START_PAGE_TITLE": "Get a price quote in Norway| Hedvig",
   "SIDEBAR_INSURANCE_TYPE_STUDENT_BRF": "Homeowner Student",
   "SIDEBAR_INSURANCE_TYPE_STUDENT_RENT": "Rental Student",
   "SIDEBAR_INSURANCE_TYPE_NO_CONTENTS_OWN": "Home Insurance",
@@ -451,5 +451,6 @@
   "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": "You can always update your choices later.",
   "OFFER_SWITCH_PROMOTION_PARAGRAPH_CAR_V2": "We noted that your car is already insured with another company. Don’t worry – switching is quick and easy. Here’s how it works:\n\n1. Sign a car insurance with Hedvig. \n2. Receive an email with a link that lets you authorize the switch, using mobile BankID.\n3. We’ll contact your precious insurer and cancel the policy on your behalf.\n4. All done! Your new car insurance with Hedvig is automatically activated on the day your previous one expires. \n\nPlease note: if your previous insurance expires within 1 week, you’ll need to contact the insurer yourself to cancel it.",
   "SIDEBAR_SWITCHING_NOTICE_ADDENDUM": "If the expiry date is within a week, you’ll be asked to contact your insurer yourself to cancel it.",
-  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": "Start date (expiry of your old insurance)"
+  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": "Start date (expiry of your old insurance)",
+  "EXTERNAL_INSURANCE_PROVIDER_UNKNOWN_NAME": "Old insurance"
 }

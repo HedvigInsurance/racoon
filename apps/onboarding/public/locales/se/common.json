@@ -451,5 +451,6 @@
   "LANDING_PAGE_UPDATE_CHOICES_SUBHEADING": "",
   "OFFER_SWITCH_PROMOTION_PARAGRAPH_CAR_V2": "Vi ser att din bil redan är försäkrad med ett annat försäkringsbolag. Oroa dig inte, det är enkelt att byta.\n\n1. Teckna en bilförsäkring med Hedvig\n2. Du får ett mejl med en länk till att säga upp din tidigare försäkring med BankID.\n3. Vi kontaktar ditt tidigare försäkringsbolag och säger upp din försäkring åt dig.\n4. Klart! Din nya bilförsäkring med Hedvig aktiveras automatiskt samma dag som din tidigare går ut.\n\nObservera: om din tidigare bilförsäkring går ut inom 1 vecka behöver du själv kontakta ditt försäkringsbolag för att säga upp den.",
   "SIDEBAR_SWITCHING_NOTICE_ADDENDUM": "Om din tidigare försäkring förfaller inom 1 vecka får du själv kontakta ditt försäkringsbolag och säga upp den.",
-  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": "Startdatum (när din tidigare försäkring går ut)"
+  "SIDEBAR_STARTDATE_CELL_LABEL_SWITCHER": "Startdatum (när din tidigare försäkring går ut)",
+  "EXTERNAL_INSURANCE_PROVIDER_UNKNOWN_NAME": "Gamla försäkringen"
 }

@@ -8,7 +8,7 @@ import {
   getStoryBySlug,
   StoryblokPageProps,
   StoryblokQueryParams,
-  getNonProductPageLinks,
+  getFilteredPageLinks,
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 
@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps<
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pageLinks = await getNonProductPageLinks()
+  const pageLinks = await getFilteredPageLinks()
   const paths: RoutingPath[] = pageLinks.map(({ locale, slugParts }) => {
     return { params: { slug: slugParts }, locale }
   })
