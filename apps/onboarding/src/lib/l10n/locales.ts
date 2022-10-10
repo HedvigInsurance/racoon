@@ -5,7 +5,7 @@ import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 export const LOCALE_URL_PARAMS = ['se', 'se-en', 'no', 'no-en', 'dk', 'dk-en'] as const
 export type LocaleUrlParams = typeof LOCALE_URL_PARAMS
 export type LocaleLabel = LocaleUrlParams[number]
-export type HrefLanguage = 'en-se' | 'sv-se' | 'nb-no' | 'en-no' | 'da-dk' | 'en-dk'
+export type HrefLanguage = 'en-se' | 'sv-se' | 'no-no' | 'en-no' | 'da-dk' | 'en-dk'
 
 export type LocaleData = {
   path: LocaleLabel
@@ -78,7 +78,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
     marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'no',
-    hrefLang: 'nb-no',
+    hrefLang: 'no-no',
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
     ssn: {
       length: ssnLengths.NO,

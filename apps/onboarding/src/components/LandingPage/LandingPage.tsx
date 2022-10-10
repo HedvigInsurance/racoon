@@ -116,7 +116,7 @@ export const LandingPage = ({
         <Main>
           <ContentCard>
             <Space y={1.5}>
-              <HeadingOLD variant="m" headingLevel="h2" colorVariant="dark">
+              <HeadingOLD variant="m" headingLevel="h1" colorVariant="dark">
                 {t('LANDING_PAGE_HEADLINE')}
               </HeadingOLD>
               <BodyText variant={1} colorVariant="medium" displayBlock>
