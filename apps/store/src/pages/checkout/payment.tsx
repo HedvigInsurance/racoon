@@ -41,9 +41,12 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       }
     }
 
-    const woPaymentURL = getWebOnboardingPaymentURL({ locale })
-    if (woPaymentURL) {
-      return { redirect: { destination: woPaymentURL, permanent: false } }
+    if (!isPaymentBeforeSign) {
+      const redirectURL = new URL(PageLink.checkoutPaymentRedirectBase({ locale }))
+      const woPaymentURL = getWebOnboardingPaymentURL({ locale, redirectURL })
+      if (woPaymentURL) {
+        return { redirect: { destination: woPaymentURL, permanent: false } }
+      }
     }
 
     const paymentMethodsResponse = await fetchAvailablePaymentMethods({
