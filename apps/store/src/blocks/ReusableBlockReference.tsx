@@ -1,8 +1,8 @@
 import { StoryblokComponent } from '@storyblok/react'
-import { ReferenceStory, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ReusableStory, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ReusableBlockReferenceProps = SbBaseBlockProps<{
-  reference: ReferenceStory
+  reference: ReusableStory
 }>
 
 export const ReusableBlockReference = ({ blok }: ReusableBlockReferenceProps) => {
