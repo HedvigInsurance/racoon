@@ -8,7 +8,6 @@ import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
-import * as Auth from '@/services/Auth/Auth'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -42,8 +41,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       }
     }
 
-    const accessToken = Auth.getAccessToken(req, res)
-    const woPaymentURL = accessToken ? getWebOnboardingPaymentURL({ locale, accessToken }) : null
+    const woPaymentURL = getWebOnboardingPaymentURL({ locale })
     if (woPaymentURL) {
       return { redirect: { destination: woPaymentURL, permanent: false } }
     }

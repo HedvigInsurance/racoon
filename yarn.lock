@@ -6326,6 +6326,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+  languageName: node
+  linkType: hard
+
 "@types/webpack-env@npm:^1.16.0":
   version: 1.16.3
   resolution: "@types/webpack-env@npm:1.16.3"
@@ -20832,6 +20839,7 @@ __metadata:
     "@types/js-cookie": 3.0.2
     "@types/node": 16.11.64
     "@types/react": 18.0.21
+    "@types/uuid": 8.3.4
     ajv: 8.11.0
     babel-loader: 8.2.5
     cookies-next: 2.1.1
@@ -20863,6 +20871,7 @@ __metadata:
     tsconfig: "workspace:"
     typescript: 4.8.4
     ui: "workspace:"
+    uuid: 9.0.0
     whatwg-fetch: 3.6.2
   languageName: unknown
   linkType: soft
@@ -22782,6 +22791,15 @@ __metadata:
   version: 3.1.0
   resolution: "uuid-browser@npm:3.1.0"
   checksum: 951ec47593865c7cc746df671f7b0f0ff48fcab583fcdaeab6c517a5222af0f5e144a6fcea5fa9620a5b3be047e2f9412a80267ea5c45050e07d51774197d49e
+  languageName: node
+  linkType: hard
+
+"uuid@npm:9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
   languageName: node
   linkType: hard
 
