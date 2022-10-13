@@ -20,6 +20,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
     <HeroSection {...storyblokEditable(blok)}>
       <HeroImageWrapper>
         <Image
+          priority
           src={blok.background.filename}
           alt={blok.background.alt}
           layout="fill"
