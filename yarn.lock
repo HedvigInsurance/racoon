@@ -12,9 +12,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.27.0":
-  version: 5.27.0
-  resolution: "@adyen/adyen-web@npm:5.27.0"
+"@adyen/adyen-web@npm:5.28.0":
+  version: 5.28.0
+  resolution: "@adyen/adyen-web@npm:5.28.0"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@babel/runtime-corejs3": ^7.19.1
@@ -23,7 +23,7 @@ __metadata:
     classnames: ^2.3.1
     core-js-pure: ^3.25.3
     preact: ^10.5.13
-  checksum: 87da50ccfb7c68a46f23dd130c69ce4a323b6ed285517c4e7e4071020b2d0104adc8364e7290802c31eae1c8084275b15c5a45cb08e7460e9e1bf4f6d7094c7a
+  checksum: e5ada41546a9e77b34a5f4c95ae9e30eca1d24ed0863d097c9610a8db4e4d81686b749807bffaede9f2ac6bde3069211a163caee9e2f0e75dd7739266e64f12c
   languageName: node
   linkType: hard
 
@@ -20816,7 +20816,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.27.0
+    "@adyen/adyen-web": 5.28.0
     "@apollo/client": 3.7.0
     "@babel/core": 7.19.3
     "@datadog/browser-logs": 4.21.2
