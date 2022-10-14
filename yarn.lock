@@ -9997,9 +9997,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dd-trace@npm:3.3.1":
-  version: 3.3.1
-  resolution: "dd-trace@npm:3.3.1"
+"dd-trace@npm:3.5.0":
+  version: 3.5.0
+  resolution: "dd-trace@npm:3.5.0"
   dependencies:
     "@datadog/native-appsec": ^1.2.1
     "@datadog/native-metrics": ^1.4.3
@@ -10024,7 +10024,7 @@ __metadata:
     path-to-regexp: ^0.1.2
     retry: ^0.10.1
     semver: ^5.5.0
-  checksum: 238d895befbc71d54506ef57fceb4b7ddef566ebc612cb78a3ed4b6b1e5f0d2b8324ee2d697dd2af22ac3a4790306faee995379e487e12543996c805861f5c09
+  checksum: 487ebe75653cf65f40e1303c7877cbc7661dcb11d6139c20874f086736140be7c45faffe510767046979889a2b04ed15313b72fb611be3b290d3a3974e5d76be
   languageName: node
   linkType: hard
 
@@ -20851,7 +20851,7 @@ __metadata:
     ajv: 8.11.0
     babel-loader: 8.2.5
     cookies-next: 2.1.1
-    dd-trace: 3.3.1
+    dd-trace: 3.5.0
     eslint: 8.24.0
     eslint-plugin-cypress: 2.12.1
     framer-motion: 7.2.1
