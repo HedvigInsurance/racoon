@@ -5,6 +5,7 @@ import { mergeDeep } from '@apollo/client/utilities'
 import { GetServerSidePropsContext } from 'next'
 import { useMemo } from 'react'
 import * as Auth from '@/services/Auth/Auth'
+import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -18,22 +19,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const authLink = setContext((_, { headers }) => {
-  const newHeaders = { ...(headers ?? {}) }
-
-  const accessToken = Auth.getAccessToken()
-  if (accessToken) {
-    newHeaders.authorization = accessToken
+const authLink = setContext((_, { headers = {} }) => {
+  return {
+    ...headers,
+    ...Auth.getAuthHeader(),
   }
-
-  return newHeaders
 })
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
 
-const createApolloClient = (accessToken?: string) => {
-  const headers = accessToken ? { authorization: accessToken } : undefined
-
+const createApolloClient = (headers?: Record<string, string>) => {
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
@@ -54,7 +49,12 @@ export const initializeApollo = ({
   req,
   res,
 }: InitializeApolloParams = {}) => {
-  const _apolloClient = apolloClient ?? createApolloClient(Auth.getAccessToken(req, res))
+  const headers = {
+    ...getDeviceIdHeader({ req, res }),
+    ...Auth.getAuthHeader({ req, res }),
+  }
+
+  const _apolloClient = apolloClient ?? createApolloClient(headers)
 
   if (initialState) {
     const existingCache = _apolloClient.extract()

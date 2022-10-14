@@ -1,3 +1,5 @@
+import { PaymentMethodsResponseObject } from '@adyen/adyen-web/dist/types/core/ProcessResponse/PaymentMethodsResponse/types'
+
 type CostData = { crossOut?: number; total: number; subTotal: number }
 type ProductData = { name: string; cost: number }
 type CampaignData = { name: string; discount: number }
@@ -10,7 +12,7 @@ export type CheckoutPaymentPageProps = {
 }
 
 export type CheckoutPaymentPageAdyenProps = CheckoutPaymentPageProps & {
-  paymentMethodsResponse: object
+  paymentMethodsResponse: PaymentMethodsResponseObject
   isPaymentConnected: boolean
 
   shopSessionId: string
