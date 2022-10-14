@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Heading, Button, Space } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { IntercomChatButton } from './IntercomChatButton'
 
 export type ContactSupportProps = {
   title: string
@@ -22,9 +23,7 @@ export const ContactSupport = ({
         <AvatarImagePlaceholder />
         <Space y={1}>
           <SpaceFlex space={0.5} wrap="wrap">
-            <FlexButton variant="outlined" onClick={() => console.log('chat')}>
-              Chat with us
-            </FlexButton>
+            <IntercomChatButton />
             {showCallButton && (
               <FlexButton variant="outlined" onClick={() => console.log('call')}>
                 Schedule a call

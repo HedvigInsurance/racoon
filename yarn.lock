@@ -19201,6 +19201,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-use-intercom@npm:2.0.0":
+  version: 2.0.0
+  resolution: "react-use-intercom@npm:2.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 1cc2d3d4ded72371ab9c5a62f6cff5b3d4a6e35db59ef2a153cdba228d13b009c1adfddc0d2b26c9ffe8c189b31c0c8792ccd12f0f22afdc3cbc31a15b5bd793
+  languageName: node
+  linkType: hard
+
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -20864,6 +20874,7 @@ __metadata:
     prettier: 2.7.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-use-intercom: 2.0.0
     scripts: "workspace:"
     storybook-addon-next: 1.6.9
     subscriptions-transport-ws: 0.11.0
