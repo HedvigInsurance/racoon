@@ -11313,14 +11313,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:5.6.0":
-  version: 5.6.0
-  resolution: "eslint-plugin-testing-library@npm:5.6.0"
+"eslint-plugin-testing-library@npm:5.7.2":
+  version: 5.7.2
+  resolution: "eslint-plugin-testing-library@npm:5.7.2"
   dependencies:
     "@typescript-eslint/utils": ^5.13.0
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: 52cd25709f782bd6ff7f1aed02995a7f8b1020abfa385922947d3fd03f057f954274480ddc4c264f14061f6c59827fa7ef4699f560ffb52bfe585fb4c93b0f16
+  checksum: 33ab09b0bc77b80ea61b9bac4d48ca3f83916a0cb9deaf0e8d2eaab80707346feb7e808a68a625fa27baf278d1d8130b1ca5d2f8eb0904804793601d8f1c8f40
   languageName: node
   linkType: hard
 
@@ -20053,7 +20053,7 @@ __metadata:
     eslint-plugin-import: 2.26.0
     eslint-plugin-jest: 26.9.0
     eslint-plugin-jsx-a11y: 6.6.1
-    eslint-plugin-testing-library: 5.6.0
+    eslint-plugin-testing-library: 5.7.2
     identity-obj-proxy: ^3.0.0
     next: 12.3.1
     react: 18.2.0
