@@ -6062,10 +6062,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@types/marked@npm:4.0.3"
-  checksum: 2fc409a6291cb770688731a444f54e7eab6257c9b565dea4e9d2f3b6654b606e9dd8ea4a924e306b2d2f581dedcb7a27f10f2ca7aed828b11642ab85955341f1
+"@types/marked@npm:4.0.7":
+  version: 4.0.7
+  resolution: "@types/marked@npm:4.0.7"
+  checksum: 4907b6a606578cd864bad429aca3c234591e6ed56bd141c575140487269b825a480ace9a85e4d003d1de1f007004c9d9b2fe600038ded5bba75aef59118e58d5
   languageName: node
   linkType: hard
 
@@ -16147,12 +16147,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:4.0.18":
-  version: 4.0.18
-  resolution: "marked@npm:4.0.18"
+"marked@npm:4.1.1":
+  version: 4.1.1
+  resolution: "marked@npm:4.1.1"
   bin:
     marked: bin/marked.js
-  checksum: a13e886d5059a8500a6fd552feecc16e18fc3636aa491fce372384b1fdea67e323d67ac49f7618f6977e66ca96e39f27400eb5c1273d5ee9c2301e8c33e90dce
+  checksum: 717e3357952ee53de831bf0eb110ed075bebca2376c58bcdf7ee523ef540d45308ad6d51b2c933da0968832ea4386f31c142ca65443e77c098e84f6cce73e418
   languageName: node
   linkType: hard
 
@@ -17339,7 +17339,7 @@ __metadata:
     "@types/formidable": 2.0.5
     "@types/jsdom": 20.0.0
     "@types/lodash-es": 4.17.6
-    "@types/marked": 4.0.3
+    "@types/marked": 4.0.7
     "@types/node": 16.11.65
     "@types/react": 18.0.21
     classnames: 2.3.2
@@ -17354,7 +17354,7 @@ __metadata:
     jest: 29.1.2
     jsdom: 20.0.1
     lodash-es: 4.17.21
-    marked: 4.0.18
+    marked: 4.1.1
     msw: 0.47.3
     next: 12.3.1
     next-i18next: 12.1.0
