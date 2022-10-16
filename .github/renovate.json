@@ -13,6 +13,6 @@
     }
   ],
   "prCreation": "not-pending",
-  "prConcurrentLimit": 5,
+  "prConcurrentLimit": 4,
   "stabilityDays": 2
 }
