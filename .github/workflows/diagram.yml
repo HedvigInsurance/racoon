@@ -32,7 +32,7 @@ jobs:
         run: git mv --force ./temp-repo-diagram.svg ./repo-diagram.svg
 
       - name: Add & commit
-        uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v9
         with:
           add: 'repo-diagram.svg'
           message: 'Repo visualizer: updated diagram'

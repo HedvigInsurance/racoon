@@ -22,6 +22,8 @@ export const PageLink = {
     const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''
     return `${localePrefix(locale)}/checkout/payment${queryString}`
   },
+  checkoutPaymentRedirectBase: ({ locale }: Required<BaseParams>) =>
+    `${localePrefix(locale)}/checkout/payment`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
