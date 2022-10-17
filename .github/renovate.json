@@ -9,7 +9,7 @@
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
-      "labels": ["deps: automerge"]
+      "labels": ["deps"]
     }
   ],
   "prCreation": "not-pending",
