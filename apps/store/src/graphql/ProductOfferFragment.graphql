@@ -1,7 +1,7 @@
 fragment ProductOffer on ProductOffer {
   id
   variant {
-    id
+    typeOfContract
     displayName
   }
   price {
