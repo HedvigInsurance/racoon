@@ -2,11 +2,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
-import { Button, HeadingOLD, mq, Space } from 'ui'
-import { BodyText } from '@/components/BodyText'
+import { Button, HeadingOLD, mq } from 'ui'
 import { FixedFooter } from '@/components/FixedFooter'
 import { Header } from '@/components/Nav/Header'
-import { useFeature, Feature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
@@ -66,11 +64,6 @@ const FooterButton = styled(Button)({
   },
 })
 
-const ContentCard = styled.div({
-  margin: '1rem 1rem 0 0',
-  [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
-})
-
 export type LandingPageProps = {
   mainCoverageInsurances: Insurances
   additionalCoverageInsurances: Insurances
@@ -89,11 +82,6 @@ export const LandingPage = ({
 
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
-
-  const [IS_HOUSE_INSURANCE_ENABLED, IS_CROSS_SELL_ENABLED] = useFeature([
-    Feature.HOUSE_INSURANCE,
-    Feature.CROSS_SELL,
-  ])
 
   const hasSelectedAtLeastOneMainInsurance = useMemo(
     () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
@@ -114,26 +102,6 @@ export const LandingPage = ({
       <PageContainer>
         <Header />
         <Main>
-          <ContentCard>
-            <Space y={1.5}>
-              <HeadingOLD variant="m" headingLevel="h1" colorVariant="dark">
-                {t('LANDING_PAGE_HEADLINE')}
-              </HeadingOLD>
-              <BodyText variant={1} colorVariant="medium" displayBlock>
-                {t(
-                  IS_HOUSE_INSURANCE_ENABLED
-                    ? 'LANDING_PAGE_MULTI_MAIN_COVERAGE_SUBHEADING'
-                    : 'LANDING_PAGE_SUBHEADING',
-                )}
-              </BodyText>
-              {IS_CROSS_SELL_ENABLED && (
-                <BodyText variant={1} colorVariant="medium" displayBlock>
-                  {t('LANDING_PAGE_UPDATE_CHOICES_SUBHEADING')}
-                </BodyText>
-              )}
-            </Space>
-          </ContentCard>
-
           <TitleContainer>
             <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
               {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
