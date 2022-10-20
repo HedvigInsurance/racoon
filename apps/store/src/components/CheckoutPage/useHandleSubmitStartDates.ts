@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
+import { formatAPIDate } from './CheckoutPage.helpers'
 import { CheckoutPageProps } from './CheckoutPage.types'
 
 type Params = {
@@ -27,7 +28,7 @@ export const useHandleSubmitStartDates = ({ cartId, products, onSuccess }: Param
         throw new Error(`No date input for ${product.offerId}`)
       }
 
-      const startDate = inputElement.valueAsDate?.toISOString().substring(0, 10) ?? null
+      const startDate = inputElement.valueAsDate ? formatAPIDate(inputElement.valueAsDate) : null
 
       return {
         offerId: product.offerId,
