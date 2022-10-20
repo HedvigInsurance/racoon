@@ -10,6 +10,7 @@ import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/clie
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 type NextPageProps = Omit<CheckoutContactDetailsPageProps, 'onSuccess'> & {
@@ -53,7 +54,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (para
         checkoutSigningId: checkoutSigning?.id ?? null,
 
         ...(await serverSideTranslations(locale)),
-        shopSessionId: shopSession.id,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.extract(),
       },
     }

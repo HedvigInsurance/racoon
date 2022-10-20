@@ -10,6 +10,7 @@ import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
 
@@ -72,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
     return {
       props: {
         ...(await serverSideTranslations(locale)),
-        shopSessionId: shopSession.id,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         isPaymentConnected: context.query.authStatus === AuthStatus.Success,
         checkoutId: shopSession.checkout.id,
         checkoutSigningId: checkoutSigning?.id ?? null,

@@ -7,6 +7,7 @@ import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSu
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 
 type NextPageProps = Omit<CheckoutPageProps, 'loading'> & {
@@ -66,7 +67,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     return {
       props: {
         ...(await serverSideTranslations(locale)),
-        shopSessionId: shopSession.id,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         cartId: shopSession.cart.id,
         products: shopSession.cart.entries.map((offer) => ({
           offerId: offer.id,

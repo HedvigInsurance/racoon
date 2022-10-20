@@ -8,6 +8,7 @@ import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import {
   getGlobalStory,
@@ -71,9 +72,9 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         ...translations,
-        globalStory,
-        shopSessionId: shopSession.id,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
+        globalStory,
       },
     }
   } catch (error) {
