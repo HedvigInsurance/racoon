@@ -64,12 +64,12 @@ export const getServerSideProps: GetServerSideProps<
 
   try {
     const apolloClient = initializeApollo({ req, res })
-    const [shopSession, globalStory] = await Promise.all([
+    const [shopSession, globalStory, translations] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
       getGlobalStory({ locale, version }),
+      serverSideTranslations(locale),
     ])
 
-    const translations = await serverSideTranslations(locale)
     return {
       props: {
         ...translations,

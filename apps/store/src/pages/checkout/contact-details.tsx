@@ -44,7 +44,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (para
       return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
     }
 
-    const checkoutSigning = await fetchCurrentCheckoutSigning({ req, apolloClient, checkoutId })
+    const [checkoutSigning, translations] = await Promise.all([
+      fetchCurrentCheckoutSigning({ req, apolloClient, checkoutId }),
+      serverSideTranslations(locale),
+    ])
 
     return {
       props: {
@@ -53,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (para
         flow: shopSession.checkout.paymentConnectionFlow,
         checkoutSigningId: checkoutSigning?.id ?? null,
 
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.extract(),
       },

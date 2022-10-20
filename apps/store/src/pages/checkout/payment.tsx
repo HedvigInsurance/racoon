@@ -50,16 +50,11 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
       }
     }
 
-    const paymentMethodsResponse = await fetchAvailablePaymentMethods({
-      apolloClient,
-      countryCode: shopSession.countryCode,
-    })
-
-    const checkoutSigning = await fetchCurrentCheckoutSigning({
-      req,
-      apolloClient,
-      checkoutId: shopSession.checkout.id,
-    })
+    const [paymentMethodsResponse, checkoutSigning, translations] = await Promise.all([
+      fetchAvailablePaymentMethods({ apolloClient, countryCode: shopSession.countryCode }),
+      fetchCurrentCheckoutSigning({ req, apolloClient, checkoutId: shopSession.checkout.id }),
+      serverSideTranslations(locale),
+    ])
 
     if (checkoutSigning?.completion) {
       return {
@@ -72,7 +67,7 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
 
     return {
       props: {
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         isPaymentConnected: context.query.authStatus === AuthStatus.Success,
         checkoutId: shopSession.checkout.id,
