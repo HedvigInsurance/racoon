@@ -5,7 +5,7 @@ import { CheckoutContactDetailsPage } from '@/components/CheckoutContactDetailsP
 import { CheckoutContactDetailsPageProps } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetails.types'
 import { CheckoutSignPage } from '@/components/CheckoutContactDetailsPage/CheckoutSignPage'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'

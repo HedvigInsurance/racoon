@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Heading, Space } from 'ui'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 
 type Props = {
   children: React.ReactNode

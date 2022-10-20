@@ -4,7 +4,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
