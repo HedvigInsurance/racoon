@@ -9,24 +9,26 @@ import { useEffect } from 'react'
 import { CountryCode } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
-export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
+const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
+const GTM_ENVIRONMENT = process.env.NEXT_PUBLIC_GTM_ENV
 
 const GTM_ENVIRONMENTS = ['local', 'staging', 'prod'] as const
 type GTMEnvironment = typeof GTM_ENVIRONMENTS[number]
 
 const getGtmEnvironment = () => {
-  const env = process.env.NEXT_PUBLIC_GTM_ENV
+  if (isGTMEnvironment(GTM_ENVIRONMENT)) return GTM_ENVIRONMENT
 
-  if (GTM_ENVIRONMENTS.includes(env as GTMEnvironment)) {
-    return env as GTMEnvironment
-  }
-
-  const message = `Unknown GTM environment ${env}, expected <${GTM_ENVIRONMENTS.join('|')}>`
+  const environments = GTM_ENVIRONMENTS.join('|')
+  const message = `Unknown GTM environment ${GTM_ENVIRONMENT}, expected <${environments}>`
   if (GTM_ID) {
     throw new Error(message)
   } else {
     datadogLogs.logger.warn(message)
   }
+}
+
+const isGTMEnvironment = (value: unknown): value is GTMEnvironment => {
+  return GTM_ENVIRONMENTS.includes(value as GTMEnvironment)
 }
 
 type GTMUserProperties = {
