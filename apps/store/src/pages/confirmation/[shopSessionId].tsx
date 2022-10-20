@@ -11,6 +11,7 @@ import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
+import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
 type Params = { shopSessionId: string }
 
@@ -41,7 +42,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       props: {
         ...(await serverSideTranslations(locale)),
         [SHOP_SESSION_PROP_NAME]: shopSessionId,
-        globalStory,
+        [GLOBAL_STORY_PROP_NAME]: globalStory,
         currency: shopSession.currencyCode,
         cost: { total: 0 },
         products: shopSession.cart.entries.map((item) => {

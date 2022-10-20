@@ -11,6 +11,7 @@ import {
   getFilteredPageLinks,
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
+import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
 type RoutingPath = {
   params: {
@@ -52,7 +53,11 @@ export const getStaticProps: GetStaticProps<
   }
 
   return {
-    props: { ...(await serverSideTranslations(locale)), story, globalStory },
+    props: {
+      ...(await serverSideTranslations(locale)),
+      [STORY_PROP_NAME]: story,
+      [GLOBAL_STORY_PROP_NAME]: globalStory,
+    },
     revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
   }
 }
