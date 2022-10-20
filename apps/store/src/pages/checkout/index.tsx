@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSubmitStartDates'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
@@ -43,8 +44,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = ({ cartId, products, ...props 
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
   const { req, res, locale } = context
-
-  if (!locale || locale === 'default') return { notFound: true }
+  if (!isRoutingLocale(locale)) return { notFound: true }
 
   try {
     const apolloClient = initializeApollo({ req, res })

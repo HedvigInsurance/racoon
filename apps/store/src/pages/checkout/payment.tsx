@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps<CheckoutPaymentPageAdyenProp
   context,
 ) => {
   const { req, res, locale } = context
-
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   try {

@@ -57,7 +57,6 @@ export const getServerSideProps: GetServerSideProps<
   StoryblokPreviewData
 > = async (context) => {
   const { req, res, locale, previewData: { version } = {} } = context
-
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)

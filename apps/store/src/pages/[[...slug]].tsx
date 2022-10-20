@@ -3,6 +3,7 @@ import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -39,7 +40,7 @@ export const getStaticProps: GetStaticProps<
   StoryblokPreviewData
 > = async (context) => {
   const { params, locale, previewData: { version } = {} } = context
-  if (!locale || locale === 'default') return { notFound: true }
+  if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
   const [story, globalStory, translations] = await Promise.all([
