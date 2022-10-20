@@ -5,13 +5,13 @@ import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPag
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Params = { shopSessionId: string }
 

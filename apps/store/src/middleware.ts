@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { countries } from '@/lib/l10n/countries'
-import { isRoutingLocale, toRoutingLocale } from '@/lib/l10n/localeUtils'
-import { LOCALE_COOKIE_KEY } from './lib/l10n/locales'
+import { countries } from '@/utils/l10n/countries'
+import { isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { LOCALE_COOKIE_KEY } from './utils/l10n/locales'
 
 export const config = {
   matcher: '/',

@@ -6,8 +6,8 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { CountryCode } from '@/lib/l10n/types'
-import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
+import { CountryCode } from '@/utils/l10n/types'
+import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 

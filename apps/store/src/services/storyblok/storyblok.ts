@@ -32,9 +32,9 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
 export type SbBaseBlockProps<T> = {

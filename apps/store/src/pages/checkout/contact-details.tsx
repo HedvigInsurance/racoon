@@ -4,14 +4,14 @@ import { useRouter } from 'next/router'
 import { CheckoutContactDetailsPage } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetails'
 import { CheckoutContactDetailsPageProps } from '@/components/CheckoutContactDetailsPage/CheckoutContactDetails.types'
 import { CheckoutSignPage } from '@/components/CheckoutContactDetailsPage/CheckoutSignPage'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { PageLink } from '@/utils/PageLink'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Omit<CheckoutContactDetailsPageProps, 'onSuccess'> & {
   flow: PaymentConnectionFlow

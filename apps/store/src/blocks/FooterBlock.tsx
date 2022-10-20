@@ -7,21 +7,21 @@ import { Space } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { countries } from '@/lib/l10n/countries'
-import { getCountryLocale } from '@/lib/l10n/countryUtils'
+import { CookiePersister } from '@/services/persister/CookiePersister'
+import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { countries } from '@/utils/l10n/countries'
+import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import {
   LocaleField,
   LOCALE_COOKIE_EXPIRY,
   LOCALE_COOKIE_KEY,
   TEMP_TRANSLATIONS,
-} from '@/lib/l10n/locales'
-import { getLocaleOrFallback, toRoutingLocale } from '@/lib/l10n/localeUtils'
-import { IsoLocale } from '@/lib/l10n/types'
-import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
-import { CookiePersister } from '@/services/persister/CookiePersister'
-import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+} from '@/utils/l10n/locales'
+import { getLocaleOrFallback, toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { IsoLocale } from '@/utils/l10n/types'
+import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField

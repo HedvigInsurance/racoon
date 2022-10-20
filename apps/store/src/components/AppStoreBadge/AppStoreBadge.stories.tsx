@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Locale } from '@/lib/l10n/types'
+import { Locale } from '@/utils/l10n/types'
 import { AppStoreBadge } from './AppStoreBadge'
 
 export default {

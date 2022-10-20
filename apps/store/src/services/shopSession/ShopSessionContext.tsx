@@ -1,6 +1,5 @@
 import { QueryResult, useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
-import { useCurrentCountry } from '@/lib/l10n/useCurrentCountry'
 import {
   ShopSessionQuery,
   ShopSessionQueryVariables,
@@ -8,6 +7,7 @@ import {
   useShopSessionQuery as useShopSessionApolloQuery,
 } from '@/services/apollo/generated'
 import { Track } from '@/services/Track/Track'
+import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>

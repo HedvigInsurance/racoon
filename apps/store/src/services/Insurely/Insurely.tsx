@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 const IFRAME_URL = 'https://dc.insurely.se/v2/'
 const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.se/v2/assets/js/dc-bootstrap.js'

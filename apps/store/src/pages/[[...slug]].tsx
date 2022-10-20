@@ -3,7 +3,6 @@ import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -13,6 +12,7 @@ import {
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type RoutingPath = {
   params: {

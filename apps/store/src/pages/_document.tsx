@@ -1,7 +1,7 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { getCDNFonts } from 'ui'
-import { getLocaleOrFallback } from '@/lib/l10n/localeUtils'
 import { GTMBodyScript } from '@/services/gtm'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 
 export default class MyDocument extends Document {
   lang(): string {
