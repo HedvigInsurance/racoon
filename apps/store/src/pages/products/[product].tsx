@@ -59,10 +59,11 @@ export const getServerSideProps: GetServerSideProps<
   try {
     const apolloClient = initializeApollo({ req, res })
 
-    const [shopSession, story, globalStory] = await Promise.all([
+    const [shopSession, story, globalStory, translations] = await Promise.all([
       getShopSessionServerSide({ req, res, apolloClient, countryCode }),
       getProductStory(slug, { locale, version }),
       getGlobalStory({ locale, version }),
+      serverSideTranslations(locale),
     ])
 
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
@@ -84,7 +85,7 @@ export const getServerSideProps: GetServerSideProps<
 
     return {
       props: {
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         priceTemplate,
         priceIntent,
         shopSession,

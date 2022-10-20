@@ -42,9 +42,10 @@ export const getStaticProps: GetStaticProps<
   if (!locale || locale === 'default') return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
-  const [story, globalStory] = await Promise.all([
+  const [story, globalStory, translations] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     getGlobalStory({ version, locale }),
+    serverSideTranslations(locale),
   ])
 
   if (story === undefined) {
@@ -54,7 +55,7 @@ export const getStaticProps: GetStaticProps<
 
   return {
     props: {
-      ...(await serverSideTranslations(locale)),
+      ...translations,
       [STORY_PROP_NAME]: story,
       [GLOBAL_STORY_PROP_NAME]: globalStory,
     },

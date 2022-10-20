@@ -28,9 +28,10 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
   try {
-    const [shopSession, globalStory] = await Promise.all([
+    const [shopSession, globalStory, translations] = await Promise.all([
       shopSessionService.fetchById(shopSessionId),
       getGlobalStory({ locale }),
+      serverSideTranslations(locale),
     ])
 
     // @TODO: uncomment after implementing signing
@@ -40,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
     return {
       props: {
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSessionId,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
         currency: shopSession.currencyCode,
