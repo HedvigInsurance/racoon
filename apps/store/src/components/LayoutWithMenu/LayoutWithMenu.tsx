@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
-import { StoryData } from '@storyblok/react'
 import { ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/TopMenuBlock'
-import { GlobalStory } from '@/services/storyblok/storyblok'
+import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 const Wrapper = styled.div({
@@ -14,12 +13,11 @@ const Wrapper = styled.div({
 })
 
 type LayoutWithMenuProps = {
-  children: ReactElement
+  children: ReactElement<StoryblokPageProps>
 }
 
 export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
-  const story = children.props.story as StoryData | undefined
-  const globalStory = children.props.globalStory as GlobalStory | undefined
+  const { story, globalStory } = children.props
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
 

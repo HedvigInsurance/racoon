@@ -17,6 +17,7 @@ import {
   getProductStory,
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
+import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string
@@ -84,11 +85,11 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         ...(await serverSideTranslations(locale)),
-        story,
-        globalStory,
         priceTemplate,
         priceIntent,
         shopSession,
+        [STORY_PROP_NAME]: story,
+        [GLOBAL_STORY_PROP_NAME]: globalStory,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
       },
