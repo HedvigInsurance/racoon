@@ -3859,26 +3859,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-collapsible@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@radix-ui/react-collapsible@npm:1.0.0"
-  dependencies:
-    "@babel/runtime": ^7.13.10
-    "@radix-ui/primitive": 1.0.0
-    "@radix-ui/react-compose-refs": 1.0.0
-    "@radix-ui/react-context": 1.0.0
-    "@radix-ui/react-id": 1.0.0
-    "@radix-ui/react-presence": 1.0.0
-    "@radix-ui/react-primitive": 1.0.0
-    "@radix-ui/react-use-controllable-state": 1.0.0
-    "@radix-ui/react-use-layout-effect": 1.0.0
-  peerDependencies:
-    react: ^16.8 || ^17.0 || ^18.0
-    react-dom: ^16.8 || ^17.0 || ^18.0
-  checksum: 98acb56ace3441da7bca63ca77eaa43aff5d6b4e702b2d08143e64d984152ca2391426defec577cff1d3d1591b05aa21623a9b3d36ad07118f3c8a78cd263505
-  languageName: node
-  linkType: hard
-
 "@radix-ui/react-collapsible@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-collapsible@npm:1.0.1"
@@ -20983,7 +20963,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": 2.5.4
     "@graphql-codegen/typescript-react-apollo": 3.3.4
     "@radix-ui/react-accordion": 1.0.1
-    "@radix-ui/react-collapsible": 1.0.0
+    "@radix-ui/react-collapsible": 1.0.1
     "@radix-ui/react-dialog": 1.0.0
     "@radix-ui/react-navigation-menu": 1.0.0
     "@radix-ui/react-radio-group": 1.0.0
