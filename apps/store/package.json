@@ -20,7 +20,7 @@
   "dependencies": {
     "@adyen/adyen-web": "5.28.1",
     "@apollo/client": "3.7.0",
-    "@datadog/browser-logs": "4.21.2",
+    "@datadog/browser-logs": "4.22.0",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@radix-ui/react-accordion": "1.0.1",
