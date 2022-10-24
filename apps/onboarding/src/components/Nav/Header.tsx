@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { HedvigLogo, mq } from 'ui'
+import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { LanguageSwitcher } from '../language-switcher'
 
 const HeaderContainer = styled.div((props) => ({
@@ -24,10 +25,12 @@ const HeaderMenu = styled.div({
 })
 
 export const Header = () => {
+  const locale = useCurrentLocale()
+
   return (
     <HeaderContainer>
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <a href="/">
+      <a href={`/${locale.path}`}>
         <HedvigLogo />
       </a>
       <HeaderMenu>
