@@ -14,7 +14,6 @@ export type ProductSummaryBlockContext = {
 type Props = SbBaseBlockProps<{
   title?: string
   description: string
-  starScore: number
 }>
 
 export const ProductSummaryBlock = (props: Props) => {
@@ -23,11 +22,7 @@ export const ProductSummaryBlock = (props: Props) => {
 
   return (
     <Wrapper {...storyblokEditable}>
-      <ProductSummary
-        title={blockTitle}
-        starScore={props.blok.starScore}
-        gradient={PLACEHOLDER_GRADIENT}
-      >
+      <ProductSummary title={blockTitle} gradient={PLACEHOLDER_GRADIENT}>
         {props.blok.description}
       </ProductSummary>
     </Wrapper>
