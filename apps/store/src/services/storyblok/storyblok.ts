@@ -35,6 +35,7 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { RoutingLocale } from '@/lib/l10n/types'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -50,8 +51,8 @@ export type StoryblokQueryParams = {
 }
 
 export type StoryblokPageProps = {
-  story: StoryData
-  globalStory: GlobalStory
+  [STORY_PROP_NAME]: StoryData
+  [GLOBAL_STORY_PROP_NAME]: GlobalStory
 }
 
 export type StoryblokVersion = 'draft' | 'published'

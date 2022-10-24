@@ -16,6 +16,7 @@ import {
   StoryblokPreviewData,
   StoryblokQueryParams,
 } from '@/services/storyblok/storyblok'
+import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
 type Props = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string
@@ -74,7 +75,7 @@ export const getServerSideProps: GetServerSideProps<
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
-        globalStory,
+        [GLOBAL_STORY_PROP_NAME]: globalStory,
       },
     }
   } catch (error) {
