@@ -32,7 +32,6 @@ export const getServerSideProps: GetServerSideProps<
   StoryblokPreviewData
 > = async (context) => {
   const { locale, params, previewData: { version } = {} } = context
-
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
