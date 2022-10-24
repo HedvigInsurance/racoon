@@ -1,6 +1,11 @@
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
+const ORIGIN_URL =
+  process.env.NEXT_PUBLIC_ORIGIN_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : 'http://localhost:8040'
+
 type BaseParams = { locale?: RoutingLocale }
 
 type ProductPage = BaseParams & { slug: string }
@@ -23,7 +28,7 @@ export const PageLink = {
     return `${localePrefix(locale)}/checkout/payment${queryString}`
   },
   checkoutPaymentRedirectBase: ({ locale }: Required<BaseParams>) =>
-    `${localePrefix(locale)}/checkout/payment`,
+    `${ORIGIN_URL}/${locale}/checkout/payment`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
