@@ -4,7 +4,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { ProductSummary } from '@/components/ProductPage/ProductSummary/ProductSummary'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-const PLACEHOLDER_GRADIENT = ['#00BFFF', '#00ff00'] as const
+const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
 export type ProductSummaryBlockContext = {
   title: string

@@ -16,7 +16,7 @@ import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useRefreshData } from '@/utils/useRefreshData'
 
 // TODO: get from API
-const PLACEHOLDER_GRADIENT = ['#00BFFF', '#00ff00'] as const
+const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
 type Props = SbBaseBlockProps<{
   title: string

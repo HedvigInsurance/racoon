@@ -21,7 +21,7 @@ export const ProductSummary = ({
   return (
     <Space y={1}>
       <SpaceFlex space={1} align="center">
-        <Pillow size="small" fromColor={fromColor} toColor={toColor} />
+        <Pillow size="medium" fromColor={fromColor} toColor={toColor} />
         <div>
           <Heading as="h2" variant="standard.20">
             {title}
