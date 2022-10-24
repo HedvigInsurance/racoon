@@ -1,6 +1,7 @@
 import { RoutingLocale } from '@/lib/l10n/types'
 
 const PAYMENT_URL_TEMPLATE = process.env.WEB_ONBOARDING_PAYMENT_URL_AFTER_SIGN
+const LOCALE_PATTERN = '{LOCALE}'
 
 // We've historically been using different locale paths in Web Onboarding
 export const convertRoutingLocale = (locale: RoutingLocale) => {
@@ -29,7 +30,7 @@ type Params = {
 
 export const getWebOnboardingPaymentURL = ({ locale, redirectURL }: Params) => {
   if (PAYMENT_URL_TEMPLATE) {
-    const baseURL = PAYMENT_URL_TEMPLATE.replace('{LOCALE}', convertRoutingLocale(locale))
+    const baseURL = PAYMENT_URL_TEMPLATE.replace(LOCALE_PATTERN, convertRoutingLocale(locale))
     return `${baseURL}?redirect_url=${redirectURL.toString()}`
   }
 

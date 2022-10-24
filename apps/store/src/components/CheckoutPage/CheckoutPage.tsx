@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, InputField, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { useResizeObserver } from './useResizeObserver'
 

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Heading, LinkButton, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
-import { PageLink } from '@/lib/PageLink'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { PageLink } from '@/utils/PageLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {

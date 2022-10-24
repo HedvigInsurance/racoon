@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
 import '@adyen/adyen-web/dist/adyen.css'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { localeToAdyenLocale, usePaymentMethodConfiguration } from './Adyen.helpers'
 import { AdyenDropinStyles } from './DropinStyles'
 

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { PageLink } from '@/lib/PageLink'
+import { PageLink } from '@/utils/PageLink'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { MD: md, PaRes: pares } = req.body

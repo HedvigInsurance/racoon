@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { PageLink } from '@/lib/PageLink'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { PageLink } from '@/utils/PageLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 
 export const ShoppingCartMenuItem = () => {

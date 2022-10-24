@@ -7,8 +7,8 @@ import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { I18nNamespace } from '@/lib/l10n/types'
-import { PageLink } from '@/lib/PageLink'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
+import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ cartId, products, cost }: CartPageProps) => {

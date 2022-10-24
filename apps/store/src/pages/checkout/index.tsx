@@ -5,11 +5,11 @@ import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSubmitStartDates'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { PageLink } from '@/lib/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Omit<CheckoutPageProps, 'loading'> & {
   cartId: string
