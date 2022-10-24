@@ -33,11 +33,25 @@ type MerchantCallbackFunction = (data: MerchantCallbackData) => void
 type MerchantCallbackData = { accountId: string }
 type TrustlyOptions = { locale: string }
 
+type InsurelyPrefilledData = {
+  company: string
+  SWEDISH_PERSONAL_NUMBER: string
+}
+type InsurelyClientParams = {
+  fontType?: 'main' | 'secondary'
+  hideResultsView?: boolean
+  language?: 'en' | 'no' | 'sv' | 'da'
+  prefilledData?: Partial<InsurelyPrefilledData>
+}
+
 declare global {
   interface Window {
     TrustlyWidget: {
       init: TrustlyInitFunction
     }
     dataLayer: DataLayerObject[]
+
+    // Insurely
+    setClientParams?: (params: InsurelyClientParams) => void
   }
 }
