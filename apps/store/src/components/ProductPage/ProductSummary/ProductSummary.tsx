@@ -20,7 +20,7 @@ export const ProductSummary = ({
 }: ProductSummaryProps) => {
   return (
     <Space y={1}>
-      <SpaceFlex space={1} align="center">
+      <SpaceFlex space={1} align="center" direction="vertical">
         <Pillow size="medium" fromColor={fromColor} toColor={toColor} />
         <div>
           <Heading as="h2" variant="standard.20">
@@ -43,5 +43,6 @@ const SmallGrayText = styled.p(({ theme }) => ({
 
 const GrayText = styled.p(({ theme }) => ({
   fontSize: theme.fontSizes[2],
+  textAlign: 'center',
   color: theme.colors.gray600,
 }))
