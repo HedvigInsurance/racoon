@@ -48,11 +48,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
   try {
     const apolloClient = initializeApollo({ req, res })
-    const shopSession = await getCurrentShopSessionServerSide({
-      req,
-      res,
-      apolloClient,
-    })
+    const [shopSession, translations] = await Promise.all([
+      getCurrentShopSessionServerSide({ req, res, apolloClient }),
+      serverSideTranslations(locale),
+    ])
 
     const cartCost = shopSession.cart.cost
 
@@ -66,7 +65,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
     return {
       props: {
-        ...(await serverSideTranslations(locale)),
+        ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         cartId: shopSession.cart.id,
         products: shopSession.cart.entries.map((offer) => ({
