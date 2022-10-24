@@ -1,6 +1,6 @@
 import { StoryblokClient } from '@storyblok/js'
 import { SbBlokData, StoryData } from '@storyblok/react'
-import { Language } from '@/lib/l10n/types'
+import { Language } from '@/utils/l10n/types'
 import { LinkField, StoryblokVersion } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(

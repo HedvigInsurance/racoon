@@ -4,8 +4,6 @@ import Head from 'next/head'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
-import { getCountryByLocale } from '@/lib/l10n/countryUtils'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
@@ -18,6 +16,8 @@ import {
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string

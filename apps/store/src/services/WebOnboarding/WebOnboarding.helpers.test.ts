@@ -1,4 +1,4 @@
-import { RoutingLocale } from '@/lib/l10n/types'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { convertRoutingLocale } from './WebOnboarding.helpers'
 
 describe('convertRoutingLocale', () => {

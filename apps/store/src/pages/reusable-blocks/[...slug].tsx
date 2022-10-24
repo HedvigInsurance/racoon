@@ -1,7 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import logger from '@/services/logger/server'
 import {
   getStoryBySlug,
@@ -9,6 +8,7 @@ import {
   StoryblokPreviewData,
   StoryblokQueryParams,
 } from '@/services/storyblok/storyblok'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type ReusableBlockPageProps = {
   story: ReusableStory

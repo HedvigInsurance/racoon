@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image'
-import { IsoLocale, Locale } from '@/lib/l10n/types'
+import { IsoLocale, Locale } from '@/utils/l10n/types'
 import { AppleDaDk } from './AppleDaDk'
 import { AppleEn } from './AppleEn'
 import { AppleNbNo } from './AppleNbNo'

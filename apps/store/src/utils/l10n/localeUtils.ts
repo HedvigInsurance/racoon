@@ -1,5 +1,5 @@
-import { FALLBACK_LOCALE, LocaleData, locales } from '@/lib/l10n/locales'
-import { IsoLocale, RoutingLocale, UiLocale } from '@/lib/l10n/types'
+import { FALLBACK_LOCALE, LocaleData, locales } from '@/utils/l10n/locales'
+import { IsoLocale, RoutingLocale, UiLocale } from '@/utils/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }

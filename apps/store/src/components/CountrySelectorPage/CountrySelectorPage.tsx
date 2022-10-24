@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { LinkButton, Space, Heading } from 'ui'
-import { countries } from '@/lib/l10n/countries'
-import { LOCALE_COOKIE_EXPIRY, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/lib/l10n/locales'
-import { toRoutingLocale } from '@/lib/l10n/localeUtils'
-import { IsoLocale } from '@/lib/l10n/types'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { countries } from '@/utils/l10n/countries'
+import { LOCALE_COOKIE_EXPIRY, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/utils/l10n/locales'
+import { toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { IsoLocale } from '@/utils/l10n/types'
 
 const Container = styled.div({
   height: 400,

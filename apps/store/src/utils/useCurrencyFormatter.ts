@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useCurrentLocale } from '@/lib/l10n/useCurrentLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 export const useCurrencyFormatter = (currencyCode: string) => {
   const { locale } = useCurrentLocale()

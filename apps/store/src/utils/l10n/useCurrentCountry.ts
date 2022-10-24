@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
-import { getCountryByLocale } from '@/lib/l10n/countryUtils'
-import { getLocaleOrFallback } from '@/lib/l10n/localeUtils'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 
 export const useCurrentCountry = () => {
   const router = useRouter()

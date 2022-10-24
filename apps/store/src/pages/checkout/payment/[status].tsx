@@ -1,11 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
-import { isRoutingLocale } from '@/lib/l10n/localeUtils'
-import { PageLink } from '@/utils/PageLink'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { PageLink } from '@/utils/PageLink'
 
 const PaymentRedirectPage: NextPage = () => {
   return (

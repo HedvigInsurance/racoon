@@ -1,4 +1,4 @@
-import { RoutingLocale } from '@/lib/l10n/types'
+import { RoutingLocale } from '@/utils/l10n/types'
 
 const PAYMENT_URL_TEMPLATE = process.env.WEB_ONBOARDING_PAYMENT_URL_AFTER_SIGN
 const LOCALE_PATTERN = '{LOCALE}'
