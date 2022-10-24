@@ -14,8 +14,11 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   require('../mocks')
 }
 
-Datadog.initDatadog()
+if (typeof window === 'undefined') {
+  Datadog.initDatadog()
+}
 
+// @TODO - should this be initialized unless running in browser?
 initStoryblok()
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
