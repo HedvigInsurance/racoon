@@ -10,6 +10,7 @@ import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/clie
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import {
   getGlobalStory,
@@ -87,8 +88,8 @@ export const getServerSideProps: GetServerSideProps<
         globalStory,
         priceTemplate,
         priceIntent,
-        shopSessionId: shopSession.id,
         shopSession,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
       },
     }

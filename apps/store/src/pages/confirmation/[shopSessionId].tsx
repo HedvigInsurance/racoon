@@ -8,6 +8,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { isRoutingLocale } from '@/lib/l10n/localeUtils'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 
@@ -39,6 +40,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     return {
       props: {
         ...(await serverSideTranslations(locale)),
+        [SHOP_SESSION_PROP_NAME]: shopSessionId,
         globalStory,
         currency: shopSession.currencyCode,
         cost: { total: 0 },
