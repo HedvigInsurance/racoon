@@ -27,8 +27,8 @@ export const SsnSeField = ({ field }: SsnSeFieldProps) => {
         type="text"
         name={field.name}
         required={field.required}
-        defaultValue={field.value ?? field.defaultValue}
         value={value}
+        readOnly
         hidden
       />
       <InputField
@@ -38,7 +38,6 @@ export const SsnSeField = ({ field }: SsnSeFieldProps) => {
         minLength={10}
         maxLength={13}
         required={field.required}
-        defaultValue={field.value ?? field.defaultValue}
         onChange={handleOnChange}
       />
     </>
