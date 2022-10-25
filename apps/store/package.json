@@ -65,7 +65,7 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
-    "@types/node": "16.11.68",
+    "@types/node": "16.18.0",
     "@types/react": "18.0.21",
     "babel-loader": "8.2.5",
     "eslint": "8.26.0",
