@@ -1,18 +1,25 @@
-import Cookies from 'js-cookie'
+import { setCookie, getCookie, removeCookies } from 'cookies-next'
+import { OptionsType } from 'cookies-next/lib/types'
 import { SimplePersister } from './Persister.types'
 
 export class CookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}
 
-  public save(value: string, cookieKey = this.cookieKey, options?: Cookies.CookieAttributes) {
-    Cookies.set(cookieKey, value, { path: '/', ...options })
+  public save(value: string, cookieKey = this.cookieKey, options?: OptionsType) {
+    setCookie(cookieKey, value, { ...this.defaultOptions(), ...options })
   }
 
   public fetch(cookieKey = this.cookieKey) {
-    return Cookies.get(cookieKey) ?? null
+    const cookieValue = getCookie(cookieKey, this.defaultOptions())
+    if (typeof cookieValue === 'string') return cookieValue
+    return null
   }
 
   public reset(cookieKey = this.cookieKey) {
-    Cookies.remove(cookieKey)
+    removeCookies(cookieKey, this.defaultOptions())
+  }
+
+  private defaultOptions() {
+    return { path: '/' }
   }
 }

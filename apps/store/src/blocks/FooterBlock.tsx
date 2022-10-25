@@ -14,7 +14,7 @@ import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import {
   LocaleField,
-  LOCALE_COOKIE_EXPIRY,
+  LOCALE_COOKIE_MAX_AGE,
   LOCALE_COOKIE_KEY,
   TEMP_TRANSLATIONS,
 } from '@/utils/l10n/locales'
@@ -89,7 +89,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
-    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
+    cookiePersister.save(toRoutingLocale(locale), undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
     router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {

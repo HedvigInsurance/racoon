@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie'
+import { OptionsType } from 'cookies-next/lib/types'
 
 export interface SimplePersister {
-  save(value: string, key?: string, options?: Cookies.CookieAttributes): void
+  save(value: string, key?: string, options?: OptionsType): void
 
   fetch(key?: string): string | null
 

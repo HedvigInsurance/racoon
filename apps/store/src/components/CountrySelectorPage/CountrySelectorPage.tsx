@@ -4,7 +4,7 @@ import { LinkButton, Space, Heading } from 'ui'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { countries } from '@/utils/l10n/countries'
-import { LOCALE_COOKIE_EXPIRY, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/utils/l10n/locales'
+import { LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY, TEMP_TRANSLATIONS } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { IsoLocale } from '@/utils/l10n/types'
 
@@ -25,7 +25,7 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
   const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
 
   const onHandleClick = (locale: IsoLocale) =>
-    cookiePersister.save(toRoutingLocale(locale), undefined, { expires: LOCALE_COOKIE_EXPIRY })
+    cookiePersister.save(toRoutingLocale(locale), undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
 
   return (
     <Container {...props}>
