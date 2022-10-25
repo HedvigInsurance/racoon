@@ -41,7 +41,7 @@ const ImageWrapper = styled.div(() => ({
   position: 'relative',
   aspectRatio: '5 / 6',
 
-  '@supports not (aspect-ratio)': {
+  '@supports not (aspect-ratio: auto)': {
     height: '0',
     paddingTop: 'calc((6/5 * 100%))',
     overflow: 'hidden',
