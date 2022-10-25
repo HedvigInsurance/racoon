@@ -4,7 +4,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { ProductSummary } from '@/components/ProductPage/ProductSummary/ProductSummary'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-const PLACEHOLDER_GRADIENT = ['#00BFFF', '#00ff00'] as const
+const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
 export type ProductSummaryBlockContext = {
   title: string
@@ -14,7 +14,6 @@ export type ProductSummaryBlockContext = {
 type Props = SbBaseBlockProps<{
   title?: string
   description: string
-  starScore: number
 }>
 
 export const ProductSummaryBlock = (props: Props) => {
@@ -23,11 +22,7 @@ export const ProductSummaryBlock = (props: Props) => {
 
   return (
     <Wrapper {...storyblokEditable}>
-      <ProductSummary
-        title={blockTitle}
-        starScore={props.blok.starScore}
-        gradient={PLACEHOLDER_GRADIENT}
-      >
+      <ProductSummary title={blockTitle} gradient={PLACEHOLDER_GRADIENT}>
         {props.blok.description}
       </ProductSummary>
     </Wrapper>
