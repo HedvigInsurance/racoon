@@ -4,10 +4,11 @@ import { ArrowForwardIcon, Button, Heading, InputField, Space } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PageLink } from '@/utils/PageLink'
+import { formatAPIDate } from './CheckoutPage.helpers'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { useResizeObserver } from './useResizeObserver'
 
-const DATE_TODAY = new Date().toISOString().substring(0, 10)
+const DATE_TODAY = formatAPIDate(new Date())
 
 const CheckoutPage = ({ currency, cost, products, campaigns, loading }: CheckoutPageProps) => {
   const [ref, { height: footerHeight }] = useResizeObserver()
