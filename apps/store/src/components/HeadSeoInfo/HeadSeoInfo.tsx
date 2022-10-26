@@ -1,6 +1,7 @@
 import { StoryData } from '@storyblok/react'
 import Head from 'next/head'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 export const HeadSeoInfo = ({ story }: { story: StoryData }) => {
   // AB testing
@@ -24,12 +25,20 @@ export const HeadSeoInfo = ({ story }: { story: StoryData }) => {
 const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
   return (
     <Head>
-      <link rel="alternate" href={`/${fullSlug}`} hrefLang={getHrefLang(fullSlug)} />
+      <link
+        rel="alternate"
+        href={`${ORIGIN_URL}/${removeTrailingSlash(fullSlug)}`}
+        hrefLang={getHrefLang(fullSlug)}
+      />
     </Head>
   )
 }
 
 const getHrefLang = (fullSlug: string) => {
   const slugLocale = fullSlug.split('/')[0]
-  return isRoutingLocale(slugLocale) ? slugLocale : 'x-default'
+  return isRoutingLocale(slugLocale) ? toIsoLocale(slugLocale) : 'x-default'
+}
+
+const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
 }
