@@ -10,6 +10,7 @@ type Payload = {
   space_id: number
 }
 
+// TODO: Probably not needed, we should use "Define as folder root" in CMS instead
 const SLUG_TO_ROUTE_MAP: Record<string, string> = {
   home: '/',
 }
