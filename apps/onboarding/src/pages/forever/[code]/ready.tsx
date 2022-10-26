@@ -1,15 +1,8 @@
 import type { NextPage } from 'next'
-import { PageLayout } from '@/components/forever/PageLayout'
-import { Ready } from '@/components/forever/Ready'
+import { ForeverCodeReadyPage } from '@/components/ForeverPage/ForeverCodeReadyPage'
 
-const ForeverPageReady: NextPage = () => {
-  return (
-    <PageLayout>
-      <Ready />
-    </PageLayout>
-  )
-}
+const NextForeverCodeReadyPage: NextPage = () => <ForeverCodeReadyPage />
 
 export { getServerSideProps } from '.'
 
-export default ForeverPageReady
+export default NextForeverCodeReadyPage

@@ -1,10 +1,10 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { LinkButton, Space } from 'ui'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
+import { PageLayout } from './PageLayout'
 
 const fadeInUp = keyframes({
   from: {
@@ -29,16 +29,18 @@ const Paragrapgh = styled.p(({ theme }) => ({
   color: theme.colors.gray700,
 }))
 
-export const Ready: NextPage = () => {
+export const ForeverCodeReadyPage = () => {
   const { t } = useTranslation()
   const { path } = useCurrentLocale()
 
   return (
-    <Wrapper y={1}>
-      <Paragrapgh>{t('FOREVER_INTRO_READY_QUESTION')}</Paragrapgh>
-      <LinkButton href={PageLink.old_landing_page({ locale: path })}>
-        {t('FOREVER_INTRO_READY_CTA')}
-      </LinkButton>
-    </Wrapper>
+    <PageLayout>
+      <Wrapper y={1}>
+        <Paragrapgh>{t('FOREVER_INTRO_READY_QUESTION')}</Paragrapgh>
+        <LinkButton href={PageLink.old_landing_page({ locale: path })}>
+          {t('FOREVER_INTRO_READY_CTA')}
+        </LinkButton>
+      </Wrapper>
+    </PageLayout>
   )
 }
