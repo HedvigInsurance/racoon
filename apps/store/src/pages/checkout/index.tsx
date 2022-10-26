@@ -3,41 +3,50 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
-import { useHandleSubmitStartDates } from '@/components/CheckoutPage/useHandleSubmitStartDates'
+import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import { initializeApollo } from '@/services/apollo/client'
+import * as Auth from '@/services/Auth/Auth'
+import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Omit<CheckoutPageProps, 'loading'> & {
+type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userErrors'> & {
   cartId: string
+  checkoutId: string
+  checkoutSigningId: string | null
 }
 
-const NextCheckoutPage: NextPage<NextPageProps> = ({ cartId, products, ...props }) => {
+const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
+  const { cartId, products, checkoutId, checkoutSigningId, ...pageProps } = props
   const router = useRouter()
-  const [handleSubmit, { loading, data }] = useHandleSubmitStartDates({
+
+  const [handleSubmit, { loading, userErrors }] = useHandleSubmitCheckout({
     cartId,
     products,
-    onSuccess() {
-      router.push(PageLink.checkoutContactDetails())
+    checkoutId,
+    checkoutSigningId,
+    onSuccess(accessToken) {
+      Auth.save(accessToken)
+      router.push(PageLink.checkoutPayment())
     },
   })
 
-  const { userErrors } = data?.cartEntriesStartDateUpdate ?? {}
-
-  const productsWithErrors = products.map((product) => {
-    const error = userErrors?.find((error) => product.offerId === error.offerId)
-    return {
-      errorMessage: error?.message,
-      ...product,
-    }
-  })
+  const productsWithErrors = products.map((product) => ({
+    errorMessage: userErrors[product.offerId],
+    ...product,
+  }))
 
   return (
     <form onSubmit={handleSubmit}>
-      <CheckoutPage {...props} loading={loading} products={productsWithErrors} />
+      <CheckoutPage
+        {...pageProps}
+        loading={loading}
+        products={productsWithErrors}
+        userErrors={userErrors}
+      />
     </form>
   )
 }
@@ -52,6 +61,22 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       getCurrentShopSessionServerSide({ req, res, apolloClient }),
       serverSideTranslations(locale),
     ])
+
+    if (shopSession.checkout.completedAt) {
+      return {
+        redirect: {
+          destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
+          permanent: false,
+        },
+      }
+    }
+
+    const checkoutId = shopSession.checkout.id
+    const checkoutSigning = await fetchCurrentCheckoutSigning({
+      req,
+      apolloClient,
+      checkoutId,
+    })
 
     const cartCost = shopSession.cart.cost
 
@@ -68,6 +93,13 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
         cartId: shopSession.cart.id,
+        checkoutId,
+        checkoutSigningId: checkoutSigning?.id ?? null,
+        prefilledData: {
+          ...(shopSession.checkout.contactDetails.email && {
+            email: shopSession.checkout.contactDetails.email,
+          }),
+        },
         products: shopSession.cart.entries.map((offer) => ({
           offerId: offer.id,
           name: offer.variant.displayName,

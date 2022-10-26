@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { setCookie, deleteCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
@@ -6,7 +7,7 @@ import {
   useCheckoutStartSignMutation,
 } from '@/services/apollo/generated'
 
-type Params = {
+export type Params = {
   checkoutId: string
   checkoutSigningId: string | null
   onSuccess: (accessToken: string) => void
@@ -31,14 +32,26 @@ export const useHandleSignCheckout = (params: Params) => {
     },
   })
 
-  const [startSign, { loading: loadingStartSign }] = useCheckoutStartSignMutation({
+  const [startSign, result] = useCheckoutStartSignMutation({
     variables: { checkoutId },
     onCompleted(data) {
       setCheckoutSigningId(data.checkoutStartSign.signing.id)
       setCookie(checkoutId, data.checkoutStartSign.signing.id)
     },
+    onError(error) {
+      datadogLogs.logger.warn('Checkout | Failed to sign', { error })
+    },
   })
 
-  const isLoading = Boolean(loadingStartSign || checkoutSigningId)
-  return [startSign, isLoading] as const
+  const userErrors = {
+    ...(result.error && { form: 'Something went wrong' }),
+  }
+
+  return [
+    startSign,
+    {
+      loading: result.loading || Boolean(checkoutSigningId),
+      userErrors,
+    },
+  ] as const
 }

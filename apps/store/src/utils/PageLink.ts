@@ -20,8 +20,6 @@ export const PageLink = {
   product: ({ locale, slug }: ProductPage) => `${localePrefix(locale)}/products/${slug}`,
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
   checkout: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout`,
-  checkoutContactDetails: ({ locale }: BaseParams = {}) =>
-    `${localePrefix(locale)}/checkout/contact-details`,
   checkoutPayment: ({ locale, authStatus }: CheckoutPaymentPage = {}) => {
     const authStatusQueryParam = authStatus ? `authStatus=${authStatus}` : null
     const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''

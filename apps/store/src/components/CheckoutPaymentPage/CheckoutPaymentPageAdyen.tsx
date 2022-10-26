@@ -22,7 +22,7 @@ export const CheckoutPaymentPageAdyen = ({
 }: CheckoutPaymentPageAdyenProps) => {
   const apolloClient = useApolloClient()
   const router = useRouter()
-  const [startSign, loadingSign] = useHandleSignCheckout({
+  const [startSign, { loading: loadingSign }] = useHandleSignCheckout({
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
@@ -36,9 +36,7 @@ export const CheckoutPaymentPageAdyen = ({
   const isCompleteButtonDisabled = !isPaymentConnected || loadingSign
 
   return (
-    <CheckoutPaymentPage
-      Header={<a href={PageLink.checkoutContactDetails()}>Return to personal details</a>}
-    >
+    <CheckoutPaymentPage Header={<a href={PageLink.checkout()}>Return to checkout</a>}>
       <Space y={1.5}>
         <Space y={0.5}>
           <PriceBreakdownWrapper>
