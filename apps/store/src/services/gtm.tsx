@@ -103,14 +103,12 @@ export const useGTMEvents = () => {
   }, [countryCode])
 
   useEffect(() => {
+    trackPageView(window.location.pathname)
+  }, [])
+
+  useEffect(() => {
     const pageview = (url: string) => {
-      pushToGTMDataLayer({
-        event: 'virtual_page_view',
-        pageData: {
-          page: url,
-          title: document.title,
-        },
-      })
+      trackPageView(url)
     }
 
     router.events.on('routeChangeComplete', pageview)
@@ -119,4 +117,15 @@ export const useGTMEvents = () => {
       router.events.off('routeChangeComplete', pageview)
     }
   }, [router.events])
+}
+
+const trackPageView = (url: string) => {
+  console.debug('pageview', url)
+  pushToGTMDataLayer({
+    event: 'virtual_page_view',
+    pageData: {
+      page: url,
+      title: document.title,
+    },
+  })
 }
