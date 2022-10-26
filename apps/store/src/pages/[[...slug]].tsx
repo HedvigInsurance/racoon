@@ -2,6 +2,7 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import {
   getGlobalStory,
@@ -27,8 +28,9 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   return (
     <>
       <Head>
-        <title>{props.story.content.name}</title>
+        <title>{story.content.name}</title>
       </Head>
+      <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
     </>
   )

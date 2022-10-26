@@ -1,7 +1,7 @@
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
-const ORIGIN_URL =
+export const ORIGIN_URL =
   process.env.NEXT_PUBLIC_ORIGIN_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : 'http://localhost:8040'

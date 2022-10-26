@@ -1,6 +1,8 @@
+import { useStoryblokState } from '@storyblok/react'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
@@ -28,12 +30,15 @@ type PageQueryParams = {
 }
 
 const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
+  const story = useStoryblokState(props.story)
+
   return (
     <>
       <Head>
-        <title>{props.story.content.name}</title>
+        <title>{story.content.name}</title>
       </Head>
-      <ProductPage {...props} />
+      <HeadSeoInfo story={story} />
+      <ProductPage {...props} story={story} />
     </>
   )
 }
