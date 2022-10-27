@@ -18,7 +18,7 @@
     "download-translations": "./scripts/download-translations.sh"
   },
   "dependencies": {
-    "@adyen/adyen-web": "5.28.1",
+    "@adyen/adyen-web": "5.28.2",
     "@apollo/client": "3.7.0",
     "@datadog/browser-logs": "4.22.0",
     "@emotion/react": "11.10.4",
