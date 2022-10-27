@@ -32,6 +32,7 @@ const isGTMEnvironment = (value: unknown): value is GTMEnvironment => {
 }
 
 type GTMUserProperties = {
+  siteVersion: string
   country: CountryCode
   environment?: GTMEnvironment
 }
@@ -95,9 +96,11 @@ export const useGTMEvents = () => {
 
   useEffect(() => {
     pushToGTMDataLayer({
+      event: 'initiate_gtm',
       userProperties: {
-        environment: getGtmEnvironment(),
+        siteVersion: 'racoon',
         country: countryCode,
+        environment: getGtmEnvironment(),
       },
     })
   }, [countryCode])
