@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@adyen/adyen-web": "5.28.2",
-    "@apollo/client": "3.7.0",
+    "@apollo/client": "3.7.1",
     "@datadog/browser-logs": "4.22.0",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
