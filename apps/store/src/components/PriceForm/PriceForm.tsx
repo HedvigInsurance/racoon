@@ -1,4 +1,8 @@
-import { usePriceIntentConfirmMutation } from '@/services/apollo/generated'
+import { datadogLogs } from '@datadog/browser-logs'
+import {
+  PriceIntentFragmentFragment,
+  usePriceIntentConfirmMutation,
+} from '@/services/apollo/generated'
 import { prefillData, updateFormState } from '@/services/PriceForm/PriceForm.helpers'
 import { Form } from '@/services/PriceForm/PriceForm.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -11,22 +15,35 @@ import { useHandleSubmitPriceForm } from './useHandleSubmitPriceForm'
 type Props = {
   priceIntent: PriceIntent
   form: Form
-  onSuccess: () => void
+  onSuccess: (priceIntent: PriceIntentFragmentFragment) => void
+  onUpdated: (priceIntent: PriceIntentFragmentFragment) => void
   loading: boolean
 }
 
-export const PriceForm = ({ form, priceIntent, onSuccess, loading }: Props) => {
+export const PriceForm = ({ form, priceIntent, onUpdated, onSuccess, loading }: Props) => {
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
+    onCompleted(data) {
+      const updatedPriceIntent = data.priceIntentConfirm.priceIntent
+      if (updatedPriceIntent) {
+        onSuccess(updatedPriceIntent)
+      }
+    },
+    onError(error) {
+      datadogLogs.logger.error('Failed to confirm price intent', {
+        error,
+        priceIntentId: priceIntent.id,
+      })
+    },
   })
 
   const [handleSubmit, loadingUpdate] = useHandleSubmitPriceForm({
     priceIntent,
-    async onSuccess(updatedPriceIntent) {
+    onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
-        await confirmPriceIntent()
+        confirmPriceIntent()
       }
-      onSuccess()
+      onUpdated(updatedPriceIntent)
     },
   })
 
