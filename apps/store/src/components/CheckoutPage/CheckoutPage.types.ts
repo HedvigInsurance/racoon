@@ -14,4 +14,8 @@ export type CheckoutPageProps = {
   products: Array<ProductData>
   campaigns?: Array<CampaignData>
   loading: boolean
+  prefilledData: { email?: string }
+  userErrors: UserErrors
 }
+
+export type UserErrors = Record<string, string>
