@@ -9,14 +9,15 @@ import { useHandleSubmitAddToCart } from '../useHandleSubmitAddToCart'
 type Props = {
   cartId: string
   product: PriceFormProduct
+  productOffer: ProductOfferFragment
+  onChangeOffer: (offer: ProductOfferFragment) => void
   priceIntent: PriceIntent
   onAddedToCart: (offer: ProductOfferFragment) => void
 }
 
-export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Props) => {
+export const TierSelector = (props: Props) => {
+  const { product, productOffer, onChangeOffer, cartId, priceIntent, onAddedToCart } = props
   const wrapperRef = useRef<HTMLDivElement>(null)
-  // TODO: implement offer selector
-  const productOffer = priceIntent.offers.find((item) => item.id)
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId,
@@ -31,29 +32,23 @@ export const TierSelector = ({ product, cartId, priceIntent, onAddedToCart }: Pr
     },
   })
 
-  const variantPrice = productOffer ? productOffer.price.amount : undefined
-
   return (
     <>
-      <div>
-        <PriceCardForm
-          title={product.displayName}
-          currencyCode={product.currencyCode}
-          gradient={product.gradient}
-          onSubmit={handleSubmitAddToCart}
-          loading={loadingAddToCart}
-          cost={variantPrice}
-          productOfferId={productOffer?.id}
-        />
-      </div>
+      <PriceCardForm
+        onSubmit={handleSubmitAddToCart}
+        loading={loadingAddToCart}
+        offers={priceIntent.offers}
+        selectedOffer={productOffer}
+        onChangeOffer={onChangeOffer}
+      />
 
       <PriceCalculatorFooterForm
         targetRef={wrapperRef}
         currencyCode={product.currencyCode}
-        price={variantPrice}
+        price={productOffer.price.amount}
         loading={loadingAddToCart}
         onSubmit={handleSubmitAddToCart}
-        productOfferId={productOffer?.id}
+        productOfferId={productOffer.id}
       />
     </>
   )

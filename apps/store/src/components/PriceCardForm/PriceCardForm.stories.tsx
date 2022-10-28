@@ -17,19 +17,14 @@ const Template: Story<PriceCardFormProps> = (props) => {
   return <PriceCardForm {...props} />
 }
 
-export const Disabled = Template.bind({})
-Disabled.args = {
+export const Default = Template.bind({})
+Default.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
-  gradient: ['#aaaaaa', '#828282'],
-  currencyCode: 'SEK',
   loading: false,
 }
 
-export const ShowingPrice = Template.bind({})
-ShowingPrice.args = {
+export const Loading = Template.bind({})
+Loading.args = {
   name: `${HEDVIG_LOGO_SYMBOL} Home`,
-  cost: 112,
-  currencyCode: 'SEK',
-  gradient: ['#aaaaaa', '#828282'],
-  loading: false,
+  loading: true,
 }
