@@ -34,7 +34,7 @@ export const PriceCardForm = ({
     <form {...formProps}>
       <Wrapper y={1.5}>
         <Space y={1}>
-          {offers.length > 1 && (
+          {offers.length > 1 ? (
             <Space y={0.75}>
               <Padded as="p">Select tier</Padded>
               <ProductOfferPicker
@@ -44,6 +44,8 @@ export const PriceCardForm = ({
                 offers={offers}
               />
             </Space>
+          ) : (
+            <input hidden readOnly name={FormElement.ProductOfferId} value={selectedOffer.id} />
           )}
 
           <Padded>
