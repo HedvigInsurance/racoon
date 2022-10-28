@@ -4,7 +4,7 @@ import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
 import { useApollo } from '@/services/apollo/client'
-import { GTMAppScript, useGTMEvents } from '@/services/gtm'
+import { GTMAppScript, trackPageView, useGTMEvents } from '@/services/gtm'
 import * as Datadog from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -17,6 +17,8 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
 if (typeof window === 'undefined') {
   Datadog.initDatadog()
+} else {
+  trackPageView(window.location.pathname)
 }
 
 // @TODO - should this be initialized unless running in browser?

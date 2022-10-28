@@ -106,14 +106,11 @@ export const useGTMEvents = () => {
   }, [countryCode])
 
   useEffect(() => {
-    trackPageView(window.location.pathname)
-  }, [])
-
-  useEffect(() => {
     const pageview = (url: string) => {
       trackPageView(url)
     }
 
+    // NOTE: Initial pageview is tracked in _app page on load
     router.events.on('routeChangeComplete', pageview)
 
     return () => {
@@ -122,7 +119,8 @@ export const useGTMEvents = () => {
   }, [router.events])
 }
 
-const trackPageView = (url: string) => {
+export const trackPageView = (url: string) => {
+  // Intentionally not logging to Datadog, since we log to Analytics here
   console.debug('pageview', url)
   pushToGTMDataLayer({
     event: 'virtual_page_view',
