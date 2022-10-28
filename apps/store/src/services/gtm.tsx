@@ -6,6 +6,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
+import { findAbRedirectForPath, getCurrentVariantId } from '@/utils/abRedirects'
 import { CountryCode } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
@@ -119,14 +120,29 @@ export const useGTMEvents = () => {
   }, [router.events])
 }
 
-export const trackPageView = (url: string) => {
+export const trackPageView = (urlPath: string) => {
   // Intentionally not logging to Datadog, since we log to Analytics here
-  console.debug('pageview', url)
+  console.debug('pageview', urlPath)
   pushToGTMDataLayer({
     event: 'virtual_page_view',
     pageData: {
-      page: url,
+      page: urlPath,
       title: document.title,
+    },
+  })
+}
+
+export const trackExperimentImpression = (urlPath: string) => {
+  const redirect = findAbRedirectForPath(urlPath)
+  if (!redirect) return
+  const variantId = getCurrentVariantId(redirect.optimizeExperimentId)
+  if (!variantId) return
+  console.debug('experiment_impression', variantId)
+  pushToGTMDataLayer({
+    event: 'experiment_impression',
+    eventData: {
+      experiment_id: redirect.optimizeExperimentId,
+      variant_id: variantId,
     },
   })
 }
