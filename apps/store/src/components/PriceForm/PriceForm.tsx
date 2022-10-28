@@ -3,9 +3,11 @@ import {
   PriceIntentFragmentFragment,
   usePriceIntentConfirmMutation,
 } from '@/services/apollo/generated'
+import { trackOffer } from '@/services/gtm'
 import { prefillData, updateFormState } from '@/services/PriceForm/PriceForm.helpers'
 import { Form } from '@/services/PriceForm/PriceForm.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceFormAccordion } from './PriceFormAccordion'
@@ -21,11 +23,20 @@ type Props = {
 }
 
 export const PriceForm = ({ form, priceIntent, onUpdated, onSuccess, loading }: Props) => {
+  const { shopSession } = useShopSession()
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
+        // FIXME: pick offer for specific product or track all offers
+        const firstOffer = updatedPriceIntent.offers[0]
+        trackOffer({
+          shopSessionId: shopSession!.id,
+          contractType: firstOffer.variant.typeOfContract,
+          amount: firstOffer.price.amount,
+          currency: firstOffer.price.currencyCode,
+        })
         onSuccess(updatedPriceIntent)
       }
     },
