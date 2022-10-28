@@ -37,6 +37,7 @@ const List = styled.ul(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space[4],
+  backgroundColor: theme.colors.gray100,
 }))
 
 const Footer = styled.div({
