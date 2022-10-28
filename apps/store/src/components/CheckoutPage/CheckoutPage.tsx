@@ -139,7 +139,7 @@ const Card = styled.div(({ theme }) => ({
   padding: theme.space[3],
   border: `2px solid ${theme.colors.gray300}`,
   borderRadius: 8,
-  backgroundColor: theme.colors.white,
+  backgroundColor: theme.colors.gray300,
 }))
 
 export default CheckoutPage
