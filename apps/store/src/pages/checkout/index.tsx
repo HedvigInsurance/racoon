@@ -78,16 +78,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       checkoutId,
     })
 
-    const cartCost = shopSession.cart.cost
-
-    const cost: CheckoutPageProps['cost'] = {
-      total: cartCost.total.amount,
-      subTotal: cartCost.subtotal.amount,
-    }
-    if (cartCost.total.amount !== cartCost.subtotal.amount) {
-      cost.crossOut = cartCost.subtotal.amount
-    }
-
     return {
       props: {
         ...translations,
@@ -106,8 +96,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
           cost: offer.price.amount,
           startDate: offer.startDate,
         })),
-        cost,
-        currency: shopSession.currencyCode,
+        cart: shopSession.cart,
       },
     }
   } catch (error) {

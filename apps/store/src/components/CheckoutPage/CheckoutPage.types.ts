@@ -1,5 +1,5 @@
-type CostData = { crossOut?: number; total: number; subTotal: number }
-type CampaignData = { name: string; discount: number }
+import { CartFragmentFragment } from '@/services/apollo/generated'
+
 type ProductData = {
   offerId: string
   name: string
@@ -9,13 +9,11 @@ type ProductData = {
 }
 
 export type CheckoutPageProps = {
-  currency: string
-  cost: CostData
   products: Array<ProductData>
-  campaigns?: Array<CampaignData>
   loading: boolean
   prefilledData: { email?: string }
   userErrors: UserErrors
+  cart: CartFragmentFragment
 }
 
 export type UserErrors = Record<string, string>
