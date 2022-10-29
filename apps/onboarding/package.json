@@ -58,7 +58,7 @@
     "@types/lodash-es": "4.17.6",
     "@types/marked": "4.0.7",
     "@types/node": "16.18.2",
-    "@types/react": "18.0.23",
+    "@types/react": "18.0.24",
     "cypress": "10.11.0",
     "eslint-plugin-cypress": "2.12.1",
     "jest": "29.2.2",
