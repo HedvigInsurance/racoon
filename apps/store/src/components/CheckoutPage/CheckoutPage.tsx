@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, HedvigLogo, InputField, Space } from 'ui'
-import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
+import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement } from './CheckoutPage.constants'
 import { formatAPIDate } from './CheckoutPage.helpers'
@@ -10,7 +10,7 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 const DATE_TODAY = formatAPIDate(new Date())
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { currency, cost, products, campaigns, loading, prefilledData, userErrors } = props
+  const { cart, products, loading, prefilledData, userErrors } = props
 
   return (
     <>
@@ -33,12 +33,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </Heading>
               </MainTop>
 
-              <PriceBreakdown
-                currency={currency}
-                products={products}
-                cost={cost}
-                campaigns={campaigns}
-              />
+              <CartInventory cart={cart} />
             </Space>
 
             <Section as="section" y={1}>
