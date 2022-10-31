@@ -120,6 +120,8 @@ export const useGTMEvents = () => {
   }, [router.events])
 }
 
+// TODO: Refactor this module and move event tracking to Track service
+
 export const trackPageView = (urlPath: string) => {
   // Intentionally not logging to Datadog, since we log to Analytics here
   console.debug('pageview', urlPath)
@@ -144,5 +146,25 @@ export const trackExperimentImpression = (urlPath: string) => {
       experiment_id: redirect.optimizeExperimentId,
       variant_id: variantId,
     },
+  })
+}
+
+// TODO: Add shopSessionId from context instead of passing it explicitly
+export const trackOffer = (offerData: {
+  shopSessionId: string
+  contractType: string
+  amount: number
+  currency: string
+}) => {
+  const eventData = {
+    shop_session_id: offerData.shopSessionId,
+    insurance_type: offerData.contractType,
+    insurance_price: String(offerData.amount),
+    currency: offerData.currency,
+  }
+  console.debug('offer_created', eventData)
+  pushToGTMDataLayer({
+    event: 'offer_created',
+    eventData,
   })
 }
