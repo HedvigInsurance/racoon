@@ -1,7 +1,6 @@
 import { useApolloClient } from '@apollo/client'
-import styled from '@emotion/styled'
 import { useMemo, useRef, useState } from 'react'
-import { Space } from 'ui'
+import { Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceForm } from '@/components/PriceForm/PriceForm'
@@ -59,14 +58,28 @@ export const PriceCalculatorBlock = ({ blok }: Props) => {
   return (
     <>
       <Space y={1.5}>
-        <Space y={1}>
-          <CenteredPillow fromColor={PLACEHOLDER_GRADIENT[0]} toColor={PLACEHOLDER_GRADIENT[1]} />
-          <CenteredText>
-            <Text size="l">
-              {displayCost ? `${product.displayName} · ${displayCost}` : product.displayName}
+        <SpaceFlex space={1} align="center" direction="vertical">
+          <Pillow
+            size="xlarge"
+            fromColor={PLACEHOLDER_GRADIENT[0]}
+            toColor={PLACEHOLDER_GRADIENT[1]}
+          />
+          <Heading as="h2" variant="standard.24">
+            {product.displayName}
+          </Heading>
+
+          {!productOffer && (
+            <Text color="gray600" size="l">
+              {blok.title}
             </Text>
-          </CenteredText>
-        </Space>
+          )}
+        </SpaceFlex>
+
+        {displayCost && (
+          <Text as="p" align="center" size="l">
+            {displayCost}
+          </Text>
+        )}
 
         {productOffer && (
           <TierSelector
@@ -80,12 +93,6 @@ export const PriceCalculatorBlock = ({ blok }: Props) => {
         )}
 
         <Space y={1}>
-          {!productOffer && (
-            <SpaceFlex align="center" direction="vertical">
-              <p>{blok.title}</p>
-            </SpaceFlex>
-          )}
-
           <PriceForm
             form={form}
             priceIntent={priceIntent}
@@ -114,11 +121,3 @@ const usePriceFormProduct = () => {
     }
   }, [story.content, shopSession.currencyCode])
 }
-
-const CenteredPillow = styled(Pillow)({
-  margin: '0 auto',
-})
-
-const CenteredText = styled.p(() => ({
-  textAlign: 'center',
-}))
