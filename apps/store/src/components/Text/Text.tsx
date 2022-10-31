@@ -6,8 +6,10 @@ import type { UIColor } from 'ui'
 type FontSize = 's' | 'm' | 'l' | 'xl'
 
 type TypographyProps = {
-  size: FontSize
+  as?: 'p' | 'span'
+  align?: 'center' | 'left' | 'right'
   color?: UIColor
+  size: FontSize
   children: ReactNode
 }
 
@@ -20,14 +22,15 @@ const elementConfig = {
 const TextElement = styled(
   'span',
   elementConfig,
-)<TypographyProps>(({ theme, color, size }) => ({
+)<TypographyProps>(({ theme, align, color, size }) => ({
   color: color ? theme.colors[color] : 'inherit',
   fontSize: theme.fontSizes[fontSizeMap[size]],
+  ...(align && { textAlign: align }),
 }))
 
-export const Text = ({ color, size = 'm', children }: TypographyProps) => {
+export const Text = ({ as = 'p', align, color, size = 'm', children }: TypographyProps) => {
   return (
-    <TextElement color={color} size={size}>
+    <TextElement as={as} align={align} color={color} size={size}>
       {children}
     </TextElement>
   )
