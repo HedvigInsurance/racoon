@@ -6,6 +6,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
+import { findAbRedirectForPath, getCurrentVariantId } from '@/utils/abRedirects'
 import { CountryCode } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
@@ -32,6 +33,7 @@ const isGTMEnvironment = (value: unknown): value is GTMEnvironment => {
 }
 
 type GTMUserProperties = {
+  siteVersion: string
   country: CountryCode
   environment?: GTMEnvironment
 }
@@ -95,28 +97,52 @@ export const useGTMEvents = () => {
 
   useEffect(() => {
     pushToGTMDataLayer({
+      event: 'initiate_gtm',
       userProperties: {
-        environment: getGtmEnvironment(),
+        siteVersion: 'racoon',
         country: countryCode,
+        environment: getGtmEnvironment(),
       },
     })
   }, [countryCode])
 
   useEffect(() => {
     const pageview = (url: string) => {
-      pushToGTMDataLayer({
-        event: 'virtual_page_view',
-        pageData: {
-          page: url,
-          title: document.title,
-        },
-      })
+      trackPageView(url)
     }
 
+    // NOTE: Initial pageview is tracked in _app page on load
     router.events.on('routeChangeComplete', pageview)
 
     return () => {
       router.events.off('routeChangeComplete', pageview)
     }
   }, [router.events])
+}
+
+export const trackPageView = (urlPath: string) => {
+  // Intentionally not logging to Datadog, since we log to Analytics here
+  console.debug('pageview', urlPath)
+  pushToGTMDataLayer({
+    event: 'virtual_page_view',
+    pageData: {
+      page: urlPath,
+      title: document.title,
+    },
+  })
+}
+
+export const trackExperimentImpression = (urlPath: string) => {
+  const redirect = findAbRedirectForPath(urlPath)
+  if (!redirect) return
+  const variantId = getCurrentVariantId(redirect.optimizeExperimentId)
+  if (!variantId) return
+  console.debug('experiment_impression', variantId)
+  pushToGTMDataLayer({
+    event: 'experiment_impression',
+    eventData: {
+      experiment_id: redirect.optimizeExperimentId,
+      variant_id: variantId,
+    },
+  })
 }
