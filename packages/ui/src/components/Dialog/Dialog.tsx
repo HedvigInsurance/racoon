@@ -1,7 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { zIndexes } from '@/utils/zIndex'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -30,11 +29,11 @@ export const Window = styled.div(({ theme }) => ({
   },
 }))
 
-const StyledContentWrapper = styled.div({
+const StyledContentWrapper = styled.div(({ theme }) => ({
   position: 'fixed',
   inset: 0,
-  zIndex: zIndexes.dialog,
-})
+  zIndex: theme.zIndexes.dialog,
+}))
 
 type ContentProps = {
   children: React.ReactNode

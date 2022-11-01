@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEvent } from 'react'
-import { Button, Heading, LinkButton, Space } from 'ui'
-import * as Dialog from '@/components/Dialog/Dialog'
+import { Button, Heading, LinkButton, Space, Dialog } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 

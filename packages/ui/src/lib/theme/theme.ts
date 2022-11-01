@@ -1,6 +1,7 @@
 import { colors, UIColor } from './colors'
 import { radius } from './radius'
 import { fonts, fontSizes } from './typography'
+import { zIndexes } from './zIndex'
 
 const space = [
   0,
@@ -22,6 +23,7 @@ export const theme = {
   fontSizes,
   radius,
   space,
+  zIndexes,
 }
 
 type CustomTheme = typeof theme

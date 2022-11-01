@@ -5,7 +5,6 @@ import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
-import { zIndexes } from '@/utils/zIndex'
 import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 import { useStickyTopMenuOffset } from './useTopMenuStickyOffset'
@@ -122,7 +121,7 @@ export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset 
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
   top: `${topOffset}px`,
-  zIndex: zIndexes.header,
+  zIndex: theme.zIndexes.header,
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
