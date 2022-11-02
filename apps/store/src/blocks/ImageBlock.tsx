@@ -17,15 +17,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ?? false}>
-      <Image
-        src={blok.image.filename}
-        {...sizeProps}
-        alt={blok.image.alt}
-        style={{
-          maxWidth: '100%',
-          height: 'auto',
-        }}
-      />
+      <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
           <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />

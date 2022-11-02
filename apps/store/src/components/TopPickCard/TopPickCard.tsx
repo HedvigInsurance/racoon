@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import ImageProps from 'next/image'
+import { default as NextImage } from 'next/image'
 import { Space } from 'ui'
 
 const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
@@ -26,15 +26,7 @@ export const TopPickCard = ({
   return (
     <Wrapper y={0.25}>
       <ImageWrapper>
-        <ImageProps
-          {...imageProps}
-          alt={alt}
-          fill
-          sizes="100vw"
-          style={{
-            objectFit: 'cover',
-          }}
-        />
+        <Image {...imageProps} alt={alt} fill sizes="100vw" />
       </ImageWrapper>
       <Space y={0.125}>
         <Title>{title}</Title>
@@ -54,6 +46,10 @@ const ImageWrapper = styled.div(() => ({
   height: PRODUCT_CARD_IMAGE_HEIGHT_SMALL,
   width: '100%',
 }))
+
+const Image = styled(NextImage)({
+  objectFit: 'cover',
+})
 
 const Title = styled.h1(({ theme }) => ({
   fontSize: theme.fontSizes[2],

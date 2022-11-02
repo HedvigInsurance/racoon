@@ -45,10 +45,6 @@ export const AppStoreBadge = ({ type, locale }: AppStoreBadgeProps) => {
       height={48}
       width={161.14285}
       placeholder="blur"
-      style={{
-        maxWidth: '100%',
-        height: 'auto',
-      }}
     />
   )
 }

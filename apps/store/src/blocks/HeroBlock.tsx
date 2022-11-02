@@ -19,16 +19,12 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
   return (
     <HeroSection {...storyblokEditable(blok)}>
       <HeroImageWrapper>
-        <Image
+        <HeroImage
           priority
           src={blok.background.filename}
           alt={blok.background.alt}
           fill
           sizes="100vw"
-          style={{
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
         />
       </HeroImageWrapper>
       <HeroContent>
@@ -60,6 +56,11 @@ const HeroSection = styled.section(({ theme }) => ({
 
 const HeroImageWrapper = styled.div({
   zIndex: '-1',
+})
+
+const HeroImage = styled(Image)({
+  objectFit: 'cover',
+  objectPosition: 'center',
 })
 
 const HeroContent = styled.div({
