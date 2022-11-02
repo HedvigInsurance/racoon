@@ -14,7 +14,7 @@ export type ProductCardBlockProps = SbBaseBlockProps<{
 
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   return (
-    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)} legacyBehavior>
       <StyledAnchor>
         <ProductCard
           title={blok.title}

@@ -10,7 +10,7 @@ export const ShoppingCartMenuItem = () => {
 
   return (
     <Wrapper>
-      <Link href={PageLink.cart()} passHref>
+      <Link href={PageLink.cart()} passHref legacyBehavior>
         <StyledLink tabIndex={0} aria-label="shopping cart">
           <ShoppingBagIcon />
         </StyledLink>

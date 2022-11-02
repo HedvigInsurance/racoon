@@ -195,7 +195,7 @@ type NavigationLinkProps = Pick<LinkProps, 'href'> &
 
 export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref legacyBehavior>
       <StyledNavigationLink {...rest} />
     </Link>
   )

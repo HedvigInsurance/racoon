@@ -47,11 +47,11 @@ const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
         <ProductItem name={name} price={price} gradient={gradient} />
 
         <Space y={0.5}>
-          <Link href={PageLink.cart()} passHref>
+          <Link href={PageLink.cart()} passHref legacyBehavior>
             <LinkButton fullWidth>Proceed to cart ({cartLineCount})</LinkButton>
           </Link>
 
-          <Link href={PageLink.store()} passHref>
+          <Link href={PageLink.store()} passHref legacyBehavior>
             <LinkButton variant="outlined" fullWidth onClick={onClose}>
               Continue shopping
             </LinkButton>

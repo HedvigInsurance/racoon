@@ -52,7 +52,7 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
         <Footer>
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
-            <Link href={PageLink.checkout()} passHref>
+            <Link href={PageLink.checkout()} passHref legacyBehavior>
               <LinkButton fullWidth>{t('CHECKOUT_BUTTON')}</LinkButton>
             </Link>
           </Space>
