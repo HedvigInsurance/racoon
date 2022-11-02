@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ImageProps } from 'next/image'
+import { ImageProps } from 'next/legacy/image'
 import { mq } from 'ui'
 
 export type SelectableCardWrapperProps = {

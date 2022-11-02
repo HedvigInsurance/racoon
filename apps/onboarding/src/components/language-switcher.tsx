@@ -40,6 +40,7 @@ export const LanguageSwitcher = () => {
           href={router.isReady ? router.asPath : FALLBACK_PATH}
           locale={language.urlParam}
           passHref
+          legacyBehavior
         >
           <Anchor active={router.locale === language.urlParam}>{language.displayName}</Anchor>
         </Link>
