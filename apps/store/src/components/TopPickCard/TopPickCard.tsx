@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import ImageProps from 'next/legacy/image'
+import ImageProps from 'next/image'
 import { Space } from 'ui'
 
 const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
@@ -26,7 +26,15 @@ export const TopPickCard = ({
   return (
     <Wrapper y={0.25}>
       <ImageWrapper>
-        <ImageProps {...imageProps} alt={alt} layout="fill" objectFit="cover" />
+        <ImageProps
+          {...imageProps}
+          alt={alt}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'cover',
+          }}
+        />
       </ImageWrapper>
       <Space y={0.125}>
         <Title>{title}</Title>

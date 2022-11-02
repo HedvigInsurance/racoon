@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -17,7 +17,15 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ?? false}>
-      <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
+      <Image
+        src={blok.image.filename}
+        {...sizeProps}
+        alt={blok.image.alt}
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
           <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />

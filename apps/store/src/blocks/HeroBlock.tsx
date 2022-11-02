@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
@@ -23,9 +23,12 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
           priority
           src={blok.background.filename}
           alt={blok.background.alt}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
         />
       </HeroImageWrapper>
       <HeroContent>
