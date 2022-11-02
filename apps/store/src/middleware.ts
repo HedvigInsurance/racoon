@@ -17,7 +17,7 @@ export function middleware(req: NextRequest) {
   const cookiePath = req.cookies.get(LOCALE_COOKIE_KEY)
 
   if (cookiePath) {
-    nextURL.pathname = cookiePath
+    nextURL.pathname = cookiePath.value
     console.log(`Found user preference in cookies: ${cookiePath}, redirecting`)
     return NextResponse.redirect(nextURL)
   }

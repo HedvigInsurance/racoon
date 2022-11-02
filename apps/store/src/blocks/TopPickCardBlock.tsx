@@ -14,7 +14,7 @@ export type TopPickCardBlockProps = SbBaseBlockProps<{
 
 export const TopPickCardBlock = ({ blok }: TopPickCardBlockProps) => {
   return (
-    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)} legacyBehavior>
       <StyledAnchor>
         <TopPickCard
           title={blok.title}

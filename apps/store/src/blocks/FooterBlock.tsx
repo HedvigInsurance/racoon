@@ -30,7 +30,7 @@ type FooterLinkProps = SbBaseBlockProps<{
 
 export const FooterLink = ({ blok }: FooterLinkProps) => {
   return (
-    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)}>
+    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)} legacyBehavior>
       <StyledLink>{blok.linkText}</StyledLink>
     </Link>
   )
