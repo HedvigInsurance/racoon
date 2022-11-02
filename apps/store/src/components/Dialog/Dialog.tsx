@@ -32,6 +32,7 @@ export const Window = styled.div(({ theme }) => ({
 const StyledContentWrapper = styled.div({
   position: 'fixed',
   inset: 0,
+  zIndex: 2000,
 })
 
 type ContentProps = {

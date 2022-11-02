@@ -1,7 +1,9 @@
 import { useApolloClient } from '@apollo/client'
+import styled from '@emotion/styled'
 import { useMemo, useRef, useState } from 'react'
-import { Heading, Space } from 'ui'
+import { Button, Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
+import * as Dialog from '@/components/Dialog/Dialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceForm } from '@/components/PriceForm/PriceForm'
 import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
@@ -22,6 +24,7 @@ type Props = { title: string }
 
 export const PriceCalculator = ({ title }: Props) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
+  const [openDialog, setOpenDialog] = useState(false)
 
   const { priceTemplate, priceIntent, shopSession } = useProductPageContext()
   const product = usePriceFormProduct()
@@ -31,6 +34,7 @@ export const PriceCalculator = ({ title }: Props) => {
   const handleSuccess = (updatedPriceIntent: PriceIntentFragmentFragment) => {
     setProductOffer(updatedPriceIntent.offers[0])
     refreshData()
+    setOpenDialog(false)
   }
 
   const form = useMemo(() => {
@@ -57,28 +61,30 @@ export const PriceCalculator = ({ title }: Props) => {
   return (
     <>
       <Space y={1.5}>
-        <SpaceFlex space={1} align="center" direction="vertical">
-          <Pillow
-            size="xlarge"
-            fromColor={PLACEHOLDER_GRADIENT[0]}
-            toColor={PLACEHOLDER_GRADIENT[1]}
-          />
-          <Heading as="h2" variant="standard.24">
-            {product.displayName}
-          </Heading>
+        <Wrapper>
+          <SpaceFlex space={1} align="center" direction="vertical">
+            <Pillow
+              size="xlarge"
+              fromColor={PLACEHOLDER_GRADIENT[0]}
+              toColor={PLACEHOLDER_GRADIENT[1]}
+            />
+            <Heading as="h2" variant="standard.24">
+              {product.displayName}
+            </Heading>
 
-          {!productOffer && (
-            <Text color="gray600" size="l">
-              {title}
-            </Text>
-          )}
-        </SpaceFlex>
+            {!productOffer && (
+              <Text color="gray600" size="l">
+                {title}
+              </Text>
+            )}
 
-        {displayCost && (
-          <Text as="p" align="center" size="l">
-            {displayCost}
-          </Text>
-        )}
+            {displayCost && (
+              <Text as="p" align="center" size="l">
+                {displayCost}
+              </Text>
+            )}
+          </SpaceFlex>
+        </Wrapper>
 
         {productOffer && (
           <TierSelector
@@ -91,15 +97,38 @@ export const PriceCalculator = ({ title }: Props) => {
           />
         )}
 
-        <Space y={1}>
-          <PriceForm
-            form={form}
-            priceIntent={priceIntent}
-            onSuccess={handleSuccess}
-            onUpdated={refreshData}
-            loading={isLoadingData}
-          />
-        </Space>
+        <Dialog.Root open={openDialog} onOpenChange={setOpenDialog}>
+          {!productOffer && (
+            <Wrapper>
+              <Dialog.Trigger asChild>
+                <Button fullWidth>Calculate price</Button>
+              </Dialog.Trigger>
+            </Wrapper>
+          )}
+          <Dialog.Content>
+            <PriceFormWrapper>
+              <Space y={5}>
+                <SpaceFlex space={1} align="center" direction="vertical">
+                  <Pillow
+                    size="large"
+                    fromColor={PLACEHOLDER_GRADIENT[0]}
+                    toColor={PLACEHOLDER_GRADIENT[1]}
+                  />
+                  <Heading as="h2" variant="standard.18">
+                    {product.displayName}
+                  </Heading>
+                </SpaceFlex>
+                <PriceForm
+                  form={form}
+                  priceIntent={priceIntent}
+                  onSuccess={handleSuccess}
+                  onUpdated={refreshData}
+                  loading={isLoadingData}
+                />
+              </Space>
+            </PriceFormWrapper>
+          </Dialog.Content>
+        </Dialog.Root>
 
         <CartToast ref={toastRef} />
       </Space>
@@ -119,3 +148,19 @@ const usePriceFormProduct = () => {
     }
   }, [story.content, shopSession.currencyCode])
 }
+
+const Wrapper = styled.div({
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+})
+
+const PriceFormWrapper = styled(Dialog.Window)(({ theme }) => ({
+  position: 'relative',
+  display: 'grid',
+  alignContent: 'center',
+  width: '100vw',
+  height: '100vh',
+  paddingLeft: theme.space[4],
+  paddingRight: theme.space[4],
+  backgroundColor: theme.colors.light,
+}))
