@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import ImageProps from 'next/image'
+import ImageProps from 'next/legacy/image'
 import { Space } from 'ui'
 
 const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
