@@ -12,9 +12,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.28.2":
-  version: 5.28.2
-  resolution: "@adyen/adyen-web@npm:5.28.2"
+"@adyen/adyen-web@npm:5.28.3":
+  version: 5.28.3
+  resolution: "@adyen/adyen-web@npm:5.28.3"
   dependencies:
     "@babel/runtime": ^7.15.4
     "@babel/runtime-corejs3": ^7.19.1
@@ -22,8 +22,8 @@ __metadata:
     "@types/googlepay": ^0.6.2
     classnames: ^2.3.1
     core-js-pure: ^3.25.3
-    preact: 10.7.3
-  checksum: b6a6cfaf626fb0069d01ed763f891660e763cd02969ffb4f0c694548d180fddc3655fd447062d911869d619e62d8d5817a98351d84afd231a1565ba2b27c7252
+    preact: 10.11.2
+  checksum: c728d262c651474458f2753747f43b43d615a325841bebc0d2c43c0667aee3d66085fe26a8d99ea3ae5afd99bf0961611d2efc28f311ab98cf4f482f121d6ea0
   languageName: node
   linkType: hard
 
@@ -18706,10 +18706,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:10.7.3":
-  version: 10.7.3
-  resolution: "preact@npm:10.7.3"
-  checksum: a0471da77528b9f9478c02bf60ae41754509655a19b65d9fea274a3c94c9583a7b1700e1329ee726ef6dd5307b73cf391d3f7f1b6a9ace43d71a70cd1be92737
+"preact@npm:10.11.2":
+  version: 10.11.2
+  resolution: "preact@npm:10.11.2"
+  checksum: 92b4087a4048595e43fc5c005e9a1f3c890ec83657689de9b40b1894e26f8c2b6b071c63e08941a44044d1612532f8313483b62e3d6e1aa3c39bde27614ed790
   languageName: node
   linkType: hard
 
@@ -21037,7 +21037,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.28.2
+    "@adyen/adyen-web": 5.28.3
     "@apollo/client": 3.7.1
     "@babel/core": 7.19.6
     "@datadog/browser-logs": 4.23.2
