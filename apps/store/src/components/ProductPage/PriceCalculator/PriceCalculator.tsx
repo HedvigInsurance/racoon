@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { useMemo, useRef, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
-import * as Dialog from '@/components/Dialog/Dialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceForm } from '@/components/PriceForm/PriceForm'
 import { PriceFormProduct } from '@/components/PriceForm/PriceForm.types'
@@ -16,6 +15,7 @@ import { setupForm } from '@/services/PriceForm/PriceForm.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useRefreshData } from '@/utils/useRefreshData'
+import { PriceFormModal } from '../PriceFormModal/PriceFormModal'
 
 // TODO: get from API
 const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
@@ -24,7 +24,7 @@ type Props = { title: string }
 
 export const PriceCalculator = ({ title }: Props) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const [openDialog, setOpenDialog] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const { priceTemplate, priceIntent, shopSession } = useProductPageContext()
   const product = usePriceFormProduct()
@@ -34,7 +34,7 @@ export const PriceCalculator = ({ title }: Props) => {
   const handleSuccess = (updatedPriceIntent: PriceIntentFragmentFragment) => {
     setProductOffer(updatedPriceIntent.offers[0])
     refreshData()
-    setOpenDialog(false)
+    setIsDialogOpen(false)
   }
 
   const form = useMemo(() => {
@@ -97,38 +97,38 @@ export const PriceCalculator = ({ title }: Props) => {
           />
         )}
 
-        <Dialog.Root open={openDialog} onOpenChange={setOpenDialog}>
-          {!productOffer && (
-            <Wrapper>
-              <Dialog.Trigger asChild>
-                <Button fullWidth>Calculate price</Button>
-              </Dialog.Trigger>
-            </Wrapper>
-          )}
-          <Dialog.Content>
-            <PriceFormWrapper>
-              <Space y={5}>
-                <SpaceFlex space={1} align="center" direction="vertical">
-                  <Pillow
-                    size="large"
-                    fromColor={PLACEHOLDER_GRADIENT[0]}
-                    toColor={PLACEHOLDER_GRADIENT[1]}
-                  />
-                  <Heading as="h2" variant="standard.18">
-                    {product.displayName}
-                  </Heading>
-                </SpaceFlex>
-                <PriceForm
-                  form={form}
-                  priceIntent={priceIntent}
-                  onSuccess={handleSuccess}
-                  onUpdated={refreshData}
-                  loading={isLoadingData}
-                />
-              </Space>
-            </PriceFormWrapper>
-          </Dialog.Content>
-        </Dialog.Root>
+        {!productOffer && (
+          <Wrapper>
+            <Button onClick={() => setIsDialogOpen(true)} fullWidth>
+              Calculate price
+            </Button>
+          </Wrapper>
+        )}
+
+        <PriceFormModal
+          isOpen={isDialogOpen}
+          toggleDialog={setIsDialogOpen}
+          header={
+            <>
+              <Pillow
+                size="large"
+                fromColor={PLACEHOLDER_GRADIENT[0]}
+                toColor={PLACEHOLDER_GRADIENT[1]}
+              />
+              <Heading as="h2" variant="standard.18">
+                {product.displayName}
+              </Heading>
+            </>
+          }
+        >
+          <PriceForm
+            form={form}
+            priceIntent={priceIntent}
+            onSuccess={handleSuccess}
+            onUpdated={refreshData}
+            loading={isLoadingData}
+          />
+        </PriceFormModal>
 
         <CartToast ref={toastRef} />
       </Space>
@@ -153,14 +153,3 @@ const Wrapper = styled.div({
   paddingLeft: '1rem',
   paddingRight: '1rem',
 })
-
-const PriceFormWrapper = styled(Dialog.Window)(({ theme }) => ({
-  position: 'relative',
-  display: 'grid',
-  alignContent: 'center',
-  width: '100vw',
-  height: '100vh',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
-  backgroundColor: theme.colors.light,
-}))
