@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Space } from 'ui'
+import { CrossIcon, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
@@ -15,6 +15,11 @@ export const PriceFormModal = ({ children, header, isOpen, toggleDialog }: Props
     <Dialog.Root open={isOpen} onOpenChange={toggleDialog}>
       <Dialog.Content>
         <PriceFormWrapper>
+          <Dialog.Close asChild>
+            <IconButton>
+              <CrossIcon size="1.25rem" />
+            </IconButton>
+          </Dialog.Close>
           <Space y={5}>
             <SpaceFlex space={1} align="center" direction="vertical">
               {header}
@@ -26,6 +31,7 @@ export const PriceFormModal = ({ children, header, isOpen, toggleDialog }: Props
     </Dialog.Root>
   )
 }
+
 const PriceFormWrapper = styled(Dialog.Window)(({ theme }) => ({
   position: 'relative',
   display: 'grid',
@@ -36,3 +42,12 @@ const PriceFormWrapper = styled(Dialog.Window)(({ theme }) => ({
   paddingRight: theme.space[4],
   backgroundColor: theme.colors.light,
 }))
+
+export const IconButton = styled.button({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: '1rem',
+  lineHeight: 0,
+  cursor: 'pointer',
+})
