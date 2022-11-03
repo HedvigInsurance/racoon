@@ -8,7 +8,6 @@ import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
-import { AdditionalCoverageCard } from './AdditionalCoverageCard'
 import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
 
@@ -65,17 +64,12 @@ const FooterButton = styled(Button)({
 })
 
 export type LandingPageProps = {
-  mainCoverageInsurances: Insurances
-  additionalCoverageInsurances: Insurances
+  insurances: Insurances
   formInitialState: Record<string, boolean>
   referer: string | null
 }
 
-export const LandingPage = ({
-  mainCoverageInsurances,
-  additionalCoverageInsurances,
-  formInitialState,
-}: LandingPageProps) => {
+export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()
@@ -83,9 +77,9 @@ export const LandingPage = ({
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
-  const hasSelectedAtLeastOneMainInsurance = useMemo(
-    () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
-    [formState, mainCoverageInsurances],
+  const hasSelectedAtLeastOneOption = useMemo(
+    () => insurances.some((insurance) => formState[insurance.fieldName]),
+    [formState, insurances],
   )
 
   return (
@@ -109,58 +103,33 @@ export const LandingPage = ({
           </TitleContainer>
 
           <CoverageCardGrid>
-            {mainCoverageInsurances.map((inrurance, index, arr) => {
+            {insurances.map((insurance, index, arr) => {
               const isLastItem = index === arr.length - 1
               const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
               const isSingleCard = arr.length === 1
+
               return (
                 <GridMainCoverageCard
-                  key={inrurance.id}
-                  selected={formState[inrurance.fieldName]}
-                  required={!hasSelectedAtLeastOneMainInsurance}
+                  key={insurance.id}
+                  selected={formState[insurance.fieldName]}
+                  required={!hasSelectedAtLeastOneOption}
                   errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                   onCheck={() => {
                     if (!isSingleCard) {
                       setFormState({
                         ...formState,
-                        [inrurance.fieldName]: !formState[inrurance.fieldName],
+                        [insurance.fieldName]: !formState[insurance.fieldName],
                       })
                     }
                   }}
-                  cardImg={inrurance.img}
-                  title={t(inrurance.name)}
-                  description={t(inrurance.description)}
+                  cardImg={insurance.img}
+                  title={t(insurance.name)}
+                  description={t(insurance.description)}
                   size={cardSize}
                   enableHover={true}
                 />
               )
             })}
-          </CoverageCardGrid>
-
-          <TitleContainer>
-            <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
-            </HeadingOLD>
-          </TitleContainer>
-
-          <CoverageCardGrid>
-            {additionalCoverageInsurances.map((insurance) => (
-              <AdditionalCoverageCard
-                key={insurance.id}
-                enableHover
-                cardImg={insurance.img}
-                selected={formState[insurance.fieldName]}
-                disabled={!hasSelectedAtLeastOneMainInsurance}
-                onCheck={() =>
-                  setFormState({
-                    ...formState,
-                    [insurance.fieldName]: !formState[insurance.fieldName],
-                  })
-                }
-                title={t(insurance.name)}
-                description={t(insurance.description)}
-              />
-            ))}
           </CoverageCardGrid>
         </Main>
         <FixedFooter>

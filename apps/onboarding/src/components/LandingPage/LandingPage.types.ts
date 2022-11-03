@@ -10,7 +10,6 @@ export type Insurance = {
   }
   fieldName: string
   isPreselected?: boolean
-  isAdditionalCoverage?: boolean
   slug?: string
 }
 

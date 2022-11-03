@@ -5,8 +5,6 @@ import Head from 'next/head'
 import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
 import {
   getInsurancesByLocaleLabel,
-  getMainCoverageInsurances,
-  getAdditionalCoverageInsurances,
   getFormInitialState,
 } from '@/components/LandingPage/LandingPage.helpers'
 import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
@@ -60,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
   const insurances = getInsurancesByLocaleLabel(locale)
 
   if (insurances.length === 0) {
-    logger.error('Cannot render new-member page, no insurances found')
+    logger.error('Cannot render new-member page; no insurances found')
     return {
       notFound: true,
     }
@@ -69,8 +67,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
   return {
     props: {
       ...(await serverSideTranslations(locale)),
-      mainCoverageInsurances: getMainCoverageInsurances(insurances),
-      additionalCoverageInsurances: getAdditionalCoverageInsurances(insurances),
+      insurances,
       formInitialState: getFormInitialState(insurances),
       referer: context.req.headers.referer ?? null,
     },

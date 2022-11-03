@@ -3,7 +3,7 @@ import { Market } from '@/lib/types'
 import { INSURANCES_BY_MARKET } from './LandingPage.constants'
 import { Insurances } from './LandingPage.types'
 
-export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
+const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
   switch (localeLabel) {
     case 'se':
     case 'se-en':
@@ -15,14 +15,6 @@ export const getMarketFromLocaleLabel = (localeLabel: LocaleLabel) => {
     case 'dk-en':
       return Market.Denmark
   }
-}
-
-export const getMainCoverageInsurances = (insurances: Insurances) => {
-  return insurances.filter(({ isAdditionalCoverage }) => !isAdditionalCoverage)
-}
-
-export const getAdditionalCoverageInsurances = (insurances: Insurances) => {
-  return insurances.filter(({ isAdditionalCoverage }) => isAdditionalCoverage)
 }
 
 export const getInsurancesByLocaleLabel = (localeLabel: LocaleLabel) => {

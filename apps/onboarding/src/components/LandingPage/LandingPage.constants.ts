@@ -2,9 +2,6 @@ import { Market, MarketLabel } from '@/lib/types'
 import { Features, Feature } from '@/services/features'
 import { Insurances } from './LandingPage.types'
 
-// TODO make usage of a proper API
-// This is being hardcoded at the moment but in the future that kind of information
-// will be retrieved from an proper API
 export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
   [Market.Sweden]: [
     {
@@ -67,7 +64,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         src: '/racoon-assets/travel.jpg',
         blurDataURL: 'L8BMoT~VaxIoWC-:WBRkRjs:Rjt7',
       },
-      isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.DK)
@@ -80,7 +76,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
               src: '/racoon-assets/accident.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
-            isAdditionalCoverage: true,
             fieldName: 'isAccident',
           },
         ]
@@ -121,7 +116,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         src: '/racoon-assets/travel.jpg',
         blurDataURL: 'L8BMoT~VaxIoWC-:WBRkRjs:Rjt7',
       },
-      isAdditionalCoverage: true,
       fieldName: 'isTravel',
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.NO)
@@ -134,7 +128,6 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
               src: '/racoon-assets/accident.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
-            isAdditionalCoverage: true,
             fieldName: 'isAccident',
           },
         ]

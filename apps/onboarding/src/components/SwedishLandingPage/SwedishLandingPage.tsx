@@ -53,12 +53,9 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type SwedishLandingPageProps = Pick<LandingPageProps, 'mainCoverageInsurances' | 'referer'>
+type SwedishLandingPageProps = Pick<LandingPageProps, 'insurances' | 'referer'>
 
-export const SwedishLandingPage = ({
-  mainCoverageInsurances,
-  referer,
-}: SwedishLandingPageProps) => {
+export const SwedishLandingPage = ({ insurances, referer }: SwedishLandingPageProps) => {
   const { t } = useTranslation()
   const locale = useCurrentLocale()
 
@@ -92,7 +89,7 @@ export const SwedishLandingPage = ({
             </Space>
           </ContentCard>
           <CoverageCardGrid>
-            {mainCoverageInsurances.map(({ id, name, description, img, slug }, index, arr) => {
+            {insurances.map(({ id, name, description, img, slug }, index, arr) => {
               const isLastItem = index === arr.length - 1
               const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
 
