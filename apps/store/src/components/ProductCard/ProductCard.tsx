@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import ImageProps from 'next/legacy/image'
+import { default as NextImage } from 'next/image'
 import { Space } from 'ui'
 
 type ImageProps = {
@@ -23,7 +23,7 @@ export const ProductCard = ({
   return (
     <Wrapper y={0.25}>
       <ImageWrapper>
-        <ImageProps {...imageProps} alt={alt} layout="fill" objectFit="cover" />
+        <Image {...imageProps} alt={alt} fill sizes="100vw" />
       </ImageWrapper>
       <Space y={0.125}>
         <Title>{title}</Title>
@@ -47,6 +47,10 @@ const ImageWrapper = styled.div(() => ({
     overflow: 'hidden',
   },
 }))
+
+const Image = styled(NextImage)({
+  objectFit: 'cover',
+})
 
 const Title = styled.p(({ theme }) => ({
   fontSize: theme.fontSizes[2],

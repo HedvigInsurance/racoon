@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
@@ -19,13 +19,12 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
   return (
     <HeroSection {...storyblokEditable(blok)}>
       <HeroImageWrapper>
-        <Image
+        <HeroImage
           priority
           src={blok.background.filename}
           alt={blok.background.alt}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          sizes="100vw"
         />
       </HeroImageWrapper>
       <HeroContent>
@@ -57,6 +56,11 @@ const HeroSection = styled.section(({ theme }) => ({
 
 const HeroImageWrapper = styled.div({
   zIndex: '-1',
+})
+
+const HeroImage = styled(Image)({
+  objectFit: 'cover',
+  objectPosition: 'center',
 })
 
 const HeroContent = styled.div({
