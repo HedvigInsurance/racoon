@@ -3,14 +3,11 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
-import {
-  getInsurancesByLocaleLabel,
-  getFormInitialState,
-} from '@/components/LandingPage/LandingPage.helpers'
 import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
+import { Insurances } from '@/services/insurances'
 import logger from '@/services/logger'
 
 type MetaLinks = Pick<LocaleData, 'hrefLang' | 'path'> & {
@@ -55,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
   }
 
   const locale = context.locale as LocaleLabel
-  const insurances = getInsurancesByLocaleLabel(locale)
+  const insurances = await Insurances.getInsurancesByLocaleLabel(locale)
 
   if (insurances.length === 0) {
     logger.error('Cannot render new-member page; no insurances found')
@@ -64,11 +61,19 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
     }
   }
 
+  const formInitialState = insurances.reduce(
+    (res, { fieldName, isPreselected }) => ({
+      ...res,
+      [fieldName]: isPreselected ?? false,
+    }),
+    {},
+  )
+
   return {
     props: {
       ...(await serverSideTranslations(locale)),
       insurances,
-      formInitialState: getFormInitialState(insurances),
+      formInitialState,
       referer: context.req.headers.referer ?? null,
     },
   }

@@ -8,7 +8,7 @@ import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
-import { Insurances } from './LandingPage.types'
+import { Insurance } from '@/services/insurances'
 import { MainCoverageCard } from './MainCoverageCard'
 
 type GridCardProps = { size: 'half' | 'full' }
@@ -64,7 +64,7 @@ const FooterButton = styled(Button)({
 })
 
 export type LandingPageProps = {
-  insurances: Insurances
+  insurances: Array<Insurance>
   formInitialState: Record<string, boolean>
   referer: string | null
 }
@@ -88,8 +88,8 @@ export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) 
         event.preventDefault()
 
         setIsRedirecting(true)
-        Embark.setStore(locale, formState)
-        const slug = Embark.getSlug(locale)
+        Embark.setStore(locale.market, formState)
+        const slug = Embark.getSlug(locale.market)
         router.push(PageLink.embark({ locale: locale.path, slug }))
       }}
     >
