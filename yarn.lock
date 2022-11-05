@@ -16380,12 +16380,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:4.1.1":
-  version: 4.1.1
-  resolution: "marked@npm:4.1.1"
+"marked@npm:4.2.1":
+  version: 4.2.1
+  resolution: "marked@npm:4.2.1"
   bin:
     marked: bin/marked.js
-  checksum: 717e3357952ee53de831bf0eb110ed075bebca2376c58bcdf7ee523ef540d45308ad6d51b2c933da0968832ea4386f31c142ca65443e77c098e84f6cce73e418
+  checksum: 9361bc017f707ed4233ba0cade7065269b2f835d29388bfa170090ebeadfe96f01097b5495b2514f79c1ce13042007d64cc156236cabb841a4e470af977af04d
   languageName: node
   linkType: hard
 
@@ -17587,7 +17587,7 @@ __metadata:
     jest: 29.2.2
     jsdom: 20.0.2
     lodash-es: 4.17.21
-    marked: 4.1.1
+    marked: 4.2.1
     msw: 0.47.3
     next: 13.0.1
     next-i18next: 12.1.0
