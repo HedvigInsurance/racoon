@@ -21112,7 +21112,7 @@ __metadata:
     react-dom: 18.2.0
     react-use-intercom: 2.0.0
     scripts: "workspace:"
-    storybook-addon-next: 1.6.9
+    storybook-addon-next: 1.6.10
     subscriptions-transport-ws: 0.11.0
     ts-jest: 29.0.3
     tsconfig: "workspace:"
@@ -21132,9 +21132,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook-addon-next@npm:1.6.9":
-  version: 1.6.9
-  resolution: "storybook-addon-next@npm:1.6.9"
+"storybook-addon-next@npm:1.6.10":
+  version: 1.6.10
+  resolution: "storybook-addon-next@npm:1.6.10"
   dependencies:
     "@storybook/addons": ^6.4.10
     image-size: ^1.0.0
@@ -21151,7 +21151,7 @@ __metadata:
     next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 040cc66a835b51449267eb339303635dd0f88f8dcb49e198a3fadd2ef220acd80e778ad55827d64bc372db7a470d58a8c68bf68e32608adef97780ce59f9900c
+  checksum: c6f76388cfae5895c2e2646c439a2c4143aee6abf3d43c5afd7d59239bf6be9fa0343bc6e37f872f9afc5c5c1f331820785bcc57af4185396dacd32d1905f040
   languageName: node
   linkType: hard
 
