@@ -1,5 +1,6 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { HouseholdSizeField } from '@/components/PriceForm/HouseholdSize'
 import { InputField as InputFieldType } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
@@ -91,9 +92,6 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
         />
       )
 
-    case 'ssn-se':
-      return <SsnSeField field={field} />
-
     case 'extra-buildings':
       return (
         <ExtraBuildingsField
@@ -106,5 +104,11 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           loading={loading}
         />
       )
+
+    case 'householdSize':
+      return <HouseholdSizeField field={field} />
+
+    case 'ssn-se':
+      return <SsnSeField field={field} />
   }
 }

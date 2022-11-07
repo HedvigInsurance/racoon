@@ -20,9 +20,27 @@ export const SE_APARTMENT: Template = {
       ],
     },
     {
+      id: 'insured-people',
+      title: { key: 'Insured people' },
+      submitLabel: { key: 'Next step' },
+      items: [
+        {
+          field: {
+            type: 'householdSize',
+            name: 'numberCoInsured',
+            label: { key: 'Household size' },
+            required: true,
+            defaultValue: 0,
+            max: 5,
+          },
+          layout: { columnSpan: 6 },
+        },
+      ],
+    },
+    {
       id: 'your-home',
       title: { key: 'Your home' },
-      submitLabel: { key: 'Next step' },
+      submitLabel: { key: 'Calculate price' },
       items: [
         {
           field: {
@@ -72,25 +90,6 @@ export const SE_APARTMENT: Template = {
             min: 0,
           },
           layout: { columnSpan: 3 },
-        },
-      ],
-    },
-    {
-      id: 'insured-people',
-      title: { key: 'Insured people' },
-      submitLabel: { key: 'Calculate price' },
-      items: [
-        {
-          field: {
-            type: 'number',
-            min: 0,
-            max: 5,
-            name: 'numberCoInsured',
-            label: { key: 'Number of co-insured' },
-            required: true,
-            defaultValue: 0,
-          },
-          layout: { columnSpan: 6 },
         },
       ],
     },
