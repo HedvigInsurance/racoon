@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+source .env.local
+
 echo "Attempting to download latest translations from Lokalise..."
 
 if [ -z "${LOKALISE_TOKEN:-}" ]; then
