@@ -5,11 +5,11 @@ import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
+import { zIndexes } from '@/utils/zIndex'
 import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
-const Z_INDEX_TOP_MENU = 1000
 
 export const TopMenu = () => {
   const [activeItem, setActiveItem] = useState('')
@@ -121,7 +121,7 @@ export const Wrapper = styled.header(({ theme }) => ({
   padding: theme.space[4],
   position: 'sticky',
   top: 0,
-  zIndex: Z_INDEX_TOP_MENU,
+  zIndex: zIndexes.header,
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({

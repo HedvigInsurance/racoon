@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { motion, useScroll } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { zIndexes } from '@/utils/zIndex'
 
 export type ScrollPastProps = {
   targetRef: React.RefObject<HTMLElement>
@@ -39,5 +40,5 @@ const StyledWrapper = styled(motion.div)({
   bottom: 0,
   left: 0,
   right: 0,
-  zIndex: 1,
+  zIndex: zIndexes.scrollPast,
 })
