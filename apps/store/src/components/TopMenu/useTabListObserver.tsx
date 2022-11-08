@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-const buildThresholdList = () => {
+const buildThresholdList = (steps: number) => {
   const thresholds = []
-  const numSteps = 120
+  const numSteps = steps
 
   for (let i = 1.0; i <= numSteps; i++) {
     const ratio = i / numSteps
@@ -13,8 +13,8 @@ const buildThresholdList = () => {
   return thresholds
 }
 
-export const useTabListObserver = () => {
-  const thresholdList = buildThresholdList()
+export const useTabListObserver = (steps = 120) => {
+  const thresholdList = buildThresholdList(steps)
 
   const [targetElementTop, setTargetElementTop] = useState(0)
   const [targetElementHeight, setTargetElementHeight] = useState(0)

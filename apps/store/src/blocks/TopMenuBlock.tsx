@@ -19,7 +19,7 @@ import {
   ToggleMenu,
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
-import { useTabListObserver } from '@/components/TopMenu/useTopMenuOffsetObserver'
+import { useTabListObserver } from '@/components/TopMenu/useTabListObserver'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
