@@ -34,7 +34,7 @@ export const Item = Accordion.Item
 
 const TriggerIcon = styled(ChevronIcon)({
   transition: 'transform 300ms',
-  '[data-state=open] &': { transform: 'rotate(180deg)' },
+  '[data-state=open] > &': { transform: 'rotate(180deg)' },
 })
 
 export const Trigger = () => {
