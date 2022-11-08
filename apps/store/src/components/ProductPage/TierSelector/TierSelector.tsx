@@ -33,7 +33,7 @@ export const TierSelector = (props: Props) => {
   })
 
   return (
-    <>
+    <div ref={wrapperRef}>
       <PriceCardForm
         onSubmit={handleSubmitAddToCart}
         loading={loadingAddToCart}
@@ -50,6 +50,6 @@ export const TierSelector = (props: Props) => {
         onSubmit={handleSubmitAddToCart}
         productOfferId={productOffer.id}
       />
-    </>
+    </div>
   )
 }
