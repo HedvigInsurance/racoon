@@ -9,6 +9,9 @@ export const Tabs = styled(RadixTabs.Root)({
 export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
   display: 'flex',
   borderBottom: `1px solid ${theme.colors.gray500}`,
+  background: theme.colors.white,
+  position: 'sticky',
+  top: 0,
 }))
 
 export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({

@@ -112,7 +112,7 @@ export const focusableStyles = {
   },
 }
 
-export const Wrapper = styled.header(({ theme }) => ({
+export const Wrapper = styled.header<{ topOffset?: number }>(({ theme, topOffset = 0 }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -120,8 +120,8 @@ export const Wrapper = styled.header(({ theme }) => ({
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
   position: 'sticky',
-  top: 0,
-  zIndex: zIndexes.header,
+  top: `${topOffset}px`,
+  zIndex: Z_INDEX_TOP_MENU,
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({

@@ -19,6 +19,7 @@ import {
   ToggleMenu,
   Wrapper,
 } from '@/components/TopMenu/TopMenu'
+import { useTopOffset } from '@/components/TopMenu/useTopOffset'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
@@ -95,8 +96,10 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
     return () => router.events.off('routeChangeComplete', closeDialog)
   }, [router.events])
 
+  const { navRef, topOffset } = useTopOffset()
+
   return (
-    <Wrapper {...storyblokEditable(blok)}>
+    <Wrapper topOffset={topOffset} ref={navRef} {...storyblokEditable(blok)}>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
         <DialogPrimitive.Trigger asChild>
           <ToggleMenu>{open ? null : <MenuIcon />}</ToggleMenu>
