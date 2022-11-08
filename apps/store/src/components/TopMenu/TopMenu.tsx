@@ -121,7 +121,7 @@ export const Wrapper = styled.header<{ topOffset?: number }>(({ theme, topOffset
   padding: theme.space[4],
   position: 'sticky',
   top: `${topOffset}px`,
-  zIndex: Z_INDEX_TOP_MENU,
+  zIndex: zIndexes.header,
 }))
 
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
