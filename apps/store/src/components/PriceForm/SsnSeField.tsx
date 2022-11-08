@@ -10,7 +10,7 @@ type SsnSeFieldProps = {
 
 export const SsnSeField = ({ field }: SsnSeFieldProps) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
-  const [value, setValue] = useState(field.value ?? field.defaultValue)
+  const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     let value = event.target.value
@@ -38,8 +38,9 @@ export const SsnSeField = ({ field }: SsnSeFieldProps) => {
         minLength={10}
         maxLength={13}
         required={field.required}
-        onChange={handleOnChange}
+        value={value}
         defaultValue={field.defaultValue}
+        onChange={handleOnChange}
       />
     </>
   )
