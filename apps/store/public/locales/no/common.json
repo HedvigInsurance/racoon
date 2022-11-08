@@ -1,3 +1,5 @@
 {
-  "CHECKOUT_BUTTON": "Sjekk ut"
+  "CHECKOUT_BUTTON": "Sjekk ut",
+  "TEST_PLURALIZE_one": "Kanelsnurr",
+  "TEST_PLURALIZE_other": "{{count}} kanelboller"
 }

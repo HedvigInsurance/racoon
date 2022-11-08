@@ -1,7 +1,9 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { useEffect } from 'react'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import {
@@ -24,6 +26,16 @@ type RoutingPath = {
 
 const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
   const story = useStoryblokState(props.story)
+  const { t } = useTranslation()
+
+  useEffect(() => {
+    console.log('Pluralization test', [
+      t('TEST_PLURALIZE', { count: 0 }),
+      t('TEST_PLURALIZE', { count: 1 }),
+      t('TEST_PLURALIZE', { count: 2 }),
+      t('TEST_PLURALIZE', { count: 3 }),
+    ])
+  }, [t])
 
   return (
     <>

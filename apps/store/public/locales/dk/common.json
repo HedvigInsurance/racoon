@@ -1,3 +1,5 @@
 {
-  "CHECKOUT_BUTTON": "Checkout"
+  "CHECKOUT_BUTTON": "Checkout",
+  "TEST_PLURALIZE_one": "Kanelbolle",
+  "TEST_PLURALIZE_other": "{{count}} kanelboller"
 }
