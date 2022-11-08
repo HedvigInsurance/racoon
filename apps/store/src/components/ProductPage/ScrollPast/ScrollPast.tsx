@@ -25,7 +25,7 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
     <StyledWrapper
       variants={{
         hidden: { opacity: 0, transitionEnd: { display: 'none' } },
-        visible: { opacity: 1, display: 'flex' },
+        visible: { opacity: 1, display: 'block' },
       }}
       initial="hidden"
       animate={hasScrolledPassed ? 'visible' : 'hidden'}
@@ -35,10 +35,10 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
   )
 }
 
-const StyledWrapper = styled(motion.div)({
+const StyledWrapper = styled(motion.div)(({ theme }) => ({
   position: 'fixed',
-  bottom: 0,
+  bottom: theme.space[8],
   left: 0,
   right: 0,
   zIndex: zIndexes.scrollPast,
-})
+}))
