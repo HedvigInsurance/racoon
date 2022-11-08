@@ -33,7 +33,7 @@ export const Button = ({ onClick, disabled, type = 'submit', children }: ButtonP
 const FlexButton = styled(UIButton)(() => ({
   display: 'flex',
   lineHeight: 1.125,
-  boxShadow: '0px -1px 1px rgba(0, 0, 0, 0.1), 0px -4px 8px rgba(0, 0, 0, 0.1)',
+  boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.4)',
 }))
 
 const Separator = styled.div(({ theme }) => ({
