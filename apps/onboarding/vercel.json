@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. &&  npx turbo run build --filter=onboarding",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=onboarding",
   "ignoreCommand": "npx turbo-ignore",
   "regions": ["arn1"],
   "github": {
