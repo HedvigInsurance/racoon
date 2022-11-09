@@ -1,4 +1,4 @@
-const zIndexOrder = ['body', 'scrollPast', 'header', 'dialog'] as const
+const zIndexOrder = ['body', 'tabs', 'scrollPast', 'header', 'dialog'] as const
 
 type ZIndexValues = typeof zIndexOrder[number]
 type ZIndexRecord = Record<ZIndexValues, number>
