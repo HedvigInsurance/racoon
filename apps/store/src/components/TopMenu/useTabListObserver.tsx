@@ -14,10 +14,9 @@ const buildThresholdList = (steps: number) => {
 }
 
 export const useTabListObserver = (steps = 120) => {
-  const thresholdList = buildThresholdList(steps)
-
   const [targetElementTop, setTargetElementTop] = useState(0)
   const [targetElementHeight, setTargetElementHeight] = useState(0)
+  const thresholdList = buildThresholdList(steps)
 
   useEffect(() => {
     const tabListElement = document.querySelector('[role=tablist]')
