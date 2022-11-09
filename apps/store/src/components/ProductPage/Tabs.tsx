@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
+import { zIndexes } from '@/utils/zIndex'
 
 export const Tabs = styled(RadixTabs.Root)({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
 })
@@ -9,6 +11,10 @@ export const Tabs = styled(RadixTabs.Root)({
 export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
   display: 'flex',
   borderBottom: `1px solid ${theme.colors.gray500}`,
+  backgroundColor: theme.colors.white,
+  position: 'sticky',
+  top: 0,
+  zIndex: zIndexes.tabs,
 }))
 
 export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
