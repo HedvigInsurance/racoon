@@ -34,9 +34,7 @@ export const useTabListObserver = (steps = 120) => {
         { threshold: thresholdList, rootMargin: `-${targetElementHeight}px` },
       )
       observer.observe(tabListElement)
-      return () => {
-        observer.unobserve(tabListElement)
-      }
+      return () => observer.disconnect()
     }
   }, [targetElementHeight, thresholdList])
 
