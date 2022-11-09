@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. &&  npx turbo run build --filter=store",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=store",
   "ignoreCommand": "npx turbo-ignore",
   "regions": ["arn1"],
   "github": {
