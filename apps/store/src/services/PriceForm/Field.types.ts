@@ -53,6 +53,11 @@ export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
 
 export type ExtraBuilding = { area: number; type: string; hasWaterConnected: boolean }
 
+export type HouseholdSizeField = BaseField<number> & {
+  type: 'householdSize'
+  max: number
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -60,4 +65,5 @@ export type InputField =
   | RadioField
   | SelectField
   | ExtraBuildingsField
+  | HouseholdSizeField
   | SsnSeField

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+source .env.local
+
 echo "Attempting to download latest translations from Lokalise..."
 
 if [ -z "${LOKALISE_TOKEN:-}" ]; then
@@ -33,7 +35,8 @@ lokalise2 \
   --add-newline-eof \
   --replace-breaks=false \
   --directory-prefix 'public/locales/%LANG_ISO%' \
-  --placeholder-format icu \
+  --placeholder-format i18n \
+  --plural-format i18next \
   --include-tags hedvig-com \
   --indentation 2sp \
   --filter-langs 'en,da_DK,en_DK,sv_SE,en_SE,nb_NO,en_NO' \

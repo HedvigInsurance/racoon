@@ -21,10 +21,5 @@ module.exports = {
   },
   fallbackNS: 'common',
   localePath: path.resolve('./public/locales'),
-  localeStructure: '{lng}/{ns}',
   lowerCaseLng: true,
-  interpolation: {
-    prefix: '{',
-    suffix: '}',
-  },
 }
