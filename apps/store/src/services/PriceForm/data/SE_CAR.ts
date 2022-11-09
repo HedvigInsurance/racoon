@@ -35,11 +35,17 @@ export const SE_CAR: Template = {
         },
         {
           field: {
-            type: 'number',
+            type: 'select',
             name: 'milage',
             label: { key: 'Annual mileage' },
             required: true,
-            min: 0,
+            options: [
+              { label: { key: '1 000 mil/år' }, value: '1000' },
+              { label: { key: '1 500 mil/år' }, value: '1500' },
+              { label: { key: '2 000 mil/år' }, value: '2000' },
+              { label: { key: '2 500 mil/år' }, value: '2500' },
+              { label: { key: '2 500+ mil/år' }, value: '2501' },
+            ],
           },
           layout: { columnSpan: 6 },
         },
