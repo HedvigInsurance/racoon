@@ -32,6 +32,7 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { VideoBlock } from '@/blocks/VideoBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -162,6 +163,7 @@ export const initStoryblok = () => {
     TextBlock,
     TopPickCardBlock,
     PerilsBlock,
+    VideoBlock,
   ]
   const blockAliases = { product: PageBlock, reusableBlock: PageBlock }
   const components = {
