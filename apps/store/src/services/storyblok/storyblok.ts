@@ -62,7 +62,7 @@ export type StoryblokPreviewData = {
   version?: StoryblokVersion
 }
 
-export type StoryblokImage = {
+export type StoryblokAsset = {
   alt: string
   copyright: string
   fieldtype: 'asset'

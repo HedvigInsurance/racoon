@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { TopPickCard } from '@/components/TopPickCard/TopPickCard'
-import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type TopPickCardBlockProps = SbBaseBlockProps<{
   title: string
   subtitle: string
-  image: StoryblokImage
+  image: StoryblokAsset
   link: LinkField
 }>
 
