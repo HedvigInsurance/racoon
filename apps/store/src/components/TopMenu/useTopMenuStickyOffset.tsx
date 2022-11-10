@@ -16,7 +16,7 @@ export const useStickyTopMenuOffset = () => {
       scrollY.onChange(() => {
         const { top: targetNodeTop } = targetNode.getBoundingClientRect()
         const navHeight = navRef.current?.getBoundingClientRect().height ?? 0
-        const calculatedOffset = (targetNodeTop < navHeight ? navHeight - targetNodeTop : 0) * -1
+        const calculatedOffset = -(targetNodeTop < navHeight ? navHeight - targetNodeTop : 0)
         setTopOffset(calculatedOffset)
       })
       return () => scrollY.destroy()
