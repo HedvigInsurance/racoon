@@ -17695,6 +17695,7 @@ __metadata:
     prettier: 2.7.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-merge-refs: 2.0.1
     scripts: "workspace:"
     start-server-and-test: 1.14.0
     ts-jest: 29.0.3
