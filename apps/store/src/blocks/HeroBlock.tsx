@@ -3,12 +3,12 @@ import { storyblokEditable } from '@storyblok/react'
 import Image from 'next/image'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type HeroBlockProps = SbBaseBlockProps<{
   content: ExpectedBlockType<HeadingBlockProps>
-  background: StoryblokImage
+  background: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
 }>
 
