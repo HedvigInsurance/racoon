@@ -2,12 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/legacy/image'
 import { Space, mq, ArrowForwardIcon, HeadingOLD } from 'ui'
 import { BodyText } from '@/components/BodyText'
-import {
-  BaseCardProps,
-  ClickableCardWrapperProps,
-  Section,
-  ClickableCardWrapper,
-} from '../LandingPage/BaseCard'
+import { BaseCardProps, ClickableCardWrapperProps, Section, ClickableCardWrapper } from './BaseCard'
 
 const ImageFrame = styled.div({
   position: 'relative',
