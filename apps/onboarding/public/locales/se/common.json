@@ -407,7 +407,7 @@
   "3D_SECURE_ERROR_BUTTON": "",
   "3D_SECURE_ERROR_HEADING": "",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Du måste välja minst en huvudförsäkring för att fortsätta",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Minst ett alternativ måste väljas för att fortsätta",
   "OPEN_COMPARISON_MODAL": "Jämför försäkringspaket",
   "COMPARISON_MODEL_HEADER": "Vilket skydd passar dig?",
   "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "Stad",

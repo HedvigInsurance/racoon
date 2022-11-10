@@ -407,7 +407,7 @@
   "3D_SECURE_ERROR_BUTTON": "Ok",
   "3D_SECURE_ERROR_HEADING": "Kortet ditt kunne ikke autentiseres",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Betaling tilkoblet!",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Du må velge minst en hovedforsikring for å fortsette",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Minst ett alternativ må velges for å fortsette",
   "OPEN_COMPARISON_MODAL": "Sammenlign våre forsikringer",
   "COMPARISON_MODEL_HEADER": "Hvilken forsikring passer deg?",
   "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "",
