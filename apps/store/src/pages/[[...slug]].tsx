@@ -45,11 +45,13 @@ export const getStaticProps: GetStaticProps<
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
+  console.time('getStoryblokData')
   const [story, globalStory, translations] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
   ])
+  console.timeEnd('getStoryblokData')
 
   if (story === undefined) {
     console.warn(`Page not found: ${slug}, locale: ${locale}`)
