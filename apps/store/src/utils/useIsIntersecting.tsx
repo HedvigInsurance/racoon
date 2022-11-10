@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 
-export const useIsIntersecting = (node: Element | null, options = {}) => {
+type UseIsIntersectingType = (
+  node: Element | null,
+  options?: IntersectionObserverInit,
+) => readonly boolean[]
+
+export const useIsIntersecting: UseIsIntersectingType = (node, options = {}) => {
   const [isIntersecting, setIsIntersecting] = useState(false)
   useEffect(() => {
     if (node) {
