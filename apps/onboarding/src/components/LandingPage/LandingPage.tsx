@@ -1,22 +1,99 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
-import { Button, HeadingOLD, mq } from 'ui'
+import { ChangeEvent, useCallback, useState, useMemo } from 'react'
+import { Button, mq, theme } from 'ui'
 import { FixedFooter } from '@/components/FixedFooter'
 import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { Insurance } from '@/services/insurances'
-import { MainCoverageCard } from './MainCoverageCard'
+import { InsuranceCard } from './InsuranceCard'
 
-type GridCardProps = { size: 'half' | 'full' }
+export type LandingPageProps = {
+  insurances: Array<Insurance>
+  referer: string | null
+}
 
-const GridMainCoverageCard = styled(MainCoverageCard)<GridCardProps>((props) => ({
-  gridColumn: '1 / span 2',
-  [mq.sm]: { gridColumn: props.size === 'half' ? 'span 1' : '1 / span 2' },
-}))
+export const LandingPage = ({ insurances }: LandingPageProps) => {
+  const { t } = useTranslation()
+  const router = useRouter()
+  const locale = useCurrentLocale()
+
+  const [formState, setFormState] = useState(getFormInitialState(insurances))
+  const [isSubmiting, setIsSubmiting] = useState(false)
+
+  const handleCardSelect = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const insuranceName = event.target.name
+
+    setFormState((prevState) => ({
+      ...prevState,
+      [insuranceName]: !prevState[insuranceName],
+    }))
+  }, [])
+
+  const hasSelectedAtLeastOneOption = useMemo(
+    () => insurances.some((insurance) => formState[insurance.fieldName]),
+    [formState, insurances],
+  )
+
+  return (
+    <PageContainer>
+      <Header />
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+
+          setIsSubmiting(true)
+          Embark.setStore(locale.market, formState)
+          const slug = Embark.getSlug(locale.market)
+          router.push(PageLink.embark({ locale: locale.path, slug }))
+        }}
+      >
+        <Main>
+          <TitleContainer>
+            <Heading>{t('LANDING_PAGE_HEADLINE')}</Heading>
+          </TitleContainer>
+          <InsuranceCardGrid>
+            {insurances.map(({ id, name, description, img, perils, fieldName }) => {
+              return (
+                <li key={id}>
+                  <InsuranceCard
+                    title={t(name)}
+                    description={t(description)}
+                    img={img}
+                    name={fieldName}
+                    perils={perils}
+                    checked={formState[fieldName]}
+                    onChange={handleCardSelect}
+                    required={!hasSelectedAtLeastOneOption}
+                    errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
+                  />
+                </li>
+              )
+            })}
+          </InsuranceCardGrid>
+        </Main>
+        <FixedFooter>
+          <FooterButton color="dark" disabled={isSubmiting}>
+            {t('START_SCREEN_SUBMIT_BUTTON')}
+          </FooterButton>
+        </FixedFooter>
+      </form>
+    </PageContainer>
+  )
+}
+
+const getFormInitialState = (insurances: Array<Insurance>) => {
+  return insurances.reduce<Record<string, boolean>>(
+    (result, insurance) => ({
+      ...result,
+      [insurance.fieldName]: false,
+    }),
+    {},
+  )
+}
 
 const Main = styled.div({
   padding: '0 1rem',
@@ -26,18 +103,29 @@ const Main = styled.div({
   marginTop: 0,
 })
 
-const CoverageCardGrid = styled.div({
+const Heading = styled.h1(({ theme }) => ({
+  fontSize: theme.fontSizes[5],
+  textAlign: 'center',
+  marginBottom: theme.space[5],
+  [mq.sm]: {
+    fontSize: theme.fontSizes[6],
+    marginBottom: theme.space[7],
+  },
+}))
+
+const InsuranceCardGrid = styled.ul(() => ({
   display: 'grid',
-  gap: '1rem',
+  gap: theme.space[3],
   gridTemplateColumns: '1fr 1fr',
-  width: '100%',
-})
+  [mq.sm]: {
+    gap: theme.space[5],
+  },
+}))
 
 const TitleContainer = styled.div({
   gridColumn: '1 / span 2',
   marginBottom: '1rem',
   marginTop: '1.5rem',
-
   [mq.sm]: {
     marginTop: '3rem',
   },
@@ -48,7 +136,7 @@ const PageContainer = styled.main((props) => ({
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
-
+  isolation: 'isolate',
   [mq.sm]: {
     display: 'block',
   },
@@ -57,87 +145,7 @@ const PageContainer = styled.main((props) => ({
 const FooterButton = styled(Button)({
   width: '100%',
   justifyContent: 'center',
-
   [mq.sm]: {
     width: 'auto',
   },
 })
-
-export type LandingPageProps = {
-  insurances: Array<Insurance>
-  formInitialState: Record<string, boolean>
-  referer: string | null
-}
-
-export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) => {
-  const { t } = useTranslation()
-  const router = useRouter()
-  const locale = useCurrentLocale()
-
-  const [formState, setFormState] = useState(formInitialState)
-  const [isRedirecting, setIsRedirecting] = useState(false)
-
-  const hasSelectedAtLeastOneOption = useMemo(
-    () => insurances.some((insurance) => formState[insurance.fieldName]),
-    [formState, insurances],
-  )
-
-  return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault()
-
-        setIsRedirecting(true)
-        Embark.setStore(locale.market, formState)
-        const slug = Embark.getSlug(locale.market)
-        router.push(PageLink.embark({ locale: locale.path, slug }))
-      }}
-    >
-      <PageContainer>
-        <Header />
-        <Main>
-          <TitleContainer>
-            <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
-              {t('LANDING_PAGE_SECTION_TITLE_MAIN')}
-            </HeadingOLD>
-          </TitleContainer>
-
-          <CoverageCardGrid>
-            {insurances.map((insurance, index, arr) => {
-              const isLastItem = index === arr.length - 1
-              const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
-              const isSingleCard = arr.length === 1
-
-              return (
-                <GridMainCoverageCard
-                  key={insurance.id}
-                  selected={formState[insurance.fieldName]}
-                  required={!hasSelectedAtLeastOneOption}
-                  errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
-                  onCheck={() => {
-                    if (!isSingleCard) {
-                      setFormState({
-                        ...formState,
-                        [insurance.fieldName]: !formState[insurance.fieldName],
-                      })
-                    }
-                  }}
-                  cardImg={insurance.img}
-                  title={t(insurance.name)}
-                  description={t(insurance.description)}
-                  size={cardSize}
-                  enableHover={true}
-                />
-              )
-            })}
-          </CoverageCardGrid>
-        </Main>
-        <FixedFooter>
-          <FooterButton color="dark" disabled={isRedirecting}>
-            {t('START_SCREEN_SUBMIT_BUTTON')}
-          </FooterButton>
-        </FixedFooter>
-      </PageContainer>
-    </form>
-  )
-}
