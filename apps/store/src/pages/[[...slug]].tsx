@@ -25,6 +25,18 @@ type RoutingPath = {
 const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
   const story = useStoryblokState(props.story)
 
+  // TODO: Remove when we have at least one case of pluralization elsewhere
+  // const { t } = useTranslation()
+  //
+  // useEffect(() => {
+  //   console.log('Pluralization test', [
+  //     t('TEST_PLURALIZE', { count: 0 }),
+  //     t('TEST_PLURALIZE', { count: 1 }),
+  //     t('TEST_PLURALIZE', { count: 2 }),
+  //     t('TEST_PLURALIZE', { count: 3 }),
+  //   ])
+  // }, [t])
+
   return (
     <>
       <Head>

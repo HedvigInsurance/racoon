@@ -44,8 +44,11 @@ lokalise2 \
     {"original_language_iso": "en","custom_language_iso": "default"},
     {"original_language_iso": "da_DK","custom_language_iso": "dk"},
     {"original_language_iso": "en_DK","custom_language_iso": "en-dk"},
-    {"original_language_iso": "sv_SE","custom_language_iso": "se"},
+    {"original_language_iso": "sv_SE","custom_language_iso": "sv-se"},
     {"original_language_iso": "en_SE","custom_language_iso": "en-se"},
     {"original_language_iso": "nb_NO","custom_language_iso": "no"},
     {"original_language_iso": "en_NO","custom_language_iso": "en-no"}
   ]'
+
+# Convert plural forms to i18next v4 format (https://www.i18next.com/misc/json-format)
+yarn dlx i18next-v4-format-converter public/locales
