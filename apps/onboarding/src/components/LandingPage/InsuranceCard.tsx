@@ -35,7 +35,7 @@ export const InsuranceCard = ({
     onChange?.(event)
     setIsSelected(event.target.checked)
   }
-  11
+
   const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
     const hasClickedOnTheCard =
       event.target !== checkboxRef.current && event.target !== moreDetailsButtonRef.current
@@ -94,7 +94,7 @@ const Card = styled.div<{ selected: boolean }>(({ theme, selected }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  minHeight: '10rem',
+  minHeight: '11.625rem',
   borderRadius: '8px',
   overflow: 'hidden',
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
@@ -106,7 +106,7 @@ const Card = styled.div<{ selected: boolean }>(({ theme, selected }) => ({
     transform: 'scale(1.010)',
   },
   [mq.sm]: {
-    minHeight: '18rem',
+    minHeight: '20.43rem',
   },
 }))
 

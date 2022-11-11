@@ -3,13 +3,14 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useState, useMemo } from 'react'
 import { Button, mq, theme } from 'ui'
-import { FixedFooter } from '@/components/FixedFooter'
 import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { Insurance } from '@/services/insurances'
 import { InsuranceCard } from './InsuranceCard'
+
+const FORM_ID = 'select-insurance-form'
 
 export type LandingPageProps = {
   insurances: Array<Insurance>
@@ -41,20 +42,20 @@ export const LandingPage = ({ insurances }: LandingPageProps) => {
   return (
     <PageContainer>
       <Header />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
 
-          setIsSubmiting(true)
-          Embark.setStore(locale.market, formState)
-          const slug = Embark.getSlug(locale.market)
-          router.push(PageLink.embark({ locale: locale.path, slug }))
-        }}
-      >
-        <Main>
-          <TitleContainer>
-            <Heading>{t('LANDING_PAGE_HEADLINE')}</Heading>
-          </TitleContainer>
+      <Main>
+        <Heading>{t('LANDING_PAGE_HEADLINE')}</Heading>
+        <form
+          id={FORM_ID}
+          onSubmit={(event) => {
+            event.preventDefault()
+
+            setIsSubmiting(true)
+            Embark.setStore(locale.market, formState)
+            const slug = Embark.getSlug(locale.market)
+            router.push(PageLink.embark({ locale: locale.path, slug }))
+          }}
+        >
           <InsuranceCardGrid>
             {insurances.map(({ id, name, description, img, perils, fieldName }) => {
               return (
@@ -74,13 +75,11 @@ export const LandingPage = ({ insurances }: LandingPageProps) => {
               )
             })}
           </InsuranceCardGrid>
-        </Main>
-        <FixedFooter>
-          <FooterButton color="dark" disabled={isSubmiting}>
-            {t('START_SCREEN_SUBMIT_BUTTON')}
-          </FooterButton>
-        </FixedFooter>
-      </form>
+        </form>
+      </Main>
+      <FooterButton form={FORM_ID} color="dark" disabled={isSubmiting}>
+        {t('START_SCREEN_SUBMIT_BUTTON')}
+      </FooterButton>
     </PageContainer>
   )
 }
@@ -97,7 +96,7 @@ const getFormInitialState = (insurances: Array<Insurance>) => {
 
 const Main = styled.div({
   padding: '0 1rem',
-  paddingBottom: `calc(${FixedFooter.HEIGHT} + 2rem)`,
+  paddingBottom: '2rem',
   margin: 'auto',
   maxWidth: '53rem',
   marginTop: 0,
@@ -106,10 +105,10 @@ const Main = styled.div({
 const Heading = styled.h1(({ theme }) => ({
   fontSize: theme.fontSizes[5],
   textAlign: 'center',
-  marginBottom: theme.space[5],
+  marginBlock: `${theme.space[4]} ${theme.space[5]}`,
   [mq.sm]: {
     fontSize: theme.fontSizes[6],
-    marginBottom: theme.space[7],
+    marginBlock: `${theme.space[5]} ${theme.space[7]}`,
   },
 }))
 
@@ -122,15 +121,6 @@ const InsuranceCardGrid = styled.ul(() => ({
   },
 }))
 
-const TitleContainer = styled.div({
-  gridColumn: '1 / span 2',
-  marginBottom: '1rem',
-  marginTop: '1.5rem',
-  [mq.sm]: {
-    marginTop: '3rem',
-  },
-})
-
 const PageContainer = styled.main((props) => ({
   backgroundColor: props.theme.colors.gray100,
   height: '100vh',
@@ -142,10 +132,13 @@ const PageContainer = styled.main((props) => ({
   },
 }))
 
-const FooterButton = styled(Button)({
-  width: '100%',
-  justifyContent: 'center',
+const FooterButton = styled(Button)(({ theme }) => ({
+  position: 'sticky',
+  bottom: theme.space[5],
+  marginInline: theme.space[4],
   [mq.sm]: {
-    width: 'auto',
+    left: '50%',
+    bottom: theme.space[6],
+    transform: 'translateX(-50%)',
   },
-})
+}))
