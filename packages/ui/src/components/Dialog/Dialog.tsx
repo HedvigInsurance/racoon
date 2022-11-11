@@ -29,11 +29,10 @@ export const Window = styled.div(({ theme }) => ({
   },
 }))
 
-const StyledContentWrapper = styled.div(({ theme }) => ({
+const StyledContentWrapper = styled.div({
   position: 'fixed',
   inset: 0,
-  zIndex: theme.zIndexes.dialog,
-}))
+})
 
 type ContentProps = {
   children: React.ReactNode
