@@ -17087,13 +17087,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-router-mock@npm:0.7.4":
-  version: 0.7.4
-  resolution: "next-router-mock@npm:0.7.4"
+"next-router-mock@npm:0.8.0":
+  version: 0.8.0
+  resolution: "next-router-mock@npm:0.8.0"
   peerDependencies:
     next: ">=10.0.0"
     react: ">=17.0.0"
-  checksum: 0014def3dd61b1ee7d324cef757fccbca72d2df61d17745d78bc7969fde4e5e1614a7401cc9f40735af86fe5699ec5610270a982252e1ef2c9761d24ac187fb7
+  checksum: b0fe784feafba7f84179dd9d0787f3b0c6f23a959ec995a49b074f163bcc261819c220567f370621fee1f132e6e28e1f514e38ccca0c39d68725f740e654c092
   languageName: node
   linkType: hard
 
@@ -17610,7 +17610,7 @@ __metadata:
     msw: 0.47.3
     next: 13.0.2
     next-i18next: 12.1.0
-    next-router-mock: 0.7.4
+    next-router-mock: 0.8.0
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
     prettier: 2.7.1
@@ -21113,7 +21113,7 @@ __metadata:
     msw: 0.44.2
     next: 13.0.2
     next-i18next: 12.1.0
-    next-router-mock: 0.7.4
+    next-router-mock: 0.8.0
     personnummer: 3.1.4
     pino: 8.7.0
     pino-datadog-transport: 1.2.2
