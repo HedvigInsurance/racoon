@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.7.1",
-    "@datadog/browser-rum": "4.23.3",
+    "@datadog/browser-rum": "4.24.0",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@radix-ui/react-radio-group": "1.1.0",
