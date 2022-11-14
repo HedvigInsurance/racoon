@@ -26,7 +26,7 @@ export const SE_CAR: Template = {
       items: [
         {
           field: {
-            type: 'text',
+            type: 'registration-number',
             name: 'registrationNumber',
             label: { key: 'Registration number' },
             required: true,
