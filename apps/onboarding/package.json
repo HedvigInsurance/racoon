@@ -52,7 +52,7 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
-    "@types/dompurify": "2.3.4",
+    "@types/dompurify": "2.4.0",
     "@types/formidable": "2.0.5",
     "@types/jsdom": "20.0.1",
     "@types/lodash-es": "4.17.6",
