@@ -10,7 +10,6 @@ type RegistrationFieldProps = {
 export const RegistrationField = ({ field }: RegistrationFieldProps) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
   const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
-  const [unmaskedValue, setUnmaskedValue] = useState('')
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target
 
@@ -19,7 +18,6 @@ export const RegistrationField = ({ field }: RegistrationFieldProps) => {
       .replace(/(\w{3})(\w{1,3})/, '$1 $2')
       .toUpperCase()
 
-    setUnmaskedValue(value.replace(/\s/, ''))
     setValue(maskedValue)
   }
 
@@ -29,7 +27,7 @@ export const RegistrationField = ({ field }: RegistrationFieldProps) => {
         type="text"
         name={field.name}
         required={field.required}
-        value={unmaskedValue}
+        value={value}
         readOnly
         hidden
       />
