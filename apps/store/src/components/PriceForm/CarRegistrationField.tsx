@@ -30,7 +30,7 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
       label={field.label ? translateLabel(field.label) : undefined}
       pattern={CAR_REGISTRATION_NUMBER_REGEX}
       placeholder="ABC 123"
-      minLength={7}
+      maxLength={7}
       required={field.required}
       value={value}
       defaultValue={field.defaultValue}
