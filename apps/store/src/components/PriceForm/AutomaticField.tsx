@@ -3,6 +3,7 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { HouseholdSizeField } from '@/components/PriceForm/HouseholdSize'
 import { InputField as InputFieldType } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
+import { CarRegistrationNumberField } from './CarRegistrationField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import { InputRadio } from './InputRadio'
 import { SsnSeField } from './SsnSeField'
@@ -110,5 +111,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
 
     case 'ssn-se':
       return <SsnSeField field={field} />
+    case 'car-registration-number':
+      return <CarRegistrationNumberField field={field} />
   }
 }
