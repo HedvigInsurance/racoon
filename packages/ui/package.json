@@ -7,7 +7,8 @@
   "private": true,
   "license": "MIT",
   "files": [
-    "dist/**"
+    "dist/**",
+    "fonts/**"
   ],
   "scripts": {
     "test": "jest --passWithNoTests",
@@ -50,6 +51,7 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
+    "@next/font": "13.0.3",
     "@radix-ui/react-checkbox": "1.0.1",
     "@radix-ui/react-radio-group": "1.1.0",
     "react": "18.2.0",

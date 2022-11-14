@@ -23,7 +23,7 @@ export { getCDNFonts, fonts } from './lib/theme/typography'
 export { theme, getColor } from './lib/theme/theme'
 export type { UIColor } from './lib/theme/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
-export { globalStyles } from './lib/globalStyles'
+export { globalStyles, globalFontStyles } from './lib/globalStyles'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'
