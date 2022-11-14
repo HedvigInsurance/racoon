@@ -1,8 +1,8 @@
 import { css } from '@emotion/react'
 import { getColor } from './theme/theme'
-import { fonts, getCDNFonts } from './theme/typography'
+import { getCDNFonts, HedvigFont } from './theme/typography'
 
-export const globalStyles = css`
+export const globalFontStyles = css`
   ${getCDNFonts()
     .map(
       (font) => `
@@ -17,11 +17,19 @@ export const globalStyles = css`
     )
     .join('\n')}
 
+  body {
+    --hedvig-font-small: ${HedvigFont.HEDVIG_LETTERS_SMALL};
+    --hedvig-font-standard: ${HedvigFont.HEDVIG_LETTERS_STANDARD};
+    --hedvig-font-big: ${HedvigFont.HEDVIG_LETTERS_BIG};
+    font-family: var(--hedvig-font-standard);
+  }
+`
+
+export const globalStyles = css`
   /***
     The following CSS reset is heavily inspired by:
     https://github.com/elad2412/the-new-css-reset
   ***/
-
 
   /*
     Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
@@ -42,7 +50,6 @@ export const globalStyles = css`
   body {
     color: ${getColor('gray900')};
     background-color: ${getColor('gray100')};
-    font-family: ${fonts.body};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
