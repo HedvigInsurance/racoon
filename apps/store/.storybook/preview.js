@@ -1,4 +1,6 @@
 import { ThemeProvider } from 'ui'
+import { storybookFontStyles } from 'ui/src/lib/storybookFontStyles'
+import { Global } from '@emotion/react'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -13,6 +15,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <>
+      <Global styles={storybookFontStyles} />
       <ThemeProvider>
         <Story />
       </ThemeProvider>

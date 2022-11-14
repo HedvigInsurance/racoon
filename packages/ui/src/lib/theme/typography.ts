@@ -14,16 +14,6 @@ export const fonts = {
   heading: FONT_STANDARD,
 }
 
-export const getCDNFonts = () => {
-  return Object.values(HedvigFont).map((fontName) => ({
-    family: fontName,
-    style: 'normal',
-    weight: 400,
-    src: `https://cdn.hedvig.com/identity/fonts/${fontName}.woff2`,
-    format: 'woff2',
-  }))
-}
-
 export const fontSizes: Record<number | string, string> = {
   0: '0.75rem',
   1: '0.875rem',
