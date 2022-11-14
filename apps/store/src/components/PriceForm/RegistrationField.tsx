@@ -3,6 +3,8 @@ import { InputField } from 'ui'
 import { RegistrationField as RegistrationFieldType } from '@/services/PriceForm/Field.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
+const CAR_REGISTRATION_NUMBER_REGEX = '[A-Za-z]{3} [0-9]{2}[A-Za-z0-9]{1}'
+
 type RegistrationFieldProps = {
   field: RegistrationFieldType
 }
@@ -22,26 +24,18 @@ export const RegistrationField = ({ field }: RegistrationFieldProps) => {
   }
 
   return (
-    <>
-      <input
-        type="text"
-        name={field.name}
-        required={field.required}
-        value={value}
-        readOnly
-        hidden
-      />
-      <InputField
-        type="text"
-        name={`${field.name}-visible-input`}
-        label={field.label ? translateLabel(field.label) : undefined}
-        minLength={6}
-        maxLength={7}
-        required={field.required}
-        value={value}
-        defaultValue={field.defaultValue}
-        onChange={handleOnChange}
-      />
-    </>
+    <InputField
+      type="text"
+      name={`${field.name}-visible-input`}
+      label={field.label ? translateLabel(field.label) : undefined}
+      pattern={CAR_REGISTRATION_NUMBER_REGEX}
+      placeholder="ABC 123"
+      minLength={6}
+      maxLength={7}
+      required={field.required}
+      value={value}
+      defaultValue={field.defaultValue}
+      onChange={handleOnChange}
+    />
   )
 }
