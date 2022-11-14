@@ -23,6 +23,8 @@ type Props = {
 }
 
 export const PriceForm = ({ form, priceIntent, onUpdated, onSuccess, loading }: Props) => {
+  console.log({ form })
+
   const { shopSession } = useShopSession()
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },

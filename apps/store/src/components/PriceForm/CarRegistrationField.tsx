@@ -12,9 +12,9 @@ type RegistrationFieldProps = {
 export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
   const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
+
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target
-
     const maskedValue = value
       .replace(/\s/, '')
       .replace(/(\w{3})(\w{1,3})/, '$1 $2')
@@ -24,28 +24,17 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
   }
 
   return (
-    <>
-      <input
-        type="text"
-        name={field.name}
-        required={field.required}
-        value={value}
-        readOnly
-        hidden
-      />
-      <InputField
-        type="text"
-        name={`${field.name}-visible-input`}
-        label={field.label ? translateLabel(field.label) : undefined}
-        pattern={CAR_REGISTRATION_NUMBER_REGEX}
-        placeholder="ABC 123"
-        minLength={6}
-        maxLength={7}
-        required={field.required}
-        value={value}
-        defaultValue={field.defaultValue}
-        onChange={handleOnChange}
-      />
-    </>
+    <InputField
+      type="text"
+      name={field.name}
+      label={field.label ? translateLabel(field.label) : undefined}
+      pattern={CAR_REGISTRATION_NUMBER_REGEX}
+      placeholder="ABC 123"
+      minLength={7}
+      required={field.required}
+      value={value}
+      defaultValue={field.defaultValue}
+      onChange={handleOnChange}
+    />
   )
 }
