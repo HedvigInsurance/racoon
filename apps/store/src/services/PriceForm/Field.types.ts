@@ -58,8 +58,8 @@ export type HouseholdSizeField = BaseField<number> & {
   max: number
 }
 
-export type RegistrationField = BaseField<string> & {
-  type: 'registration-number'
+export type CarRegistrationNumberField = BaseField<string> & {
+  type: 'car-registration-number'
 }
 
 export type InputField =
@@ -71,4 +71,4 @@ export type InputField =
   | ExtraBuildingsField
   | HouseholdSizeField
   | SsnSeField
-  | RegistrationField
+  | CarRegistrationNumberField
