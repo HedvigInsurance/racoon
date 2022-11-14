@@ -24,18 +24,28 @@ export const RegistrationField = ({ field }: RegistrationFieldProps) => {
   }
 
   return (
-    <InputField
-      type="text"
-      name={`${field.name}-visible-input`}
-      label={field.label ? translateLabel(field.label) : undefined}
-      pattern={CAR_REGISTRATION_NUMBER_REGEX}
-      placeholder="ABC 123"
-      minLength={6}
-      maxLength={7}
-      required={field.required}
-      value={value}
-      defaultValue={field.defaultValue}
-      onChange={handleOnChange}
-    />
+    <>
+      <input
+        type="text"
+        name={field.name}
+        required={field.required}
+        value={value}
+        readOnly
+        hidden
+      />
+      <InputField
+        type="text"
+        name={`${field.name}-visible-input`}
+        label={field.label ? translateLabel(field.label) : undefined}
+        pattern={CAR_REGISTRATION_NUMBER_REGEX}
+        placeholder="ABC 123"
+        minLength={6}
+        maxLength={7}
+        required={field.required}
+        value={value}
+        defaultValue={field.defaultValue}
+        onChange={handleOnChange}
+      />
+    </>
   )
 }
