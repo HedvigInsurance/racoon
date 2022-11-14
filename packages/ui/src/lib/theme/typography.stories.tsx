@@ -1,3 +1,12 @@
+// TODO: Continue when solution or workaround is available for https://github.com/storybookjs/storybook/issues/19711
+
+// import localFont from '@next/font/local'
+// const hedvigFonts = {
+//   standard: localFont({ src: '../../fonts/HedvigLetters-Standard.woff2' }),
+// }
+//
+// console.log(hedvigFonts)
+
 const config = {
   title: 'Theme / Typography',
 }
