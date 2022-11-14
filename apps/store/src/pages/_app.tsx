@@ -22,20 +22,23 @@ import { initStoryblok } from '@/services/storyblok/storyblok'
 const smallFont = localFont({
   src: '../../../../packages/ui/fonts/HedvigLetters-Small.woff2',
   weight: '400',
-  fallback: ['serif'],
+  fallback: ['sans-serif'],
   variable: '--hedvig-font-small',
+  display: 'swap',
 })
 const standardFont = localFont({
   src: '../../../../packages/ui/fonts/HedvigLetters-Standard.woff2',
   weight: '400',
   fallback: ['serif'],
   variable: '--hedvig-font-standard',
+  display: 'swap',
 })
 const bigFont = localFont({
   src: '../../../../packages/ui/fonts/HedvigLetters-Big.woff2',
   weight: '400',
   fallback: ['serif'],
   variable: '--hedvig-font-big',
+  display: 'swap',
 })
 // Apply variables for theme and standard font as default
 const contentFontClassName = [
