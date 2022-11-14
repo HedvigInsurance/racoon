@@ -1,5 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { getCDNFonts } from 'ui'
+import { contentFontClassName } from '@/lib/fonts'
 import { locales, LocaleLabel } from '@/lib/l10n/locales'
 import { gtmDevScript, gtmProdScript } from '@/services/analytics/gtm'
 
@@ -17,19 +17,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang={this.lang()}>
-        <Head>
-          {getCDNFonts().map((font) => (
-            <link
-              key={font.src}
-              rel="preload"
-              href={font.src}
-              as="font"
-              type={`font/${font.format}`}
-              crossOrigin="anonymous"
-            />
-          ))}
-        </Head>
-        <body>
+        <Head />
+        {/* Fallback for pages that don't pass className down to DOM */}
+        <body className={contentFontClassName}>
           <noscript>
             <iframe
               src={
