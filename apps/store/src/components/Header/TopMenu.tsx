@@ -3,7 +3,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
-import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
+import { ArrowForwardIcon, CrossIcon, Space, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Pillow } from '../Pillow/Pillow'
 import { MenuIcon } from './MenuIcon'
@@ -44,22 +44,27 @@ export const TopMenu = ({ isOpen, currentActiveItem }: Props) => {
                     <NavigationSecondaryList>
                       <NavigationMenuPrimitive.Item value="browseAll">
                         <SecondaryNavigationLink href={PageLink.store()} onSelect={closeDialog}>
-                          Browse All
+                          Bil
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                       <NavigationMenuPrimitive.Item value="homeInsurance">
                         <SecondaryNavigationLink href="#" onSelect={closeDialog}>
-                          Home Insurances
+                          Home
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                       <NavigationMenuPrimitive.Item value="accidentInsurance">
                         <SecondaryNavigationLink href="#" onSelect={closeDialog}>
-                          Accident Insurance
+                          Accident
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                       <NavigationMenuPrimitive.Item value="carInsurance">
                         <SecondaryNavigationLink href="#" onSelect={closeDialog}>
-                          Car Insurance
+                          Student
+                        </SecondaryNavigationLink>
+                      </NavigationMenuPrimitive.Item>
+                      <NavigationMenuPrimitive.Item value="carInsurance">
+                        <SecondaryNavigationLink href="#" onSelect={closeDialog}>
+                          Olycksfall
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                     </NavigationSecondaryList>
@@ -144,7 +149,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space[5],
-  padding: `${theme.space[10]} ${theme.space[4]} 0`,
+  padding: `${theme.space[8]} ${theme.space[4]} 0`,
   backgroundColor: theme.colors.gray200,
 }))
 
@@ -153,8 +158,10 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   listStyle: 'none',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  gap: theme.space[2],
+  gap: theme.space[1],
+  rowGap: theme.space[4],
   fontSize: theme.fontSizes[2],
+  paddingTop: theme.space[6],
 })
 
 export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
@@ -180,20 +187,25 @@ export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
   )
 }
 
-export const SecondaryNavigationLinkCard = styled.div(({ theme }) => ({
+export const SecondaryNavigationLinkCard = styled(Space)({
   display: 'flex',
   alignItems: 'center',
-  gap: `${theme.space[3]}`,
+})
+
+const StyledPillow = styled(Pillow)(({ theme }) => ({
+  marginRight: theme.space[3],
 }))
 
 export const SecondaryNavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
   return (
-    <SecondaryNavigationLinkCard>
-      <Pillow size="xsmall" fromColor="green" toColor="palevioletred" />
-      <Link href={href} passHref legacyBehavior>
-        <StyledNavigationLink {...rest} />
-      </Link>
-    </SecondaryNavigationLinkCard>
+    <>
+      <SecondaryNavigationLinkCard>
+        <StyledPillow size="xsmall" fromColor="dodgerblue" toColor="palevioletred" />
+        <Link href={href} passHref legacyBehavior>
+          <StyledNavigationLink {...rest} />
+        </Link>
+      </SecondaryNavigationLinkCard>
+    </>
   )
 }
 
