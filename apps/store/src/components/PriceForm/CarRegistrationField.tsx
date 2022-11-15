@@ -4,6 +4,7 @@ import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 const CAR_REGISTRATION_NUMBER_REGEX = '[A-Za-z]{3} [0-9]{2}[A-Za-z0-9]{1}'
+const CAR_REGISTRATION_NUMBER_LENGTH = 7
 
 type RegistrationFieldProps = {
   field: CarRegistrationNumberFieldType
@@ -28,9 +29,9 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
       type="text"
       name={field.name}
       label={field.label ? translateLabel(field.label) : undefined}
-      pattern={CAR_REGISTRATION_NUMBER_REGEX}
       placeholder="ABC 123"
-      minLength={7}
+      pattern={CAR_REGISTRATION_NUMBER_REGEX}
+      maxLength={CAR_REGISTRATION_NUMBER_LENGTH}
       required={field.required}
       value={value}
       defaultValue={field.defaultValue}
