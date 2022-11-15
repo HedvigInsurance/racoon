@@ -4,10 +4,12 @@ import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './CheckoutPage.constants'
 import { UserErrors } from './CheckoutPage.types'
 
+// TODO: Take that from UI
 const DEFAULT_INPUT = {
-  personalNumber: '',
-  firstName: '',
-  lastName: '',
+  personalNumber: 'REDACTED',
+  firstName: 'Hedvig',
+  lastName: 'Hedvigson',
+  phoneNumber: '123456789',
 }
 
 type Params = {
