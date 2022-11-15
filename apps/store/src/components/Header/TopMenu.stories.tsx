@@ -6,15 +6,15 @@ export default {
   component: TopMenu,
 } as ComponentMeta<typeof TopMenu>
 
-export type Props = {
+export type TopMenuProps = {
   isOpen: boolean
   currentActiveItem: string
 }
 
-const Template: Story<Props> = (props) => <TopMenu {...props} />
+const Template: Story<TopMenuProps> = (props) => <TopMenu {...props} />
 
-export const Default = Template.bind({})
-Default.args = {
+export const Mobile = Template.bind({})
+Mobile.args = {
   isOpen: true,
   currentActiveItem: 'insurances',
 }

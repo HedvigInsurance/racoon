@@ -7,11 +7,11 @@ import { ArrowForwardIcon, CrossIcon, Space, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Pillow } from '../Pillow/Pillow'
 import { MenuIcon } from './MenuIcon'
-import { Props } from './TopMenu.stories'
+import { TopMenuProps } from './TopMenu.stories'
 
-export const TopMenu = ({ isOpen, currentActiveItem }: Props) => {
-  const [activeItem, setActiveItem] = useState(currentActiveItem)
-  const [open, setOpen] = useState(isOpen)
+export const TopMenu = ({ isOpen, currentActiveItem }: TopMenuProps) => {
+  const [activeItem, setActiveItem] = useState(currentActiveItem || '')
+  const [open, setOpen] = useState(isOpen || false)
 
   const closeDialog = useCallback(() => {
     setOpen(false)
@@ -44,7 +44,7 @@ export const TopMenu = ({ isOpen, currentActiveItem }: Props) => {
                     <NavigationSecondaryList>
                       <NavigationMenuPrimitive.Item value="browseAll">
                         <SecondaryNavigationLink href={PageLink.store()} onSelect={closeDialog}>
-                          Bil
+                          Travel
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                       <NavigationMenuPrimitive.Item value="homeInsurance">
@@ -65,6 +65,11 @@ export const TopMenu = ({ isOpen, currentActiveItem }: Props) => {
                       <NavigationMenuPrimitive.Item value="carInsurance">
                         <SecondaryNavigationLink href="#" onSelect={closeDialog}>
                           Olycksfall
+                        </SecondaryNavigationLink>
+                      </NavigationMenuPrimitive.Item>
+                      <NavigationMenuPrimitive.Item value="carInsurance">
+                        <SecondaryNavigationLink href="#" onSelect={closeDialog}>
+                          House
                         </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                     </NavigationSecondaryList>
