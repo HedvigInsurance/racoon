@@ -21074,6 +21074,7 @@ __metadata:
     "@graphql-codegen/typescript": 2.8.1
     "@graphql-codegen/typescript-operations": 2.5.6
     "@graphql-codegen/typescript-react-apollo": 3.3.6
+    "@next/font": 13.0.3
     "@radix-ui/react-accordion": 1.0.1
     "@radix-ui/react-collapsible": 1.0.1
     "@radix-ui/react-dialog": 1.0.2
@@ -22511,7 +22512,6 @@ __metadata:
     "@emotion/jest": 11.10.5
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@next/font": 13.0.3
     "@radix-ui/react-checkbox": 1.0.1
     "@radix-ui/react-radio-group": 1.1.0
     "@storybook/addon-actions": 6.5.13
