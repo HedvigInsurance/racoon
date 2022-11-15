@@ -10,7 +10,7 @@ import {
   FieldOption,
 } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
-import { MENU_BAR_HEIGHT } from '../TopMenu/TopMenu'
+import { MENU_BAR_HEIGHT } from '../Header/Header'
 import { InputSwitch } from './InputSwitch'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 

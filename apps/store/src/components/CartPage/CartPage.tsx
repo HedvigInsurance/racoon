@@ -5,10 +5,10 @@ import { FormEvent, useCallback } from 'react'
 import { Button, Heading, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
-import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { MENU_BAR_HEIGHT } from '../Header/Header'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ cartId, products, cost }: CartPageProps) => {

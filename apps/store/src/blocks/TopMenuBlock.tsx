@@ -5,8 +5,9 @@ import { storyblokEditable } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { ArrowForwardIcon, CrossIcon } from 'ui'
-import { MenuIcon } from '@/components/TopMenu/MenuIcon'
-import { ShoppingCartMenuItem } from '@/components/TopMenu/ShoppingCartMenuItem'
+import { Wrapper } from '@/components/Header/Header'
+import { MenuIcon } from '@/components/Header/MenuIcon'
+import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
 import {
   DialogCloseIcon,
   DialogContent,
@@ -17,9 +18,8 @@ import {
   NavigationSecondaryList,
   NavigationTrigger,
   ToggleMenu,
-  Wrapper,
-} from '@/components/TopMenu/TopMenu'
-import { useStickyTopMenuOffset } from '@/components/TopMenu/useTopMenuStickyOffset'
+} from '@/components/Header/TopMenu'
+import { useStickyTopMenuOffset } from '@/components/Header/useTopMenuStickyOffset'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
@@ -82,6 +82,21 @@ const StyledNavigationTrigger = styled(NavigationTrigger)({
   },
 })
 
+const getNestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
+  const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
+    block,
+    NestedNavContainerBlock.blockName,
+  )
+  if (navContainer) {
+    return <NestedNavContainerBlock key={navContainer._uid} blok={navContainer} />
+  }
+
+  const navBlock = checkBlockType<NavItemBlockProps['blok']>(block, NavItemBlock.blockName)
+  if (navBlock) return <NavItemBlock key={navBlock._uid} blok={navBlock} />
+
+  return null
+}
+
 export type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: ExpectedBlockType<NestedNavContainerBlockProps | NavItemBlockProps>
 }>
@@ -122,18 +137,3 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   )
 }
 HeaderBlock.blockName = 'header'
-
-const getNestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
-  const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
-    block,
-    NestedNavContainerBlock.blockName,
-  )
-  if (navContainer) {
-    return <NestedNavContainerBlock key={navContainer._uid} blok={navContainer} />
-  }
-
-  const navBlock = checkBlockType<NavItemBlockProps['blok']>(block, NavItemBlock.blockName)
-  if (navBlock) return <NavItemBlock key={navBlock._uid} blok={navBlock} />
-
-  return null
-}
