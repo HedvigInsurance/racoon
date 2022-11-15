@@ -19,11 +19,11 @@ export type { HeadingProps } from './components/HeadingNew/HeadingNew'
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'
 
-export { getCDNFonts, fonts } from './lib/theme/typography'
+export { fonts } from './lib/theme/typography'
 export { theme, getColor } from './lib/theme/theme'
 export type { UIColor } from './lib/theme/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
-export { globalStyles, globalFontStyles } from './lib/globalStyles'
+export { globalStyles } from './lib/globalStyles'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'

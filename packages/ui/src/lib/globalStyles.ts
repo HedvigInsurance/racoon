@@ -1,29 +1,5 @@
 import { css } from '@emotion/react'
 import { getColor } from './theme/theme'
-import { getCDNFonts, HedvigFont } from './theme/typography'
-
-export const globalFontStyles = css`
-  ${getCDNFonts()
-    .map(
-      (font) => `
-    @font-face {
-      font-family: ${font.family};
-      font-style: ${font.style};
-      font-weight: ${font.weight};
-      src: url("${font.src}") format("${font.format}");
-      font-display: swap;
-    }
-  `,
-    )
-    .join('\n')}
-
-  body {
-    --hedvig-font-small: ${HedvigFont.HEDVIG_LETTERS_SMALL};
-    --hedvig-font-standard: ${HedvigFont.HEDVIG_LETTERS_STANDARD};
-    --hedvig-font-big: ${HedvigFont.HEDVIG_LETTERS_BIG};
-    font-family: var(--hedvig-font-standard);
-  }
-`
 
 export const globalStyles = css`
   /***
