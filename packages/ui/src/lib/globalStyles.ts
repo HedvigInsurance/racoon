@@ -1,27 +1,11 @@
 import { css } from '@emotion/react'
 import { getColor } from './theme/theme'
-import { fonts, getCDNFonts } from './theme/typography'
 
 export const globalStyles = css`
-  ${getCDNFonts()
-    .map(
-      (font) => `
-    @font-face {
-      font-family: ${font.family};
-      font-style: ${font.style};
-      font-weight: ${font.weight};
-      src: url("${font.src}") format("${font.format}");
-      font-display: swap;
-    }
-  `,
-    )
-    .join('\n')}
-
   /***
     The following CSS reset is heavily inspired by:
     https://github.com/elad2412/the-new-css-reset
   ***/
-
 
   /*
     Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
@@ -42,7 +26,6 @@ export const globalStyles = css`
   body {
     color: ${getColor('gray900')};
     background-color: ${getColor('gray100')};
-    font-family: ${fonts.body};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

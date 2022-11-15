@@ -32,7 +32,12 @@ export const IntercomChatButton = () => {
   }
 
   return (
-    <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
+    <IntercomProvider
+      appId={appId}
+      autoBoot
+      autoBootProps={{ hideDefaultLauncher: true }}
+      initializeDelay={1000}
+    >
       <WithIntercom />
     </IntercomProvider>
   )

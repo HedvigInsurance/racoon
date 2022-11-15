@@ -5,20 +5,30 @@ import { isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { LOCALE_COOKIE_KEY } from './utils/l10n/locales'
 
 export const config = {
-  matcher: '/',
+  matcher: [
+    '/', // Failsafe, always match root
+    // Anything that can be a subject to redirect
+    '/((?!api|_next|favicon.ico).*)',
+  ],
 }
 
 export function middleware(req: NextRequest) {
-  if (isRoutingLocale(req.nextUrl.locale)) {
-    return
+  if (!isRoutingLocale(req.nextUrl.locale)) {
+    // Workaround for Vercel edge middleware matching requests for static resources despite config specifying not to do so
+    if (req.nextUrl.pathname !== '/') {
+      return
+    }
+    return countrySelectorMiddleware(req)
   }
+}
 
+const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
   const nextURL = req.nextUrl.clone()
   const cookiePath = req.cookies.get(LOCALE_COOKIE_KEY)
 
   if (cookiePath) {
     nextURL.pathname = cookiePath.value
-    console.log(`Found user preference in cookies: ${cookiePath}, redirecting`)
+    console.log(`Found user preference in cookies: ${cookiePath.value}, redirecting`)
     return NextResponse.redirect(nextURL)
   }
 

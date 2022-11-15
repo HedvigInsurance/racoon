@@ -14,6 +14,7 @@ import * as Datadog from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
+import { contentFontClassName } from '@/utils/fonts'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -45,7 +46,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
-            {getLayout(<Component {...pageProps} />)}
+            {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
           </ShopSessionProvider>
         </ThemeProvider>
       </ApolloProvider>
