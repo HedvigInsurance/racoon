@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { zIndexes } from '@/utils/zIndex'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
-import { TopMenu } from './TopMenu'
 import { useStickyTopMenuOffset } from './useTopMenuStickyOffset'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
@@ -22,7 +21,6 @@ export const Header = () => {
   const { topOffset, navRef } = useStickyTopMenuOffset()
   return (
     <Wrapper topOffset={topOffset} ref={navRef}>
-      <TopMenu />
       <ShoppingCartMenuItem />
     </Wrapper>
   )

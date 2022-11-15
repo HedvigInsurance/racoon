@@ -5,11 +5,13 @@ import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
+import { Pillow } from '../Pillow/Pillow'
 import { MenuIcon } from './MenuIcon'
+import { Props } from './TopMenu.stories'
 
-export const TopMenu = () => {
-  const [activeItem, setActiveItem] = useState('')
-  const [open, setOpen] = useState(false)
+export const TopMenu = ({ isOpen, currentActiveItem }: Props) => {
+  const [activeItem, setActiveItem] = useState(currentActiveItem)
+  const [open, setOpen] = useState(isOpen)
 
   const closeDialog = useCallback(() => {
     setOpen(false)
@@ -41,27 +43,24 @@ export const TopMenu = () => {
                   <NavigationMenuPrimitive.Sub defaultValue="browseAll">
                     <NavigationSecondaryList>
                       <NavigationMenuPrimitive.Item value="browseAll">
-                        <NavigationLink href={PageLink.store()} onSelect={closeDialog}>
+                        <SecondaryNavigationLink href={PageLink.store()} onSelect={closeDialog}>
                           Browse All
-                        </NavigationLink>
+                        </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
-
                       <NavigationMenuPrimitive.Item value="homeInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
+                        <SecondaryNavigationLink href="#" onSelect={closeDialog}>
                           Home Insurances
-                        </NavigationLink>
+                        </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
-
                       <NavigationMenuPrimitive.Item value="accidentInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
+                        <SecondaryNavigationLink href="#" onSelect={closeDialog}>
                           Accident Insurance
-                        </NavigationLink>
+                        </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
-
                       <NavigationMenuPrimitive.Item value="carInsurance">
-                        <NavigationLink href="#" onSelect={closeDialog}>
+                        <SecondaryNavigationLink href="#" onSelect={closeDialog}>
                           Car Insurance
-                        </NavigationLink>
+                        </SecondaryNavigationLink>
                       </NavigationMenuPrimitive.Item>
                     </NavigationSecondaryList>
                   </NavigationMenuPrimitive.Sub>
@@ -152,12 +151,10 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space[3],
-  paddingTop: theme.space[5],
-  paddingLeft: theme.space[5],
-  fontSize: theme.fontSizes[3],
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: theme.space[2],
+  fontSize: theme.fontSizes[2],
 })
 
 export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
@@ -180,6 +177,23 @@ export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
     <Link href={href} passHref legacyBehavior>
       <StyledNavigationLink {...rest} />
     </Link>
+  )
+}
+
+export const SecondaryNavigationLinkCard = styled.div(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: `${theme.space[3]}`,
+}))
+
+export const SecondaryNavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
+  return (
+    <SecondaryNavigationLinkCard>
+      <Pillow size="xsmall" fromColor="green" toColor="palevioletred" />
+      <Link href={href} passHref legacyBehavior>
+        <StyledNavigationLink {...rest} />
+      </Link>
+    </SecondaryNavigationLinkCard>
   )
 }
 
