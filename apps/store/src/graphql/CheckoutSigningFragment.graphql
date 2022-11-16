@@ -1,7 +1,4 @@
 fragment CheckoutSigning on CheckoutSigning {
   id
   status
-  completion {
-    accessToken
-  }
 }

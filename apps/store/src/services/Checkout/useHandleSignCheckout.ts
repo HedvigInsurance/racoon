@@ -14,6 +14,7 @@ export type Params = {
 }
 
 export const useHandleSignCheckout = (params: Params) => {
+  // eslint-disable-next-line
   const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
 
@@ -23,8 +24,12 @@ export const useHandleSignCheckout = (params: Params) => {
     pollInterval: 1000,
     onCompleted(data) {
       const isSigned = data.checkoutSigning.status === CheckoutSigningStatus.Signed
-      if (isSigned && data.checkoutSigning.completion) {
-        onSuccess(data.checkoutSigning.completion.accessToken)
+      console.debug('Polling signing status', data.checkoutSigning.status)
+      // TODO: Restore
+      // if (isSigned && data.checkoutSigning.completion) {
+      if (isSigned) {
+        console.log('Congratulations, signing complete!  To be continued in next PR')
+        // onSuccess(data.checkoutSigning.completion.accessToken)
 
         setCheckoutSigningId(null)
         deleteCookie(checkoutId)
