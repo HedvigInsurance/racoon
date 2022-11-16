@@ -6,7 +6,6 @@ import React, { useState } from 'react'
 import { ChevronIcon, Space, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Pillow } from '../../Pillow/Pillow'
-import { TopMenuDesktopProps } from './TopMenuDesktop.stories'
 
 export const focusableStyles = {
   cursor: 'pointer',
@@ -87,9 +86,8 @@ export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
   position: 'fixed',
 })
 
-export const TopMenuDesktop = ({ currentActiveItem }: TopMenuDesktopProps) => {
-  const [activeItem, setActiveItem] = useState(currentActiveItem || '')
-  // const [open, setOpen] = useState(isOpen || false)
+export const TopMenuDesktop = () => {
+  const [activeItem, setActiveItem] = useState('')
 
   return (
     <>

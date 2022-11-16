@@ -69,7 +69,7 @@ export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
 
 export const TopMenuMobile = ({ isOpen, currentActiveItem }: TopMenuMobileProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
-  const [open, setOpen] = useState(isOpen || false)
+  const [open, setOpen] = useState(false)
 
   const closeDialog = useCallback(() => {
     setOpen(false)
