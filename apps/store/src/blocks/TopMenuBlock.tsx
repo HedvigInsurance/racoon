@@ -18,7 +18,7 @@ import {
   NavigationSecondaryList,
   NavigationTrigger,
   ToggleMenu,
-} from '@/components/Header/TopMenu'
+} from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useStickyTopMenuOffset } from '@/components/Header/useTopMenuStickyOffset'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {

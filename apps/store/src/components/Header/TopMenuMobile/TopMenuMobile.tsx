@@ -5,11 +5,69 @@ import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, Space, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
-import { Pillow } from '../Pillow/Pillow'
-import { MenuIcon } from './MenuIcon'
-import { TopMenuProps } from './TopMenu.stories'
+import { Pillow } from '../../Pillow/Pillow'
+import { MenuIcon } from '../MenuIcon'
+import { TopMenuMobileProps } from './TopMenuMobile.stories'
 
-export const TopMenu = ({ isOpen, currentActiveItem }: TopMenuProps) => {
+export const focusableStyles = {
+  cursor: 'pointer',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
+}
+
+export const IconButton = styled.button({
+  position: 'absolute',
+  top: '1rem',
+  left: '1rem',
+  lineHeight: 0,
+  ...focusableStyles,
+})
+
+export const ToggleMenu = styled.button({
+  ...focusableStyles,
+})
+
+export const Navigation = styled(NavigationMenuPrimitive.Root)({
+  backgroundColor: theme.colors.gray200,
+  fontSize: theme.fontSizes[5],
+})
+
+export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+  all: 'unset',
+  listStyle: 'none',
+  position: 'fixed',
+  inset: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space[5],
+  padding: `${theme.space[8]} ${theme.space[4]} 0`,
+  backgroundColor: theme.colors.gray200,
+}))
+
+export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
+  all: 'unset',
+  listStyle: 'none',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: theme.space[1],
+  rowGap: theme.space[4],
+  fontSize: theme.fontSizes[2],
+  paddingTop: theme.space[6],
+})
+
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  ...focusableStyles,
+})
+
+export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
+  position: 'fixed',
+})
+
+export const TopMenuMobile = ({ isOpen, currentActiveItem }: TopMenuMobileProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
   const [open, setOpen] = useState(isOpen || false)
 
@@ -108,13 +166,6 @@ export const TopMenu = ({ isOpen, currentActiveItem }: TopMenuProps) => {
   )
 }
 
-export const focusableStyles = {
-  cursor: 'pointer',
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-  },
-}
-
 export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
   position: 'fixed',
   inset: 0,
@@ -128,53 +179,6 @@ export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
     </DialogPrimitive.Portal>
   )
 }
-
-export const IconButton = styled.button({
-  position: 'absolute',
-  top: '1rem',
-  left: '1rem',
-  lineHeight: 0,
-  ...focusableStyles,
-})
-
-export const ToggleMenu = styled.button({
-  ...focusableStyles,
-})
-
-export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  backgroundColor: theme.colors.gray200,
-  fontSize: theme.fontSizes[5],
-})
-
-export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
-  all: 'unset',
-  listStyle: 'none',
-  position: 'fixed',
-  inset: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space[5],
-  padding: `${theme.space[8]} ${theme.space[4]} 0`,
-  backgroundColor: theme.colors.gray200,
-}))
-
-export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
-  all: 'unset',
-  listStyle: 'none',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: theme.space[1],
-  rowGap: theme.space[4],
-  fontSize: theme.fontSizes[2],
-  paddingTop: theme.space[6],
-})
-
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  ...focusableStyles,
-})
 
 export const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   textDecoration: 'none',
@@ -213,7 +217,3 @@ export const SecondaryNavigationLink = ({ href, ...rest }: NavigationLinkProps) 
     </>
   )
 }
-
-export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
-  position: 'fixed',
-})
