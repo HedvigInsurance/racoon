@@ -17,11 +17,15 @@ export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset 
   zIndex: zIndexes.header,
 }))
 
-export const Header = () => {
+type HeaderProps = {
+  children: React.ReactNode
+}
+export const Header = ({ children }: HeaderProps) => {
   const { topOffset, navRef } = useStickyTopMenuOffset()
   return (
     <Wrapper topOffset={topOffset} ref={navRef}>
-      <ShoppingCartMenuItem />
+      {/* <ShoppingCartMenuItem /> */}
+      {children}
     </Wrapper>
   )
 }
