@@ -40,8 +40,13 @@ export const useHandleSignCheckout = (params: Params) => {
   const [startSign, result] = useCheckoutStartSignMutation({
     variables: { checkoutId },
     onCompleted(data) {
-      setCheckoutSigningId(data.checkoutStartSign.signing.id)
-      setCookie(checkoutId, data.checkoutStartSign.signing.id)
+      const { signing } = data.checkoutStartSign
+      if (signing && data.checkoutStartSign.userErrors.length === 0) {
+        setCheckoutSigningId(signing.id)
+        setCookie(checkoutId, signing.id)
+      } else {
+        console.error('Got userErrors', data.checkoutStartSign.userErrors)
+      }
     },
     onError(error) {
       datadogLogs.logger.warn('Checkout | Failed to sign', { error })
