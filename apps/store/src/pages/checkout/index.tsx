@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
+import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import { initializeApollo } from '@/services/apollo/client'
@@ -86,9 +87,11 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         checkoutId,
         checkoutSigningId: checkoutSigning?.id ?? null,
         prefilledData: {
-          ...(shopSession.checkout.contactDetails.email && {
-            email: shopSession.checkout.contactDetails.email,
-          }),
+          [FormElement.FirstName]: shopSession.checkout.contactDetails.firstName || '',
+          [FormElement.LastName]: shopSession.checkout.contactDetails.lastName || '',
+          [FormElement.PersonalNumber]: shopSession.checkout.contactDetails.personalNumber || '',
+          [FormElement.PhoneNumber]: shopSession.checkout.contactDetails.phoneNumber || '',
+          [FormElement.Email]: shopSession.checkout.contactDetails.email || '',
         },
         products: shopSession.cart.entries.map((offer) => ({
           offerId: offer.id,
