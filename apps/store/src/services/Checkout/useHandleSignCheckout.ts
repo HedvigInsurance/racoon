@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { setCookie, deleteCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
   CheckoutSigningStatus,
@@ -23,12 +23,11 @@ export const useHandleSignCheckout = (params: Params) => {
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
     onCompleted(data) {
-      const isSigned = data.checkoutSigning.status === CheckoutSigningStatus.Signed
-      console.debug('Polling signing status', data.checkoutSigning.status)
-      // TODO: Restore
-      // if (isSigned && data.checkoutSigning.completion) {
-      if (isSigned) {
-        console.log('Congratulations, signing complete!  To be continued in next PR')
+      const { status, completion } = data.checkoutSigning
+      console.debug('Polling signing status', status)
+      if (status === CheckoutSigningStatus.Signed && completion) {
+        console.log('Congratulations, signing complete!  To be continued in next PR', completion)
+        // TODO: Exchange autorhizationCode to accessToken
         // onSuccess(data.checkoutSigning.completion.accessToken)
 
         setCheckoutSigningId(null)
