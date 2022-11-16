@@ -15,7 +15,7 @@ export const SsnSeField = ({ field }: SsnSeFieldProps) => {
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     let value = event.target.value
 
-    if (typeof value === 'string' && Personnummer.valid(value)) {
+    if (Personnummer.valid(value)) {
       value = Personnummer.parse(value).format(true)
     }
     setValue(value)
@@ -39,7 +39,6 @@ export const SsnSeField = ({ field }: SsnSeFieldProps) => {
         maxLength={13}
         required={field.required}
         value={value}
-        defaultValue={field.defaultValue}
         onChange={handleOnChange}
       />
     </>
