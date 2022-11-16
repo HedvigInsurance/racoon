@@ -3,5 +3,10 @@ mutation CheckoutStartSign($checkoutId: ID!) {
     signing {
       ...CheckoutSigning
     }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
