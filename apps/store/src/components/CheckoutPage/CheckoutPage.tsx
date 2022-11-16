@@ -66,7 +66,30 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Heading as="h2" variant="standard.24">
                 2. Your contact info
               </Heading>
-
+              <InputField
+                label="Personal Number"
+                name={FormElement.PersonalNumber}
+                type="text"
+                required
+                defaultValue={prefilledData.personalNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PersonalNumber]}
+              />
+              <InputField
+                label="First Name"
+                name={FormElement.FirstName}
+                type="text"
+                required
+                defaultValue={prefilledData.firstName ?? undefined}
+                errorMessage={userErrors[FormElement.FirstName]}
+              />
+              <InputField
+                label="Last Name"
+                name={FormElement.LastName}
+                type="text"
+                required
+                defaultValue={prefilledData.lastName ?? undefined}
+                errorMessage={userErrors[FormElement.LastName]}
+              />
               <InputField
                 label="Email"
                 name={FormElement.Email}
@@ -74,6 +97,14 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 required
                 defaultValue={prefilledData.email ?? undefined}
                 errorMessage={userErrors[FormElement.Email]}
+              />
+              <InputField
+                label="Phone"
+                name={FormElement.PhoneNumber}
+                type="phone"
+                required
+                defaultValue={prefilledData.phoneNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PhoneNumber]}
               />
             </Section>
 
@@ -87,7 +118,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   Complete purchase
                 </Button>
                 {userErrors.form && <p>ERROR: {userErrors.form}</p>}
-                <p>After completing the purchase, you&apos;ll can connect payment.</p>
+                <p>After completing the purchase, you&apos;ll be able to connect payment.</p>
               </Space>
             </Section>
           </Space>

@@ -4,14 +4,6 @@ import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './CheckoutPage.constants'
 import { UserErrors } from './CheckoutPage.types'
 
-// TODO: Take that from UI
-const DEFAULT_INPUT = {
-  personalNumber: 'REDACTED',
-  firstName: 'Hedvig',
-  lastName: 'Hedvigson',
-  phoneNumber: '123456789',
-}
-
 type Params = {
   checkoutId: string
   onSuccess: () => void
@@ -32,9 +24,13 @@ export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
   const handleSubmit = async (formData: FormData) => {
     datadogLogs.logger.debug('Checkout | Submit contact details')
     const email = getOrThrowFormValue(formData, FormElement.Email)
+    const firstName = getOrThrowFormValue(formData, FormElement.FirstName)
+    const lastName = getOrThrowFormValue(formData, FormElement.LastName)
+    const personalNumber = getOrThrowFormValue(formData, FormElement.PersonalNumber)
+    const phoneNumber = getOrThrowFormValue(formData, FormElement.PhoneNumber)
     updateContactDetails({
       variables: {
-        input: { checkoutId, email, ...DEFAULT_INPUT },
+        input: { checkoutId, email, firstName, lastName, personalNumber, phoneNumber },
       },
     })
   }

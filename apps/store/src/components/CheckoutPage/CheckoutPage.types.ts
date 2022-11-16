@@ -11,7 +11,13 @@ type ProductData = {
 export type CheckoutPageProps = {
   products: Array<ProductData>
   loading: boolean
-  prefilledData: { email?: string }
+  prefilledData: {
+    email?: string
+    firstName?: string
+    lastName?: string
+    personalNumber?: string
+    phoneNumber?: string
+  }
   userErrors: UserErrors
   cart: CartFragmentFragment
 }
