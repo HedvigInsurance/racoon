@@ -1,4 +1,4 @@
-import { CartFragmentFragment } from '@/services/apollo/generated'
+import { CartFragmentFragment, CheckoutSigningStatus } from '@/services/apollo/generated'
 
 type ProductData = {
   offerId: string
@@ -18,6 +18,7 @@ export type CheckoutPageProps = {
     personalNumber?: string
     phoneNumber?: string
   }
+  signingStatus?: CheckoutSigningStatus
   userErrors: UserErrors
   cart: CartFragmentFragment
 }
