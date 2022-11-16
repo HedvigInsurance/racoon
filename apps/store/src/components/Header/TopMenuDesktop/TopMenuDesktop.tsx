@@ -58,7 +58,7 @@ const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ them
   padding: `0 ${theme.space[4]}`,
 }))
 
-const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(({ theme }) => ({
+const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
   position: 'absolute',
   top: MODEL_OFFSET,
   left: HALF_REM,
@@ -87,7 +87,7 @@ export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
   position: 'fixed',
 })
 
-export const TopMenuDesktop = ({ isOpen, currentActiveItem }: TopMenuDesktopProps) => {
+export const TopMenuDesktop = ({ currentActiveItem }: TopMenuDesktopProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
   // const [open, setOpen] = useState(isOpen || false)
 

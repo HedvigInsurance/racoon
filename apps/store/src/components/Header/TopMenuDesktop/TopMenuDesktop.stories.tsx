@@ -15,7 +15,6 @@ export type TopMenuDesktopProps = {
 const StyledPage = styled.div({
   height: '100vh',
   width: '100vw',
-
 })
 
 const Template: Story<TopMenuDesktopProps> = (props) => (
