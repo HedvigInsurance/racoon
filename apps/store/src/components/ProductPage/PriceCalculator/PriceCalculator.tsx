@@ -1,5 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useMemo, useRef, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
@@ -41,8 +42,14 @@ export const PriceCalculator = ({ title }: Props) => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
 
-  const apolloClient = useApolloClient()
+  const { t } = useTranslation()
   const formatter = useCurrencyFormatter(shopSession.currencyCode)
+  let displayCost
+  if (productOffer?.price.amount) {
+    displayCost = t('MONTHLY_PRICE', { displayAmount: formatter.format(productOffer.price.amount) })
+  }
+
+  const apolloClient = useApolloClient()
   const handleAddedToCart = (productOffer: ProductOfferFragment) => {
     setProductOffer(undefined)
     toastRef.current?.publish({
@@ -54,9 +61,6 @@ export const PriceCalculator = ({ title }: Props) => {
     priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(priceTemplate.name)
     refreshData()
   }
-
-  const offerCost = productOffer?.price.amount
-  const displayCost = offerCost ? `${shopSession.currencyCode} ${offerCost} /mth.` : undefined
 
   return (
     <>

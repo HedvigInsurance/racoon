@@ -36,7 +36,7 @@ export const SE_CAR: Template = {
         {
           field: {
             type: 'select',
-            name: 'milage',
+            name: 'mileage',
             label: { key: 'Annual mileage' },
             required: true,
             options: [

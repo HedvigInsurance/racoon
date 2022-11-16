@@ -1,12 +1,16 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
+import { useTranslation } from 'next-i18next'
 import { ProductOfferFragment } from '@/services/apollo/generated'
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 type Props = RadioGroup.RadioGroupProps & {
   offers: Array<ProductOfferFragment>
 }
 
 export const ProductOfferPicker = ({ offers, ...radioGroupProps }: Props) => {
+  const { t } = useTranslation()
+  const currencyFormatter = useCurrencyFormatter(offers[0].price.currencyCode)
   return (
     <StyledRadioGroup {...radioGroupProps}>
       {offers.map((offer) => (
@@ -17,7 +21,9 @@ export const ProductOfferPicker = ({ offers, ...radioGroupProps }: Props) => {
             </IndicatorWrapper>
           </IndicatorBox>
           <TitleBox>{offer.variant.displayName}</TitleBox>
-          <PriceBox>{`${offer.price.currencyCode} ${offer.price.amount} /mth.`}</PriceBox>
+          <PriceBox>
+            {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(offer.price.amount) })}
+          </PriceBox>
           <FooterBox>Space for some description.</FooterBox>
         </OfferItem>
       ))}
