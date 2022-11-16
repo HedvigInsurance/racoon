@@ -47,11 +47,18 @@ export const fetchStory = async (
 }
 
 export const getLinkFieldURL = (link: LinkField) => {
-  if (link.story) return link.story.url
+  if (link.story) return makeAbsolute(link.story.url)
 
-  if (link.linktype === 'url') return link.url
+  if (link.linktype === 'url') return makeAbsolute(link.url)
 
   // Should never happen, but let's simplify debugging when it does
   console.warn('Did not see story field in link, returning empty URL', link)
   return '/'
+}
+
+const makeAbsolute = (url: string) => {
+  if (/^(\/|https?:\/\/|\/\/)/.test(url)) {
+    return url
+  }
+  return '/' + url
 }
