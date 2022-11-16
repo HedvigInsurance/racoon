@@ -3,6 +3,7 @@ import { deleteCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
   CheckoutSigningStatus,
+  CheckoutStartSignMutationResult,
   useCheckoutSigningQuery,
   useCheckoutStartSignMutation,
 } from '@/services/apollo/generated'
@@ -45,8 +46,6 @@ export const useHandleSignCheckout = (params: Params) => {
       if (signing && data.checkoutStartSign.userErrors.length === 0) {
         setCheckoutSigningId(signing.id)
         setCookie(checkoutId, signing.id)
-      } else {
-        console.error('Got userErrors', data.checkoutStartSign.userErrors)
       }
     },
     onError(error) {
@@ -54,16 +53,22 @@ export const useHandleSignCheckout = (params: Params) => {
     },
   })
 
-  const userErrors = {
-    ...(result.error && { form: 'Something went wrong' }),
-  }
-
   return [
     startSign,
     {
       loading: result.loading || Boolean(checkoutSigningId),
       signingStatus,
-      userErrors,
+      userErrors: getErrors(result),
     },
   ] as const
+}
+
+const getErrors = (result: CheckoutStartSignMutationResult) => {
+  if (result.error) {
+    return { form: 'Something went wrong' }
+  }
+  const userErrors = result.data?.checkoutStartSign.userErrors ?? []
+  if (userErrors.length > 0) {
+    return { form: userErrors.map((error) => error.message).join('; ') }
+  }
 }
