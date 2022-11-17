@@ -7,6 +7,7 @@ import {
   useCheckoutSigningQuery,
   useCheckoutStartSignMutation,
 } from '@/services/apollo/generated'
+import { exchangeAuthorizationCode } from '@/utils/oauth'
 
 export type Params = {
   checkoutId: string
@@ -15,7 +16,6 @@ export type Params = {
 }
 
 export const useHandleSignCheckout = (params: Params) => {
-  // eslint-disable-next-line
   const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
 
@@ -23,16 +23,15 @@ export const useHandleSignCheckout = (params: Params) => {
     skip: checkoutSigningId === null,
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
-    onCompleted(data) {
+    async onCompleted(data) {
       const { status, completion } = data.checkoutSigning
-      console.debug('Polling signing status', status)
       if (status === CheckoutSigningStatus.Signed && completion) {
-        console.log('Congratulations, signing complete!  To be continued in next PR', completion)
-        // TODO: Exchange authorizationCode to accessToken
-        // onSuccess(data.checkoutSigning.completion.accessToken)
-
         setCheckoutSigningId(null)
+        // TODO: Handle errors
+        console.debug('Congratulations, signing complete!', completion)
+        const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
         deleteCookie(checkoutId)
+        onSuccess(accessToken)
       }
     },
   })

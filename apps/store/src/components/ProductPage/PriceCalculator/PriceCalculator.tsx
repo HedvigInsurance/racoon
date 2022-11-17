@@ -21,9 +21,7 @@ import { PriceFormModal } from '../PriceFormModal/PriceFormModal'
 // TODO: get from API
 const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
-type Props = { title: string }
-
-export const PriceCalculator = ({ title }: Props) => {
+export const PriceCalculator = () => {
   const toastRef = useRef<CartToastAttributes | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -75,12 +73,6 @@ export const PriceCalculator = ({ title }: Props) => {
             <Heading as="h2" variant="standard.24">
               {product.displayName}
             </Heading>
-
-            {!productOffer && (
-              <Text color="gray600" size="l">
-                {title}
-              </Text>
-            )}
 
             {displayCost && (
               <Text as="p" align="center" size="l">
