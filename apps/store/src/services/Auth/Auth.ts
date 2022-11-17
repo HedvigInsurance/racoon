@@ -19,11 +19,9 @@ export const save = (accessToken: string) => {
 }
 
 const getRootDomain = () => {
-  const url = new URL(ORIGIN_URL)
-  const hostname = url.hostname
-  const parts = hostname.split('.')
-  const rootDomtainParts = parts.slice(-2, parts.length + 1)
-  return rootDomtainParts.join('.')
+  const parts = new URL(ORIGIN_URL).hostname.split('.')
+  const rootDomainParts = parts.slice(-2)
+  return rootDomainParts.join('.')
 }
 
 type CookieParams = Pick<OptionsType, 'req' | 'res'>
