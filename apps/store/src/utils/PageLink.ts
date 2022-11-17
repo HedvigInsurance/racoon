@@ -2,9 +2,10 @@ import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage
 import { RoutingLocale } from '@/utils/l10n/types'
 
 export const ORIGIN_URL =
-  process.env.NEXT_PUBLIC_ORIGIN_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL
+  process.env.NEXT_PUBLIC_ORIGIN_URL ??
+  (process.env.NEXT_PUBLIC_VERCEL_URL
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:8040'
+    : 'http://localhost:8040')
 
 type BaseParams = { locale?: RoutingLocale }
 
