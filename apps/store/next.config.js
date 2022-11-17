@@ -7,7 +7,7 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ['a.storyblok.com'],
+    domains: ['a.storyblok.com', 'promise.hedvig.com'],
   },
   productionBrowserSourceMaps: true,
   i18n,
