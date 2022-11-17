@@ -1,0 +1,60 @@
+import styled from '@emotion/styled'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
+import { mq, theme } from 'ui'
+import { MENU_BAR_HEIGHT_DESKTOP } from './Header'
+
+export const focusableStyles = {
+  cursor: 'pointer',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
+}
+
+export const Navigation = styled(NavigationMenuPrimitive.Root)({
+  backgroundColor: theme.colors.gray200,
+  fontSize: theme.fontSizes[5],
+})
+
+export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+  all: 'unset',
+  listStyle: 'none',
+  position: 'fixed',
+  inset: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space[5],
+  padding: `${theme.space[8]} ${theme.space[4]} 0`,
+  backgroundColor: theme.colors.gray100,
+
+  [mq.md]: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: MENU_BAR_HEIGHT_DESKTOP,
+    padding: '0 0 0 0.5rem',
+  },
+}))
+
+export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
+  all: 'unset',
+  listStyle: 'none',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: theme.space[1],
+  rowGap: theme.space[4],
+  fontSize: theme.fontSizes[2],
+  paddingTop: theme.space[6],
+
+  [mq.md]: {
+    gap: 'none',
+    rowGap: theme.space[4],
+    padding: `${theme.space[4]} 0`,
+    borderRadius: '0.5rem',
+  },
+})
+
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  ...focusableStyles,
+})

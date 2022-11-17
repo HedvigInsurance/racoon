@@ -1,20 +1,19 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
-import { ArrowForwardIcon, CrossIcon, Space, theme } from 'ui'
+import { ArrowForwardIcon, CrossIcon } from 'ui'
 import { PageLink } from '@/utils/PageLink'
-import { Pillow } from '../../Pillow/Pillow'
+import {
+  focusableStyles,
+  Navigation,
+  NavigationPrimaryList,
+  NavigationSecondaryList,
+  NavigationTrigger,
+} from '../HeaderStyles'
 import { MenuIcon } from '../MenuIcon'
+import { NavigationLink, SecondaryNavigationLink } from '../NavigationLink'
 import { TopMenuMobileProps } from './TopMenuMobile.stories'
-
-export const focusableStyles = {
-  cursor: 'pointer',
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-  },
-}
 
 export const IconButton = styled.button({
   position: 'absolute',
@@ -26,50 +25,18 @@ export const IconButton = styled.button({
 
 export const ToggleMenu = styled.button({
   ...focusableStyles,
-})
-
-export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  backgroundColor: theme.colors.gray200,
-  fontSize: theme.fontSizes[5],
-})
-
-export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
-  all: 'unset',
-  listStyle: 'none',
-  position: 'fixed',
-  inset: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space[5],
-  padding: `${theme.space[8]} ${theme.space[4]} 0`,
-  backgroundColor: theme.colors.gray200,
-}))
-
-export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
-  all: 'unset',
-  listStyle: 'none',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: theme.space[1],
-  rowGap: theme.space[4],
-  fontSize: theme.fontSizes[2],
-  paddingTop: theme.space[6],
-})
-
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  ...focusableStyles,
+  '&[data-state=open]': {
+    display: 'none',
+  },
 })
 
 export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
   position: 'fixed',
 })
 
-export const TopMenuMobile = ({ isOpen, currentActiveItem }: TopMenuMobileProps) => {
+export const TopMenuMobile = ({ currentActiveItem }: TopMenuMobileProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
-  const [open, setOpen] = useState(isOpen || false)
+  const [open, setOpen] = useState(false)
 
   const closeDialog = useCallback(() => {
     setOpen(false)
@@ -177,43 +144,5 @@ export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
       <StyledDialogOverlay />
       <DialogPrimitive.Content {...props} />
     </DialogPrimitive.Portal>
-  )
-}
-
-export const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
-  textDecoration: 'none',
-  ...focusableStyles,
-})
-
-type NavigationLinkProps = Pick<LinkProps, 'href'> &
-  Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'>
-
-export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
-  return (
-    <Link href={href} passHref legacyBehavior>
-      <StyledNavigationLink {...rest} />
-    </Link>
-  )
-}
-
-export const SecondaryNavigationLinkCard = styled(Space)({
-  display: 'flex',
-  alignItems: 'center',
-})
-
-const StyledPillow = styled(Pillow)(({ theme }) => ({
-  marginRight: theme.space[3],
-}))
-
-export const SecondaryNavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
-  return (
-    <>
-      <SecondaryNavigationLinkCard>
-        <StyledPillow size="xsmall" fromColor="dodgerblue" toColor="palevioletred" />
-        <Link href={href} passHref legacyBehavior>
-          <StyledNavigationLink {...rest} />
-        </Link>
-      </SecondaryNavigationLinkCard>
-    </>
   )
 }
