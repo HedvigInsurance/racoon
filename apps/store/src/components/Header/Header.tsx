@@ -31,7 +31,7 @@ export const Header = ({ children }: HeaderProps) => {
   const { topOffset, navRef } = useStickyTopMenuOffset()
   return (
     <Wrapper topOffset={topOffset} ref={navRef}>
-      {/* <ShoppingCartMenuItem /> */}
+      <ShoppingCartMenuItem />
       {children}
     </Wrapper>
   )
