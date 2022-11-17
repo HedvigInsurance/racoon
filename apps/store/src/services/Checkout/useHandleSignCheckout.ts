@@ -18,16 +18,13 @@ export type Params = {
 export const useHandleSignCheckout = (params: Params) => {
   const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
-  const [signingStatus, setSigningStatus] = useState<CheckoutSigningStatus | undefined>()
 
-  useCheckoutSigningQuery({
+  const queryResult = useCheckoutSigningQuery({
     skip: checkoutSigningId === null,
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
     async onCompleted(data) {
       const { status, completion } = data.checkoutSigning
-      console.debug('Polling signing status', status)
-      setSigningStatus(status)
       if (status === CheckoutSigningStatus.Signed && completion) {
         setCheckoutSigningId(null)
         // TODO: Handle errors
@@ -57,7 +54,7 @@ export const useHandleSignCheckout = (params: Params) => {
     startSign,
     {
       loading: result.loading || Boolean(checkoutSigningId),
-      signingStatus,
+      signingStatus: queryResult.data?.checkoutSigning.status,
       userErrors: getErrors(result),
     },
   ] as const
