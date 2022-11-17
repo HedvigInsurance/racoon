@@ -170,15 +170,22 @@ export const Insurances = {
     const locale = getLocale(localeLabel)
     const insurancesWithouthPerils = INSURANCES_BY_MARKET[locale.market]
 
-    const insurances: Array<Insurance> = []
-    for (const insurance of insurancesWithouthPerils) {
-      const perilsData = await graphqlSdk.ContractPerils({
-        contractType: insurance.typeOfContract,
-        locale: locale.isoLocale,
-      })
-      const perils = perilsData.contractPerils.map(({ title }) => title)
-      insurances.push({ ...insurance, perils })
-    }
+    const contractPerilsQueriesResult = await Promise.all(
+      insurancesWithouthPerils.map((insurance) =>
+        graphqlSdk.ContractPerils({
+          contractType: insurance.typeOfContract,
+          locale: locale.isoLocale,
+        }),
+      ),
+    )
+    const normalisedContractPerils = contractPerilsQueriesResult.map((perilsData) =>
+      perilsData.contractPerils.map(({ title }) => title),
+    )
+    const insurances = insurancesWithouthPerils.map<Insurance>((insuranceWithoutPerils, index) => {
+      const perils = normalisedContractPerils[index]
+
+      return { ...insuranceWithoutPerils, perils }
+    })
 
     return insurances
   },
