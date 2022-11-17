@@ -2,8 +2,10 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { useEffect } from 'react'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import * as Auth from '@/services/Auth/Auth'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -36,6 +38,11 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   //     t('TEST_PLURALIZE', { count: 3 }),
   //   ])
   // }, [t])
+
+  // DEBUG
+  useEffect(() => {
+    Auth.save('test')
+  }, [])
 
   return (
     <>

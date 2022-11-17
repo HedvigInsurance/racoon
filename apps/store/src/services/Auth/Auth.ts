@@ -7,6 +7,7 @@ const ACCESS_TOKEN_SESSION_FIELD = 'token'
 const MAX_AGE = 60 * 60 * 24 // 24 hours
 
 export const save = (accessToken: string) => {
+  console.debug('saveToken', accessToken, getRootDomain())
   setCookie(COOKIE_KEY, serialize(accessToken), {
     maxAge: MAX_AGE,
     path: '/',
