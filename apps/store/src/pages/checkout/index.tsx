@@ -24,7 +24,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { cartId, products, checkoutId, checkoutSigningId, ...pageProps } = props
   const router = useRouter()
 
-  const [handleSubmit, { loading, userErrors }] = useHandleSubmitCheckout({
+  const [handleSubmit, { loading, userErrors, signingStatus }] = useHandleSubmitCheckout({
     cartId,
     products,
     checkoutId,
@@ -46,6 +46,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
         {...pageProps}
         loading={loading}
         products={productsWithErrors}
+        signingStatus={signingStatus}
         userErrors={userErrors}
       />
     </form>
