@@ -168,7 +168,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
 export const Insurances = {
   async getInsurancesByLocaleLabel(localeLabel: LocaleLabel) {
     const locale = getLocale(localeLabel)
-    const insurancesWithouthPerils = INSURANCES_BY_MARKET[locale.market]
+    const insurancesWithouthPerils = INSURANCES_BY_MARKET[locale.market] ?? []
 
     const contractPerilsQueriesResult = await Promise.all(
       insurancesWithouthPerils.map((insurance) =>

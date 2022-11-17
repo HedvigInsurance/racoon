@@ -51,31 +51,36 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
     return { notFound: true }
   }
 
-  const locale = context.locale as LocaleLabel
-  const insurances = await Insurances.getInsurancesByLocaleLabel(locale)
+  try {
+    const locale = context.locale as LocaleLabel
+    const insurances = await Insurances.getInsurancesByLocaleLabel(locale)
 
-  if (insurances.length === 0) {
-    logger.error('Cannot render new-member page; no insurances found')
-    return {
-      notFound: true,
+    if (insurances.length === 0) {
+      logger.error('Cannot render new-member page; no insurances found')
+      return {
+        notFound: true,
+      }
     }
-  }
 
-  const formInitialState = insurances.reduce(
-    (res, { fieldName, isPreselected }) => ({
-      ...res,
-      [fieldName]: isPreselected ?? false,
-    }),
-    {},
-  )
+    const formInitialState = insurances.reduce(
+      (res, { fieldName, isPreselected }) => ({
+        ...res,
+        [fieldName]: isPreselected ?? false,
+      }),
+      {},
+    )
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale)),
-      insurances,
-      formInitialState,
-      referer: context.req.headers.referer ?? null,
-    },
+    return {
+      props: {
+        ...(await serverSideTranslations(locale)),
+        insurances,
+        formInitialState,
+        referer: context.req.headers.referer ?? null,
+      },
+    }
+  } catch (error) {
+    logger.error(error)
+    return { notFound: true }
   }
 }
 
