@@ -26,7 +26,7 @@ export const IconButton = styled.button({
 export const ToggleMenu = styled.button({
   ...focusableStyles,
   '&[data-state=open]': {
-    display: 'none',
+    visibility: 'hidden',
   },
 })
 
