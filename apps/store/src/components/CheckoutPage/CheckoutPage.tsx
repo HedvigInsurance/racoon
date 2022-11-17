@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, HedvigLogo, InputField, Space } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement } from './CheckoutPage.constants'
 import { formatAPIDate } from './CheckoutPage.helpers'
@@ -66,10 +67,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Heading as="h2" variant="standard.24">
                 2. Your contact info
               </Heading>
-              <InputField
-                label="Personal Number"
+              <PersonalNumberField
                 name={FormElement.PersonalNumber}
-                type="text"
                 required
                 defaultValue={prefilledData.personalNumber ?? undefined}
                 errorMessage={userErrors[FormElement.PersonalNumber]}
