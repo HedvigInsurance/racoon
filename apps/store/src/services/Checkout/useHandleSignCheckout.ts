@@ -18,16 +18,14 @@ export const useHandleSignCheckout = (params: Params) => {
   // eslint-disable-next-line
   const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
-  const [signingStatus, setSigningStatus] = useState<CheckoutSigningStatus | undefined>()
 
-  useCheckoutSigningQuery({
+  const queryResult = useCheckoutSigningQuery({
     skip: checkoutSigningId === null,
     variables: checkoutSigningId ? { checkoutSigningId } : undefined,
     pollInterval: 1000,
     onCompleted(data) {
       const { status, completion } = data.checkoutSigning
       console.debug('Polling signing status', status)
-      setSigningStatus(status)
       if (status === CheckoutSigningStatus.Signed && completion) {
         console.log('Congratulations, signing complete!  To be continued in next PR', completion)
         // TODO: Exchange authorizationCode to accessToken
@@ -57,7 +55,7 @@ export const useHandleSignCheckout = (params: Params) => {
     startSign,
     {
       loading: result.loading || Boolean(checkoutSigningId),
-      signingStatus,
+      signingStatus: queryResult.data?.checkoutSigning.status,
       userErrors: getErrors(result),
     },
   ] as const
