@@ -6,6 +6,7 @@ export const Tabs = styled(RadixTabs.Root)({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
+  isolation: 'isolate',
 })
 
 export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
