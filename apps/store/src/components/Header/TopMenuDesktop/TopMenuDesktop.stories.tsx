@@ -8,7 +8,6 @@ export default {
 } as ComponentMeta<typeof TopMenuDesktop>
 
 export type TopMenuDesktopProps = {
-  isOpen: boolean
   currentActiveItem: string
 }
 
@@ -25,6 +24,5 @@ const Template: Story<TopMenuDesktopProps> = (props) => (
 
 export const Desktop = Template.bind({})
 Desktop.args = {
-  isOpen: false,
   currentActiveItem: 'insurances',
 }

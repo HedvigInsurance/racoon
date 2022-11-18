@@ -27,6 +27,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   backgroundColor: theme.colors.gray100,
 
   [mq.md]: {
+    position: 'static',
     flexDirection: 'row',
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
