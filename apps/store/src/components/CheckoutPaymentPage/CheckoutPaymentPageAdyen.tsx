@@ -48,7 +48,11 @@ export const CheckoutPaymentPageAdyen = ({
             </Text>
           </p>
         </Space>
-        <AdyenCheckout paymentMethodsResponse={paymentMethodsResponse} onSuccess={() => {}} />
+        <AdyenCheckout
+          shopSessionId={shopSessionId}
+          paymentMethodsResponse={paymentMethodsResponse}
+          onSuccess={() => {}}
+        />
         <Space y={0.5}>
           <Button onClick={startSign} disabled={isCompleteButtonDisabled} fullWidth>
             Complete purchase

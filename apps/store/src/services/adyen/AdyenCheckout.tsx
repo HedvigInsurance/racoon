@@ -9,13 +9,14 @@ import { localeToAdyenLocale, usePaymentMethodConfiguration } from './Adyen.help
 import { AdyenDropinStyles } from './DropinStyles'
 
 type Props = {
+  shopSessionId: string
   paymentMethodsResponse: PaymentMethodsResponseObject
   onSuccess: (paymentConnection: unknown) => void
 }
 
-export const AdyenCheckout = ({ onSuccess, paymentMethodsResponse }: Props) => {
+export const AdyenCheckout = ({ shopSessionId, onSuccess, paymentMethodsResponse }: Props) => {
   const paymentContainer = useRef<HTMLDivElement>(null)
-  const configuration = useAdyenConfiguration()
+  const configuration = useAdyenConfiguration({ shopSessionId })
 
   useEffect(() => {
     const createCheckout = async () => {
@@ -50,7 +51,9 @@ export const AdyenCheckout = ({ onSuccess, paymentMethodsResponse }: Props) => {
   )
 }
 
-const useAdyenConfiguration = () => {
+type AdyenConfigurationParams = { shopSessionId: string }
+
+const useAdyenConfiguration = ({ shopSessionId }: AdyenConfigurationParams) => {
   const { locale, routingLocale } = useCurrentLocale()
   const { t } = useTranslation()
   const paymentMethodConfiguration = usePaymentMethodConfiguration()
@@ -77,10 +80,10 @@ const useAdyenConfiguration = () => {
         'da-DK': { payButton: payButtonText },
         'en-US': { payButton: payButtonText },
       },
-      returnUrl: PageLink.apiPaymentAdyenCallback({ locale: routingLocale }),
+      returnUrl: PageLink.apiPaymentAdyenCallback({ locale: routingLocale, shopSessionId }),
 
       paymentMethodConfiguration,
     }),
-    [locale, routingLocale, payButtonText, paymentMethodConfiguration],
+    [locale, routingLocale, payButtonText, paymentMethodConfiguration, shopSessionId],
   )
 }
