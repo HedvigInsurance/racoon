@@ -56,7 +56,7 @@ const Template: ComponentStory<typeof TierSelector.Root> = () => {
           {selected ? (
             <>
               <div>{selected?.title}</div>
-              <div>{selected?.price}</div>
+              <TierSelector.SecondaryTextStyle>{selected?.price}</TierSelector.SecondaryTextStyle>
             </>
           ) : (
             <div>Välj skydd</div>

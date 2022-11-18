@@ -63,8 +63,8 @@ const RecommendedContainer = styled.div(({ theme }) => ({
 
 const RecommendedDot = styled.span(({ theme }) => ({
   display: 'inline-block',
-  height: theme.space[2],
-  width: theme.space[2],
+  height: theme.radius.sm,
+  width: theme.radius.sm,
   backgroundColor: theme.colors.black,
   borderRadius: '50%',
   marginRight: '.5rem',
@@ -104,6 +104,10 @@ const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
+export const SecondaryTextStyle = styled.div(({ theme }) => ({
+  color: theme.colors.gray700,
+}))
+
 export type TierItemProps = {
   title: string
   price: string
@@ -126,9 +130,11 @@ export const TierItem = ({
     <TierItemContainer isSelected={isSelected} onClick={handleClick}>
       <TitleContainer>
         <TitleItem>{title}</TitleItem>
-        <TitleItem>{price}</TitleItem>
+        <TitleItem>
+          <SecondaryTextStyle>{price}</SecondaryTextStyle>
+        </TitleItem>
       </TitleContainer>
-      <div>{description}</div>
+      <SecondaryTextStyle>{description}</SecondaryTextStyle>
       {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
     </TierItemContainer>
   )
