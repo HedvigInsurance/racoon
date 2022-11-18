@@ -75,7 +75,7 @@ type RecommendedItemProps = {
 }
 export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   <RecommendedContainer>
-    <RecommendedDot></RecommendedDot>
+    <RecommendedDot/>
     {children}
   </RecommendedContainer>
 )
