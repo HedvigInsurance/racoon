@@ -2,6 +2,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { CartFragmentFragment, CurrencyCode } from '@/services/apollo/generated'
 import { CartInventory } from './CartInventory'
+import { OfferInventoryItem } from './OfferInventoryItem'
 
 export default {
   title: 'Cart Inventory',
@@ -15,7 +16,11 @@ export default {
 } as ComponentMeta<typeof CartInventory>
 
 const Template: ComponentStory<typeof CartInventory> = () => {
-  return <CartInventory cart={MOCK_CART} />
+  return (
+    <CartInventory cart={MOCK_CART}>
+      {(offer) => <OfferInventoryItem offer={offer} />}
+    </CartInventory>
+  )
 }
 
 export const Default = Template.bind({})

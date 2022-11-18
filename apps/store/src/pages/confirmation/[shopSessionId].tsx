@@ -44,24 +44,13 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSessionId,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
+        cart: shopSession.cart,
         currency: shopSession.currencyCode,
-        cost: { total: 0 },
-        products: shopSession.cart.entries.map((item) => {
-          const startDate = item.startDate
-
-          if (startDate === null) throw new Error('startDate is null')
-
-          return {
-            name: item.variant.displayName,
-            startDate: item.startDate,
-          }
-        }),
-        firstName: 'Josh',
         platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
       },
     }
   } catch (error) {
-    logger.error('Unable to render confirmation page', error)
+    logger.error(error, 'Unable to render confirmation page')
     return { notFound: true }
   }
 }
