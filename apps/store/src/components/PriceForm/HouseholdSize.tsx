@@ -46,20 +46,25 @@ export const HouseholdSizeField = ({ field }: FieldProps) => {
 }
 
 const Wrapper = styled.div(({ theme }) => ({
-  border: `1px solid ${theme.colors.gray500}`,
+  border: `1px solid ${theme.colors.gray300}`,
   borderRadius: theme.space[2],
   display: 'flex',
   flexDirection: 'row',
+  backgroundColor: theme.colors.white,
+  height: '3.5rem',
+  fontSize: theme.fontSizes[3],
 }))
 
 const Value = styled.div(({ theme }) => ({
   padding: theme.space[2],
   textAlign: 'center',
   flex: 1,
+  lineHeight: '2.25rem',
 }))
 
 const StyledButton = styled.button(({ theme }) => ({
-  borderLeft: `1px solid ${theme.colors.gray500}`,
-  padding: `${theme.space[2]} ${theme.space[3]}`,
+  borderLeft: `1px solid ${theme.colors.gray300}`,
+  width: '2.5rem',
+  textAlign: 'center',
   cursor: 'pointer',
 }))

@@ -121,7 +121,6 @@ export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset 
   width: '100%',
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
-  position: 'sticky',
   top: `${topOffset}px`,
   zIndex: zIndexes.header,
 }))

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, HedvigLogo, InputField, Space } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { Text } from '@/components/Text/Text'
 import { CheckoutSigningStatus } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement } from './CheckoutPage.constants'
@@ -108,17 +109,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               />
             </Section>
 
-            <Section as="section" y={1}>
-              <Heading as="h2" variant="standard.24">
-                3. Authorize
-              </Heading>
-
-              <Space y={0.5}>
-                <p>After completing the purchase, you&apos;ll be able to connect payment.</p>
-                <SubmitButton loading={loading} signingStatus={props.signingStatus} />
-                {userErrors.form && <p>ERROR: {userErrors.form}</p>}
-              </Space>
-            </Section>
+            <Space y={1}>
+              <Text size="m">
+                After completing the purchase, you&apos;ll be able to connect payment.
+              </Text>
+              <SubmitButton loading={loading} signingStatus={props.signingStatus} />
+              {userErrors.form && <Text size="m">ERROR: {userErrors.form}</Text>}
+            </Space>
           </Space>
         </Main>
       </Space>
@@ -131,17 +128,22 @@ const SubmitButton = ({
   signingStatus,
 }: Pick<CheckoutPageProps, 'loading' | 'signingStatus'>) => {
   let label
-  if (signingStatus === CheckoutSigningStatus.Pending) {
-    label = 'Please open your BankID app and sign there'
-  } else if (loading) {
+  if (loading) {
     label = 'Processing...'
   } else {
-    label = 'Complete purchase'
+    label = 'Sign with BankID'
   }
   return (
-    <Button fullWidth disabled={loading}>
-      {label}
-    </Button>
+    <>
+      <Button fullWidth disabled={loading}>
+        {label}
+      </Button>
+      {signingStatus === CheckoutSigningStatus.Pending && (
+        <Text size="m" align="center">
+          Please open your BankID app
+        </Text>
+      )}
+    </>
   )
 }
 
