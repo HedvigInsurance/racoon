@@ -1,56 +1,33 @@
 import styled from '@emotion/styled'
 import { SbBlokData, storyblokEditable } from '@storyblok/react'
+import Image from 'next/image'
+import { useMemo } from 'react'
 import { Perils } from '@/components/Perils/Perils'
-import { ShieldIcon } from '@/components/Perils/ShieldIcon'
-
-const ITEMS = [
-  {
-    id: 'waterLeaks',
-    icon: <ShieldIcon size="1.25rem" />,
-    name: 'Water leaks',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
-    covered: [
-      'Lorem ipsum dolor sit amet',
-      'Sed fermentum tempus',
-      'Morbi at egestas tortor',
-      'Quisque venenatis lacus dolor',
-    ],
-    notCovered: ['Morbi vitae elit sapien', 'Duis sed viverra nibh'],
-  },
-  {
-    id: 'fire',
-    icon: <ShieldIcon size="1.25rem" />,
-    name: 'Fire',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
-    covered: ['Lorem ipsum dolor sit amet', 'Sed fermentum tempus'],
-    notCovered: [
-      'Morbi at egestas tortor',
-      'Morbi vitae elit sapien',
-      'Duis sed viverra nibh',
-      'Quisque venenatis lacus dolor',
-    ],
-  },
-  {
-    id: 'storms',
-    icon: <ShieldIcon size="1.25rem" />,
-    name: 'Storms',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
-    covered: [
-      'Lorem ipsum dolor sit amet',
-      'Sed fermentum tempus',
-      'Quisque venenatis lacus dolor',
-    ],
-    notCovered: ['Morbi vitae elit sapien'],
-  },
-]
+import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 
 export const PerilsBlock = (blok: SbBlokData) => {
+  const { productData, selectedVariant } = useProductPageContext()
+
+  const items = useMemo(() => {
+    const selectedProductVariant = productData.variants.find(
+      (item) => item.typeOfContract === selectedVariant?.typeOfContract,
+    )
+
+    const productVariant = selectedProductVariant ?? productData.variants[0]
+
+    return productVariant.perils.map((item) => ({
+      id: item.title,
+      name: item.title,
+      description: item.description,
+      covered: item.covered,
+      notCovered: item.exceptions,
+      icon: <Image src={item.icon.variants.light.svgUrl} alt="" width={24} height={24} />,
+    }))
+  }, [productData, selectedVariant])
+
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <Perils items={ITEMS} />
+      <Perils items={items} />
     </Wrapper>
   )
 }

@@ -14,6 +14,11 @@ export const toIsoLocale = (locale: UiLocale): IsoLocale => {
   return locale
 }
 
+export const toApiLocale = (locale: UiLocale): string => {
+  const isoLocale = toIsoLocale(locale)
+  return isoLocale.replace('-', '_')
+}
+
 export const toRoutingLocale = (locale: UiLocale): RoutingLocale => {
   if (isIsoLocale(locale)) return isoToRoutingLocales[locale]
   return locale
