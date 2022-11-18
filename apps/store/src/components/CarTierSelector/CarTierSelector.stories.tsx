@@ -1,13 +1,13 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import * as Accordion from './CarTierSelector'
+import * as TierSelector from './CarTierSelector'
 
 export default {
   title: 'CarTierSelector',
-  component: Accordion.Root,
-} as ComponentMeta<typeof Accordion.Root>
+  component: TierSelector.Root,
+} as ComponentMeta<typeof TierSelector.Root>
 
-type MockedTierItemType = Array<Accordion.TierItemProps>
+type MockedTierItemType = Array<TierSelector.TierItemProps>
 
 const MockedTierItems: MockedTierItemType = [
   {
@@ -41,8 +41,8 @@ const MockedTierItems: MockedTierItemType = [
   },
 ]
 
-const Template: ComponentStory<typeof Accordion.Root> = () => {
-  const [selected, setSelected] = useState<Accordion.TierItemProps>()
+const Template: ComponentStory<typeof TierSelector.Root> = () => {
+  const [selected, setSelected] = useState<TierSelector.TierItemProps>()
 
   const handleClick = (item: string) => {
     const selectedItem = MockedTierItems.find((e) => e.value === item)
@@ -50,9 +50,9 @@ const Template: ComponentStory<typeof Accordion.Root> = () => {
   }
 
   return (
-    <Accordion.Root type="multiple">
-      <Accordion.Item value="item-1">
-        <Accordion.HeaderWithTrigger>
+    <TierSelector.Root type="multiple">
+      <TierSelector.Item value="item-1">
+        <TierSelector.HeaderWithTrigger>
           {selected ? (
             <>
               <div>{selected?.title}</div>
@@ -61,12 +61,12 @@ const Template: ComponentStory<typeof Accordion.Root> = () => {
           ) : (
             <div>Välj skydd</div>
           )}
-        </Accordion.HeaderWithTrigger>
-        <Accordion.Content>
+        </TierSelector.HeaderWithTrigger>
+        <TierSelector.Content>
           {MockedTierItems.map((tier) => {
             const { value, description, price, title, recommendedText } = tier
             return (
-              <Accordion.TierItem
+              <TierSelector.TierItem
                 key={value}
                 value={value}
                 title={title}
@@ -78,9 +78,9 @@ const Template: ComponentStory<typeof Accordion.Root> = () => {
               />
             )
           })}
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
+        </TierSelector.Content>
+      </TierSelector.Item>
+    </TierSelector.Root>
   )
 }
 
