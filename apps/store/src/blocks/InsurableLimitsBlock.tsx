@@ -2,14 +2,10 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { Statistic } from '@/components/Statistic/Statistic'
+import * as Statistic from '@/components/Statistic/Statistic'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type InsurableLimitsBlockProps = SbBaseBlockProps<unknown>
-
-const StyledInsurableLimits = styled(InsurableLimits)(({ theme }) => ({
-  padding: theme.space[4],
-}))
 
 export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
   const { productData, selectedVariant } = useProductPageContext()
@@ -23,9 +19,17 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
   return (
     <StyledInsurableLimits {...storyblokEditable(blok)}>
       {productVariant.insurableLimits.map((item) => (
-        <Statistic key={item.label} label={item.label} value={item.limit} />
+        <Statistic.Root key={item.label}>
+          <Statistic.Badge>{item.label}</Statistic.Badge>
+          <Statistic.Description>{item.description}</Statistic.Description>
+          <Statistic.Value>{item.limit}</Statistic.Value>
+        </Statistic.Root>
       ))}
     </StyledInsurableLimits>
   )
 }
 InsurableLimitsBlock.blockName = 'insurableLimits'
+
+const StyledInsurableLimits = styled(InsurableLimits)(({ theme }) => ({
+  padding: theme.space[4],
+}))
