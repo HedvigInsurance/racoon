@@ -1,4 +1,4 @@
-import { getCookie, removeCookies, setCookie } from 'cookies-next'
+import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
 import { GetServerSidePropsContext } from 'next'
 import { SimplePersister } from './Persister.types'
@@ -23,7 +23,7 @@ export class ServerCookiePersister implements SimplePersister {
   }
 
   public reset(cookieKey = this.cookieKey) {
-    removeCookies(cookieKey, this.defaultOptions())
+    deleteCookie(cookieKey, this.defaultOptions())
   }
 
   private defaultOptions() {
