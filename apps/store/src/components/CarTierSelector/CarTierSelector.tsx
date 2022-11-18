@@ -22,11 +22,11 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   justifyContent: 'space-between',
   background: theme.colors.gray200,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
-  borderRadius: theme.space[3],
+  borderRadius: theme.radius.xs,
   borderBottom: `1px solid ${theme.colors.gray500}`,
   padding: `0 ${theme.space[4]}`,
 
-  '[data-state=open] &': { borderRadius: `${theme.space[3]} ${theme.space[3]} 0 0` },
+  '[data-state=open] &': { borderRadius: `${theme.radius.xs} ${theme.radius.xs} 0 0` },
 }))
 
 const CenteredHeader = styled.div({
@@ -75,7 +75,7 @@ type RecommendedItemProps = {
 }
 export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   <RecommendedContainer>
-    <RecommendedDot/>
+    <RecommendedDot />
     {children}
   </RecommendedContainer>
 )
@@ -89,7 +89,7 @@ const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelect
   backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
 
   '&:last-of-type': {
-    borderRadius: `0 0 ${theme.space[3]} ${theme.space[3]}`,
+    borderRadius: `0 0 ${theme.radius.xs} ${theme.radius.xs}`,
   },
 }))
 
