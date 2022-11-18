@@ -42,29 +42,39 @@ const MockedTierItems: MockedTierItemType = [
 ]
 
 const Template: ComponentStory<typeof Accordion.Root> = () => {
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState<Accordion.TierItemProps>()
 
   const handleClick = (item: string) => {
-    console.log('item', item)
-    setSelected(item)
+    const selectedItem = MockedTierItems.find((e) => e.value === item)
+    setSelected(selectedItem)
   }
 
   return (
     <Accordion.Root type="multiple">
       <Accordion.Item value="item-1">
-        <Accordion.HeaderWithTrigger>Välj skydd</Accordion.HeaderWithTrigger>
+        <Accordion.HeaderWithTrigger>
+          {selected ? (
+            <>
+              <div>{selected?.title}</div>
+              <div>{selected?.price}</div>
+            </>
+          ) : (
+            <div>Välj skydd</div>
+          )}
+        </Accordion.HeaderWithTrigger>
         <Accordion.Content>
           {MockedTierItems.map((tier) => {
+            const { value, description, price, title, recommendedText } = tier
             return (
               <Accordion.TierItem
-                key={tier.value}
-                value={tier.value}
-                title={tier.title}
-                description={tier.description}
-                price={tier.price}
-                recommendedText={tier.recommendedText}
-                isSelected={selected === tier.value}
-                handleClick={() => handleClick(tier.value)}
+                key={value}
+                value={value}
+                title={title}
+                description={description}
+                price={price}
+                recommendedText={recommendedText}
+                isSelected={selected?.value === value}
+                handleClick={() => handleClick(value)}
               />
             )
           })}

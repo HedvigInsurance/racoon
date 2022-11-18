@@ -13,7 +13,7 @@ export const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
 const Header = AccordionPrimitives.Header
 
 const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
-  height: '3rem',
+  height: theme.space[7],
   width: '100%',
   cursor: 'pointer',
   display: 'flex',
@@ -31,6 +31,9 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
 
 const CenteredHeader = styled.div({
   width: '100%',
+  display: 'flex',
+  alignContent: 'center',
+  justifyContent: 'space-around',
 })
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
@@ -60,9 +63,9 @@ const RecommendedContainer = styled.div(({ theme }) => ({
 
 const RecommendedDot = styled.span(({ theme }) => ({
   display: 'inline-block',
+  height: theme.space[2],
+  width: theme.space[2],
   backgroundColor: theme.colors.black,
-  height: '12px',
-  width: '12px',
   borderRadius: '50%',
   marginRight: '.5rem',
 }))
@@ -82,7 +85,7 @@ const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelect
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  padding: '1rem',
+  padding: theme.space[4],
   backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
 
   '&:last-of-type': {
@@ -91,10 +94,14 @@ const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelect
 }))
 
 const TitleContainer = styled.div(({ theme }) => ({
-  fontSize: theme.fontSizes[2],
+  fontSize: theme.fontSizes[3],
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+}))
+
+const TitleItem = styled.div(({ theme }) => ({
+  paddingBottom: theme.space[1],
 }))
 
 export type TierItemProps = {
@@ -118,8 +125,8 @@ export const TierItem = ({
   return (
     <TierItemContainer isSelected={isSelected} onClick={handleClick}>
       <TitleContainer>
-        <div>{title}</div>
-        <div>{price}</div>
+        <TitleItem>{title}</TitleItem>
+        <TitleItem>{price}</TitleItem>
       </TitleContainer>
       <div>{description}</div>
       {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
