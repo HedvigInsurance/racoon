@@ -1,6 +1,4 @@
-import Personnummer from 'personnummer'
-import { ChangeEventHandler, useState } from 'react'
-import { InputField } from 'ui'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SsnSeField as SsnSeFieldType } from '@/services/PriceForm/Field.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
@@ -10,38 +8,8 @@ type SsnSeFieldProps = {
 
 export const SsnSeField = ({ field }: SsnSeFieldProps) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
-  const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
-
-  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    let value = event.target.value
-
-    if (typeof value === 'string' && Personnummer.valid(value)) {
-      value = Personnummer.parse(value).format(true)
-    }
-    setValue(value)
-  }
 
   return (
-    <>
-      <input
-        type="text"
-        name={field.name}
-        required={field.required}
-        value={value}
-        readOnly
-        hidden
-      />
-      <InputField
-        type="text"
-        name={`${field.name}-visible-input`}
-        label={field.label ? translateLabel(field.label) : undefined}
-        minLength={10}
-        maxLength={13}
-        required={field.required}
-        value={value}
-        defaultValue={field.defaultValue}
-        onChange={handleOnChange}
-      />
-    </>
+    <PersonalNumberField {...field} label={field.label ? translateLabel(field.label) : undefined} />
   )
 }

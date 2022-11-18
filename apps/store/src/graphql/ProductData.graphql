@@ -1,0 +1,27 @@
+query ProductData($productName: String!, $locale: String!) {
+  product(productName: $productName) {
+    id
+    variants {
+      typeOfContract
+      perils(locale: $locale) {
+        title
+        description
+        icon {
+          variants {
+            light {
+              svgUrl
+            }
+          }
+        }
+        covered
+        exceptions
+      }
+      insurableLimits(locale: $locale) {
+        type
+        label
+        limit
+        description
+      }
+    }
+  }
+}

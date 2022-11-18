@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { Heading, Space } from 'ui'
 import * as Table from '@/components/Table/Table'
 import { Text } from '@/components/Text/Text'
@@ -16,6 +17,7 @@ export const ConfirmationPage = ({
   platform,
 }: ConfirmationPageProps) => {
   const { locale } = useCurrentLocale()
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(currency)
 
   return (
@@ -75,7 +77,11 @@ export const ConfirmationPage = ({
                       <Text size="m">Total price</Text>
                     </Table.Cell>
                     <Table.Cell align="right">
-                      <Text size="m">{currencyFormatter.format(cost.total)}/mo</Text>
+                      <Text size="m">
+                        {t('MONTHLY_PRICE', {
+                          displayAmount: currencyFormatter.format(cost.total),
+                        })}
+                      </Text>
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>

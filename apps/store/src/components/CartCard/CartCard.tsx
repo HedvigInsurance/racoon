@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEvent } from 'react'
 import { Button, Heading, LinkButton, Space } from 'ui'
 import * as Dialog from '@/components/Dialog/Dialog'
@@ -13,6 +14,7 @@ export type CartCardProps = {
 }
 
 export const CartCard = ({ title, price, currency, onSubmit, loading }: CartCardProps) => {
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(currency)
 
   return (
@@ -22,7 +24,9 @@ export const CartCard = ({ title, price, currency, onSubmit, loading }: CartCard
         <Content>
           <HeaderElement>
             <div>{title}</div>
-            <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
+            <ExtraElement>
+              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(price) })}
+            </ExtraElement>
           </HeaderElement>
 
           <Dialog.Trigger asChild>

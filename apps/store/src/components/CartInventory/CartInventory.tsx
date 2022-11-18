@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { Heading, Space } from 'ui'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
@@ -10,6 +11,7 @@ type Props = {
 }
 
 export const CartInventory = ({ cart, onRemove }: Props) => {
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(cart.cost.total.currencyCode)
 
   return (
@@ -26,7 +28,7 @@ export const CartInventory = ({ cart, onRemove }: Props) => {
           Total
         </Heading>
         <Heading as="h3" variant="standard.18">
-          {currencyFormatter.format(cart.cost.total.amount)}/mån
+          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cart.cost.total.amount) })}
         </Heading>
       </Footer>
     </Space>

@@ -49,6 +49,7 @@ export const useHandleSubmitCheckout = (params: Params) => {
     {
       loading: signResult.loading || contactDetailsResult.loading || startDatesResult.loading,
       userErrors,
+      signingStatus: signResult.signingStatus,
     },
   ] as const
 }

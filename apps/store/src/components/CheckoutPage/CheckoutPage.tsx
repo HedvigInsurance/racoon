@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, HedvigLogo, InputField, Space } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { CheckoutSigningStatus } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement } from './CheckoutPage.constants'
 import { formatAPIDate } from './CheckoutPage.helpers'
@@ -66,7 +68,28 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Heading as="h2" variant="standard.24">
                 2. Your contact info
               </Heading>
-
+              <PersonalNumberField
+                name={FormElement.PersonalNumber}
+                required
+                defaultValue={prefilledData.personalNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PersonalNumber]}
+              />
+              <InputField
+                label="First Name"
+                name={FormElement.FirstName}
+                type="text"
+                required
+                defaultValue={prefilledData.firstName ?? undefined}
+                errorMessage={userErrors[FormElement.FirstName]}
+              />
+              <InputField
+                label="Last Name"
+                name={FormElement.LastName}
+                type="text"
+                required
+                defaultValue={prefilledData.lastName ?? undefined}
+                errorMessage={userErrors[FormElement.LastName]}
+              />
               <InputField
                 label="Email"
                 name={FormElement.Email}
@@ -74,6 +97,14 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 required
                 defaultValue={prefilledData.email ?? undefined}
                 errorMessage={userErrors[FormElement.Email]}
+              />
+              <InputField
+                label="Phone"
+                name={FormElement.PhoneNumber}
+                type="phone"
+                required
+                defaultValue={prefilledData.phoneNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PhoneNumber]}
               />
             </Section>
 
@@ -83,17 +114,34 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               </Heading>
 
               <Space y={0.5}>
-                <Button fullWidth disabled={loading}>
-                  Complete purchase
-                </Button>
+                <p>After completing the purchase, you&apos;ll be able to connect payment.</p>
+                <SubmitButton loading={loading} signingStatus={props.signingStatus} />
                 {userErrors.form && <p>ERROR: {userErrors.form}</p>}
-                <p>After completing the purchase, you&apos;ll can connect payment.</p>
               </Space>
             </Section>
           </Space>
         </Main>
       </Space>
     </>
+  )
+}
+
+const SubmitButton = ({
+  loading,
+  signingStatus,
+}: Pick<CheckoutPageProps, 'loading' | 'signingStatus'>) => {
+  let label
+  if (signingStatus === CheckoutSigningStatus.Pending) {
+    label = 'Please open your BankID app and sign there'
+  } else if (loading) {
+    label = 'Processing...'
+  } else {
+    label = 'Complete purchase'
+  }
+  return (
+    <Button fullWidth disabled={loading}>
+      {label}
+    </Button>
   )
 }
 

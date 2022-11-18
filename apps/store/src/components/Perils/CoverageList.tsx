@@ -17,11 +17,13 @@ export const CoverageList = ({ heading, items, variant }: CoverageListProps) => 
       <List>
         {items.map((item, index) => (
           <Item key={index}>
-            {variant === 'covered' ? (
-              <CheckIcon color="currentColor" size="0.75rem" />
-            ) : (
-              <CrossIcon color="currentColor" size="0.75rem" />
-            )}
+            <NoShrink>
+              {variant === 'covered' ? (
+                <CheckIcon color="currentColor" size="0.75rem" />
+              ) : (
+                <CrossIcon color="currentColor" size="0.75rem" />
+              )}
+            </NoShrink>
             {item}
           </Item>
         ))}
@@ -51,3 +53,5 @@ const Item = styled.li(({ theme }) => ({
   alignItems: 'center',
   gap: theme.space[2],
 }))
+
+const NoShrink = styled.div({ flexShrink: 0 })
