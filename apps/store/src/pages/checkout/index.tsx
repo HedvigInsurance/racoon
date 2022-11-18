@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client'
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
@@ -10,7 +11,10 @@ import * as Auth from '@/services/Auth/Auth'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import {
+  getCurrentShopSessionServerSide,
+  setupShopSessionServiceClientSide,
+} from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
@@ -24,12 +28,14 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { cartId, products, checkoutId, checkoutSigningId, ...pageProps } = props
   const router = useRouter()
 
+  const apolloClient = useApolloClient()
   const [handleSubmit, { loading, userErrors, signingStatus }] = useHandleSubmitCheckout({
     cartId,
     products,
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
+      setupShopSessionServiceClientSide(apolloClient).reset()
       Auth.save(accessToken)
       router.push(PageLink.checkoutPayment())
     },
