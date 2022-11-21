@@ -3,31 +3,35 @@ import Link from 'next/link'
 import { initializeApollo } from '@/services/apollo/client'
 import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
-import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-const PaymentRedirectPage: NextPage = () => {
+type Props = { shopSessionId: string }
+type Params = { shopSessionId: string; status: string }
+
+const PaymentRedirectPage: NextPage<Props> = ({ shopSessionId }) => {
   return (
     <div>
-      Something went wrong. Please <Link href={PageLink.checkoutPayment()}>try again</Link>.
+      Something went wrong. Please{' '}
+      <Link href={PageLink.checkoutPayment({ shopSessionId })}>try again</Link>.
     </div>
   )
 }
 
-type Props = Record<string, unknown>
-type Params = { status: string }
-
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { req, res, locale, params } = context
   const status = params?.status
+  const shopSessionId = params?.shopSessionId
 
   if (!status) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
+  if (!shopSessionId) return { notFound: true }
 
   try {
     const apolloClient = initializeApollo({ req, res })
-    const shopSession = await getCurrentShopSessionServerSide({ req, res, apolloClient })
+    const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
+    const shopSession = await shopSessionService.fetchById(shopSessionId)
 
     const isPaymentBeforeSign =
       shopSession.checkout.paymentConnectionFlow === PaymentConnectionFlow.BeforeSign
@@ -39,7 +43,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       })
       return {
         redirect: {
-          destination: PageLink.checkoutPayment({ locale }),
+          destination: PageLink.checkoutPayment({ locale, shopSessionId }),
           permanent: false,
         },
       }
@@ -53,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         },
       }
     } else {
-      return { props: {} }
+      return { props: { shopSessionId } }
     }
   } catch (error) {
     logger.error(error, 'Failed to get server side props for checkout page')

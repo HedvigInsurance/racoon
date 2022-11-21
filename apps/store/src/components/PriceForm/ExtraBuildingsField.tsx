@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, InputField, Space } from 'ui'
-import * as Dialog from '@/components/Dialog/Dialog'
+import { Button, Heading, InputField, Space, Dialog } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {

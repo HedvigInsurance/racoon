@@ -37,6 +37,7 @@ export const SE_HOUSE: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
+            inputMode: 'numeric',
             label: { key: 'Postal code' },
             required: true,
           },

@@ -22,10 +22,11 @@ type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userErrors'> & {
   cartId: string
   checkoutId: string
   checkoutSigningId: string | null
+  shopSessionId: string
 }
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
-  const { cartId, products, checkoutId, checkoutSigningId, ...pageProps } = props
+  const { cartId, products, checkoutId, checkoutSigningId, shopSessionId, ...pageProps } = props
   const router = useRouter()
 
   const apolloClient = useApolloClient()
@@ -37,7 +38,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     onSuccess(accessToken) {
       setupShopSessionServiceClientSide(apolloClient).reset()
       Auth.save(accessToken)
-      router.push(PageLink.checkoutPayment())
+      router.push(PageLink.checkoutPayment({ shopSessionId }))
     },
   })
 

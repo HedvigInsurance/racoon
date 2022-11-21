@@ -1,0 +1,5 @@
+query ContractPerils($contractType: TypeOfContract!, $locale: Locale!) {
+  contractPerils(contractType: $contractType, locale: $locale) {
+    title
+  }
+}

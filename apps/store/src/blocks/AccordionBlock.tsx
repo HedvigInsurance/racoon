@@ -13,25 +13,25 @@ type Props = SbBaseBlockProps<{
 export const AccordionBlock = ({ blok }: Props) => {
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   return (
-    <StyledRoot type="multiple">
+    <Wrapper>
       <Space y={1}>
         {blok.title && (
           <StyledHeading as="h2" variant="standard.20">
             {blok.title}
           </StyledHeading>
         )}
-        <div>
+        <Accordion.Root type="multiple">
           {accordionItems.map((nestedBlock) => (
             <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
-        </div>
+        </Accordion.Root>
       </Space>
-    </StyledRoot>
+    </Wrapper>
   )
 }
 AccordionBlock.blockName = 'accordion'
 
-const StyledRoot = styled(Accordion.Root)(({ theme }) => ({
+const Wrapper = styled.div(({ theme }) => ({
   padding: theme.space[4],
 }))
 

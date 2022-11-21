@@ -1,16 +1,18 @@
-type RadiusAlias = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+const base = {
+  0: 8,
+  1: 12,
+  2: 16,
+  3: 20,
+  4: 28,
+} as const
 
-export const radius: Partial<Record<number | RadiusAlias, string>> = {
-  0: '8px',
-  1: '12px',
-  2: '16px',
-  3: '20px',
-  4: '28px',
+export const radius = {
+  ...base,
+
+  // Aliases
+  xs: base[0],
+  sm: base[1],
+  md: base[2],
+  lg: base[3],
+  xl: base[4],
 }
-
-// Aliases
-radius.xs = radius[0]
-radius.sm = radius[1]
-radius.md = radius[2]
-radius.lg = radius[3]
-radius.xl = radius[4]

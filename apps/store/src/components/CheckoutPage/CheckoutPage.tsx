@@ -6,6 +6,7 @@ import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNu
 import { Text } from '@/components/Text/Text'
 import { CheckoutSigningStatus } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
+import { OfferInventoryItem } from '../CartInventory/OfferInventoryItem'
 import { FormElement } from './CheckoutPage.constants'
 import { formatAPIDate } from './CheckoutPage.helpers'
 import { CheckoutPageProps } from './CheckoutPage.types'
@@ -36,7 +37,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </Heading>
               </MainTop>
 
-              <CartInventory cart={cart} />
+              <CartInventory cart={cart}>
+                {(offer) => <OfferInventoryItem offer={offer} />}
+              </CartInventory>
             </Space>
 
             <Section as="section" y={1}>
@@ -103,6 +106,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 label="Phone"
                 name={FormElement.PhoneNumber}
                 type="phone"
+                inputMode="tel"
                 required
                 defaultValue={prefilledData.phoneNumber ?? undefined}
                 errorMessage={userErrors[FormElement.PhoneNumber]}

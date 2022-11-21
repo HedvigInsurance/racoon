@@ -1,7 +1,10 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { zIndexes } from '@/utils/zIndex'
+
+type OverlayProps = {
+  frosted?: boolean
+}
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -13,14 +16,19 @@ const contentShow = keyframes({
   '100%': { opacity: 1, transform: 'scale(1)' },
 })
 
-const StyledOverlay = styled(DialogPrimitive.Overlay)({
+const StyledOverlay = styled(DialogPrimitive.Overlay)<OverlayProps>(({ frosted }) => ({
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   position: 'fixed',
   inset: 0,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
   },
-})
+
+  ...(frosted && {
+    backgroundColor: 'rgba(250, 250, 250, 0.6)',
+    backdropFilter: 'blur(64px)',
+  }),
+}))
 
 export const Window = styled.div(({ theme }) => ({
   backgroundColor: theme.colors.white,
@@ -33,21 +41,21 @@ export const Window = styled.div(({ theme }) => ({
 const StyledContentWrapper = styled.div({
   position: 'fixed',
   inset: 0,
-  zIndex: zIndexes.dialog,
 })
 
 type ContentProps = {
   children: React.ReactNode
   onClose?: () => void
   className?: string
+  frostedOverlay?: boolean
 }
 
-export const Content = ({ children, onClose, className }: ContentProps) => {
+export const Content = ({ children, onClose, className, frostedOverlay }: ContentProps) => {
   const handleClose = () => onClose?.()
 
   return (
     <DialogPrimitive.Portal>
-      <StyledOverlay />
+      <StyledOverlay frosted={frostedOverlay} />
       <StyledContentWrapper className={className}>
         <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
           {children}

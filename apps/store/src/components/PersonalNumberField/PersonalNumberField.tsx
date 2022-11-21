@@ -35,6 +35,7 @@ export const PersonalNumberField = (props: Props) => {
         name={`${props.name}-visible-input`}
         label={label}
         infoMessage={infoMessage}
+        inputMode="numeric"
         errorMessage={errorMessage}
         minLength={10}
         maxLength={13}

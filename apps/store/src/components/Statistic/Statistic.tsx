@@ -10,7 +10,7 @@ export type StatisticProps = {
 
 export const Root = styled.div(({ theme }) => ({
   padding: theme.space[5],
-  borderRadius: 8,
+  borderRadius: theme.radius.lg,
   backgroundColor: theme.colors.gray200,
   minHeight: HEIGHT,
 
@@ -31,7 +31,7 @@ export const Badge = styled.span(({ theme }) => ({
   fontSize: theme.fontSizes[1],
   backgroundColor: theme.colors.purple300,
   padding: theme.space[2],
-  borderRadius: 8,
+  borderRadius: theme.radius.xs,
 }))
 
 export const Description = styled.p(({ theme }) => ({
