@@ -13,6 +13,7 @@ export type TextField = BaseField<string> & {
   pattern?: string
   minLength?: number
   maxLength?: number
+  inputMode?: 'text' | 'numeric' | 'tel' | 'email'
 }
 
 export type SsnSeField = BaseField<string> & {
