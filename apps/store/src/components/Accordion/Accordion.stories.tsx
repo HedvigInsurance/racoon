@@ -32,7 +32,9 @@ const Template: ComponentStory<typeof Accordion.Root> = () => (
       </Accordion.Content>
     </Accordion.Item>
     <Accordion.Item value="item-3">
-      <Accordion.HeaderWithTrigger>Header 3</Accordion.HeaderWithTrigger>
+      <Accordion.HeaderWithTrigger>
+        Header 3 which is really long and wraps
+      </Accordion.HeaderWithTrigger>
       <Accordion.Content>
         Lorem ipsum dolor sit amet, florrum plorrum klufs grufs glufs. Nufs ep trop. Nufs ep trop.
         Lorem ipsum dolor sit amet, florrum plorrum.
