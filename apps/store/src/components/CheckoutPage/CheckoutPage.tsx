@@ -106,6 +106,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 label="Phone"
                 name={FormElement.PhoneNumber}
                 type="phone"
+                inputMode="tel"
                 required
                 defaultValue={prefilledData.phoneNumber ?? undefined}
                 errorMessage={userErrors[FormElement.PhoneNumber]}

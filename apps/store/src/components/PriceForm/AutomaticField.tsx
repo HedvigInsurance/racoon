@@ -29,6 +29,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           pattern={field.pattern}
           minLength={field.minLength}
           maxLength={field.maxLength}
+          inputMode={field.inputMode ?? 'text'}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
@@ -43,6 +44,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           label={field.label ? translateLabel(field.label) : undefined}
           min={field.min}
           max={field.max}
+          inputMode="numeric"
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}

@@ -74,6 +74,7 @@ export const SE_APARTMENT: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
+            inputMode: 'numeric',
             label: { key: 'Postal code' },
             minLength: 5,
             maxLength: 5,
