@@ -407,7 +407,7 @@
   "3D_SECURE_ERROR_BUTTON": "OK",
   "3D_SECURE_ERROR_HEADING": "Your card couldn’t be authenticated",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Payment connected!",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "At least one option must be selected to continue",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Select at least one insurance to continue",
   "OPEN_COMPARISON_MODAL": "Compare our insurance policies",
   "COMPARISON_MODEL_HEADER": "Which coverage suits you?",
   "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "City",
@@ -460,5 +460,7 @@
   "EXTERNAL_INSURANCE_COMPARE_DATE_EXPIRES": "Expires {value}",
   "AFTER_SIGN_PAYMENT_MESSAGE": "",
   "PERILS_DIALOG_TITLE": "Included in {{insurance}}",
-  "INSURANCE_CARD_SEE_COVERAGE": "See coverage"
+  "INSURANCE_CARD_SEE_COVERAGE": "See coverage",
+  "INSURANCE_SELECTOR_HEADLINE": "Your insurance choices",
+  "LANDING_PAGE_SUBMIT_BUTTON": "Continue"
 }

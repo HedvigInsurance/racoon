@@ -407,7 +407,7 @@
   "3D_SECURE_ERROR_BUTTON": "Okay",
   "3D_SECURE_ERROR_HEADING": "Dit kort kunne ikke godkendes",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "Betaling er tilknyttet!",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Der skal vælges mindst én mulighed for at fortsætte",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Vælg mindst én forsikring for at fortsætte",
   "OPEN_COMPARISON_MODAL": "Sammenlign forsikringsniveauer",
   "COMPARISON_MODEL_HEADER": "Hvilket forsikringsniveau passer til dig?",
   "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "",
@@ -460,5 +460,7 @@
   "EXTERNAL_INSURANCE_COMPARE_DATE_EXPIRES": "Udløber {value}",
   "AFTER_SIGN_PAYMENT_MESSAGE": "",
   "PERILS_DIALOG_TITLE": "Inkluderet i {{insurance}}",
-  "INSURANCE_CARD_SEE_COVERAGE": "Se dækning"
+  "INSURANCE_CARD_SEE_COVERAGE": "Se dækning",
+  "INSURANCE_SELECTOR_HEADLINE": "Dine forsikring valg",
+  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsæt"
 }
