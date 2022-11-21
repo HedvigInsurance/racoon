@@ -13,14 +13,14 @@ const MockedTierItems: MockedTierItemType = [
   {
     value: '0',
     title: 'Trafikförsäkring',
-    description: 'Grundläggande skydd för att köra bil',
+    body: 'Grundläggande skydd för att köra bil',
     isSelected: false,
     price: '300 kr/mån',
   },
   {
     value: '1',
     title: 'Halvförsäkring Tack',
-    description: 'Grundläggande skydd för att köra bil',
+    body: 'Grundläggande skydd för att köra bil',
     isSelected: false,
     price: '300 kr/mån',
     recommendedText: 'Rekommenderad för din bil',
@@ -28,14 +28,14 @@ const MockedTierItems: MockedTierItemType = [
   {
     value: '2',
     title: 'Halvförsäkring',
-    description: 'Grundläggande skydd för att köra bil',
+    body: 'Grundläggande skydd för att köra bil',
     isSelected: false,
     price: '300 kr/mån',
   },
   {
     value: '3',
     title: 'Halvförsäkring plus',
-    description: 'Grundläggande skydd för att köra bil',
+    body: 'Grundläggande skydd för att köra bil',
     isSelected: false,
     price: '300 kr/mån',
   },
@@ -64,13 +64,13 @@ const Template: ComponentStory<typeof TierSelector.Root> = () => {
         </TierSelector.HeaderWithTrigger>
         <TierSelector.Content>
           {MockedTierItems.map((tier) => {
-            const { value, description, price, title, recommendedText } = tier
+            const { value, body, price, title, recommendedText } = tier
             return (
               <TierSelector.TierItem
                 key={value}
                 value={value}
                 title={title}
-                description={description}
+                body={body}
                 price={price}
                 recommendedText={recommendedText}
                 isSelected={selected?.value === value}

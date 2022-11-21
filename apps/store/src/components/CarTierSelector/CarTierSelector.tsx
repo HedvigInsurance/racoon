@@ -111,17 +111,17 @@ export const SecondaryTextStyle = styled.div(({ theme }) => ({
 export type TierItemProps = {
   title: string
   price: string
-  description: string
+  body: string
   isSelected?: boolean
   recommendedText?: string
   children?: React.ReactNode
-  handleClick?: () => void
+  handleClick?: (id: any) => void
 } & AccordionPrimitives.AccordionItemProps
 
 export const TierItem = ({
   title,
   price,
-  description,
+  body,
   isSelected = false,
   recommendedText = '',
   handleClick,
@@ -134,7 +134,7 @@ export const TierItem = ({
           <SecondaryTextStyle>{price}</SecondaryTextStyle>
         </TitleItem>
       </TitleContainer>
-      <SecondaryTextStyle>{description}</SecondaryTextStyle>
+      <SecondaryTextStyle>{body}</SecondaryTextStyle>
       {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
     </TierItemContainer>
   )
