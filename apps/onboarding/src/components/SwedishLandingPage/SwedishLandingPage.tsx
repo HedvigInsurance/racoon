@@ -7,7 +7,7 @@ import { Header } from '@/components/Nav/Header'
 import { useTrackEvent } from '@/hooks/useTrackEvent'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
-import { LandingPageProps } from '../LandingPage/LandingPage'
+import { NewLandingPageProps } from '../LandingPage/NewLandingPage'
 import { ClickableCard } from './ClickableCard'
 
 type GridCardProps = { size: 'half' | 'full' }
@@ -53,7 +53,7 @@ const ContentCard = styled.div({
   [mq.sm]: { margin: '0 8rem', marginTop: '3.5rem', textAlign: 'center' },
 })
 
-type SwedishLandingPageProps = Pick<LandingPageProps, 'insurances' | 'referer'>
+type SwedishLandingPageProps = Pick<NewLandingPageProps, 'insurances' | 'referer'>
 
 export const SwedishLandingPage = ({ insurances, referer }: SwedishLandingPageProps) => {
   const { t } = useTranslation()

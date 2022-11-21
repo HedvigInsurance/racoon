@@ -9,6 +9,7 @@ import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { Insurance } from '@/services/insurances'
+import { AdditionalCoverageCard } from './AdditionalCoverageCard'
 import { MainCoverageCard } from './MainCoverageCard'
 
 type GridCardProps = { size: 'half' | 'full' }
@@ -63,13 +64,18 @@ const FooterButton = styled(Button)({
   },
 })
 
-export type LandingPageProps = {
-  insurances: Array<Insurance>
+export type OldLandingPageProps = {
+  mainCoverageInsurances: Array<Insurance>
+  additionalCoverageInsurances: Array<Insurance>
   formInitialState: Record<string, boolean>
   referer: string | null
 }
 
-export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) => {
+export const OldLandingPage = ({
+  mainCoverageInsurances,
+  additionalCoverageInsurances,
+  formInitialState,
+}: OldLandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()
@@ -77,9 +83,9 @@ export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) 
   const [formState, setFormState] = useState(formInitialState)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
-  const hasSelectedAtLeastOneOption = useMemo(
-    () => insurances.some((insurance) => formState[insurance.fieldName]),
-    [formState, insurances],
+  const hasSelectedAtLeastOneMainInsurance = useMemo(
+    () => mainCoverageInsurances.some((insurance) => formState[insurance.fieldName]),
+    [formState, mainCoverageInsurances],
   )
 
   return (
@@ -103,38 +109,63 @@ export const LandingPage = ({ insurances, formInitialState }: LandingPageProps) 
           </TitleContainer>
 
           <CoverageCardGrid>
-            {insurances.map((insurance, index, arr) => {
+            {mainCoverageInsurances.map((inrurance, index, arr) => {
               const isLastItem = index === arr.length - 1
               const cardSize = isLastItem && index % 2 === 0 ? 'full' : 'half'
               const isSingleCard = arr.length === 1
-
               return (
                 <GridMainCoverageCard
-                  key={insurance.id}
-                  selected={formState[insurance.fieldName]}
-                  required={!hasSelectedAtLeastOneOption}
+                  key={inrurance.id}
+                  selected={formState[inrurance.fieldName]}
+                  required={!hasSelectedAtLeastOneMainInsurance}
                   errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                   onCheck={() => {
                     if (!isSingleCard) {
                       setFormState({
                         ...formState,
-                        [insurance.fieldName]: !formState[insurance.fieldName],
+                        [inrurance.fieldName]: !formState[inrurance.fieldName],
                       })
                     }
                   }}
-                  cardImg={insurance.img}
-                  title={t(insurance.name)}
-                  description={t(insurance.description)}
+                  cardImg={inrurance.img}
+                  title={t(inrurance.name)}
+                  description={t(inrurance.description)}
                   size={cardSize}
                   enableHover={true}
                 />
               )
             })}
           </CoverageCardGrid>
+
+          <TitleContainer>
+            <HeadingOLD variant="xs" colorVariant="dark" headingLevel="h3">
+              {t('LANDING_PAGE_SECTION_TITLE_ADDITIONAL')}
+            </HeadingOLD>
+          </TitleContainer>
+
+          <CoverageCardGrid>
+            {additionalCoverageInsurances.map((insurance) => (
+              <AdditionalCoverageCard
+                key={insurance.id}
+                enableHover
+                cardImg={insurance.img}
+                selected={formState[insurance.fieldName]}
+                disabled={!hasSelectedAtLeastOneMainInsurance}
+                onCheck={() =>
+                  setFormState({
+                    ...formState,
+                    [insurance.fieldName]: !formState[insurance.fieldName],
+                  })
+                }
+                title={t(insurance.name)}
+                description={t(insurance.description)}
+              />
+            ))}
+          </CoverageCardGrid>
         </Main>
         <FixedFooter>
           <FooterButton color="dark" disabled={isRedirecting}>
-            {t('START_SCREEN_SUBMIT_BUTTON')}
+            {t('LANDING_PAGE_SUBMIT_BUTTON')}
           </FooterButton>
         </FixedFooter>
       </PageContainer>

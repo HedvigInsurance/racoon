@@ -8,12 +8,7 @@ module.exports = {
     defaultLocale: 'default',
     localeDetection: false,
   },
-
+  fallbackNS: 'common',
   localePath: path.resolve('./public/locales'),
-  localeStructure: '{lng}/{ns}',
   lowerCaseLng: true,
-  interpolation: {
-    prefix: '{',
-    suffix: '}',
-  },
 }
