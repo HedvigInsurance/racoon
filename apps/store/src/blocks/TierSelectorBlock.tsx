@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import * as TierSelector from '../components/CarTierSelector/CarTierSelector'
+import * as TierSelector from '../components/TierSelector/TierSelector'
 import { TierSelectorItemBlock, TierSelectorItemBlockProps } from './TierSelectorItemBlock'
 
 type Props = SbBaseBlockProps<{
@@ -10,8 +10,6 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const TierSelectorBlock = ({ blok }: Props) => {
-  console.log({ blok })
-
   const tierSelectorItems = filterByBlockType(blok.items, TierSelectorItemBlock.blockName)
 
   const [selectedId, setSelectedId] = useState('')

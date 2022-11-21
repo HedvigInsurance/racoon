@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import * as TierSelector from './CarTierSelector'
+import * as TierSelector from './TierSelector'
 
 export default {
-  title: 'CarTierSelector',
+  title: 'TierSelector',
   component: TierSelector.Root,
 } as ComponentMeta<typeof TierSelector.Root>
 
@@ -84,5 +84,5 @@ const Template: ComponentStory<typeof TierSelector.Root> = () => {
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Car = Template.bind({})
+Car.args = {}

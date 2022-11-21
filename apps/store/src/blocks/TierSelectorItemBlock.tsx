@@ -1,28 +1,21 @@
 import { storyblokEditable } from '@storyblok/react'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import * as TierSelector from '../components/CarTierSelector/CarTierSelector'
+import * as TierSelector from '../components/TierSelector/TierSelector'
 
 export type TierSelectorItemBlockProps = SbBaseBlockProps<{
-  isSelected: boolean
-  recommendedText: string
   body: string
-  price: string
-  title: string
   handleClick: (id: string) => void
+  isSelected: boolean
+  price: string
+  recommendedText: string
+  title: string
 }>
 
 export const TierSelectorItemBlock = ({ blok }: TierSelectorItemBlockProps) => {
   return (
     <>
       <TierSelector.Content>
-        <TierSelector.TierItem
-          {...storyblokEditable(blok)}
-          {...blok}
-          body={blok.body}
-          price={blok.price}
-          title={blok.price}
-          value={blok._uid}
-        />
+        <TierSelector.TierItem {...storyblokEditable(blok)} {...blok} value={blok._uid} />
       </TierSelector.Content>
     </>
   )
