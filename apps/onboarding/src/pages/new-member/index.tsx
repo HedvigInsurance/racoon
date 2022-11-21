@@ -73,8 +73,10 @@ export const getServerSideProps: GetServerSideProps<
       }
     }
 
+    const marketLabel = getMarketLabelFromLocaleLabel(locale)
     if (
-      Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, getMarketLabelFromLocaleLabel(locale))
+      marketLabel === MarketLabel.SE ||
+      Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, marketLabel)
     ) {
       return {
         props: {
