@@ -23,6 +23,8 @@ import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
+import { TierSelectorBlock } from '@/blocks/TierSelectorBlock'
+import { TierSelectorItemBlock } from '@/blocks/TierSelectorItemBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import {
@@ -136,6 +138,8 @@ export const initStoryblok = () => {
     CheckListBlock,
     ContactSupportBlock,
     ContentBlock,
+    TierSelectorBlock,
+    TierSelectorItemBlock,
     FooterBlock,
     FooterLink,
     FooterSection,
