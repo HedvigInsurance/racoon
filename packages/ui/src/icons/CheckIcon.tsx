@@ -1,4 +1,4 @@
-import { IconRoot, IconRootProps } from '../../icons/Root'
+import { IconRoot, IconRootProps } from './Root'
 
 export const CheckIcon = ({ className, size = '0.875rem' }: IconRootProps) => {
   return (

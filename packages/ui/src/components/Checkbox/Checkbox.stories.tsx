@@ -29,6 +29,7 @@ const Template: ComponentStory<typeof Checkbox> = (args) => {
       <Checkbox {...args} checked={checked} onChange={onChange} />
       <Checkbox {...args} checked={checked} onChange={onChange} label="Label" />
       <Checkbox {...args} checked={checked} onChange={onChange} label="Label" prependLabel />
+      <Checkbox label="Uncontrolled" prependLabel disabled={args.disabled} />
     </TemplateContainer>
   )
 }

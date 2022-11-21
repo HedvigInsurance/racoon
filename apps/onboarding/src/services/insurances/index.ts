@@ -1,11 +1,29 @@
+import { getLocale } from '@/lib/l10n'
+import { LocaleLabel } from '@/lib/l10n/locales'
 import { Market, MarketLabel } from '@/lib/types'
 import { Features, Feature } from '@/services/features'
-import { Insurances } from './LandingPage.types'
+import { TypeOfContract } from '@/services/graphql/generated'
+import { graphqlSdk } from '@/services/graphql/sdk'
 
-// TODO make usage of a proper API
-// This is being hardcoded at the moment but in the future that kind of information
-// will be retrieved from an proper API
-export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
+export type Insurance = {
+  id: string
+  name: string
+  description: string
+  img: {
+    src: string
+    alt?: string
+    blurDataURL?: string
+    objectPosition?: string
+  }
+  perils: Array<string>
+  typeOfContract: TypeOfContract
+  fieldName: string
+  isAdditionalCoverage?: boolean
+  isPreselected?: boolean
+  slug?: string
+}
+
+const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
   [Market.Sweden]: [
     {
       id: 'se-home',
@@ -16,6 +34,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         blurDataURL: 'LfLD[NayRkM{?waee.t6emt8ogof',
       },
       isPreselected: false,
+      typeOfContract: TypeOfContract.SeApartmentRent,
       fieldName: 'isHome',
       slug: 'home-insurance',
     },
@@ -28,6 +47,7 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         blurDataURL: 'LQF~gZngMxIU~ARiWUM{s;Ipazj@',
       },
       isPreselected: false,
+      typeOfContract: TypeOfContract.SeCarFull,
       fieldName: 'isCar',
       slug: 'car',
     },
@@ -38,10 +58,13 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: '/racoon-assets/home.jpg',
+        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+          ? '/racoon-assets/home.jpg'
+          : '/racoon-assets/home_old.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       fieldName: 'isHomeContents',
+      typeOfContract: TypeOfContract.DkHomeContentOwn,
       isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK),
     },
     ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK)
@@ -51,10 +74,13 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: '/racoon-assets/house.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+                ? '/racoon-assets/house.jpg'
+                : '/racoon-assets/house_old.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
+            typeOfContract: TypeOfContract.DkHouse,
             fieldName: 'isHouse',
           },
         ]
@@ -67,8 +93,9 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         src: '/racoon-assets/travel.jpg',
         blurDataURL: 'L8BMoT~VaxIoWC-:WBRkRjs:Rjt7',
       },
-      isAdditionalCoverage: true,
+      typeOfContract: TypeOfContract.DkTravel,
       fieldName: 'isTravel',
+      isAdditionalCoverage: true,
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.DK)
       ? [
@@ -77,11 +104,14 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: '/racoon-assets/accident.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+                ? '/racoon-assets/accident.jpg'
+                : '/racoon-assets/accident_old.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
-            isAdditionalCoverage: true,
+            typeOfContract: TypeOfContract.DkAccident,
             fieldName: 'isAccident',
+            isAdditionalCoverage: true,
           },
         ]
       : []),
@@ -92,9 +122,12 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: '/racoon-assets/home.jpg',
+        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+          ? '/racoon-assets/home.jpg'
+          : '/racoon-assets/home_old.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
+      typeOfContract: TypeOfContract.NoHomeContentOwn,
       fieldName: 'isHomeContents',
       isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO),
     },
@@ -105,10 +138,13 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: '/racoon-assets/house.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+                ? '/racoon-assets/house.jpg'
+                : '/racoon-assets/house_old.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
+            typeOfContract: TypeOfContract.NoHouse,
             fieldName: 'isHouse',
           },
         ]
@@ -121,8 +157,9 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
         src: '/racoon-assets/travel.jpg',
         blurDataURL: 'L8BMoT~VaxIoWC-:WBRkRjs:Rjt7',
       },
-      isAdditionalCoverage: true,
+      typeOfContract: TypeOfContract.NoTravel,
       fieldName: 'isTravel',
+      isAdditionalCoverage: true,
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.NO)
       ? [
@@ -131,13 +168,42 @@ export const INSURANCES_BY_MARKET: Record<Market, Insurances> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: '/racoon-assets/accident.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+                ? '/racoon-assets/accident.jpg'
+                : '/racoon-assets/accident_old.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
-            isAdditionalCoverage: true,
+            typeOfContract: TypeOfContract.NoAccident,
             fieldName: 'isAccident',
+            isAdditionalCoverage: true,
           },
         ]
       : []),
   ],
+}
+
+export const Insurances = {
+  async getInsurancesByLocaleLabel(localeLabel: LocaleLabel) {
+    const locale = getLocale(localeLabel)
+    const insurancesWithouthPerils = INSURANCES_BY_MARKET[locale.market] ?? []
+
+    const contractPerilsQueriesResult = await Promise.all(
+      insurancesWithouthPerils.map((insurance) =>
+        graphqlSdk.ContractPerils({
+          contractType: insurance.typeOfContract,
+          locale: locale.isoLocale,
+        }),
+      ),
+    )
+    const normalisedContractPerils = contractPerilsQueriesResult.map((perilsData) =>
+      perilsData.contractPerils.map(({ title }) => title),
+    )
+    const insurances = insurancesWithouthPerils.map<Insurance>((insuranceWithoutPerils, index) => {
+      const perils = normalisedContractPerils[index]
+
+      return { ...insuranceWithoutPerils, perils }
+    })
+
+    return insurances
+  },
 }

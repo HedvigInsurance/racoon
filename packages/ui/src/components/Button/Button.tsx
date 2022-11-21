@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ElementType } from 'react'
+import { ElementType, forwardRef } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from '../../lib/margins'
 import { getPaddings, Paddings } from '../../lib/paddings'
@@ -121,14 +121,16 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
   }),
 )
 
-export const Button = ({ children, icon, ...rest }: ButtonProps) => {
-  return (
-    <ButtonElement {...rest}>
-      {children}
-      {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
-    </ButtonElement>
-  )
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, icon, ...rest }, ref) => {
+    return (
+      <ButtonElement ref={ref} {...rest}>
+        {children}
+        {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
+      </ButtonElement>
+    )
+  },
+)
 
 export type LinkButtonProps = ButtonProps & {
   href?: string
