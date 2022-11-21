@@ -1,4 +1,4 @@
-import { Market as ApiMarket, Locale as IsoLocale, MarketLabel } from '@/lib/types'
+import { Market as ApiMarket, Locale as IsoLocale, Market, MarketLabel } from '@/lib/types'
 import { birthDateFormats, ssnFormats, ssnLengths } from './birth-date-and-ssn-formats'
 import { PhoneNumberData, phoneNumbers } from './phone-numbers'
 
@@ -10,6 +10,7 @@ export type HrefLanguage = 'en-se' | 'sv-se' | 'no-no' | 'en-no' | 'da-dk' | 'en
 export type LocaleData = {
   path: LocaleLabel
   isoLocale: IsoLocale
+  market: Market
   marketLabel: MarketLabel
   apiMarket: ApiMarket
   htmlLang: 'en' | 'sv' | 'no' | 'da'
@@ -33,6 +34,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   se: {
     path: 'se',
     isoLocale: IsoLocale.SvSe,
+    market: Market.Sweden,
     marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'sv',
@@ -54,6 +56,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'se-en': {
     path: 'se-en',
     isoLocale: IsoLocale.EnSe,
+    market: Market.Sweden,
     marketLabel: MarketLabel.SE,
     apiMarket: ApiMarket.Sweden,
     htmlLang: 'en',
@@ -75,6 +78,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   no: {
     path: 'no',
     isoLocale: IsoLocale.NbNo,
+    market: Market.Norway,
     marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'no',
@@ -95,6 +99,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'no-en': {
     path: 'no-en',
     isoLocale: IsoLocale.EnNo,
+    market: Market.Norway,
     marketLabel: MarketLabel.NO,
     apiMarket: ApiMarket.Norway,
     htmlLang: 'en',
@@ -115,6 +120,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   dk: {
     path: 'dk',
     isoLocale: IsoLocale.DaDk,
+    market: Market.Denmark,
     marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'da',
@@ -135,6 +141,7 @@ export const locales: Record<LocaleLabel, LocaleData> = {
   'dk-en': {
     path: 'dk-en',
     isoLocale: IsoLocale.EnDk,
+    market: Market.Denmark,
     marketLabel: MarketLabel.DK,
     apiMarket: ApiMarket.Denmark,
     htmlLang: 'en',

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { theme } from '../lib/theme/theme'
 
 export type TickIconProps = {
   color?: string
