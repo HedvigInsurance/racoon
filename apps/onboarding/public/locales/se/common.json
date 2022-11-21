@@ -407,7 +407,7 @@
   "3D_SECURE_ERROR_BUTTON": "",
   "3D_SECURE_ERROR_HEADING": "",
   "CHECKOUT_PAYMENT_ADYEN_SETUP_DONE_MESSAGE": "",
-  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Minst ett alternativ måste väljas för att fortsätta",
+  "LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR": "Välj minst en försäkring för att fortsätta",
   "OPEN_COMPARISON_MODAL": "Jämför försäkringspaket",
   "COMPARISON_MODEL_HEADER": "Vilket skydd passar dig?",
   "DETAILS_MODULE_TABLE_CITY_CELL_LABEL": "Stad",
@@ -460,5 +460,7 @@
   "EXTERNAL_INSURANCE_COMPARE_DATE_EXPIRES": "Löper ut {value}",
   "AFTER_SIGN_PAYMENT_MESSAGE": "Välkommen till Hedvig! Saknas bara en sak innan vi är klara; koppla autogiro för dina månadsbetalningar.",
   "PERILS_DIALOG_TITLE": "Ingår i {{insurance}}",
-  "INSURANCE_CARD_SEE_COVERAGE": "Se täckning"
+  "INSURANCE_CARD_SEE_COVERAGE": "Se täckning",
+  "INSURANCE_SELECTOR_HEADLINE": "Dina försäkringsval",
+  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsätt"
 }
