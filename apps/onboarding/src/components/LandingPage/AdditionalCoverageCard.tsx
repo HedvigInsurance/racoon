@@ -14,77 +14,82 @@ const ImageFrame = styled.div({
   position: 'relative',
 })
 
-const MainWrapper = styled(SelectableCardWrapper)({
+const AdditionalWrapper = styled(SelectableCardWrapper)({
   display: 'grid',
-  gridTemplateColumns: '1fr 2fr',
-  minHeight: '8rem',
+  gridTemplateRows: '1.5fr 1fr',
 
   [mq.sm]: {
+    height: '100%',
     borderRadius: '16px',
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: '1.5fr 1fr',
+    gridTemplateColumns: '1fr 2fr',
+    gridTemplateRows: '1fr',
+  },
+})
+
+const AdditionalSection = styled(Section)({
+  padding: '0.5rem',
+
+  [mq.sm]: {
+    paddingLeft: '1rem',
+    alignItems: 'center',
   },
 })
 
 const CheckboxContainer = styled.div({
-  padding: 0,
-  position: 'static',
-  margin: '0.4rem',
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: '0.625rem',
 
   [mq.sm]: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 30,
-    padding: '0.625rem',
+    padding: 0,
+    position: 'static',
+    margin: '0.4rem',
   },
 })
 
-export const MainCoverageCard = ({
+export const AdditionalCoverageCard = ({
   cardImg,
   title,
   description,
   onCheck,
   selected,
-  required,
-  errorMessage,
+  disabled,
   ...wrapperProps
 }: BaseCardProps & SelectableCardWrapperProps) => {
   const isCheckable = onCheck !== undefined
-
   return (
-    <MainWrapper {...wrapperProps} selected={selected} isCheckable={isCheckable} onClick={onCheck}>
+    <AdditionalWrapper
+      {...wrapperProps}
+      selected={selected}
+      isCheckable={isCheckable}
+      onClick={onCheck}
+      disabled={disabled}
+    >
       <ImageFrame>
         <Image
           {...cardImg}
           alt={cardImg.alt ?? ''}
           layout="fill"
           objectFit="cover"
-          placeholder="blur"
           priority={true}
         />
       </ImageFrame>
-      <Section isCheckable={isCheckable}>
-        <Space y={0.25}>
-          <BodyText variant={0} colorVariant="dark" displayBlock>
+      <AdditionalSection isCheckable={isCheckable}>
+        <Space y={0.5}>
+          <BodyText variant={1} colorVariant="dark" displayBlock fixedSize>
             {title}
           </BodyText>
-          <BodyText variant={2} colorVariant="medium" displayBlock>
+          <BodyText variant={3} colorVariant="medium" displayBlock>
             {description}
           </BodyText>
         </Space>
         {isCheckable && (
           <CheckboxContainer>
-            <Checkbox
-              tabIndex={-1}
-              onChange={onCheck}
-              checked={selected}
-              required={required}
-              errorMessage={errorMessage}
-            />
+            <Checkbox tabIndex={-1} onChange={onCheck} checked={selected} disabled={disabled} />
           </CheckboxContainer>
         )}
-      </Section>
-    </MainWrapper>
+      </AdditionalSection>
+    </AdditionalWrapper>
   )
 }

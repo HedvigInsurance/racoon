@@ -2,11 +2,14 @@ import type { GetServerSideProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
-import { LandingPage, LandingPageProps } from '@/components/LandingPage/LandingPage'
+import { NewLandingPage, NewLandingPageProps } from '@/components/LandingPage/NewLandingPage'
+import { OldLandingPage, OldLandingPageProps } from '@/components/LandingPage/OldLandingPage'
 import { SwedishLandingPage } from '@/components/SwedishLandingPage/SwedishLandingPage'
+import { useFeature } from '@/hooks/useFeature'
 import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
+import { Features, Feature } from '@/services/features'
 import { Insurances } from '@/services/insurances'
 import logger from '@/services/logger'
 
@@ -20,11 +23,21 @@ const metaLinks: MetaLinks[] = LOCALE_URL_PARAMS.map((locale) => ({
   href: `https://www.hedvig.com/${locales[locale].path}/new-member`,
 }))
 
-const NewMemberPage = (props: LandingPageProps) => {
+const NewMemberPage = (props: NewLandingPageProps | OldLandingPageProps) => {
   const { t } = useTranslation()
   const { marketLabel, path } = useCurrentLocale()
+  const [isTravelAccidentStandaloneEnabled] = useFeature([Feature.TRAVEL_ACCIDENT_STANDALONE])
 
   const canonicalLink = metaLinks.find((link) => link.path === path)?.href
+
+  let LandingPageComponent: React.ReactNode
+  if (marketLabel === MarketLabel.SE) {
+    LandingPageComponent = <SwedishLandingPage {...(props as NewLandingPageProps)} />
+  } else if (isTravelAccidentStandaloneEnabled) {
+    LandingPageComponent = <NewLandingPage {...(props as NewLandingPageProps)} />
+  } else {
+    LandingPageComponent = <OldLandingPage {...(props as OldLandingPageProps)} />
+  }
 
   return (
     <>
@@ -35,16 +48,14 @@ const NewMemberPage = (props: LandingPageProps) => {
           <link rel="alternative" key={link.hrefLang} hrefLang={link.hrefLang} href={link.href} />
         ))}
       </Head>
-      {marketLabel === MarketLabel.SE ? (
-        <SwedishLandingPage {...props} />
-      ) : (
-        <LandingPage {...props} />
-      )}
+      {LandingPageComponent}
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<
+  NewLandingPageProps | OldLandingPageProps
+> = async (context) => {
   // Skips prerendering this page for 'default' locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#non-dynamic-getstaticprops-pages
   if (context.locale === 'default') {
@@ -62,6 +73,18 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
       }
     }
 
+    if (
+      Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, getMarketLabelFromLocaleLabel(locale))
+    ) {
+      return {
+        props: {
+          ...(await serverSideTranslations(locale)),
+          insurances,
+          referer: context.req.headers.referer ?? null,
+        },
+      }
+    }
+
     const formInitialState = insurances.reduce(
       (res, { fieldName, isPreselected }) => ({
         ...res,
@@ -73,7 +96,10 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
     return {
       props: {
         ...(await serverSideTranslations(locale)),
-        insurances,
+        mainCoverageInsurances: insurances.filter((insurance) => !insurance.isAdditionalCoverage),
+        additionalCoverageInsurances: insurances.filter(
+          (insurance) => insurance.isAdditionalCoverage,
+        ),
         formInitialState,
         referer: context.req.headers.referer ?? null,
       },
@@ -81,6 +107,20 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
   } catch (error) {
     logger.error(error)
     return { notFound: true }
+  }
+}
+
+const getMarketLabelFromLocaleLabel = (localeLabel: LocaleLabel) => {
+  switch (localeLabel) {
+    case 'se':
+    case 'se-en':
+      return MarketLabel.SE
+    case 'dk':
+    case 'dk-en':
+      return MarketLabel.DK
+    case 'no':
+    case 'no-en':
+      return MarketLabel.NO
   }
 }
 

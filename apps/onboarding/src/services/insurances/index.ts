@@ -18,6 +18,7 @@ export type Insurance = {
   perils: Array<string>
   typeOfContract: TypeOfContract
   fieldName: string
+  isAdditionalCoverage?: boolean
   isPreselected?: boolean
   slug?: string
 }
@@ -57,7 +58,9 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: '/racoon-assets/home.jpg',
+        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+          ? '/racoon-assets/home.jpg'
+          : '/racoon-assets/home_old.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       fieldName: 'isHomeContents',
@@ -71,7 +74,9 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: '/racoon-assets/house.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+                ? '/racoon-assets/house.jpg'
+                : '/racoon-assets/house_old.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
@@ -90,6 +95,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       },
       typeOfContract: TypeOfContract.DkTravel,
       fieldName: 'isTravel',
+      isAdditionalCoverage: true,
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.DK)
       ? [
@@ -98,11 +104,14 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: '/racoon-assets/accident.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
+                ? '/racoon-assets/accident.jpg'
+                : '/racoon-assets/accident_old.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
             typeOfContract: TypeOfContract.DkAccident,
             fieldName: 'isAccident',
+            isAdditionalCoverage: true,
           },
         ]
       : []),
@@ -113,7 +122,9 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: '/racoon-assets/home.jpg',
+        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+          ? '/racoon-assets/home.jpg'
+          : '/racoon-assets/home_old.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       typeOfContract: TypeOfContract.NoHomeContentOwn,
@@ -127,7 +138,9 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: '/racoon-assets/house.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+                ? '/racoon-assets/house.jpg'
+                : '/racoon-assets/house_old.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
@@ -146,6 +159,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       },
       typeOfContract: TypeOfContract.NoTravel,
       fieldName: 'isTravel',
+      isAdditionalCoverage: true,
     },
     ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.NO)
       ? [
@@ -154,11 +168,14 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: '/racoon-assets/accident.jpg',
+              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
+                ? '/racoon-assets/accident.jpg'
+                : '/racoon-assets/accident_old.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
             typeOfContract: TypeOfContract.NoAccident,
             fieldName: 'isAccident',
+            isAdditionalCoverage: true,
           },
         ]
       : []),
