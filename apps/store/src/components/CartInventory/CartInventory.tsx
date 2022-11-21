@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { ReactNode } from 'react'
 import { Heading, Space } from 'ui'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { OfferInventoryItem } from './OfferInventoryItem'
 
 type Props = {
   cart: CartFragmentFragment
-  onRemove?: (offer: ProductOfferFragment) => void
+  children: (offer: ProductOfferFragment) => ReactNode
 }
 
-export const CartInventory = ({ cart, onRemove }: Props) => {
+export const CartInventory = ({ cart, children }: Props) => {
   const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(cart.cost.total.currencyCode)
 
@@ -18,9 +18,7 @@ export const CartInventory = ({ cart, onRemove }: Props) => {
     <Space y={1}>
       <List>
         {cart.entries.map((offer) => (
-          <li key={offer.id}>
-            <OfferInventoryItem offer={offer} onRemove={onRemove} />
-          </li>
+          <li key={offer.id}>{children(offer)}</li>
         ))}
       </List>
       <Footer>
