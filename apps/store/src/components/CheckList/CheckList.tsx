@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { PropsWithChildren } from 'react'
-import { TickIcon } from '@/components/TickIcon/TickIcon'
+import { TickIcon } from 'ui'
 
 export const Root = styled.ul({
   padding: 0,

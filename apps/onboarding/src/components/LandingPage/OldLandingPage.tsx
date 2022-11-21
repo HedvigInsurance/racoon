@@ -8,8 +8,8 @@ import { Header } from '@/components/Nav/Header'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
+import { Insurance } from '@/services/insurances'
 import { AdditionalCoverageCard } from './AdditionalCoverageCard'
-import { Insurances } from './LandingPage.types'
 import { MainCoverageCard } from './MainCoverageCard'
 
 type GridCardProps = { size: 'half' | 'full' }
@@ -64,18 +64,18 @@ const FooterButton = styled(Button)({
   },
 })
 
-export type LandingPageProps = {
-  mainCoverageInsurances: Insurances
-  additionalCoverageInsurances: Insurances
+export type OldLandingPageProps = {
+  mainCoverageInsurances: Array<Insurance>
+  additionalCoverageInsurances: Array<Insurance>
   formInitialState: Record<string, boolean>
   referer: string | null
 }
 
-export const LandingPage = ({
+export const OldLandingPage = ({
   mainCoverageInsurances,
   additionalCoverageInsurances,
   formInitialState,
-}: LandingPageProps) => {
+}: OldLandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()
@@ -94,8 +94,8 @@ export const LandingPage = ({
         event.preventDefault()
 
         setIsRedirecting(true)
-        Embark.setStore(locale, formState)
-        const slug = Embark.getSlug(locale)
+        Embark.setStore(locale.market, formState)
+        const slug = Embark.getSlug(locale.market)
         router.push(PageLink.embark({ locale: locale.path, slug }))
       }}
     >
@@ -165,7 +165,7 @@ export const LandingPage = ({
         </Main>
         <FixedFooter>
           <FooterButton color="dark" disabled={isRedirecting}>
-            {t('START_SCREEN_SUBMIT_BUTTON')}
+            {t('LANDING_PAGE_SUBMIT_BUTTON')}
           </FooterButton>
         </FixedFooter>
       </PageContainer>

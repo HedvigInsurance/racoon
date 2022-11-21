@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { CrossIcon, Space } from 'ui'
-import * as Dialog from '@/components/Dialog/Dialog'
+import { CrossIcon, Space, Dialog } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
