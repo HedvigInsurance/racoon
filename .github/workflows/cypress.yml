@@ -23,6 +23,8 @@ jobs:
       # Install NPM dependencies, cache them correctly and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v4
+        env:
+          NEXT_PUBLIC_GRAPHQL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_GRAPHQL_ENDPOINT }}
         with:
           install-command: yarn install --immutable
           command: yarn e2e-onboarding:headless
