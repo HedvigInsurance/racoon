@@ -15,17 +15,17 @@ export const save = (accessToken: string) => {
   })
 }
 
-type CookieParams = Pick<OptionsType, 'req' | 'res'>
+export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
 const getAccessToken = ({ req, res }: CookieParams) => {
   const cookieValue = getCookie(COOKIE_KEY, { req, res })
-  if (cookieValue !== 'string') return undefined
+  if (typeof cookieValue !== 'string') return undefined
   return deserialize(cookieValue)
 }
 
 export const getAuthHeader = (params: CookieParams = {}): Record<string, string> => {
   const accessToken = getAccessToken(params)
-  if (accessToken) return { authorization: accessToken }
+  if (accessToken) return { authorization: `Bearer ${accessToken}` }
   return {}
 }
 

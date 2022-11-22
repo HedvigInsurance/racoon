@@ -24,14 +24,19 @@ export const convertRoutingLocale = (locale: RoutingLocale) => {
 }
 
 type Params = {
+  authorizationCode: string
   locale: RoutingLocale
   redirectURL: URL
 }
 
-export const getWebOnboardingPaymentURL = ({ locale, redirectURL }: Params) => {
+export const getWebOnboardingPaymentURL = ({ authorizationCode, locale, redirectURL }: Params) => {
   if (PAYMENT_URL_TEMPLATE) {
-    const baseURL = PAYMENT_URL_TEMPLATE.replace(LOCALE_PATTERN, convertRoutingLocale(locale))
-    return `${baseURL}?redirect_url=${redirectURL.toString()}`
+    const targetUrl = new URL(
+      PAYMENT_URL_TEMPLATE.replace(LOCALE_PATTERN, convertRoutingLocale(locale)),
+    )
+    targetUrl.searchParams.set('redirect_url', redirectURL.toString())
+    targetUrl.searchParams.set('authorization_code', authorizationCode)
+    return targetUrl.toString()
   }
 
   return null
