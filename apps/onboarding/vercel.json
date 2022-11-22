@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
   "buildCommand": "cd ../.. && npx turbo run build --filter=onboarding",
-  "ignoreCommand": "npx turbo-ignore",
+  "ignoreCommand": "../../bin/vercel-ignore-step.sh",
   "regions": ["arn1"],
   "github": {
     "autoJobCancelation": false
