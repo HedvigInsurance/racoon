@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import * as PriceFooter from '../PriceFooter/PriceFooter'
 import { FormElement } from '../ProductPage.constants'
@@ -19,6 +20,7 @@ export const PriceCalculatorFooterForm = ({
   loading,
   ...formProps
 }: Props) => {
+  const { t } = useTranslation()
   const formatter = useCurrencyFormatter(currencyCode)
 
   const handleClick = () => {
@@ -30,7 +32,7 @@ export const PriceCalculatorFooterForm = ({
       <PriceFooter.Footer>
         <form {...formProps}>
           <PriceFooter.Button type="submit" onClick={handleClick} disabled={loading}>
-            <span>{formatter.format(price)}</span>
+            <span>{t('MONTHLY_PRICE', { displayAmount: formatter.format(price) })}</span>
             <span>Add to cart</span>
           </PriceFooter.Button>
 

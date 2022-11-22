@@ -9,6 +9,7 @@ import { useApollo } from '@/hooks/useApollo'
 import { useDebugTranslationKeys } from '@/hooks/useDebugTranslationsKeys'
 import { useSetupQuoteCartEffect } from '@/hooks/useSetupQuoteCartEffect'
 import { useTrackPageViews } from '@/hooks/useTrackPageViews'
+import { contentFontClassName } from '@/lib/fonts'
 import { useCurrentLocale } from '@/lib/l10n/use-current-locale'
 import { gtmDevScript, gtmProdScript, useGTMUserProperties } from '@/services/analytics/gtm'
 import * as Datadog from '@/services/datadog'
@@ -44,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
-          <Component {...pageProps} />
+          <Component {...pageProps} className={contentFontClassName} />
         </ThemeProvider>
       </ApolloProvider>
 

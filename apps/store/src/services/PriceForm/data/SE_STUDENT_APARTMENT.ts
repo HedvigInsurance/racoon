@@ -59,6 +59,7 @@ export const SE_STUDENT_APARTMENT: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
+            inputMode: 'numeric',
             label: { key: 'Postal code' },
             minLength: 5,
             maxLength: 5,
@@ -85,13 +86,12 @@ export const SE_STUDENT_APARTMENT: Template = {
       items: [
         {
           field: {
-            type: 'number',
-            min: 0,
-            max: 5,
+            type: 'householdSize',
             name: 'numberCoInsured',
-            label: { key: 'Number of co-insured' },
+            label: { key: 'Household size' },
             required: true,
             defaultValue: 0,
+            max: 5,
           },
           layout: { columnSpan: 6 },
         },

@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEvent } from 'react'
-import { Button, Heading, LinkButton, Space } from 'ui'
-import * as Dialog from '@/components/Dialog/Dialog'
+import { Button, Heading, LinkButton, Space, Dialog } from 'ui'
+import { Pillow } from '@/components/Pillow/Pillow'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 export type CartCardProps = {
@@ -13,16 +14,19 @@ export type CartCardProps = {
 }
 
 export const CartCard = ({ title, price, currency, onSubmit, loading }: CartCardProps) => {
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(currency)
 
   return (
     <Dialog.Root>
       <ProductCard>
-        <IconElement />
+        <Pillow size="small" fromColor="#C0E4F3" toColor="#99AAD8" />
         <Content>
           <HeaderElement>
             <div>{title}</div>
-            <ExtraElement>{currencyFormatter.format(price)}/mo.</ExtraElement>
+            <ExtraElement>
+              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(price) })}
+            </ExtraElement>
           </HeaderElement>
 
           <Dialog.Trigger asChild>
@@ -77,17 +81,6 @@ const HeaderElement = styled.div(({ theme }) => ({
   width: '100%',
 }))
 
-const IconElement = styled.div(
-  {
-    width: '48px',
-    height: '48px',
-    borderRadius: '0.75rem',
-  },
-  (props) => ({
-    border: `2px solid ${props.theme.colors.gray500}`,
-    backgroundColor: `${props.theme.colors.gray300}`,
-  }),
-)
 const ExtraElement = styled.div({
   justifySelf: 'end',
 })

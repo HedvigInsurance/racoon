@@ -1,27 +1,17 @@
-enum HedvigFont {
+export enum HedvigFont {
   HEDVIG_LETTERS_BIG = 'HedvigLetters-Big',
   HEDVIG_LETTERS_SMALL = 'HedvigLetters-Small',
   HEDVIG_LETTERS_STANDARD = 'HedvigLetters-Standard',
 }
 
-const FONT_STANDARD = `'${HedvigFont.HEDVIG_LETTERS_STANDARD}', sans-serif`
+const FONT_STANDARD = `var(--hedvig-font-standard), sans-serif`
 export const fonts = {
   standard: FONT_STANDARD,
-  small: `'${HedvigFont.HEDVIG_LETTERS_SMALL}', serif`,
-  big: `'${HedvigFont.HEDVIG_LETTERS_BIG}', serif`,
+  small: 'var(--hedvig-font-small), serif',
+  big: 'var(--hedvig-font-big), serif',
 
   body: FONT_STANDARD,
   heading: FONT_STANDARD,
-}
-
-export const getCDNFonts = () => {
-  return Object.values(HedvigFont).map((fontName) => ({
-    family: fontName,
-    style: 'normal',
-    weight: 400,
-    src: `https://cdn.hedvig.com/identity/fonts/${fontName}.woff2`,
-    format: 'woff2',
-  }))
 }
 
 export const fontSizes: Record<number | string, string> = {

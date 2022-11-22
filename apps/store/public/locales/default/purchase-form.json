@@ -1,0 +1,4 @@
+{
+  "HOUSEHOLD_SIZE_VALUE": "You + {{count}}",
+  "HOUSEHOLD_SIZE_VALUE_zero": "Just you"
+}

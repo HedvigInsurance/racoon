@@ -26,7 +26,7 @@ export const SE_CAR: Template = {
       items: [
         {
           field: {
-            type: 'text',
+            type: 'car-registration-number',
             name: 'registrationNumber',
             label: { key: 'Registration number' },
             required: true,
@@ -35,11 +35,17 @@ export const SE_CAR: Template = {
         },
         {
           field: {
-            type: 'number',
-            name: 'milage',
+            type: 'select',
+            name: 'mileage',
             label: { key: 'Annual mileage' },
             required: true,
-            min: 0,
+            options: [
+              { label: { key: '10 000 km/year' }, value: '1000' },
+              { label: { key: '15 000 km/year' }, value: '1500' },
+              { label: { key: '20 000 km/year' }, value: '2000' },
+              { label: { key: '25 000 km/year' }, value: '2500' },
+              { label: { key: '20 500+ km/year' }, value: '2501' },
+            ],
           },
           layout: { columnSpan: 6 },
         },
@@ -63,6 +69,7 @@ export const SE_CAR: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
+            inputMode: 'numeric',
             label: { key: 'Postal code' },
             minLength: 5,
             maxLength: 5,

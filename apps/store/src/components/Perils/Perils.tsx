@@ -1,11 +1,9 @@
 import styled from '@emotion/styled'
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CoverageList } from './CoverageList'
-import { MinusIcon } from './MinusIcon'
 import { Peril } from './Perils.types'
-import { PlusIcon } from './PlusIcon'
 
 type Props = {
   items: Array<Peril>
@@ -18,16 +16,12 @@ export const Perils = ({ items }: Props) => {
     setOpenedItems(value)
   }, [])
 
-  const openedItemsSet = useMemo(() => new Set(openedItems), [openedItems])
-
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       {items.map(({ id, icon, name, description, covered, notCovered }) => {
-        const isOpened = openedItemsSet.has(name)
-
         return (
           <Accordion.Item key={id} value={name}>
-            <Accordion.HeaderWithTrigger icon={isOpened ? <MinusIcon /> : <PlusIcon />}>
+            <Accordion.HeaderWithTrigger>
               <SpaceFlex space={0.5}>
                 {icon}
                 {name}

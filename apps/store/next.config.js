@@ -7,30 +7,10 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ['a.storyblok.com'],
+    domains: ['a.storyblok.com', 'promise.hedvig.com'],
   },
   productionBrowserSourceMaps: true,
   i18n,
-  // Temporary fix for normalizing locales.  Will be replaced with redirect configuration
-  async redirects() {
-    return [
-      {
-        source: '/sv-se',
-        destination: '/se',
-        permanent: true,
-      },
-      {
-        source: '/da-dk',
-        destination: '/dk',
-        permanent: true,
-      },
-      {
-        source: '/nb-no',
-        destination: '/no',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig

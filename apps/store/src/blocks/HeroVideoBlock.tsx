@@ -1,13 +1,13 @@
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { HeadingBlockProps, HeadingBlock } from './HeadingBlock'
 
 type HeroVideoBlockProps = SbBaseBlockProps<{
-  video: StoryblokImage
+  video: StoryblokAsset
   format: string
   height: number
-  poster?: StoryblokImage
+  poster?: StoryblokAsset
   headingsPadding: string
   headings: ExpectedBlockType<HeadingBlockProps>
 }>

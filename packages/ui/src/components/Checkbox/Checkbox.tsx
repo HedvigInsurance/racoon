@@ -1,53 +1,38 @@
 import styled from '@emotion/styled'
-import { useEffect, useRef } from 'react'
-import { CheckIcon } from './CheckIcon'
+import { useEffect, useRef, useId } from 'react'
+import type { ReactNode, ComponentPropsWithRef } from 'react'
+import { CheckIcon } from '../../icons/CheckIcon'
 
-export type CheckboxProps = {
-  label?: React.ReactNode
+export type CheckboxProps = ComponentPropsWithRef<'input'> & {
+  label?: ReactNode
   prependLabel?: boolean
-  onChange?: () => void
-  checked?: boolean
-  disabled?: boolean
   circle?: boolean
-  required?: boolean
   errorMessage?: string
-  tabIndex?: number
 }
-
-const Icon = styled(CheckIcon)<CheckboxProps>((props) => ({
-  marginTop: '1.5px',
-  visibility: props.checked && !props.disabled ? 'visible' : 'hidden',
-}))
-
-// Hide checkbox visually but remain accessible to screen readers.
-// Source: https://polished.js.org/docs/#hidevisually
-export const HiddenInput = styled.input(
-  {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: '1px',
-    margin: '-1px',
-    overflow: 'hidden',
-    padding: '0px',
-    width: '1px',
-    position: 'absolute',
-    whiteSpace: 'nowrap',
-  },
-  (props) => ({
-    '&:focus + *': {
-      border: `2px solid ${props.theme.colors.gray900}`,
-    },
-  }),
-)
 
 const ControlContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
+  gap: '0.4rem',
+  width: 'max-content',
 })
 
-const ControlLabel = styled.div<{ disabled?: boolean }>(
+const HiddenInput = styled.input({
+  position: 'absolute',
+  inset: 0,
+  // Hide checkbox visually but remain accessible to screen readers.
+  opacity: 0,
+  // The input needs to cover all the presentational bit (StyledCheckbox) and being
+  // rendered on top of it so it handles interactions (house click, etc)
+  zIndex: 1,
+  '&:enabled:hover': {
+    cursor: 'pointer',
+  },
+})
+
+const ControlLabel = styled.label<{ disabled?: boolean }>(
   {
+    cursor: 'default',
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '0.875rem',
@@ -59,70 +44,65 @@ const ControlLabel = styled.div<{ disabled?: boolean }>(
   }),
 )
 
-export const StyledCheckbox = ({ checked, onChange, disabled, circle }: CheckboxProps) => {
-  return (
-    <StyledCheckboxElement {...{ checked, onClick: onChange, disabled, circle }}>
-      <DisabledTick disabled={disabled} />
-      <Icon disabled={disabled} checked={checked} />
-    </StyledCheckboxElement>
-  )
-}
+const Icon = styled(CheckIcon)({
+  // Its appearance is controlled by StyledCheckboxElement
+  visibility: 'hidden',
+})
 
-const StyledCheckboxElement = styled.div<CheckboxProps>(
-  ({ circle }: CheckboxProps) => ({
-    position: 'relative',
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '1.25rem',
-    height: '1.25rem',
-    margin: '0.4rem',
-    borderRadius: circle ? '100%' : '2px',
-    boxSizing: 'border-box',
-    transition: 'all 150ms',
-  }),
-  (props) => {
-    let background = props.theme.colors.white
-    if (props.disabled) {
-      background = props.theme.colors.gray300
-    } else if (props.checked) {
-      background = props.theme.colors.gray900
-    }
-    return {
-      background,
-      border:
-        (!props.checked && !props.disabled && `1px solid ${props.theme.colors.gray500};`) ||
-        'initial',
-      '&:hover': {
-        border: (!props.checked && `2px solid ${props.theme.colors.gray900};`) || 'initial',
-      },
-    }
-  },
-)
+const DisabledTick = styled.div(({ theme }) => ({
+  position: 'absolute',
+  // Its appearance is controlled by StyledCheckboxElement
+  display: 'none',
+  width: 10,
+  height: 2,
+  backgroundColor: theme.colors.gray500,
+}))
 
-const DisabledTick = styled.div<{ disabled?: boolean }>(
-  {
-    position: 'absolute',
-    width: 10,
-    height: 2,
+const StyledCheckboxElement = styled.div<CheckboxProps>(({ theme, circle }) => ({
+  position: 'relative',
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '1.25rem',
+  height: '1.25rem',
+  border: `1px solid ${theme.colors.gray500}`,
+  borderRadius: circle ? '100%' : '2px',
+  background: theme.colors.white,
+  transition: 'all 150ms',
+  // checked/unchecked backgorund
+  [`${HiddenInput}:checked + &`]: {
+    background: theme.colors.gray900,
   },
-  (props) => ({
-    backgroundColor: props.theme.colors.gray500,
-    display: props.disabled ? 'initial' : 'none',
-  }),
-)
+  [`${HiddenInput}:disabled + &`]: {
+    background: theme.colors.gray300,
+  },
+  // hover/focus-visible
+  [`${HiddenInput}:enabled:hover + &, ${HiddenInput}:focus-visible + &`]: {
+    border: `2px solid ${theme.colors.gray900}`,
+  },
+  // checked/disabled icons
+  [`${HiddenInput}:enabled${HiddenInput}:checked + & > ${Icon}`]: {
+    visibility: 'revert',
+  },
+  [`${HiddenInput}:not(:enabled) + & > ${DisabledTick}`]: {
+    display: 'revert',
+  },
+}))
+
+const CheckboxWrapper = styled.div({
+  position: 'relative',
+  isolation: 'isolate',
+})
 
 export const Checkbox = ({
-  disabled,
-  checked,
-  onChange,
-  label,
+  circle,
   prependLabel,
-  required,
+  label,
   errorMessage,
-  tabIndex,
+  ...delegated
 }: CheckboxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const id = useId()
 
   const handleInvalid = () => {
     if (errorMessage) {
@@ -132,19 +112,34 @@ export const Checkbox = ({
 
   useEffect(() => {
     inputRef.current?.setCustomValidity('')
-  }, [required, checked])
+  }, [delegated.required, delegated.checked])
+
+  let LabelComponent: ReactNode = null
+  if (label) {
+    LabelComponent = (
+      <ControlLabel htmlFor={delegated.id ?? id} disabled={delegated.disabled}>
+        {label}
+      </ControlLabel>
+    )
+  }
 
   return (
     <ControlContainer>
-      {prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
-      <HiddenInput
-        {...{ tabIndex, checked, onChange, disabled, required }}
-        onInvalid={handleInvalid}
-        ref={inputRef}
-        type="checkbox"
-      />
-      <StyledCheckbox {...{ checked, onChange, disabled }} />
-      {!prependLabel && <ControlLabel disabled={disabled}>{label}</ControlLabel>}
+      {prependLabel && LabelComponent}
+      <CheckboxWrapper>
+        <HiddenInput
+          ref={inputRef}
+          id={delegated.id ?? id}
+          type="checkbox"
+          onInvalid={handleInvalid}
+          {...delegated}
+        />
+        <StyledCheckboxElement circle={circle}>
+          <Icon />
+          <DisabledTick />
+        </StyledCheckboxElement>
+      </CheckboxWrapper>
+      {!prependLabel && LabelComponent}
     </ControlContainer>
   )
 }

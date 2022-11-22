@@ -9,12 +9,11 @@ export const Footer = ({ children }: FooterProps) => {
   return <Wrapper y={1}>{children}</Wrapper>
 }
 
-const Wrapper = styled(Space)(({ theme }) => ({
-  backgroundColor: theme.colors.white,
-  boxShadow: '0px -1px 1px rgba(0, 0, 0, 0.1), 0px -4px 8px rgba(0, 0, 0, 0.1)',
-  padding: `${theme.space[3]} ${theme.space[4]}`,
+const Wrapper = styled(Space)({
+  display: 'flex',
+  justifyContent: 'center',
   width: '100%',
-}))
+})
 
 export type ButtonProps = {
   type?: 'button' | 'submit'
@@ -25,7 +24,7 @@ export type ButtonProps = {
 
 export const Button = ({ onClick, disabled, type = 'submit', children }: ButtonProps) => {
   return (
-    <FlexButton fullWidth type={type} onClick={onClick} disabled={disabled}>
+    <FlexButton type={type} onClick={onClick} disabled={disabled}>
       <Separate Separator={<Separator />}>{children}</Separate>
     </FlexButton>
   )
@@ -33,6 +32,8 @@ export const Button = ({ onClick, disabled, type = 'submit', children }: ButtonP
 
 const FlexButton = styled(UIButton)(() => ({
   display: 'flex',
+  lineHeight: 1.125,
+  boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.4)',
 }))
 
 const Separator = styled.div(({ theme }) => ({

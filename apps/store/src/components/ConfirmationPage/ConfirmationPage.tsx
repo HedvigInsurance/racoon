@@ -1,21 +1,20 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { Heading, Space } from 'ui'
-import * as Table from '@/components/Table/Table'
+import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
+import { CartInventory } from '@/components/CartInventory/CartInventory'
+import * as InventoryItem from '@/components/CartInventory/InventoryItem'
+import { Pillow } from '@/components/Pillow/Pillow'
 import { Text } from '@/components/Text/Text'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { fromNow } from './ConfirmationPage.helpers'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
-export const ConfirmationPage = ({
-  firstName,
-  currency,
-  cost,
-  products,
-  platform,
-}: ConfirmationPageProps) => {
+export const ConfirmationPage = (props: ConfirmationPageProps) => {
+  const { cart, currency, platform } = props
   const { locale } = useCurrentLocale()
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(currency)
 
   return (
@@ -25,12 +24,8 @@ export const ConfirmationPage = ({
           <Space y={2.5}>
             <Space y={1}>
               <CenteredHeading as="h1" variant="standard.24">
-                Welcome, {firstName}
+                Welcome to Hedvig!
               </CenteredHeading>
-              <CenteredText>
-                Thank you for joining Hedvig. You can access all information and help you need in
-                the Hedvig app.
-              </CenteredText>
             </Space>
 
             <CenteredList>
@@ -49,38 +44,33 @@ export const ConfirmationPage = ({
         <main>
           <Space y={1}>
             <Heading as="h2" variant="standard.18">
-              Purchase summary
+              Your purchase
             </Heading>
 
-            <Space y={1}>
-              <StyledTable layout="fixed">
-                <Table.Body>
-                  {products.map((product) => (
-                    <Table.Row key={product.name}>
-                      <Table.Cell>
-                        <Text size="m">{product.name}</Text>
-                      </Table.Cell>
-                      <Table.Cell align="right">
-                        <Text size="m">{fromNow(new Date(product.startDate), locale)}</Text>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </StyledTable>
-
-              <StyledTable layout="fixed">
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Text size="m">Total price</Text>
-                    </Table.Cell>
-                    <Table.Cell align="right">
-                      <Text size="m">{currencyFormatter.format(cost.total)}/mo</Text>
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </StyledTable>
-            </Space>
+            <CartInventory cart={cart}>
+              {(offer) => (
+                <InventoryItem.Root>
+                  <InventoryItem.Left>
+                    <Pillow size="small" fromColor="#C0E4F3" toColor="#99AAD8" />
+                  </InventoryItem.Left>
+                  <InventoryItem.Main>
+                    <InventoryItem.MainLeft>
+                      <p>{offer.variant.displayName}</p>
+                    </InventoryItem.MainLeft>
+                    <InventoryItem.MainRight>
+                      {t('MONTHLY_PRICE', {
+                        displayAmount: currencyFormatter.format(offer.price.amount),
+                      })}
+                    </InventoryItem.MainRight>
+                    <InventoryItem.MainBottom>
+                      <Text as="p" color="gray600" size="s">
+                        Activates {fromNow(new Date(offer.startDate), locale)}
+                      </Text>
+                    </InventoryItem.MainBottom>
+                  </InventoryItem.Main>
+                </InventoryItem.Root>
+              )}
+            </CartInventory>
           </Space>
         </main>
       </Space>
@@ -92,23 +82,15 @@ const Wrapper = styled.div(({ theme }) => ({
   padding: theme.space[4],
   paddingTop: theme.space[8],
   minHeight: '100vh',
+  width: '100%',
 }))
 
 const CenteredHeading = styled(Heading)({
   textAlign: 'center',
 })
 
-const CenteredText = styled.p(({ theme }) => ({
-  textAlign: 'center',
-  color: theme.colors.gray700,
-}))
-
 const CenteredList = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   gap: theme.space[2],
-}))
-
-const StyledTable = styled(Table.Root)(({ theme }) => ({
-  backgroundColor: theme.colors.white,
 }))

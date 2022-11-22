@@ -53,9 +53,9 @@ export const PriceCardForm = ({
               <CustomButton fullWidth disabled={loading}>
                 Add to cart
               </CustomButton>
-              <CenteredText>
-                <Text size="s">Cancel anytime</Text>
-              </CenteredText>
+              <Text size="s" align="center">
+                Cancel anytime
+              </Text>
             </SpaceFlex>
           </Padded>
         </Space>
@@ -71,10 +71,6 @@ const CustomButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.colors.gray500,
     color: theme.colors.gray100,
   },
-}))
-
-const CenteredText = styled.p(() => ({
-  textAlign: 'center',
 }))
 
 const Padded = styled.div(({ theme }) => ({

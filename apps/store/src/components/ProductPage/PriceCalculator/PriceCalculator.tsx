@@ -1,5 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useMemo, useRef, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
@@ -20,9 +21,7 @@ import { PriceFormModal } from '../PriceFormModal/PriceFormModal'
 // TODO: get from API
 const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
-type Props = { title: string }
-
-export const PriceCalculator = ({ title }: Props) => {
+export const PriceCalculator = () => {
   const toastRef = useRef<CartToastAttributes | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -41,8 +40,14 @@ export const PriceCalculator = ({ title }: Props) => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
 
-  const apolloClient = useApolloClient()
+  const { t } = useTranslation()
   const formatter = useCurrencyFormatter(shopSession.currencyCode)
+  let displayCost
+  if (productOffer?.price.amount) {
+    displayCost = t('MONTHLY_PRICE', { displayAmount: formatter.format(productOffer.price.amount) })
+  }
+
+  const apolloClient = useApolloClient()
   const handleAddedToCart = (productOffer: ProductOfferFragment) => {
     setProductOffer(undefined)
     toastRef.current?.publish({
@@ -54,9 +59,6 @@ export const PriceCalculator = ({ title }: Props) => {
     priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(priceTemplate.name)
     refreshData()
   }
-
-  const offerCost = productOffer?.price.amount
-  const displayCost = offerCost ? `${shopSession.currencyCode} ${offerCost} /mth.` : undefined
 
   return (
     <>
@@ -71,12 +73,6 @@ export const PriceCalculator = ({ title }: Props) => {
             <Heading as="h2" variant="standard.24">
               {product.displayName}
             </Heading>
-
-            {!productOffer && (
-              <Text color="gray600" size="l">
-                {title}
-              </Text>
-            )}
 
             {displayCost && (
               <Text as="p" align="center" size="l">

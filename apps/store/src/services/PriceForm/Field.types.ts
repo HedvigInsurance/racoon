@@ -13,6 +13,7 @@ export type TextField = BaseField<string> & {
   pattern?: string
   minLength?: number
   maxLength?: number
+  inputMode?: 'text' | 'numeric' | 'tel' | 'email'
 }
 
 export type SsnSeField = BaseField<string> & {
@@ -53,6 +54,15 @@ export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
 
 export type ExtraBuilding = { area: number; type: string; hasWaterConnected: boolean }
 
+export type HouseholdSizeField = BaseField<number> & {
+  type: 'householdSize'
+  max: number
+}
+
+export type CarRegistrationNumberField = BaseField<string> & {
+  type: 'car-registration-number'
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -60,4 +70,6 @@ export type InputField =
   | RadioField
   | SelectField
   | ExtraBuildingsField
+  | HouseholdSizeField
   | SsnSeField
+  | CarRegistrationNumberField

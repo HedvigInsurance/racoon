@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
+import { useTranslation } from 'next-i18next'
 import { ChevronIcon, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
@@ -9,6 +10,7 @@ import { CheckoutPaymentPageProps } from '../CheckoutPaymentPage/CheckoutPayment
 type Props = CheckoutPaymentPageProps
 
 export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) => {
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(currency)
   return (
     <Collapsible>
@@ -48,7 +50,9 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
           ) : null}
 
           <SpaceFlex x={0.5}>
-            <Text size="l">{currencyFormatter.format(cost.total)}/mo.</Text>
+            <Text size="l">
+              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.total) })}
+            </Text>
             <TriggerIcon size="1rem" />
           </SpaceFlex>
         </SpaceFlex>

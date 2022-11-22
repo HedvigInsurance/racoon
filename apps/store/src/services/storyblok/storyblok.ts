@@ -32,6 +32,7 @@ import {
   HeaderBlockProps,
 } from '@/blocks/TopMenuBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { VideoBlock } from '@/blocks/VideoBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -61,7 +62,7 @@ export type StoryblokPreviewData = {
   version?: StoryblokVersion
 }
 
-export type StoryblokImage = {
+export type StoryblokAsset = {
   alt: string
   copyright: string
   fieldtype: 'asset'
@@ -162,6 +163,7 @@ export const initStoryblok = () => {
     TextBlock,
     TopPickCardBlock,
     PerilsBlock,
+    VideoBlock,
   ]
   const blockAliases = { product: PageBlock, reusableBlock: PageBlock }
   const components = {
@@ -173,6 +175,13 @@ export const initStoryblok = () => {
 
   storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+    apiOptions: {
+      // ~290ms -> ~15ms for subsequent page renders
+      cache: {
+        type: 'memory',
+        clear: 'auto',
+      },
+    },
     use: [apiPlugin],
     components,
   })

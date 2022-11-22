@@ -1,7 +1,9 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { HouseholdSizeField } from '@/components/PriceForm/HouseholdSize'
 import { InputField as InputFieldType } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
+import { CarRegistrationNumberField } from './CarRegistrationField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import { InputRadio } from './InputRadio'
 import { SsnSeField } from './SsnSeField'
@@ -27,6 +29,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           pattern={field.pattern}
           minLength={field.minLength}
           maxLength={field.maxLength}
+          inputMode={field.inputMode ?? 'text'}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
@@ -41,6 +44,7 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           label={field.label ? translateLabel(field.label) : undefined}
           min={field.min}
           max={field.max}
+          inputMode="numeric"
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
@@ -91,9 +95,6 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
         />
       )
 
-    case 'ssn-se':
-      return <SsnSeField field={field} />
-
     case 'extra-buildings':
       return (
         <ExtraBuildingsField
@@ -106,5 +107,13 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           loading={loading}
         />
       )
+
+    case 'householdSize':
+      return <HouseholdSizeField field={field} />
+
+    case 'ssn-se':
+      return <SsnSeField field={field} />
+    case 'car-registration-number':
+      return <CarRegistrationNumberField field={field} />
   }
 }

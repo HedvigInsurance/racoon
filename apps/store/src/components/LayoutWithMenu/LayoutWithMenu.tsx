@@ -10,19 +10,20 @@ const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  isolation: 'isolate',
 })
 
 type LayoutWithMenuProps = {
-  children: ReactElement<StoryblokPageProps>
+  children: ReactElement<StoryblokPageProps & { className: string }>
 }
 
 export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
-  const { story, globalStory } = children.props
+  const { story, globalStory, className } = children.props
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {(!story || !story.content.hideMenu) &&
         headerBlock?.map((nestedBlock) => (
           <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />

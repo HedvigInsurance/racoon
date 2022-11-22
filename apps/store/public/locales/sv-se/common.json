@@ -1,0 +1,6 @@
+{
+  "CHECKOUT_BUTTON": "Kolla upp",
+  "TEST_PLURALIZE_one": "Kanelbulle",
+  "TEST_PLURALIZE_other": "{{count}} kanelbullar",
+  "MONTHLY_PRICE": "{{displayAmount}}/mån"
+}

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
@@ -10,19 +11,20 @@ type Props = {
 }
 
 export const OfferInventoryItem = ({ offer, onRemove }: Props) => {
+  const { t } = useTranslation()
   const currencyFormatter = useCurrencyFormatter(offer.price.currencyCode)
 
   return (
     <InventoryItem.Root>
       <InventoryItem.Left>
-        <Pillow size="small" fromColor="blue" toColor="green" />
+        <Pillow size="small" fromColor="#C0E4F3" toColor="#99AAD8" />
       </InventoryItem.Left>
       <InventoryItem.Main>
         <InventoryItem.MainLeft>
           <p>{offer.variant.displayName}</p>
         </InventoryItem.MainLeft>
         <InventoryItem.MainRight>
-          {currencyFormatter.format(offer.price.amount)}/mån
+          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(offer.price.amount) })}
         </InventoryItem.MainRight>
         {onRemove && (
           <InventoryItem.MainBottom>

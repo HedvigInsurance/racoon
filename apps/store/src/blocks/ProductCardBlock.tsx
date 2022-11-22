@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
-import { SbBaseBlockProps, LinkField, StoryblokImage } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type ProductCardBlockProps = SbBaseBlockProps<{
   title: string
   subtitle: string
-  image: StoryblokImage
+  image: StoryblokAsset
   link: LinkField
 }>
 

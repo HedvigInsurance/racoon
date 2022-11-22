@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/legacy/image'
-import { Checkbox, Space, mq } from 'ui'
+import { Space, mq } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import {
   BaseCardProps,
@@ -8,6 +8,7 @@ import {
   SelectableCardWrapperProps,
   SelectableCardWrapper,
 } from './BaseCard'
+import { Checkbox } from './Checkbox'
 
 const ImageFrame = styled.div({
   position: 'relative',
@@ -28,7 +29,7 @@ const MainWrapper = styled(SelectableCardWrapper)({
 const CheckboxContainer = styled.div({
   padding: 0,
   position: 'static',
-  marginLeft: 'auto',
+  margin: '0.4rem',
 
   [mq.sm]: {
     position: 'absolute',

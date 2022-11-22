@@ -5,10 +5,11 @@ import { PageLink } from '@/utils/PageLink'
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { MD: md, PaRes: pares } = req.body
+  const { locale, shopSessionId } = req.query
 
-  if (!isRoutingLocale(req.query.locale)) return res.status(400).json({ message: 'Invalid locale' })
-
-  const locale = req.query.locale
+  if (!isRoutingLocale(locale)) return res.status(400).json({ message: 'Invalid locale' })
+  if (typeof shopSessionId !== 'string')
+    return res.status(400).json({ message: 'Missing ShopSession ID' })
 
   if (typeof md !== 'string')
     return res.status(400).json({ message: 'MD parameter not found in body' })
@@ -20,6 +21,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.redirect(
     PageLink.checkoutPayment({
       locale,
+      shopSessionId,
       authStatus: AuthStatus.Success,
     }),
   )

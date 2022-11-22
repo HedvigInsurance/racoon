@@ -2,7 +2,11 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ArrowForwardIcon, Button, Heading, HedvigLogo, InputField, Space } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { Text } from '@/components/Text/Text'
+import { CheckoutSigningStatus } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
+import { OfferInventoryItem } from '../CartInventory/OfferInventoryItem'
 import { FormElement } from './CheckoutPage.constants'
 import { formatAPIDate } from './CheckoutPage.helpers'
 import { CheckoutPageProps } from './CheckoutPage.types'
@@ -33,7 +37,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </Heading>
               </MainTop>
 
-              <CartInventory cart={cart} />
+              <CartInventory cart={cart}>
+                {(offer) => <OfferInventoryItem offer={offer} />}
+              </CartInventory>
             </Space>
 
             <Section as="section" y={1}>
@@ -66,7 +72,28 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Heading as="h2" variant="standard.24">
                 2. Your contact info
               </Heading>
-
+              <PersonalNumberField
+                name={FormElement.PersonalNumber}
+                required
+                defaultValue={prefilledData.personalNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PersonalNumber]}
+              />
+              <InputField
+                label="First Name"
+                name={FormElement.FirstName}
+                type="text"
+                required
+                defaultValue={prefilledData.firstName ?? undefined}
+                errorMessage={userErrors[FormElement.FirstName]}
+              />
+              <InputField
+                label="Last Name"
+                name={FormElement.LastName}
+                type="text"
+                required
+                defaultValue={prefilledData.lastName ?? undefined}
+                errorMessage={userErrors[FormElement.LastName]}
+              />
               <InputField
                 label="Email"
                 name={FormElement.Email}
@@ -75,24 +102,51 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 defaultValue={prefilledData.email ?? undefined}
                 errorMessage={userErrors[FormElement.Email]}
               />
+              <InputField
+                label="Phone"
+                name={FormElement.PhoneNumber}
+                type="phone"
+                inputMode="tel"
+                required
+                defaultValue={prefilledData.phoneNumber ?? undefined}
+                errorMessage={userErrors[FormElement.PhoneNumber]}
+              />
             </Section>
 
-            <Section as="section" y={1}>
-              <Heading as="h2" variant="standard.24">
-                3. Authorize
-              </Heading>
-
-              <Space y={0.5}>
-                <Button fullWidth disabled={loading}>
-                  Complete purchase
-                </Button>
-                {userErrors.form && <p>ERROR: {userErrors.form}</p>}
-                <p>After completing the purchase, you&apos;ll can connect payment.</p>
-              </Space>
-            </Section>
+            <Space y={1}>
+              <Text size="m">
+                After completing the purchase, you&apos;ll be able to connect payment.
+              </Text>
+              <SubmitButton loading={loading} signingStatus={props.signingStatus} />
+              {userErrors.form && <Text size="m">ERROR: {userErrors.form}</Text>}
+            </Space>
           </Space>
         </Main>
       </Space>
+    </>
+  )
+}
+
+const SubmitButton = ({
+  loading,
+  signingStatus,
+}: Pick<CheckoutPageProps, 'loading' | 'signingStatus'>) => {
+  let label
+  if (loading) {
+    label = 'Processing...'
+  } else {
+    label = 'Sign with BankID'
+  }
+  return (
+    <>
+      <Button fullWidth disabled={loading}>
+        {label}
+      </Button>
+      {signingStatus === CheckoutSigningStatus.Pending && (
+        <Text size="m" align="center">
+          Please open your BankID app
+        </Text>
+      )}
     </>
   )
 }

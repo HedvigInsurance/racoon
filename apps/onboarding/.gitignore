@@ -10,3 +10,4 @@ tsconfig.tsbuildinfo
 src/services/**/generated.ts
 src/services/apollo/types.ts
 
+.vercel

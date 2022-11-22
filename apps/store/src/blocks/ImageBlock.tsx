@@ -2,11 +2,11 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Image from 'next/image'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokImage } from '@/services/storyblok/storyblok'
+import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type ImageBlockProps = SbBaseBlockProps<{
-  image: StoryblokImage
+  image: StoryblokAsset
   fullBleed?: boolean
   body?: ExpectedBlockType<HeadingBlockProps>
 }>

@@ -1,6 +1,6 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Statistic } from '@/components/Statistic/Statistic'
+import * as Statistic from '@/components/Statistic/Statistic'
 import { InsurableLimits } from './InsurableLimits'
 
 export default {
@@ -26,7 +26,10 @@ const Template: ComponentStory<typeof InsurableLimits> = () => {
   return (
     <InsurableLimits>
       {limits.map((limit) => (
-        <Statistic key={limit.label} label={limit.label} value={limit.value} />
+        <Statistic.Root key={limit.label}>
+          <Statistic.Description>{limit.label}</Statistic.Description>
+          <Statistic.Value>{limit.value}</Statistic.Value>
+        </Statistic.Root>
       ))}
     </InsurableLimits>
   )

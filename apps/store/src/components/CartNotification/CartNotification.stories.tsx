@@ -1,6 +1,5 @@
 import { Story } from '@storybook/react'
-import { Button, Space } from 'ui'
-import * as Dialog from '@/components/Dialog/Dialog'
+import { Button, Space, Dialog } from 'ui'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { Header } from './Header'
 import { Main } from './Main'
