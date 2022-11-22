@@ -1,11 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useMemo } from 'react'
 import {
   PriceIntentFragmentFragment,
   usePriceIntentConfirmMutation,
 } from '@/services/apollo/generated'
 import { trackOffer } from '@/services/gtm'
-import { prefillData, updateFormState } from '@/services/PriceForm/PriceForm.helpers'
-import { Form } from '@/services/PriceForm/PriceForm.types'
+import { prefillData, setupForm, updateFormState } from '@/services/PriceForm/PriceForm.helpers'
+import { Form, Template } from '@/services/PriceForm/PriceForm.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { AutomaticField } from './AutomaticField'
@@ -16,13 +17,17 @@ import { useHandleSubmitPriceForm } from './useHandleSubmitPriceForm'
 
 type Props = {
   priceIntent: PriceIntent
-  form: Form
+  priceTemplate: Template
   onSuccess: (priceIntent: PriceIntentFragmentFragment) => void
   onUpdated: (priceIntent: PriceIntentFragmentFragment) => void
   loading: boolean
 }
 
-export const PriceForm = ({ form, priceIntent, onUpdated, onSuccess, loading }: Props) => {
+export const PriceForm = ({ priceTemplate, priceIntent, onUpdated, onSuccess, loading }: Props) => {
+  const form = useMemo(() => {
+    return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
+  }, [priceTemplate, priceIntent])
+
   const { shopSession } = useShopSession()
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
