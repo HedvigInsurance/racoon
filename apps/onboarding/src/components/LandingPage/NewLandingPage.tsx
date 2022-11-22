@@ -9,6 +9,7 @@ import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { Insurance } from '@/services/insurances'
 import { InsuranceCard } from './InsuranceCard'
+import { useInsuranceSelectorFormState } from './useInsuranceSelectorFormState'
 
 const FORM_ID = 'select-insurance-form'
 
@@ -22,17 +23,20 @@ export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
   const router = useRouter()
   const locale = useCurrentLocale()
 
-  const [formState, setFormState] = useState(getFormInitialState(insurances))
+  const [formState, setFormState] = useInsuranceSelectorFormState(insurances)
   const [isSubmiting, setIsSubmiting] = useState(false)
 
-  const handleCardSelect = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const insuranceName = event.target.name
+  const handleCardSelect = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const insuranceName = event.target.name
 
-    setFormState((prevState) => ({
-      ...prevState,
-      [insuranceName]: !prevState[insuranceName],
-    }))
-  }, [])
+      setFormState((prevState) => ({
+        ...prevState,
+        [insuranceName]: !prevState[insuranceName],
+      }))
+    },
+    [setFormState],
+  )
 
   const hasSelectedAtLeastOneOption = useMemo(
     () => insurances.some((insurance) => formState[insurance.fieldName]),
@@ -81,16 +85,6 @@ export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
         {t('START_SCREEN_SUBMIT_BUTTON')}
       </FooterButton>
     </PageContainer>
-  )
-}
-
-const getFormInitialState = (insurances: Array<Insurance>) => {
-  return insurances.reduce<Record<string, boolean>>(
-    (result, insurance) => ({
-      ...result,
-      [insurance.fieldName]: false,
-    }),
-    {},
   )
 }
 
