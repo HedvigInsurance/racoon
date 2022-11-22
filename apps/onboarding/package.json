@@ -71,7 +71,7 @@
     "start-server-and-test": "1.14.0",
     "ts-jest": "29.0.3",
     "tsconfig": "workspace:",
-    "typescript": "4.8.4",
+    "typescript": "4.9.3",
     "whatwg-fetch": "3.6.2"
   },
   "msw": {
