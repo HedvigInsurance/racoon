@@ -27,6 +27,7 @@ export const PurchaseForm = () => {
     setIsEditingPriceFormOpen(false)
   }
 
+  const scrollPastRef = useRef<HTMLDivElement | null>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const apolloClient = useApolloClient()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
@@ -53,8 +54,9 @@ export const PurchaseForm = () => {
     ) : (
       <Wrapper>
         <OfferPresenter
-          shopSession={shopSession}
           priceIntent={priceIntent}
+          shopSession={shopSession}
+          scrollPastRef={scrollPastRef}
           onAddedToCart={handleAddedToCart}
         />
       </Wrapper>
@@ -63,7 +65,7 @@ export const PurchaseForm = () => {
   return (
     <>
       <Space y={1.5}>
-        <Wrapper>
+        <Wrapper ref={scrollPastRef}>
           <SpaceFlex space={1} align="center" direction="vertical">
             <Pillow
               size="xlarge"
