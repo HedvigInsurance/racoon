@@ -21,6 +21,7 @@ export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset 
 
   [mq.md]: {
     height: MENU_BAR_HEIGHT_DESKTOP,
+    backgroundColor: theme.colors.gray100,
   },
 }))
 
@@ -29,10 +30,11 @@ type HeaderProps = {
 }
 export const Header = ({ children }: HeaderProps) => {
   const { topOffset, navRef } = useStickyTopMenuOffset()
+
   return (
     <Wrapper topOffset={topOffset} ref={navRef}>
-      <ShoppingCartMenuItem />
       {children}
+      <ShoppingCartMenuItem />
     </Wrapper>
   )
 }

@@ -74,7 +74,7 @@ const Template: Story<TopMenuMobileProps> = (props) => {
   return (
     <>
       <MockedHeaderWrapper topOffset={0}>
-        {isDesktop ? <TopMenu.Desktop /> : <TopMenu.Mobile isOpen={props.isOpen} />}
+        {isDesktop ? <TopMenu.Desktop /> : <TopMenu.Mobile />}
         <MockedShoppingCartMenuItem count={props.count} />
       </MockedHeaderWrapper>
     </>

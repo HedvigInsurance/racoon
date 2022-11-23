@@ -1,25 +1,18 @@
 import styled from '@emotion/styled'
-import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import { ArrowForwardIcon, CrossIcon } from 'ui'
-import { Wrapper } from '@/components/Header/Header'
-import { MenuIcon } from '@/components/Header/MenuIcon'
-import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
+import { ArrowForwardIcon, CrossIcon, useBreakpoint } from 'ui'
+import { Header } from '@/components/Header/Header'
 import {
-  DialogCloseIcon,
-  DialogContent,
-  IconButton,
-  Navigation,
-  NavigationLink,
+  NavigationMenuPrimitiveContent,
+  NavigationMenuPrimitiveItem,
   NavigationPrimaryList,
   NavigationSecondaryList,
   NavigationTrigger,
-  ToggleMenu,
-} from '@/components/Header/TopMenuMobile/TopMenuMobile'
-import { useStickyTopMenuOffset } from '@/components/Header/useTopMenuStickyOffset'
+  TriggerIcon,
+} from '@/components/Header/HeaderStyles'
+import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
+import { TopMenu } from '@/components/Header/TopMenu'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
@@ -34,9 +27,9 @@ type NavItemBlockProps = SbBaseBlockProps<{
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
   return (
-    <NavigationMenuPrimitive.Item value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
       <NavigationLink href={getLinkFieldURL(blok.link)}>{blok.name}</NavigationLink>
-    </NavigationMenuPrimitive.Item>
+    </NavigationMenuPrimitiveItem>
   )
 }
 NavItemBlock.blockName = 'navItem'
@@ -44,28 +37,45 @@ NavItemBlock.blockName = 'navItem'
 type NestedNavContainerBlockProps = SbBaseBlockProps<{
   name: string
   navItems: ExpectedBlockType<NavItemBlockProps>
+  currentActiveItem?: string
 }>
 
 export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
+  const isDesktop = useBreakpoint('md')
 
   return (
-    <NavigationMenuPrimitive.Item value={blok.name} {...storyblokEditable(blok)}>
-      <StyledNavigationTrigger>
-        {blok.name}
-        <StyledCrossIcon size="1rem" />
-        <StyledArrowForwardIcon size="1rem" />
-      </StyledNavigationTrigger>
-      <NavigationMenuPrimitive.Content>
+    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+      {isDesktop ? (
+        <NavigationTrigger>
+          {blok.name}
+          <TriggerIcon size="16px" />
+        </NavigationTrigger>
+      ) : (
+        <StyledNavigationTrigger>
+          {blok.name}
+          <StyledCrossIcon size="1rem" />
+          <StyledArrowForwardIcon size="1rem" />
+        </StyledNavigationTrigger>
+      )}
+      <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>
             {filteredNavItems.map((nestedBlock) => (
-              <NavItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+              <NavigationMenuPrimitiveItem
+                key={nestedBlock._uid}
+                value={nestedBlock.name}
+                {...storyblokEditable(nestedBlock)}
+              >
+                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link)}>
+                  {nestedBlock.name}
+                </SecondaryNavigationLink>
+              </NavigationMenuPrimitiveItem>
             ))}
           </NavigationSecondaryList>
         </NavigationMenuPrimitive.Sub>
-      </NavigationMenuPrimitive.Content>
-    </NavigationMenuPrimitive.Item>
+      </NavigationMenuPrimitiveContent>
+    </NavigationMenuPrimitiveItem>
   )
 }
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
@@ -102,38 +112,25 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 }>
 
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
-  const [open, setOpen] = useState(false)
-
-  const router = useRouter()
-  useEffect(() => {
-    const closeDialog = () => setOpen(false)
-    router.events.on('routeChangeComplete', closeDialog)
-    return () => router.events.off('routeChangeComplete', closeDialog)
-  }, [router.events])
-
-  const { topOffset, navRef } = useStickyTopMenuOffset()
+  const isDesktop = useBreakpoint('md')
+  console.log(blok)
 
   return (
-    <Wrapper ref={navRef} topOffset={topOffset} {...storyblokEditable(blok)}>
-      <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogPrimitive.Trigger asChild>
-          <ToggleMenu>{open ? null : <MenuIcon />}</ToggleMenu>
-        </DialogPrimitive.Trigger>
-        <DialogContent>
-          <Navigation>
-            <NavigationPrimaryList>
-              {blok.navMenuContainer.map(getNestedNavigationBlock)}
-            </NavigationPrimaryList>
-          </Navigation>
-          <DialogCloseIcon asChild>
-            <IconButton>
-              <CrossIcon />
-            </IconButton>
-          </DialogCloseIcon>
-        </DialogContent>
-      </DialogPrimitive.Root>
-      <ShoppingCartMenuItem />
-    </Wrapper>
+    <Header {...storyblokEditable(blok)}>
+      {isDesktop ? (
+        <TopMenu.Desktop>
+          <NavigationPrimaryList>
+            {blok.navMenuContainer.map(getNestedNavigationBlock)}
+          </NavigationPrimaryList>
+        </TopMenu.Desktop>
+      ) : (
+        <TopMenu.Mobile>
+          <NavigationPrimaryList>
+            {blok.navMenuContainer.map(getNestedNavigationBlock)}
+          </NavigationPrimaryList>
+        </TopMenu.Mobile>
+      )}
+    </Header>
   )
 }
 HeaderBlock.blockName = 'header'

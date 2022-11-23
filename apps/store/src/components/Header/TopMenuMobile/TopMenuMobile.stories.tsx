@@ -7,8 +7,9 @@ export default {
 } as ComponentMeta<typeof TopMenuMobile>
 
 export type TopMenuMobileProps = {
-  isOpen: boolean
-  currentActiveItem: string
+  isOpen?: boolean
+  currentActiveItem?: string
+  children?: React.ReactNode
 }
 
 const Template: Story<TopMenuMobileProps> = (props) => <TopMenuMobile {...props} />

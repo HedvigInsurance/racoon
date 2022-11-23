@@ -8,7 +8,8 @@ export default {
 } as ComponentMeta<typeof TopMenuDesktop>
 
 export type TopMenuDesktopProps = {
-  currentActiveItem: string
+  currentActiveItem?: string
+  children?: React.ReactNode
 }
 
 const StyledPage = styled.div({

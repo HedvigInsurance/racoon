@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { mq, theme } from 'ui'
+import { ChevronIcon, mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP } from './Header'
 
 export const focusableStyles = {
@@ -13,6 +13,28 @@ export const focusableStyles = {
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
   backgroundColor: theme.colors.gray200,
   fontSize: theme.fontSizes[5],
+  [mq.md]: {
+    fontSize: theme.fontSizes[3],
+  },
+})
+
+export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  [mq.md]: {
+    padding: `0 ${theme.space[4]}`,
+  },
+}))
+
+export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
+  [mq.md]: {
+    position: 'absolute',
+    top: 'calc(MENU_BAR_HEIGHT_DESKTOP + 0.5rem)',
+    left: '0.5rem',
+  },
+}))
+
+export const TriggerIcon = styled(ChevronIcon)({
+  transition: 'transform 300ms',
+  '[data-state=open] &': { transform: 'rotate(180deg)' },
 })
 
 export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
