@@ -9,21 +9,23 @@ import { PageLink } from '@/lib/PageLink'
 import { Embark } from '@/services/embark'
 import { Insurance } from '@/services/insurances'
 import { InsuranceCard } from './InsuranceCard'
-import { useInsuranceSelectorFormState } from './useInsuranceSelectorFormState'
 
 const FORM_ID = 'select-insurance-form'
 
 export type NewLandingPageProps = {
   insurances: Array<Insurance>
+  preSelectedInsurances: Array<Insurance['typeOfContract']>
   referer: string | null
 }
 
-export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
+export const NewLandingPage = ({ insurances, preSelectedInsurances }: NewLandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()
 
-  const [formState, setFormState] = useInsuranceSelectorFormState(insurances)
+  const [formState, setFormState] = useState(() =>
+    getFormInitialState(insurances, preSelectedInsurances),
+  )
   const [isSubmiting, setIsSubmiting] = useState(false)
 
   const handleCardSelect = useCallback(
@@ -85,6 +87,19 @@ export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
         {t('START_SCREEN_SUBMIT_BUTTON')}
       </FooterButton>
     </PageContainer>
+  )
+}
+
+const getFormInitialState = (
+  insurances: Array<Insurance>,
+  preselectedInsurance: Array<Insurance['typeOfContract']>,
+) => {
+  return insurances.reduce<Record<string, boolean>>(
+    (result, insurance) => ({
+      ...result,
+      [insurance.fieldName]: preselectedInsurance.includes(insurance.typeOfContract),
+    }),
+    {},
   )
 }
 
