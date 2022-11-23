@@ -64,13 +64,12 @@ export const SE_ACCIDENT: Template = {
       items: [
         {
           field: {
-            type: 'number',
-            min: 0,
-            max: 5,
+            type: 'householdSize',
             name: 'numberCoInsured',
-            label: { key: 'Number of co-insured' },
+            label: { key: 'Household size' },
             required: true,
             defaultValue: 0,
+            max: 5,
           },
           layout: { columnSpan: 6 },
         },
