@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
+import { convertToDate, formatAPIDate } from '@/utils/date'
 
 export type Params = {
   cartId: string
@@ -53,18 +54,4 @@ export const useUpdateStartDate = ({ cartId, offerId, onSuccess }: Params) => {
       userError,
     },
   ] as const
-}
-
-const convertToDate = (value: unknown) => {
-  if (typeof value === 'string') {
-    const date = new Date(value)
-    if (isNaN(date.getTime())) return null
-    return date
-  }
-
-  return null
-}
-
-export const formatAPIDate = (date: Date) => {
-  return date.toISOString().substring(0, 10)
 }
