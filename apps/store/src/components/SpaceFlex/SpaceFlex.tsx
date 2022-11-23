@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { forwardRef, ReactNode } from 'react'
 
@@ -9,13 +10,15 @@ type SpaceFlexProps = {
   wrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
 }
 
-const SpaceFlexWrapper = styled.div(({ space, direction, align, wrap }: SpaceFlexProps) => ({
-  display: 'flex',
-  flexWrap: wrap,
-  gap: `${space}rem`,
-  flexDirection: direction === 'horizontal' ? 'row' : 'column',
-  alignItems: align,
-}))
+const SpaceFlexWrapper = styled('div', { shouldForwardProp: isPropValid })(
+  ({ space, direction, align, wrap }: SpaceFlexProps) => ({
+    display: 'flex',
+    flexWrap: wrap,
+    gap: `${space}rem`,
+    flexDirection: direction === 'horizontal' ? 'row' : 'column',
+    alignItems: align,
+  }),
+)
 
 export const SpaceFlex = forwardRef<HTMLDivElement, SpaceFlexProps>(
   ({ children, space = 1, direction = 'horizontal', align = 'start', wrap }, ref) => (
