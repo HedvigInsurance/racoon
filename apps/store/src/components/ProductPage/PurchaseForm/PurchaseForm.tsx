@@ -32,6 +32,7 @@ export const PurchaseForm = () => {
 
   const productDisplayName = story.content.name
 
+  // TODO: Show "loading offers" state or don't close modal while still loading
   const bodyContent =
     priceIntent.offers.length === 0 ? (
       <Wrapper>
@@ -40,12 +41,14 @@ export const PurchaseForm = () => {
         </Button>
       </Wrapper>
     ) : (
-      <OfferPresenter
-        shopSession={shopSession}
-        story={story}
-        priceIntent={priceIntent}
-        onAddedToCart={handleAddedToCart}
-      />
+      <Wrapper>
+        <OfferPresenter
+          shopSession={shopSession}
+          story={story}
+          priceIntent={priceIntent}
+          onAddedToCart={handleAddedToCart}
+        />
+      </Wrapper>
     )
 
   return (

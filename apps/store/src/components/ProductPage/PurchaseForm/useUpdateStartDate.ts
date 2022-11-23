@@ -4,18 +4,25 @@ import { convertToDate, formatAPIDate } from '@/utils/date'
 
 export type Params = {
   cartId: string
-  offerId: string
-  onSuccess: () => void
 }
 
-export const useUpdateStartDate = ({ cartId, offerId, onSuccess }: Params) => {
+export const useUpdateStartDate = ({ cartId }: Params) => {
   const [updateStartDate, result] = useStartDateUpdateMutation({
     onError(error) {
       datadogLogs.logger.warn('Failed to update start date', { error })
     },
   })
 
-  const handleUpdateStartDate = async (dateValue: string | null) => {
+  // TODO: Improve this name, it's not event handler
+  const handleUpdateStartDate = async ({
+    offerId,
+    dateValue,
+    onSuccess,
+  }: {
+    offerId: string
+    dateValue: string | null
+    onSuccess: () => void
+  }) => {
     datadogLogs.logger.info('Update start date')
 
     const date = convertToDate(dateValue)
@@ -39,9 +46,8 @@ export const useUpdateStartDate = ({ cartId, offerId, onSuccess }: Params) => {
   if (result.error) {
     userError = { message: 'Something went wrong' }
   } else {
-    const error = result.data?.cartEntriesStartDateUpdate.userErrors.find(
-      (error) => error.offerId === offerId,
-    )
+    // TODO: Handle multiple errors
+    const error = result.data?.cartEntriesStartDateUpdate.userErrors[0]
     if (error) {
       userError = { message: error.message }
     }
