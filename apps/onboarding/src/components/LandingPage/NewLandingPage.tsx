@@ -14,25 +14,31 @@ const FORM_ID = 'select-insurance-form'
 
 export type NewLandingPageProps = {
   insurances: Array<Insurance>
+  preSelectedInsurances: Array<Insurance['typeOfContract']>
   referer: string | null
 }
 
-export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
+export const NewLandingPage = ({ insurances, preSelectedInsurances }: NewLandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()
 
-  const [formState, setFormState] = useState(getFormInitialState(insurances))
+  const [formState, setFormState] = useState(() =>
+    getFormInitialState(insurances, preSelectedInsurances),
+  )
   const [isSubmiting, setIsSubmiting] = useState(false)
 
-  const handleCardSelect = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const insuranceName = event.target.name
+  const handleCardSelect = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const insuranceName = event.target.name
 
-    setFormState((prevState) => ({
-      ...prevState,
-      [insuranceName]: !prevState[insuranceName],
-    }))
-  }, [])
+      setFormState((prevState) => ({
+        ...prevState,
+        [insuranceName]: !prevState[insuranceName],
+      }))
+    },
+    [setFormState],
+  )
 
   const hasSelectedAtLeastOneOption = useMemo(
     () => insurances.some((insurance) => formState[insurance.fieldName]),
@@ -84,11 +90,14 @@ export const NewLandingPage = ({ insurances }: NewLandingPageProps) => {
   )
 }
 
-const getFormInitialState = (insurances: Array<Insurance>) => {
+const getFormInitialState = (
+  insurances: Array<Insurance>,
+  preselectedInsurance: Array<Insurance['typeOfContract']>,
+) => {
   return insurances.reduce<Record<string, boolean>>(
     (result, insurance) => ({
       ...result,
-      [insurance.fieldName]: false,
+      [insurance.fieldName]: preselectedInsurance.includes(insurance.typeOfContract),
     }),
     {},
   )

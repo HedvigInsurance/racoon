@@ -10,8 +10,10 @@ import { useCurrentLocale } from '@/lib/l10n'
 import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/locales'
 import { MarketLabel } from '@/lib/types'
 import { Features, Feature } from '@/services/features'
-import { Insurances } from '@/services/insurances'
+import { Insurances, Insurance } from '@/services/insurances'
 import logger from '@/services/logger'
+
+const SELECTED_INSURANCE_QUERY_KEY = 'type'
 
 type MetaLinks = Pick<LocaleData, 'hrefLang' | 'path'> & {
   href: string
@@ -78,10 +80,22 @@ export const getServerSideProps: GetServerSideProps<
       marketLabel === MarketLabel.SE ||
       Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, marketLabel)
     ) {
+      const preSelectedInsurances = (context.query[SELECTED_INSURANCE_QUERY_KEY] ?? []) as Array<
+        Insurance['typeOfContract']
+      >
+      const sortedInsurances = insurances
+        .sort((a, b) => typePriority(a) - typePriority(b))
+        .sort(
+          (a, b) =>
+            selectionStatePriority(a, preSelectedInsurances) -
+            selectionStatePriority(b, preSelectedInsurances),
+        )
+
       return {
         props: {
           ...(await serverSideTranslations(locale)),
-          insurances,
+          insurances: sortedInsurances,
+          preSelectedInsurances,
           referer: context.req.headers.referer ?? null,
         },
       }
@@ -94,7 +108,6 @@ export const getServerSideProps: GetServerSideProps<
       }),
       {},
     )
-
     return {
       props: {
         ...(await serverSideTranslations(locale)),
@@ -124,6 +137,27 @@ const getMarketLabelFromLocaleLabel = (localeLabel: LocaleLabel) => {
     case 'no-en':
       return MarketLabel.NO
   }
+}
+
+const typePriority = (insurance: Insurance) => {
+  const type = insurance.typeOfContract
+
+  if (type.includes('HOME_CONTENT') || type.includes('HOUSE')) {
+    return 0
+  }
+
+  if (type.includes('TRAVEL')) {
+    return 1
+  }
+
+  return 2
+}
+
+const selectionStatePriority = (
+  insurance: Insurance,
+  selectedInsurances: Array<Insurance['typeOfContract']>,
+) => {
+  return selectedInsurances.includes(insurance.typeOfContract) ? 0 : 1
 }
 
 export default NewMemberPage
