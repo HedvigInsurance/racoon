@@ -8,13 +8,10 @@ import { CheckoutSigningStatus } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { OfferInventoryItem } from '../CartInventory/OfferInventoryItem'
 import { FormElement } from './CheckoutPage.constants'
-import { formatAPIDate } from './CheckoutPage.helpers'
 import { CheckoutPageProps } from './CheckoutPage.types'
 
-const DATE_TODAY = formatAPIDate(new Date())
-
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { cart, products, loading, prefilledData, userErrors } = props
+  const { cart, loading, prefilledData, userErrors } = props
 
   return (
     <>
@@ -44,33 +41,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
             <Section as="section" y={1}>
               <Heading as="h2" variant="standard.24">
-                1. Select start dates
-              </Heading>
-
-              <Space y={1}>
-                {products.map((product) => (
-                  <Card key={product.offerId}>
-                    <Space y={0.5}>
-                      <Heading as="h2" variant="standard.18">
-                        {product.name}
-                      </Heading>
-
-                      <InputField
-                        label="Start date"
-                        type="date"
-                        errorMessage={product.errorMessage}
-                        name={product.offerId}
-                        defaultValue={product.startDate ?? DATE_TODAY}
-                      />
-                    </Space>
-                  </Card>
-                ))}
-              </Space>
-            </Section>
-
-            <Section as="section" y={1}>
-              <Heading as="h2" variant="standard.24">
-                2. Your contact info
+                Your contact info
               </Heading>
               <PersonalNumberField
                 name={FormElement.PersonalNumber}
@@ -182,13 +153,6 @@ const MainTop = styled.div({ textAlign: 'center' })
 const Section = styled(Space)(({ theme }) => ({
   borderTop: `2px solid ${theme.colors.gray900}`,
   paddingTop: theme.space[4],
-}))
-
-const Card = styled.div(({ theme }) => ({
-  padding: theme.space[3],
-  border: `2px solid ${theme.colors.gray300}`,
-  borderRadius: 8,
-  backgroundColor: theme.colors.white,
 }))
 
 export default CheckoutPage
