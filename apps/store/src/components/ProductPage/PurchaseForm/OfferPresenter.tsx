@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { RefObject, useState } from 'react'
 import { Button, InputField } from 'ui'
 import { FormElement } from '@/components/ProductPage/ProductPage.constants'
+import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
+import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleSubmitAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
@@ -16,11 +18,17 @@ import { TierSelector } from './TierSelector'
 type Props = {
   priceIntent: PriceIntent
   shopSession: ShopSession
+  scrollPastRef: RefObject<HTMLElement>
   // TODO: Use better type
   onAddedToCart: (productOffer: ProductOfferFragment) => void
 }
 
-export const OfferPresenter = ({ priceIntent, shopSession, onAddedToCart }: Props) => {
+export const OfferPresenter = ({
+  priceIntent,
+  shopSession,
+  scrollPastRef,
+  onAddedToCart,
+}: Props) => {
   const { t } = useTranslation()
   const formatter = useCurrencyFormatter(shopSession.currencyCode)
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
@@ -40,24 +48,37 @@ export const OfferPresenter = ({ priceIntent, shopSession, onAddedToCart }: Prop
     },
   })
 
+  const displayPrice = t('MONTHLY_PRICE', {
+    displayAmount: formatter.format(selectedOffer.price.amount),
+  })
+
   return (
-    <form onSubmit={handleSubmitAddToCart}>
-      <FormContent direction="vertical" align="center">
-        <Text as="p" align="center" size="l">
-          {t('MONTHLY_PRICE', { displayAmount: formatter.format(selectedOffer.price.amount) })}
-        </Text>
+    <>
+      <form onSubmit={handleSubmitAddToCart}>
+        <FormContent direction="vertical" align="center">
+          <Text as="p" align="center" size="l">
+            {displayPrice}
+          </Text>
 
-        <TierSelector
-          offers={priceIntent.offers}
-          selectedOfferId={selectedOfferId}
-          onValueChange={setSelectedOfferId}
-        />
+          <TierSelector
+            offers={priceIntent.offers}
+            selectedOfferId={selectedOfferId}
+            onValueChange={setSelectedOfferId}
+          />
 
-        <CancellationSettings />
+          <CancellationSettings />
 
-        <SubmitButton loading={loadingAddToCart} />
-      </FormContent>
-    </form>
+          <SubmitButton loading={loadingAddToCart} />
+        </FormContent>
+      </form>
+      <ScrollPast targetRef={scrollPastRef}>
+        <ScrollToButton targetRef={scrollPastRef} type="button">
+          <span>{displayPrice}</span>
+          <Separator />
+          <span>Add to cart</span>
+        </ScrollToButton>
+      </ScrollPast>
+    </>
   )
 }
 
@@ -90,3 +111,10 @@ const SubmitButton = ({ loading }: { loading: boolean }) => {
     </SpaceFlex>
   )
 }
+
+const Separator = styled.div(({ theme }) => ({
+  width: 1,
+  backgroundColor: theme.colors.gray600,
+  margin: `0 ${theme.space[3]}`,
+  alignSelf: 'stretch',
+}))
