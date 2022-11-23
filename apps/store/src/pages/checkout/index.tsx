@@ -19,20 +19,17 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userErrors'> & {
-  cartId: string
   checkoutId: string
   checkoutSigningId: string | null
   shopSessionId: string
 }
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
-  const { cartId, products, checkoutId, checkoutSigningId, shopSessionId, ...pageProps } = props
+  const { products, checkoutId, checkoutSigningId, shopSessionId, ...pageProps } = props
   const router = useRouter()
 
   const apolloClient = useApolloClient()
   const [handleSubmit, { loading, userErrors, signingStatus }] = useHandleSubmitCheckout({
-    cartId,
-    products,
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
@@ -91,7 +88,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       props: {
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        cartId: shopSession.cart.id,
         checkoutId,
         checkoutSigningId: checkoutSigning?.id ?? null,
         prefilledData: {
