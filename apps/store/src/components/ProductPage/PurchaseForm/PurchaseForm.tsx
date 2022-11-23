@@ -1,12 +1,15 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
+import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceForm } from '@/components/PriceForm/PriceForm'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useRefreshData } from '@/utils/useRefreshData'
 import { PriceFormModal } from '../PriceFormModal/PriceFormModal'
 import { OfferPresenter } from './OfferPresenter'
@@ -17,15 +20,22 @@ const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 export const PurchaseForm = () => {
   const [isEditingPriceForm, setIsEditingPriceFormOpen] = useState(false)
   const { priceTemplate, priceIntent, shopSession, story } = useProductPageContext()
-
+  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
   const [refreshData, isLoadingData] = useRefreshData()
   const handleCalculatePriceSuccess = () => {
     refreshData()
     setIsEditingPriceFormOpen(false)
   }
 
+  const toastRef = useRef<CartToastAttributes | null>(null)
   const apolloClient = useApolloClient()
-  const handleAddedToCart = () => {
+  const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
+    toastRef.current?.publish({
+      name: story.content.name,
+      price: currencyFormatter.format(addedProdutOffer.price.amount),
+      gradient: PLACEHOLDER_GRADIENT,
+    })
+
     priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(priceTemplate.name)
     refreshData()
   }
@@ -44,7 +54,6 @@ export const PurchaseForm = () => {
       <Wrapper>
         <OfferPresenter
           shopSession={shopSession}
-          story={story}
           priceIntent={priceIntent}
           onAddedToCart={handleAddedToCart}
         />
@@ -68,32 +77,34 @@ export const PurchaseForm = () => {
         </Wrapper>
 
         {!isEditingPriceForm && bodyContent}
-
-        <PriceFormModal
-          isOpen={isEditingPriceForm}
-          toggleDialog={setIsEditingPriceFormOpen}
-          header={
-            <>
-              <Pillow
-                size="large"
-                fromColor={PLACEHOLDER_GRADIENT[0]}
-                toColor={PLACEHOLDER_GRADIENT[1]}
-              />
-              <Heading as="h2" variant="standard.18">
-                {productDisplayName}
-              </Heading>
-            </>
-          }
-        >
-          <PriceForm
-            priceTemplate={priceTemplate}
-            priceIntent={priceIntent}
-            onSuccess={handleCalculatePriceSuccess}
-            onUpdated={refreshData}
-            loading={isLoadingData}
-          />
-        </PriceFormModal>
       </Space>
+
+      <PriceFormModal
+        isOpen={isEditingPriceForm}
+        toggleDialog={setIsEditingPriceFormOpen}
+        header={
+          <>
+            <Pillow
+              size="large"
+              fromColor={PLACEHOLDER_GRADIENT[0]}
+              toColor={PLACEHOLDER_GRADIENT[1]}
+            />
+            <Heading as="h2" variant="standard.18">
+              {productDisplayName}
+            </Heading>
+          </>
+        }
+      >
+        <PriceForm
+          priceTemplate={priceTemplate}
+          priceIntent={priceIntent}
+          onSuccess={handleCalculatePriceSuccess}
+          onUpdated={refreshData}
+          loading={isLoadingData}
+        />
+      </PriceFormModal>
+
+      <CartToast ref={toastRef} />
     </>
   )
 }

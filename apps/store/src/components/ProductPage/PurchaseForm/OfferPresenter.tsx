@@ -1,43 +1,30 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useMemo, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Button, InputField } from 'ui'
-import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { FormElement } from '@/components/ProductPage/ProductPage.constants'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleSubmitAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { ProductStory } from '@/services/storyblok/storyblok'
 import { formatAPIDate } from '@/utils/date'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { TierSelector } from './TierSelector'
 
-const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
-
 type Props = {
   priceIntent: PriceIntent
-  story: ProductStory
   shopSession: ShopSession
-  onAddedToCart: () => void
+  // TODO: Use better type
+  onAddedToCart: (productOffer: ProductOfferFragment) => void
 }
 
-export const OfferPresenter = ({ priceIntent, story, shopSession, onAddedToCart }: Props) => {
+export const OfferPresenter = ({ priceIntent, shopSession, onAddedToCart }: Props) => {
   const { t } = useTranslation()
   const formatter = useCurrencyFormatter(shopSession.currencyCode)
-  const toastRef = useRef<CartToastAttributes | null>(null)
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
-
-  const product = useMemo(() => {
-    return {
-      name: story.content.productId,
-      displayName: story.content.name,
-      currencyCode: shopSession.currencyCode,
-      gradient: PLACEHOLDER_GRADIENT,
-    }
-  }, [story.content, shopSession.currencyCode])
 
   // TODO: Update start date on change
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
@@ -49,37 +36,28 @@ export const OfferPresenter = ({ priceIntent, story, shopSession, onAddedToCart 
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
-      toastRef.current?.publish({
-        name: product.displayName,
-        price: formatter.format(addedProdutOffer.price.amount),
-        gradient: product.gradient,
-      })
-      onAddedToCart()
+      onAddedToCart(addedProdutOffer)
     },
   })
 
   return (
-    <>
-      <form onSubmit={handleSubmitAddToCart}>
-        <FormContent direction="vertical" align="center">
-          <Text as="p" align="center" size="l">
-            {t('MONTHLY_PRICE', { displayAmount: formatter.format(selectedOffer.price.amount) })}
-          </Text>
+    <form onSubmit={handleSubmitAddToCart}>
+      <FormContent direction="vertical" align="center">
+        <Text as="p" align="center" size="l">
+          {t('MONTHLY_PRICE', { displayAmount: formatter.format(selectedOffer.price.amount) })}
+        </Text>
 
-          <TierSelector
-            offers={priceIntent.offers}
-            selectedOfferId={selectedOfferId}
-            onValueChange={setSelectedOfferId}
-          />
+        <TierSelector
+          offers={priceIntent.offers}
+          selectedOfferId={selectedOfferId}
+          onValueChange={setSelectedOfferId}
+        />
 
-          <CancellationSettings />
+        <CancellationSettings />
 
-          <SubmitButton loading={loadingAddToCart} />
-        </FormContent>
-      </form>
-
-      <CartToast ref={toastRef} />
-    </>
+        <SubmitButton loading={loadingAddToCart} />
+      </FormContent>
+    </form>
   )
 }
 
