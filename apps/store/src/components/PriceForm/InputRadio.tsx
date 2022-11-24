@@ -53,7 +53,7 @@ const Indicator = styled(RadioGroup.Indicator)(({ theme }) => ({
 
 type InputRadioProps = InputBaseProps & {
   name: string
-  options: Array<{ label: string; value: string }>
+  options: ReadonlyArray<{ label: string; value: string }>
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
