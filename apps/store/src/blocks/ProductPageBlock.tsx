@@ -6,6 +6,8 @@ import * as Tabs from '@/components/ProductPage/Tabs'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ProductPageBlockProps = SbBaseBlockProps<{
+  overviewLabel: string
+  coverageLabel: string
   overview: SbBlokData[]
   coverage: SbBlokData[]
   body: SbBlokData[]
@@ -20,9 +22,8 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
           <PurchaseForm />
           <Tabs.Tabs defaultValue="overview">
             <Tabs.TabsList>
-              {/* TODO: Get tab labels from Storyblok */}
-              <Tabs.TabsTrigger value="overview">Overview</Tabs.TabsTrigger>
-              <Tabs.TabsTrigger value="coverage">Coverage</Tabs.TabsTrigger>
+              <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
+              <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
             </Tabs.TabsList>
 
             <Tabs.TabsContent value="overview">
