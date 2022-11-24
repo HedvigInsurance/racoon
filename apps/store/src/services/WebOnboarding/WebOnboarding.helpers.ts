@@ -32,7 +32,7 @@ type Params = {
 export const getWebOnboardingPaymentURL = ({ authorizationCode, locale, redirectURL }: Params) => {
   if (PAYMENT_URL_TEMPLATE) {
     const targetUrl = new URL(
-      PAYMENT_URL_TEMPLATE.replace(LOCALE_PATTERN, convertRoutingLocale(locale)),
+      PAYMENT_URL_TEMPLATE.replaceAll(LOCALE_PATTERN, convertRoutingLocale(locale)),
     )
     targetUrl.searchParams.set('redirect_url', redirectURL.toString())
     targetUrl.searchParams.set('authorization_code', authorizationCode)
