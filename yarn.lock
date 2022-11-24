@@ -11589,9 +11589,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.27.0":
-  version: 8.27.0
-  resolution: "eslint@npm:8.27.0"
+"eslint@npm:8.28.0":
+  version: 8.28.0
+  resolution: "eslint@npm:8.28.0"
   dependencies:
     "@eslint/eslintrc": ^1.3.3
     "@humanwhocodes/config-array": ^0.11.6
@@ -11634,7 +11634,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 153b022d309e1b647a73b1bb0fa98912add699b06e279084155f23c6f2b5fc5abd05411fc1ba81608a24bbfaf044ca079544c16fffa6fc987b8f676c9960a2c4
+  checksum: 1b793486b2ec80f0602d75fff7116f7c39a3286f523608a999eead9bec4154a06841785d2b4fb87f8292a94cf85778c1dbfaec727772a09c4d604fdb9ff0809a
   languageName: node
   linkType: hard
 
@@ -19282,7 +19282,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "racoon@workspace:."
   dependencies:
-    eslint: 8.27.0
+    eslint: 8.28.0
     eslint-import-resolver-typescript: 3.5.2
     husky: 8.0.2
     lint-staged: 13.0.3
@@ -20409,7 +20409,7 @@ __metadata:
   dependencies:
     "@typescript-eslint/eslint-plugin": 5.43.0
     "@typescript-eslint/parser": 5.43.0
-    eslint: 8.27.0
+    eslint: 8.28.0
     eslint-config-next: 13.0.4
     eslint-config-prettier: 8.5.0
     eslint-plugin-import: 2.26.0
@@ -21189,7 +21189,7 @@ __metadata:
     babel-loader: 9.1.0
     cookies-next: 2.1.1
     dd-trace: 3.8.0
-    eslint: 8.27.0
+    eslint: 8.28.0
     eslint-config-next: 13.0.4
     eslint-plugin-cypress: 2.12.1
     framer-motion: 7.6.7
