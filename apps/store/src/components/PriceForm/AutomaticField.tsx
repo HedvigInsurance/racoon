@@ -3,7 +3,9 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { HouseholdSizeField } from '@/components/PriceForm/HouseholdSize'
 import { InputField as InputFieldType } from '@/services/PriceForm/Field.types'
 import { JSONData } from '@/services/PriceForm/PriceForm.types'
+import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { CarRegistrationNumberField } from './CarRegistrationField'
+import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import { InputRadio } from './InputRadio'
 import { SsnSeField } from './SsnSeField'
@@ -18,6 +20,7 @@ type Props = {
 
 export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
+  const { story, priceIntent } = useProductPageContext()
 
   switch (field.type) {
     case 'text':
@@ -115,5 +118,14 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
       return <SsnSeField field={field} />
     case 'car-registration-number':
       return <CarRegistrationNumberField field={field} />
+
+    case 'current-insurance':
+      return (
+        <CurrentInsuranceField
+          label={translateLabel(field.label)}
+          productName={story.content.productId}
+          priceIntentId={priceIntent.id}
+        />
+      )
   }
 }

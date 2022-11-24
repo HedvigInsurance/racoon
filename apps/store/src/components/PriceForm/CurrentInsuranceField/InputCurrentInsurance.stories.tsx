@@ -1,10 +1,10 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { CurrentInsuranceField } from './CurrentInsuranceField'
+import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 export default {
-  title: 'Input / Current Insurance Field',
-  component: CurrentInsuranceField,
+  title: 'Input / Current Insurance',
+  component: InputCurrentInsurance,
   parameters: {
     viewport: {
       viewports: INITIAL_VIEWPORTS,
@@ -12,10 +12,10 @@ export default {
     },
   },
   argTypes: { onCompanyChange: { action: 'changed' } },
-} as ComponentMeta<typeof CurrentInsuranceField>
+} as ComponentMeta<typeof InputCurrentInsurance>
 
-const Template: ComponentStory<typeof CurrentInsuranceField> = (props) => {
-  return <CurrentInsuranceField {...props} />
+const Template: ComponentStory<typeof InputCurrentInsurance> = (props) => {
+  return <InputCurrentInsurance {...props} />
 }
 export const Default = Template.bind({})
 Default.args = {
