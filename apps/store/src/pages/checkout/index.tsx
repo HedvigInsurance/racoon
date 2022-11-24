@@ -32,7 +32,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const [handleSubmit, { loading, userErrors, signingStatus }] = useHandleSubmitCheckout({
     checkoutId,
     checkoutSigningId,
-    async onSuccess(accessToken) {
+    onSuccess(accessToken) {
       Auth.save(accessToken)
       setupShopSessionServiceClientSide(apolloClient).reset()
       router.push(PageLink.checkoutPayment({ shopSessionId }))
