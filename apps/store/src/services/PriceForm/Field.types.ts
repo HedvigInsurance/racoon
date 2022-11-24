@@ -63,6 +63,10 @@ export type CarRegistrationNumberField = BaseField<string> & {
   type: 'car-registration-number'
 }
 
+export type CurrentInsuranceField = BaseField<string> & {
+  type: 'current-insurance'
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -73,3 +77,4 @@ export type InputField =
   | HouseholdSizeField
   | SsnSeField
   | CarRegistrationNumberField
+  | CurrentInsuranceField
