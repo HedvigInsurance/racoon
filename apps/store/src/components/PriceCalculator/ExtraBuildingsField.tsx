@@ -7,8 +7,8 @@ import {
   ExtraBuildingsField as InputFieldExtraBuildings,
   ExtraBuilding,
   FieldOption,
-} from '@/services/PriceForm/Field.types'
-import { JSONData } from '@/services/PriceForm/PriceForm.types'
+} from '@/services/PriceCalculator/Field.types'
+import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { MENU_BAR_HEIGHT } from '../TopMenu/TopMenu'
 import { InputSwitch } from './InputSwitch'
 import { useTranslateTextLabel } from './useTranslateTextLabel'

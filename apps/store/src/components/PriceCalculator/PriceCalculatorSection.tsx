@@ -1,22 +1,17 @@
 import { FormEventHandler, ReactNode } from 'react'
 import { Button, Space } from 'ui'
-import { deserializeField } from '@/services/PriceForm/PriceForm.helpers'
-import { FormSection, JSONData } from '@/services/PriceForm/PriceForm.types'
+import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { FormSection, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
-type PriceFormSectionProps = {
+type Props = {
   section: FormSection
   loading: boolean
   onSubmit: (data: JSONData) => void
   children: ReactNode
 }
 
-export const PriceFormSection = ({
-  section,
-  loading,
-  onSubmit,
-  children,
-}: PriceFormSectionProps) => {
+export const PriceCalculatorSection = ({ section, loading, onSubmit, children }: Props) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {

@@ -8,7 +8,7 @@ import { SE_CAR } from './data/SE_CAR'
 import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
 import { InputField } from './Field.types'
-import { Form, FormSection, JSONData, Template } from './PriceForm.types'
+import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
 const TEMPLATES: Record<string, Template | undefined> = {
   SE_HOUSE,

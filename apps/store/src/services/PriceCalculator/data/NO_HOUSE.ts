@@ -1,7 +1,10 @@
-import { Template } from '../PriceForm.types'
+import { Template } from '../PriceCalculator.types'
 
-export const SE_HOUSE: Template = {
-  name: 'SE_HOUSE',
+export const NO_HOUSE: Template = {
+  name: 'NO_HOUSE',
+  initialData: {
+    isStudent: false,
+  },
   sections: [
     {
       id: 'your-info',
@@ -10,9 +13,9 @@ export const SE_HOUSE: Template = {
       items: [
         {
           field: {
-            type: 'ssn-se',
-            name: 'ssn',
-            label: { key: 'Personal number' },
+            type: 'date',
+            name: 'birthDate',
+            label: { key: 'Date of birth' },
             required: true,
           },
           layout: { columnSpan: 6 },
@@ -37,8 +40,9 @@ export const SE_HOUSE: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
-            inputMode: 'numeric',
             label: { key: 'Postal code' },
+            minLength: 4,
+            maxLength: 4,
             required: true,
           },
           layout: { columnSpan: 3 },
@@ -46,18 +50,8 @@ export const SE_HOUSE: Template = {
         {
           field: {
             type: 'number',
-            name: 'livingSpace',
-            label: { key: 'House size' },
-            required: true,
-            min: 0,
-          },
-          layout: { columnSpan: 3 },
-        },
-        {
-          field: {
-            type: 'number',
-            name: 'ancillaryArea',
-            label: { key: 'Ancillary area' },
+            name: 'squareMeters',
+            label: { key: 'Square meters' },
             required: true,
             min: 0,
           },
@@ -76,8 +70,18 @@ export const SE_HOUSE: Template = {
         {
           field: {
             type: 'number',
-            name: 'numberOfBathrooms',
-            label: { key: 'Number of bathrooms' },
+            name: 'yearOfOwnership',
+            label: { key: 'Year of ownership' },
+            required: true,
+            min: 0,
+          },
+          layout: { columnSpan: 3 },
+        },
+        {
+          field: {
+            type: 'number',
+            name: 'numberOfWetUnits',
+            label: { key: 'Number of wet units' },
             required: true,
             min: 0,
           },
@@ -86,9 +90,20 @@ export const SE_HOUSE: Template = {
         {
           field: {
             type: 'select',
+            name: 'waterLeakageDetector',
+            label: { key: 'Water leakage detector' },
+            options: [
+              { label: { key: 'Yes' }, value: 'true' },
+              { label: { key: 'No' }, value: 'false' },
+            ],
+          },
+          layout: { columnSpan: 3 },
+        },
+        {
+          field: {
+            type: 'select',
             name: 'isSubleted',
             label: { key: 'Subletting' },
-            required: true,
             options: [
               { label: { key: 'Yes' }, value: 'true' },
               { label: { key: 'No' }, value: 'false' },
@@ -101,7 +116,6 @@ export const SE_HOUSE: Template = {
             type: 'extra-buildings',
             name: 'extraBuildings',
             label: { key: 'Extra buildings' },
-            defaultValue: [],
             buildingOptions: [
               { label: { key: 'Garage' }, value: 'GARAGE' },
               { label: { key: 'Carport' }, value: 'CARPORT' },
@@ -118,6 +132,7 @@ export const SE_HOUSE: Template = {
               { label: { key: 'Boathouse' }, value: 'BOATHOUSE' },
               { label: { key: 'Other' }, value: 'OTHER' },
             ],
+            defaultValue: [],
           },
           layout: { columnSpan: 6 },
         },
@@ -130,12 +145,13 @@ export const SE_HOUSE: Template = {
       items: [
         {
           field: {
-            type: 'householdSize',
+            type: 'number',
+            min: 0,
+            max: 5,
             name: 'numberCoInsured',
-            label: { key: 'Household size' },
+            label: { key: 'Number of co-insured' },
             required: true,
             defaultValue: 0,
-            max: 5,
           },
           layout: { columnSpan: 6 },
         },

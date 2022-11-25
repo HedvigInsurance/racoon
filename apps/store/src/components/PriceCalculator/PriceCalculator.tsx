@@ -5,15 +5,19 @@ import {
   usePriceIntentConfirmMutation,
 } from '@/services/apollo/generated'
 import { trackOffer } from '@/services/gtm'
-import { prefillData, setupForm, updateFormState } from '@/services/PriceForm/PriceForm.helpers'
-import { Form, Template } from '@/services/PriceForm/PriceForm.types'
+import {
+  prefillData,
+  setupForm,
+  updateFormState,
+} from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { Form, Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
-import { PriceFormAccordion } from './PriceFormAccordion'
-import { PriceFormSection } from './PriceFormSection'
-import { useHandleSubmitPriceForm } from './useHandleSubmitPriceForm'
+import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
+import { PriceCalculatorSection } from './PriceCalculatorSection'
+import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
   priceIntent: PriceIntent
@@ -23,7 +27,13 @@ type Props = {
   loading: boolean
 }
 
-export const PriceForm = ({ priceTemplate, priceIntent, onUpdated, onSuccess, loading }: Props) => {
+export const PriceCalculator = ({
+  priceTemplate,
+  priceIntent,
+  onUpdated,
+  onSuccess,
+  loading,
+}: Props) => {
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
@@ -53,7 +63,7 @@ export const PriceForm = ({ priceTemplate, priceIntent, onUpdated, onSuccess, lo
     },
   })
 
-  const [handleSubmit, loadingUpdate] = useHandleSubmitPriceForm({
+  const [handleSubmit, loadingUpdate] = useHandleSubmitPriceCalculator({
     priceIntent,
     onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
@@ -66,9 +76,9 @@ export const PriceForm = ({ priceTemplate, priceIntent, onUpdated, onSuccess, lo
   const isLoading = loadingUpdate || loadingConfirm || loading
 
   return (
-    <PriceFormAccordion form={form}>
+    <PriceCalculatorAccordion form={form}>
       {(section, sectionIndex) => (
-        <PriceFormSection section={section} onSubmit={handleSubmit} loading={isLoading}>
+        <PriceCalculatorSection section={section} onSubmit={handleSubmit} loading={isLoading}>
           <FormGrid items={section.items}>
             {(field, index) => (
               <AutomaticField
@@ -83,9 +93,9 @@ export const PriceForm = ({ priceTemplate, priceIntent, onUpdated, onSuccess, lo
               />
             )}
           </FormGrid>
-        </PriceFormSection>
+        </PriceCalculatorSection>
       )}
-    </PriceFormAccordion>
+    </PriceCalculatorAccordion>
   )
 }
 

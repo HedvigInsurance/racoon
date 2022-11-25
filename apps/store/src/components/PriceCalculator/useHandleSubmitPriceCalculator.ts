@@ -1,5 +1,5 @@
 import { usePriceIntentDataUpdateMutation } from '@/services/apollo/generated'
-import { JSONData } from '@/services/PriceForm/PriceForm.types'
+import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 
 type Params = {
@@ -7,7 +7,7 @@ type Params = {
   onSuccess: (priceIntent: PriceIntent) => void
 }
 
-export const useHandleSubmitPriceForm = ({ onSuccess, priceIntent }: Params) => {
+export const useHandleSubmitPriceCalculator = ({ onSuccess, priceIntent }: Params) => {
   const [updateData, { loading }] = usePriceIntentDataUpdateMutation()
 
   const handleSubmit = async (data: JSONData) => {

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { STEP_ICON_SIZE } from './PriceForm.constants'
+import { STEP_ICON_SIZE } from './PriceCalculator.constants'
 
 export const StepIconDefault = styled.div(({ theme }) => ({
   width: STEP_ICON_SIZE,

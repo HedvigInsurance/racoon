@@ -4,27 +4,27 @@ import { useRef, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { PriceForm } from '@/components/PriceForm/PriceForm'
+import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useRefreshData } from '@/utils/useRefreshData'
-import { PriceFormModal } from '../PriceFormModal/PriceFormModal'
 import { OfferPresenter } from './OfferPresenter'
+import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 
 // TODO: get from API
 const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
 export const PurchaseForm = () => {
-  const [isEditingPriceForm, setIsEditingPriceFormOpen] = useState(false)
+  const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
   const { priceTemplate, priceIntent, shopSession, story } = useProductPageContext()
   const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
   const [refreshData, isLoadingData] = useRefreshData()
   const handleCalculatePriceSuccess = () => {
     refreshData()
-    setIsEditingPriceFormOpen(false)
+    setIsEditingPriceCalculator(false)
   }
 
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
@@ -47,7 +47,7 @@ export const PurchaseForm = () => {
   const bodyContent =
     priceIntent.offers.length === 0 ? (
       <Wrapper>
-        <Button onClick={() => setIsEditingPriceFormOpen(true)} fullWidth>
+        <Button onClick={() => setIsEditingPriceCalculator(true)} fullWidth>
           Calculate price
         </Button>
       </Wrapper>
@@ -78,12 +78,12 @@ export const PurchaseForm = () => {
           </SpaceFlex>
         </Wrapper>
 
-        {!isEditingPriceForm && bodyContent}
+        {!isEditingPriceCalculator && bodyContent}
       </Space>
 
-      <PriceFormModal
-        isOpen={isEditingPriceForm}
-        toggleDialog={setIsEditingPriceFormOpen}
+      <PriceCalculatorDialog
+        isOpen={isEditingPriceCalculator}
+        toggleDialog={setIsEditingPriceCalculator}
         header={
           <>
             <Pillow
@@ -97,14 +97,14 @@ export const PurchaseForm = () => {
           </>
         }
       >
-        <PriceForm
+        <PriceCalculator
           priceTemplate={priceTemplate}
           priceIntent={priceIntent}
           onSuccess={handleCalculatePriceSuccess}
           onUpdated={refreshData}
           loading={isLoadingData}
         />
-      </PriceFormModal>
+      </PriceCalculatorDialog>
 
       <CartToast ref={toastRef} />
     </>

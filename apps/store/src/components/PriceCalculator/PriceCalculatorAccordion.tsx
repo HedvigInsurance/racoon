@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Heading } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Form, FormSection } from '@/services/PriceForm/PriceForm.types'
+import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import * as Accordion from './Accordion'
 import { StepIconDefault } from './StepIconDefault'
 import { StepIconValid } from './StepIconValid'
@@ -12,7 +12,7 @@ type Props = {
   children(section: FormSection, index: number): ReactNode
 }
 
-export const PriceFormAccordion = ({ form, children }: Props) => {
+export const PriceCalculatorAccordion = ({ form, children }: Props) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
   const [activeSectionId, onActiveSectionChange] = useActiveFormSection(form)
 
