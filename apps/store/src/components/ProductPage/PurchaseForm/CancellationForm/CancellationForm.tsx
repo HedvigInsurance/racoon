@@ -10,8 +10,8 @@ type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: string 
 
 type Props = {
   option: CancellationOption
-  onStartDateChange: (date: Date) => void
-  onAutoSwithChange: (checked: boolean) => void
+  onStartDateChange?: (date: Date) => void
+  onAutoSwithChange?: (checked: boolean) => void
 }
 
 export const CancellationForm = ({ option, ...props }: Props) => {
@@ -39,7 +39,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
   const [checked, setChecked] = useState(false)
   const handleCheckedChange = (newValue: boolean) => {
     setChecked(newValue)
-    onAutoSwithChange(newValue)
+    onAutoSwithChange?.(newValue)
   }
 
   return (
@@ -63,7 +63,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
   )
 }
 
-type StartDateInputProps = { onChange: (date: Date) => void }
+type StartDateInputProps = { onChange?: (date: Date) => void }
 
 const StartDateInput = ({ onChange }: StartDateInputProps) => {
   const { t } = useTranslation('purchase-form')
@@ -73,7 +73,7 @@ const StartDateInput = ({ onChange }: StartDateInputProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.valueAsDate) {
       setValue(event.target.valueAsDate)
-      onChange(event.target.valueAsDate)
+      onChange?.(event.target.valueAsDate)
     }
   }
 

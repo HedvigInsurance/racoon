@@ -2,9 +2,9 @@ import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
-import { FormElement } from '@/components/ProductPage/ProductPage.constants'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { FormElement } from './PurchaseForm.constants'
 
 type Props = {
   offers: Array<ProductOfferFragment>
