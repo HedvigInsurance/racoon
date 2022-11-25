@@ -2,7 +2,7 @@ import { FormEventHandler } from 'react'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { useCartEntryAddMutation } from '@/services/apollo/generated'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
-import { FormElement } from './ProductPage.constants'
+import { FormElement } from './PurchaseForm.constants'
 
 type Params = {
   cartId: string
