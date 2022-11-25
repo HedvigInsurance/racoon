@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import logger from '@/services/logger/server'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -81,6 +82,15 @@ export const getStaticProps: GetStaticProps<
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  // When this is true (preview env) don't prerender any static pages
+  if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
+    logger.info('Skipping static generation...')
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
+  }
+
   const pageLinks = await getFilteredPageLinks()
   const paths: RoutingPath[] = pageLinks.map(({ locale, slugParts }) => {
     return { params: { slug: slugParts }, locale }
