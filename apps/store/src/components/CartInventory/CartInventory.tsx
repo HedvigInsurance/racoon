@@ -12,7 +12,7 @@ type Props = {
 
 export const CartInventory = ({ cart, children }: Props) => {
   const { t } = useTranslation()
-  const currencyFormatter = useCurrencyFormatter(cart.cost.total.currencyCode)
+  const currencyFormatter = useCurrencyFormatter(cart.cost.gross.currencyCode)
 
   return (
     <Space y={1}>
@@ -26,7 +26,7 @@ export const CartInventory = ({ cart, children }: Props) => {
           Total
         </Heading>
         <Heading as="h3" variant="standard.18">
-          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cart.cost.total.amount) })}
+          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cart.cost.net.amount) })}
         </Heading>
       </Footer>
     </Space>

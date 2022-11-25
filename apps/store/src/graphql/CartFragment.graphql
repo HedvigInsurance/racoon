@@ -1,11 +1,11 @@
 fragment CartFragment on Cart {
   id
   cost {
-    subtotal {
+    gross {
       amount
       currencyCode
     }
-    total {
+    net {
       amount
       currencyCode
     }

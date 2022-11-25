@@ -18,7 +18,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
         <Space y={0.5}>
           <DataRow>
             <Text size="m">Subtotal</Text>
-            <Text size="m">{currencyFormatter.format(cost.subTotal)}</Text>
+            <Text size="m">{currencyFormatter.format(cost.gross)}</Text>
           </DataRow>
           {products.map((product) => (
             <DataRow key={product.name}>
@@ -51,7 +51,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
 
           <SpaceFlex x={0.5}>
             <Text size="l">
-              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.total) })}
+              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.net) })}
             </Text>
             <TriggerIcon size="1rem" />
           </SpaceFlex>
