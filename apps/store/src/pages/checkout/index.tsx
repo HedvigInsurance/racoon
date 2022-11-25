@@ -33,8 +33,8 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
-      setupShopSessionServiceClientSide(apolloClient).reset()
       Auth.save(accessToken)
+      setupShopSessionServiceClientSide(apolloClient).reset()
       router.push(PageLink.checkoutPayment({ shopSessionId }))
     },
   })

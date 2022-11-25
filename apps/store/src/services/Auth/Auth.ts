@@ -1,6 +1,5 @@
 import { getCookie, setCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
-import { ORIGIN_URL } from '@/utils/PageLink'
 
 const COOKIE_KEY = '_hvsession'
 const ACCESS_TOKEN_SESSION_FIELD = 'token'
@@ -10,31 +9,23 @@ export const save = (accessToken: string) => {
   setCookie(COOKIE_KEY, serialize(accessToken), {
     maxAge: MAX_AGE,
     path: '/',
-    domain: getRootDomain(),
     ...(process.env.NODE_ENV === 'production' && {
-      sameSite: 'none',
       secure: true,
     }),
   })
 }
 
-const getRootDomain = () => {
-  const parts = new URL(ORIGIN_URL).hostname.split('.')
-  const rootDomainParts = parts.slice(-2)
-  return rootDomainParts.join('.')
-}
-
-type CookieParams = Pick<OptionsType, 'req' | 'res'>
+export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
 const getAccessToken = ({ req, res }: CookieParams) => {
   const cookieValue = getCookie(COOKIE_KEY, { req, res })
-  if (cookieValue !== 'string') return undefined
+  if (typeof cookieValue !== 'string') return undefined
   return deserialize(cookieValue)
 }
 
 export const getAuthHeader = (params: CookieParams = {}): Record<string, string> => {
   const accessToken = getAccessToken(params)
-  if (accessToken) return { authorization: accessToken }
+  if (accessToken) return { authorization: `Bearer ${accessToken}` }
   return {}
 }
 
