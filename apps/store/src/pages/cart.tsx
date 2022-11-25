@@ -37,15 +37,15 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
   })
 
   const cartCost = data.shopSession.cart.cost
-  const total = cartCost.total.amount
-  const subTotal = cartCost.subtotal.amount
-  const crossOut = total !== subTotal ? subTotal : undefined
+  const grossAmount = cartCost.gross.amount
+  const netAmount = cartCost.net.amount
+  const crossOut = grossAmount !== netAmount ? netAmount : undefined
 
   return (
     <CartPage
       cartId={data.shopSession.cart.id}
       products={products}
-      cost={{ total, subTotal, crossOut }}
+      cost={{ net: grossAmount, gross: netAmount, crossOut }}
       {...props}
     />
   )

@@ -29,8 +29,8 @@ Default.args = {}
 const MOCK_CART: CartFragmentFragment = {
   id: 'fd2fe15b-7e05-4b1d-8f3d-72300077ad20',
   cost: {
-    subtotal: { amount: 178, currencyCode: CurrencyCode.Sek },
-    total: { amount: 178, currencyCode: CurrencyCode.Sek },
+    gross: { amount: 178, currencyCode: CurrencyCode.Sek },
+    net: { amount: 178, currencyCode: CurrencyCode.Sek },
   },
   entries: [
     {
