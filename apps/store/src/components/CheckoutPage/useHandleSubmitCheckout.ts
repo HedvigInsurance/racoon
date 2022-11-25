@@ -6,15 +6,13 @@ import {
 } from '@/services/Checkout/useHandleSignCheckout'
 import { UserErrors } from './CheckoutPage.types'
 import { useUpdateContactDetails } from './useUpdateContactDetails'
-import { useUpdateStartDates, Params as StartDatesParams } from './useUpdateStartDates'
 
-type Params = Omit<StartDatesParams, 'onSuccess'> &
-  SignCheckoutParams & {
-    checkoutId: string
-  }
+type Params = SignCheckoutParams & {
+  checkoutId: string
+}
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { checkoutId, checkoutSigningId, onSuccess, ...startDateParams } = params
+  const { checkoutId, checkoutSigningId, onSuccess } = params
   const [startSign, signResult] = useHandleSignCheckout({
     checkoutId,
     checkoutSigningId,
@@ -26,20 +24,14 @@ export const useHandleSubmitCheckout = (params: Params) => {
     onSuccess: startSign,
   })
 
-  const [updateStartDates, startDatesResult] = useUpdateStartDates({
-    ...startDateParams,
-    onSuccess: updateContactDetails,
-  })
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     datadogLogs.logger.debug('Checkout | Submit')
     const formData = new FormData(event.currentTarget)
-    updateStartDates(formData)
+    updateContactDetails(formData)
   }
 
   const userErrors: UserErrors = {
-    ...startDatesResult.userErrors,
     ...contactDetailsResult.userErrors,
     ...signResult.userErrors,
   }
@@ -47,7 +39,7 @@ export const useHandleSubmitCheckout = (params: Params) => {
   return [
     handleSubmit,
     {
-      loading: signResult.loading || contactDetailsResult.loading || startDatesResult.loading,
+      loading: signResult.loading || contactDetailsResult.loading,
       userErrors,
       signingStatus: signResult.signingStatus,
     },

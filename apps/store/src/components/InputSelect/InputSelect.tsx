@@ -44,7 +44,7 @@ const StyledSelect = styled.select(({ theme }) => ({
 
 type InputSelectProps = InputBaseProps & {
   name: string
-  options: Array<{ name: string; value: string }>
+  options: ReadonlyArray<{ name: string; value: string }>
   value?: string
   defaultValue?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>

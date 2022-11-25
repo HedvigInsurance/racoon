@@ -7,7 +7,7 @@ import {
   useCheckoutSigningQuery,
   useCheckoutStartSignMutation,
 } from '@/services/apollo/generated'
-import { exchangeAuthorizationCode } from '@/utils/oauth'
+import { exchangeAuthorizationCode } from '@/utils/auth'
 
 export type Params = {
   checkoutId: string

@@ -3,6 +3,7 @@ import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
+import { createAuthorizationCode } from '@/utils/auth'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
@@ -31,6 +32,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { notFound: true }
   }
 
+  let authorizationCode
+  try {
+    authorizationCode = await createAuthorizationCode({ req, res })
+  } catch (error) {
+    LOGGER.error(error, 'Failed to create authorization code')
+    return { notFound: true }
+  }
+
   const redirectBaseURL = PageLink.checkoutPaymentRedirectBase({ locale, shopSessionId })
   let redirectURL: URL
   try {
@@ -40,7 +49,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { notFound: true }
   }
 
-  const woPaymentURL = getWebOnboardingPaymentURL({ locale, redirectURL })
+  const woPaymentURL = getWebOnboardingPaymentURL({ authorizationCode, locale, redirectURL })
   if (!woPaymentURL) {
     LOGGER.error('Web Onboarding payment URL not configured')
     return { notFound: true }
