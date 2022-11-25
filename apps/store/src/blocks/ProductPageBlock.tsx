@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { useBreakpoint } from 'ui'
+import { mq } from 'ui'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -14,34 +14,31 @@ type ProductPageBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
-  const isDesktop = useBreakpoint('lg')
   return (
     <Main {...storyblokEditable(blok)}>
-      {!isDesktop && (
-        <>
-          <PurchaseForm />
-          <Tabs.Tabs defaultValue="overview">
-            <Tabs.TabsList>
-              <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
-              <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
-            </Tabs.TabsList>
+      <MobileLayout>
+        <PurchaseForm />
+        <Tabs.Tabs defaultValue="overview">
+          <Tabs.TabsList>
+            <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
+            <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
+          </Tabs.TabsList>
 
-            <Tabs.TabsContent value="overview">
-              {blok.overview?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </Tabs.TabsContent>
+          <Tabs.TabsContent value="overview">
+            {blok.overview?.map((nestedBlock) => (
+              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+            ))}
+          </Tabs.TabsContent>
 
-            <Tabs.TabsContent value="coverage">
-              {blok.coverage?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </Tabs.TabsContent>
-          </Tabs.Tabs>
-        </>
-      )}
+          <Tabs.TabsContent value="coverage">
+            {blok.coverage?.map((nestedBlock) => (
+              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+            ))}
+          </Tabs.TabsContent>
+        </Tabs.Tabs>
+      </MobileLayout>
 
-      {isDesktop && (
+      <DesktopLayout>
         <>
           <ProductUpper>
             <div>
@@ -59,7 +56,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
             <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
           ))}
         </>
-      )}
+      </DesktopLayout>
 
       {blok.body.map((nestedBlock) => (
         <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
@@ -83,4 +80,17 @@ const ProductUpper = styled.div({
 const PurchaseFormWrapper = styled.div({
   position: 'sticky',
   top: 0,
+})
+
+const MobileLayout = styled.div({
+  [mq.lg]: {
+    display: 'none',
+  },
+})
+
+const DesktopLayout = styled.div({
+  display: 'none',
+  [mq.lg]: {
+    display: 'block',
+  },
 })
