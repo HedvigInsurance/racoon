@@ -10,6 +10,7 @@ const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  isolation: 'isolate',
 })
 
 type LayoutWithMenuProps = {

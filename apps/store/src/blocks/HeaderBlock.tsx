@@ -1,14 +1,15 @@
-import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { ArrowForwardIcon, CrossIcon, useBreakpoint } from 'ui'
+import { useBreakpoint } from 'ui'
 import { Header } from '@/components/Header/Header'
 import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
-  NavigationPrimaryList,
   NavigationSecondaryList,
   NavigationTrigger,
+  StyledArrowForwardIcon,
+  StyledCrossIcon,
+  StyledNavigationTrigger,
   TriggerIcon,
 } from '@/components/Header/HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
@@ -80,18 +81,6 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
 }
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
 
-const StyledCrossIcon = styled(CrossIcon)()
-const StyledArrowForwardIcon = styled(ArrowForwardIcon)()
-
-const StyledNavigationTrigger = styled(NavigationTrigger)({
-  ['&[data-state=open]']: {
-    [StyledArrowForwardIcon.toString()]: { display: 'none' },
-  },
-  '&[data-state=closed]': {
-    [StyledCrossIcon.toString()]: { display: 'none' },
-  },
-})
-
 const getNestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
     block,
@@ -113,22 +102,13 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   const isDesktop = useBreakpoint('md')
-  console.log(blok)
 
   return (
     <Header {...storyblokEditable(blok)}>
       {isDesktop ? (
-        <TopMenu.Desktop>
-          <NavigationPrimaryList>
-            {blok.navMenuContainer.map(getNestedNavigationBlock)}
-          </NavigationPrimaryList>
-        </TopMenu.Desktop>
+        <TopMenu.Desktop navItems={blok.navMenuContainer.map(getNestedNavigationBlock)} />
       ) : (
-        <TopMenu.Mobile>
-          <NavigationPrimaryList>
-            {blok.navMenuContainer.map(getNestedNavigationBlock)}
-          </NavigationPrimaryList>
-        </TopMenu.Mobile>
+        <TopMenu.Mobile navItems={blok.navMenuContainer.map(getNestedNavigationBlock)} />
       )}
     </Header>
   )

@@ -10,7 +10,9 @@ export const ORIGIN_URL =
 type BaseParams = { locale?: RoutingLocale }
 
 type ProductPage = BaseParams & { slug: string }
-type CheckoutPaymentPage = BaseParams & { authStatus?: AuthStatus }
+type CheckoutPaymentPage = BaseParams & { shopSessionId: string; authStatus?: AuthStatus }
+type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
+type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
@@ -21,17 +23,17 @@ export const PageLink = {
   product: ({ locale, slug }: ProductPage) => `${localePrefix(locale)}/products/${slug}`,
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
   checkout: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout`,
-  checkoutPayment: ({ locale, authStatus }: CheckoutPaymentPage = {}) => {
+  checkoutPayment: ({ locale, authStatus, shopSessionId }: CheckoutPaymentPage) => {
     const authStatusQueryParam = authStatus ? `authStatus=${authStatus}` : null
     const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''
-    return `${localePrefix(locale)}/checkout/payment${queryString}`
+    return `${localePrefix(locale)}/checkout/${shopSessionId}/payment${queryString}`
   },
-  checkoutPaymentRedirectBase: ({ locale }: Required<BaseParams>) =>
-    `${ORIGIN_URL}/${locale}/checkout/payment`,
+  checkoutPaymentRedirectBase: ({ locale, shopSessionId }: CheckoutPaymentRedirectBasePage) =>
+    `${ORIGIN_URL}/${locale}/checkout/${shopSessionId}/payment`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
 
-  apiPaymentAdyenCallback: ({ locale }: Required<BaseParams>) =>
-    `/api/payment/adyen-callback/${locale}`,
+  apiPaymentAdyenCallback: ({ locale, shopSessionId }: AdyenCallbackRoute) =>
+    `/api/payment/adyen-callback/${shopSessionId}/${locale}`,
 } as const

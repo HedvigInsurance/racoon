@@ -3,9 +3,8 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { CrossIcon } from 'ui'
-import { focusableStyles, Navigation } from '../HeaderStyles'
+import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 import { MenuIcon } from '../MenuIcon'
-import { TopMenuMobileProps } from './TopMenuMobile.stories'
 
 export const IconButton = styled.button({
   position: 'absolute',
@@ -26,7 +25,13 @@ export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
   position: 'fixed',
 })
 
-export const TopMenuMobile = ({ currentActiveItem, children }: TopMenuMobileProps) => {
+export type TopMenuMobileProps = {
+  isOpen?: boolean
+  currentActiveItem?: string
+  navItems: (JSX.Element | null)[]
+}
+
+export const TopMenuMobile = ({ currentActiveItem, navItems }: TopMenuMobileProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -48,7 +53,7 @@ export const TopMenuMobile = ({ currentActiveItem, children }: TopMenuMobileProp
 
         <DialogContent>
           <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
-            {children}
+            <NavigationPrimaryList>{navItems}</NavigationPrimaryList>
           </Navigation>
 
           <DialogCloseIcon asChild>

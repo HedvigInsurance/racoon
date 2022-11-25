@@ -52,11 +52,11 @@
     },
     "onboarding#dev": {
       "cache": false,
-      "dependsOn": ["codegen"]
+      "dependsOn": ["^build","codegen"]
     },
     "store#dev": {
       "cache": false,
-      "dependsOn": ["codegen"]
+      "dependsOn": ["^build","codegen"]
     },
     "clean": {
       "cache": false

@@ -31,5 +31,9 @@ const Wrapper = styled.div(({ theme }) => ({
 const ScrollableItem = styled.div({
   scrollSnapAlign: 'center',
   flexShrink: 0,
-  maxWidth: 'min(96%, 20rem)',
+  maxWidth: '96%',
+
+  [mq.sm]: {
+    maxWidth: '20rem',
+  },
 })

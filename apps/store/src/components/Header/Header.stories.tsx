@@ -1,9 +1,22 @@
 import styled from '@emotion/styled'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { ComponentMeta, Story } from '@storybook/react'
 import Link from 'next/link'
 import { useBreakpoint } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
+import {
+  NavigationMenuPrimitiveContent,
+  NavigationMenuPrimitiveItem,
+  NavigationPrimaryList,
+  NavigationSecondaryList,
+  NavigationTrigger,
+  StyledArrowForwardIcon,
+  StyledCrossIcon,
+  StyledNavigationTrigger,
+  TriggerIcon,
+} from './HeaderStyles'
+import { NavigationLink, SecondaryNavigationLink } from './NavigationLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { TopMenu } from './TopMenu'
 
@@ -11,6 +24,18 @@ export default {
   title: 'Header',
   component: Header,
 } as ComponentMeta<typeof Header>
+
+const ShoppingCartMenuItemWrapper = styled.div({
+  position: 'relative',
+  lineHeight: 0,
+})
+
+const StyledLink = styled.a(({ theme }) => ({
+  display: 'inline-block',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
+}))
 
 export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
   return (
@@ -24,18 +49,6 @@ export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
     </ShoppingCartMenuItemWrapper>
   )
 }
-
-const ShoppingCartMenuItemWrapper = styled.div({
-  position: 'relative',
-  lineHeight: 0,
-})
-
-const StyledLink = styled.a(({ theme }) => ({
-  display: 'inline-block',
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-  },
-}))
 
 type CounterProps = { value: number }
 
@@ -74,7 +87,7 @@ const Template: Story<TopMenuMobileProps> = (props) => {
   return (
     <>
       <MockedHeaderWrapper topOffset={0}>
-        {isDesktop ? <TopMenu.Desktop /> : <TopMenu.Mobile />}
+        {/* {isDesktop ? <TopMenu.Desktop /> : <TopMenu.Mobile />} */}
         <MockedShoppingCartMenuItem count={props.count} />
       </MockedHeaderWrapper>
     </>
@@ -86,4 +99,61 @@ Default.args = {
   isOpen: true,
   currentActiveItem: 'insurances',
   count: 0,
+}
+
+const MockedNavigationComponent = () => {
+  const isDesktop = useBreakpoint('md')
+
+  return (
+    <NavigationPrimaryList>
+      <NavigationMenuPrimitiveItem value="insurances">
+        {isDesktop ? (
+          <NavigationTrigger>
+            Insurances <TriggerIcon size="16px" />
+          </NavigationTrigger>
+        ) : (
+          <StyledNavigationTrigger>
+            Insurances
+            <StyledCrossIcon size="1rem" />
+            <StyledArrowForwardIcon size="1rem" />
+          </StyledNavigationTrigger>
+        )}
+        <NavigationMenuPrimitiveContent>
+          <NavigationMenuPrimitive.Sub defaultValue="browseAll">
+            <NavigationSecondaryList>
+              <NavigationMenuPrimitive.Item value="browseAll">
+                <SecondaryNavigationLink href={PageLink.store()}>
+                  Browse All
+                </SecondaryNavigationLink>
+              </NavigationMenuPrimitive.Item>
+
+              <NavigationMenuPrimitive.Item value="homeInsurance">
+                <SecondaryNavigationLink href="#">Home Insurances</SecondaryNavigationLink>
+              </NavigationMenuPrimitive.Item>
+
+              <NavigationMenuPrimitive.Item value="accidentInsurance">
+                <SecondaryNavigationLink href="#">Accident Insurance</SecondaryNavigationLink>
+              </NavigationMenuPrimitive.Item>
+
+              <NavigationMenuPrimitive.Item value="carInsurance">
+                <SecondaryNavigationLink href="#">Car Insurance</SecondaryNavigationLink>
+              </NavigationMenuPrimitive.Item>
+            </NavigationSecondaryList>
+          </NavigationMenuPrimitive.Sub>
+        </NavigationMenuPrimitiveContent>
+      </NavigationMenuPrimitiveItem>
+
+      <NavigationMenuPrimitive.Item value="onlyAtHedvig">
+        <NavigationLink href="#">Only At Hedvig</NavigationLink>
+      </NavigationMenuPrimitive.Item>
+
+      <NavigationMenuPrimitive.Item value="ourStory">
+        <NavigationLink href="#">Our Story</NavigationLink>
+      </NavigationMenuPrimitive.Item>
+
+      <NavigationMenuPrimitive.Item value="support">
+        <NavigationLink href="#">Support</NavigationLink>
+      </NavigationMenuPrimitive.Item>
+    </NavigationPrimaryList>
+  )
 }

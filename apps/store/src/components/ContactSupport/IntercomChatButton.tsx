@@ -2,9 +2,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { IntercomProvider, useIntercom } from 'react-use-intercom'
-import { Button } from 'ui'
+import { Button, ButtonProps } from 'ui'
 
-const ChatButton: typeof Button = (props) => {
+const ChatButton = (props: ButtonProps) => {
   return (
     <FlexButton variant="outlined" {...props}>
       Chat with us
