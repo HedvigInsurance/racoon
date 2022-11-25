@@ -1,5 +1,9 @@
 {
   "HOUSEHOLD_SIZE_VALUE": "You + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Just you",
-  "CURRENT_INSURANCE_FIELD_PLACEHOLDER": "Pick company..."
+  "CURRENT_INSURANCE_FIELD_PLACEHOLDER": "Pick company...",
+  "START_DATE_FIELD_LABEL": "Start date",
+  "START_DATE_FIELD_TODAY": "Today",
+  "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
+  "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires."
 }

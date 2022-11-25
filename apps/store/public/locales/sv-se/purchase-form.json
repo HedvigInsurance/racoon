@@ -1,5 +1,9 @@
 {
   "HOUSEHOLD_SIZE_VALUE": "Du + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Bara du",
-  "CURRENT_INSURANCE_FIELD_PLACEHOLDER": "Välj bolag..."
+  "CURRENT_INSURANCE_FIELD_PLACEHOLDER": "Välj bolag...",
+  "START_DATE_FIELD_LABEL": "Startdatum",
+  "START_DATE_FIELD_TODAY": "Idag",
+  "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
+  "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut."
 }
