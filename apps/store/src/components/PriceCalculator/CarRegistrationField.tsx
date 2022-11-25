@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState } from 'react'
 import { InputField } from 'ui'
-import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceForm/Field.types'
+import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceCalculator/Field.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 const CAR_REGISTRATION_NUMBER_REGEX = '[A-Za-z]{3} [0-9]{2}[A-Za-z0-9]{1}'

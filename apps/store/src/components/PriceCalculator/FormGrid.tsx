@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { InputField } from '@/services/PriceForm/Field.types'
-import { SectionItem } from '@/services/PriceForm/PriceForm.types'
+import { InputField } from '@/services/PriceCalculator/Field.types'
+import { SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 
 const Grid = styled.div(({ theme }) => ({
   display: 'grid',

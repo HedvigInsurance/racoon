@@ -1,7 +1,10 @@
-import { Template } from '../PriceForm.types'
+import { Template } from '../PriceCalculator.types'
 
-export const SE_ACCIDENT: Template = {
-  name: 'SE_ACCIDENT',
+export const NO_HOME_CONTENT: Template = {
+  name: 'NO_HOME_CONTENT',
+  initialData: {
+    isStudent: false,
+  },
   sections: [
     {
       id: 'your-info',
@@ -10,9 +13,9 @@ export const SE_ACCIDENT: Template = {
       items: [
         {
           field: {
-            type: 'ssn-se',
-            name: 'ssn',
-            label: { key: 'Personal number' },
+            type: 'date',
+            name: 'birthDate',
+            label: { key: 'Date of birth' },
             required: true,
           },
           layout: { columnSpan: 6 },
@@ -26,6 +29,25 @@ export const SE_ACCIDENT: Template = {
       items: [
         {
           field: {
+            type: 'radio',
+            name: 'subType',
+            label: { key: 'Ownership type' },
+            options: [
+              {
+                label: { key: 'I rent' },
+                value: 'RENT',
+              },
+              {
+                label: { key: 'I own' },
+                value: 'OWN',
+              },
+            ],
+            required: true,
+          },
+          layout: { columnSpan: 6 },
+        },
+        {
+          field: {
             type: 'text',
             name: 'street',
             label: { key: 'Address' },
@@ -37,10 +59,9 @@ export const SE_ACCIDENT: Template = {
           field: {
             type: 'text',
             name: 'zipCode',
-            inputMode: 'numeric',
             label: { key: 'Postal code' },
-            minLength: 5,
-            maxLength: 5,
+            minLength: 4,
+            maxLength: 4,
             required: true,
           },
           layout: { columnSpan: 3 },
@@ -64,12 +85,13 @@ export const SE_ACCIDENT: Template = {
       items: [
         {
           field: {
-            type: 'householdSize',
+            type: 'number',
+            min: 0,
+            max: 5,
             name: 'numberCoInsured',
-            label: { key: 'Household size' },
+            label: { key: 'Number of co-insured' },
             required: true,
             defaultValue: 0,
-            max: 5,
           },
           layout: { columnSpan: 6 },
         },

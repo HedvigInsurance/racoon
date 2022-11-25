@@ -1,5 +1,5 @@
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { SsnSeField as SsnSeFieldType } from '@/services/PriceForm/Field.types'
+import { SsnSeField as SsnSeFieldType } from '@/services/PriceCalculator/Field.types'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type SsnSeFieldProps = {

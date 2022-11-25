@@ -5,7 +5,7 @@ import {
   PriceIntentQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
-import { Template } from '@/services/PriceForm/PriceForm.types'
+import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { createPriceIntent, updatePriceIntentData } from './PriceIntent.helpers'
 import { PriceIntentCreateParams } from './priceIntent.types'

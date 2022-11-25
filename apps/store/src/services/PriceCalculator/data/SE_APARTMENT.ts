@@ -1,10 +1,7 @@
-import { Template } from '../PriceForm.types'
+import { Template } from '../PriceCalculator.types'
 
-export const SE_STUDENT_APARTMENT: Template = {
-  name: 'SE_STUDENT_APARTMENT',
-  initialData: {
-    isStudent: true,
-  },
+export const SE_APARTMENT: Template = {
+  name: 'SE_APARTMENT',
   sections: [
     {
       id: 'your-info',
@@ -25,7 +22,7 @@ export const SE_STUDENT_APARTMENT: Template = {
     {
       id: 'your-home',
       title: { key: 'Your home' },
-      submitLabel: { key: 'Next step' },
+      submitLabel: { key: 'Calculate price' },
       items: [
         {
           field: {
@@ -77,12 +74,20 @@ export const SE_STUDENT_APARTMENT: Template = {
           },
           layout: { columnSpan: 3 },
         },
+        {
+          field: {
+            type: 'current-insurance',
+            name: 'externalInsurer',
+            label: { key: 'I already have home insurance' },
+          },
+          layout: { columnSpan: 6 },
+        },
       ],
     },
     {
       id: 'insured-people',
       title: { key: 'Insured people' },
-      submitLabel: { key: 'Calculate price' },
+      submitLabel: { key: 'Next step' },
       items: [
         {
           field: {

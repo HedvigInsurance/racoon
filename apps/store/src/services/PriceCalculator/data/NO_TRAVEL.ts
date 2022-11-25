@@ -1,4 +1,4 @@
-import { Template } from '../PriceForm.types'
+import { Template } from '../PriceCalculator.types'
 
 export const NO_TRAVEL: Template = {
   name: 'NO_TRAVEL',

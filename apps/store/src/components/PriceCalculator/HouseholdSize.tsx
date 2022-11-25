@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { MouseEventHandler, useState } from 'react'
 import { InputBase } from 'ui'
-import { HouseholdSizeField as HouseholdSizeFieldType } from '@/services/PriceForm/Field.types'
+import { HouseholdSizeField as HouseholdSizeFieldType } from '@/services/PriceCalculator/Field.types'
 
 type FieldProps = {
   field: HouseholdSizeFieldType

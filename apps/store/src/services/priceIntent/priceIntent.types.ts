@@ -3,7 +3,7 @@ import type {
   PriceIntentDataUpdateMutationVariables,
   PriceIntentQuery,
 } from '@/services/apollo/generated'
-import { Template } from '@/services/PriceForm/PriceForm.types'
+import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 
 export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'> & {
   priceTemplate: Template

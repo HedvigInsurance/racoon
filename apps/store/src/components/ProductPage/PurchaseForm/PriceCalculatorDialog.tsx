@@ -9,11 +9,11 @@ type Props = {
   toggleDialog: (open: boolean) => void
 }
 
-export const PriceFormModal = ({ children, header, isOpen, toggleDialog }: Props) => {
+export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }: Props) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={toggleDialog}>
       <Dialog.Content frostedOverlay>
-        <PriceFormWrapper>
+        <ContentWrapper>
           <Dialog.Close asChild>
             <IconButton>
               <CrossIcon size="1.25rem" />
@@ -25,13 +25,13 @@ export const PriceFormModal = ({ children, header, isOpen, toggleDialog }: Props
             </SpaceFlex>
             {children}
           </Space>
-        </PriceFormWrapper>
+        </ContentWrapper>
       </Dialog.Content>
     </Dialog.Root>
   )
 }
 
-const PriceFormWrapper = styled(Dialog.Window)(({ theme }) => ({
+const ContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   position: 'relative',
   display: 'grid',
   alignContent: 'center',

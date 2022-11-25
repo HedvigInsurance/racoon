@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Label } from '@/services/PriceForm/PriceForm.types'
+import { Label } from '@/services/PriceCalculator/PriceCalculator.types'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const t = (key: string, _placeholders?: Record<string, string | number>) => key

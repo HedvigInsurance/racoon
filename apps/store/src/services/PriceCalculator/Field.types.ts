@@ -1,4 +1,4 @@
-import { Label } from './PriceForm.types'
+import { Label } from './PriceCalculator.types'
 
 type BaseField<ValueType> = {
   name: string
