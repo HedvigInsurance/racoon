@@ -13,7 +13,8 @@ import {
   TriggerIcon,
 } from '@/components/Header/HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
-import { TopMenu } from '@/components/Header/TopMenu'
+import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
+import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import {
   checkBlockType,
@@ -106,9 +107,9 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   return (
     <Header {...storyblokEditable(blok)}>
       {isDesktop ? (
-        <TopMenu.Desktop navItems={blok.navMenuContainer.map(getNestedNavigationBlock)} />
+        <TopMenuDesktop>{blok.navMenuContainer.map(getNestedNavigationBlock)}</TopMenuDesktop>
       ) : (
-        <TopMenu.Mobile navItems={blok.navMenuContainer.map(getNestedNavigationBlock)} />
+        <TopMenuMobile>{blok.navMenuContainer.map(getNestedNavigationBlock)} </TopMenuMobile>
       )}
     </Header>
   )

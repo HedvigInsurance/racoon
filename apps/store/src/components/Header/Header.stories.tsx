@@ -8,7 +8,6 @@ import { Header, Wrapper as MockedHeaderWrapper } from './Header'
 import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
-  NavigationPrimaryList,
   NavigationSecondaryList,
   NavigationTrigger,
   StyledArrowForwardIcon,
@@ -18,7 +17,8 @@ import {
 } from './HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from './NavigationLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
-import { TopMenu } from './TopMenu'
+import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
+import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
 
 export default {
   title: 'Header',
@@ -75,19 +75,77 @@ const StyledCounter = styled.span(({ theme }) => ({
   fontWeight: 'bold',
 }))
 
-export type TopMenuMobileProps = {
+const MockedNavItems = () => {
+  const isDesktop = useBreakpoint('md')
+
+  return (
+    <>
+      <NavigationMenuPrimitiveItem value="Home">
+        <NavigationLink href="#">Home</NavigationLink>
+      </NavigationMenuPrimitiveItem>
+      <NavigationMenuPrimitiveItem value="Insurances">
+        {isDesktop ? (
+          <NavigationTrigger>
+            Insurances
+            <TriggerIcon size="16px" />
+          </NavigationTrigger>
+        ) : (
+          <StyledNavigationTrigger>
+            Insurances
+            <StyledCrossIcon size="1rem" />
+            <StyledArrowForwardIcon size="1rem" />
+          </StyledNavigationTrigger>
+        )}
+        <NavigationMenuPrimitiveContent>
+          <NavigationMenuPrimitive.Sub defaultValue="Insurances">
+            <NavigationSecondaryList>
+              <NavigationMenuPrimitiveItem key="1" value="Browse all">
+                <SecondaryNavigationLink href="#">Browse all</SecondaryNavigationLink>
+              </NavigationMenuPrimitiveItem>
+              <NavigationMenuPrimitiveItem key="2" value="Hedvig Home">
+                <SecondaryNavigationLink href="#">Hedvig Home</SecondaryNavigationLink>
+              </NavigationMenuPrimitiveItem>
+              <NavigationMenuPrimitiveItem key="3" value="Hedvig Accident">
+                <SecondaryNavigationLink href="#">Hedvig Accident</SecondaryNavigationLink>
+              </NavigationMenuPrimitiveItem>
+            </NavigationSecondaryList>
+          </NavigationMenuPrimitive.Sub>
+        </NavigationMenuPrimitiveContent>
+      </NavigationMenuPrimitiveItem>
+      <NavigationMenuPrimitiveItem value="Why Hedvig?">
+        <NavigationLink href="#">Why Hedvig?</NavigationLink>
+      </NavigationMenuPrimitiveItem>
+      <NavigationMenuPrimitiveItem value="Only at Hedvig">
+        <NavigationLink href="#">Only at Hedvig</NavigationLink>
+      </NavigationMenuPrimitiveItem>
+      <NavigationMenuPrimitiveItem value="Support">
+        <NavigationLink href="#">Support</NavigationLink>
+      </NavigationMenuPrimitiveItem>
+    </>
+  )
+}
+
+export type TopMenuProps = {
   isOpen?: boolean
   currentActiveItem?: string
   count?: number
 }
 
-const Template: Story<TopMenuMobileProps> = (props) => {
+const Template: Story<TopMenuProps> = (props) => {
   const isDesktop = useBreakpoint('md')
 
   return (
     <>
       <MockedHeaderWrapper topOffset={0}>
-        {/* {isDesktop ? <TopMenu.Desktop /> : <TopMenu.Mobile />} */}
+        {isDesktop ? (
+          <TopMenuDesktop>
+            <MockedNavItems />
+          </TopMenuDesktop>
+        ) : (
+          <TopMenuMobile>
+            <MockedNavItems />
+          </TopMenuMobile>
+        )}
         <MockedShoppingCartMenuItem count={props.count} />
       </MockedHeaderWrapper>
     </>
@@ -99,61 +157,4 @@ Default.args = {
   isOpen: true,
   currentActiveItem: 'insurances',
   count: 0,
-}
-
-const MockedNavigationComponent = () => {
-  const isDesktop = useBreakpoint('md')
-
-  return (
-    <NavigationPrimaryList>
-      <NavigationMenuPrimitiveItem value="insurances">
-        {isDesktop ? (
-          <NavigationTrigger>
-            Insurances <TriggerIcon size="16px" />
-          </NavigationTrigger>
-        ) : (
-          <StyledNavigationTrigger>
-            Insurances
-            <StyledCrossIcon size="1rem" />
-            <StyledArrowForwardIcon size="1rem" />
-          </StyledNavigationTrigger>
-        )}
-        <NavigationMenuPrimitiveContent>
-          <NavigationMenuPrimitive.Sub defaultValue="browseAll">
-            <NavigationSecondaryList>
-              <NavigationMenuPrimitive.Item value="browseAll">
-                <SecondaryNavigationLink href={PageLink.store()}>
-                  Browse All
-                </SecondaryNavigationLink>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="homeInsurance">
-                <SecondaryNavigationLink href="#">Home Insurances</SecondaryNavigationLink>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="accidentInsurance">
-                <SecondaryNavigationLink href="#">Accident Insurance</SecondaryNavigationLink>
-              </NavigationMenuPrimitive.Item>
-
-              <NavigationMenuPrimitive.Item value="carInsurance">
-                <SecondaryNavigationLink href="#">Car Insurance</SecondaryNavigationLink>
-              </NavigationMenuPrimitive.Item>
-            </NavigationSecondaryList>
-          </NavigationMenuPrimitive.Sub>
-        </NavigationMenuPrimitiveContent>
-      </NavigationMenuPrimitiveItem>
-
-      <NavigationMenuPrimitive.Item value="onlyAtHedvig">
-        <NavigationLink href="#">Only At Hedvig</NavigationLink>
-      </NavigationMenuPrimitive.Item>
-
-      <NavigationMenuPrimitive.Item value="ourStory">
-        <NavigationLink href="#">Our Story</NavigationLink>
-      </NavigationMenuPrimitive.Item>
-
-      <NavigationMenuPrimitive.Item value="support">
-        <NavigationLink href="#">Support</NavigationLink>
-      </NavigationMenuPrimitive.Item>
-    </NavigationPrimaryList>
-  )
 }

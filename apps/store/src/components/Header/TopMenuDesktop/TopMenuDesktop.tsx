@@ -4,16 +4,16 @@ import { NavigationPrimaryList } from '../HeaderStyles'
 
 export type TopMenuDesktopProps = {
   currentActiveItem?: string
-  navItems: (JSX.Element | null)[]
+  children: React.ReactNode
 }
 
-export const TopMenuDesktop = ({ navItems, currentActiveItem }: TopMenuDesktopProps) => {
+export const TopMenuDesktop = ({ children, currentActiveItem }: TopMenuDesktopProps) => {
   const [activeItem, setActiveItem] = useState(currentActiveItem || '')
 
   return (
     <>
       <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
-        <NavigationPrimaryList>{navItems}</NavigationPrimaryList>
+        <NavigationPrimaryList>{children}</NavigationPrimaryList>
       </Navigation>
     </>
   )
