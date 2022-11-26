@@ -17691,7 +17691,7 @@ __metadata:
     next-router-mock: 0.8.0
     pino-datadog: "https://github.com/simonauner/pino-datadog#rename-hostname-to-host"
     pino-multi-stream: 6.0.0
-    prettier: 2.7.1
+    prettier: 2.8.0
     react: 18.2.0
     react-dom: 18.2.0
     react-merge-refs: 2.0.1
@@ -18835,12 +18835,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.7.1":
-  version: 2.7.1
-  resolution: "prettier@npm:2.7.1"
+"prettier@npm:2.8.0":
+  version: 2.8.0
+  resolution: "prettier@npm:2.8.0"
   bin:
     prettier: bin-prettier.js
-  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
+  checksum: 72004ce0cc9bb097daf3e3833f62495768724392c1d5b178dd47372337616e9e50ecbb0804f236596223f7b5eb1bbe69cefc8957dca21112c5777e77ef73a564
   languageName: node
   linkType: hard
 
@@ -19285,7 +19285,7 @@ __metadata:
     eslint-import-resolver-typescript: 3.5.2
     husky: 8.0.2
     lint-staged: 13.0.3
-    prettier: 2.7.1
+    prettier: 2.8.0
     turbo: 1.6.3
   languageName: unknown
   linkType: soft
@@ -21205,7 +21205,7 @@ __metadata:
     pino: 8.7.0
     pino-datadog-transport: 1.2.2
     pino-pretty: 9.1.1
-    prettier: 2.7.1
+    prettier: 2.8.0
     react: 18.2.0
     react-dom: 18.2.0
     react-use-intercom: 2.0.0
