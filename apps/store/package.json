@@ -40,7 +40,7 @@
     "framer-motion": "7.6.12",
     "graphql": "16.6.0",
     "next": "13.0.5",
-    "next-i18next": "12.1.0",
+    "next-i18next": "13.0.0",
     "personnummer": "3.1.4",
     "pino": "8.7.0",
     "pino-datadog-transport": "1.2.2",
