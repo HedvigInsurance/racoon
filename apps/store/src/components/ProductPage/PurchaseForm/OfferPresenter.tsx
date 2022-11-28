@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
 import { Button } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
+import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -37,7 +38,14 @@ export const OfferPresenter = ({
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
 
-  // TODO: Update start date on change
+  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({
+    priceIntentId: priceIntent.id,
+  })
+
+  const handleStartDateChange = (startDate: Date) => {
+    updateStartDate({ dateValue: startDate })
+  }
+
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
     priceIntentId: priceIntent.id,
@@ -62,7 +70,7 @@ export const OfferPresenter = ({
 
   const cancellationOption = getCancellationOption(priceIntent.cancellation)
 
-  const loading = loadingAddToCart || updateCancellationInfo.loading
+  const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
   return (
     <>
@@ -81,6 +89,7 @@ export const OfferPresenter = ({
           <CancellationForm
             option={cancellationOption}
             onAutoSwitchChange={handleUpdateCancellation}
+            onStartDateChange={handleStartDateChange}
           />
 
           <SubmitButton loading={loading} />
