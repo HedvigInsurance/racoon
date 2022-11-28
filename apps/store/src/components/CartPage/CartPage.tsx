@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { FormEvent, useCallback } from 'react'
-import { Button, Heading, LinkButton, Space } from 'ui'
+import { FormEvent, FormEventHandler, useCallback } from 'react'
+import { Button, Heading, InputField, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
@@ -10,8 +10,9 @@ import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
+import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 
-export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
+export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) => {
   const { t } = useTranslation(I18nNamespace.Cart)
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
     refetchQueries: 'active',
@@ -25,6 +26,26 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
     },
     [removeCartEntry, cartId],
   )
+
+  const [redeemCampaign, { loading: loadingRedeemCampaign, userError }] = useRedeemCampaign({
+    cartId,
+  })
+  const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const code = formData.get('campaignCode')
+    if (typeof code === 'string') {
+      redeemCampaign(code)
+    }
+  }
+
+  const [unredeemCampaign, { loading: loadingUnredeenCampaign }] = useUnredeemCampaign({ cartId })
+  const handleSubmitUnredeemCampaign = (campaignId: string): FormEventHandler => {
+    return (event) => {
+      event.preventDefault()
+      unredeemCampaign(campaignId)
+    }
+  }
 
   if (products.length === 0) {
     return <EmptyState />
@@ -49,6 +70,29 @@ export const CartPage = ({ cartId, products, cost }: CartPageProps) => {
             </li>
           ))}
         </ProductList>
+
+        <Space y={2}>
+          <form onSubmit={handleSubmitCampaign}>
+            <Space y={0.5}>
+              <InputField name="campaignCode" label="Campaign code" errorMessage={userError} />
+              <Button disabled={loadingRedeemCampaign}>Add code</Button>
+            </Space>
+          </form>
+
+          <ul>
+            {campaigns.map((item) => (
+              <li key={item.id}>
+                <Space y={0.5}>
+                  <p>{item.displayName}</p>
+                  <form onSubmit={handleSubmitUnredeemCampaign(item.id)}>
+                    <Button disabled={loadingUnredeenCampaign}>Remove</Button>
+                  </form>
+                </Space>
+              </li>
+            ))}
+          </ul>
+        </Space>
+
         <Footer>
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
