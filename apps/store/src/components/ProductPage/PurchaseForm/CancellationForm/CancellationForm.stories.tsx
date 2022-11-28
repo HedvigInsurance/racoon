@@ -13,7 +13,7 @@ export default {
   },
   argTypes: {
     onStartDateChange: { action: 'change start date' },
-    onAutoSwithChange: { action: 'change auto switch' },
+    onAutoSwitchChange: { action: 'change auto switch' },
   },
 } as ComponentMeta<typeof CancellationForm>
 

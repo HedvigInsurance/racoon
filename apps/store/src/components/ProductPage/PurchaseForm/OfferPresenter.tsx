@@ -80,7 +80,7 @@ export const OfferPresenter = ({
 
           <CancellationForm
             option={cancellationOption}
-            onAutoSwithChange={handleUpdateCancellation}
+            onAutoSwitchChange={handleUpdateCancellation}
           />
 
           <SubmitButton loading={loading} />
