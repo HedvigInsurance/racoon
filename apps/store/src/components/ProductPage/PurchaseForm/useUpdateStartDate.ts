@@ -3,10 +3,10 @@ import { useStartDateUpdateMutation } from '@/services/apollo/generated'
 import { convertToDate, formatAPIDate } from '@/utils/date'
 
 export type Params = {
-  cartId: string
+  priceIntentId: string
 }
 
-export const useUpdateStartDate = ({ cartId }: Params) => {
+export const useUpdateStartDate = ({ priceIntentId }: Params) => {
   const [updateStartDate, result] = useStartDateUpdateMutation({
     onError(error) {
       datadogLogs.logger.warn('Failed to update start date', { error })
@@ -15,7 +15,6 @@ export const useUpdateStartDate = ({ cartId }: Params) => {
 
   // TODO: Improve this name, it's not event handler
   const handleUpdateStartDate = async ({
-    offerId,
     dateValue,
     onSuccess,
   }: {
@@ -28,14 +27,17 @@ export const useUpdateStartDate = ({ cartId }: Params) => {
     const date = convertToDate(dateValue)
 
     if (!date) {
-      datadogLogs.logger.warn('Unable to update start date', { offerId, dateValue })
-      throw new Error(`Invalid date value for ${offerId}`)
+      datadogLogs.logger.warn('Unable to update start date', {
+        priceIntentId,
+        dateValue,
+      })
+      throw new Error(`Invalid date value for ${priceIntentId}`)
     }
 
     updateStartDate({
-      variables: { input: { cartId, updates: [{ offerId, startDate: formatAPIDate(date) }] } },
+      variables: { priceIntentId, startDate: formatAPIDate(date) },
       onCompleted(data) {
-        if (data.cartEntriesStartDateUpdate.userErrors.length === 0) {
+        if (data.priceIntentStartDateUpdate.userErrors.length === 0) {
           onSuccess()
         }
       },
@@ -47,7 +49,7 @@ export const useUpdateStartDate = ({ cartId }: Params) => {
     userError = { message: 'Something went wrong' }
   } else {
     // TODO: Handle multiple errors
-    const error = result.data?.cartEntriesStartDateUpdate.userErrors[0]
+    const error = result.data?.priceIntentStartDateUpdate.userErrors[0]
     if (error) {
       userError = { message: error.message }
     }

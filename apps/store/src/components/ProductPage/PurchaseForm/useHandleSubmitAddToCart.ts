@@ -6,13 +6,16 @@ import { FormElement } from './PurchaseForm.constants'
 
 type Params = {
   cartId: string
+  priceIntentId: string
   onSuccess: (productOfferId: string) => void
 }
 
 // Temporary implementation, we should set startDate on priceIntent before adding to cart
-export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
+export const useHandleSubmitAddToCart = ({ cartId, priceIntentId, onSuccess }: Params) => {
   const [addEntry, { loading }] = useCartEntryAddMutation()
-  const [updateStartDate, { loading: updateStateDateLoading }] = useUpdateStartDate({ cartId })
+  const [updateStartDate, { loading: updateStateDateLoading }] = useUpdateStartDate({
+    priceIntentId,
+  })
 
   // @TODO: expose and handle errors
 

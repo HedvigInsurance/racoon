@@ -40,6 +40,7 @@ export const OfferPresenter = ({
   // TODO: Update start date on change
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
+    priceIntentId: priceIntent.id,
     onSuccess(productOfferId) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 
