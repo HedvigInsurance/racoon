@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { usePriceIntentCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
 
 type Params = { priceIntentId: string }
@@ -11,8 +12,9 @@ export const useUpdateCancellation = ({ priceIntentId }: Params) => {
         priceIntentId,
         requested,
       },
-    }).catch((err) => {
-      console.log('Ignore update error until fixed on backend', err)
+      onError(error) {
+        datadogLogs.logger.warn('Failed to update cancellation', { error })
+      },
     })
   }
 
