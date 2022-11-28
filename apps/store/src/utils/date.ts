@@ -9,5 +9,7 @@ export const convertToDate = (value: unknown) => {
 }
 
 export const formatAPIDate = (date: Date) => {
-  return date.toISOString().substring(0, 10)
+  return date.toISOString().split('T')[0]
 }
+
+export const formatInputDateValue = formatAPIDate

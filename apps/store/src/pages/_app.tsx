@@ -15,6 +15,7 @@ import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.const
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 import { contentFontClassName } from '@/utils/fonts'
+import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -36,6 +37,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || ((page) => page)
   useGTMEvents()
+  useDebugTranslationKeys()
 
   return (
     <>

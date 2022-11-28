@@ -1,19 +1,18 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
-import { Button, InputField } from 'ui'
-import { FormElement } from '@/components/ProductPage/ProductPage.constants'
+import { Button } from 'ui'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
-import { useHandleSubmitAddToCart } from '@/components/ProductPage/useHandleSubmitAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { formatAPIDate } from '@/utils/date'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { CancellationForm } from './CancellationForm/CancellationForm'
 import { TierSelector } from './TierSelector'
+import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
   priceIntent: PriceIntent
@@ -66,7 +65,7 @@ export const OfferPresenter = ({
             onValueChange={setSelectedOfferId}
           />
 
-          <CancellationSettings />
+          <CancellationForm option={{ type: 'NONE' }} />
 
           <SubmitButton loading={loadingAddToCart} />
         </FormContent>
@@ -85,18 +84,6 @@ export const OfferPresenter = ({
 const FormContent = styled(SpaceFlex)({
   flex: 1,
 })
-
-// TODO: Support IEX switching
-const CancellationSettings = () => {
-  return (
-    <InputField
-      label="Start date"
-      type="date"
-      name={FormElement.StartDate}
-      defaultValue={formatAPIDate(new Date())}
-    />
-  )
-}
 
 // TODO: Localize
 const SubmitButton = ({ loading }: { loading: boolean }) => {
