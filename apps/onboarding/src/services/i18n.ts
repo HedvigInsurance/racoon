@@ -8,8 +8,13 @@ export const replaceMarkdown = async (translations: SSRConfig, fields: Array<str
   const window = new JSDOM('').window
   const DOMPurify = createDOMPurify(window as unknown as Window)
 
-  for (const localeKey of Object.keys(translations._nextI18Next.initialI18nStore)) {
-    const localeTranslations = translations._nextI18Next.initialI18nStore[localeKey].common
+  const store = translations._nextI18Next?.initialI18nStore
+  if (typeof store == 'undefined') {
+    throw new Error('Translation store not found or initialized')
+  }
+
+  for (const localeKey of Object.keys(store)) {
+    const localeTranslations = store[localeKey].common
     for (const markdownField of fields) {
       if (localeTranslations[markdownField]) {
         localeTranslations[markdownField] = DOMPurify.sanitize(

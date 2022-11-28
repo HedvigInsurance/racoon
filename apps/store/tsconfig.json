@@ -18,5 +18,5 @@
     },
     "incremental": true
   },
-  "include": ["src", "next-env.d.ts", "index.d.ts"]
+  "include": ["src", "*.d.ts"]
 }
