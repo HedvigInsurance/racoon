@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
 import { Button } from 'ui'
+import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -50,11 +51,17 @@ export const OfferPresenter = ({
     },
   })
 
+  const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({
+    priceIntentId: priceIntent.id,
+  })
+
   const displayPrice = t('MONTHLY_PRICE', {
     displayAmount: formatter.format(selectedOffer.price.amount),
   })
 
   const cancellationOption = getCancellationOption(priceIntent.cancellation)
+
+  const loading = loadingAddToCart || updateCancellationInfo.loading
 
   return (
     <>
@@ -70,9 +77,12 @@ export const OfferPresenter = ({
             onValueChange={setSelectedOfferId}
           />
 
-          <CancellationForm option={cancellationOption} />
+          <CancellationForm
+            option={cancellationOption}
+            onAutoSwithChange={handleUpdateCancellation}
+          />
 
-          <SubmitButton loading={loadingAddToCart} />
+          <SubmitButton loading={loading} />
         </FormContent>
       </form>
       <ScrollPast targetRef={scrollPastRef}>
