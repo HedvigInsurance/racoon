@@ -9,6 +9,14 @@ fragment CartFragment on Cart {
       amount
       currencyCode
     }
+    discount {
+      amount
+      currencyCode
+    }
+  }
+  redeemedCampaigns {
+    id
+    code
   }
   entries {
     ...ProductOffer
