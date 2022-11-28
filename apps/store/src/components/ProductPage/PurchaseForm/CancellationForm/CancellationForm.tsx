@@ -6,7 +6,7 @@ import { Text } from '@/components/Text/Text'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
 
-type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: string }
+export type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: string }
 
 type Props = {
   option: CancellationOption
