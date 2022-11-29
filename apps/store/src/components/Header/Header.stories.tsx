@@ -9,13 +9,9 @@ import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationSecondaryList,
-  NavigationTrigger,
-  StyledArrowForwardIcon,
-  StyledCrossIcon,
-  StyledNavigationTrigger,
-  TriggerIcon,
 } from './HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from './NavigationLink'
+import { ResponsiveNavTrigger } from './ResponsiveNavTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
@@ -76,26 +72,13 @@ const StyledCounter = styled.span(({ theme }) => ({
 }))
 
 const MockedNavItems = () => {
-  const isDesktop = useBreakpoint('md')
-
   return (
     <>
       <NavigationMenuPrimitiveItem value="Home">
         <NavigationLink href="#">Home</NavigationLink>
       </NavigationMenuPrimitiveItem>
       <NavigationMenuPrimitiveItem value="Insurances">
-        {isDesktop ? (
-          <NavigationTrigger>
-            Insurances
-            <TriggerIcon size="16px" />
-          </NavigationTrigger>
-        ) : (
-          <StyledNavigationTrigger>
-            Insurances
-            <StyledCrossIcon size="1rem" />
-            <StyledArrowForwardIcon size="1rem" />
-          </StyledNavigationTrigger>
-        )}
+        <ResponsiveNavTrigger name="Insurances" />
         <NavigationMenuPrimitiveContent>
           <NavigationMenuPrimitive.Sub defaultValue="Insurances">
             <NavigationSecondaryList>
@@ -136,7 +119,7 @@ const Template: Story<TopMenuProps> = (props) => {
 
   return (
     <>
-      <MockedHeaderWrapper topOffset={0}>
+      <MockedHeaderWrapper>
         {isDesktop ? (
           <TopMenuDesktop>
             <MockedNavItems />

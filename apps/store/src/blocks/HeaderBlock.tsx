@@ -6,13 +6,9 @@ import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationSecondaryList,
-  NavigationTrigger,
-  StyledArrowForwardIcon,
-  StyledCrossIcon,
-  StyledNavigationTrigger,
-  TriggerIcon,
 } from '@/components/Header/HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
+import { ResponsiveNavTrigger } from '@/components/Header/ResponsiveNavTrigger'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -44,22 +40,10 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 
 export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
-  const isDesktop = useBreakpoint('md')
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      {isDesktop ? (
-        <NavigationTrigger>
-          {blok.name}
-          <TriggerIcon size="16px" />
-        </NavigationTrigger>
-      ) : (
-        <StyledNavigationTrigger>
-          {blok.name}
-          <StyledCrossIcon size="1rem" />
-          <StyledArrowForwardIcon size="1rem" />
-        </StyledNavigationTrigger>
-      )}
+      <ResponsiveNavTrigger name={blok.name} />
       <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>
