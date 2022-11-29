@@ -18,7 +18,7 @@ import {
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userErrors'> & {
+type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userError'> & {
   checkoutId: string
   checkoutSigningId: string | null
   shopSessionId: string
@@ -29,7 +29,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const router = useRouter()
 
   const apolloClient = useApolloClient()
-  const [handleSubmit, { loading, userErrors, signingStatus }] = useHandleSubmitCheckout({
+  const [handleSubmit, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
@@ -39,19 +39,14 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     },
   })
 
-  const productsWithErrors = products.map((product) => ({
-    errorMessage: userErrors[product.offerId],
-    ...product,
-  }))
-
   return (
     <form onSubmit={handleSubmit}>
       <CheckoutPage
         {...pageProps}
         loading={loading}
-        products={productsWithErrors}
+        products={products}
         signingStatus={signingStatus}
-        userErrors={userErrors}
+        userError={userError}
       />
     </form>
   )

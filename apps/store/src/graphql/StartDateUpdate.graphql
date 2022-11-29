@@ -3,9 +3,7 @@ mutation StartDateUpdate($priceIntentId: ID!, $startDate: Date) {
     priceIntent {
       ...PriceIntentFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }

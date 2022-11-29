@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { usePriceIntentCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
+import { getMutationError } from '@/utils/getMutationError'
 
 type Params = { priceIntentId: string }
 
@@ -18,22 +19,11 @@ export const useUpdateCancellation = ({ priceIntentId }: Params) => {
     })
   }
 
-  // TODO: Extract boilerplate to some util module.  Localize generic error
-  let userError = null
-  if (result.error) {
-    userError = { message: 'Something went wrong' }
-  } else {
-    const error = result.data?.priceIntentCancellationRequestedUpdate.userErrors[0]
-    if (error) {
-      userError = { message: error.message }
-    }
-  }
-
   return [
     handleUpdateCancellation,
     {
       loading: result.loading,
-      userError,
+      userError: getMutationError(result, result.data?.priceIntentCancellationRequestedUpdate),
     },
   ] as const
 }

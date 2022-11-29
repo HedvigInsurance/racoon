@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
 import { formatAPIDate } from '@/utils/date'
+import { getMutationError } from '@/utils/getMutationError'
 
 export type Params = {
   priceIntentId: string
@@ -24,29 +25,18 @@ export const useUpdateStartDate = ({ priceIntentId }: Params) => {
     updateStartDate({
       variables: { priceIntentId, startDate: formatAPIDate(dateValue) },
       onCompleted(data) {
-        if (data.priceIntentStartDateUpdate.userErrors.length === 0) {
+        if (!data.priceIntentStartDateUpdate.userError) {
           onSuccess?.()
         }
       },
     })
   }
 
-  let userError: { message: string } | null = null
-  if (result.error) {
-    userError = { message: 'Something went wrong' }
-  } else {
-    // TODO: Handle multiple errors
-    const error = result.data?.priceIntentStartDateUpdate.userErrors[0]
-    if (error) {
-      userError = { message: error.message }
-    }
-  }
-
   return [
     saveStartDate,
     {
       loading: result.loading,
-      userError,
+      userError: getMutationError(result, result.data?.priceIntentStartDateUpdate),
     },
   ] as const
 }

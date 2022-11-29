@@ -3,9 +3,7 @@ mutation PriceIntentCancellationRequestedUpdate($priceIntentId: ID!, $requested:
     priceIntent {
       ...PriceIntentFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }
