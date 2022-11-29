@@ -1,6 +1,5 @@
 fragment Checkout on Checkout {
   id
-  completedAt
   contactDetails {
     email
     firstName
@@ -8,5 +7,4 @@ fragment Checkout on Checkout {
     personalNumber
     phoneNumber
   }
-  paymentConnectionFlow
 }
