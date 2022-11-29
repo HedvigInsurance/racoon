@@ -8,12 +8,13 @@ export type SelectOptions = ReadonlyArray<{ name: string; value: string }>
 
 export type InputCurrentInsuranceProps = {
   label: string
+  company?: string
   companyOptions: SelectOptions
   onCompanyChange: (company: string) => void
 }
 
 export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
-  const { companyOptions, onCompanyChange, label } = props
+  const { label, company, companyOptions, onCompanyChange } = props
   const [hasInsurance, setHasInsurance] = useState(false)
 
   const handleCheckedChange = (checked: boolean) => {
@@ -40,6 +41,7 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
           required
           options={companyOptions}
           placeholder={t('CURRENT_INSURANCE_FIELD_PLACEHOLDER')}
+          value={company}
           onChange={handleChangeExternalInsurer}
         />
       )}

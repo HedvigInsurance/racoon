@@ -1,10 +1,11 @@
-mutation StartDateUpdate($input: CartEntriesStartDateUpdateInput!) {
-  cartEntriesStartDateUpdate(input: $input) {
-    cart {
-      ...CartFragment
+mutation StartDateUpdate($priceIntentId: ID!, $startDate: Date) {
+  priceIntentStartDateUpdate(priceIntentId: $priceIntentId, startDate: $startDate) {
+    priceIntent {
+      ...PriceIntentFragment
     }
     userErrors {
-      offerId
+      code
+      field
       message
     }
   }

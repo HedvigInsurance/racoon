@@ -1,0 +1,15 @@
+mutation ExternalInsurerUpdate($priceIntentId: ID!, $externalInsurer: String!) {
+  priceIntentExternalInsurerUpdate(
+    priceIntentId: $priceIntentId
+    externalInsurer: $externalInsurer
+  ) {
+    priceIntent {
+      ...PriceIntentFragment
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}

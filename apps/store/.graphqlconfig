@@ -1,0 +1,13 @@
+{
+  "name": "Octopus GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "includes": ["src/graphql/*.graphql"],
+  "extensions": {
+    "endpoints": {
+      "dev": {
+        "url": "https://apollo-router.dev.hedvigit.com",
+        "introspect": false
+      }
+    }
+  }
+}

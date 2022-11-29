@@ -1,0 +1,8 @@
+query ExternalInsurers($productName: String!) {
+  product(productName: $productName) {
+    externalInsurers {
+      id
+      displayName
+    }
+  }
+}
