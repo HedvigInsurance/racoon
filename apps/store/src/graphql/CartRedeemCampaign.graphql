@@ -3,9 +3,7 @@ mutation RedeemCampaign($cartId: ID!, $code: String!) {
     cart {
       ...CartFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }
