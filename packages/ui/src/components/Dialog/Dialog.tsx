@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -16,7 +17,9 @@ const contentShow = keyframes({
   '100%': { opacity: 1, transform: 'scale(1)' },
 })
 
-const StyledOverlay = styled(DialogPrimitive.Overlay)<OverlayProps>(({ frosted }) => ({
+const StyledOverlay = styled(DialogPrimitive.Overlay, {
+  shouldForwardProp: isPropValid,
+})<OverlayProps>(({ frosted }) => ({
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   position: 'fixed',
   inset: 0,
