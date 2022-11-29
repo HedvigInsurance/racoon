@@ -8,7 +8,6 @@ import { PageLink } from '@/utils/PageLink'
 import { zIndexes } from '@/utils/zIndex'
 import { MenuIcon } from './MenuIcon'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
-import { useStickyTopMenuOffset } from './useTopMenuStickyOffset'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
 
@@ -20,10 +19,9 @@ export const TopMenu = () => {
     setOpen(false)
     setActiveItem('')
   }, [])
-  const { topOffset, navRef } = useStickyTopMenuOffset()
 
   return (
-    <Wrapper topOffset={topOffset} ref={navRef}>
+    <Wrapper>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
         <DialogPrimitive.Trigger asChild>
           <ToggleMenu>
@@ -114,14 +112,13 @@ export const focusableStyles = {
   },
 }
 
-export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset = 0 }) => ({
+export const Wrapper = styled.header(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
   height: MENU_BAR_HEIGHT,
   padding: theme.space[4],
-  top: `${topOffset}px`,
   zIndex: zIndexes.header,
 }))
 
