@@ -74,7 +74,11 @@ export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) =
         <Space y={2}>
           <form onSubmit={handleSubmitCampaign}>
             <Space y={0.5}>
-              <InputField name="campaignCode" label="Campaign code" errorMessage={userError} />
+              <InputField
+                name="campaignCode"
+                label="Campaign code"
+                errorMessage={userError?.message}
+              />
               <Button disabled={loadingRedeemCampaign}>Add code</Button>
             </Space>
           </form>
