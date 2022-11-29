@@ -2,9 +2,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { FormEvent, useCallback } from 'react'
-import { Button, Heading, LinkButton, mq, Space } from 'ui'
+import { Button, Heading, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
-import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
@@ -86,10 +85,6 @@ const Wrapper = styled.div(({ theme }) => ({
   width: '100%',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-  paddingTop: MENU_BAR_HEIGHT_MOBILE,
-  [mq.md]: {
-    paddingTop: MENU_BAR_HEIGHT_DESKTOP,
-  },
 }))
 
 const StyledHeading = styled(Heading)({ textAlign: 'center' })

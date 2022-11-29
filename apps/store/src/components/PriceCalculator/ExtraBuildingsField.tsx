@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, InputField, Space, Dialog, mq } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header'
+import { Button, Heading, InputField, Space, Dialog } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
@@ -156,14 +155,10 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
 }
 
 const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
-  marginTop: MENU_BAR_HEIGHT_MOBILE,
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
   padding: theme.space[4],
   borderRadius: 8,
-  [mq.md]: {
-    marginTop: MENU_BAR_HEIGHT_DESKTOP,
-  },
 }))
 
 const Flex = styled.div({ flex: 1 })

@@ -1,7 +1,10 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { ArrowForwardIcon, ChevronIcon, CrossIcon, mq, theme } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP } from './Header'
+
+export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
+
+export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
 
 export const focusableStyles = {
   cursor: 'pointer',

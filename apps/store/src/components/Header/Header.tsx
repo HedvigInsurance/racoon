@@ -1,12 +1,9 @@
 import styled from '@emotion/styled'
 import { mq } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 import { useStickyTopMenuOffset } from './useTopMenuStickyOffset'
-
-export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
-
-export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
 
 export const Wrapper = styled.header<{ topOffset: number }>(({ theme, topOffset = 0 }) => ({
   display: 'flex',
