@@ -11,7 +11,7 @@ import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { cart, loading, prefilledData, userErrors } = props
+  const { cart, loading, prefilledData, userError } = props
 
   return (
     <>
@@ -47,7 +47,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 name={FormElement.PersonalNumber}
                 required
                 defaultValue={prefilledData.personalNumber ?? undefined}
-                errorMessage={userErrors[FormElement.PersonalNumber]}
               />
               <InputField
                 label="First Name"
@@ -55,7 +54,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 type="text"
                 required
                 defaultValue={prefilledData.firstName ?? undefined}
-                errorMessage={userErrors[FormElement.FirstName]}
               />
               <InputField
                 label="Last Name"
@@ -63,7 +61,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 type="text"
                 required
                 defaultValue={prefilledData.lastName ?? undefined}
-                errorMessage={userErrors[FormElement.LastName]}
               />
               <InputField
                 label="Email"
@@ -71,7 +68,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 type="email"
                 required
                 defaultValue={prefilledData.email ?? undefined}
-                errorMessage={userErrors[FormElement.Email]}
               />
               <InputField
                 label="Phone"
@@ -80,7 +76,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 inputMode="tel"
                 required
                 defaultValue={prefilledData.phoneNumber ?? undefined}
-                errorMessage={userErrors[FormElement.PhoneNumber]}
               />
             </Section>
 
@@ -89,7 +84,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 After completing the purchase, you&apos;ll be able to connect payment.
               </Text>
               <SubmitButton loading={loading} signingStatus={props.signingStatus} />
-              {userErrors.form && <Text size="m">ERROR: {userErrors.form}</Text>}
+              {userError && <Text size="m">{userError.message}</Text>}
             </Space>
           </Space>
         </Main>

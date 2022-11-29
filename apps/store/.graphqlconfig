@@ -1,7 +1,7 @@
 {
   "name": "Octopus GraphQL Schema",
   "schemaPath": "schema.graphql",
-  "includes": ["src/graphql/*.graphql"],
+  "includes": ["schema.graphql","src/graphql/*.graphql"],
   "extensions": {
     "endpoints": {
       "dev": {

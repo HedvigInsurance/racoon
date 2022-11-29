@@ -1,8 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useContactDetailsUpdateMutation } from '@/services/apollo/generated'
+import { getMutationError } from '@/utils/getMutationError'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './CheckoutPage.constants'
-import { UserErrors } from './CheckoutPage.types'
 
 type Params = {
   checkoutId: string
@@ -12,7 +12,7 @@ type Params = {
 export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
   const [updateContactDetails, result] = useContactDetailsUpdateMutation({
     onCompleted(data) {
-      if (data.checkoutContactDetailsUpdate.userErrors.length === 0) {
+      if (!data.checkoutContactDetailsUpdate.userError) {
         onSuccess()
       }
     },
@@ -35,22 +35,11 @@ export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
     })
   }
 
-  const userErrors: UserErrors = {
-    ...(result.error && { form: 'Something went wrong' }),
-    ...result.data?.checkoutContactDetailsUpdate.userErrors.reduce((errors, error) => {
-      const key = error.field?.join('.') ?? 'form'
-      return {
-        ...errors,
-        [key]: error.message,
-      }
-    }, {}),
-  }
-
   return [
     handleSubmit,
     {
       loading: result.loading,
-      userErrors,
+      userError: getMutationError(result, result.data?.checkoutContactDetailsUpdate),
     },
   ] as const
 }

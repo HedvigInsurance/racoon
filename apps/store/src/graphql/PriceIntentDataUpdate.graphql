@@ -3,9 +3,7 @@ mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: JSON!) {
     priceIntent {
       ...PriceIntentFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }
