@@ -22,9 +22,12 @@ export const PurchaseForm = () => {
   const { priceTemplate, priceIntent, shopSession, story } = useProductPageContext()
   const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
   const [refreshData, isLoadingData] = useRefreshData()
-  const handleCalculatePriceSuccess = () => {
-    refreshData()
-    setIsEditingPriceCalculator(false)
+  const handleCalculatePriceSuccess = async () => {
+    try {
+      await refreshData()
+    } finally {
+      setIsEditingPriceCalculator(false)
+    }
   }
 
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
