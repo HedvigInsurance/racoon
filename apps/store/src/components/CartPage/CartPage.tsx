@@ -133,6 +133,7 @@ const Wrapper = styled.div(({ theme }) => ({
   width: '100%',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
+  paddingTop: '3.5rem',
 }))
 
 const StyledHeading = styled(Heading)({ textAlign: 'center' })

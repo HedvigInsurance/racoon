@@ -1,11 +1,9 @@
 import styled from '@emotion/styled'
 import { ReactElement } from 'react'
-import { mq } from 'ui'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderStyles'
 
 const Wrapper = styled.div({
   minHeight: '100vh',
@@ -13,10 +11,6 @@ const Wrapper = styled.div({
   flexDirection: 'column',
   alignItems: 'center',
   isolation: 'isolate',
-  marginTop: MENU_BAR_HEIGHT_MOBILE,
-  [mq.md]: {
-    marginTop: MENU_BAR_HEIGHT_DESKTOP,
-  },
 })
 
 type LayoutWithMenuProps = {

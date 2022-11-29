@@ -157,6 +157,7 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
 const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
+  marginTop: '3.5rem',
   padding: theme.space[4],
   borderRadius: 8,
 }))
