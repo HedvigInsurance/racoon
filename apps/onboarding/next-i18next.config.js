@@ -11,4 +11,5 @@ module.exports = {
   fallbackNS: 'common',
   localePath: path.resolve('./public/locales'),
   lowerCaseLng: true,
+  returnNull: false,
 }

@@ -1,0 +1,10 @@
+mutation PriceIntentCancellationRequestedUpdate($priceIntentId: ID!, $requested: Boolean!) {
+  priceIntentCancellationRequestedUpdate(priceIntentId: $priceIntentId, requested: $requested) {
+    priceIntent {
+      ...PriceIntentFragment
+    }
+    userError {
+      message
+    }
+  }
+}

@@ -3,9 +3,7 @@ mutation CartEntryAdd($cartId: ID!, $offerId: ID!) {
     cart {
       ...CartFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }

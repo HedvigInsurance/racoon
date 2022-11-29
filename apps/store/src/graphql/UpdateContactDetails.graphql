@@ -3,9 +3,7 @@ mutation ContactDetailsUpdate($input: CheckoutContactDetailsUpdateInput) {
     checkout {
       ...Checkout
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }

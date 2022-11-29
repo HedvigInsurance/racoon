@@ -35,6 +35,7 @@ const createApolloClient = (headers?: Record<string, string>) => {
     link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
     headers,
+    connectToDevTools: process.env.NODE_ENV === 'development',
   })
 }
 

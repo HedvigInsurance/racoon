@@ -23,6 +23,7 @@ import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
+import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
@@ -151,6 +152,7 @@ export const initStoryblok = () => {
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
+    ProductPageBlock,
     PriceCalculatorBlock,
     ProductCardBlock,
     ProductGridBlock,
@@ -165,7 +167,7 @@ export const initStoryblok = () => {
     PerilsBlock,
     VideoBlock,
   ]
-  const blockAliases = { product: PageBlock, reusableBlock: PageBlock }
+  const blockAliases = { reusableBlock: PageBlock }
   const components = {
     ...Object.fromEntries(
       blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent]),

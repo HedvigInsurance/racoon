@@ -1,0 +1,10 @@
+mutation RedeemCampaign($cartId: ID!, $code: String!) {
+  cartRedeemCampaign(input: { cartId: $cartId, code: $code }) {
+    cart {
+      ...CartFragment
+    }
+    userError {
+      message
+    }
+  }
+}

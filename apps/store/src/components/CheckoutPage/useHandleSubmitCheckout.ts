@@ -4,7 +4,6 @@ import {
   useHandleSignCheckout,
   Params as SignCheckoutParams,
 } from '@/services/Checkout/useHandleSignCheckout'
-import { UserErrors } from './CheckoutPage.types'
 import { useUpdateContactDetails } from './useUpdateContactDetails'
 
 type Params = SignCheckoutParams & {
@@ -31,16 +30,13 @@ export const useHandleSubmitCheckout = (params: Params) => {
     updateContactDetails(formData)
   }
 
-  const userErrors: UserErrors = {
-    ...contactDetailsResult.userErrors,
-    ...signResult.userErrors,
-  }
+  const userError = contactDetailsResult.userError || signResult.userError
 
   return [
     handleSubmit,
     {
       loading: signResult.loading || contactDetailsResult.loading,
-      userErrors,
+      userError,
       signingStatus: signResult.signingStatus,
     },
   ] as const

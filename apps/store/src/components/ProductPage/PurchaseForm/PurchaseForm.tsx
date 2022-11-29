@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useRef, useState } from 'react'
-import { Button, Heading, Space } from 'ui'
+import { Button, Heading } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
@@ -22,9 +22,12 @@ export const PurchaseForm = () => {
   const { priceTemplate, priceIntent, shopSession, story } = useProductPageContext()
   const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
   const [refreshData, isLoadingData] = useRefreshData()
-  const handleCalculatePriceSuccess = () => {
-    refreshData()
-    setIsEditingPriceCalculator(false)
+  const handleCalculatePriceSuccess = async () => {
+    try {
+      await refreshData()
+    } finally {
+      setIsEditingPriceCalculator(false)
+    }
   }
 
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
@@ -46,25 +49,23 @@ export const PurchaseForm = () => {
   // TODO: Show "loading offers" state or don't close modal while still loading
   const bodyContent =
     priceIntent.offers.length === 0 ? (
-      <Wrapper>
+      <ButtonWrapper>
         <Button onClick={() => setIsEditingPriceCalculator(true)} fullWidth>
           Calculate price
         </Button>
-      </Wrapper>
+      </ButtonWrapper>
     ) : (
-      <Wrapper>
-        <OfferPresenter
-          priceIntent={priceIntent}
-          shopSession={shopSession}
-          scrollPastRef={scrollPastRef}
-          onAddedToCart={handleAddedToCart}
-        />
-      </Wrapper>
+      <OfferPresenter
+        priceIntent={priceIntent}
+        shopSession={shopSession}
+        scrollPastRef={scrollPastRef}
+        onAddedToCart={handleAddedToCart}
+      />
     )
 
   return (
     <>
-      <Space y={1.5}>
+      <PurchaseFormTop>
         <Wrapper ref={scrollPastRef}>
           <SpaceFlex space={1} align="center" direction="vertical">
             <Pillow
@@ -78,8 +79,8 @@ export const PurchaseForm = () => {
           </SpaceFlex>
         </Wrapper>
 
-        {!isEditingPriceCalculator && bodyContent}
-      </Space>
+        {!isEditingPriceCalculator && <Wrapper>{bodyContent}</Wrapper>}
+      </PurchaseFormTop>
 
       <PriceCalculatorDialog
         isOpen={isEditingPriceCalculator}
@@ -110,6 +111,21 @@ export const PurchaseForm = () => {
     </>
   )
 }
+
+const PurchaseFormTop = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '4.5rem',
+  paddingTop: '9vh',
+  paddingBottom: '9vh',
+})
+
+const ButtonWrapper = styled.div({
+  maxWidth: '21rem',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+})
 
 const Wrapper = styled.div({
   paddingLeft: '1rem',

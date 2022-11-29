@@ -31,7 +31,9 @@ const MOCK_CART: CartFragmentFragment = {
   cost: {
     gross: { amount: 178, currencyCode: CurrencyCode.Sek },
     net: { amount: 178, currencyCode: CurrencyCode.Sek },
+    discount: { amount: 0, currencyCode: CurrencyCode.Sek },
   },
+  redeemedCampaigns: [],
   entries: [
     {
       id: 'a98c1fe0-a216-412d-8664-fe130daec0f8',

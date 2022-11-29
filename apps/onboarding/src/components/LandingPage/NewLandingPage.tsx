@@ -144,6 +144,7 @@ const PageContainer = styled.main((props) => ({
 const FooterButton = styled(Button)(({ theme }) => ({
   position: 'sticky',
   bottom: theme.space[5],
+  marginTop: theme.space[5],
   marginInline: theme.space[4],
   [mq.sm]: {
     left: '50%',

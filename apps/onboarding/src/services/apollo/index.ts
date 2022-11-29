@@ -13,6 +13,7 @@ export const createApolloClient = () => {
       credentials: 'same-origin',
     }),
     cache: new InMemoryCache(),
+    connectToDevTools: process.env.NODE_ENV === 'development',
   })
 }
 

@@ -36,6 +36,13 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
     }
   })
 
+  const campaigns: CartPageProps['campaigns'] = data.shopSession.cart.redeemedCampaigns.map(
+    (item) => ({
+      id: item.id,
+      displayName: item.code,
+    }),
+  )
+
   const cartCost = data.shopSession.cart.cost
   const grossAmount = cartCost.gross.amount
   const netAmount = cartCost.net.amount
@@ -45,6 +52,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
     <CartPage
       cartId={data.shopSession.cart.id}
       products={products}
+      campaigns={campaigns}
       cost={{ net: grossAmount, gross: netAmount, crossOut }}
       {...props}
     />

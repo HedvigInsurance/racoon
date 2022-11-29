@@ -3,9 +3,7 @@ mutation PriceIntentConfirm($priceIntentId: ID!) {
     priceIntent {
       ...PriceIntentFragment
     }
-    userErrors {
-      code
-      field
+    userError {
       message
     }
   }

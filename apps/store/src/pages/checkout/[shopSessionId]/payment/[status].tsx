@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { initializeApollo } from '@/services/apollo/client'
-import { PaymentConnectionFlow } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -32,22 +31,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     const apolloClient = initializeApollo({ req, res })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
     const shopSession = await shopSessionService.fetchById(shopSessionId)
-
-    const isPaymentBeforeSign =
-      shopSession.checkout.paymentConnectionFlow === PaymentConnectionFlow.BeforeSign
-
-    if (isPaymentBeforeSign) {
-      // This should not happen
-      logger.warn('BEFORE_SIGN ShopSession incorrectly on payment redirect page', {
-        shopSessionId: shopSession.id,
-      })
-      return {
-        redirect: {
-          destination: PageLink.checkoutPayment({ locale, shopSessionId }),
-          permanent: false,
-        },
-      }
-    }
 
     if (status === 'success') {
       return {
