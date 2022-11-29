@@ -63,15 +63,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       serverSideTranslations(locale),
     ])
 
-    if (shopSession.checkout.completedAt) {
-      return {
-        redirect: {
-          destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
-          permanent: false,
-        },
-      }
-    }
-
     const checkoutId = shopSession.checkout.id
     const checkoutSigning = await fetchCurrentCheckoutSigning({
       req,
