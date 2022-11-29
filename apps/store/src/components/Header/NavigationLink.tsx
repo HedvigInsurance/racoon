@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
 import { Space } from 'ui'
-import { Pillow } from '../Pillow/Pillow'
+import { Pillow } from '@/components/Pillow/Pillow'
 import { focusableStyles } from './HeaderStyles'
 
 const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({

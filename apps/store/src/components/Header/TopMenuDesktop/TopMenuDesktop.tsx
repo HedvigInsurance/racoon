@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Navigation } from '../HeaderStyles'
 import { NavigationPrimaryList } from '../HeaderStyles'
 
 export type TopMenuDesktopProps = {
-  currentActiveItem?: string
   children: React.ReactNode
 }
 
-export const TopMenuDesktop = ({ children, currentActiveItem }: TopMenuDesktopProps) => {
-  const [activeItem, setActiveItem] = useState(currentActiveItem || '')
-
+export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
   return (
     <>
-      <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
+      <Navigation>
         <NavigationPrimaryList>{children}</NavigationPrimaryList>
       </Navigation>
     </>

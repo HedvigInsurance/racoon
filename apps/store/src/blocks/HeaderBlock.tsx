@@ -82,7 +82,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
 }
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
 
-const getNestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
+const NestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
     block,
     NestedNavContainerBlock.blockName,
@@ -107,9 +107,9 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   return (
     <Header {...storyblokEditable(blok)}>
       {isDesktop ? (
-        <TopMenuDesktop>{blok.navMenuContainer.map(getNestedNavigationBlock)}</TopMenuDesktop>
+        <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       ) : (
-        <TopMenuMobile>{blok.navMenuContainer.map(getNestedNavigationBlock)} </TopMenuMobile>
+        <TopMenuMobile>{blok.navMenuContainer.map(NestedNavigationBlock)} </TopMenuMobile>
       )}
     </Header>
   )

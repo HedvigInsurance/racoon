@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { FormEvent, useCallback } from 'react'
 import { Button, Heading, LinkButton, mq, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
+import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '../Header/Header'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = ({ cartId, products, cost }: CartPageProps) => {

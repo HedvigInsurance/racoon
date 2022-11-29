@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { FormEventHandler, useState } from 'react'
 import { Button, Heading, InputField, Space, Dialog, mq } from 'ui'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
@@ -9,7 +10,6 @@ import {
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '../Header/Header'
 import { InputSwitch } from './InputSwitch'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 

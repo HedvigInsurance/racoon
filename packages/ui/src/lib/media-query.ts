@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
@@ -32,7 +32,7 @@ export const useBreakpoint = (level: Level) => {
   // Initial value must be the same on SSR and CSR to prevent hydration errors
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions())
     }

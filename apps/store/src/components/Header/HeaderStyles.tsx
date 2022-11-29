@@ -27,7 +27,7 @@ export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(
 export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
   [mq.md]: {
     position: 'absolute',
-    top: 'calc(MENU_BAR_HEIGHT_DESKTOP + 0.5rem)',
+    top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
     left: '0.5rem',
   },
 }))
