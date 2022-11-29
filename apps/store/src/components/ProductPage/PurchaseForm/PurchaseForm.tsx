@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useRef, useState } from 'react'
-import { Button, Heading, Space } from 'ui'
+import { Button, Heading } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
@@ -65,7 +65,7 @@ export const PurchaseForm = () => {
 
   return (
     <>
-      <Space y={1.5}>
+      <PurchaseFormTop>
         <Wrapper ref={scrollPastRef}>
           <SpaceFlex space={1} align="center" direction="vertical">
             <Pillow
@@ -80,7 +80,7 @@ export const PurchaseForm = () => {
         </Wrapper>
 
         {!isEditingPriceCalculator && <Wrapper>{bodyContent}</Wrapper>}
-      </Space>
+      </PurchaseFormTop>
 
       <PriceCalculatorDialog
         isOpen={isEditingPriceCalculator}
@@ -111,6 +111,15 @@ export const PurchaseForm = () => {
     </>
   )
 }
+
+const PurchaseFormTop = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '4.5rem',
+  paddingTop: '9vh',
+  paddingBottom: '9vh',
+})
 
 const ButtonWrapper = styled.div({
   maxWidth: '21rem',

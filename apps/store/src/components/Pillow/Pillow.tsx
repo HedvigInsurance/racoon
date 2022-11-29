@@ -34,6 +34,6 @@ const getSize = (size: 'small' | 'medium' | 'large' | 'xlarge') => {
     case 'large':
       return '4rem'
     case 'xlarge':
-      return '12.5rem'
+      return '13.75rem'
   }
 }
