@@ -49,20 +49,18 @@ export const PurchaseForm = () => {
   // TODO: Show "loading offers" state or don't close modal while still loading
   const bodyContent =
     priceIntent.offers.length === 0 ? (
-      <Wrapper>
+      <ButtonWrapper>
         <Button onClick={() => setIsEditingPriceCalculator(true)} fullWidth>
           Calculate price
         </Button>
-      </Wrapper>
+      </ButtonWrapper>
     ) : (
-      <Wrapper>
-        <OfferPresenter
-          priceIntent={priceIntent}
-          shopSession={shopSession}
-          scrollPastRef={scrollPastRef}
-          onAddedToCart={handleAddedToCart}
-        />
-      </Wrapper>
+      <OfferPresenter
+        priceIntent={priceIntent}
+        shopSession={shopSession}
+        scrollPastRef={scrollPastRef}
+        onAddedToCart={handleAddedToCart}
+      />
     )
 
   return (
@@ -81,7 +79,7 @@ export const PurchaseForm = () => {
           </SpaceFlex>
         </Wrapper>
 
-        {!isEditingPriceCalculator && bodyContent}
+        {!isEditingPriceCalculator && <Wrapper>{bodyContent}</Wrapper>}
       </Space>
 
       <PriceCalculatorDialog
@@ -113,6 +111,12 @@ export const PurchaseForm = () => {
     </>
   )
 }
+
+const ButtonWrapper = styled.div({
+  maxWidth: '21rem',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+})
 
 const Wrapper = styled.div({
   paddingLeft: '1rem',
