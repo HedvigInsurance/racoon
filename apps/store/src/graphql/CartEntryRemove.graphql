@@ -1,4 +1,4 @@
-mutation CartEntryRemove($cartId: ID!, $offerId: ID!) {
+mutation CartEntryRemove($cartId: ID!, $offerId: ID!, $locale: String!) {
   cartEntriesRemove(input: { cartId: $cartId, offerIds: [$offerId] }) {
     cart {
       ...CartFragment

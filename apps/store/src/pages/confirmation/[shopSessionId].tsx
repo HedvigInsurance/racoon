@@ -11,7 +11,7 @@ import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.const
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 
 type Params = { shopSessionId: string }
 
@@ -26,10 +26,9 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = initializeApollo({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-
   try {
     const [shopSession, globalStory, translations] = await Promise.all([
-      shopSessionService.fetchById(shopSessionId),
+      shopSessionService.fetchById(shopSessionId, toIsoLocale(locale)),
       getGlobalStory({ locale }),
       serverSideTranslations(locale),
     ])

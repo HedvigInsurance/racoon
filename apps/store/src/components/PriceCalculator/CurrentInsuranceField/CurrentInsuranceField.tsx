@@ -3,6 +3,7 @@ import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
 } from '@/services/apollo/generated'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 type Props = {
@@ -57,8 +58,12 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
     },
   })
 
+  const { locale } = useCurrentLocale()
+
   return (externalInsurerId: string) => {
     datadogLogs.logger.info('Updating external insurer', { priceIntentId, externalInsurerId })
-    updateExternalInsurer({ variables: { priceIntentId, externalInsurer: externalInsurerId } })
+    updateExternalInsurer({
+      variables: { priceIntentId, externalInsurer: externalInsurerId, locale },
+    })
   }
 }

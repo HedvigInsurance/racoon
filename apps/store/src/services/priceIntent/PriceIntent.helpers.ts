@@ -15,10 +15,10 @@ import { COOKIE_KEY_PRICE_INTENT } from './priceIntent.constants'
 import { PriceIntentService } from './PriceIntentService'
 
 export const priceIntentServiceInitServerSide = ({
+  apolloClient,
   req,
   res,
   shopSession,
-  apolloClient,
 }: Params) => {
   return new PriceIntentService(
     new ServerCookiePersister(COOKIE_KEY_PRICE_INTENT, req, res), // FIXME: it makes no sense to pass in this key anymore since it's always overridden
@@ -28,8 +28,8 @@ export const priceIntentServiceInitServerSide = ({
 }
 
 export const priceIntentServiceInitClientSide = ({
-  shopSession,
   apolloClient,
+  shopSession,
 }: Omit<Params, 'req' | 'res'>) => {
   return new PriceIntentService(
     new CookiePersister(COOKIE_KEY_PRICE_INTENT), // FIXME: it makes no sense to pass in this key anymore since it's always overridden
@@ -39,25 +39,23 @@ export const priceIntentServiceInitClientSide = ({
 }
 
 type Params = {
-  req: GetServerSidePropsContext['req']
-  res: GetServerSidePropsContext['res']
-  shopSession: ShopSession
   apolloClient: ApolloClient<unknown>
-}
+  shopSession: ShopSession
+} & Pick<GetServerSidePropsContext, 'locale' | 'req' | 'res'>
 
 type UpdatePriceIntentDataParams = PriceIntentDataUpdateMutationVariables & {
   apolloClient: ApolloClient<unknown>
 }
 
 export const updatePriceIntentData = async (params: UpdatePriceIntentDataParams) => {
-  const { apolloClient, priceIntentId, data } = params
+  const { apolloClient, data, locale, priceIntentId } = params
 
   const updatedResult = await apolloClient.mutate<
     PriceIntentDataUpdateMutation,
     PriceIntentDataUpdateMutationVariables
   >({
     mutation: PriceIntentDataUpdateDocument,
-    variables: { priceIntentId, data },
+    variables: { data, locale, priceIntentId },
   })
 
   const updatedPriceIntent = updatedResult.data?.priceIntentDataUpdate.priceIntent
@@ -73,14 +71,14 @@ type CreatePriceIntentParams = PriceIntentCreateMutationVariables & {
 }
 
 export const createPriceIntent = async (params: CreatePriceIntentParams) => {
-  const { apolloClient, shopSessionId, productName } = params
+  const { apolloClient, locale, shopSessionId, productName } = params
 
   const result = await apolloClient.mutate<
     PriceIntentCreateMutation,
     PriceIntentCreateMutationVariables
   >({
     mutation: PriceIntentCreateDocument,
-    variables: { shopSessionId, productName },
+    variables: { locale, productName, shopSessionId },
   })
 
   const priceIntent = result.data?.priceIntentCreate

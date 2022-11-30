@@ -1,30 +1,29 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { FormEvent, FormEventHandler, useCallback } from 'react'
+import { FormEvent, FormEventHandler } from 'react'
 import { Button, Heading, InputField, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 
 export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) => {
   const { t } = useTranslation(I18nNamespace.Cart)
+  const { locale } = useCurrentLocale()
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
     refetchQueries: 'active',
     awaitRefetchQueries: true,
   })
 
-  const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>, offerId: string) => {
-      event.preventDefault()
-      await removeCartEntry({ variables: { cartId, offerId } })
-    },
-    [removeCartEntry, cartId],
-  )
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>, offerId: string) => {
+    event.preventDefault()
+    await removeCartEntry({ variables: { cartId, offerId, locale } })
+  }
 
   const [redeemCampaign, { loading: loadingRedeemCampaign, userError }] = useRedeemCampaign({
     cartId,

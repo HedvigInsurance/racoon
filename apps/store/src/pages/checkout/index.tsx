@@ -59,11 +59,17 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   try {
     const apolloClient = initializeApollo({ req, res })
     const [shopSession, translations] = await Promise.all([
-      getCurrentShopSessionServerSide({ req, res, apolloClient }),
+      getCurrentShopSessionServerSide({ apolloClient, locale, req, res }),
       serverSideTranslations(locale),
     ])
 
-    const checkoutId = shopSession.checkout.id
+    const { checkout } = shopSession
+    if (!checkout) {
+      logger.warn('No checkout info in shopSession')
+      return { notFound: true }
+    }
+
+    const checkoutId = checkout.id
     const checkoutSigning = await fetchCurrentCheckoutSigning({
       req,
       apolloClient,
@@ -77,11 +83,11 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         checkoutId,
         checkoutSigningId: checkoutSigning?.id ?? null,
         prefilledData: {
-          [FormElement.FirstName]: shopSession.checkout.contactDetails.firstName || '',
-          [FormElement.LastName]: shopSession.checkout.contactDetails.lastName || '',
-          [FormElement.PersonalNumber]: shopSession.checkout.contactDetails.personalNumber || '',
-          [FormElement.PhoneNumber]: shopSession.checkout.contactDetails.phoneNumber || '',
-          [FormElement.Email]: shopSession.checkout.contactDetails.email || '',
+          [FormElement.FirstName]: checkout.contactDetails.firstName || '',
+          [FormElement.LastName]: checkout.contactDetails.lastName || '',
+          [FormElement.PersonalNumber]: checkout.contactDetails.personalNumber || '',
+          [FormElement.PhoneNumber]: checkout.contactDetails.phoneNumber || '',
+          [FormElement.Email]: checkout.contactDetails.email || '',
         },
         products: shopSession.cart.entries.map((offer) => ({
           offerId: offer.id,

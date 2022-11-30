@@ -1,4 +1,4 @@
-mutation StartDateUpdate($priceIntentId: ID!, $startDate: Date) {
+mutation StartDateUpdate($priceIntentId: ID!, $startDate: Date, $locale: String!) {
   priceIntentStartDateUpdate(priceIntentId: $priceIntentId, startDate: $startDate) {
     priceIntent {
       ...PriceIntentFragment
