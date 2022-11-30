@@ -27,12 +27,10 @@ export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
 
 export type TopMenuMobileProps = {
   isOpen?: boolean
-  currentActiveItem?: string
   children: React.ReactNode
 }
 
-export const TopMenuMobile = ({ currentActiveItem, children }: TopMenuMobileProps) => {
-  const [activeItem, setActiveItem] = useState(currentActiveItem || '')
+export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -52,7 +50,7 @@ export const TopMenuMobile = ({ currentActiveItem, children }: TopMenuMobileProp
         </DialogPrimitive.Trigger>
 
         <DialogContent>
-          <Navigation value={activeItem} onValueChange={(activeItem) => setActiveItem(activeItem)}>
+          <Navigation>
             <NavigationPrimaryList>{children}</NavigationPrimaryList>
           </Navigation>
 
