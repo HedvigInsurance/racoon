@@ -1,4 +1,8 @@
-mutation PriceIntentCancellationRequestedUpdate($priceIntentId: ID!, $requested: Boolean!) {
+mutation PriceIntentCancellationRequestedUpdate(
+  $priceIntentId: ID!
+  $requested: Boolean!
+  $locale: String!
+) {
   priceIntentCancellationRequestedUpdate(priceIntentId: $priceIntentId, requested: $requested) {
     priceIntent {
       ...PriceIntentFragment

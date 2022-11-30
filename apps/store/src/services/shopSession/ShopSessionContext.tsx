@@ -8,6 +8,7 @@ import {
 } from '@/services/apollo/generated'
 import { Track } from '@/services/Track/Track'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 type ShopSessionQueryResult = QueryResult<ShopSessionQuery, ShopSessionQueryVariables>
@@ -18,18 +19,19 @@ type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
   const { countryCode } = useCurrentCountry()
+  const { locale } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
   const shopSessionId = initialShopSessionId ?? shopSessionService.shopSessionId()
 
   const [createShopSession, mutationResult] = useShopSessionCreateMutation({
-    variables: { countryCode },
+    variables: { countryCode, locale },
     onCompleted: ({ shopSessionCreate }) => {
       shopSessionService.save(shopSessionCreate)
     },
   })
 
   const queryResult = useShopSessionApolloQuery({
-    variables: shopSessionId ? { shopSessionId } : undefined,
+    variables: shopSessionId ? { shopSessionId, locale } : undefined,
     skip: !shopSessionId,
     ssr: typeof window === 'undefined',
     onCompleted: ({ shopSession }) => {

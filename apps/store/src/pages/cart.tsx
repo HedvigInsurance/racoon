@@ -17,13 +17,15 @@ import {
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type Props = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string
 }
 
 const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) => {
-  const { data } = useShopSessionQuery({ variables: { shopSessionId } })
+  const { locale } = useCurrentLocale()
+  const { data } = useShopSessionQuery({ variables: { shopSessionId, locale } })
 
   if (!data) return null
 
@@ -72,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<
   try {
     const apolloClient = initializeApollo({ req, res })
     const [shopSession, globalStory, translations] = await Promise.all([
-      getShopSessionServerSide({ req, res, apolloClient, countryCode }),
+      getShopSessionServerSide({ apolloClient, countryCode, locale, req, res }),
       getGlobalStory({ locale, version }),
       serverSideTranslations(locale),
     ])

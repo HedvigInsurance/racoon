@@ -1,4 +1,4 @@
-query PriceIntent($priceIntentId: ID!) {
+query PriceIntent($priceIntentId: ID!, $locale: String!) {
   priceIntent(id: $priceIntentId) {
     ...PriceIntentFragment
   }

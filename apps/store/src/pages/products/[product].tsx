@@ -20,7 +20,7 @@ import {
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
-import { isRoutingLocale, toApiLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale, toApiLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string
@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<
     const apolloClient = initializeApollo({ req, res })
 
     const [shopSession, story, globalStory, translations] = await Promise.all([
-      getShopSessionServerSide({ req, res, apolloClient, countryCode }),
+      getShopSessionServerSide({ apolloClient, countryCode, locale, req, res }),
       getProductStory(slug, { locale, version }),
       getGlobalStory({ locale, version }),
       serverSideTranslations(locale),
@@ -79,10 +79,11 @@ export const getServerSideProps: GetServerSideProps<
     }
 
     const priceIntentService = priceIntentServiceInitServerSide({
+      apolloClient,
+      locale,
+      shopSession,
       req,
       res,
-      shopSession,
-      apolloClient,
     })
     const [productData, priceIntent] = await Promise.all([
       getProductData({
@@ -91,6 +92,7 @@ export const getServerSideProps: GetServerSideProps<
         locale: toApiLocale(locale),
       }),
       priceIntentService.fetch({
+        locale: toIsoLocale(locale),
         productName: story.content.productId,
         priceTemplate,
       }),

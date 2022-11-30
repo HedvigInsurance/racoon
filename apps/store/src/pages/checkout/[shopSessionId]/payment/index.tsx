@@ -4,7 +4,7 @@ import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
 import { createAuthorizationCode } from '@/utils/auth'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
 const LOGGER = logger.child({ module: 'pages/checkout/[shopSessionId]/payment' })
@@ -25,7 +25,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   try {
     const apolloClient = initializeApollo({ req, res })
-    await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId)
+    await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(
+      shopSessionId,
+      toIsoLocale(locale),
+    )
     // TODO: validate ShopSession
   } catch (error) {
     logger.error(error, `Unable to fetch ShopSession: ${shopSessionId}`)

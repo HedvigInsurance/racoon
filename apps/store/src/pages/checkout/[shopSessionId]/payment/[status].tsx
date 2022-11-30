@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
 type Props = { shopSessionId: string }
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   try {
     const apolloClient = initializeApollo({ req, res })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    const shopSession = await shopSessionService.fetchById(shopSessionId)
+    const shopSession = await shopSessionService.fetchById(shopSessionId, toIsoLocale(locale))
 
     if (status === 'success') {
       return {

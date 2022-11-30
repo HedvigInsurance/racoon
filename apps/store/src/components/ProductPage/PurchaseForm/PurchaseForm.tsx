@@ -9,6 +9,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { useRefreshData } from '@/utils/useRefreshData'
 import { OfferPresenter } from './OfferPresenter'
@@ -33,6 +34,7 @@ export const PurchaseForm = () => {
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
   const toastRef = useRef<CartToastAttributes | null>(null)
   const apolloClient = useApolloClient()
+  const { locale } = useCurrentLocale()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     toastRef.current?.publish({
       name: story.content.name,
@@ -40,7 +42,9 @@ export const PurchaseForm = () => {
       gradient: PLACEHOLDER_GRADIENT,
     })
 
-    priceIntentServiceInitClientSide({ shopSession, apolloClient }).clear(priceTemplate.name)
+    priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
+      priceTemplate.name,
+    )
     refreshData()
   }
 

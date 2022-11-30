@@ -1,4 +1,4 @@
-mutation CartEntryAdd($cartId: ID!, $offerId: ID!) {
+mutation CartEntryAdd($cartId: ID!, $offerId: ID!, $locale: String!) {
   cartEntriesAdd(input: { cartId: $cartId, offerIds: [$offerId] }) {
     cart {
       ...CartFragment

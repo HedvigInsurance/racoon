@@ -1,4 +1,4 @@
-query ShopSession($shopSessionId: ID!) {
+query ShopSession($shopSessionId: ID!, $locale: String!) {
   shopSession(id: $shopSessionId) {
     ...ShopSession
   }
