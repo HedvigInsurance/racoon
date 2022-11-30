@@ -9,7 +9,6 @@ import {
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { MENU_BAR_HEIGHT } from '../TopMenu/TopMenu'
 import { InputSwitch } from './InputSwitch'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
@@ -156,9 +155,9 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
 }
 
 const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
-  marginTop: MENU_BAR_HEIGHT,
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
+  marginTop: '3.5rem',
   padding: theme.space[4],
   borderRadius: 8,
 }))

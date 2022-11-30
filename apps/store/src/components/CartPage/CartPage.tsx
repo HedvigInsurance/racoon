@@ -5,7 +5,6 @@ import { FormEvent, FormEventHandler, useCallback } from 'react'
 import { Button, Heading, InputField, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
-import { MENU_BAR_HEIGHT } from '@/components/TopMenu/TopMenu'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -134,7 +133,7 @@ const Wrapper = styled.div(({ theme }) => ({
   width: '100%',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-  paddingTop: MENU_BAR_HEIGHT,
+  paddingTop: '3.5rem',
 }))
 
 const StyledHeading = styled(Heading)({ textAlign: 'center' })

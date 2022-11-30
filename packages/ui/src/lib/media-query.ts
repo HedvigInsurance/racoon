@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
@@ -29,14 +29,15 @@ function getWindowDimensions() {
  * @returns `true` if window size is at or above breakpoint, `false` otherwise
  */
 export const useBreakpoint = (level: Level) => {
-  const [windowDimensions, setWindowDimensions] = useState(() =>
-    typeof window === 'undefined' ? { width: 0, height: 0 } : getWindowDimensions(),
-  )
+  // Initial value must be the same on SSR and CSR to prevent hydration errors
+  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions())
     }
+
+    handleResize()
 
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)

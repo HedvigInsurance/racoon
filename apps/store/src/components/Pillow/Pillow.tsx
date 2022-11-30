@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 type PillowProps = {
   fromColor: string
   toColor: string
-  size?: 'small' | 'medium' | 'large' | 'xlarge'
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 }
 
 export const PillowShape = styled.div<PillowProps>(({ fromColor, toColor, size = 'medium' }) => ({
@@ -25,8 +25,10 @@ export const Pillow = (props: PillowProps) => (
   </>
 )
 
-const getSize = (size: 'small' | 'medium' | 'large' | 'xlarge') => {
+const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
   switch (size) {
+    case 'xsmall':
+      return '2.25rem'
     case 'small':
       return '3rem'
     case 'medium':

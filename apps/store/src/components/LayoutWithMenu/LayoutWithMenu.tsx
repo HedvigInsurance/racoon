@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
-import { HeaderBlock } from '@/blocks/TopMenuBlock'
+import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
