@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { FormEvent, FormEventHandler } from 'react'
-import { Button, Heading, InputField, LinkButton, Space } from 'ui'
+import { Button, Heading, InputField, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
@@ -11,8 +12,10 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
+import { useStartCheckout } from './useStartCheckout'
 
-export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) => {
+export const CartPage = (props: CartPageProps) => {
+  const { shopSessionId, cartId, products, campaigns, cost } = props
   const { t } = useTranslation(I18nNamespace.Cart)
   const { locale } = useCurrentLocale()
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
@@ -44,6 +47,14 @@ export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) =
       unredeemCampaign(campaignId)
     }
   }
+
+  const router = useRouter()
+  const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({
+    shopSessionId,
+    onCompleted() {
+      router.push(PageLink.checkout())
+    },
+  })
 
   if (products.length === 0) {
     return <EmptyState />
@@ -98,9 +109,10 @@ export const CartPage = ({ cartId, products, campaigns, cost }: CartPageProps) =
         <Footer>
           <Space y={1.5}>
             <PriceBreakdown currency="SEK" products={products} cost={cost} />
-            <Link href={PageLink.checkout()} passHref legacyBehavior>
-              <LinkButton fullWidth>{t('CHECKOUT_BUTTON')}</LinkButton>
-            </Link>
+
+            <Button onClick={startCheckout} fullWidth disabled={loadingStartCheckout}>
+              {t('CHECKOUT_BUTTON')}
+            </Button>
           </Space>
         </Footer>
       </Space>

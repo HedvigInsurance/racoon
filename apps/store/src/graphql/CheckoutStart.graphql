@@ -1,0 +1,5 @@
+mutation CheckoutStart($shopSessionId: ID!, $locale: String!) {
+  shopSessionCheckoutStart(sessionId: $shopSessionId) {
+    ...ShopSession
+  }
+}
