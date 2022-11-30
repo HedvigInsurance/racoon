@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -80,14 +80,13 @@ export const getServerSideProps: GetServerSideProps<
       serverSideTranslations(locale),
     ])
 
-    return {
+    return addApolloState(apolloClient, {
       props: {
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
         [GLOBAL_STORY_PROP_NAME]: globalStory,
       },
-    }
+    })
   } catch (error) {
     logger.error(error)
     return { notFound: true }
