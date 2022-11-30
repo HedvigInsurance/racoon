@@ -4,10 +4,10 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
 import React, { useState, useCallback } from 'react'
 import { ArrowForwardIcon, CrossIcon, theme } from 'ui'
+import { MenuIcon } from '@/components/Header/MenuIcon'
+import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
 import { PageLink } from '@/utils/PageLink'
 import { zIndexes } from '@/utils/zIndex'
-import { MenuIcon } from '../Header/MenuIcon'
-import { ShoppingCartMenuItem } from '../Header/ShoppingCartMenuItem'
 
 export const MENU_BAR_HEIGHT = '3.75rem'
 
