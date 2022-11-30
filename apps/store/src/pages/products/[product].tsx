@@ -7,7 +7,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
-import { APOLLO_STATE_PROP_NAME, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps<
       }),
     ])
 
-    return {
+    return addApolloState(apolloClient, {
       props: {
         ...translations,
         productData,
@@ -108,9 +108,8 @@ export const getServerSideProps: GetServerSideProps<
         [STORY_PROP_NAME]: story,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        [APOLLO_STATE_PROP_NAME]: apolloClient.cache.extract(),
       },
-    }
+    })
   } catch (error) {
     logger.error(error)
     return { notFound: true }

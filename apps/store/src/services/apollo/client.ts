@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 import * as Auth from '@/services/Auth/Auth'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 
-export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
+const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
