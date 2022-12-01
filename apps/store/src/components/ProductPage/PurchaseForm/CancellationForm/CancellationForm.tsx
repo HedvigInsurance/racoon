@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler } from 'react'
 import { Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { formatInputDateValue } from '@/utils/date'
@@ -7,7 +7,9 @@ import { FormElement } from '../PurchaseForm.constants'
 import { CheckboxInput } from './CheckboxInput'
 import { DateInput } from './DateInput'
 
-export type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: string }
+export type CancellationOption =
+  | { type: 'NONE' }
+  | { type: 'IEX'; companyName: string; requested: boolean }
 
 type Props = {
   option: CancellationOption
@@ -19,7 +21,9 @@ type Props = {
 export const CancellationForm = ({ option, ...props }: Props) => {
   switch (option.type) {
     case 'IEX':
-      return <IEXCancellation {...props} companyName={option.companyName} />
+      return (
+        <IEXCancellation {...props} companyName={option.companyName} requested={option.requested} />
+      )
     case 'NONE':
       return <NoCancellation {...props} />
   }
@@ -36,14 +40,13 @@ const NoCancellation = ({ onStartDateChange, startDate }: NoCancellationProps) =
 type IEXCancellationProps = Pick<Props, 'onStartDateChange' | 'onAutoSwitchChange'> & {
   companyName: string
   startDate: Date
+  requested: boolean
 }
 
 const IEXCancellation = (props: IEXCancellationProps) => {
   const { onStartDateChange, onAutoSwitchChange, companyName } = props
   const { t } = useTranslation('purchase-form')
-  const [autoSwithEnabled, setAutoSwitchEnabled] = useState(true)
   const handleCheckedChange = (newValue: boolean) => {
-    setAutoSwitchEnabled(newValue)
     onAutoSwitchChange?.(newValue)
   }
 
@@ -52,17 +55,17 @@ const IEXCancellation = (props: IEXCancellationProps) => {
       <CheckboxInput
         name={FormElement.AutoSwitch}
         label={t('AUTO_SWITCH_FIELD_LABEL')}
-        checked={autoSwithEnabled}
+        checked={props.requested}
         onCheckedChange={handleCheckedChange}
       >
-        {autoSwithEnabled && (
+        {props.requested && (
           <Text as="p" size="s" color="gray700">
             {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
           </Text>
         )}
       </CheckboxInput>
 
-      {!autoSwithEnabled && (
+      {!props.requested && (
         <StartDateInput startDate={props.startDate} onChange={onStartDateChange} />
       )}
     </Space>
