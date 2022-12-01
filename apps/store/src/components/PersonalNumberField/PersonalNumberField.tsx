@@ -1,15 +1,26 @@
+import { useTheme } from '@emotion/react'
+import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
 import Personnummer from 'personnummer'
-import { ChangeEventHandler, useState } from 'react'
-import { InputField, InputFieldProps } from 'ui'
+import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
 
-type Props = Omit<InputFieldProps, 'suffix'>
+type Props = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
+>
+
+enum AnimationState {
+  Idle = 'IDLE',
+  Active = 'ACTIVE',
+}
 
 /**
  * Personal Number input field.
  * Only supports Swedish personal numbers.
  */
 export const PersonalNumberField = (props: Props) => {
-  const { value: propValue, defaultValue, label, infoMessage, errorMessage, ...baseProps } = props
+  const theme = useTheme()
+  const { value: propValue, defaultValue, ...baseProps } = props
 
   const [value, setValue] = useState(() => {
     if (typeof propValue === 'string') return propValue
@@ -17,6 +28,7 @@ export const PersonalNumberField = (props: Props) => {
     return ''
   })
 
+  const [isAnimating, setIsAnimating] = useState(false)
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     let value = event.target.value
 
@@ -24,24 +36,42 @@ export const PersonalNumberField = (props: Props) => {
       value = Personnummer.parse(value).format(true)
     }
     setValue(value)
+    setIsAnimating(true)
   }
+
+  const animationVariants = {
+    [AnimationState.Idle]: { backgroundColor: theme.colors.gray300 },
+    [AnimationState.Active]: { backgroundColor: 'rgba(197, 236, 127, 0.6)' },
+  } as const
 
   return (
     <>
       <input {...baseProps} type="text" value={value} readOnly hidden />
-      <InputField
+
+      <Input
         {...baseProps}
         type="text"
-        name={`${props.name}-visible-input`}
-        label={label}
-        infoMessage={infoMessage}
+        name={undefined}
         inputMode="numeric"
-        errorMessage={errorMessage}
         minLength={10}
         maxLength={13}
-        value={value}
+        pattern="[0-9-+]"
         onChange={handleOnChange}
+        variants={animationVariants}
+        initial={AnimationState.Idle}
+        animate={isAnimating ? AnimationState.Active : AnimationState.Idle}
+        onAnimationComplete={() => setIsAnimating(false)}
       />
     </>
   )
 }
+
+const Input = styled(motion.input)(({ theme }) => ({
+  backgroundColor: theme.colors.gray300,
+  padding: theme.space[4],
+  borderRadius: theme.radius.sm,
+  width: '100%',
+
+  fontFamily: theme.fonts.body,
+  fontSize: theme.fontSizes[3],
+}))
