@@ -47,6 +47,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 name={FormElement.PersonalNumber}
                 required
                 defaultValue={prefilledData.personalNumber ?? undefined}
+                placeholder="ÅÅMMDD-XXXX"
               />
               <InputField
                 label="First Name"

@@ -14,6 +14,7 @@ import {
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { convertToDate } from '@/utils/date'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { TierSelector } from './TierSelector'
@@ -72,6 +73,8 @@ export const OfferPresenter = ({
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
+  const dateToday = new Date()
+
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
@@ -88,6 +91,7 @@ export const OfferPresenter = ({
 
           <CancellationForm
             option={cancellationOption}
+            startDate={convertToDate(priceIntent.startDate) ?? dateToday}
             onAutoSwitchChange={handleUpdateCancellation}
             onStartDateChange={handleStartDateChange}
           />
@@ -133,7 +137,11 @@ const Separator = styled.div(({ theme }) => ({
 
 const getCancellationOption = (cancellation: PriceIntent['cancellation']): CancellationOption => {
   if (cancellation.option === ExternalInsuranceCancellationOption.Iex) {
-    return { type: 'IEX', companyName: cancellation.externalInsurer?.displayName ?? 'Unknown' }
+    return {
+      type: 'IEX',
+      companyName: cancellation.externalInsurer?.displayName ?? 'Unknown',
+      requested: cancellation.requested,
+    }
   } else {
     return { type: 'NONE' }
   }
