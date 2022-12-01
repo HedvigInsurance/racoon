@@ -52,6 +52,7 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
 
   return (
     <CartPage
+      shopSessionId={shopSessionId}
       cartId={data.shopSession.cart.id}
       products={products}
       campaigns={campaigns}
