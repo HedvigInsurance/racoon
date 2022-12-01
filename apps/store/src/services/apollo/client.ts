@@ -3,6 +3,7 @@ import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
 import { GetServerSidePropsContext } from 'next'
+import { AppProps } from 'next/app'
 import { useMemo } from 'react'
 import * as Auth from '@/services/Auth/Auth'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
@@ -72,15 +73,14 @@ export const initializeApollo = ({
   return _apolloClient
 }
 
-export const useApollo = (pageProps: any) => {
-  const state = pageProps[APOLLO_STATE_PROP_NAME]
-  const store = useMemo(() => initializeApollo(state), [state])
-  return store
+export const useApollo = (pageProps: AppProps['pageProps']) => {
+  const initialState = pageProps[APOLLO_STATE_PROP_NAME]
+  return useMemo(() => initializeApollo({ initialState }), [initialState])
 }
 
 export const addApolloState = (
   client: ApolloClient<NormalizedCacheObject>,
-  pageProps?: { props: any },
+  pageProps: AppProps['pageProps'],
 ) => {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
