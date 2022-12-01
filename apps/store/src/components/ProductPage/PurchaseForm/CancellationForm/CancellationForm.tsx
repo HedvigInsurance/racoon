@@ -11,6 +11,7 @@ export type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: 
 
 type Props = {
   option: CancellationOption
+  startDate: Date
   onStartDateChange?: (date: Date) => void
   onAutoSwitchChange?: (checked: boolean) => void
 }
@@ -24,22 +25,25 @@ export const CancellationForm = ({ option, ...props }: Props) => {
   }
 }
 
-type NoCancellationProps = Pick<Props, 'onStartDateChange'>
+type NoCancellationProps = Pick<Props, 'onStartDateChange'> & {
+  startDate: Date
+}
 
-const NoCancellation = ({ onStartDateChange }: NoCancellationProps) => {
-  return <StartDateInput onChange={onStartDateChange} />
+const NoCancellation = ({ onStartDateChange, startDate }: NoCancellationProps) => {
+  return <StartDateInput startDate={startDate} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<Props, 'onStartDateChange' | 'onAutoSwitchChange'> & {
   companyName: string
+  startDate: Date
 }
 
 const IEXCancellation = (props: IEXCancellationProps) => {
   const { onStartDateChange, onAutoSwitchChange, companyName } = props
   const { t } = useTranslation('purchase-form')
-  const [checked, setChecked] = useState(false)
+  const [autoSwithEnabled, setAutoSwitchEnabled] = useState(true)
   const handleCheckedChange = (newValue: boolean) => {
-    setChecked(newValue)
+    setAutoSwitchEnabled(newValue)
     onAutoSwitchChange?.(newValue)
   }
 
@@ -48,36 +52,36 @@ const IEXCancellation = (props: IEXCancellationProps) => {
       <CheckboxInput
         name={FormElement.AutoSwitch}
         label={t('AUTO_SWITCH_FIELD_LABEL')}
-        checked={checked}
+        checked={autoSwithEnabled}
         onCheckedChange={handleCheckedChange}
       >
-        {checked && (
+        {autoSwithEnabled && (
           <Text as="p" size="s">
             {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
           </Text>
         )}
       </CheckboxInput>
 
-      {!checked && <StartDateInput onChange={onStartDateChange} />}
+      {!autoSwithEnabled && (
+        <StartDateInput startDate={props.startDate} onChange={onStartDateChange} />
+      )}
     </Space>
   )
 }
 
-type StartDateInputProps = { onChange?: (date: Date) => void }
+type StartDateInputProps = { startDate: Date; onChange?: (date: Date) => void }
 
-const StartDateInput = ({ onChange }: StartDateInputProps) => {
+const StartDateInput = ({ startDate, onChange }: StartDateInputProps) => {
   const { t } = useTranslation('purchase-form')
   const dateToday = new Date()
-  const [value, setValue] = useState(dateToday)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.valueAsDate) {
-      setValue(event.target.valueAsDate)
       onChange?.(event.target.valueAsDate)
     }
   }
 
-  const inputValue = formatInputDateValue(value)
+  const inputValue = formatInputDateValue(startDate)
   const inputValueToday = formatInputDateValue(dateToday)
   const isToday = inputValue === inputValueToday
 
