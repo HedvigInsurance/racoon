@@ -3,10 +3,12 @@ import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
 import { GetServerSidePropsContext } from 'next'
+import { i18n } from 'next-i18next'
 import { AppProps } from 'next/app'
 import { useMemo } from 'react'
 import * as Auth from '@/services/Auth/Auth'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -20,10 +22,24 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const authLink = setContext((_, { headers = {} }) => {
+const authLink = setContext((_, { headers = {}, context }) => {
   return {
-    ...headers,
-    ...Auth.getAuthHeader(),
+    headers: {
+      ...headers,
+      ...Auth.getAuthHeader(),
+    },
+    ...context,
+  }
+})
+
+const languageLink = setContext((operation, { headers = {}, ...context }) => {
+  const locale = operation.variables?.locale ?? getLocaleOrFallback(i18n?.language).locale
+  return {
+    headers: {
+      ...headers,
+      'Hedvig-Language': locale,
+    },
+    ...context,
   }
 })
 
@@ -33,7 +49,7 @@ const createApolloClient = (headers?: Record<string, string>) => {
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, authLink, httpLink]),
+    link: from([errorLink, authLink, languageLink, httpLink]),
     cache: new InMemoryCache(),
     headers,
     connectToDevTools: process.env.NODE_ENV === 'development',
