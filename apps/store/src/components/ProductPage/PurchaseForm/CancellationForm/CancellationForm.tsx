@@ -56,7 +56,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         onCheckedChange={handleCheckedChange}
       >
         {autoSwithEnabled && (
-          <Text as="p" size="s">
+          <Text as="p" size="s" color="gray700">
             {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
           </Text>
         )}
@@ -96,7 +96,7 @@ const StartDateInput = ({ startDate, onChange }: StartDateInputProps) => {
       onChange={handleChange}
     >
       {isToday && (
-        <Text as="p" size="s">
+        <Text as="p" size="s" color="gray700">
           {t('START_DATE_FIELD_TODAY')}
         </Text>
       )}
