@@ -5,7 +5,7 @@ import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPag
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
-import { initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
     // }
 
-    return {
+    return addApolloState(apolloClient, {
       props: {
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSessionId,
@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
         currency: shopSession.currencyCode,
         platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
       },
-    }
+    })
   } catch (error) {
     logger.error(error, 'Unable to render confirmation page')
     return { notFound: true }

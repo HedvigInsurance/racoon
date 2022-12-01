@@ -6,7 +6,7 @@ import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
-import { initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import * as Auth from '@/services/Auth/Auth'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       checkoutId,
     })
 
-    return {
+    return addApolloState(apolloClient, {
       props: {
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
@@ -97,7 +97,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
         })),
         cart: shopSession.cart,
       },
-    }
+    })
   } catch (error) {
     logger.error(error, 'Failed to get server side props for checkout page')
     return { notFound: true }
