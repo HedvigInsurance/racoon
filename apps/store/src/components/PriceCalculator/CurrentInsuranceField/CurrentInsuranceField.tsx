@@ -59,8 +59,7 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
   })
 
   const { locale } = useCurrentLocale()
-
-  return (externalInsurerId: string) => {
+  return (externalInsurerId?: string) => {
     datadogLogs.logger.info('Updating external insurer', { priceIntentId, externalInsurerId })
     updateExternalInsurer({
       variables: { priceIntentId, externalInsurer: externalInsurerId, locale },
