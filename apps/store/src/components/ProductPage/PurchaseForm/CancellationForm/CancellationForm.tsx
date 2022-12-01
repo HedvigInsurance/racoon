@@ -1,10 +1,11 @@
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, useState } from 'react'
-import { InputField, Space } from 'ui'
-import { InputSwitch } from '@/components/PriceCalculator/InputSwitch'
+import { Space } from 'ui'
 import { Text } from '@/components/Text/Text'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
+import { CheckboxInput } from './CheckboxInput'
+import { DateInput } from './DateInput'
 
 export type CancellationOption = { type: 'NONE' } | { type: 'IEX'; companyName: string }
 
@@ -43,20 +44,19 @@ const IEXCancellation = (props: IEXCancellationProps) => {
   }
 
   return (
-    <Space y={0.5}>
-      <Space y={0.5}>
-        <InputSwitch
-          name={FormElement.AutoSwitch}
-          label={t('AUTO_SWITCH_FIELD_LABEL')}
-          checked={checked}
-          onCheckedChange={handleCheckedChange}
-        />
+    <Space y={0.25}>
+      <CheckboxInput
+        name={FormElement.AutoSwitch}
+        label={t('AUTO_SWITCH_FIELD_LABEL')}
+        checked={checked}
+        onCheckedChange={handleCheckedChange}
+      >
         {checked && (
           <Text as="p" size="s">
             {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
           </Text>
         )}
-      </Space>
+      </CheckboxInput>
 
       {!checked && <StartDateInput onChange={onStartDateChange} />}
     </Space>
@@ -82,7 +82,7 @@ const StartDateInput = ({ onChange }: StartDateInputProps) => {
   const isToday = inputValue === inputValueToday
 
   return (
-    <InputField
+    <DateInput
       type="date"
       name={FormElement.StartDate}
       label={t('START_DATE_FIELD_LABEL')}
@@ -90,7 +90,12 @@ const StartDateInput = ({ onChange }: StartDateInputProps) => {
       value={inputValue}
       min={inputValueToday}
       onChange={handleChange}
-      infoMessage={isToday ? t('START_DATE_FIELD_TODAY') : undefined}
-    />
+    >
+      {isToday && (
+        <Text as="p" size="s">
+          {t('START_DATE_FIELD_TODAY')}
+        </Text>
+      )}
+    </DateInput>
   )
 }
