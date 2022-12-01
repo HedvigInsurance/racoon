@@ -12,36 +12,31 @@ export const Checkbox = (props: CheckboxProps) => {
 }
 
 const SwitchWrapper = styled(RadixSwitch.Root)(({ theme }) => ({
-  width: 48,
-  height: 24,
-  borderRadius: 12,
-  border: `2px solid ${theme.colors.gray500}`,
-  borderWidth: 2,
-  borderStyle: 'solid',
-  borderColor: theme.colors.gray500,
-  padding: 4,
+  boxSizing: 'border-box',
+  width: '1.75rem',
+  borderRadius: 9999,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
 
+  backgroundColor: theme.colors.gray500,
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: 'transparent',
+
   ':focus': {
-    outline: `5px auto ${theme.colors.purple700}`,
+    borderColor: theme.colors.gray900,
   },
 
   '&[data-state=checked]': {
-    borderColor: theme.colors.black,
-    backgroundColor: theme.colors.black,
+    backgroundColor: '#23CD61',
     justifyContent: 'flex-end',
   },
 }))
 
 const SwitchHandle = styled(RadixSwitch.Thumb)(({ theme }) => ({
-  width: 12,
-  height: 12,
-  backgroundColor: theme.colors.gray500,
-  borderRadius: 12,
-
-  '&[data-state=checked]': {
-    backgroundColor: theme.colors.white,
-  },
+  width: '1rem',
+  height: '1rem',
+  borderRadius: '100%',
+  backgroundColor: theme.colors.white,
 }))
