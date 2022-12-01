@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@babel/core": "7.20.2",
+    "@babel/core": "7.20.5",
     "@emotion/babel-plugin": "11.10.5",
     "@emotion/jest": "11.10.5",
     "@storybook/addon-actions": "6.5.13",
