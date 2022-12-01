@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
 import { PropsWithChildren } from 'react'
+import { theme } from 'ui'
 
 export type VideoSource = {
   url: string
 }
 
-type HeroVideoProps = PropsWithChildren & {
+export type VideoProps = PropsWithChildren & {
   /**
    * An array of videos with different supported formats
    */
@@ -13,18 +14,29 @@ type HeroVideoProps = PropsWithChildren & {
   poster?: string
 }
 
-const VideoWrapper = styled.div({
+const VideoWrapper = styled.div(({ theme }) => ({
   position: 'relative',
-})
+  paddingLeft: theme.space[2],
+  paddingRight: theme.space[2],
+}))
 
-const StyledVideo = styled.video({
+const StyledVideo = styled.video(({ poster }: Pick<VideoProps, 'poster'>) => ({
   width: '100%',
-  height: 'auto',
+  background: `url(${poster}) no-repeat`,
   backgroundSize: 'cover',
   objectFit: 'cover',
-})
+  borderRadius: theme.radius.xl,
+  ['@media (orientation: portrait)']: {
+    aspectRatio: '4 / 5',
+    maxHeight: '80vh',
+  },
+  ['@media (orientation: landscape)']: {
+    aspectRatio: '1 / 1',
+    maxHeight: '90vh',
+  },
+}))
 
-export const Video = ({ sources, poster }: HeroVideoProps) => {
+export const Video = ({ sources, poster }: VideoProps) => {
   return (
     <VideoWrapper>
       {/*
