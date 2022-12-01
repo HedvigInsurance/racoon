@@ -10,7 +10,7 @@ export type InputCurrentInsuranceProps = {
   label: string
   company?: string
   companyOptions: SelectOptions
-  onCompanyChange: (company: string) => void
+  onCompanyChange: (company?: string) => void
 }
 
 export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
@@ -24,9 +24,7 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
   const { t } = useTranslation('purchase-form')
 
   const handleChangeExternalInsurer: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    if (event.target.value) {
-      onCompanyChange(event.target.value)
-    }
+    onCompanyChange(event.target.value || undefined)
   }
 
   return (
