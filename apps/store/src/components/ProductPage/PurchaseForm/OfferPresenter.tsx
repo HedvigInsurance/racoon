@@ -137,7 +137,11 @@ const Separator = styled.div(({ theme }) => ({
 
 const getCancellationOption = (cancellation: PriceIntent['cancellation']): CancellationOption => {
   if (cancellation.option === ExternalInsuranceCancellationOption.Iex) {
-    return { type: 'IEX', companyName: cancellation.externalInsurer?.displayName ?? 'Unknown' }
+    return {
+      type: 'IEX',
+      companyName: cancellation.externalInsurer?.displayName ?? 'Unknown',
+      requested: cancellation.requested,
+    }
   } else {
     return { type: 'NONE' }
   }
