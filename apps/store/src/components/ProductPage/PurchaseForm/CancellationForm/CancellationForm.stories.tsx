@@ -22,7 +22,7 @@ const Template: ComponentStoryFn<typeof CancellationForm> = (props) => {
 }
 
 export const NoCancellation = Template.bind({})
-NoCancellation.args = { option: { type: 'NONE' } }
+NoCancellation.args = { option: { type: 'NONE' }, startDate: new Date() }
 
 export const IEX = Template.bind({})
-IEX.args = { option: { type: 'IEX', companyName: 'Folksam' } }
+IEX.args = { option: { type: 'IEX', companyName: 'Folksam' }, startDate: new Date() }
