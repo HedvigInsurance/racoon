@@ -532,6 +532,10 @@ const AnotherNotCoolDiv = styled.div`
 `
 ```
 
+### Responsive design
+
+Customizing markup for different viewports often causes issues with SSR and re-hydration. Therefore, we render all markup needed (sometimes duplicate) and hide/show relevant content using CSS.
+
 ## Storyblok
 
 Our CMS.
