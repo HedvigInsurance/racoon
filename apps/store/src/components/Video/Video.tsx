@@ -12,6 +12,7 @@ export type VideoProps = PropsWithChildren & {
    */
   sources: VideoSource[]
   poster?: string
+  autoplay?: boolean
 }
 
 const VideoWrapper = styled.div(({ theme }) => ({
@@ -36,7 +37,14 @@ const StyledVideo = styled.video(({ poster }: Pick<VideoProps, 'poster'>) => ({
   },
 }))
 
-export const Video = ({ sources, poster }: VideoProps) => {
+const autoplaySettings = {
+  autoPlay: true,
+  muted: true,
+  loop: true,
+}
+
+export const Video = ({ sources, poster, autoplay }: VideoProps) => {
+  const autoplayAttributes = autoplay ? autoplaySettings : {}
   return (
     <VideoWrapper>
       {/*
@@ -45,7 +53,7 @@ export const Video = ({ sources, poster }: VideoProps) => {
     - Safari on iOS will default to autoplay videos in fullscreen unless `playsInline` is added
     Read more: https://webkit.org/blog/6784/new-video-policies-for-ios/
     */}
-      <StyledVideo playsInline autoPlay muted loop preload="auto" poster={poster}>
+      <StyledVideo {...autoplayAttributes} playsInline preload="auto" poster={poster}>
         {sources.map((source) => (
           <source key={source.url} src={source.url} />
         ))}
