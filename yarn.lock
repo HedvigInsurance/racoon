@@ -19469,15 +19469,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-animate-height@npm:3.0.5":
-  version: 3.0.5
-  resolution: "react-animate-height@npm:3.0.5"
-  dependencies:
-    classnames: ^2.3.1
+"react-animate-height@npm:3.1.0":
+  version: 3.1.0
+  resolution: "react-animate-height@npm:3.1.0"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: dab50deca7d476a4d87fdb619a047b6d3099fb27a2edbdecf52be3062993cb84c2e4a8122e3230a3e301e08b6cc82ebeb4679f927fe64f1fdd5a280d80e656a8
+  checksum: 46f802fe1e70d5d451d74fabece0dc8e2060543ea106dd56fc0ff544391e8939f8876af480323854dc39cbefd286d8cece29e509de3fb2d231fa9f77097532af
   languageName: node
   linkType: hard
 
@@ -22759,7 +22757,7 @@ __metadata:
     babel-loader: 9.1.0
     jest: 29.3.1
     react: 18.2.0
-    react-animate-height: 3.0.5
+    react-animate-height: 3.1.0
     react-dom: 18.2.0
     scripts: "workspace:"
     ts-jest: 29.0.3
