@@ -6,8 +6,8 @@ export const SE_APARTMENT_RENT: Template = {
   sections: [
     {
       id: 'personal-number',
-      title: { key: 'Personal number' },
-      submitLabel: { key: 'Next step' },
+      title: { key: 'SECTION_TITLE_PERSONAL_NUMBER' },
+      submitLabel: { key: 'SUBMIT_LABEL_PROCEED' },
       items: [
         {
           field: {
@@ -22,14 +22,14 @@ export const SE_APARTMENT_RENT: Template = {
     },
     {
       id: 'your-home',
-      title: { key: 'Your Home' },
-      submitLabel: { key: 'Next step' },
+      title: { key: 'SECTION_TITLE_YOUR_HOME' },
+      submitLabel: { key: 'SUBMIT_LABEL_PROCEED' },
       items: [
         {
           field: {
             type: 'text',
             name: 'street',
-            label: { key: 'Address' },
+            label: { key: 'FIELD_STREET_LABEL' },
             required: true,
           },
           layout: { columnSpan: 6 },
@@ -39,7 +39,7 @@ export const SE_APARTMENT_RENT: Template = {
             type: 'text',
             name: 'zipCode',
             inputMode: 'numeric',
-            label: { key: 'Postal code' },
+            label: { key: 'FIELD_ZIP_CODE_LABEL' },
             minLength: 5,
             maxLength: 5,
             required: true,
@@ -50,7 +50,7 @@ export const SE_APARTMENT_RENT: Template = {
           field: {
             type: 'number',
             name: 'livingSpace',
-            label: { key: 'Apartment size' },
+            label: { key: 'FIELD_LIVING_SPACE_LABEL' },
             required: true,
             min: 0,
           },
@@ -60,7 +60,7 @@ export const SE_APARTMENT_RENT: Template = {
           field: {
             type: 'current-insurance',
             name: 'externalInsurer',
-            label: { key: 'Do you already have home insurance for this address?' },
+            label: { key: 'FIELD_EXTERNAL_INSURER_LABEL' },
           },
           layout: { columnSpan: 6 },
         },
@@ -68,8 +68,8 @@ export const SE_APARTMENT_RENT: Template = {
     },
     {
       id: 'your-family',
-      title: { key: 'Your Family' },
-      submitLabel: { key: 'Calculate price' },
+      title: { key: 'SECTION_TITLE_YOUR_FAMILY' },
+      submitLabel: { key: 'SUBMIT_LABEL_FINISH' },
       items: [
         {
           field: {
