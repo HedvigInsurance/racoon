@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/image'
+import { default as NextImage } from 'next/image'
+import { mq } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -16,8 +17,13 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
-    <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ?? false}>
-      <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
+    <Wrapper {...storyblokEditable(blok)} spacing={!blok.fullBleed}>
+      <Image
+        src={blok.image.filename}
+        roundedCorners={!blok.fullBleed}
+        {...sizeProps}
+        alt={blok.image.alt}
+      />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
           <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
@@ -28,10 +34,19 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 }
 ImageBlock.blockName = 'image'
 
-const Wrapper = styled.div<{ margins: boolean }>(({ theme, margins = true }) => ({
-  paddingLeft: margins ? theme.space[4] : 0,
-  paddingRight: margins ? theme.space[4] : 0,
+const Wrapper = styled.div<{ spacing: boolean }>(({ theme, spacing = true }) => ({
+  paddingLeft: spacing ? theme.space[4] : 0,
+  paddingRight: spacing ? theme.space[4] : 0,
   position: 'relative',
+}))
+
+const Image = styled(NextImage)<{ roundedCorners: boolean }>(({ theme, roundedCorners }) => ({
+  ...(roundedCorners && {
+    borderRadius: theme.radius.md,
+    [mq.lg]: {
+      borderRadius: theme.radius.xl,
+    },
+  }),
 }))
 
 const BodyWrapper = styled.div(({ theme }) => ({
