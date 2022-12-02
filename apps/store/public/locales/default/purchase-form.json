@@ -5,5 +5,8 @@
   "START_DATE_FIELD_LABEL": "Start date",
   "START_DATE_FIELD_TODAY": "Today",
   "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
-  "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires."
+  "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires.",
+  "SSN_FILED_LABEL": "Personal number",
+  "ADDRESS_FILED_LABEL": "Your Address",
+  "SWITCH_ALREADY_HAVE_INSURANCE_MESSAGE": "Do you already have home insurance for {{ADDRESS}}?"
 }

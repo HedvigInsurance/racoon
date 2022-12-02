@@ -5,5 +5,8 @@
   "START_DATE_FIELD_LABEL": "Startdatum",
   "START_DATE_FIELD_TODAY": "Idag",
   "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
-  "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut."
+  "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",
+  "SSN_FILED_LABEL": "Personnummer",
+  "ADDRESS_FILED_LABEL": "Ditt Hem",
+  "SWITCH_ALREADY_HAVE_INSURANCE_MESSAGE": "Har du redan hemförsäkring för {{ADDRESS}}? "
 }
