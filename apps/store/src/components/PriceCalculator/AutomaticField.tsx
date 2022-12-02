@@ -1,6 +1,7 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { HouseholdSizeField } from '@/components/PriceCalculator/HouseholdSize'
+import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
@@ -25,10 +26,10 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
   switch (field.type) {
     case 'text':
       return (
-        <InputField
+        <TextField
           type="text"
           name={field.name}
-          label={field.label ? translateLabel(field.label) : undefined}
+          placeholder={translateLabel(field.label)}
           pattern={field.pattern}
           minLength={field.minLength}
           maxLength={field.maxLength}
@@ -41,10 +42,10 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
 
     case 'number':
       return (
-        <InputField
+        <TextField
           type="number"
           name={field.name}
-          label={field.label ? translateLabel(field.label) : undefined}
+          placeholder={translateLabel(field.label)}
           min={field.min}
           max={field.max}
           inputMode="numeric"

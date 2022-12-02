@@ -1,25 +1,15 @@
 import styled from '@emotion/styled'
 import * as Accordion from '@radix-ui/react-accordion'
-import { ChevronIcon } from 'ui'
+import { ReactNode } from 'react'
 
-export const Header = styled(Accordion.Header)(({ theme }) => ({
+export const Header = styled(Accordion.Header)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: theme.space[4],
-  paddingRight: theme.space[5],
-  height: '4rem',
-  borderBottom: '1px solid transparent',
-
-  '&[data-state=closed]': {
-    borderBottomColor: theme.colors.gray500,
-  },
 }))
 
 export const Content = styled(Accordion.Content)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.colors.gray500}`,
-  padding: theme.space[4],
-  paddingTop: theme.space[0],
+  paddingTop: theme.space[3],
 }))
 
 const StyledTrigger = styled(Accordion.Trigger)(({ theme }) => ({
@@ -30,17 +20,16 @@ const StyledTrigger = styled(Accordion.Trigger)(({ theme }) => ({
 }))
 
 export const Root = Accordion.Root
-export const Item = Accordion.Item
+export const Item = styled(Accordion.Item)(({ theme }) => ({
+  paddingTop: theme.space[3],
+  '&:not(:last-child)': {
+    borderBottom: '1px solid hsla(0, 0%, 7%, 0.15)',
+    paddingBottom: theme.space[3],
+  },
+}))
 
-const TriggerIcon = styled(ChevronIcon)({
-  transition: 'transform 300ms',
-  '[data-state=open] > &': { transform: 'rotate(180deg)' },
-})
+type TriggerProps = { children: ReactNode }
 
-export const Trigger = () => {
-  return (
-    <StyledTrigger>
-      <TriggerIcon size="1rem" />
-    </StyledTrigger>
-  )
+export const Trigger = ({ children }: TriggerProps) => {
+  return <StyledTrigger>{children}</StyledTrigger>
 }

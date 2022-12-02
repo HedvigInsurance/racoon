@@ -36,7 +36,7 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, children }:
 
   return (
     <form onSubmit={handleSubmit}>
-      <Space y={2}>
+      <Space y={0.25}>
         {children}
 
         <footer>
