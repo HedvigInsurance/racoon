@@ -55,7 +55,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
       <CheckboxInput
         name={FormElement.AutoSwitch}
         label={t('AUTO_SWITCH_FIELD_LABEL')}
-        checked={props.requested}
+        defaultChecked={props.requested}
         onCheckedChange={handleCheckedChange}
       >
         {props.requested && (

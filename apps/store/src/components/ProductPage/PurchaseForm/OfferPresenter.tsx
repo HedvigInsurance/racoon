@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
-import { Button } from 'ui'
+import { Button, Space } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -78,8 +78,8 @@ export const OfferPresenter = ({
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
-        <FormContent direction="vertical" align="center">
-          <Text as="p" align="center" size="l">
+        <Space y={2}>
+          <Text as="p" align="center" size="xxl">
             {displayPrice}
           </Text>
 
@@ -89,15 +89,17 @@ export const OfferPresenter = ({
             onValueChange={setSelectedOfferId}
           />
 
-          <CancellationForm
-            option={cancellationOption}
-            startDate={convertToDate(priceIntent.startDate) ?? dateToday}
-            onAutoSwitchChange={handleUpdateCancellation}
-            onStartDateChange={handleStartDateChange}
-          />
+          <Space y={0.25}>
+            <CancellationForm
+              option={cancellationOption}
+              startDate={convertToDate(priceIntent.startDate) ?? dateToday}
+              onAutoSwitchChange={handleUpdateCancellation}
+              onStartDateChange={handleStartDateChange}
+            />
 
-          <SubmitButton loading={loading} />
-        </FormContent>
+            <SubmitButton loading={loading} />
+          </Space>
+        </Space>
       </form>
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
@@ -109,10 +111,6 @@ export const OfferPresenter = ({
     </>
   )
 }
-
-const FormContent = styled(SpaceFlex)({
-  flex: 1,
-})
 
 // TODO: Localize
 const SubmitButton = ({ loading }: { loading: boolean }) => {

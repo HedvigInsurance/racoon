@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import type { UIColor } from 'ui'
 
-type FontSize = 's' | 'm' | 'l' | 'xl'
+const FONT_SIZE_MAP = { s: 1, m: 2, l: 3, xl: 4, xxl: 5 }
+type FontSize = keyof typeof FONT_SIZE_MAP
 
 type TypographyProps = {
   as?: 'p' | 'span'
@@ -12,8 +13,6 @@ type TypographyProps = {
   size: FontSize
   children: ReactNode
 }
-
-const fontSizeMap = { s: 1, m: 2, l: 3, xl: 4 }
 
 const elementConfig = {
   shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
@@ -24,7 +23,7 @@ const TextElement = styled(
   elementConfig,
 )<TypographyProps>(({ theme, align, color, size }) => ({
   color: color ? theme.colors[color] : 'inherit',
-  fontSize: theme.fontSizes[fontSizeMap[size]],
+  fontSize: theme.fontSizes[FONT_SIZE_MAP[size]],
   ...(align && { textAlign: align }),
 }))
 

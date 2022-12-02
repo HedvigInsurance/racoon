@@ -8,6 +8,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { usePriceIntentQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
@@ -21,6 +22,7 @@ import {
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale, toApiLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type NextPageProps = ProductPageProps & {
   shopSessionId: string
@@ -30,8 +32,12 @@ type PageQueryParams = {
   product: string[]
 }
 
-const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
-  const story = useStoryblokState(props.story)
+const NextProductPage: NextPageWithLayout<NextPageProps> = ({ priceIntent, ...pageProps }) => {
+  const story = useStoryblokState(pageProps.story)
+
+  const { locale } = useCurrentLocale()
+  const { data } = usePriceIntentQuery({ variables: { priceIntentId: priceIntent.id, locale } })
+  const livePriceIntent = data?.priceIntent || priceIntent
 
   return (
     <>
@@ -39,7 +45,7 @@ const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
         <title>{story.content.name}</title>
       </Head>
       <HeadSeoInfo story={story} />
-      <ProductPage {...props} story={story} />
+      <ProductPage {...pageProps} priceIntent={livePriceIntent} story={story} />
     </>
   )
 }

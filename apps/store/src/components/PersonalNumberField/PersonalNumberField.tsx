@@ -55,7 +55,8 @@ export const PersonalNumberField = (props: Props) => {
         inputMode="numeric"
         minLength={10}
         maxLength={13}
-        pattern="[0-9-+]"
+        // https://github.com/personnummer/js
+        pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
         onChange={handleOnChange}
         variants={animationVariants}
         initial={AnimationState.Idle}
