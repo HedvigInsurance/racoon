@@ -1,7 +1,8 @@
 import { Template } from '../PriceCalculator.types'
 
-export const SE_APARTMENT: Template = {
-  name: 'SE_APARTMENT',
+export const SE_APARTMENT_RENT: Template = {
+  name: 'SE_APARTMENT_RENT',
+  initialData: { subType: 'RENT' },
   sections: [
     {
       id: 'personal-number',
@@ -24,25 +25,6 @@ export const SE_APARTMENT: Template = {
       title: { key: 'Your Home' },
       submitLabel: { key: 'Next step' },
       items: [
-        {
-          field: {
-            type: 'radio',
-            name: 'subType',
-            label: { key: 'Ownership type' },
-            options: [
-              {
-                label: { key: 'I rent' },
-                value: 'RENT',
-              },
-              {
-                label: { key: 'I own' },
-                value: 'BRF',
-              },
-            ],
-            required: true,
-          },
-          layout: { columnSpan: 6 },
-        },
         {
           field: {
             type: 'text',
