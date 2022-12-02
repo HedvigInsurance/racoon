@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { PersonalNumberField } from './PersonalNumberField'
 
 export default {
-  title: 'Input / PersonalNumberField',
+  title: 'Inputs/PersonalNumberField',
   component: PersonalNumberField,
   parameters: {
     viewport: {

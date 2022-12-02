@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 export default {
-  title: 'Input / Current Insurance',
+  title: 'Inputs/Current Insurance',
   component: InputCurrentInsurance,
   parameters: {
     viewport: {
