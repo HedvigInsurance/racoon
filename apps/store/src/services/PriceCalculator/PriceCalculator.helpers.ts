@@ -4,6 +4,8 @@ import { NO_HOUSE } from './data/NO_HOUSE'
 import { NO_TRAVEL } from './data/NO_TRAVEL'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
 import { SE_APARTMENT } from './data/SE_APARTMENT'
+import { SE_APARTMENT_BRF } from './data/SE_APARTMENT_BRF'
+import { SE_APARTMENT_RENT } from './data/SE_APARTMENT_RENT'
 import { SE_CAR } from './data/SE_CAR'
 import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
@@ -13,6 +15,8 @@ import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 const TEMPLATES: Record<string, Template | undefined> = {
   SE_HOUSE,
   SE_APARTMENT,
+  SE_APARTMENT_RENT,
+  SE_APARTMENT_BRF,
   SE_ACCIDENT,
   SE_STUDENT_APARTMENT,
   SE_CAR,
