@@ -16,7 +16,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
-    <Wrapper {...storyblokEditable(blok)} margins={blok.fullBleed ?? false}>
+    <Wrapper {...storyblokEditable(blok)} spacing={!blok.fullBleed}>
       <Image src={blok.image.filename} {...sizeProps} alt={blok.image.alt} />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
@@ -28,9 +28,9 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 }
 ImageBlock.blockName = 'image'
 
-const Wrapper = styled.div<{ margins: boolean }>(({ theme, margins = true }) => ({
-  paddingLeft: margins ? theme.space[4] : 0,
-  paddingRight: margins ? theme.space[4] : 0,
+const Wrapper = styled.div<{ spacing: boolean }>(({ theme, spacing = true }) => ({
+  paddingLeft: spacing ? theme.space[4] : 0,
+  paddingRight: spacing ? theme.space[4] : 0,
   position: 'relative',
 }))
 
