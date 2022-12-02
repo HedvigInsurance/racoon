@@ -1,10 +1,11 @@
+import styled from '@emotion/styled'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Heading } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
+import { Text } from '../Text/Text'
 import * as Accordion from './Accordion'
-import { StepIconDefault } from './StepIconDefault'
-import { StepIconValid } from './StepIconValid'
+import { StepIcon } from './StepIcon'
 import { useTranslateTextLabel } from './useTranslateTextLabel'
 
 type Props = {
@@ -23,24 +24,30 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
       onValueChange={onActiveSectionChange}
       collapsible
     >
-      {form.sections.map((section, index) => (
-        <Accordion.Item key={section.id} value={section.id}>
-          <Accordion.Header>
-            <SpaceFlex space={1} align="center">
-              {section.state === 'valid' ? (
-                <StepIconValid />
-              ) : (
-                <StepIconDefault>{index + 1}</StepIconDefault>
+      {form.sections.map((section, index) => {
+        const isMuted = section.state !== 'valid' && section.id !== activeSectionId
+
+        return (
+          <Accordion.Item key={section.id} value={section.id}>
+            <Accordion.Header>
+              <SpaceFlex space={0.5} align="center">
+                <StepIcon filled={section.id === activeSectionId} />
+                <StyledHeading as="h3" variant="standard.18" muted={isMuted}>
+                  {translateLabel(section.title)}
+                </StyledHeading>
+              </SpaceFlex>
+              {section.state === 'valid' && (
+                <Accordion.Trigger>
+                  <Text size="l" color="gray700">
+                    Edit
+                  </Text>
+                </Accordion.Trigger>
               )}
-              <Heading as="h3" variant="standard.18">
-                {translateLabel(section.title)}
-              </Heading>
-            </SpaceFlex>
-            <Accordion.Trigger />
-          </Accordion.Header>
-          <Accordion.Content>{children(section, index)}</Accordion.Content>
-        </Accordion.Item>
-      ))}
+            </Accordion.Header>
+            <Accordion.Content>{children(section, index)}</Accordion.Content>
+          </Accordion.Item>
+        )
+      })}
     </Accordion.Root>
   )
 }
@@ -67,3 +74,9 @@ const useActiveFormSection = (form: Form) => {
 
   return [activeSectionId, setActiveSectionId] as const
 }
+
+type StyledHeadingProps = { muted: boolean }
+
+const StyledHeading = styled(Heading)<StyledHeadingProps>(({ theme, muted }) => ({
+  color: muted ? theme.colors.gray600 : theme.colors.gray900,
+}))
