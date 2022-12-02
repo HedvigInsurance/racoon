@@ -462,5 +462,6 @@
   "PERILS_DIALOG_TITLE": "Included in {{insurance}}",
   "INSURANCE_CARD_SEE_COVERAGE": "See coverage",
   "INSURANCE_SELECTOR_HEADLINE": "Your insurance choices",
-  "LANDING_PAGE_SUBMIT_BUTTON": "Continue"
+  "LANDING_PAGE_SUBMIT_BUTTON": "Continue",
+  "OFFER_PAGE_MISSING_INSURANCE_SELECTION_ERROR": "Select at least one insurance to continue"
 }

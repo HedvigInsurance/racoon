@@ -462,5 +462,6 @@
   "PERILS_DIALOG_TITLE": "Inkludert i {{insurance}}",
   "INSURANCE_CARD_SEE_COVERAGE": "Se dekning",
   "INSURANCE_SELECTOR_HEADLINE": "Dine forsikringsvalg",
-  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsett"
+  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsett",
+  "OFFER_PAGE_MISSING_INSURANCE_SELECTION_ERROR": "Velg minst én forsikring for å fortsette"
 }

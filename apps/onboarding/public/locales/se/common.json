@@ -462,5 +462,6 @@
   "PERILS_DIALOG_TITLE": "Ingår i {{insurance}}",
   "INSURANCE_CARD_SEE_COVERAGE": "Se täckning",
   "INSURANCE_SELECTOR_HEADLINE": "Dina försäkringsval",
-  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsätt"
+  "LANDING_PAGE_SUBMIT_BUTTON": "Fortsätt",
+  "OFFER_PAGE_MISSING_INSURANCE_SELECTION_ERROR": "Välj minst en försäkring för att fortsätta"
 }
