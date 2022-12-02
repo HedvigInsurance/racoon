@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { InputHTMLAttributes, useState, KeyboardEvent } from 'react'
-import { theme } from 'ui'
+import { InputHTMLAttributes } from 'react'
+import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 const Input = styled(motion.input)(({ theme }) => ({
   width: '100%',
@@ -19,39 +19,12 @@ const Input = styled(motion.input)(({ theme }) => ({
   },
 }))
 
-enum AnimationState {
-  Idle = 'IDLE',
-  Active = 'ACTIVE',
-}
-
-const animationVariants = {
-  [AnimationState.Active]: { backgroundColor: 'rgba(197, 236, 127, 0.6)' },
-  [AnimationState.Idle]: { backgroundColor: theme.colors.gray300 },
-} as const
-
 type Props = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
 >
 
 export const TextField = (props: Props) => {
-  const [isTyping, setIsTyping] = useState(false)
-
-  const handleAnimate = (event: KeyboardEvent<HTMLInputElement>) => {
-    props.onKeyDown?.(event)
-    setIsTyping(true)
-  }
-
-  return (
-    <Input
-      {...props}
-      onKeyDown={(event) => handleAnimate(event)}
-      variants={animationVariants}
-      initial={AnimationState.Idle}
-      animate={isTyping ? AnimationState.Active : AnimationState.Idle}
-      onAnimationComplete={() => {
-        setIsTyping(false)
-      }}
-    />
-  )
+  const { highlight, animationProps } = useHighlightAnimation()
+  return <Input {...props} onKeyDown={highlight} {...animationProps} />
 }
