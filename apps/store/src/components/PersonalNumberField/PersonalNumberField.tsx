@@ -1,6 +1,6 @@
 import Personnummer from 'personnummer'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
-import { TextField } from '../TextField/TextField'
+import { TextField } from '@/components/TextField/TextField'
 
 type Props = Omit<
   InputHTMLAttributes<HTMLInputElement>,

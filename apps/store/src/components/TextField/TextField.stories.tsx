@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { TextField } from './TextField'
 
 export default {
-  title: 'Input/TextField',
+  title: 'Inputs/TextField',
   component: TextField,
   parameters: {
     viewport: {
