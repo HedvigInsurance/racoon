@@ -13,12 +13,12 @@ export default {
   },
 } as ComponentMeta<typeof TextField>
 
-const Template: ComponentStory<typeof TextField> = () => {
+const Template: ComponentStory<typeof TextField> = (props) => {
   return (
     <>
-      <TextField />
+      <TextField {...props} />
       <div style={{ marginTop: '2rem' }}></div>
-      <TextField />
+      <TextField {...props} />
     </>
   )
 }
