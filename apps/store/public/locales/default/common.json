@@ -2,6 +2,5 @@
   "CHECKOUT_BUTTON": "Checkout",
   "TEST_PLURALIZE_one": "Cinnamon bun",
   "TEST_PLURALIZE_other": "{{count}} cinnamon buns",
-  "MONTHLY_PRICE": "{{displayAmount}}/mo.",
-  "GO_TO_STORE_BUTTON": "Go to Store"
+  "MONTHLY_PRICE": "{{displayAmount}}/mo."
 }
