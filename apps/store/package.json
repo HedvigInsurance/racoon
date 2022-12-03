@@ -35,7 +35,7 @@
     "@types/uuid": "8.3.4",
     "ajv": "8.11.2",
     "cookies-next": "2.1.1",
-    "dd-trace": "3.8.0",
+    "dd-trace": "3.9.0",
     "eslint-config-next": "13.0.5",
     "framer-motion": "7.6.17",
     "graphql": "16.6.0",
