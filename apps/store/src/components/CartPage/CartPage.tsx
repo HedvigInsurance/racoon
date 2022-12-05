@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEvent, FormEventHandler } from 'react'
-import { Button, Heading, InputField, Space } from 'ui'
+import { Button, Heading, InputField, LinkButton, Space } from 'ui'
 import { CartCard } from '@/components/CartCard/CartCard'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
@@ -122,6 +121,8 @@ export const CartPage = (props: CartPageProps) => {
 
 const EmptyState = () => {
   const { t } = useTranslation(I18nNamespace.Cart)
+  const { routingLocale } = useCurrentLocale()
+
   return (
     <Wrapper>
       <Space y={3}>
@@ -130,9 +131,9 @@ const EmptyState = () => {
         </StyledHeading>
         <CenteredParagraph>{t('CART_EMPTY_SUMMARY')}</CenteredParagraph>
         <Footer>
-          <Button fullWidth>
-            <Link href={PageLink.store()}>Go to Store</Link>
-          </Button>
+          <LinkButton fullWidth href={PageLink.store({ locale: routingLocale })}>
+            {t('GO_TO_STORE_BUTTON')}
+          </LinkButton>
         </Footer>
       </Space>
     </Wrapper>

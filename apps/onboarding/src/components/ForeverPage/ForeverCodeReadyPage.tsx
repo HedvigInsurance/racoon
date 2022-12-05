@@ -24,7 +24,7 @@ const Wrapper = styled(Space)({
   alignItems: 'center',
 })
 
-const Paragrapgh = styled.p(({ theme }) => ({
+const Paragraph = styled.p(({ theme }) => ({
   textAlign: 'center',
   color: theme.colors.gray700,
 }))
@@ -36,7 +36,7 @@ export const ForeverCodeReadyPage = () => {
   return (
     <PageLayout>
       <Wrapper y={1}>
-        <Paragrapgh>{t('FOREVER_INTRO_READY_QUESTION')}</Paragrapgh>
+        <Paragraph>{t('FOREVER_INTRO_READY_QUESTION')}</Paragraph>
         <LinkButton href={PageLink.old_landing_page({ locale: path })}>
           {t('FOREVER_INTRO_READY_CTA')}
         </LinkButton>
