@@ -8,7 +8,7 @@ export default {
   component: TierSelector,
 } as ComponentMeta<typeof TierSelector>
 
-const MockedOffers: Partial<TierSelectorProps['offers']> = [
+const MockedOffers: TierSelectorProps['offers'] = [
   {
     id: '0',
     variant: { displayName: 'Trafikförsäkring', typeOfContract: 'Traffic' },

@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
 import { Button, Space } from 'ui'
+import { TierSelector } from '@/components/CarTierSelector/CarTierSelector'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -17,7 +18,6 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
-import { TierSelector } from './TierSelector'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -76,15 +76,22 @@ export const OfferPresenter = ({
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
-        <Space y={2}>
-          <Text as="p" align="center" size="xxl">
-            {displayPrice}
-          </Text>
+        <Text as="p" align="center" size="xxl">
+          {displayPrice}
+        </Text>
 
-          <TierSelector
-            offers={priceIntent.offers}
-            selectedOfferId={selectedOfferId}
-            onValueChange={setSelectedOfferId}
+        <TierSelector
+          offers={priceIntent.offers}
+          selectedOfferId={selectedOfferId}
+          onValueChange={setSelectedOfferId}
+        />
+
+        <Space y={0.25}>
+          <CancellationForm
+            option={cancellationOption}
+            startDate={convertToDate(priceIntent.startDate) ?? dateToday}
+            onAutoSwitchChange={handleUpdateCancellation}
+            onStartDateChange={handleStartDateChange}
           />
 
           <Space y={0.25}>

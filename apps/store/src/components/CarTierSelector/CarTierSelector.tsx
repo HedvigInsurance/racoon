@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
-import { PropsWithChildren, ReactElement } from 'react'
+import { Dispatch, PropsWithChildren, ReactElement, SetStateAction } from 'react'
 import { ChevronIcon } from 'ui'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
@@ -110,7 +111,7 @@ export const SecondaryTextStyle = styled.div(({ theme }) => ({
 
 export type TierItemProps = {
   title: string
-  price: string
+  price: number
   description: string
   isSelected?: boolean
   recommendedText?: string
@@ -137,5 +138,55 @@ export const TierItem = ({
       <SecondaryTextStyle>{description}</SecondaryTextStyle>
       {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
     </TierItemContainer>
+  )
+}
+
+export type TierSelectorProps = {
+  offers: Array<ProductOfferFragment>
+  selectedOfferId: string
+  onValueChange: Dispatch<SetStateAction<string>>
+}
+export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
+  const handleClick = (id: string) => {
+    onValueChange?.(id)
+  }
+
+  const selectedTitle = offers.find((offer) => offer.id === selectedOfferId)
+  console.log({
+    offers,
+    selectedOfferId,
+  })
+
+  return (
+    <Root type="multiple">
+      <Item value="item-1">
+        <HeaderWithTrigger>
+          {selectedOfferId ? (
+            <>
+              <div>{selectedTitle?.variant.typeOfContract}</div>
+              <SecondaryTextStyle>{selectedTitle?.price.amount}</SecondaryTextStyle>
+            </>
+          ) : (
+            <div>Välj skydd</div>
+          )}
+        </HeaderWithTrigger>
+        <Content>
+          {offers.map((offer) => {
+            const { id, price } = offer
+            return (
+              <TierItem
+                key={id}
+                value={id}
+                title={offer.variant.typeOfContract}
+                description="description text"
+                price={price.amount}
+                isSelected={selectedOfferId === id}
+                handleClick={() => handleClick(id)}
+              />
+            )
+          })}
+        </Content>
+      </Item>
+    </Root>
   )
 }
