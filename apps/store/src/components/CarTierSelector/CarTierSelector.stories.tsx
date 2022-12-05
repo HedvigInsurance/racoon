@@ -1,88 +1,37 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import * as TierSelector from './CarTierSelector'
+import { CurrencyCode } from '@/services/apollo/generated'
+import { TierSelector, TierSelectorProps } from './CarTierSelector'
 
 export default {
   title: 'CarTierSelector',
-  component: TierSelector.Root,
-} as ComponentMeta<typeof TierSelector.Root>
+  component: TierSelector,
+} as ComponentMeta<typeof TierSelector>
 
-type MockedTierItemType = Array<TierSelector.TierItemProps>
-
-const MockedTierItems: MockedTierItemType = [
+const MockedOffers: Partial<TierSelectorProps['offers']> = [
   {
-    value: '0',
-    title: 'Trafikförsäkring',
-    description: 'Grundläggande skydd för att köra bil',
-    isSelected: false,
-    price: '300 kr/mån',
+    id: '0',
+    variant: { displayName: 'Trafikförsäkring', typeOfContract: 'Traffic' },
+    price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
   },
   {
-    value: '1',
-    title: 'Halvförsäkring Tack',
-    description: 'Grundläggande skydd för att köra bil',
-    isSelected: false,
-    price: '300 kr/mån',
-    recommendedText: 'Rekommenderad för din bil',
+    id: '1',
+    variant: { displayName: 'Halvförsäkring', typeOfContract: 'Halvförsäkring' },
+    price: { amount: 299, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
   },
   {
-    value: '2',
-    title: 'Halvförsäkring',
-    description: 'Grundläggande skydd för att köra bil',
-    isSelected: false,
-    price: '300 kr/mån',
-  },
-  {
-    value: '3',
-    title: 'Halvförsäkring plus',
-    description: 'Grundläggande skydd för att köra bil',
-    isSelected: false,
-    price: '300 kr/mån',
+    id: '2',
+    variant: { displayName: 'Helförsäkring 🍒', typeOfContract: 'Driving' },
+    price: { amount: 999, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
   },
 ]
 
-const Template: ComponentStory<typeof TierSelector.Root> = () => {
-  const [selected, setSelected] = useState<TierSelector.TierItemProps>()
-
-  const handleClick = (item: string) => {
-    const selectedItem = MockedTierItems.find((e) => e.value === item)
-    setSelected(selectedItem)
-  }
-
-  return (
-    <TierSelector.Root type="multiple">
-      <TierSelector.Item value="item-1">
-        <TierSelector.HeaderWithTrigger>
-          {selected ? (
-            <>
-              <div>{selected?.title}</div>
-              <TierSelector.SecondaryTextStyle>{selected?.price}</TierSelector.SecondaryTextStyle>
-            </>
-          ) : (
-            <div>Välj skydd</div>
-          )}
-        </TierSelector.HeaderWithTrigger>
-        <TierSelector.Content>
-          {MockedTierItems.map((tier) => {
-            const { value, description, price, title, recommendedText } = tier
-            return (
-              <TierSelector.TierItem
-                key={value}
-                value={value}
-                title={title}
-                description={description}
-                price={price}
-                recommendedText={recommendedText}
-                isSelected={selected?.value === value}
-                handleClick={() => handleClick(value)}
-              />
-            )
-          })}
-        </TierSelector.Content>
-      </TierSelector.Item>
-    </TierSelector.Root>
-  )
+const Template: ComponentStory<typeof TierSelector> = (props) => {
+  const [selected, setSelected] = useState(props.selectedOfferId)
+  return <TierSelector {...props} onValueChange={setSelected} selectedOfferId={selected} />
 }
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  offers: MockedOffers,
+}
