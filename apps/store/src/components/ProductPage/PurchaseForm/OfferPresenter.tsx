@@ -73,8 +73,6 @@ export const OfferPresenter = ({
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
-  const dateToday = new Date()
-
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
@@ -92,7 +90,7 @@ export const OfferPresenter = ({
           <Space y={0.25}>
             <CancellationForm
               option={cancellationOption}
-              startDate={convertToDate(priceIntent.startDate) ?? dateToday}
+              startDate={convertToDate(priceIntent.startDate)!}
               onAutoSwitchChange={handleUpdateCancellation}
               onStartDateChange={handleStartDateChange}
             />
