@@ -1,6 +1,6 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { HouseholdSizeField } from '@/components/PriceCalculator/HouseholdSize'
+import { HouseholdSizeField } from '@/components/PriceCalculator/HouseholdSizeField/HouseholdSizeField'
 import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
