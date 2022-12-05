@@ -6,7 +6,7 @@
   "START_DATE_FIELD_TODAY": "Idag",
   "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
   "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",
-  "SSN_FIELD_LABEL": "Personnummer",
+  "FIELD_SSN_SE_LABEL": "ÅÅMMDD-XXXX",
   "ADDRESS_FILED_LABEL": "Ditt Hem",
   "SWITCH_ALREADY_HAVE_INSURANCE_MESSAGE": "Har du redan hemförsäkring för {{ADDRESS}}? ",
   "SECTION_TITLE_PERSONAL_NUMBER": "Personnummer",
@@ -17,5 +17,7 @@
   "FIELD_LIVING_SPACE_LABEL": "Boyta",
   "FIELD_EXTERNAL_INSURER_LABEL": "Har du redan hemförsäkring för adressen?",
   "SECTION_TITLE_YOUR_FAMILY": "Din Familj",
-  "SUBMIT_LABEL_FINISH": "Beräkna pris"
+  "SUBMIT_LABEL_FINISH": "Beräkna pris",
+  "SECTION_TITLE_YOUR_CAR": "Din bil",
+  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registreringsnummer"
 }
