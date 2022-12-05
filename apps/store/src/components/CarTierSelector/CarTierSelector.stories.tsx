@@ -4,7 +4,7 @@ import { CurrencyCode } from '@/services/apollo/generated'
 import { TierSelector, TierSelectorProps } from './CarTierSelector'
 
 export default {
-  title: 'CarTierSelector',
+  title: 'Car Tier Selector',
   component: TierSelector,
 } as ComponentMeta<typeof TierSelector>
 

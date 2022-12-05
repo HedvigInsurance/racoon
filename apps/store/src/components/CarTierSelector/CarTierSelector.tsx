@@ -27,7 +27,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   borderBottom: `1px solid ${theme.colors.gray500}`,
   padding: `0 ${theme.space[4]}`,
 
-  '[data-state=open] &': { borderRadius: `${theme.radius.xs} ${theme.radius.xs} 0 0` },
+  '[data-state=open] &': { borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0` },
 }))
 
 const CenteredHeader = styled.div({
@@ -90,7 +90,7 @@ const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelect
   backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
 
   '&:last-of-type': {
-    borderRadius: `0 0 ${theme.radius.xs} ${theme.radius.xs}`,
+    borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
   },
 }))
 
@@ -132,7 +132,7 @@ export const TierItem = ({
       <TitleContainer>
         <TitleItem>{title}</TitleItem>
         <TitleItem>
-          <SecondaryTextStyle>{price}</SecondaryTextStyle>
+          <SecondaryTextStyle>{price} kr/mån</SecondaryTextStyle>
         </TitleItem>
       </TitleContainer>
       <SecondaryTextStyle>{description}</SecondaryTextStyle>
@@ -164,7 +164,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
           {selectedOfferId ? (
             <>
               <div>{selectedTitle?.variant.typeOfContract}</div>
-              <SecondaryTextStyle>{selectedTitle?.price.amount}</SecondaryTextStyle>
+              <SecondaryTextStyle>{selectedTitle?.price.amount}/m</SecondaryTextStyle>
             </>
           ) : (
             <div>Välj skydd</div>
