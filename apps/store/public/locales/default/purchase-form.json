@@ -19,5 +19,8 @@
   "SECTION_TITLE_YOUR_FAMILY": "Your Family",
   "SUBMIT_LABEL_FINISH": "Calculate price",
   "SECTION_TITLE_YOUR_CAR": "Your car",
-  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registration number"
+  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registration number",
+  "YEARLY_MILEAGE_VALUE": "{{value}} km/year",
+  "SECTION_TITLE_YOUR_ADDRESS": "Your address",
+  "FIELD_MILEAGE_LABEL": "Annual mileage"
 }

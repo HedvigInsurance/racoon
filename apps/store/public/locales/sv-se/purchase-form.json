@@ -19,5 +19,8 @@
   "SECTION_TITLE_YOUR_FAMILY": "Din Familj",
   "SUBMIT_LABEL_FINISH": "Beräkna pris",
   "SECTION_TITLE_YOUR_CAR": "Din bil",
-  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registreringsnummer"
+  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registreringsnummer",
+  "YEARLY_MILEAGE_VALUE": "{{value}} km/år",
+  "SECTION_TITLE_YOUR_ADDRESS": "Din adress",
+  "FIELD_MILEAGE_LABEL": "Årlig körsträcka"
 }
