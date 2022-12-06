@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
@@ -32,8 +32,8 @@ export const useBreakpoint = (level: Level) => {
   // Initial value must be the same on SSR and CSR to prevent hydration errors
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 })
 
-  useLayoutEffect(() => {
-    function handleResize() {
+  useIsomorphicLayoutEffect(() => {
+    const handleResize = () => {
       setWindowDimensions(getWindowDimensions())
     }
 
@@ -51,3 +51,5 @@ export const useBreakpoint = (level: Level) => {
 
   return windowDimensions.width >= breakpointWidth
 }
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
