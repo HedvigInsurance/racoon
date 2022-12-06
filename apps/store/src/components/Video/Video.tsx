@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { mq, theme } from 'ui'
 
 export type VideoSource = {
   url: string
@@ -25,6 +25,10 @@ const VideoWrapper = styled.div(({ theme }) => ({
   position: 'relative',
   paddingLeft: theme.space[2],
   paddingRight: theme.space[2],
+  [mq.lg]: {
+    paddingLeft: theme.space[4],
+    paddingRight: theme.space[4],
+  },
 }))
 
 const StyledVideo = styled.video(
@@ -39,7 +43,7 @@ const StyledVideo = styled.video(
     background: `url(${poster}) no-repeat`,
     backgroundSize: 'cover',
     objectFit: 'cover',
-    borderRadius: theme.radius.xl,
+    borderRadius: theme.radius.md,
     ['@media (orientation: portrait)']: {
       ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),
       ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),
@@ -47,6 +51,9 @@ const StyledVideo = styled.video(
     ['@media (orientation: landscape)']: {
       ...(aspectRatioLandscape && { aspectRatio: aspectRatioLandscape }),
       ...(maxHeightLandscape && { maxHeight: `${maxHeightLandscape}vh` }),
+    },
+    [mq.lg]: {
+      borderRadius: theme.radius.xl,
     },
   }),
 )
