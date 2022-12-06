@@ -11,28 +11,36 @@ export const Tabs = styled(RadixTabs.Root)({
 
 export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
   display: 'flex',
-  borderBottom: `1px solid ${theme.colors.gray500}`,
-  backgroundColor: theme.colors.white,
+  gap: theme.space[2],
   position: 'sticky',
-  top: 0,
+  top: theme.space[3],
+  paddingInline: theme.space[4],
   zIndex: zIndexes.tabs,
 }))
 
 export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
-  flexGrow: 1,
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'center',
   textAlign: 'center',
-  paddingInline: theme.space[2],
-  paddingBlock: theme.space[4],
+  paddingInline: theme.space[4],
+  paddingBlock: theme.space[2],
+  fontSize: theme.fontSizes[3],
+  lineHeight: theme.fontSizes[5],
+  color: theme.colors.dark,
+  // TODO: See if we should define translucent colors in theme
+  backgroundColor: 'rgba(242, 242, 242, 0.6)',
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  backdropFilter: 'blur(20px)',
+  borderRadius: theme.radius.sm,
   cursor: 'pointer',
 
   '&:hover': { color: theme.colors.purple900 },
 
   '&[data-state=active]': {
-    color: theme.colors.purple900,
-    boxShadow: `inset 0 -1px 0 0 ${theme.colors.purple900}, 0 1px 0 0 currentColor`,
+    paddingInline: '3.75rem',
+    color: theme.colors.dark,
+    backgroundColor: 'rgba(205, 205, 205, 0.6)',
   },
 
   '&:focus-visible': {
