@@ -41,7 +41,7 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   return (
     <>
       <Head>
-        <title>{story.content.name}</title>
+        <title>{story.name}</title>
       </Head>
       <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
