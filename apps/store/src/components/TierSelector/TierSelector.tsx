@@ -3,6 +3,8 @@ import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { Dispatch, PropsWithChildren, ReactElement, SetStateAction } from 'react'
 import { ChevronIcon } from 'ui'
 import { ProductOfferFragment } from '@/services/apollo/generated'
+import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
@@ -111,7 +113,7 @@ export const SecondaryTextStyle = styled.div(({ theme }) => ({
 
 export type TierItemProps = {
   title: string
-  price: number
+  price: string
   description: string
   isSelected?: boolean
   recommendedText?: string
@@ -132,7 +134,7 @@ export const TierItem = ({
       <TitleContainer>
         <TitleItem>{title}</TitleItem>
         <TitleItem>
-          <SecondaryTextStyle>{price} kr/mån</SecondaryTextStyle>
+          <SecondaryTextStyle>{price}/mån</SecondaryTextStyle>
         </TitleItem>
       </TitleContainer>
       <SecondaryTextStyle>{description}</SecondaryTextStyle>
@@ -147,20 +149,34 @@ export type TierSelectorProps = {
   onValueChange: Dispatch<SetStateAction<string>>
 }
 export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
+  const currencyFormatter = useCurrencyFormatter(offers[0].price.currencyCode)
+  const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
+
   const handleClick = (id: string) => {
     onValueChange?.(id)
   }
 
-  const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
+  if (offers.length === 1) {
+    return <input hidden readOnly name={FormElement.ProductOfferId} value={selectedOfferId} />
+  }
 
   return (
     <Root type="multiple">
-      <Item value="item-1">
+      <input
+        type="text"
+        hidden
+        readOnly
+        value={selectedOfferId}
+        name={FormElement.ProductOfferId}
+      />
+      <Item value={selectedOfferId}>
         <HeaderWithTrigger>
-          {selectedOfferId ? (
+          {selectedOffer ? (
             <>
-              <div>{selectedOffer?.variant.typeOfContract}</div>
-              <SecondaryTextStyle>{selectedOffer?.price.amount}/mån</SecondaryTextStyle>
+              <div>{selectedOffer.variant.typeOfContract}</div>
+              <SecondaryTextStyle>
+                {currencyFormatter.format(selectedOffer.price.amount)}/mån
+              </SecondaryTextStyle>
             </>
           ) : (
             <div>Välj skydd</div>
@@ -175,7 +191,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
                 value={id}
                 title={offer.variant.typeOfContract}
                 description="some description here"
-                price={price.amount}
+                price={currencyFormatter.format(price.amount)}
                 isSelected={selectedOfferId === id}
                 handleClick={() => handleClick(id)}
               />
