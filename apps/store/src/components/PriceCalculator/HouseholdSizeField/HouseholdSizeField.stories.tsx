@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { HouseholdSizeField } from './HouseholdSizeField'
 
 export default {
-  title: 'Input / Household Size',
+  title: 'Inputs / Household Size',
   component: HouseholdSizeField,
   parameters: {
     viewport: {
