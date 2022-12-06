@@ -6,7 +6,7 @@
   "START_DATE_FIELD_TODAY": "Today",
   "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
   "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires.",
-  "SSN_FIELD_LABEL": "Personal Number",
+  "FIELD_SSN_SE_LABEL": "YYMMDD-XXXX",
   "ADDRESS_FILED_LABEL": "Your Address",
   "SWITCH_ALREADY_HAVE_INSURANCE_MESSAGE": "Do you already have home insurance for {{ADDRESS}}?",
   "SECTION_TITLE_PERSONAL_NUMBER": "Personal Number",
@@ -17,5 +17,10 @@
   "FIELD_LIVING_SPACE_LABEL": "Apartment size",
   "FIELD_EXTERNAL_INSURER_LABEL": "Do you already have home insurance for this address?",
   "SECTION_TITLE_YOUR_FAMILY": "Your Family",
-  "SUBMIT_LABEL_FINISH": "Calculate price"
+  "SUBMIT_LABEL_FINISH": "Calculate price",
+  "SECTION_TITLE_YOUR_CAR": "Your car",
+  "FIELD_CAR_REGISTRATION_NUMBER_LABEL": "Registration number",
+  "YEARLY_MILEAGE_VALUE": "{{value}} km/year",
+  "SECTION_TITLE_YOUR_ADDRESS": "Your address",
+  "FIELD_MILEAGE_LABEL": "Annual mileage"
 }

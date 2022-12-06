@@ -1,5 +1,6 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { CarMileageField } from '@/components/PriceCalculator/CarMileageField'
 import { HouseholdSizeField } from '@/components/PriceCalculator/HouseholdSizeField/HouseholdSizeField'
 import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
@@ -119,6 +120,8 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
       return <SsnSeField field={field} />
     case 'car-registration-number':
       return <CarRegistrationNumberField field={field} />
+    case 'car-mileage':
+      return <CarMileageField field={field} />
 
     case 'current-insurance':
       return (
@@ -129,5 +132,10 @@ export const AutomaticField = ({ field, onSubmit, loading, autoFocus }: Props) =
           externalInsurer={priceIntent.cancellation.externalInsurer?.id}
         />
       )
+    default: {
+      const badField: never = field
+      console.warn(`Did not find field type=${(badField as any).type}.  Field not displayed`)
+      return null
+    }
   }
 }
