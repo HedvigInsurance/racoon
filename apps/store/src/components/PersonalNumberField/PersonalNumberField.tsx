@@ -35,6 +35,7 @@ export const PersonalNumberField = (props: Props) => {
 
       <TextField
         {...baseProps}
+        defaultValue={propValue ?? defaultValue}
         type="text"
         name={undefined}
         inputMode="numeric"
