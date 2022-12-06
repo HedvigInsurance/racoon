@@ -151,11 +151,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
     onValueChange?.(id)
   }
 
-  const selectedTitle = offers.find((offer) => offer.id === selectedOfferId)
-  console.log({
-    offers,
-    selectedOfferId,
-  })
+  const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
   return (
     <Root type="multiple">
@@ -163,8 +159,8 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
         <HeaderWithTrigger>
           {selectedOfferId ? (
             <>
-              <div>{selectedTitle?.variant.typeOfContract}</div>
-              <SecondaryTextStyle>{selectedTitle?.price.amount}/m</SecondaryTextStyle>
+              <div>{selectedOffer?.variant.typeOfContract}</div>
+              <SecondaryTextStyle>{selectedOffer?.price.amount}/mån</SecondaryTextStyle>
             </>
           ) : (
             <div>Välj skydd</div>
@@ -178,7 +174,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
                 key={id}
                 value={id}
                 title={offer.variant.typeOfContract}
-                description="description text"
+                description="some description here"
                 price={price.amount}
                 isSelected={selectedOfferId === id}
                 handleClick={() => handleClick(id)}

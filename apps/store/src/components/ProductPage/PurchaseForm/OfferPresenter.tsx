@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
 import { Button, Space } from 'ui'
-import { TierSelector } from '@/components/CarTierSelector/CarTierSelector'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,

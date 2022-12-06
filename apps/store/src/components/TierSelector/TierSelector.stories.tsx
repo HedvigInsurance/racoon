@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
 import { CurrencyCode } from '@/services/apollo/generated'
-import { TierSelector, TierSelectorProps } from './CarTierSelector'
+import { TierSelector, TierSelectorProps } from './TierSelector'
 
 export default {
   title: 'Car Tier Selector',
