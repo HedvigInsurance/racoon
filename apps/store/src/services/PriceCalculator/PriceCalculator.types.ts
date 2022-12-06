@@ -30,7 +30,7 @@ export type Template = {
   sections: Array<TemplateSection>
 }
 
-type TemplateSection = {
+export type TemplateSection = {
   id: string
   title: Label
   submitLabel: Label
