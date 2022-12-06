@@ -13,33 +13,17 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
 }))
 
 const StyledSelect = styled.select(({ theme }) => ({
-  backgroundColor: theme.colors.white,
+  backgroundColor: theme.colors.gray300,
   color: theme.colors.gray900,
-  fontSize: '1.125rem',
-  lineHeight: '1.75rem',
-  padding: '0 1rem',
+  fontSize: theme.fontSizes[5],
   width: '100%',
-  borderRadius: '0.5rem',
-  borderWidth: '1px',
-  borderStyle: 'solid',
+  borderRadius: theme.radius.sm,
   display: 'flex',
-  alignItems: 'center',
-  height: '3.5rem',
+  padding: `${theme.space[3]} ${theme.space[4]}`,
+}))
 
-  ':focus, :hover': {
-    outline: '2px solid transparent',
-    outlineOffset: '2px',
-    borderColor: theme.colors.gray900,
-  },
-
-  ':disabled': {
-    backgroundColor: theme.colors.gray300,
-    borderColor: theme.colors.gray300,
-    color: theme.colors.gray500,
-    cursor: 'not-allowed',
-  },
-
-  borderColor: theme.colors.gray300,
+const Placeholder = styled.option(({ theme }) => ({
+  color: theme.colors.gray500,
 }))
 
 type InputSelectProps = InputBaseProps & {
@@ -73,7 +57,7 @@ export const InputSelect = ({
             defaultValue={defaultValue}
             {...rest}
           >
-            {placeholder && <option value="">{placeholder}</option>}
+            {placeholder && <Placeholder value="">{placeholder}</Placeholder>}
             {options.map(({ name, value }) => (
               <option key={value} value={value}>
                 {name}
