@@ -13,7 +13,7 @@
     "lint:fix": "next lint --fix --ignore-path .gitignore",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
-    "codegen": "graphql-codegen && prettier --write ./src/services/**/{generated,types}.ts && yarn lint:fix",
+    "codegen": "graphql-codegen",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
     "typecheck": "tsc --noEmit"

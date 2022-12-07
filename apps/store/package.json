@@ -14,7 +14,7 @@
     "storybook": "start-storybook -p 6008 --no-open",
     "storybook:build": "build-storybook",
     "chromatic": "npx chromatic --exit-zero-on-changes --storybook-build-dir ./storybook-static",
-    "codegen": "graphql-codegen -r dotenv/config && prettier --write ./src/services/**/generated.ts && yarn lint --fix",
+    "codegen": "graphql-codegen -r dotenv/config",
     "download-translations": "./scripts/download-translations.sh"
   },
   "dependencies": {
