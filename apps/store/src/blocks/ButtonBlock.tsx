@@ -14,11 +14,15 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <NextLink href={getLinkFieldURL(blok.link)} passHref legacyBehavior>
-        <LinkButton variant={blok.variant} color="dark" size="lg">
-          {blok.text}
-        </LinkButton>
-      </NextLink>
+      <LinkButton
+        as={NextLink}
+        href={getLinkFieldURL(blok.link)}
+        variant={blok.variant}
+        color="dark"
+        size="lg"
+      >
+        {blok.text}
+      </LinkButton>
     </Wrapper>
   )
 }
