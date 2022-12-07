@@ -8,7 +8,6 @@
     "start": "node --require ./server-preload.js $(yarn bin next) start",
     "test": "jest --passWithNoTests --coverage",
     "lint": "next lint",
-    "lint:fix": "next lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6008 --no-open",
