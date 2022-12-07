@@ -1,33 +1,35 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
-    "build": {
+    "codegen": {
+      "inputs": ["src/graphql/*.graphql", "codegen.yml"],
+      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["^build", "codegen"],
+      "outputs": [],
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "codegen"],
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^build","codegen"]
+    },
+    "test": {
+      "dependsOn": ["^build", "codegen"],
+      "outputs": ["coverage/**"]
+    },
+    "ui#build": {
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
     },
-    "onboarding#build": {
+    "build": {
       "outputs": [".next/**"],
       "dependsOn": ["^build", "codegen"]
-    },
-    "store#build": {
-      "outputs": [".next/**"],
-      "dependsOn": ["^build", "codegen"]
-    },
-    "onboarding#test": {
-      "outputs": ["coverage/**"],
-      "dependsOn": ["^build"]
-    },
-    "onboarding#lint": {
-      "outputs": [],
-      "dependsOn": ["codegen"],
-      "cache": false
-    },
-    "test": {
-      "outputs": ["coverage/**"]
-    },
-    "store#test": {
-      "outputs": ["coverage/**"],
-      "dependsOn": ["codegen"]
     },
     "e2e": {
       "dependsOn": ["build"]
@@ -35,28 +37,8 @@
     "e2e:headless": {
       "dependsOn": ["build"]
     },
-    "lint": {
-      "outputs": [],
-      "cache": false
-    },
-    "store#lint": {
-      "outputs": [],
-      "dependsOn": ["codegen"],
-      "cache": false
-    },
     "lint:fix": {
       "outputs": []
-    },
-    "dev": {
-      "cache": false
-    },
-    "onboarding#dev": {
-      "cache": false,
-      "dependsOn": ["^build","codegen"]
-    },
-    "store#dev": {
-      "cache": false,
-      "dependsOn": ["^build","codegen"]
     },
     "clean": {
       "cache": false
@@ -71,30 +53,6 @@
     },
     "chromatic": {
       "dependsOn": ["storybook:build"]
-    },
-    "typecheck": {
-      "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "onboarding#typecheck": {
-      "dependsOn": ["^build", "codegen"],
-      "outputs": []
-    },
-    "store#typecheck": {
-      "dependsOn": ["codegen", "^build"],
-      "outputs": []
-    },
-    "onboarding#codegen": {
-      "inputs": ["src/graphql/*.graphql", "codegen.yml"],
-      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
-      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
-      "cache": false
-    },
-    "store#codegen": {
-      "inputs": ["src/graphql/*.graphql", "codegen.yml"],
-      "outputs": ["src/services/**/generated.ts"],
-      "env": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
-      "cache": false
     }
   }
 }
