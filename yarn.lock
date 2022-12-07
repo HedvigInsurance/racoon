@@ -22283,6 +22283,7 @@ __metadata:
     react: 18.2.0
     react-animate-height: 3.1.0
     react-dom: 18.2.0
+    react-merge-refs: 2.0.1
     scripts: "workspace:"
     ts-jest: 29.0.3
     tsconfig: "workspace:"

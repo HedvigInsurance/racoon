@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useEffect, useRef, useId } from 'react'
-import type { ReactNode, ComponentPropsWithRef } from 'react'
+import { useEffect, useRef, useId, forwardRef, ReactNode, ComponentPropsWithRef } from 'react'
+import { mergeRefs } from 'react-merge-refs'
 import { CheckIcon } from '../../icons/CheckIcon'
 
 export type CheckboxProps = ComponentPropsWithRef<'input'> & {
@@ -94,52 +94,50 @@ const CheckboxWrapper = styled.div({
   isolation: 'isolate',
 })
 
-export const Checkbox = ({
-  circle,
-  prependLabel,
-  label,
-  errorMessage,
-  ...delegated
-}: CheckboxProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const id = useId()
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ circle, prependLabel, label, errorMessage, ...delegated }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null)
+    const id = useId()
 
-  const handleInvalid = () => {
-    if (errorMessage) {
-      inputRef.current?.setCustomValidity(errorMessage)
+    const handleInvalid = () => {
+      if (errorMessage) {
+        inputRef.current?.setCustomValidity(errorMessage)
+      }
     }
-  }
 
-  useEffect(() => {
-    inputRef.current?.setCustomValidity('')
-  }, [delegated.required, delegated.checked])
+    useEffect(() => {
+      inputRef.current?.setCustomValidity('')
+    }, [delegated.required, delegated.checked])
 
-  let LabelComponent: ReactNode = null
-  if (label) {
-    LabelComponent = (
-      <ControlLabel htmlFor={delegated.id ?? id} disabled={delegated.disabled}>
-        {label}
-      </ControlLabel>
+    let LabelComponent: ReactNode = null
+    if (label) {
+      LabelComponent = (
+        <ControlLabel htmlFor={delegated.id ?? id} disabled={delegated.disabled}>
+          {label}
+        </ControlLabel>
+      )
+    }
+
+    return (
+      <ControlContainer>
+        {prependLabel && LabelComponent}
+        <CheckboxWrapper>
+          <HiddenInput
+            ref={mergeRefs([inputRef, ref])}
+            id={delegated.id ?? id}
+            type="checkbox"
+            onInvalid={handleInvalid}
+            {...delegated}
+          />
+          <StyledCheckboxElement circle={circle}>
+            <Icon />
+            <DisabledTick />
+          </StyledCheckboxElement>
+        </CheckboxWrapper>
+        {!prependLabel && LabelComponent}
+      </ControlContainer>
     )
-  }
+  },
+)
 
-  return (
-    <ControlContainer>
-      {prependLabel && LabelComponent}
-      <CheckboxWrapper>
-        <HiddenInput
-          ref={inputRef}
-          id={delegated.id ?? id}
-          type="checkbox"
-          onInvalid={handleInvalid}
-          {...delegated}
-        />
-        <StyledCheckboxElement circle={circle}>
-          <Icon />
-          <DisabledTick />
-        </StyledCheckboxElement>
-      </CheckboxWrapper>
-      {!prependLabel && LabelComponent}
-    </ControlContainer>
-  )
-}
+Checkbox.displayName = 'Checkbox'

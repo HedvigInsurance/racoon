@@ -1,4 +1,5 @@
 export { Checkbox } from './components/Checkbox/Checkbox'
+export type { CheckboxProps } from './components/Checkbox/Checkbox'
 export { BurgerButton } from './components/BurgerButton/BurgerButton'
 export { Menu } from './components/Menu/Menu'
 export type { MenuTheme } from './components/Menu/Menu'
