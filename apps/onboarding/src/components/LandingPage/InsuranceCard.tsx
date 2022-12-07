@@ -3,8 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Image, { ImageProps } from 'next/legacy/image'
 import type { ChangeEventHandler, MouseEventHandler } from 'react'
 import { useRef, useState } from 'react'
-import { Button, Space, useBreakpoint, mq } from 'ui'
-import { Checkbox, CheckboxProps } from './Checkbox'
+import { Button, Space, Checkbox, CheckboxProps, useBreakpoint, mq } from 'ui'
 import { CoverageDialog } from './CoverageDialog'
 
 type Props = {
