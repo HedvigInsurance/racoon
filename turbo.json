@@ -23,17 +23,14 @@
       "outputs": ["coverage/**"]
     },
     "build": {
-      "outputs": [".next/**"],
-      "dependsOn": ["codegen"]
+      "dependsOn": ["codegen"],
+      "outputs": [".next/**"]
     },
     "e2e": {
       "dependsOn": ["build"]
     },
     "e2e:headless": {
       "dependsOn": ["build"]
-    },
-    "lint:fix": {
-      "outputs": []
     },
     "clean": {
       "cache": false
