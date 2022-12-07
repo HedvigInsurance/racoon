@@ -5,8 +5,8 @@ import Script from 'next/script'
 import { useEffect } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-const IFRAME_URL = 'https://dc.insurely.se/v2/'
-const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.se/v2/assets/js/dc-bootstrap.js'
+const IFRAME_URL = 'https://dc.insurely.com/v2/'
+const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.com/v2/assets/js/dc-bootstrap.js'
 
 enum EventName {
   APP_LOADED = 'APP_LOADED',
@@ -26,12 +26,12 @@ type InsurelyIframeProps = BoostrapScriptProps & {
   clientId: string
   onLoaded?: () => void
   onClose?: () => void
-  onStart?: (collectionId: string) => void
+  onCollection?: (collectionId: string) => void
   onCompleted?: () => void
 }
 
 export const InsurelyIframe = (props: InsurelyIframeProps) => {
-  const { clientId, onLoaded, onClose, onStart, onCompleted, ...boostrapProps } = props
+  const { clientId, onLoaded, onClose, onCollection, onCompleted, ...bootstrapProps } = props
 
   useEffect(() => {
     const handleMessage = ({ data }: MessageEvent<InsurelyMessage>) => {
@@ -43,7 +43,7 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
           return onClose?.()
 
         case EventName.COLLECTION_ID:
-          return onStart?.(data.value)
+          return onCollection?.(data.value)
 
         case EventName.RESULTS:
           return onCompleted?.()
@@ -51,7 +51,7 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     }
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [onLoaded, onClose, onStart, onCompleted])
+  }, [onLoaded, onClose, onCollection, onCompleted])
 
   return (
     <>
@@ -66,7 +66,7 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     allow-top-navigation"
       />
 
-      <BoostrapScript {...boostrapProps} />
+      <BoostrapScript {...bootstrapProps} />
     </>
   )
 }
@@ -84,7 +84,7 @@ const BoostrapScript = ({ personalNumber, company }: BoostrapScriptProps) => {
       fontType: 'secondary',
       hideResultsView: true,
       language,
-      prefilledData: {
+      prefilledInput: {
         ...(personalNumber && { SWEDISH_PERSONAL_NUMBER: personalNumber }),
         ...(company && { company }),
       },

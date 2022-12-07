@@ -31,6 +31,7 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
 
   const handleRadioValueChange = (newValue: string) => {
     highlight()
+    if (newValue === RadioOption.NO) onCompanyChange(undefined)
     setHasInsurance(newValue === RadioOption.YES)
   }
 

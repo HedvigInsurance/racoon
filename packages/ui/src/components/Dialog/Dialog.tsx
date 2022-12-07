@@ -60,13 +60,17 @@ export const Content = ({ children, onClose, className, frostedOverlay }: Conten
     <DialogPrimitive.Portal>
       <StyledOverlay frosted={frostedOverlay} />
       <StyledContentWrapper className={className}>
-        <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
+        <StyledDialogPrimitiveContent onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
           {children}
-        </DialogPrimitive.Content>
+        </StyledDialogPrimitiveContent>
       </StyledContentWrapper>
     </DialogPrimitive.Portal>
   )
 }
+
+const StyledDialogPrimitiveContent = styled(DialogPrimitive.Content)({
+  width: '100%',
+})
 
 export const Root = DialogPrimitive.Root
 export const Trigger = DialogPrimitive.Trigger
