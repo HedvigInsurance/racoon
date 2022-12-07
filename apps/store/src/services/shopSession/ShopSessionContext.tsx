@@ -1,5 +1,5 @@
 import { QueryResult, useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useRef } from 'react'
 import {
   ShopSessionQuery,
   ShopSessionQueryVariables,
@@ -22,8 +22,9 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
   const { locale } = useCurrentLocale()
   const shopSessionService = useShopSessionService()
   const shopSessionId = initialShopSessionId ?? shopSessionService.shopSessionId()
+  const calledRef = useRef(false)
 
-  const [createShopSession, mutationResult] = useShopSessionCreateMutation({
+  const [createShopSession] = useShopSessionCreateMutation({
     variables: { countryCode, locale },
     onCompleted: ({ shopSessionCreate }) => {
       shopSessionService.save(shopSessionCreate)
@@ -47,13 +48,14 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
     },
   })
 
-  // Has to be wrapped to prevent duplicate execution (Apollo quirk leads do duplicate execution when called directly from render)
   useEffect(() => {
+    // calledRef ensures we don't call the effect twice in strict mode
     // TODO: isBrowser() and ensure code splitting does not break
-    if (typeof window !== 'undefined' && !shopSessionId && !mutationResult.called) {
+    if (typeof window !== 'undefined' && !shopSessionId && !calledRef.current) {
+      calledRef.current = true
       createShopSession()
     }
-  }, [createShopSession, mutationResult.called, shopSessionId])
+  }, [createShopSession, shopSessionId])
 
   return <ShopSessionContext.Provider value={queryResult}>{children}</ShopSessionContext.Provider>
 }
