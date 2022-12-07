@@ -2,8 +2,8 @@ import { Market } from '@/lib/types'
 
 const EMBARK_STORY_BY_MARKET: Record<Market, string> = {
   [Market.Sweden]: process.env.NEXT_PUBLIC_EMBARK_STORY_SE ?? '',
-  [Market.Denmark]: process.env.NEXT_PUBLIC_EMBARK_STORY_DK ?? 'onboarding-DK-v2',
-  [Market.Norway]: process.env.NEXT_PUBLIC_EMBARK_STORY_NO ?? 'onboarding-NO-v3',
+  [Market.Denmark]: process.env.NEXT_PUBLIC_EMBARK_STORY_DK ?? 'onboarding-DK-v3',
+  [Market.Norway]: process.env.NEXT_PUBLIC_EMBARK_STORY_NO ?? 'onboarding-NO-v4',
 }
 
 const EMBARK_URL_SLUG_BY_MARKET: Record<Market, string> = {
