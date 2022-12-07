@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { ComponentMeta, Story } from '@storybook/react'
 import Link from 'next/link'
-import { useBreakpoint } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
 import {
@@ -115,20 +114,17 @@ export type TopMenuProps = {
 }
 
 const Template: Story<TopMenuProps> = (props) => {
-  const isDesktop = useBreakpoint('md')
-
   return (
     <>
       <MockedHeaderWrapper>
-        {isDesktop ? (
-          <TopMenuDesktop>
-            <MockedNavItems />
-          </TopMenuDesktop>
-        ) : (
-          <TopMenuMobile>
-            <MockedNavItems />
-          </TopMenuMobile>
-        )}
+        <TopMenuDesktop>
+          <MockedNavItems />
+        </TopMenuDesktop>
+
+        <TopMenuMobile>
+          <MockedNavItems />
+        </TopMenuMobile>
+
         <MockedShoppingCartMenuItem count={props.count} />
       </MockedHeaderWrapper>
     </>

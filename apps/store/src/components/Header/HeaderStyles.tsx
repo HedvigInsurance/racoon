@@ -40,22 +40,32 @@ export const TriggerIcon = styled(ChevronIcon)({
   '[data-state=open] &': { transform: 'rotate(180deg)' },
 })
 
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  ...focusableStyles,
+export const NavigationTriggerDesktop = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'none',
+  [mq.md]: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    ...focusableStyles,
+  },
 })
 
 export const StyledCrossIcon = styled(CrossIcon)()
 export const StyledArrowForwardIcon = styled(ArrowForwardIcon)()
 
-export const StyledNavigationTrigger = styled(NavigationTrigger)({
+export const NavigationTriggerMobile = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  ...focusableStyles,
   ['&[data-state=open]']: {
     [StyledArrowForwardIcon.toString()]: { display: 'none' },
   },
   '&[data-state=closed]': {
     [StyledCrossIcon.toString()]: { display: 'none' },
+  },
+  [mq.md]: {
+    display: 'none',
   },
 })
 
