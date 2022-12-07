@@ -3,8 +3,7 @@
   "pipeline": {
     "codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
-      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"],
-      "cache": false
+      "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"]
     },
     "lint": {
       "dependsOn": ["codegen"],

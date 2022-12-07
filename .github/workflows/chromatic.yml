@@ -28,6 +28,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish to Chromatic (store)
-        run: yarn chromatic --filter=store
+        run: |
+          yarn codegen:ci
+          yarn chromatic --filter=store
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
