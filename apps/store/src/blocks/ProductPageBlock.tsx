@@ -24,11 +24,13 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
             <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
           </Tabs.TabsList>
 
-          <Tabs.TabsContent value="overview">
-            {blok.overview?.map((nestedBlock) => (
-              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-            ))}
-          </Tabs.TabsContent>
+          <OverviewSectionMobile>
+            <Tabs.TabsContent value="overview">
+              {blok.overview?.map((nestedBlock) => (
+                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+              ))}
+            </Tabs.TabsContent>
+          </OverviewSectionMobile>
 
           <Tabs.TabsContent value="coverage">
             {blok.coverage?.map((nestedBlock) => (
@@ -81,6 +83,10 @@ const PurchaseFormWrapper = styled.div({
   position: 'sticky',
   top: 0,
 })
+
+const OverviewSectionMobile = styled.div(({ theme }) => ({
+  marginTop: `-${theme.space[7]}`,
+}))
 
 const MobileLayout = styled.div({
   [mq.lg]: {
