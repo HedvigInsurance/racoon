@@ -241,6 +241,11 @@ export const getGlobalStory = async (options: StoryOptions) => {
   return story as GlobalStory
 }
 
+export const getFilteredProductLinks = async () => {
+  const allLinks = await getPageLinks()
+  return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
+}
+
 export const getProductStory = async (slug: string, options: StoryOptions) => {
   const story = await getStoryBySlug(`/products/${slug}`, options)
   return story as ProductStory
