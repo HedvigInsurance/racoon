@@ -7,29 +7,25 @@
       "cache": false
     },
     "lint": {
-      "dependsOn": ["^build", "codegen"],
+      "dependsOn": ["codegen"],
       "outputs": [],
       "cache": false
     },
     "typecheck": {
-      "dependsOn": ["^build", "codegen"],
+      "dependsOn": ["codegen"],
       "outputs": []
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^build","codegen"]
+      "dependsOn": ["codegen"]
     },
     "test": {
-      "dependsOn": ["^build", "codegen"],
+      "dependsOn": ["codegen"],
       "outputs": ["coverage/**"]
-    },
-    "ui#build": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["^build"]
     },
     "build": {
       "outputs": [".next/**"],
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["codegen"]
     },
     "e2e": {
       "dependsOn": ["build"]
@@ -44,12 +40,12 @@
       "cache": false
     },
     "storybook": {
-      "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["codegen"],
+      "cache": false
     },
     "storybook:build": {
-      "outputs": ["storybook-static/**"],
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["codegen"],
+      "outputs": ["storybook-static/**"]
     },
     "chromatic": {
       "dependsOn": ["storybook:build"]

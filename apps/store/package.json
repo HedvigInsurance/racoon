@@ -42,6 +42,7 @@
     "i18next": "22.0.6",
     "next": "13.0.6",
     "next-i18next": "13.0.0",
+    "next-transpile-modules": "10.0.0",
     "personnummer": "3.1.4",
     "pino": "8.7.0",
     "pino-datadog-transport": "1.2.2",
