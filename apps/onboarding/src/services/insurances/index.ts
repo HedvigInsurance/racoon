@@ -58,9 +58,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
-          ? '/racoon-assets/home.jpg'
-          : '/racoon-assets/home_old.jpg',
+        src: '/racoon-assets/home.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       fieldName: 'isHomeContents',
@@ -74,9 +72,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
-                ? '/racoon-assets/house.jpg'
-                : '/racoon-assets/house_old.jpg',
+              src: '/racoon-assets/house.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
@@ -104,9 +100,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.DK)
-                ? '/racoon-assets/accident.jpg'
-                : '/racoon-assets/accident_old.jpg',
+              src: '/racoon-assets/accident.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
             typeOfContract: TypeOfContract.DkAccident,
@@ -122,9 +116,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       name: 'MAIN_COVERAGE_TITLE_HOME',
       description: 'MAIN_COVERAGE_DESC_HOME',
       img: {
-        src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
-          ? '/racoon-assets/home.jpg'
-          : '/racoon-assets/home_old.jpg',
+        src: '/racoon-assets/home.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
       typeOfContract: TypeOfContract.NoHomeContentOwn,
@@ -138,9 +130,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_HOUSE',
             description: 'MAIN_COVERAGE_DESC_HOUSE',
             img: {
-              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
-                ? '/racoon-assets/house.jpg'
-                : '/racoon-assets/house_old.jpg',
+              src: '/racoon-assets/house.jpg',
               blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
               objectPosition: 'top left',
             },
@@ -168,9 +158,7 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
             name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
             description: 'MAIN_COVERAGE_DESC_ACCIDENT',
             img: {
-              src: Features.getFeature(Feature.TRAVEL_ACCIDENT_STANDALONE, MarketLabel.NO)
-                ? '/racoon-assets/accident.jpg'
-                : '/racoon-assets/accident_old.jpg',
+              src: '/racoon-assets/accident.jpg',
               blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
             },
             typeOfContract: TypeOfContract.NoAccident,
