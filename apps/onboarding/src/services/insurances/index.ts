@@ -1,7 +1,6 @@
 import { getLocale } from '@/lib/l10n'
 import { LocaleLabel } from '@/lib/l10n/locales'
-import { Market, MarketLabel } from '@/lib/types'
-import { Features, Feature } from '@/services/features'
+import { Market } from '@/lib/types'
 import { TypeOfContract } from '@/services/graphql/generated'
 import { graphqlSdk } from '@/services/graphql/sdk'
 
@@ -18,8 +17,6 @@ export type Insurance = {
   perils: Array<string>
   typeOfContract: TypeOfContract
   fieldName: string
-  isAdditionalCoverage?: boolean
-  isPreselected?: boolean
   slug?: string
 }
 
@@ -33,7 +30,6 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
         src: '/racoon-assets/home_se.jpg',
         blurDataURL: 'LfLD[NayRkM{?waee.t6emt8ogof',
       },
-      isPreselected: false,
       typeOfContract: TypeOfContract.SeApartmentRent,
       fieldName: 'isHome',
       slug: 'home-insurance',
@@ -46,7 +42,6 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
         src: '/racoon-assets/car_se.jpg',
         blurDataURL: 'LQF~gZngMxIU~ARiWUM{s;Ipazj@',
       },
-      isPreselected: false,
       typeOfContract: TypeOfContract.SeCarFull,
       fieldName: 'isCar',
       slug: 'car',
@@ -61,26 +56,21 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
         src: '/racoon-assets/home.jpg',
         blurDataURL: 'TUKUN5WFozx^j]t7ROt6a}?wn~Rj',
       },
-      fieldName: 'isHomeContents',
       typeOfContract: TypeOfContract.DkHomeContentOwn,
-      isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK),
+      fieldName: 'isHomeContents',
     },
-    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.DK)
-      ? [
-          {
-            id: 'dk-house',
-            name: 'MAIN_COVERAGE_TITLE_HOUSE',
-            description: 'MAIN_COVERAGE_DESC_HOUSE',
-            img: {
-              src: '/racoon-assets/house.jpg',
-              blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
-              objectPosition: 'top left',
-            },
-            typeOfContract: TypeOfContract.DkHouse,
-            fieldName: 'isHouse',
-          },
-        ]
-      : []),
+    {
+      id: 'dk-house',
+      name: 'MAIN_COVERAGE_TITLE_HOUSE',
+      description: 'MAIN_COVERAGE_DESC_HOUSE',
+      img: {
+        src: '/racoon-assets/house.jpg',
+        blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
+        objectPosition: 'top left',
+      },
+      typeOfContract: TypeOfContract.DkHouse,
+      fieldName: 'isHouse',
+    },
     {
       id: 'dk-travel',
       name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
@@ -91,24 +81,18 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       },
       typeOfContract: TypeOfContract.DkTravel,
       fieldName: 'isTravel',
-      isAdditionalCoverage: true,
     },
-    ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.DK)
-      ? [
-          {
-            id: 'dk-accident',
-            name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
-            description: 'MAIN_COVERAGE_DESC_ACCIDENT',
-            img: {
-              src: '/racoon-assets/accident.jpg',
-              blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
-            },
-            typeOfContract: TypeOfContract.DkAccident,
-            fieldName: 'isAccident',
-            isAdditionalCoverage: true,
-          },
-        ]
-      : []),
+    {
+      id: 'dk-accident',
+      name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
+      description: 'MAIN_COVERAGE_DESC_ACCIDENT',
+      img: {
+        src: '/racoon-assets/accident.jpg',
+        blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
+      },
+      typeOfContract: TypeOfContract.DkAccident,
+      fieldName: 'isAccident',
+    },
   ],
   [Market.Norway]: [
     {
@@ -121,24 +105,19 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       },
       typeOfContract: TypeOfContract.NoHomeContentOwn,
       fieldName: 'isHomeContents',
-      isPreselected: !Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO),
     },
-    ...(Features.getFeature(Feature.HOUSE_INSURANCE, MarketLabel.NO)
-      ? [
-          {
-            id: 'no-house',
-            name: 'MAIN_COVERAGE_TITLE_HOUSE',
-            description: 'MAIN_COVERAGE_DESC_HOUSE',
-            img: {
-              src: '/racoon-assets/house.jpg',
-              blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
-              objectPosition: 'top left',
-            },
-            typeOfContract: TypeOfContract.NoHouse,
-            fieldName: 'isHouse',
-          },
-        ]
-      : []),
+    {
+      id: 'no-house',
+      name: 'MAIN_COVERAGE_TITLE_HOUSE',
+      description: 'MAIN_COVERAGE_DESC_HOUSE',
+      img: {
+        src: '/racoon-assets/house.jpg',
+        blurDataURL: 'TeHLbm9axG~qj]ae%g%1NH?voIWq',
+        objectPosition: 'top left',
+      },
+      typeOfContract: TypeOfContract.NoHouse,
+      fieldName: 'isHouse',
+    },
     {
       id: 'no-travel',
       name: 'ADDITIONAL_COVERAGE_TITLE_TRAVEL',
@@ -149,24 +128,18 @@ const INSURANCES_BY_MARKET: Record<Market, Array<Omit<Insurance, 'perils'>>> = {
       },
       typeOfContract: TypeOfContract.NoTravel,
       fieldName: 'isTravel',
-      isAdditionalCoverage: true,
     },
-    ...(Features.getFeature(Feature.ACCIDENT_INSURANCE, MarketLabel.NO)
-      ? [
-          {
-            id: 'no-accident',
-            name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
-            description: 'MAIN_COVERAGE_DESC_ACCIDENT',
-            img: {
-              src: '/racoon-assets/accident.jpg',
-              blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
-            },
-            typeOfContract: TypeOfContract.NoAccident,
-            fieldName: 'isAccident',
-            isAdditionalCoverage: true,
-          },
-        ]
-      : []),
+    {
+      id: 'no-accident',
+      name: 'MAIN_COVERAGE_TITLE_ACCIDENT',
+      description: 'MAIN_COVERAGE_DESC_ACCIDENT',
+      img: {
+        src: '/racoon-assets/accident.jpg',
+        blurDataURL: 'LnJ*Cw?HNFoz_NtRRjof%gRkRjof',
+      },
+      typeOfContract: TypeOfContract.NoAccident,
+      fieldName: 'isAccident',
+    },
   ],
 }
 
