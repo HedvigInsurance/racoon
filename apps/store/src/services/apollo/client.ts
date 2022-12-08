@@ -83,8 +83,10 @@ export const useFillApolloCacheFromServer = (
   if (isBrowser() && !firstRenderRef.current) {
     firstRenderRef.current = true
     const initialState = pageProps[APOLLO_STATE_PROP_NAME]
-    const existingCache = apolloClient.extract()
-    const data = mergeDeep(existingCache, initialState)
-    apolloClient.cache.restore(data)
+    if (initialState) {
+      const existingCache = apolloClient.extract()
+      const data = mergeDeep(existingCache, initialState)
+      apolloClient.cache.restore(data)
+    }
   }
 }

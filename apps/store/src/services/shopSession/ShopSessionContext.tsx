@@ -1,11 +1,9 @@
-import { useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { isBrowser } from '@/utils/isBrowser'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 export enum ShopSessionState {
   Loading = 'Loading',
@@ -23,17 +21,24 @@ const defaultContextValue = {
 
 export const ShopSessionContext = createContext<ShopSessionContext>(defaultContextValue)
 
-type Props = PropsWithChildren<{ shopSessionId?: string }>
+type Props = PropsWithChildren<{ shopSessionService?: ShopSessionService; shopSessionId?: string }>
 
-export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
+export const ShopSessionProvider = ({
+  children,
+  shopSessionId: initialShopSessionId,
+  shopSessionService,
+}: Props) => {
   const { countryCode } = useCurrentCountry()
   const { locale } = useCurrentLocale()
-  const shopSessionService = useShopSessionService()
   const [contextValue, setContextValue] = useState<ShopSessionContext>(defaultContextValue)
+
+  if (isBrowser() && !shopSessionService) {
+    throw new Error('shopSessionService must be provided in browser environment')
+  }
 
   useEffect(() => {
     if (isBrowser() && initialShopSessionId) {
-      shopSessionService.save(initialShopSessionId)
+      shopSessionService!.save(initialShopSessionId)
     }
   }, [initialShopSessionId, shopSessionService])
 
@@ -42,7 +47,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
       if (!isBrowser()) return
       try {
         setContextValue(defaultContextValue)
-        const shopSession = await shopSessionService.getOrCreate({ locale, countryCode })
+        const shopSession = await shopSessionService!.getOrCreate({ locale, countryCode })
         setContextValue({ shopSession, state: ShopSessionState.Success })
       } catch (err) {
         setContextValue({ state: ShopSessionState.Error })
@@ -55,14 +60,4 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
 
 export const useShopSession = () => {
   return useContext(ShopSessionContext)
-}
-
-// TODO: Make creation explicit in App
-let shopSessionService: ShopSessionService
-const useShopSessionService = () => {
-  const apolloClient = useApolloClient()
-  if (isBrowser() && !shopSessionService) {
-    shopSessionService = setupShopSessionServiceClientSide(apolloClient)
-  }
-  return shopSessionService
 }

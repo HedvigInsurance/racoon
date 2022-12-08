@@ -12,9 +12,12 @@ import {
 } from '@/services/gtm'
 import * as Datadog from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
+import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 import { contentFontClassName } from '@/utils/fonts'
+import { isBrowser } from '@/utils/isBrowser'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 
 // Enable API mocking
@@ -33,6 +36,10 @@ if (typeof window === 'undefined') {
 initStoryblok()
 
 const apolloClient = createApolloClient()
+let shopSessionService: ShopSessionService
+if (isBrowser()) {
+  shopSessionService = setupShopSessionServiceClientSide(apolloClient)
+}
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useFillApolloCacheFromServer(apolloClient, pageProps)
@@ -49,7 +56,10 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
-          <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
+          <ShopSessionProvider
+            shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}
+            shopSessionService={shopSessionService!}
+          >
             {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
           </ShopSessionProvider>
         </ThemeProvider>

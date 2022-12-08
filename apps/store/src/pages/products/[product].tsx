@@ -8,7 +8,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { usePriceIntent } from '@/components/ProductPage/usePriceIntent'
-import { initializeApollo } from '@/services/apollo/client'
+import { addApolloState, createApolloClient } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -91,13 +91,15 @@ export const getStaticProps: ProductPageGetStaticProps = async (context) => {
     return { notFound: true }
   }
 
+  const apolloClient = createApolloClient()
+
   const productData = await getProductData({
-    apolloClient: initializeApollo(),
+    apolloClient,
     productName: story.content.productId,
     locale: toApiLocale(locale),
   })
 
-  return {
+  return addApolloState(apolloClient, {
     props: {
       ...translations,
       [STORY_PROP_NAME]: story,
@@ -106,7 +108,7 @@ export const getStaticProps: ProductPageGetStaticProps = async (context) => {
       priceTemplate,
     },
     revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
-  }
+  })
 }
 
 NextProductPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
