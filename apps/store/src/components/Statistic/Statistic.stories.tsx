@@ -1,18 +1,19 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Label } from 'ui'
 import * as Statistic from './Statistic'
 
 type Props = {
-  badge: string
   label: string
+  description: string
   value: string
 }
 
-const Component = ({ badge, label, value }: Props) => {
+const Component = ({ label, description, value }: Props) => {
   return (
     <Statistic.Root>
-      <Statistic.Badge>{badge}</Statistic.Badge>
-      <Statistic.Description>{label}</Statistic.Description>
+      <Label color="#D2E6F1">{label}</Label>
+      <Statistic.Description>{description}</Statistic.Description>
       <Statistic.Value>{value}</Statistic.Value>
     </Statistic.Root>
   )
@@ -33,7 +34,7 @@ const Template: ComponentStory<typeof Component> = (props) => <Component {...pro
 
 export const Default = Template.bind({})
 Default.args = {
-  badge: 'Deductible',
-  label: 'For all-risk damage including water damages',
+  label: 'Deductible',
+  description: 'For all-risk damage including water damages',
   value: 'SEK 1,500',
 }
