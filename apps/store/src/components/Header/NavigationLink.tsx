@@ -24,7 +24,7 @@ type NavigationLinkProps = Pick<LinkProps, 'href'> &
 
 export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref legacyBehavior>
       <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
     </Link>
   )
@@ -35,7 +35,7 @@ export const SecondaryNavigationLink = ({ href, children, ...rest }: NavigationL
     <>
       <SecondaryNavigationLinkCard>
         <StyledPillow size="xsmall" fromColor="dodgerblue" toColor="palevioletred" />
-        <Link href={href} passHref>
+        <Link href={href} passHref legacyBehavior>
           <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
         </Link>
       </SecondaryNavigationLinkCard>
