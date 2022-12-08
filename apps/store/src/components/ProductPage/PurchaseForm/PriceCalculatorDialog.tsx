@@ -33,13 +33,10 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
 
 const ContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   position: 'relative',
-  display: 'grid',
-  alignContent: 'center',
   width: '100vw',
   height: '100vh',
   overflow: 'auto',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  padding: theme.space[4],
   backgroundColor: 'transparent',
 }))
 

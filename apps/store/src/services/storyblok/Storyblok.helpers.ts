@@ -40,9 +40,14 @@ export const fetchStory = async (
   slug: string,
   params: StoryblokFetchParams,
 ): Promise<StoryData | undefined> => {
+  const response = await storyblokClient.get(`cdn/stories/${slug}`, {
+    ...params,
+    resolve_links: 'url',
+  })
+
   const {
     data: { story },
-  } = await storyblokClient.get(`cdn/stories/${slug}`, { ...params, resolve_links: 'url' })
+  } = response
   return story
 }
 
