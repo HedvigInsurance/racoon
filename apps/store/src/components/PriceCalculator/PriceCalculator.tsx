@@ -24,17 +24,9 @@ type Props = {
   priceIntent: PriceIntent
   priceTemplate: Template
   onSuccess: (priceIntent: PriceIntentFragmentFragment) => void
-  onUpdated: (priceIntent: PriceIntentFragmentFragment) => void
-  loading: boolean
 }
 
-export const PriceCalculator = ({
-  priceTemplate,
-  priceIntent,
-  onUpdated,
-  onSuccess,
-  loading,
-}: Props) => {
+export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props) => {
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
@@ -71,11 +63,10 @@ export const PriceCalculator = ({
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
         confirmPriceIntent()
       }
-      onUpdated(updatedPriceIntent)
     },
   })
 
-  const isLoading = loadingUpdate || loadingConfirm || loading
+  const isLoading = loadingUpdate || loadingConfirm
 
   return (
     <PriceCalculatorAccordion form={form}>
@@ -87,6 +78,7 @@ export const PriceCalculator = ({
                 field={field}
                 onSubmit={handleSubmit}
                 loading={isLoading}
+                priceIntent={priceIntent}
                 // We don't want to mess up focusing for the user by setting autoFocus on the
                 // first item in the form, since that would make it unintuitive to navigate our
                 // site. But when the user is in the form editing, even having submitted the first
