@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react'
+import { useShopSessionLazyQuery } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { isBrowser } from '@/utils/isBrowser'
@@ -30,7 +31,7 @@ export const ShopSessionProvider = ({
 }: Props) => {
   const { countryCode } = useCurrentCountry()
   const { locale } = useCurrentLocale()
-  const [contextValue, setContextValue] = useState<ShopSessionContext>(defaultContextValue)
+  const [state, setState] = useState(ShopSessionState.Loading)
 
   if (isBrowser() && !shopSessionService) {
     throw new Error('shopSessionService must be provided in browser environment')
@@ -42,18 +43,37 @@ export const ShopSessionProvider = ({
     }
   }, [initialShopSessionId, shopSessionService])
 
+  // Using query to subscribe to further updates
+  // It should not fetch because we're launching if after session is already in cache
+  const [loadShopSession, queryResult] = useShopSessionLazyQuery({
+    ssr: false,
+  })
+
   useEffect(() => {
     ;(async () => {
       if (!isBrowser()) return
       try {
-        setContextValue(defaultContextValue)
+        setState(ShopSessionState.Loading)
         const shopSession = await shopSessionService!.getOrCreate({ locale, countryCode })
-        setContextValue({ shopSession, state: ShopSessionState.Success })
+        loadShopSession({
+          variables: { shopSessionId: shopSession.id, locale },
+          onCompleted() {
+            setState(ShopSessionState.Success)
+          },
+        })
       } catch (err) {
-        setContextValue({ state: ShopSessionState.Error })
+        setState(ShopSessionState.Error)
       }
     })()
-  }, [shopSessionService, locale, countryCode])
+  }, [shopSessionService, locale, countryCode, loadShopSession])
+
+  const contextValue = useMemo(
+    () => ({
+      state,
+      shopSession: queryResult.data?.shopSession,
+    }),
+    [state, queryResult.data],
+  )
 
   return <ShopSessionContext.Provider value={contextValue}>{children}</ShopSessionContext.Provider>
 }
