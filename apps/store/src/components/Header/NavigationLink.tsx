@@ -22,21 +22,21 @@ const StyledPillow = styled(Pillow)(({ theme }) => ({
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'>
 
-export const NavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
+export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
   return (
-    <Link href={href} passHref legacyBehavior>
-      <StyledNavigationLink {...rest} />
+    <Link href={href} passHref>
+      <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
     </Link>
   )
 }
 
-export const SecondaryNavigationLink = ({ href, ...rest }: NavigationLinkProps) => {
+export const SecondaryNavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
   return (
     <>
       <SecondaryNavigationLinkCard>
         <StyledPillow size="xsmall" fromColor="dodgerblue" toColor="palevioletred" />
-        <Link href={href} passHref legacyBehavior>
-          <StyledNavigationLink {...rest} />
+        <Link href={href} passHref>
+          <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
         </Link>
       </SecondaryNavigationLinkCard>
     </>
