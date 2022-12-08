@@ -84,7 +84,7 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentExternalInsurerUpdate.priceIntent
       if (updatedPriceIntent) {
-        const insurer = updatedPriceIntent.cancellation.externalInsurer?.displayName
+        const insurer = updatedPriceIntent.externalInsurer?.displayName
         datadogLogs.logger.info(`Updated external insurer: ${insurer}`)
       } else {
         datadogLogs.logger.warn('Failed to update external insurer', {

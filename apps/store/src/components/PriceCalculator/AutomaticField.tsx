@@ -131,7 +131,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           label={translateLabel(field.label)}
           productName={story.content.productId}
           priceIntentId={priceIntent.id}
-          externalInsurer={priceIntent.cancellation.externalInsurer?.id}
+          externalInsurer={priceIntent.externalInsurer?.id}
         />
       )
     default: {

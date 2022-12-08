@@ -6,11 +6,11 @@ fragment PriceIntentFragment on PriceIntent {
     ...ProductOffer
   }
   startDate
+  externalInsurer {
+    id
+    displayName
+  }
   cancellation {
-    externalInsurer {
-      id
-      displayName
-    }
     option
     requested
   }
