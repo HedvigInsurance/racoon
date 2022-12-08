@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
+import { createApolloClient } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!shopSessionId) return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo({ req, res })
+    const apolloClient = createApolloClient({ req, res })
     await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(
       shopSessionId,
       toIsoLocale(locale),

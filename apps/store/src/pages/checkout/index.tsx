@@ -6,7 +6,7 @@ import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, createApolloClient } from '@/services/apollo/client'
 import * as Auth from '@/services/Auth/Auth'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
 import logger from '@/services/logger/server'
@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo({ req, res })
+    const apolloClient = createApolloClient({ req, res })
     const [shopSession, translations] = await Promise.all([
       getCurrentShopSessionServerSide({ apolloClient, locale, req, res }),
       serverSideTranslations(locale),

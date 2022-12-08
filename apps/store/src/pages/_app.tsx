@@ -3,7 +3,7 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'ui'
-import { useApollo } from '@/services/apollo/client'
+import { createApolloClient, useFillApolloCacheFromServer } from '@/services/apollo/client'
 import {
   GTMAppScript,
   trackExperimentImpression,
@@ -32,8 +32,10 @@ if (typeof window === 'undefined') {
 // @TODO - should this be initialized unless running in browser?
 initStoryblok()
 
+const apolloClient = createApolloClient()
+
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const apolloClient = useApollo(pageProps)
+  useFillApolloCacheFromServer(apolloClient, pageProps)
 
   const getLayout = Component.getLayout || ((page) => page)
   useGTMEvents()

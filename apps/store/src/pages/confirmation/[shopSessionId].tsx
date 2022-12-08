@@ -5,7 +5,7 @@ import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPag
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, createApolloClient } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = createApolloClient({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   try {
     const [shopSession, globalStory, translations] = await Promise.all([

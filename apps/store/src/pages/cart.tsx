@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, createApolloClient } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<
   const { countryCode } = getCountryByLocale(locale)
 
   try {
-    const apolloClient = initializeApollo({ req, res })
+    const apolloClient = createApolloClient({ req, res })
     const [shopSession, globalStory, translations] = await Promise.all([
       getShopSessionServerSide({ apolloClient, countryCode, locale, req, res }),
       getGlobalStory({ locale, version }),

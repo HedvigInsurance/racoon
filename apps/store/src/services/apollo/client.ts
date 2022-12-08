@@ -5,14 +5,13 @@ import { mergeDeep } from '@apollo/client/utilities'
 import { GetServerSidePropsContext } from 'next'
 import { i18n } from 'next-i18next'
 import { AppProps } from 'next/app'
-import { useMemo } from 'react'
+import { useRef } from 'react'
 import * as Auth from '@/services/Auth/Auth'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
+import { isBrowser } from '@/utils/isBrowser'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 
-const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
-
-let apolloClient: ApolloClient<NormalizedCacheObject>
+export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -45,7 +44,17 @@ const languageLink = setContext((operation, { headers = {}, ...context }) => {
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
 
-const createApolloClient = (headers?: Record<string, string>) => {
+type InitializeApolloParams = {
+  initialState?: unknown
+  req?: GetServerSidePropsContext['req']
+  res?: GetServerSidePropsContext['res']
+}
+
+export const createApolloClient = ({ req, res }: InitializeApolloParams = {}) => {
+  const headers = {
+    ...getDeviceIdHeader({ req, res }),
+    ...Auth.getAuthHeader({ req, res }),
+  }
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
@@ -56,44 +65,6 @@ const createApolloClient = (headers?: Record<string, string>) => {
   })
 }
 
-type InitializeApolloParams = {
-  initialState?: unknown
-  req?: GetServerSidePropsContext['req']
-  res?: GetServerSidePropsContext['res']
-}
-
-export const initializeApollo = ({
-  initialState = null,
-  req,
-  res,
-}: InitializeApolloParams = {}) => {
-  const headers = {
-    ...getDeviceIdHeader({ req, res }),
-    ...Auth.getAuthHeader({ req, res }),
-  }
-
-  const _apolloClient = apolloClient ?? createApolloClient(headers)
-
-  if (initialState) {
-    const existingCache = _apolloClient.extract()
-    const data = mergeDeep(existingCache, initialState)
-    _apolloClient.cache.restore(data)
-  }
-
-  // always create new Apollo Client for SSG/SSR
-  if (typeof window === 'undefined') return _apolloClient
-
-  // reuse client on the client-side
-  if (!apolloClient) apolloClient = _apolloClient
-
-  return _apolloClient
-}
-
-export const useApollo = (pageProps: AppProps['pageProps']) => {
-  const initialState = pageProps[APOLLO_STATE_PROP_NAME]
-  return useMemo(() => initializeApollo({ initialState }), [initialState])
-}
-
 export const addApolloState = (
   client: ApolloClient<NormalizedCacheObject>,
   pageProps: AppProps['pageProps'],
@@ -101,6 +72,19 @@ export const addApolloState = (
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
   }
-
   return pageProps
+}
+
+export const useFillApolloCacheFromServer = (
+  apolloClient: ApolloClient<NormalizedCacheObject>,
+  pageProps: AppProps['pageProps'],
+) => {
+  const firstRenderRef = useRef(false)
+  if (isBrowser() && !firstRenderRef.current) {
+    firstRenderRef.current = true
+    const initialState = pageProps[APOLLO_STATE_PROP_NAME]
+    const existingCache = apolloClient.extract()
+    const data = mergeDeep(existingCache, initialState)
+    apolloClient.cache.restore(data)
+  }
 }
