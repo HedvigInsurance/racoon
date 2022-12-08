@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useEffect, useRef, useId, forwardRef, ReactNode, ComponentPropsWithRef } from 'react'
-import { mergeRefs } from 'react-merge-refs'
 import { CheckIcon } from '../../icons/CheckIcon'
+import { mergeRefs } from '../../lib/merge-refs'
 
 export type CheckboxProps = ComponentPropsWithRef<'input'> & {
   label?: ReactNode
