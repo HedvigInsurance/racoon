@@ -4,7 +4,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { ProductPage } from '@/components/ProductPage/ProductPage'
+import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
+import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
+import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
+import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   getGlobalStory,
   getStoryBySlug,
@@ -14,17 +19,21 @@ import {
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import { isRoutingLocale, toApiLocale } from '@/utils/l10n/localeUtils'
 
-type RoutingPath = {
-  params: {
-    slug: string[]
-  }
-  locale?: string
+type NextContentPageProps = StoryblokPageProps & { type: 'content' }
+type NextProductPageProps = ProductPageProps & { type: 'product' }
+
+type PageProps = NextContentPageProps | NextProductPageProps
+
+const NextPage: NextPageWithLayout<PageProps> = (props) => {
+  if (props.type === 'product') return <NextProductPage {...props} />
+  return <NextStoryblokPage {...props} />
 }
 
-const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPageProps) => {
-  const story = useStoryblokState(props.story)
+const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
+  const story = useStoryblokState(initialStory)
 
   // TODO: Remove when we have at least one case of pluralization elsewhere
   // const { t } = useTranslation()
@@ -49,8 +58,23 @@ const NextPage: NextPageWithLayout<StoryblokPageProps> = (props: StoryblokPagePr
   )
 }
 
+const NextProductPage = (props: ProductPageProps) => {
+  const { story: initialStory, ...pageProps } = props
+  const story = useStoryblokState(initialStory)
+
+  return (
+    <>
+      <Head>
+        <title>{story.name}</title>
+      </Head>
+      <HeadSeoInfo story={story} />
+      <ProductPage {...pageProps} story={story} />
+    </>
+  )
+}
+
 export const getStaticProps: GetStaticProps<
-  StoryblokPageProps,
+  PageProps,
   StoryblokQueryParams,
   StoryblokPreviewData
 > = async (context) => {
@@ -71,14 +95,39 @@ export const getStaticProps: GetStaticProps<
     return { notFound: true }
   }
 
-  return {
-    props: {
-      ...translations,
-      [STORY_PROP_NAME]: story,
-      [GLOBAL_STORY_PROP_NAME]: globalStory,
-    },
-    revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
+  const props = {
+    ...translations,
+    [STORY_PROP_NAME]: story,
+    [GLOBAL_STORY_PROP_NAME]: globalStory,
   }
+  const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
+
+  if (isProductStory(story)) {
+    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
+    if (priceTemplate === undefined) {
+      logger.error(new Error(`Unknown price template: ${story.content.priceFormTemplateId}`))
+      return { notFound: true }
+    }
+
+    const productData = await getProductData({
+      apolloClient: initializeApollo(),
+      productName: story.content.productId,
+      locale: toApiLocale(locale),
+    })
+
+    return {
+      props: {
+        type: 'product',
+        ...props,
+        [STORY_PROP_NAME]: story,
+        productData,
+        priceTemplate,
+      },
+      revalidate,
+    }
+  }
+
+  return { props: { type: 'content', ...props }, revalidate }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -92,11 +141,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const pageLinks = await getFilteredPageLinks()
-  const paths: RoutingPath[] = pageLinks.map(({ locale, slugParts }) => {
-    return { params: { slug: slugParts }, locale }
-  })
   return {
-    paths,
+    paths: pageLinks.map(({ locale, slugParts }) => {
+      return { params: { slug: slugParts }, locale }
+    }),
     fallback: false,
   }
 }
