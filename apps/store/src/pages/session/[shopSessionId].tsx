@@ -29,7 +29,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   try {
     const apolloClient = initializeApollo({ req, res })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    shopSessionService.save(await shopSessionService.fetchById(shopSessionId, toIsoLocale(locale)))
+    const shopSession = await shopSessionService.fetchById(shopSessionId, toIsoLocale(locale))
+    shopSessionService.save(shopSession.id)
   } catch (error) {
     logger.error(error, `Unable to fetch ShopSession: ${shopSessionId}`)
     return fallbackRedirect
