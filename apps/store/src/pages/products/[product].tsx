@@ -1,5 +1,5 @@
 import { useStoryblokState } from '@storyblok/react'
-import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
@@ -7,37 +7,34 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { usePriceIntentQuery } from '@/services/apollo/generated'
+import { usePriceIntent } from '@/components/ProductPage/usePriceIntent'
+import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntent.helpers'
-import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import {
+  getFilteredProductLinks,
   getGlobalStory,
   getProductStory,
   StoryblokPreviewData,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { getCountryByLocale } from '@/utils/l10n/countryUtils'
-import { isRoutingLocale, toApiLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { isRoutingLocale, toApiLocale } from '@/utils/l10n/localeUtils'
 
-type NextPageProps = ProductPageProps & {
-  shopSessionId: string
-}
+type NextPageProps = Omit<ProductPageProps, 'shopSession' | 'priceIntent'>
 
 type PageQueryParams = {
   product: string[]
 }
 
-const NextProductPage: NextPageWithLayout<NextPageProps> = ({ priceIntent, ...pageProps }) => {
-  const story = useStoryblokState(pageProps.story)
-
-  const { locale } = useCurrentLocale()
-  const { data } = usePriceIntentQuery({ variables: { priceIntentId: priceIntent.id, locale } })
-  const livePriceIntent = data?.priceIntent || priceIntent
+const NextProductPage: NextPageWithLayout<NextPageProps> = (props) => {
+  const story = useStoryblokState(props.story)
+  const { shopSession } = useShopSession()
+  const { data: { priceIntent } = {} } = usePriceIntent({
+    shopSession,
+    priceTemplate: props.priceTemplate,
+    productName: props.story.content.productId,
+  })
 
   return (
     <>
@@ -45,80 +42,70 @@ const NextProductPage: NextPageWithLayout<NextPageProps> = ({ priceIntent, ...pa
         <title>{story.content.name}</title>
       </Head>
       <HeadSeoInfo story={story} />
-      <ProductPage {...pageProps} priceIntent={livePriceIntent} story={story} />
+      {/* @TODO: handle product page without dynamic data available */}
+      {shopSession && priceIntent && (
+        <ProductPage {...props} story={story} shopSession={shopSession} priceIntent={priceIntent} />
+      )}
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<
+export const getStaticPaths: GetStaticPaths = async () => {
+  // When this is true (preview env) don't prerender any static pages
+  if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
+    logger.info('Skipping static generation for product pages...')
+    return { paths: [], fallback: 'blocking' }
+  }
+
+  const pageLinks = await getFilteredProductLinks()
+  return {
+    paths: pageLinks.map(({ locale, slugParts }) => {
+      const lastSlugPart = slugParts[slugParts.length - 1]
+      return { params: { product: lastSlugPart }, locale }
+    }),
+    fallback: false,
+  }
+}
+
+type ProductPageGetStaticProps = GetStaticProps<
   NextPageProps,
   PageQueryParams,
   StoryblokPreviewData
-> = async (context) => {
-  const {
-    locale,
-    req,
-    res,
-    params: { product: slug } = {},
-    previewData: { version } = {},
-  } = context
+>
+export const getStaticProps: ProductPageGetStaticProps = async (context) => {
+  const { locale, params: { product: slug } = {}, previewData: { version } = {} } = context
 
   if (!isRoutingLocale(locale)) return { notFound: true }
   if (typeof slug !== 'string') return { notFound: true }
 
-  const { countryCode } = getCountryByLocale(locale)
+  const [story, globalStory, translations] = await Promise.all([
+    getProductStory(slug, { locale, version }),
+    getGlobalStory({ locale, version }),
+    serverSideTranslations(locale),
+  ])
 
-  try {
-    const apolloClient = initializeApollo({ req, res })
+  const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
 
-    const [shopSession, story, globalStory, translations] = await Promise.all([
-      getShopSessionServerSide({ apolloClient, countryCode, locale, req, res }),
-      getProductStory(slug, { locale, version }),
-      getGlobalStory({ locale, version }),
-      serverSideTranslations(locale),
-    ])
-
-    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
-    if (priceTemplate === undefined) {
-      logger.error(new Error(`Unknown price template: ${story.content.priceFormTemplateId}`))
-      return { notFound: true }
-    }
-
-    const priceIntentService = priceIntentServiceInitServerSide({
-      apolloClient,
-      locale,
-      shopSession,
-      req,
-      res,
-    })
-    const [productData, priceIntent] = await Promise.all([
-      getProductData({
-        apolloClient,
-        productName: story.content.productId,
-        locale: toApiLocale(locale),
-      }),
-      priceIntentService.fetch({
-        locale: toIsoLocale(locale),
-        productName: story.content.productId,
-        priceTemplate,
-      }),
-    ])
-
-    return addApolloState(apolloClient, {
-      props: {
-        ...translations,
-        productData,
-        priceTemplate,
-        priceIntent,
-        shopSession,
-        [STORY_PROP_NAME]: story,
-        [GLOBAL_STORY_PROP_NAME]: globalStory,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      },
-    })
-  } catch (error) {
-    logger.error(error)
+  if (priceTemplate === undefined) {
+    logger.error(new Error(`Unknown price template: ${story.content.priceFormTemplateId}`))
     return { notFound: true }
+  }
+
+  const productData = await getProductData({
+    apolloClient: initializeApollo(),
+    productName: story.content.productId,
+    locale: toApiLocale(locale),
+  })
+
+  return {
+    props: {
+      ...translations,
+      [STORY_PROP_NAME]: story,
+      [GLOBAL_STORY_PROP_NAME]: globalStory,
+      productData,
+      priceTemplate,
+    },
+    revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
   }
 }
 
