@@ -1,0 +1,23 @@
+import styled from '@emotion/styled'
+
+export type LabelProps = {
+  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  color?: string
+  children: React.ReactNode
+}
+
+export const LabelBase = styled.div<Pick<LabelProps, 'color'>>(({ color, theme }) => ({
+  display: 'inline-block',
+  padding: `${theme.space[2]} ${theme.space[3]}`,
+  fontSize: theme.fontSizes[1],
+  color: theme.colors.dark,
+  // TODO: use colors from theme once defined
+  backgroundColor: color ?? '#E0F0F9',
+  borderRadius: theme.radius.xs,
+}))
+
+export const Label = ({ as, children, color }: LabelProps) => (
+  <LabelBase as={as} color={color}>
+    {children}
+  </LabelBase>
+)
