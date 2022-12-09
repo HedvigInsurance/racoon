@@ -4,11 +4,8 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { ProductSummary } from '@/components/ProductPage/ProductSummary/ProductSummary'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
-
 export type ProductSummaryBlockContext = {
   title: string
-  gradient: readonly [string, string]
 }
 
 type Props = SbBaseBlockProps<{
@@ -22,9 +19,7 @@ export const ProductSummaryBlock = (props: Props) => {
 
   return (
     <Wrapper {...storyblokEditable}>
-      <ProductSummary title={blockTitle} gradient={PLACEHOLDER_GRADIENT}>
-        {props.blok.description}
-      </ProductSummary>
+      <ProductSummary title={blockTitle}>{props.blok.description}</ProductSummary>
     </Wrapper>
   )
 }

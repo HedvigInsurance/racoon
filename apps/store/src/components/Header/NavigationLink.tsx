@@ -34,7 +34,7 @@ export const SecondaryNavigationLink = ({ href, children, ...rest }: NavigationL
   return (
     <>
       <SecondaryNavigationLinkCard>
-        <StyledPillow size="xsmall" fromColor="dodgerblue" toColor="palevioletred" />
+        <StyledPillow size="xsmall" />
         <Link href={href} passHref legacyBehavior>
           <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
         </Link>
