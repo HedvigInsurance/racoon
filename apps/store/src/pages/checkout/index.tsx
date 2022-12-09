@@ -15,17 +15,18 @@ import {
   getCurrentShopSessionServerSide,
   setupShopSessionServiceClientSide,
 } from '@/services/shopSession/ShopSession.helpers'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userError'> & {
   checkoutId: string
   checkoutSigningId: string | null
-  shopSessionId: string
 }
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
-  const { products, checkoutId, checkoutSigningId, shopSessionId, ...pageProps } = props
+  const { products, checkoutId, checkoutSigningId, ...pageProps } = props
+  const { shopSession } = useShopSession()
   const router = useRouter()
 
   const apolloClient = useApolloClient()
@@ -35,6 +36,10 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     onSuccess(accessToken) {
       Auth.save(accessToken)
       setupShopSessionServiceClientSide(apolloClient).reset()
+      const shopSessionId = shopSession?.id
+      if (!shopSessionId) {
+        throw new Error('shopSessionId must exists at this point')
+      }
       router.push(PageLink.checkoutPayment({ shopSessionId }))
     },
   })
@@ -79,7 +84,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     return addApolloState(apolloClient, {
       props: {
         ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
+        [SHOP_SESSION_PROP_NAME]: shopSession,
         checkoutId,
         checkoutSigningId: checkoutSigning?.id ?? null,
         prefilledData: {

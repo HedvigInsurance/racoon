@@ -21,6 +21,7 @@ export class ShopSessionService {
     return this.persister.fetch()
   }
 
+  // TODO: take only ID, name it saveId
   public save(shopSession: ShopSession) {
     this.persister.save(shopSession.id)
   }
@@ -35,7 +36,6 @@ export class ShopSessionService {
     if (existingShopSession?.countryCode === params.countryCode) {
       return existingShopSession
     }
-
     return await this.create(params)
   }
 

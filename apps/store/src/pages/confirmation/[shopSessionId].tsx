@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     return addApolloState(apolloClient, {
       props: {
         ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSessionId,
+        [SHOP_SESSION_PROP_NAME]: shopSession,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
         cart: shopSession.cart,
         currency: shopSession.currencyCode,
