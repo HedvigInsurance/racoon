@@ -7,6 +7,10 @@ import {
   useExternalInsurerUpdateMutation,
 } from '@/services/apollo/generated'
 import { InsurelyIframe } from '@/services/Insurely/Insurely'
+import {
+  INSURELY_IFRAME_MAX_HEIGHT,
+  INSURELY_IFRAME_MAX_WIDTH,
+} from '@/services/Insurely/Insurely.constants'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
@@ -109,13 +113,22 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
   }
 }
 
-const StyledDialogContent = styled(Dialog.Content)({
+const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
+  height: '100%',
   display: 'flex',
-  alignItems: 'center',
-})
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  paddingTop: theme.space[2],
+  paddingLeft: theme.space[2],
+  paddingRight: theme.space[2],
+}))
 
 const StyledDialogWindow = styled(Dialog.Window)(({ theme }) => ({
-  marginInline: theme.space[2],
-  marginTop: theme.space[2],
-  borderRadius: theme.radius.xs,
+  width: '100%',
+  maxWidth: INSURELY_IFRAME_MAX_WIDTH,
+  height: '100%',
+  maxHeight: INSURELY_IFRAME_MAX_HEIGHT,
+  overflowY: 'auto',
+  borderTopLeftRadius: theme.radius.xs,
+  borderTopRightRadius: theme.radius.xs,
 }))
