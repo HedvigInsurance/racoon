@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { CrossIcon, Space, Dialog } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
   header?: React.ReactNode
@@ -19,10 +18,8 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
               <CrossIcon size="1.25rem" />
             </IconButton>
           </Dialog.Close>
-          <Space y={1}>
-            <SpaceFlex space={1} align="center" direction="vertical">
-              {header}
-            </SpaceFlex>
+          <Space y={4}>
+            <HeaderWrapper>{header}</HeaderWrapper>
             {children}
           </Space>
         </ContentWrapper>
@@ -30,6 +27,10 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
     </Dialog.Root>
   )
 }
+
+const HeaderWrapper = styled.div(({ theme }) => ({
+  paddingTop: theme.space[8],
+}))
 
 const ContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   position: 'relative',

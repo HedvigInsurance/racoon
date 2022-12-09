@@ -17,11 +17,9 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { usePriceIntent } from '../usePriceIntent'
+import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
-
-// TODO: get from API
-const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
 
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
@@ -82,13 +80,10 @@ const Layout = ({ children }: LayoutProps) => {
       <PurchaseFormTop>
         <Wrapper>
           <SpaceFlex space={1} align="center" direction="vertical">
-            <Pillow
-              size="xlarge"
-              fromColor={PLACEHOLDER_GRADIENT[0]}
-              toColor={PLACEHOLDER_GRADIENT[1]}
-            />
+            <Pillow size="xlarge" />
             <Heading as="h2" variant="standard.24">
               {story.content.name}
+              <CircledHSuperscript />
             </Heading>
           </SpaceFlex>
         </Wrapper>
@@ -141,16 +136,13 @@ const EditingState = (props: EditingStateProps) => {
       isOpen
       toggleDialog={onToggleDialog}
       header={
-        <>
-          <Pillow
-            size="large"
-            fromColor={PLACEHOLDER_GRADIENT[0]}
-            toColor={PLACEHOLDER_GRADIENT[1]}
-          />
+        <SpaceFlex direction="vertical" align="center" space={0.5}>
+          <Pillow size="large" />
           <Heading as="h2" variant="standard.18">
             {story.content.name}
+            <CircledHSuperscript />
           </Heading>
-        </>
+        </SpaceFlex>
       }
     >
       <PriceCalculator
@@ -181,7 +173,6 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
     onAddedToCart({
       name: story.content.name,
       price: currencyFormatter.format(addedProdutOffer.price.amount),
-      gradient: PLACEHOLDER_GRADIENT,
     })
     priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
       priceTemplate.name,
