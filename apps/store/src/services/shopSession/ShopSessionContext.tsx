@@ -63,7 +63,7 @@ const useShopSessionContextValue = (initialShopSession?: ShopSession) => {
   useEffect(() => {
     if (isBrowser()) {
       if (initialShopSession && shopSessionService.shopSessionId() !== initialShopSession.id) {
-        shopSessionService.save(initialShopSession)
+        shopSessionService.saveId(initialShopSession.id)
       }
     }
   }, [initialShopSession, shopSessionService])
@@ -82,7 +82,7 @@ const useShopSessionContextValue = (initialShopSession?: ShopSession) => {
       // SSR with session
       return { ...queryResult, data: { shopSession: initialShopSession } }
     } else {
-      // SSG or SSR without session - we don't have data and we don't
+      // SSG or SSR without session - we don't have data and won't start loading until client side takes over
       return queryResult
     }
   }, [initialShopSession, queryResult])
