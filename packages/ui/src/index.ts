@@ -1,4 +1,5 @@
 export { Checkbox } from './components/Checkbox/Checkbox'
+export type { CheckboxProps } from './components/Checkbox/Checkbox'
 export { BurgerButton } from './components/BurgerButton/BurgerButton'
 export { Menu } from './components/Menu/Menu'
 export type { MenuTheme } from './components/Menu/Menu'
@@ -26,6 +27,7 @@ export { theme, getColor } from './lib/theme/theme'
 export type { UIColor } from './lib/theme/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
+export { mergeRefs } from './lib/merge-refs'
 
 export { MailIcon } from './icons/MailIcon'
 export { PhoneIcon } from './icons/PhoneIcon'
