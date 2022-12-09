@@ -45,7 +45,6 @@ export class ShopSessionService {
     if (!this.createPromise || JSON.stringify(this.createParams) != JSON.stringify(params)) {
       this.createParams = params
       this.createPromise = this.create(params)
-      console.log('CREATE')
     }
     return await this.createPromise
   }

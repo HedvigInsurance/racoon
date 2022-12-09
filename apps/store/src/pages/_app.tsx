@@ -47,7 +47,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider>
-          <ShopSessionProvider shopSession={pageProps[SHOP_SESSION_PROP_NAME]}>
+          <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
           </ShopSessionProvider>
         </ThemeProvider>

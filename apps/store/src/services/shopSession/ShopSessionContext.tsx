@@ -1,7 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { Track } from '@/services/Track/Track'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
@@ -10,10 +9,10 @@ import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
 
-type Props = PropsWithChildren<{ shopSession?: ShopSession }>
+type Props = PropsWithChildren<{ shopSessionId?: string }>
 
-export const ShopSessionProvider = ({ children, shopSession: initialShopSession }: Props) => {
-  const contextValue = useShopSessionContextValue(initialShopSession)
+export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
+  const contextValue = useShopSessionContextValue(initialShopSessionId)
 
   const shopSessionId = contextValue?.data?.shopSession.id
   useEffect(() => {
@@ -44,29 +43,29 @@ export const useShopSession = () => {
   }, [queryResult, countryCode])
 }
 
-const useShopSessionContextValue = (initialShopSession?: ShopSession) => {
+const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
   const { locale } = useCurrentLocale()
   const apolloClient = useApolloClient()
+  // Only used client-side
   const shopSessionService = useMemo(
     () => setupShopSessionServiceClientSide(apolloClient),
     [apolloClient],
   )
-  const shopSessionId = shopSessionService.shopSessionId() ?? initialShopSession?.id
+  const shopSessionId = shopSessionService.shopSessionId() ?? initialShopSessionId
 
   const queryResult = useShopSessionQuery({
     variables: shopSessionId ? { shopSessionId, locale } : undefined,
-    ssr: false,
     skip: !shopSessionId,
   })
 
   useEffect(() => {
     if (isBrowser()) {
-      if (initialShopSession && shopSessionService.shopSessionId() !== initialShopSession.id) {
-        shopSessionService.saveId(initialShopSession.id)
+      if (initialShopSessionId && shopSessionService.shopSessionId() !== initialShopSessionId) {
+        shopSessionService.saveId(initialShopSessionId)
       }
     }
-  }, [initialShopSession, shopSessionService])
+  }, [initialShopSessionId, shopSessionService])
 
   useEffect(() => {
     if (isBrowser()) {
@@ -74,16 +73,5 @@ const useShopSessionContextValue = (initialShopSession?: ShopSession) => {
     }
   }, [countryCode, locale, shopSessionService])
 
-  return useMemo(() => {
-    if (isBrowser()) {
-      // Client: we always have a session, sometimes there's loading state
-      return queryResult
-    } else if (initialShopSession) {
-      // SSR with session
-      return { ...queryResult, data: { shopSession: initialShopSession } }
-    } else {
-      // SSG or SSR without session - we don't have data and won't start loading until client side takes over
-      return queryResult
-    }
-  }, [initialShopSession, queryResult])
+  return queryResult
 }

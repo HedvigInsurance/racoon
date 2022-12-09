@@ -3,7 +3,6 @@ import { SSRConfig } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type PageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -14,7 +13,7 @@ declare module 'next' {
 }
 
 type GlobalAppProps = SSRConfig & {
-  [SHOP_SESSION_PROP_NAME]?: ShopSession
+  [SHOP_SESSION_PROP_NAME]?: string
 }
 
 declare module 'next/app' {

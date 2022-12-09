@@ -84,7 +84,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     return addApolloState(apolloClient, {
       props: {
         ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSession,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         checkoutId,
         checkoutSigningId: checkoutSigning?.id ?? null,
         prefilledData: {

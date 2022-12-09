@@ -77,7 +77,7 @@ export const getServerSideProps: GetServerSideProps<
     return addApolloState(apolloClient, {
       props: {
         ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSession,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
       },
     })
