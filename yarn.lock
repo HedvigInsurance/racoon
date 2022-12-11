@@ -12,18 +12,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.29.0":
-  version: 5.29.0
-  resolution: "@adyen/adyen-web@npm:5.29.0"
+"@adyen/adyen-web@npm:5.30.0":
+  version: 5.30.0
+  resolution: "@adyen/adyen-web@npm:5.30.0"
   dependencies:
     "@babel/runtime": ^7.15.4
-    "@babel/runtime-corejs3": ^7.19.1
+    "@babel/runtime-corejs3": ^7.20.1
     "@types/applepayjs": ^3.0.4
     "@types/googlepay": ^0.6.2
     classnames: ^2.3.1
     core-js-pure: ^3.25.3
     preact: 10.11.2
-  checksum: ee7e2ad876c68f4506596fd1755e7c16a7139af771919aebd22e0b349f3ba90aa9136306af833bce47b1959af782cd141c73ce41d189beb693c61b5da63de141
+  checksum: 30768a0245188473ba064ceb108b36818f17b85f77c3d2284c4ec59efaac8add0671841ea1adf7003fa8393c073173d718743b1c226cbf4ab52f2b12556c4a3d
   languageName: node
   linkType: hard
 
@@ -1775,13 +1775,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:^7.19.1":
-  version: 7.19.1
-  resolution: "@babel/runtime-corejs3@npm:7.19.1"
+"@babel/runtime-corejs3@npm:^7.20.1":
+  version: 7.20.6
+  resolution: "@babel/runtime-corejs3@npm:7.20.6"
   dependencies:
     core-js-pure: ^3.25.1
-    regenerator-runtime: ^0.13.4
-  checksum: 38a1e8fcd2ba1f76c951259c98a5a11052123923adbf30ec8b2fec202dbbe38c6db61658ef9398e00c30f799e2e54ea036e56a09f43229261918bf5ec1b7d03a
+    regenerator-runtime: ^0.13.11
+  checksum: d533d432216509426c4f9dad56db2fe453112b7d738433111944372fba4abd0b07bee3261f19a218530b435de46592121b2a6a57b98c0c7c3452d552ba009c3e
   languageName: node
   linkType: hard
 
@@ -19446,7 +19446,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.10":
+"regenerator-runtime@npm:^0.13.10, regenerator-runtime@npm:^0.13.11":
   version: 0.13.11
   resolution: "regenerator-runtime@npm:0.13.11"
   checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
@@ -20899,7 +20899,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.29.0
+    "@adyen/adyen-web": 5.30.0
     "@apollo/client": 3.7.2
     "@babel/core": 7.20.5
     "@datadog/browser-logs": 4.26.0
