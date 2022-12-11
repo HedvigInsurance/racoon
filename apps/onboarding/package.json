@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.7.2",
-    "@datadog/browser-rum": "4.25.0",
+    "@datadog/browser-rum": "4.26.0",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@next/font": "13.0.6",
