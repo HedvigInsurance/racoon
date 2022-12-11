@@ -1803,12 +1803,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.17.2":
+"@babel/runtime@npm:^7.14.5":
   version: 7.20.1
   resolution: "@babel/runtime@npm:7.20.1"
   dependencies:
     regenerator-runtime: ^0.13.10
   checksum: 00567a333d3357925742a6f5e39394dcc0af6e6029103fe188158bf7ae8b0b3ee3c6c0f68fccc217f0a6cfa455f6be252298baf56b3f5ff37b34313b170cd9f6
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.20.6":
+  version: 7.20.6
+  resolution: "@babel/runtime@npm:7.20.6"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 42a8504db21031b1859fbc0f52d698a3d2f5ada9519eb76c6f96a7e657d8d555732a18fe71ef428a67cc9fc81ca0d3562fb7afdc70549c5fec343190cbaa9b03
   languageName: node
   linkType: hard
 
@@ -13485,12 +13494,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:22.0.6":
-  version: 22.0.6
-  resolution: "i18next@npm:22.0.6"
+"i18next@npm:22.1.4":
+  version: 22.1.4
+  resolution: "i18next@npm:22.1.4"
   dependencies:
-    "@babel/runtime": ^7.17.2
-  checksum: b9d20b8d6cdd16c38def15d4f1c5906418926412eafa7d582fbd8395618deb177e73bdc709559480de7e1a3281287b69665d6f7c2af8df791f10ea1dfd79cb79
+    "@babel/runtime": ^7.20.6
+  checksum: bd51364957f705fce025e17bbad9d750059a956f6fbe2447e54dc47c7563109961e1ac420468b67179bbd9c96f12d7c50237e21f6b219912683c51c0f814a64c
   languageName: node
   linkType: hard
 
@@ -17456,7 +17465,7 @@ __metadata:
     framer-motion: 7.6.19
     graphql: 16.6.0
     graphql-tag: 2.12.6
-    i18next: 22.0.6
+    i18next: 22.1.4
     jest: 29.3.1
     jsdom: 20.0.3
     lodash-es: 4.17.21
@@ -20942,7 +20951,7 @@ __metadata:
     graphql: 16.6.0
     graphql-sse: 1.3.2
     graphql-tag: 2.12.6
-    i18next: 22.0.6
+    i18next: 22.1.4
     jest: 29.3.1
     jest-environment-jsdom: 29.3.1
     msw: 0.44.2
