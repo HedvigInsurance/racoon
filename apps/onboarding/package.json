@@ -59,7 +59,7 @@
     "@types/formidable": "2.0.5",
     "@types/jsdom": "20.0.1",
     "@types/lodash-es": "4.17.6",
-    "@types/marked": "4.0.7",
+    "@types/marked": "4.0.8",
     "@types/node": "18.11.12",
     "@types/react": "18.0.26",
     "cypress": "11.2.0",
