@@ -182,7 +182,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
               </SecondaryTextStyle>
             </>
           ) : (
-            <span>{t('TIER_SELECTOR_DEFAULT_LABEL')}</span>
+            <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
           )}
         </HeaderWithTrigger>
         <Content>
