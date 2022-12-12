@@ -1,8 +1,6 @@
 import '@emotion/react'
-import { theme } from 'ui'
+import { LegacyTheme } from 'ui'
 
 declare module '@emotion/react' {
-  type MyTheme = typeof theme
-
-  export interface Theme extends MyTheme {}
+  export interface Theme extends LegacyTheme {}
 }

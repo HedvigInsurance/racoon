@@ -1,16 +1,12 @@
 const gray = {
-  25: '#fafafa',
-  50: '#f5f5f5',
-  100: '#f0f0f0',
-  200: '#eaeaea',
-  300: '#e0e0e0',
-  400: '#cfcfcf',
-  500: '#bbbbbb',
-  600: '#a0a0a0',
-  700: '#848484',
-  800: '#666666',
-  900: '#404040',
-  1000: '#121212',
+  100: '#fafafa',
+  200: '#f2f2f2',
+  300: '#eaeaea',
+  500: '#aaaaaa',
+  600: '#777777',
+  700: '#505050',
+  800: '#272727',
+  900: '#121212',
 }
 
 const purple = {
@@ -27,9 +23,7 @@ const red = {
   600: '#dd2727',
 }
 
-export const colors = {
-  gray25: gray[25],
-  gray50: gray[50],
+export const legacyColors = {
   gray100: gray[100],
   gray200: gray[200],
   gray300: gray[300],
@@ -38,7 +32,6 @@ export const colors = {
   gray700: gray[700],
   gray800: gray[800],
   gray900: gray[900],
-  gray1000: gray[1000],
   purple100: purple[100],
   purple300: purple[300],
   purple500: purple[500],
@@ -50,10 +43,9 @@ export const colors = {
   black: '#000000',
   white: '#ffffff',
   // Alias colors
-  dark: gray[1000],
-  light: gray[25],
+  dark: gray[900],
+  light: gray[100],
   lavender: purple[500],
-  secondaryText: gray[500],
 }
 
-export type UIColor = keyof typeof colors
+export type LegacyUIColor = keyof typeof legacyColors

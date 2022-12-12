@@ -1,20 +1,7 @@
 import { colors, UIColor } from './colors'
 import { radius } from './radius'
+import { space } from './space'
 import { fonts, fontSizes } from './typography'
-
-const space = [
-  0,
-  '0.25rem',
-  '0.5rem',
-  '0.75rem',
-  '1rem',
-  '1.5rem',
-  '2rem',
-  '3rem',
-  '4rem',
-  '6rem',
-  '8rem',
-]
 
 export const theme = {
   colors,
