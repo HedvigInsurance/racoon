@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 
 export type LabelProps = {
@@ -6,7 +7,14 @@ export type LabelProps = {
   children: React.ReactNode
 }
 
-export const LabelBase = styled.div<Pick<LabelProps, 'color'>>(({ color, theme }) => ({
+const elementConfig = {
+  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
+}
+
+export const LabelBase = styled(
+  'div',
+  elementConfig,
+)<Pick<LabelProps, 'color'>>(({ color, theme }) => ({
   display: 'inline-block',
   padding: `${theme.space[2]} ${theme.space[3]}`,
   fontSize: theme.fontSizes[1],
