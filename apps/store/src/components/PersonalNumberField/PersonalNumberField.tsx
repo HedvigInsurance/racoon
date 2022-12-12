@@ -5,14 +5,16 @@ import { TextField } from '@/components/TextField/TextField'
 type Props = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
->
+> & {
+  label: string
+}
 
 /**
  * Personal Number input field.
  * Only supports Swedish personal numbers.
  */
 export const PersonalNumberField = (props: Props) => {
-  const { value: propValue, defaultValue, ...baseProps } = props
+  const { value: propValue, defaultValue, label, ...baseProps } = props
 
   const [value, setValue] = useState(() => {
     if (typeof propValue === 'string') return propValue
@@ -36,6 +38,7 @@ export const PersonalNumberField = (props: Props) => {
       <TextField
         {...baseProps}
         defaultValue={propValue ?? defaultValue}
+        label={label}
         type="text"
         name={undefined}
         inputMode="numeric"
