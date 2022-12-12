@@ -3,3 +3,5 @@
 coverage
 dist
 storybook-static
+
+generated.ts

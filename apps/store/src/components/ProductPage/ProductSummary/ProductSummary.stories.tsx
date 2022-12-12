@@ -16,5 +16,4 @@ Default.args = {
   title: 'Hedvig Home',
   children:
     'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget.',
-  gradient: ['#c61313', '#2d76ab'],
 }

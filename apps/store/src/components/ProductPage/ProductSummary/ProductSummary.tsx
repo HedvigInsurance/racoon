@@ -6,18 +6,13 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 export type ProductSummaryProps = {
   title: string
   children: React.ReactNode
-  gradient: readonly [string, string]
 }
 
-export const ProductSummary = ({
-  title,
-  children,
-  gradient: [fromColor, toColor],
-}: ProductSummaryProps) => {
+export const ProductSummary = ({ title, children }: ProductSummaryProps) => {
   return (
     <Space y={1}>
       <SpaceFlex space={1} align="center" direction="vertical">
-        <Pillow size="xlarge" fromColor={fromColor} toColor={toColor} />
+        <Pillow size="xlarge" />
         <div>
           <Heading as="h2" variant="standard.20">
             {title}

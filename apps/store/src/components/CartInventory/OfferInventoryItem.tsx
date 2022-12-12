@@ -17,7 +17,7 @@ export const OfferInventoryItem = ({ offer, onRemove }: Props) => {
   return (
     <InventoryItem.Root>
       <InventoryItem.Left>
-        <Pillow size="small" fromColor="#C0E4F3" toColor="#99AAD8" />
+        <Pillow size="small" />
       </InventoryItem.Left>
       <InventoryItem.Main>
         <InventoryItem.MainLeft>

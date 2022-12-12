@@ -30,9 +30,9 @@ type FooterLinkProps = SbBaseBlockProps<{
 
 export const FooterLink = ({ blok }: FooterLinkProps) => {
   return (
-    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)} legacyBehavior>
-      <StyledLink>{blok.linkText}</StyledLink>
-    </Link>
+    <StyledLink href={getLinkFieldURL(blok.link)} {...storyblokEditable(blok)}>
+      {blok.linkText}
+    </StyledLink>
   )
 }
 FooterLink.blockName = 'footerLink' as const
@@ -155,6 +155,4 @@ export const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => (
   paddingTop: theme.space[2],
 }))
 
-export const StyledLink = styled.a({
-  textDecoration: 'none',
-})
+export const StyledLink = styled(Link)({ textDecoration: 'none' })

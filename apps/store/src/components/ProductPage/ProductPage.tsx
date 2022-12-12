@@ -1,10 +1,8 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent } from '@storyblok/react'
 import { ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
 
-export const ProductPage = ({ story: initalStory, ...props }: ProductPageProps) => {
-  const story = useStoryblokState(initalStory)
-
+export const ProductPage = ({ story, ...props }: ProductPageProps) => {
   return (
     <ProductPageContextProvider {...props} story={story}>
       <StoryblokComponent blok={story.content} />

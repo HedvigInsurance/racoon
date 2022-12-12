@@ -12,13 +12,13 @@ import { InsuranceCard } from './InsuranceCard'
 
 const FORM_ID = 'select-insurance-form'
 
-export type NewLandingPageProps = {
+export type LandingPageProps = {
   insurances: Array<Insurance>
   preSelectedInsurances: Array<Insurance['typeOfContract']>
   referer: string | null
 }
 
-export const NewLandingPage = ({ insurances, preSelectedInsurances }: NewLandingPageProps) => {
+export const LandingPage = ({ insurances, preSelectedInsurances }: LandingPageProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const locale = useCurrentLocale()

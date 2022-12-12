@@ -41,11 +41,6 @@ export const Window = styled.div(({ theme }) => ({
   },
 }))
 
-const StyledContentWrapper = styled.div({
-  position: 'fixed',
-  inset: 0,
-})
-
 type ContentProps = {
   children: React.ReactNode
   onClose?: () => void
@@ -59,14 +54,23 @@ export const Content = ({ children, onClose, className, frostedOverlay }: Conten
   return (
     <DialogPrimitive.Portal>
       <StyledOverlay frosted={frostedOverlay} />
-      <StyledContentWrapper className={className}>
-        <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
+      <StyledContentWrapper>
+        <DialogPrimitive.Content
+          className={className}
+          onEscapeKeyDown={handleClose}
+          onInteractOutside={handleClose}
+        >
           {children}
         </DialogPrimitive.Content>
       </StyledContentWrapper>
     </DialogPrimitive.Portal>
   )
 }
+
+const StyledContentWrapper = styled.div({
+  position: 'fixed',
+  inset: 0,
+})
 
 export const Root = DialogPrimitive.Root
 export const Trigger = DialogPrimitive.Trigger

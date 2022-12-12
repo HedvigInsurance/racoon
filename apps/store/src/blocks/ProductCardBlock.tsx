@@ -14,20 +14,18 @@ export type ProductCardBlockProps = SbBaseBlockProps<{
 
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   return (
-    <Link href={getLinkFieldURL(blok.link)} passHref {...storyblokEditable(blok)} legacyBehavior>
-      <StyledAnchor>
-        <ProductCard
-          title={blok.title}
-          subtitle={blok.subtitle}
-          image={{ src: blok.image.filename, alt: blok.image.alt }}
-        />
-      </StyledAnchor>
-    </Link>
+    <StyledLink href={getLinkFieldURL(blok.link)} {...storyblokEditable(blok)}>
+      <ProductCard
+        title={blok.title}
+        subtitle={blok.subtitle}
+        image={{ src: blok.image.filename, alt: blok.image.alt }}
+      />
+    </StyledLink>
   )
 }
 ProductCardBlock.blockName = 'productCard'
 
-const StyledAnchor = styled.a({
+const StyledLink = styled(Link)({
   textDecoration: 'none',
   color: 'inherit',
   cursor: 'pointer',

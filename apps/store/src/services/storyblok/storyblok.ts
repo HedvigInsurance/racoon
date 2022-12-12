@@ -231,9 +231,7 @@ const PRODUCTS_SLUG = 'products'
 const REUSABLE_BLOCK = 'reusable-blocks'
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(
-    ({ slugParts }) => slugParts[0] !== PRODUCTS_SLUG && slugParts[0] !== REUSABLE_BLOCK,
-  )
+  return allLinks.filter(({ slugParts }) => slugParts[0] !== REUSABLE_BLOCK)
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {
@@ -241,7 +239,7 @@ export const getGlobalStory = async (options: StoryOptions) => {
   return story as GlobalStory
 }
 
-export const getProductStory = async (slug: string, options: StoryOptions) => {
-  const story = await getStoryBySlug(`/products/${slug}`, options)
-  return story as ProductStory
+export const getFilteredProductLinks = async () => {
+  const allLinks = await getPageLinks()
+  return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
 }

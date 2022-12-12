@@ -59,7 +59,7 @@ export class PriceIntentService {
   }
 
   public async fetch({ locale, productName, priceTemplate }: FetchParams) {
-    const priceIntentId = this.persister.fetch(this.getPriceIntentKey(priceTemplate.name))
+    const priceIntentId = this.getStoredId(priceTemplate.name)
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId, locale)
@@ -72,6 +72,14 @@ export class PriceIntentService {
 
   private getPriceIntentKey(templateName: string) {
     return `HEDVIG_${this.shopSession.id}_${templateName}`
+  }
+
+  public getStoredId(templateName: string) {
+    return this.persister.fetch(this.getPriceIntentKey(templateName))
+  }
+
+  public save(templateName: string, priceIntentId: string) {
+    this.persister.save(priceIntentId, this.getPriceIntentKey(templateName))
   }
 
   public clear(templateName: string) {
