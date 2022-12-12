@@ -8,7 +8,7 @@ export type TopMenuDesktopProps = {
   children: React.ReactNode
 }
 
-const Wrapper = styled(Navigation)({
+const Wrapper = styled.div({
   display: 'none',
   [mq.md]: {
     display: 'block',
@@ -18,7 +18,9 @@ const Wrapper = styled(Navigation)({
 export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
   return (
     <Wrapper>
-      <NavigationPrimaryList>{children}</NavigationPrimaryList>
+      <Navigation>
+        <NavigationPrimaryList>{children}</NavigationPrimaryList>
+      </Navigation>
     </Wrapper>
   )
 }
