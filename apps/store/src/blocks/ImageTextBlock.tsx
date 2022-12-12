@@ -30,9 +30,9 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 ImageTextBlock.blockName = 'imageText'
 
 const Wrapper = styled('div')(({ theme }) => ({
-  paddingInline: theme.space[4],
-  [mq.md]: {
-    maxWidth: '37.5rem',
+  paddingInline: theme.space[2],
+  [mq.lg]: {
+    paddingInline: theme.space[4],
   },
 }))
 
@@ -44,5 +44,11 @@ const Image = styled(NextImage)(({ theme }) => ({
 }))
 
 const BodyWrapper = styled.div(({ theme }) => ({
-  padding: theme.space[4],
+  padding: theme.space[2],
+  [mq.lg]: {
+    padding: theme.space[4],
+  },
+  '& > *': {
+    paddingInline: 0,
+  },
 }))

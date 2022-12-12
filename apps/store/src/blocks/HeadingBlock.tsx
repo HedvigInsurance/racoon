@@ -6,7 +6,6 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-  textAlign: 'center',
 }))
 
 export type HeadingBlockProps = SbBaseBlockProps<{
