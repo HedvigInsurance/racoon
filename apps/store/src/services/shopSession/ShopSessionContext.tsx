@@ -54,14 +54,6 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 
   useEffect(() => {
     if (isBrowser()) {
-      if (initialShopSessionId && shopSessionService.shopSessionId() !== initialShopSessionId) {
-        shopSessionService.saveId(initialShopSessionId)
-      }
-    }
-  }, [initialShopSessionId, shopSessionService])
-
-  useEffect(() => {
-    if (isBrowser()) {
       shopSessionService.getOrCreate({ locale, countryCode })
     }
   }, [countryCode, locale, shopSessionService])
