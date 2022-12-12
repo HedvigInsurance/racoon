@@ -17,6 +17,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
 import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
+import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
@@ -148,6 +149,7 @@ export const initStoryblok = () => {
     HeroVideoBlock,
     HeroVideoVimeoBlock,
     ImageBlock,
+    ImageTextBlock,
     InsurableLimitsBlock,
     NavItemBlock,
     NestedNavContainerBlock,
