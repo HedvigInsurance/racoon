@@ -32,7 +32,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
         <TextField
           type="text"
           name={field.name}
-          placeholder={translateLabel(field.label)}
+          label={translateLabel(field.label)}
           pattern={field.pattern}
           minLength={field.minLength}
           maxLength={field.maxLength}
@@ -48,7 +48,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
         <TextField
           type="number"
           name={field.name}
-          placeholder={translateLabel(field.label)}
+          label={translateLabel(field.label)}
           min={field.min}
           max={field.max}
           inputMode="numeric"

@@ -19,5 +19,5 @@ const Template: ComponentStory<typeof PersonalNumberField> = (props) => {
 }
 export const Default = Template.bind({})
 Default.args = {
-  placeholder: 'ÅÅMMDD-XXXX',
+  label: 'ÅÅÅÅMMDDXXXX',
 }

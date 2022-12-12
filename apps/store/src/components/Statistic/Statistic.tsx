@@ -25,15 +25,6 @@ export const Root = styled.div(({ theme }) => ({
   `,
 }))
 
-export const Badge = styled.span(({ theme }) => ({
-  gridArea: 'badge',
-
-  fontSize: theme.fontSizes[1],
-  backgroundColor: theme.colors.purple300,
-  padding: theme.space[2],
-  borderRadius: theme.radius.xs,
-}))
-
 export const Description = styled.p(({ theme }) => ({
   gridArea: 'description',
 

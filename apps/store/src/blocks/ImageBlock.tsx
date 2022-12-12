@@ -65,7 +65,7 @@ const BodyWrapper = styled.div(({ theme }) => ({
   right: theme.space[4],
 }))
 
-const getSizeFromURL = (url: string) => {
+export const getSizeFromURL = (url: string) => {
   const [, rawWidth, rawHeight] = url.match(/\/(\d+)x(\d+)\//) || []
 
   const width = parseInt(rawWidth, 10) || 0

@@ -9,5 +9,5 @@ type SsnSeFieldProps = {
 export const SsnSeField = ({ field }: SsnSeFieldProps) => {
   const translateLabel = useTranslateTextLabel({ data: {} })
 
-  return <PersonalNumberField {...field} placeholder={translateLabel(field.label)} />
+  return <PersonalNumberField {...field} label={translateLabel(field.label)} />
 }

@@ -18,6 +18,7 @@ export { Heading as HeadingOLD } from './components/Heading/Heading'
 export { Heading } from './components/HeadingNew/HeadingNew'
 export type { HeadingProps } from './components/HeadingNew/HeadingNew'
 export * as Dialog from './components/Dialog/Dialog'
+export { HeadingLabel } from './components/HeadingLabel/HeadingLabel'
 
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'
