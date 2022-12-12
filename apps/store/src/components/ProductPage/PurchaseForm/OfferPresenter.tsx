@@ -8,6 +8,7 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
@@ -17,7 +18,6 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
-import { TierSelector } from './TierSelector'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -76,15 +76,23 @@ export const OfferPresenter = ({
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
-        <Space y={2}>
-          <Text as="p" align="center" size="xxl">
-            {displayPrice}
-          </Text>
+        <Text as="p" align="center" size="xxl">
+          {displayPrice}
+        </Text>
 
-          <TierSelector
-            offers={priceIntent.offers}
-            selectedOfferId={selectedOfferId}
-            onValueChange={setSelectedOfferId}
+        <TierSelector
+          offers={priceIntent.offers}
+          selectedOfferId={selectedOfferId}
+          onValueChange={setSelectedOfferId}
+          currencyCode={shopSession.currencyCode}
+        />
+
+        <Space y={0.25}>
+          <CancellationForm
+            option={cancellationOption}
+            startDate={convertToDate(priceIntent.startDate)!}
+            onAutoSwitchChange={handleUpdateCancellation}
+            onStartDateChange={handleStartDateChange}
           />
 
           <Space y={0.25}>

@@ -26,7 +26,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   borderBottom: `1px solid ${theme.colors.gray500}`,
   padding: `0 ${theme.space[4]}`,
 
-  '[data-state=open] &': { borderRadius: `${theme.radius.xs} ${theme.radius.xs} 0 0` },
+  '[data-state=open] &': { borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0` },
 }))
 
 const CenteredHeader = styled.div({
@@ -80,62 +80,32 @@ export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   </RecommendedContainer>
 )
 
-const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelected = false }) => ({
-  cursor: 'pointer',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  padding: theme.space[4],
-  backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
+export const TierItemContainer = styled.div<{ isSelected: boolean }>(
+  ({ theme, isSelected = false }) => ({
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: theme.space[4],
+    backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
 
-  '&:last-of-type': {
-    borderRadius: `0 0 ${theme.radius.xs} ${theme.radius.xs}`,
-  },
-}))
+    '&:last-of-type': {
+      borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
+    },
+  }),
+)
 
-const TitleContainer = styled.div(({ theme }) => ({
+export const TitleContainer = styled.div(({ theme }) => ({
   fontSize: theme.fontSizes[3],
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
 }))
 
-const TitleItem = styled.div(({ theme }) => ({
+export const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
 export const SecondaryTextStyle = styled.div(({ theme }) => ({
   color: theme.colors.gray700,
 }))
-
-export type TierItemProps = {
-  title: string
-  price: string
-  description: string
-  isSelected?: boolean
-  recommendedText?: string
-  children?: React.ReactNode
-  handleClick?: () => void
-} & AccordionPrimitives.AccordionItemProps
-
-export const TierItem = ({
-  title,
-  price,
-  description,
-  isSelected = false,
-  recommendedText = '',
-  handleClick,
-}: TierItemProps) => {
-  return (
-    <TierItemContainer isSelected={isSelected} onClick={handleClick}>
-      <TitleContainer>
-        <TitleItem>{title}</TitleItem>
-        <TitleItem>
-          <SecondaryTextStyle>{price}</SecondaryTextStyle>
-        </TitleItem>
-      </TitleContainer>
-      <SecondaryTextStyle>{description}</SecondaryTextStyle>
-      {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
-    </TierItemContainer>
-  )
-}
