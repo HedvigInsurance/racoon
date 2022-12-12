@@ -42,7 +42,8 @@ export class ShopSessionService {
     }
 
     // Deduplicate mutation, Apollo won't do this for us
-    if (!this.createPromise || JSON.stringify(this.createParams) != JSON.stringify(params)) {
+    const paramsEquals = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
+    if (!this.createPromise || !paramsEquals(this.createParams, params)) {
       this.createParams = params
       this.createPromise = this.create(params)
     }
