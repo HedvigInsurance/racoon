@@ -12,6 +12,7 @@ type TypographyProps = {
   color?: UIColor
   size: FontSize
   children: ReactNode
+  className?: string
 }
 
 const elementConfig = {
@@ -27,9 +28,9 @@ const TextElement = styled(
   ...(align && { textAlign: align }),
 }))
 
-export const Text = ({ as = 'p', align, color, size = 'm', children }: TypographyProps) => {
+export const Text = ({ as = 'p', size = 'm', children, ...props }: TypographyProps) => {
   return (
-    <TextElement as={as} align={align} color={color} size={size}>
+    <TextElement as={as} size={size} {...props}>
       {children}
     </TextElement>
   )
