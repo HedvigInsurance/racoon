@@ -33,7 +33,7 @@ type Props = ProductItemProps & {
   onClose: () => void
 }
 
-const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
+const CartNotificationContent = ({ name, price, onClose }: Props) => {
   const { shopSession } = useShopSession()
   const cartLineCount = shopSession?.cart.entries.length ?? 1
 
@@ -43,18 +43,22 @@ const CartNotificationContent = ({ name, price, gradient, onClose }: Props) => {
         <Heading as="h2" variant="standard.18">
           Insurance added to cart
         </Heading>
-        <ProductItem name={name} price={price} gradient={gradient} />
+        <ProductItem name={name} price={price} />
 
         <Space y={0.5}>
-          <Link href={PageLink.cart()} passHref legacyBehavior>
-            <LinkButton fullWidth>Proceed to cart ({cartLineCount})</LinkButton>
-          </Link>
+          <LinkButton as={Link} href={PageLink.cart()} fullWidth>
+            Proceed to cart ({cartLineCount})
+          </LinkButton>
 
-          <Link href={PageLink.store()} passHref legacyBehavior>
-            <LinkButton variant="outlined" fullWidth onClick={onClose}>
-              Continue shopping
-            </LinkButton>
-          </Link>
+          <LinkButton
+            as={Link}
+            href={PageLink.store()}
+            variant="outlined"
+            fullWidth
+            onClick={onClose}
+          >
+            Continue shopping
+          </LinkButton>
         </Space>
       </DialogContentWrapper>
     </Dialog.Content>

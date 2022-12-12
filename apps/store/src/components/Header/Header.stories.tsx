@@ -25,7 +25,7 @@ const ShoppingCartMenuItemWrapper = styled.div({
   lineHeight: 0,
 })
 
-const StyledLink = styled.a(({ theme }) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   display: 'inline-block',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
@@ -35,11 +35,9 @@ const StyledLink = styled.a(({ theme }) => ({
 export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
   return (
     <ShoppingCartMenuItemWrapper>
-      <Link href={PageLink.cart()} passHref legacyBehavior>
-        <StyledLink tabIndex={0} aria-label="shopping cart">
-          <ShoppingBagIcon />
-        </StyledLink>
-      </Link>
+      <StyledLink href={PageLink.cart()} tabIndex={0} aria-label="shopping cart">
+        <ShoppingBagIcon />
+      </StyledLink>
       <Counter value={count} />
     </ShoppingCartMenuItemWrapper>
   )

@@ -1,41 +1,31 @@
 import styled from '@emotion/styled'
+import Image from 'next/image'
+
+const PLACEHOLDER = 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png'
 
 type PillowProps = {
-  fromColor: string
-  toColor: string
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 }
 
-export const PillowShape = styled.div<PillowProps>(({ fromColor, toColor, size = 'medium' }) => ({
-  height: getSize(size),
-  width: getSize(size),
-  background: `linear-gradient(116.75deg, ${fromColor} 0%, ${toColor} 100%)`,
-  backgroundClip: 'padding-box',
-  clipPath: 'url(#pillowClipPath)',
-}))
-
 export const Pillow = (props: PillowProps) => (
-  <>
-    <svg width="0" height="0">
-      <clipPath id="pillowClipPath" clipPathUnits="objectBoundingBox">
-        <path d="M0.794,0.986 a3,3,0,0,1,-0.588,0 a0.213,0.213,0,0,1,-0.192,-0.192 a3,3,0,0,1,0,-0.588 A0.213,0.213,0,0,1,0.206,0.014 a3,3,0,0,1,0.588,0 a0.213,0.213,0,0,1,0.192,0.192 a3,3,0,0,1,0,0.588 a0.213,0.213,0,0,1,-0.192,0.192"></path>
-      </clipPath>
-    </svg>
-    <PillowShape {...props} />
-  </>
+  <StyledImage alt="" src={PLACEHOLDER} {...props} width={80} height={80} />
 )
+
+const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => ({
+  ...getSize(size),
+}))
 
 const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
   switch (size) {
     case 'xsmall':
-      return '2.25rem'
+      return { width: '2.25rem', height: '2.25rem' }
     case 'small':
-      return '3rem'
+      return { width: '3rem', height: '3rem' }
     case 'medium':
-      return '3.5rem'
+      return { width: '3.5rem', height: '3.5rem' }
     case 'large':
-      return '4rem'
+      return { width: '8rem', height: '8rem' }
     case 'xlarge':
-      return '13.75rem'
+      return { width: '13.75rem', height: '13.75rem' }
   }
 }

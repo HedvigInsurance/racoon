@@ -9,26 +9,30 @@ export type HeadingProps = Margins & {
   color?: 'dark' | 'light'
   children: React.ReactNode
   variant?: HeadingVariant | ''
+  textAlignment?: 'left' | 'center'
 }
 
-type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant'> & Margins
+type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant' | 'textAlignment'> & Margins
 
-const HeadingBase = styled.h2<HeadingBaseProps>(({ theme, color, variant, ...props }) => {
-  // GOTCHA: We may get empty string from Storyblok, this should be handled safely
-  variant = variant || 'standard.32'
-  return {
-    color: color ? getColor(color) : 'currentColor',
-    fontFamily: theme.fonts.heading,
-    fontWeight: 400,
-    lineHeight: 1.2,
-    ...getMargins(props),
-    ...getHeadingVariant(variant, theme),
-  }
-})
+const HeadingBase = styled.h2<HeadingBaseProps>(
+  ({ theme, color, variant, textAlignment, ...props }) => {
+    // GOTCHA: We may get empty string from Storyblok, this should be handled safely
+    variant = variant || 'standard.32'
+    return {
+      color: color ? getColor(color) : 'currentColor',
+      fontFamily: theme.fonts.heading,
+      fontWeight: 400,
+      lineHeight: 1.2,
+      textAlign: textAlignment ?? 'left',
+      ...getMargins(props),
+      ...getHeadingVariant(variant, theme),
+    }
+  },
+)
 
-export const Heading = ({ as, color, children, variant, ...rest }: HeadingProps) => {
+export const Heading = ({ as, color, children, variant, textAlignment, ...rest }: HeadingProps) => {
   return (
-    <HeadingBase as={as} color={color} variant={variant} {...rest}>
+    <HeadingBase as={as} color={color} variant={variant} textAlignment={textAlignment} {...rest}>
       {children}
     </HeadingBase>
   )

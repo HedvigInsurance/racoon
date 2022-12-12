@@ -1,4 +1,5 @@
 import { ApolloClient } from '@apollo/client'
+import { getCookie, setCookie } from 'cookies-next'
 import { GetServerSidePropsContext } from 'next'
 import {
   PriceIntentCreateDocument,
@@ -10,10 +11,13 @@ import {
 } from '@/services/apollo/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
+import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { COOKIE_KEY_PRICE_INTENT } from './priceIntent.constants'
+import { PriceIntent } from './priceIntent.types'
 import { PriceIntentService } from './PriceIntentService'
 
+// @TODO: remove, no longer used
 export const priceIntentServiceInitServerSide = ({
   apolloClient,
   req,
@@ -85,4 +89,21 @@ export const createPriceIntent = async (params: CreatePriceIntentParams) => {
   if (!priceIntent) throw new Error('Could not create price intent')
 
   return priceIntent
+}
+
+type GetStoredPriceIntentIdParams = { shopSession: ShopSession; priceTemplate: Template }
+
+export const getStoredPriceIntentId = (params: GetStoredPriceIntentIdParams) => {
+  const { shopSession, priceTemplate } = params
+  const cookieKey = `HEDVIG_${shopSession.id}_${priceTemplate.name}`
+  const value = getCookie(cookieKey)
+  if (typeof value === 'string') return value
+}
+
+type SavePriceIntentParams = GetStoredPriceIntentIdParams & { priceIntent: PriceIntent }
+
+export const savePriceIntent = (params: SavePriceIntentParams) => {
+  const { shopSession, priceTemplate, priceIntent } = params
+  const cookieKey = `HEDVIG_${shopSession.id}_${priceTemplate.name}`
+  setCookie(cookieKey, priceIntent.id, { path: '/' })
 }

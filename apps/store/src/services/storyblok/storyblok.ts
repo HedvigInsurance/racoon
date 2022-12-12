@@ -17,6 +17,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
 import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
+import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
@@ -148,6 +149,7 @@ export const initStoryblok = () => {
     HeroVideoBlock,
     HeroVideoVimeoBlock,
     ImageBlock,
+    ImageTextBlock,
     InsurableLimitsBlock,
     NavItemBlock,
     NestedNavContainerBlock,
@@ -231,9 +233,7 @@ const PRODUCTS_SLUG = 'products'
 const REUSABLE_BLOCK = 'reusable-blocks'
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(
-    ({ slugParts }) => slugParts[0] !== PRODUCTS_SLUG && slugParts[0] !== REUSABLE_BLOCK,
-  )
+  return allLinks.filter(({ slugParts }) => slugParts[0] !== REUSABLE_BLOCK)
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {
@@ -241,7 +241,7 @@ export const getGlobalStory = async (options: StoryOptions) => {
   return story as GlobalStory
 }
 
-export const getProductStory = async (slug: string, options: StoryOptions) => {
-  const story = await getStoryBySlug(`/products/${slug}`, options)
-  return story as ProductStory
+export const getFilteredProductLinks = async () => {
+  const allLinks = await getPageLinks()
+  return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
 }

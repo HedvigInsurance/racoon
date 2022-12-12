@@ -1,118 +1,204 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
-import { useRef, useState } from 'react'
-import { Button, Heading } from 'ui'
+import { ReactNode, useRef, useState } from 'react'
+import { Button, Heading, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
+import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { useRefreshData } from '@/utils/useRefreshData'
+import useRouterRefresh from '@/utils/useRouterRefresh'
+import { usePriceIntent } from '../usePriceIntent'
+import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 
-// TODO: get from API
-const PLACEHOLDER_GRADIENT = ['#C0E4F3', '#99AAD8'] as const
-
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
-  const { priceTemplate, priceIntent, shopSession, story } = useProductPageContext()
-  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
-  const [refreshData, isLoadingData] = useRefreshData()
-  const handleCalculatePriceSuccess = async () => {
-    try {
-      await refreshData()
-    } finally {
-      setIsEditingPriceCalculator(false)
-    }
-  }
 
-  const scrollPastRef = useRef<HTMLDivElement | null>(null)
+  const { priceTemplate, story } = useProductPageContext()
+  const { shopSession } = useShopSession()
+  const { data: { priceIntent } = {} } = usePriceIntent({
+    shopSession,
+    priceTemplate: priceTemplate,
+    productName: story.content.productId,
+  })
+
+  return (
+    <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
+      {(notifyProductAdded) => {
+        if (!shopSession || !priceIntent) return <PendingState />
+
+        if (isEditingPriceCalculator) {
+          return (
+            <EditingState
+              priceIntent={priceIntent}
+              onToggleDialog={setIsEditingPriceCalculator}
+              onSuccess={() => setIsEditingPriceCalculator(false)}
+            />
+          )
+        }
+
+        if (priceIntent.offers.length > 0) {
+          return (
+            <ShowOfferState
+              shopSession={shopSession}
+              priceIntent={priceIntent}
+              onAddedToCart={notifyProductAdded}
+            />
+          )
+        }
+
+        return <IdleState onClick={() => setIsEditingPriceCalculator(true)} />
+      }}
+    </Layout>
+  )
+}
+
+type LayoutProps = {
+  children: (notifyProductAdded: (item: ProductItemProps) => void) => ReactNode
+  pillowSize: 'small' | 'large'
+}
+
+const Layout = ({ children, pillowSize }: LayoutProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const apolloClient = useApolloClient()
-  const { locale } = useCurrentLocale()
-  const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
-    toastRef.current?.publish({
-      name: story.content.name,
-      price: currencyFormatter.format(addedProdutOffer.price.amount),
-      gradient: PLACEHOLDER_GRADIENT,
-    })
+  const { story } = useProductPageContext()
 
-    priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
-      priceTemplate.name,
-    )
-    refreshData()
+  const notifyProductAdded = (item: ProductItemProps) => {
+    toastRef.current?.publish(item)
   }
 
-  const productDisplayName = story.content.name
+  return (
+    <>
+      <PurchaseFormTop>
+        <OfferPresenterWrapper>
+          <SpaceFlex space={1} align="center" direction="vertical">
+            <Pillow size={pillowSize === 'large' ? 'xlarge' : 'large'} />
+            <Heading as="h2" variant="standard.24">
+              {story.content.name}
+              <CircledHSuperscript />
+            </Heading>
+          </SpaceFlex>
+        </OfferPresenterWrapper>
 
-  // TODO: Show "loading offers" state or don't close modal while still loading
-  const bodyContent =
-    priceIntent.offers.length === 0 ? (
+        {children(notifyProductAdded)}
+      </PurchaseFormTop>
+      <CartToast ref={toastRef} />
+    </>
+  )
+}
+
+const PendingState = () => {
+  return (
+    <OfferPresenterWrapper>
       <ButtonWrapper>
-        <Button onClick={() => setIsEditingPriceCalculator(true)} fullWidth>
+        <Button disabled fullWidth>
           Calculate price
         </Button>
       </ButtonWrapper>
-    ) : (
+    </OfferPresenterWrapper>
+  )
+}
+
+type IdleStateProps = { onClick: () => void }
+
+const IdleState = ({ onClick }: IdleStateProps) => {
+  return (
+    <OfferPresenterWrapper>
+      <ButtonWrapper>
+        <Button onClick={onClick} fullWidth>
+          Calculate price
+        </Button>
+      </ButtonWrapper>
+    </OfferPresenterWrapper>
+  )
+}
+
+type EditingStateProps = {
+  priceIntent: PriceIntent
+  onToggleDialog: (open: boolean) => void
+  onSuccess: () => void
+}
+
+const EditingState = (props: EditingStateProps) => {
+  const { onToggleDialog, priceIntent, onSuccess } = props
+  const { priceTemplate, story } = useProductPageContext()
+  const isLarge = useBreakpoint('lg')
+
+  const priceCalculator = (
+    <PriceCalculatorWrapper>
+      <PriceCalculator
+        priceTemplate={priceTemplate}
+        priceIntent={priceIntent}
+        onSuccess={onSuccess}
+      />
+    </PriceCalculatorWrapper>
+  )
+
+  if (isLarge) return priceCalculator
+
+  return (
+    <PriceCalculatorDialog
+      isOpen
+      toggleDialog={onToggleDialog}
+      header={
+        <SpaceFlex direction="vertical" align="center" space={0.5}>
+          <Pillow size="large" />
+          <Heading as="h2" variant="standard.18">
+            {story.content.name}
+            <CircledHSuperscript />
+          </Heading>
+        </SpaceFlex>
+      }
+    >
+      {priceCalculator}
+    </PriceCalculatorDialog>
+  )
+}
+
+type ShowOfferStateProps = {
+  priceIntent: PriceIntent
+  shopSession: ShopSession
+  onAddedToCart: (item: ProductItemProps) => void
+}
+
+const ShowOfferState = (props: ShowOfferStateProps) => {
+  const { shopSession, priceIntent, onAddedToCart } = props
+  const { priceTemplate, story } = useProductPageContext()
+  const scrollPastRef = useRef<HTMLDivElement | null>(null)
+
+  const refresh = useRouterRefresh()
+  const apolloClient = useApolloClient()
+  const { locale } = useCurrentLocale()
+  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
+  const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
+    onAddedToCart({
+      name: story.content.name,
+      price: currencyFormatter.format(addedProdutOffer.price.amount),
+    })
+    priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
+      priceTemplate.name,
+    )
+    refresh()
+  }
+
+  return (
+    <OfferPresenterWrapper>
       <OfferPresenter
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
         onAddedToCart={handleAddedToCart}
       />
-    )
-
-  return (
-    <>
-      <PurchaseFormTop>
-        <Wrapper ref={scrollPastRef}>
-          <SpaceFlex space={1} align="center" direction="vertical">
-            <Pillow
-              size="xlarge"
-              fromColor={PLACEHOLDER_GRADIENT[0]}
-              toColor={PLACEHOLDER_GRADIENT[1]}
-            />
-            <Heading as="h2" variant="standard.24">
-              {productDisplayName}
-            </Heading>
-          </SpaceFlex>
-        </Wrapper>
-
-        {!isEditingPriceCalculator && <Wrapper>{bodyContent}</Wrapper>}
-      </PurchaseFormTop>
-
-      <PriceCalculatorDialog
-        isOpen={isEditingPriceCalculator}
-        toggleDialog={setIsEditingPriceCalculator}
-        header={
-          <>
-            <Pillow
-              size="large"
-              fromColor={PLACEHOLDER_GRADIENT[0]}
-              toColor={PLACEHOLDER_GRADIENT[1]}
-            />
-            <Heading as="h2" variant="standard.18">
-              {productDisplayName}
-            </Heading>
-          </>
-        }
-      >
-        <PriceCalculator
-          priceTemplate={priceTemplate}
-          priceIntent={priceIntent}
-          onSuccess={handleCalculatePriceSuccess}
-          onUpdated={refreshData}
-          loading={isLoadingData}
-        />
-      </PriceCalculatorDialog>
-
-      <CartToast ref={toastRef} />
-    </>
+    </OfferPresenterWrapper>
   )
 }
 
@@ -131,7 +217,17 @@ const ButtonWrapper = styled.div({
   marginRight: 'auto',
 })
 
-const Wrapper = styled.div({
+const OfferPresenterWrapper = styled.div({
   paddingLeft: '1rem',
   paddingRight: '1rem',
+
+  width: '100%',
+  maxWidth: '21rem',
+  margin: '0 auto',
+})
+
+const PriceCalculatorWrapper = styled.div({
+  width: '100%',
+  maxWidth: '21rem',
+  margin: '0 auto',
 })

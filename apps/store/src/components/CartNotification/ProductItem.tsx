@@ -5,13 +5,12 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 export type ProductItemProps = {
   name: string
   price: string
-  gradient: readonly [string, string]
 }
 
-export const ProductItem = ({ name, price, gradient: [fromColor, toColor] }: ProductItemProps) => {
+export const ProductItem = ({ name, price }: ProductItemProps) => {
   return (
     <SpaceFlex space={1} align="center">
-      <Pillow size="small" fromColor={fromColor} toColor={toColor} />
+      <Pillow size="small" />
       <SpaceBetween>
         <BodyText>{name}</BodyText>
         <BodyText>{price}</BodyText>

@@ -1,3 +1,4 @@
+const withTM = require('next-transpile-modules')
 const { i18n } = require('./next-i18next.config')
 
 /** @type {import('next').NextConfig} */
@@ -13,4 +14,4 @@ const nextConfig = {
   i18n,
 }
 
-module.exports = nextConfig
+module.exports = withTM(['ui'])(nextConfig)
