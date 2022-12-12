@@ -31,7 +31,8 @@ export const ProductDocuments = ({ heading, productData }: Props) => {
 }
 
 const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
-  const documentType = doc.url.substring(doc.url.lastIndexOf('.') + 1)
+  const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
+  // TODO: We need to humanize doc.type here or get displayType from PCMS - waiting for reply on this
   return (
     <DocumentCard>
       <a href={doc.url} target="_blank" rel="noopener noreferrer">
@@ -56,6 +57,7 @@ const ProductDocumentsWrapper = styled.div(({ theme }) => ({
 const ProductDocumentsLabel = styled(HeadingLabel)({})
 
 // TODO: Add hover style to Card or LinkCard component
+// TODO: Provide default card background in app theme
 const DocumentCard = styled(Card)({
   backgroundColor: getColor('gray200'),
 })
