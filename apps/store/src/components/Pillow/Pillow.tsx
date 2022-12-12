@@ -24,7 +24,7 @@ const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
     case 'medium':
       return { width: '3.5rem', height: '3.5rem' }
     case 'large':
-      return { width: '5rem', height: '5rem' }
+      return { width: '8rem', height: '8rem' }
     case 'xlarge':
       return { width: '13.75rem', height: '13.75rem' }
   }

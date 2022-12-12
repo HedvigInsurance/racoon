@@ -63,7 +63,7 @@ const LargeLabel = styled.label(({ theme }) => ({
   position: 'absolute',
   pointerEvents: 'none',
   transformOrigin: 'top left',
-  transition: '200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+  transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   transform: `translate(0, 0) scale(1)`,
 
   fontSize: theme.fontSizes[5],

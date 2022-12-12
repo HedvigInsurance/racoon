@@ -38,9 +38,9 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
               </SpaceFlex>
               {section.state === 'valid' && (
                 <Accordion.Trigger>
-                  <Text size="l" color="gray700">
+                  <StyledText size="l" color="gray700">
                     Edit
-                  </Text>
+                  </StyledText>
                 </Accordion.Trigger>
               )}
             </Accordion.Header>
@@ -79,4 +79,7 @@ type StyledHeadingProps = { muted: boolean }
 
 const StyledHeading = styled(Heading)<StyledHeadingProps>(({ theme, muted }) => ({
   color: muted ? theme.colors.gray600 : theme.colors.gray900,
+  lineHeight: 1,
 }))
+
+const StyledText = styled(Text)({ lineHeight: 1 })
