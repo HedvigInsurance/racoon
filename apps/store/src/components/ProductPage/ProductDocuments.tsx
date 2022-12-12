@@ -39,7 +39,7 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
           <Text size="m">
             {doc.displayName} <DocumentType>{documentType}</DocumentType>
           </Text>
-          <Text size="m" color="gray500">
+          <Text size="m" color="secondaryText">
             {doc.type}
           </Text>
         </CardContent>
