@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { CrossIcon } from 'ui'
+import { CrossIcon, mq } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 import { MenuIcon } from '../MenuIcon'
 
@@ -12,12 +12,18 @@ export const IconButton = styled.button({
   left: '1rem',
   lineHeight: 0,
   ...focusableStyles,
+  [mq.md]: {
+    display: 'none',
+  },
 })
 
 export const ToggleMenu = styled.button({
   ...focusableStyles,
   '&[data-state=open]': {
     visibility: 'hidden',
+  },
+  [mq.md]: {
+    display: 'none',
   },
 })
 
