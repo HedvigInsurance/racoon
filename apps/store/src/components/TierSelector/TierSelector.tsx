@@ -1,7 +1,8 @@
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { CurrencyCode, ProductOfferFragment } from '@/services/apollo/generated'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
@@ -14,6 +15,7 @@ import {
   Item,
   HeaderWithTrigger,
   Content,
+  TierItemWrapper,
 } from './TierSelectorStyles'
 
 type TierItemProps = {
@@ -34,16 +36,18 @@ const TierItem = ({
   recommendedText = '',
   handleClick,
 }: TierItemProps) => (
-  <TierItemContainer isSelected={isSelected} onClick={handleClick}>
-    <TitleContainer>
-      <TitleItem>{title}</TitleItem>
-      <TitleItem>
-        <SecondaryTextStyle>{price}</SecondaryTextStyle>
-      </TitleItem>
-    </TitleContainer>
-    <SecondaryTextStyle>{description}</SecondaryTextStyle>
-    {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
-  </TierItemContainer>
+  <TierItemWrapper isSelected={isSelected} onClick={handleClick}>
+    <TierItemContainer isSelected={isSelected}>
+      <TitleContainer>
+        <TitleItem>{title}</TitleItem>
+        <TitleItem>
+          <SecondaryTextStyle>{price}</SecondaryTextStyle>
+        </TitleItem>
+      </TitleContainer>
+      <SecondaryTextStyle>{description}</SecondaryTextStyle>
+      {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
+    </TierItemContainer>
+  </TierItemWrapper>
 )
 
 export type TierSelectorProps = {
@@ -53,8 +57,8 @@ export type TierSelectorProps = {
 }
 export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
   const { t } = useTranslation()
-
-  const currencyFormatter = useCurrencyFormatter(offers[0].price.currencyCode)
+  const { shopSession } = useShopSession()
+  const currencyFormatter = useCurrencyFormatter(shopSession?.currencyCode ?? CurrencyCode.Sek)
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
   const handleClick = (id: string) => {
@@ -78,12 +82,8 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
         <HeaderWithTrigger>
           {selectedOffer ? (
             <>
+              <div>Skyddsnivå</div>
               <div>{selectedOffer.variant.typeOfContract}</div>
-              <SecondaryTextStyle>
-                {t('MONTHLY_PRICE', {
-                  displayAmount: currencyFormatter.format(selectedOffer.price.amount),
-                })}
-              </SecondaryTextStyle>
             </>
           ) : (
             <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
@@ -103,10 +103,11 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
                 title={offer.variant.typeOfContract}
                 description="some description here"
                 price={t('MONTHLY_PRICE', {
-                  displayAmount: amount,
+                  displayAmount: currencyFormatter.format(amount),
                 })}
                 isSelected={selectedOfferId === id}
                 handleClick={() => handleClick(id)}
+                recommendedText={'Hey there'}
               />
             )
           })}

@@ -21,19 +21,20 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   textAlign: 'center',
   justifyContent: 'space-between',
   background: theme.colors.gray200,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
   borderRadius: theme.radius.xs,
-  borderBottom: `1px solid ${theme.colors.gray500}`,
   padding: `0 ${theme.space[4]}`,
 
-  '[data-state=open] &': { borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0` },
+  '[data-state=open] &': {
+    borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0`,
+  },
 }))
 
 const CenteredHeader = styled.div({
   width: '100%',
   display: 'flex',
   alignContent: 'center',
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
+  paddingRight: '1rem',
 })
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
@@ -58,7 +59,7 @@ export const HeaderWithTrigger = ({
   )
 }
 const RecommendedContainer = styled.div(({ theme }) => ({
-  paddingTop: theme.space[5],
+  paddingTop: theme.space[2],
 }))
 
 const RecommendedDot = styled.span(({ theme }) => ({
@@ -80,18 +81,30 @@ export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   </RecommendedContainer>
 )
 
+export const TierItemWrapper = styled.div<{ isSelected: boolean }>(({ theme }) => ({
+  cursor: 'pointer',
+  padding: theme.space[2],
+  backgroundColor: theme.colors.gray200,
+
+  '&:first-of-type': {
+    borderTop: `1px solid ${theme.colors.gray300}`,
+  },
+  '&:last-of-type': {
+    borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
+  },
+}))
+
 export const TierItemContainer = styled.div<{ isSelected: boolean }>(
   ({ theme, isSelected = false }) => ({
     cursor: 'pointer',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: theme.space[4],
-    backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
+    padding: theme.space[2],
+    borderRadius: `${theme.radius.xs}px`,
 
-    '&:last-of-type': {
-      borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
-    },
+    boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
+    backgroundColor: isSelected ? '#E9FFC8' : theme.colors.gray200,
   }),
 )
 
@@ -107,5 +120,5 @@ export const TitleItem = styled.div(({ theme }) => ({
 }))
 
 export const SecondaryTextStyle = styled.div(({ theme }) => ({
-  color: theme.colors.gray700,
+  color: theme.colors.gray600,
 }))
