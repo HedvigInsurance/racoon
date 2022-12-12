@@ -73,69 +73,39 @@ const RecommendedDot = styled.span(({ theme }) => ({
 type RecommendedItemProps = {
   children: React.ReactNode
 }
-const RecommendedItem = ({ children }: RecommendedItemProps) => (
+export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   <RecommendedContainer>
     <RecommendedDot />
     {children}
   </RecommendedContainer>
 )
 
-const TierItemContainer = styled.div<{ isSelected: boolean }>(({ theme, isSelected = false }) => ({
-  cursor: 'pointer',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  padding: theme.space[4],
-  backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
+export const TierItemContainer = styled.div<{ isSelected: boolean }>(
+  ({ theme, isSelected = false }) => ({
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: theme.space[4],
+    backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
 
-  '&:last-of-type': {
-    borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
-  },
-}))
+    '&:last-of-type': {
+      borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
+    },
+  }),
+)
 
-const TitleContainer = styled.div(({ theme }) => ({
+export const TitleContainer = styled.div(({ theme }) => ({
   fontSize: theme.fontSizes[3],
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
 }))
 
-const TitleItem = styled.div(({ theme }) => ({
+export const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
-const SecondaryTextStyle = styled.div(({ theme }) => ({
+export const SecondaryTextStyle = styled.div(({ theme }) => ({
   color: theme.colors.gray700,
 }))
-
-type TierItemProps = {
-  title: string
-  price: string
-  description: string
-  isSelected?: boolean
-  recommendedText?: string
-  children?: React.ReactNode
-  handleClick?: () => void
-} & AccordionPrimitives.AccordionItemProps
-
-export const TierItem = ({
-  title,
-  price,
-  description,
-  isSelected = false,
-  recommendedText = '',
-  handleClick,
-}: TierItemProps) => {
-  return (
-    <TierItemContainer isSelected={isSelected} onClick={handleClick}>
-      <TitleContainer>
-        <TitleItem>{title}</TitleItem>
-        <TitleItem>
-          <SecondaryTextStyle>{price}/mån</SecondaryTextStyle>
-        </TitleItem>
-      </TitleContainer>
-      <SecondaryTextStyle>{description}</SecondaryTextStyle>
-      {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
-    </TierItemContainer>
-  )
-}
