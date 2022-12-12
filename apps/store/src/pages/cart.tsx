@@ -4,10 +4,10 @@ import { CartPage } from '@/components/CartPage/CartPage'
 import { CartPageProps } from '@/components/CartPage/CartPageProps.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { useShopSessionQuery } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import {
   getGlobalStory,
   StoryblokPageProps,
@@ -17,19 +17,15 @@ import {
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-type Props = Pick<StoryblokPageProps, 'globalStory'> & {
-  shopSessionId: string
-}
+type Props = Pick<StoryblokPageProps, 'globalStory'>
 
-const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) => {
-  const { locale } = useCurrentLocale()
-  const { data } = useShopSessionQuery({ variables: { shopSessionId, locale } })
+const NextCartPage: NextPageWithLayout<Props> = (props) => {
+  const { shopSession } = useShopSession()
 
-  if (!data) return null
+  if (!shopSession) return null
 
-  const products: CartPageProps['products'] = data.shopSession.cart.entries.map((item) => {
+  const products: CartPageProps['products'] = shopSession.cart.entries.map((item) => {
     return {
       id: item.id,
       name: item.variant.displayName,
@@ -38,22 +34,20 @@ const NextCartPage: NextPageWithLayout<Props> = ({ shopSessionId, ...props }) =>
     }
   })
 
-  const campaigns: CartPageProps['campaigns'] = data.shopSession.cart.redeemedCampaigns.map(
-    (item) => ({
-      id: item.id,
-      displayName: item.code,
-    }),
-  )
+  const campaigns: CartPageProps['campaigns'] = shopSession.cart.redeemedCampaigns.map((item) => ({
+    id: item.id,
+    displayName: item.code,
+  }))
 
-  const cartCost = data.shopSession.cart.cost
+  const cartCost = shopSession.cart.cost
   const grossAmount = cartCost.gross.amount
   const netAmount = cartCost.net.amount
   const crossOut = grossAmount !== netAmount ? netAmount : undefined
 
   return (
     <CartPage
-      shopSessionId={shopSessionId}
-      cartId={data.shopSession.cart.id}
+      shopSessionId={shopSession.id}
+      cartId={shopSession.cart.id}
       products={products}
       campaigns={campaigns}
       cost={{ net: grossAmount, gross: netAmount, crossOut }}
