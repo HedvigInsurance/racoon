@@ -179,7 +179,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
               </SecondaryTextStyle>
             </>
           ) : (
-            <div>Välj skydd</div>
+            <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
           )}
         </HeaderWithTrigger>
         <Content>
