@@ -129,20 +129,18 @@ const TierItem = ({
   isSelected = false,
   recommendedText = '',
   handleClick,
-}: TierItemProps) => {
-  return (
-    <TierItemContainer isSelected={isSelected} onClick={handleClick}>
-      <TitleContainer>
-        <TitleItem>{title}</TitleItem>
-        <TitleItem>
-          <SecondaryTextStyle>{price}</SecondaryTextStyle>
-        </TitleItem>
-      </TitleContainer>
-      <SecondaryTextStyle>{description}</SecondaryTextStyle>
-      {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
-    </TierItemContainer>
-  )
-}
+}: TierItemProps) => (
+  <TierItemContainer isSelected={isSelected} onClick={handleClick}>
+    <TitleContainer>
+      <TitleItem>{title}</TitleItem>
+      <TitleItem>
+        <SecondaryTextStyle>{price}</SecondaryTextStyle>
+      </TitleItem>
+    </TitleContainer>
+    <SecondaryTextStyle>{description}</SecondaryTextStyle>
+    {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
+  </TierItemContainer>
+)
 
 export type TierSelectorProps = {
   offers: Array<ProductOfferFragment>
@@ -178,23 +176,31 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
             <>
               <div>{selectedOffer.variant.typeOfContract}</div>
               <SecondaryTextStyle>
-                {currencyFormatter.format(selectedOffer.price.amount)}/mån
+                {t('MONTHLY_PRICE', {
+                  displayAmount: currencyFormatter.format(selectedOffer.price.amount),
+                })}
               </SecondaryTextStyle>
             </>
           ) : (
-            <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
+            <span>{t('TIER_SELECTOR_DEFAULT_LABEL')}</span>
           )}
         </HeaderWithTrigger>
         <Content>
           {offers.map((offer) => {
-            const { id, price } = offer
+            const {
+              id,
+              price: { amount },
+            } = offer
+
             return (
               <TierItem
                 key={id}
                 value={id}
                 title={offer.variant.typeOfContract}
                 description="some description here"
-                price={currencyFormatter.format(price.amount)}
+                price={t('MONTHLY_PRICE', {
+                  displayAmount: amount,
+                })}
                 isSelected={selectedOfferId === id}
                 handleClick={() => handleClick(id)}
               />
