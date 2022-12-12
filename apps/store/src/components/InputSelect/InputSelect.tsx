@@ -8,7 +8,7 @@ const Wrapper = styled.div(() => ({
 const StyledChevronIcon = styled(ChevronIcon)(() => ({
   position: 'absolute',
   top: '50%',
-  right: '1.25rem',
+  right: '1.125rem',
   transform: 'translateY(-50%)',
 }))
 
@@ -18,8 +18,15 @@ const StyledSelect = styled.select(({ theme }) => ({
   fontSize: theme.fontSizes[5],
   width: '100%',
   borderRadius: theme.radius.sm,
-  display: 'flex',
-  padding: `${theme.space[3]} ${theme.space[4]}`,
+  padding: `${theme.space[2]} ${theme.space[4]}`,
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+
+  '&:focus': {
+    backgroundColor: theme.colors.gray500,
+  },
 }))
 
 const Placeholder = styled.option(({ theme }) => ({
@@ -55,9 +62,14 @@ export const InputSelect = ({
             onChange={onChange}
             value={value}
             defaultValue={defaultValue}
+            placeholder={placeholder}
             {...rest}
           >
-            {placeholder && <Placeholder value="">{placeholder}</Placeholder>}
+            {placeholder && (
+              <Placeholder value="" disabled selected>
+                {placeholder}
+              </Placeholder>
+            )}
             {options.map(({ name, value }) => (
               <option key={value} value={value}>
                 {name}
