@@ -13,17 +13,26 @@ export default {
   },
 } as ComponentMeta<typeof TextField>
 
-const Template: ComponentStory<typeof TextField> = (props) => {
+const Template: ComponentStory<typeof TextField> = ({ defaultValue, ...props }) => {
   return (
     <>
       <TextField {...props} />
-      <div style={{ marginTop: '2rem' }}></div>
-      <TextField {...props} />
+      <div style={{ marginTop: '0.25rem' }}></div>
+      <TextField {...props} defaultValue={defaultValue} />
     </>
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  placeholder: 'Name',
+export const Large = Template.bind({})
+Large.args = {
+  label: 'Name',
+  variant: 'large',
+  defaultValue: 'John Sculley',
+}
+
+export const Small = Template.bind({})
+Small.args = {
+  label: 'Address',
+  variant: 'small',
+  defaultValue: '786 Franklin Ave.',
 }

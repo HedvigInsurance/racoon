@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react'
-import { useCallback, useState } from 'react'
+import { KeyboardEvent, useCallback, useState } from 'react'
 
 enum AnimationState {
   Idle = 'IDLE',
@@ -15,7 +15,9 @@ export const useHighlightAnimation = () => {
     [AnimationState.Idle]: { backgroundColor: theme.colors.gray300 },
   } as const
 
-  const highlight = useCallback(() => setIsInteractive(true), [])
+  const highlight = useCallback((event?: KeyboardEvent<HTMLElement>) => {
+    if (event && !EXCLUDE_SET.has(event.key)) setIsInteractive(true)
+  }, [])
 
   return {
     highlight,
@@ -27,3 +29,13 @@ export const useHighlightAnimation = () => {
     },
   } as const
 }
+
+const EXCLUDE_SET = new Set([
+  'Tab',
+  'Enter',
+  'ArrowDown',
+  'ArrowUp',
+  'ArrowRight',
+  'ArrowLeft',
+  'Shift',
+])
