@@ -19,7 +19,7 @@ export const ProductDocuments = ({ heading, productData }: Props) => {
   return (
     <ProductDocumentsWrapper>
       <Space y={1}>
-        <ProductDocumentsLabel>{heading}</ProductDocumentsLabel>
+        <HeadingLabel>{heading}</HeadingLabel>
         {productData.variants.flatMap((variant) =>
           variant.documents.map((doc, i) => (
             <ProductDocument key={`${variant.typeOfContract}_${i}`} doc={doc} />
@@ -32,16 +32,12 @@ export const ProductDocuments = ({ heading, productData }: Props) => {
 
 const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
-  // TODO: We need to humanize doc.type here or get displayType from PCMS - waiting for reply on this
   return (
     <DocumentCard>
       <a href={doc.url} target="_blank" rel="noopener noreferrer">
         <CardContent>
           <Text size="m">
             {doc.displayName} <DocumentType>{documentType}</DocumentType>
-          </Text>
-          <Text size="m" color="secondaryText">
-            {doc.type}
           </Text>
         </CardContent>
       </a>
@@ -53,8 +49,6 @@ const ProductDocumentsWrapper = styled.div(({ theme }) => ({
   paddingInline: theme.space[4],
   marginBlock: theme.space[4],
 }))
-
-const ProductDocumentsLabel = styled(HeadingLabel)({})
 
 // TODO: Add hover style to Card or LinkCard component
 // TODO: Provide default card background in app theme

@@ -7,6 +7,7 @@ type Props = SbBaseBlockProps<{
   heading: string
 }>
 
+// TODO: Also use variant context and show docs from selected variant only
 export const ProductDocumentsBlock = ({ blok }: Props) => {
   const { productData } = useProductPageContext()
   const { heading } = blok
