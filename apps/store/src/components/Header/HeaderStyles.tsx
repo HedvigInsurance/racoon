@@ -40,7 +40,7 @@ export const TriggerIcon = styled(ChevronIcon)({
   '[data-state=open] &': { transform: 'rotate(180deg)' },
 })
 
-const navigationTriggerStyles = {
+export const navigationTriggerStyles = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
