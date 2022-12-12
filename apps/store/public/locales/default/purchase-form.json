@@ -24,5 +24,6 @@
   "SECTION_TITLE_YOUR_ADDRESS": "Your address",
   "FIELD_MILEAGE_LABEL": "Annual mileage",
   "LABEL_YES": "Yes",
-  "LABEL_NO": "No"
+  "LABEL_NO": "No",
+  "TIER_SELECTOR_DEFAULT_LABEL": "Choose protection"
 }
