@@ -1,7 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
-import { Track } from '@/services/Track/Track'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -13,12 +12,6 @@ type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
   const contextValue = useShopSessionContextValue(initialShopSessionId)
-
-  const shopSessionId = contextValue?.data?.shopSession.id
-  useEffect(() => {
-    Track.addContext('shopSessionId', shopSessionId)
-  }, [shopSessionId])
-
   return <ShopSessionContext.Provider value={contextValue}>{children}</ShopSessionContext.Provider>
 }
 
