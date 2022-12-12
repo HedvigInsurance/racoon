@@ -84,6 +84,7 @@ export const OfferPresenter = ({
           offers={priceIntent.offers}
           selectedOfferId={selectedOfferId}
           onValueChange={setSelectedOfferId}
+          currencyCode={shopSession.currencyCode}
         />
 
         <Space y={0.25}>

@@ -1,8 +1,7 @@
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
-import { CurrencyCode, ProductOfferFragment } from '@/services/apollo/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
@@ -50,13 +49,18 @@ const TierItem = ({
 export type TierSelectorProps = {
   offers: Array<ProductOfferFragment>
   selectedOfferId: string
+  currencyCode: string
   onValueChange: Dispatch<SetStateAction<string>>
 }
-export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
+export const TierSelector = ({
+  offers,
+  selectedOfferId,
+  currencyCode,
+  onValueChange,
+}: TierSelectorProps) => {
   const { t } = useTranslation()
-  const { shopSession } = useShopSession()
 
-  const currencyFormatter = useCurrencyFormatter(shopSession?.currencyCode ?? CurrencyCode.Sek)
+  const currencyFormatter = useCurrencyFormatter(currencyCode)
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
   const handleClick = (id: string) => {

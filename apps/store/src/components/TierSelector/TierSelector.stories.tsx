@@ -34,4 +34,5 @@ const Template: ComponentStory<typeof TierSelector> = (props) => {
 export const Default = Template.bind({})
 Default.args = {
   offers: MockedOffers,
+  currencyCode: 'SEK',
 }
