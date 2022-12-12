@@ -1,6 +1,6 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Label } from 'ui'
+import { HeadingLabel } from 'ui'
 import * as Statistic from './Statistic'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 const Component = ({ label, description, value }: Props) => {
   return (
     <Statistic.Root>
-      <Label color="#D2E6F1">{label}</Label>
+      <HeadingLabel color="#D2E6F1">{label}</HeadingLabel>
       <Statistic.Description>{description}</Statistic.Description>
       <Statistic.Value>{value}</Statistic.Value>
     </Statistic.Root>

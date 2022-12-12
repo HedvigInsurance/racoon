@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { Label } from 'ui'
+import { HeadingLabel } from 'ui'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import * as Statistic from '@/components/Statistic/Statistic'
@@ -21,7 +21,7 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
     <StyledInsurableLimits {...storyblokEditable(blok)}>
       {productVariant.insurableLimits.map((item) => (
         <Statistic.Root key={item.label}>
-          <Label color="#D2E6F1">{item.label}</Label>
+          <HeadingLabel color="#D2E6F1">{item.label}</HeadingLabel>
           <Statistic.Description>{item.description}</Statistic.Description>
           <Statistic.Value>{item.limit}</Statistic.Value>
         </Statistic.Root>

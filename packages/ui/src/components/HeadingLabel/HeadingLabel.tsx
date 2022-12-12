@@ -16,7 +16,7 @@ export const LabelBase = styled.div<Pick<LabelProps, 'color'>>(({ color, theme }
   borderRadius: theme.radius.xs,
 }))
 
-export const Label = ({ as, children, color }: LabelProps) => (
+export const HeadingLabel = ({ as, children, color }: LabelProps) => (
   <LabelBase as={as} color={color}>
     {children}
   </LabelBase>
