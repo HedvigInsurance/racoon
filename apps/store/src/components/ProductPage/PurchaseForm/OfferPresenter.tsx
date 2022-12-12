@@ -69,7 +69,7 @@ export const OfferPresenter = ({
     displayAmount: formatter.format(selectedOffer.price.amount),
   })
 
-  const cancellationOption = getCancellationOption(priceIntent.cancellation)
+  const cancellationOption = getCancellationOption(priceIntent)
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
@@ -131,11 +131,12 @@ const Separator = styled.div(({ theme }) => ({
   alignSelf: 'stretch',
 }))
 
-const getCancellationOption = (cancellation: PriceIntent['cancellation']): CancellationOption => {
+const getCancellationOption = (priceIntent: PriceIntent): CancellationOption => {
+  const { cancellation, externalInsurer } = priceIntent
   if (cancellation.option === ExternalInsuranceCancellationOption.Iex) {
     return {
       type: 'IEX',
-      companyName: cancellation.externalInsurer?.displayName ?? 'Unknown',
+      companyName: externalInsurer?.displayName ?? 'Unknown',
       requested: cancellation.requested,
     }
   } else {

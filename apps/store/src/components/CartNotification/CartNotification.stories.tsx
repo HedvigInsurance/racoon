@@ -14,8 +14,6 @@ type Props = {
   name: string
   price: number
   currencyCode: string
-  gradientFromColor: string
-  gradientToColor: string
 }
 
 const Template: Story<Props> = (props) => {
@@ -32,8 +30,6 @@ Content.args = {
   name: 'Hedvig Home',
   price: 179,
   currencyCode: 'SEK',
-  gradientFromColor: '#f2ff00',
-  gradientToColor: '#00fff0',
 }
 
 const TemplateWithDialog: Story<Props> = (props) => {
@@ -57,28 +53,16 @@ WithDialog.args = {
   name: 'Hedvig Home',
   price: 179,
   currencyCode: 'SEK',
-  gradientFromColor: '#f2ff00',
-  gradientToColor: '#00fff0',
 }
 
 export default config
 
-const NotificationContent = ({
-  name,
-  price,
-  currencyCode,
-  gradientFromColor,
-  gradientToColor,
-}: Props) => {
+const NotificationContent = ({ name, price, currencyCode }: Props) => {
   const formatter = useCurrencyFormatter(currencyCode)
 
   return (
     <Space y={1.5}>
-      <ProductItem
-        name={name}
-        price={formatter.format(price)}
-        gradient={[gradientFromColor, gradientToColor]}
-      />
+      <ProductItem name={name} price={formatter.format(price)} />
 
       <Space y={0.5}>
         <Button fullWidth>Proceed to cart (1)</Button>

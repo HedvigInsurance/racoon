@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && npx turbo run build --filter=store",
+  "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && yarn turbo run build --filter=store",
   "ignoreCommand": "../../bin/vercel-ignore-step.sh",
   "regions": ["arn1"],
   "github": {

@@ -1,79 +1,36 @@
+import {
+  LAYOUT,
+  livingSpaceField,
+  personalNumberSection,
+  postalCodeField,
+  streetAddressField,
+  yourFamilySection,
+} from '@/services/PriceCalculator/formFragments'
 import { Template } from '../PriceCalculator.types'
 
 export const SE_ACCIDENT: Template = {
   name: 'SE_ACCIDENT',
   sections: [
-    {
-      id: 'your-info',
-      title: { key: 'Your info' },
-      submitLabel: { key: 'Next step' },
-      items: [
-        {
-          field: {
-            type: 'ssn-se',
-            name: 'ssn',
-            label: { key: 'Personal number' },
-            required: true,
-          },
-          layout: { columnSpan: 6 },
-        },
-      ],
-    },
+    personalNumberSection,
     {
       id: 'your-home',
-      title: { key: 'Your home' },
-      submitLabel: { key: 'Next step' },
+      title: { key: 'SECTION_TITLE_YOUR_HOME' },
+      submitLabel: { key: 'SUBMIT_LABEL_PROCEED' },
       items: [
         {
-          field: {
-            type: 'text',
-            name: 'street',
-            label: { key: 'Address' },
-            required: true,
-          },
-          layout: { columnSpan: 6 },
+          field: streetAddressField,
+          layout: LAYOUT.FULL_WIDTH,
         },
         {
-          field: {
-            type: 'text',
-            name: 'zipCode',
-            inputMode: 'numeric',
-            label: { key: 'Postal code' },
-            minLength: 5,
-            maxLength: 5,
-            required: true,
-          },
-          layout: { columnSpan: 3 },
+          field: postalCodeField,
+          layout: LAYOUT.HALF_WIDTH,
         },
         {
-          field: {
-            type: 'number',
-            name: 'livingSpace',
-            label: { key: 'Apartment size' },
-            required: true,
-            min: 0,
-          },
-          layout: { columnSpan: 3 },
+          field: livingSpaceField,
+          layout: LAYOUT.HALF_WIDTH,
         },
       ],
     },
-    {
-      id: 'insured-people',
-      title: { key: 'Insured people' },
-      submitLabel: { key: 'Calculate price' },
-      items: [
-        {
-          field: {
-            type: 'householdSize',
-            name: 'numberCoInsured',
-            label: { key: 'Household size' },
-            required: true,
-            defaultValue: 0,
-            max: 5,
-          },
-          layout: { columnSpan: 6 },
-        },
-      ],
-    },
+    yourFamilySection,
   ],
 }

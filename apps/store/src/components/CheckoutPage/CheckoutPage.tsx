@@ -17,11 +17,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     <>
       <Space y={1}>
         <Header>
-          <Link href={PageLink.cart()} passHref legacyBehavior>
-            <StyledLink>
-              <ArrowBackIcon size="1rem" />
-            </StyledLink>
-          </Link>
+          <StyledLink href={PageLink.cart()}>
+            <ArrowBackIcon size="1rem" />
+          </StyledLink>
           <HedvigLogo width={82} />
         </Header>
 
@@ -47,7 +45,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 name={FormElement.PersonalNumber}
                 required
                 defaultValue={prefilledData.personalNumber ?? undefined}
-                placeholder="ÅÅMMDD-XXXX"
+                label="ÅÅÅÅMMDDXXXX"
               />
               <InputField
                 label="First Name"
@@ -127,7 +125,7 @@ const Header = styled.header(({ theme }) => ({
   position: 'relative',
 }))
 
-const StyledLink = styled.a(({ theme }) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   position: 'absolute',
   left: theme.space[4],
   top: '50%',

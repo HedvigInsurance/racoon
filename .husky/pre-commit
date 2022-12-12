@@ -2,6 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn typecheck
-yarn test
 
 npx lint-staged

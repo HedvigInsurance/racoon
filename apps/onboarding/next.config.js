@@ -1,7 +1,8 @@
+const withTM = require('next-transpile-modules')
 const { i18n } = require('./next-i18next.config')
 
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   i18n,
   images: {
@@ -21,3 +22,5 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
 }
+
+module.exports = withTM(['ui'])(nextConfig)

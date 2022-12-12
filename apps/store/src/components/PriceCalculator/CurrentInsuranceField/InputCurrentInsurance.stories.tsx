@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof InputCurrentInsurance> = (props) => {
 }
 export const Default = Template.bind({})
 Default.args = {
-  label: 'Are you already insured?',
+  label: 'Do you already have home insurance?',
   companyOptions: [
     {
       name: 'Folksam',

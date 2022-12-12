@@ -20,7 +20,7 @@ export const CartCard = ({ title, price, currency, onSubmit, loading }: CartCard
   return (
     <Dialog.Root>
       <ProductCard>
-        <Pillow size="small" fromColor="#C0E4F3" toColor="#99AAD8" />
+        <Pillow size="small" />
         <Content>
           <HeaderElement>
             <div>{title}</div>

@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
@@ -17,7 +18,7 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
-    <Wrapper {...storyblokEditable(blok)} spacing={!blok.fullBleed}>
+    <Wrapper {...storyblokEditable(blok)} includePadding={!blok.fullBleed}>
       <Image
         src={blok.image.filename}
         roundedCorners={!blok.fullBleed}
@@ -34,20 +35,28 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 }
 ImageBlock.blockName = 'image'
 
-const Wrapper = styled.div<{ spacing: boolean }>(({ theme, spacing = true }) => ({
-  paddingLeft: spacing ? theme.space[4] : 0,
-  paddingRight: spacing ? theme.space[4] : 0,
-  position: 'relative',
-}))
+type WrapperProps = { includePadding: boolean }
 
-const Image = styled(NextImage)<{ roundedCorners: boolean }>(({ theme, roundedCorners }) => ({
-  ...(roundedCorners && {
-    borderRadius: theme.radius.md,
-    [mq.lg]: {
-      borderRadius: theme.radius.xl,
-    },
+const Wrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperProps>(
+  ({ theme, includePadding }) => ({
+    paddingLeft: includePadding ? theme.space[4] : 0,
+    paddingRight: includePadding ? theme.space[4] : 0,
+    position: 'relative',
   }),
-}))
+)
+
+type ImageProps = { roundedCorners: boolean }
+
+const Image = styled(NextImage, { shouldForwardProp: isPropValid })<ImageProps>(
+  ({ theme, roundedCorners }) => ({
+    ...(roundedCorners && {
+      borderRadius: theme.radius.md,
+      [mq.lg]: {
+        borderRadius: theme.radius.xl,
+      },
+    }),
+  }),
+)
 
 const BodyWrapper = styled.div(({ theme }) => ({
   position: 'absolute',
@@ -56,7 +65,7 @@ const BodyWrapper = styled.div(({ theme }) => ({
   right: theme.space[4],
 }))
 
-const getSizeFromURL = (url: string) => {
+export const getSizeFromURL = (url: string) => {
   const [, rawWidth, rawHeight] = url.match(/\/(\d+)x(\d+)\//) || []
 
   const width = parseInt(rawWidth, 10) || 0

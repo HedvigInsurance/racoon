@@ -35,16 +35,14 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
         </Heading>
         <CountryOptionsContainer>
           {Object.entries(countries).map(([country, countryData]) => (
-            <Link
+            <LinkButton
               key={country}
+              as={Link}
               href={`/${toRoutingLocale(countryData.defaultLocale)}`}
-              passHref
-              legacyBehavior
+              onClick={() => onHandleClick(countryData.defaultLocale)}
             >
-              <LinkButton onClick={() => onHandleClick(countryData.defaultLocale)}>
-                {TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}
-              </LinkButton>
-            </Link>
+              {TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`]}
+            </LinkButton>
           ))}
         </CountryOptionsContainer>
       </Space>
