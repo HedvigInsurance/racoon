@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
+import { useTranslation } from 'next-i18next'
 import { Dispatch, PropsWithChildren, ReactElement, SetStateAction } from 'react'
 import { ChevronIcon } from 'ui'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 
-export const Root = AccordionPrimitives.Root
-export const Content = AccordionPrimitives.Content
+const Root = AccordionPrimitives.Root
+const Content = AccordionPrimitives.Content
 
-export const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
+const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
   padding: theme.space[2],
 }))
 
@@ -47,7 +48,7 @@ const TriggerIcon = styled(ChevronIcon)({
   '[data-state=open] &': { transform: 'rotate(180deg)' },
 })
 
-export const HeaderWithTrigger = ({
+const HeaderWithTrigger = ({
   children,
   icon = <TriggerIcon size="1rem" />,
 }: HeaderWithTriggerProps) => {
@@ -76,7 +77,7 @@ const RecommendedDot = styled.span(({ theme }) => ({
 type RecommendedItemProps = {
   children: React.ReactNode
 }
-export const RecommendedItem = ({ children }: RecommendedItemProps) => (
+const RecommendedItem = ({ children }: RecommendedItemProps) => (
   <RecommendedContainer>
     <RecommendedDot />
     {children}
@@ -107,11 +108,11 @@ const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
-export const SecondaryTextStyle = styled.div(({ theme }) => ({
+const SecondaryTextStyle = styled.div(({ theme }) => ({
   color: theme.colors.gray700,
 }))
 
-export type TierItemProps = {
+type TierItemProps = {
   title: string
   price: string
   description: string
@@ -121,7 +122,7 @@ export type TierItemProps = {
   handleClick?: () => void
 } & AccordionPrimitives.AccordionItemProps
 
-export const TierItem = ({
+const TierItem = ({
   title,
   price,
   description,
@@ -134,7 +135,7 @@ export const TierItem = ({
       <TitleContainer>
         <TitleItem>{title}</TitleItem>
         <TitleItem>
-          <SecondaryTextStyle>{price}/mån</SecondaryTextStyle>
+          <SecondaryTextStyle>{price}</SecondaryTextStyle>
         </TitleItem>
       </TitleContainer>
       <SecondaryTextStyle>{description}</SecondaryTextStyle>
@@ -149,6 +150,8 @@ export type TierSelectorProps = {
   onValueChange: Dispatch<SetStateAction<string>>
 }
 export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
+  const { t } = useTranslation()
+
   const currencyFormatter = useCurrencyFormatter(offers[0].price.currencyCode)
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
