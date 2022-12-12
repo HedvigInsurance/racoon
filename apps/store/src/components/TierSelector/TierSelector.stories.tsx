@@ -27,7 +27,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
 ]
 
 const Template: ComponentStory<typeof TierSelector> = (props) => {
-  const [selected, setSelected] = useState(props.selectedOfferId)
+  const [selected, setSelected] = useState(MockedOffers[0].id)
   return <TierSelector {...props} onValueChange={setSelected} selectedOfferId={selected} />
 }
 
