@@ -88,7 +88,7 @@ export const TierSelector = ({
           <HeaderWithTrigger>
             {selectedOffer ? (
               <>
-                <div>Skyddsnivå</div>
+                <div>{t('TIER_SELECTOR_SELECTED_LABEL')}</div>
                 <div>{selectedOffer.variant.typeOfContract}</div>
               </>
             ) : (
@@ -101,13 +101,13 @@ export const TierSelector = ({
                 key={offer.id}
                 value={offer.id}
                 title={offer.variant.typeOfContract}
-                description="some description here"
+                description="Description here"
                 price={t('MONTHLY_PRICE', {
                   displayAmount: currencyFormatter.format(offer.price.amount),
                 })}
                 isSelected={selectedOfferId === offer.id}
                 handleClick={() => handleClick(offer.id)}
-                recommendedText={'Hey there'}
+                recommendedText={'Recommended'}
               />
             ))}
           </Content>
