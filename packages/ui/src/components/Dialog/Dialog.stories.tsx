@@ -27,9 +27,7 @@ export const Default: Story = () => {
       <DialogContent>
         <Wrapper>
           <Space y={1}>
-            <Heading headingLevel="h1" variant="xs" colorVariant="dark">
-              This is a sample dialog!
-            </Heading>
+            <Heading as="h1">This is a sample dialog!</Heading>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nibh lacus, rutrum vitae
               quam ut, elementum elementum nunc.

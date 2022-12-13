@@ -1,12 +1,13 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import { HeadingOLD, mq, Space } from 'ui'
+import { mq, Space } from 'ui'
 import { BodyText } from '@/components/BodyText'
 import { Header } from '@/components/Nav/Header'
 import { useTrackEvent } from '@/hooks/useTrackEvent'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
+import { Heading } from '../Heading/Heading'
 import { LandingPageProps } from '../LandingPage/LandingPage'
 import { ClickableCard } from './ClickableCard'
 
@@ -80,9 +81,9 @@ export const SwedishLandingPage = ({ insurances, referer }: SwedishLandingPagePr
         <Space y={{ base: 1.5, md: 5 }}>
           <ContentCard>
             <Space y={1.5}>
-              <HeadingOLD variant="m" headingLevel="h1" colorVariant="dark">
+              <Heading variant="m" headingLevel="h1" colorVariant="dark">
                 {t('LANDING_PAGE_HEADLINE')}
-              </HeadingOLD>
+              </Heading>
               <BodyText variant={1} colorVariant="medium" displayBlock>
                 {t('LANDING_PAGE_SUBHEADER_NO_ADDITIONAL_COVERAGE')}
               </BodyText>
