@@ -5,6 +5,7 @@ import { Dialog } from 'ui'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
+  usePriceIntentInsurelyUpdateMutation,
 } from '@/services/apollo/generated'
 import { InsurelyIframe } from '@/services/Insurely/Insurely'
 import {
@@ -23,6 +24,7 @@ type Props = {
 
 export const CurrentInsuranceField = (props: Props) => {
   const { label, productName, priceIntentId, externalInsurer } = props
+  const { locale } = useCurrentLocale()
   const companyOptions = useCompanyOptions(productName)
   const updateExternalInsurer = useUpdateExternalInsurer(priceIntentId)
 
@@ -32,16 +34,25 @@ export const CurrentInsuranceField = (props: Props) => {
     updateExternalInsurer(company)
   }
 
-  const handleInsurelyCollection = useCallback((collectionId: string) => {
-    // @TODO: send to API
-    console.log('COLLECTION', collectionId)
-  }, [])
+  const closeModal = useCallback(() => setIsInsurelyModalOpen(false), [])
+
+  const [dataCollectionId, setDataCollectionId] = useState<string | null>(null)
+  const [updateDataCollectionId] = usePriceIntentInsurelyUpdateMutation({
+    onError(error) {
+      console.warn(error)
+    },
+  })
 
   const handleInsurelyCompleted = useCallback(() => {
-    setIsInsurelyModalOpen(false)
-  }, [])
-
-  const handleInsurelyClose = useCallback(() => setIsInsurelyModalOpen(false), [])
+    if (dataCollectionId) {
+      updateDataCollectionId({ variables: { priceIntentId, dataCollectionId, locale } })
+    } else {
+      datadogLogs.logger.error('Completed Insurely without getting data collection ID', {
+        priceIntentId,
+      })
+    }
+    closeModal()
+  }, [updateDataCollectionId, priceIntentId, locale, dataCollectionId, closeModal])
 
   return (
     <>
@@ -62,8 +73,8 @@ export const CurrentInsuranceField = (props: Props) => {
                 company={'se-demo'}
                 // @TODO: get from price intent
                 personalNumber={'200001020000'}
-                onCollection={handleInsurelyCollection}
-                onClose={handleInsurelyClose}
+                onCollection={setDataCollectionId}
+                onClose={closeModal}
                 onCompleted={handleInsurelyCompleted}
               />
             </StyledDialogWindow>
