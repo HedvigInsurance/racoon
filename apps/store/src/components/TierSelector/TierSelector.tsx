@@ -61,7 +61,7 @@ export const TierSelector = ({
   currencyCode,
   onValueChange,
 }: TierSelectorProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('purchase-form')
   const currencyFormatter = useCurrencyFormatter(currencyCode)
 
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
