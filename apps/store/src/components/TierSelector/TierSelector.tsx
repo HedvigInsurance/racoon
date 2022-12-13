@@ -6,7 +6,7 @@ import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
-  RecommendedItem,
+  SuggestedItem,
   SecondaryTextStyle,
   TierItemContainer,
   TitleContainer,
@@ -23,7 +23,7 @@ type TierItemProps = {
   price: string
   description: string
   isSelected?: boolean
-  recommendedText?: string
+  suggestedText?: string
   children?: React.ReactNode
   handleClick?: () => void
 } & AccordionPrimitives.AccordionItemProps
@@ -33,7 +33,7 @@ const TierItem = ({
   price,
   description,
   isSelected = false,
-  recommendedText = '',
+  suggestedText = '',
   handleClick,
 }: TierItemProps) => (
   <TierItemWrapper isSelected={isSelected} onClick={handleClick}>
@@ -45,10 +45,12 @@ const TierItem = ({
         </TitleItem>
       </TitleContainer>
       <SecondaryTextStyle>{description}</SecondaryTextStyle>
-      {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
+      {suggestedText ? <SuggestedItem>{suggestedText}</SuggestedItem> : null}
     </TierItemContainer>
   </TierItemWrapper>
 )
+
+const tierSelectorValue = 'tier-selector-item' // needed for radix to handle open/close
 
 export type TierSelectorProps = {
   offers: Array<ProductOfferFragment>
@@ -85,7 +87,7 @@ export const TierSelector = ({
         name={FormElement.ProductOfferId}
       />
       <Root type="multiple">
-        <Item value={'item-1'}>
+        <Item value={tierSelectorValue}>
           <HeaderWithTrigger>
             {selectedOffer ? (
               <>
@@ -108,7 +110,7 @@ export const TierSelector = ({
                 })}
                 isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}
-                recommendedText={'Recommended'}
+                suggestedText={'Suggested'}
               />
             ))}
           </Content>

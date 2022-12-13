@@ -60,7 +60,7 @@ const RecommendedContainer = styled.div(({ theme }) => ({
   paddingTop: theme.space[2],
 }))
 
-const RecommendedDot = styled.span(({ theme }) => ({
+const SuggestedDot = styled.span(({ theme }) => ({
   display: 'inline-block',
   height: theme.radius.sm,
   width: theme.radius.sm,
@@ -69,13 +69,13 @@ const RecommendedDot = styled.span(({ theme }) => ({
   marginRight: '.5rem',
 }))
 
-type RecommendedItemProps = {
+type SuggestedItemProps = {
   children: React.ReactNode
 }
 
-export const RecommendedItem = ({ children }: RecommendedItemProps) => (
+export const SuggestedItem = ({ children }: SuggestedItemProps) => (
   <RecommendedContainer>
-    <RecommendedDot />
+    <SuggestedDot />
     {children}
   </RecommendedContainer>
 )
