@@ -17,7 +17,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   alignItems: 'center',
   textAlign: 'center',
   justifyContent: 'space-between',
-  background: theme.colors.gray300,
+  backgroundColor: theme.colors.gray200,
   borderRadius: theme.radius.xs,
   padding: `0 ${theme.space[4]}`,
 
