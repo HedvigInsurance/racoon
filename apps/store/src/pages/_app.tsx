@@ -1,8 +1,9 @@
 import { ApolloProvider } from '@apollo/client'
+import { Global, ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
-import { ThemeProvider } from 'ui'
+import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
 import {
   GTMAppScript,
@@ -46,7 +47,8 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <ApolloProvider client={apolloClient}>
-        <ThemeProvider>
+        <Global styles={globalStyles} />
+        <ThemeProvider theme={theme}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
           </ShopSessionProvider>
