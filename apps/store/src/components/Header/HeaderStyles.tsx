@@ -31,7 +31,6 @@ export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Con
   [mq.md]: {
     position: 'absolute',
     top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
-    left: '0.5rem',
   },
 }))
 
@@ -107,6 +106,5 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
     padding: `${theme.space[4]} 0`,
     borderRadius: '0.5rem',
     backgroundColor: theme.colors.gray100,
-    marginTop: theme.space[6],
   },
 }))
