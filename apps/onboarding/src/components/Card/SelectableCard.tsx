@@ -2,8 +2,8 @@ import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { mq } from '../../lib/media-query'
-import { getColor } from '../../lib/theme/theme'
+import { mq } from 'ui/src/lib/media-query'
+import { getColor } from 'ui/src/lib/theme/theme'
 import { CardContent, CardProps, cardStyle } from './Card'
 
 export type SelectableCardProps = CardProps & {

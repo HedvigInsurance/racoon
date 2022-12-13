@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import { Space } from '../Space'
+import { Space } from 'ui/src/components/Space'
 import { Card, CardContent } from './Card'
 import { SelectableCard as SelectableCardComponent } from './SelectableCard'
 
