@@ -6,9 +6,9 @@ import { CartInventory } from '@/components/CartInventory/CartInventory'
 import * as InventoryItem from '@/components/CartInventory/InventoryItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Text } from '@/components/Text/Text'
+import { fromNow } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { fromNow } from './ConfirmationPage.helpers'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
