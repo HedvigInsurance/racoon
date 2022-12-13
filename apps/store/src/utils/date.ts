@@ -13,3 +13,10 @@ export const formatAPIDate = (date: Date) => {
 }
 
 export const formatInputDateValue = formatAPIDate
+
+export const fromNow = (dateObj: Date, locale: string) => {
+  const today = new Date()
+  const diff = Math.abs(today.getTime() - dateObj.getTime())
+  const diffDays = Math.floor(diff / (1000 * 3600 * 24))
+  return diffDays === 0 ? 'today' : dateObj.toLocaleDateString(locale)
+}

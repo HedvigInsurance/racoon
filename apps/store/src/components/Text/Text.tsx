@@ -10,7 +10,7 @@ type TypographyProps = {
   as?: 'p' | 'span'
   align?: 'center' | 'left' | 'right'
   color?: UIColor
-  size: FontSize
+  size?: FontSize
   children: ReactNode
   className?: string
 }
@@ -22,7 +22,7 @@ const elementConfig = {
 const TextElement = styled(
   'span',
   elementConfig,
-)<TypographyProps>(({ theme, align, color, size }) => ({
+)<TypographyProps>(({ theme, align, color, size = 'm' }) => ({
   color: color ? theme.colors[color] : 'inherit',
   fontSize: theme.fontSizes[FONT_SIZE_MAP[size]],
   ...(align && { textAlign: align }),

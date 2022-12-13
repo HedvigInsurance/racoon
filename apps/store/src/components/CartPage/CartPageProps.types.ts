@@ -1,13 +1,20 @@
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-export type ProductData = { id: string; name: string; cost: number; currency: string }
+export type CartEntry = {
+  offerId: string
+  title: string
+  cost: number
+  currencyCode: string
+  startDate?: Date
+}
+
 type CampaignData = { id: string; displayName: string }
-type CostData = { crossOut?: number; net: number; gross: number }
+export type CostData = { currencyCode: string; net: number; crossOut?: number }
 
 export type CartPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
   shopSessionId: string
   cartId: string
-  products: Array<ProductData>
   cost: CostData
   campaigns: Array<CampaignData>
+  entries: Array<CartEntry>
 }
