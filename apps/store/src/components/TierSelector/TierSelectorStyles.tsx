@@ -6,7 +6,6 @@ import { ChevronIcon } from 'ui'
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
 export const Item = AccordionPrimitives.Item
-
 const Header = AccordionPrimitives.Header
 
 const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
@@ -37,6 +36,7 @@ const CenteredHeader = styled.div({
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
 }
+
 const TriggerIcon = styled(ChevronIcon)({
   transition: 'transform 300ms',
   '[data-state=open] &': { transform: 'rotate(180deg)' },
@@ -55,6 +55,7 @@ export const HeaderWithTrigger = ({
     </Header>
   )
 }
+
 const RecommendedContainer = styled.div(({ theme }) => ({
   paddingTop: theme.space[2],
 }))
@@ -71,6 +72,7 @@ const RecommendedDot = styled.span(({ theme }) => ({
 type RecommendedItemProps = {
   children: React.ReactNode
 }
+
 export const RecommendedItem = ({ children }: RecommendedItemProps) => (
   <RecommendedContainer>
     <RecommendedDot />

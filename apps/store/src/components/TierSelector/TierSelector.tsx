@@ -105,7 +105,7 @@ export const TierSelector = ({
                 price={t('MONTHLY_PRICE', {
                   displayAmount: currencyFormatter.format(offer.price.amount),
                 })}
-                isSelected={selectedOfferId === offer.id}
+                isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}
                 recommendedText={'Recommended'}
               />
