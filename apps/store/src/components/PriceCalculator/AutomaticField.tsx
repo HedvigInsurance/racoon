@@ -46,12 +46,14 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
     case 'number':
       return (
         <TextField
-          type="number"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="off"
           name={field.name}
           label={translateLabel(field.label)}
           min={field.min}
           max={field.max}
-          inputMode="numeric"
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
