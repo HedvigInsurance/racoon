@@ -22,6 +22,11 @@ query ProductData($productName: String!, $locale: String!) {
         limit
         description
       }
+      documents(locale: $locale) {
+        type
+        displayName
+        url
+      }
     }
   }
 }

@@ -46,6 +46,7 @@ export const colors = {
   dark: gray[900],
   light: gray[100],
   lavender: purple[500],
+  secondaryText: gray[500],
 }
 
 export type UIColor = keyof typeof colors

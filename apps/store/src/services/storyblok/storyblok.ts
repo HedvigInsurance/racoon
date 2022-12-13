@@ -23,6 +23,7 @@ import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
+import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
@@ -154,9 +155,11 @@ export const initStoryblok = () => {
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
+    PerilsBlock,
     ProductPageBlock,
     PriceCalculatorBlock,
     ProductCardBlock,
+    ProductDocumentsBlock,
     ProductGridBlock,
     ProductSlideshowBlock,
     ProductSummaryBlock,
@@ -166,7 +169,6 @@ export const initStoryblok = () => {
     TimelineItemBlock,
     TextBlock,
     TopPickCardBlock,
-    PerilsBlock,
     VideoBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
