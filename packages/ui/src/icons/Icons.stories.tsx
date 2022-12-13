@@ -1,35 +1,41 @@
+import styled from '@emotion/styled'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { ArrowForwardIcon } from './ArrowIcon'
-import { CheckIcon } from './CheckIcon'
-import { CrossIcon } from './CrossIcon'
-import { MailIcon } from './MailIcon'
-import { PhoneIcon } from './PhoneIcon'
-import { IconRootProps } from './Root'
-import { TickIcon } from './TickIcon'
+import * as AllIcons from './index'
 
-export default {
-  title: 'Icons',
-  component: ArrowForwardIcon,
-  argsTypes: { onClick: { action: 'clicked' } },
-} as ComponentMeta<typeof ArrowForwardIcon>
+const AllIconNames = Object.keys(AllIcons)
 
-const Template: ComponentStory<typeof MailIcon> = (props: IconRootProps) => {
+type IconProps = {
+  icon: string
+}
+const Icon = ({ icon }: IconProps) => {
+  const Component = AllIcons[icon as keyof typeof AllIcons]
+  return <Component />
+}
+
+const IconWrapper = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  paddingBottom: '1rem',
+})
+
+const Template: ComponentStory<typeof Icon> = () => {
   return (
-    <div>
-      <MailIcon {...props} />
-      <div style={{ paddingBottom: '1rem' }}></div>
-      <PhoneIcon {...props} />
-      <div style={{ paddingBottom: '1rem' }}></div>
-      <ArrowForwardIcon {...props} />
-      <div style={{ paddingBottom: '1rem' }}></div>
-      <CrossIcon {...props} />
-      <div style={{ paddingBottom: '1rem' }}></div>
-      <CheckIcon {...props} />
-      <div style={{ paddingBottom: '1rem' }}></div>
-      <TickIcon {...props} />
-    </div>
+    <>
+      {AllIconNames.map((icon) => (
+        <IconWrapper>
+          <div>{icon}</div>
+          <Icon icon={icon} />
+        </IconWrapper>
+      ))}
+    </>
   )
 }
 
 export const Default = Template.bind({})
-Default.args = {}
+
+export default {
+  title: 'Icons',
+  component: Icon,
+} as ComponentMeta<typeof Icon>
