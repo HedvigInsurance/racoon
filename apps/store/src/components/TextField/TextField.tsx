@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
@@ -38,8 +39,12 @@ export const TextField = ({ label, variant = 'large', ...props }: Props) => {
 }
 
 type WrapperProps = { active: boolean }
+const checkProps = { shouldForwardProp: isPropValid }
 
-const LargeWrapper = styled(motion.div)<WrapperProps>(({ theme, active }) => ({
+const LargeWrapper = styled(
+  motion.div,
+  checkProps,
+)<WrapperProps>(({ theme, active }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',

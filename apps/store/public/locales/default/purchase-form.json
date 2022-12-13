@@ -25,5 +25,6 @@
   "FIELD_MILEAGE_LABEL": "Annual mileage",
   "LABEL_YES": "Yes",
   "LABEL_NO": "No",
-  "TIER_SELECTOR_DEFAULT_LABEL": "Choose protection"
+  "TIER_SELECTOR_DEFAULT_LABEL": "Choose coverage",
+  "TIER_SELECTOR_SELECTED_LABEL": "Coverage level"
 }

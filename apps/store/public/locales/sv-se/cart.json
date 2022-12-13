@@ -1,8 +1,8 @@
 {
   "CART_EMPTY_SUMMARY": "Din vagn är tom",
-  "CART_PAGE_HEADING": "Varukorg",
   "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkod",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "VIEW_ENTRY_DETAILS_BUTTON": "Detaljer",
-  "CART_ENTRY_DATE_LABEL": "Startar {{date}}"
+  "CART_ENTRY_DATE_LABEL": "Startar {{date}}",
+  "CART_PAGE_HEADING": "Varukorg"
 }

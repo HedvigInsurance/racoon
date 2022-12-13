@@ -31,4 +31,5 @@ export enum CountryLabel {
 export enum I18nNamespace {
   Common = 'common',
   Cart = 'cart',
+  Checkout = 'checkout',
 }

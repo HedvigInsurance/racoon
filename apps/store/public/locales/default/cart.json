@@ -1,9 +1,9 @@
 {
   "CART_EMPTY_SUMMARY": "Your cart is empty",
   "GO_TO_STORE_BUTTON": "Go to Store",
-  "CART_PAGE_HEADING": "Cart",
   "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
   "REMOVE_ENTRY_BUTTON": "Remove",
   "VIEW_ENTRY_DETAILS_BUTTON": "Details",
-  "CART_ENTRY_DATE_LABEL": "Starts {{date}}"
+  "CART_ENTRY_DATE_LABEL": "Starts {{date}}",
+  "CART_PAGE_HEADING": "Cart"
 }

@@ -25,5 +25,6 @@
   "FIELD_MILEAGE_LABEL": "Årlig körsträcka",
   "LABEL_YES": "Ja",
   "LABEL_NO": "Nej",
-  "TIER_SELECTOR_DEFAULT_LABEL": "Välj skydd"
+  "TIER_SELECTOR_DEFAULT_LABEL": "Välj skydd",
+  "TIER_SELECTOR_SELECTED_LABEL": "Skyddsnivå"
 }
