@@ -118,6 +118,10 @@ export const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
-export const SecondaryTextStyle = styled.div(({ theme }) => ({
+export const SecondaryText = styled.div(({ theme }) => ({
   color: theme.colors.gray600,
+}))
+
+export const PriceText = styled.div<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+  color: isSelected ? theme.colors.gray900 : theme.colors.gray600,
 }))

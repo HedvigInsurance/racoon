@@ -7,7 +7,7 @@ import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
   SuggestedItem,
-  SecondaryTextStyle,
+  SecondaryText,
   TierItemContainer,
   TitleContainer,
   TitleItem,
@@ -16,6 +16,7 @@ import {
   HeaderWithTrigger,
   Content,
   TierItemWrapper,
+  PriceText,
 } from './TierSelectorStyles'
 
 type TierItemProps = {
@@ -41,10 +42,10 @@ const TierItem = ({
       <TitleContainer>
         <TitleItem>{title}</TitleItem>
         <TitleItem>
-          <SecondaryTextStyle>{price}</SecondaryTextStyle>
+          <PriceText isSelected={isSelected}>{price}</PriceText>
         </TitleItem>
       </TitleContainer>
-      <SecondaryTextStyle>{description}</SecondaryTextStyle>
+      <SecondaryText>{description}</SecondaryText>
       {suggestedText ? <SuggestedItem>{suggestedText}</SuggestedItem> : null}
     </TierItemContainer>
   </TierItemWrapper>
