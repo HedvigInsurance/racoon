@@ -5,10 +5,7 @@ import { ChevronIcon } from 'ui'
 
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
-
-export const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
-  padding: theme.space[2],
-}))
+export const Item = AccordionPrimitives.Item
 
 const Header = AccordionPrimitives.Header
 
@@ -20,7 +17,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   alignItems: 'center',
   textAlign: 'center',
   justifyContent: 'space-between',
-  background: theme.colors.gray200,
+  background: theme.colors.gray300,
   borderRadius: theme.radius.xs,
   padding: `0 ${theme.space[4]}`,
 
