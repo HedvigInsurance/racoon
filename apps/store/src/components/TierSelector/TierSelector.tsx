@@ -1,8 +1,7 @@
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
-import { CurrencyCode, ProductOfferFragment } from '@/services/apollo/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
@@ -53,12 +52,18 @@ const TierItem = ({
 export type TierSelectorProps = {
   offers: Array<ProductOfferFragment>
   selectedOfferId: string
+  currencyCode: string
   onValueChange: Dispatch<SetStateAction<string>>
 }
-export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
+export const TierSelector = ({
+  offers,
+  selectedOfferId,
+  currencyCode,
+  onValueChange,
+}: TierSelectorProps) => {
   const { t } = useTranslation()
-  const { shopSession } = useShopSession()
-  const currencyFormatter = useCurrencyFormatter(shopSession?.currencyCode ?? CurrencyCode.Sek)
+  const currencyFormatter = useCurrencyFormatter(currencyCode)
+
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
   const handleClick = (id: string) => {
@@ -70,7 +75,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
   }
 
   return (
-    <Root type="multiple">
+    <>
       <input
         type="text"
         hidden
@@ -78,41 +83,36 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
         value={selectedOfferId}
         name={FormElement.ProductOfferId}
       />
-      <Item value={selectedOfferId}>
-        <HeaderWithTrigger>
-          {selectedOffer ? (
-            <>
-              <div>Skyddsnivå</div>
-              <div>{selectedOffer.variant.typeOfContract}</div>
-            </>
-          ) : (
-            <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
-          )}
-        </HeaderWithTrigger>
-        <Content>
-          {offers.map((offer) => {
-            const {
-              id,
-              price: { amount },
-            } = offer
-
-            return (
+      <Root type="multiple">
+        <Item value={'item-1'}>
+          <HeaderWithTrigger>
+            {selectedOffer ? (
+              <>
+                <div>Skyddsnivå</div>
+                <div>{selectedOffer.variant.typeOfContract}</div>
+              </>
+            ) : (
+              <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
+            )}
+          </HeaderWithTrigger>
+          <Content>
+            {offers.map((offer) => (
               <TierItem
-                key={id}
-                value={id}
+                key={offer.id}
+                value={offer.id}
                 title={offer.variant.typeOfContract}
                 description="some description here"
                 price={t('MONTHLY_PRICE', {
-                  displayAmount: currencyFormatter.format(amount),
+                  displayAmount: currencyFormatter.format(offer.price.amount),
                 })}
-                isSelected={selectedOfferId === id}
-                handleClick={() => handleClick(id)}
+                isSelected={selectedOfferId === offer.id}
+                handleClick={() => handleClick(offer.id)}
                 recommendedText={'Hey there'}
               />
-            )
-          })}
-        </Content>
-      </Item>
-    </Root>
+            ))}
+          </Content>
+        </Item>
+      </Root>
+    </>
   )
 }
