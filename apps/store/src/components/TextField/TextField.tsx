@@ -69,6 +69,7 @@ const LargeLabel = styled.label(({ theme }) => ({
   fontSize: theme.fontSizes[5],
   color: theme.colors.gray700,
   padding: theme.space[4],
+  whiteSpace: 'nowrap',
 }))
 
 const LargeInput = styled.input(({ theme }) => ({
