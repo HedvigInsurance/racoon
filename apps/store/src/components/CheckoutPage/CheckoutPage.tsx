@@ -1,23 +1,51 @@
+import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { Button, CrossIcon, Heading, Space } from 'ui'
+import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
+import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
+import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TextField } from '@/components/TextField/TextField'
+import * as Auth from '@/services/Auth/Auth'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { BankIdIcon } from './BankIdIcon'
+import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
+import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { cart, loading, prefilledData } = props
+  const { checkoutId, checkoutSigningId, cart, prefilledData } = props
   const { t } = useTranslation(I18nNamespace.Checkout)
 
+  const { shopSession } = useShopSession()
+  const router = useRouter()
+  const apolloClient = useApolloClient()
+  const [handleSubmitSign, { loading }] = useHandleSubmitCheckout({
+    checkoutId,
+    checkoutSigningId,
+    onSuccess(accessToken) {
+      Auth.save(accessToken)
+      setupShopSessionServiceClientSide(apolloClient).reset()
+      const shopSessionId = shopSession?.id
+      if (!shopSessionId) {
+        throw new Error('shopSessionId must exists at this point')
+      }
+      router.push(PageLink.checkoutPayment({ shopSessionId }))
+    },
+  })
+
   return (
-    <Space y={1}>
+    <Wrapper y={1}>
       <div>
         <Header>
           <Heading as="h1" variant="standard.24">
@@ -28,9 +56,28 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <CrossIcon size="1.5rem" />
           </Link>
         </Header>
-
-        <HorizontalLine />
       </div>
+
+      <Section>
+        <CartCollapsible
+          title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
+          cost={cart.cost}
+        >
+          <CartCollapsibleInner>
+            <CartEntryList>
+              {cart.entries.map((item) => (
+                <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+              ))}
+            </CartEntryList>
+            <HorizontalLine />
+            <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+            <HorizontalLine />
+            <CostSummary {...cart.cost} />
+          </CartCollapsibleInner>
+        </CartCollapsible>
+      </Section>
+
+      <HorizontalLineStandalone />
 
       <Section y={1}>
         <SpaceBetween>
@@ -41,38 +88,44 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           <Text size="l">{t('FORM_HELP_LABEL')}</Text>
         </SpaceBetween>
 
-        <Space y={0.25}>
-          <PersonalNumberField
-            name={FormElement.PersonalNumber}
-            label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-            required
-            defaultValue={prefilledData.personalNumber ?? undefined}
-          />
-          <TextField
-            type="email"
-            label={t('FORM_EMAIL_LABEL')}
-            name={FormElement.Email}
-            required
-            defaultValue={prefilledData.email ?? undefined}
-          />
-          <Space y={0.5}>
-            <Button fullWidth disabled={loading}>
-              <SpaceFlex space={0.5}>
-                <BankIdIcon />
-                {t('SIGN_BUTTON', { count: cart.entries.length })}
-              </SpaceFlex>
-            </Button>
-            <Text size="s" color="gray600" align="center">
-              {t('SIGN_DISCLAIMER')}
-            </Text>
+        <form onSubmit={handleSubmitSign}>
+          <Space y={0.25}>
+            <PersonalNumberField
+              name={FormElement.PersonalNumber}
+              label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+              required
+              defaultValue={prefilledData.personalNumber ?? undefined}
+            />
+            <TextField
+              type="email"
+              label={t('FORM_EMAIL_LABEL')}
+              name={FormElement.Email}
+              required
+              defaultValue={prefilledData.email ?? undefined}
+            />
+            <Space y={0.5}>
+              <Button fullWidth disabled={loading}>
+                <SpaceFlex space={0.5}>
+                  <BankIdIcon />
+                  {t('SIGN_BUTTON', { count: cart.entries.length })}
+                </SpaceFlex>
+              </Button>
+              <Text size="s" color="gray600" align="center">
+                {t('SIGN_DISCLAIMER')}
+              </Text>
+            </Space>
           </Space>
-        </Space>
+        </form>
       </Section>
 
-      <HorizontalLine />
-    </Space>
+      <HorizontalLineStandalone />
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Space)(({ theme }) => ({
+  paddingBottom: theme.space[6],
+}))
 
 const Section = styled(Space)(({ theme }) => ({
   paddingLeft: theme.space[4],
@@ -90,6 +143,9 @@ Header.defaultProps = { as: 'header' }
 const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
   height: 1,
+}))
+
+const HorizontalLineStandalone = styled(HorizontalLine)(({ theme }) => ({
   marginLeft: theme.space[4],
   marginRight: theme.space[4],
 }))
@@ -107,5 +163,11 @@ const SpaceBetween = styled.div(({ theme }) => ({
   alignItems: 'center',
   gap: theme.space[4],
 }))
+
+const CartCollapsibleInner = styled(Space)(({ theme }) => ({
+  paddingTop: theme.space[4],
+  paddingBottom: theme.space[4],
+}))
+CartCollapsibleInner.defaultProps = { y: 1.5 }
 
 export default CheckoutPage

@@ -4,28 +4,26 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { CostData } from './CartPageProps.types'
+import { CartCost } from './CartInventory.types'
 
-type Props = {
-  cost: CostData
-}
+type Props = CartCost
 
-export const CostSummary = ({ cost }: Props) => {
+export const CostSummary = ({ currencyCode, amount, crossOutAmount }: Props) => {
   const { t } = useTranslation(I18nNamespace.Cart)
-  const currencyFormatter = useCurrencyFormatter(cost.currencyCode)
+  const formatCurrency = useCurrencyFormatter(currencyCode).format
 
   return (
     <SpaceBetween>
       <Text size="l">Totalt</Text>
       <SpaceFlex space={0.5}>
-        {cost.crossOut && (
+        {crossOutAmount && (
           <CrossOutText size="l" color="gray600">
-            {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.crossOut) })}
+            {t('MONTHLY_PRICE', {
+              displayAmount: formatCurrency(crossOutAmount),
+            })}
           </CrossOutText>
         )}
-        <Text size="l">
-          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.net) })}
-        </Text>
+        <Text size="l">{t('MONTHLY_PRICE', { displayAmount: formatCurrency(amount) })}</Text>
       </SpaceFlex>
     </SpaceBetween>
   )

@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { CrossIcon } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { I18nNamespace } from '@/utils/l10n/types'
-import { CartPageProps } from './CartPageProps.types'
+import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 
 const FORM_CAMPAIGN_CODE = 'campaignCode'
 
 type Props = {
   cartId: string
-  campaigns: CartPageProps['campaigns']
+  campaigns: Array<CartCampaign>
 }
 
 export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
