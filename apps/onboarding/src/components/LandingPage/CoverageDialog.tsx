@@ -39,6 +39,7 @@ export const CoverageDialog = ({ open, onOpenChange, title, perils }: CoverageDi
 const DialogContent = styled(Dialog.Content)({
   display: 'grid',
   placeItems: 'center',
+  height: '100%',
 })
 
 const Wrapper = styled.div(({ theme }) => ({
