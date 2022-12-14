@@ -50,7 +50,17 @@ const createApolloClient = (headers?: Record<string, string>) => {
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
     link: from([errorLink, authLink, languageLink, httpLink]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Cart: {
+          fields: {
+            redeemedCampaigns: {
+              merge: (_, incoming) => incoming,
+            },
+          },
+        },
+      },
+    }),
     headers,
     connectToDevTools: process.env.NODE_ENV === 'development',
   })
