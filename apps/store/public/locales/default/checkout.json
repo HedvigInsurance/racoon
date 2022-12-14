@@ -1,0 +1,10 @@
+{
+  "CHECKOUT_PAGE_HEADING": "Checkout",
+  "SIGN_BUTTON_one": "Sign one insurance",
+  "SIGN_BUTTON_other": "Sign {{count}} insurances",
+  "SIGN_DISCLAIMER": "You connect autogiro after you sign Hedvig. It's safely handled with Trustly.",
+  "FORM_EMAIL_LABEL": "Email",
+  "FORM_HELP_LABEL": "Help",
+  "CONTACT_DETAILS_FORM_TITLE": "Your contact details",
+  "FIELD_PERSONAL_NUMBER_SE_LABEL": "YYYYMMDDXXXX"
+}
