@@ -2,11 +2,12 @@ import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
 import { ProductOfferFragment } from '@/services/apollo/generated'
+import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
-  RecommendedItem,
-  SecondaryTextStyle,
+  SuggestedItem,
+  SecondaryText,
   TierItemContainer,
   TitleContainer,
   TitleItem,
@@ -14,6 +15,8 @@ import {
   Item,
   HeaderWithTrigger,
   Content,
+  TierItemWrapper,
+  PriceText,
 } from './TierSelectorStyles'
 
 type TierItemProps = {
@@ -21,7 +24,7 @@ type TierItemProps = {
   price: string
   description: string
   isSelected?: boolean
-  recommendedText?: string
+  suggestedText?: string
   children?: React.ReactNode
   handleClick?: () => void
 } & AccordionPrimitives.AccordionItemProps
@@ -31,20 +34,24 @@ const TierItem = ({
   price,
   description,
   isSelected = false,
-  recommendedText = '',
+  suggestedText = '',
   handleClick,
 }: TierItemProps) => (
-  <TierItemContainer isSelected={isSelected} onClick={handleClick}>
-    <TitleContainer>
-      <TitleItem>{title}</TitleItem>
-      <TitleItem>
-        <SecondaryTextStyle>{price}</SecondaryTextStyle>
-      </TitleItem>
-    </TitleContainer>
-    <SecondaryTextStyle>{description}</SecondaryTextStyle>
-    {recommendedText ? <RecommendedItem>{recommendedText}</RecommendedItem> : null}
-  </TierItemContainer>
+  <TierItemWrapper isSelected={isSelected} onClick={handleClick}>
+    <TierItemContainer isSelected={isSelected}>
+      <TitleContainer>
+        <TitleItem>{title}</TitleItem>
+        <TitleItem>
+          <PriceText isSelected={isSelected}>{price}</PriceText>
+        </TitleItem>
+      </TitleContainer>
+      <SecondaryText>{description}</SecondaryText>
+      {suggestedText ? <SuggestedItem>{suggestedText}</SuggestedItem> : null}
+    </TierItemContainer>
+  </TierItemWrapper>
 )
+
+const tierSelectorValue = 'tier-selector-item' // needed for radix to handle open/close
 
 export type TierSelectorProps = {
   offers: Array<ProductOfferFragment>
@@ -58,9 +65,9 @@ export const TierSelector = ({
   currencyCode,
   onValueChange,
 }: TierSelectorProps) => {
-  const { t } = useTranslation()
-
+  const { t } = useTranslation(I18nNamespace.PurchaseForm)
   const currencyFormatter = useCurrencyFormatter(currencyCode)
+
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
   const handleClick = (id: string) => {
@@ -72,7 +79,7 @@ export const TierSelector = ({
   }
 
   return (
-    <Root type="multiple">
+    <>
       <input
         type="text"
         hidden
@@ -80,44 +87,36 @@ export const TierSelector = ({
         value={selectedOfferId}
         name={FormElement.ProductOfferId}
       />
-      <Item value={selectedOfferId}>
-        <HeaderWithTrigger>
-          {selectedOffer ? (
-            <>
-              <div>{selectedOffer.variant.typeOfContract}</div>
-              <SecondaryTextStyle>
-                {t('MONTHLY_PRICE', {
-                  displayAmount: currencyFormatter.format(selectedOffer.price.amount),
-                })}
-              </SecondaryTextStyle>
-            </>
-          ) : (
-            <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
-          )}
-        </HeaderWithTrigger>
-        <Content>
-          {offers.map((offer) => {
-            const {
-              id,
-              price: { amount },
-            } = offer
-
-            return (
+      <Root type="multiple">
+        <Item value={tierSelectorValue}>
+          <HeaderWithTrigger>
+            {selectedOffer ? (
+              <>
+                <div>{t('TIER_SELECTOR_SELECTED_LABEL')}</div>
+                <div>{selectedOffer.variant.typeOfContract}</div>
+              </>
+            ) : (
+              <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
+            )}
+          </HeaderWithTrigger>
+          <Content>
+            {offers.map((offer) => (
               <TierItem
-                key={id}
-                value={id}
+                key={offer.id}
+                value={offer.id}
                 title={offer.variant.typeOfContract}
-                description="some description here"
+                description="Description here"
                 price={t('MONTHLY_PRICE', {
-                  displayAmount: amount,
+                  displayAmount: currencyFormatter.format(offer.price.amount),
                 })}
-                isSelected={selectedOfferId === id}
-                handleClick={() => handleClick(id)}
+                isSelected={selectedOffer?.id === offer.id}
+                handleClick={() => handleClick(offer.id)}
+                suggestedText={'Suggested'}
               />
-            )
-          })}
-        </Content>
-      </Item>
-    </Root>
+            ))}
+          </Content>
+        </Item>
+      </Root>
+    </>
   )
 }

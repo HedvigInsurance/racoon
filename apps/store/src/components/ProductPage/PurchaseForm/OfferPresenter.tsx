@@ -80,14 +80,13 @@ export const OfferPresenter = ({
           {displayPrice}
         </Text>
 
-        <TierSelector
-          offers={priceIntent.offers}
-          selectedOfferId={selectedOfferId}
-          onValueChange={setSelectedOfferId}
-          currencyCode={shopSession.currencyCode}
-        />
-
         <Space y={0.25}>
+          <TierSelector
+            offers={priceIntent.offers}
+            selectedOfferId={selectedOfferId}
+            onValueChange={setSelectedOfferId}
+            currencyCode={shopSession.currencyCode}
+          />
           <CancellationForm
             option={cancellationOption}
             startDate={convertToDate(priceIntent.startDate)!}
@@ -95,16 +94,14 @@ export const OfferPresenter = ({
             onStartDateChange={handleStartDateChange}
           />
 
-          <Space y={0.25}>
-            <CancellationForm
-              option={cancellationOption}
-              startDate={convertToDate(priceIntent.startDate)!}
-              onAutoSwitchChange={handleUpdateCancellation}
-              onStartDateChange={handleStartDateChange}
-            />
+          <CancellationForm
+            option={cancellationOption}
+            startDate={convertToDate(priceIntent.startDate)!}
+            onAutoSwitchChange={handleUpdateCancellation}
+            onStartDateChange={handleStartDateChange}
+          />
 
-            <SubmitButton loading={loading} />
-          </Space>
+          <SubmitButton loading={loading} />
         </Space>
       </form>
       <ScrollPast targetRef={scrollPastRef}>

@@ -5,11 +5,7 @@ import { ChevronIcon } from 'ui'
 
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
-
-export const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
-  padding: theme.space[2],
-}))
-
+export const Item = AccordionPrimitives.Item
 const Header = AccordionPrimitives.Header
 
 const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
@@ -20,25 +16,27 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   alignItems: 'center',
   textAlign: 'center',
   justifyContent: 'space-between',
-  background: theme.colors.gray200,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+  backgroundColor: theme.colors.gray200,
   borderRadius: theme.radius.xs,
-  borderBottom: `1px solid ${theme.colors.gray500}`,
   padding: `0 ${theme.space[4]}`,
 
-  '[data-state=open] &': { borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0` },
+  '[data-state=open] &': {
+    borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0`,
+  },
 }))
 
 const CenteredHeader = styled.div({
   width: '100%',
   display: 'flex',
   alignContent: 'center',
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
+  paddingRight: '1rem',
 })
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
 }
+
 const TriggerIcon = styled(ChevronIcon)({
   transition: 'transform 300ms',
   '[data-state=open] &': { transform: 'rotate(180deg)' },
@@ -57,11 +55,12 @@ export const HeaderWithTrigger = ({
     </Header>
   )
 }
+
 const RecommendedContainer = styled.div(({ theme }) => ({
-  paddingTop: theme.space[5],
+  paddingTop: theme.space[2],
 }))
 
-const RecommendedDot = styled.span(({ theme }) => ({
+const SuggestedDot = styled.span(({ theme }) => ({
   display: 'inline-block',
   height: theme.radius.sm,
   width: theme.radius.sm,
@@ -70,15 +69,29 @@ const RecommendedDot = styled.span(({ theme }) => ({
   marginRight: '.5rem',
 }))
 
-type RecommendedItemProps = {
+type SuggestedItemProps = {
   children: React.ReactNode
 }
-export const RecommendedItem = ({ children }: RecommendedItemProps) => (
+
+export const SuggestedItem = ({ children }: SuggestedItemProps) => (
   <RecommendedContainer>
-    <RecommendedDot />
+    <SuggestedDot />
     {children}
   </RecommendedContainer>
 )
+
+export const TierItemWrapper = styled.div<{ isSelected: boolean }>(({ theme }) => ({
+  cursor: 'pointer',
+  padding: theme.space[2],
+  backgroundColor: theme.colors.gray200,
+
+  '&:first-of-type': {
+    borderTop: `1px solid ${theme.colors.gray300}`,
+  },
+  '&:last-of-type': {
+    borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
+  },
+}))
 
 export const TierItemContainer = styled.div<{ isSelected: boolean }>(
   ({ theme, isSelected = false }) => ({
@@ -86,12 +99,11 @@ export const TierItemContainer = styled.div<{ isSelected: boolean }>(
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: theme.space[4],
-    backgroundColor: isSelected ? '#E0F6BE' : theme.colors.gray200,
+    padding: theme.space[2],
+    borderRadius: `${theme.radius.xs}px`,
 
-    '&:last-of-type': {
-      borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
-    },
+    boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
+    backgroundColor: isSelected ? '#E9FFC8' : theme.colors.gray200,
   }),
 )
 
@@ -106,6 +118,10 @@ export const TitleItem = styled.div(({ theme }) => ({
   paddingBottom: theme.space[1],
 }))
 
-export const SecondaryTextStyle = styled.div(({ theme }) => ({
-  color: theme.colors.gray700,
+export const SecondaryText = styled.div(({ theme }) => ({
+  color: theme.colors.gray600,
+}))
+
+export const PriceText = styled.div<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+  color: isSelected ? theme.colors.gray900 : theme.colors.gray600,
 }))
