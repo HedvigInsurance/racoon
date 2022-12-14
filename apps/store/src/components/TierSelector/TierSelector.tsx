@@ -2,7 +2,7 @@ import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
   SuggestedItem,
@@ -61,11 +61,10 @@ export type TierSelectorProps = {
 export const TierSelector = ({
   offers,
   selectedOfferId,
-  currencyCode,
   onValueChange,
 }: TierSelectorProps) => {
-  const { t } = useTranslation(['purchase-form', 'common'])
-  const currencyFormatter = useCurrencyFormatter(currencyCode)
+  const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
 
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
 
@@ -105,10 +104,7 @@ export const TierSelector = ({
                 value={offer.id}
                 title={offer.variant.typeOfContract}
                 description="Description here"
-                price={t('MONTHLY_PRICE', {
-                  displayAmount: currencyFormatter.format(offer.price.amount),
-                  ns: 'common',
-                })}
+                price={formatter.monthlyPrice(offer.price.amount)}
                 isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}
                 suggestedText={'Suggested'}

@@ -1,29 +1,27 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
-import { useTranslation } from 'next-i18next'
 import { ChevronIcon, Space } from 'ui'
 import { Text } from '@/components/Text/Text'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { CheckoutPaymentPageProps } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
 
 type Props = CheckoutPaymentPageProps
 
-export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) => {
-  const { t } = useTranslation()
-  const currencyFormatter = useCurrencyFormatter(currency)
+export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
+  const formatter = useFormatter()
   return (
     <Collapsible>
       <CollapsibleContent>
         <Space y={0.5}>
           <DataRow>
             <Text size="m">Subtotal</Text>
-            <Text size="m">{currencyFormatter.format(cost.gross)}</Text>
+            <Text size="m">{formatter.amount(cost.gross)}</Text>
           </DataRow>
           {products.map((product) => (
             <DataRow key={product.name}>
               <Text size="m">{product.name}</Text>
-              <Price>{currencyFormatter.format(product.cost)}</Price>
+              <Price>{formatter.amount(product.cost)}</Price>
             </DataRow>
           ))}
         </Space>
@@ -33,7 +31,7 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
             {campaigns.map((campaign) => (
               <DataRow key={campaign.name}>
                 <Text size="m">{campaign.name}</Text>
-                <Text size="m">{currencyFormatter.format(campaign.discount)}</Text>
+                <Text size="m">{formatter.amount(campaign.discount)}</Text>
               </DataRow>
             ))}
           </Space>
@@ -45,14 +43,12 @@ export const PriceBreakdown = ({ currency, cost, products, campaigns }: Props) =
         <SpaceFlex x={0.25}>
           {cost.crossOut ? (
             <CrossOutText>
-              <Text size="l">{currencyFormatter.format(cost.crossOut)}</Text>
+              <Text size="l">{formatter.amount(cost.crossOut)}</Text>
             </CrossOutText>
           ) : null}
 
           <SpaceFlex x={0.5}>
-            <Text size="l">
-              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost.net) })}
-            </Text>
+            <Text size="l">{formatter.monthlyPrice(cost.net)}</Text>
             <TriggerIcon size="1rem" />
           </SpaceFlex>
         </SpaceFlex>

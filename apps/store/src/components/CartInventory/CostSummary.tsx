@@ -1,15 +1,13 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { CartCost } from './CartInventory.types'
 
 type Props = CartCost
 
-export const CostSummary = ({ currencyCode, amount, crossOutAmount }: Props) => {
-  const { t } = useTranslation()
-  const formatCurrency = useCurrencyFormatter(currencyCode).format
+export const CostSummary = ({ amount, crossOutAmount }: Props) => {
+  const formatter = useFormatter()
 
   return (
     <SpaceBetween>
@@ -17,12 +15,10 @@ export const CostSummary = ({ currencyCode, amount, crossOutAmount }: Props) => 
       <SpaceFlex space={0.5}>
         {crossOutAmount && (
           <CrossOutText size="l" color="gray600">
-            {t('MONTHLY_PRICE', {
-              displayAmount: formatCurrency(crossOutAmount),
-            })}
+            {formatter.monthlyPrice(crossOutAmount)}
           </CrossOutText>
         )}
-        <Text size="l">{t('MONTHLY_PRICE', { displayAmount: formatCurrency(amount) })}</Text>
+        <Text size="l">{formatter.monthlyPrice(amount)}</Text>
       </SpaceFlex>
     </SpaceBetween>
   )

@@ -14,6 +14,7 @@ export const formatAPIDate = (date: Date) => {
 
 export const formatInputDateValue = formatAPIDate
 
+// TODO: Move to formatters, localize
 export const fromNow = (dateObj: Date, locale: string) => {
   const today = new Date()
   const diff = Math.abs(today.getTime() - dateObj.getTime())

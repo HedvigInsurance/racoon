@@ -14,7 +14,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
@@ -178,11 +178,11 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   const refresh = useRouterRefresh()
   const apolloClient = useApolloClient()
   const { locale } = useCurrentLocale()
-  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
+  const formatter = useFormatter()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     onAddedToCart({
       name: story.content.name,
-      price: currencyFormatter.format(addedProdutOffer.price.amount),
+      price: formatter.amount(addedProdutOffer.price.amount),
     })
     priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
       priceTemplate.name,
