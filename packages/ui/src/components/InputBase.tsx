@@ -4,7 +4,7 @@ import { Space } from './Space'
 
 const Label = styled.label(({ theme }) => ({
   fontFamily: theme.fonts.body,
-  color: theme.colors.gray900,
+  color: theme.colors.textPrimary,
   fontSize: '0.875rem',
   lineHeight: '1.375rem',
 }))
@@ -29,7 +29,7 @@ const ErrorMessage = styled.span(({ theme }) => ({
 
 const InfoMessage = styled.span(({ theme }) => ({
   fontFamily: theme.fonts.body,
-  color: theme.colors.gray700,
+  color: theme.colors.textSecondary,
   fontSize: '0.75rem',
   lineHeight: '1rem',
 }))

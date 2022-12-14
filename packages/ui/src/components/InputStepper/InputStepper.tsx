@@ -27,7 +27,7 @@ const Wrapper = styled.div<ErrorProps>(({ theme, $error }) => ({
   ':disabled': {
     backgroundColor: theme.colors.gray300,
     borderColor: theme.colors.gray300,
-    color: theme.colors.gray500,
+    color: theme.colors.textDisabled,
     cursor: 'not-allowed',
   },
 
@@ -59,7 +59,7 @@ const StepButtonRight = styled(StepButton)({
 })
 
 const StyledInput = styled.input(({ theme }) => ({
-  color: theme.colors.gray900,
+  color: theme.colors.textPrimary,
   fontSize: '1.125rem',
   lineHeight: '1.75rem',
   textAlign: 'center',
@@ -67,7 +67,7 @@ const StyledInput = styled.input(({ theme }) => ({
   border: 0,
 
   '::placeholder': {
-    color: theme.colors.gray500,
+    color: theme.colors.textTertiary,
   },
 }))
 

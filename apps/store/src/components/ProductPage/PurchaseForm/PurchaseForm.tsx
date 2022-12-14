@@ -90,7 +90,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
                 {productData.displayNameShort}
                 <CircledHSuperscript />
               </Heading>
-              <Text size="s" color="secondaryText" align="center">
+              <Text size="s" color="textSecondary" align="center">
                 {productData.displayNameFull}
               </Text>
             </Space>

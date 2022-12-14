@@ -40,7 +40,7 @@ const ControlLabel = styled.label<{ disabled?: boolean }>(
   },
   (props) => ({
     fontFamily: props.theme.fonts.body,
-    color: props.disabled ? props.theme.colors.gray500 : props.theme.colors.gray900,
+    color: props.disabled ? props.theme.colors.gray500 : props.theme.colors.textPrimary,
   }),
 )
 
@@ -71,14 +71,14 @@ const StyledCheckboxElement = styled.div<CheckboxProps>(({ theme, circle }) => (
   transition: 'all 150ms',
   // checked/unchecked backgorund
   [`${HiddenInput}:checked + &`]: {
-    background: theme.colors.gray900,
+    background: theme.colors.dark,
   },
   [`${HiddenInput}:disabled + &`]: {
     background: theme.colors.gray300,
   },
   // hover/focus-visible
   [`${HiddenInput}:enabled:hover + &, ${HiddenInput}:focus-visible + &`]: {
-    border: `2px solid ${theme.colors.gray900}`,
+    border: `2px solid ${theme.colors.dark}`,
   },
   // checked/disabled icons
   [`${HiddenInput}:enabled${HiddenInput}:checked + & > ${Icon}`]: {
