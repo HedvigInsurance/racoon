@@ -6,7 +6,7 @@ import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.ty
 import { Text } from '../Text/Text'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   form: Form
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const PriceCalculatorAccordion = ({ form, children }: Props) => {
-  const translateLabel = useTranslateTextLabel({ data: {} })
+  const translateLabel = useTranslateFieldLabel()
   const [activeSectionId, onActiveSectionChange] = useActiveFormSection(form)
 
   return (
