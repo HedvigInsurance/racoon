@@ -21,6 +21,7 @@ export const CarMileageField = ({ field, autoFocus }: Props) => {
   return (
     <InputSelect
       name={field.name}
+      // @ts-expect-error dynamic text (not type-safe)
       label={t(field.label.key)}
       required={field.required}
       defaultValue={field.defaultValue}

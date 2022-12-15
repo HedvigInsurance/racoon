@@ -1,8 +1,8 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
 import { Button, CrossIcon, Heading, Space } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
@@ -15,7 +15,6 @@ import { TextField } from '@/components/TextField/TextField'
 import * as Auth from '@/services/Auth/Auth'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { BankIdIcon } from './BankIdIcon'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
@@ -25,7 +24,7 @@ import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
   const { checkoutId, checkoutSigningId, cart, prefilledData } = props
-  const { t } = useTranslation(I18nNamespace.Checkout)
+  const { t } = useTranslation('checkout')
 
   const { shopSession } = useShopSession()
   const router = useRouter()

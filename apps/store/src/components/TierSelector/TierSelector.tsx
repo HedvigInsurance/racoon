@@ -2,7 +2,6 @@ import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
 import { Dispatch, SetStateAction } from 'react'
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
@@ -65,7 +64,7 @@ export const TierSelector = ({
   currencyCode,
   onValueChange,
 }: TierSelectorProps) => {
-  const { t } = useTranslation(I18nNamespace.PurchaseForm)
+  const { t } = useTranslation(['purchase-form', 'common'])
   const currencyFormatter = useCurrencyFormatter(currencyCode)
 
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
@@ -92,11 +91,11 @@ export const TierSelector = ({
           <HeaderWithTrigger>
             {selectedOffer ? (
               <>
-                <div>{t('TIER_SELECTOR_SELECTED_LABEL')}</div>
+                <div>{t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}</div>
                 <div>{selectedOffer.variant.typeOfContract}</div>
               </>
             ) : (
-              <div>{t('TIER_SELECTOR_DEFAULT_LABEL')}</div>
+              <div>{t('TIER_SELECTOR_DEFAULT_LABEL', { ns: 'purchase-form' })}</div>
             )}
           </HeaderWithTrigger>
           <Content>
@@ -108,6 +107,7 @@ export const TierSelector = ({
                 description="Description here"
                 price={t('MONTHLY_PRICE', {
                   displayAmount: currencyFormatter.format(offer.price.amount),
+                  ns: 'common',
                 })}
                 isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}

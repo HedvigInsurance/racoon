@@ -1,10 +1,9 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
-import { useTranslation } from 'react-i18next'
 import { CrossIcon } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 
@@ -16,7 +15,7 @@ type Props = {
 }
 
 export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
-  const { t } = useTranslation(I18nNamespace.Cart)
+  const { t } = useTranslation('cart')
   const theme = useTheme()
 
   const [redeemCampaign, { loading: loadingRedeem }] = useRedeemCampaign({ cartId })

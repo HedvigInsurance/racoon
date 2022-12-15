@@ -11,7 +11,6 @@ import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSess
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { I18nNamespace } from '@/utils/l10n/types'
 
 type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId'> & {
   [SHOP_SESSION_PROP_NAME]: string
@@ -71,11 +70,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     const apolloClient = initializeApollo({ req, res })
     const [shopSession, translations] = await Promise.all([
       getCurrentShopSessionServerSide({ apolloClient, locale, req, res }),
-      serverSideTranslations(locale, [
-        I18nNamespace.Common,
-        I18nNamespace.Checkout,
-        I18nNamespace.Cart,
-      ]),
+      serverSideTranslations(locale),
     ])
 
     const { checkout } = shopSession
