@@ -1,14 +1,13 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Button, Dialog, Heading, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { fromNow } from '@/utils/date'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 import { CartEntry } from './CartInventory.types'
@@ -17,7 +16,7 @@ type Props = CartEntry & { cartId: string }
 
 export const CartEntryItem = (props: Props) => {
   const { cartId, offerId, currencyCode, title, startDate, cost } = props
-  const { t } = useTranslation(I18nNamespace.Cart)
+  const { t } = useTranslation(['cart', 'common'])
   const { locale } = useCurrentLocale()
   const currencyFormatter = useCurrencyFormatter(currencyCode)
 
@@ -40,19 +39,21 @@ export const CartEntryItem = (props: Props) => {
             <Text size="l">{title}</Text>
             <Text size="l" color="gray600">
               {startDate
-                ? t('CART_ENTRY_DATE_LABEL', { date: fromNow(startDate, locale) })
+                ? t('CART_ENTRY_DATE_LABEL', { date: fromNow(startDate, locale), ns: 'cart' })
                 : 'Starts sometime...'}
             </Text>
           </div>
           <SpaceFlex space={0.25}>
-            <LinkButtonSecondary href="#">{t('VIEW_ENTRY_DETAILS_BUTTON')}</LinkButtonSecondary>
+            <LinkButtonSecondary href="#">
+              {t('VIEW_ENTRY_DETAILS_BUTTON', { ns: 'cart' })}
+            </LinkButtonSecondary>
             <Dialog.Trigger asChild>
-              <TextButton disabled={loading}>{t('REMOVE_ENTRY_BUTTON')}</TextButton>
+              <TextButton disabled={loading}>{t('REMOVE_ENTRY_BUTTON', { ns: 'cart' })}</TextButton>
             </Dialog.Trigger>
           </SpaceFlex>
         </Space>
         <Text size="l">
-          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost) })}
+          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost), ns: 'common' })}
         </Text>
       </Wrapper>
 

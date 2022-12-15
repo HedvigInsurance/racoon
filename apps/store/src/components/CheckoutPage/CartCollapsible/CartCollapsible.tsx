@@ -6,7 +6,6 @@ import { CartCost } from '@/components/CartInventory/CartInventory.types'
 import { MinusIcon } from '@/components/Perils/MinusIcon'
 import { PlusIcon } from '@/components/Perils/PlusIcon'
 import { Text } from '@/components/Text/Text'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
 
 type Props = {
@@ -17,7 +16,7 @@ type Props = {
 
 export const CartCollapsible = ({ children, title, cost }: Props) => {
   const currencyFormatter = useCurrencyFormatter(cost.currencyCode)
-  const { t } = useTranslation(I18nNamespace.Checkout)
+  const { t } = useTranslation()
 
   const [open, setOpen] = useState(false)
   const closed = !open

@@ -9,7 +9,6 @@ import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { Text } from '@/components/Text/Text'
-import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
@@ -17,7 +16,7 @@ import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost } = props
-  const { t } = useTranslation(I18nNamespace.Cart)
+  const { t } = useTranslation()
 
   const router = useRouter()
   const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({
@@ -74,7 +73,7 @@ export const CartPage = (props: CartPageProps) => {
 type EmptyStateProps = { children: ReactNode }
 
 const EmptyState = ({ children }: EmptyStateProps) => {
-  const { t } = useTranslation(I18nNamespace.Cart)
+  const { t } = useTranslation('cart')
   const { routingLocale } = useCurrentLocale()
 
   return (
@@ -100,7 +99,7 @@ const EmptyState = ({ children }: EmptyStateProps) => {
 }
 
 const Header = () => {
-  const { t } = useTranslation(I18nNamespace.Cart)
+  const { t } = useTranslation('cart')
 
   return (
     <StyledHeader>

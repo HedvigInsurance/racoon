@@ -1,11 +1,12 @@
+import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Label } from '@/services/PriceCalculator/PriceCalculator.types'
 
 type TranslateTextLabelParams = {
   data: Record<string, string | number>
 }
 
+// @TODO: remove this function
 export const useTranslateTextLabel = ({ data }: TranslateTextLabelParams) => {
   const { t } = useTranslation('purchase-form')
 
@@ -13,19 +14,18 @@ export const useTranslateTextLabel = ({ data }: TranslateTextLabelParams) => {
     (label: Label) => {
       const { key, placeholders } = label
 
-      return t(
-        key,
-        placeholders?.reduce((acc, placeholder) => {
-          const value = data[placeholder.key]
+      const options = placeholders?.reduce((acc, placeholder) => {
+        const value = data[placeholder.key]
 
-          if (value === undefined) return acc
+        if (value === undefined) return acc
 
-          return {
-            ...acc,
-            [placeholder.pattern]: value,
-          }
-        }, {}),
-      )
+        return {
+          ...acc,
+          [placeholder.pattern]: value,
+        }
+      }, {})
+
+      return t(key, { ...options, defaultValue: 'MISSING' })
     },
     [t, data],
   )

@@ -1,6 +1,5 @@
 import AdyenCheckoutAPI from '@adyen/adyen-web'
 import { PaymentMethodsResponseObject } from '@adyen/adyen-web/dist/types/core/ProcessResponse/PaymentMethodsResponse/types'
-import { useTranslation } from 'next-i18next'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import '@adyen/adyen-web/dist/adyen.css'
@@ -55,10 +54,10 @@ type AdyenConfigurationParams = { shopSessionId: string }
 
 const useAdyenConfiguration = ({ shopSessionId }: AdyenConfigurationParams) => {
   const { locale, routingLocale } = useCurrentLocale()
-  const { t } = useTranslation()
   const paymentMethodConfiguration = usePaymentMethodConfiguration()
 
-  const payButtonText = t('CHECKOUT_BUTTON_CONNECT_CARD')
+  // @TODO: translate
+  const payButtonText = 'Connect credit card'
 
   return useMemo(
     () => ({
