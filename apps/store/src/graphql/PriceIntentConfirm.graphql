@@ -1,4 +1,4 @@
-mutation PriceIntentConfirm($priceIntentId: ID!, $locale: String!) {
+mutation PriceIntentConfirm($priceIntentId: ID!) {
   priceIntentConfirm(priceIntentId: $priceIntentId) {
     priceIntent {
       ...PriceIntentFragment

@@ -1,9 +1,9 @@
-query ProductData($productName: String!, $locale: String!) {
+query ProductData($productName: String!) {
   product(productName: $productName) {
     id
     variants {
       typeOfContract
-      perils(locale: $locale) {
+      perils {
         title
         description
         icon {
@@ -16,13 +16,13 @@ query ProductData($productName: String!, $locale: String!) {
         covered
         exceptions
       }
-      insurableLimits(locale: $locale) {
+      insurableLimits {
         type
         label
         limit
         description
       }
-      documents(locale: $locale) {
+      documents {
         type
         displayName
         url

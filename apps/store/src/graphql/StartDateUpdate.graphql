@@ -1,4 +1,4 @@
-mutation StartDateUpdate($productOfferIds: [ID!]!, $startDate: Date!, $locale: String!) {
+mutation StartDateUpdate($productOfferIds: [ID!]!, $startDate: Date!) {
   productOffersStartDateUpdate(productOfferIds: $productOfferIds, startDate: $startDate) {
     productOffers {
       ...ProductOffer

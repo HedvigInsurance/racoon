@@ -12,7 +12,6 @@ import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 type Props = {
@@ -24,7 +23,6 @@ type Props = {
 
 export const CurrentInsuranceField = (props: Props) => {
   const { label, productName, priceIntentId, externalInsurer } = props
-  const { locale } = useCurrentLocale()
   const companyOptions = useCompanyOptions(productName)
   const updateExternalInsurer = useUpdateExternalInsurer(priceIntentId)
 
@@ -45,14 +43,14 @@ export const CurrentInsuranceField = (props: Props) => {
 
   const handleInsurelyCompleted = useCallback(() => {
     if (dataCollectionId) {
-      updateDataCollectionId({ variables: { priceIntentId, dataCollectionId, locale } })
+      updateDataCollectionId({ variables: { priceIntentId, dataCollectionId } })
     } else {
       datadogLogs.logger.error('Completed Insurely without getting data collection ID', {
         priceIntentId,
       })
     }
     closeModal()
-  }, [updateDataCollectionId, priceIntentId, locale, dataCollectionId, closeModal])
+  }, [updateDataCollectionId, priceIntentId, dataCollectionId, closeModal])
 
   return (
     <>
@@ -115,11 +113,10 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
     },
   })
 
-  const { locale } = useCurrentLocale()
   return (externalInsurerId?: string) => {
     datadogLogs.logger.info('Updating external insurer', { priceIntentId, externalInsurerId })
     updateExternalInsurer({
-      variables: { priceIntentId, externalInsurer: externalInsurerId, locale },
+      variables: { priceIntentId, externalInsurer: externalInsurerId },
     })
   }
 }

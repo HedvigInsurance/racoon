@@ -69,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   try {
     const apolloClient = initializeApollo({ req, res })
     const [shopSession, translations] = await Promise.all([
-      getCurrentShopSessionServerSide({ apolloClient, locale, req, res }),
+      getCurrentShopSessionServerSide({ apolloClient, req, res }),
       serverSideTranslations(locale),
     ])
 
