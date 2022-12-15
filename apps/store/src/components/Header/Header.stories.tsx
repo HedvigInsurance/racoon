@@ -36,37 +36,11 @@ export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
   return (
     <ShoppingCartMenuItemWrapper>
       <StyledLink href={PageLink.cart()} tabIndex={0} aria-label="shopping cart">
-        <ShoppingBagIcon />
+        <ShoppingBagIcon count={count} />
       </StyledLink>
-      <Counter value={count} />
     </ShoppingCartMenuItemWrapper>
   )
 }
-
-type CounterProps = { value: number }
-
-const Counter = ({ value }: CounterProps) => {
-  if (value <= 0) return null
-
-  return <StyledCounter>{value}</StyledCounter>
-}
-
-const StyledCounter = styled.span(({ theme }) => ({
-  pointerEvents: 'none',
-  position: 'absolute',
-  top: 1,
-  right: -6,
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 14,
-  height: 14,
-  borderRadius: '50%',
-  backgroundColor: theme.colors.gray900,
-  color: theme.colors.gray200,
-  fontSize: 10,
-  fontWeight: 'bold',
-}))
 
 const MockedNavItems = () => {
   return (
