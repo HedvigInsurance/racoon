@@ -39,9 +39,7 @@ export const OfferPresenter = ({
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
 
-  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({
-    priceIntentId: priceIntent.id,
-  })
+  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 
   const handleStartDateChange = (startDate: Date) => {
     updateStartDate({ dateValue: startDate })
@@ -76,32 +74,28 @@ export const OfferPresenter = ({
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
-        <Text as="p" align="center" size="xxl">
-          {displayPrice}
-        </Text>
+        <Space y={2}>
+          <Text as="p" align="center" size="xxl">
+            {displayPrice}
+          </Text>
 
-        <Space y={0.25}>
-          <TierSelector
-            offers={priceIntent.offers}
-            selectedOfferId={selectedOfferId}
-            onValueChange={setSelectedOfferId}
-            currencyCode={shopSession.currencyCode}
-          />
-          <CancellationForm
-            option={cancellationOption}
-            startDate={convertToDate(priceIntent.startDate)!}
-            onAutoSwitchChange={handleUpdateCancellation}
-            onStartDateChange={handleStartDateChange}
-          />
+          <Space y={0.25}>
+            <TierSelector
+              offers={priceIntent.offers}
+              selectedOfferId={selectedOfferId}
+              onValueChange={setSelectedOfferId}
+              currencyCode={shopSession.currencyCode}
+            />
 
-          <CancellationForm
-            option={cancellationOption}
-            startDate={convertToDate(priceIntent.startDate)!}
-            onAutoSwitchChange={handleUpdateCancellation}
-            onStartDateChange={handleStartDateChange}
-          />
+            <CancellationForm
+              option={cancellationOption}
+              startDate={convertToDate(selectedOffer.startDate)!}
+              onAutoSwitchChange={handleUpdateCancellation}
+              onStartDateChange={handleStartDateChange}
+            />
 
-          <SubmitButton loading={loading} />
+            <SubmitButton loading={loading} />
+          </Space>
         </Space>
       </form>
       <ScrollPast targetRef={scrollPastRef}>
