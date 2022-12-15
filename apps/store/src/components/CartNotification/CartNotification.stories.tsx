@@ -54,6 +54,7 @@ WithDialog.args = {
 
 export default config
 
+// TODO: use CartToast or nothing - does not make sense to have separate presentational component here in story
 const NotificationContent = ({ name, price }: Props) => {
   const formatter = useFormatter()
 

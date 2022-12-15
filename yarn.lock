@@ -20985,6 +20985,7 @@ __metadata:
     react-use-intercom: 2.0.0
     scripts: "workspace:"
     storybook-addon-next: 1.7.1
+    storybook-addon-next-router: 4.0.2
     subscriptions-transport-ws: 0.11.0
     ts-jest: 29.0.3
     tsconfig: "workspace:"
@@ -21001,6 +21002,22 @@ __metadata:
   peerDependencies:
     axios: ^0.27.2
   checksum: cbdc33858dde6fcf96f144cd42a28ce9e570f6a69ad84ce312e5e268bc4174bab61c0979ee683e44a4ce899a8121c2ac44b9fb4843b19b62f031b9e8b898bf1e
+  languageName: node
+  linkType: hard
+
+"storybook-addon-next-router@npm:4.0.2":
+  version: 4.0.2
+  resolution: "storybook-addon-next-router@npm:4.0.2"
+  dependencies:
+    tslib: 2.4.0
+  peerDependencies:
+    "@storybook/addon-actions": ^6.0.0
+    "@storybook/addons": ^6.0.0
+    "@storybook/client-api": ^6.0.0
+    next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5e3d1b2510700c21d175e10d56bcad970a8b390715bbd8e9767528e60165c4bc651ef94a7a854f042185454c51c57d884b03c625c0ee28000d3916e11a6d865f
   languageName: node
   linkType: hard
 
