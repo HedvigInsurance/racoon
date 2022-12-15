@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
@@ -22,6 +23,7 @@ type Props = Pick<StoryblokPageProps, 'globalStory'>
 
 const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
+  const getDiscountExplanation = useGetDiscountExplaination()
 
   if (!shopSession) return null
 
@@ -34,7 +36,8 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
 
   const campaigns = shopSession.cart.redeemedCampaigns.map((item) => ({
     id: item.id,
-    displayName: item.code,
+    code: item.code,
+    explanation: getDiscountExplanation(item.discount),
   }))
 
   const cartCost = shopSession.cart.cost
