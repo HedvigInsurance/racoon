@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
 import { CrossIcon } from 'ui'
+import { Text } from '@/components/Text/Text'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
@@ -56,10 +57,12 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
           <SpaceBetween>
             <form onSubmit={handleSubmitUnredeemCampaign(item.id)}>
               <ChipButton disabled={loadingUnredeenCampaign}>
-                {item.displayName}
+                {item.code}
                 <CrossIcon size={theme.fontSizes[1]} color={theme.colors.gray500} />
               </ChipButton>
             </form>
+
+            <Text>{item.explanation}</Text>
           </SpaceBetween>
         </li>
       ))}
@@ -67,11 +70,12 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
   )
 }
 
-const SpaceBetween = styled.div({
+const SpaceBetween = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-})
+  gap: theme.space[2],
+}))
 
 const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })
 

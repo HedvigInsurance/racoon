@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
@@ -18,6 +19,7 @@ type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId'> & {
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
+  const getDiscountExplanation = useGetDiscountExplaination()
 
   if (!shopSession || !shopSession.checkout) return null
 
@@ -36,7 +38,8 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     })),
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
       id: item.id,
-      displayName: item.code,
+      code: item.code,
+      explanation: getDiscountExplanation(item.discount),
     })),
   }
 

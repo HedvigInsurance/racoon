@@ -4,5 +4,8 @@
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "VIEW_ENTRY_DETAILS_BUTTON": "Detaljer",
   "CART_ENTRY_DATE_LABEL": "Startar {{date}}",
-  "CART_PAGE_HEADING": "Varukorg"
+  "CART_PAGE_HEADING": "Varukorg",
+  "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mån",
+  "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% rabatt i {{count}} mån",
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt"
 }

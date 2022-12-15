@@ -7,7 +7,7 @@ export type CartEntry = {
   startDate?: Date
 }
 
-export type CartCampaign = { id: string; displayName: string }
+export type CartCampaign = { id: string; code: string; explanation: string }
 
 export type CartCost = {
   total: Money
