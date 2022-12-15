@@ -13,7 +13,6 @@ import {
 import { Form, Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -31,10 +30,9 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
 
-  const { locale } = useCurrentLocale()
   const { shopSession } = useShopSession()
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
-    variables: { priceIntentId: priceIntent.id, locale },
+    variables: { priceIntentId: priceIntent.id },
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {

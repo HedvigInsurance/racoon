@@ -4,7 +4,8 @@ const englishFallback = ['default']
  * @type {import('next-i18next').UserConfig}
  */
 module.exports = {
-  debug: process.env.NODE_ENV === 'development',
+  // Noisy, but may be useful for debugging i18n issues
+  debug: false,
   reloadOnPrerender: process.env.NODE_ENV === 'development',
   // 1. Include "default" to prefix the default locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale

@@ -1,7 +1,7 @@
-mutation StartDateUpdate($priceIntentId: ID!, $startDate: Date!, $locale: String!) {
-  priceIntentStartDateUpdate(priceIntentId: $priceIntentId, startDate: $startDate) {
-    priceIntent {
-      ...PriceIntentFragment
+mutation StartDateUpdate($productOfferIds: [ID!]!, $startDate: Date!) {
+  productOffersStartDateUpdate(productOfferIds: $productOfferIds, startDate: $startDate) {
+    productOffers {
+      ...ProductOffer
     }
     userError {
       message

@@ -12,7 +12,7 @@ import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceF
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import { InputRadio } from './InputRadio'
 import { SsnSeField } from './SsnSeField'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldType
@@ -23,7 +23,7 @@ type Props = {
 }
 
 export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocus }: Props) => {
-  const translateLabel = useTranslateTextLabel({ data: {} })
+  const translateLabel = useTranslateFieldLabel()
   const { story } = useProductPageContext()
 
   switch (field.type) {

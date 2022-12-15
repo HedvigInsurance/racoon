@@ -2,7 +2,7 @@ fragment ProductOffer on ProductOffer {
   id
   variant {
     typeOfContract
-    displayName(locale: $locale)
+    displayName
   }
   price {
     amount

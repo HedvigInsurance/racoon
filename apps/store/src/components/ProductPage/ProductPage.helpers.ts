@@ -9,15 +9,14 @@ import { ProductData } from './ProductPage.types'
 type GetProductDataParams = {
   apolloClient: ApolloClient<unknown>
   productName: string
-  locale: string
 }
 
 export const getProductData = async (params: GetProductDataParams): Promise<ProductData> => {
-  const { apolloClient, productName, locale } = params
+  const { apolloClient, productName } = params
 
   const { data } = await apolloClient.query<ProductDataQuery, ProductDataQueryVariables>({
     query: ProductDataDocument,
-    variables: { productName, locale },
+    variables: { productName },
   })
 
   if (!data.product) {

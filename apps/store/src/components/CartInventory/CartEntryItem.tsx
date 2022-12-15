@@ -26,7 +26,7 @@ export const CartEntryItem = (props: Props) => {
 
   const handleSubmit = (offerId: string) => async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    await removeCartEntry({ variables: { cartId, offerId, locale } })
+    await removeCartEntry({ variables: { cartId, offerId } })
   }
 
   return (
