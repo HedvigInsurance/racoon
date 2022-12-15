@@ -1,13 +1,14 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { ReactNode, useRef, useState } from 'react'
-import { Button, Heading, useBreakpoint } from 'ui'
+import { Button, Heading, Space, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Text } from '@/components/Text/Text'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -23,12 +24,12 @@ import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
 
-  const { priceTemplate, story } = useProductPageContext()
+  const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const { data: { priceIntent } = {} } = usePriceIntent({
     shopSession,
     priceTemplate: priceTemplate,
-    productName: story.content.productId,
+    productName: productData.name,
   })
 
   return (
@@ -69,7 +70,7 @@ type LayoutProps = {
 
 const Layout = ({ children, pillowSize }: LayoutProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const { story } = useProductPageContext()
+  const { productData } = useProductPageContext()
 
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
@@ -80,11 +81,19 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
       <PurchaseFormTop>
         <OfferPresenterWrapper>
           <SpaceFlex space={1} align="center" direction="vertical">
-            <Pillow size={pillowSize === 'large' ? 'xlarge' : 'large'} />
-            <Heading as="h2" variant="standard.24">
-              {story.content.name}
-              <CircledHSuperscript />
-            </Heading>
+            <Pillow
+              size={pillowSize === 'large' ? 'xlarge' : 'large'}
+              {...productData.pillowImage}
+            />
+            <Space y={0.5}>
+              <Heading as="h2" variant="standard.24" textAlignment="center">
+                {productData.displayNameShort}
+                <CircledHSuperscript />
+              </Heading>
+              <Text size="s" color="secondaryText" align="center">
+                {productData.displayNameFull}
+              </Text>
+            </Space>
           </SpaceFlex>
         </OfferPresenterWrapper>
 
@@ -129,7 +138,7 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { onToggleDialog, priceIntent, onSuccess } = props
-  const { priceTemplate, story } = useProductPageContext()
+  const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
 
   const priceCalculator = (
@@ -150,9 +159,9 @@ const EditingState = (props: EditingStateProps) => {
       toggleDialog={onToggleDialog}
       header={
         <SpaceFlex direction="vertical" align="center" space={0.5}>
-          <Pillow size="large" />
+          <Pillow size="large" {...productData.pillowImage} />
           <Heading as="h2" variant="standard.18">
-            {story.content.name}
+            {productData.displayNameShort}
             <CircledHSuperscript />
           </Heading>
         </SpaceFlex>
