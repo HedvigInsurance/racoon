@@ -11,7 +11,7 @@ import { fromNow } from '@/utils/date'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
-import { CartEntry } from './CartPageProps.types'
+import { CartEntry } from './CartInventory.types'
 
 type Props = CartEntry & { cartId: string }
 

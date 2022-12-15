@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { ElementType, forwardRef } from 'react'
 import { ReactNode } from 'react'
@@ -33,7 +34,7 @@ const IconWrapper = styled.div<IconWrapperProps>(({ padded }) => ({
   display: 'flex',
 }))
 
-export const UnstyledButton = styled.button({
+export const UnstyledButton = styled('button', { shouldForwardProp: isPropValid })({
   padding: 0,
   margin: 0,
   background: 'none',

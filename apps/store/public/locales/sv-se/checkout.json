@@ -6,5 +6,7 @@
   "FORM_EMAIL_LABEL": "E-post",
   "FORM_HELP_LABEL": "Hjälp",
   "CONTACT_DETAILS_FORM_TITLE": "Dina kontaktuppgifter",
-  "FIELD_PERSONAL_NUMBER_SE_LABEL": "ÅÅÅÅMMDDXXXX"
+  "FIELD_PERSONAL_NUMBER_SE_LABEL": "ÅÅÅÅMMDDXXXX",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 försäkring",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} försäkringar"
 }

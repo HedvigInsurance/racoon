@@ -3,15 +3,16 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
-import { Button, Heading, LinkButton, Separate, Space } from 'ui'
+import { Button, Heading, LinkButton, Space } from 'ui'
+import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
+import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
+import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { Text } from '@/components/Text/Text'
 import { I18nNamespace } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CampaignCodeList } from './CampaignCodeList'
-import { CartEntryItem } from './CartEntryItem'
 import { CartPageProps } from './CartPageProps.types'
-import { CostSummary } from './CostSummary'
 import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
@@ -33,7 +34,11 @@ export const CartPage = (props: CartPageProps) => {
           <HorizontalLine />
           <CampaignCodeList cartId={cartId} campaigns={campaigns} />
           <HorizontalLine />
-          <CostSummary cost={cost} />
+          <CostSummary
+            currencyCode={cost.currencyCode}
+            amount={cost.net}
+            crossOutAmount={cost.crossOut}
+          />
         </Space>
       </EmptyState>
     )
@@ -44,19 +49,19 @@ export const CartPage = (props: CartPageProps) => {
       <Space y={1.5}>
         <Header />
 
-        <CartEntryList Separator={<HorizontalLineWithSpace />}>
+        <CartEntryList>
           {entries.map((item) => (
             <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
           ))}
         </CartEntryList>
-
         <HorizontalLine />
-
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-
         <HorizontalLine />
-
-        <CostSummary cost={cost} />
+        <CostSummary
+          currencyCode={cost.currencyCode}
+          amount={cost.net}
+          crossOutAmount={cost.crossOut}
+        />
 
         <Button fullWidth onClick={startCheckout} disabled={loadingStartCheckout}>
           {t('CHECKOUT_BUTTON')}
@@ -126,15 +131,3 @@ const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
   height: 1,
 }))
-
-const HorizontalLineWithSpace = styled(HorizontalLine)(({ theme }) => ({
-  marginTop: theme.space[5],
-  marginBottom: theme.space[5],
-}))
-
-const CartEntryList = styled(Separate)({
-  padding: 0,
-  listStyleType: 'none',
-  width: '100%',
-})
-CartEntryList.defaultProps = { as: 'ul' }
