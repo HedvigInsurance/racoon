@@ -5,6 +5,6 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 export const useFormatter = (): Formatter => {
   const { locale } = useCurrentLocale()
-  const { i18n } = useTranslation()
-  return useMemo(() => new Formatter({ locale, i18n }), [locale, i18n])
+  const { t } = useTranslation()
+  return useMemo(() => new Formatter({ locale, t }), [locale, t])
 }

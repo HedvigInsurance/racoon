@@ -1,4 +1,4 @@
-import { i18n as I18NextClient } from 'i18next'
+import { TFunction } from 'next-i18next'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { IsoLocale } from '@/utils/l10n/types'
 
@@ -20,10 +20,10 @@ export const formatMoney = (money: Money, options: MoneyFormatOptions): string =
 
 export const formatMonthlyPrice = (
   price: Money,
-  options: MoneyFormatOptions & { i18n: I18NextClient },
+  options: MoneyFormatOptions & { t: TFunction },
 ): string => {
   const displayAmount = formatMoney(price, options)
-  return options.i18n.t('MONTHLY_PRICE', {
+  return options.t('MONTHLY_PRICE', {
     displayAmount,
     lng: options.locale,
     defaultValue: `MONTHLY_PRICE ${displayAmount}`,
@@ -42,7 +42,7 @@ export const formatDateFromNow = (date: Date, options: DateFormatOptions): strin
   return date.toLocaleDateString(options.locale)
 }
 
-type FormatterOptions = MoneyFormatOptions & { i18n: I18NextClient }
+type FormatterOptions = MoneyFormatOptions & { t: TFunction }
 
 export class Formatter {
   constructor(public options: FormatterOptions) {
@@ -50,7 +50,7 @@ export class Formatter {
     this.options = options
   }
 
-  money = (money: Money) => formatMoney(money, this.options)
-  monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
-  fromNow = (date: Date) => formatDateFromNow(date, this.options)
+  public money = (money: Money) => formatMoney(money, this.options)
+  public monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
+  public fromNow = (date: Date) => formatDateFromNow(date, this.options)
 }
