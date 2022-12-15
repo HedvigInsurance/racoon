@@ -58,11 +58,7 @@ export type TierSelectorProps = {
   currencyCode: string
   onValueChange: Dispatch<SetStateAction<string>>
 }
-export const TierSelector = ({
-  offers,
-  selectedOfferId,
-  onValueChange,
-}: TierSelectorProps) => {
+export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
 
@@ -104,7 +100,7 @@ export const TierSelector = ({
                 value={offer.id}
                 title={offer.variant.typeOfContract}
                 description="Description here"
-                price={formatter.monthlyPrice(offer.price.amount)}
+                price={formatter.monthlyPrice(offer.price)}
                 isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}
                 suggestedText={'Suggested'}

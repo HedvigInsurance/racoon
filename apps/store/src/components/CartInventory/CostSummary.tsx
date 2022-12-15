@@ -6,19 +6,19 @@ import { CartCost } from './CartInventory.types'
 
 type Props = CartCost
 
-export const CostSummary = ({ amount, crossOutAmount }: Props) => {
+export const CostSummary = ({ total, crossOut }: Props) => {
   const formatter = useFormatter()
 
   return (
     <SpaceBetween>
       <Text size="l">Totalt</Text>
       <SpaceFlex space={0.5}>
-        {crossOutAmount && (
+        {crossOut && (
           <CrossOutText size="l" color="gray600">
-            {formatter.monthlyPrice(crossOutAmount)}
+            {formatter.monthlyPrice(crossOut)}
           </CrossOutText>
         )}
-        <Text size="l">{formatter.monthlyPrice(amount)}</Text>
+        <Text size="l">{formatter.monthlyPrice(total)}</Text>
       </SpaceFlex>
     </SpaceBetween>
   )

@@ -24,7 +24,7 @@ export const CartInventory = ({ cart, children }: Props) => {
           Total
         </Heading>
         <Heading as="h3" variant="standard.18">
-          {formatter.monthlyPrice(cart.cost.net.amount)}
+          {formatter.monthlyPrice(cart.cost.net)}
         </Heading>
       </Footer>
     </Space>

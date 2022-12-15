@@ -2,22 +2,27 @@ import { i18n as I18NextClient } from 'i18next'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { IsoLocale } from '@/utils/l10n/types'
 
-type MoneyFormatOptions = { currencyCode: CurrencyCode; locale: IsoLocale }
+type MoneyFormatOptions = { locale: IsoLocale }
 
-export const formatAmount = (amount: number, options: MoneyFormatOptions): string => {
+export type Money = {
+  amount: number
+  currencyCode: CurrencyCode
+}
+
+export const formatMoney = (money: Money, options: MoneyFormatOptions): string => {
   return new Intl.NumberFormat(options.locale, {
     style: 'currency',
-    currency: options.currencyCode,
+    currency: money.currencyCode,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount)
+  }).format(money.amount)
 }
 
 export const formatMonthlyPrice = (
-  amount: number,
+  price: Money,
   options: MoneyFormatOptions & { i18n: I18NextClient },
 ): string => {
-  const displayAmount = formatAmount(amount, options)
+  const displayAmount = formatMoney(price, options)
   return options.i18n.t('MONTHLY_PRICE', {
     displayAmount,
     lng: options.locale,
@@ -45,7 +50,7 @@ export class Formatter {
     this.options = options
   }
 
-  amount = (amount: number) => formatAmount(amount, this.options)
-  monthlyPrice = (amount: number) => formatMonthlyPrice(amount, this.options)
+  money = (money: Money) => formatMoney(money, this.options)
+  monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
   fromNow = (date: Date) => formatDateFromNow(date, this.options)
 }

@@ -26,7 +26,7 @@ export const CartCollapsible = ({ children, title, cost }: Props) => {
           <Text size="l">{title}</Text>
           {closed && (
             <Text size="l" color="gray600">
-              {formatter.monthlyPrice(cost.amount)}
+              {formatter.monthlyPrice(cost.total)}
             </Text>
           )}
         </SpaceBetween>

@@ -182,7 +182,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     onAddedToCart({
       name: story.content.name,
-      price: formatter.amount(addedProdutOffer.price.amount),
+      price: formatter.money(addedProdutOffer.price),
     })
     priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
       priceTemplate.name,

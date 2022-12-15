@@ -34,7 +34,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: Props) 
               </IndicatorWrapper>
             </IndicatorBox>
             <TitleBox>{offer.variant.displayName}</TitleBox>
-            <PriceBox>{formatter.monthlyPrice(offer.price.amount)}</PriceBox>
+            <PriceBox>{formatter.monthlyPrice(offer.price)}</PriceBox>
             <FooterBox>Space for some description.</FooterBox>
           </OfferItem>
         ))}

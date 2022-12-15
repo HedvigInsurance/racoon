@@ -63,7 +63,7 @@ export const OfferPresenter = ({
     priceIntentId: priceIntent.id,
   })
 
-  const displayPrice = formatter.monthlyPrice(selectedOffer.price.amount)
+  const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
   const cancellationOption = getCancellationOption(priceIntent)
 

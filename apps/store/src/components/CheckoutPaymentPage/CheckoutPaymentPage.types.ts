@@ -1,8 +1,9 @@
 import { PaymentMethodsResponseObject } from '@adyen/adyen-web/dist/types/core/ProcessResponse/PaymentMethodsResponse/types'
+import { Money } from '@/utils/formatter'
 
-type CostData = { crossOut?: number; net: number; gross: number }
-type ProductData = { name: string; cost: number }
-type CampaignData = { name: string; discount: number }
+type CostData = { crossOut?: Money; net: Money; gross: Money }
+type ProductData = { name: string; cost: Money }
+type CampaignData = { name: string; discount: Money }
 
 export type CheckoutPaymentPageProps = {
   currency: string
