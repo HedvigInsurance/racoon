@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
-import { Button, Heading, LinkButton, Space } from 'ui'
+import { Button, CrossIcon, Heading, LinkButton, Space } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -15,7 +15,7 @@ import { CartPageProps } from './CartPageProps.types'
 import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
-  const { shopSessionId, cartId, entries, campaigns, cost } = props
+  const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
   const { t } = useTranslation()
 
   const router = useRouter()
@@ -28,7 +28,7 @@ export const CartPage = (props: CartPageProps) => {
 
   if (entries.length === 0) {
     return (
-      <EmptyState>
+      <EmptyState prevURL={prevURL}>
         <Space y={1.5}>
           <HorizontalLine />
           <CampaignCodeList cartId={cartId} campaigns={campaigns} />
@@ -42,7 +42,7 @@ export const CartPage = (props: CartPageProps) => {
   return (
     <Wrapper>
       <Space y={1.5}>
-        <Header />
+        <Header prevURL={prevURL} />
 
         <CartEntryList>
           {entries.map((item) => (
@@ -62,16 +62,16 @@ export const CartPage = (props: CartPageProps) => {
   )
 }
 
-type EmptyStateProps = { children: ReactNode }
+type EmptyStateProps = { children: ReactNode; prevURL: string }
 
-const EmptyState = ({ children }: EmptyStateProps) => {
+const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
   const { t } = useTranslation('cart')
   const { routingLocale } = useCurrentLocale()
 
   return (
     <Wrapper>
       <Space y={5}>
-        <Header />
+        <Header prevURL={prevURL} />
 
         <Space y={2}>
           <Space y={1}>
@@ -90,7 +90,9 @@ const EmptyState = ({ children }: EmptyStateProps) => {
   )
 }
 
-const Header = () => {
+type HeaderProps = { prevURL: string }
+
+const Header = ({ prevURL }: HeaderProps) => {
   const { t } = useTranslation('cart')
 
   return (
@@ -98,6 +100,10 @@ const Header = () => {
       <Heading as="h1" variant="standard.24">
         {t('CART_PAGE_HEADING')}
       </Heading>
+
+      <Link href={prevURL}>
+        <CrossIcon size="1.5rem" />
+      </Link>
     </StyledHeader>
   )
 }

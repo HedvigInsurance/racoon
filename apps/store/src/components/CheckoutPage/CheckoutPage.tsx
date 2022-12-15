@@ -45,17 +45,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   return (
     <Wrapper y={1}>
-      <div>
-        <Header>
-          <Heading as="h1" variant="standard.24">
-            {t('CHECKOUT_PAGE_HEADING')}
-          </Heading>
+      <Header>
+        <Heading as="h1" variant="standard.24">
+          {t('CHECKOUT_PAGE_HEADING')}
+        </Heading>
 
-          <Link href={PageLink.cart()}>
-            <CrossIcon size="1.5rem" />
-          </Link>
-        </Header>
-      </div>
+        <Link href={PageLink.cart()}>
+          <CrossIcon size="1.5rem" />
+        </Link>
+      </Header>
 
       <Section>
         <CartCollapsible

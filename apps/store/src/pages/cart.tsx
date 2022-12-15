@@ -1,25 +1,19 @@
-import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
-import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import {
-  getGlobalStory,
-  StoryblokPageProps,
-  StoryblokPreviewData,
-  StoryblokQueryParams,
-} from '@/services/storyblok/storyblok'
-import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { convertToDate } from '@/utils/date'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
+import { PageLink } from '@/utils/PageLink'
 
-type Props = Pick<StoryblokPageProps, 'globalStory'>
+type Props = { [SHOP_SESSION_PROP_NAME]: string; prevURL: string }
 
 const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
@@ -45,7 +39,6 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
 
   return (
     <CartPage
-      shopSessionId={shopSession.id}
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
@@ -58,21 +51,16 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<
-  Props,
-  StoryblokQueryParams,
-  StoryblokPreviewData
-> = async (context) => {
-  const { req, res, locale, previewData: { version } = {} } = context
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+  const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)
 
   try {
     const apolloClient = initializeApollo({ req, res })
-    const [shopSession, globalStory, translations] = await Promise.all([
+    const [shopSession, translations] = await Promise.all([
       getShopSessionServerSide({ apolloClient, countryCode, req, res }),
-      getGlobalStory({ locale, version }),
       serverSideTranslations(locale),
     ])
 
@@ -80,7 +68,7 @@ export const getServerSideProps: GetServerSideProps<
       props: {
         ...translations,
         [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        [GLOBAL_STORY_PROP_NAME]: globalStory,
+        prevURL: getPrevURL(context, locale),
       },
     })
   } catch (error) {
@@ -89,6 +77,21 @@ export const getServerSideProps: GetServerSideProps<
   }
 }
 
-NextCartPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+const getPrevURL = (context: GetServerSidePropsContext, locale: RoutingLocale) => {
+  const storeURL = PageLink.store({ locale })
+
+  console.log(context.req.headers.referer)
+  if (!context.req.headers.referer) return storeURL
+
+  const url = new URL(context.req.headers.referer)
+
+  // External redirect
+  if (url.origin !== process.env.NEXT_PUBLIC_ORIGIN_URL) return storeURL
+
+  // Page reload
+  if (url.pathname.replace(`/${locale}`, '') === context.resolvedUrl) return storeURL
+
+  return url.pathname
+}
 
 export default NextCartPage
