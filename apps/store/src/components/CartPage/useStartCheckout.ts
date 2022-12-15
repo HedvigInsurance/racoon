@@ -1,6 +1,5 @@
 import { useCheckoutStartMutation } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type Params = {
   shopSessionId: string
@@ -8,9 +7,8 @@ type Params = {
 }
 
 export const useStartCheckout = ({ shopSessionId, onCompleted }: Params) => {
-  const { locale } = useCurrentLocale()
   return useCheckoutStartMutation({
-    variables: { shopSessionId, locale },
+    variables: { shopSessionId },
     onCompleted: (data) => onCompleted(data.shopSessionCheckoutStart),
   })
 }

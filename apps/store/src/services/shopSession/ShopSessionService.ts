@@ -9,7 +9,6 @@ import {
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { IsoLocale } from '@/utils/l10n/types'
 
 export class ShopSessionService {
   constructor(
@@ -35,7 +34,7 @@ export class ShopSessionService {
   }
 
   public async getOrCreate(params: ShopSessionCreateMutationVariables): Promise<ShopSession> {
-    const existingShopSession = await this.fetch(params.locale as IsoLocale)
+    const existingShopSession = await this.fetch()
 
     if (existingShopSession?.countryCode === params.countryCode) {
       return existingShopSession
@@ -50,21 +49,21 @@ export class ShopSessionService {
     return await this.createPromise
   }
 
-  public async fetch(locale: IsoLocale): Promise<ShopSession | null> {
+  public async fetch(): Promise<ShopSession | null> {
     const shopSessionId = this.persister.fetch()
     if (!shopSessionId) return null
     try {
-      return await this.fetchById(shopSessionId, locale)
+      return await this.fetchById(shopSessionId)
     } catch (error) {
       console.info(`ShopSession not found: ${shopSessionId}`)
       return null
     }
   }
 
-  public async fetchById(shopSessionId: string, locale: IsoLocale): Promise<ShopSession> {
+  public async fetchById(shopSessionId: string): Promise<ShopSession> {
     const { data } = await this.apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
       query: ShopSessionDocument,
-      variables: { shopSessionId, locale },
+      variables: { shopSessionId },
     })
     return data.shopSession
   }

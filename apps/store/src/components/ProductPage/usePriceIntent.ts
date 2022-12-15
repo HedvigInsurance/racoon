@@ -8,7 +8,6 @@ import {
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { getStoredPriceIntentId, savePriceIntent } from '@/services/priceIntent/PriceIntent.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type Params = {
   shopSession?: ShopSession
@@ -18,7 +17,6 @@ type Params = {
 
 export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Params) => {
   const storedPriceIntentId = shopSession && getStoredPriceIntentId({ shopSession, priceTemplate })
-  const { locale } = useCurrentLocale()
 
   const [updatePriceIntentData] = usePriceIntentDataUpdateMutation({
     onError(error) {
@@ -27,8 +25,8 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
   })
 
   const variables = useMemo(
-    () => (shopSession ? { shopSessionId: shopSession.id, productName, locale } : null),
-    [shopSession, productName, locale],
+    () => (shopSession ? { shopSessionId: shopSession.id, productName } : null),
+    [shopSession, productName],
   )
 
   const [createPriceIntent, createResult] = usePriceIntentCreateMutation({
@@ -46,7 +44,6 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
           variables: {
             priceIntentId: priceIntentCreate.id,
             data: priceTemplate.initialData,
-            locale,
           },
         })
       }
@@ -58,7 +55,7 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
 
   const result = usePriceIntentQuery({
     skip: !storedPriceIntentId,
-    variables: storedPriceIntentId ? { priceIntentId: storedPriceIntentId, locale } : undefined,
+    variables: storedPriceIntentId ? { priceIntentId: storedPriceIntentId } : undefined,
     ssr: typeof window === 'undefined',
     onError: (error) => {
       datadogLogs.logger.warn('PriceIntent not found', {

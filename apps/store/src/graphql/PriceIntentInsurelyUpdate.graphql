@@ -1,8 +1,4 @@
-mutation PriceIntentInsurelyUpdate(
-  $priceIntentId: ID!
-  $dataCollectionId: String!
-  $locale: String!
-) {
+mutation PriceIntentInsurelyUpdate($priceIntentId: ID!, $dataCollectionId: String!) {
   priceIntentInsurelyUpdate(priceIntentId: $priceIntentId, dataCollectionId: $dataCollectionId) {
     priceIntent {
       ...PriceIntentFragment

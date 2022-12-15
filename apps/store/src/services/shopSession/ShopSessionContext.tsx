@@ -3,7 +3,6 @@ import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
 export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
@@ -38,7 +37,6 @@ export const useShopSession = () => {
 
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
-  const { locale } = useCurrentLocale()
   const apolloClient = useApolloClient()
   // Only used client-side
   const shopSessionService = useMemo(
@@ -48,15 +46,15 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const shopSessionId = shopSessionService.shopSessionId() ?? initialShopSessionId
 
   const queryResult = useShopSessionQuery({
-    variables: shopSessionId ? { shopSessionId, locale } : undefined,
+    variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
   })
 
   useEffect(() => {
     if (isBrowser()) {
-      shopSessionService.getOrCreate({ locale, countryCode })
+      shopSessionService.getOrCreate({ countryCode })
     }
-  }, [countryCode, locale, shopSessionService])
+  }, [countryCode, shopSessionService])
 
   return queryResult
 }

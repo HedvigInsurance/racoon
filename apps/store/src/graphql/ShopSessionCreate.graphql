@@ -1,4 +1,4 @@
-mutation ShopSessionCreate($countryCode: CountryCode!, $locale: String!) {
+mutation ShopSessionCreate($countryCode: CountryCode!) {
   shopSessionCreate(input: { countryCode: $countryCode }) {
     ...ShopSession
   }

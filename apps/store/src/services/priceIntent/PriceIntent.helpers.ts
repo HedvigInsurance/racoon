@@ -45,21 +45,21 @@ export const priceIntentServiceInitClientSide = ({
 type Params = {
   apolloClient: ApolloClient<unknown>
   shopSession: ShopSession
-} & Pick<GetServerSidePropsContext, 'locale' | 'req' | 'res'>
+} & Pick<GetServerSidePropsContext, 'req' | 'res'>
 
 type UpdatePriceIntentDataParams = PriceIntentDataUpdateMutationVariables & {
   apolloClient: ApolloClient<unknown>
 }
 
 export const updatePriceIntentData = async (params: UpdatePriceIntentDataParams) => {
-  const { apolloClient, data, locale, priceIntentId } = params
+  const { apolloClient, data, priceIntentId } = params
 
   const updatedResult = await apolloClient.mutate<
     PriceIntentDataUpdateMutation,
     PriceIntentDataUpdateMutationVariables
   >({
     mutation: PriceIntentDataUpdateDocument,
-    variables: { data, locale, priceIntentId },
+    variables: { data, priceIntentId },
   })
 
   const updatedPriceIntent = updatedResult.data?.priceIntentDataUpdate.priceIntent
@@ -75,14 +75,14 @@ type CreatePriceIntentParams = PriceIntentCreateMutationVariables & {
 }
 
 export const createPriceIntent = async (params: CreatePriceIntentParams) => {
-  const { apolloClient, locale, shopSessionId, productName } = params
+  const { apolloClient, shopSessionId, productName } = params
 
   const result = await apolloClient.mutate<
     PriceIntentCreateMutation,
     PriceIntentCreateMutationVariables
   >({
     mutation: PriceIntentCreateDocument,
-    variables: { locale, productName, shopSessionId },
+    variables: { productName, shopSessionId },
   })
 
   const priceIntent = result.data?.priceIntentCreate
