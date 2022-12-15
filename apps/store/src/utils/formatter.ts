@@ -28,7 +28,10 @@ export const formatMonthlyPrice = (
 type FormatterOptions = MoneyFormatOptions & { i18n: I18NextClient }
 
 export class Formatter {
-  constructor(public options: FormatterOptions) {}
+  constructor(public options: FormatterOptions) {
+    // Has to be assigned explicitly for Storybook compatibility, looks like it messes up TS constructor properties
+    this.options = options
+  }
 
   amount = (amount: number) => formatAmount(amount, this.options)
   monthlyPrice = (amount: number) => formatMonthlyPrice(amount, this.options)
