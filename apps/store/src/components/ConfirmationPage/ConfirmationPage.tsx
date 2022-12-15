@@ -55,7 +55,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                       <p>{offer.variant.displayName}</p>
                     </InventoryItem.MainLeft>
                     <InventoryItem.MainRight>
-                      {formatter.monthlyPrice(offer.price.amount)}
+                      {formatter.monthlyPrice(offer.price)}
                     </InventoryItem.MainRight>
                     <InventoryItem.MainBottom>
                       <Text as="p" color="gray600" size="s">

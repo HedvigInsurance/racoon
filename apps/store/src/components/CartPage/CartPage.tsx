@@ -33,11 +33,7 @@ export const CartPage = (props: CartPageProps) => {
           <HorizontalLine />
           <CampaignCodeList cartId={cartId} campaigns={campaigns} />
           <HorizontalLine />
-          <CostSummary
-            currencyCode={cost.currencyCode}
-            amount={cost.net}
-            crossOutAmount={cost.crossOut}
-          />
+          <CostSummary {...cost} />
         </Space>
       </EmptyState>
     )
@@ -56,11 +52,7 @@ export const CartPage = (props: CartPageProps) => {
         <HorizontalLine />
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
         <HorizontalLine />
-        <CostSummary
-          currencyCode={cost.currencyCode}
-          amount={cost.net}
-          crossOutAmount={cost.crossOut}
-        />
+        <CostSummary {...cost} />
 
         <Button fullWidth onClick={startCheckout} disabled={loadingStartCheckout}>
           {t('CHECKOUT_BUTTON')}

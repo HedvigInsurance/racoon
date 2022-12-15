@@ -1,5 +1,6 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta } from '@storybook/react'
+import { CurrencyCode } from '@/services/apollo/generated'
 import { CartCollapsible } from './CartCollapsible'
 
 export default {
@@ -14,7 +15,10 @@ export default {
 } as ComponentMeta<typeof CartCollapsible>
 
 export const Default = () => (
-  <CartCollapsible title="3 insurances" cost={{ amount: 234, currencyCode: 'SEK' }}>
+  <CartCollapsible
+    title="3 insurances"
+    cost={{ total: { amount: 234, currencyCode: CurrencyCode.Sek } }}
+  >
     I am inside the collapsible
   </CartCollapsible>
 )

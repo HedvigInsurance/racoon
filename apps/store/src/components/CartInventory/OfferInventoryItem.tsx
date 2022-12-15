@@ -21,9 +21,7 @@ export const OfferInventoryItem = ({ offer, onRemove }: Props) => {
         <InventoryItem.MainLeft>
           <p>{offer.variant.displayName}</p>
         </InventoryItem.MainLeft>
-        <InventoryItem.MainRight>
-          {formatter.monthlyPrice(offer.price.amount)}
-        </InventoryItem.MainRight>
+        <InventoryItem.MainRight>{formatter.monthlyPrice(offer.price)}</InventoryItem.MainRight>
         {onRemove && (
           <InventoryItem.MainBottom>
             <ButtonLink onClick={() => onRemove(offer)}>Ta bort</ButtonLink>

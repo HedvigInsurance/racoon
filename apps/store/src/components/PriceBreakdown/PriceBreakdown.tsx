@@ -16,12 +16,12 @@ export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
         <Space y={0.5}>
           <DataRow>
             <Text size="m">Subtotal</Text>
-            <Text size="m">{formatter.amount(cost.gross)}</Text>
+            <Text size="m">{formatter.money(cost.gross)}</Text>
           </DataRow>
           {products.map((product) => (
             <DataRow key={product.name}>
               <Text size="m">{product.name}</Text>
-              <Price>{formatter.amount(product.cost)}</Price>
+              <Price>{formatter.money(product.cost)}</Price>
             </DataRow>
           ))}
         </Space>
@@ -31,7 +31,7 @@ export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
             {campaigns.map((campaign) => (
               <DataRow key={campaign.name}>
                 <Text size="m">{campaign.name}</Text>
-                <Text size="m">{formatter.amount(campaign.discount)}</Text>
+                <Text size="m">{formatter.money(campaign.discount)}</Text>
               </DataRow>
             ))}
           </Space>
@@ -43,7 +43,7 @@ export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
         <SpaceFlex x={0.25}>
           {cost.crossOut ? (
             <CrossOutText>
-              <Text size="l">{formatter.amount(cost.crossOut)}</Text>
+              <Text size="l">{formatter.money(cost.crossOut)}</Text>
             </CrossOutText>
           ) : null}
 
