@@ -1,4 +1,3 @@
-import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
@@ -31,20 +30,16 @@ export const TextField = ({ label, variant = 'large', ...props }: Props) => {
       : [SmallWrapper, SmallLabel, SmallInput]
 
   return (
-    <Wrapper {...animationProps} active={!!inputValue}>
+    <Wrapper {...animationProps} $active={!!inputValue}>
       <Label htmlFor={props.id}>{label}</Label>
       <Input {...props} onKeyDown={highlight} onChange={handleChange} />
     </Wrapper>
   )
 }
 
-type WrapperProps = { active: boolean }
-const checkProps = { shouldForwardProp: isPropValid }
+type WrapperProps = { $active: boolean }
 
-const LargeWrapper = styled(
-  motion.div,
-  checkProps,
-)<WrapperProps>(({ theme, active }) => ({
+const LargeWrapper = styled(motion.div)<WrapperProps>(({ theme, $active }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -57,7 +52,7 @@ const LargeWrapper = styled(
     transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
   },
 
-  ...(active && {
+  ...($active && {
     '> label': {
       transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
     },
@@ -89,14 +84,14 @@ const LargeInput = styled.input(({ theme }) => ({
   },
 }))
 
-const SmallWrapper = styled(LargeWrapper)(({ theme, active }) => ({
+const SmallWrapper = styled(LargeWrapper)(({ theme, $active }) => ({
   height: '3.5rem',
 
   [':focus-within > label']: {
     transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
   },
 
-  ...(active && {
+  ...($active && {
     '> label': {
       transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
     },
