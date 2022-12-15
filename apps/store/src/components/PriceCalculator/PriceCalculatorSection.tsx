@@ -2,7 +2,7 @@ import { FormEventHandler, ReactNode } from 'react'
 import { Button, Space } from 'ui'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { FormSection, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   section: FormSection
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const PriceCalculatorSection = ({ section, loading, onSubmit, children }: Props) => {
-  const translateLabel = useTranslateTextLabel({ data: {} })
+  const translateLabel = useTranslateFieldLabel()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
