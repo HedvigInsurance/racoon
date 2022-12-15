@@ -21,20 +21,17 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   if (!shopSession || !shopSession.checkout) return null
 
-  const netAmount = shopSession.cart.cost.net.amount
-  const grossAmount = shopSession.cart.cost.gross.amount
+  const cartCost = shopSession.cart.cost
   const cart = {
     id: shopSession.cart.id,
     cost: {
-      currencyCode: shopSession.currencyCode,
-      amount: shopSession.cart.cost.net.amount,
-      crossOutAmount: netAmount !== grossAmount ? grossAmount : undefined,
+      total: cartCost.net,
+      crossOut: cartCost.net.amount !== cartCost.gross.amount ? cartCost.gross : undefined,
     },
     entries: shopSession.cart.entries.map((item) => ({
       offerId: item.id,
       title: item.variant.displayName,
-      cost: item.price.amount,
-      currencyCode: item.price.currencyCode,
+      cost: item.price,
       startDate: convertToDate(item.startDate) ?? undefined,
     })),
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({

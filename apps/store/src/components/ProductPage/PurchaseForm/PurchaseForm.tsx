@@ -13,7 +13,7 @@ import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIn
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
@@ -176,11 +176,11 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
 
   const refresh = useRouterRefresh()
   const apolloClient = useApolloClient()
-  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
+  const formatter = useFormatter()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     onAddedToCart({
       name: story.content.name,
-      price: currencyFormatter.format(addedProdutOffer.price.amount),
+      price: formatter.money(addedProdutOffer.price),
     })
     priceIntentServiceInitClientSide({ apolloClient, shopSession }).clear(priceTemplate.name)
     refresh()

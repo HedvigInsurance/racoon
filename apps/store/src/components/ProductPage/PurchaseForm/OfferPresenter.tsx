@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import { RefObject, useState } from 'react'
 import { Button, Space } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
@@ -16,7 +15,7 @@ import {
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
@@ -34,8 +33,7 @@ export const OfferPresenter = ({
   scrollPastRef,
   onAddedToCart,
 }: Props) => {
-  const { t } = useTranslation()
-  const formatter = useCurrencyFormatter(shopSession.currencyCode)
+  const formatter = useFormatter()
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
 
@@ -63,9 +61,7 @@ export const OfferPresenter = ({
     priceIntentId: priceIntent.id,
   })
 
-  const displayPrice = t('MONTHLY_PRICE', {
-    displayAmount: formatter.format(selectedOffer.price.amount),
-  })
+  const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
   const cancellationOption = getCancellationOption(priceIntent)
 

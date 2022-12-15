@@ -1,21 +1,18 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import { Heading, Space } from 'ui'
 import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import * as InventoryItem from '@/components/CartInventory/InventoryItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Text } from '@/components/Text/Text'
-import { fromNow } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
-  const { cart, currency, platform } = props
+  const { cart, platform } = props
   const { locale } = useCurrentLocale()
-  const { t } = useTranslation()
-  const currencyFormatter = useCurrencyFormatter(currency)
+  const formatter = useFormatter()
 
   return (
     <Wrapper>
@@ -58,13 +55,11 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                       <p>{offer.variant.displayName}</p>
                     </InventoryItem.MainLeft>
                     <InventoryItem.MainRight>
-                      {t('MONTHLY_PRICE', {
-                        displayAmount: currencyFormatter.format(offer.price.amount),
-                      })}
+                      {formatter.monthlyPrice(offer.price)}
                     </InventoryItem.MainRight>
                     <InventoryItem.MainBottom>
                       <Text as="p" color="gray600" size="s">
-                        Activates {fromNow(new Date(offer.startDate), locale)}
+                        Activates {formatter.fromNow(new Date(offer.startDate))}
                       </Text>
                     </InventoryItem.MainBottom>
                   </InventoryItem.Main>

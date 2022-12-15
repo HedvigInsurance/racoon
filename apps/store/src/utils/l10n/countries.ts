@@ -1,4 +1,4 @@
-import { CountryCode, Locale, CountryLabel, IsoLocale } from './types'
+import { CountryCode, CountryLabel, IsoLocale, Locale } from './types'
 
 export type CountryData = {
   id: CountryLabel

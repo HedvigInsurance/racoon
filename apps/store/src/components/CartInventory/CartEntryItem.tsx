@@ -7,18 +7,15 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
-import { fromNow } from '@/utils/date'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
 
 type Props = CartEntry & { cartId: string }
 
 export const CartEntryItem = (props: Props) => {
-  const { cartId, offerId, currencyCode, title, startDate, cost } = props
-  const { t } = useTranslation(['cart', 'common'])
-  const { locale } = useCurrentLocale()
-  const currencyFormatter = useCurrencyFormatter(currencyCode)
+  const { cartId, offerId, title, startDate, cost } = props
+  const { t } = useTranslation('cart')
+  const formatter = useFormatter()
 
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
     refetchQueries: 'active',
@@ -39,7 +36,7 @@ export const CartEntryItem = (props: Props) => {
             <Text size="l">{title}</Text>
             <Text size="l" color="gray600">
               {startDate
-                ? t('CART_ENTRY_DATE_LABEL', { date: fromNow(startDate, locale), ns: 'cart' })
+                ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
                 : 'Starts sometime...'}
             </Text>
           </div>
@@ -52,9 +49,7 @@ export const CartEntryItem = (props: Props) => {
             </Dialog.Trigger>
           </SpaceFlex>
         </Space>
-        <Text size="l">
-          {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(cost), ns: 'common' })}
-        </Text>
+        <Text size="l">{formatter.monthlyPrice(cost)}</Text>
       </Wrapper>
 
       <StyledDialogContent>

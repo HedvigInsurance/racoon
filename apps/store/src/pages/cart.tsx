@@ -28,8 +28,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const entries = shopSession.cart.entries.map((item) => ({
     offerId: item.id,
     title: item.variant.displayName || 'Unknown insurance',
-    cost: item.price.amount,
-    currencyCode: item.price.currencyCode,
+    cost: item.price,
     startDate: convertToDate(item.startDate) ?? undefined,
   }))
 
@@ -39,9 +38,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   }))
 
   const cartCost = shopSession.cart.cost
-  const grossAmount = cartCost.gross.amount
-  const netAmount = cartCost.net.amount
-  const crossOut = grossAmount !== netAmount ? grossAmount : undefined
+  const crossOut = cartCost.gross.amount !== cartCost.net.amount ? cartCost.gross : undefined
 
   return (
     <CartPage
@@ -50,8 +47,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
       entries={entries}
       campaigns={campaigns}
       cost={{
-        currencyCode: shopSession.currencyCode,
-        net: netAmount,
+        total: cartCost.net,
         crossOut,
       }}
       {...props}
