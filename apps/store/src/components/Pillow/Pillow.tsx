@@ -5,15 +5,15 @@ const PLACEHOLDER = 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apar
 
 type PillowProps = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+  src?: string
+  alt?: string | null
 }
 
-export const Pillow = (props: PillowProps) => (
-  <StyledImage alt="" src={PLACEHOLDER} {...props} width={80} height={80} />
+export const Pillow = ({ alt, src = PLACEHOLDER, ...props }: PillowProps) => (
+  <StyledImage {...props} src={src} alt={alt ?? ''} width={80} height={80} />
 )
 
-const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => ({
-  ...getSize(size),
-}))
+const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => getSize(size))
 
 const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
   switch (size) {

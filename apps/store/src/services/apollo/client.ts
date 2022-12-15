@@ -32,8 +32,8 @@ const authLink = setContext((_, { headers = {}, context }) => {
   }
 })
 
-const languageLink = setContext((operation, { headers = {}, ...context }) => {
-  const locale = operation.variables?.locale ?? getLocaleOrFallback(i18n?.language).locale
+const languageLink = setContext((_, { headers = {}, ...context }) => {
+  const locale = getLocaleOrFallback(i18n?.language).locale
   return {
     headers: {
       ...headers,
