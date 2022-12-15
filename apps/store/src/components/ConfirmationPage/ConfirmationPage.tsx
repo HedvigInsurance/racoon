@@ -5,7 +5,6 @@ import { CartInventory } from '@/components/CartInventory/CartInventory'
 import * as InventoryItem from '@/components/CartInventory/InventoryItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Text } from '@/components/Text/Text'
-import { fromNow } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useFormatter } from '@/utils/useFormatter'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
@@ -60,7 +59,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                     </InventoryItem.MainRight>
                     <InventoryItem.MainBottom>
                       <Text as="p" color="gray600" size="s">
-                        Activates {fromNow(new Date(offer.startDate), locale)}
+                        Activates {formatter.fromNow(new Date(offer.startDate))}
                       </Text>
                     </InventoryItem.MainBottom>
                   </InventoryItem.Main>

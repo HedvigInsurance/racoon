@@ -7,7 +7,6 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
-import { fromNow } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
@@ -39,7 +38,7 @@ export const CartEntryItem = (props: Props) => {
             <Text size="l">{title}</Text>
             <Text size="l" color="gray600">
               {startDate
-                ? t('CART_ENTRY_DATE_LABEL', { date: fromNow(startDate, locale), ns: 'cart' })
+                ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
                 : 'Starts sometime...'}
             </Text>
           </div>

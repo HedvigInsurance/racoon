@@ -25,6 +25,18 @@ export const formatMonthlyPrice = (
   })
 }
 
+type DateFormatOptions = { locale: IsoLocale }
+
+export const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
+  const today = new Date()
+  const diff = Math.abs(today.getTime() - date.getTime())
+  const diffDays = Math.floor(diff / (1000 * 3600 * 24))
+  if (diffDays == 0) {
+    return new Intl.RelativeTimeFormat(options.locale, { numeric: 'auto' }).format(0, 'day')
+  }
+  return date.toLocaleDateString(options.locale)
+}
+
 type FormatterOptions = MoneyFormatOptions & { i18n: I18NextClient }
 
 export class Formatter {
@@ -35,4 +47,5 @@ export class Formatter {
 
   amount = (amount: number) => formatAmount(amount, this.options)
   monthlyPrice = (amount: number) => formatMonthlyPrice(amount, this.options)
+  fromNow = (date: Date) => formatDateFromNow(date, this.options)
 }
