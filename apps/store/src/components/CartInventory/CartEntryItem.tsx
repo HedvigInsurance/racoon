@@ -7,7 +7,6 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
 
@@ -16,7 +15,6 @@ type Props = CartEntry & { cartId: string }
 export const CartEntryItem = (props: Props) => {
   const { cartId, offerId, title, startDate, cost } = props
   const { t } = useTranslation('cart')
-  const { locale } = useCurrentLocale()
   const formatter = useFormatter()
 
   const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
