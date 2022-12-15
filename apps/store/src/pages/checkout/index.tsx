@@ -8,25 +8,57 @@ import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helper
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { I18nNamespace } from '@/utils/l10n/types'
 
-type NextPageProps = Omit<CheckoutPageProps, 'loading' | 'userError'> & {
+type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
-const NextCheckoutPage: NextPage<NextPageProps> = ({ cart, ...pageProps }) => {
+const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
+  const { shopSession } = useShopSession()
+
+  if (!shopSession || !shopSession.checkout) return null
+
+  const netAmount = shopSession.cart.cost.net.amount
+  const grossAmount = shopSession.cart.cost.gross.amount
+  const cart = {
+    id: shopSession.cart.id,
+    cost: {
+      currencyCode: shopSession.currencyCode,
+      amount: shopSession.cart.cost.net.amount,
+      crossOutAmount: netAmount !== grossAmount ? grossAmount : undefined,
+    },
+    entries: shopSession.cart.entries.map((item) => ({
+      offerId: item.id,
+      title: item.variant.displayName,
+      cost: item.price.amount,
+      currencyCode: item.price.currencyCode,
+      startDate: convertToDate(item.startDate) ?? undefined,
+    })),
+    campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
+      id: item.id,
+      displayName: item.code,
+    })),
+  }
+
+  const contactDetails = shopSession.checkout.contactDetails
+  const prefilledData = {
+    [FormElement.FirstName]: contactDetails.firstName ?? '',
+    [FormElement.LastName]: contactDetails.lastName ?? '',
+    [FormElement.PersonalNumber]: contactDetails.personalNumber ?? '',
+    [FormElement.PhoneNumber]: contactDetails.phoneNumber ?? '',
+    [FormElement.Email]: contactDetails.email ?? '',
+  }
+
   return (
     <CheckoutPage
-      {...pageProps}
-      cart={{
-        ...cart,
-        entries: cart.entries.map((item) => ({
-          ...item,
-          startDate: convertToDate(item.startDate) ?? undefined,
-        })),
-      }}
+      {...props}
+      checkoutId={shopSession.checkout.id}
+      cart={cart}
+      prefilledData={prefilledData}
     />
   )
 }
@@ -52,47 +84,15 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       return { notFound: true }
     }
 
-    const checkoutId = checkout.id
     const checkoutSigning = await fetchCurrentCheckoutSigning({
       req,
       apolloClient,
-      checkoutId,
+      checkoutId: checkout.id,
     })
 
-    const netAmount = shopSession.cart.cost.net.amount
-    const grossAmount = shopSession.cart.cost.gross.amount
     const pageProps: NextPageProps = {
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      cart: {
-        id: shopSession.cart.id,
-        cost: {
-          currencyCode: shopSession.currencyCode,
-          amount: shopSession.cart.cost.net.amount,
-          ...(netAmount !== grossAmount && { crossOutAmount: grossAmount }),
-        },
-        entries: shopSession.cart.entries.map((item) => ({
-          offerId: item.id,
-          title: item.variant.displayName,
-          cost: item.price.amount,
-          currencyCode: item.price.currencyCode,
-          startDate: item.startDate,
-        })),
-        campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
-          id: item.id,
-          displayName: item.code,
-        })),
-      },
-
-      prefilledData: {
-        [FormElement.FirstName]: checkout.contactDetails.firstName || '',
-        [FormElement.LastName]: checkout.contactDetails.lastName || '',
-        [FormElement.PersonalNumber]: checkout.contactDetails.personalNumber || '',
-        [FormElement.PhoneNumber]: checkout.contactDetails.phoneNumber || '',
-        [FormElement.Email]: checkout.contactDetails.email || '',
-      },
-
-      checkoutId,
       checkoutSigningId: checkoutSigning?.id ?? null,
     }
 
