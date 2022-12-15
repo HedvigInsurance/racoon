@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CountrySelectorPage } from '@/components/CountrySelectorPage/CountrySelectorPage'
 import { getGlobalStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
@@ -11,9 +12,15 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (isRoutingLocale(locale)) routingLocale = locale
   else routingLocale = toRoutingLocale(FALLBACK_LOCALE)
 
+  const [globalStory, translations] = await Promise.all([
+    getGlobalStory({ locale: routingLocale }),
+    serverSideTranslations(routingLocale),
+  ])
+
   return {
     props: {
-      [GLOBAL_STORY_PROP_NAME]: await getGlobalStory({ locale: routingLocale }),
+      ...translations,
+      [GLOBAL_STORY_PROP_NAME]: globalStory,
     },
   }
 }

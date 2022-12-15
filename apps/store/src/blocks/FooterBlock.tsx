@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useRef } from 'react'
@@ -12,12 +13,7 @@ import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/story
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
-import {
-  LocaleField,
-  LOCALE_COOKIE_MAX_AGE,
-  LOCALE_COOKIE_KEY,
-  TEMP_TRANSLATIONS,
-} from '@/utils/l10n/locales'
+import { LocaleField, LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
 import { getLocaleOrFallback, toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
@@ -68,17 +64,18 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
+  const { t } = useTranslation()
   const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
 
   const countryList = Object.keys(countries).map((country) => ({
-    name: TEMP_TRANSLATIONS[`COUNTRY_LABEL_${country}`],
+    name: t(`COUNTRY_LABEL_${country}`, { defaultValue: country }),
     value: country,
   }))
 
   const languageList = currentCountry.locales.map((locale) => {
     const { language } = getLocaleOrFallback(locale)
     return {
-      name: TEMP_TRANSLATIONS[`LANGUAGE_LABEL_${language}`],
+      name: t(`LANGUAGE_LABEL_${language}`, { defaultValue: language }),
       value: language,
     }
   })
