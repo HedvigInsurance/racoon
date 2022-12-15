@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useState } from 'react'
-import { InputField } from 'ui'
+import { TextField } from '@/components/TextField/TextField'
 import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceCalculator/Field.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -25,11 +25,10 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
   }
 
   return (
-    <InputField
+    <TextField
       type="text"
       name={field.name}
-      label={field.label ? translateLabel(field.label) : undefined}
-      placeholder="ABC 123"
+      label={translateLabel(field.label)}
       pattern={CAR_REGISTRATION_NUMBER_REGEX}
       maxLength={CAR_REGISTRATION_NUMBER_LENGTH}
       required={field.required}
