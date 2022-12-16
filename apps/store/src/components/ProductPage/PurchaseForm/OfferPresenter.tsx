@@ -168,6 +168,12 @@ const getCancellationOption = (priceIntent: PriceIntent): CancellationOption => 
         requested: cancellation.requested,
       }
 
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+      return {
+        type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+      }
+
     default:
       return { type: ExternalInsuranceCancellationOption.None }
   }
