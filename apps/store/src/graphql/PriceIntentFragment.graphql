@@ -8,6 +8,7 @@ fragment PriceIntentFragment on PriceIntent {
   externalInsurer {
     id
     displayName
+    insurelyId
   }
   cancellation {
     option
