@@ -26,12 +26,13 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
     >
       {form.sections.map((section, index) => {
         const isMuted = section.state !== 'valid' && section.id !== activeSectionId
+        const stepIconState = section.state === 'valid' ? 'muted' : 'outline'
 
         return (
           <Accordion.Item key={section.id} value={section.id}>
             <Accordion.Header>
               <SpaceFlex space={0.5} align="center">
-                <StepIcon filled={section.id === activeSectionId} />
+                <StepIcon state={section.id === activeSectionId ? 'filled' : stepIconState} />
                 <StyledHeading as="h3" variant="standard.18" muted={isMuted}>
                   {translateLabel(section.title)}
                 </StyledHeading>
