@@ -7,11 +7,13 @@ import {
   useExternalInsurerUpdateMutation,
   usePriceIntentInsurelyUpdateMutation,
 } from '@/services/apollo/generated'
-import { InsurelyIframe } from '@/services/Insurely/Insurely'
+import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
+import { PERSONAL_NUMBER_FIELD_NAME } from '@/services/priceIntent/priceIntent.constants'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 type Props = {
@@ -25,15 +27,30 @@ type Props = {
 export const CurrentInsuranceField = (props: Props) => {
   const { label, productName, priceIntentId, insurelyClientId, externalInsurer } = props
   const companyOptions = useCompanyOptions(productName)
-  const updateExternalInsurer = useUpdateExternalInsurer(priceIntentId)
+  const updateExternalInsurer = useUpdateExternalInsurer({
+    priceIntentId,
+    onCompleted(updatedPriceIntent) {
+      const companyId = updatedPriceIntent.externalInsurer?.insurelyId
+      const personalNumber = updatedPriceIntent.data[PERSONAL_NUMBER_FIELD_NAME]
+      if (companyId && typeof personalNumber === 'string') {
+        setIsDialogOpen(true)
+        insurelyPrefillInput({ company: companyId, personalNumber })
+      } else {
+        datadogLogs.logger.error('Failed to prefill Insurely', {
+          priceIntentId,
+          companyId,
+          personalNumber,
+        })
+      }
+    },
+  })
 
-  const [isInsurelyModalOpen, setIsInsurelyModalOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const handleCompanyChange = (company?: string) => {
-    if (company) setIsInsurelyModalOpen(true)
     updateExternalInsurer(company)
   }
 
-  const closeModal = useCallback(() => setIsInsurelyModalOpen(false), [])
+  const closeModal = useCallback(() => setIsDialogOpen(false), [])
 
   const [dataCollectionId, setDataCollectionId] = useState<string | null>(null)
   const [updateDataCollectionId] = usePriceIntentInsurelyUpdateMutation({
@@ -61,16 +78,12 @@ export const CurrentInsuranceField = (props: Props) => {
         companyOptions={companyOptions}
         onCompanyChange={handleCompanyChange}
       />
-      {isInsurelyModalOpen && (
-        <Dialog.Root open onOpenChange={setIsInsurelyModalOpen}>
+      {isDialogOpen && (
+        <Dialog.Root open onOpenChange={closeModal}>
           <StyledDialogContent>
             <StyledDialogWindow>
               <InsurelyIframe
                 clientId={insurelyClientId}
-                // @TODO: convert from "company"
-                company={'se-demo'}
-                // @TODO: get from price intent
-                personalNumber={'200001020000'}
                 onCollection={setDataCollectionId}
                 onClose={closeModal}
                 onCompleted={handleInsurelyCompleted}
@@ -92,13 +105,20 @@ const useCompanyOptions = (productName: string) => {
   return companyOptions ?? []
 }
 
-const useUpdateExternalInsurer = (priceIntentId: string) => {
+type UseUpdateExternalInsurerParams = {
+  priceIntentId: string
+  onCompleted: (priceIntent: PriceIntent) => void
+}
+
+const useUpdateExternalInsurer = (params: UseUpdateExternalInsurerParams) => {
+  const { priceIntentId } = params
   const [updateExternalInsurer] = useExternalInsurerUpdateMutation({
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentExternalInsurerUpdate.priceIntent
       if (updatedPriceIntent) {
         const insurer = updatedPriceIntent.externalInsurer?.displayName
         datadogLogs.logger.info(`Updated external insurer: ${insurer}`)
+        params.onCompleted(updatedPriceIntent)
       } else {
         datadogLogs.logger.warn('Failed to update external insurer', {
           priceIntentId,
@@ -124,11 +144,9 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
 const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
   height: '100%',
   display: 'flex',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   justifyContent: 'center',
-  paddingTop: theme.space[2],
-  paddingLeft: theme.space[2],
-  paddingRight: theme.space[2],
+  padding: theme.space[2],
 }))
 
 const StyledDialogWindow = styled(Dialog.Window)(({ theme }) => ({
@@ -137,6 +155,5 @@ const StyledDialogWindow = styled(Dialog.Window)(({ theme }) => ({
   height: '100%',
   maxHeight: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
-  borderTopLeftRadius: theme.radius.xs,
-  borderTopRightRadius: theme.radius.xs,
+  borderRadius: theme.radius.xs,
 }))
