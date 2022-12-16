@@ -29,5 +29,6 @@
   "TIER_SELECTOR_SELECTED_LABEL": "Skyddsnivå",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
   "PRICE_MATCH_BUBBLE_FAIL_TITLE": "Vi kunde inte matcha ditt pris",
-  "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Går ut {{date}}"
+  "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Går ut {{date}}",
+  "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Startdatum {{company}}"
 }
