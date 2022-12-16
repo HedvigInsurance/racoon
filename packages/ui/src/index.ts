@@ -25,6 +25,7 @@ export { mq, useBreakpoint } from './lib/media-query'
 
 export { fonts } from './lib/theme/typography'
 export { theme, getColor } from './lib/theme/theme'
+export { legacyTheme } from './lib/theme/legacy/legacyTheme'
 export type { UIColor } from './lib/theme/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
