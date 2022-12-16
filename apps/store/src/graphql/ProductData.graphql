@@ -10,6 +10,7 @@ query ProductData($productName: String!) {
       alt
       src
     }
+    insurelyClientId
     variants {
       typeOfContract
       perils {
