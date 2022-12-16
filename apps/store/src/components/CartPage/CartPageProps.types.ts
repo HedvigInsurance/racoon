@@ -1,12 +1,4 @@
-import { CartCost, CartCampaign } from '@/components/CartInventory/CartInventory.types'
-import { Money } from '@/utils/formatter'
-
-export type CartEntry = {
-  offerId: string
-  title: string
-  cost: Money
-  startDate?: Date
-}
+import { CartCost, CartCampaign, CartEntry } from '@/components/CartInventory/CartInventory.types'
 
 export type CartPageProps = {
   shopSessionId: string

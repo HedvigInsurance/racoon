@@ -5,6 +5,7 @@ export type CartEntry = {
   title: string
   cost: Money
   startDate?: Date
+  pillow: { src: string; alt?: string }
 }
 
 export type CartCampaign = { id: string; code: string; explanation: string }

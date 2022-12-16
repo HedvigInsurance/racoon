@@ -1,8 +1,11 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { CartFragmentFragment, CurrencyCode } from '@/services/apollo/generated'
+import {
+  CampaignDiscountType,
+  CartFragmentFragment,
+  CurrencyCode,
+} from '@/services/apollo/generated'
 import { CartInventory } from './CartInventory'
-import { OfferInventoryItem } from './OfferInventoryItem'
 
 export default {
   title: 'Cart Inventory',
@@ -18,7 +21,7 @@ export default {
 const Template: ComponentStory<typeof CartInventory> = () => {
   return (
     <CartInventory cart={MOCK_CART}>
-      {(offer) => <OfferInventoryItem offer={offer} />}
+      {(offer) => <div>{offer.variant.product.displayNameFull}</div>}
     </CartInventory>
   )
 }
@@ -27,25 +30,115 @@ export const Default = Template.bind({})
 Default.args = {}
 
 const MOCK_CART: CartFragmentFragment = {
-  id: 'fd2fe15b-7e05-4b1d-8f3d-72300077ad20',
+  id: '2184f2c1-b967-421e-877c-7c7e96173893',
   cost: {
-    gross: { amount: 178, currencyCode: CurrencyCode.Sek },
-    net: { amount: 178, currencyCode: CurrencyCode.Sek },
-    discount: { amount: 0, currencyCode: CurrencyCode.Sek },
+    gross: {
+      amount: 307,
+      currencyCode: CurrencyCode.Sek,
+      __typename: 'Money',
+    },
+    net: {
+      amount: 307,
+      currencyCode: CurrencyCode.Sek,
+      __typename: 'Money',
+    },
+    discount: {
+      amount: 10,
+      currencyCode: CurrencyCode.Sek,
+      __typename: 'Money',
+    },
+    __typename: 'CartCost',
   },
-  redeemedCampaigns: [],
+  redeemedCampaigns: [
+    {
+      id: 'fb6a2f59-faaa-423c-b43b-169c3c6ccf4c',
+      code: 'meletis4ever',
+      discount: {
+        type: CampaignDiscountType.MonthlyCost,
+        amount: {
+          currencyCode: CurrencyCode.Sek,
+          amount: 10,
+          __typename: 'Money',
+        },
+        percentage: 0,
+        months: 0,
+        __typename: 'CampaignDiscount',
+      },
+      __typename: 'RedeemedCampaign',
+    },
+  ],
   entries: [
     {
-      id: 'a98c1fe0-a216-412d-8664-fe130daec0f8',
-      variant: { typeOfContract: 'SE_APARTMENT_RENT', displayName: '◰ Hem' },
-      price: { amount: 109, currencyCode: CurrencyCode.Sek },
-      startDate: '2022-10-26',
+      id: 'e01f57f9-37f8-4554-946b-e509233632ff',
+      variant: {
+        typeOfContract: 'SE_ACCIDENT',
+        product: {
+          displayNameFull: 'Accident Insurance',
+          pillowImage: {
+            id: '6646216',
+            alt: '',
+            src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
+            __typename: 'StoryblokImageAsset',
+          },
+          __typename: 'Product',
+        },
+        __typename: 'ProductVariant',
+      },
+      price: {
+        amount: 69,
+        currencyCode: CurrencyCode.Sek,
+        __typename: 'Money',
+      },
+      startDate: '2022-12-15',
+      __typename: 'ProductOffer',
     },
     {
-      id: 'c89d2bcf-c7de-408e-95b0-570b75294795',
-      variant: { typeOfContract: 'SE_ACCIDENT', displayName: '◰ Olycksfall' },
-      price: { amount: 69, currencyCode: CurrencyCode.Sek },
-      startDate: null,
+      id: '078f43ab-19fa-4007-bf64-714202bfb430',
+      variant: {
+        typeOfContract: 'SE_APARTMENT_RENT',
+        product: {
+          displayNameFull: 'Home Insurance Rental',
+          pillowImage: {
+            id: '6646216',
+            alt: '',
+            src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
+            __typename: 'StoryblokImageAsset',
+          },
+          __typename: 'Product',
+        },
+        __typename: 'ProductVariant',
+      },
+      price: {
+        amount: 119,
+        currencyCode: CurrencyCode.Sek,
+        __typename: 'Money',
+      },
+      startDate: '2022-12-15',
+      __typename: 'ProductOffer',
+    },
+    {
+      id: 'f13c5d6f-52ba-41db-adf3-9df196818dec',
+      variant: {
+        typeOfContract: 'SE_APARTMENT_RENT',
+        product: {
+          displayNameFull: 'Home Insurance Rental',
+          pillowImage: {
+            id: '6646216',
+            alt: '',
+            src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
+            __typename: 'StoryblokImageAsset',
+          },
+          __typename: 'Product',
+        },
+        __typename: 'ProductVariant',
+      },
+      price: {
+        amount: 119,
+        currencyCode: CurrencyCode.Sek,
+        __typename: 'Money',
+      },
+      startDate: '2022-12-15',
+      __typename: 'ProductOffer',
     },
   ],
 }

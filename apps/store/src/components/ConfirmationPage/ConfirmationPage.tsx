@@ -52,7 +52,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                   </InventoryItem.Left>
                   <InventoryItem.Main>
                     <InventoryItem.MainLeft>
-                      <p>{offer.variant.displayName}</p>
+                      <p>{offer.variant.product.displayNameFull}</p>
                     </InventoryItem.MainLeft>
                     <InventoryItem.MainRight>
                       {formatter.monthlyPrice(offer.price)}
