@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import { getColor } from '../../lib/theme/theme'
-import { Card, CardContent } from '../Card/Card'
-import { SelectableCard, SelectableCardProps } from '../Card/SelectableCard'
-import { Checkbox } from '../Checkbox/Checkbox'
+import { Checkbox } from 'ui'
+import { Card, CardContent } from 'onboarding/src/components/Card/Card'
+import { SelectableCard, SelectableCardProps } from 'onboarding/src/components/Card/SelectableCard'
 
 const HeaderElement = styled.div({
   display: 'grid',
@@ -16,10 +15,10 @@ const HeaderElement = styled.div({
 
 const TitleElement = styled.div({})
 
-const ExtraElement = styled.div({
-  color: getColor('gray500'),
+const ExtraElement = styled.div(({ theme }) => ({
+  color: theme.colors.gray500,
   justifySelf: 'end',
-})
+}))
 
 export type QuotePriceCardProps = SelectableCardProps & {
   title?: React.ReactNode

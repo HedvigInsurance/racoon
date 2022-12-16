@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import { SelectableCardGroup } from '../Card/SelectableCardGroup'
-import { Space } from '../Space'
+import { Space } from 'ui'
+import { SelectableCardGroup } from 'onboarding/src/components/Card/SelectableCardGroup'
 import { QuotePriceCard } from './QuotePriceCard'
 
 export default {

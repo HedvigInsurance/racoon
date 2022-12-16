@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Space } from '../Space'
+import { Space } from 'ui'
 import { CardContent } from './Card'
 import { SelectableCard } from './SelectableCard'
 import { SelectableCardGroup } from './SelectableCardGroup'

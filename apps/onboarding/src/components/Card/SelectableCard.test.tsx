@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { renderWithTheme } from '../../../test-helpers'
+import { renderWithTheme } from 'ui/test-helpers'
 import { CardContent } from './Card'
 import { SelectableCard } from './SelectableCard'
 import { SelectableCardGroup } from './SelectableCardGroup'

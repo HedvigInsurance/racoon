@@ -1,8 +1,8 @@
-import { Meta, Story } from '@storybook/react'
+import { ComponentMeta, Story } from '@storybook/react'
 import { Heading, HeadingProps } from './Heading'
 
-const storyMeta: Meta<HeadingProps> = {
-  title: 'Heading',
+export default {
+  title: 'Heading New',
   component: Heading,
   parameters: {
     backgrounds: {
@@ -10,20 +10,19 @@ const storyMeta: Meta<HeadingProps> = {
     },
   },
   args: {
-    variant: 'xl',
-    headingLevel: 'h1',
-    children: 'This is a headline',
+    variant: 'serif.72',
+    children: 'This is a Heading',
   },
-}
+} as ComponentMeta<typeof Heading>
 
-export default storyMeta
-
-const Template: Story<HeadingProps> = ({ variant, headingLevel, colorVariant, children }) => (
-  <Heading variant={variant} headingLevel={headingLevel} colorVariant={colorVariant}>
-    {children}
-  </Heading>
+const Template: Story<HeadingProps> = ({ children, ...rest }) => (
+  <Heading {...rest}>{children}</Heading>
 )
 
 export const LightBackground = Template.bind({})
 LightBackground.parameters = { backgrounds: { default: 'Light' } }
-LightBackground.args = { colorVariant: 'dark' }
+LightBackground.args = { color: 'dark' }
+
+export const DarkBackground = Template.bind({})
+DarkBackground.parameters = { backgrounds: { default: 'Dark' } }
+DarkBackground.args = { color: 'light' }
