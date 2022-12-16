@@ -9,4 +9,18 @@ fragment ProductOffer on ProductOffer {
     currencyCode
   }
   startDate
+  priceMatch {
+    externalInsurer {
+      id
+      displayName
+    }
+    priceReduction {
+      amount
+      currencyCode
+    }
+    externalPrice {
+      amount
+      currencyCode
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { RefObject, useState } from 'react'
+import { useTranslation } from 'next-i18next'
+import { RefObject, useMemo, useState } from 'react'
 import { Button, Space } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
@@ -17,6 +18,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
+import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -33,6 +35,7 @@ export const OfferPresenter = ({
   scrollPastRef,
   onAddedToCart,
 }: Props) => {
+  const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
@@ -67,13 +70,31 @@ export const OfferPresenter = ({
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
+  const priceMatch = useMemo(() => {
+    if (!selectedOffer.priceMatch) return null
+
+    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
+    const company = selectedOffer.priceMatch.externalInsurer.displayName
+    const externalPrice = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+
+    return {
+      title: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
+      // TODO: Include external expiry date
+      children: `${company} · ${externalPrice}`,
+    }
+  }, [selectedOffer.priceMatch, formatter, t])
+
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
         <Space y={2}>
-          <Text as="p" align="center" size="xxl">
-            {displayPrice}
-          </Text>
+          <Space y={0.5}>
+            <Text as="p" align="center" size="xxl">
+              {displayPrice}
+            </Text>
+
+            {priceMatch && <PriceMatchBubble {...priceMatch} />}
+          </Space>
 
           <Space y={0.25}>
             <TierSelector

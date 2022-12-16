@@ -26,5 +26,8 @@
   "LABEL_YES": "Yes",
   "LABEL_NO": "No",
   "TIER_SELECTOR_DEFAULT_LABEL": "Choose coverage",
-  "TIER_SELECTOR_SELECTED_LABEL": "Coverage level"
+  "TIER_SELECTOR_SELECTED_LABEL": "Coverage level",
+  "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "You save {{amount}}",
+  "PRICE_MATCH_BUBBLE_FAIL_TITLE": "We could not match your price",
+  "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Expires on {{date}}"
 }
