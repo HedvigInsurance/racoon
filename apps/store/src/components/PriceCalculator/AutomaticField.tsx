@@ -24,7 +24,7 @@ type Props = {
 
 export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocus }: Props) => {
   const translateLabel = useTranslateFieldLabel()
-  const { story } = useProductPageContext()
+  const { productData } = useProductPageContext()
 
   switch (field.type) {
     case 'text':
@@ -128,14 +128,16 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       return <CarMileageField field={field} />
 
     case 'current-insurance':
-      return (
+      return productData.insurelyClientId ? (
         <CurrentInsuranceField
           label={translateLabel(field.label)}
-          productName={story.content.productId}
+          productName={productData.name}
           priceIntentId={priceIntent.id}
+          insurelyClientId={productData.insurelyClientId}
           externalInsurer={priceIntent.externalInsurer?.id}
         />
-      )
+      ) : // TODO: Add a fallback for when we don't have an insurelyClientId
+      null
     default: {
       const badField: never = field
       console.warn(`Did not find field type=${(badField as any).type}.  Field not displayed`)

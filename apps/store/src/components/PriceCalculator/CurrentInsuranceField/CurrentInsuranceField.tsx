@@ -18,11 +18,12 @@ type Props = {
   label: string
   productName: string
   priceIntentId: string
+  insurelyClientId: string
   externalInsurer?: string
 }
 
 export const CurrentInsuranceField = (props: Props) => {
-  const { label, productName, priceIntentId, externalInsurer } = props
+  const { label, productName, priceIntentId, insurelyClientId, externalInsurer } = props
   const companyOptions = useCompanyOptions(productName)
   const updateExternalInsurer = useUpdateExternalInsurer(priceIntentId)
 
@@ -65,8 +66,7 @@ export const CurrentInsuranceField = (props: Props) => {
           <StyledDialogContent>
             <StyledDialogWindow>
               <InsurelyIframe
-                // @TODO: fetch from API
-                clientId="713b65c7-5613-4395-b1b8-db0028d5a9d2"
+                clientId={insurelyClientId}
                 // @TODO: convert from "company"
                 company={'se-demo'}
                 // @TODO: get from price intent
