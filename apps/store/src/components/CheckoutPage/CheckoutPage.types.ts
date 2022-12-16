@@ -9,11 +9,8 @@ export type CheckoutPageProps = {
     cost: CartCost
     campaigns: Array<CartCampaign>
   }
+  personalNumber: string
   prefilledData: {
     email?: string
-    firstName?: string
-    lastName?: string
-    personalNumber?: string
-    phoneNumber?: string
   }
 }

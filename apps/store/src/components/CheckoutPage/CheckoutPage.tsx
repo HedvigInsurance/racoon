@@ -23,7 +23,7 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { checkoutId, checkoutSigningId, cart, prefilledData } = props
+  const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData } = props
   const { t } = useTranslation('checkout')
 
   const { shopSession } = useShopSession()
@@ -90,15 +90,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <PersonalNumberField
               name={FormElement.PersonalNumber}
               label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-              required
-              defaultValue={prefilledData.personalNumber ?? undefined}
+              value={personalNumber}
+              readOnly
             />
             <TextField
               type="email"
               label={t('FORM_EMAIL_LABEL')}
               name={FormElement.Email}
+              defaultValue={prefilledData.email}
               required
-              defaultValue={prefilledData.email ?? undefined}
             />
             <Space y={0.5}>
               <Button fullWidth disabled={loading}>
@@ -114,14 +114,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           </Space>
         </form>
       </Section>
-
-      <HorizontalLineStandalone />
     </Wrapper>
   )
 }
 
 const Wrapper = styled(Space)(({ theme }) => ({
   paddingBottom: theme.space[6],
+  maxWidth: '40rem',
+  marginLeft: 'auto',
+  marginRight: 'auto',
 }))
 
 const Section = styled(Space)(({ theme }) => ({
