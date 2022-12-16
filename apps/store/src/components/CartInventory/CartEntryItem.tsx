@@ -13,7 +13,7 @@ import { CartEntry } from './CartInventory.types'
 type Props = CartEntry & { cartId: string }
 
 export const CartEntryItem = (props: Props) => {
-  const { cartId, offerId, title, startDate, cost } = props
+  const { cartId, offerId, title, startDate, cost, pillow } = props
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
@@ -30,11 +30,12 @@ export const CartEntryItem = (props: Props) => {
   return (
     <Dialog.Root>
       <Wrapper>
-        <Pillow size="small" />
+        <Pillow size="small" {...pillow} />
         <Space y={1}>
           <div>
             <Text size="l">{title}</Text>
             <Text size="l" color="gray600">
+              {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
                 ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
                 : 'Starts sometime...'}

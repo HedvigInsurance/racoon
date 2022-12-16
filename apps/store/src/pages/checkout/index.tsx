@@ -32,9 +32,13 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     },
     entries: shopSession.cart.entries.map((item) => ({
       offerId: item.id,
-      title: item.variant.displayName,
+      title: item.variant.product.displayNameFull,
       cost: item.price,
       startDate: convertToDate(item.startDate) ?? undefined,
+      pillow: {
+        src: item.variant.product.pillowImage.src,
+        alt: item.variant.product.pillowImage.alt ?? undefined,
+      },
     })),
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
       id: item.id,
