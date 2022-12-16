@@ -116,7 +116,7 @@ const useUpdateExternalInsurer = (priceIntentId: string) => {
   return (externalInsurerId?: string) => {
     datadogLogs.logger.info('Updating external insurer', { priceIntentId, externalInsurerId })
     updateExternalInsurer({
-      variables: { priceIntentId, externalInsurer: externalInsurerId },
+      variables: { priceIntentId, externalInsurerId },
     })
   }
 }
