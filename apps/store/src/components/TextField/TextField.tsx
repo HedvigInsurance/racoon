@@ -1,5 +1,6 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
+import { isValidMotionProp, motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -30,16 +31,18 @@ export const TextField = ({ label, variant = 'large', ...props }: Props) => {
       : [SmallWrapper, SmallLabel, SmallInput]
 
   return (
-    <Wrapper {...animationProps} $active={!!inputValue}>
+    <Wrapper {...animationProps} isActive={!!inputValue}>
       <Label htmlFor={props.id}>{label}</Label>
       <Input {...props} onKeyDown={highlight} onChange={handleChange} />
     </Wrapper>
   )
 }
 
-type WrapperProps = { $active: boolean }
+type WrapperProps = { isActive: boolean }
 
-const LargeWrapper = styled(motion.div)<WrapperProps>(({ theme, $active }) => ({
+const LargeWrapper = styled(motion.div, {
+  shouldForwardProp: (propName) => isPropValid(propName) || isValidMotionProp(propName),
+})<WrapperProps>(({ theme, isActive }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -52,7 +55,7 @@ const LargeWrapper = styled(motion.div)<WrapperProps>(({ theme, $active }) => ({
     transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
   },
 
-  ...($active && {
+  ...(isActive && {
     '> label': {
       transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
     },
@@ -84,14 +87,14 @@ const LargeInput = styled.input(({ theme }) => ({
   },
 }))
 
-const SmallWrapper = styled(LargeWrapper)(({ theme, $active }) => ({
+const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
   height: '3.5rem',
 
   [':focus-within > label']: {
     transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
   },
 
-  ...($active && {
+  ...(isActive && {
     '> label': {
       transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
     },
