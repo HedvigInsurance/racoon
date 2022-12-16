@@ -16,7 +16,8 @@ export const useHighlightAnimation = () => {
   } as const
 
   const highlight = useCallback((event?: KeyboardEvent<HTMLElement>) => {
-    if (event && !EXCLUDE_SET.has(event.key)) setIsInteractive(true)
+    if (!event) return setIsInteractive(true)
+    if (!EXCLUDE_SET.has(event.key)) setIsInteractive(true)
   }, [])
 
   return {
