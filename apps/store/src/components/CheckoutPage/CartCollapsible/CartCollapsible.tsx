@@ -30,7 +30,7 @@ export const CartCollapsible = ({ children, title, cost }: Props) => {
             </Text>
           )}
         </SpaceBetween>
-        {open ? <MinusIcon size="1.5rem" /> : <PlusIcon size="1.5rem" />}
+        {open ? <MinusIcon size="1.25rem" /> : <PlusIcon size="1.25rem" />}
       </Trigger>
       <Collapsible.Content>{children}</Collapsible.Content>
     </Collapsible.Root>
@@ -42,7 +42,7 @@ const Trigger = styled(Collapsible.Trigger)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: theme.space[2],
+  gap: theme.space[1],
 }))
 
 const SpaceBetween = styled.div(({ theme }) => ({

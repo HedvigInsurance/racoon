@@ -13,7 +13,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId'> & {
+type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'personalNumber'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -49,10 +49,6 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   const contactDetails = shopSession.checkout.contactDetails
   const prefilledData = {
-    [FormElement.FirstName]: contactDetails.firstName ?? '',
-    [FormElement.LastName]: contactDetails.lastName ?? '',
-    [FormElement.PersonalNumber]: contactDetails.personalNumber ?? '',
-    [FormElement.PhoneNumber]: contactDetails.phoneNumber ?? '',
     [FormElement.Email]: contactDetails.email ?? '',
   }
 
@@ -79,8 +75,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
     const { checkout } = shopSession
     if (!checkout) {
-      logger.warn('No checkout info in shopSession')
-      return { notFound: true }
+      throw new Error('No checkout info in shopSession')
+    }
+
+    const personalNumber = checkout.contactDetails.personalNumber
+    if (!personalNumber) {
+      throw new Error('No personal number in shopSession')
     }
 
     const checkoutSigning = await fetchCurrentCheckoutSigning({
@@ -92,6 +92,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     const pageProps: NextPageProps = {
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
+      personalNumber,
       checkoutSigningId: checkoutSigning?.id ?? null,
     }
 
