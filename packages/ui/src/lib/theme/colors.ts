@@ -13,6 +13,45 @@ const gray = {
   1000: 'hsl(0, 0%, 7%)',
 }
 
+const green = {
+  50: 'hsl(85, 100%, 90%)',
+  100: 'hsl(85, 73%, 87%)',
+  200: 'hsl(85, 66%, 84%)',
+  300: 'hsl(85, 58%, 80%)',
+  400: 'hsl(85, 54%, 76%)',
+  500: 'hsl(85, 50%, 70%)',
+  600: 'hsl(140, 70%, 47%)',
+  700: 'hsl(100, 25%, 45%)',
+  800: 'hsl(100, 28%, 32%)',
+  900: 'hsl(100, 40%, 18%)',
+}
+
+const red = {
+  50: 'hsl(7, 100%, 97%)',
+  100: 'hsl(7, 86%, 95%)',
+  200: 'hsl(7, 76%, 92%)',
+  300: 'hsl(7, 82%, 89%)',
+  400: 'hsl(7, 91%, 83%)',
+  500: 'hsl(7, 91%, 78%)',
+  600: 'hsl(7, 100%, 61%)',
+  700: 'hsl(7, 61%, 57%)',
+  800: 'hsl(7, 76%, 40%)',
+  900: 'hsl(7, 100%, 22%)',
+}
+
+const yellow = {
+  50: 'hsl(55, 100%, 91%)',
+  100: 'hsl(55, 75%, 86%)',
+  200: 'hsl(55, 60%, 80%)',
+  300: 'hsl(55, 55%, 76%)',
+  400: 'hsl(55, 50%, 72%)',
+  500: 'hsl(55, 50%, 67%)',
+  600: 'hsl(55, 100%, 70%)',
+  700: 'hsl(50, 30%, 49%)',
+  800: 'hsl(50, 42%, 36%)',
+  900: 'hsl(50, 80%, 20%)',
+}
+
 const purple = {
   100: '#f5ebf5',
   300: '#e3d7ee',
@@ -20,11 +59,6 @@ const purple = {
   700: '#ccb9df',
   800: '#bea4d5',
   900: '#8c67ad',
-}
-
-const red = {
-  500: '#e24646',
-  600: '#dd2727',
 }
 
 export const colors = {
@@ -39,14 +73,39 @@ export const colors = {
   gray800: gray[800],
   gray900: gray[900],
   gray1000: gray[1000],
+  green50: green[50],
+  green100: green[100],
+  green200: green[200],
+  green300: green[300],
+  green500: green[500],
+  green600: green[600],
+  green700: green[700],
+  green800: green[800],
+  green900: green[900],
   purple100: purple[100],
   purple300: purple[300],
   purple500: purple[500],
   purple700: purple[700],
   purple800: purple[800],
   purple900: purple[900],
+  red50: red[50],
+  red100: red[100],
+  red200: red[200],
+  red300: red[300],
   red500: red[500],
   red600: red[600],
+  red700: red[700],
+  red800: red[800],
+  red900: red[900],
+  yellow50: yellow[50],
+  yellow100: yellow[100],
+  yellow200: yellow[200],
+  yellow300: yellow[300],
+  yellow500: yellow[500],
+  yellow600: yellow[600],
+  yellow700: yellow[700],
+  yellow800: yellow[800],
+  yellow900: yellow[900],
   black: '#000000',
   white: '#ffffff',
   // Alias colors
