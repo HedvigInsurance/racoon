@@ -88,6 +88,7 @@ const LargeInput = styled.input(({ theme }) => ({
 }))
 
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
+  width: '100%',
   height: '3.5rem',
 
   [':focus-within > label']: {
