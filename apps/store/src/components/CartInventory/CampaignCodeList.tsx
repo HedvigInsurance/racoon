@@ -47,7 +47,7 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
             variant="small"
             disabled={loadingRedeem}
           />
-          <AddDiscountButton>Lägg till</AddDiscountButton>
+          <AddDiscountButton>{t('CHECKOUT_ADD_DISCOUNT_BUTTON')}</AddDiscountButton>
         </DiscountFormWrapper>
       </form>
     )

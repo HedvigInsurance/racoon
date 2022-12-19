@@ -7,5 +7,6 @@
   "CART_PAGE_HEADING": "Varukorg",
   "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mån",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% rabatt i {{count}} mån",
-  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt"
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
+  "CHECKOUT_ADD_DISCOUNT_BUTTON": "Lägg till"
 }
