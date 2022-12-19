@@ -138,6 +138,7 @@ export const Wrapper = styled(Space)(({ theme }) => ({
   width: '100%',
   backgroundColor: theme.colors.gray200,
   padding: `${theme.space[6]} ${theme.space[4]}`,
+  paddingBottom: theme.space[9],
 }))
 
 export const Flex = styled.div({ flex: 1 })
