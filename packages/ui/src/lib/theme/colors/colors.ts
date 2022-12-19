@@ -1,4 +1,4 @@
-const gray = {
+export const gray = {
   25: 'hsl(0, 0%, 98%)',
   50: 'hsl(0, 0%, 96%)',
   100: 'hsl(0, 0%, 94%)',
@@ -13,7 +13,7 @@ const gray = {
   1000: 'hsl(0, 0%, 7%)',
 }
 
-const green = {
+export const green = {
   50: 'hsl(85, 100%, 90%)',
   100: 'hsl(85, 73%, 87%)',
   200: 'hsl(85, 66%, 84%)',
@@ -26,7 +26,7 @@ const green = {
   900: 'hsl(100, 40%, 18%)',
 }
 
-const red = {
+export const red = {
   50: 'hsl(7, 100%, 97%)',
   100: 'hsl(7, 86%, 95%)',
   200: 'hsl(7, 76%, 92%)',
@@ -39,7 +39,7 @@ const red = {
   900: 'hsl(7, 100%, 22%)',
 }
 
-const yellow = {
+export const yellow = {
   50: 'hsl(55, 100%, 91%)',
   100: 'hsl(55, 75%, 86%)',
   200: 'hsl(55, 60%, 80%)',

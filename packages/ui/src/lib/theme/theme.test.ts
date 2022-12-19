@@ -1,4 +1,4 @@
-import { colors } from './colors'
+import { colors } from './colors/colors'
 import { getColor } from './theme'
 
 describe('theme', () => {

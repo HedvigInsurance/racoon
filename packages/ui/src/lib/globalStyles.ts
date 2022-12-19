@@ -24,8 +24,8 @@ export const globalStyles = css`
 
   /* Set default font rules and color on body */
   body {
-    color: ${getColor('gray900')};
-    background-color: ${getColor('gray100')};
+    color: ${getColor('textPrimary')};
+    background-color: ${getColor('light')};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
