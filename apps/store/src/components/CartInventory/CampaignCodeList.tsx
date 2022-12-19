@@ -40,12 +40,15 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
   if (campaigns.length === 0) {
     return (
       <form onSubmit={handleSubmitCampaign}>
-        <UppercaseTextField
-          name={FORM_CAMPAIGN_CODE}
-          label={t('CAMPAIGN_CODE_INPUT_LABEL')}
-          variant="small"
-          disabled={loadingRedeem}
-        />
+        <DiscountFormWrapper>
+          <UppercaseTextField
+            name={FORM_CAMPAIGN_CODE}
+            label={t('CAMPAIGN_CODE_INPUT_LABEL')}
+            variant="small"
+            disabled={loadingRedeem}
+          />
+          <AddDiscountButton>Lägg till</AddDiscountButton>
+        </DiscountFormWrapper>
       </form>
     )
   }
@@ -78,6 +81,21 @@ const SpaceBetween = styled.div(({ theme }) => ({
 }))
 
 const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })
+
+const DiscountFormWrapper = styled.div(({ theme }) => ({
+  display: 'flex',
+  gap: theme.space[2],
+}))
+
+const AddDiscountButton = styled.button(({ theme }) => ({
+  textAlign: 'center',
+  backgroundColor: theme.colors.green50,
+  padding: `${theme.space[2]} ${theme.space[5]}`,
+  borderRadius: `${theme.radius.sm}px`,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  backdropFilter: 'blur(30px)',
+  whiteSpace: 'nowrap',
+}))
 
 const ChipButton = styled.button(({ theme }) => ({
   display: 'flex',
