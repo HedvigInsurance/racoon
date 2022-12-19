@@ -1,4 +1,4 @@
-import { colors, UIColor } from './colors'
+import { colors, UIColor } from './colors/colors'
 import { radius } from './radius'
 import { space } from './space'
 import { fonts, fontSizes } from './typography'
