@@ -1,11 +1,17 @@
 import styled from '@emotion/styled'
-import { SbBlokData, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import Image from 'next/image'
 import { useMemo } from 'react'
+import { HeadingLabel, Space } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export const PerilsBlock = (blok: SbBlokData) => {
+type PerilsBlockProps = SbBaseBlockProps<{
+  heading: string
+}>
+
+export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
   const { productData, selectedVariant } = useProductPageContext()
 
   const items = useMemo(() => {
@@ -27,7 +33,10 @@ export const PerilsBlock = (blok: SbBlokData) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <Perils items={items} />
+      <Space y={1}>
+        <HeadingLabel>{blok.heading}</HeadingLabel>
+        <Perils items={items} />
+      </Space>
     </Wrapper>
   )
 }
@@ -35,6 +44,5 @@ export const PerilsBlock = (blok: SbBlokData) => {
 PerilsBlock.blockName = 'perils'
 
 const Wrapper = styled.div(({ theme }) => ({
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingInline: theme.space[4],
 }))
