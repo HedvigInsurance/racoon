@@ -1,5 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { ReactNode, useRef, useState } from 'react'
 import { Button, Heading, Space, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
@@ -25,6 +26,7 @@ export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
 
   const { priceTemplate, productData } = useProductPageContext()
+
   const { shopSession } = useShopSession()
   const { data: { priceIntent } = {} } = usePriceIntent({
     shopSession,
@@ -105,11 +107,13 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
 }
 
 const PendingState = () => {
+  const { t } = useTranslation('purchase-form')
+
   return (
     <OfferPresenterWrapper>
       <ButtonWrapper>
         <Button disabled fullWidth>
-          Calculate price
+          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
         </Button>
       </ButtonWrapper>
     </OfferPresenterWrapper>
@@ -119,11 +123,13 @@ const PendingState = () => {
 type IdleStateProps = { onClick: () => void }
 
 const IdleState = ({ onClick }: IdleStateProps) => {
+  const { t } = useTranslation('purchase-form')
+
   return (
     <OfferPresenterWrapper>
       <ButtonWrapper>
         <Button onClick={onClick} fullWidth>
-          Calculate price
+          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
         </Button>
       </ButtonWrapper>
     </OfferPresenterWrapper>
@@ -180,7 +186,7 @@ type ShowOfferStateProps = {
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
   const { shopSession, priceIntent, onAddedToCart } = props
-  const { priceTemplate, story } = useProductPageContext()
+  const { priceTemplate, productData } = useProductPageContext()
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
   const refresh = useRouterRefresh()
@@ -188,7 +194,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   const formatter = useFormatter()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     onAddedToCart({
-      name: story.content.name,
+      name: productData.displayNameFull,
       price: formatter.money(addedProdutOffer.price),
     })
     priceIntentServiceInitClientSide({ apolloClient, shopSession }).clear(priceTemplate.name)

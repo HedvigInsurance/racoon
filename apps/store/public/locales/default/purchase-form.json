@@ -31,5 +31,6 @@
   "PRICE_MATCH_BUBBLE_FAIL_TITLE": "We could not match your price",
   "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Expires on {{date}}",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "End date {{company}}",
-  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Because your insurance at {{company}} expires soon, you have to manually cancel it. Don't worry, we will email instructions."
+  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Because your insurance at {{company}} expires soon, you have to manually cancel it. Don't worry, we will email instructions.",
+  "OPEN_PRICE_CALCULATOR_BUTTON": "Calculate price"
 }
