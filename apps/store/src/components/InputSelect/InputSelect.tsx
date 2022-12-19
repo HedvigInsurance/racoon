@@ -1,5 +1,8 @@
 import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
+import { ChangeEventHandler } from 'react'
 import { ChevronIcon, InputBase, InputBaseProps } from 'ui'
+import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 const Wrapper = styled.div(() => ({
   position: 'relative',
@@ -8,38 +11,29 @@ const Wrapper = styled.div(() => ({
 const StyledChevronIcon = styled(ChevronIcon)(() => ({
   position: 'absolute',
   top: '50%',
-  right: '1.25rem',
+  right: '1.125rem',
   transform: 'translateY(-50%)',
 }))
 
-const StyledSelect = styled.select(({ theme }) => ({
-  backgroundColor: theme.colors.white,
+const StyledSelect = styled(motion.select)(({ theme }) => ({
+  backgroundColor: theme.colors.gray300,
   color: theme.colors.gray900,
-  fontSize: '1.125rem',
-  lineHeight: '1.75rem',
-  padding: '0 1rem',
+  fontSize: theme.fontSizes[5],
   width: '100%',
-  borderRadius: '0.5rem',
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  display: 'flex',
-  alignItems: 'center',
-  height: '3.5rem',
+  borderRadius: theme.radius.sm,
+  padding: `${theme.space[2]} ${theme.space[4]}`,
 
-  ':focus, :hover': {
-    outline: '2px solid transparent',
-    outlineOffset: '2px',
-    borderColor: theme.colors.gray900,
+  '&:hover': {
+    cursor: 'pointer',
   },
 
-  ':disabled': {
-    backgroundColor: theme.colors.gray300,
-    borderColor: theme.colors.gray300,
-    color: theme.colors.gray500,
-    cursor: 'not-allowed',
+  '&:focus': {
+    backgroundColor: theme.colors.gray500,
   },
+}))
 
-  borderColor: theme.colors.gray300,
+const Placeholder = styled.option(({ theme }) => ({
+  color: theme.colors.gray500,
 }))
 
 type InputSelectProps = InputBaseProps & {
@@ -62,18 +56,31 @@ export const InputSelect = ({
   placeholder,
   ...rest
 }: InputSelectProps) => {
+  const { highlight, animationProps } = useHighlightAnimation()
+
+  const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    onChange?.(event)
+    highlight()
+  }
+
   return (
     <InputBase {...rest}>
       {() => (
         <Wrapper>
           <StyledSelect
             name={name}
-            onChange={onChange}
+            onChange={handleChange}
             value={value}
             defaultValue={defaultValue}
+            placeholder={placeholder}
             {...rest}
+            {...animationProps}
           >
-            {placeholder && <option value="">{placeholder}</option>}
+            {placeholder && (
+              <Placeholder value="" disabled selected hidden>
+                {placeholder}
+              </Placeholder>
+            )}
             {options.map(({ name, value }) => (
               <option key={value} value={value}>
                 {name}
