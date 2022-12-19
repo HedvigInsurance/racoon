@@ -68,3 +68,16 @@ export const BankSignering: ComponentStoryFn<typeof CancellationForm> = (props) 
   )
 }
 BankSignering.args = { startDate: new Date() }
+
+export const BankSigneringInvalidStartDate: ComponentStoryFn<typeof CancellationForm> = (props) => {
+  return (
+    <CancellationForm
+      {...props}
+      option={{
+        type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate,
+        companyName: 'Trygg Hansa',
+      }}
+    />
+  )
+}
+BankSigneringInvalidStartDate.args = { startDate: new Date() }
