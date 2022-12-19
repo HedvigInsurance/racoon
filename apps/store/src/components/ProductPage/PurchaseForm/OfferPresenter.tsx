@@ -84,6 +84,9 @@ export const OfferPresenter = ({
     }
   }, [selectedOffer.priceMatch, formatter, t])
 
+  // TODO: Suggested date should be handled by backend
+  const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
+
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
@@ -106,7 +109,7 @@ export const OfferPresenter = ({
 
             <CancellationForm
               option={cancellationOption}
-              startDate={convertToDate(selectedOffer.startDate)!}
+              startDate={startDate}
               onAutoSwitchChange={handleUpdateCancellation}
               onStartDateChange={handleStartDateChange}
             />
@@ -149,13 +152,23 @@ const Separator = styled.div(({ theme }) => ({
 
 const getCancellationOption = (priceIntent: PriceIntent): CancellationOption => {
   const { cancellation, externalInsurer } = priceIntent
-  if (cancellation.option === ExternalInsuranceCancellationOption.Iex) {
-    return {
-      type: 'IEX',
-      companyName: externalInsurer?.displayName ?? 'Unknown',
-      requested: cancellation.requested,
-    }
-  } else {
-    return { type: 'NONE' }
+
+  switch (cancellation.option) {
+    case ExternalInsuranceCancellationOption.Iex:
+      return {
+        type: ExternalInsuranceCancellationOption.Iex,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+        requested: cancellation.requested,
+      }
+
+    case ExternalInsuranceCancellationOption.Banksignering:
+      return {
+        type: ExternalInsuranceCancellationOption.Banksignering,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+        requested: cancellation.requested,
+      }
+
+    default:
+      return { type: ExternalInsuranceCancellationOption.None }
   }
 }
