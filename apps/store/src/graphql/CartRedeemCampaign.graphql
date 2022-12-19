@@ -1,4 +1,4 @@
-mutation RedeemCampaign($cartId: ID!, $code: String!, $locale: String!) {
+mutation RedeemCampaign($cartId: ID!, $code: String!) {
   cartRedeemCampaign(input: { cartId: $cartId, code: $code }) {
     cart {
       ...CartFragment

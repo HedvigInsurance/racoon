@@ -1,0 +1,10 @@
+mutation PriceIntentInsurelyUpdate($priceIntentId: ID!, $dataCollectionId: String!) {
+  priceIntentInsurelyUpdate(priceIntentId: $priceIntentId, dataCollectionId: $dataCollectionId) {
+    priceIntent {
+      ...PriceIntentFragment
+    }
+    userError {
+      message
+    }
+  }
+}

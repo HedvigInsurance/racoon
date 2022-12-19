@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { ElementType, forwardRef } from 'react'
 import { ReactNode } from 'react'
@@ -33,7 +34,7 @@ const IconWrapper = styled.div<IconWrapperProps>(({ padded }) => ({
   display: 'flex',
 }))
 
-export const UnstyledButton = styled.button({
+export const UnstyledButton = styled('button', { shouldForwardProp: isPropValid })({
   padding: 0,
   margin: 0,
   background: 'none',
@@ -79,15 +80,15 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
       borderRadius: size === 'lg' ? '0.5rem' : '0.375rem',
     }),
     ...(variant === 'filled' && {
-      backgroundColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
-      color: color === 'lavender' ? theme.colors.gray900 : theme.colors.gray100,
-      borderColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.gray900,
+      backgroundColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.dark,
+      color: color === 'lavender' ? theme.colors.dark : theme.colors.light,
+      borderColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.dark,
 
       ':hover, :focus': {
         backgroundColor: color === 'lavender' ? theme.colors.purple800 : theme.colors.gray800,
       },
       ':disabled': {
-        color: theme.colors.gray500,
+        color: theme.colors.textDisabled,
         backgroundColor: theme.colors.gray300,
         borderColor: theme.colors.gray300,
       },
@@ -95,14 +96,14 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
 
     ...(variant === 'outlined' && {
       backgroundColor: 'transparent',
-      color: color ? getColor(color) : theme.colors.gray900,
-      borderColor: color ? getColor(color) : theme.colors.gray900,
+      color: color ? getColor(color) : theme.colors.dark,
+      borderColor: color ? getColor(color) : theme.colors.dark,
       ':hover, :focus': {
         color: color ? getColor(color) : theme.colors.gray700,
         borderColor: color ? getColor(color) : theme.colors.gray700,
       },
       ':disabled': {
-        color: theme.colors.gray500,
+        color: theme.colors.textDisabled,
         borderColor: theme.colors.gray500,
       },
     }),
@@ -112,7 +113,7 @@ const ButtonElement = styled(UnstyledButton)<ButtonProps>(
       color: color ? getColor(color) : 'currentcolor',
       border: 'none',
       ':disabled': {
-        color: theme.colors.gray500,
+        color: theme.colors.textDisabled,
       },
     }),
 

@@ -1,3 +1,11 @@
 {
-  "CART_EMPTY_SUMMARY": "Din vagn är tom"
+  "CART_EMPTY_SUMMARY": "Din vagn är tom",
+  "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkod",
+  "REMOVE_ENTRY_BUTTON": "Ta bort",
+  "VIEW_ENTRY_DETAILS_BUTTON": "Detaljer",
+  "CART_ENTRY_DATE_LABEL": "Startar {{date}}",
+  "CART_PAGE_HEADING": "Varukorg",
+  "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mån",
+  "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% rabatt i {{count}} mån",
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt"
 }

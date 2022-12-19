@@ -1,13 +1,10 @@
-import { StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { CartCost, CartCampaign, CartEntry } from '@/components/CartInventory/CartInventory.types'
 
-export type ProductData = { id: string; name: string; cost: number; currency: string }
-type CampaignData = { id: string; displayName: string }
-type CostData = { crossOut?: number; net: number; gross: number }
-
-export type CartPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
+export type CartPageProps = {
   shopSessionId: string
   cartId: string
-  products: Array<ProductData>
-  cost: CostData
-  campaigns: Array<CampaignData>
+  cost: CartCost
+  campaigns: Array<CartCampaign>
+  entries: Array<CartEntry>
+  prevURL: string
 }

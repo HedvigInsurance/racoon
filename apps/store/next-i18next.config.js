@@ -1,8 +1,12 @@
-const path = require('path')
-
 const englishFallback = ['default']
 
+/**
+ * @type {import('next-i18next').UserConfig}
+ */
 module.exports = {
+  // Noisy, but may be useful for debugging i18n issues
+  debug: false,
+  reloadOnPrerender: process.env.NODE_ENV === 'development',
   // 1. Include "default" to prefix the default locale
   // https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale
   // 2. Keep in sync with other places locales are configured
@@ -27,6 +31,7 @@ module.exports = {
     se: ['sv-se'],
   },
   fallbackNS: 'common',
-  localePath: path.resolve('./public/locales'),
+  localePath:
+    typeof window === 'undefined' ? require('path').resolve('./public/locales') : '/locales',
   lowerCaseLng: true,
 }

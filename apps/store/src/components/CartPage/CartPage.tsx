@@ -1,51 +1,22 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FormEvent, FormEventHandler } from 'react'
-import { Button, Heading, InputField, LinkButton, Space } from 'ui'
-import { CartCard } from '@/components/CartCard/CartCard'
-import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
-import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
-import { I18nNamespace } from '@/utils/l10n/types'
+import { ReactNode } from 'react'
+import { Button, CrossIcon, Heading, LinkButton, Space } from 'ui'
+import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
+import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
+import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { Text } from '@/components/Text/Text'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
-import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
-  const { shopSessionId, cartId, products, campaigns, cost } = props
-  const { t } = useTranslation(I18nNamespace.Cart)
-  const { locale } = useCurrentLocale()
-  const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
-    refetchQueries: 'active',
-    awaitRefetchQueries: true,
-  })
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>, offerId: string) => {
-    event.preventDefault()
-    await removeCartEntry({ variables: { cartId, offerId, locale } })
-  }
-
-  const [redeemCampaign, { loading: loadingRedeemCampaign, userError }] = useRedeemCampaign({
-    cartId,
-  })
-  const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const code = formData.get('campaignCode')
-    if (typeof code === 'string') {
-      redeemCampaign(code)
-    }
-  }
-
-  const [unredeemCampaign, { loading: loadingUnredeenCampaign }] = useUnredeemCampaign({ cartId })
-  const handleSubmitUnredeemCampaign = (campaignId: string): FormEventHandler => {
-    return (event) => {
-      event.preventDefault()
-      unredeemCampaign(campaignId)
-    }
-  }
+  const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
+  const { t } = useTranslation()
 
   const router = useRouter()
   const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({
@@ -55,115 +26,105 @@ export const CartPage = (props: CartPageProps) => {
     },
   })
 
-  if (products.length === 0) {
-    return <EmptyState />
+  if (entries.length === 0) {
+    return (
+      <EmptyState prevURL={prevURL}>
+        <Space y={1.5}>
+          <HorizontalLine />
+          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+          <HorizontalLine />
+          <CostSummary {...cost} />
+        </Space>
+      </EmptyState>
+    )
   }
 
   return (
     <Wrapper>
-      <Space y={3}>
-        <StyledHeading as="h1" variant="standard.24">
-          Cart ({products.length})
-        </StyledHeading>
-        <ProductList as="ul" y={1.5}>
-          {products.map((item) => (
-            <li key={item.id}>
-              <CartCard
-                title={item.name}
-                price={item.cost}
-                currency={item.currency}
-                onSubmit={(event) => handleSubmit(event, item.id)}
-                loading={loading}
-              />
-            </li>
+      <Space y={1.5}>
+        <Header prevURL={prevURL} />
+
+        <CartEntryList>
+          {entries.map((item) => (
+            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
           ))}
-        </ProductList>
+        </CartEntryList>
+        <HorizontalLine />
+        <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+        <HorizontalLine />
+        <CostSummary {...cost} />
 
-        <Space y={2}>
-          <form onSubmit={handleSubmitCampaign}>
-            <Space y={0.5}>
-              <InputField
-                name="campaignCode"
-                label="Campaign code"
-                errorMessage={userError?.message}
-              />
-              <Button disabled={loadingRedeemCampaign}>Add code</Button>
-            </Space>
-          </form>
-
-          <ul>
-            {campaigns.map((item) => (
-              <li key={item.id}>
-                <Space y={0.5}>
-                  <p>{item.displayName}</p>
-                  <form onSubmit={handleSubmitUnredeemCampaign(item.id)}>
-                    <Button disabled={loadingUnredeenCampaign}>Remove</Button>
-                  </form>
-                </Space>
-              </li>
-            ))}
-          </ul>
-        </Space>
-
-        <Footer>
-          <Space y={1.5}>
-            <PriceBreakdown currency="SEK" products={products} cost={cost} />
-
-            <Button onClick={startCheckout} fullWidth disabled={loadingStartCheckout}>
-              {t('CHECKOUT_BUTTON')}
-            </Button>
-          </Space>
-        </Footer>
+        <Button fullWidth onClick={startCheckout} disabled={loadingStartCheckout}>
+          {t('CHECKOUT_BUTTON')}
+        </Button>
       </Space>
     </Wrapper>
   )
 }
 
-const EmptyState = () => {
-  const { t } = useTranslation(I18nNamespace.Cart)
+type EmptyStateProps = { children: ReactNode; prevURL: string }
+
+const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
+  const { t } = useTranslation('cart')
   const { routingLocale } = useCurrentLocale()
 
   return (
     <Wrapper>
-      <Space y={3}>
-        <StyledHeading as="h1" variant="standard.24">
-          Cart (0)
-        </StyledHeading>
-        <CenteredParagraph>{t('CART_EMPTY_SUMMARY')}</CenteredParagraph>
-        <Footer>
-          <LinkButton fullWidth href={PageLink.store({ locale: routingLocale })}>
+      <Space y={5}>
+        <Header prevURL={prevURL} />
+
+        <Space y={2}>
+          <Space y={1}>
+            <CenteredText>¯\_(ツ)_/¯</CenteredText>
+            <CenteredText>{t('CART_EMPTY_SUMMARY')}</CenteredText>
+          </Space>
+
+          <LinkButton as={Link} fullWidth href={PageLink.store({ locale: routingLocale })}>
             {t('GO_TO_STORE_BUTTON')}
           </LinkButton>
-        </Footer>
+        </Space>
+
+        {children}
       </Space>
     </Wrapper>
   )
 }
 
+type HeaderProps = { prevURL: string }
+
+const Header = ({ prevURL }: HeaderProps) => {
+  const { t } = useTranslation('cart')
+
+  return (
+    <StyledHeader>
+      <Heading as="h1" variant="standard.24">
+        {t('CART_PAGE_HEADING')}
+      </Heading>
+
+      <Link href={prevURL}>
+        <CrossIcon size="1.5rem" />
+      </Link>
+    </StyledHeader>
+  )
+}
+
+const StyledHeader = styled.div({
+  height: '3.5rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+})
+
 const Wrapper = styled.div(({ theme }) => ({
-  minHeight: '100vh',
   width: '100%',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-  paddingTop: '3.5rem',
+  paddingBottom: theme.space[7],
 }))
 
-const StyledHeading = styled(Heading)({ textAlign: 'center' })
-const CenteredParagraph = styled.p({ textAlign: 'center' })
+const CenteredText = styled(Text)({ textAlign: 'center' })
 
-const ProductList = styled(Space)({
-  padding: 0,
-  listStyleType: 'none',
-  width: '100%',
-})
-
-const Footer = styled.footer(({ theme }) => ({
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  width: '100%',
-  padding: `0 ${theme.space[3]} ${theme.space[6]} ${theme.space[3]}`,
-  a: {
-    textDecoration: 'none',
-  },
+const HorizontalLine = styled.hr(({ theme }) => ({
+  backgroundColor: theme.colors.gray300,
+  height: 1,
 }))

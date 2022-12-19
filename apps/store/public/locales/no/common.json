@@ -1,5 +1,7 @@
 {
   "CHECKOUT_BUTTON": "Sjekk ut",
   "TEST_PLURALIZE_one": "Kanelsnurr",
-  "TEST_PLURALIZE_other": "{{count}} kanelboller"
+  "TEST_PLURALIZE_other": "{{count}} kanelboller",
+  "COUNTRY_LABEL_NO": "Norge",
+  "LANGUAGE_LABEL_no": "Norsk"
 }

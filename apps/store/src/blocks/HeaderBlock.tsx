@@ -1,6 +1,5 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { useBreakpoint } from 'ui'
 import { Header } from '@/components/Header/Header'
 import {
   NavigationMenuPrimitiveContent,
@@ -86,15 +85,10 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 }>
 
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
-  const isDesktop = useBreakpoint('md')
-
   return (
     <Header {...storyblokEditable(blok)}>
-      {isDesktop ? (
-        <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
-      ) : (
-        <TopMenuMobile>{blok.navMenuContainer.map(NestedNavigationBlock)} </TopMenuMobile>
-      )}
+      <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
+      <TopMenuMobile>{blok.navMenuContainer.map(NestedNavigationBlock)} </TopMenuMobile>
     </Header>
   )
 }

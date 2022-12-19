@@ -8,8 +8,7 @@ import {
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
-import { IsoLocale } from '@/utils/l10n/types'
-import type { ShopSession } from './ShopSession.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export class ShopSessionService {
   constructor(
@@ -17,48 +16,59 @@ export class ShopSessionService {
     private readonly apolloClient: ApolloClient<unknown>,
   ) {}
 
+  private createParams: ShopSessionCreateMutationVariables | null = null
+  private createPromise: Promise<ShopSession> | null = null
+
   public shopSessionId() {
     return this.persister.fetch()
   }
 
-  public save(shopSession: ShopSession) {
-    this.persister.save(shopSession.id)
+  public saveId(shopSessionId: string) {
+    this.persister.save(shopSessionId)
   }
 
   public reset() {
     this.persister.reset()
+    this.createPromise = null
+    this.createParams = null
   }
 
-  public async getOrCreate(params: ShopSessionCreateMutationVariables) {
-    const existingShopSession = await this.fetch(params.locale as IsoLocale)
+  public async getOrCreate(params: ShopSessionCreateMutationVariables): Promise<ShopSession> {
+    const existingShopSession = await this.fetch()
 
     if (existingShopSession?.countryCode === params.countryCode) {
       return existingShopSession
     }
 
-    return await this.create(params)
+    // Deduplicate mutation, Apollo won't do this for us
+    const paramsEquals = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
+    if (!this.createPromise || !paramsEquals(this.createParams, params)) {
+      this.createParams = params
+      this.createPromise = this.create(params)
+    }
+    return await this.createPromise
   }
 
-  public async fetch(locale: IsoLocale) {
+  public async fetch(): Promise<ShopSession | null> {
     const shopSessionId = this.persister.fetch()
     if (!shopSessionId) return null
     try {
-      return await this.fetchById(shopSessionId, locale)
+      return await this.fetchById(shopSessionId)
     } catch (error) {
       console.info(`ShopSession not found: ${shopSessionId}`)
       return null
     }
   }
 
-  public async fetchById(shopSessionId: string, locale: IsoLocale) {
+  public async fetchById(shopSessionId: string): Promise<ShopSession> {
     const { data } = await this.apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
       query: ShopSessionDocument,
-      variables: { shopSessionId, locale },
+      variables: { shopSessionId },
     })
     return data.shopSession
   }
 
-  private async create(variables: ShopSessionCreateMutationVariables) {
+  private async create(variables: ShopSessionCreateMutationVariables): Promise<ShopSession> {
     const result = await this.apolloClient.mutate<
       ShopSessionCreateMutation,
       ShopSessionCreateMutationVariables
@@ -68,10 +78,9 @@ export class ShopSessionService {
     })
 
     const shopSession = result.data?.shopSessionCreate
-
     if (!shopSession) throw new Error('Unable to create ShopSession')
 
-    this.save(shopSession)
+    this.saveId(shopSession.id)
 
     return shopSession
   }

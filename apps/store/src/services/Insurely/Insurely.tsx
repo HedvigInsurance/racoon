@@ -7,6 +7,7 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 const IFRAME_URL = 'https://dc.insurely.com/v2/'
 const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.com/v2/assets/js/dc-bootstrap.js'
+const PREFILL_STORE: Array<Record<string, string>> = []
 
 enum EventName {
   APP_LOADED = 'APP_LOADED',
@@ -22,7 +23,7 @@ type InsurelyMessage =
   | { name: EventName.COLLECTION_ID; value: string }
   | { name: EventName.RESULTS }
 
-type InsurelyIframeProps = BoostrapScriptProps & {
+type InsurelyIframeProps = {
   clientId: string
   onLoaded?: () => void
   onClose?: () => void
@@ -31,7 +32,8 @@ type InsurelyIframeProps = BoostrapScriptProps & {
 }
 
 export const InsurelyIframe = (props: InsurelyIframeProps) => {
-  const { clientId, onLoaded, onClose, onCollection, onCompleted, ...bootstrapProps } = props
+  const { clientId, onLoaded, onClose, onCollection, onCompleted } = props
+  const { language } = useCurrentLocale()
 
   useEffect(() => {
     const handleMessage = ({ data }: MessageEvent<InsurelyMessage>) => {
@@ -53,6 +55,16 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     return () => window.removeEventListener('message', handleMessage)
   }, [onLoaded, onClose, onCollection, onCompleted])
 
+  const handleLoad = () => {
+    const prefilledInput = PREFILL_STORE.shift()
+    window.setClientParams?.({
+      fontType: 'secondary',
+      hideResultsView: true,
+      language,
+      ...(prefilledInput && { prefilledInput }),
+    })
+  }
+
   return (
     <>
       <StyledIframe
@@ -66,34 +78,26 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     allow-top-navigation"
       />
 
-      <BoostrapScript {...bootstrapProps} />
+      <Script strategy="afterInteractive" src={BOOTSTRAP_SCRIPT_URL} onLoad={handleLoad} />
     </>
   )
 }
 
-type BoostrapScriptProps = Partial<{
-  personalNumber: string
-  company: string
-}>
+type InsurelyClientParams = { company: string; personalNumber: string }
 
-const BoostrapScript = ({ personalNumber, company }: BoostrapScriptProps) => {
-  const { language } = useCurrentLocale()
-
-  const handleLoad = () => {
-    window.setClientParams?.({
-      fontType: 'secondary',
-      hideResultsView: true,
-      language,
-      prefilledInput: {
-        ...(personalNumber && { SWEDISH_PERSONAL_NUMBER: personalNumber }),
-        ...(company && { company }),
-      },
-    })
+export const insurelyPrefillInput = ({ personalNumber, company }: InsurelyClientParams) => {
+  const prefilledInput = {
+    ...(personalNumber && { SWEDISH_PERSONAL_NUMBER: personalNumber }),
+    ...(company && { company }),
   }
 
-  return <Script strategy="afterInteractive" src={BOOTSTRAP_SCRIPT_URL} onLoad={handleLoad} />
+  // If the iframe is already loaded, we can set the prefilled input directly
+  if (window.setClientParams) {
+    return window.setClientParams({ prefilledInput })
+  }
+
+  // Otherwise we store the prefilled input and set it when the iframe is loaded
+  PREFILL_STORE.push(prefilledInput)
 }
 
-const StyledIframe = styled.iframe({
-  border: 0,
-})
+const StyledIframe = styled.iframe({ border: 0 })

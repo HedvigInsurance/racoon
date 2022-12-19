@@ -23,7 +23,7 @@ export const SE_CAR: Template = {
         },
         {
           field: mileageField,
-          layout: { columnSpan: 6 },
+          layout: LAYOUT.FULL_WIDTH,
         },
       ],
     },
@@ -32,8 +32,8 @@ export const SE_CAR: Template = {
       title: { key: 'SECTION_TITLE_YOUR_ADDRESS' },
       submitLabel: { key: 'SUBMIT_LABEL_FINISH' },
       items: [
-        { field: streetAddressField, layout: { columnSpan: 4 } },
-        { field: postalCodeField, layout: { columnSpan: 2 } },
+        { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
+        { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
       ],
     },
   ],

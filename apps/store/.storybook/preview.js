@@ -1,6 +1,8 @@
 import { ThemeProvider } from 'ui'
 import { storybookFontStyles } from 'ui/src/lib/storybookFontStyles'
+import { WithNextRouter } from 'storybook-addon-next-router/dist/decorators'
 import { Global } from '@emotion/react'
+import { RouterContext } from 'next/dist/shared/lib/router-context'
 import './i18next'
 
 export const parameters = {
@@ -10,6 +12,11 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
+    locale: 'en-se',
+    path: '/en-se',
   },
 }
 
@@ -22,4 +29,5 @@ export const decorators = [
       </ThemeProvider>
     </>
   ),
+  WithNextRouter,
 ]

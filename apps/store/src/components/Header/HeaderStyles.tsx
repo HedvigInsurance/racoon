@@ -31,7 +31,6 @@ export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Con
   [mq.md]: {
     position: 'absolute',
     top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
-    left: '0.5rem',
   },
 }))
 
@@ -40,22 +39,34 @@ export const TriggerIcon = styled(ChevronIcon)({
   '[data-state=open] &': { transform: 'rotate(180deg)' },
 })
 
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+export const navigationTriggerStyles = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
-  ...focusableStyles,
+}
+
+export const NavigationTriggerDesktop = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'none',
+  [mq.md]: {
+    ...navigationTriggerStyles,
+    ...focusableStyles,
+  },
 })
 
 export const StyledCrossIcon = styled(CrossIcon)()
 export const StyledArrowForwardIcon = styled(ArrowForwardIcon)()
 
-export const StyledNavigationTrigger = styled(NavigationTrigger)({
+export const NavigationTriggerMobile = styled(NavigationMenuPrimitive.Trigger)({
+  ...navigationTriggerStyles,
+  ...focusableStyles,
   ['&[data-state=open]']: {
     [StyledArrowForwardIcon.toString()]: { display: 'none' },
   },
   '&[data-state=closed]': {
     [StyledCrossIcon.toString()]: { display: 'none' },
+  },
+  [mq.md]: {
+    display: 'none',
   },
 })
 
@@ -95,6 +106,5 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
     padding: `${theme.space[4]} 0`,
     borderRadius: '0.5rem',
     backgroundColor: theme.colors.gray100,
-    marginTop: theme.space[6],
   },
 }))

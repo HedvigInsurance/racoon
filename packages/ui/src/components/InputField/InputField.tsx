@@ -19,7 +19,7 @@ const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
 
 const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   backgroundColor: theme.colors.white,
-  color: theme.colors.gray900,
+  color: theme.colors.textPrimary,
   fontSize: '1.125rem',
   lineHeight: '1.75rem',
   padding: '0 1rem',
@@ -32,7 +32,7 @@ const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   height: '3.5rem',
 
   '::placeholder': {
-    color: theme.colors.gray500,
+    color: theme.colors.textTertiary,
   },
 
   ':focus, :hover': {
@@ -44,7 +44,7 @@ const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
   ':disabled': {
     backgroundColor: theme.colors.gray300,
     borderColor: theme.colors.gray300,
-    color: theme.colors.gray500,
+    color: theme.colors.textDisabled,
     cursor: 'not-allowed',
   },
 

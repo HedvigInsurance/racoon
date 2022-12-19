@@ -24,5 +24,12 @@
   "SECTION_TITLE_YOUR_ADDRESS": "Din adress",
   "FIELD_MILEAGE_LABEL": "Årlig körsträcka",
   "LABEL_YES": "Ja",
-  "LABEL_NO": "Nej"
+  "LABEL_NO": "Nej",
+  "TIER_SELECTOR_DEFAULT_LABEL": "Välj skydd",
+  "TIER_SELECTOR_SELECTED_LABEL": "Skyddsnivå",
+  "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
+  "PRICE_MATCH_BUBBLE_FAIL_TITLE": "Vi kunde inte matcha ditt pris",
+  "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Går ut {{date}}",
+  "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Startdatum {{company}}",
+  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Eftersom din försäkring hos {{company}} går ut ganska snart behöver du själv säga upp den. Oroa dig inte, vi mejlar instruktioner till dig."
 }

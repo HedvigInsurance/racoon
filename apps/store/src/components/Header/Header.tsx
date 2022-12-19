@@ -17,6 +17,8 @@ export const Wrapper = styled.header(({ theme }) => ({
   [mq.md]: {
     height: MENU_BAR_HEIGHT_DESKTOP,
     backgroundColor: theme.colors.gray100,
+    position: 'sticky',
+    top: 0,
   },
 }))
 

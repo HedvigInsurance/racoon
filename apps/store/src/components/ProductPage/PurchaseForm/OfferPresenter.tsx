@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useState } from 'react'
+import { RefObject, useMemo, useState } from 'react'
 import { Button, Space } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
@@ -8,6 +8,7 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
+import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
@@ -15,9 +16,9 @@ import {
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
-import { TierSelector } from './TierSelector'
+import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -34,14 +35,12 @@ export const OfferPresenter = ({
   scrollPastRef,
   onAddedToCart,
 }: Props) => {
-  const { t } = useTranslation()
-  const formatter = useCurrencyFormatter(shopSession.currencyCode)
+  const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
   const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
 
-  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({
-    priceIntentId: priceIntent.id,
-  })
+  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 
   const handleStartDateChange = (startDate: Date) => {
     updateStartDate({ dateValue: startDate })
@@ -65,32 +64,52 @@ export const OfferPresenter = ({
     priceIntentId: priceIntent.id,
   })
 
-  const displayPrice = t('MONTHLY_PRICE', {
-    displayAmount: formatter.format(selectedOffer.price.amount),
-  })
+  const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
   const cancellationOption = getCancellationOption(priceIntent)
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
+  const priceMatch = useMemo(() => {
+    if (!selectedOffer.priceMatch) return null
+
+    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
+    const company = selectedOffer.priceMatch.externalInsurer.displayName
+    const externalPrice = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+
+    return {
+      title: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
+      // TODO: Include external expiry date
+      children: `${company} · ${externalPrice}`,
+    }
+  }, [selectedOffer.priceMatch, formatter, t])
+
+  // TODO: Suggested date should be handled by backend
+  const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
+
   return (
     <>
       <form onSubmit={handleSubmitAddToCart}>
         <Space y={2}>
-          <Text as="p" align="center" size="xxl">
-            {displayPrice}
-          </Text>
+          <Space y={0.5}>
+            <Text as="p" align="center" size="xxl">
+              {displayPrice}
+            </Text>
 
-          <TierSelector
-            offers={priceIntent.offers}
-            selectedOfferId={selectedOfferId}
-            onValueChange={setSelectedOfferId}
-          />
+            {priceMatch && <PriceMatchBubble {...priceMatch} />}
+          </Space>
 
           <Space y={0.25}>
+            <TierSelector
+              offers={priceIntent.offers}
+              selectedOfferId={selectedOfferId}
+              onValueChange={setSelectedOfferId}
+              currencyCode={shopSession.currencyCode}
+            />
+
             <CancellationForm
               option={cancellationOption}
-              startDate={convertToDate(priceIntent.startDate)!}
+              startDate={startDate}
               onAutoSwitchChange={handleUpdateCancellation}
               onStartDateChange={handleStartDateChange}
             />
@@ -133,13 +152,29 @@ const Separator = styled.div(({ theme }) => ({
 
 const getCancellationOption = (priceIntent: PriceIntent): CancellationOption => {
   const { cancellation, externalInsurer } = priceIntent
-  if (cancellation.option === ExternalInsuranceCancellationOption.Iex) {
-    return {
-      type: 'IEX',
-      companyName: externalInsurer?.displayName ?? 'Unknown',
-      requested: cancellation.requested,
-    }
-  } else {
-    return { type: 'NONE' }
+
+  switch (cancellation.option) {
+    case ExternalInsuranceCancellationOption.Iex:
+      return {
+        type: ExternalInsuranceCancellationOption.Iex,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+        requested: cancellation.requested,
+      }
+
+    case ExternalInsuranceCancellationOption.Banksignering:
+      return {
+        type: ExternalInsuranceCancellationOption.Banksignering,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+        requested: cancellation.requested,
+      }
+
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+      return {
+        type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate,
+        companyName: externalInsurer?.displayName ?? 'Unknown',
+      }
+
+    default:
+      return { type: ExternalInsuranceCancellationOption.None }
   }
 }

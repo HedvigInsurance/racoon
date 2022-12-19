@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import Image from 'next/legacy/image'
-import { Space, mq, ArrowForwardIcon, HeadingOLD } from 'ui'
+import { Space, mq, ArrowForwardIcon } from 'ui'
 import { BodyText } from '@/components/BodyText'
+import { Heading } from '../Heading/Heading'
 import { BaseCardProps, ClickableCardWrapperProps, Section, ClickableCardWrapper } from './BaseCard'
 
 const ImageFrame = styled.div({
@@ -69,9 +70,9 @@ export const ClickableCard = ({
         <Section>
           <Space y={0.25}>
             <Row>
-              <HeadingOLD variant="xs" headingLevel="h2" colorVariant="dark">
+              <Heading variant="xs" headingLevel="h2" colorVariant="dark">
                 {title}
-              </HeadingOLD>
+              </Heading>
               <ArrowForwardIcon size="1.25rem" />
             </Row>
             <BodyTextWrapper>

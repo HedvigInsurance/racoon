@@ -5,10 +5,10 @@ fragment PriceIntentFragment on PriceIntent {
   offers {
     ...ProductOffer
   }
-  startDate
   externalInsurer {
     id
     displayName
+    insurelyId
   }
   cancellation {
     option

@@ -11,7 +11,7 @@ import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.const
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Params = { shopSessionId: string }
 
@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   try {
     const [shopSession, globalStory, translations] = await Promise.all([
-      shopSessionService.fetchById(shopSessionId, toIsoLocale(locale)),
+      shopSessionService.fetchById(shopSessionId),
       getGlobalStory({ locale }),
       serverSideTranslations(locale),
     ])
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     return addApolloState(apolloClient, {
       props: {
         ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSessionId,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
         [GLOBAL_STORY_PROP_NAME]: globalStory,
         cart: shopSession.cart,
         currency: shopSession.currencyCode,

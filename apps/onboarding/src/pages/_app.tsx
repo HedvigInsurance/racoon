@@ -1,9 +1,10 @@
 import { ApolloProvider } from '@apollo/client'
+import { Global, ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
-import { ThemeProvider } from 'ui'
+import { globalStyles, legacyTheme } from 'ui'
 import { MetaFavicons } from '@/components/meta-favicons'
 import { useApollo } from '@/hooks/useApollo'
 import { useDebugTranslationKeys } from '@/hooks/useDebugTranslationsKeys'
@@ -44,7 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <ApolloProvider client={apolloClient}>
-        <ThemeProvider>
+        <Global styles={globalStyles} />
+        <ThemeProvider theme={legacyTheme}>
           <Component {...pageProps} className={contentFontClassName} />
         </ThemeProvider>
       </ApolloProvider>

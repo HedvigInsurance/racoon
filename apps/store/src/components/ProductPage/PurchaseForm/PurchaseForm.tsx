@@ -1,20 +1,20 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { ReactNode, useRef, useState } from 'react'
-import { Button, Heading } from 'ui'
+import { Button, Heading, Space, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Text } from '@/components/Text/Text'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
@@ -24,16 +24,16 @@ import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
 
-  const { priceTemplate, story } = useProductPageContext()
+  const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const { data: { priceIntent } = {} } = usePriceIntent({
     shopSession,
     priceTemplate: priceTemplate,
-    productName: story.content.productId,
+    productName: productData.name,
   })
 
   return (
-    <Layout>
+    <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
       {(notifyProductAdded) => {
         if (!shopSession || !priceIntent) return <PendingState />
 
@@ -65,11 +65,12 @@ export const PurchaseForm = () => {
 
 type LayoutProps = {
   children: (notifyProductAdded: (item: ProductItemProps) => void) => ReactNode
+  pillowSize: 'small' | 'large'
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, pillowSize }: LayoutProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const { story } = useProductPageContext()
+  const { productData } = useProductPageContext()
 
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
@@ -78,15 +79,23 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <PurchaseFormTop>
-        <Wrapper>
+        <OfferPresenterWrapper>
           <SpaceFlex space={1} align="center" direction="vertical">
-            <Pillow size="xlarge" />
-            <Heading as="h2" variant="standard.24">
-              {story.content.name}
-              <CircledHSuperscript />
-            </Heading>
+            <Pillow
+              size={pillowSize === 'large' ? 'xlarge' : 'large'}
+              {...productData.pillowImage}
+            />
+            <Space y={0.5}>
+              <Heading as="h2" variant="standard.24" textAlignment="center">
+                {productData.displayNameShort}
+                <CircledHSuperscript />
+              </Heading>
+              <Text size="s" color="textSecondary" align="center">
+                {productData.displayNameFull}
+              </Text>
+            </Space>
           </SpaceFlex>
-        </Wrapper>
+        </OfferPresenterWrapper>
 
         {children(notifyProductAdded)}
       </PurchaseFormTop>
@@ -97,13 +106,13 @@ const Layout = ({ children }: LayoutProps) => {
 
 const PendingState = () => {
   return (
-    <Wrapper>
+    <OfferPresenterWrapper>
       <ButtonWrapper>
         <Button disabled fullWidth>
           Calculate price
         </Button>
       </ButtonWrapper>
-    </Wrapper>
+    </OfferPresenterWrapper>
   )
 }
 
@@ -111,13 +120,13 @@ type IdleStateProps = { onClick: () => void }
 
 const IdleState = ({ onClick }: IdleStateProps) => {
   return (
-    <Wrapper>
+    <OfferPresenterWrapper>
       <ButtonWrapper>
         <Button onClick={onClick} fullWidth>
           Calculate price
         </Button>
       </ButtonWrapper>
-    </Wrapper>
+    </OfferPresenterWrapper>
   )
 }
 
@@ -129,7 +138,20 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { onToggleDialog, priceIntent, onSuccess } = props
-  const { priceTemplate, story } = useProductPageContext()
+  const { priceTemplate, productData } = useProductPageContext()
+  const isLarge = useBreakpoint('lg')
+
+  const priceCalculator = (
+    <PriceCalculatorWrapper>
+      <PriceCalculator
+        priceTemplate={priceTemplate}
+        priceIntent={priceIntent}
+        onSuccess={onSuccess}
+      />
+    </PriceCalculatorWrapper>
+  )
+
+  if (isLarge) return priceCalculator
 
   return (
     <PriceCalculatorDialog
@@ -137,19 +159,15 @@ const EditingState = (props: EditingStateProps) => {
       toggleDialog={onToggleDialog}
       header={
         <SpaceFlex direction="vertical" align="center" space={0.5}>
-          <Pillow size="large" />
+          <Pillow size="large" {...productData.pillowImage} />
           <Heading as="h2" variant="standard.18">
-            {story.content.name}
+            {productData.displayNameShort}
             <CircledHSuperscript />
           </Heading>
         </SpaceFlex>
       }
     >
-      <PriceCalculator
-        priceTemplate={priceTemplate}
-        priceIntent={priceIntent}
-        onSuccess={onSuccess}
-      />
+      {priceCalculator}
     </PriceCalculatorDialog>
   )
 }
@@ -167,28 +185,25 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
 
   const refresh = useRouterRefresh()
   const apolloClient = useApolloClient()
-  const { locale } = useCurrentLocale()
-  const currencyFormatter = useCurrencyFormatter(shopSession.currencyCode)
+  const formatter = useFormatter()
   const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
     onAddedToCart({
       name: story.content.name,
-      price: currencyFormatter.format(addedProdutOffer.price.amount),
+      price: formatter.money(addedProdutOffer.price),
     })
-    priceIntentServiceInitClientSide({ apolloClient, locale, shopSession }).clear(
-      priceTemplate.name,
-    )
+    priceIntentServiceInitClientSide({ apolloClient, shopSession }).clear(priceTemplate.name)
     refresh()
   }
 
   return (
-    <Wrapper>
+    <OfferPresenterWrapper>
       <OfferPresenter
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
         onAddedToCart={handleAddedToCart}
       />
-    </Wrapper>
+    </OfferPresenterWrapper>
   )
 }
 
@@ -207,7 +222,17 @@ const ButtonWrapper = styled.div({
   marginRight: 'auto',
 })
 
-const Wrapper = styled.div({
+const OfferPresenterWrapper = styled.div({
   paddingLeft: '1rem',
   paddingRight: '1rem',
+
+  width: '100%',
+  maxWidth: '21rem',
+  margin: '0 auto',
+})
+
+const PriceCalculatorWrapper = styled.div({
+  width: '100%',
+  maxWidth: '21rem',
+  margin: '0 auto',
 })

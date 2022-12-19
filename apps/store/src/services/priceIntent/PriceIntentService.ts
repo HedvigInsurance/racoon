@@ -7,7 +7,6 @@ import {
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { IsoLocale } from '@/utils/l10n/types'
 import { createPriceIntent, updatePriceIntentData } from './PriceIntent.helpers'
 import { PriceIntentCreateParams } from './priceIntent.types'
 
@@ -18,10 +17,9 @@ export class PriceIntentService {
     private readonly shopSession: ShopSession,
   ) {}
 
-  public async create({ locale, productName, priceTemplate }: PriceIntentCreateParams) {
+  public async create({ productName, priceTemplate }: PriceIntentCreateParams) {
     const priceIntent = await createPriceIntent({
       apolloClient: this.apolloClient,
-      locale,
       shopSessionId: this.shopSession.id,
       productName,
     })
@@ -31,7 +29,6 @@ export class PriceIntentService {
     if (priceTemplate.initialData) {
       return await updatePriceIntentData({
         apolloClient: this.apolloClient,
-        locale,
         priceIntentId: priceIntent.id,
         data: priceTemplate.initialData,
       })
@@ -40,11 +37,11 @@ export class PriceIntentService {
     return priceIntent
   }
 
-  private async get(priceIntentId: string, locale: IsoLocale) {
+  private async get(priceIntentId: string) {
     try {
       const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
         query: PriceIntentDocument,
-        variables: { priceIntentId, locale },
+        variables: { priceIntentId },
       })
       return result.data?.priceIntent ?? null
     } catch (error) {
@@ -58,16 +55,16 @@ export class PriceIntentService {
     return null
   }
 
-  public async fetch({ locale, productName, priceTemplate }: FetchParams) {
+  public async fetch({ productName, priceTemplate }: FetchParams) {
     const priceIntentId = this.getStoredId(priceTemplate.name)
 
     if (priceIntentId) {
-      const priceIntent = await this.get(priceIntentId, locale)
+      const priceIntent = await this.get(priceIntentId)
       // @TODO: check if price intent is linked to the product
       if (priceIntent) return priceIntent
     }
 
-    return await this.create({ locale, productName, priceTemplate })
+    return await this.create({ productName, priceTemplate })
   }
 
   private getPriceIntentKey(templateName: string) {
@@ -88,7 +85,6 @@ export class PriceIntentService {
 }
 
 type FetchParams = {
-  locale: IsoLocale
   productName: string
   priceTemplate: Template
 }

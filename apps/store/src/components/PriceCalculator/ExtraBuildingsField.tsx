@@ -10,7 +10,7 @@ import {
 } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { InputSwitch } from './InputSwitch'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
@@ -27,7 +27,7 @@ export const ExtraBuildingsField = ({
 }: ExtraBuildingsFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const translateLabel = useTranslateTextLabel({ data: {} })
+  const translateLabel = useTranslateFieldLabel()
 
   const buildingOptionsInput = buildingOptions.map((option) => {
     return { name: option.label.key, value: option.value }

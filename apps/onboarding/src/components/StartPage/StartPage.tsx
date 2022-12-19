@@ -3,13 +3,14 @@ import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, HeadingOLD, Space } from 'ui'
+import { Button, Space } from 'ui'
 import { HeroImage } from '@/components/hero-image'
 import { PageHeaderLayout } from '@/components/page-header-layout'
 import { useForm } from '@/hooks/useForm'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
 import * as Analytics from '@/services/analytics/analytics'
+import { Heading } from '../Heading/Heading'
 import { Bullet, BulletList } from './components/BulletList'
 import { CaptionText } from './components/CaptionText'
 import { ContentWrapper } from './components/ContentWrapper'
@@ -66,9 +67,9 @@ export const StartPage = () => {
             <Col>
               <ContentWrapper y={2}>
                 <Space y={1}>
-                  <HeadingOLD variant="s" headingLevel="h1" colorVariant="dark">
+                  <Heading variant="s" headingLevel="h1" colorVariant="dark">
                     {t('START_SCREEN_HEADER')}
-                  </HeadingOLD>
+                  </Heading>
                   <SubHeading>{t('START_SCREEN_SUBHEADER')}</SubHeading>
                 </Space>
                 <RadioGroup.Root

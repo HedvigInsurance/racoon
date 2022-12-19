@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const LOGGER = logger.child({ module: 'pages/session' })
@@ -29,7 +29,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   try {
     const apolloClient = initializeApollo({ req, res })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    shopSessionService.save(await shopSessionService.fetchById(shopSessionId, toIsoLocale(locale)))
+    const shopSession = await shopSessionService.fetchById(shopSessionId)
+    shopSessionService.saveId(shopSession.id)
   } catch (error) {
     logger.error(error, `Unable to fetch ShopSession: ${shopSessionId}`)
     return fallbackRedirect

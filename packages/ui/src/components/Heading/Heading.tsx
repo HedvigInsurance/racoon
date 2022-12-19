@@ -1,109 +1,39 @@
-import styled, { StyledComponent } from '@emotion/styled'
+import styled from '@emotion/styled'
 import React from 'react'
-import { mq } from '../../lib/media-query'
+import { getMargins, Margins } from '../../lib/margins'
+import { getColor } from '../../lib/theme/theme'
+import { getHeadingVariant, HeadingVariant } from './Heading.helpers'
 
-export type HeadingProps = {
-  variant: 'xl' | 'l' | 'm' | 's' | 'xs' | 'overline'
-  headingLevel: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  colorVariant: 'dark' | 'light'
+export type HeadingProps = Margins & {
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  color?: 'dark' | 'light'
   children: React.ReactNode
+  variant?: HeadingVariant | ''
+  textAlignment?: 'left' | 'center'
 }
 
-type ColorProp = Pick<HeadingProps, 'colorVariant'>
+type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant' | 'textAlignment'> & Margins
 
-type StyleProps = {
-  as: HeadingProps['headingLevel']
-} & ColorProp
-
-const HeadingBase = styled.span<ColorProp>(({ theme, colorVariant }) => ({
-  color: colorVariant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
-  margin: 0,
-  padding: 0,
-  fontFamily: theme.fonts.body,
-  fontWeight: 400,
-}))
-
-const HeadingXL = styled(HeadingBase)<StyleProps>(() => ({
-  fontSize: '3.5rem',
-  lineHeight: '4rem',
-  letterSpacing: '-0.02em',
-  [mq.md]: {
-    fontSize: '4.5rem',
-    lineHeight: '4.5rem',
+const HeadingBase = styled.h2<HeadingBaseProps>(
+  ({ theme, color, variant, textAlignment, ...props }) => {
+    // GOTCHA: We may get empty string from Storyblok, this should be handled safely
+    variant = variant || 'standard.32'
+    return {
+      color: color ? getColor(color) : 'currentColor',
+      fontFamily: theme.fonts.heading,
+      fontWeight: 400,
+      lineHeight: 1.2,
+      textAlign: textAlignment ?? 'left',
+      ...getMargins(props),
+      ...getHeadingVariant(variant, theme),
+    }
   },
-}))
+)
 
-const HeadingL = styled(HeadingBase)<StyleProps>(() => ({
-  fontSize: '2.5rem',
-  lineHeight: '2.75rem',
-  letterSpacing: '-0.02em',
-  [mq.md]: {
-    fontSize: '3.5rem',
-    lineHeight: '4rem',
-  },
-}))
-
-const HeadingM = styled(HeadingBase)<StyleProps>(() => ({
-  fontSize: '2rem',
-  lineHeight: '2.5rem',
-  letterSpacing: '-0.02em',
-  [mq.md]: {
-    fontSize: '3rem',
-    lineHeight: '3.5rem',
-  },
-}))
-
-const HeadingS = styled(HeadingBase)<StyleProps>(() => ({
-  fontSize: '1.5rem',
-  lineHeight: '2rem',
-  letterSpacing: '-0.02em',
-  [mq.md]: {
-    fontSize: '2rem',
-    lineHeight: '2.5rem',
-  },
-}))
-
-const HeadingXS = styled(HeadingBase)<StyleProps>(() => ({
-  fontSize: '1.25rem',
-  lineHeight: '1.75rem',
-  letterSpacing: '-0.02em',
-  [mq.md]: {
-    fontSize: '1.5rem',
-    lineHeight: '2rem',
-  },
-}))
-
-const HeadingOverline = styled(HeadingBase)<StyleProps>(() => ({
-  textTransform: 'uppercase',
-  fontSize: '0.875rem',
-  lineHeight: '1.375rem',
-  letterSpacing: '0',
-  [mq.md]: {
-    fontSize: '1rem',
-    lineHeight: '1.5rem',
-  },
-}))
-
-type Headings = Record<
-  HeadingProps['variant'],
-  StyledComponent<Record<string, unknown>, StyleProps, any>
->
-
-const headings: Headings = {
-  xl: HeadingXL,
-  l: HeadingL,
-  m: HeadingM,
-  s: HeadingS,
-  xs: HeadingXS,
-  overline: HeadingOverline,
-}
-
-export const Heading = ({ variant, headingLevel, colorVariant, children }: HeadingProps) => {
-  const HeadingComponent = headings[variant]
-
+export const Heading = ({ as, color, children, variant, textAlignment, ...rest }: HeadingProps) => {
   return (
-    <HeadingComponent as={headingLevel} colorVariant={colorVariant}>
+    <HeadingBase as={as} color={color} variant={variant} textAlignment={textAlignment} {...rest}>
       {children}
-    </HeadingComponent>
+    </HeadingBase>
   )
 }

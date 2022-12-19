@@ -6,7 +6,7 @@ import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.ty
 import { Text } from '../Text/Text'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
-import { useTranslateTextLabel } from './useTranslateTextLabel'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   form: Form
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const PriceCalculatorAccordion = ({ form, children }: Props) => {
-  const translateLabel = useTranslateTextLabel({ data: {} })
+  const translateLabel = useTranslateFieldLabel()
   const [activeSectionId, onActiveSectionChange] = useActiveFormSection(form)
 
   return (
@@ -26,21 +26,22 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
     >
       {form.sections.map((section, index) => {
         const isMuted = section.state !== 'valid' && section.id !== activeSectionId
+        const stepIconState = section.state === 'valid' ? 'muted' : 'outline'
 
         return (
           <Accordion.Item key={section.id} value={section.id}>
             <Accordion.Header>
               <SpaceFlex space={0.5} align="center">
-                <StepIcon filled={section.id === activeSectionId} />
+                <StepIcon state={section.id === activeSectionId ? 'filled' : stepIconState} />
                 <StyledHeading as="h3" variant="standard.18" muted={isMuted}>
                   {translateLabel(section.title)}
                 </StyledHeading>
               </SpaceFlex>
               {section.state === 'valid' && (
                 <Accordion.Trigger>
-                  <Text size="l" color="gray700">
+                  <StyledText size="l" color="gray700">
                     Edit
-                  </Text>
+                  </StyledText>
                 </Accordion.Trigger>
               )}
             </Accordion.Header>
@@ -79,4 +80,7 @@ type StyledHeadingProps = { muted: boolean }
 
 const StyledHeading = styled(Heading)<StyledHeadingProps>(({ theme, muted }) => ({
   color: muted ? theme.colors.gray600 : theme.colors.gray900,
+  lineHeight: 1,
 }))
+
+const StyledText = styled(Text)({ lineHeight: 1 })

@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { useCurrencyFormatter } from '@/utils/useCurrencyFormatter'
+import { useFormatter } from '@/utils/useFormatter'
 import { FormElement } from './PurchaseForm.constants'
 
 type Props = {
@@ -13,8 +12,7 @@ type Props = {
 }
 
 export const TierSelector = ({ offers, selectedOfferId, onValueChange }: Props) => {
-  const { t } = useTranslation()
-  const currencyFormatter = useCurrencyFormatter(offers[0].price.currencyCode)
+  const formatter = useFormatter()
 
   if (offers.length === 1) {
     return <input hidden readOnly name={FormElement.ProductOfferId} value={selectedOfferId} />
@@ -35,10 +33,8 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: Props) 
                 <Indicator />
               </IndicatorWrapper>
             </IndicatorBox>
-            <TitleBox>{offer.variant.displayName}</TitleBox>
-            <PriceBox>
-              {t('MONTHLY_PRICE', { displayAmount: currencyFormatter.format(offer.price.amount) })}
-            </PriceBox>
+            <TitleBox>{offer.variant.product.displayNameFull}</TitleBox>
+            <PriceBox>{formatter.monthlyPrice(offer.price)}</PriceBox>
             <FooterBox>Space for some description.</FooterBox>
           </OfferItem>
         ))}

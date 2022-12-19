@@ -43,18 +43,6 @@ export const locales: Record<IsoLocale, LocaleData> = {
   },
 }
 
-// TODO: Move to Lokalise
-export const TEMP_TRANSLATIONS: Record<string, string> = {
-  COUNTRY_LABEL_SE: 'Sweden',
-  COUNTRY_LABEL_NO: 'Norway',
-  COUNTRY_LABEL_DK: 'Denmark',
-
-  LANGUAGE_LABEL_sv: 'Swedish',
-  LANGUAGE_LABEL_en: 'English',
-  LANGUAGE_LABEL_no: 'Norwegian',
-  LANGUAGE_LABEL_da: 'Danish',
-}
-
 export enum LocaleField {
   Country = 'country',
   Language = 'language',

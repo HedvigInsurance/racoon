@@ -20,7 +20,7 @@ import {
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { isRoutingLocale, toApiLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextContentPageProps = StoryblokPageProps & { type: 'content' }
 type NextProductPageProps = ProductPageProps & { type: 'product' }
@@ -112,7 +112,6 @@ export const getStaticProps: GetStaticProps<
     const productData = await getProductData({
       apolloClient: initializeApollo(),
       productName: story.content.productId,
-      locale: toApiLocale(locale),
     })
 
     return {

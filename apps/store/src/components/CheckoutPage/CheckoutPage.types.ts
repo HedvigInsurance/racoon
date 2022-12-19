@@ -1,23 +1,16 @@
-import { CartFragmentFragment, CheckoutSigningStatus, UserError } from '@/services/apollo/generated'
-
-type ProductData = {
-  offerId: string
-  name: string
-  cost: number
-  startDate?: string
-}
+import { CartCampaign, CartCost, CartEntry } from '@/components/CartInventory/CartInventory.types'
 
 export type CheckoutPageProps = {
-  products: Array<ProductData>
-  loading: boolean
+  checkoutId: string
+  checkoutSigningId: string | null
+  cart: {
+    id: string
+    entries: Array<CartEntry>
+    cost: CartCost
+    campaigns: Array<CartCampaign>
+  }
+  personalNumber: string
   prefilledData: {
     email?: string
-    firstName?: string
-    lastName?: string
-    personalNumber?: string
-    phoneNumber?: string
   }
-  signingStatus?: CheckoutSigningStatus
-  userError?: UserError | null
-  cart: CartFragmentFragment
 }

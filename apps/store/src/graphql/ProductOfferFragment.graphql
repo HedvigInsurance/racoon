@@ -2,11 +2,32 @@ fragment ProductOffer on ProductOffer {
   id
   variant {
     typeOfContract
-    displayName(locale: $locale)
+    product {
+      displayNameFull
+      pillowImage {
+        id
+        alt
+        src
+      }
+    }
   }
   price {
     amount
     currencyCode
   }
   startDate
+  priceMatch {
+    externalInsurer {
+      id
+      displayName
+    }
+    priceReduction {
+      amount
+      currencyCode
+    }
+    externalPrice {
+      amount
+      currencyCode
+    }
+  }
 }

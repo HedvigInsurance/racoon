@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
+import { useTrackShopSession } from '@/services/shopSession/useTrackShopSession'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -21,6 +22,9 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
   const { story, globalStory, className } = children.props
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
+
+  // TODO: Extract some common layout component and move there if we ever have multiple layouts
+  useTrackShopSession()
 
   return (
     <Wrapper className={className}>

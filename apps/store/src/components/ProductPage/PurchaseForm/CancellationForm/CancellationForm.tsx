@@ -2,14 +2,21 @@ import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
 import { Space } from 'ui'
 import { Text } from '@/components/Text/Text'
+import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
 import { CheckboxInput } from './CheckboxInput'
 import { DateInput } from './DateInput'
 
 export type CancellationOption =
-  | { type: 'NONE' }
-  | { type: 'IEX'; companyName: string; requested: boolean }
+  | { type: ExternalInsuranceCancellationOption.None; message?: string }
+  | { type: ExternalInsuranceCancellationOption.Iex; companyName: string; requested: boolean }
+  | {
+      type: ExternalInsuranceCancellationOption.Banksignering
+      companyName: string
+      requested: boolean
+    }
+  | { type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate; companyName: string }
 
 type Props = {
   option: CancellationOption
@@ -20,11 +27,26 @@ type Props = {
 
 export const CancellationForm = ({ option, ...props }: Props) => {
   switch (option.type) {
-    case 'IEX':
+    case ExternalInsuranceCancellationOption.Iex:
       return (
         <IEXCancellation {...props} companyName={option.companyName} requested={option.requested} />
       )
-    case 'NONE':
+
+    case ExternalInsuranceCancellationOption.Banksignering:
+      return (
+        <BankSigneringCancellation
+          {...props}
+          companyName={option.companyName}
+          requested={option.requested}
+        />
+      )
+
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+      return (
+        <BankSigneringInvalidStartDateCancellation {...props} companyName={option.companyName} />
+      )
+
+    case ExternalInsuranceCancellationOption.None:
       return <NoCancellation {...props} />
   }
 }
@@ -33,48 +55,111 @@ type NoCancellationProps = Pick<Props, 'onStartDateChange'> & {
   startDate: Date
 }
 
-const NoCancellation = ({ onStartDateChange, startDate }: NoCancellationProps) => {
-  return <StartDateInput startDate={startDate} onChange={onStartDateChange} />
+const NoCancellation = ({ onStartDateChange, ...props }: NoCancellationProps) => {
+  return <StartDateInput {...props} onChange={onStartDateChange} />
 }
 
-type IEXCancellationProps = Pick<Props, 'onStartDateChange' | 'onAutoSwitchChange'> & {
+type IEXCancellationProps = Pick<
+  Props,
+  'onStartDateChange' | 'onAutoSwitchChange' | 'startDate'
+> & {
   companyName: string
-  startDate: Date
   requested: boolean
 }
 
 const IEXCancellation = (props: IEXCancellationProps) => {
-  const { onStartDateChange, onAutoSwitchChange, companyName } = props
-  const { t } = useTranslation('purchase-form')
+  const { onStartDateChange, onAutoSwitchChange, companyName, requested } = props
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
   }
 
   return (
     <Space y={0.25}>
-      <CheckboxInput
-        name={FormElement.AutoSwitch}
-        label={t('AUTO_SWITCH_FIELD_LABEL')}
-        defaultChecked={props.requested}
+      <AutoSwitchInput
+        value={requested}
         onCheckedChange={handleCheckedChange}
-      >
-        {props.requested && (
-          <Text as="p" size="s" color="gray700">
-            {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
-          </Text>
-        )}
-      </CheckboxInput>
+        companyName={companyName}
+      />
 
-      {!props.requested && (
-        <StartDateInput startDate={props.startDate} onChange={onStartDateChange} />
-      )}
+      {!requested && <StartDateInput startDate={props.startDate} onChange={onStartDateChange} />}
     </Space>
   )
 }
 
-type StartDateInputProps = { startDate: Date; onChange?: (date: Date) => void }
+type BankSigneringCancellationProps = IEXCancellationProps
 
-const StartDateInput = ({ startDate, onChange }: StartDateInputProps) => {
+const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
+  const { onStartDateChange, onAutoSwitchChange, companyName, requested } = props
+  const { t } = useTranslation('purchase-form')
+
+  const handleCheckedChange = (newValue: boolean) => {
+    onAutoSwitchChange?.(newValue)
+  }
+
+  const renewalDateLabel = t('AUTO_SWITCH_RENEWAL_DATE_LABEL', { company: companyName })
+
+  return (
+    <Space y={0.25}>
+      <AutoSwitchInput
+        value={requested}
+        onCheckedChange={handleCheckedChange}
+        companyName={companyName}
+      />
+
+      <StartDateInput
+        label={requested ? renewalDateLabel : undefined}
+        startDate={props.startDate}
+        onChange={onStartDateChange}
+      />
+    </Space>
+  )
+}
+
+type BankSigneringInvalidStartDateProps = Pick<Props, 'onStartDateChange'> & {
+  startDate: Date
+  companyName: string
+}
+
+const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
+  const { onStartDateChange, companyName } = props
+  const { t } = useTranslation('purchase-form')
+  const message = t('AUTO_SWITCH_INVALID_START_DATE_MESSAGE', { company: companyName })
+  return <StartDateInput {...props} onChange={onStartDateChange} message={message} />
+}
+
+type AutoSwitchInputProps = {
+  onCheckedChange: (checked: boolean) => void
+  value: boolean
+  companyName: string
+}
+
+const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInputProps) => {
+  const { t } = useTranslation('purchase-form')
+
+  return (
+    <CheckboxInput
+      name={FormElement.AutoSwitch}
+      label={t('AUTO_SWITCH_FIELD_LABEL')}
+      defaultChecked={value}
+      onCheckedChange={onCheckedChange}
+    >
+      {value && (
+        <Text as="p" size="s" color="gray700">
+          {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
+        </Text>
+      )}
+    </CheckboxInput>
+  )
+}
+
+type StartDateInputProps = {
+  label?: string
+  message?: string
+  startDate: Date
+  onChange?: (date: Date) => void
+}
+
+const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputProps) => {
   const { t } = useTranslation('purchase-form')
   const dateToday = new Date()
 
@@ -88,19 +173,22 @@ const StartDateInput = ({ startDate, onChange }: StartDateInputProps) => {
   const inputValueToday = formatInputDateValue(dateToday)
   const isToday = inputValue === inputValueToday
 
+  const todayMessage = isToday ? t('START_DATE_FIELD_TODAY') : undefined
+  const inputMessage = message ?? todayMessage
+
   return (
     <DateInput
       type="date"
       name={FormElement.StartDate}
-      label={t('START_DATE_FIELD_LABEL')}
+      label={label ?? t('START_DATE_FIELD_LABEL')}
       required
       value={inputValue}
       min={inputValueToday}
       onChange={handleChange}
     >
-      {isToday && (
+      {inputMessage && (
         <Text as="p" size="s" color="gray700">
-          {t('START_DATE_FIELD_TODAY')}
+          {inputMessage}
         </Text>
       )}
     </DateInput>
