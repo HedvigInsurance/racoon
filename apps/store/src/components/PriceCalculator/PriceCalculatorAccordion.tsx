@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode } from 'react'
 import { Heading } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -12,12 +12,14 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 type Props = {
   form: Form
   children(section: FormSection, index: number): ReactNode
+  activeSectionId?: string
+  onActiveSectionChange(sectionId: string): void
 }
 
-export const PriceCalculatorAccordion = ({ form, children }: Props) => {
+export const PriceCalculatorAccordion = (props: Props) => {
+  const { form, children, activeSectionId, onActiveSectionChange } = props
   const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
-  const [activeSectionId, onActiveSectionChange] = useActiveFormSection(form)
 
   return (
     <Accordion.Root
@@ -53,29 +55,6 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
       })}
     </Accordion.Root>
   )
-}
-
-const useActiveFormSection = (form: Form) => {
-  const [activeSectionId, setActiveSectionId] = useState(
-    () => form.sections.find(({ state }) => state !== 'valid')?.id,
-  )
-  const prevActiveSectionRef = useRef<string>()
-
-  const currentSectionIsValid =
-    form.sections.find((section) => section.id === activeSectionId)?.state === 'valid'
-
-  useEffect(() => {
-    if (currentSectionIsValid && activeSectionId === prevActiveSectionRef.current) {
-      const nextSectionId = form.sections.find(({ state }) => state !== 'valid')?.id
-      if (nextSectionId) setActiveSectionId(nextSectionId)
-    }
-  }, [activeSectionId, currentSectionIsValid, form.sections])
-
-  useEffect(() => {
-    prevActiveSectionRef.current = activeSectionId
-  }, [activeSectionId])
-
-  return [activeSectionId, setActiveSectionId] as const
 }
 
 type StyledHeadingProps = { muted: boolean }
