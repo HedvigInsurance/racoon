@@ -11,7 +11,7 @@ export const gray = {
   800: 'hsl(0, 0%, 40%)',
   900: 'hsl(0, 0%, 25%)',
   1000: 'hsl(0, 0%, 7%)',
-}
+} as const
 
 export const green = {
   50: 'hsl(85, 100%, 90%)',
@@ -24,7 +24,7 @@ export const green = {
   700: 'hsl(100, 25%, 45%)',
   800: 'hsl(100, 28%, 32%)',
   900: 'hsl(100, 40%, 18%)',
-}
+} as const
 
 export const red = {
   50: 'hsl(7, 100%, 97%)',
@@ -37,7 +37,7 @@ export const red = {
   700: 'hsl(7, 61%, 57%)',
   800: 'hsl(7, 76%, 40%)',
   900: 'hsl(7, 100%, 22%)',
-}
+} as const
 
 export const yellow = {
   50: 'hsl(55, 100%, 91%)',
@@ -50,7 +50,7 @@ export const yellow = {
   700: 'hsl(50, 30%, 49%)',
   800: 'hsl(50, 42%, 36%)',
   900: 'hsl(50, 80%, 20%)',
-}
+} as const
 
 const purple = {
   100: '#f5ebf5',
@@ -59,7 +59,7 @@ const purple = {
   700: '#ccb9df',
   800: '#bea4d5',
   900: '#8c67ad',
-}
+} as const
 
 export const colors = {
   gray25: gray[25],
@@ -116,6 +116,6 @@ export const colors = {
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[400],
-}
+} as const
 
 export type UIColor = keyof typeof colors
