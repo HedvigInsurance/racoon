@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { InputSelect } from './InputSelect'
 
 export default {
-  title: 'Input / Select',
+  title: 'Inputs / Select',
   component: InputSelect,
   parameters: {
     viewport: {

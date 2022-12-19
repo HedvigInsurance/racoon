@@ -77,7 +77,7 @@ export const InputSelect = ({
             {...animationProps}
           >
             {placeholder && (
-              <Placeholder value="" disabled selected>
+              <Placeholder value="" disabled selected hidden>
                 {placeholder}
               </Placeholder>
             )}
