@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Heading } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -14,6 +15,7 @@ type Props = {
 }
 
 export const PriceCalculatorAccordion = ({ form, children }: Props) => {
+  const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
   const [activeSectionId, onActiveSectionChange] = useActiveFormSection(form)
 
@@ -39,8 +41,8 @@ export const PriceCalculatorAccordion = ({ form, children }: Props) => {
               </SpaceFlex>
               {section.state === 'valid' && (
                 <Accordion.Trigger>
-                  <StyledText size="l" color="gray700">
-                    Edit
+                  <StyledText size="l" color="textPrimary">
+                    {t('PRICE_CALCULATOR_SECTION_EDIT_BUTTON')}
                   </StyledText>
                 </Accordion.Trigger>
               )}
