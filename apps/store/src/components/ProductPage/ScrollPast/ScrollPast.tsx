@@ -13,7 +13,7 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
 
   const [hasScrolledPassed, setHasScrolledPassed] = useState(false)
   useEffect(() => {
-    return scrollY.onChange((latest) => {
+    return scrollY.on('change', (latest) => {
       if (targetRef.current) {
         const elementEnd = targetRef.current.offsetTop + targetRef.current.clientHeight
         setHasScrolledPassed(latest > elementEnd)
@@ -37,7 +37,7 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
 
 const StyledWrapper = styled(motion.div)(({ theme }) => ({
   position: 'fixed',
-  bottom: theme.space[8],
+  bottom: theme.space[4],
   left: 0,
   right: 0,
   zIndex: zIndexes.scrollPast,

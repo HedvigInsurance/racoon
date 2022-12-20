@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useRef, useState } from 'react'
-import { Button, Heading, Space, useBreakpoint } from 'ui'
+import { Button, Heading, mq, Space, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -17,6 +17,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useFormatter } from '@/utils/useFormatter'
 import useRouterRefresh from '@/utils/useRouterRefresh'
+import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
@@ -81,7 +82,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
   return (
     <>
       <PurchaseFormTop>
-        <OfferPresenterWrapper>
+        <SectionWrapper>
           <SpaceFlex space={1} align="center" direction="vertical">
             <Pillow
               size={pillowSize === 'large' ? 'xlarge' : 'large'}
@@ -97,7 +98,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
               </Text>
             </Space>
           </SpaceFlex>
-        </OfferPresenterWrapper>
+        </SectionWrapper>
 
         {children(notifyProductAdded)}
       </PurchaseFormTop>
@@ -110,29 +111,37 @@ const PendingState = () => {
   const { t } = useTranslation('purchase-form')
 
   return (
-    <OfferPresenterWrapper>
-      <ButtonWrapper>
+    <SectionWrapper>
+      <OpenModalButtonWrapper>
         <Button disabled fullWidth>
           {t('OPEN_PRICE_CALCULATOR_BUTTON')}
         </Button>
-      </ButtonWrapper>
-    </OfferPresenterWrapper>
+      </OpenModalButtonWrapper>
+    </SectionWrapper>
   )
 }
 
 type IdleStateProps = { onClick: () => void }
 
 const IdleState = ({ onClick }: IdleStateProps) => {
+  const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
+  const button = (
+    <Button onClick={onClick} fullWidth>
+      {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+    </Button>
+  )
+
   return (
-    <OfferPresenterWrapper>
-      <ButtonWrapper>
-        <Button onClick={onClick} fullWidth>
-          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
-        </Button>
-      </ButtonWrapper>
-    </OfferPresenterWrapper>
+    <>
+      <SectionWrapper ref={ref}>
+        <OpenModalButtonWrapper>{button}</OpenModalButtonWrapper>
+      </SectionWrapper>
+      <ScrollPast targetRef={ref}>
+        <StickyButtonWrapper>{button}</StickyButtonWrapper>
+      </ScrollPast>
+    </>
   )
 }
 
@@ -202,14 +211,14 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   }
 
   return (
-    <OfferPresenterWrapper>
+    <SectionWrapper ref={scrollPastRef}>
       <OfferPresenter
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
         onAddedToCart={handleAddedToCart}
       />
-    </OfferPresenterWrapper>
+    </SectionWrapper>
   )
 }
 
@@ -222,16 +231,23 @@ const PurchaseFormTop = styled.div({
   paddingBottom: '9vh',
 })
 
-const ButtonWrapper = styled.div({
-  maxWidth: '21rem',
-  marginLeft: 'auto',
-  marginRight: 'auto',
+const OpenModalButtonWrapper = styled.div({
+  [mq.lg]: {
+    padding: 0,
+    maxWidth: '21rem',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
 })
 
-const OfferPresenterWrapper = styled.div({
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
+const StickyButtonWrapper = styled.div(({ theme }) => ({
+  paddingInline: theme.space[4],
+  [mq.lg]: {
+    display: 'none',
+  },
+}))
 
+const SectionWrapper = styled.div({
   width: '100%',
   maxWidth: '21rem',
   margin: '0 auto',
