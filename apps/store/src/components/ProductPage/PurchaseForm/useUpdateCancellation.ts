@@ -1,16 +1,17 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { usePriceIntentCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
+import { useCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { getMutationError } from '@/utils/getMutationError'
 
-type Params = { priceIntentId: string }
+type Params = { priceIntent: PriceIntent }
 
-export const useUpdateCancellation = ({ priceIntentId }: Params) => {
-  const [updateCancellation, result] = usePriceIntentCancellationRequestedUpdateMutation()
+export const useUpdateCancellation = ({ priceIntent }: Params) => {
+  const [updateCancellation, result] = useCancellationRequestedUpdateMutation()
 
   const handleUpdateCancellation = (requested: boolean) => {
     updateCancellation({
       variables: {
-        priceIntentId,
+        productOfferIds: priceIntent.offers.map(({ id }) => id),
         requested,
       },
       onError(error) {
@@ -23,7 +24,7 @@ export const useUpdateCancellation = ({ priceIntentId }: Params) => {
     handleUpdateCancellation,
     {
       loading: result.loading,
-      userError: getMutationError(result, result.data?.priceIntentCancellationRequestedUpdate),
+      userError: getMutationError(result, result.data?.productOffersCancellationRequestedUpdate),
     },
   ] as const
 }

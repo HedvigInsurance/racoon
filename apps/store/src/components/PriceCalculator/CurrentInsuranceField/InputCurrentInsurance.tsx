@@ -71,8 +71,6 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
       {hasInsurance && (
         <InputSelect
           name="externalInsurer"
-          // @TODO: remove, not part of updated designs
-          label="Current insurance company"
           required
           options={companyOptions}
           placeholder={t('CURRENT_INSURANCE_FIELD_PLACEHOLDER')}

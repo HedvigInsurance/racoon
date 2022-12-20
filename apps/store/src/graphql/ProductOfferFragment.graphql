@@ -16,6 +16,10 @@ fragment ProductOffer on ProductOffer {
     currencyCode
   }
   startDate
+  cancellation {
+    option
+    requested
+  }
   priceMatch {
     externalInsurer {
       id

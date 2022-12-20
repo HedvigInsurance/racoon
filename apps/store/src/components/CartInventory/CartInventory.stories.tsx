@@ -4,6 +4,7 @@ import {
   CampaignDiscountType,
   CartFragmentFragment,
   CurrencyCode,
+  ExternalInsuranceCancellationOption,
 } from '@/services/apollo/generated'
 import { CartInventory } from './CartInventory'
 
@@ -90,6 +91,10 @@ const MOCK_CART: CartFragmentFragment = {
         __typename: 'Money',
       },
       startDate: '2022-12-15',
+      cancellation: {
+        option: ExternalInsuranceCancellationOption.None,
+        requested: false,
+      },
       __typename: 'ProductOffer',
     },
     {
@@ -114,6 +119,10 @@ const MOCK_CART: CartFragmentFragment = {
         __typename: 'Money',
       },
       startDate: '2022-12-15',
+      cancellation: {
+        option: ExternalInsuranceCancellationOption.None,
+        requested: false,
+      },
       __typename: 'ProductOffer',
     },
     {
@@ -138,6 +147,10 @@ const MOCK_CART: CartFragmentFragment = {
         __typename: 'Money',
       },
       startDate: '2022-12-15',
+      cancellation: {
+        option: ExternalInsuranceCancellationOption.None,
+        requested: false,
+      },
       __typename: 'ProductOffer',
     },
   ],
