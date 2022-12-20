@@ -10,8 +10,4 @@ fragment PriceIntentFragment on PriceIntent {
     displayName
     insurelyId
   }
-  cancellation {
-    option
-    requested
-  }
 }

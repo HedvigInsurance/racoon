@@ -54,8 +54,6 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
   })
 
   const createNewPriceIntent = useCallback(() => {
-    console.log('Create new price intent')
-
     if (storedPriceIntentId) return
     if (createResult.loading) return
     if (createResult.error) return

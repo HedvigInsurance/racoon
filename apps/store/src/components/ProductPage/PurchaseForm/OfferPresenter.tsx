@@ -60,13 +60,11 @@ export const OfferPresenter = ({
     },
   })
 
-  const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({
-    priceIntentId: priceIntent.id,
-  })
+  const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({ priceIntent })
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
-  const cancellationOption = getCancellationOption(priceIntent)
+  const cancellationOption = getCancellationOption({ priceIntent, productOffer: selectedOffer })
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
@@ -150,8 +148,16 @@ const Separator = styled.div(({ theme }) => ({
   alignSelf: 'stretch',
 }))
 
-const getCancellationOption = (priceIntent: PriceIntent): CancellationOption => {
-  const { cancellation, externalInsurer } = priceIntent
+type GetCancellationOptionParams = {
+  priceIntent: PriceIntent
+  productOffer: ProductOfferFragment
+}
+
+const getCancellationOption = (params: GetCancellationOptionParams): CancellationOption => {
+  const {
+    productOffer: { cancellation },
+    priceIntent: { externalInsurer },
+  } = params
 
   switch (cancellation.option) {
     case ExternalInsuranceCancellationOption.Iex:

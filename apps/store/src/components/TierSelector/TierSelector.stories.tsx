@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { TierSelector, TierSelectorProps } from './TierSelector'
 
 export default {
@@ -28,6 +28,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
       },
     },
     price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
+    cancellation: {
+      option: ExternalInsuranceCancellationOption.None,
+      requested: false,
+    },
   },
   {
     id: '1',
@@ -43,6 +47,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
       },
     },
     price: { amount: 299, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
+    cancellation: {
+      option: ExternalInsuranceCancellationOption.None,
+      requested: false,
+    },
   },
   {
     id: '2',
@@ -58,6 +66,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
       },
     },
     price: { amount: 999, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
+    cancellation: {
+      option: ExternalInsuranceCancellationOption.None,
+      requested: false,
+    },
   },
 ]
 

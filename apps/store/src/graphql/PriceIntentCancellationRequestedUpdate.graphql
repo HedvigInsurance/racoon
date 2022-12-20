@@ -1,7 +1,10 @@
-mutation PriceIntentCancellationRequestedUpdate($priceIntentId: ID!, $requested: Boolean!) {
-  priceIntentCancellationRequestedUpdate(priceIntentId: $priceIntentId, requested: $requested) {
-    priceIntent {
-      ...PriceIntentFragment
+mutation CancellationRequestedUpdate($productOfferIds: [ID!]!, $requested: Boolean!) {
+  productOffersCancellationRequestedUpdate(
+    productOfferIds: $productOfferIds
+    requested: $requested
+  ) {
+    productOffers {
+      ...ProductOffer
     }
     userError {
       message
