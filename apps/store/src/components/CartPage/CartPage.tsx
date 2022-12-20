@@ -123,7 +123,7 @@ const Wrapper = styled.div(({ theme }) => ({
 }))
 
 const CenteredText = styled(Text)({ textAlign: 'center' })
-const CenteredTextSecondary = styled(CenteredText)(({ theme }) => ({ color: theme.colors.gray700 }))
+const CenteredTextSecondary = styled(CenteredText)(({ theme }) => ({ color: theme.colors.gray800 }))
 
 const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
