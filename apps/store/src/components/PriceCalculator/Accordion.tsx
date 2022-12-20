@@ -12,13 +12,6 @@ export const Content = styled(Accordion.Content)(({ theme }) => ({
   paddingTop: theme.space[3],
 }))
 
-const StyledTrigger = styled(Accordion.Trigger)(({ theme }) => ({
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-    outlineOffset: 2,
-  },
-}))
-
 export const Root = Accordion.Root
 export const Item = styled(Accordion.Item)(({ theme }) => ({
   paddingTop: theme.space[3],
@@ -33,3 +26,12 @@ type TriggerProps = { children: ReactNode }
 export const Trigger = ({ children }: TriggerProps) => {
   return <StyledTrigger>{children}</StyledTrigger>
 }
+
+const StyledTrigger = styled(Accordion.Trigger)(({ theme }) => ({
+  cursor: 'pointer',
+
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+    outlineOffset: 2,
+  },
+}))
