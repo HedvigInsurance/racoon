@@ -8,5 +8,6 @@
   "CART_PAGE_HEADING": "Cart",
   "DISCOUNT_STATE_FREE_MONTHS": "Free for {{count}} mth.",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% discount for {{count}} mth.",
-  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount"
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
+  "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add "
 }
