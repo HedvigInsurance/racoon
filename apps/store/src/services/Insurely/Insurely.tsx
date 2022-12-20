@@ -83,7 +83,7 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
   )
 }
 
-type InsurelyClientParams = { company: string; personalNumber: string }
+type InsurelyClientParams = Partial<{ company: string; personalNumber: string }>
 
 export const insurelyPrefillInput = ({ personalNumber, company }: InsurelyClientParams) => {
   const prefilledInput = {
