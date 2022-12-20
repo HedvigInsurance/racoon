@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import {
   usePriceIntentCreateMutation,
   usePriceIntentDataUpdateMutation,
@@ -53,6 +53,20 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
     },
   })
 
+  const createNewPriceIntent = useCallback(() => {
+    console.log('Create new price intent')
+
+    if (storedPriceIntentId) return
+    if (createResult.loading) return
+    if (createResult.error) return
+    if (!variables) {
+      datadogLogs.logger.error('ShopSession missing when creating price intent (createNew)')
+      return
+    }
+
+    createPriceIntent({ variables })
+  }, [storedPriceIntentId, createResult, variables, createPriceIntent])
+
   const result = usePriceIntentQuery({
     skip: !storedPriceIntentId,
     variables: storedPriceIntentId ? { priceIntentId: storedPriceIntentId } : undefined,
@@ -62,24 +76,12 @@ export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Para
         priceIntentId: storedPriceIntentId,
         error,
       })
-      if (variables) {
-        createPriceIntent({ variables })
-      } else {
-        datadogLogs.logger.error('ShopSession missing when creating price intent (error)')
-      }
+      createNewPriceIntent()
     },
   })
 
   // @TODO: make sure this doesn't run more than once
-  useEffect(() => {
-    if (!storedPriceIntentId && !createResult.loading) {
-      if (variables) {
-        createPriceIntent({ variables })
-      } else {
-        datadogLogs.logger.error('ShopSession missing when creating price intent (init)')
-      }
-    }
-  }, [storedPriceIntentId, createResult.loading, createPriceIntent, variables])
+  useEffect(createNewPriceIntent, [createNewPriceIntent])
 
   return result
 }
