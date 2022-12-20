@@ -2,13 +2,14 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useStartDateUpdateMutation } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { formatAPIDate } from '@/utils/date'
-import { getMutationError } from '@/utils/getMutationError'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 
 export type Params = {
   priceIntent: PriceIntent
 }
 
 export const useUpdateStartDate = ({ priceIntent }: Params) => {
+  const getMutationError = useGetMutationError()
   const [updateStartDate, result] = useStartDateUpdateMutation({
     onError(error) {
       datadogLogs.logger.warn('Failed to update start date', { error })
