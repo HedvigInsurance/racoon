@@ -95,7 +95,8 @@ export type LinkField = {
 
 export type ProductStory = StoryData & {
   content: StoryData['content'] & {
-    name: string
+    name?: string
+    description?: string
     productId: string
     priceFormTemplateId: string
     body: Array<SbBlokData>

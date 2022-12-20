@@ -24,6 +24,11 @@ export const ProductPageContextProvider = (props: Props) => {
       ...rest,
       selectedVariant,
       selectedVariantUpdate: setSelectedVariant,
+      productData: {
+        ...rest.productData,
+        displayNameShort: rest.story.content.name || rest.productData.displayNameShort,
+        displayNameFull: rest.story.content.description || rest.productData.displayNameFull,
+      },
     }),
     [rest, selectedVariant],
   )

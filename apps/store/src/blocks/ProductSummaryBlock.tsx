@@ -14,12 +14,11 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const ProductSummaryBlock = (props: Props) => {
-  const { story } = useProductPageContext()
-  const blockTitle = props.blok.title || story.content.name
+  const { productData } = useProductPageContext()
 
   return (
     <Wrapper {...storyblokEditable}>
-      <ProductSummary title={blockTitle}>{props.blok.description}</ProductSummary>
+      <ProductSummary title={productData.displayNameShort}>{props.blok.description}</ProductSummary>
     </Wrapper>
   )
 }
