@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import {
   PriceIntentFragmentFragment,
   usePriceIntentConfirmMutation,
@@ -29,6 +29,10 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
+
+  const [activeSectionId, setActiveSectionId] = useState(
+    () => form.sections.find(({ state }) => state !== 'valid')?.id,
+  )
 
   const { shopSession } = useShopSession()
   const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
@@ -60,6 +64,20 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
     onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
         confirmPriceIntent()
+      } else {
+        setActiveSectionId((prevSectionId) => {
+          const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
+          const nextSection = form.sections[currentSectionIndex + 1]
+          if (nextSection) {
+            return nextSection.id
+          } else {
+            datadogLogs.logger.error('Failed to find next section', {
+              prevSectionId,
+              templateName: priceTemplate.name,
+              priceIntentId: priceIntent.id,
+            })
+          }
+        })
       }
     },
   })
@@ -67,7 +85,11 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
   const isLoading = loadingUpdate || loadingConfirm
 
   return (
-    <PriceCalculatorAccordion form={form}>
+    <PriceCalculatorAccordion
+      form={form}
+      activeSectionId={activeSectionId}
+      onActiveSectionChange={setActiveSectionId}
+    >
       {(section, sectionIndex) => (
         <PriceCalculatorSection section={section} onSubmit={handleSubmit} loading={isLoading}>
           <FormGrid items={section.items}>
