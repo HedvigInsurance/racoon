@@ -21,13 +21,11 @@ import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
-import { PriceCalculatorBlock } from '@/blocks/PriceCalculatorBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
-import { ProductSummaryBlock } from '@/blocks/ProductSummaryBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
@@ -158,12 +156,10 @@ export const initStoryblok = () => {
     PageBlock,
     PerilsBlock,
     ProductPageBlock,
-    PriceCalculatorBlock,
     ProductCardBlock,
     ProductDocumentsBlock,
     ProductGridBlock,
     ProductSlideshowBlock,
-    ProductSummaryBlock,
     SpacerBlock,
     TabsBlock,
     TimelineBlock,
