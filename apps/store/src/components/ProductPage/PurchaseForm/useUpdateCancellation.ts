@@ -1,11 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { getMutationError } from '@/utils/getMutationError'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 
 type Params = { priceIntent: PriceIntent }
 
 export const useUpdateCancellation = ({ priceIntent }: Params) => {
+  const getMutationError = useGetMutationError()
   const [updateCancellation, result] = useCancellationRequestedUpdateMutation()
 
   const handleUpdateCancellation = (requested: boolean) => {

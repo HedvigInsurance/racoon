@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useContactDetailsUpdateMutation } from '@/services/apollo/generated'
-import { getMutationError } from '@/utils/getMutationError'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 import { FormElement } from './CheckoutPage.constants'
 
 type Params = {
@@ -10,6 +10,7 @@ type Params = {
 }
 
 export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
+  const getMutationError = useGetMutationError()
   const [updateContactDetails, result] = useContactDetailsUpdateMutation({
     onCompleted(data) {
       if (!data.checkoutContactDetailsUpdate.userError) {

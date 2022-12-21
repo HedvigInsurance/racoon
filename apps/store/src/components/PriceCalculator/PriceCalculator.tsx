@@ -13,6 +13,7 @@ import {
 import { Form, Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -26,6 +27,7 @@ type Props = {
 }
 
 export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props) => {
+  const getMutationError = useGetMutationError()
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
@@ -35,7 +37,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
   )
 
   const { shopSession } = useShopSession()
-  const [confirmPriceIntent, { loading: loadingConfirm }] = usePriceIntentConfirmMutation({
+  const [confirmPriceIntent, resultConfirm] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
@@ -58,6 +60,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
       })
     },
   })
+  const { loading: loadingConfirm } = resultConfirm
 
   const [handleSubmit, loadingUpdate] = useHandleSubmitPriceCalculator({
     priceIntent,
@@ -82,6 +85,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
     },
   })
 
+  const errorMessage = getMutationError(resultConfirm, resultConfirm.data?.priceIntentConfirm)
   const isLoading = loadingUpdate || loadingConfirm
 
   return (
@@ -91,7 +95,12 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
       onActiveSectionChange={setActiveSectionId}
     >
       {(section, sectionIndex) => (
-        <PriceCalculatorSection section={section} onSubmit={handleSubmit} loading={isLoading}>
+        <PriceCalculatorSection
+          section={section}
+          onSubmit={handleSubmit}
+          loading={isLoading}
+          error={errorMessage?.message}
+        >
           <FormGrid items={section.items}>
             {(field, index) => (
               <AutomaticField
