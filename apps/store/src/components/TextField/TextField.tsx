@@ -2,6 +2,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { isValidMotionProp, motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type BaseInputProps = Omit<
@@ -12,9 +13,10 @@ type BaseInputProps = Omit<
 type Props = BaseInputProps & {
   label: string
   variant?: 'small' | 'large'
+  suffix?: string
 }
 
-export const TextField = ({ label, variant = 'large', ...props }: Props) => {
+export const TextField = ({ label, variant = 'large', suffix, ...props }: Props) => {
   const [value, setValue] = useState(props.defaultValue || '')
   const { highlight, animationProps } = useHighlightAnimation()
 
@@ -25,15 +27,18 @@ export const TextField = ({ label, variant = 'large', ...props }: Props) => {
 
   const inputValue = props.value || value
 
-  const [Wrapper, Label, Input] =
+  const [Wrapper, Label, Input, Suffix] =
     variant === 'large'
-      ? [LargeWrapper, LargeLabel, LargeInput]
-      : [SmallWrapper, SmallLabel, SmallInput]
+      ? [LargeWrapper, LargeLabel, LargeInput, LargeSuffix]
+      : [SmallWrapper, SmallLabel, SmallInput, SmallSuffix]
 
   return (
     <Wrapper {...animationProps} isActive={!!inputValue}>
       <Label htmlFor={props.id}>{label}</Label>
-      <Input {...props} onKeyDown={highlight} onChange={handleChange} />
+      <SpaceFlex align="center" space={0}>
+        <Input {...props} onKeyDown={highlight} onChange={handleChange} />
+        {suffix && inputValue && <Suffix>{suffix}</Suffix>}
+      </SpaceFlex>
     </Wrapper>
   )
 }
@@ -87,6 +92,12 @@ const LargeInput = styled.input(({ theme }) => ({
   },
 }))
 
+const LargeSuffix = styled.span(({ theme }) => ({
+  color: theme.colors.textSecondary,
+  fontSize: theme.fontSizes[5],
+  paddingRight: theme.space[4],
+}))
+
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
   width: '100%',
   height: '3.5rem',
@@ -110,4 +121,8 @@ const SmallLabel = styled(LargeLabel)(({ theme }) => ({
 const SmallInput = styled(LargeInput)(({ theme }) => ({
   fontSize: theme.fontSizes[4],
   paddingTop: theme.space[5],
+}))
+
+const SmallSuffix = styled(LargeSuffix)(({ theme }) => ({
+  fontSize: theme.fontSizes[4],
 }))

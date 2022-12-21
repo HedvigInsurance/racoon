@@ -29,6 +29,7 @@ export const livingSpaceField: InputField = {
   label: { key: 'FIELD_LIVING_SPACE_LABEL' },
   required: true,
   min: 0,
+  suffix: 'm²',
 }
 
 export const currentInsuranceField: InputField = {
