@@ -76,7 +76,9 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
         <Space y={2}>
           <Space y={1}>
             <CenteredText>¯\_(ツ)_/¯</CenteredText>
-            <Text align="center" color="textSecondary">{t('CART_EMPTY_SUMMARY')}</Text>
+            <Text align="center" color="textSecondary">
+              {t('CART_EMPTY_SUMMARY')}
+            </Text>
           </Space>
 
           <LinkButton as={Link} fullWidth href={PageLink.store({ locale: routingLocale })}>
@@ -123,9 +125,6 @@ const Wrapper = styled.div(({ theme }) => ({
 }))
 
 const CenteredText = styled(Text)({ textAlign: 'center' })
-const CenteredTextSecondary = styled(CenteredText)(({ theme }) => ({
-  color: theme.colors.textSecondary,
-}))
 
 const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
