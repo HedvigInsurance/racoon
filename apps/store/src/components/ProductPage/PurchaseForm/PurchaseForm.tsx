@@ -1,5 +1,7 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
+import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, useBreakpoint } from 'ui'
@@ -10,12 +12,14 @@ import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
+import { trackOffer } from '@/services/gtm'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useFormatter } from '@/utils/useFormatter'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { usePriceIntent } from '../usePriceIntent'
@@ -153,20 +157,66 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { onToggleDialog, priceIntent, onSuccess } = props
+  const getMutationError = useGetMutationError()
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
 
-  const priceCalculator = (
+  const { shopSession } = useShopSession()
+  const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
+    variables: { priceIntentId: priceIntent.id },
+    onError(error) {
+      datadogLogs.logger.error('Failed to confirm price intent', {
+        error,
+        priceIntentId: priceIntent.id,
+      })
+      setIsLoadingPrice(false)
+    },
+  })
+  const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
+
+  const handleConfirm = async () => {
+    setIsLoadingPrice(true)
+
+    try {
+      const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
+      const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
+      if (updatedPriceIntent) {
+        // FIXME: pick offer for specific product or track all offers
+        const firstOffer = updatedPriceIntent.offers[0]
+        trackOffer({
+          shopSessionId: shopSession!.id,
+          contractType: firstOffer.variant.typeOfContract,
+          amount: firstOffer.price.amount,
+          currency: firstOffer.price.currencyCode,
+        })
+        onSuccess()
+      } else {
+        setIsLoadingPrice(false)
+      }
+    } catch (error) {
+      // Error is already handled in onError callback
+      console.debug('Error confirming price intent', error)
+    }
+  }
+
+  const confirmError = getMutationError(result, result.data?.priceIntentConfirm)
+
+  const content = isLoadingPrice ? (
+    <PriceLoaderWrapper>
+      <PriceLoader />
+    </PriceLoaderWrapper>
+  ) : (
     <PriceCalculatorWrapper>
       <PriceCalculator
         priceTemplate={priceTemplate}
         priceIntent={priceIntent}
-        onSuccess={onSuccess}
+        onConfirm={handleConfirm}
+        error={confirmError?.message}
       />
     </PriceCalculatorWrapper>
   )
 
-  if (isLarge) return priceCalculator
+  if (isLarge) return content
 
   return (
     <PriceCalculatorDialog
@@ -182,10 +232,67 @@ const EditingState = (props: EditingStateProps) => {
         </SpaceFlex>
       }
     >
-      {priceCalculator}
+      {content}
     </PriceCalculatorDialog>
   )
 }
+
+const ANIMATION_DURATION_SEC = 2
+
+const completePriceLoader = () =>
+  new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ANIMATION_DURATION_SEC * 1000)
+  })
+
+const PriceLoader = () => {
+  const { t } = useTranslation('purchase-form')
+
+  const variants: Variants = {
+    enter: {
+      width: '0%',
+    },
+    animate: {
+      width: '100%',
+      transition: {
+        delay: 0,
+        // Acconut for delay in mounting the component
+        duration: ANIMATION_DURATION_SEC * 0.8,
+        ease: 'easeInOut',
+      },
+    },
+  }
+
+  return (
+    <Space y={2}>
+      <Text size="l" align="center">
+        {t('LOADING_PRICE_ANIMATION_LABEL')}
+      </Text>
+      <Bar>
+        <ProgressBar variants={variants} initial="enter" animate="animate" exit="enter" />
+      </Bar>
+    </Space>
+  )
+}
+
+const PriceLoaderWrapper = styled.div(({ theme }) => ({
+  paddingTop: theme.space[7],
+}))
+
+const Bar = styled.div(({ theme }) => ({
+  height: theme.space[1],
+  maxWidth: '16rem',
+  marginInline: 'auto',
+  backgroundColor: theme.colors.gray500,
+  borderRadius: theme.radius.xs,
+}))
+
+const ProgressBar = styled(motion.div)(({ theme }) => ({
+  height: '100%',
+  backgroundColor: theme.colors.gray1000,
+  borderRadius: theme.radius.xs,
+}))
 
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
