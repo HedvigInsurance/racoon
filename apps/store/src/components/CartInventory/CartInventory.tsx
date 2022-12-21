@@ -20,12 +20,23 @@ export const CartInventory = ({ cart, children }: Props) => {
         ))}
       </List>
       <Footer>
-        <Heading as="h3" variant="standard.18">
-          Total
-        </Heading>
-        <Heading as="h3" variant="standard.18">
+        <TotalWrapper>
+          <Heading as="h3" variant="standard.18">
+            Total
+          </Heading>
+          <PriceWrapper>
+            <OriginalPrice as="h3" variant="standard.18">
+              {formatter.monthlyPrice(cart.cost.net)}
+            </OriginalPrice>
+            <Heading as="h3" variant="standard.18">
+              {formatter.monthlyPrice(cart.cost.discount)}
+            </Heading>
+          </PriceWrapper>
+        </TotalWrapper>
+        <DiscountMessage>
+          in {cart.redeemedCampaigns[0].discount.months} months, then{' '}
           {formatter.monthlyPrice(cart.cost.net)}
-        </Heading>
+        </DiscountMessage>
       </Footer>
     </Space>
   )
@@ -39,5 +50,28 @@ const List = styled.ul(({ theme }) => ({
 
 const Footer = styled.div({
   display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'space-between',
 })
+
+const TotalWrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+const PriceWrapper = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: theme.space[2],
+}))
+
+const OriginalPrice = styled(Heading)(({ theme }) => ({
+  color: theme.colors.textSecondary,
+  textDecoration: 'line-through',
+}))
+
+const DiscountMessage = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  color: theme.colors.textSecondary,
+}))
