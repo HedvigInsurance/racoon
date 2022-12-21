@@ -1,19 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useMemo, useState } from 'react'
 import {
-  PriceIntentFragmentFragment,
-  usePriceIntentConfirmMutation,
-} from '@/services/apollo/generated'
-import { trackOffer } from '@/services/gtm'
-import {
   prefillData,
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { Form, Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useGetMutationError } from '@/utils/useGetMutationError'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -23,50 +16,26 @@ import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator
 type Props = {
   priceIntent: PriceIntent
   priceTemplate: Template
-  onSuccess: (priceIntent: PriceIntentFragmentFragment) => void
+  onConfirm: () => void
+  error?: string
 }
 
-export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props) => {
-  const getMutationError = useGetMutationError()
+export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm, error }: Props) => {
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
 
-  const [activeSectionId, setActiveSectionId] = useState(
-    () => form.sections.find(({ state }) => state !== 'valid')?.id,
-  )
-
-  const { shopSession } = useShopSession()
-  const [confirmPriceIntent, resultConfirm] = usePriceIntentConfirmMutation({
-    variables: { priceIntentId: priceIntent.id },
-    onCompleted(data) {
-      const updatedPriceIntent = data.priceIntentConfirm.priceIntent
-      if (updatedPriceIntent) {
-        // FIXME: pick offer for specific product or track all offers
-        const firstOffer = updatedPriceIntent.offers[0]
-        trackOffer({
-          shopSessionId: shopSession!.id,
-          contractType: firstOffer.variant.typeOfContract,
-          amount: firstOffer.price.amount,
-          currency: firstOffer.price.currencyCode,
-        })
-        onSuccess(updatedPriceIntent)
-      }
-    },
-    onError(error) {
-      datadogLogs.logger.error('Failed to confirm price intent', {
-        error,
-        priceIntentId: priceIntent.id,
-      })
-    },
+  const [activeSectionId, setActiveSectionId] = useState(() => {
+    const firstIncompleteSection = form.sections.find(({ state }) => state !== 'valid')
+    if (firstIncompleteSection) return firstIncompleteSection.id
+    return form.sections[form.sections.length - 1].id
   })
-  const { loading: loadingConfirm } = resultConfirm
 
-  const [handleSubmit, loadingUpdate] = useHandleSubmitPriceCalculator({
+  const [handleSubmit, isLoading] = useHandleSubmitPriceCalculator({
     priceIntent,
     onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
-        confirmPriceIntent()
+        onConfirm()
       } else {
         setActiveSectionId((prevSectionId) => {
           const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
@@ -79,14 +48,12 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
               templateName: priceTemplate.name,
               priceIntentId: priceIntent.id,
             })
+            return prevSectionId
           }
         })
       }
     },
   })
-
-  const errorMessage = getMutationError(resultConfirm, resultConfirm.data?.priceIntentConfirm)
-  const isLoading = loadingUpdate || loadingConfirm
 
   return (
     <PriceCalculatorAccordion
@@ -98,8 +65,8 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onSuccess }: Props
         <PriceCalculatorSection
           section={section}
           onSubmit={handleSubmit}
+          error={error}
           loading={isLoading}
-          error={errorMessage?.message}
         >
           <FormGrid items={section.items}>
             {(field, index) => (
