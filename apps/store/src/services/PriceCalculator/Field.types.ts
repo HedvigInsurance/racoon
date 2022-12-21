@@ -24,6 +24,7 @@ export type NumberField = BaseField<number> & {
   type: 'number'
   min?: number
   max?: number
+  suffix?: string
 }
 
 export type DateField = BaseField<string> & {

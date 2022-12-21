@@ -36,3 +36,15 @@ Small.args = {
   variant: 'small',
   defaultValue: '786 Franklin Ave.',
 }
+
+export const Number = Template.bind({})
+Number.args = {
+  type: 'text',
+  inputMode: 'numeric',
+  pattern: '[0-9]*',
+  autoComplete: 'off',
+  label: 'Weight',
+  variant: 'large',
+  defaultValue: '150',
+  suffix: 'kg',
+}
