@@ -10,5 +10,6 @@
   "LANGUAGE_LABEL_sv": "Swedish",
   "LANGUAGE_LABEL_no": "Norwegian",
   "LANGUAGE_LABEL_da": "Danish",
-  "COUNTRY_NOT_DETECTED": "We’re not quite sure where you’re visiting us from. Select your country below."
+  "COUNTRY_NOT_DETECTED": "We’re not quite sure where you’re visiting us from. Select your country below.",
+  "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }

@@ -1,11 +1,12 @@
 import { useRedeemCampaignMutation, useUnredeemCampaignMutation } from '@/services/apollo/generated'
-import { getMutationError } from '@/utils/getMutationError'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 
 type Params = {
   cartId: string
 }
 
 export const useRedeemCampaign = ({ cartId }: Params) => {
+  const getMutationError = useGetMutationError()
   const [redeemCampaign, result] = useRedeemCampaignMutation()
 
   const redeem = async (code: string) => {

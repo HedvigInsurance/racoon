@@ -4,5 +4,6 @@
   "TEST_PLURALIZE_other": "{{count}} kanelbullar",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",
   "COUNTRY_LABEL_SE": "Sverige",
-  "LANGUAGE_LABEL_sv": "Svenska"
+  "LANGUAGE_LABEL_sv": "Svenska",
+  "UNKNOWN_ERROR_MESSAGE": "Något gick fel, vänligen försök igen."
 }

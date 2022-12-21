@@ -7,7 +7,7 @@ import {
   useCheckoutStartSignMutation,
 } from '@/services/apollo/generated'
 import { exchangeAuthorizationCode } from '@/utils/auth'
-import { getMutationError } from '@/utils/getMutationError'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 
 export type Params = {
   checkoutId: string
@@ -16,6 +16,7 @@ export type Params = {
 }
 
 export const useHandleSignCheckout = (params: Params) => {
+  const getMutationError = useGetMutationError()
   const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
 
