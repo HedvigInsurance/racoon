@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { ChevronIcon } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Button, mq } from 'ui'
 
 export type ScrollToButtonProps = {
   type: 'button' | 'submit'
@@ -14,12 +13,9 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
 
   return (
     <Wrappper>
-      <StyledPillButton type={type} onClick={handleClick}>
-        <SpaceFlex space={0.5} align="center">
-          {children}
-          <ChevronUp size="0.75rem" />
-        </SpaceFlex>
-      </StyledPillButton>
+      <Button type={type} onClick={handleClick} fullWidth>
+        {children}
+      </Button>
     </Wrappper>
   )
 }
@@ -27,20 +23,8 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
 const Wrappper = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
-  paddingBottom: theme.space[5],
+  paddingInline: theme.space[4],
   width: '100%',
-}))
 
-const StyledPillButton = styled.button(({ theme }) => ({
-  color: theme.colors.white,
-  height: '2rem',
-  borderRadius: '1rem',
-  backgroundColor: theme.colors.black,
-  padding: `0 ${theme.space[4]}`,
-  cursor: 'pointer',
-}))
-
-const ChevronUp = styled(ChevronIcon)(({ theme }) => ({
-  transform: 'rotate(180deg)',
-  color: theme.colors.white,
+  [mq.lg]: { display: 'none' },
 }))
