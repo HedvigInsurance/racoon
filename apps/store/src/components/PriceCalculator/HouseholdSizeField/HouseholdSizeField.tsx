@@ -82,10 +82,6 @@ const Wrapper = styled(motion.div)(({ theme }) => ({
   padding: `${theme.space[3]} ${theme.space[4]}`,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray300,
-
-  '&:focus-within': {
-    outline: `1px solid ${theme.colors.gray500}`,
-  },
 }))
 
 const StyledSelect = styled.select(({ theme }) => ({
