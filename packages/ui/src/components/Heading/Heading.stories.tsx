@@ -21,8 +21,8 @@ const Template: Story<HeadingProps> = ({ children, ...rest }) => (
 
 export const LightBackground = Template.bind({})
 LightBackground.parameters = { backgrounds: { default: 'Light' } }
-LightBackground.args = { color: 'dark' }
+LightBackground.args = { color: 'textPrimary' }
 
 export const DarkBackground = Template.bind({})
 DarkBackground.parameters = { backgrounds: { default: 'Dark' } }
-DarkBackground.args = { color: 'light' }
+DarkBackground.args = { color: 'textNegative' }

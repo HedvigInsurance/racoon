@@ -17,7 +17,7 @@ export const ContactSupport = ({
   return (
     <Main>
       <Space y={1.5}>
-        <Heading as="h2" color="dark" variant="standard.24">
+        <Heading as="h2" color="textPrimary" variant="standard.24">
           {title}
         </Heading>
         <AvatarImagePlaceholder />

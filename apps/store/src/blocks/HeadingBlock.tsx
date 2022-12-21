@@ -13,7 +13,7 @@ export type HeadingBlockProps = SbBaseBlockProps<{
   variant: HeadingProps['variant']
   as: HeadingProps['as']
   color: HeadingProps['color']
-  textAlignment?: HeadingProps['textAlignment']
+  textAlignment?: HeadingProps['align']
 }>
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
@@ -23,7 +23,7 @@ export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
         as={blok.as}
         variant={blok.variant}
         color={blok.color}
-        textAlignment={blok.textAlignment}
+        align={blok.textAlignment}
         {...storyblokEditable(blok)}
       >
         {blok.text}
