@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Text } from '@/components/Text/Text'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartCost } from './CartInventory.types'
 

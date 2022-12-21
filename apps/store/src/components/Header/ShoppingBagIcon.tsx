@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Text } from '@/components/Text/Text'
+import { Text } from 'ui'
 
 export type ShoppingBagIconProps = {
   count: number

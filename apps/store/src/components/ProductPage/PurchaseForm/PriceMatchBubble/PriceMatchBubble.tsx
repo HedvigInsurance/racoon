@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Text } from '@/components/Text/Text'
+import { Text } from 'ui'
 
 type Props = {
   title: string

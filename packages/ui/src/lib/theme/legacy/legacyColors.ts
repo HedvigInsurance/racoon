@@ -46,10 +46,11 @@ export const legacyColors = {
   dark: gray[900],
   light: gray[100],
   lavender: purple[500],
-  textPrimary: purple[900],
+  textPrimary: gray[900],
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[500],
+  textNegative: gray[100],
 }
 
 export type LegacyUIColor = keyof typeof legacyColors

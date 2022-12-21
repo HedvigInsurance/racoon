@@ -14,6 +14,7 @@ export type { InputFieldProps } from './components/InputField/InputField'
 export { InputStepper } from './components/InputStepper/InputStepper'
 export { Heading } from './components/Heading/Heading'
 export type { HeadingProps } from './components/Heading/Heading'
+export { Text } from './components/Text/Text'
 export * as Dialog from './components/Dialog/Dialog'
 export { HeadingLabel } from './components/HeadingLabel/HeadingLabel'
 

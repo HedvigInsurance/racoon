@@ -1,7 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
-import { Space } from 'ui'
-import { Text } from '@/components/Text/Text'
+import { Space, Text } from 'ui'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
