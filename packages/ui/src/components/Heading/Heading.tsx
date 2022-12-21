@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import React from 'react'
 import { getMargins, Margins } from '../../lib/margins'
@@ -15,9 +16,16 @@ export type HeadingProps = Margins & {
   align?: 'center' | 'left' | 'right'
 }
 
+const elementConfig = {
+  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
+}
+
 type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant' | 'align'> & Margins
 
-const HeadingBase = styled.h2<HeadingBaseProps>(({ theme, color, variant, align, ...props }) => {
+const HeadingBase = styled(
+  'h2',
+  elementConfig,
+)<HeadingBaseProps>(({ theme, color, variant, align, ...props }) => {
   // GOTCHA: We may get empty string from Storyblok, this should be handled safely
   variant = variant || 'standard.32'
   return {
