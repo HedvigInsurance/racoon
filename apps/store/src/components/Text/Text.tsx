@@ -1,15 +1,19 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import type { UIColorKeys } from 'ui'
+import type { UIColors } from 'ui'
 
 const FONT_SIZE_MAP = { s: 1, m: 2, l: 3, xl: 4, xxl: 5 }
+type TextColor = Pick<
+  UIColors,
+  'textPrimary' | 'textSecondary' | 'textTertiary' | 'textDisabled' | 'textNegative'
+>
 type FontSize = keyof typeof FONT_SIZE_MAP
 
 type TypographyProps = {
   as?: 'p' | 'span'
   align?: 'center' | 'left' | 'right'
-  color?: UIColorKeys
+  color?: keyof TextColor
   size?: FontSize
   children: ReactNode
   className?: string

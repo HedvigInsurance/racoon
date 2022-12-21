@@ -107,7 +107,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   {t('SIGN_BUTTON', { count: cart.entries.length })}
                 </SpaceFlex>
               </Button>
-              <Text size="s" color="gray600" align="center">
+              <Text size="s" color="textSecondary" align="center">
                 {t('SIGN_DISCLAIMER')}
               </Text>
             </Space>

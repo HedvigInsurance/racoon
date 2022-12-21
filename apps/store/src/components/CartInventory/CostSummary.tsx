@@ -14,7 +14,7 @@ export const CostSummary = ({ total, crossOut }: Props) => {
       <Text size="l">Totalt</Text>
       <SpaceFlex space={0.5}>
         {crossOut && (
-          <CrossOutText size="l" color="gray600">
+          <CrossOutText size="l" color="textSecondary">
             {formatter.monthlyPrice(crossOut)}
           </CrossOutText>
         )}

@@ -58,7 +58,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                       {formatter.monthlyPrice(offer.price)}
                     </InventoryItem.MainRight>
                     <InventoryItem.MainBottom>
-                      <Text as="p" color="gray600" size="s">
+                      <Text as="p" color="textSecondary" size="s">
                         Activates {formatter.fromNow(new Date(offer.startDate))}
                       </Text>
                     </InventoryItem.MainBottom>

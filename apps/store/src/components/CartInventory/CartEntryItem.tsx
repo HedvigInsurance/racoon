@@ -34,7 +34,7 @@ export const CartEntryItem = (props: Props) => {
         <Space y={1}>
           <div>
             <Text size="l">{title}</Text>
-            <Text size="l" color="gray600">
+            <Text size="l" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
                 ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
