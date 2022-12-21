@@ -1,0 +1,11 @@
+{
+  "CHECKOUT_PAGE_HEADING": "Kasse",
+  "SIGN_BUTTON_one": "Signer én forsikring",
+  "SIGN_BUTTON_other": "Signér {{count}} forsikringer",
+  "SIGN_DISCLAIMER": "Du kobler Autogiro etter at du har signert med Hedvig. Det er trygt ivaretatt av vår partner Trustly.",
+  "FORM_EMAIL_LABEL": "E-post",
+  "FORM_HELP_LABEL": "Hjelp",
+  "CONTACT_DETAILS_FORM_TITLE": "Din kontaktinformasjon",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer"
+}

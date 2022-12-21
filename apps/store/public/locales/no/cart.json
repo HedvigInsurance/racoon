@@ -1,3 +1,12 @@
 {
-  "REMOVE_ENTRY_BUTTON": "Ta bort"
+  "GO_TO_STORE_BUTTON": "Gå til markedsplass",
+  "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkode",
+  "REMOVE_ENTRY_BUTTON": "Ta bort",
+  "VIEW_ENTRY_DETAILS_BUTTON": "Detaljer",
+  "CART_ENTRY_DATE_LABEL": "Starter den {{date}}",
+  "CART_PAGE_HEADING": "Handlevogn",
+  "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mnd",
+  "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% rabatt i {{count}} måneder",
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
+  "CHECKOUT_ADD_DISCOUNT_BUTTON": "Legg til"
 }
