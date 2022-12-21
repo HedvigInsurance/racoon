@@ -49,6 +49,6 @@ const StyledInput = styled.input(({ theme }) => ({
   fontFamily: theme.fonts.body,
   fontSize: theme.fontSizes[3],
 
-  display: 'flex',
-  alignItems: 'center',
+  WebkitAlignItems: 'center',
+  '::-webkit-datetime-edit': { textAlign: 'right', paddingRight: theme.space[1] },
 }))
