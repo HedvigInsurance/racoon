@@ -76,7 +76,7 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
         <Space y={2}>
           <Space y={1}>
             <CenteredText>¯\_(ツ)_/¯</CenteredText>
-            <CenteredTextSecondary>{t('CART_EMPTY_SUMMARY')}</CenteredTextSecondary>
+            <Text align="center" color="textSecondary">{t('CART_EMPTY_SUMMARY')}</Text>
           </Space>
 
           <LinkButton as={Link} fullWidth href={PageLink.store({ locale: routingLocale })}>
