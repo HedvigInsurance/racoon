@@ -33,5 +33,7 @@
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Startdatum {{company}}",
   "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Eftersom din försäkring hos {{company}} går ut ganska snart behöver du själv säga upp den. Oroa dig inte, vi mejlar instruktioner till dig.",
   "OPEN_PRICE_CALCULATOR_BUTTON": "Beräkna pris",
-  "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra"
+  "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
+  "INSURELY_SUCCESS_CONTINUE_BUTTON": "Fortsätt",
+  "INSURELY_SUCCESS_PROMPT": "Vi hittade din försäkring hos {{company}}"
 }

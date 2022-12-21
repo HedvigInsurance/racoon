@@ -1,11 +1,13 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
-import { Dialog } from 'ui'
+import { Button, Dialog, Heading, Space } from 'ui'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
   usePriceIntentInsurelyUpdateMutation,
+  ExternalInsurer,
 } from '@/services/apollo/generated'
 import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
 import {
@@ -24,36 +26,74 @@ type Props = {
   externalInsurer?: string
 }
 
+type State =
+  | { type: 'IDLE' }
+  | { type: 'COMPARE'; externalInsurer: ExternalInsurer }
+  | { type: 'SUCCESS'; externalInsurer: ExternalInsurer }
+  | { type: 'CONFIRMED'; externalInsurer: ExternalInsurer }
+
 export const CurrentInsuranceField = (props: Props) => {
   const { label, productName, priceIntentId, insurelyClientId, externalInsurer } = props
+  const { t } = useTranslation('purchase-form')
+  const [state, setState] = useState<State>({ type: 'IDLE' })
+
+  const compare = useCallback(
+    (externalInsurer: ExternalInsurer) => setState({ type: 'COMPARE', externalInsurer }),
+    [],
+  )
+  const close = useCallback(() => setState({ type: 'IDLE' }), [])
+  const success = useCallback(
+    (externalInsurer: ExternalInsurer) => setState({ type: 'SUCCESS', externalInsurer }),
+    [],
+  )
+  const confirm = useCallback(
+    (externalInsurer: ExternalInsurer) => setState({ type: 'CONFIRMED', externalInsurer }),
+    [],
+  )
+  const isDialogOpen = state.type === 'COMPARE' || state.type === 'SUCCESS'
+
   const companyOptions = useCompanyOptions(productName)
   const updateExternalInsurer = useUpdateExternalInsurer({
     priceIntentId,
     onCompleted(updatedPriceIntent) {
-      const companyId = updatedPriceIntent.externalInsurer?.insurelyId
+      const externalInsurer = updatedPriceIntent.externalInsurer
       const personalNumber = updatedPriceIntent.data[PERSONAL_NUMBER_FIELD_NAME]
-      if (companyId && typeof personalNumber === 'string') {
-        setIsDialogOpen(true)
-        insurelyPrefillInput({ company: companyId, personalNumber })
+      if (externalInsurer && typeof personalNumber === 'string') {
+        compare(externalInsurer)
+        insurelyPrefillInput({ company: externalInsurer.insurelyId ?? undefined, personalNumber })
       } else {
         datadogLogs.logger.error('Failed to prefill Insurely', {
           priceIntentId,
-          companyId,
+          insurelyId: externalInsurer?.insurelyId,
           personalNumber,
         })
       }
     },
   })
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const handleCompanyChange = (company?: string) => {
     updateExternalInsurer(company)
   }
 
-  const closeModal = useCallback(() => setIsDialogOpen(false), [])
-
   const [dataCollectionId, setDataCollectionId] = useState<string | null>(null)
   const [updateDataCollectionId] = usePriceIntentInsurelyUpdateMutation({
+    onCompleted({ priceIntentInsurelyUpdate }) {
+      datadogLogs.logger.info('Updated Insurely data collection ID', {
+        priceIntentId,
+        dataCollectionId,
+      })
+
+      const updatedPriceIntent = priceIntentInsurelyUpdate.priceIntent
+      if (updatedPriceIntent && updatedPriceIntent.externalInsurer) {
+        success(updatedPriceIntent.externalInsurer)
+      } else {
+        datadogLogs.logger.error('Failed to update Insurely data collection ID', {
+          priceIntentId,
+          dataCollectionId,
+        })
+      }
+      close()
+    },
     onError(error) {
       console.warn(error)
     },
@@ -67,8 +107,7 @@ export const CurrentInsuranceField = (props: Props) => {
         priceIntentId,
       })
     }
-    closeModal()
-  }, [updateDataCollectionId, priceIntentId, dataCollectionId, closeModal])
+  }, [updateDataCollectionId, priceIntentId, dataCollectionId])
 
   return (
     <>
@@ -79,16 +118,29 @@ export const CurrentInsuranceField = (props: Props) => {
         onCompanyChange={handleCompanyChange}
       />
       {isDialogOpen && (
-        <Dialog.Root open onOpenChange={closeModal}>
+        <Dialog.Root open onOpenChange={close}>
           <StyledDialogContent>
-            <StyledDialogWindow>
-              <InsurelyIframe
-                clientId={insurelyClientId}
-                onCollection={setDataCollectionId}
-                onClose={closeModal}
-                onCompleted={handleInsurelyCompleted}
-              />
-            </StyledDialogWindow>
+            {state.type === 'COMPARE' ? (
+              <DialogIframeWindow>
+                <InsurelyIframe
+                  clientId={insurelyClientId}
+                  onCollection={setDataCollectionId}
+                  onClose={close}
+                  onCompleted={handleInsurelyCompleted}
+                />
+              </DialogIframeWindow>
+            ) : (
+              <DialogSuccessWindow>
+                <Space y={1.5}>
+                  <Heading as="h3" variant="standard.20">
+                    {t('INSURELY_SUCCESS_PROMPT', { company: state.externalInsurer.displayName })}
+                  </Heading>
+                  <Button fullWidth onClick={() => confirm(state.externalInsurer)}>
+                    {t('INSURELY_SUCCESS_CONTINUE_BUTTON')}
+                  </Button>
+                </Space>
+              </DialogSuccessWindow>
+            )}
           </StyledDialogContent>
         </Dialog.Root>
       )}
@@ -149,11 +201,17 @@ const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
   padding: theme.space[2],
 }))
 
-const StyledDialogWindow = styled(Dialog.Window)(({ theme }) => ({
+const DialogIframeWindow = styled(Dialog.Window)(({ theme }) => ({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
   height: '100%',
   maxHeight: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
   borderRadius: theme.radius.xs,
+}))
+
+const DialogSuccessWindow = styled(Dialog.Window)(({ theme }) => ({
+  padding: theme.space[4],
+  borderRadius: theme.radius.xs,
+  maxWidth: '21rem',
 }))
