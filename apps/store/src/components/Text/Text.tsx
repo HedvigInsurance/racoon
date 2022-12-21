@@ -1,7 +1,7 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import type { UIColor } from 'ui'
+import type { UIColorKeys } from 'ui'
 
 const FONT_SIZE_MAP = { s: 1, m: 2, l: 3, xl: 4, xxl: 5 }
 type FontSize = keyof typeof FONT_SIZE_MAP
@@ -9,7 +9,7 @@ type FontSize = keyof typeof FONT_SIZE_MAP
 type TypographyProps = {
   as?: 'p' | 'span'
   align?: 'center' | 'left' | 'right'
-  color?: UIColor
+  color?: UIColorKeys
   size?: FontSize
   children: ReactNode
   className?: string

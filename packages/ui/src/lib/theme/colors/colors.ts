@@ -116,6 +116,8 @@ export const colors = {
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[400],
+  textNegative: gray[25],
 } as const
 
-export type UIColor = keyof typeof colors
+export type UIColors = typeof colors
+export type UIColorKeys = keyof typeof colors
