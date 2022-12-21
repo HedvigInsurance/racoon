@@ -34,6 +34,7 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
+import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -167,6 +168,7 @@ export const initStoryblok = () => {
     TextBlock,
     TopPickCardBlock,
     VideoBlock,
+    VideoListBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
