@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
+import { useGetDiscountExplanation } from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
@@ -19,7 +19,7 @@ type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'personalNumb
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplaination()
+  const getDiscountExplanation = useGetDiscountExplanation()
 
   if (!shopSession || !shopSession.checkout) return null
 

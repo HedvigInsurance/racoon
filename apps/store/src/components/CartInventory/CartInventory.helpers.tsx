@@ -3,7 +3,7 @@ import { CampaignDiscount, CampaignDiscountType } from '@/services/apollo/genera
 import { Money } from '@/utils/formatter'
 import { useFormatter } from '@/utils/useFormatter'
 
-export const useGetDiscountExplaination = () => {
+export const useGetDiscountExplanation = () => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 

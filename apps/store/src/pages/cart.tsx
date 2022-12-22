@@ -1,6 +1,6 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
+import { useGetDiscountExplanation } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
@@ -17,7 +17,7 @@ type Props = { [SHOP_SESSION_PROP_NAME]: string; prevURL: string }
 
 const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplaination()
+  const getDiscountExplanation = useGetDiscountExplanation()
 
   if (!shopSession) return null
 
