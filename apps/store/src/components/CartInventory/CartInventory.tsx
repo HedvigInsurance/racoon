@@ -15,6 +15,10 @@ export const CartInventory = ({ cart, children }: Props) => {
 
   const discountDurationExplanation = useGetDiscountDurationExplanation()
 
+  const campaigns = cart.redeemedCampaigns.map((item) => ({
+    discount: item.discount,
+  }))
+
   return (
     <Space y={1}>
       <List>
@@ -36,9 +40,13 @@ export const CartInventory = ({ cart, children }: Props) => {
             </Heading>
           </PriceWrapper>
         </TotalWrapper>
-        <DiscountMessage>
-          {discountDurationExplanation(cart.redeemedCampaigns[0].discount, cart.cost.gross)}
-        </DiscountMessage>
+        {campaigns
+          ? campaigns.map((campaign) => (
+              <DiscountMessage key={campaign.discount.type}>
+                {discountDurationExplanation(campaign.discount, cart.cost.gross)}
+              </DiscountMessage>
+            ))
+          : null}
       </Footer>
     </Space>
   )
