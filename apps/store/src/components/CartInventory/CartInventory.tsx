@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Heading, Space } from 'ui'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
+import { useGetDiscountDurationExplanation } from './CartInventory.helpers'
 
 type Props = {
   cart: CartFragmentFragment
@@ -11,6 +12,8 @@ type Props = {
 
 export const CartInventory = ({ cart, children }: Props) => {
   const formatter = useFormatter()
+
+  const discountDurationExplanation = useGetDiscountDurationExplanation()
 
   return (
     <Space y={1}>
@@ -34,8 +37,7 @@ export const CartInventory = ({ cart, children }: Props) => {
           </PriceWrapper>
         </TotalWrapper>
         <DiscountMessage>
-          in {cart.redeemedCampaigns[0].discount.months} months, then{' '}
-          {formatter.monthlyPrice(cart.cost.net)}
+          {discountDurationExplanation(cart.redeemedCampaigns[0].discount, cart.cost.gross)}
         </DiscountMessage>
       </Footer>
     </Space>
@@ -74,4 +76,5 @@ const DiscountMessage = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
   color: theme.colors.textSecondary,
+  fontSize: theme.fontSizes[1],
 }))
