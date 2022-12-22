@@ -1,9 +1,7 @@
 import styled from '@emotion/styled'
 import { Card, CardContent } from 'ui/src/components/Card/Card'
-import { Space } from 'ui'
-import { getColor, HeadingLabel } from 'ui'
+import { getColor, HeadingLabel, Space, Text } from 'ui'
 import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { Text } from '@/components/Text/Text'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {

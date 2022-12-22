@@ -2,10 +2,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
-import { Button, Dialog, Heading, Space } from 'ui'
+import { Button, Dialog, Heading, Space, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Text } from '@/components/Text/Text'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
@@ -34,7 +33,7 @@ export const CartEntryItem = (props: Props) => {
         <Space y={1}>
           <div>
             <Text size="l">{title}</Text>
-            <Text size="l" color="gray600">
+            <Text size="l" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
                 ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })

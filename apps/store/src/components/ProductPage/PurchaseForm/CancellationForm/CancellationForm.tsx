@@ -1,7 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
-import { Space } from 'ui'
-import { Text } from '@/components/Text/Text'
+import { Space, Text } from 'ui'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
@@ -144,7 +143,7 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
       onCheckedChange={onCheckedChange}
     >
       {value && (
-        <Text as="p" size="s" color="gray700">
+        <Text as="p" size="s" color="textSecondary">
           {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
         </Text>
       )}
@@ -187,7 +186,7 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
       onChange={handleChange}
     >
       {inputMessage && (
-        <Text as="p" size="s" color="gray700">
+        <Text as="p" size="s" color="textSecondary">
           {inputMessage}
         </Text>
       )}

@@ -3,14 +3,13 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Button, CrossIcon, Heading, Space } from 'ui'
+import { Button, CrossIcon, Heading, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Text } from '@/components/Text/Text'
 import { TextField } from '@/components/TextField/TextField'
 import * as Auth from '@/services/Auth/Auth'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
@@ -107,7 +106,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   {t('SIGN_BUTTON', { count: cart.entries.length })}
                 </SpaceFlex>
               </Button>
-              <Text size="s" color="gray600" align="center">
+              <Text size="s" color="textSecondary" align="center">
                 {t('SIGN_DISCLAIMER')}
               </Text>
             </Space>

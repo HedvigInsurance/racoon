@@ -1,8 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
-import { ChevronIcon, Space } from 'ui'
-import { Text } from '@/components/Text/Text'
+import { ChevronIcon, Space, Text } from 'ui'
 import { useFormatter } from '@/utils/useFormatter'
 import { CheckoutPaymentPageProps } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
 
