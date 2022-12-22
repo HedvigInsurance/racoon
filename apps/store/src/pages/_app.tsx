@@ -7,9 +7,10 @@ import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
 import {
   GTMAppScript,
-  trackExperimentImpression,
+  trackNewSiteExperimentImpression,
   trackPageView,
   useGTMEvents,
+  useHandleExperimentQueryParam,
 } from '@/services/gtm'
 import * as Datadog from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -27,7 +28,7 @@ if (typeof window === 'undefined') {
   Datadog.initDatadog()
 } else {
   trackPageView(window.location.pathname)
-  trackExperimentImpression(window.location.pathname)
+  trackNewSiteExperimentImpression()
 }
 
 // @TODO - should this be initialized unless running in browser?
@@ -38,6 +39,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const getLayout = Component.getLayout || ((page) => page)
   useGTMEvents()
+  useHandleExperimentQueryParam()
   useDebugTranslationKeys()
 
   return (
