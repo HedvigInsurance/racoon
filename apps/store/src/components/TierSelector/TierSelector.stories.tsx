@@ -18,6 +18,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
     id: '0',
     variant: {
       typeOfContract: 'Traffic',
+      displayName: 'Traffic',
       product: {
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
@@ -37,6 +38,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
     id: '1',
     variant: {
       typeOfContract: 'Halvförsäkring',
+      displayName: 'Halvförsäkring',
       product: {
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
@@ -56,6 +58,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
     id: '2',
     variant: {
       typeOfContract: 'Driving',
+      displayName: 'Driving',
       product: {
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
