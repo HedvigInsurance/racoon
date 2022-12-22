@@ -1,5 +1,6 @@
 import { css, useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
+import { forwardRef } from 'react'
 import type { ButtonHTMLAttributes } from 'react'
 import { LoadingSpinner } from './LoadingSpinner'
 
@@ -11,7 +12,7 @@ type CustomProps = {
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomProps
 
-export const Button = (props: Props) => {
+export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { variant = 'primary', loading, children, ...baseProps } = props
 
   const theme = useTheme()
@@ -27,15 +28,16 @@ export const Button = (props: Props) => {
 
   switch (variant) {
     case 'primary':
-      return <PrimaryButton {...buttonProps} />
+      return <PrimaryButton ref={ref} {...buttonProps} />
     case 'primary-alt':
-      return <PrimaryAltButton {...buttonProps} />
+      return <PrimaryAltButton ref={ref} {...buttonProps} />
     case 'secondary':
-      return <SecondaryButton {...buttonProps} />
+      return <SecondaryButton ref={ref} {...buttonProps} />
     case 'ghost':
-      return <GhostButton {...buttonProps} />
+      return <GhostButton ref={ref} {...buttonProps} />
   }
-}
+})
+Button.displayName = 'Button'
 
 const Centered = styled.div({
   display: 'flex',
