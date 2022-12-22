@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useCallback, useRef, useState } from 'react'
-import { mq, theme, Button, PlayIcon, PauseIcon } from 'ui'
+import { mq, theme, PlayIcon, PauseIcon } from 'ui'
+import { Button } from '@/components/Button/Button'
 
 enum State {
   Playing = 'playing',
@@ -106,14 +107,10 @@ export const Video = ({
       {controls && (
         <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
           <Controls>
-            <Button
-              ref={playPauseButtonRef}
-              icon={state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-              onClick={togglePlay}
-              color="light"
-            >
+            <PlayPauseButton ref={playPauseButtonRef} onClick={togglePlay} variant="secondary">
+              {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
               {state === State.Paused ? 'Play' : null}
-            </Button>
+            </PlayPauseButton>
           </Controls>
         </VideoControls>
       )}
@@ -177,3 +174,9 @@ const Controls = styled.div({
     visibility: 'visible',
   },
 })
+
+const PlayPauseButton = styled(Button)(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: theme.space[2],
+}))
