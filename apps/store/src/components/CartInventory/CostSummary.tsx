@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartCampaign, CartCost } from './CartInventory.types'
@@ -17,7 +18,7 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
         <CostWrapper>
           <PriceWrapper>
             {crossOut && (
-              <CrossOutText size="l" color="gray600">
+              <CrossOutText size="l" color="textSecondary">
                 {formatter.monthlyPrice(crossOut)}
               </CrossOutText>
             )}

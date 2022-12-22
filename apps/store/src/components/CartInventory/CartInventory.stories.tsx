@@ -78,6 +78,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
     {
       id: 'e01f57f9-37f8-4554-946b-e509233632ff',
       variant: {
+        displayName: 'SE_Accident',
         typeOfContract: 'SE_ACCIDENT',
         product: {
           displayNameFull: 'Accident Insurance',
@@ -106,6 +107,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
     {
       id: '078f43ab-19fa-4007-bf64-714202bfb430',
       variant: {
+        displayName: 'SE Apartment',
         typeOfContract: 'SE_APARTMENT_RENT',
         product: {
           displayNameFull: 'Home Insurance Rental',
@@ -134,6 +136,8 @@ const MOCK_CART_TWO: CartFragmentFragment = {
     {
       id: 'f13c5d6f-52ba-41db-adf3-9df196818dec',
       variant: {
+        displayName: 'SE Rent',
+
         typeOfContract: 'SE_APARTMENT_RENT',
         product: {
           displayNameFull: 'Home Insurance Rental',
