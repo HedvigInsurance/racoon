@@ -25,13 +25,7 @@ const Template: ComponentStory<typeof CartInventory> = () => {
       <CartInventory cart={MOCK_CART}>
         {(offer) => <div>{offer.variant.product.displayNameFull}</div>}
       </CartInventory>
-      <div
-        style={{
-          padding: '1px',
-          margin: '1rem',
-          backgroundColor: 'black',
-        }}
-      ></div>
+      <div style={{ margin: '2rem', borderBottom: '1px solid black' }}></div>
       <CartInventory cart={MOCK_CART_TWO}>
         {(offer) => <div>{offer.variant.product.displayNameFull}</div>}
       </CartInventory>

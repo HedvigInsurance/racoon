@@ -1,6 +1,9 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useGetDiscountExplanation } from '@/components/CartInventory/CartInventory.helpers'
+import {
+  useGetDiscountDurationExplanation,
+  useGetDiscountExplanation,
+} from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import logger from '@/services/logger/server'
@@ -18,6 +21,7 @@ type Props = { [SHOP_SESSION_PROP_NAME]: string; prevURL: string }
 const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
+  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
   if (!shopSession) return null
 
@@ -35,11 +39,15 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const campaigns = shopSession.cart.redeemedCampaigns.map((item) => ({
     id: item.id,
     code: item.code,
-    explanation: getDiscountExplanation(item.discount),
+    discountExplanation: getDiscountExplanation(item.discount),
+    discountDurationExplanation: getDiscountDurationExplanation(
+      shopSession.cart.redeemedCampaigns[0].discount,
+      shopSession.cart.cost.gross,
+    ),
   }))
 
   const cartCost = shopSession.cart.cost
-  const crossOut = cartCost.gross.amount !== cartCost.net.amount ? cartCost.gross : undefined
+  const crossOut = shopSession.cart.redeemedCampaigns.length ? cartCost.discount : undefined
 
   return (
     <CartPage

@@ -45,7 +45,7 @@ export const useGetDiscountDurationExplanation = () => {
       case CampaignDiscountType.MonthlyCost:
       case CampaignDiscountType.IndefinitePercentage:
       default:
-        return null
+        return ''
     }
   }
 }
