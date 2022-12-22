@@ -60,6 +60,7 @@ export const PurchaseForm = () => {
               shopSession={shopSession}
               priceIntent={priceIntent}
               onAddedToCart={notifyProductAdded}
+              onClickEdit={() => setIsEditingPriceCalculator(true)}
             />
           )
         }
@@ -298,10 +299,11 @@ type ShowOfferStateProps = {
   priceIntent: PriceIntent
   shopSession: ShopSession
   onAddedToCart: (item: ProductItemProps) => void
+  onClickEdit: () => void
 }
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
-  const { shopSession, priceIntent, onAddedToCart } = props
+  const { shopSession, priceIntent, onAddedToCart, onClickEdit } = props
   const { priceTemplate, productData } = useProductPageContext()
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
@@ -324,6 +326,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
         onAddedToCart={handleAddedToCart}
+        onClickEdit={onClickEdit}
       />
     </SectionWrapper>
   )

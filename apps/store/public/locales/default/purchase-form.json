@@ -36,5 +36,6 @@
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Edit",
   "INSURELY_SUCCESS_CONTINUE_BUTTON": "Continue",
   "INSURELY_SUCCESS_PROMPT": "We found your insurance at {{company}}",
-  "LOADING_PRICE_ANIMATION_LABEL": "Calculating your price..."
+  "LOADING_PRICE_ANIMATION_LABEL": "Calculating your price...",
+  "PRESENT_OFFER_EDIT_BUTTON": "Edit your info"
 }

@@ -26,14 +26,11 @@ type Props = {
   scrollPastRef: RefObject<HTMLElement>
   // TODO: Use better type
   onAddedToCart: (productOffer: ProductOfferFragment) => void
+  onClickEdit: () => void
 }
 
-export const OfferPresenter = ({
-  priceIntent,
-  shopSession,
-  scrollPastRef,
-  onAddedToCart,
-}: Props) => {
+export const OfferPresenter = (props: Props) => {
+  const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
@@ -92,6 +89,11 @@ export const OfferPresenter = ({
             <Text as="p" align="center" size="xxl">
               {displayPrice}
             </Text>
+            <FullWidthButton onClick={onClickEdit}>
+              <Text align="center" size="s">
+                {t('PRESENT_OFFER_EDIT_BUTTON')}
+              </Text>
+            </FullWidthButton>
 
             {priceMatch && <PriceMatchBubble {...priceMatch} />}
           </Space>
@@ -125,6 +127,8 @@ export const OfferPresenter = ({
     </>
   )
 }
+
+const FullWidthButton = styled.button({ width: '100%' })
 
 // TODO: Localize
 const SubmitButton = ({ loading }: { loading: boolean }) => {
