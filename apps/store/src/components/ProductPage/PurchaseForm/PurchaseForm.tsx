@@ -98,7 +98,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
                 {productData.displayNameShort}
                 <CircledHSuperscript />
               </Heading>
-              <Text size="s" color="textSecondary" align="center">
+              <Text size="xs" color="textSecondary" align="center">
                 {productData.displayNameFull}
               </Text>
             </Space>
@@ -254,7 +254,7 @@ const PriceLoader = () => {
 
   return (
     <Space y={2}>
-      <Text size="l" align="center">
+      <Text size="md" align="center">
         {t('LOADING_PRICE_ANIMATION_LABEL')}
       </Text>
       <Bar>

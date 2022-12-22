@@ -42,7 +42,7 @@ export const CheckoutPaymentPageAdyen = ({
             <PriceBreakdown {...props} />
           </PriceBreakdownWrapper>
           <p>
-            <Text size="s">
+            <Text size="xs">
               Money is withdrawn the end of each month. We handle payments securely with Adyen.
             </Text>
           </p>
@@ -57,7 +57,7 @@ export const CheckoutPaymentPageAdyen = ({
             Complete purchase
           </Button>
           <p>
-            <Text size="s">
+            <Text size="xs">
               By clicking &quot;Complete purchase&quot; I confirm that I have read and understood
               the terms and conditions, and that I approve that Hedvig handles my personal
               information.

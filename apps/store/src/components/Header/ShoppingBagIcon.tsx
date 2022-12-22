@@ -24,7 +24,7 @@ export const ShoppingBagIcon = ({ count }: ShoppingBagIconProps) => {
           strokeWidth="1.5"
         />
       </svg>
-      <Count size="s">{count}</Count>
+      <Count size="xs">{count}</Count>
     </Wrapper>
   )
 }

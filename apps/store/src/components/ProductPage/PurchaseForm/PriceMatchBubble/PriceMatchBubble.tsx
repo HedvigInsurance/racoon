@@ -11,10 +11,10 @@ export const PriceMatchBubble = ({ title, children }: Props) => {
     <Root>
       <Tip />
       <Bubble>
-        <Text size="s" align="center">
+        <Text size="xs" align="center">
           {title}
         </Text>
-        <Text size="s" color="textSecondary" align="center">
+        <Text size="xs" color="textSecondary" align="center">
           {children}
         </Text>
       </Bubble>
