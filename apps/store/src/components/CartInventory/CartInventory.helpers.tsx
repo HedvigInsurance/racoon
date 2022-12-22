@@ -37,10 +37,10 @@ export const useGetDiscountDurationExplanation = () => {
     switch (discount.type) {
       case CampaignDiscountType.FreeMonths:
       case CampaignDiscountType.MonthlyPercentage:
-        return t('DISCOUNT_DURATION_EXPLANATION', {
+        // A workaround to escape the '/' in the monthly price.
+        return `${t('DISCOUNT_DURATION_EXPLANATION', {
           count: discount.months,
-          total: formatter.monthlyPrice(total),
-        })
+        })} ${formatter.monthlyPrice(total)}`
 
       case CampaignDiscountType.MonthlyCost:
       case CampaignDiscountType.IndefinitePercentage:
