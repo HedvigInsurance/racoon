@@ -26,6 +26,7 @@ import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
+import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
@@ -341,7 +342,7 @@ const PurchaseFormTop = styled.div({
 const OpenModalButtonWrapper = styled.div({
   [mq.lg]: {
     padding: 0,
-    maxWidth: '21rem',
+    maxWidth: PURCHASE_FORM_MAX_WIDTH,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -356,12 +357,12 @@ const StickyButtonWrapper = styled.div(({ theme }) => ({
 
 const SectionWrapper = styled.div({
   width: '100%',
-  maxWidth: '21rem',
+  maxWidth: PURCHASE_FORM_MAX_WIDTH,
   margin: '0 auto',
 })
 
 const PriceCalculatorWrapper = styled.div({
   width: '100%',
-  maxWidth: '21rem',
+  maxWidth: PURCHASE_FORM_MAX_WIDTH,
   margin: '0 auto',
 })
