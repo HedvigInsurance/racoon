@@ -42,7 +42,7 @@ type GTMPageData = {
 type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
-  offerData?: Record<string, string>
+  offerData?: Record<string, string | number>
   eventData?: Record<string, string>
   pageData?: GTMPageData
 }
@@ -95,25 +95,5 @@ export const setGtmContext = (countryCode: CountryCode) => {
       country: countryCode,
       environment: getGtmEnvironment(),
     },
-  })
-}
-
-// TODO: Add shopSessionId from context instead of passing it explicitly
-export const trackOffer = (offerData: {
-  shopSessionId: string
-  contractType: string
-  amount: number
-  currency: string
-}) => {
-  const eventData = {
-    shop_session_id: offerData.shopSessionId,
-    insurance_type: offerData.contractType,
-    insurance_price: String(offerData.amount),
-    currency: offerData.currency,
-  }
-  console.debug('offer_created', eventData)
-  pushToGTMDataLayer({
-    event: 'offer_created',
-    eventData,
   })
 }

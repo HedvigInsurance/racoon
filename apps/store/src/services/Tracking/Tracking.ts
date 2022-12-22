@@ -1,3 +1,4 @@
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { pushToGTMDataLayer } from '@/services/gtm'
 import { isBrowser } from '@/utils/env'
 import { newSiteAbTest } from '../../newSiteAbTest'
@@ -44,6 +45,34 @@ export class Tracking {
       },
     }
     console.debug(event.event, variantId)
+    pushToGTMDataLayer(event)
+  }
+
+  public reportOffer(offer: ProductOfferFragment) {
+    this.ensureBrowserEnvironment()
+    const event = {
+      event: TrackingEvent.OfferCreated,
+      offerData: {
+        currency: offer.price.currencyCode as string,
+        insurance_price: offer.price.amount,
+        insurance_type: offer.variant.typeOfContract,
+        // TODO: Decide what to do with remaining fields
+        // number_of_people
+        // referral_code
+        // has_accident
+        // has_home
+        // has_travel
+        // is_student
+        // discounted_premium
+        // flow_type
+        // quote_cart_id
+        // has_house
+        // ownership_type
+        // has_car_
+        // car_sub_type
+      },
+    }
+    console.debug(event.event, event.offerData)
     pushToGTMDataLayer(event)
   }
 
