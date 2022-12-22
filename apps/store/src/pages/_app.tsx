@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
 import { GTMAppScript } from '@/services/gtm'
-import * as Datadog from '@/services/logger/client'
+import { initDatadog } from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -23,10 +23,8 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
 const tracking = new Tracking()
 
-if (typeof window === 'undefined') {
-  // TODO: Fix browser init
-  Datadog.initDatadog()
-} else {
+if (typeof window !== 'undefined') {
+  initDatadog()
   tracking.reportPageView(window.location.pathname)
   trackNewSiteExperimentImpression(tracking)
 }
