@@ -5,17 +5,14 @@ import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
-import {
-  GTMAppScript,
-  trackNewSiteExperimentImpression,
-  trackPageView,
-  useGTMEvents,
-  useHandleExperimentQueryParam,
-} from '@/services/gtm'
+import { GTMAppScript } from '@/services/gtm'
 import * as Datadog from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
+import { Tracking } from '@/services/Tracking/Tracking'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
+import { trackNewSiteExperimentImpression } from '@/services/Tracking/useHandleExperimentQueryParam'
 import { contentFontClassName } from '@/utils/fonts'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 
@@ -24,11 +21,14 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   require('../mocks')
 }
 
+const tracking = new Tracking()
+
 if (typeof window === 'undefined') {
+  // TODO: Fix browser init
   Datadog.initDatadog()
 } else {
-  trackPageView(window.location.pathname)
-  trackNewSiteExperimentImpression()
+  tracking.reportPageView(window.location.pathname)
+  trackNewSiteExperimentImpression(tracking)
 }
 
 // @TODO - should this be initialized unless running in browser?
@@ -38,8 +38,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
 
   const getLayout = Component.getLayout || ((page) => page)
-  useGTMEvents()
-  useHandleExperimentQueryParam()
   useDebugTranslationKeys()
 
   return (
@@ -52,7 +50,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <Global styles={globalStyles} />
         <ThemeProvider theme={theme}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
-            {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+            <TrackingProvider value={tracking}>
+              {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+            </TrackingProvider>
           </ShopSessionProvider>
         </ThemeProvider>
       </ApolloProvider>

@@ -3,13 +3,8 @@
  */
 
 import { datadogLogs } from '@datadog/browser-logs'
-import { getCookie, setCookie } from 'cookies-next'
-import { useRouter } from 'next/router'
 import Script from 'next/script'
-import { useEffect } from 'react'
 import { CountryCode } from '@/utils/l10n/types'
-import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
-import { newSiteAbTest } from '../newSiteAbTest'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 const GTM_ENVIRONMENT = process.env.NEXT_PUBLIC_GTM_ENV
@@ -53,7 +48,7 @@ type DataLayerObject = {
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
-const pushToGTMDataLayer = (obj: DataLayerObject) => {
+export const pushToGTMDataLayer = (obj: DataLayerObject) => {
   if (!window.dataLayer) window.dataLayer = []
   window.dataLayer.push(obj)
 }
@@ -92,80 +87,15 @@ export const GTMBodyScript = () => {
   )
 }
 
-export const useGTMEvents = () => {
-  const router = useRouter()
-  const { countryCode } = useCurrentCountry()
-
-  useEffect(() => {
-    pushToGTMDataLayer({
-      event: 'initiate_gtm',
-      userProperties: {
-        siteVersion: 'racoon',
-        country: countryCode,
-        environment: getGtmEnvironment(),
-      },
-    })
-  }, [countryCode])
-
-  useEffect(() => {
-    const pageview = (url: string, { shallow = false } = {}) => {
-      if (!shallow) {
-        trackPageView(url)
-      }
-    }
-
-    // NOTE: Initial pageview is tracked in _app page on load
-    router.events.on('routeChangeComplete', pageview)
-
-    return () => {
-      router.events.off('routeChangeComplete', pageview)
-    }
-  }, [router.events])
-}
-
-// TODO: Refactor this module and move event tracking to Track service
-
-export const trackPageView = (urlPath: string) => {
-  // Intentionally not logging to Datadog, since we log to Analytics here
-  console.debug('pageview', urlPath)
+export const setGtmContext = (countryCode: CountryCode) => {
   pushToGTMDataLayer({
-    event: 'virtual_page_view',
-    pageData: {
-      page: urlPath,
-      title: document.title,
+    event: 'initiate_gtm',
+    userProperties: {
+      siteVersion: 'racoon',
+      country: countryCode,
+      environment: getGtmEnvironment(),
     },
   })
-}
-
-// Track experiment impression based on local cookie set by router
-export const trackNewSiteExperimentImpression = () => {
-  const variantId = getCookie(newSiteAbTest.cookies.variant.name)
-  if (typeof variantId !== 'string') return
-  console.debug('experiment_impression', variantId)
-  pushToGTMDataLayer({
-    event: 'experiment_impression',
-    eventData: {
-      experiment_id: newSiteAbTest.optimizeExperimentId,
-      variant_id: variantId,
-    },
-  })
-}
-
-export const useHandleExperimentQueryParam = () => {
-  const { pathname, query, isReady, replace } = useRouter()
-  useEffect(() => {
-    const variantId = query[newSiteAbTest.experimentQueryParam]
-    if (isReady && typeof variantId === 'string') {
-      setCookie(newSiteAbTest.cookies.variant.name, variantId, {
-        maxAge: newSiteAbTest.cookies.variant.maxAge,
-      })
-      const target = { pathname, query: { ...query } }
-      delete target.query[newSiteAbTest.experimentQueryParam]
-      console.debug('Record experiment variantId from query parameter')
-      trackNewSiteExperimentImpression()
-      replace(target, undefined, { shallow: true })
-    }
-  }, [query, isReady, pathname, replace])
 }
 
 // TODO: Add shopSessionId from context instead of passing it explicitly
