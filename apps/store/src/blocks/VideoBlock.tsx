@@ -16,11 +16,11 @@ export type VideoBlockProps = SbBaseBlockProps<
     | 'maxHeightLandscape'
     | 'maxHeightPortrait'
   >
->
+> & { className?: string }
 
-export const VideoBlock = ({ blok }: VideoBlockProps) => {
+export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Video
         sources={[{ url: blok.video.filename }]}
         poster={blok.poster?.filename}
@@ -37,10 +37,8 @@ export const VideoBlock = ({ blok }: VideoBlockProps) => {
 VideoBlock.blockName = 'videoBlock'
 
 const Wrapper = styled.div(({ theme }) => ({
-  paddingLeft: theme.space[2],
-  paddingRight: theme.space[2],
+  paddingInline: theme.space[2],
   [mq.lg]: {
-    paddingLeft: theme.space[4],
-    paddingRight: theme.space[4],
+    paddingInline: theme.space[4],
   },
 }))
