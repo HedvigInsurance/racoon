@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, InputField, Space, Dialog } from 'ui'
+import { Button, Heading, Space, Dialog } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Text } from '@/components/Text/Text'
+import { TextField } from '@/components/TextField/TextField'
 import {
   ExtraBuildingsField as InputFieldExtraBuildings,
   ExtraBuilding,
@@ -14,7 +17,7 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
-  onSubmit: (data: JSONData) => Promise<void>
+  onSubmit: (data: JSONData) => Promise<unknown>
   loading: boolean
   buildingOptions: Array<FieldOption>
 }
@@ -27,11 +30,13 @@ export const ExtraBuildingsField = ({
 }: ExtraBuildingsFieldProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
 
-  const buildingOptionsInput = buildingOptions.map((option) => {
-    return { name: option.label.key, value: option.value }
-  })
+  const buildingOptionsInput = buildingOptions.map((option) => ({
+    name: translateLabel(option.label),
+    value: option.value,
+  }))
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -59,8 +64,8 @@ export const ExtraBuildingsField = ({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
-      <Space y={0.5}>
-        <Label>{translateLabel(field.label)}</Label>
+      <Card y={0.5}>
+        <Text size="l">{translateLabel(field.label)}</Text>
 
         <Space y={0.5} as="ul">
           {field.value?.map((item) => {
@@ -76,7 +81,7 @@ export const ExtraBuildingsField = ({
                   </MutedText>
                 </SpaceFlex>
                 <Button type="button" variant="ghost" onClick={() => handleRemove(item)}>
-                  Delete
+                  {t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
                 </Button>
               </Preview>
             )
@@ -85,47 +90,55 @@ export const ExtraBuildingsField = ({
 
         <Dialog.Trigger asChild>
           <Button type="button" variant="ghost">
-            Add extra building
+            {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
           </Button>
         </Dialog.Trigger>
-      </Space>
+      </Card>
 
       <Dialog.Content>
         <DialogContentWrapper>
           <Space y={1.5}>
             <SpaceFlex align="center" direction="vertical">
               <Heading as="h2" variant="standard.18">
-                Add extra building
+                {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
               </Heading>
             </SpaceFlex>
 
             <form onSubmit={handleSubmit}>
               <Space y={1}>
                 <Space y={1}>
-                  <SpaceFlex align="center" space={1}>
-                    <Flex>
-                      <InputSelect
-                        name="type"
-                        label="Building type"
-                        options={buildingOptionsInput}
-                        required={true}
-                      />
-                    </Flex>
-                    <Flex>
-                      <InputField type="number" name="area" label="Size" min={0} required={true} />
-                    </Flex>
-                  </SpaceFlex>
-                  <InputSwitch name="hasWaterConnected" label="Water connected" />
+                  <Space y={0.25}>
+                    <InputSelect
+                      name="type"
+                      label={t('FIELD_EXTRA_BUILDINGS_TYPE_LABEL')}
+                      options={buildingOptionsInput}
+                      required={true}
+                    />
+                    <TextField
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      autoComplete="off"
+                      name="area"
+                      label={t('FIELD_EXTRA_BUILDINGS_AREA_LABEL')}
+                      min={0}
+                      required
+                    />
+                  </Space>
+                  <InputSwitch
+                    name="hasWaterConnected"
+                    label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
+                  />
                 </Space>
 
                 <SpaceFlex space={1}>
                   <Dialog.Close asChild>
                     <Button type="button" variant="ghost">
-                      Cancel
+                      {t('FIELD_EXTRA_BUILDINGS_MODAL_CANCEL')}
                     </Button>
                   </Dialog.Close>
                   <Button type="submit" disabled={loading}>
-                    Add
+                    {t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}
                   </Button>
                 </SpaceFlex>
               </Space>
@@ -154,19 +167,18 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
   }
 }
 
+const Card = styled(Space)(({ theme }) => ({
+  padding: `${theme.space[3]} ${theme.space[4]}`,
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.gray300,
+}))
+
 const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
   marginTop: '3.5rem',
   padding: theme.space[4],
   borderRadius: 8,
-}))
-
-const Flex = styled.div({ flex: 1 })
-
-const Label = styled.p(({ theme }) => ({
-  fontFamily: theme.fonts.body,
-  fontSize: theme.fontSizes[1],
 }))
 
 const Preview = styled.li(({ theme }) => ({
