@@ -29,7 +29,6 @@ export const useShopSession = (): ShopSessionResult => {
 
   // Make sure result object is stable
   const result = useRef<ShopSessionResult>({} as ShopSessionResult)
-  Object.assign(result.current, queryResult)
 
   // Ignore session from different country.
   // This probably means old session was fetched and new one is being created
@@ -57,7 +56,9 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   useEffect(() => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
-        fetchSession({ variables: { shopSessionId: shopSession.id } })
+        fetchSession({
+          variables: { shopSessionId: shopSession.id },
+        })
       })
     }
   }, [shopSessionServiceClientSide, countryCode, fetchSession])
