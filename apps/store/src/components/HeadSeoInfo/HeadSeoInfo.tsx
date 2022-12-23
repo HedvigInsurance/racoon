@@ -1,9 +1,9 @@
-import { StoryData } from '@storyblok/react'
+import { ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
-export const HeadSeoInfo = ({ story }: { story: StoryData }) => {
+export const HeadSeoInfo = ({ story }: { story: ISbStoryData }) => {
   // AB testing
   const { canonicalUrl } = story.content
   // Translations and other alternates

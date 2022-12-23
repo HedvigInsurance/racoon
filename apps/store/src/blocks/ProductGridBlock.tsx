@@ -11,11 +11,14 @@ type ProductGridBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
-  const items = useMemo(() => blok.items.map((item) => ({ key: item._uid, ...item })), [blok.items])
+  const items = useMemo(
+    () => blok.items.map((item) => ({ key: item._uid || item.title, ...item })),
+    [blok.items],
+  )
   return (
     <Wrapper>
       <ProductGrid title={blok.title} items={items} {...storyblokEditable(blok)}>
-        {(nestedBlock) => <ProductCardBlock key={nestedBlock._uid} blok={nestedBlock} />}
+        {(nestedBlock) => <ProductCardBlock key={nestedBlock.key} blok={nestedBlock} />}
       </ProductGrid>
     </Wrapper>
   )
