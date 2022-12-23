@@ -27,7 +27,7 @@ export const Space = styled.div<BaseProps>({}, ({ x, y }) => {
       }
     })
   }
-  console.log('styles', styles)
+
   if (typeof y === 'number') {
     styles[selector] = { marginTop: `${y}rem` }
   } else if (y) {
