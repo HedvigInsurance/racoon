@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 import { Heading, Space } from 'ui'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
@@ -12,6 +13,7 @@ type Props = {
 
 export const CartInventory = ({ cart, children }: Props) => {
   const formatter = useFormatter()
+  const { t } = useTranslation('cart')
 
   const discountDurationExplanation = useGetDiscountDurationExplanation()
 
@@ -29,7 +31,7 @@ export const CartInventory = ({ cart, children }: Props) => {
       <Footer>
         <TotalWrapper>
           <Heading as="h3" variant="standard.18">
-            Total
+            {t('CHECKOUT_PRICE_TOTAL')}
           </Heading>
           <PriceWrapper>
             <OriginalPrice as="h3" variant="standard.18">
