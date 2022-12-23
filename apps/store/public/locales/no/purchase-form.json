@@ -50,5 +50,7 @@
   "FIELD_EXTRA_BUIDLINGS_BARN_LABEL": "Låve",
   "FIELD_EXTRA_BUIDLINGS_OTHER_LABEL": "Annet",
   "FIELD_IS_SUBLETED_OPTION_YES": "Ja, jeg fremleier",
-  "FIELD_IS_SUBLETED_OPTION_NO": "Nei, jeg fremleier ikke"
+  "FIELD_IS_SUBLETED_OPTION_NO": "Nei, jeg fremleier ikke",
+  "FIELD_EXTRA_BUILDINGS_ADD_BUTTON": "Legg til bygning",
+  "FIELD_EXTRA_BUILDINGS_MODAL_ADD": "Legg til"
 }

@@ -31,7 +31,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm, error }
     return form.sections[form.sections.length - 1].id
   })
 
-  const [handleSubmit, isLoading] = useHandleSubmitPriceCalculator({
+  const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     priceIntent,
     onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {
@@ -64,7 +64,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm, error }
       {(section, sectionIndex) => (
         <PriceCalculatorSection
           section={section}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitSection}
           error={error}
           loading={isLoading}
         >
