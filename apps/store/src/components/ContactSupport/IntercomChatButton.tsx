@@ -1,21 +1,16 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { IntercomProvider, useIntercom } from 'react-use-intercom'
-import { Button, ButtonProps } from 'ui'
-
-const ChatButton = (props: ButtonProps) => {
-  return (
-    <FlexButton variant="outlined" {...props}>
-      Chat with us
-    </FlexButton>
-  )
-}
+import { Button } from 'ui'
 
 const WithIntercom = () => {
   const { show } = useIntercom()
 
-  return <ChatButton onClick={show} />
+  return (
+    <Button variant="ghost" onClick={show}>
+      Chat with us
+    </Button>
+  )
 }
 
 export const IntercomChatButton = () => {
@@ -28,7 +23,11 @@ export const IntercomChatButton = () => {
   }, [appId])
 
   if (!appId) {
-    return <ChatButton disabled />
+    return (
+      <Button variant="ghost" disabled>
+        Chat with us
+      </Button>
+    )
   }
 
   return (
@@ -42,5 +41,3 @@ export const IntercomChatButton = () => {
     </IntercomProvider>
   )
 }
-
-const FlexButton = styled(Button)({ flex: 1 })

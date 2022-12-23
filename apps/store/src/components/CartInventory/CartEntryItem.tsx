@@ -61,7 +61,7 @@ export const CartEntryItem = (props: Props) => {
               </Heading>
               <ButtonWrapper>
                 <Dialog.Trigger asChild>
-                  <Button type="button" variant="outlined">
+                  <Button type="button" variant="ghost">
                     Dont remove
                   </Button>
                 </Dialog.Trigger>

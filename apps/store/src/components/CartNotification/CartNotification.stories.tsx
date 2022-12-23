@@ -67,11 +67,9 @@ const NotificationContent = ({ name, price, currencyCode }: Props) => {
       <ProductItem name={name} price={formatter.money({ amount: price, currencyCode })} />
 
       <Space y={0.5}>
-        <Button fullWidth>Proceed to cart (1)</Button>
+        <Button>Proceed to cart (1)</Button>
 
-        <Button variant="outlined" fullWidth>
-          Continue shopping
-        </Button>
+        <Button variant="ghost">Continue shopping</Button>
       </Space>
     </Space>
   )

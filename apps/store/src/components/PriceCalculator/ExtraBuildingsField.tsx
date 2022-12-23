@@ -75,7 +75,7 @@ export const ExtraBuildingsField = ({
                     {item.area} m<Sup>2</Sup>
                   </MutedText>
                 </SpaceFlex>
-                <Button type="button" variant="text" onClick={() => handleRemove(item)}>
+                <Button type="button" variant="ghost" onClick={() => handleRemove(item)}>
                   Delete
                 </Button>
               </Preview>
@@ -84,7 +84,7 @@ export const ExtraBuildingsField = ({
         </Space>
 
         <Dialog.Trigger asChild>
-          <Button type="button" fullWidth variant="outlined">
+          <Button type="button" variant="ghost">
             Add extra building
           </Button>
         </Dialog.Trigger>
@@ -120,11 +120,11 @@ export const ExtraBuildingsField = ({
 
                 <SpaceFlex space={1}>
                   <Dialog.Close asChild>
-                    <Button type="button" variant="text" fullWidth>
+                    <Button type="button" variant="ghost">
                       Cancel
                     </Button>
                   </Dialog.Close>
-                  <Button type="submit" disabled={loading} fullWidth>
+                  <Button type="submit" disabled={loading}>
                     Add
                   </Button>
                 </SpaceFlex>

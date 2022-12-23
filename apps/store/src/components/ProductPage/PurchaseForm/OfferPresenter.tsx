@@ -146,9 +146,7 @@ const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
 const SubmitButton = ({ loading }: { loading: boolean }) => {
   return (
     <SpaceFlex space={0.5} direction="vertical" align="center">
-      <Button fullWidth disabled={loading}>
-        {loading ? 'Loading...' : 'Add to cart'}
-      </Button>
+      <Button disabled={loading}>{loading ? 'Loading...' : 'Add to cart'}</Button>
       <Text size="s" align="center">
         Cancel anytime
       </Text>

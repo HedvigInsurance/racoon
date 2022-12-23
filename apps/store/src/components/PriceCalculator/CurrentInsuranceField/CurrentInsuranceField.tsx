@@ -136,7 +136,7 @@ export const CurrentInsuranceField = (props: Props) => {
                   <Heading as="h3" variant="standard.20">
                     {t('INSURELY_SUCCESS_PROMPT', { company: state.externalInsurer.displayName })}
                   </Heading>
-                  <Button fullWidth onClick={() => confirm(state.externalInsurer)}>
+                  <Button onClick={() => confirm(state.externalInsurer)}>
                     {t('INSURELY_SUCCESS_CONTINUE_BUTTON')}
                   </Button>
                 </Space>
