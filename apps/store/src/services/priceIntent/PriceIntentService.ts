@@ -1,5 +1,11 @@
 import { ApolloClient } from '@apollo/client'
 import {
+  PriceIntentCreateDocument,
+  PriceIntentCreateMutation,
+  PriceIntentCreateMutationVariables,
+  PriceIntentDataUpdateDocument,
+  PriceIntentDataUpdateMutation,
+  PriceIntentDataUpdateMutationVariables,
   PriceIntentDocument,
   PriceIntentQuery,
   PriceIntentQueryVariables,
@@ -7,32 +13,35 @@ import {
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { createPriceIntent, updatePriceIntentData } from './PriceIntent.helpers'
-import { PriceIntentCreateParams } from './priceIntent.types'
+import { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
 export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
     private readonly apolloClient: ApolloClient<unknown>,
-    private readonly shopSession: ShopSession,
+    public readonly shopSession: ShopSession,
   ) {}
 
   public async create({ productName, priceTemplate }: PriceIntentCreateParams) {
-    const priceIntent = await createPriceIntent({
-      apolloClient: this.apolloClient,
-      shopSessionId: this.shopSession.id,
-      productName,
+    const result = await this.apolloClient.mutate<
+      PriceIntentCreateMutation,
+      PriceIntentCreateMutationVariables
+    >({
+      mutation: PriceIntentCreateDocument,
+      variables: { productName, shopSessionId: this.shopSession.id },
     })
+    if (!result.data?.priceIntentCreate) throw new Error('Could not create price intent')
 
-    this.persister.save(priceIntent.id, this.getPriceIntentKey(priceTemplate.name))
+    let priceIntent: PriceIntent = result.data.priceIntentCreate
 
     if (priceTemplate.initialData) {
-      return await updatePriceIntentData({
-        apolloClient: this.apolloClient,
+      priceIntent = await this.update({
         priceIntentId: priceIntent.id,
         data: priceTemplate.initialData,
       })
     }
+
+    this.persister.save(priceIntent.id, this.getPriceIntentKey(priceTemplate.name))
 
     return priceIntent
   }
@@ -65,6 +74,21 @@ export class PriceIntentService {
     }
 
     return await this.create({ productName, priceTemplate })
+  }
+
+  private async update(variables: PriceIntentDataUpdateMutationVariables) {
+    const updatedResult = await this.apolloClient.mutate<
+      PriceIntentDataUpdateMutation,
+      PriceIntentDataUpdateMutationVariables
+    >({
+      mutation: PriceIntentDataUpdateDocument,
+      variables,
+    })
+    const { priceIntent } = updatedResult.data?.priceIntentDataUpdate ?? {}
+    if (!priceIntent) {
+      throw new Error('Could not update price intent with initial data')
+    }
+    return priceIntent
   }
 
   private getPriceIntentKey(templateName: string) {

@@ -1,85 +1,29 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { useCallback, useEffect, useMemo } from 'react'
-import {
-  usePriceIntentCreateMutation,
-  usePriceIntentDataUpdateMutation,
-  usePriceIntentQuery,
-} from '@/services/apollo/generated'
+import { useEffect } from 'react'
+import { usePriceIntentLazyQuery } from '@/services/apollo/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
-import { getStoredPriceIntentId, savePriceIntent } from '@/services/priceIntent/PriceIntent.helpers'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 
 type Params = {
-  shopSession?: ShopSession
+  priceIntentService?: PriceIntentService
   priceTemplate: Template
   productName: string
 }
 
-export const usePriceIntent = ({ shopSession, priceTemplate, productName }: Params) => {
-  const storedPriceIntentId = shopSession && getStoredPriceIntentId({ shopSession, priceTemplate })
-
-  const [updatePriceIntentData] = usePriceIntentDataUpdateMutation({
-    onError(error) {
-      datadogLogs.logger.error('Failed to update PriceIntent with initial data', { error })
-    },
+export const usePriceIntent = ({ priceIntentService, priceTemplate, productName }: Params) => {
+  const [fetchQuery, queryResult] = usePriceIntentLazyQuery({
+    // Prevent network requests and ensure we trigger an error on cache miss, which should never happen
+    fetchPolicy: 'cache-only',
   })
 
-  const variables = useMemo(
-    () => (shopSession ? { shopSessionId: shopSession.id, productName } : null),
-    [shopSession, productName],
-  )
+  console.log('upi', queryResult.called)
 
-  const [createPriceIntent, createResult] = usePriceIntentCreateMutation({
-    onCompleted: ({ priceIntentCreate }) => {
-      if (shopSession) {
-        savePriceIntent({ shopSession, priceTemplate, priceIntent: priceIntentCreate })
-      } else {
-        datadogLogs.logger.error('ShopSession missing when saving price intent', {
-          priceIntentId: priceIntentCreate.id,
-        })
-      }
+  useEffect(() => {
+    priceIntentService?.fetch({ priceTemplate, productName }).then((priceIntent) =>
+      fetchQuery({
+        variables: { priceIntentId: priceIntent.id },
+      }),
+    )
+  }, [fetchQuery, priceIntentService, priceTemplate, productName])
 
-      if (priceTemplate.initialData) {
-        updatePriceIntentData({
-          variables: {
-            priceIntentId: priceIntentCreate.id,
-            data: priceTemplate.initialData,
-          },
-        })
-      }
-    },
-    onError(error) {
-      datadogLogs.logger.error('Failed to create PriceIntent', { ...variables, error })
-    },
-  })
-
-  const createNewPriceIntent = useCallback(() => {
-    if (storedPriceIntentId) return
-    if (createResult.loading) return
-    if (createResult.error) return
-    if (!variables) {
-      datadogLogs.logger.error('ShopSession missing when creating price intent (createNew)')
-      return
-    }
-
-    createPriceIntent({ variables })
-  }, [storedPriceIntentId, createResult, variables, createPriceIntent])
-
-  const result = usePriceIntentQuery({
-    skip: !storedPriceIntentId,
-    variables: storedPriceIntentId ? { priceIntentId: storedPriceIntentId } : undefined,
-    ssr: typeof window === 'undefined',
-    onError: (error) => {
-      datadogLogs.logger.warn('PriceIntent not found', {
-        priceIntentId: storedPriceIntentId,
-        error,
-      })
-      createNewPriceIntent()
-    },
-  })
-
-  // @TODO: make sure this doesn't run more than once
-  useEffect(createNewPriceIntent, [createNewPriceIntent])
-
-  return result
+  return queryResult
 }

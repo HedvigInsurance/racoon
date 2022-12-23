@@ -3,7 +3,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useMemo, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, Text, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
@@ -17,6 +17,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { isBrowser } from '@/utils/env'
 import { useFormatter } from '@/utils/useFormatter'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import useRouterRefresh from '@/utils/useRouterRefresh'
@@ -29,12 +30,26 @@ import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
-
   const { priceTemplate, productData } = useProductPageContext()
 
   const { shopSession } = useShopSession()
+  const apolloClient = useApolloClient()
+  const priceIntentService = useMemo(() => {
+    if (shopSession) {
+      if (!isBrowser()) {
+        throw new Error(
+          'This component should not be used in SSR, either SSG (no shop session) or client rendering',
+        )
+      }
+      if (isBrowser()) {
+        console.count('CREATE SERVICE')
+      }
+      return priceIntentServiceInitClientSide({ apolloClient, shopSession })
+    }
+  }, [apolloClient, shopSession])
+
   const { data: { priceIntent } = {} } = usePriceIntent({
-    shopSession,
+    priceIntentService,
     priceTemplate: priceTemplate,
     productName: productData.name,
   })
