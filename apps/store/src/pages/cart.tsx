@@ -6,6 +6,7 @@ import {
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { CampaignDiscountType } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -47,17 +48,34 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   }))
 
   const cartCost = shopSession.cart.cost
-  const crossOut = shopSession.cart.redeemedCampaigns.length ? cartCost.discount : undefined
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length
+
+  const total =
+    hasDiscount &&
+    shopSession.cart.redeemedCampaigns[0].discount.type === CampaignDiscountType.FreeMonths
+      ? cartCost.discount
+      : cartCost.net
+
+  const getCrossOut = () => {
+    if (hasDiscount) {
+      switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+        case CampaignDiscountType.FreeMonths:
+          return cartCost.gross
+        case CampaignDiscountType.IndefinitePercentage:
+        case CampaignDiscountType.MonthlyCost:
+        case CampaignDiscountType.MonthlyPercentage:
+          return cartCost.discount
+      }
+    }
+    return undefined
+  }
 
   return (
     <CartPage
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{
-        total: cartCost.net,
-        crossOut,
-      }}
+      cost={{ total, crossOut: getCrossOut() }}
       {...props}
     />
   )
