@@ -100,7 +100,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               required
             />
             <Space y={0.5}>
-              <Button fullWidth disabled={loading}>
+              <Button disabled={loading}>
                 <SpaceFlex space={0.5}>
                   <BankIdIcon />
                   {t('SIGN_BUTTON', { count: cart.entries.length })}

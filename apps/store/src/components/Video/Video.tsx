@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useCallback, useRef, useState } from 'react'
-import { mq, theme, PlayIcon, PauseIcon } from 'ui'
-import { Button } from '@/components/Button/Button'
+import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
 
 enum State {
   Playing = 'playing',
