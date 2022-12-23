@@ -1,5 +1,5 @@
 import { StoryblokClient } from '@storyblok/js'
-import { SbBlokData, StoryData } from '@storyblok/react'
+import { SbBlokData, ISbStoryData } from '@storyblok/react'
 import { Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
@@ -39,7 +39,7 @@ export const fetchStory = async (
   storyblokClient: StoryblokClient,
   slug: string,
   params: StoryblokFetchParams,
-): Promise<StoryData | undefined> => {
+): Promise<ISbStoryData | undefined> => {
   const response = await storyblokClient.get(`cdn/stories/${slug}`, {
     ...params,
     resolve_links: 'url',
@@ -68,6 +68,6 @@ const makeAbsolute = (url: string) => {
   return '/' + url
 }
 
-export const isProductStory = (story: StoryData): story is ProductStory => {
+export const isProductStory = (story: ISbStoryData): story is ProductStory => {
   return story.content.component === 'product'
 }

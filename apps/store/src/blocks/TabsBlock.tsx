@@ -24,14 +24,17 @@ export const TabsBlock = ({ blok }: TabsBlockProps) => {
   return (
     <Tabs.Tabs defaultValue={firstTabValue} {...storyblokEditable(blok)}>
       <Tabs.TabsList>
-        {tabBlocks.map((tabBlock) => (
-          <Tabs.TabsTrigger key={tabBlock._uid} value={tabBlock._uid}>
-            {tabBlock.title}
-          </Tabs.TabsTrigger>
-        ))}
+        {tabBlocks.map((tabBlock) => {
+          const tabId = tabBlock._uid || tabBlock.title
+          return (
+            <Tabs.TabsTrigger key={tabId} value={tabId}>
+              {tabBlock.title}
+            </Tabs.TabsTrigger>
+          )
+        })}
       </Tabs.TabsList>
       {tabBlocks.map((tabBlock) => (
-        <TabBlock key={tabBlock._uid} blok={tabBlock} />
+        <TabBlock key={tabBlock._uid || tabBlock.title} blok={tabBlock} />
       ))}
     </Tabs.Tabs>
   )
@@ -40,7 +43,7 @@ TabsBlock.blockName = 'tabs'
 
 const TabBlock = ({ blok }: TabBlockProps) => {
   return (
-    <Tabs.TabsContent value={blok._uid}>
+    <Tabs.TabsContent value={blok._uid || blok.title}>
       {blok.body.map((nestedBlock) => (
         <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
       ))}
