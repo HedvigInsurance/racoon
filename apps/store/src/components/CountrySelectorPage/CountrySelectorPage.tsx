@@ -40,11 +40,10 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
             <Link
               key={country}
               href={`/${toRoutingLocale(countryData.defaultLocale)}`}
-              onClick={() => onHandleClick(countryData.defaultLocale)}
               passHref
               legacyBehavior
             >
-              <Button>
+              <Button onClick={() => onHandleClick(countryData.defaultLocale)}>
                 {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
               </Button>
             </Link>
