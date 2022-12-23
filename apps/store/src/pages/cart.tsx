@@ -60,10 +60,10 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     if (hasDiscount) {
       switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
         case CampaignDiscountType.FreeMonths:
+        case CampaignDiscountType.MonthlyPercentage:
           return cartCost.gross
         case CampaignDiscountType.IndefinitePercentage:
         case CampaignDiscountType.MonthlyCost:
-        case CampaignDiscountType.MonthlyPercentage:
           return cartCost.discount
       }
     }
