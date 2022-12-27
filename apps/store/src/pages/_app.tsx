@@ -4,16 +4,19 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import { globalStyles, theme } from 'ui'
-import { useApollo } from '@/services/apollo/client'
+import { initializeApollo, useApollo } from '@/services/apollo/client'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackNewSiteExperimentImpression } from '@/services/Tracking/useHandleExperimentQueryParam'
 import { contentFontClassName } from '@/utils/fonts'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 
 // Enable API mocking
@@ -27,6 +30,13 @@ if (typeof window !== 'undefined') {
   initDatadog()
   tracking.reportPageView(window.location.pathname)
   trackNewSiteExperimentImpression(tracking)
+
+  const locale = window.location.pathname.split('/')[1]
+  if (isRoutingLocale(locale)) {
+    const { countryCode } = getCountryByLocale(locale)
+    const apolloClient = initializeApollo()
+    setupShopSessionServiceClientSide(apolloClient).getOrCreate({ countryCode })
+  }
 }
 
 // @TODO - should this be initialized unless running in browser?
