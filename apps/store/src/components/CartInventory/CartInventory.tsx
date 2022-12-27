@@ -50,7 +50,7 @@ type DisplayTotalAmountProps = {
   hasDiscount: boolean
 }
 const DisplayTotalAmount = ({ hasDiscount = false, cost }: DisplayTotalAmountProps) => {
-  const { discount, gross } = cost
+  const { gross, net } = cost
   const formatter = useFormatter()
 
   return (
@@ -60,7 +60,7 @@ const DisplayTotalAmount = ({ hasDiscount = false, cost }: DisplayTotalAmountPro
       ) : (
         <SpaceBetweenPrice>
           <LineThroughPrice>{formatter.monthlyPrice(gross)}</LineThroughPrice>
-          <Text>{formatter.monthlyPrice(discount)}</Text>
+          <Text>{formatter.monthlyPrice(net)}</Text>
         </SpaceBetweenPrice>
       )}
     </>
