@@ -121,7 +121,7 @@ export const CurrentInsuranceField = (props: Props) => {
       {isDialogOpen && (
         <Dialog.Root open onOpenChange={close}>
           <StyledDialogContent>
-            {state.type !== 'COMPARE' ? (
+            {state.type === 'COMPARE' ? (
               <DialogIframeWindow>
                 <InsurelyIframe
                   clientId={insurelyClientId}
