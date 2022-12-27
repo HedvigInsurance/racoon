@@ -15,7 +15,7 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
     <SpaceBetweenWrapper>
       <Text size="l">{t('CHECKOUT_PRICE_TOTAL')}</Text>
       <SpaceFlex space={0.5}>
-        <CostWrapper>
+        <SpaceFlex direction="vertical" align="end" space={0}>
           <PriceWrapper>
             {crossOut && (
               <CrossOutText size="l" color="textSecondary">
@@ -31,7 +31,7 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
               </Text>
             </FlexEnd>
           ))}
-        </CostWrapper>
+        </SpaceFlex>
       </SpaceFlex>
     </SpaceBetweenWrapper>
   )
@@ -40,12 +40,6 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
 const SpaceBetweenWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
-})
-
-const CostWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-  flexDirection: 'column',
 })
 
 const CrossOutText = styled(Text)({ textDecoration: 'line-through' })
