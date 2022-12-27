@@ -35,7 +35,7 @@ export const CartInventory = ({ cart, children }: Props) => {
           </Heading>
           <PriceWrapper>
             <OriginalPrice as="h3" variant="standard.18">
-              {formatter.monthlyPrice(cart.cost.net)}
+              {formatter.monthlyPrice(cart.cost.gross)}
             </OriginalPrice>
             <Heading as="h3" variant="standard.18">
               {formatter.monthlyPrice(cart.cost.discount)}

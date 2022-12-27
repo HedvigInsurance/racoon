@@ -40,17 +40,17 @@ const MOCK_CART_TWO: CartFragmentFragment = {
   id: '950119de-7639-4c56-bdc4-613c1a4e1705',
   cost: {
     gross: {
-      amount: 307,
+      amount: 279,
       currencyCode: CurrencyCode.Sek,
       __typename: 'Money',
     },
     net: {
-      amount: 307,
+      amount: 55.8,
       currencyCode: CurrencyCode.Sek,
       __typename: 'Money',
     },
     discount: {
-      amount: 10,
+      amount: 223.2,
       currencyCode: CurrencyCode.Sek,
       __typename: 'Money',
     },
@@ -175,7 +175,7 @@ const MOCK_CART: CartFragmentFragment = {
       __typename: 'Money',
     },
     net: {
-      amount: 307,
+      amount: 297,
       currencyCode: CurrencyCode.Sek,
       __typename: 'Money',
     },
