@@ -50,11 +50,15 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const cartCost = shopSession.cart.cost
   const hasDiscount = shopSession.cart.redeemedCampaigns.length
 
-  const total =
-    hasDiscount &&
-    shopSession.cart.redeemedCampaigns[0].discount.type === CampaignDiscountType.FreeMonths
-      ? cartCost.discount
-      : cartCost.net
+  const getTotal = () => {
+    if (!hasDiscount) return cartCost.net
+    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+      case CampaignDiscountType.FreeMonths:
+        return cartCost.discount
+      default:
+        return cartCost.net
+    }
+  }
 
   const getCrossOut = () => {
     if (!hasDiscount) return undefined
@@ -74,7 +78,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{ total, crossOut: getCrossOut() }}
+      cost={{ total: getTotal(), crossOut: getCrossOut() }}
       {...props}
     />
   )
