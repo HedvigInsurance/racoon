@@ -17,6 +17,7 @@ import {
 } from '@/services/Tracking/newSiteExperimentTracking'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
+import { trackPageViews } from '@/services/Tracking/trackPageViews'
 import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
@@ -32,10 +33,9 @@ const tracking = new Tracking()
 if (typeof window !== 'undefined') {
   initDatadog()
 
-  tracking.reportPageView(window.location.pathname)
-
   handleNewSiteExperimentQueryParam()
   trackNewSiteExperimentImpression(tracking)
+  trackPageViews(tracking)
 
   router.ready(() => {
     const { routingLocale } = getLocaleOrFallback(router.locale)
