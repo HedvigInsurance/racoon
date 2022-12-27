@@ -10,6 +10,6 @@
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% discount for {{count}} mth.",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
-  "DISCOUNT_DURATION_EXPLANATION": "For {{count}} months, then",
+  "DISCOUNT_DURATION_EXPLANATION": "For {{count}} month, then",
   "CHECKOUT_PRICE_TOTAL": "Total"
 }

@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Button, CrossIcon, Heading, Space, Text } from 'ui'
+import { PropsWithChildren } from 'react'
+import { Button, Heading, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -48,10 +49,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         <Heading as="h1" variant="standard.24">
           {t('CHECKOUT_PAGE_HEADING')}
         </Heading>
-
-        <Link href={PageLink.cart()}>
-          <CrossIcon size="1.5rem" />
-        </Link>
+        <Link href={PageLink.cart()}>{t('BACK_BUTTON')}</Link>
       </Header>
 
       <Section>
@@ -81,7 +79,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <StepIcon />
             <Text size="l">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
           </SpaceFlex>
-          <Text size="l">{t('FORM_HELP_LABEL')}</Text>
         </SpaceBetween>
 
         <form onSubmit={handleSubmitSign}>
@@ -100,14 +97,11 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               required
             />
             <Space y={0.5}>
-              <Button disabled={loading}>
-                <SpaceFlex space={0.5}>
-                  <BankIdIcon />
-                  {t('SIGN_BUTTON', { count: cart.entries.length })}
-                </SpaceFlex>
-              </Button>
+              <SignButton loading={loading}>
+                {t('SIGN_BUTTON', { count: cart.entries.length })}
+              </SignButton>
               <Text size="s" color="textSecondary" align="center">
-                {t('SIGN_DISCLAIMER')}
+                {loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')}
               </Text>
             </Space>
           </Space>
@@ -166,5 +160,24 @@ const CartCollapsibleInner = styled(Space)(({ theme }) => ({
   paddingBottom: theme.space[4],
 }))
 CartCollapsibleInner.defaultProps = { y: 1.5 }
+
+const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean }>) => {
+  return (
+    <Button type="submit" loading={loading} disabled={loading}>
+      <StyledSignButtonContent>
+        <BankIdIcon />
+        {children}
+      </StyledSignButtonContent>
+    </Button>
+  )
+}
+
+const StyledSignButtonContent = styled.div(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space[3],
+  width: '100%',
+}))
 
 export default CheckoutPage
