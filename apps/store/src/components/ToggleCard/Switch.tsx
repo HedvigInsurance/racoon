@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import * as RadixSwitch from '@radix-ui/react-switch'
 
-export type CheckboxProps = RadixSwitch.SwitchProps
+export type SwitchProps = RadixSwitch.SwitchProps
 
-export const Checkbox = (props: CheckboxProps) => {
+export const Switch = (props: SwitchProps) => {
   return (
     <SwitchWrapper {...props}>
       <SwitchHandle />

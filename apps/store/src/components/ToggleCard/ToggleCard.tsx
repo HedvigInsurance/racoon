@@ -1,21 +1,30 @@
 import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
 import { useId } from 'react'
 import { Space } from 'ui'
-import { Checkbox, CheckboxProps } from './Checkbox'
+import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import { Switch, SwitchProps } from './Switch'
 
-type Props = CheckboxProps & {
+type Props = SwitchProps & {
   label: string
 }
 
-export const CheckboxInput = ({ label, children, ...checkboxProps }: Props) => {
-  const identifier = useId()
+export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxProps }: Props) => {
+  const { highlight, animationProps } = useHighlightAnimation()
+  const backupId = useId()
+  const identifier = id || backupId
+
+  const handleCheckedChange = (checked: boolean) => {
+    highlight()
+    onCheckedChange?.(checked)
+  }
 
   return (
-    <InputWrapper>
+    <InputWrapper {...animationProps}>
       <Space y={0.5}>
         <CheckboxHeader>
           <StyledLabel htmlFor={identifier}>{label}</StyledLabel>
-          <Checkbox id={identifier} {...checkboxProps} />
+          <Switch id={identifier} onCheckedChange={handleCheckedChange} {...checkboxProps} />
         </CheckboxHeader>
         {children}
       </Space>
@@ -23,7 +32,7 @@ export const CheckboxInput = ({ label, children, ...checkboxProps }: Props) => {
   )
 }
 
-const InputWrapper = styled.div(({ theme }) => ({
+const InputWrapper = styled(motion.div)(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
   padding: theme.space[4],
   borderRadius: theme.radius.sm,

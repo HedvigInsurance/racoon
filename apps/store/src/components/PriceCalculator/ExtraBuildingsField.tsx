@@ -6,13 +6,13 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Text } from '@/components/Text/Text'
 import { TextField } from '@/components/TextField/TextField'
+import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import {
   ExtraBuildingsField as InputFieldExtraBuildings,
   ExtraBuilding,
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { InputSwitch } from './InputSwitch'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type ExtraBuildingsFieldProps = {
@@ -64,7 +64,7 @@ export const ExtraBuildingsField = ({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
-      <Card y={0.5}>
+      <Card y={1}>
         <Text size="l">{translateLabel(field.label)}</Text>
 
         <Space y={0.5} as="ul">
@@ -75,27 +75,34 @@ export const ExtraBuildingsField = ({
             return (
               <Preview key={identifier}>
                 <SpaceFlex space={0.25} align="end">
-                  <p>{translateLabel(buildingOptionName)}</p>
-                  <MutedText>
+                  <Text>{translateLabel(buildingOptionName)}</Text>
+                  <Text as="span" color="textSecondary">
                     {item.area} m<Sup>2</Sup>
-                  </MutedText>
+                  </Text>
                 </SpaceFlex>
-                <Button type="button" variant="ghost" onClick={() => handleRemove(item)}>
-                  {t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
-                </Button>
+                <div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="small"
+                    onClick={() => handleRemove(item)}
+                  >
+                    {t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
+                  </Button>
+                </div>
               </Preview>
             )
           })}
         </Space>
 
         <Dialog.Trigger asChild>
-          <Button type="button" variant="ghost">
+          <Button type="button" variant="secondary">
             {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
           </Button>
         </Dialog.Trigger>
       </Card>
 
-      <Dialog.Content>
+      <DialogContent>
         <DialogContentWrapper>
           <Space y={1.5}>
             <SpaceFlex align="center" direction="vertical">
@@ -122,30 +129,31 @@ export const ExtraBuildingsField = ({
                       name="area"
                       label={t('FIELD_EXTRA_BUILDINGS_AREA_LABEL')}
                       min={0}
+                      suffix="m²"
                       required
                     />
+                    <ToggleCard
+                      name="hasWaterConnected"
+                      label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
+                    />
                   </Space>
-                  <InputSwitch
-                    name="hasWaterConnected"
-                    label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
-                  />
                 </Space>
 
-                <SpaceFlex space={1}>
+                <Space y={0.25}>
+                  <Button type="submit" variant="primary" loading={loading} disabled={loading}>
+                    {t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}
+                  </Button>
                   <Dialog.Close asChild>
                     <Button type="button" variant="ghost">
                       {t('FIELD_EXTRA_BUILDINGS_MODAL_CANCEL')}
                     </Button>
                   </Dialog.Close>
-                  <Button type="submit" disabled={loading}>
-                    {t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}
-                  </Button>
-                </SpaceFlex>
+                </Space>
               </Space>
             </form>
           </Space>
         </DialogContentWrapper>
-      </Dialog.Content>
+      </DialogContent>
     </Dialog.Root>
   )
 }
@@ -173,29 +181,28 @@ const Card = styled(Space)(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
 }))
 
+const DialogContent = styled(Dialog.Content)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: theme.space[2],
+}))
+
 const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
-  marginTop: '3.5rem',
   padding: theme.space[4],
   borderRadius: 8,
+  width: '100%',
+  maxWidth: '32rem',
 }))
 
-const Preview = styled.li(({ theme }) => ({
-  border: `1px solid ${theme.colors.gray500}`,
-  borderRadius: 8,
-  paddingLeft: theme.space[5],
-
+const Preview = styled.li({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-}))
-
-const MutedText = styled.p(({ theme }) => ({
-  fontFamily: theme.fonts.body,
-  fontSize: theme.fontSizes[1],
-  color: theme.colors.gray700,
-}))
+})
 
 const Sup = styled.sup({
   verticalAlign: 'super',
