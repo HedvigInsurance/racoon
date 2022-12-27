@@ -1,4 +1,10 @@
-import { apiPlugin, getStoryblokApi, SbBlokData, storyblokInit, StoryData } from '@storyblok/react'
+import {
+  apiPlugin,
+  getStoryblokApi,
+  SbBlokData,
+  storyblokInit,
+  ISbStoryData,
+} from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
@@ -34,6 +40,7 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
+import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -53,7 +60,7 @@ export type StoryblokQueryParams = {
 }
 
 export type StoryblokPageProps = {
-  [STORY_PROP_NAME]: StoryData
+  [STORY_PROP_NAME]: ISbStoryData
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
 }
 
@@ -91,8 +98,8 @@ export type LinkField = {
   }
 }
 
-export type ProductStory = StoryData & {
-  content: StoryData['content'] & {
+export type ProductStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
     name?: string
     description?: string
     productId: string
@@ -102,21 +109,21 @@ export type ProductStory = StoryData & {
   }
 }
 
-export type GlobalStory = StoryData & {
-  content: StoryData['content'] & {
+export type GlobalStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
     header: ExpectedBlockType<HeaderBlockProps>
     footer: ExpectedBlockType<FooterBlockProps>
   }
 }
 
-export type ReusableStory = StoryData & {
-  content: StoryData['content'] & {
+export type ReusableStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
     body: Array<SbBlokData>
   }
 }
 
 type LinkData = Pick<
-  StoryData,
+  ISbStoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
 > & { is_folder: boolean; path: string; published: boolean; real_path: string }
 
@@ -167,6 +174,7 @@ export const initStoryblok = () => {
     TextBlock,
     TopPickCardBlock,
     VideoBlock,
+    VideoListBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {

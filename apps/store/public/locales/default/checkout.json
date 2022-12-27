@@ -6,7 +6,9 @@
   "FORM_EMAIL_LABEL": "Email",
   "FORM_HELP_LABEL": "Help",
   "CONTACT_DETAILS_FORM_TITLE": "Your contact details",
-  "FIELD_PERSONAL_NUMBER_SE_LABEL": "YYYYMMDDXXXX",
+  "FIELD_PERSONAL_NUMBER_SE_LABEL": "Personal number",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 insurance",
-  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} insurances"
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} insurances",
+  "BACK_BUTTON": "Back",
+  "OPEN_BANKID_DESCRIPTION": "Open the BankID app on your phone."
 }

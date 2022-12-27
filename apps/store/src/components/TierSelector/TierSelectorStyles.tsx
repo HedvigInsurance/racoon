@@ -85,6 +85,10 @@ export const TierItemWrapper = styled.div<{ isSelected: boolean }>(({ theme }) =
   padding: theme.space[2],
   backgroundColor: theme.colors.gray200,
 
+  ':not(:first-of-type)': {
+    paddingTop: 0,
+  },
+
   '&:first-of-type': {
     borderTop: `1px solid ${theme.colors.gray300}`,
   },

@@ -6,7 +6,9 @@
   "FORM_EMAIL_LABEL": "E-post",
   "FORM_HELP_LABEL": "Hjälp",
   "CONTACT_DETAILS_FORM_TITLE": "Dina kontaktuppgifter",
-  "FIELD_PERSONAL_NUMBER_SE_LABEL": "ÅÅÅÅMMDDXXXX",
+  "FIELD_PERSONAL_NUMBER_SE_LABEL": "Personnummer",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 försäkring",
-  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} försäkringar"
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} försäkringar",
+  "BACK_BUTTON": "Tillbaka",
+  "OPEN_BANKID_DESCRIPTION": "Öppna BankID-appen på din telefon."
 }

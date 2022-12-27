@@ -1,25 +1,44 @@
-import { Video, VideoSize } from '@/components/Video/Video'
+import styled from '@emotion/styled'
+import { mq } from 'ui'
+import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
-type VideoBlockProps = SbBaseBlockProps<
+export type VideoBlockProps = SbBaseBlockProps<
   {
     video: StoryblokAsset
     poster?: StoryblokAsset
-    autoplay?: boolean
-  } & VideoSize
->
+  } & Pick<
+    VideoProps,
+    | 'autoPlay'
+    | 'controls'
+    | 'aspectRatioLandscape'
+    | 'aspectRatioPortrait'
+    | 'maxHeightLandscape'
+    | 'maxHeightPortrait'
+  >
+> & { className?: string }
 
-export const VideoBlock = ({ blok }: VideoBlockProps) => {
+export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
   return (
-    <Video
-      sources={[{ url: blok.video.filename }]}
-      poster={blok.poster?.filename}
-      autoplay={blok.autoplay}
-      aspectRatioLandscape={blok.aspectRatioLandscape}
-      aspectRatioPortrait={blok.aspectRatioPortrait}
-      maxHeightLandscape={blok.maxHeightLandscape}
-      maxHeightPortrait={blok.maxHeightPortrait}
-    />
+    <Wrapper className={className}>
+      <Video
+        sources={[{ url: blok.video.filename }]}
+        poster={blok.poster?.filename}
+        autoPlay={blok.autoPlay}
+        controls={blok.controls}
+        aspectRatioLandscape={blok.aspectRatioLandscape}
+        aspectRatioPortrait={blok.aspectRatioPortrait}
+        maxHeightLandscape={blok.maxHeightLandscape}
+        maxHeightPortrait={blok.maxHeightPortrait}
+      />
+    </Wrapper>
   )
 }
 VideoBlock.blockName = 'videoBlock'
+
+const Wrapper = styled.div(({ theme }) => ({
+  paddingInline: theme.space[2],
+  [mq.lg]: {
+    paddingInline: theme.space[4],
+  },
+}))

@@ -25,7 +25,7 @@ export const ContactSupport = ({
           <SpaceFlex space={0.5} wrap="wrap">
             <IntercomChatButton />
             {showCallButton && (
-              <FlexButton variant="outlined" onClick={() => console.log('call')}>
+              <FlexButton variant="ghost" onClick={() => console.log('call')}>
                 Schedule a call
               </FlexButton>
             )}

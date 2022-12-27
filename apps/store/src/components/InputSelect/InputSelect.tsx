@@ -54,6 +54,7 @@ export const InputSelect = ({
   value,
   defaultValue,
   placeholder,
+  label,
   ...rest
 }: InputSelectProps) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -62,6 +63,8 @@ export const InputSelect = ({
     onChange?.(event)
     highlight()
   }
+
+  const labelText = label || placeholder
 
   return (
     <InputBase {...rest}>
@@ -76,9 +79,9 @@ export const InputSelect = ({
             {...rest}
             {...animationProps}
           >
-            {placeholder && (
+            {labelText && (
               <Placeholder value="" disabled selected>
-                {placeholder}
+                {labelText}
               </Placeholder>
             )}
             {options.map(({ name, value }) => (

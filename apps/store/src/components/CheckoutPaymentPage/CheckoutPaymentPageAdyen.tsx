@@ -53,7 +53,7 @@ export const CheckoutPaymentPageAdyen = ({
           onSuccess={() => {}}
         />
         <Space y={0.5}>
-          <Button onClick={startSign} disabled={isCompleteButtonDisabled} fullWidth>
+          <Button onClick={() => startSign()} disabled={isCompleteButtonDisabled}>
             Complete purchase
           </Button>
           <p>

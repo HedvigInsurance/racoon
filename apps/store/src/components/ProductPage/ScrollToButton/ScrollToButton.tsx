@@ -13,7 +13,7 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
 
   return (
     <Wrappper>
-      <Button type={type} onClick={handleClick} fullWidth>
+      <Button type={type} onClick={handleClick}>
         {children}
       </Button>
     </Wrappper>

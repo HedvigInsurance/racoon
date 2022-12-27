@@ -16,7 +16,7 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldType
-  onSubmit: (data: JSONData) => Promise<void>
+  onSubmit: (data: JSONData) => Promise<unknown>
   loading: boolean
   autoFocus?: boolean
   priceIntent: PriceIntent
