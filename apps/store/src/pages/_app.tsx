@@ -3,6 +3,7 @@ import { Global, ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
+import router from 'next/router'
 import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
 import { GTMAppScript } from '@/services/gtm'
@@ -10,10 +11,15 @@ import { initDatadog } from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
+import {
+  handleNewSiteExperimentQueryParam,
+  trackNewSiteExperimentImpression,
+} from '@/services/Tracking/newSiteExperimentTracking'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
-import { trackNewSiteExperimentImpression } from '@/services/Tracking/useHandleExperimentQueryParam'
 import { contentFontClassName } from '@/utils/fonts'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 
 // Enable API mocking
@@ -25,8 +31,17 @@ const tracking = new Tracking()
 
 if (typeof window !== 'undefined') {
   initDatadog()
+
   tracking.reportPageView(window.location.pathname)
+
+  handleNewSiteExperimentQueryParam()
   trackNewSiteExperimentImpression(tracking)
+
+  router.ready(() => {
+    const { routingLocale } = getLocaleOrFallback(router.locale)
+    const { countryCode } = getCountryByLocale(routingLocale)
+    tracking.setAppContext({ countryCode })
+  })
 }
 
 // @TODO - should this be initialized unless running in browser?
