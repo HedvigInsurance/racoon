@@ -52,6 +52,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
 
   const getTotal = () => {
     if (!hasDiscount) return cartCost.net
+    // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
     switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
       case CampaignDiscountType.FreeMonths:
         return cartCost.discount
@@ -62,7 +63,6 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
 
   const getCrossOut = () => {
     if (!hasDiscount) return undefined
-
     switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
       case CampaignDiscountType.FreeMonths:
       case CampaignDiscountType.MonthlyPercentage:
