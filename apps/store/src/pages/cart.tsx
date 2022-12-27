@@ -57,17 +57,16 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
       : cartCost.net
 
   const getCrossOut = () => {
-    if (hasDiscount) {
-      switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
-        case CampaignDiscountType.FreeMonths:
-        case CampaignDiscountType.MonthlyPercentage:
-          return cartCost.gross
-        case CampaignDiscountType.IndefinitePercentage:
-        case CampaignDiscountType.MonthlyCost:
-          return cartCost.discount
-      }
+    if (!hasDiscount) return undefined
+
+    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+      case CampaignDiscountType.FreeMonths:
+      case CampaignDiscountType.MonthlyPercentage:
+        return cartCost.gross
+      case CampaignDiscountType.IndefinitePercentage:
+      case CampaignDiscountType.MonthlyCost:
+        return cartCost.discount
     }
-    return undefined
   }
 
   return (
