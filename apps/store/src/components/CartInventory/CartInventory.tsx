@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
-import { Heading, Space } from 'ui'
+import { Heading, Space, Text } from 'ui'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { useGetDiscountDurationExplanation } from './CartInventory.helpers'
@@ -12,14 +12,12 @@ type Props = {
 }
 
 export const CartInventory = ({ cart, children }: Props) => {
-  const formatter = useFormatter()
   const { t } = useTranslation('cart')
-
   const discountDurationExplanation = useGetDiscountDurationExplanation()
-
   const campaigns = cart.redeemedCampaigns.map((item) => ({
     discount: item.discount,
   }))
+  const hasDiscount = cart.redeemedCampaigns.length !== 0
 
   return (
     <Space y={1}>
@@ -33,14 +31,7 @@ export const CartInventory = ({ cart, children }: Props) => {
           <Heading as="h3" variant="standard.18">
             {t('CHECKOUT_PRICE_TOTAL')}
           </Heading>
-          <PriceWrapper>
-            <OriginalPrice as="h3" variant="standard.18">
-              {formatter.monthlyPrice(cart.cost.gross)}
-            </OriginalPrice>
-            <Heading as="h3" variant="standard.18">
-              {formatter.monthlyPrice(cart.cost.discount)}
-            </Heading>
-          </PriceWrapper>
+          <DisplayTotalAmount cost={cart.cost} hasDiscount={hasDiscount} />
         </TotalWrapper>
         {campaigns
           ? campaigns.map((campaign) => (
@@ -53,6 +44,39 @@ export const CartInventory = ({ cart, children }: Props) => {
     </Space>
   )
 }
+
+type DisplayTotalAmountProps = {
+  cost: CartFragmentFragment['cost']
+  hasDiscount: boolean
+}
+const DisplayTotalAmount = ({ hasDiscount = false, cost }: DisplayTotalAmountProps) => {
+  const { discount, gross } = cost
+  const formatter = useFormatter()
+
+  return (
+    <>
+      {!hasDiscount ? (
+        <Text>{formatter.monthlyPrice(gross)}</Text>
+      ) : (
+        <SpaceBetweenPrice>
+          <LineThroughPrice>{formatter.monthlyPrice(gross)}</LineThroughPrice>
+          <Text>{formatter.monthlyPrice(discount)}</Text>
+        </SpaceBetweenPrice>
+      )}
+    </>
+  )
+}
+
+const LineThroughPrice = styled(Text)(({ theme }) => ({
+  color: theme.colors.textSecondary,
+  textDecoration: 'line-through',
+}))
+
+const SpaceBetweenPrice = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: theme.space[2],
+}))
 
 const List = styled.ul(({ theme }) => ({
   display: 'flex',
@@ -70,17 +94,6 @@ const TotalWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
 })
-
-const PriceWrapper = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: theme.space[2],
-}))
-
-const OriginalPrice = styled(Heading)(({ theme }) => ({
-  color: theme.colors.textSecondary,
-  textDecoration: 'line-through',
-}))
 
 const DiscountMessage = styled.div(({ theme }) => ({
   display: 'flex',
