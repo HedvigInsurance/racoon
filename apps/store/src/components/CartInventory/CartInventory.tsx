@@ -13,7 +13,7 @@ type Props = {
 
 export const CartInventory = ({ cart, children }: Props) => {
   const { t } = useTranslation('cart')
-  const discountDurationExplanation = useGetDiscountDurationExplanation()
+  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
   const campaigns = cart.redeemedCampaigns.map((item) => ({
     discount: item.discount,
   }))
@@ -33,13 +33,11 @@ export const CartInventory = ({ cart, children }: Props) => {
           </Heading>
           <DisplayTotalAmount cost={cart.cost} hasDiscount={hasDiscount} />
         </TotalWrapper>
-        {campaigns
-          ? campaigns.map((campaign) => (
-              <DiscountMessage key={campaign.discount.type}>
-                {discountDurationExplanation(campaign.discount, cart.cost.gross)}
-              </DiscountMessage>
-            ))
-          : null}
+        {campaigns.map((campaign) => (
+          <DiscountMessage key={campaign.discount.type}>
+            {getDiscountDurationExplanation(campaign.discount, cart.cost.gross)}
+          </DiscountMessage>
+        ))}
       </Footer>
     </Space>
   )
@@ -49,22 +47,20 @@ type DisplayTotalAmountProps = {
   cost: CartFragmentFragment['cost']
   hasDiscount: boolean
 }
-const DisplayTotalAmount = ({ hasDiscount = false, cost }: DisplayTotalAmountProps) => {
-  const { gross, net } = cost
+const DisplayTotalAmount = ({ cost, hasDiscount }: DisplayTotalAmountProps) => {
   const formatter = useFormatter()
+  const { gross, net } = cost
 
-  return (
-    <>
-      {!hasDiscount ? (
-        <Text>{formatter.monthlyPrice(gross)}</Text>
-      ) : (
-        <SpaceBetweenPrice>
-          <LineThroughPrice>{formatter.monthlyPrice(gross)}</LineThroughPrice>
-          <Text>{formatter.monthlyPrice(net)}</Text>
-        </SpaceBetweenPrice>
-      )}
-    </>
-  )
+  if (hasDiscount) {
+    return (
+      <SpaceBetweenPrice>
+        <LineThroughPrice>{formatter.monthlyPrice(gross)}</LineThroughPrice>
+        <Text>{formatter.monthlyPrice(net)}</Text>
+      </SpaceBetweenPrice>
+    )
+  }
+
+  return <Text>{formatter.monthlyPrice(gross)}</Text>
 }
 
 const LineThroughPrice = styled(Text)(({ theme }) => ({
