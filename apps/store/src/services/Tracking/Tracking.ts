@@ -1,5 +1,5 @@
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { pushToGTMDataLayer } from '@/services/gtm'
+import { AppTrackingContext, pushToGTMDataLayer, setGtmContext } from '@/services/gtm'
 import { isBrowser } from '@/utils/env'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
@@ -20,6 +20,11 @@ export class Tracking {
       console.debug('tracking context', key, value)
     }
     this.context[key] = value
+  }
+
+  public setAppContext = (context: AppTrackingContext) => {
+    this.setContext('countryCode', context.countryCode)
+    setGtmContext(context)
   }
 
   public reportPageView(urlPath: string) {

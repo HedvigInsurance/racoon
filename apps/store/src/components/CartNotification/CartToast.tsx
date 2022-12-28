@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Heading, LinkButton, Space, Dialog } from 'ui'
+import { Heading, Space, Dialog, Button } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
@@ -46,19 +46,15 @@ const CartNotificationContent = ({ name, price, onClose }: Props) => {
         <ProductItem name={name} price={price} />
 
         <Space y={0.5}>
-          <LinkButton as={Link} href={PageLink.cart()} fullWidth>
-            Proceed to cart ({cartLineCount})
-          </LinkButton>
+          <Link href={PageLink.cart()} passHref legacyBehavior>
+            <Button variant="primary">Proceed to cart ({cartLineCount})</Button>
+          </Link>
 
-          <LinkButton
-            as={Link}
-            href={PageLink.store()}
-            variant="outlined"
-            fullWidth
-            onClick={onClose}
-          >
-            Continue shopping
-          </LinkButton>
+          <Link href={PageLink.store()} passHref legacyBehavior>
+            <Button variant="ghost" onClick={onClose}>
+              Continue shopping
+            </Button>
+          </Link>
         </Space>
       </DialogContentWrapper>
     </Dialog.Content>

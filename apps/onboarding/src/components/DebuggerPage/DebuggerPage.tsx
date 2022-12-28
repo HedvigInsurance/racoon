@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { Button, Space } from 'ui'
+import { Space } from 'ui'
+import { Button } from '@/components/Button/Button'
 import { FixedFooter } from '@/components/FixedFooter'
 import { useForm } from '@/hooks/useForm'
 import { PageLink } from '@/lib/PageLink'

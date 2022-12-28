@@ -2,6 +2,7 @@ fragment ProductOffer on ProductOffer {
   id
   variant {
     typeOfContract
+    displayName
     product {
       displayNameFull
       pillowImage {

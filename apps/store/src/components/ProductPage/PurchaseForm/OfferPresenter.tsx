@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useMemo, useState } from 'react'
@@ -33,8 +34,19 @@ export const OfferPresenter = (props: Props) => {
   const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
-  const [selectedOfferId, setSelectedOfferId] = useState(priceIntent.offers[0].id)
-  const selectedOffer = priceIntent.offers.find((offer) => offer.id === selectedOfferId)!
+  const [selectedOffer, setSelectedOffer] = useState(priceIntent.offers[0])
+  const selectedOfferId = selectedOffer.id
+
+  const handleTierSelectorValueChange = (offerId: string) => {
+    const offer = priceIntent.offers.find((offer) => offer.id === offerId)
+
+    if (offer === undefined) {
+      datadogLogs.logger.error(`Unknown offer selected: ${offerId}`)
+      return
+    }
+
+    setSelectedOffer(offer)
+  }
 
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 
@@ -102,7 +114,7 @@ export const OfferPresenter = (props: Props) => {
             <TierSelector
               offers={priceIntent.offers}
               selectedOfferId={selectedOfferId}
-              onValueChange={setSelectedOfferId}
+              onValueChange={handleTierSelectorValueChange}
               currencyCode={shopSession.currencyCode}
             />
 
@@ -128,15 +140,13 @@ export const OfferPresenter = (props: Props) => {
   )
 }
 
-const FullWidthButton = styled.button({ width: '100%' })
+const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
 
 // TODO: Localize
 const SubmitButton = ({ loading }: { loading: boolean }) => {
   return (
     <SpaceFlex space={0.5} direction="vertical" align="center">
-      <Button fullWidth disabled={loading}>
-        {loading ? 'Loading...' : 'Add to cart'}
-      </Button>
+      <Button disabled={loading}>{loading ? 'Loading...' : 'Add to cart'}</Button>
       <Text size="s" align="center">
         Cancel anytime
       </Text>

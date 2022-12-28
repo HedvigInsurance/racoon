@@ -1,19 +1,19 @@
 import styled from '@emotion/styled'
-import { getStoryblokApi, Richtext } from '@storyblok/react'
+import { ISbRichtext, renderRichText } from '@storyblok/react'
 import { Heading } from 'ui'
 import * as Timeline from '@/components/Timeline/Timeline'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type TimelineItemBlockProps = SbBaseBlockProps<{
   title: string
-  body: Richtext
+  body: ISbRichtext
 }> & {
   isFirst: boolean
   isLast: boolean
 }
 
 export const TimelineItemBlock = ({ blok, isFirst, isLast }: TimelineItemBlockProps) => {
-  const contentHtml = getStoryblokApi().richTextResolver.render(blok.body)
+  const contentHtml = renderRichText(blok.body)
   return (
     <Timeline.Item>
       <Timeline.Separator>

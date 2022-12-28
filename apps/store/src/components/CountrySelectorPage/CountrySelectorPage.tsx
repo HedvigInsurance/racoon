@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { LinkButton, Space, Heading } from 'ui'
+import { Space, Heading, Button } from 'ui'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { countries } from '@/utils/l10n/countries'
@@ -37,14 +37,16 @@ export const CountrySelectorPage = (props: StoryblokPageProps) => {
         </Heading>
         <CountryOptionsContainer>
           {Object.entries(countries).map(([country, countryData]) => (
-            <LinkButton
+            <Link
               key={country}
-              as={Link}
               href={`/${toRoutingLocale(countryData.defaultLocale)}`}
-              onClick={() => onHandleClick(countryData.defaultLocale)}
+              passHref
+              legacyBehavior
             >
-              {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
-            </LinkButton>
+              <Button onClick={() => onHandleClick(countryData.defaultLocale)}>
+                {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
+              </Button>
+            </Link>
           ))}
         </CountryOptionsContainer>
       </Space>
