@@ -1,12 +1,13 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
+  useGetCrossOut,
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
+  useGetTotal,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { CampaignDiscountType } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -23,6 +24,8 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+  const total = useGetTotal()
+  const crossOut = useGetCrossOut()
 
   if (!shopSession) return null
 
@@ -47,38 +50,12 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     ),
   }))
 
-  const cartCost = shopSession.cart.cost
-  const hasDiscount = shopSession.cart.redeemedCampaigns.length
-
-  const getTotal = () => {
-    if (!hasDiscount) return cartCost.net
-    // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
-    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
-      case CampaignDiscountType.FreeMonths:
-        return cartCost.discount
-      default:
-        return cartCost.net
-    }
-  }
-
-  const getCrossOut = () => {
-    if (!hasDiscount) return undefined
-    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
-      case CampaignDiscountType.FreeMonths:
-      case CampaignDiscountType.MonthlyPercentage:
-        return cartCost.gross
-      case CampaignDiscountType.IndefinitePercentage:
-      case CampaignDiscountType.MonthlyCost:
-        return cartCost.discount
-    }
-  }
-
   return (
     <CartPage
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{ total: getTotal(), crossOut: getCrossOut() }}
+      cost={{ total, crossOut }}
       {...props}
     />
   )
