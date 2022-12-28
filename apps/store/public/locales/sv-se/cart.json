@@ -10,5 +10,8 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Lägg till",
   "DISCOUNT_DURATION_EXPLANATION": "i {{count}} månad, sedan",
-  "CHECKOUT_PRICE_TOTAL": "Totalt"
+  "CHECKOUT_PRICE_TOTAL": "Totalt",
+  "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Ja, ta bort",
+  "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Avbryt",
+  "REMOVE_ENTRY_MODAL_PROMPT": "Är du säker på att du vill ta bort {{name}}?"
 }
