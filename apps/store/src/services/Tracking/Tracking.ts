@@ -1,5 +1,8 @@
+import { datadogLogs } from '@datadog/browser-logs'
+import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { AppTrackingContext, pushToGTMDataLayer, setGtmContext } from '@/services/gtm'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { isBrowser } from '@/utils/env'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
@@ -11,20 +14,42 @@ export enum TrackingEvent {
   PageView = 'virtual_page_view',
 }
 
+datadogLogs.createLogger('tracking')
+
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
   constructor(public context: TrackingContext = {}) {}
+
+  private logger = datadogLogs.getLogger('tracking')!
 
   public setContext = (key: string, value: unknown) => {
     if (this.context[key] !== value) {
       console.debug(`tracking context ${key}:`, value)
     }
-    this.context[key] = value
+    if (value != null) {
+      this.context[key] = value
+    } else {
+      delete this.context[key]
+    }
   }
 
   public setAppContext = (context: AppTrackingContext) => {
     this.setContext('countryCode', context.countryCode)
     setGtmContext(context)
+  }
+
+  public setProductContext = (product: ProductData) => {
+    this.setContext('has_home', product.name.includes('_APARTMENT'))
+    this.setContext('has_house', product.name.includes('_HOUSE'))
+    this.setContext('has_card', product.name.includes('_CAR'))
+    this.setContext('has_accident', product.name.includes('_ACCIDENT'))
+    this.setContext('has_travel', false)
+    this.setContext('is_student', product.name.includes('STUDENT'))
+  }
+
+  public setPriceIntentContext = (priceIntent: PriceIntent) => {
+    const { numberCoInsured } = priceIntent.data
+    this.setContext('number_of_people', numberCoInsured ? numberCoInsured + 1 : undefined)
   }
 
   public reportPageView(urlPath: string) {
@@ -53,31 +78,26 @@ export class Tracking {
     pushToGTMDataLayer(event)
   }
 
+  // TODO: Decide what to do with legacy context fields
+  // referral_code
+  // discounted_premium
+  // flow_type
+  // quote_cart_id
+  // ownership_type
+  // car_sub_type
   public reportOffer(offer: ProductOfferFragment) {
     this.ensureBrowserEnvironment()
     const event = {
       event: TrackingEvent.OfferCreated,
       offerData: {
+        id: offer.id,
         currency: offer.price.currencyCode as string,
         insurance_price: offer.price.amount,
         insurance_type: offer.variant.typeOfContract,
-        // TODO: Decide what to do with remaining fields
-        // number_of_people
-        // referral_code
-        // has_accident
-        // has_home
-        // has_travel
-        // is_student
-        // discounted_premium
-        // flow_type
-        // quote_cart_id
-        // has_house
-        // ownership_type
-        // has_car_
-        // car_sub_type
+        ...this.context,
       },
     }
-    console.debug(event.event, event.offerData)
+    this.logger.log(event.event, event.offerData)
     pushToGTMDataLayer(event)
   }
 

@@ -17,7 +17,11 @@ export const initDatadog = () => {
       datadogLogsConfig.beforeSend = (event) => {
         // Must exclude console origin to avoid endless loop.  Feel free to experiment with other values
         if (event.origin === 'logger') {
-          console[event.status](event.message)
+          if (event.logger?.name == 'tracking') {
+            console[event.status]('tracking event', event.message, event)
+          } else {
+            console[event.status](event.message)
+          }
         }
       }
     }

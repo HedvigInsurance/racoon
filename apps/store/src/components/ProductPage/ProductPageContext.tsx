@@ -1,5 +1,6 @@
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react'
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react'
 import { ProductVariant } from '@/services/apollo/generated'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { ProductPageProps } from './ProductPage.types'
 
 type ProductPageContextData = ProductPageProps & {
@@ -32,6 +33,11 @@ export const ProductPageContextProvider = (props: Props) => {
     }),
     [rest, selectedVariant],
   )
+
+  const tracking = useTracking()
+  useEffect(() => {
+    tracking.setProductContext(contextValue.productData)
+  }, [contextValue.productData, tracking])
 
   return <ProductPageContext.Provider value={contextValue}>{children}</ProductPageContext.Provider>
 }
