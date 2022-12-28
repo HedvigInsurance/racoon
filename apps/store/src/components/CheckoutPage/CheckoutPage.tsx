@@ -52,24 +52,25 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
       </Header>
 
-      <Section>
-        <CartCollapsible
-          title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
-          cost={cart.cost}
-        >
-          <CartCollapsibleInner>
-            <CartEntryList>
-              {cart.entries.map((item) => (
-                <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
-              ))}
-            </CartEntryList>
-            <HorizontalLine />
-            <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
-            <HorizontalLine />
-            <CostSummary {...cart.cost} campaigns={cart.campaigns} />
-          </CartCollapsibleInner>
-        </CartCollapsible>
-      </Section>
+      <Space y={0.5}>
+        <Section>
+          <CartCollapsible
+            title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
+            cost={cart.cost}
+          >
+            <CartCollapsibleInner>
+              <CartEntryList>
+                {cart.entries.map((item) => (
+                  <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+                ))}
+              </CartEntryList>
+              <HorizontalLine />
+              <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+              <HorizontalLine />
+              <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+            </CartCollapsibleInner>
+          </CartCollapsible>
+        </Section>
 
         <HorizontalLineStandalone />
       </Space>
