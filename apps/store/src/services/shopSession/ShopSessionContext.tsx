@@ -32,7 +32,7 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
 }
 
 export const useShopSession = (): ShopSessionResult => {
-  const queryResult = useContext(ShopSessionContext) as ShopSessionResult
+  const queryResult = useContext(ShopSessionContext)
   if (!queryResult) {
     throw new Error(
       'useShopSession called from outside ShopSessionContextProvider, no value in context',
@@ -54,13 +54,12 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   )
 
   const queryResult = useShopSessionQuery({
-    ssr: true,
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
   }) as ShopSessionResult
 
   // GOTCHA: We cannot use queryResult.observable directly with skipped query since it changes
-  // when query becomes un-skipped
+  // when query becomes un-skipped.  Probably an Apollo Client bug
   const readyRef = useRef<{
     observable: Observable<ShopSession>
     observer?: SubscriptionObserver<ShopSession>
