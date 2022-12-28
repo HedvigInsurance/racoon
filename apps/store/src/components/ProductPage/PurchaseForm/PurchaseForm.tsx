@@ -12,11 +12,11 @@ import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
-import { trackOffer } from '@/services/gtm'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import useRouterRefresh from '@/utils/useRouterRefresh'
@@ -155,8 +155,8 @@ const EditingState = (props: EditingStateProps) => {
   const getMutationError = useGetMutationError()
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
+  const tracking = useTracking()
 
-  const { shopSession } = useShopSession()
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onError(error) {
@@ -176,14 +176,7 @@ const EditingState = (props: EditingStateProps) => {
       const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
       const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
-        // FIXME: pick offer for specific product or track all offers
-        const firstOffer = updatedPriceIntent.offers[0]
-        trackOffer({
-          shopSessionId: shopSession!.id,
-          contractType: firstOffer.variant.typeOfContract,
-          amount: firstOffer.price.amount,
-          currency: firstOffer.price.currencyCode,
-        })
+        updatedPriceIntent.offers.forEach((offer) => tracking.reportOffer(offer))
         onSuccess()
       } else {
         setIsLoadingPrice(false)
