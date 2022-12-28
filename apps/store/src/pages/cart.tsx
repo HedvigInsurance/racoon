@@ -113,7 +113,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 const getPrevURL = (context: GetServerSidePropsContext, locale: RoutingLocale) => {
   const storeURL = PageLink.store({ locale })
 
-  console.log(context.req.headers.referer)
   if (!context.req.headers.referer) return storeURL
 
   const url = new URL(context.req.headers.referer)
