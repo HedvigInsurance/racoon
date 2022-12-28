@@ -16,6 +16,6 @@ export type CartCampaign = {
 }
 
 export type CartCost = {
-  total: Money
+  total?: Money
   crossOut?: Money
 }
