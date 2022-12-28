@@ -15,12 +15,17 @@ import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
+let id = 1
+
 export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
     private readonly apolloClient: ApolloClient<unknown>,
     public readonly shopSession: ShopSession,
   ) {}
+  id = id++
+  private createParams: PriceIntentCreateParams | null = null
+  private createPromise: Promise<PriceIntent> | null = null
 
   public async create({ productName, priceTemplate }: PriceIntentCreateParams) {
     const result = await this.apolloClient.mutate<
@@ -29,6 +34,16 @@ export class PriceIntentService {
     >({
       mutation: PriceIntentCreateDocument,
       variables: { productName, shopSessionId: this.shopSession.id },
+      update: (cache, result) => {
+        const priceIntent = result.data?.priceIntentCreate
+        if (priceIntent) {
+          cache.writeQuery({
+            query: PriceIntentDocument,
+            variables: { priceIntentId: priceIntent.id },
+            data: { priceIntent },
+          })
+        }
+      },
     })
     if (!result.data?.priceIntentCreate) throw new Error('Could not create price intent')
 
@@ -64,8 +79,8 @@ export class PriceIntentService {
     return null
   }
 
-  public async fetch({ productName, priceTemplate }: FetchParams) {
-    const priceIntentId = this.getStoredId(priceTemplate.name)
+  public async getOrCreate(params: FetchParams) {
+    const priceIntentId = this.getStoredId(params.priceTemplate.name)
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
@@ -73,7 +88,13 @@ export class PriceIntentService {
       if (priceIntent) return priceIntent
     }
 
-    return await this.create({ productName, priceTemplate })
+    // Deduplicate mutation, Apollo won't do this for us
+    const paramsEquals = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
+    if (!this.createPromise || !paramsEquals(this.createParams, params)) {
+      this.createParams = params
+      this.createPromise = this.create(params)
+    }
+    return await this.createPromise
   }
 
   private async update(variables: PriceIntentDataUpdateMutationVariables) {
