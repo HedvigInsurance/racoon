@@ -1,6 +1,14 @@
 import { useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useRef } from 'react'
-import { ShopSessionQueryResult, useShopSessionLazyQuery } from '@/services/apollo/generated'
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
@@ -30,6 +38,7 @@ export const useShopSession = (): ShopSessionResult => {
   // Make sure result object is stable
   const result = useRef<ShopSessionResult>({} as ShopSessionResult)
 
+  // TODO: Move country check elsewhere, make sure we do full reload (GRW-1985)
   // Ignore session from different country.
   // This probably means old session was fetched and new one is being created
   const shopSession = queryResult.data?.shopSession
@@ -41,32 +50,29 @@ export const useShopSession = (): ShopSessionResult => {
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
   const apolloClient = useApolloClient()
-  // Only used client-side
   const shopSessionServiceClientSide = useMemo(
     () => setupShopSessionServiceClientSide(apolloClient),
     [apolloClient],
   )
 
-  const [fetchSession, queryResult] = useShopSessionLazyQuery({
-    // Prevent network requests and ensure we trigger an error on cache miss, which should never happen
-    fetchPolicy: 'cache-only',
+  const [shopSessionId, setShopSessionId] = useState(
+    shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId,
+  )
+
+  const queryResult = useShopSessionQuery({
+    ssr: true,
+    variables: shopSessionId ? { shopSessionId } : undefined,
+    skip: !shopSessionId,
   })
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
-        fetchSession({
-          variables: { shopSessionId: shopSession.id },
-        })
+        setShopSessionId(shopSession.id)
       })
     }
-  }, [shopSessionServiceClientSide, countryCode, fetchSession])
-
-  // Fetch once during SSR
-  if (!isBrowser() && initialShopSessionId && !queryResult.called) {
-    fetchSession({ variables: { shopSessionId: initialShopSessionId } })
-  }
+  }, [shopSessionServiceClientSide, countryCode])
 
   return queryResult
 }
