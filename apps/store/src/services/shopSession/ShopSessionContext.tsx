@@ -1,14 +1,14 @@
-import { Observable, useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
-import { SubscriptionObserver } from 'zen-observable-ts'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
@@ -59,26 +59,25 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   }) as ShopSessionResult
 
   // GOTCHA: We cannot use queryResult.observable directly with skipped query since it changes
-  // when query becomes un-skipped.  Probably an Apollo Client bug
-  const readyRef = useRef<{
-    observable: Observable<ShopSession>
-    observer?: SubscriptionObserver<ShopSession>
-  }>()
-  if (readyRef.current == null) {
-    const observable = new Observable<ShopSession>((subscriptionObserver) => {
-      if (readyRef.current) readyRef.current.observer = subscriptionObserver
-    })
-    readyRef.current = {
-      observable,
-    }
-  }
+  // when query becomes un-skipped.  Hence, we have this analog of RxJS.Subject
+  const callbacksRef = useRef(new Set<OnReadyCallback>())
+  queryResult.onReady = useCallback(
+    (callback) => {
+      if (queryResult.shopSession) {
+        callback(queryResult.shopSession)
+      }
+      callbacksRef.current.add(callback)
+      return () => callbacksRef.current?.delete(callback)
+    },
+    [queryResult.shopSession],
+  )
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
-        readyRef.current?.observer?.next(shopSession)
+        callbacksRef.current?.forEach((callback) => callback(shopSession))
       })
     }
   }, [shopSessionServiceClientSide, countryCode])
@@ -88,13 +87,6 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   // This probably means old session was fetched and new one is being created
   const shopSession = queryResult.data?.shopSession
   queryResult.shopSession = shopSession?.countryCode === countryCode ? shopSession : undefined
-
-  if (!queryResult.onReady) {
-    queryResult.onReady = (callback) => {
-      const subscription = readyRef.current?.observable.subscribe(callback)
-      return () => subscription?.unsubscribe()
-    }
-  }
 
   return queryResult
 }
