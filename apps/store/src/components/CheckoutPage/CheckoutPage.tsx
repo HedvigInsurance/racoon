@@ -86,10 +86,10 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         <form onSubmit={handleSubmitSign}>
           <Space y={0.25}>
             <PersonalNumberField
-              name={FormElement.PersonalNumber}
               label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
               value={personalNumber}
               readOnly
+              disabled
             />
             <TextField
               type="email"
@@ -147,6 +147,11 @@ const HeaderHeading = styled(Heading)(({ theme }) => ({
 }))
 
 const HeaderLink = styled(Link)(({ theme }) => ({
+  ':focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.light}, 0 0 0 4px ${theme.colors.textPrimary}`,
+    borderRadius: theme.radius.xs,
+  },
+
   [mq.lg]: {
     position: 'absolute',
     top: theme.space[4],
