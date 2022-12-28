@@ -1,8 +1,12 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
+import {
+  useGetDiscountDurationExplanation,
+  useGetDiscountExplanation,
+} from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { CampaignDiscountType } from '@/services/apollo/generated'
 import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -17,7 +21,8 @@ type Props = { [SHOP_SESSION_PROP_NAME]: string; prevURL: string }
 
 const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplaination()
+  const getDiscountExplanation = useGetDiscountExplanation()
+  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
   if (!shopSession) return null
 
@@ -35,21 +40,45 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const campaigns = shopSession.cart.redeemedCampaigns.map((item) => ({
     id: item.id,
     code: item.code,
-    explanation: getDiscountExplanation(item.discount),
+    discountExplanation: getDiscountExplanation(item.discount),
+    discountDurationExplanation: getDiscountDurationExplanation(
+      shopSession.cart.redeemedCampaigns[0].discount,
+      shopSession.cart.cost.gross,
+    ),
   }))
 
   const cartCost = shopSession.cart.cost
-  const crossOut = cartCost.gross.amount !== cartCost.net.amount ? cartCost.gross : undefined
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length
+
+  const getTotal = () => {
+    if (!hasDiscount) return cartCost.net
+    // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
+    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+      case CampaignDiscountType.FreeMonths:
+        return cartCost.discount
+      default:
+        return cartCost.net
+    }
+  }
+
+  const getCrossOut = () => {
+    if (!hasDiscount) return undefined
+    switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+      case CampaignDiscountType.FreeMonths:
+      case CampaignDiscountType.MonthlyPercentage:
+        return cartCost.gross
+      case CampaignDiscountType.IndefinitePercentage:
+      case CampaignDiscountType.MonthlyCost:
+        return cartCost.discount
+    }
+  }
 
   return (
     <CartPage
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{
-        total: cartCost.net,
-        crossOut,
-      }}
+      cost={{ total: getTotal(), crossOut: getCrossOut() }}
       {...props}
     />
   )

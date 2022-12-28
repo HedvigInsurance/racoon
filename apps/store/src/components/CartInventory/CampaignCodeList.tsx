@@ -64,7 +64,7 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
               </ChipButton>
             </form>
 
-            <Text>{item.explanation}</Text>
+            <Text>{item.discountExplanation}</Text>
           </SpaceBetween>
         </li>
       ))}
