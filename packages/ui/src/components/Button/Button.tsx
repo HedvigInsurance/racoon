@@ -1,147 +1,173 @@
-import isPropValid from '@emotion/is-prop-valid'
+import { css, useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { ElementType, forwardRef } from 'react'
-import { ReactNode } from 'react'
-import { getMargins, Margins } from '../../lib/margins'
-import { getPaddings, Paddings } from '../../lib/paddings'
-import { getColor } from '../../lib/theme/theme'
+import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { LoadingSpinner } from './LoadingSpinner'
 
-export type ButtonVariant = 'filled' | 'outlined' | 'text'
-export type ButtonSize = 'sm' | 'lg'
-
-export type ButtonColors = 'dark' | 'light' | 'lavender'
-
-export type ButtonProps = Paddings &
-  Margins & {
-    variant?: ButtonVariant
-    fullWidth?: boolean
-    color?: ButtonColors
-    size?: ButtonSize
-    children?: ReactNode
-    icon?: ReactNode
-    onClick?: () => void
-    type?: 'button' | 'submit'
-    disabled?: boolean
-    form?: string
-  }
-
-type IconWrapperProps = {
-  padded?: boolean
+export type CustomButtonProps = {
+  variant?: 'primary' | 'primary-alt' | 'secondary' | 'ghost'
+  size?: 'large' | 'medium' | 'small'
+  loading?: boolean
+  href?: string
 }
 
-const IconWrapper = styled.div<IconWrapperProps>(({ padded }) => ({
-  marginLeft: padded ? '0.5rem' : 0,
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
+
+export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
+  const { variant = 'primary', loading, children, ...baseProps } = props
+
+  const theme = useTheme()
+  const buttonChildren = loading ? (
+    <Centered>
+      <LoadingSpinner size={props.size === 'small' ? theme.fontSizes[1] : theme.fontSizes[2]} />
+    </Centered>
+  ) : (
+    children
+  )
+
+  const buttonProps = {
+    ...baseProps,
+    children: buttonChildren,
+    as: props.href ? 'a' : 'button',
+    ref,
+  } as const
+
+  switch (variant) {
+    case 'primary':
+      return <PrimaryButton {...buttonProps} />
+    case 'primary-alt':
+      return <PrimaryAltButton {...buttonProps} />
+    case 'secondary':
+      return <SecondaryButton {...buttonProps} />
+    case 'ghost':
+      return <GhostButton {...buttonProps} />
+  }
+})
+
+Button.displayName = 'Button'
+
+const Centered = styled.div({
   display: 'flex',
-}))
+  justifyContent: 'center',
+})
 
-export const UnstyledButton = styled('button', { shouldForwardProp: isPropValid })({
-  padding: 0,
-  margin: 0,
-  background: 'none',
-  border: 'none',
-  outline: 'none',
-  appearance: 'none',
-  cursor: 'pointer',
-
+const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }) => ({
   // opt out of double tap to zoom to immediately respond to taps
   touchAction: 'manipulation',
 
+  borderRadius: theme.radius.sm,
+
+  whiteSpace: 'nowrap',
+  lineHeight: 1,
+  transition:
+    'background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
+
+  ...(size === 'large' && {
+    display: 'inline-block',
+    width: '100%',
+    paddingInline: theme.space[6],
+    paddingBlock: theme.space[3],
+
+    textAlign: 'center',
+    fontSize: theme.fontSizes[3],
+  }),
+
+  ...(size === 'medium' && {
+    paddingInline: theme.space[4],
+    paddingBlock: theme.space[2],
+    fontSize: theme.fontSizes[3],
+  }),
+
+  ...(size === 'small' && {
+    paddingInline: theme.space[4],
+    paddingBlock: theme.space[2],
+    fontSize: theme.fontSizes[1],
+  }),
+
+  cursor: 'pointer',
   '&:disabled': {
     cursor: 'default',
   },
+
+  '&:focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+  },
+}))
+
+const PrimaryButton = styled(StyledButton)(({ theme }) => ({
+  backgroundColor: theme.colors.gray1000,
+  color: theme.colors.textNegative,
+
+  '&:hover': {
+    // TODO: update to use translucent gray900
+    backgroundColor: theme.colors.gray900,
+  },
+
+  '&:disabled': {
+    backgroundColor: theme.colors.gray200,
+    color: theme.colors.textDisabled,
+  },
+
+  '&:focus-visible': {
+    backgroundColor: theme.colors.gray900,
+  },
+}))
+
+const shadow = css({
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  backdropFilter: 'blur(30px)',
 })
 
-const paddingsForSize: Record<ButtonSize, string> = {
-  sm: '0.375rem 0.75rem',
-  lg: '0.75rem 2rem',
-}
+const PrimaryAltButton = styled(StyledButton)(
+  ({ theme }) => ({
+    backgroundColor: theme.colors.green50,
+    color: theme.colors.textPrimary,
 
-const ButtonElement = styled(UnstyledButton)<ButtonProps>(
-  ({ theme, variant = 'filled', fullWidth, color, size = 'lg', ...props }) => ({
-    width: fullWidth ? '100%' : 'auto',
-    padding: paddingsForSize[size],
-    lineHeight: size === 'lg' ? '1.5rem' : '1rem',
-    fontFamily: theme.fonts.body,
-    fontSize: '1rem',
-    fontWeight: 400,
-    border: '1px solid',
-    maxWidth: '100%',
-    transition: 'all ease-out 200ms',
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    whiteSpace: 'nowrap',
-
-    ':focus': {
-      outline: `5px auto ${theme.colors.purple700}`,
+    '&:hover': {
+      backgroundColor: theme.colors.green100,
     },
 
-    ...((variant === 'filled' || variant === 'outlined') && {
-      borderRadius: size === 'lg' ? '0.5rem' : '0.375rem',
-    }),
-    ...(variant === 'filled' && {
-      backgroundColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.dark,
-      color: color === 'lavender' ? theme.colors.dark : theme.colors.light,
-      borderColor: color === 'lavender' ? theme.colors.purple500 : theme.colors.dark,
-
-      ':hover, :focus': {
-        backgroundColor: color === 'lavender' ? theme.colors.purple800 : theme.colors.gray800,
-      },
-      ':disabled': {
-        color: theme.colors.textDisabled,
-        backgroundColor: theme.colors.gray300,
-        borderColor: theme.colors.gray300,
-      },
-    }),
-
-    ...(variant === 'outlined' && {
-      backgroundColor: 'transparent',
-      color: color ? getColor(color) : theme.colors.dark,
-      borderColor: color ? getColor(color) : theme.colors.dark,
-      ':hover, :focus': {
-        color: color ? getColor(color) : theme.colors.gray700,
-        borderColor: color ? getColor(color) : theme.colors.gray700,
-      },
-      ':disabled': {
-        color: theme.colors.textDisabled,
-        borderColor: theme.colors.gray500,
-      },
-    }),
-
-    ...(variant === 'text' && {
-      backgroundColor: 'transparent',
-      color: color ? getColor(color) : 'currentcolor',
-      border: 'none',
-      ':disabled': {
-        color: theme.colors.textDisabled,
-      },
-    }),
-
-    ...getMargins(props),
-    ...getPaddings(props),
+    '&:disabled': {
+      backgroundColor: theme.colors.gray200,
+      color: theme.colors.textDisabled,
+      boxShadow: 'none',
+      backdropFilter: 'none',
+    },
   }),
+  shadow,
 )
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, icon, ...rest }, ref) => {
-    return (
-      <ButtonElement ref={ref} {...rest}>
-        {children}
-        {icon && <IconWrapper padded={Boolean(children)}>{icon}</IconWrapper>}
-      </ButtonElement>
-    )
+const SecondaryButton = styled(StyledButton)(
+  ({ theme }) => ({
+    // TODO: update to use translucent gray100
+    backgroundColor: theme.colors.gray100,
+    color: theme.colors.textPrimary,
+
+    '&:hover': {
+      // TODO: update to use translucent gray200
+      backgroundColor: theme.colors.gray200,
+    },
+
+    '&:disabled': {
+      backgroundColor: theme.colors.gray200,
+      color: theme.colors.textDisabled,
+      boxShadow: 'none',
+      backdropFilter: 'none',
+    },
+  }),
+  shadow,
+)
+
+const GhostButton = styled(StyledButton)(({ theme }) => ({
+  backgroundColor: 'transparent',
+  color: theme.colors.textPrimary,
+
+  '&:hover': {
+    // TODO: update to use translucent gray100
+    backgroundColor: theme.colors.gray100,
   },
-)
 
-export type LinkButtonProps = ButtonProps & {
-  href?: string
-  as?: ElementType
-}
-
-export const LinkButton = styled(ButtonElement)<LinkButtonProps>(({ as }: LinkButtonProps) => ({
-  textDecoration: 'none',
-  textAlign: 'center',
-  display: 'inline-block',
-  cursor: as === 'span' ? 'default' : 'pointer',
+  '&:disabled': {
+    color: theme.colors.textDisabled,
+    backgroundColor: 'transparent',
+  },
 }))
-LinkButton.defaultProps = { as: 'a' }

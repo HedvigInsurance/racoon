@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   logger.info(`Revalidate: ${action} story ${story_id}`)
 
   try {
-    const { data } = await STORYBLOK_API.getStory(`${story_id}`)
+    const { data } = await STORYBLOK_API.getStory(`${story_id}`, {})
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug
     const pathToRevalidate = path.join('/', route)
 

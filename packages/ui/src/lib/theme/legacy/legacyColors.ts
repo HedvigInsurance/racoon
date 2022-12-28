@@ -51,6 +51,12 @@ export const legacyColors = {
   textTertiary: gray[500],
   textDisabled: gray[500],
   textNegative: gray[100],
+
+  // Compatability with new theme
+  gray1000: gray[900],
+  gray50: gray[100],
+  green50: '#e6f4e6',
+  green100: '#e6f4e6',
 }
 
 export type LegacyUIColor = keyof typeof legacyColors

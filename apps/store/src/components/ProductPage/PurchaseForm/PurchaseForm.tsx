@@ -133,9 +133,7 @@ const PendingState = () => {
   return (
     <SectionWrapper>
       <OpenModalButtonWrapper>
-        <Button disabled fullWidth>
-          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
-        </Button>
+        <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
       </OpenModalButtonWrapper>
     </SectionWrapper>
   )
@@ -147,11 +145,7 @@ const IdleState = ({ onClick }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
-  const button = (
-    <Button onClick={onClick} fullWidth>
-      {t('OPEN_PRICE_CALCULATOR_BUTTON')}
-    </Button>
-  )
+  const button = <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
 
   return (
     <>

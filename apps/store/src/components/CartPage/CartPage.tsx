@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
-import { Button, CrossIcon, Heading, LinkButton, Space, Text } from 'ui'
+import { Button, CrossIcon, Heading, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -32,7 +32,7 @@ export const CartPage = (props: CartPageProps) => {
           <HorizontalLine />
           <CampaignCodeList cartId={cartId} campaigns={campaigns} />
           <HorizontalLine />
-          <CostSummary {...cost} />
+          <CostSummary {...cost} campaigns={campaigns} />
         </Space>
       </EmptyState>
     )
@@ -51,9 +51,9 @@ export const CartPage = (props: CartPageProps) => {
         <HorizontalLine />
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
         <HorizontalLine />
-        <CostSummary {...cost} />
+        <CostSummary {...cost} campaigns={campaigns} />
 
-        <Button fullWidth onClick={startCheckout} disabled={loadingStartCheckout}>
+        <Button onClick={() => startCheckout()} disabled={loadingStartCheckout}>
           {t('CHECKOUT_BUTTON')}
         </Button>
       </Space>
@@ -80,9 +80,9 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
             </Text>
           </Space>
 
-          <LinkButton as={Link} fullWidth href={PageLink.store({ locale: routingLocale })}>
-            {t('GO_TO_STORE_BUTTON')}
-          </LinkButton>
+          <Link href={PageLink.store({ locale: routingLocale })} passHref legacyBehavior>
+            <Button>{t('GO_TO_STORE_BUTTON')}</Button>
+          </Link>
         </Space>
 
         {children}

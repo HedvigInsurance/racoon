@@ -1,54 +1,76 @@
-import { Meta, Story } from '@storybook/react'
-import { MailIcon } from '../../icons/MailIcon'
-import { Button, ButtonProps } from './Button'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Space } from 'ui'
+import { Button } from './Button'
 
-type StoryProps = ButtonProps & { disabled: boolean }
-
-const storyMeta: Meta<StoryProps> = {
-  title: 'Button',
+export default {
+  title: 'Base / Button',
   component: Button,
-  args: {
-    color: 'lavender',
-    fullWidth: false,
-    variant: 'filled',
-    disabled: false,
-  },
-  parameters: {
-    backgrounds: {
-      default: 'gray100',
-    },
-  },
+} as ComponentMeta<typeof Button>
+
+const Template: ComponentStory<typeof Button> = (props) => {
+  return (
+    <Space y={2}>
+      <Space y={1}>
+        <div>
+          <Button {...props} variant="primary" />
+        </div>
+        <div>
+          <Button {...props} variant="primary-alt" />
+        </div>
+        <div>
+          <Button {...props} variant="secondary" />
+        </div>
+        <div>
+          <Button {...props} variant="ghost" />
+        </div>
+      </Space>
+
+      <Space y={1}>
+        <div>
+          <Button {...props} variant="primary" disabled />
+        </div>
+        <div>
+          <Button {...props} variant="primary-alt" disabled />
+        </div>
+        <div>
+          <Button {...props} variant="secondary" disabled />
+        </div>
+        <div>
+          <Button {...props} variant="ghost" disabled />
+        </div>
+      </Space>
+
+      <Space y={1}>
+        <div>
+          <Button {...props} variant="primary" loading />
+        </div>
+        <div>
+          <Button {...props} variant="primary-alt" loading />
+        </div>
+        <div>
+          <Button {...props} variant="secondary" loading />
+        </div>
+        <div>
+          <Button {...props} variant="ghost" loading />
+        </div>
+      </Space>
+    </Space>
+  )
 }
 
-export default storyMeta
+export const Large = Template.bind({})
+Large.args = {
+  children: 'Button label',
+}
 
-type Template = Story<StoryProps>
+export const Medium = Template.bind({})
+Medium.args = {
+  children: 'Button label',
+  size: 'medium',
+}
 
-const Template: Template = ({ children, ...args }) => <Button {...args}>{children}</Button>
-
-export const Default = Template.bind({})
-Default.args = { children: 'Hello' }
-
-export const WithIcon = Template.bind({})
-WithIcon.args = { icon: <MailIcon />, children: 'Send email' }
-
-export const OnlyIcon = Template.bind({})
-OnlyIcon.args = { icon: <MailIcon /> }
-
-const TemplateManyButtons: Template = ({ children, ...args }) => (
-  <>
-    <Button {...args}>{children}</Button>
-    <Button {...args}>{children}</Button>
-  </>
-)
-
-export const TwoButtons = TemplateManyButtons.bind({})
-TwoButtons.args = { icon: <MailIcon />, children: 'Send email' }
-
-const TemplateFullWidth: Template = ({ children, ...args }) => (
-  <div style={{ width: '512px', marginInline: 'auto' }}>
-    <Button {...args}>{children}</Button>
-  </div>
-)
-export const FullWidth = TemplateFullWidth.bind({})
-FullWidth.args = { fullWidth: true, children: `I'm full width!`, icon: <MailIcon /> }
+export const Small = Template.bind({})
+Small.args = {
+  children: 'Button label',
+  size: 'small',
+}
