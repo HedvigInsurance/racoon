@@ -2,12 +2,15 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
-import { Button, Dialog, Heading, Space, Text } from 'ui'
+import { Button, Dialog, Space, Text } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
+
+const REMOVE_CART_ENTRY_FORM = 'remove-cart-entry-form'
 
 type Props = CartEntry & { cartId: string }
 
@@ -27,7 +30,7 @@ export const CartEntryItem = (props: Props) => {
   }
 
   return (
-    <Dialog.Root>
+    <FullscreenDialog.Root>
       <Wrapper>
         <Pillow size="small" {...pillow} />
         <Space y={1}>
@@ -52,29 +55,31 @@ export const CartEntryItem = (props: Props) => {
         <Text size="md">{formatter.monthlyPrice(cost)}</Text>
       </Wrapper>
 
-      <StyledDialogContent>
-        <DialogContentWrapper>
-          <form onSubmit={handleSubmit(offerId)}>
-            <Space y={1}>
-              <Heading as="h2" variant="standard.20">
-                Remove insurance?
-              </Heading>
-              <ButtonWrapper>
-                <Dialog.Trigger asChild>
-                  <Button type="button" variant="ghost">
-                    Dont remove
-                  </Button>
-                </Dialog.Trigger>
-
-                <Button type="submit" disabled={loading}>
-                  Remove
-                </Button>
-              </ButtonWrapper>
-            </Space>
-          </form>
-        </DialogContentWrapper>
-      </StyledDialogContent>
-    </Dialog.Root>
+      <FullscreenDialog.Modal
+        Footer={
+          <>
+            <Button
+              form={REMOVE_CART_ENTRY_FORM}
+              type="submit"
+              loading={loading}
+              disabled={loading}
+            >
+              {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON', { ns: 'cart' })}
+            </Button>
+            <FullscreenDialog.Close asChild>
+              <Button type="button" variant="ghost">
+                {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON', { ns: 'cart' })}
+              </Button>
+            </FullscreenDialog.Close>
+          </>
+        }
+      >
+        <form id={REMOVE_CART_ENTRY_FORM} onSubmit={handleSubmit(offerId)} />
+        <Text size={{ _: 'md', lg: 'xl' }} align="center">
+          {t('REMOVE_ENTRY_MODAL_PROMPT', { ns: 'cart', name: title })}
+        </Text>
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
   )
 }
 
@@ -106,27 +111,3 @@ const TextButton = styled(SecondaryButton)({
   backgroundColor: 'transparent',
   boxShadow: 'none',
 })
-
-const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
-  height: '100%',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}))
-
-const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
-  padding: theme.space[4],
-  textAlign: 'center',
-  borderRadius: theme.radius.sm,
-  width: '100%',
-  maxWidth: '32rem',
-}))
-
-const ButtonWrapper = styled.div(({ theme }) => ({
-  display: 'grid',
-  gridAutoColumns: 'minmax(0, 1fr)',
-  gridAutoFlow: 'column',
-  gap: theme.space[2],
-}))

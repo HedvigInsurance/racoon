@@ -11,5 +11,8 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
   "DISCOUNT_DURATION_EXPLANATION": "For {{count}} month, then",
-  "CHECKOUT_PRICE_TOTAL": "Total"
+  "CHECKOUT_PRICE_TOTAL": "Total",
+  "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Yes, remove",
+  "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
+  "REMOVE_ENTRY_MODAL_PROMPT": "Are you sure you want to remove {{name}}?"
 }
