@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, Space, Dialog } from 'ui'
+import { Button, Heading, Space, Dialog, Text } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Text } from '@/components/Text/Text'
 import { TextField } from '@/components/TextField/TextField'
 import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import {
@@ -65,7 +64,7 @@ export const ExtraBuildingsField = ({
   return (
     <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
       <Card y={1}>
-        <Text size="l">{translateLabel(field.label)}</Text>
+        <Text size="lg">{translateLabel(field.label)}</Text>
 
         <Space y={0.5} as="ul">
           {field.value?.map((item) => {

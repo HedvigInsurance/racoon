@@ -13,20 +13,20 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
 
   return (
     <SpaceBetweenWrapper>
-      <Text size="l">{t('CHECKOUT_PRICE_TOTAL')}</Text>
+      <Text size="md">{t('CHECKOUT_PRICE_TOTAL')}</Text>
       <SpaceFlex space={0.5}>
         <SpaceFlex direction="vertical" align="end" space={0}>
           <PriceWrapper>
             {crossOut && (
-              <CrossOutText size="l" color="textSecondary">
+              <CrossOutText size="md" color="textSecondary">
                 {formatter.monthlyPrice(crossOut)}
               </CrossOutText>
             )}
-            <Text size="l">{formatter.monthlyPrice(total)}</Text>
+            <Text size="md">{formatter.monthlyPrice(total)}</Text>
           </PriceWrapper>
           {campaigns.map((item) => (
             <FlexEnd key={item.id}>
-              <Text size="s" color="textSecondary">
+              <Text size="sm" color="textSecondary">
                 {item.discountDurationExplanation}
               </Text>
             </FlexEnd>

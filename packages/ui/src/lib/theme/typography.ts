@@ -14,7 +14,7 @@ export const fonts = {
   heading: FONT_STANDARD,
 }
 
-export const fontSizes: Record<number | string, string> = {
+export const fontSizeScale = {
   0: '0.75rem',
   1: '0.875rem',
   2: '1rem',
@@ -27,7 +27,18 @@ export const fontSizes: Record<number | string, string> = {
   9: '3.5rem',
   10: '4.5rem',
   11: '6rem',
-}
+} as const
 
-// Add more alaises when we have more hi-fi designs
-fontSizes.body = fontSizes[2]
+export const fontSizes = {
+  ...fontSizeScale,
+  body: fontSizeScale[2],
+  xxs: fontSizeScale[0],
+  xs: fontSizeScale[1],
+  sm: fontSizeScale[2],
+  md: fontSizeScale[3],
+  lg: fontSizeScale[4],
+  xl: fontSizeScale[5],
+  xxl: fontSizeScale[6],
+} as const
+
+export type FontSizes = keyof typeof fontSizes

@@ -14,23 +14,23 @@ export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
       <CollapsibleContent>
         <Space y={0.5}>
           <DataRow>
-            <Text size="m">Subtotal</Text>
-            <Text size="m">{formatter.money(cost.gross)}</Text>
+            <Text size="sm">Subtotal</Text>
+            <Text size="sm">{formatter.money(cost.gross)}</Text>
           </DataRow>
           {products.map((product) => (
             <DataRow key={product.name}>
-              <Text size="m">{product.name}</Text>
+              <Text size="sm">{product.name}</Text>
               <Price>{formatter.money(product.cost)}</Price>
             </DataRow>
           ))}
         </Space>
         {campaigns ? (
           <Space y={0.5}>
-            <Text size="m">Discount</Text>
+            <Text size="sm">Discount</Text>
             {campaigns.map((campaign) => (
               <DataRow key={campaign.name}>
-                <Text size="m">{campaign.name}</Text>
-                <Text size="m">{formatter.money(campaign.discount)}</Text>
+                <Text size="sm">{campaign.name}</Text>
+                <Text size="sm">{formatter.money(campaign.discount)}</Text>
               </DataRow>
             ))}
           </Space>
@@ -38,16 +38,16 @@ export const PriceBreakdown = ({ cost, products, campaigns }: Props) => {
         <CollapsibleDivider />
       </CollapsibleContent>
       <CollapsibleHeader>
-        <Text size="l">Total</Text>
+        <Text size="md">Total</Text>
         <SpaceFlex x={0.25}>
           {cost.crossOut ? (
             <CrossOutText>
-              <Text size="l">{formatter.money(cost.crossOut)}</Text>
+              <Text size="md">{formatter.money(cost.crossOut)}</Text>
             </CrossOutText>
           ) : null}
 
           <SpaceFlex x={0.5}>
-            <Text size="l">{formatter.monthlyPrice(cost.net)}</Text>
+            <Text size="md">{formatter.monthlyPrice(cost.net)}</Text>
             <TriggerIcon size="1rem" />
           </SpaceFlex>
         </SpaceFlex>

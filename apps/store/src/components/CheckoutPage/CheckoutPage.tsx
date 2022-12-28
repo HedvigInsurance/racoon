@@ -79,7 +79,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         <SpaceBetween>
           <SpaceFlex space={0.5} align="center">
             <StepIcon />
-            <Text size="l">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
+            <Text size="md">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
           </SpaceFlex>
         </SpaceBetween>
 
@@ -102,7 +102,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <SignButton loading={loading}>
                 {t('SIGN_BUTTON', { count: cart.entries.length })}
               </SignButton>
-              <Text size="s" color="textSecondary" align="center">
+              <Text size="sm" color="textSecondary" align="center">
                 {loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')}
               </Text>
             </Space>

@@ -34,7 +34,7 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
     <DocumentCard>
       <a href={doc.url} target="_blank" rel="noopener noreferrer">
         <CardContent>
-          <Text size="m">
+          <Text size="sm">
             {doc.displayName} <DocumentType>{documentType}</DocumentType>
           </Text>
         </CardContent>

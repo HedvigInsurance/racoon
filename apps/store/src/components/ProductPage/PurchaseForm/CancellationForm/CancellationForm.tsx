@@ -143,7 +143,7 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
       onCheckedChange={onCheckedChange}
     >
       {value && (
-        <Text as="p" size="s" color="textSecondary">
+        <Text as="p" size="sm" color="textSecondary">
           {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
         </Text>
       )}
@@ -186,7 +186,7 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
       onChange={handleChange}
     >
       {inputMessage && (
-        <Text as="p" size="s" color="textSecondary">
+        <Text as="p" size="sm" color="textSecondary">
           {inputMessage}
         </Text>
       )}

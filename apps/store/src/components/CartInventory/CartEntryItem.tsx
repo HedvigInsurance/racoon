@@ -32,8 +32,8 @@ export const CartEntryItem = (props: Props) => {
         <Pillow size="small" {...pillow} />
         <Space y={1}>
           <div>
-            <Text size="l">{title}</Text>
-            <Text size="l" color="textSecondary">
+            <Text size="md">{title}</Text>
+            <Text size="md" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
                 ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
@@ -49,7 +49,7 @@ export const CartEntryItem = (props: Props) => {
             </Dialog.Trigger>
           </SpaceFlex>
         </Space>
-        <Text size="l">{formatter.monthlyPrice(cost)}</Text>
+        <Text size="md">{formatter.monthlyPrice(cost)}</Text>
       </Wrapper>
 
       <StyledDialogContent>
