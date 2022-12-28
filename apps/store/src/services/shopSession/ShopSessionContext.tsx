@@ -14,7 +14,14 @@ import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
 
-export const ShopSessionContext = createContext<ShopSessionQueryResult | null>(null)
+type OnReadyCallback = (shopSession: ShopSession) => unknown
+
+type ShopSessionResult = ShopSessionQueryResult & {
+  shopSession?: ShopSession
+  onReady: (callback: OnReadyCallback) => () => void
+}
+
+export const ShopSessionContext = createContext<ShopSessionResult | null>(null)
 
 type Props = PropsWithChildren<{ shopSessionId?: string }>
 
@@ -23,28 +30,14 @@ export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessio
   return <ShopSessionContext.Provider value={contextValue}>{children}</ShopSessionContext.Provider>
 }
 
-type ShopSessionResult = ShopSessionQueryResult & { shopSession?: ShopSession }
-
 export const useShopSession = (): ShopSessionResult => {
-  const { countryCode } = useCurrentCountry()
-
-  const queryResult = useContext(ShopSessionContext)
+  const queryResult = useContext(ShopSessionContext) as ShopSessionResult
   if (!queryResult) {
     throw new Error(
       'useShopSession called from outside ShopSessionContextProvider, no value in context',
     )
   }
-
-  // Make sure result object is stable
-  const result = useRef<ShopSessionResult>({} as ShopSessionResult)
-
-  // TODO: Move country check elsewhere, make sure we do full reload (GRW-1985)
-  // Ignore session from different country.
-  // This probably means old session was fetched and new one is being created
-  const shopSession = queryResult.data?.shopSession
-  result.current.shopSession = shopSession?.countryCode === countryCode ? shopSession : undefined
-
-  return result.current
+  return queryResult
 }
 
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
@@ -63,16 +56,35 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     ssr: true,
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
-  })
+  }) as ShopSessionResult
+
+  // GOTCHA: We cannot use queryResult.observable directly with skipped query since it changes
+  // when query becomes unskipped
+  // TODO: Try to use observable and connect queryResult.observable to it
+  const callbacksRef = useRef(new Set<OnReadyCallback>())
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
+        callbacksRef.current.forEach((callback) => callback(shopSession))
       })
     }
   }, [shopSessionServiceClientSide, countryCode])
+
+  // TODO: Move country check elsewhere, make sure we do full reload (GRW-1985)
+  // Ignore session from different country.
+  // This probably means old session was fetched and new one is being created
+  const shopSession = queryResult.data?.shopSession
+  queryResult.shopSession = shopSession?.countryCode === countryCode ? shopSession : undefined
+
+  if (!queryResult.onReady) {
+    queryResult.onReady = (callback) => {
+      callbacksRef.current?.add(callback)
+      return () => callbacksRef.current?.delete(callback)
+    }
+  }
 
   return queryResult
 }

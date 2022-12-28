@@ -17,7 +17,7 @@ export class Tracking {
 
   public setContext = (key: string, value: unknown) => {
     if (this.context[key] !== value) {
-      console.debug('tracking context', key, value)
+      console.debug(`tracking context ${key}:`, value)
     }
     this.context[key] = value
   }

@@ -11,11 +11,10 @@ export const TrackingProvider = ({ value: tracking, children }: ProviderProps<Tr
 }
 
 export const useTrackShopSession = (tracking: Tracking) => {
-  const { shopSession } = useShopSession()
-  const shopSessionId = shopSession?.id
+  const { onReady } = useShopSession()
   useEffect(() => {
-    if (shopSessionId) {
-      tracking.setContext('shopSessionId', shopSessionId)
-    }
-  }, [shopSessionId, tracking])
+    return onReady((shopSession) => {
+      tracking.setContext('shopSessionId', shopSession.id)
+    })
+  }, [onReady, tracking])
 }
