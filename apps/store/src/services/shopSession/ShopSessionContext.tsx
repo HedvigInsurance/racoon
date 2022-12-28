@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client'
+import { Observable, useApolloClient } from '@apollo/client'
 import {
   createContext,
   PropsWithChildren,
@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { SubscriptionObserver } from 'zen-observable-ts'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
@@ -59,16 +60,26 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   }) as ShopSessionResult
 
   // GOTCHA: We cannot use queryResult.observable directly with skipped query since it changes
-  // when query becomes unskipped
-  // TODO: Try to use observable and connect queryResult.observable to it
-  const callbacksRef = useRef(new Set<OnReadyCallback>())
+  // when query becomes un-skipped
+  const readyRef = useRef<{
+    observable: Observable<ShopSession>
+    observer?: SubscriptionObserver<ShopSession>
+  }>()
+  if (readyRef.current == null) {
+    const observable = new Observable<ShopSession>((subscriptionObserver) => {
+      if (readyRef.current) readyRef.current.observer = subscriptionObserver
+    })
+    readyRef.current = {
+      observable,
+    }
+  }
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
-        callbacksRef.current.forEach((callback) => callback(shopSession))
+        readyRef.current?.observer?.next(shopSession)
       })
     }
   }, [shopSessionServiceClientSide, countryCode])
@@ -81,8 +92,8 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 
   if (!queryResult.onReady) {
     queryResult.onReady = (callback) => {
-      callbacksRef.current?.add(callback)
-      return () => callbacksRef.current?.delete(callback)
+      const subscription = readyRef.current?.observable.subscribe(callback)
+      return () => subscription?.unsubscribe()
     }
   }
 
