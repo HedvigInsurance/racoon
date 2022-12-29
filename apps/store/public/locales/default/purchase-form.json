@@ -66,5 +66,9 @@
   "FIELD_EXTRA_BUILDINGS_AREA_LABEL": "Size",
   "FIELD_EXTRA_BUILDINGS_DELETE_BUTTON": "Delete",
   "FIELD_EXTRA_BUILDINGS_TYPE_LABEL": "Select building type...",
-  "FIELD_EXTERNAL_INSURER_CAR_LABEL": "Do you already have insurance for this car?"
+  "FIELD_EXTERNAL_INSURER_CAR_LABEL": "Do you already have insurance for this car?",
+  "FIELD_SUB_TYPE_APARTMENT_LABEL": "Do you own or rent your home?",
+  "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "I rent it",
+  "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "I own it",
+  "FIELD_HOUSEHOLD_SIZE_LABEL": "Choose the number of people to insure"
 }

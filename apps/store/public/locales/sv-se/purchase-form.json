@@ -66,5 +66,9 @@
   "FIELD_EXTRA_BUILDINGS_AREA_LABEL": "Area",
   "FIELD_EXTRA_BUILDINGS_DELETE_BUTTON": "Radera",
   "FIELD_EXTRA_BUILDINGS_TYPE_LABEL": "Välj byggnadstyp...",
-  "FIELD_EXTERNAL_INSURER_CAR_LABEL": "Har du redan försäkring för den här bilen?"
+  "FIELD_EXTERNAL_INSURER_CAR_LABEL": "Har du redan försäkring för den här bilen?",
+  "FIELD_SUB_TYPE_APARTMENT_LABEL": "Äger eller hyr du din bostad?",
+  "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Jag hyr den",
+  "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Jag äger den",
+  "FIELD_HOUSEHOLD_SIZE_LABEL": "Välj antal personer att försäkra"
 }

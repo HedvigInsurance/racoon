@@ -1,4 +1,6 @@
 import {
+  apartmentSubTypeField,
+  LAYOUT,
   personalNumberSection,
   yourApartmentSection,
   yourFamilySection,
@@ -10,5 +12,18 @@ export const SE_STUDENT_APARTMENT: Template = {
   initialData: {
     isStudent: true,
   },
-  sections: [personalNumberSection, yourApartmentSection, yourFamilySection],
+  sections: [
+    personalNumberSection,
+    {
+      ...yourApartmentSection,
+      items: [
+        {
+          field: apartmentSubTypeField,
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        ...yourApartmentSection.items,
+      ],
+    },
+    yourFamilySection,
+  ],
 }
