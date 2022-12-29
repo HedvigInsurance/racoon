@@ -39,6 +39,9 @@ export const PurchaseForm = () => {
     productName: productData.name,
   })
 
+  console.log('shopSession', shopSession)
+  console.log('priceintent', priceIntent)
+
   return (
     <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
       {(notifyProductAdded) => {

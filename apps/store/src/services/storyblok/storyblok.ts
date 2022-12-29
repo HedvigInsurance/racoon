@@ -8,6 +8,7 @@ import {
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
+import { ButtonDescriptionBlock } from '@/blocks/ButtonDescriptionBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
@@ -175,6 +176,7 @@ export const initStoryblok = () => {
     TopPickCardBlock,
     VideoBlock,
     VideoListBlock,
+    ButtonDescriptionBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
