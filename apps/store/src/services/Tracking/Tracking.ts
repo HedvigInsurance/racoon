@@ -12,6 +12,7 @@ export enum TrackingEvent {
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
+  ViewItem = 'view_item',
 }
 
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
@@ -85,8 +86,9 @@ export class Tracking {
   // quote_cart_id
   // ownership_type
   // car_sub_type
-  public reportOffer(offer: ProductOfferFragment) {
+  public reportOfferCreated(offer: ProductOfferFragment) {
     this.ensureBrowserEnvironment()
+    // Our custom event compatible with market-web
     const event = {
       event: TrackingEvent.OfferCreated,
       offerData: {
@@ -99,6 +101,26 @@ export class Tracking {
     }
     this.logger.log(event.event, event.offerData)
     pushToGTMDataLayer(event)
+  }
+
+  public reportViewItem(offer: ProductOfferFragment) {
+    this.ensureBrowserEnvironment()
+    // Google Analytics ecommerce event
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_item
+    const analyticsEvent = {
+      event: TrackingEvent.ViewItem,
+      value: offer.price.amount,
+      currency: offer.price.currencyCode,
+      items: [
+        {
+          item_id: offer.variant.typeOfContract,
+          item_name: offer.variant.displayName,
+        },
+      ],
+    }
+    const { event, ...dataFields } = analyticsEvent
+    this.logger.log(event, dataFields)
+    pushToGTMDataLayer(analyticsEvent)
   }
 
   private ensureBrowserEnvironment() {
