@@ -11,11 +11,12 @@ type Params = SignCheckoutParams & {
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { checkoutId, checkoutSigningId, onSuccess } = params
+  const { checkoutId, checkoutSigningId, onSuccess, onError } = params
   const [startSign, signResult] = useHandleSignCheckout({
     checkoutId,
     checkoutSigningId,
     onSuccess,
+    onError,
   })
 
   const [updateContactDetails, contactDetailsResult] = useUpdateContactDetails({
