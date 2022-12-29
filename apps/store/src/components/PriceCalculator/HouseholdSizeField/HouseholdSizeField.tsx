@@ -8,13 +8,14 @@ import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type FieldProps = {
   field: HouseholdSizeFieldType
+  autoFocus?: boolean
 }
 
 /**
  * Specialized Stepper Input
  * Based on: https://www.magentaa11y.com/checklist-web/stepper-input/
  */
-export const HouseholdSizeField = ({ field }: FieldProps) => {
+export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => {
   const { t } = useTranslation('purchase-form')
   const minValue = 0
   const maxValue = field.max
@@ -51,6 +52,7 @@ export const HouseholdSizeField = ({ field }: FieldProps) => {
           required={field.required}
           value={value}
           onChange={handleChange}
+          autoFocus={autoFocus}
         >
           {options.map((item) => (
             <option key={item.value} value={item.value}>
@@ -60,10 +62,20 @@ export const HouseholdSizeField = ({ field }: FieldProps) => {
         </StyledSelect>
 
         <SpaceFlex space={0.5}>
-          <StyledButton onClick={decrement} aria-hidden={true} disabled={value === minValue}>
+          <StyledButton
+            onClick={decrement}
+            tabIndex={-1}
+            aria-hidden={true}
+            disabled={value === minValue}
+          >
             <Minus />
           </StyledButton>
-          <StyledButton onClick={increment} aria-hidden={true} disabled={value === maxValue}>
+          <StyledButton
+            onClick={increment}
+            tabIndex={-1}
+            aria-hidden={true}
+            disabled={value === maxValue}
+          >
             <Plus />
           </StyledButton>
         </SpaceFlex>
@@ -122,6 +134,9 @@ const StyledButton = styled.button(({ theme }) => ({
   cursor: 'pointer',
   height: '1.5rem',
   width: '1.5rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
   '&[disabled] div': {
     backgroundColor: theme.colors.gray500,
