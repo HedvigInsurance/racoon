@@ -3,12 +3,13 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import { Button, Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
@@ -26,10 +27,11 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData } = props
   const { t } = useTranslation('checkout')
 
+  const [showSignError, setShowSignError] = useState(false)
   const { shopSession } = useShopSession()
   const router = useRouter()
   const apolloClient = useApolloClient()
-  const [handleSubmitSign, { loading }] = useHandleSubmitCheckout({
+  const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
@@ -41,75 +43,96 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       }
       router.push(PageLink.checkoutPayment({ shopSessionId }))
     },
+    onError() {
+      setShowSignError(true)
+    },
   })
 
+  const submitButtonMessage = loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')
+
   return (
-    <Wrapper y={{ base: 1, lg: 4 }}>
-      <Header>
-        <HeaderHeading as="h1" variant="standard.24">
-          {t('CHECKOUT_PAGE_HEADING')}
-        </HeaderHeading>
-        <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
-      </Header>
+    <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+      <Wrapper y={{ base: 1, lg: 4 }}>
+        <Header>
+          <HeaderHeading as="h1" variant="standard.24">
+            {t('CHECKOUT_PAGE_HEADING')}
+          </HeaderHeading>
+          <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
+        </Header>
 
-      <Space y={0.5}>
-        <Section>
-          <CartCollapsible
-            title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
-            cost={cart.cost}
-          >
-            <CartCollapsibleInner>
-              <CartEntryList>
-                {cart.entries.map((item) => (
-                  <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
-                ))}
-              </CartEntryList>
-              <HorizontalLine />
-              <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
-              <HorizontalLine />
-              <CostSummary {...cart.cost} campaigns={cart.campaigns} />
-            </CartCollapsibleInner>
-          </CartCollapsible>
-        </Section>
+        <Space y={0.5}>
+          <Section>
+            <CartCollapsible
+              title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
+              cost={cart.cost}
+            >
+              <CartCollapsibleInner>
+                <CartEntryList>
+                  {cart.entries.map((item) => (
+                    <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+                  ))}
+                </CartEntryList>
+                <HorizontalLine />
+                <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+                <HorizontalLine />
+                <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+              </CartCollapsibleInner>
+            </CartCollapsible>
+          </Section>
 
-        <HorizontalLineStandalone />
-      </Space>
+          <HorizontalLineStandalone />
+        </Space>
 
-      <Section y={1}>
-        <SpaceBetween>
-          <SpaceFlex space={0.5} align="center">
-            <StepIcon />
-            <Text size="md">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
-          </SpaceFlex>
-        </SpaceBetween>
+        <Section y={1}>
+          <SpaceBetween>
+            <SpaceFlex space={0.5} align="center">
+              <StepIcon />
+              <Text size="md">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
+            </SpaceFlex>
+          </SpaceBetween>
 
-        <form onSubmit={handleSubmitSign}>
-          <Space y={0.25}>
-            <PersonalNumberField
-              label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-              value={personalNumber}
-              readOnly
-              disabled
-            />
-            <TextField
-              type="email"
-              label={t('FORM_EMAIL_LABEL')}
-              name={FormElement.Email}
-              defaultValue={prefilledData.email}
-              required
-            />
-            <Space y={0.5}>
-              <SignButton loading={loading}>
-                {t('SIGN_BUTTON', { count: cart.entries.length })}
-              </SignButton>
-              <Text size="sm" color="textSecondary" align="center">
-                {loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')}
-              </Text>
+          <form onSubmit={handleSubmitSign}>
+            <Space y={0.25}>
+              <PersonalNumberField
+                label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+                value={personalNumber}
+                readOnly
+                disabled
+              />
+              <TextField
+                type="email"
+                label={t('FORM_EMAIL_LABEL')}
+                name={FormElement.Email}
+                defaultValue={prefilledData.email}
+                required
+              />
+              <Space y={0.5}>
+                <SignButton loading={loading}>
+                  {t('SIGN_BUTTON', { count: cart.entries.length })}
+                </SignButton>
+                <Text size="sm" color="textSecondary" align="center">
+                  {userError?.message ?? submitButtonMessage}
+                </Text>
+              </Space>
             </Space>
-          </Space>
-        </form>
-      </Section>
-    </Wrapper>
+          </form>
+        </Section>
+      </Wrapper>
+
+      <FullscreenDialog.Modal
+        Footer={
+          <FullscreenDialog.Close asChild>
+            <Button type="button" variant="primary">
+              {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+            </Button>
+          </FullscreenDialog.Close>
+        }
+      >
+        <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+          {t('ERROR_GENERAL_DIALOG_PROMPT')}
+        </ErrorPrompt>
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
   )
 }
 
@@ -207,5 +230,11 @@ const StyledSignButtonContent = styled.div(({ theme }) => ({
   gap: theme.space[3],
   width: '100%',
 }))
+
+const ErrorPrompt = styled(Text)({
+  maxWidth: '42rem',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+})
 
 export default CheckoutPage

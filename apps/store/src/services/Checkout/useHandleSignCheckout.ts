@@ -13,11 +13,12 @@ export type Params = {
   checkoutId: string
   checkoutSigningId: string | null
   onSuccess: (accessToken: string) => void
+  onError?: () => void
 }
 
 export const useHandleSignCheckout = (params: Params) => {
   const getMutationError = useGetMutationError()
-  const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess } = params
+  const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess, onError } = params
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
 
   const queryResult = useCheckoutSigningQuery({
@@ -35,6 +36,9 @@ export const useHandleSignCheckout = (params: Params) => {
         onSuccess(accessToken)
       }
     },
+    onError(error) {
+      datadogLogs.logger.warn('Checkout | SigningQuery | Failed to sign', { error })
+    },
   })
 
   const [startSign, result] = useCheckoutStartSignMutation({
@@ -47,7 +51,8 @@ export const useHandleSignCheckout = (params: Params) => {
       }
     },
     onError(error) {
-      datadogLogs.logger.warn('Checkout | Failed to sign', { error })
+      datadogLogs.logger.warn('Checkout | StartSign | Failed to sign', { error })
+      onError?.()
     },
   })
 

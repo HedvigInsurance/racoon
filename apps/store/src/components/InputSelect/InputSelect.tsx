@@ -27,8 +27,8 @@ const StyledSelect = styled(motion.select)(({ theme }) => ({
     cursor: 'pointer',
   },
 
-  '&:focus': {
-    backgroundColor: theme.colors.gray500,
+  '&:focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
   },
 }))
 
