@@ -14,13 +14,13 @@ export enum TrackingEvent {
   PageView = 'virtual_page_view',
 }
 
-datadogLogs.createLogger('tracking')
-
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
+  static LOGGER_NAME = 'tracking'
+
   constructor(public context: TrackingContext = {}) {}
 
-  private logger = datadogLogs.getLogger('tracking')!
+  private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
 
   public setContext = (key: string, value: unknown) => {
     if (this.context[key] !== value) {
@@ -107,3 +107,5 @@ export class Tracking {
     }
   }
 }
+
+datadogLogs.createLogger(Tracking.LOGGER_NAME)
