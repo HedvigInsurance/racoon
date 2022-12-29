@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
+import { useState } from 'react'
 import { mq } from 'ui'
+import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
+import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ProductPageBlockProps = SbBaseBlockProps<{
@@ -14,14 +17,22 @@ type ProductPageBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
+  const { productData } = useProductPageContext()
+  const [selectedTab, setSelectedTab] = useState('overview')
+
+  const shouldRenderVariantSelector = selectedTab === 'coverage' && productData.variants.length > 1
+
   return (
     <Main {...storyblokEditable(blok)}>
       <MobileLayout>
         <PurchaseForm />
-        <Tabs.Tabs defaultValue="overview">
+        <Tabs.Tabs value={selectedTab} onValueChange={setSelectedTab}>
           <Tabs.TabsList>
-            <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
-            <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
+            <TablistWrapper>
+              <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
+              <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
+            </TablistWrapper>
+            {shouldRenderVariantSelector && <StyledProductVariantSelector />}
           </Tabs.TabsList>
 
           <OverviewSectionMobile>
@@ -100,3 +111,13 @@ const DesktopLayout = styled.div({
     display: 'block',
   },
 })
+
+const StyledProductVariantSelector = styled(ProductVariantSelector)({
+  minWidth: '12.5rem',
+  width: 'fit-content',
+})
+
+const TablistWrapper = styled.div(({ theme }) => ({
+  display: 'flex',
+  gap: theme.space[2],
+}))

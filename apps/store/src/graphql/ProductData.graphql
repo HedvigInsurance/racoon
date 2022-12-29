@@ -13,6 +13,7 @@ query ProductData($productName: String!) {
     insurelyClientId
     variants {
       typeOfContract
+      displayName
       perils {
         title
         description
