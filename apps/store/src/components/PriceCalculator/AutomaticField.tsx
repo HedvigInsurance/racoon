@@ -118,7 +118,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'householdSize':
-      return <HouseholdSizeField field={field} />
+      return <HouseholdSizeField field={field} autoFocus={autoFocus} />
 
     case 'ssn-se':
       return <SsnSeField field={field} />
