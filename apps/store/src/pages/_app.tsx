@@ -14,6 +14,7 @@ import { initStoryblok } from '@/services/storyblok/storyblok'
 import {
   handleNewSiteExperimentQueryParam,
   trackNewSiteExperimentImpression,
+  useRemoveExperimentQueryParam,
 } from '@/services/Tracking/newSiteExperimentTracking'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -48,6 +49,8 @@ if (typeof window !== 'undefined') {
 initStoryblok()
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  useRemoveExperimentQueryParam()
+
   const apolloClient = useApollo(pageProps)
 
   const getLayout = Component.getLayout || ((page) => page)
