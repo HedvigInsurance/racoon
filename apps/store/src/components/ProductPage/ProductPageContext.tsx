@@ -1,37 +1,45 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react'
-import { ProductVariant } from '@/services/apollo/generated'
+import { ProductDataQuery } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { ProductPageProps } from './ProductPage.types'
 
+type ProductDataVariant =
+  | Exclude<ProductDataQuery['product'], undefined | null>['variants'][number]
+  | null
+
 type ProductPageContextData = ProductPageProps & {
-  selectedVariant: null | ProductVariant
-  selectedVariantUpdate: (variant: ProductVariant) => void
+  selectedVariant: ProductDataVariant
+  selectedVariantUpdate: (variant: ProductDataVariant) => void
 }
 
 const ProductPageContext = createContext<ProductPageContextData | null>(null)
 
 type Props = PropsWithChildren<
   ProductPageProps & {
-    initialSelectedVariant?: ProductVariant
+    initialSelectedVariant?: ProductDataVariant
   }
 >
 
-export const ProductPageContextProvider = (props: Props) => {
-  const { children, initialSelectedVariant = null, ...rest } = props
-  const [selectedVariant, setSelectedVariant] = useState(initialSelectedVariant)
+export const ProductPageContextProvider = ({
+  children,
+  initialSelectedVariant = null,
+  productData,
+  ...rest
+}: Props) => {
+  const [selectedVariant, setSelectVariant] = useState(initialSelectedVariant)
 
   const contextValue = useMemo(
     () => ({
       ...rest,
       selectedVariant,
-      selectedVariantUpdate: setSelectedVariant,
+      selectedVariantUpdate: setSelectVariant,
       productData: {
-        ...rest.productData,
-        displayNameShort: rest.story.content.name || rest.productData.displayNameShort,
-        displayNameFull: rest.story.content.description || rest.productData.displayNameFull,
+        ...productData,
+        displayNameShort: rest.story.content.name || productData.displayNameShort,
+        displayNameFull: rest.story.content.description || productData.displayNameFull,
       },
     }),
-    [rest, selectedVariant],
+    [rest, productData, selectedVariant],
   )
 
   const tracking = useTracking()
