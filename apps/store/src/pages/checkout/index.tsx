@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
-  useGetCrossOut,
+  getCrossOut,
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
-  useGetTotal,
+  getTotal,
 } from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
@@ -26,16 +26,14 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
-  const total = useGetTotal()
-  const crossOut = useGetCrossOut()
 
   if (!shopSession || !shopSession.checkout) return null
 
   const cart = {
     id: shopSession.cart.id,
     cost: {
-      total,
-      crossOut,
+      total: getTotal(shopSession),
+      crossOut: getCrossOut(shopSession),
     },
     entries: shopSession.cart.entries.map((item) => ({
       offerId: item.id,

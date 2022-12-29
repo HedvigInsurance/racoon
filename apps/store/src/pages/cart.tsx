@@ -1,10 +1,10 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
-  useGetCrossOut,
+  getCrossOut,
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
-  useGetTotal,
+  getTotal,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
@@ -24,8 +24,6 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
-  const total = useGetTotal()
-  const crossOut = useGetCrossOut()
 
   if (!shopSession) return null
 
@@ -50,12 +48,17 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     ),
   }))
 
+  const cost = {
+    total: getTotal(shopSession),
+    crossOut: getCrossOut(shopSession),
+  }
+
   return (
     <CartPage
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{ total, crossOut }}
+      cost={{ ...cost }}
       {...props}
     />
   )

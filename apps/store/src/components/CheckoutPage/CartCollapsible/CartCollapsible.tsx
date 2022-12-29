@@ -24,7 +24,7 @@ export const CartCollapsible = ({ children, title, cost }: Props) => {
       <Trigger>
         <SpaceBetween>
           <Text size="l">{title}</Text>
-          {closed && cost.total && (
+          {closed && (
             <Text size="l" color="textSecondary">
               {formatter.monthlyPrice(cost.total)}
             </Text>

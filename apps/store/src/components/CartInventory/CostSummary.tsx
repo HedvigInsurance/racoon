@@ -11,8 +11,6 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
   const formatter = useFormatter()
   const { t } = useTranslation('cart')
 
-  if (!total) return null
-
   return (
     <SpaceBetweenWrapper>
       <Text size="l">{t('CHECKOUT_PRICE_TOTAL')}</Text>
