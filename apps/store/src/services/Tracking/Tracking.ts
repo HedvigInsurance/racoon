@@ -50,7 +50,10 @@ export class Tracking {
 
   public setPriceIntentContext = (priceIntent: PriceIntent) => {
     const { numberCoInsured } = priceIntent.data
-    this.setContext('number_of_people', numberCoInsured ? numberCoInsured + 1 : undefined)
+    this.setContext(
+      'number_of_people',
+      numberCoInsured ? parseInt(numberCoInsured, 10) + 1 : undefined,
+    )
   }
 
   public reportPageView(urlPath: string) {
