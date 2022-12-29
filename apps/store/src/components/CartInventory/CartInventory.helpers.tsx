@@ -1,5 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { CampaignDiscount, CampaignDiscountType } from '@/services/apollo/generated'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { Money } from '@/utils/formatter'
 import { useFormatter } from '@/utils/useFormatter'
 
@@ -47,5 +48,32 @@ export const useGetDiscountDurationExplanation = () => {
       default:
         return ''
     }
+  }
+}
+
+export const getTotal = (shopSession: ShopSession) => {
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
+
+  if (!hasDiscount) return shopSession.cart.cost.net
+  // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
+  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+      return shopSession.cart.cost.discount
+    default:
+      return shopSession.cart.cost.net
+  }
+}
+
+export const getCrossOut = (shopSession: ShopSession) => {
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
+
+  if (!hasDiscount) return undefined
+  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+    case CampaignDiscountType.MonthlyPercentage:
+      return shopSession.cart.cost.gross
+    case CampaignDiscountType.IndefinitePercentage:
+    case CampaignDiscountType.MonthlyCost:
+      return shopSession.cart.cost.discount
   }
 }
