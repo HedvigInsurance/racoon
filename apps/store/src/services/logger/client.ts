@@ -1,5 +1,6 @@
 import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
+import { Tracking } from '@/services/Tracking/Tracking'
 import { CLIENT_CONFIG } from './config'
 
 const APPLICATION_ID = process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
@@ -17,7 +18,11 @@ export const initDatadog = () => {
       datadogLogsConfig.beforeSend = (event) => {
         // Must exclude console origin to avoid endless loop.  Feel free to experiment with other values
         if (event.origin === 'logger') {
-          console[event.status](event.message)
+          if (event.logger?.name === Tracking.LOGGER_NAME) {
+            console[event.status]('tracking event', event.message, event)
+          } else {
+            console[event.status](event.message)
+          }
         }
       }
     }

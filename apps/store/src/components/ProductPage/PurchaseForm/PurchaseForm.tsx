@@ -193,6 +193,7 @@ const EditingState = (props: EditingStateProps) => {
       const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
       const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
+        tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOffer(offer))
         onSuccess()
       } else {

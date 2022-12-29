@@ -18,7 +18,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const theme = useTheme()
   const buttonChildren = loading ? (
     <Centered>
-      <LoadingSpinner size={props.size === 'small' ? theme.fontSizes[1] : theme.fontSizes[2]} />
+      <LoadingSpinner size={props.size === 'small' ? theme.fontSizes.xs : theme.fontSizes.md} />
     </Centered>
   ) : (
     children
@@ -65,7 +65,7 @@ const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }
     display: 'inline-block',
     width: '100%',
     paddingInline: theme.space[6],
-    paddingBlock: theme.space[3],
+    paddingBlock: theme.space.md,
 
     textAlign: 'center',
     fontSize: theme.fontSizes[3],
