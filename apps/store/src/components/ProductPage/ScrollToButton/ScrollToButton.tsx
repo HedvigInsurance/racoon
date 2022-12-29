@@ -21,8 +21,6 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
 }
 
 const Wrappper = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
   paddingInline: theme.space[4],
   width: '100%',
 
