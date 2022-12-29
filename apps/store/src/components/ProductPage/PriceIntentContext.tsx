@@ -2,9 +2,8 @@ import { useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PriceIntentQueryResult, usePriceIntentLazyQuery } from '@/services/apollo/generated'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { isBrowser } from '@/utils/env'
 
 type PriceIntentResult = PriceIntentQueryResult
 
@@ -20,7 +19,7 @@ export const PriceIntentContextProvider = ({ children }: Props) => {
 const usePriceIntentContextValue = () => {
   const { priceTemplate, productData } = useProductPageContext()
   const apolloClient = useApolloClient()
-  const { shopSession, onReady } = useShopSession()
+  const { onReady } = useShopSession()
   const [fetchQuery, queryResult] = usePriceIntentLazyQuery({
     // Prevent network requests and ensure we trigger an error on cache miss, which should never happen
     fetchPolicy: 'cache-only',
@@ -28,18 +27,18 @@ const usePriceIntentContextValue = () => {
 
   const productName = productData.name
   const priceIntentService = useMemo(() => {
-    if (isBrowser() && shopSession) {
-      return priceIntentServiceInitClientSide({ apolloClient, shopSession })
-    }
-  }, [apolloClient, shopSession])
+    return priceIntentServiceInitClientSide(apolloClient)
+  }, [apolloClient])
 
   useEffect(() => {
-    return onReady(() => {
-      priceIntentService?.getOrCreate({ priceTemplate, productName }).then((priceIntent) => {
-        fetchQuery({
-          variables: { priceIntentId: priceIntent.id },
+    return onReady((shopSession) => {
+      priceIntentService
+        .getOrCreate({ priceTemplate, productName, shopSessionId: shopSession.id })
+        .then((priceIntent) => {
+          fetchQuery({
+            variables: { priceIntentId: priceIntent.id },
+          })
         })
-      })
     })
   }, [fetchQuery, onReady, priceIntentService, priceTemplate, productName])
 

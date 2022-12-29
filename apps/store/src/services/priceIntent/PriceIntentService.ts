@@ -10,30 +10,26 @@ import {
   PriceIntentQuery,
   PriceIntentQueryVariables,
 } from '@/services/apollo/generated'
+import { CookiePersister } from '@/services/persister/CookiePersister'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
-
-let id = 1
 
 export class PriceIntentService {
   constructor(
     private readonly persister: SimplePersister,
     private readonly apolloClient: ApolloClient<unknown>,
-    public readonly shopSession: ShopSession,
   ) {}
-  id = id++
   private createParams: PriceIntentCreateParams | null = null
   private createPromise: Promise<PriceIntent> | null = null
 
-  public async create({ productName, priceTemplate }: PriceIntentCreateParams) {
+  public async create({ productName, priceTemplate, shopSessionId }: PriceIntentCreateParams) {
     const result = await this.apolloClient.mutate<
       PriceIntentCreateMutation,
       PriceIntentCreateMutationVariables
     >({
       mutation: PriceIntentCreateDocument,
-      variables: { productName, shopSessionId: this.shopSession.id },
+      variables: { productName, shopSessionId },
       update: (cache, result) => {
         const priceIntent = result.data?.priceIntentCreate
         if (priceIntent) {
@@ -56,7 +52,7 @@ export class PriceIntentService {
       })
     }
 
-    this.persister.save(priceIntent.id, this.getPriceIntentKey(priceTemplate.name))
+    this.save({ priceIntentId: priceIntent.id, templateName: priceTemplate.name, shopSessionId })
 
     return priceIntent
   }
@@ -80,7 +76,7 @@ export class PriceIntentService {
   }
 
   public async getOrCreate(params: FetchParams) {
-    const priceIntentId = this.getStoredId(params.priceTemplate.name)
+    const priceIntentId = this.getStoredId(params.priceTemplate.name, params.shopSessionId)
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
@@ -112,24 +108,32 @@ export class PriceIntentService {
     return priceIntent
   }
 
-  private getPriceIntentKey(templateName: string) {
-    return `HEDVIG_${this.shopSession.id}_${templateName}`
+  private getPriceIntentKey(templateName: string, shopSessionId: string) {
+    return `HEDVIG_${shopSessionId}_${templateName}`
   }
 
-  public getStoredId(templateName: string) {
-    return this.persister.fetch(this.getPriceIntentKey(templateName))
+  public getStoredId(templateName: string, shopSessionId: string) {
+    return this.persister.fetch(this.getPriceIntentKey(templateName, shopSessionId))
   }
 
-  public save(templateName: string, priceIntentId: string) {
-    this.persister.save(priceIntentId, this.getPriceIntentKey(templateName))
+  public save(params: { templateName: string; priceIntentId: string; shopSessionId: string }) {
+    this.persister.save(
+      params.priceIntentId,
+      this.getPriceIntentKey(params.templateName, params.shopSessionId),
+    )
   }
 
-  public clear(templateName: string) {
-    this.persister.reset(this.getPriceIntentKey(templateName))
+  public clear(templateName: string, shopSessionId: string) {
+    this.persister.reset(this.getPriceIntentKey(templateName, shopSessionId))
   }
 }
 
 type FetchParams = {
   productName: string
   priceTemplate: Template
+  shopSessionId: string
+}
+
+export const priceIntentServiceInitClientSide = (apolloClient: ApolloClient<unknown>) => {
+  return new PriceIntentService(new CookiePersister('UNUSED_DEFAULT_KEY'), apolloClient)
 }

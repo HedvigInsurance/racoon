@@ -13,8 +13,8 @@ import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -295,7 +295,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
       name: productData.displayNameFull,
       price: formatter.money(addedProdutOffer.price),
     })
-    priceIntentServiceInitClientSide({ apolloClient, shopSession }).clear(priceTemplate.name)
+    priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSession.id)
     refresh()
   }
 

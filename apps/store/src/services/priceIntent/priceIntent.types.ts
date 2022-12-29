@@ -5,7 +5,7 @@ import type {
 } from '@/services/apollo/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 
-export type PriceIntentCreateParams = Omit<PriceIntentCreateMutationVariables, 'shopSessionId'> & {
+export type PriceIntentCreateParams = PriceIntentCreateMutationVariables & {
   priceTemplate: Template
 }
 export type PriceIntentDataUpdateParams = Omit<
