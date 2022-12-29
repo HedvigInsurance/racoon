@@ -26,12 +26,15 @@ export const ProductVariantSelector = ({ className }: Props) => {
     }
   }
 
+  const defaultValue = productData.variants[0].typeOfContract
+
   return (
     <InputSelect
       className={className}
       name="product-variant-select"
       options={variantOptions}
       onChange={handleChange}
+      defaultValue={defaultValue}
     />
   )
 }
