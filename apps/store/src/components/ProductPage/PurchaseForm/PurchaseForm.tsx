@@ -105,13 +105,6 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
   )
 }
 
-const TaglineWrapper = styled.div({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
 const Tagline = () => {
   const { story } = useProductPageContext()
   return (
@@ -122,6 +115,13 @@ const Tagline = () => {
     </TaglineWrapper>
   )
 }
+
+const TaglineWrapper = styled.div({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
 
 const PendingState = () => {
   const { t } = useTranslation('purchase-form')
