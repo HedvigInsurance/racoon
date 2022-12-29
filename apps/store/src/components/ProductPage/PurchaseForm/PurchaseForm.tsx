@@ -9,19 +9,19 @@ import { CartToast, CartToastAttributes } from '@/components/CartNotification/Ca
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
-import { trackOffer } from '@/services/gtm'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntent.helpers'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
-import { usePriceIntent } from '../usePriceIntent'
 import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
@@ -29,15 +29,8 @@ import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
-
-  const { priceTemplate, productData } = useProductPageContext()
-
   const { shopSession } = useShopSession()
-  const { data: { priceIntent } = {} } = usePriceIntent({
-    shopSession,
-    priceTemplate: priceTemplate,
-    productName: productData.name,
-  })
+  const { data: { priceIntent } = {} } = usePriceIntent()
 
   console.log('shopSession', shopSession)
   console.log('priceintent', priceIntent)
@@ -101,7 +94,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
                 {productData.displayNameShort}
                 <CircledHSuperscript />
               </Heading>
-              <Text size="s" color="textSecondary" align="center">
+              <Text size="xs" color="textSecondary" align="center">
                 {productData.displayNameFull}
               </Text>
             </Space>
@@ -158,8 +151,8 @@ const EditingState = (props: EditingStateProps) => {
   const getMutationError = useGetMutationError()
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
+  const tracking = useTracking()
 
-  const { shopSession } = useShopSession()
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onError(error) {
@@ -179,14 +172,7 @@ const EditingState = (props: EditingStateProps) => {
       const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
       const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
-        // FIXME: pick offer for specific product or track all offers
-        const firstOffer = updatedPriceIntent.offers[0]
-        trackOffer({
-          shopSessionId: shopSession!.id,
-          contractType: firstOffer.variant.typeOfContract,
-          amount: firstOffer.price.amount,
-          currency: firstOffer.price.currencyCode,
-        })
+        updatedPriceIntent.offers.forEach((offer) => tracking.reportOffer(offer))
         onSuccess()
       } else {
         setIsLoadingPrice(false)
@@ -264,7 +250,7 @@ const PriceLoader = () => {
 
   return (
     <Space y={2}>
-      <Text size="l" align="center">
+      <Text size="md" align="center">
         {t('LOADING_PRICE_ANIMATION_LABEL')}
       </Text>
       <Bar>
@@ -312,7 +298,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
       name: productData.displayNameFull,
       price: formatter.money(addedProdutOffer.price),
     })
-    priceIntentServiceInitClientSide({ apolloClient, shopSession }).clear(priceTemplate.name)
+    priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSession.id)
     refresh()
   }
 

@@ -1,6 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useGetDiscountExplaination } from '@/components/CartInventory/CartInventory.helpers'
+import {
+  getCrossOut,
+  useGetDiscountDurationExplanation,
+  useGetDiscountExplanation,
+  getTotal,
+} from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
@@ -19,16 +24,16 @@ type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'personalNumb
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplaination()
+  const getDiscountExplanation = useGetDiscountExplanation()
+  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
   if (!shopSession || !shopSession.checkout) return null
 
-  const cartCost = shopSession.cart.cost
   const cart = {
     id: shopSession.cart.id,
     cost: {
-      total: cartCost.net,
-      crossOut: cartCost.net.amount !== cartCost.gross.amount ? cartCost.gross : undefined,
+      total: getTotal(shopSession),
+      crossOut: getCrossOut(shopSession),
     },
     entries: shopSession.cart.entries.map((item) => ({
       offerId: item.id,
@@ -43,7 +48,11 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
       id: item.id,
       code: item.code,
-      explanation: getDiscountExplanation(item.discount),
+      discountExplanation: getDiscountExplanation(item.discount),
+      discountDurationExplanation: getDiscountDurationExplanation(
+        shopSession.cart.redeemedCampaigns[0].discount,
+        shopSession.cart.cost.gross,
+      ),
     })),
   }
 

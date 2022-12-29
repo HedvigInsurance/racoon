@@ -14,5 +14,5 @@ export const SpacerBlock = ({ blok }: SpacerBlockProps) => {
 SpacerBlock.blockName = 'spacer'
 
 const Spacer = styled.div<Props>(({ theme, size }) => ({
-  height: theme.space[size] ?? size,
+  height: theme.space[size as keyof typeof theme.space] ?? size,
 }))

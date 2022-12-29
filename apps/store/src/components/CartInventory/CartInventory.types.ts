@@ -8,7 +8,12 @@ export type CartEntry = {
   pillow: { src: string; alt?: string }
 }
 
-export type CartCampaign = { id: string; code: string; explanation: string }
+export type CartCampaign = {
+  id: string
+  code: string
+  discountExplanation: string
+  discountDurationExplanation: string
+}
 
 export type CartCost = {
   total: Money

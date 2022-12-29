@@ -75,6 +75,17 @@ export class ShopSessionService {
     >({
       mutation: ShopSessionCreateDocument,
       variables,
+      // TODO: Investigate if we can do it by returning shopSession recond on top instead of shopSessionCreate
+      update: (cache, result) => {
+        const shopSession = result.data?.shopSessionCreate
+        if (shopSession) {
+          cache.writeQuery({
+            query: ShopSessionDocument,
+            data: { shopSession },
+            variables: { shopSessionId: shopSession.id },
+          })
+        }
+      },
     })
 
     const shopSession = result.data?.shopSessionCreate

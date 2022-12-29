@@ -7,21 +7,6 @@ const CLIENT_TOKEN = process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN
 
 export const initDatadog = () => {
   if (APPLICATION_ID && CLIENT_TOKEN) {
-    datadogRum.init({
-      ...CLIENT_CONFIG,
-      clientToken: CLIENT_TOKEN,
-      applicationId: APPLICATION_ID,
-      trackInteractions: true,
-      defaultPrivacyLevel: 'mask-user-input',
-      silentMultipleInit: true,
-
-      allowedTracingOrigins: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
-        ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
-        : undefined,
-    })
-
-    datadogRum.startSessionReplayRecording()
-
     const datadogLogsConfig: LogsInitConfiguration = {
       ...CLIENT_CONFIG,
       clientToken: CLIENT_TOKEN,
@@ -36,7 +21,20 @@ export const initDatadog = () => {
         }
       }
     }
-
     datadogLogs.init(datadogLogsConfig)
+
+    datadogRum.init({
+      ...CLIENT_CONFIG,
+      clientToken: CLIENT_TOKEN,
+      applicationId: APPLICATION_ID,
+      trackInteractions: true,
+      defaultPrivacyLevel: 'mask-user-input',
+      silentMultipleInit: true,
+
+      allowedTracingOrigins: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
+        ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
+        : undefined,
+    })
+    datadogRum.startSessionReplayRecording()
   }
 }

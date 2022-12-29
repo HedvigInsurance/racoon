@@ -1,10 +1,10 @@
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
 import { Space, Text } from 'ui'
+import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
-import { CheckboxInput } from './CheckboxInput'
 import { DateInput } from './DateInput'
 
 export type CancellationOption =
@@ -136,18 +136,18 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
   const { t } = useTranslation('purchase-form')
 
   return (
-    <CheckboxInput
+    <ToggleCard
       name={FormElement.AutoSwitch}
       label={t('AUTO_SWITCH_FIELD_LABEL')}
       defaultChecked={value}
       onCheckedChange={onCheckedChange}
     >
       {value && (
-        <Text as="p" size="s" color="textSecondary">
+        <Text as="p" size="sm" color="textSecondary">
           {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
         </Text>
       )}
-    </CheckboxInput>
+    </ToggleCard>
   )
 }
 
@@ -186,7 +186,7 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
       onChange={handleChange}
     >
       {inputMessage && (
-        <Text as="p" size="s" color="textSecondary">
+        <Text as="p" size="sm" color="textSecondary">
           {inputMessage}
         </Text>
       )}

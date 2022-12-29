@@ -1,8 +1,10 @@
 import { useTranslation } from 'next-i18next'
 import { CampaignDiscount, CampaignDiscountType } from '@/services/apollo/generated'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { Money } from '@/utils/formatter'
 import { useFormatter } from '@/utils/useFormatter'
 
-export const useGetDiscountExplaination = () => {
+export const useGetDiscountExplanation = () => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
@@ -25,5 +27,53 @@ export const useGetDiscountExplaination = () => {
           percentage: discount.percentage,
         })
     }
+  }
+}
+
+export const useGetDiscountDurationExplanation = () => {
+  const { t } = useTranslation('cart')
+  const formatter = useFormatter()
+
+  return (discount: CampaignDiscount, total: Money) => {
+    switch (discount.type) {
+      case CampaignDiscountType.FreeMonths:
+      case CampaignDiscountType.MonthlyPercentage:
+        // A workaround to escape the '/' in the monthly price.
+        return `${t('DISCOUNT_DURATION_EXPLANATION', {
+          count: discount.months,
+        })} ${formatter.monthlyPrice(total)}`
+
+      case CampaignDiscountType.MonthlyCost:
+      case CampaignDiscountType.IndefinitePercentage:
+      default:
+        return ''
+    }
+  }
+}
+
+export const getTotal = (shopSession: ShopSession) => {
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
+
+  if (!hasDiscount) return shopSession.cart.cost.net
+  // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
+  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+      return shopSession.cart.cost.discount
+    default:
+      return shopSession.cart.cost.net
+  }
+}
+
+export const getCrossOut = (shopSession: ShopSession) => {
+  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
+
+  if (!hasDiscount) return undefined
+  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+    case CampaignDiscountType.MonthlyPercentage:
+      return shopSession.cart.cost.gross
+    case CampaignDiscountType.IndefinitePercentage:
+    case CampaignDiscountType.MonthlyCost:
+      return shopSession.cart.cost.discount
   }
 }

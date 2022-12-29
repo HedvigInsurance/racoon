@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren } from 'react'
-import { Button, Heading, Space, Text } from 'ui'
+import { Button, Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -44,40 +44,42 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   })
 
   return (
-    <Wrapper y={1}>
+    <Wrapper y={{ base: 1, lg: 4 }}>
       <Header>
-        <Heading as="h1" variant="standard.24">
+        <HeaderHeading as="h1" variant="standard.24">
           {t('CHECKOUT_PAGE_HEADING')}
-        </Heading>
-        <Link href={PageLink.cart()}>{t('BACK_BUTTON')}</Link>
+        </HeaderHeading>
+        <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
       </Header>
 
-      <Section>
-        <CartCollapsible
-          title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
-          cost={cart.cost}
-        >
-          <CartCollapsibleInner>
-            <CartEntryList>
-              {cart.entries.map((item) => (
-                <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
-              ))}
-            </CartEntryList>
-            <HorizontalLine />
-            <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
-            <HorizontalLine />
-            <CostSummary {...cart.cost} />
-          </CartCollapsibleInner>
-        </CartCollapsible>
-      </Section>
+      <Space y={0.5}>
+        <Section>
+          <CartCollapsible
+            title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
+            cost={cart.cost}
+          >
+            <CartCollapsibleInner>
+              <CartEntryList>
+                {cart.entries.map((item) => (
+                  <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+                ))}
+              </CartEntryList>
+              <HorizontalLine />
+              <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+              <HorizontalLine />
+              <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+            </CartCollapsibleInner>
+          </CartCollapsible>
+        </Section>
 
-      <HorizontalLineStandalone />
+        <HorizontalLineStandalone />
+      </Space>
 
       <Section y={1}>
         <SpaceBetween>
           <SpaceFlex space={0.5} align="center">
             <StepIcon />
-            <Text size="l">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
+            <Text size="md">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
           </SpaceFlex>
         </SpaceBetween>
 
@@ -100,7 +102,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <SignButton loading={loading}>
                 {t('SIGN_BUTTON', { count: cart.entries.length })}
               </SignButton>
-              <Text size="s" color="textSecondary" align="center">
+              <Text size="sm" color="textSecondary" align="center">
                 {loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')}
               </Text>
             </Space>
@@ -128,8 +130,29 @@ const Header = styled(Section)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+
+  [mq.lg]: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    height: '7rem',
+  },
 })
 Header.defaultProps = { as: 'header' }
+
+const HeaderHeading = styled(Heading)(({ theme }) => ({
+  [mq.lg]: {
+    textAlign: 'center',
+    fontSize: theme.fontSizes[8],
+  },
+}))
+
+const HeaderLink = styled(Link)(({ theme }) => ({
+  [mq.lg]: {
+    position: 'absolute',
+    top: theme.space[4],
+    right: theme.space[4],
+  },
+}))
 
 const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,

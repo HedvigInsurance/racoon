@@ -13,8 +13,8 @@ export const parameters = {
   backgrounds: {
     default: 'Light',
     values: [
-      { name: 'Dark', value: defaultTheme.colors.gray900 },
-      { name: 'Light', value: defaultTheme.colors.gray100 },
+      { name: 'Dark', value: defaultTheme.colors.dark },
+      { name: 'Light', value: defaultTheme.colors.light },
     ],
   },
   layout: 'centered',

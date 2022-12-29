@@ -102,7 +102,7 @@ export const OfferPresenter = (props: Props) => {
               {displayPrice}
             </Text>
             <FullWidthButton onClick={onClickEdit}>
-              <Text align="center" size="s">
+              <Text align="center" size="xs">
                 {t('PRESENT_OFFER_EDIT_BUTTON')}
               </Text>
             </FullWidthButton>
@@ -147,7 +147,7 @@ const SubmitButton = ({ loading }: { loading: boolean }) => {
   return (
     <SpaceFlex space={0.5} direction="vertical" align="center">
       <Button disabled={loading}>{loading ? 'Loading...' : 'Add to cart'}</Button>
-      <Text size="s" align="center">
+      <Text size="sm" align="center">
         Cancel anytime
       </Text>
     </SpaceFlex>

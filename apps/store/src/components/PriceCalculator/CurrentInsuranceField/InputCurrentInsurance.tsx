@@ -41,7 +41,7 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
   return (
     <Space y={0.25}>
       <Card y={0.75} {...animationProps}>
-        <Text as="p" size="l">
+        <Text as="p" size="md">
           {label}
         </Text>
 

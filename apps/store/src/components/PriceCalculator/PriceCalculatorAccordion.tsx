@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
-import { Heading } from 'ui'
+import { Heading, Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
-import { Text } from '../Text/Text'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -43,7 +42,7 @@ export const PriceCalculatorAccordion = (props: Props) => {
               </SpaceFlex>
               {section.state === 'valid' && (
                 <Accordion.Trigger>
-                  <StyledText size="l" color="textPrimary">
+                  <StyledText size="md" color="textPrimary">
                     {t('PRICE_CALCULATOR_SECTION_EDIT_BUTTON')}
                   </StyledText>
                 </Accordion.Trigger>
