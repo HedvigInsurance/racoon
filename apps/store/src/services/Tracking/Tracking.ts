@@ -3,7 +3,6 @@ import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { AppTrackingContext, pushToGTMDataLayer, setGtmContext } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { isBrowser } from '@/utils/env'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
 type TrackingContext = Record<string, unknown>
@@ -55,7 +54,6 @@ export class Tracking {
   }
 
   public reportPageView(urlPath: string) {
-    this.ensureBrowserEnvironment()
     const event = {
       event: TrackingEvent.PageView,
       pageData: {
@@ -68,7 +66,6 @@ export class Tracking {
   }
 
   public reportExperimentImpression(variantId: string) {
-    this.ensureBrowserEnvironment()
     const event = {
       event: TrackingEvent.ExperimentImpression,
       eventData: {
@@ -88,7 +85,6 @@ export class Tracking {
   // ownership_type
   // car_sub_type
   public reportOfferCreated(offer: ProductOfferFragment) {
-    this.ensureBrowserEnvironment()
     // Our custom event compatible with market-web
     const event = {
       event: TrackingEvent.OfferCreated,
@@ -105,7 +101,6 @@ export class Tracking {
   }
 
   public reportViewItem(offer: ProductOfferFragment) {
-    this.ensureBrowserEnvironment()
     // Google Analytics ecommerce event
     // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_item
     const analyticsEvent = offerToEcommerceEvent(TrackingEvent.ViewItem, offer)
@@ -121,12 +116,6 @@ export class Tracking {
     const { event, ...dataFields } = analyticsEvent
     this.logger.log(event, dataFields)
     pushToGTMDataLayer(analyticsEvent)
-  }
-
-  private ensureBrowserEnvironment() {
-    if (!isBrowser()) {
-      throw new Error('This method must be called in browser environment')
-    }
   }
 }
 
