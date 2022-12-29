@@ -1,28 +1,21 @@
 import styled from '@emotion/styled'
 import { Card, CardContent } from 'ui/src/components/Card/Card'
 import { getColor, HeadingLabel, Space, Text } from 'ui'
-import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {
   heading: string
-  productData: ProductData
+  docs: Array<InsuranceDocument>
 }
 
-export const ProductDocuments = ({ heading, productData }: Props) => {
-  if (productData.variants.length < 1) {
-    console.warn('No product variants, hiding productDocuments')
-    return null
-  }
+export const ProductDocuments = ({ heading, docs }: Props) => {
   return (
     <ProductDocumentsWrapper>
       <Space y={1}>
         <HeadingLabel>{heading}</HeadingLabel>
-        {productData.variants.flatMap((variant) =>
-          variant.documents.map((doc, i) => (
-            <ProductDocument key={`${variant.typeOfContract}_${i}`} doc={doc} />
-          )),
-        )}
+        {docs.map((doc, index) => (
+          <ProductDocument key={index} doc={doc} />
+        ))}
       </Space>
     </ProductDocumentsWrapper>
   )
