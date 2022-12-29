@@ -32,9 +32,6 @@ export const PurchaseForm = () => {
   const { shopSession } = useShopSession()
   const { data: { priceIntent } = {} } = usePriceIntent()
 
-  console.log('shopSession', shopSession)
-  console.log('priceintent', priceIntent)
-
   return (
     <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
       {(notifyProductAdded) => {
@@ -108,14 +105,35 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
   )
 }
 
+const TaglineWrapper = styled.div({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+const Tagline = () => {
+  const { story } = useProductPageContext()
+  return (
+    <TaglineWrapper>
+      <Text color="textSecondary" size="xs">
+        {story.content.tagline}
+      </Text>
+    </TaglineWrapper>
+  )
+}
+
 const PendingState = () => {
   const { t } = useTranslation('purchase-form')
 
   return (
     <SectionWrapper>
-      <OpenModalButtonWrapper>
-        <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-      </OpenModalButtonWrapper>
+      <Space y={0.5}>
+        <Tagline />
+        <OpenModalButtonWrapper>
+          <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+        </OpenModalButtonWrapper>
+      </Space>
     </SectionWrapper>
   )
 }
@@ -131,7 +149,10 @@ const IdleState = ({ onClick }: IdleStateProps) => {
   return (
     <>
       <SectionWrapper ref={ref}>
-        <OpenModalButtonWrapper>{button}</OpenModalButtonWrapper>
+        <Space y={0.5}>
+          <Tagline />
+          <OpenModalButtonWrapper>{button}</OpenModalButtonWrapper>
+        </Space>
       </SectionWrapper>
       <ScrollPast targetRef={ref}>
         <StickyButtonWrapper>{button}</StickyButtonWrapper>
