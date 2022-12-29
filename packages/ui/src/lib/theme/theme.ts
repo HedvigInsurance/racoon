@@ -9,7 +9,7 @@ export const theme = {
   fontSizes,
   radius,
   space,
-}
+} as const
 
 export const getColor = (color: UIColorKeys) => {
   return theme.colors[color]
