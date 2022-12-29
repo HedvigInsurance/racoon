@@ -9,6 +9,7 @@ import { newSiteAbTest } from '../../newSiteAbTest'
 type TrackingContext = Record<string, unknown>
 
 export enum TrackingEvent {
+  AddToCart = 'add_to_cart',
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
@@ -107,17 +108,16 @@ export class Tracking {
     this.ensureBrowserEnvironment()
     // Google Analytics ecommerce event
     // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_item
-    const analyticsEvent = {
-      event: TrackingEvent.ViewItem,
-      value: offer.price.amount,
-      currency: offer.price.currencyCode,
-      items: [
-        {
-          item_id: offer.variant.typeOfContract,
-          item_name: offer.variant.displayName,
-        },
-      ],
-    }
+    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.ViewItem, offer)
+    const { event, ...dataFields } = analyticsEvent
+    this.logger.log(event, dataFields)
+    pushToGTMDataLayer(analyticsEvent)
+  }
+
+  public reportAddToCart(offer: ProductOfferFragment) {
+    // Google Analytics ecommerce event
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#add_to_cart
+    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.AddToCart, offer)
     const { event, ...dataFields } = analyticsEvent
     this.logger.log(event, dataFields)
     pushToGTMDataLayer(analyticsEvent)
@@ -131,3 +131,18 @@ export class Tracking {
 }
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)
+
+const offerToEcommerceEvent = (event: TrackingEvent, offer: ProductOfferFragment) => {
+  return {
+    event,
+    value: offer.price.amount,
+    currency: offer.price.currencyCode,
+    items: [
+      {
+        item_id: offer.variant.typeOfContract,
+        item_name: offer.variant.displayName,
+        price: offer.price.amount,
+      },
+    ],
+  } as const
+}
