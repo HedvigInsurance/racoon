@@ -10,5 +10,7 @@
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 insurance",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} insurances",
   "BACK_BUTTON": "Back",
-  "OPEN_BANKID_DESCRIPTION": "Open the BankID app on your phone."
+  "OPEN_BANKID_DESCRIPTION": "Open the BankID app on your phone.",
+  "ERROR_GENERAL_DIALOG_PROMPT": "Something went wrong. Please try again, and contact us at hedvig@hedvig.com if the problem persists.",
+  "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Try again"
 }

@@ -42,7 +42,7 @@ export const currentInsuranceField: InputField = {
 export const householdSizeField: InputField = {
   type: 'householdSize',
   name: 'numberCoInsured',
-  label: { key: 'Household size' },
+  label: { key: 'FIELD_HOUSEHOLD_SIZE_LABEL' },
   required: true,
   defaultValue: 0,
   max: 5,
@@ -68,6 +68,20 @@ export const mileageField: InputField = {
   //   { label: { key: '25 000 km/year' }, value: '2500' },
   //   { label: { key: '20 500+ km/year' }, value: '2501' },
   // ],
+}
+
+export const apartmentSubTypeField: InputField = {
+  type: 'radio',
+  name: 'subType',
+  label: { key: 'FIELD_SUB_TYPE_APARTMENT_LABEL' },
+  options: [
+    {
+      label: { key: 'FIELD_SUB_TYPE_APARTMENT_OPTION_OWN' },
+      value: 'BRF',
+    },
+    { label: { key: 'FIELD_SUB_TYPE_APARTMENT_OPTION_RENT' }, value: 'RENT' },
+  ],
+  required: true,
 }
 
 export const personalNumberSection: TemplateSection = {

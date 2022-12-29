@@ -1,5 +1,4 @@
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
-import { SE_APARTMENT } from './data/SE_APARTMENT'
 import { SE_APARTMENT_BRF } from './data/SE_APARTMENT_BRF'
 import { SE_APARTMENT_RENT } from './data/SE_APARTMENT_RENT'
 import { SE_CAR } from './data/SE_CAR'
@@ -10,7 +9,6 @@ import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
 const TEMPLATES: Record<string, Template | undefined> = {
   SE_HOUSE,
-  SE_APARTMENT,
   SE_APARTMENT_RENT,
   SE_APARTMENT_BRF,
   SE_ACCIDENT,
