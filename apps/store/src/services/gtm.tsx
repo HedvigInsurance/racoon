@@ -39,17 +39,24 @@ type GTMPageData = {
   title: string
 }
 
+type GTMEcommerceData = Record<string, unknown>
+
 type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
   offerData?: Record<string, string | number>
   eventData?: Record<string, string>
   pageData?: GTMPageData
+  ecommerce?: GTMEcommerceData
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
 export const pushToGTMDataLayer = (obj: DataLayerObject) => {
   if (!window.dataLayer) window.dataLayer = []
+  // Clear the previous ecommerce object
+  if (typeof obj.ecommerce !== 'undefined') {
+    window.dataLayer.push({ ecommerce: null })
+  }
   window.dataLayer.push(obj)
 }
 

@@ -102,7 +102,7 @@ export class Tracking {
 
   public reportViewItem(offer: ProductOfferFragment) {
     // Google Analytics ecommerce event
-    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_item
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item
     const analyticsEvent = offerToEcommerceEvent(TrackingEvent.ViewItem, offer)
     const { event, ...dataFields } = analyticsEvent
     this.logger.log(event, dataFields)
@@ -111,7 +111,7 @@ export class Tracking {
 
   public reportAddToCart(offer: ProductOfferFragment) {
     // Google Analytics ecommerce event
-    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#add_to_cart
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_cart
     const analyticsEvent = offerToEcommerceEvent(TrackingEvent.AddToCart, offer)
     const { event, ...dataFields } = analyticsEvent
     this.logger.log(event, dataFields)
@@ -124,14 +124,16 @@ datadogLogs.createLogger(Tracking.LOGGER_NAME)
 const offerToEcommerceEvent = (event: TrackingEvent, offer: ProductOfferFragment) => {
   return {
     event,
-    value: offer.price.amount,
-    currency: offer.price.currencyCode,
-    items: [
-      {
-        item_id: offer.variant.typeOfContract,
-        item_name: offer.variant.displayName,
-        price: offer.price.amount,
-      },
-    ],
+    ecommerce: {
+      value: offer.price.amount,
+      currency: offer.price.currencyCode,
+      items: [
+        {
+          item_id: offer.variant.typeOfContract,
+          item_name: offer.variant.displayName,
+          price: offer.price.amount,
+        },
+      ],
+    },
   } as const
 }
