@@ -41,7 +41,7 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, children, e
         {children}
 
         <Space as="footer" y={0.25}>
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading} loading={loading}>
             {translateLabel(section.submitLabel)}
           </Button>
           {error && <Text align="center">{error}</Text>}
