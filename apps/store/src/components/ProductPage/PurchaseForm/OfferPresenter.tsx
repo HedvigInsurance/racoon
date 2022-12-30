@@ -140,14 +140,21 @@ export const OfferPresenter = (props: Props) => {
       </form>
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
-          <span>{displayPrice}</span>
-          <Separator />
-          <span>Add to cart</span>
+          <ScrollPastButtonContent>
+            <span>{displayPrice}</span>
+            <Separator />
+            <span>Add to cart</span>
+          </ScrollPastButtonContent>
         </ScrollToButton>
       </ScrollPast>
     </>
   )
 }
+
+const ScrollPastButtonContent = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+})
 
 const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
 

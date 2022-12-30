@@ -45,12 +45,12 @@
     "ui": "workspace:"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "2.16.1",
-    "@graphql-codegen/typescript": "2.8.5",
+    "@graphql-codegen/cli": "2.16.2",
+    "@graphql-codegen/typescript": "2.8.6",
     "@graphql-codegen/typescript-generic-sdk": "3.0.4",
-    "@graphql-codegen/typescript-operations": "2.5.10",
+    "@graphql-codegen/typescript-operations": "2.5.11",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
-    "@testing-library/dom": "8.17.1",
+    "@testing-library/dom": "8.19.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",

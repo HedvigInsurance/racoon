@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       throw new Error('No checkout info in shopSession')
     }
 
-    const personalNumber = checkout.contactDetails.personalNumber
+    const personalNumber = checkout.contactDetails.ssn
     if (!personalNumber) {
       throw new Error('No personal number in shopSession')
     }

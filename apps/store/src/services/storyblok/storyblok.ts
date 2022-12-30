@@ -102,6 +102,7 @@ export type ProductStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     name?: string
     description?: string
+    tagline?: string
     productId: string
     priceFormTemplateId: string
     body: Array<SbBlokData>

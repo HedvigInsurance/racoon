@@ -4,7 +4,7 @@ fragment Checkout on Checkout {
     email
     firstName
     lastName
-    personalNumber
+    ssn
     phoneNumber
   }
 }
