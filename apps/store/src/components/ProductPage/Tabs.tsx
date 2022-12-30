@@ -10,7 +10,7 @@ export const Tabs = styled(RadixTabs.Root)({
 })
 
 export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
-  display: 'flex',
+  display: 'grid',
   gap: theme.space[2],
   position: 'sticky',
   top: theme.space[3],

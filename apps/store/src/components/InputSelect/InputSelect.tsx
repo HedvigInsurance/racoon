@@ -21,7 +21,7 @@ const StyledSelect = styled(motion.select)(({ theme }) => ({
   fontSize: theme.fontSizes[5],
   width: '100%',
   borderRadius: theme.radius.sm,
-  padding: `${theme.space[2]} ${theme.space[4]}`,
+  padding: `${theme.space[2]} ${theme.space[7]} ${theme.space[2]} ${theme.space[4]}`,
 
   '&:hover': {
     cursor: 'pointer',
@@ -45,6 +45,7 @@ type InputSelectProps = InputBaseProps & {
   required?: boolean
   placeholder?: string
   autoFocus?: boolean
+  className?: string
 }
 
 export const InputSelect = ({
@@ -55,6 +56,7 @@ export const InputSelect = ({
   defaultValue,
   placeholder,
   label,
+  className,
   ...rest
 }: InputSelectProps) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -69,7 +71,7 @@ export const InputSelect = ({
   return (
     <InputBase {...rest}>
       {() => (
-        <Wrapper>
+        <Wrapper className={className}>
           <StyledSelect
             name={name}
             onChange={handleChange}
