@@ -9,6 +9,7 @@ import {
   useExternalInsurerUpdateMutation,
   usePriceIntentInsurelyUpdateMutation,
   ExternalInsurer,
+  useInsurelyDataCollectionCreateMutation,
 } from '@/services/apollo/generated'
 import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
 import {
@@ -100,11 +101,34 @@ export const CurrentInsuranceField = (props: Props) => {
     },
   })
 
+  const [createDataCollection] = useInsurelyDataCollectionCreateMutation({
+    onCompleted(data) {
+      const dataCollectionId = data.externalInsuranceProvider?.initiateIframeDataCollection
+      if (dataCollectionId) {
+        setDataCollectionId(dataCollectionId)
+      } else {
+        datadogLogs.logger.error('Failed to create Insurely data collection', {
+          priceIntentId,
+        })
+      }
+    },
+    onError(error) {
+      datadogLogs.logger.error('Error creating Insurely data collection', {
+        priceIntentId,
+        error,
+      })
+    },
+  })
+
+  const handleInsurelyCollection = (collectionId: string) => {
+    createDataCollection({ variables: { collectionId } })
+  }
+
   const handleInsurelyCompleted = useCallback(() => {
     if (dataCollectionId) {
       updateDataCollectionId({ variables: { priceIntentId, dataCollectionId } })
     } else {
-      datadogLogs.logger.error('Completed Insurely without getting data collection ID', {
+      datadogLogs.logger.error('Completed Insurely without creating data collection ID', {
         priceIntentId,
       })
     }
@@ -125,7 +149,7 @@ export const CurrentInsuranceField = (props: Props) => {
               <DialogIframeWindow>
                 <InsurelyIframe
                   clientId={insurelyClientId}
-                  onCollection={setDataCollectionId}
+                  onCollection={handleInsurelyCollection}
                   onClose={close}
                   onCompleted={handleInsurelyCompleted}
                 />
