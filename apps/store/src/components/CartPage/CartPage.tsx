@@ -1,13 +1,16 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { Button, CrossIcon, Heading, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
@@ -15,7 +18,18 @@ import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
+  const { shopSession } = useShopSession()
   const { t } = useTranslation()
+
+  const tracking = useTracking()
+  useEffect(() => {
+    const { cart } = shopSession ?? {}
+    if (cart) {
+      tracking.reportViewCart(cart)
+    } else {
+      datadogLogs.logger.error('No cart data on cartPage')
+    }
+  }, [tracking, shopSession])
 
   const router = useRouter()
   const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({

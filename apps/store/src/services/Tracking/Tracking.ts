@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
   AppTrackingContext,
   EcommerceEvent,
@@ -123,6 +123,14 @@ export class Tracking {
     this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.DeleteFromCart, offer))
   }
 
+  public reportViewCart(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart))
+  }
+
+  public reportBeginCheckout(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart))
+  }
+
   // Google Analytics ecommerce events
   // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm
   private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
@@ -150,6 +158,23 @@ const offerToEcommerceEvent = (
           price: offer.price.amount,
         },
       ],
+    },
+  } as const
+}
+
+// NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics
+// Let's figure it out later when/if it becomes a priority
+const cartToEcommerceEvent = (event: TrackingEvent, cart: CartFragmentFragment): EcommerceEvent => {
+  return {
+    event,
+    ecommerce: {
+      value: cart.cost.net.amount,
+      currency: cart.cost.net.currencyCode,
+      items: cart.entries.map((entry) => ({
+        item_id: entry.variant.typeOfContract,
+        item_name: entry.variant.displayName,
+        price: entry.price.amount,
+      })),
     },
   } as const
 }
