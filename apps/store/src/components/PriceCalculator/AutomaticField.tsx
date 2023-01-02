@@ -10,7 +10,7 @@ import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
-import { InputRadio } from './InputRadio'
+import * as InputRadio from './InputRadio'
 import { SsnSeField } from './SsnSeField'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -76,17 +76,21 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
 
     case 'radio':
       return (
-        <InputRadio
+        <InputRadio.Root
           name={field.name}
-          label={field.label ? translateLabel(field.label) : undefined}
+          label={translateLabel(field.label)}
           required={field.required}
           defaultValue={field.defaultValue}
-          options={field.options.map((option) => ({
-            ...option,
-            label: translateLabel(option.label),
-          }))}
-          autoFocus={autoFocus}
-        />
+        >
+          {field.options.map((option, index) => (
+            <InputRadio.Item
+              key={option.value}
+              label={translateLabel(option.label)}
+              value={option.value}
+              autoFocus={autoFocus && index === 0}
+            />
+          ))}
+        </InputRadio.Root>
       )
 
     case 'select':

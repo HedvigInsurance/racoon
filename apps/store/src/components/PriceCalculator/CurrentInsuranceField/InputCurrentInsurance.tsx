@@ -1,12 +1,8 @@
-import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, useState } from 'react'
-import { Space, Text } from 'ui'
+import { Space } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import * as RadioGroup from './RadioGroup'
+import * as InputRadio from '../InputRadio'
 
 export type SelectOptions = ReadonlyArray<{ name: string; value: string }>
 
@@ -25,11 +21,9 @@ export type InputCurrentInsuranceProps = {
 export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
   const { label, company, companyOptions, onCompanyChange } = props
   const { t } = useTranslation('purchase-form')
-  const { highlight, animationProps } = useHighlightAnimation()
   const [hasInsurance, setHasInsurance] = useState(!!company)
 
   const handleRadioValueChange = (newValue: string) => {
-    highlight()
     if (newValue === RadioOption.NO) onCompanyChange(undefined)
     setHasInsurance(newValue === RadioOption.YES)
   }
@@ -40,32 +34,14 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
 
   return (
     <Space y={0.25}>
-      <Card y={0.75} {...animationProps}>
-        <Text as="p" size="md">
-          {label}
-        </Text>
-
-        <RadioGroup.Root
-          value={hasInsurance ? RadioOption.YES : RadioOption.NO}
-          onValueChange={handleRadioValueChange}
-        >
-          <SpaceFlex space={1} align="center">
-            <SpaceFlex space={0.5} align="center">
-              <RadioGroup.Item id={RadioOption.YES} value={RadioOption.YES}>
-                <RadioGroup.Indicator />
-              </RadioGroup.Item>
-              <label htmlFor={RadioOption.YES}>{t('LABEL_YES')}</label>
-            </SpaceFlex>
-
-            <SpaceFlex space={0.5} align="center">
-              <RadioGroup.Item id={RadioOption.NO} value={RadioOption.NO}>
-                <RadioGroup.Indicator />
-              </RadioGroup.Item>
-              <label htmlFor={RadioOption.NO}>{t('LABEL_NO')}</label>
-            </SpaceFlex>
-          </SpaceFlex>
-        </RadioGroup.Root>
-      </Card>
+      <InputRadio.Root
+        label={label}
+        value={hasInsurance ? RadioOption.YES : RadioOption.NO}
+        onValueChange={handleRadioValueChange}
+      >
+        <InputRadio.Item label={t('LABEL_YES')} value={RadioOption.YES} />
+        <InputRadio.Item label={t('LABEL_NO')} value={RadioOption.NO} />
+      </InputRadio.Root>
 
       {hasInsurance && (
         <InputSelect
@@ -80,9 +56,3 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
     </Space>
   )
 }
-
-const Card = styled(motion(Space))(({ theme }) => ({
-  padding: `${theme.space[3]} ${theme.space[4]}`,
-  borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray300,
-}))
