@@ -25,7 +25,7 @@ type NavItemBlockProps = SbBaseBlockProps<{
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationLink href={getLinkFieldURL(blok.link)}>{blok.name}</NavigationLink>
+      <NavigationLink href={getLinkFieldURL(blok.link, blok.name)}>{blok.name}</NavigationLink>
     </NavigationMenuPrimitiveItem>
   )
 }
@@ -52,7 +52,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
                 value={nestedBlock.name}
                 {...storyblokEditable(nestedBlock)}
               >
-                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link)}>
+                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
                   {nestedBlock.name}
                 </SecondaryNavigationLink>
               </NavigationMenuPrimitiveItem>
