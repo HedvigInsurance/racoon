@@ -3,15 +3,16 @@ import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { AppTrackingContext, pushToGTMDataLayer, setGtmContext } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { isBrowser } from '@/utils/env'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
 type TrackingContext = Record<string, unknown>
 
 export enum TrackingEvent {
+  AddToCart = 'add_to_cart',
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
+  ViewItem = 'view_item',
 }
 
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
@@ -49,11 +50,13 @@ export class Tracking {
 
   public setPriceIntentContext = (priceIntent: PriceIntent) => {
     const { numberCoInsured } = priceIntent.data
-    this.setContext('number_of_people', numberCoInsured ? numberCoInsured + 1 : undefined)
+    this.setContext(
+      'number_of_people',
+      numberCoInsured ? parseInt(numberCoInsured, 10) + 1 : undefined,
+    )
   }
 
   public reportPageView(urlPath: string) {
-    this.ensureBrowserEnvironment()
     const event = {
       event: TrackingEvent.PageView,
       pageData: {
@@ -66,7 +69,6 @@ export class Tracking {
   }
 
   public reportExperimentImpression(variantId: string) {
-    this.ensureBrowserEnvironment()
     const event = {
       event: TrackingEvent.ExperimentImpression,
       eventData: {
@@ -85,8 +87,8 @@ export class Tracking {
   // quote_cart_id
   // ownership_type
   // car_sub_type
-  public reportOffer(offer: ProductOfferFragment) {
-    this.ensureBrowserEnvironment()
+  public reportOfferCreated(offer: ProductOfferFragment) {
+    // Our custom event compatible with market-web
     const event = {
       event: TrackingEvent.OfferCreated,
       offerData: {
@@ -101,11 +103,40 @@ export class Tracking {
     pushToGTMDataLayer(event)
   }
 
-  private ensureBrowserEnvironment() {
-    if (!isBrowser()) {
-      throw new Error('This method must be called in browser environment')
-    }
+  public reportViewItem(offer: ProductOfferFragment) {
+    // Google Analytics ecommerce event
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item
+    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.ViewItem, offer)
+    const { event, ...dataFields } = analyticsEvent
+    this.logger.log(event, dataFields)
+    pushToGTMDataLayer(analyticsEvent)
+  }
+
+  public reportAddToCart(offer: ProductOfferFragment) {
+    // Google Analytics ecommerce event
+    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_cart
+    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.AddToCart, offer)
+    const { event, ...dataFields } = analyticsEvent
+    this.logger.log(event, dataFields)
+    pushToGTMDataLayer(analyticsEvent)
   }
 }
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)
+
+const offerToEcommerceEvent = (event: TrackingEvent, offer: ProductOfferFragment) => {
+  return {
+    event,
+    ecommerce: {
+      value: offer.price.amount,
+      currency: offer.price.currencyCode,
+      items: [
+        {
+          item_id: offer.variant.typeOfContract,
+          item_name: offer.variant.displayName,
+          price: offer.price.amount,
+        },
+      ],
+    },
+  } as const
+}

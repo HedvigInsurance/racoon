@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useMemo, useState } from 'react'
+import { RefObject, useEffect, useMemo, useState } from 'react'
 import { Button, Space, Text } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
@@ -15,6 +15,7 @@ import {
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
@@ -47,6 +48,14 @@ export const OfferPresenter = (props: Props) => {
 
     setSelectedOffer(offer)
   }
+
+  // TODO: Deal with duplicate tracking from purchase form responisve layout
+  //   Perhaps only track when offer becomes visible via intersectionObserver?
+  const tracking = useTracking()
+  useEffect(
+    () => selectedOffer && tracking.reportViewItem(selectedOffer),
+    [selectedOffer, tracking],
+  )
 
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 

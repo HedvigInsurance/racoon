@@ -194,7 +194,7 @@ const EditingState = (props: EditingStateProps) => {
       const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
         tracking.setPriceIntentContext(updatedPriceIntent)
-        updatedPriceIntent.offers.forEach((offer) => tracking.reportOffer(offer))
+        updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
         onSuccess()
       } else {
         setIsLoadingPrice(false)
