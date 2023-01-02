@@ -32,20 +32,28 @@ export const livingSpaceField: InputField = {
   suffix: 'm²',
 }
 
-export const currentInsuranceField: InputField = {
+const currentInsuranceField: InputField = {
   type: 'current-insurance',
   name: 'externalInsurer',
   // TODO: Do we want promise-specific labels?
   label: { key: 'FIELD_EXTERNAL_INSURER_LABEL' },
 }
 
-export const householdSizeField: InputField = {
+const householdSizeField: InputField = {
   type: 'householdSize',
   name: 'numberCoInsured',
   label: { key: 'FIELD_HOUSEHOLD_SIZE_LABEL' },
   required: true,
   defaultValue: 0,
   max: 5,
+}
+
+export const emailField: InputField = {
+  type: 'text',
+  inputMode: 'email',
+  name: 'email',
+  label: { key: 'FIELD_EMAIL_LABEL' },
+  required: true,
 }
 
 export const carRegistrationNumberField: InputField = {
@@ -129,5 +137,8 @@ export const yourFamilySection = {
   id: 'your-family',
   title: { key: 'SECTION_TITLE_YOUR_FAMILY' },
   submitLabel: { key: 'SUBMIT_LABEL_FINISH' },
-  items: [{ field: householdSizeField, layout: LAYOUT.FULL_WIDTH }],
+  items: [
+    { field: householdSizeField, layout: LAYOUT.FULL_WIDTH },
+    { field: emailField, layout: LAYOUT.FULL_WIDTH },
+  ],
 }

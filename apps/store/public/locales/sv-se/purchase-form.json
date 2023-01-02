@@ -70,5 +70,6 @@
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Äger eller hyr du din bostad?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Jag hyr den",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Jag äger den",
-  "FIELD_HOUSEHOLD_SIZE_LABEL": "Välj antal personer att försäkra"
+  "FIELD_HOUSEHOLD_SIZE_LABEL": "Välj antal personer att försäkra",
+  "FIELD_EMAIL_LABEL": "E-post"
 }

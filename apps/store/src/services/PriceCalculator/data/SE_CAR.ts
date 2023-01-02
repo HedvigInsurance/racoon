@@ -1,5 +1,6 @@
 import {
   carRegistrationNumberField,
+  emailField,
   LAYOUT,
   mileageField,
   personalNumberSection,
@@ -42,6 +43,7 @@ export const SE_CAR: Template = {
       items: [
         { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
         { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
+        { field: emailField, layout: LAYOUT.FULL_WIDTH },
       ],
     },
   ],
