@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
+import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useEffect, useMemo, useState } from 'react'
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
@@ -49,13 +50,14 @@ export const OfferPresenter = (props: Props) => {
     setSelectedOffer(offer)
   }
 
-  // TODO: Deal with duplicate tracking from purchase form responisve layout
-  //   Perhaps only track when offer becomes visible via intersectionObserver?
+  const offerRef = useRef(null)
   const tracking = useTracking()
-  useEffect(
-    () => selectedOffer && tracking.reportViewItem(selectedOffer),
-    [selectedOffer, tracking],
-  )
+  const isInView = useInView(offerRef, { once: true })
+  useEffect(() => {
+    if (isInView) {
+      tracking.reportViewItem(selectedOffer)
+    }
+  }, [selectedOffer, tracking, isInView])
 
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 
@@ -104,7 +106,7 @@ export const OfferPresenter = (props: Props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmitAddToCart}>
+      <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
         <Space y={2}>
           <Space y={0.5}>
             <Text as="p" align="center" size="xxl">
