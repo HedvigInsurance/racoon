@@ -70,5 +70,6 @@
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Do you own or rent your home?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "I rent it",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "I own it",
-  "FIELD_HOUSEHOLD_SIZE_LABEL": "Choose the number of people to insure"
+  "FIELD_HOUSEHOLD_SIZE_LABEL": "Choose the number of people to insure",
+  "FIELD_EMAIL_LABEL": "Email"
 }
