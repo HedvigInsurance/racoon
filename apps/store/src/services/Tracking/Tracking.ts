@@ -19,6 +19,8 @@ export enum TrackingEvent {
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
+  Purchase = 'purchase',
+  SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
 }
@@ -129,6 +131,12 @@ export class Tracking {
 
   public reportBeginCheckout(cart: CartFragmentFragment) {
     this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart))
+  }
+
+  public reportPurchase(cart: CartFragmentFragment) {
+    const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart)
+    event.ecommerce.transaction_id = cart.id
+    this.reportEcommerceEvent(event)
   }
 
   // Google Analytics ecommerce events
