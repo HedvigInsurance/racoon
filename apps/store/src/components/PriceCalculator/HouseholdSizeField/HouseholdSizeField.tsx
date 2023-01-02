@@ -63,6 +63,7 @@ export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => 
 
         <SpaceFlex space={0.5}>
           <StyledButton
+            type="button"
             onClick={decrement}
             tabIndex={-1}
             aria-hidden={true}
@@ -71,6 +72,7 @@ export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => 
             <Minus />
           </StyledButton>
           <StyledButton
+            type="button"
             onClick={increment}
             tabIndex={-1}
             aria-hidden={true}
