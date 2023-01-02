@@ -37,3 +37,11 @@ https://www.store.dev.hedvigit.com/{LOCALE}/session/{SHOP_SESSION_ID}?next={REDI
 ```
 
 You can optionally provide a `?next=/se/cart` query parameter with the relative link to route to redirect the user. By default, the user is redirected to the home page.
+
+## Resetting current Shop Session
+
+If you want to reset the current shop session, you can do so by visiting the following URL:
+
+```html
+/api/session/reset?next={REDIRECT_URL}
+```

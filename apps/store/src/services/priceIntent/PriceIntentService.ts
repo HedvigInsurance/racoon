@@ -1,4 +1,5 @@
 import { ApolloClient } from '@apollo/client'
+import { GetServerSidePropsContext } from 'next'
 import {
   PriceIntentCreateDocument,
   PriceIntentCreateMutation,
@@ -13,6 +14,7 @@ import {
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import { ServerCookiePersister } from '../persister/ServerCookiePersister'
 import { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
 export class PriceIntentService {
@@ -119,6 +121,14 @@ export class PriceIntentService {
   public clear(templateName: string, shopSessionId: string) {
     this.persister.reset(this.getPriceIntentKey(templateName, shopSessionId))
   }
+
+  public clearAll(shopSessionId: string) {
+    for (const key of Object.keys(this.persister.getAll())) {
+      if (key.startsWith(`HEDVIG_${shopSessionId}_`)) {
+        this.persister.reset(key)
+      }
+    }
+  }
 }
 
 type FetchParams = {
@@ -129,4 +139,17 @@ type FetchParams = {
 
 export const priceIntentServiceInitClientSide = (apolloClient: ApolloClient<unknown>) => {
   return new PriceIntentService(new CookiePersister('UNUSED_DEFAULT_KEY'), apolloClient)
+}
+
+type ServerSideParams = {
+  req: GetServerSidePropsContext['req']
+  res: GetServerSidePropsContext['res']
+  apolloClient: ApolloClient<unknown>
+}
+
+export const priceIntentServiceInitServerSide = ({ req, res, apolloClient }: ServerSideParams) => {
+  return new PriceIntentService(
+    new ServerCookiePersister('UNUSED_DEFAULT_KEY', req, res),
+    apolloClient,
+  )
 }

@@ -1,4 +1,4 @@
-import { OptionsType } from 'cookies-next/lib/types'
+import { OptionsType, TmpCookiesObj } from 'cookies-next/lib/types'
 
 export interface SimplePersister {
   save(value: string, key?: string, options?: OptionsType): void
@@ -6,4 +6,6 @@ export interface SimplePersister {
   fetch(key?: string): string | null
 
   reset(key?: string): void
+
+  getAll(): TmpCookiesObj
 }

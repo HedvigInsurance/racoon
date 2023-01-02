@@ -1,4 +1,4 @@
-import { setCookie, getCookie, deleteCookie } from 'cookies-next'
+import { setCookie, getCookie, deleteCookie, getCookies } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
 import { SimplePersister } from './Persister.types'
 
@@ -21,5 +21,9 @@ export class CookiePersister implements SimplePersister {
 
   private defaultOptions() {
     return { path: '/' }
+  }
+
+  public getAll() {
+    return getCookies(this.defaultOptions())
   }
 }
