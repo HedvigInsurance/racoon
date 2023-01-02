@@ -3,10 +3,10 @@ import { useTranslation } from 'next-i18next'
 import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
 import { Button, Dialog, Space, Text } from 'ui'
+import { useRemoveCartEntry } from '@/components/CartInventory/useRemoveCartEntry'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
 
@@ -19,14 +19,11 @@ export const CartEntryItem = (props: Props) => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
-  const [removeCartEntry, { loading }] = useCartEntryRemoveMutation({
-    refetchQueries: 'active',
-    awaitRefetchQueries: true,
-  })
+  const [removeCartEntry, { loading }] = useRemoveCartEntry({ cartId, offerId })
 
-  const handleSubmit = (offerId: string) => async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    await removeCartEntry({ variables: { cartId, offerId } })
+    await removeCartEntry()
   }
 
   return (
@@ -74,7 +71,7 @@ export const CartEntryItem = (props: Props) => {
           </>
         }
       >
-        <form id={REMOVE_CART_ENTRY_FORM} onSubmit={handleSubmit(offerId)} />
+        <form id={REMOVE_CART_ENTRY_FORM} onSubmit={handleSubmit} />
         <Text size={{ _: 'md', lg: 'xl' }} align="center">
           {t('REMOVE_ENTRY_MODAL_PROMPT', { ns: 'cart', name: title })}
         </Text>
