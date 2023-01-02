@@ -36,7 +36,26 @@ export const OfferPresenter = (props: Props) => {
   const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
-  const [selectedOffer, setSelectedOffer] = useState(priceIntent.offers[0])
+  const [selectedTypeOfContract, setSelectedTypeOfContract] = useState(
+    priceIntent.offers[0].variant.typeOfContract,
+  )
+
+  const selectedOffer = useMemo(() => {
+    const newSelectedOffer = priceIntent.offers.find(
+      (offer) => offer.variant.typeOfContract === selectedTypeOfContract,
+    )
+
+    if (newSelectedOffer) {
+      return newSelectedOffer
+    }
+
+    datadogLogs.logger.error('Failed to select offer with type of contract', {
+      typeOfContract: selectedTypeOfContract,
+      priceIntentId: priceIntent.id,
+    })
+    return priceIntent.offers[0]
+  }, [priceIntent.offers, priceIntent.id, selectedTypeOfContract])
+
   const selectedOfferId = selectedOffer.id
 
   const handleTierSelectorValueChange = (offerId: string) => {
@@ -47,7 +66,7 @@ export const OfferPresenter = (props: Props) => {
       return
     }
 
-    setSelectedOffer(offer)
+    setSelectedTypeOfContract(offer.variant.typeOfContract)
   }
 
   const offerRef = useRef(null)
@@ -83,7 +102,10 @@ export const OfferPresenter = (props: Props) => {
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
-  const cancellationOption = getCancellationOption({ priceIntent, productOffer: selectedOffer })
+  const cancellationOption = getCancellationOption({
+    priceIntent,
+    productOffer: selectedOffer,
+  })
 
   const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
 
@@ -101,7 +123,6 @@ export const OfferPresenter = (props: Props) => {
     }
   }, [selectedOffer.priceMatch, formatter, t])
 
-  // TODO: Suggested date should be handled by backend
   const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
 
   return (
@@ -164,7 +185,9 @@ const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
 const SubmitButton = ({ loading }: { loading: boolean }) => {
   return (
     <SpaceFlex space={0.5} direction="vertical" align="center">
-      <Button disabled={loading}>{loading ? 'Loading...' : 'Add to cart'}</Button>
+      <Button disabled={loading} loading={loading}>
+        Add to cart
+      </Button>
       <Text size="sm" align="center">
         Cancel anytime
       </Text>
