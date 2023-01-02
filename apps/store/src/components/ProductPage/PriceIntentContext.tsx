@@ -1,13 +1,16 @@
 import { useApolloClient } from '@apollo/client'
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from 'react'
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PriceIntentQueryResult, usePriceIntentLazyQuery } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type PriceIntentResult = PriceIntentQueryResult
+type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
+type ContextValue = readonly [PriceIntentResult, SetupPriceIntent] | null
 
-export const PriceIntentContext = createContext<PriceIntentResult | null>(null)
+export const PriceIntentContext = createContext<ContextValue>(null)
 
 type Props = PropsWithChildren<unknown>
 
@@ -25,30 +28,30 @@ const usePriceIntentContextValue = () => {
     fetchPolicy: 'cache-only',
   })
 
-  const productName = productData.name
-  const priceIntentService = useMemo(() => {
-    return priceIntentServiceInitClientSide(apolloClient)
-  }, [apolloClient])
+  const setupPriceIntent = useCallback(
+    async (shopSession: ShopSession) => {
+      const service = priceIntentServiceInitClientSide(apolloClient)
+      const priceIntent = await service.getOrCreate({
+        priceTemplate,
+        productName: productData.name,
+        shopSessionId: shopSession.id,
+      })
+      await fetchQuery({
+        variables: { priceIntentId: priceIntent.id },
+      })
+    },
+    [apolloClient, fetchQuery, priceTemplate, productData.name],
+  )
 
-  useEffect(() => {
-    return onReady((shopSession) => {
-      priceIntentService
-        .getOrCreate({ priceTemplate, productName, shopSessionId: shopSession.id })
-        .then((priceIntent) => {
-          fetchQuery({
-            variables: { priceIntentId: priceIntent.id },
-          })
-        })
-    })
-  }, [fetchQuery, onReady, priceIntentService, priceTemplate, productName])
+  useEffect(() => onReady(setupPriceIntent), [onReady, setupPriceIntent])
 
-  return queryResult
+  return [queryResult, setupPriceIntent] as const
 }
 
 export const usePriceIntent = () => {
-  const queryResult = useContext(PriceIntentContext)
-  if (!queryResult) {
+  const contextValue = useContext(PriceIntentContext)
+  if (!contextValue) {
     throw new Error('usePriceIntent called outside PriceIntentContext, no value to provide')
   }
-  return queryResult
+  return contextValue
 }
