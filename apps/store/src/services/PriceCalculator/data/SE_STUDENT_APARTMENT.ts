@@ -9,9 +9,6 @@ import { Template } from '../PriceCalculator.types'
 
 export const SE_STUDENT_APARTMENT: Template = {
   name: 'SE_STUDENT_APARTMENT',
-  initialData: {
-    isStudent: true,
-  },
   sections: [
     personalNumberSection,
     {

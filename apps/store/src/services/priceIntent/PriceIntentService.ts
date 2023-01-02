@@ -41,16 +41,9 @@ export class PriceIntentService {
         }
       },
     })
-    if (!result.data?.priceIntentCreate) throw new Error('Could not create price intent')
 
-    let priceIntent: PriceIntent = result.data.priceIntentCreate
-
-    if (priceTemplate.initialData) {
-      priceIntent = await this.update({
-        priceIntentId: priceIntent.id,
-        data: priceTemplate.initialData,
-      })
-    }
+    const priceIntent = result.data?.priceIntentCreate
+    if (!priceIntent) throw new Error('Could not create price intent')
 
     this.save({ priceIntentId: priceIntent.id, templateName: priceTemplate.name, shopSessionId })
 
