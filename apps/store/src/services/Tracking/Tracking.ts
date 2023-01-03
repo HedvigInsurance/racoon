@@ -1,7 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { ProductOfferFragment } from '@/services/apollo/generated'
-import { AppTrackingContext, pushToGTMDataLayer, setGtmContext } from '@/services/gtm'
+import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
+import {
+  AppTrackingContext,
+  EcommerceEvent,
+  pushToGTMDataLayer,
+  setGtmContext,
+} from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
@@ -9,9 +14,12 @@ type TrackingContext = Record<string, unknown>
 
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
+  BeginCheckout = 'begin_checkout',
+  DeleteFromCart = 'delete_from_cart',
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
+  ViewCart = 'view_cart',
   ViewItem = 'view_item',
 }
 
@@ -104,27 +112,40 @@ export class Tracking {
   }
 
   public reportViewItem(offer: ProductOfferFragment) {
-    // Google Analytics ecommerce event
-    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item
-    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.ViewItem, offer)
-    const { event, ...dataFields } = analyticsEvent
-    this.logger.log(event, dataFields)
-    pushToGTMDataLayer(analyticsEvent)
+    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.ViewItem, offer))
   }
 
   public reportAddToCart(offer: ProductOfferFragment) {
-    // Google Analytics ecommerce event
-    // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_cart
-    const analyticsEvent = offerToEcommerceEvent(TrackingEvent.AddToCart, offer)
-    const { event, ...dataFields } = analyticsEvent
+    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.AddToCart, offer))
+  }
+
+  public reportDeleteFromCart(offer: ProductOfferFragment) {
+    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.DeleteFromCart, offer))
+  }
+
+  public reportViewCart(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart))
+  }
+
+  public reportBeginCheckout(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart))
+  }
+
+  // Google Analytics ecommerce events
+  // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm
+  private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
+    const { event, ...dataFields } = ecommerceEvent
     this.logger.log(event, dataFields)
-    pushToGTMDataLayer(analyticsEvent)
+    pushToGTMDataLayer(ecommerceEvent)
   }
 }
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)
 
-const offerToEcommerceEvent = (event: TrackingEvent, offer: ProductOfferFragment) => {
+const offerToEcommerceEvent = (
+  event: TrackingEvent,
+  offer: ProductOfferFragment,
+): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -137,6 +158,23 @@ const offerToEcommerceEvent = (event: TrackingEvent, offer: ProductOfferFragment
           price: offer.price.amount,
         },
       ],
+    },
+  } as const
+}
+
+// NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics
+// Let's figure it out later when/if it becomes a priority
+const cartToEcommerceEvent = (event: TrackingEvent, cart: CartFragmentFragment): EcommerceEvent => {
+  return {
+    event,
+    ecommerce: {
+      value: cart.cost.net.amount,
+      currency: cart.cost.net.currencyCode,
+      items: cart.entries.map((entry) => ({
+        item_id: entry.variant.typeOfContract,
+        item_name: entry.variant.displayName,
+        price: entry.price.amount,
+      })),
     },
   } as const
 }

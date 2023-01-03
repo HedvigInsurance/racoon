@@ -4,6 +4,7 @@
 
 import { datadogLogs } from '@datadog/browser-logs'
 import Script from 'next/script'
+import { TrackingEvent } from '@/services/Tracking/Tracking'
 import { CountryCode } from '@/utils/l10n/types'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
@@ -39,7 +40,7 @@ type GTMPageData = {
   title: string
 }
 
-type GTMEcommerceData = Record<string, unknown>
+export type GTMEcommerceData = Record<string, unknown>
 
 type DataLayerObject = {
   event?: string
@@ -48,6 +49,11 @@ type DataLayerObject = {
   eventData?: Record<string, string>
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData
+}
+
+export type EcommerceEvent = {
+  event: TrackingEvent
+  ecommerce: GTMEcommerceData
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
