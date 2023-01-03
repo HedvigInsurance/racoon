@@ -12,5 +12,8 @@ export type CheckoutPageProps = {
   personalNumber: string
   prefilledData: {
     email?: string
+    firstName?: string
+    lastName?: string
   }
+  collectName: boolean
 }
