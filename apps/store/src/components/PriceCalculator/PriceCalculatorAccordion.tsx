@@ -28,19 +28,26 @@ export const PriceCalculatorAccordion = (props: Props) => {
       collapsible
     >
       {form.sections.map((section, index) => {
-        const isMuted = section.state !== 'valid' && section.id !== activeSectionId
-        const stepIconState = section.state === 'valid' ? 'muted' : 'outline'
+        const isActive = section.id === activeSectionId
+        const isValid = section.state === 'valid'
+        const showMutedHeading = !(isActive || isValid)
+        const showEditButton = isValid && !isActive
+        const stepIconState = isValid ? 'muted' : 'outline'
 
         return (
           <Accordion.Item key={section.id} value={section.id}>
             <Accordion.Header>
               <SpaceFlex space={0.5} align="center">
-                <StepIcon state={section.id === activeSectionId ? 'filled' : stepIconState} />
-                <StyledHeading as="h3" variant="standard.18" muted={isMuted}>
+                <StepIcon state={isActive ? 'filled' : stepIconState} />
+                <StyledHeading
+                  as="h3"
+                  variant="standard.18"
+                  color={showMutedHeading ? 'textSecondary' : 'textPrimary'}
+                >
                   {translateLabel(section.title)}
                 </StyledHeading>
               </SpaceFlex>
-              {section.state === 'valid' && (
+              {showEditButton && (
                 <Accordion.Trigger>
                   <StyledText size="md" color="textPrimary">
                     {t('PRICE_CALCULATOR_SECTION_EDIT_BUTTON')}
@@ -56,11 +63,5 @@ export const PriceCalculatorAccordion = (props: Props) => {
   )
 }
 
-type StyledHeadingProps = { muted: boolean }
-
-const StyledHeading = styled(Heading)<StyledHeadingProps>(({ theme, muted }) => ({
-  color: muted ? theme.colors.gray600 : theme.colors.gray900,
-  lineHeight: 1,
-}))
-
+const StyledHeading = styled(Heading)({ lineHeight: 1 })
 const StyledText = styled(Text)({ lineHeight: 1 })
