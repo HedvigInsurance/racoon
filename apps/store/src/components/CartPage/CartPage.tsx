@@ -139,7 +139,7 @@ const Header = ({ prevURL }: HeaderProps) => {
       <HeaderHeading as="h1" variant="standard.24">
         {t('CART_PAGE_HEADING')}
       </HeaderHeading>
-      <HeaderLink href={prevURL}>Back</HeaderLink>
+      <HeaderLink href={prevURL}>{t('BACK_BUTTON')}</HeaderLink>
     </StyledHeader>
   )
 }
