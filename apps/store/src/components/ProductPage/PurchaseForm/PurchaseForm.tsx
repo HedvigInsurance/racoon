@@ -151,9 +151,7 @@ const PendingState = () => {
     <SectionWrapper>
       <Space y={0.5}>
         <Tagline />
-        <OpenModalButtonWrapper>
-          <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-        </OpenModalButtonWrapper>
+        <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
       </Space>
     </SectionWrapper>
   )
@@ -172,7 +170,7 @@ const IdleState = ({ onClick }: IdleStateProps) => {
       <SectionWrapper ref={ref}>
         <Space y={0.5}>
           <Tagline />
-          <OpenModalButtonWrapper>{button}</OpenModalButtonWrapper>
+          {button}
         </Space>
       </SectionWrapper>
       <ScrollPast targetRef={ref}>
@@ -345,23 +343,14 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   )
 }
 
-const PurchaseFormTop = styled.div({
+const PurchaseFormTop = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '4.5rem',
-  paddingTop: '9vh',
-  paddingBottom: '9vh',
-})
-
-const OpenModalButtonWrapper = styled.div({
-  [mq.lg]: {
-    padding: 0,
-    maxWidth: PURCHASE_FORM_MAX_WIDTH,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-})
+  paddingBlock: '9vh',
+  paddingInline: theme.space.md,
+}))
 
 const StickyButtonWrapper = styled.div(({ theme }) => ({
   paddingInline: theme.space[4],
@@ -372,12 +361,16 @@ const StickyButtonWrapper = styled.div(({ theme }) => ({
 
 const SectionWrapper = styled.div({
   width: '100%',
-  maxWidth: PURCHASE_FORM_MAX_WIDTH,
-  margin: '0 auto',
+  [mq.sm]: {
+    maxWidth: PURCHASE_FORM_MAX_WIDTH,
+    margin: '0 auto',
+  },
 })
 
 const PriceCalculatorWrapper = styled.div({
   width: '100%',
-  maxWidth: PURCHASE_FORM_MAX_WIDTH,
-  margin: '0 auto',
+  [mq.sm]: {
+    maxWidth: PURCHASE_FORM_MAX_WIDTH,
+    margin: '0 auto',
+  },
 })
