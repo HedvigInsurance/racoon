@@ -8,10 +8,7 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
   const { shopSession } = useShopSession()
 
   const tracking = useTracking()
-  const [runMutation, mutationResult] = useCartEntryRemoveMutation({
-    refetchQueries: 'active',
-    awaitRefetchQueries: true,
-  })
+  const [runMutation, mutationResult] = useCartEntryRemoveMutation()
   const removeCartEntry = useCallback(() => {
     runMutation({
       variables: { cartId, offerId },
