@@ -76,13 +76,13 @@ export const InputSelect = ({
             name={name}
             onChange={handleChange}
             value={value}
-            defaultValue={defaultValue}
+            defaultValue={value ? undefined : defaultValue ?? ''}
             placeholder={placeholder}
             {...rest}
             {...animationProps}
           >
             {labelText && (
-              <Placeholder value="" disabled selected>
+              <Placeholder value="" disabled>
                 {labelText}
               </Placeholder>
             )}
