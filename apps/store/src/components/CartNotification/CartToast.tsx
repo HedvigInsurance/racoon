@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Heading, Space, Dialog, Button } from 'ui'
@@ -34,6 +35,7 @@ type Props = ProductItemProps & {
 }
 
 const CartNotificationContent = ({ name, price, onClose }: Props) => {
+  const { t } = useTranslation('purchase-form')
   const { shopSession } = useShopSession()
   const cartLineCount = shopSession?.cart.entries.length ?? 1
 
@@ -41,18 +43,18 @@ const CartNotificationContent = ({ name, price, onClose }: Props) => {
     <Dialog.Content onClose={onClose}>
       <DialogContentWrapper y={1.5}>
         <Heading as="h2" variant="standard.18">
-          Insurance added to cart
+          {t('CART_TOAST_HEADING')}
         </Heading>
         <ProductItem name={name} price={price} />
 
         <Space y={0.5}>
           <Link href={PageLink.cart()} passHref legacyBehavior>
-            <Button variant="primary">Proceed to cart ({cartLineCount})</Button>
+            <Button variant="primary">{t('CART_TOAST_CART_LINK', { count: cartLineCount })}</Button>
           </Link>
 
           <Link href={PageLink.store()} passHref legacyBehavior>
             <Button variant="ghost" onClick={onClose}>
-              Continue shopping
+              {t('CART_TOAST_STORE_LINK')}
             </Button>
           </Link>
         </Space>
