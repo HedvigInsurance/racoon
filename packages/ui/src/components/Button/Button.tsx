@@ -3,6 +3,12 @@ import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { LoadingSpinner } from './LoadingSpinner'
 
+const HEIGHT = {
+  large: '3.25rem',
+  medium: '2.5rem',
+  small: '2.125rem',
+}
+
 export type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'ghost'
   size?: 'large' | 'medium' | 'small'
@@ -61,25 +67,28 @@ const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }
   transition:
     'background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
 
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
   ...(size === 'large' && {
-    display: 'inline-block',
+    height: HEIGHT.large,
     width: '100%',
     paddingInline: theme.space[6],
-    paddingBlock: theme.space.md,
 
     textAlign: 'center',
     fontSize: theme.fontSizes[3],
   }),
 
   ...(size === 'medium' && {
+    height: HEIGHT.medium,
     paddingInline: theme.space[4],
-    paddingBlock: theme.space[2],
     fontSize: theme.fontSizes[3],
   }),
 
   ...(size === 'small' && {
+    height: HEIGHT.small,
     paddingInline: theme.space[4],
-    paddingBlock: theme.space[2],
     fontSize: theme.fontSizes[1],
   }),
 
@@ -108,7 +117,7 @@ const PrimaryButton = styled(StyledButton)(({ theme }) => ({
   },
 
   '&:focus-visible': {
-    backgroundColor: theme.colors.gray900,
+    boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
   },
 }))
 
