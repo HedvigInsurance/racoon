@@ -12,5 +12,7 @@
   "BACK_BUTTON": "Back",
   "OPEN_BANKID_DESCRIPTION": "Open the BankID app on your phone.",
   "ERROR_GENERAL_DIALOG_PROMPT": "Something went wrong. Please try again, and contact us at hedvig@hedvig.com if the problem persists.",
-  "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Try again"
+  "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Try again",
+  "FORM_FIRST_NAME_LABEL": "First name",
+  "FORM_LAST_NAME_LABEL": "Last name"
 }

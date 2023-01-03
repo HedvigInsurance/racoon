@@ -25,8 +25,10 @@ export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
   const handleSubmit = async (formData: FormData) => {
     datadogLogs.logger.debug('Checkout | Submit contact details')
     const email = getOrThrowFormValue(formData, FormElement.Email)
+    const firstName = formData.get(FormElement.FirstName) as string | null
+    const lastName = formData.get(FormElement.LastName) as string | null
     updateContactDetails({
-      variables: { input: { checkoutId, email } },
+      variables: { input: { checkoutId, email, firstName, lastName } },
     })
   }
 

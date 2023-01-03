@@ -24,7 +24,7 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData } = props
+  const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData, collectName } = props
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
@@ -99,6 +99,24 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 readOnly
                 disabled
               />
+              {collectName && (
+                <SpaceFlex space={0.25}>
+                  <TextField
+                    type="text"
+                    label={t('FORM_FIRST_NAME_LABEL')}
+                    name={FormElement.FirstName}
+                    defaultValue={prefilledData.firstName}
+                    required
+                  />
+                  <TextField
+                    type="text"
+                    label={t('FORM_LAST_NAME_LABEL')}
+                    name={FormElement.LastName}
+                    defaultValue={prefilledData.lastName}
+                    required
+                  />
+                </SpaceFlex>
+              )}
               <TextField
                 type="email"
                 label={t('FORM_EMAIL_LABEL')}

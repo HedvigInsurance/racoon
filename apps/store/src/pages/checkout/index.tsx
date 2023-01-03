@@ -18,7 +18,10 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'personalNumber'> & {
+type NextPageProps = Pick<
+  CheckoutPageProps,
+  'checkoutSigningId' | 'personalNumber' | 'collectName'
+> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -58,7 +61,9 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   const contactDetails = shopSession.checkout.contactDetails
   const prefilledData = {
-    [FormElement.Email]: contactDetails.email ?? '',
+    [FormElement.Email]: contactDetails.email ?? undefined,
+    [FormElement.FirstName]: contactDetails.firstName ?? undefined,
+    [FormElement.LastName]: contactDetails.lastName ?? undefined,
   }
 
   return (
@@ -102,6 +107,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       personalNumber,
+      collectName: !checkout.contactDetails.firstName || !checkout.contactDetails.lastName,
       checkoutSigningId: checkoutSigning?.id ?? null,
     }
 
