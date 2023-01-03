@@ -51,13 +51,17 @@ export const fetchStory = async (
   return story
 }
 
-export const getLinkFieldURL = (link: LinkField) => {
+const missingLinks = new Set()
+export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
   if (link.story) return makeAbsolute(link.story.url)
 
   if (link.linktype === 'url') return makeAbsolute(link.url)
 
-  // Should never happen, but let's simplify debugging when it does
-  console.warn('Did not see story field in link, returning empty URL', link)
+  // Warn about CMS links without target. This could be either reference to something not yet created or misconfiguration
+  if (!missingLinks.has(link.id)) {
+    missingLinks.add(link.id)
+    console.log('Did not see story field in link, returning empty URL.', linkText, link)
+  }
   return '/'
 }
 
