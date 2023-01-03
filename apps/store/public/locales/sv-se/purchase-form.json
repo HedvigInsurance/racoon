@@ -71,5 +71,9 @@
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Jag hyr den",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Jag äger den",
   "FIELD_HOUSEHOLD_SIZE_LABEL": "Välj antal personer att försäkra",
-  "FIELD_EMAIL_LABEL": "E-post"
+  "FIELD_EMAIL_LABEL": "E-post",
+  "ADD_TO_CART_BUTTON_LABEL": "Lägg i varukorgen",
+  "CART_TOAST_HEADING": "Försäkring tillagd i varukorgen",
+  "CART_TOAST_CART_LINK": "Fortsätt till varukorgen ({{count}})",
+  "CART_TOAST_STORE_LINK": "Fortsätt shoppa"
 }
