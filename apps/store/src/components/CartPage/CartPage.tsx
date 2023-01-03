@@ -92,7 +92,7 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
 
         <Space y={2}>
           <Space y={1}>
-            <CenteredText>¯\_(ツ)_/¯</CenteredText>
+            <Text align="center">¯\_(ツ)_/¯</Text>
             <Text align="center" color="textSecondary">
               {t('CART_EMPTY_SUMMARY')}
             </Text>
@@ -107,8 +107,6 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
     </Wrapper>
   )
 }
-
-const CenteredText = styled(Text)({ textAlign: 'center' })
 
 const HorizontalLine = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
