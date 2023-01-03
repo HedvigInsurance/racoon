@@ -18,18 +18,22 @@ import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
-  const { shopSession } = useShopSession()
+  const { onReady } = useShopSession()
   const { t } = useTranslation()
 
   const tracking = useTracking()
-  useEffect(() => {
-    const { cart } = shopSession ?? {}
-    if (cart) {
-      tracking.reportViewCart(cart)
-    } else {
-      datadogLogs.logger.error('No cart data on cartPage')
-    }
-  }, [tracking, shopSession])
+  useEffect(
+    () =>
+      onReady((shopSession) => {
+        const { cart } = shopSession
+        if (cart) {
+          tracking.reportViewCart(cart)
+        } else {
+          datadogLogs.logger.error('No cart data on cartPage')
+        }
+      }),
+    [onReady, tracking],
+  )
 
   const router = useRouter()
   const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({

@@ -3,12 +3,12 @@ import { useTranslation } from 'next-i18next'
 import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
 import { Button, Dialog, Space, Text } from 'ui'
-import { useRemoveCartEntry } from '@/components/CartInventory/useRemoveCartEntry'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
+import { useRemoveCartEntry } from './useRemoveCartEntry'
 
 const REMOVE_CART_ENTRY_FORM = 'remove-cart-entry-form'
 
