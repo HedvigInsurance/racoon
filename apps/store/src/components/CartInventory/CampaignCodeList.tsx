@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
-import { CrossIcon, Text } from 'ui'
+import { Button, CrossIcon, Text } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
@@ -46,7 +46,9 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
             variant="small"
             disabled={loadingRedeem}
           />
-          <AddDiscountButton>{t('CHECKOUT_ADD_DISCOUNT_BUTTON')}</AddDiscountButton>
+          <Button variant="primary-alt" loading={loadingRedeem} disabled={loadingRedeem}>
+            {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
+          </Button>
         </DiscountFormWrapper>
       </form>
     )
@@ -82,18 +84,9 @@ const SpaceBetween = styled.div(({ theme }) => ({
 const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })
 
 const DiscountFormWrapper = styled.div(({ theme }) => ({
-  display: 'flex',
-  gap: theme.space[2],
-}))
-
-const AddDiscountButton = styled.button(({ theme }) => ({
-  textAlign: 'center',
-  backgroundColor: theme.colors.green50,
-  padding: `${theme.space[2]} ${theme.space[5]}`,
-  borderRadius: `${theme.radius.sm}px`,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-  backdropFilter: 'blur(30px)',
-  whiteSpace: 'nowrap',
+  display: 'grid',
+  gridTemplateColumns: '1fr minmax(20%, min-content)',
+  gap: theme.space.xs,
 }))
 
 const ChipButton = styled.button(({ theme }) => ({

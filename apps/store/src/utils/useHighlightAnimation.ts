@@ -39,4 +39,7 @@ const EXCLUDE_SET = new Set([
   'ArrowRight',
   'ArrowLeft',
   'Shift',
+  'Alt',
+  'Meta',
+  'Control',
 ])
