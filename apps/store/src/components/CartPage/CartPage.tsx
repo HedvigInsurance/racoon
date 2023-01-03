@@ -114,15 +114,15 @@ const HorizontalLine = styled.hr(({ theme }) => ({
 }))
 
 const Wrapper = styled(Space)(({ theme }) => ({
-  paddingBottom: theme.space[6],
+  paddingBottom: theme.space.xl,
   maxWidth: '40rem',
   marginLeft: 'auto',
   marginRight: 'auto',
 }))
 
 const Section = styled(Space)(({ theme }) => ({
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
 }))
 
 // Header
@@ -150,8 +150,8 @@ const HeaderLink = styled(Link)(({ theme }) => ({
 
   [mq.lg]: {
     position: 'absolute',
-    top: theme.space[4],
-    right: theme.space[4],
+    top: theme.space.md,
+    right: theme.space.md,
   },
 }))
 
