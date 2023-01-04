@@ -1,11 +1,8 @@
 {
-  "CHECKOUT_BUTTON": "Sjekk ut",
-  "TEST_PLURALIZE_one": "Kanelsnurr",
-  "TEST_PLURALIZE_other": "{{count}} kanelboller",
-  "MONTHLY_PRICE": "{{displayAmount}}/mnd",
   "COUNTRY_LABEL_NO": "Norge",
+  "COUNTRY_NOT_DETECTED": "Vi er usikre på hvilket land du besøker oss. Velg landet ditt nedenfor:",
+  "LANGUAGE_LABEL_da": "Dansk",
   "LANGUAGE_LABEL_en": "Engelsk",
   "LANGUAGE_LABEL_no": "Norsk",
-  "LANGUAGE_LABEL_da": "Dansk",
-  "COUNTRY_NOT_DETECTED": "Vi er usikre på hvilket land du besøker oss. Velg landet ditt nedenfor:"
+  "MONTHLY_PRICE": "{{displayAmount}}/mnd"
 }

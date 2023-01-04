@@ -1,8 +1,5 @@
 {
-  "CHECKOUT_BUTTON": "Checkout",
-  "TEST_PLURALIZE_one": "Kanelbolle",
-  "TEST_PLURALIZE_other": "{{count}} kanelboller",
   "COUNTRY_LABEL_DK": "Danmark",
-  "LANGUAGE_LABEL_en": "Engelsk",
-  "LANGUAGE_LABEL_da": "Dansk"
+  "LANGUAGE_LABEL_da": "Dansk",
+  "LANGUAGE_LABEL_en": "Engelsk"
 }
