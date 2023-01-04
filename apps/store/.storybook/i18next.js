@@ -18,4 +18,4 @@ const requireTranslationsBackend = {
 i18n
   .use(initReactI18next)
   .use(requireTranslationsBackend)
-  .init({ ...nextI18nextConfig, lng: 'default', defaultNS: nextI18nextConfig.fallbackNS })
+  .init({ ...nextI18nextConfig, lng: 'en', defaultNS: nextI18nextConfig.fallbackNS })

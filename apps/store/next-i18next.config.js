@@ -1,4 +1,4 @@
-const englishFallback = ['default']
+const englishFallback = ['en']
 
 /**
  * @type {import('next-i18next').UserConfig}
@@ -14,11 +14,24 @@ module.exports = {
   // - Storyblok folder slugs
   // - Dictionaries download script
   i18n: {
-    locales: ['default', 'se', 'sv-se', 'en-se', 'dk', 'en-dk', 'no', 'en-no'],
-    defaultLocale: 'default',
+    locales: [
+      // Generic English with optional country-specific variants (generally should be empty)
+      'en',
+      'en-dk',
+      'en-no',
+      'en-se',
+      // Swedish, see note in fallbackLng
+      'se',
+      'sv-se',
+      // Everything else
+      'dk',
+      'no',
+    ],
+    defaultLocale: 'en',
     localeDetection: false,
   },
   fallbackLng: {
+    // Need explicit fallbacks, locale loading fails with nonExplicitSupportedLngs: true,
     'en-se': englishFallback,
     'en-dk': englishFallback,
     'en-no': englishFallback,
