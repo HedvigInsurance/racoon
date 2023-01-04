@@ -1,8 +1,8 @@
 export type Peril = {
-  id: string
   icon: React.ReactNode
-  name: string
+  title: string
   description: string
   covered: Array<string>
-  notCovered: Array<string>
+  exceptions: Array<string>
+  info: string
 }

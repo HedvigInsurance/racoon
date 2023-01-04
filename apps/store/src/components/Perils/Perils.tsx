@@ -41,20 +41,20 @@ const PerilsAccordion = ({ perils }: { perils: Array<Peril> }) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ id, icon, name, description, covered, notCovered }) => {
+      {perils.map(({ icon, title, description, covered, exceptions }) => {
         return (
-          <Accordion.Item key={id} value={name}>
+          <Accordion.Item key={title} value={title}>
             <Accordion.HeaderWithTrigger>
               <SpaceFlex space={0.5}>
                 {icon}
-                {name}
+                {title}
               </SpaceFlex>
             </Accordion.HeaderWithTrigger>
             <Accordion.Content>
               <ContentWrapper>
                 <p>{description}</p>
                 <CoverageList variant="covered" heading="Covered" items={covered} />
-                <CoverageList variant="not-covered" heading="Not Covered" items={notCovered} />
+                <CoverageList variant="not-covered" heading="Not Covered" items={exceptions} />
               </ContentWrapper>
             </Accordion.Content>
           </Accordion.Item>
