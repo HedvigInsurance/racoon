@@ -178,7 +178,7 @@ export const OfferPresenter = (props: Props) => {
           <ScrollPastButtonContent>
             <span>{displayPrice}</span>
             <Separator />
-            <span>Add to cart</span>
+            <span>{t('ADD_TO_CART_BUTTON_LABEL')}</span>
           </ScrollPastButtonContent>
         </ScrollToButton>
       </ScrollPast>
@@ -193,16 +193,14 @@ const ScrollPastButtonContent = styled.div({
 
 const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
 
-// TODO: Localize
 const SubmitButton = ({ loading }: { loading: boolean }) => {
+  const { t } = useTranslation('purchase-form')
+
   return (
     <SpaceFlex space={0.5} direction="vertical" align="center">
       <Button disabled={loading} loading={loading}>
-        Add to cart
+        {t('ADD_TO_CART_BUTTON_LABEL')}
       </Button>
-      <Text size="sm" align="center">
-        Cancel anytime
-      </Text>
     </SpaceFlex>
   )
 }

@@ -20,7 +20,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 import { useGetMutationError } from '@/utils/useGetMutationError'
-import useRouterRefresh from '@/utils/useRouterRefresh'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
@@ -29,8 +28,11 @@ import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 
 export const PurchaseForm = () => {
   const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
+  const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
-  const { data: { priceIntent } = {} } = usePriceIntent()
+  const apolloClient = useApolloClient()
+  const formatter = useFormatter()
+  const [{ data: { priceIntent = null } = {} }, setupPriceIntent] = usePriceIntent()
 
   return (
     <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
@@ -48,11 +50,30 @@ export const PurchaseForm = () => {
         }
 
         if (priceIntent.offers.length > 0) {
+          const handleAddedToCart = async (item: ProductOfferFragment) => {
+            notifyProductAdded({
+              name: productData.displayNameFull,
+              price: formatter.money(item.price),
+            })
+
+            const service = priceIntentServiceInitClientSide(apolloClient)
+            service.clear(priceTemplate.name, shopSession.id)
+            try {
+              await setupPriceIntent(shopSession)
+            } catch (error) {
+              datadogLogs.logger.error('Failed to create new price intent', {
+                error,
+                priceTemplate: priceTemplate.name,
+                shopSessionId: shopSession.id,
+              })
+            }
+          }
+
           return (
             <ShowOfferState
               shopSession={shopSession}
               priceIntent={priceIntent}
-              onAddedToCart={notifyProductAdded}
+              onAddedToCart={handleAddedToCart}
               onClickEdit={() => setIsEditingPriceCalculator(true)}
             />
           )
@@ -303,26 +324,13 @@ const ProgressBar = styled(motion.div)(({ theme }) => ({
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
   shopSession: ShopSession
-  onAddedToCart: (item: ProductItemProps) => void
+  onAddedToCart: (item: ProductOfferFragment) => void
   onClickEdit: () => void
 }
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
   const { shopSession, priceIntent, onAddedToCart, onClickEdit } = props
-  const { priceTemplate, productData } = useProductPageContext()
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
-
-  const refresh = useRouterRefresh()
-  const apolloClient = useApolloClient()
-  const formatter = useFormatter()
-  const handleAddedToCart = (addedProdutOffer: ProductOfferFragment) => {
-    onAddedToCart({
-      name: productData.displayNameFull,
-      price: formatter.money(addedProdutOffer.price),
-    })
-    priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSession.id)
-    refresh()
-  }
 
   return (
     <SectionWrapper ref={scrollPastRef}>
@@ -330,7 +338,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
-        onAddedToCart={handleAddedToCart}
+        onAddedToCart={onAddedToCart}
         onClickEdit={onClickEdit}
       />
     </SectionWrapper>

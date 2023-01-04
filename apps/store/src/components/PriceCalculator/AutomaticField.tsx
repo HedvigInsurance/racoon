@@ -30,7 +30,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
     case 'text':
       return (
         <TextField
-          type="text"
+          type={field.inputType ?? 'text'}
           name={field.name}
           label={translateLabel(field.label)}
           pattern={field.pattern}

@@ -2,6 +2,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { isValidMotionProp, motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
+import { Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -51,18 +52,19 @@ const LargeWrapper = styled(motion.div, {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center',
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray300,
 
   height: '4rem',
 
   [':focus-within > label']: {
-    transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
+    transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
   },
 
   ...(isActive && {
     '> label': {
-      transform: `translate(calc(${theme.space[4]} * 0.4), -0.1rem) scale(0.6)`,
+      transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
     },
   }),
 }))
@@ -74,17 +76,17 @@ const LargeLabel = styled.label(({ theme }) => ({
   transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   transform: `translate(0, 0) scale(1)`,
 
-  fontSize: theme.fontSizes[5],
+  fontSize: theme.fontSizes.xl,
   color: theme.colors.gray700,
-  padding: theme.space[4],
+  paddingInline: theme.space.md,
   whiteSpace: 'nowrap',
 }))
 
 const LargeInput = styled.input(({ theme }) => ({
   width: '100%',
-  fontSize: theme.fontSizes[5],
-  padding: theme.space[4],
-  paddingTop: theme.space[5],
+  fontSize: theme.fontSizes.xl,
+  paddingInline: theme.space.md,
+  paddingTop: theme.space.md,
 
   ':disabled': {
     opacity: 0.6,
@@ -92,37 +94,26 @@ const LargeInput = styled.input(({ theme }) => ({
   },
 }))
 
-const LargeSuffix = styled.span(({ theme }) => ({
-  color: theme.colors.textSecondary,
-  fontSize: theme.fontSizes[5],
-  paddingRight: theme.space[4],
-}))
+const LargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md }))
+LargeSuffix.defaultProps = { size: 'xl', color: 'textSecondary', as: 'span' }
 
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
   width: '100%',
-  height: '3.5rem',
+  height: '3.25rem',
 
   [':focus-within > label']: {
-    transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
+    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
   },
 
   ...(isActive && {
     '> label': {
-      transform: `translate(calc(${theme.space[4]} * 0.2), -0.4rem) scale(0.8)`,
+      transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
     },
   }),
 }))
 
-const SmallLabel = styled(LargeLabel)(({ theme }) => ({
-  fontSize: theme.fontSizes[3],
-  paddingTop: theme.space[4],
-}))
+const SmallLabel = styled(LargeLabel)(({ theme }) => ({ fontSize: theme.fontSizes.md }))
+const SmallInput = styled(LargeInput)(({ theme }) => ({ fontSize: theme.fontSizes.lg }))
 
-const SmallInput = styled(LargeInput)(({ theme }) => ({
-  fontSize: theme.fontSizes[4],
-  paddingTop: theme.space[5],
-}))
-
-const SmallSuffix = styled(LargeSuffix)(({ theme }) => ({
-  fontSize: theme.fontSizes[4],
-}))
+const SmallSuffix = styled(LargeSuffix)()
+SmallSuffix.defaultProps = { size: 'lg' }

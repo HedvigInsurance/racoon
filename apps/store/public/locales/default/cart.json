@@ -14,5 +14,6 @@
   "CHECKOUT_PRICE_TOTAL": "Total",
   "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Yes, remove",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
-  "REMOVE_ENTRY_MODAL_PROMPT": "Are you sure you want to remove {{name}}?"
+  "REMOVE_ENTRY_MODAL_PROMPT": "Are you sure you want to remove {{name}}?",
+  "BACK_BUTTON": "Back"
 }

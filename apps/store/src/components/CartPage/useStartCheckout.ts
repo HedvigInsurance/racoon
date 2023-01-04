@@ -1,5 +1,6 @@
 import { useCheckoutStartMutation } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useTracking } from '@/services/Tracking/useTracking'
 
 type Params = {
   shopSessionId: string
@@ -7,8 +8,13 @@ type Params = {
 }
 
 export const useStartCheckout = ({ shopSessionId, onCompleted }: Params) => {
+  const tracking = useTracking()
   return useCheckoutStartMutation({
     variables: { shopSessionId },
-    onCompleted: (data) => onCompleted(data.shopSessionCheckoutStart),
+    onCompleted: (data) => {
+      const { cart } = data.shopSessionCheckoutStart
+      tracking.reportBeginCheckout(cart)
+      onCompleted(data.shopSessionCheckoutStart)
+    },
   })
 }

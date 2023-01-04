@@ -30,6 +30,7 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 }
 
 const tracking = new Tracking()
+initStoryblok()
 
 if (typeof window !== 'undefined') {
   initDatadog()
@@ -45,23 +46,20 @@ if (typeof window !== 'undefined') {
   })
 }
 
-// @TODO - should this be initialized unless running in browser?
-initStoryblok()
-
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useRemoveExperimentQueryParam()
-
-  const apolloClient = useApollo(pageProps)
-
-  const getLayout = Component.getLayout || ((page) => page)
   useDebugTranslationKeys()
+  const apolloClient = useApollo(pageProps)
+  const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <>
-      <GTMAppScript />
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      <GTMAppScript />
+
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
         <ThemeProvider theme={theme}>
