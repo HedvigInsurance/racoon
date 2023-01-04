@@ -172,9 +172,7 @@ export const OfferPresenter = (props: Props) => {
       <Button onClick={toggleComparisonTable} variant="ghost">
         Compare coverage
       </Button>
-      {isComparisonTableOpen && (
-        <ComparisonTable.Root>{priceIntent.offers.map((offer) => {})}</ComparisonTable.Root>
-      )}
+      {isComparisonTableOpen && <ComparisonTable.Root>hello</ComparisonTable.Root>}
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
           <ScrollPastButtonContent>
