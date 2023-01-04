@@ -20,6 +20,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
+import * as ComparisonTable from './ComparisonTable/ComparisonTable'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
@@ -39,6 +40,7 @@ export const OfferPresenter = (props: Props) => {
   const [selectedTypeOfContract, setSelectedTypeOfContract] = useState(
     priceIntent.offers[0].variant.typeOfContract,
   )
+  const [isComparisonTableOpen, setIsComparisonTableOpen] = useState(false)
 
   const selectedOffer = useMemo(() => {
     const newSelectedOffer = priceIntent.offers.find(
@@ -125,6 +127,12 @@ export const OfferPresenter = (props: Props) => {
 
   const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
 
+  const toggleComparisonTable = () => {
+    setIsComparisonTableOpen(!isComparisonTableOpen)
+  }
+
+  console.log('priceintent', priceIntent)
+
   return (
     <>
       <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
@@ -161,6 +169,12 @@ export const OfferPresenter = (props: Props) => {
           </Space>
         </Space>
       </form>
+      <Button onClick={toggleComparisonTable} variant="ghost">
+        Compare coverage
+      </Button>
+      {isComparisonTableOpen && (
+        <ComparisonTable.Root>{priceIntent.offers.map((offer) => {})}</ComparisonTable.Root>
+      )}
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
           <ScrollPastButtonContent>
