@@ -72,7 +72,7 @@ const LargeWrapper = styled(motion.div, {
   }),
 
   ':has(input:focus-visible)': {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
   },
 }))
 
