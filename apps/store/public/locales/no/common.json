@@ -1,5 +1,4 @@
 {
-  "CHECKOUT_BUTTON": "Sjekk ut",
   "TEST_PLURALIZE_one": "Kanelsnurr",
   "TEST_PLURALIZE_other": "{{count}} kanelboller",
   "MONTHLY_PRICE": "{{displayAmount}}/mnd",

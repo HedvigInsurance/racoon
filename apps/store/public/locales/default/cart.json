@@ -1,5 +1,6 @@
 {
   "CART_EMPTY_SUMMARY": "Your cart is empty",
+  "CHECKOUT_BUTTON": "Checkout",
   "GO_TO_STORE_BUTTON": "Go to Store",
   "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
   "REMOVE_ENTRY_BUTTON": "Remove",

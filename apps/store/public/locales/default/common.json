@@ -1,5 +1,4 @@
 {
-  "CHECKOUT_BUTTON": "Checkout",
   "TEST_PLURALIZE_one": "Cinnamon bun",
   "TEST_PLURALIZE_other": "{{count}} cinnamon buns",
   "MONTHLY_PRICE": "{{displayAmount}}/mo.",

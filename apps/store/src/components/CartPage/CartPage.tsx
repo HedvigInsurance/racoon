@@ -19,7 +19,7 @@ import { useStartCheckout } from './useStartCheckout'
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
   const { onReady } = useShopSession()
-  const { t } = useTranslation()
+  const { t } = useTranslation('cart')
 
   const tracking = useTracking()
   useEffect(
