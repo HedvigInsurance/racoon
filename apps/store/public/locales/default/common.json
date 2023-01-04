@@ -8,7 +8,5 @@
   "LANGUAGE_LABEL_no": "Norwegian",
   "LANGUAGE_LABEL_sv": "Swedish",
   "MONTHLY_PRICE": "{{displayAmount}}/mo.",
-  "TEST_PLURALIZE_one": "Cinnamon bun",
-  "TEST_PLURALIZE_other": "{{count}} cinnamon buns",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }

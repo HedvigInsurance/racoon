@@ -4,7 +4,5 @@
   "LANGUAGE_LABEL_da": "Dansk",
   "LANGUAGE_LABEL_en": "Engelsk",
   "LANGUAGE_LABEL_no": "Norsk",
-  "MONTHLY_PRICE": "{{displayAmount}}/mnd",
-  "TEST_PLURALIZE_one": "Kanelsnurr",
-  "TEST_PLURALIZE_other": "{{count}} kanelboller"
+  "MONTHLY_PRICE": "{{displayAmount}}/mnd"
 }
