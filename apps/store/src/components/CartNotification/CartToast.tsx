@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Heading, Space, Dialog, Button } from 'ui'
+import { Heading, Space, Dialog } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
+import { ButtonNextLink } from '../ButtonNextLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -48,15 +48,13 @@ const CartNotificationContent = ({ name, price, onClose }: Props) => {
         <ProductItem name={name} price={price} />
 
         <Space y={0.5}>
-          <Link href={PageLink.cart()} passHref legacyBehavior>
-            <Button variant="primary">{t('CART_TOAST_CART_LINK', { count: cartLineCount })}</Button>
-          </Link>
+          <ButtonNextLink href={PageLink.cart()} variant="primary">
+            {t('CART_TOAST_CART_LINK', { count: cartLineCount })}
+          </ButtonNextLink>
 
-          <Link href={PageLink.store()} passHref legacyBehavior>
-            <Button variant="ghost" onClick={onClose}>
-              {t('CART_TOAST_STORE_LINK')}
-            </Button>
-          </Link>
+          <ButtonNextLink href={PageLink.store()} onClick={onClose} variant="ghost">
+            {t('CART_TOAST_STORE_LINK')}
+          </ButtonNextLink>
         </Space>
       </DialogContentWrapper>
     </Dialog.Content>

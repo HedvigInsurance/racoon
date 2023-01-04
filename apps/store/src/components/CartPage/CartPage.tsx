@@ -11,8 +11,8 @@ import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
 import { useStartCheckout } from './useStartCheckout'
 
@@ -83,7 +83,6 @@ type EmptyStateProps = { children: ReactNode; prevURL: string }
 
 const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
   const { t } = useTranslation('cart')
-  const { routingLocale } = useCurrentLocale()
 
   return (
     <Wrapper>
@@ -98,9 +97,7 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
             </Text>
           </Space>
 
-          <Link href={PageLink.store({ locale: routingLocale })} passHref legacyBehavior>
-            <Button>{t('GO_TO_STORE_BUTTON')}</Button>
-          </Link>
+          <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
         </Space>
         {children}
       </Space>
