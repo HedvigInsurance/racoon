@@ -4,7 +4,7 @@ module.exports = {
   defaultNamespace: 'common',
   output: 'public/locales/$LOCALE/$NAMESPACE.json',
   verbose: true,
-  keepRemoved: true,
+  keepRemoved: false,
   // Workaround to make local sort match Lokalize rules
   sort: (a, b) => a.localeCompare(b, 'en', { sensitivity: 'base', ignorePunctuation: true }),
 }
