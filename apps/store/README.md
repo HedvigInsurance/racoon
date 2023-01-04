@@ -45,3 +45,20 @@ If you want to reset the current shop session, you can do so by visiting the fol
 ```html
 /api/session/reset?next={REDIRECT_URL}
 ```
+
+## Create new Shop Session with entries
+
+If you want to create a new shop session with entries, you can do so by visiting the following URL:
+
+```html
+/api/session/create
+```
+
+It will setup a shop session with two products: `SE_APARTMENT_RENT` and `SE_ACCIDENT`.
+
+Optional query parameters:
+
+- `?ssn={SSN}`: Swedish personal identity number
+
+> **Note**
+> This endpoint only supports Sweden for now.

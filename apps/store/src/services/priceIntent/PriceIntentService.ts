@@ -10,6 +10,9 @@ import {
   PriceIntentDocument,
   PriceIntentQuery,
   PriceIntentQueryVariables,
+  PriceIntentConfirmDocument,
+  PriceIntentConfirmMutation,
+  PriceIntentConfirmMutationVariables,
 } from '@/services/apollo/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { SimplePersister } from '@/services/persister/Persister.types'
@@ -88,7 +91,7 @@ export class PriceIntentService {
     return await this.createPromise
   }
 
-  private async update(variables: PriceIntentDataUpdateMutationVariables) {
+  public async update(variables: PriceIntentDataUpdateMutationVariables) {
     const updatedResult = await this.apolloClient.mutate<
       PriceIntentDataUpdateMutation,
       PriceIntentDataUpdateMutationVariables
@@ -100,6 +103,19 @@ export class PriceIntentService {
     if (!priceIntent) {
       throw new Error('Could not update price intent with initial data')
     }
+    return priceIntent
+  }
+
+  public async confirm(priceIntentId: string) {
+    const updatedResult = await this.apolloClient.mutate<
+      PriceIntentConfirmMutation,
+      PriceIntentConfirmMutationVariables
+    >({
+      mutation: PriceIntentConfirmDocument,
+      variables: { priceIntentId },
+    })
+    const { priceIntent } = updatedResult.data?.priceIntentConfirm ?? {}
+    if (!priceIntent) throw new Error('Could not confirm price intent')
     return priceIntent
   }
 
