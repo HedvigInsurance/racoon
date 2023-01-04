@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Space, Text } from 'ui'
+import { Button, CrossIcon, Space, Text } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -12,6 +12,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
+  PerilFragment,
   ProductOfferFragment,
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -23,6 +24,8 @@ import { CancellationForm, CancellationOption } from './CancellationForm/Cancell
 import * as ComparisonTable from './ComparisonTable/ComparisonTable'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
+
+const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
 
 type Props = {
   priceIntent: PriceIntent
@@ -131,7 +134,21 @@ export const OfferPresenter = (props: Props) => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
   }
 
-  console.log('priceintent', priceIntent)
+  const getAllPerils = () => {
+    return priceIntent.offers.reduce(
+      (accumulatedPerils, offer) => accumulatedPerils.concat(offer.variant.perils),
+      [] as PerilFragment[],
+    )
+  }
+
+  const getUniquePerilTitles = () => {
+    const allPerils = getAllPerils()
+    const perilTitles = allPerils.map((peril) => peril.title)
+    return removeDuplicates(perilTitles)
+  }
+
+  const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
+    offer.variant.perils.some((peril) => peril.title === perilTitle)
 
   return (
     <>
@@ -169,10 +186,43 @@ export const OfferPresenter = (props: Props) => {
           </Space>
         </Space>
       </form>
-      <Button onClick={toggleComparisonTable} variant="ghost">
-        Compare coverage
-      </Button>
-      {isComparisonTableOpen && <ComparisonTable.Root>hello</ComparisonTable.Root>}
+      {priceIntent.offers.length > 1 && (
+        <TextButton onClick={toggleComparisonTable}>
+          <StyledCrossIcon
+            transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
+            size="0.875rem"
+          />
+          Compare coverage
+        </TextButton>
+      )}
+      {isComparisonTableOpen && (
+        <ComparisonTable.Root>
+          <ComparisonTable.Head>
+            <ComparisonTable.Header />
+            {priceIntent.offers.map((offer) => (
+              <ComparisonTable.Header key={offer.id}>
+                {offer.variant.displayName}todo
+              </ComparisonTable.Header>
+            ))}
+          </ComparisonTable.Head>
+          <ComparisonTable.Body>
+            {getUniquePerilTitles().map((perilTitle) => (
+              <ComparisonTable.Row key={perilTitle}>
+                <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
+                {priceIntent.offers.map((offer) => (
+                  <ComparisonTable.DataCell key={offer.id}>
+                    {offerHasPeril(offer, perilTitle) ? (
+                      <ComparisonTable.CheckIcon />
+                    ) : (
+                      <ComparisonTable.MissingIcon />
+                    )}
+                  </ComparisonTable.DataCell>
+                ))}
+              </ComparisonTable.Row>
+            ))}
+          </ComparisonTable.Body>
+        </ComparisonTable.Root>
+      )}
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
           <ScrollPastButtonContent>
@@ -211,6 +261,22 @@ const Separator = styled.div(({ theme }) => ({
   margin: `0 ${theme.space[3]}`,
   alignSelf: 'stretch',
 }))
+
+const TextButton = styled.button(({ theme }) => ({
+  border: 'none',
+  backgroundColor: 'inherit',
+  cursor: 'pointer',
+  fontSize: theme.fontSizes[1],
+  width: '100%',
+  margin: `${theme.space[4]} 0`,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}))
+
+const StyledCrossIcon = styled(CrossIcon)({
+  marginRight: '0.375rem',
+})
 
 type GetCancellationOptionParams = {
   priceIntent: PriceIntent
