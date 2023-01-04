@@ -73,13 +73,11 @@ const IconName = styled.div({
   paddingTop: '1rem',
 })
 
-const updateClipboard = (newClip: string) => {
-  navigator.clipboard.writeText(newClip).then(
-    () => {
-      console.log(`Copied <${newClip} /> to clipboard`)
-    },
-    () => {
-      console.log(`Failed to write ${newClip} to clipboard`)
-    },
-  )
+const updateClipboard = async (newClip: string) => {
+  try {
+    await navigator.clipboard.writeText(newClip).catch((e) => console.warn(e))
+    console.log(`Copied ${newClip} to clipboard`)
+  } catch (error) {
+    console.warn(error)
+  }
 }
