@@ -11,7 +11,9 @@ fragment ProductOffer on ProductOffer {
         src
       }
     }
-    ...Peril
+    perils {
+      ...Peril
+    }
   }
   price {
     amount
