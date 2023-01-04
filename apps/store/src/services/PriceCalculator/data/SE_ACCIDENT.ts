@@ -6,7 +6,10 @@ import {
   streetAddressField,
   yourFamilySection,
 } from '@/services/PriceCalculator/formFragments'
+import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
+
+setI18nNamespace('purchase-form')
 
 export const SE_ACCIDENT: Template = {
   name: 'SE_ACCIDENT',
@@ -14,8 +17,8 @@ export const SE_ACCIDENT: Template = {
     personalNumberSection,
     {
       id: 'your-home',
-      title: { key: 'SECTION_TITLE_YOUR_HOME' },
-      submitLabel: { key: 'SUBMIT_LABEL_PROCEED' },
+      title: { key: tKey('SECTION_TITLE_YOUR_HOME') },
+      submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
       items: [
         {
           field: streetAddressField,
