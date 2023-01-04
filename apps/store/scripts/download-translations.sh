@@ -30,7 +30,7 @@ lokalise2 \
   --project-id 743091915e9da969db9340.20943733 \
   file download \
   --format json \
-  --export-sort first_added \
+  --export-sort a_z \
   --export-empty-as skip \
   --add-newline-eof \
   --replace-breaks=false \
