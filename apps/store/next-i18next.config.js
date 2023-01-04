@@ -15,6 +15,8 @@ module.exports = {
   // - Dictionaries download script
   i18n: {
     locales: [
+      // Technical value for "locale not selected", see https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale
+      'default',
       // Generic English with optional country-specific variants (generally should be empty)
       'en',
       'en-dk',
@@ -27,10 +29,11 @@ module.exports = {
       'dk',
       'no',
     ],
-    defaultLocale: 'en',
+    defaultLocale: 'default',
     localeDetection: false,
   },
   fallbackLng: {
+    default: englishFallback,
     // Need explicit fallbacks, locale loading fails with nonExplicitSupportedLngs: true,
     'en-se': englishFallback,
     'en-dk': englishFallback,
