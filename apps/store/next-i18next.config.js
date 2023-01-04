@@ -33,6 +33,7 @@ module.exports = {
     localeDetection: false,
   },
   fallbackLng: {
+    // Only used in country selector page
     default: englishFallback,
     // Need explicit fallbacks, locale loading fails with nonExplicitSupportedLngs: true,
     'en-se': englishFallback,
