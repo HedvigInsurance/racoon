@@ -36,10 +36,10 @@ Ask someone from the Purchase Journey team to help you out :)
 If you're already part of the Vercel-team you can run:
 
 ```sh
-vercel --scope hedvig link --project racoon --yes
+vercel --scope hedvig link --project onboarding --yes
 vercel env pull apps/onboarding/.env.local
 
-vercel --scope hedvig link --project racoon-store --yes
+vercel --scope hedvig link --project hedvig-dot-com --yes
 vercel env pull apps/store/.env.local
 ```
 
