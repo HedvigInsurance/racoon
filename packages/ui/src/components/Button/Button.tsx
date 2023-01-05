@@ -39,6 +39,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...baseProps,
     children: buttonChildren,
     as: props.href ? 'a' : 'button',
+    loading,
     ref,
   } as const
 
@@ -107,7 +108,7 @@ const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }
   },
 }))
 
-const PrimaryButton = styled(StyledButton)(({ theme }) => ({
+const PrimaryButton = styled(StyledButton)(({ theme, loading }) => ({
   backgroundColor: theme.colors.gray1000,
   color: theme.colors.textNegative,
 
@@ -116,10 +117,12 @@ const PrimaryButton = styled(StyledButton)(({ theme }) => ({
     backgroundColor: theme.colors.gray900,
   },
 
-  '&:disabled': {
-    backgroundColor: theme.colors.gray200,
-    color: theme.colors.textDisabled,
-  },
+  ...(!loading && {
+    '&:disabled': {
+      backgroundColor: theme.colors.gray200,
+      color: theme.colors.textDisabled,
+    },
+  }),
 
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
@@ -132,7 +135,7 @@ const shadow = css({
 })
 
 const PrimaryAltButton = styled(StyledButton)(
-  ({ theme }) => ({
+  ({ theme, loading }) => ({
     backgroundColor: theme.colors.green50,
     color: theme.colors.textPrimary,
 
@@ -140,18 +143,20 @@ const PrimaryAltButton = styled(StyledButton)(
       backgroundColor: theme.colors.green100,
     },
 
-    '&:disabled': {
-      backgroundColor: theme.colors.gray200,
-      color: theme.colors.textDisabled,
-      boxShadow: 'none',
-      backdropFilter: 'none',
-    },
+    ...(!loading && {
+      '&:disabled': {
+        backgroundColor: theme.colors.gray200,
+        color: theme.colors.textDisabled,
+        boxShadow: 'none',
+        backdropFilter: 'none',
+      },
+    }),
   }),
   shadow,
 )
 
 const SecondaryButton = styled(StyledButton)(
-  ({ theme }) => ({
+  ({ theme, loading }) => ({
     // TODO: update to use translucent gray100
     backgroundColor: theme.colors.gray100,
     color: theme.colors.textPrimary,
@@ -161,17 +166,19 @@ const SecondaryButton = styled(StyledButton)(
       backgroundColor: theme.colors.gray200,
     },
 
-    '&:disabled': {
-      backgroundColor: theme.colors.gray200,
-      color: theme.colors.textDisabled,
-      boxShadow: 'none',
-      backdropFilter: 'none',
-    },
+    ...(!loading && {
+      '&:disabled': {
+        backgroundColor: theme.colors.gray200,
+        color: theme.colors.textDisabled,
+        boxShadow: 'none',
+        backdropFilter: 'none',
+      },
+    }),
   }),
   shadow,
 )
 
-const GhostButton = styled(StyledButton)(({ theme }) => ({
+const GhostButton = styled(StyledButton)(({ theme, loading }) => ({
   backgroundColor: 'transparent',
   color: theme.colors.textPrimary,
 
@@ -180,8 +187,10 @@ const GhostButton = styled(StyledButton)(({ theme }) => ({
     backgroundColor: theme.colors.gray100,
   },
 
-  '&:disabled': {
-    color: theme.colors.textDisabled,
-    backgroundColor: 'transparent',
-  },
+  ...(!loading && {
+    '&:disabled': {
+      color: theme.colors.textDisabled,
+      backgroundColor: 'transparent',
+    },
+  }),
 }))
