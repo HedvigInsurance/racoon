@@ -17,10 +17,9 @@ type Props = {
   priceIntent: PriceIntent
   priceTemplate: Template
   onConfirm: () => void
-  error?: string
 }
 
-export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm, error }: Props) => {
+export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm }: Props) => {
   const form = useMemo(() => {
     return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
   }, [priceTemplate, priceIntent])
@@ -65,7 +64,6 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm, error }
         <PriceCalculatorSection
           section={section}
           onSubmit={handleSubmitSection}
-          error={error}
           loading={isLoading}
         >
           <FormGrid items={section.items}>
