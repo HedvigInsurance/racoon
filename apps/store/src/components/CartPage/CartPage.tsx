@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactNode, useEffect } from 'react'
+import { FormEventHandler, ReactNode, useEffect } from 'react'
 import { Button, Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
@@ -36,12 +36,17 @@ export const CartPage = (props: CartPageProps) => {
   )
 
   const router = useRouter()
-  const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({
+  const [startCheckout, { loading }] = useStartCheckout({
     shopSessionId,
     onCompleted() {
       router.push(PageLink.checkout())
     },
   })
+
+  const handleSubmit: FormEventHandler = (event) => {
+    event.preventDefault()
+    startCheckout()
+  }
 
   if (entries.length === 0) {
     return (
@@ -69,9 +74,11 @@ export const CartPage = (props: CartPageProps) => {
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
         <HorizontalLine />
         <CostSummary {...cost} campaigns={campaigns} />
-        <Button onClick={() => startCheckout()} disabled={loadingStartCheckout}>
-          {t('CHECKOUT_BUTTON')}
-        </Button>
+        <form onSubmit={handleSubmit}>
+          <Button disabled={loading} loading={loading}>
+            {t('CHECKOUT_BUTTON')}
+          </Button>
+        </form>
       </Space>
     </Wrapper>
   )
