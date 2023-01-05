@@ -151,7 +151,9 @@ const PendingState = () => {
     <SectionWrapper>
       <Space y={0.5}>
         <Tagline />
-        <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+        <Button loading disabled>
+          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+        </Button>
       </Space>
     </SectionWrapper>
   )
