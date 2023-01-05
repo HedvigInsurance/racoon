@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import NextLink from 'next/link'
 import { ComponentProps } from 'react'
 import { Button } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -15,11 +15,13 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <NextLink href={getLinkFieldURL(blok.link, blok.text)} passHref legacyBehavior>
-        <Button variant={blok.variant} color="dark" size="large">
-          {blok.text}
-        </Button>
-      </NextLink>
+      <ButtonNextLink
+        href={getLinkFieldURL(blok.link, blok.text)}
+        variant={blok.variant}
+        size="large"
+      >
+        {blok.text}
+      </ButtonNextLink>
     </Wrapper>
   )
 }
