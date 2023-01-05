@@ -61,7 +61,9 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
           <SpaceBetween>
             <form onSubmit={handleSubmitUnredeemCampaign(item.id)}>
               <ChipButton disabled={loadingUnredeenCampaign}>
-                {item.code}
+                <Text as="span" size="xs">
+                  {item.code}
+                </Text>
                 <CrossIcon size={theme.fontSizes[1]} color={theme.colors.gray500} />
               </ChipButton>
             </form>
@@ -85,7 +87,7 @@ const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })
 
 const DiscountFormWrapper = styled.div(({ theme }) => ({
   display: 'grid',
-  gridTemplateColumns: '1fr minmax(20%, min-content)',
+  gridTemplateColumns: '1fr minmax(33%, min-content)',
   gap: theme.space.xs,
 }))
 
@@ -95,13 +97,15 @@ const ChipButton = styled.button(({ theme }) => ({
   gap: theme.space[1],
   borderRadius: theme.radius.xs,
   backgroundColor: theme.colors.gray200,
-  color: theme.colors.gray900,
-  fontSize: theme.fontSizes[1],
   textTransform: 'uppercase',
   paddingTop: theme.space[1],
   paddingBottom: theme.space[1],
   paddingLeft: theme.space[2],
   paddingRight: theme.space[2],
+
+  ':focus-visible': {
+    boxShadow: `0 0 0 1px ${theme.colors.gray1000}`,
+  },
 
   ':disabled': {
     opacity: 0.6,
