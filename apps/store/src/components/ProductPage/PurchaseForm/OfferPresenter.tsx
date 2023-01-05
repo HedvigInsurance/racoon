@@ -150,6 +150,13 @@ export const OfferPresenter = (props: Props) => {
   const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
     offer.variant.perils.some((peril) => peril.title === perilTitle)
 
+  console.log(priceIntent.offers)
+
+  const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
+    if (offer.id === selectedOfferId) return true
+    return false
+  }
+
   return (
     <>
       <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
@@ -200,7 +207,10 @@ export const OfferPresenter = (props: Props) => {
           <ComparisonTable.Head>
             <ComparisonTable.Header />
             {priceIntent.offers.map((offer) => (
-              <ComparisonTable.Header key={offer.id}>
+              <ComparisonTable.Header
+                key={offer.id}
+                active={isSelectedOffer(offer, selectedOfferId)}
+              >
                 {offer.variant.displayName}todo
               </ComparisonTable.Header>
             ))}
@@ -210,7 +220,10 @@ export const OfferPresenter = (props: Props) => {
               <ComparisonTable.Row key={perilTitle}>
                 <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
                 {priceIntent.offers.map((offer) => (
-                  <ComparisonTable.DataCell key={offer.id}>
+                  <ComparisonTable.DataCell
+                    key={offer.id}
+                    active={isSelectedOffer(offer, selectedOfferId)}
+                  >
                     {offerHasPeril(offer, perilTitle) ? (
                       <ComparisonTable.CheckIcon />
                     ) : (
