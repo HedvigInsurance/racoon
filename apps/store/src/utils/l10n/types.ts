@@ -12,7 +12,6 @@ export const Locale = {
 
 export type IsoLocale = typeof Locale[keyof typeof Locale]
 export type RoutingLocale = Lowercase<CountryLabel> | Lowercase<IsoLocale>
-export type NextLocale = RoutingLocale | 'default'
 export type UiLocale = IsoLocale | RoutingLocale
 
 export enum Language {
