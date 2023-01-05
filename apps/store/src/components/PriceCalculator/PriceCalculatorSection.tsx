@@ -1,5 +1,5 @@
 import { FormEventHandler, ReactNode } from 'react'
-import { Button, Space, Text } from 'ui'
+import { Button, Space } from 'ui'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { FormSection, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -9,10 +9,9 @@ type Props = {
   loading: boolean
   onSubmit: (data: JSONData) => void
   children: ReactNode
-  error?: string
 }
 
-export const PriceCalculatorSection = ({ section, loading, onSubmit, children, error }: Props) => {
+export const PriceCalculatorSection = ({ section, loading, onSubmit, children }: Props) => {
   const translateLabel = useTranslateFieldLabel()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -44,7 +43,6 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, children, e
           <Button type="submit" disabled={loading} loading={loading}>
             {translateLabel(section.submitLabel)}
           </Button>
-          {error && <Text align="center">{error}</Text>}
         </Space>
       </Space>
     </form>
