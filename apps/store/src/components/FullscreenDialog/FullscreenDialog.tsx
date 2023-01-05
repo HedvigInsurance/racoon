@@ -4,9 +4,10 @@ import { CrossIcon, Dialog, mq } from 'ui'
 type Props = {
   children: React.ReactNode
   Footer: React.ReactNode
+  center?: boolean
 }
 
-export const Modal = ({ children, Footer }: Props) => {
+export const Modal = ({ children, Footer, center = false }: Props) => {
   return (
     <Content frostedOverlay={true}>
       <Header>
@@ -14,47 +15,83 @@ export const Modal = ({ children, Footer }: Props) => {
           <CrossIcon size="1.5rem" />
         </CloseButton>
       </Header>
-      <Main>{children}</Main>
+      {center ? (
+        <CenteredMain>{children}</CenteredMain>
+      ) : (
+        <Main>
+          <ClearHeader />
+          {children}
+          <ClearFooter />
+        </Main>
+      )}
       <FooterWrapper>{Footer}</FooterWrapper>
     </Content>
   )
 }
 
-const Content = styled(Dialog.Content)(({ theme }) => ({
+const Content = styled(Dialog.Content)({
   height: '100%',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
-  paddingBottom: theme.space[4],
-  display: 'grid',
-  gridTemplateRows: '3rem 1fr auto',
+  overflowY: 'auto',
+})
 
-  [mq.lg]: {
-    paddingBottom: theme.space[7],
-  },
-}))
-
-const Header = styled.header({
+const HEADER_HEIGHT = '3.5rem'
+const Header = styled.header(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-})
+  paddingInline: theme.space.md,
+  height: HEADER_HEIGHT,
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
 
-const CloseButton = styled(Dialog.Close)({
-  cursor: 'pointer',
-})
+  [mq.lg]: {
+    paddingInline: theme.space.xl,
+  },
+}))
+
+const CloseButton = styled(Dialog.Close)({ cursor: 'pointer' })
 
 const Main = styled.main({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
+  height: '100%',
 })
 
+const CenteredMain = styled(Main)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingInline: theme.space.md,
+}))
+
+const ClearHeader = styled.div({
+  height: HEADER_HEIGHT,
+})
+
+const BUTTON_HEIGHT = '3.25rem'
+const ClearFooter = styled.div(({ theme }) => ({
+  height: `calc(${BUTTON_HEIGHT} + ${theme.space.md} * 2)`,
+  [mq.lg]: {
+    height: `calc(${BUTTON_HEIGHT} + ${theme.space.xxl} * 2)`,
+  },
+}))
+
 const FooterWrapper = styled.footer(({ theme }) => ({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 24rem)',
   justifyContent: 'center',
   gap: theme.space[1],
+  paddingInline: theme.space.md,
+  paddingBottom: theme.space.md,
+
+  [mq.lg]: {
+    paddingBottom: theme.space.xxl,
+  },
 }))
 
 export const Root = Dialog.Root

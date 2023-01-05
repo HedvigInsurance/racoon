@@ -90,6 +90,7 @@ const MOCK_CART: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {
@@ -119,6 +120,7 @@ const MOCK_CART: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {
@@ -148,6 +150,7 @@ const MOCK_CART: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {
@@ -219,6 +222,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {
@@ -248,6 +252,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {
@@ -278,6 +283,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           },
           __typename: 'Product',
         },
+        documents: [],
         __typename: 'ProductVariant',
       },
       price: {

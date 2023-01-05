@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Link, { LinkProps } from 'next/link'
 import { FormEvent } from 'react'
 import { Button, Dialog, Space, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -8,6 +7,7 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
+import { DetailsSheetDialog } from './DetailsSheetDialog'
 import { useRemoveCartEntry } from './useRemoveCartEntry'
 
 const REMOVE_CART_ENTRY_FORM = 'remove-cart-entry-form'
@@ -15,15 +15,16 @@ const REMOVE_CART_ENTRY_FORM = 'remove-cart-entry-form'
 type Props = CartEntry & { cartId: string }
 
 export const CartEntryItem = (props: Props) => {
-  const { cartId, offerId, title, startDate, cost, pillow } = props
+  const { cartId, ...cartEntry } = props
+  const { offerId, title, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
   const [removeCartEntry, { loading }] = useRemoveCartEntry({ cartId, offerId })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    await removeCartEntry()
+    removeCartEntry()
   }
 
   return (
@@ -36,16 +37,22 @@ export const CartEntryItem = (props: Props) => {
             <Text size="md" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
-                ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
+                ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
                 : 'Starts sometime...'}
             </Text>
           </div>
           <SpaceFlex space={0.25}>
-            <LinkButtonSecondary href="#">
-              {t('VIEW_ENTRY_DETAILS_BUTTON', { ns: 'cart' })}
-            </LinkButtonSecondary>
+            <DetailsSheetDialog {...cartEntry}>
+              <Dialog.Trigger asChild>
+                <Button variant="secondary" size="small">
+                  {t('VIEW_ENTRY_DETAILS_BUTTON')}
+                </Button>
+              </Dialog.Trigger>
+            </DetailsSheetDialog>
             <Dialog.Trigger asChild>
-              <TextButton disabled={loading}>{t('REMOVE_ENTRY_BUTTON', { ns: 'cart' })}</TextButton>
+              <Button variant="ghost" size="small" disabled={loading}>
+                {t('REMOVE_ENTRY_BUTTON')}
+              </Button>
             </Dialog.Trigger>
           </SpaceFlex>
         </Space>
@@ -53,6 +60,7 @@ export const CartEntryItem = (props: Props) => {
       </Wrapper>
 
       <FullscreenDialog.Modal
+        center
         Footer={
           <>
             <Button
@@ -61,11 +69,11 @@ export const CartEntryItem = (props: Props) => {
               loading={loading}
               disabled={loading}
             >
-              {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON', { ns: 'cart' })}
+              {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}
             </Button>
             <FullscreenDialog.Close asChild>
               <Button type="button" variant="ghost">
-                {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON', { ns: 'cart' })}
+                {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
               </Button>
             </FullscreenDialog.Close>
           </>
@@ -73,7 +81,7 @@ export const CartEntryItem = (props: Props) => {
       >
         <form id={REMOVE_CART_ENTRY_FORM} onSubmit={handleSubmit} />
         <Text size={{ _: 'md', lg: 'xl' }} align="center">
-          {t('REMOVE_ENTRY_MODAL_PROMPT', { ns: 'cart', name: title })}
+          {t('REMOVE_ENTRY_MODAL_PROMPT', { name: title })}
         </Text>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
@@ -85,26 +93,3 @@ const Wrapper = styled.li(({ theme }) => ({
   gridTemplateColumns: '3rem minmax(0, 1fr) auto',
   gap: theme.space[3],
 }))
-
-const SecondaryButton = styled.button(({ theme }) => ({
-  fontSize: theme.fontSizes[1],
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
-  paddingTop: theme.space[2],
-  paddingBottom: theme.space[2],
-  borderRadius: theme.radius.xs,
-  backgroundColor: theme.colors.gray200,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-
-  ':disabled': {
-    opacity: 0.6,
-  },
-}))
-
-const LinkButtonSecondary = styled(SecondaryButton)<LinkProps>()
-LinkButtonSecondary.defaultProps = { as: Link }
-
-const TextButton = styled(SecondaryButton)({
-  backgroundColor: 'transparent',
-  boxShadow: 'none',
-})
