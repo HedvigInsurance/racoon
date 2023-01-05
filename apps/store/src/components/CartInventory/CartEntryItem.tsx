@@ -57,9 +57,6 @@ export const CartEntryItem = (props: Props) => {
         <Space y={1}>
           <div>
             <Text size="md" color="textSecondary">
-              Bostadsrätt Tavastgatan 39 Startar 02 dec. 2023
-            </Text>
-            <Text size="md" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
                 ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
