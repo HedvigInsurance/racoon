@@ -14,7 +14,11 @@ import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storybl
 import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField, LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
-import { getLocaleOrFallback, toRoutingLocale } from '@/utils/l10n/localeUtils'
+import {
+  getLocaleOrFallback,
+  toRoutingLocale,
+  translateLanguageName,
+} from '@/utils/l10n/localeUtils'
 import { IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -75,7 +79,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const languageList = currentCountry.locales.map((locale) => {
     const { language } = getLocaleOrFallback(locale)
     return {
-      name: t(`LANGUAGE_LABEL_${language}`, { defaultValue: language }),
+      name: translateLanguageName(language, t),
       value: language,
     }
   })
