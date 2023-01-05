@@ -120,10 +120,12 @@ const DesktopWrapper = styled.li(({ theme }) => ({
     gap: theme.space.sm,
   },
 }))
+
 const DesktopPillowTitle = styled.div({
   display: 'flex',
   alignItems: 'flex-start',
 })
+
 const DesktopPillowFlexItem = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -132,10 +134,7 @@ const DesktopPillowFlexItem = styled.div(({ theme }) => ({
 
 const SecondaryButton = styled.button(({ theme }) => ({
   fontSize: theme.fontSizes[1],
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.md,
-  paddingTop: theme.space.xs,
-  paddingBottom: theme.space.xs,
+  padding: `${theme.space.xs} ${theme.space.md}`,
   borderRadius: theme.radius.xs,
   backgroundColor: theme.colors.gray200,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
