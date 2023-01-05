@@ -33,7 +33,7 @@ const ContentSecurityPolicy = `
   font-src https://fonts.intercomcdn.com 'self';
   img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com blob: data: 'self';
   media-src https://*.storyblok.com;
-  connect-src https://*.browser-intake-datadoghq.eu https://*.hedvigit.com https://api-iam.intercom.io wss://*.intercom.io 'self';
+  connect-src https://*.browser-intake-datadoghq.eu https://*.google-analytics.com https://api-iam.intercom.io wss://*.intercom.io https://*.hedvigit.com 'self';
   worker-src blob:;
   object-src data:;
   frame-src https://dc.insurely.com;
