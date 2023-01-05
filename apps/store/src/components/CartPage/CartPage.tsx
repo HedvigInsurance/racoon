@@ -159,7 +159,7 @@ const HeaderHeading = styled(Heading)(({ theme }) => ({
   },
 }))
 
-const StyledHeader = styled(Section)({
+const StyledHeader = styled(Space)({
   height: '3.5rem',
   display: 'flex',
   alignItems: 'center',
