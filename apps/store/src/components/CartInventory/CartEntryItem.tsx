@@ -107,8 +107,6 @@ const MobileWrapper = styled.li(({ theme }) => ({
   gap: theme.space.sm,
   [mq.lg]: {
     display: 'none',
-    gridTemplateColumns: '3fr 2fr 2fr',
-    gap: theme.space.sm,
   },
 }))
 
