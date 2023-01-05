@@ -1,5 +1,4 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
   AppTrackingContext,
@@ -49,15 +48,6 @@ export class Tracking {
     setGtmContext(context)
   }
 
-  public setProductContext = (product: ProductData) => {
-    this.setContext('has_home', product.name.includes('_APARTMENT'))
-    this.setContext('has_house', product.name.includes('_HOUSE'))
-    this.setContext('has_card', product.name.includes('_CAR'))
-    this.setContext('has_accident', product.name.includes('_ACCIDENT'))
-    this.setContext('has_travel', false)
-    this.setContext('is_student', product.name.includes('STUDENT'))
-  }
-
   public setPriceIntentContext = (priceIntent: PriceIntent) => {
     const { numberCoInsured } = priceIntent.data
     this.setContext(
@@ -90,23 +80,38 @@ export class Tracking {
     pushToGTMDataLayer(event)
   }
 
-  // TODO: Decide what to do with legacy context fields
-  // referral_code
-  // discounted_premium
-  // flow_type
-  // quote_cart_id
-  // ownership_type
-  // car_sub_type
+  // Legacy event in market-web format
   public reportOfferCreated(offer: ProductOfferFragment) {
-    // Our custom event compatible with market-web
     const event = {
       event: TrackingEvent.OfferCreated,
       offerData: {
-        id: offer.id,
-        currency: offer.price.currencyCode as string,
         insurance_price: offer.price.amount,
+        currency: offer.price.currencyCode as string,
+
         insurance_type: offer.variant.typeOfContract,
-        ...this.context,
+        flow_type: offer.variant.product.name,
+        ...getLegacyEventFlags([offer.variant.typeOfContract]),
+      },
+    }
+    this.logger.log(event.event, event.offerData)
+    pushToGTMDataLayer(event)
+  }
+
+  // Legacy event in market-web format
+  public reportSignedCustomer(cart: CartFragmentFragment) {
+    const event = {
+      event: TrackingEvent.SignedCustomer,
+      offerData: {
+        quote_cart_id: cart.id,
+        transaction_id: cart.id,
+
+        discounted_premium: cart.cost.net.amount,
+        insurance_price: cart.cost.gross.amount,
+        currency: cart.cost.net.currencyCode as string,
+
+        insurance_type: cart.entries[0].variant.typeOfContract,
+        flow_type: cart.entries[0].variant.product.name,
+        ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
     }
     this.logger.log(event.event, event.offerData)
@@ -137,6 +142,8 @@ export class Tracking {
     const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart)
     event.ecommerce.transaction_id = cart.id
     this.reportEcommerceEvent(event)
+    // Also report in web-onboarding format
+    this.reportSignedCustomer(cart)
   }
 
   // Google Analytics ecommerce events
@@ -184,5 +191,19 @@ const cartToEcommerceEvent = (event: TrackingEvent, cart: CartFragmentFragment):
         price: entry.price.amount,
       })),
     },
+  } as const
+}
+
+// TODO: Decide what do to with
+// ownership_type - maybe expose though API?
+// number_of_people - get from offer, tricky for cart
+const getLegacyEventFlags = (typesOfContract: Array<string>) => {
+  return {
+    has_home: typesOfContract.some((type) => type.includes('_APARTMENT')),
+    has_house: typesOfContract.some((type) => type.includes('_HOUSE')),
+    has_car: typesOfContract.some((type) => type.includes('_CAR_')),
+    has_accident: typesOfContract.some((type) => type.includes('_ACCIDENT')),
+    is_student: typesOfContract.some((type) => type.includes('STUDENT')),
+    car_sub_type: typesOfContract.find((type) => type.includes('_CAR_')),
   } as const
 }
