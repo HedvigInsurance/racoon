@@ -58,23 +58,21 @@ export const CartPage = (props: CartPageProps) => {
 
   return (
     <Wrapper y={{ base: 1, lg: 4 }}>
-      <Section>
-        <Space y={1.5}>
-          <Header prevURL={prevURL} />
-          <CartEntryList>
-            {entries.map((item) => (
-              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-            ))}
-          </CartEntryList>
-          <HorizontalLine />
-          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-          <HorizontalLine />
-          <CostSummary {...cost} campaigns={campaigns} />
-          <Button onClick={() => startCheckout()} disabled={loadingStartCheckout}>
-            {t('CHECKOUT_BUTTON')}
-          </Button>
-        </Space>
-      </Section>
+      <Header prevURL={prevURL} />
+      <Space y={1.5}>
+        <CartEntryList>
+          {entries.map((item) => (
+            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
+          ))}
+        </CartEntryList>
+        <HorizontalLine />
+        <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+        <HorizontalLine />
+        <CostSummary {...cost} campaigns={campaigns} />
+        <Button onClick={() => startCheckout()} disabled={loadingStartCheckout}>
+          {t('CHECKOUT_BUTTON')}
+        </Button>
+      </Space>
     </Wrapper>
   )
 }
@@ -85,22 +83,19 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
   const { t } = useTranslation('cart')
 
   return (
-    <Wrapper>
-      <Space y={5}>
-        <Header prevURL={prevURL} />
-
-        <Space y={2}>
-          <Space y={1}>
-            <Text align="center">¯\_(ツ)_/¯</Text>
-            <Text align="center" color="textSecondary">
-              {t('CART_EMPTY_SUMMARY')}
-            </Text>
-          </Space>
-
-          <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
+    <Wrapper y={4}>
+      <Header prevURL={prevURL} />
+      <Space y={2}>
+        <Space y={1}>
+          <Text align="center">¯\_(ツ)_/¯</Text>
+          <Text align="center" color="textSecondary">
+            {t('CART_EMPTY_SUMMARY')}
+          </Text>
         </Space>
-        {children}
+
+        <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
       </Space>
+      {children}
     </Wrapper>
   )
 }
@@ -115,9 +110,6 @@ const Wrapper = styled(Space)(({ theme }) => ({
   maxWidth: '40rem',
   marginLeft: 'auto',
   marginRight: 'auto',
-}))
-
-const Section = styled(Space)(({ theme }) => ({
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
 }))

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { mq, Separate } from 'ui'
+import { Separate } from 'ui'
 
 type Props = { children: ReactNode }
 
@@ -10,14 +10,11 @@ export const CartEntryList = ({ children }: Props) => {
   )
 }
 
-const StyledCartEntryList = styled(Separate)(({ theme }) => ({
+const StyledCartEntryList = styled(Separate)({
   padding: 0,
   listStyleType: 'none',
   width: '100%',
-  [mq.lg]: {
-    paddingTop: theme.space.xxxl,
-  },
-}))
+})
 StyledCartEntryList.defaultProps = { as: 'ul' }
 
 const HorizontalLineWithSpace = styled.hr(({ theme }) => ({
