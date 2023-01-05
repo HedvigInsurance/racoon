@@ -7,6 +7,7 @@
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Lägg till",
   "CHECKOUT_BUTTON": "Gå till checkout",
   "CHECKOUT_PRICE_TOTAL": "Totalt",
+  "DETAILS_SHEET_DISMISS_BUTTON": "Klar",
   "DISCOUNT_DURATION_EXPLANATION": "i {{count}} månad, sedan",
   "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mån",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",

@@ -47,6 +47,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
         src: item.variant.product.pillowImage.src,
         alt: item.variant.product.pillowImage.alt ?? undefined,
       },
+      documents: item.variant.documents,
     })),
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
       id: item.id,

@@ -7,6 +7,7 @@
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
   "CHECKOUT_BUTTON": "Checkout",
   "CHECKOUT_PRICE_TOTAL": "Total",
+  "DETAILS_SHEET_DISMISS_BUTTON": "Done",
   "DISCOUNT_DURATION_EXPLANATION": "For {{count}} month, then",
   "DISCOUNT_STATE_FREE_MONTHS": "Free for {{count}} mth.",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",

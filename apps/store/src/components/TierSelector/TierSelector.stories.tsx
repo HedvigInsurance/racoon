@@ -27,6 +27,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
     price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
@@ -47,6 +48,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
     price: { amount: 299, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
@@ -67,6 +69,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
     price: { amount: 999, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {

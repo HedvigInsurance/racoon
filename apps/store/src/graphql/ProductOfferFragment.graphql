@@ -11,6 +11,11 @@ fragment ProductOffer on ProductOffer {
         src
       }
     }
+    documents {
+      type
+      displayName
+      url
+    }
   }
   price {
     amount

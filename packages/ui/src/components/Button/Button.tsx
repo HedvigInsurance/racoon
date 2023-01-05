@@ -9,12 +9,17 @@ const HEIGHT = {
   small: '2.125rem',
 }
 
+type LinkProps = {
+  href?: string
+  target?: string
+  rel?: string
+}
+
 export type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'ghost'
   size?: 'large' | 'medium' | 'small'
   loading?: boolean
-  href?: string
-}
+} & LinkProps
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 
