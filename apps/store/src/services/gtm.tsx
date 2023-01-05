@@ -45,7 +45,7 @@ export type GTMEcommerceData = Record<string, unknown>
 type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
-  offerData?: Record<string, string | number>
+  offerData?: Record<string, unknown>
   eventData?: Record<string, string>
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData

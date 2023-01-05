@@ -81,6 +81,7 @@ const MOCK_CART: CartFragmentFragment = {
         typeOfContract: 'SE_ACCIDENT',
         displayName: 'Accident Insurance',
         product: {
+          name: 'SE_ACCIDENT',
           displayNameFull: 'Accident Insurance',
           pillowImage: {
             id: '6646216',
@@ -111,6 +112,7 @@ const MOCK_CART: CartFragmentFragment = {
         typeOfContract: 'SE_APARTMENT_RENT',
         displayName: 'Home Insurance Rental',
         product: {
+          name: 'SE_APARTMENT_RENT',
           displayNameFull: 'Home Insurance Rental',
           pillowImage: {
             id: '6646216',
@@ -141,6 +143,7 @@ const MOCK_CART: CartFragmentFragment = {
         typeOfContract: 'SE_APARTMENT_RENT',
         displayName: 'Home Insurance Rental',
         product: {
+          name: 'SE_APARTMENT_RENT',
           displayNameFull: 'Home Insurance Rental',
           pillowImage: {
             id: '6646216',
@@ -213,6 +216,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
         displayName: 'SE_Accident',
         typeOfContract: 'SE_ACCIDENT',
         product: {
+          name: 'SE_ACCIDENT',
           displayNameFull: 'Accident Insurance',
           pillowImage: {
             id: '6646216',
@@ -243,6 +247,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
         displayName: 'SE Apartment',
         typeOfContract: 'SE_APARTMENT_RENT',
         product: {
+          name: 'SE_APARTMENT_RENT',
           displayNameFull: 'Home Insurance Rental',
           pillowImage: {
             id: '6646216',
@@ -271,9 +276,9 @@ const MOCK_CART_TWO: CartFragmentFragment = {
       id: 'f13c5d6f-52ba-41db-adf3-9df196818dec',
       variant: {
         displayName: 'SE Rent',
-
         typeOfContract: 'SE_APARTMENT_RENT',
         product: {
+          name: 'SE_APARTMENT_RENT',
           displayNameFull: 'Home Insurance Rental',
           pillowImage: {
             id: '6646216',
