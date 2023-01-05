@@ -3,7 +3,7 @@ import { Global, ThemeProvider } from '@emotion/react'
 import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
-import router from 'next/router'
+import Router from 'next/router'
 import { globalStyles, theme } from 'ui'
 import { useApollo } from '@/services/apollo/client'
 import { GTMAppScript } from '@/services/gtm'
@@ -33,14 +33,21 @@ const tracking = new Tracking()
 initStoryblok()
 
 if (typeof window !== 'undefined') {
+  if (process.env.NODE_ENV === 'production') {
+    console.log(
+      `%cHey there fellow developer! Curious how we built this? Find us at https://github.com/HedvigInsurance !\nLike it, and want to change the insurance industry? Of course we're hiring: https://www.hedvig.com/se-en/jobs`,
+      `font-size: 2rem; font-family: sans-serif; color: ${theme.colors.textSecondary}; padding: 2rem; display: block;`,
+    )
+  }
+
   initDatadog()
 
   handleNewSiteExperimentQueryParam()
   trackNewSiteExperimentImpression(tracking)
   trackPageViews(tracking)
 
-  router.ready(() => {
-    const { routingLocale } = getLocaleOrFallback(router.locale)
+  Router.ready(() => {
+    const { routingLocale } = getLocaleOrFallback(Router.locale)
     const { countryCode } = getCountryByLocale(routingLocale)
     tracking.setAppContext({ countryCode })
   })
