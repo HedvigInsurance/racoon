@@ -59,15 +59,13 @@ export const CartPage = (props: CartPageProps) => {
   return (
     <Wrapper y={{ base: 1, lg: 4 }}>
       <Section>
-        <Space y={2}>
-          <Space y={4}>
-            <Header prevURL={prevURL} />
-            <CartEntryList>
-              {entries.map((item) => (
-                <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-              ))}
-            </CartEntryList>
-          </Space>
+        <Space y={1.5}>
+          <Header prevURL={prevURL} />
+          <CartEntryList>
+            {entries.map((item) => (
+              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
+            ))}
+          </CartEntryList>
           <HorizontalLine />
           <CampaignCodeList cartId={cartId} campaigns={campaigns} />
           <HorizontalLine />
