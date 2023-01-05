@@ -4,6 +4,7 @@ fragment ProductOffer on ProductOffer {
     typeOfContract
     displayName
     product {
+      name
       displayNameFull
       pillowImage {
         id
