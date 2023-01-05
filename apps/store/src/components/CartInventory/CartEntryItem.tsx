@@ -21,41 +21,16 @@ export const CartEntryItem = (props: Props) => {
 
   return (
     <FullscreenDialog.Root>
-      <MobileWrapper>
-        <Pillow size="small" {...pillow} />
-        <Space y={1}>
-          <div>
-            <Text size="md">{title}</Text>
-            <Text size="md" color="textSecondary">
-              {/* @TODO: display "automatically switches" if cancellation is requested" */}
-              {startDate
-                ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate), ns: 'cart' })
-                : 'Starts sometime...'}
-            </Text>
-          </div>
-          <SpaceFlex space={0.25}>
-            <LinkButtonSecondary href="#">
-              {t('VIEW_ENTRY_DETAILS_BUTTON', { ns: 'cart' })}
-            </LinkButtonSecondary>
-            <Dialog.Trigger asChild>
-              <Button variant="secondary" size="small">
-                {t('VIEW_ENTRY_DETAILS_BUTTON')}
-              </Button>
-            </Dialog.Trigger>
-          </SpaceFlex>
-        </Space>
-        <Text size="md">{formatter.monthlyPrice(cost)}</Text>
-      </MobileWrapper>
-
-      <DesktopWrapper>
-        <DesktopPillowTitle>
+      <Wrapper>
+        <PillowWrapper>
           <DesktopPillowFlexItem>
             <Pillow size="small" {...pillow} />
-            <Text size="md">{title}</Text>
+            <DesktopTitle size="md">{title}</DesktopTitle>
           </DesktopPillowFlexItem>
-        </DesktopPillowTitle>
+        </PillowWrapper>
         <Space y={1}>
           <div>
+            <MobileTitle size="md">{title}</MobileTitle>
             <Text size="md" color="textSecondary">
               {/* @TODO: display "automatically switches" if cancellation is requested" */}
               {startDate
@@ -75,7 +50,7 @@ export const CartEntryItem = (props: Props) => {
         <Text align="right" size="md">
           {formatter.monthlyPrice(cost)}
         </Text>
-      </DesktopWrapper>
+      </Wrapper>
 
       <FullscreenDialog.Modal
         Footer={
@@ -101,17 +76,10 @@ export const CartEntryItem = (props: Props) => {
   )
 }
 
-const MobileWrapper = styled.li(({ theme }) => ({
+const Wrapper = styled.li(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '3rem minmax(0, 1fr) auto',
   gap: theme.space.sm,
-  [mq.lg]: {
-    display: 'none',
-  },
-}))
-
-const DesktopWrapper = styled.li(({ theme }) => ({
-  display: 'none',
   [mq.lg]: {
     display: 'grid',
     gridTemplateColumns: '3fr 2fr 2fr',
@@ -119,9 +87,26 @@ const DesktopWrapper = styled.li(({ theme }) => ({
   },
 }))
 
-const DesktopPillowTitle = styled.div({
+const PillowWrapper = styled.div({
   display: 'flex',
   alignItems: 'flex-start',
+  [mq.lg]: {
+    display: 'flex',
+    alignItems: 'flex-start',
+  },
+})
+
+const DesktopTitle = styled(Text)({
+  display: 'none',
+  [mq.lg]: {
+    display: 'block',
+  },
+})
+
+const MobileTitle = styled(Text)({
+  [mq.lg]: {
+    display: 'none',
+  },
 })
 
 const DesktopPillowFlexItem = styled.div(({ theme }) => ({
