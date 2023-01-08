@@ -13084,21 +13084,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:8.0.2":
-  version: 8.0.2
-  resolution: "framer-motion@npm:8.0.2"
+"framer-motion@npm:8.2.4":
+  version: 8.2.4
+  resolution: "framer-motion@npm:8.2.4"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": ^10.15.3
     hey-listen: ^1.0.8
-    tslib: 2.4.0
+    tslib: ^2.4.0
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: 7c1df1b35d8b91f2458f2c9deb9f2af159d965e0d3e15f6535cd51bd9563ed22e28a407a8a3b6f21d76651bb109af98db1db9013967db03957583f9d949540c3
+  checksum: e5598a84a9f6446ba15b73b89513faf20fa680d1045588bb8708479245806d921d52f9ba494858ce862a9b791050ac23732f22d23a6e3c443516f77f21fc49a2
   languageName: node
   linkType: hard
 
@@ -18400,7 +18400,7 @@ __metadata:
     dompurify: 2.4.2
     eslint-plugin-cypress: 2.12.1
     formidable: 2.1.1
-    framer-motion: 8.0.2
+    framer-motion: 8.2.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.8
@@ -22012,7 +22012,7 @@ __metadata:
     eslint: 8.31.0
     eslint-config-next: 13.1.1
     eslint-plugin-cypress: 2.12.1
-    framer-motion: 8.0.2
+    framer-motion: 8.2.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.8
