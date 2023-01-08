@@ -4,5 +4,4 @@ export type Peril = {
   description: string
   covered: Array<string>
   exceptions: Array<string>
-  info: string
 }

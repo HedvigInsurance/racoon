@@ -1,7 +1,6 @@
 fragment Peril on Peril {
   title
   description
-  info
   covered
   exceptions
   icon {

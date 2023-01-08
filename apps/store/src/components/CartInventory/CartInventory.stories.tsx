@@ -6,6 +6,7 @@ import {
   CurrencyCode,
   ExternalInsuranceCancellationOption,
 } from '@/services/apollo/generated'
+import { mockedPerils } from '../Perils/Perils.stories'
 import { CartInventory } from './CartInventory'
 
 export default {
@@ -91,6 +92,7 @@ const MOCK_CART: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 69,
@@ -120,6 +122,7 @@ const MOCK_CART: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 119,
@@ -149,6 +152,7 @@ const MOCK_CART: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 119,
@@ -220,6 +224,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 69,
@@ -249,6 +254,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 119,
@@ -279,6 +285,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
           __typename: 'Product',
         },
         __typename: 'ProductVariant',
+        perils: mockedPerils,
       },
       price: {
         amount: 119,
