@@ -33,7 +33,7 @@
     "@radix-ui/react-tabs": "1.0.1",
     "@storyblok/react": "2.0.3",
     "@types/uuid": "9.0.0",
-    "ajv": "8.11.2",
+    "ajv": "8.12.0",
     "cookies-next": "2.1.1",
     "dd-trace": "3.9.3",
     "eslint-config-next": "13.1.1",
