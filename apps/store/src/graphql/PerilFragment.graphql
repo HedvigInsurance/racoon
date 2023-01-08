@@ -6,11 +6,6 @@ fragment Peril on Peril {
   icon {
     variants {
       light {
-        pdfUrl
-        svgUrl
-      }
-      dark {
-        pdfUrl
         svgUrl
       }
     }

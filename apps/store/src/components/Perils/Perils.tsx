@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
+import Image from 'next/image'
 import React, { useState, useCallback, ReactNode } from 'react'
 import { mq } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
-import { Peril } from './Perils.types'
 
 const MAX_COLS = 4
 
 type Props = {
-  items: Array<Peril>
+  items: Array<PerilFragment>
 }
 
 export const Perils = ({ items }: Props) => {
@@ -32,7 +33,7 @@ const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boo
   },
 }))
 
-const PerilsAccordion = ({ perils }: { perils: Array<Peril> }) => {
+const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
@@ -48,7 +49,7 @@ const PerilsAccordion = ({ perils }: { perils: Array<Peril> }) => {
           <Accordion.Item key={title} value={title}>
             <Accordion.HeaderWithTrigger>
               <SpaceFlex space={0.5}>
-                {icon}
+                <Image src={icon.variants.light.svgUrl} alt="" width={24} height={24} />
                 {title}
               </SpaceFlex>
             </Accordion.HeaderWithTrigger>
