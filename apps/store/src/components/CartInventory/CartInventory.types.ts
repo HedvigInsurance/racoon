@@ -1,3 +1,4 @@
+import { CartFragmentFragment } from '@/services/apollo/generated'
 import { Money } from '@/utils/formatter'
 
 export type CartEntry = {
@@ -6,6 +7,7 @@ export type CartEntry = {
   cost: Money
   startDate?: Date
   pillow: { src: string; alt?: string }
+  documents: CartFragmentFragment['entries'][number]['variant']['documents']
 }
 
 export type CartCampaign = {

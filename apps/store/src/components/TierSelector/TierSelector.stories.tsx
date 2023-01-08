@@ -17,9 +17,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
   {
     id: '0',
     variant: {
-      typeOfContract: 'Traffic',
+      typeOfContract: 'SE_CAR_TRAFFIC',
       displayName: 'Traffic',
       product: {
+        name: 'SE_CAR',
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
           id: '6646216',
@@ -27,8 +28,9 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
-    price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
+    price: { amount: 199, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
       option: ExternalInsuranceCancellationOption.None,
       requested: false,
@@ -37,9 +39,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
   {
     id: '1',
     variant: {
-      typeOfContract: 'Halvförsäkring',
+      typeOfContract: 'SE_CAR_HALF',
       displayName: 'Halvförsäkring',
       product: {
+        name: 'SE_CAR',
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
           id: '6646216',
@@ -47,8 +50,9 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
-    price: { amount: 299, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
+    price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
       option: ExternalInsuranceCancellationOption.None,
       requested: false,
@@ -57,9 +61,10 @@ const MockedOffers: TierSelectorProps['offers'] = [
   {
     id: '2',
     variant: {
-      typeOfContract: 'Driving',
+      typeOfContract: 'SE_CAR_FULL',
       displayName: 'Driving',
       product: {
+        name: 'SE_CAR',
         displayNameFull: 'Bilförsäkring',
         pillowImage: {
           id: '6646216',
@@ -67,6 +72,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
           src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
         },
       },
+      documents: [],
     },
     price: { amount: 999, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {

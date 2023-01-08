@@ -20,6 +20,6 @@ StyledCartEntryList.defaultProps = { as: 'ul' }
 const HorizontalLineWithSpace = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,
   height: 1,
-  marginTop: theme.space[5],
-  marginBottom: theme.space[5],
+  marginTop: theme.space.lg,
+  marginBottom: theme.space.lg,
 }))

@@ -38,7 +38,7 @@ export const Root = ({ children, label, onValueChange, ...props }: RootProps) =>
 const Card = styled(motion(Space))(({ theme }) => ({
   padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray300,
+  backgroundColor: theme.colors.gray100,
 }))
 
 type ItemProps = {
@@ -65,22 +65,22 @@ const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
   width: '1.375rem',
   height: '1.375rem',
 
+  cursor: 'pointer',
   border: `1px solid ${theme.colors.gray500}`,
   borderRadius: '50%',
 
   '&[data-state=checked]': {
-    borderColor: theme.colors.gray900,
+    borderColor: theme.colors.gray1000,
   },
 
-  '&:focus': {
-    // @TODO: pending design
-    boxShadow: '0 0 0 2px rgba(0, 0, 0, 0.4)',
+  '&:focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
   },
 }))
 
 const StyledIndicator = styled(RadioGroup.Indicator)(({ theme }) => ({
   display: 'block',
-  backgroundColor: theme.colors.gray900,
+  backgroundColor: theme.colors.gray1000,
   borderRadius: '50%',
   width: '100%',
   height: '100%',

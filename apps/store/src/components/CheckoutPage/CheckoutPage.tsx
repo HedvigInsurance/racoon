@@ -16,6 +16,7 @@ import { TextField } from '@/components/TextField/TextField'
 import * as Auth from '@/services/Auth/Auth'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { BankIdIcon } from './BankIdIcon'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
@@ -31,16 +32,18 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const { shopSession } = useShopSession()
   const router = useRouter()
   const apolloClient = useApolloClient()
+  const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
       Auth.save(accessToken)
-      setupShopSessionServiceClientSide(apolloClient).reset()
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
       }
+      tracking.reportPurchase(shopSession.cart)
+      setupShopSessionServiceClientSide(apolloClient).reset()
       router.push(PageLink.checkoutPayment({ shopSessionId }))
     },
     onError() {

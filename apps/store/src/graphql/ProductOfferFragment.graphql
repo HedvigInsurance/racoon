@@ -4,6 +4,7 @@ fragment ProductOffer on ProductOffer {
     typeOfContract
     displayName
     product {
+      name
       displayNameFull
       pillowImage {
         id
@@ -13,6 +14,11 @@ fragment ProductOffer on ProductOffer {
     }
     perils {
       ...Peril
+    }
+    documents {
+      type
+      displayName
+      url
     }
   }
   price {

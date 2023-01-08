@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactNode, useEffect } from 'react'
+import { FormEventHandler, ReactNode, useEffect } from 'react'
 import { Button, Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
@@ -11,15 +11,15 @@ import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
 import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
   const { onReady } = useShopSession()
-  const { t } = useTranslation()
+  const { t } = useTranslation('cart')
 
   const tracking = useTracking()
   useEffect(
@@ -36,12 +36,17 @@ export const CartPage = (props: CartPageProps) => {
   )
 
   const router = useRouter()
-  const [startCheckout, { loading: loadingStartCheckout }] = useStartCheckout({
+  const [startCheckout, { loading }] = useStartCheckout({
     shopSessionId,
     onCompleted() {
       router.push(PageLink.checkout())
     },
   })
+
+  const handleSubmit: FormEventHandler = (event) => {
+    event.preventDefault()
+    startCheckout()
+  }
 
   if (entries.length === 0) {
     return (
@@ -58,23 +63,23 @@ export const CartPage = (props: CartPageProps) => {
 
   return (
     <Wrapper y={{ base: 1, lg: 4 }}>
-      <Section>
-        <Space y={1.5}>
-          <Header prevURL={prevURL} />
-          <CartEntryList>
-            {entries.map((item) => (
-              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-            ))}
-          </CartEntryList>
-          <HorizontalLine />
-          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-          <HorizontalLine />
-          <CostSummary {...cost} campaigns={campaigns} />
-          <Button onClick={() => startCheckout()} disabled={loadingStartCheckout}>
+      <Header prevURL={prevURL} />
+      <Space y={1.5}>
+        <CartEntryList>
+          {entries.map((item) => (
+            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
+          ))}
+        </CartEntryList>
+        <HorizontalLine />
+        <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+        <HorizontalLine />
+        <CostSummary {...cost} campaigns={campaigns} />
+        <form onSubmit={handleSubmit}>
+          <Button disabled={loading} loading={loading}>
             {t('CHECKOUT_BUTTON')}
           </Button>
-        </Space>
-      </Section>
+        </form>
+      </Space>
     </Wrapper>
   )
 }
@@ -83,27 +88,21 @@ type EmptyStateProps = { children: ReactNode; prevURL: string }
 
 const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
   const { t } = useTranslation('cart')
-  const { routingLocale } = useCurrentLocale()
 
   return (
-    <Wrapper>
-      <Space y={5}>
-        <Header prevURL={prevURL} />
-
-        <Space y={2}>
-          <Space y={1}>
-            <Text align="center">¯\_(ツ)_/¯</Text>
-            <Text align="center" color="textSecondary">
-              {t('CART_EMPTY_SUMMARY')}
-            </Text>
-          </Space>
-
-          <Link href={PageLink.store({ locale: routingLocale })} passHref legacyBehavior>
-            <Button>{t('GO_TO_STORE_BUTTON')}</Button>
-          </Link>
+    <Wrapper y={4}>
+      <Header prevURL={prevURL} />
+      <Space y={2}>
+        <Space y={1}>
+          <Text align="center">¯\_(ツ)_/¯</Text>
+          <Text align="center" color="textSecondary">
+            {t('CART_EMPTY_SUMMARY')}
+          </Text>
         </Space>
-        {children}
+
+        <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
       </Space>
+      {children}
     </Wrapper>
   )
 }
@@ -118,9 +117,6 @@ const Wrapper = styled(Space)(({ theme }) => ({
   maxWidth: '40rem',
   marginLeft: 'auto',
   marginRight: 'auto',
-}))
-
-const Section = styled(Space)(({ theme }) => ({
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
 }))
@@ -162,7 +158,7 @@ const HeaderHeading = styled(Heading)(({ theme }) => ({
   },
 }))
 
-const StyledHeader = styled(Section)({
+const StyledHeader = styled(Space)({
   height: '3.5rem',
   display: 'flex',
   alignItems: 'center',

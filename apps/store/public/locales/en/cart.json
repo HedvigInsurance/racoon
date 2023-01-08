@@ -1,0 +1,21 @@
+{
+  "BACK_BUTTON": "Back",
+  "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
+  "CART_EMPTY_SUMMARY": "Your cart is empty",
+  "CART_ENTRY_DATE_LABEL": "Starts {{date}}",
+  "CART_PAGE_HEADING": "Cart",
+  "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
+  "CHECKOUT_BUTTON": "Checkout",
+  "CHECKOUT_PRICE_TOTAL": "Total",
+  "DETAILS_SHEET_DISMISS_BUTTON": "Done",
+  "DISCOUNT_DURATION_EXPLANATION": "For {{count}} month, then",
+  "DISCOUNT_STATE_FREE_MONTHS": "Free for {{count}} mth.",
+  "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
+  "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% discount for {{count}} mth.",
+  "GO_TO_STORE_BUTTON": "Go to Store",
+  "REMOVE_ENTRY_BUTTON": "Remove",
+  "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
+  "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Yes, remove",
+  "REMOVE_ENTRY_MODAL_PROMPT": "Are you sure you want to remove {{name}}?",
+  "VIEW_ENTRY_DETAILS_BUTTON": "Details"
+}

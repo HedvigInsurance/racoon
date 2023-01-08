@@ -7,6 +7,7 @@ import { ReactNode, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, Text, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
@@ -19,15 +20,17 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
-import { useGetMutationError } from '@/utils/useGetMutationError'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 
+type FormState = 'IDLE' | 'EDIT' | 'ERROR'
+
 export const PurchaseForm = () => {
-  const [isEditingPriceCalculator, setIsEditingPriceCalculator] = useState(false)
+  const { t } = useTranslation('purchase-form')
+  const [formState, setFormState] = useState<FormState>('IDLE')
   const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const apolloClient = useApolloClient()
@@ -35,17 +38,43 @@ export const PurchaseForm = () => {
   const [{ data: { priceIntent = null } = {} }, setupPriceIntent] = usePriceIntent()
 
   return (
-    <Layout pillowSize={isEditingPriceCalculator ? 'small' : 'large'}>
+    <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
       {(notifyProductAdded) => {
         if (!shopSession || !priceIntent) return <PendingState />
 
-        if (isEditingPriceCalculator) {
+        if (formState !== 'IDLE') {
           return (
-            <EditingState
-              priceIntent={priceIntent}
-              onToggleDialog={setIsEditingPriceCalculator}
-              onSuccess={() => setIsEditingPriceCalculator(false)}
-            />
+            <>
+              <EditingState
+                priceIntent={priceIntent}
+                onToggleDialog={() => setFormState('IDLE')}
+                onComplete={(success) => setFormState(success ? 'IDLE' : 'ERROR')}
+              />
+              <FullscreenDialog.Root
+                open={formState === 'ERROR'}
+                onOpenChange={() => setFormState('IDLE')}
+              >
+                <FullscreenDialog.Modal
+                  center
+                  Footer={
+                    <>
+                      <Button type="button" onClick={() => setFormState('EDIT')}>
+                        {t('GENERAL_ERROR_DIALOG_PRIMARY_BUTTON')}
+                      </Button>
+                      <FullscreenDialog.Close asChild>
+                        <Button type="button" variant="ghost">
+                          {t('DIALOG_BUTTON_CANCEL')}
+                        </Button>
+                      </FullscreenDialog.Close>
+                    </>
+                  }
+                >
+                  <Text size={{ _: 'lg', lg: 'xl' }} align="center">
+                    {t('GENERAL_ERROR_DIALOG_PROMPT')}
+                  </Text>
+                </FullscreenDialog.Modal>
+              </FullscreenDialog.Root>
+            </>
           )
         }
 
@@ -74,12 +103,12 @@ export const PurchaseForm = () => {
               shopSession={shopSession}
               priceIntent={priceIntent}
               onAddedToCart={handleAddedToCart}
-              onClickEdit={() => setIsEditingPriceCalculator(true)}
+              onClickEdit={() => setFormState('EDIT')}
             />
           )
         }
 
-        return <IdleState onClick={() => setIsEditingPriceCalculator(true)} />
+        return <IdleState onClick={() => setFormState('EDIT')} />
       }}
     </Layout>
   )
@@ -151,9 +180,9 @@ const PendingState = () => {
     <SectionWrapper>
       <Space y={0.5}>
         <Tagline />
-        <OpenModalButtonWrapper>
-          <Button disabled>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-        </OpenModalButtonWrapper>
+        <Button loading disabled>
+          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+        </Button>
       </Space>
     </SectionWrapper>
   )
@@ -172,7 +201,7 @@ const IdleState = ({ onClick }: IdleStateProps) => {
       <SectionWrapper ref={ref}>
         <Space y={0.5}>
           <Tagline />
-          <OpenModalButtonWrapper>{button}</OpenModalButtonWrapper>
+          {button}
         </Space>
       </SectionWrapper>
       <ScrollPast targetRef={ref}>
@@ -185,12 +214,11 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 type EditingStateProps = {
   priceIntent: PriceIntent
   onToggleDialog: (open: boolean) => void
-  onSuccess: () => void
+  onComplete: (success: boolean) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { onToggleDialog, priceIntent, onSuccess } = props
-  const getMutationError = useGetMutationError()
+  const { onToggleDialog, priceIntent, onComplete } = props
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
   const tracking = useTracking()
@@ -202,7 +230,7 @@ const EditingState = (props: EditingStateProps) => {
         error,
         priceIntentId: priceIntent.id,
       })
-      setIsLoadingPrice(false)
+      onComplete(false)
     },
   })
   const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
@@ -216,7 +244,7 @@ const EditingState = (props: EditingStateProps) => {
       if (updatedPriceIntent) {
         tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
-        onSuccess()
+        onComplete(true)
       } else {
         setIsLoadingPrice(false)
       }
@@ -225,8 +253,6 @@ const EditingState = (props: EditingStateProps) => {
       console.debug('Error confirming price intent', error)
     }
   }
-
-  const confirmError = getMutationError(result, result.data?.priceIntentConfirm)
 
   const content = isLoadingPrice ? (
     <PriceLoaderWrapper>
@@ -238,7 +264,6 @@ const EditingState = (props: EditingStateProps) => {
         priceTemplate={priceTemplate}
         priceIntent={priceIntent}
         onConfirm={handleConfirm}
-        error={confirmError?.message}
       />
     </PriceCalculatorWrapper>
   )
@@ -345,23 +370,14 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   )
 }
 
-const PurchaseFormTop = styled.div({
+const PurchaseFormTop = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '4.5rem',
-  paddingTop: '9vh',
-  paddingBottom: '9vh',
-})
-
-const OpenModalButtonWrapper = styled.div({
-  [mq.lg]: {
-    padding: 0,
-    maxWidth: PURCHASE_FORM_MAX_WIDTH,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-})
+  paddingBlock: '9vh',
+  paddingInline: theme.space.md,
+}))
 
 const StickyButtonWrapper = styled.div(({ theme }) => ({
   paddingInline: theme.space[4],
@@ -372,12 +388,16 @@ const StickyButtonWrapper = styled.div(({ theme }) => ({
 
 const SectionWrapper = styled.div({
   width: '100%',
-  maxWidth: PURCHASE_FORM_MAX_WIDTH,
-  margin: '0 auto',
+  [mq.sm]: {
+    maxWidth: PURCHASE_FORM_MAX_WIDTH,
+    margin: '0 auto',
+  },
 })
 
 const PriceCalculatorWrapper = styled.div({
   width: '100%',
-  maxWidth: PURCHASE_FORM_MAX_WIDTH,
-  margin: '0 auto',
+  [mq.sm]: {
+    maxWidth: PURCHASE_FORM_MAX_WIDTH,
+    margin: '0 auto',
+  },
 })

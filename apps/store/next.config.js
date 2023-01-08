@@ -28,12 +28,12 @@ module.exports = {
 // style-src: consider emotion + nonce: https://emotion.sh/docs/@emotion/cache#nonce
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src https://app.storyblok.com https://widget.intercom.io https://js.intercomcdn.com https://www.googletagmanager.com https://dc.insurely.com 'unsafe-inline' 'unsafe-eval' 'self';
-  style-src 'unsafe-inline';
+  script-src https://app.storyblok.com https://widget.intercom.io https://js.intercomcdn.com https://www.googletagmanager.com https://dc.insurely.com https://vercel.live 'unsafe-inline' 'unsafe-eval' 'self';
+  style-src 'unsafe-inline' 'self';
   font-src https://fonts.intercomcdn.com 'self';
   img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com blob: data: 'self';
   media-src https://*.storyblok.com;
-  connect-src https://*.browser-intake-datadoghq.eu https://*.hedvigit.com https://api-iam.intercom.io wss://*.intercom.io 'self';
+  connect-src https://*.browser-intake-datadoghq.eu https://*.google-analytics.com https://api-iam.intercom.io wss://*.intercom.io https://*.hedvigit.com 'self';
   worker-src blob:;
   object-src data:;
   frame-src https://dc.insurely.com;

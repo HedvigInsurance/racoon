@@ -1,5 +1,6 @@
+import { TFunction } from 'next-i18next'
 import { FALLBACK_LOCALE, LocaleData, locales } from '@/utils/l10n/locales'
-import { IsoLocale, RoutingLocale, UiLocale } from '@/utils/l10n/types'
+import { CountryCode, IsoLocale, Language, RoutingLocale, UiLocale } from '@/utils/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
@@ -38,4 +39,32 @@ export const getLocaleOrFallback = (locale: UiLocale | string | undefined): Loca
     return locales[FALLBACK_LOCALE]
   }
   return locales[toIsoLocale(locale)]
+}
+
+export const translateCountryName = (countryCode: CountryCode, t: TFunction) => {
+  switch (countryCode) {
+    case CountryCode.Dk:
+      return t('COUNTRY_LABEL_DK')
+    case CountryCode.No:
+      return t('COUNTRY_LABEL_NO')
+    case CountryCode.Se:
+      return t('COUNTRY_LABEL_SE')
+    default:
+      return `MISSING ${countryCode}`
+  }
+}
+
+export const translateLanguageName = (language: Language, t: TFunction) => {
+  switch (language) {
+    case Language.Da:
+      return t('LANGUAGE_LABEL_da')
+    case Language.En:
+      return t('LANGUAGE_LABEL_en')
+    case Language.No:
+      return t('LANGUAGE_LABEL_no')
+    case Language.Sv:
+      return t('LANGUAGE_LABEL_sv')
+    default:
+      return `MISSING ${language}`
+  }
 }

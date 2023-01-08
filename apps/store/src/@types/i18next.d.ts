@@ -7,10 +7,10 @@
  */
 import 'i18next'
 
-import type cart from '../../public/locales/default/cart.json'
-import type checkout from '../../public/locales/default/checkout.json'
-import type common from '../../public/locales/default/common.json'
-import type purchaseForm from '../../public/locales/default/purchase-form.json'
+import type cart from '../../public/locales/en/cart.json'
+import type checkout from '../../public/locales/en/checkout.json'
+import type common from '../../public/locales/en/common.json'
+import type purchaseForm from '../../public/locales/en/purchase-form.json'
 
 interface I18nNamespaces {
   common: typeof common

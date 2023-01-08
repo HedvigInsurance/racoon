@@ -93,20 +93,20 @@ const Wrapper = styled(motion.div)(({ theme }) => ({
   alignItems: 'center',
   width: '100%',
 
-  padding: `${theme.space[3]} ${theme.space[4]}`,
+  padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray300,
+  backgroundColor: theme.colors.gray100,
 }))
 
 const StyledSelect = styled.select(({ theme }) => ({
-  fontSize: theme.fontSizes[5],
-  color: theme.colors.gray900,
+  fontSize: theme.fontSizes.xl,
+  color: theme.colors.textPrimary,
 }))
 
 const Minus = styled.div(({ theme }) => ({
   width: '1.25rem',
   height: '0.0625rem', // 1px
-  backgroundColor: theme.colors.gray900,
+  backgroundColor: theme.colors.textPrimary,
 }))
 
 const Plus = () => {
@@ -121,7 +121,7 @@ const Plus = () => {
 const PlusVerticalLine = styled.div(({ theme }) => ({
   height: '1.25rem',
   width: '0.0625rem', // 1px
-  backgroundColor: theme.colors.gray900,
+  backgroundColor: theme.colors.textPrimary,
   position: 'absolute',
 }))
 
@@ -141,6 +141,6 @@ const StyledButton = styled.button(({ theme }) => ({
   justifyContent: 'center',
 
   '&[disabled] div': {
-    backgroundColor: theme.colors.gray500,
+    backgroundColor: theme.colors.textDisabled,
   },
 }))

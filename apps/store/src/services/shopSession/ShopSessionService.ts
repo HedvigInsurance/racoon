@@ -68,7 +68,7 @@ export class ShopSessionService {
     return data.shopSession
   }
 
-  private async create(variables: ShopSessionCreateMutationVariables): Promise<ShopSession> {
+  public async create(variables: ShopSessionCreateMutationVariables): Promise<ShopSession> {
     const result = await this.apolloClient.mutate<
       ShopSessionCreateMutation,
       ShopSessionCreateMutationVariables

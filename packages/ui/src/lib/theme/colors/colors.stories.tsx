@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { theme } from '../theme'
 import { gray, green, red, yellow } from './colors'
 
 export default {
@@ -52,7 +53,7 @@ const ColorSwatch = styled.div<{ hue: string }>(({ hue }) => ({
   backgroundColor: hue,
   overflow: 'hidden',
   border: '1px solid hsla(0, 0%, 0%, 0.1)',
-  borderRadius: 16,
+  borderRadius: theme.radius.md,
 }))
 
 const HueName = styled.p({

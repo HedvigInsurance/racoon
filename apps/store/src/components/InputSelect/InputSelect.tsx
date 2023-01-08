@@ -16,24 +16,24 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
 }))
 
 const StyledSelect = styled(motion.select)(({ theme }) => ({
-  backgroundColor: theme.colors.gray300,
-  color: theme.colors.gray900,
-  fontSize: theme.fontSizes[5],
+  backgroundColor: theme.colors.gray100,
+  color: theme.colors.textPrimary,
+  fontSize: theme.fontSizes.xl,
   width: '100%',
   borderRadius: theme.radius.sm,
-  padding: `${theme.space[2]} ${theme.space[7]} ${theme.space[2]} ${theme.space[4]}`,
+  padding: `${theme.space.xs} ${theme.space.xxl} ${theme.space.xs} ${theme.space.md}`,
 
   '&:hover': {
     cursor: 'pointer',
   },
 
   '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
   },
 }))
 
 const Placeholder = styled.option(({ theme }) => ({
-  color: theme.colors.gray500,
+  color: theme.colors.textSecondary,
 }))
 
 type InputSelectProps = InputBaseProps & {

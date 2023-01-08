@@ -11,8 +11,7 @@ export const useHighlightAnimation = () => {
   const [isInteractive, setIsInteractive] = useState(false)
 
   const animationVariants = {
-    [AnimationState.Active]: { backgroundColor: 'rgba(197, 236, 127, 0.6)' },
-    [AnimationState.Idle]: { backgroundColor: theme.colors.gray300 },
+    [AnimationState.Active]: { backgroundColor: theme.colors.green100 },
   } as const
 
   const highlight = useCallback((event?: KeyboardEvent<HTMLElement>) => {

@@ -9,7 +9,13 @@ type BaseProps = {
   y?: number | PartialRecord<Level | 'base', number>
 }
 
-export const Space = styled.div<BaseProps>({}, ({ x, y }) => {
+const config = {
+  shouldForwardProp: (prop: string) => !(prop === 'x' || prop === 'y'),
+}
+export const Space = styled(
+  'div',
+  config,
+)<BaseProps>(({ x, y }) => {
   const styles: CSSObject = {}
   const selector = '> :not([hidden]) ~ :not([hidden])'
 

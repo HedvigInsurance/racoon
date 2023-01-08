@@ -28,14 +28,18 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
 
   const inputValue = props.value || value
 
-  const [Wrapper, Label, Input, Suffix] =
+  const [Wrapper, Input, Suffix, labelSize] =
     variant === 'large'
-      ? [LargeWrapper, LargeLabel, LargeInput, LargeSuffix]
-      : [SmallWrapper, SmallLabel, SmallInput, SmallSuffix]
+      ? ([LargeWrapper, LargeInput, LargeSuffix, 'xl'] as const)
+      : ([SmallWrapper, SmallInput, SmallSuffix, 'lg'] as const)
 
   return (
     <Wrapper {...animationProps} isActive={!!inputValue}>
-      <Label htmlFor={props.id}>{label}</Label>
+      <Label htmlFor={props.id}>
+        <Text as="span" size={labelSize} color={props.disabled ? 'textDisabled' : 'textPrimary'}>
+          {label}
+        </Text>
+      </Label>
       <SpaceFlex align="center" space={0}>
         <Input {...props} onKeyDown={highlight} onChange={handleChange} />
         {suffix && inputValue && <Suffix>{suffix}</Suffix>}
@@ -54,8 +58,7 @@ const LargeWrapper = styled(motion.div, {
   flexDirection: 'column',
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray300,
-
+  backgroundColor: theme.colors.gray100,
   height: '4rem',
 
   [':focus-within > label']: {
@@ -67,17 +70,18 @@ const LargeWrapper = styled(motion.div, {
       transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
     },
   }),
+
+  ':has(input:focus-visible)': {
+    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
+  },
 }))
 
-const LargeLabel = styled.label(({ theme }) => ({
+const Label = styled.label(({ theme }) => ({
   position: 'absolute',
   pointerEvents: 'none',
   transformOrigin: 'top left',
   transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   transform: `translate(0, 0) scale(1)`,
-
-  fontSize: theme.fontSizes.xl,
-  color: theme.colors.gray700,
   paddingInline: theme.space.md,
   whiteSpace: 'nowrap',
 }))
@@ -89,8 +93,12 @@ const LargeInput = styled.input(({ theme }) => ({
   paddingTop: theme.space.md,
 
   ':disabled': {
-    opacity: 0.6,
+    color: theme.colors.textDisabled,
     cursor: 'not-allowed',
+
+    // Webkit overrides
+    WebkitTextFillColor: theme.colors.textDisabled,
+    opacity: 1,
   },
 }))
 
@@ -112,7 +120,6 @@ const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
   }),
 }))
 
-const SmallLabel = styled(LargeLabel)(({ theme }) => ({ fontSize: theme.fontSizes.md }))
 const SmallInput = styled(LargeInput)(({ theme }) => ({ fontSize: theme.fontSizes.lg }))
 
 const SmallSuffix = styled(LargeSuffix)()

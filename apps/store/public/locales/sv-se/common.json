@@ -1,10 +1,7 @@
 {
-  "CHECKOUT_BUTTON": "Kolla upp",
-  "TEST_PLURALIZE_one": "Kanelbulle",
-  "TEST_PLURALIZE_other": "{{count}} kanelbullar",
-  "MONTHLY_PRICE": "{{displayAmount}}/mån",
   "COUNTRY_LABEL_SE": "Sverige",
   "LANGUAGE_LABEL_en": "Engelska",
   "LANGUAGE_LABEL_sv": "Svenska",
+  "MONTHLY_PRICE": "{{displayAmount}}/mån",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, vänligen försök igen."
 }

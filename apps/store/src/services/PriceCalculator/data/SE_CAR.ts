@@ -7,7 +7,10 @@ import {
   postalCodeField,
   streetAddressField,
 } from '@/services/PriceCalculator/formFragments'
+import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
+
+setI18nNamespace('purchase-form')
 
 export const SE_CAR: Template = {
   name: 'SE_CAR',
@@ -15,8 +18,8 @@ export const SE_CAR: Template = {
     personalNumberSection,
     {
       id: 'your-car',
-      title: { key: 'SECTION_TITLE_YOUR_CAR' },
-      submitLabel: { key: 'SUBMIT_LABEL_PROCEED' },
+      title: { key: tKey('SECTION_TITLE_YOUR_CAR') },
+      submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
       items: [
         {
           field: carRegistrationNumberField,
@@ -30,7 +33,7 @@ export const SE_CAR: Template = {
           field: {
             type: 'current-insurance',
             name: 'externalInsurer',
-            label: { key: 'FIELD_EXTERNAL_INSURER_CAR_LABEL' },
+            label: { key: tKey('FIELD_EXTERNAL_INSURER_CAR_LABEL') },
           },
           layout: LAYOUT.FULL_WIDTH,
         },
@@ -38,8 +41,8 @@ export const SE_CAR: Template = {
     },
     {
       id: 'your-address',
-      title: { key: 'SECTION_TITLE_YOUR_ADDRESS' },
-      submitLabel: { key: 'SUBMIT_LABEL_FINISH' },
+      title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
+      submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
       items: [
         { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
         { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
