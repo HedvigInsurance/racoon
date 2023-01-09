@@ -141,6 +141,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       </Wrapper>
 
       <FullscreenDialog.Modal
+        center
         Footer={
           <FullscreenDialog.Close asChild>
             <Button type="button" variant="primary">
