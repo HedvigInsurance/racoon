@@ -107,7 +107,7 @@ const Wrapper = styled.li(({ theme }) => ({
 const DesktopTitle = styled(Text)({
   display: 'none',
   [mq.lg]: {
-    display: 'block',
+    display: 'revert',
   },
 })
 
