@@ -7,6 +7,7 @@ import {
   ShopSessionQuery,
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
+import * as Auth from '@/services/Auth/Auth'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
@@ -69,30 +70,40 @@ export class ShopSessionService {
   }
 
   public async create(variables: ShopSessionCreateMutationVariables): Promise<ShopSession> {
-    const result = await this.apolloClient.mutate<
-      ShopSessionCreateMutation,
-      ShopSessionCreateMutationVariables
-    >({
-      mutation: ShopSessionCreateDocument,
-      variables,
-      // TODO: Investigate if we can do it by returning shopSession recond on top instead of shopSessionCreate
-      update: (cache, result) => {
-        const shopSession = result.data?.shopSessionCreate
-        if (shopSession) {
-          cache.writeQuery({
-            query: ShopSessionDocument,
-            data: { shopSession },
-            variables: { shopSessionId: shopSession.id },
-          })
-        }
-      },
-    })
+    try {
+      const result = await this.apolloClient.mutate<
+        ShopSessionCreateMutation,
+        ShopSessionCreateMutationVariables
+      >({
+        mutation: ShopSessionCreateDocument,
+        variables,
+        // TODO: Investigate if we can do it by returning shopSession recond on top instead of shopSessionCreate
+        update: (cache, result) => {
+          const shopSession = result.data?.shopSessionCreate
+          if (shopSession) {
+            cache.writeQuery({
+              query: ShopSessionDocument,
+              data: { shopSession },
+              variables: { shopSessionId: shopSession.id },
+            })
+          }
+        },
+      })
 
-    const shopSession = result.data?.shopSessionCreate
-    if (!shopSession) throw new Error('Unable to create ShopSession')
+      const shopSession = result.data?.shopSessionCreate
+      if (!shopSession) {
+        Auth.reset()
+        return this.create(variables)
+      }
 
-    this.saveId(shopSession.id)
+      this.saveId(shopSession.id)
 
-    return shopSession
+      return shopSession
+    } catch (error) {
+      // This can happen both client and server side - how to log?
+      console.error("Couldn't create shop session", error)
+      Auth.reset()
+      return this.create(variables)
+    }
   }
 }
