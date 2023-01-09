@@ -108,7 +108,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       personalNumber,
-      collectName: !checkout.contactDetails.firstName || !checkout.contactDetails.lastName,
+      collectName: !(checkout.contactDetails.firstName && checkout.contactDetails.lastName),
       checkoutSigningId: checkoutSigning?.id ?? null,
     }
 

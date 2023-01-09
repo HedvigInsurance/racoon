@@ -60,6 +60,7 @@ const LargeWrapper = styled(motion.div, {
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
   height: '4rem',
+  width: '100%',
 
   [':focus-within > label']: {
     transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
@@ -106,7 +107,6 @@ const LargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md 
 LargeSuffix.defaultProps = { size: 'xl', color: 'textSecondary', as: 'span' }
 
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
-  width: '100%',
   height: '3.25rem',
 
   [':focus-within > label']: {
