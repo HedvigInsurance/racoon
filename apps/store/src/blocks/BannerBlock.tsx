@@ -1,9 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
-import { mq } from 'ui'
-import { HeadingBlock, HeadingBlockProps, isHeadingBlock } from '@/blocks/HeadingBlock'
-import { TextBlock, TextBlockProps, isTextBlock } from '@/blocks/TextBlock'
+import { Heading, Text, mq } from 'ui'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 type ImageSize = {
@@ -14,14 +12,13 @@ type ImageSize = {
 type BannerBlockProps = SbBaseBlockProps<
   {
     image: StoryblokAsset
-    fullBleed?: boolean
-    body?: Array<HeadingBlockProps['blok'] | TextBlockProps['blok']>
+    title?: string
+    description?: string
   } & ImageSize
 >
 
 export const BannerBlock = ({ blok }: BannerBlockProps) => {
-  const headingBlocks = blok.body?.filter(isHeadingBlock)
-  const textBlocks = blok.body?.filter(isTextBlock)
+  const hasContent = blok.title || blok.description
 
   return (
     <Wrapper
@@ -30,14 +27,20 @@ export const BannerBlock = ({ blok }: BannerBlockProps) => {
       {...storyblokEditable(blok)}
     >
       <Image src={blok.image.filename} alt={blok.image.alt} fill={true} />
-      <BodyWrapper>
-        {headingBlocks?.map((nestedBlock) => (
-          <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
-        ))}
-        {textBlocks?.map((nestedBlock) => (
-          <TextBlock key={nestedBlock._uid} blok={nestedBlock} />
-        ))}
-      </BodyWrapper>
+      {hasContent && (
+        <BodyWrapper>
+          {blok.title && (
+            <Title as="h1" align="center" color="textNegative" variant="serif.32">
+              {blok.title}
+            </Title>
+          )}
+          {blok.description && (
+            <Description color="textNegative" size={{ _: 'md', lg: 'lg' }} align="center">
+              {blok.description}
+            </Description>
+          )}
+        </BodyWrapper>
+      )}
     </Wrapper>
   )
 }
@@ -71,13 +74,29 @@ const Image = styled(NextImage)({
 const BodyWrapper = styled.div(({ theme }) => ({
   position: 'absolute',
   inset: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  display: 'grid',
+  gridTemplateRows: 'auto 1fr auto',
+  gridTemplateAreas: `
+    'title'
+    '.'
+    'content'
+  `,
   padding: theme.space.md,
 
   [mq.md]: {
     padding: theme.space.xl,
   },
 }))
+
+const Title = styled(Heading)(({ theme }) => ({
+  gridArea: 'title',
+  fontSize: theme.fontSizes[6],
+
+  [mq.md]: {
+    fontSize: theme.fontSizes[10],
+  },
+}))
+
+const Description = styled(Text)({
+  gridArea: 'content',
+})
