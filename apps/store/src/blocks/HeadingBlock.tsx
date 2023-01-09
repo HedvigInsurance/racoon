@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { storyblokEditable } from '@storyblok/react'
+import { SbBlokData, storyblokEditable } from '@storyblok/react'
 import { Heading, HeadingProps } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -32,3 +32,7 @@ export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
   )
 }
 HeadingBlock.blockName = 'heading'
+
+export const isHeadingBlock = (block: SbBlokData): block is HeadingBlockProps['blok'] => {
+  return block.component === HeadingBlock.blockName
+}
