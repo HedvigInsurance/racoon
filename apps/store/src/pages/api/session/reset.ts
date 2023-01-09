@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
+import * as Auth from '@/services/Auth/Auth'
 import logger from '@/services/logger/server'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -24,6 +25,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
     const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
     const shopSessionId = shopSessionService.shopSessionId()
+
+    if (Auth.getAuthHeader({ req, res })) {
+      logger.debug('Resetting auth session')
+      Auth.reset({ req, res })
+    }
 
     if (shopSessionId) {
       logger.debug({ shopSessionId }, 'Resetting shop session')
