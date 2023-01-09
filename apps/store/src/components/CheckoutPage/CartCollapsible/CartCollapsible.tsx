@@ -43,6 +43,12 @@ const Trigger = styled(Collapsible.Trigger)(({ theme }) => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   gap: theme.space[1],
+
+  backgroundColor: theme.colors.light,
+  ':focus-visible': {
+    borderRadius: theme.radius.xs,
+    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+  },
 }))
 
 const SpaceBetween = styled.div(({ theme }) => ({
