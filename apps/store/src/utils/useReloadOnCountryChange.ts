@@ -1,16 +1,24 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useEffect, useRef } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { getUrlLocale } from '@/utils/l10n/localeUtils'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
 export const useReloadOnCountryChange = () => {
+  const router = useRouter()
   const { countryCode } = useCurrentCountry()
-  const countryRef = useRef(countryCode)
   useEffect(() => {
-    if (countryCode !== countryRef.current) {
-      datadogLogs.logger.warn(
-        `Country changed without page reload, this is probably an error ${countryRef.current} -> ${countryCode}`,
-      )
-      window.location.reload()
+    const onRoute = (url: string) => {
+      const urlCountry = getCountryByLocale(getUrlLocale(url))
+      if (countryCode !== urlCountry.countryCode) {
+        datadogLogs.logger.warn(
+          `Country changed without page reload, this is probably an error ${countryCode} -> ${urlCountry.countryCode}`,
+        )
+        window.location.reload()
+      }
     }
-  }, [countryCode])
+    router.events.on('routeChangeStart', onRoute)
+    return () => router.events.off('routeChangeStart', onRoute)
+  }, [countryCode, router.events])
 }

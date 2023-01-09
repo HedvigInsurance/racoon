@@ -41,6 +41,11 @@ export const getLocaleOrFallback = (locale: UiLocale | string | undefined): Loca
   return locales[toIsoLocale(locale)]
 }
 
+export const getUrlLocale = (url: string): RoutingLocale => {
+  const routingLocale = url.split('/')[0]
+  return getLocaleOrFallback(routingLocale).routingLocale
+}
+
 export const translateCountryName = (countryCode: CountryCode, t: TFunction) => {
   switch (countryCode) {
     case CountryCode.Dk:
