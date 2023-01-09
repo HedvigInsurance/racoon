@@ -133,11 +133,13 @@ export const OfferPresenter = (props: Props) => {
             <Text as="p" align="center" size="xxl">
               {displayPrice}
             </Text>
-            <FullWidthButton onClick={onClickEdit}>
-              <Text align="center" size="xs">
-                {t('PRESENT_OFFER_EDIT_BUTTON')}
-              </Text>
-            </FullWidthButton>
+            <Centered>
+              <TextButton onClick={onClickEdit}>
+                <Text align="center" size="xs">
+                  {t('PRESENT_OFFER_EDIT_BUTTON')}
+                </Text>
+              </TextButton>
+            </Centered>
 
             {priceMatch && <PriceMatchBubble {...priceMatch} />}
           </Space>
@@ -179,7 +181,20 @@ const ScrollPastButtonContent = styled.div({
   justifyContent: 'center',
 })
 
-const FullWidthButton = styled.button({ width: '100%', cursor: 'pointer' })
+const Centered = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+})
+
+const TextButton = styled.button(({ theme }) => ({
+  cursor: 'pointer',
+
+  backgroundColor: theme.colors.light,
+  ':focus-visible': {
+    borderRadius: theme.radius.xs,
+    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+  },
+}))
 
 const SubmitButton = ({ loading }: { loading: boolean }) => {
   const { t } = useTranslation('purchase-form')
