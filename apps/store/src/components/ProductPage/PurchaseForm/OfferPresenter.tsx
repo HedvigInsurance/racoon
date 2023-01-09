@@ -150,8 +150,6 @@ export const OfferPresenter = (props: Props) => {
   const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
     offer.variant.perils.some((peril) => peril.title === perilTitle)
 
-  console.log(priceIntent.offers)
-
   const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
     if (offer.id === selectedOfferId) return true
     return false
@@ -211,7 +209,7 @@ export const OfferPresenter = (props: Props) => {
                 key={offer.id}
                 active={isSelectedOffer(offer, selectedOfferId)}
               >
-                {offer.variant.displayName}todo
+                {offer.variant.displayName}Half
               </ComparisonTable.Header>
             ))}
           </ComparisonTable.Head>

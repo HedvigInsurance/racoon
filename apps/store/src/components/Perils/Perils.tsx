@@ -40,8 +40,6 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
     setOpenedItems(value)
   }, [])
 
-  console.log(perils)
-
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       {perils.map(({ icon, title, description, covered, exceptions }) => {
