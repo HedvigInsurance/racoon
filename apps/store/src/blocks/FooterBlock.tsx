@@ -20,9 +20,10 @@ import { LocaleField, LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l
 import {
   getLocaleOrFallback,
   toRoutingLocale,
+  translateCountryName,
   translateLanguageName,
 } from '@/utils/l10n/localeUtils'
-import { IsoLocale } from '@/utils/l10n/types'
+import { CountryLabel, IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
@@ -76,7 +77,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const apolloClient = useApolloClient()
 
   const countryList = Object.keys(countries).map((country) => ({
-    name: t(`COUNTRY_LABEL_${country}`, { defaultValue: country }),
+    name: translateCountryName(country as CountryLabel, t),
     value: country,
   }))
 
