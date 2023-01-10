@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, Space, Text } from 'ui'
+import { Button, Dialog, mq, Space, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
@@ -18,10 +18,15 @@ export const CartEntryItem = (props: Props) => {
 
   return (
     <Wrapper>
-      <Pillow size="small" {...pillow} />
+      <div>
+        <DesktopPillowWithTitle>
+          <Pillow size="small" {...pillow} />
+          <DesktopTitle size="md">{title}</DesktopTitle>
+        </DesktopPillowWithTitle>
+      </div>
       <Space y={1}>
         <div>
-          <Text size="md">{title}</Text>
+          <MobileTitle size="md">{title}</MobileTitle>
           <Text size="md" color="textSecondary">
             {/* @TODO: display "automatically switches" if cancellation is requested" */}
             {startDate
@@ -46,7 +51,9 @@ export const CartEntryItem = (props: Props) => {
           </RemoveEntryDialog>
         </SpaceFlex>
       </Space>
-      <Text size="md">{formatter.monthlyPrice(cost)}</Text>
+      <Text align="right" size="md">
+        {formatter.monthlyPrice(cost)}
+      </Text>
     </Wrapper>
   )
 }
@@ -54,5 +61,27 @@ export const CartEntryItem = (props: Props) => {
 const Wrapper = styled.li(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '3rem minmax(0, 1fr) auto',
-  gap: theme.space[3],
+  gap: theme.space.sm,
+  [mq.lg]: {
+    gridTemplateColumns: '3fr 2fr 2fr',
+  },
+}))
+
+const DesktopTitle = styled(Text)({
+  display: 'none',
+  [mq.lg]: {
+    display: 'revert',
+  },
+})
+
+const MobileTitle = styled(Text)({
+  [mq.lg]: {
+    display: 'none',
+  },
+})
+
+const DesktopPillowWithTitle = styled.div(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.sm,
 }))
