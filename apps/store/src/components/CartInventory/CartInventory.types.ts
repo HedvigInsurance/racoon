@@ -8,6 +8,8 @@ export type CartEntry = {
   startDate?: Date
   pillow: { src: string; alt?: string }
   documents: CartFragmentFragment['entries'][number]['variant']['documents']
+  productName: string
+  data: Record<string, unknown>
 }
 
 export type CartCampaign = {

@@ -37,6 +37,8 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
       alt: item.variant.product.pillowImage.alt ?? undefined,
     },
     documents: item.variant.documents,
+    productName: item.variant.product.name,
+    data: item.priceIntentData,
   }))
 
   const campaigns = shopSession.cart.redeemedCampaigns.map((item) => ({

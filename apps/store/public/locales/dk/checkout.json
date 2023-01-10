@@ -1,0 +1,16 @@
+{
+  "BACK_BUTTON": "Tilbage",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
+  "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer",
+  "CONTACT_DETAILS_FORM_TITLE": "Dine kontaktoplysninger",
+  "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Prøv igen",
+  "ERROR_GENERAL_DIALOG_PROMPT": "Noget gik galt. Forsøg venligst igen og kontakt os på hedvig@hedvig.com hvis problemet fortsætter.",
+  "FORM_EMAIL_LABEL": "Email",
+  "FORM_FIRST_NAME_LABEL": "Fornavn(e)",
+  "FORM_HELP_LABEL": "Hjælp",
+  "FORM_LAST_NAME_LABEL": "Efternavn",
+  "OPEN_BANKID_DESCRIPTION": "Åbn BankID appen på din telefon.",
+  "SIGN_BUTTON_one": "Underskriv en forsikring",
+  "SIGN_BUTTON_other": "Underskriv {{count}} forsikringer",
+  "SIGN_DISCLAIMER": "Du forbinder autogiro efter du tilmelder dig Hedvig. Det håndteres sikkert via Trustly."
+}
