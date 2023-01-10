@@ -8,7 +8,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type PerilsBlockProps = SbBaseBlockProps<{
-  heading: string
+  heading?: string
 }>
 
 export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
@@ -34,7 +34,7 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <Space y={1}>
-        <HeadingLabel>{blok.heading}</HeadingLabel>
+        {blok.heading && <HeadingLabel>{blok.heading}</HeadingLabel>}
         <Perils items={items} />
       </Space>
     </Wrapper>
