@@ -7194,6 +7194,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/edge-config@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@vercel/edge-config@npm:0.1.0"
+  checksum: 2da09a664b848e7c64354857affcab8c92d100e8153f6f1569422129dcae057ba035ac77ddd28e82a4156c5ae29557abe055d7346db1ede804dc6593a44ac241
+  languageName: node
+  linkType: hard
+
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
   resolution: "@webassemblyjs/ast@npm:1.11.1"
@@ -22005,6 +22012,7 @@ __metadata:
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/uuid": 9.0.0
+    "@vercel/edge-config": 0.1.0
     ajv: 8.12.0
     babel-loader: 9.1.2
     cookies-next: 2.1.1
