@@ -170,10 +170,6 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
 
   const inputValue = formatInputDateValue(startDate)
   const inputValueToday = formatInputDateValue(dateToday)
-  const isToday = inputValue === inputValueToday
-
-  const todayMessage = isToday ? t('START_DATE_FIELD_TODAY') : undefined
-  const inputMessage = message ?? todayMessage
 
   return (
     <DateInput
@@ -185,11 +181,7 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
       min={inputValueToday}
       onChange={handleChange}
     >
-      {inputMessage && (
-        <Text as="p" size="sm" color="textSecondary">
-          {inputMessage}
-        </Text>
-      )}
+      {message}
     </DateInput>
   )
 }
