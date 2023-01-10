@@ -7,6 +7,7 @@ import {
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
+import { BannerBlock } from '@/blocks/BannerBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
@@ -142,6 +143,7 @@ export const initStoryblok = () => {
   const blockComponents: Array<NamedBlock> = [
     AccordionBlock,
     AccordionItemBlock,
+    BannerBlock,
     ButtonBlock,
     CheckListBlock,
     ContactSupportBlock,
