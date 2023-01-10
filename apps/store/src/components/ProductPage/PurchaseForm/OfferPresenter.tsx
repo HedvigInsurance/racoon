@@ -209,7 +209,7 @@ export const OfferPresenter = (props: Props) => {
                 key={offer.id}
                 active={isSelectedOffer(offer, selectedOfferId)}
               >
-                {offer.variant.displayName}Half
+                {offer.variant.displayName}Trafik
               </ComparisonTable.Header>
             ))}
           </ComparisonTable.Head>
