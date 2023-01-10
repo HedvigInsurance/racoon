@@ -11281,10 +11281,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.4.2":
-  version: 2.4.2
-  resolution: "dompurify@npm:2.4.2"
-  checksum: 5b01e377755f8f3b5d4e30fc3292e060ece66874b50b35e19f601f1e671d6cefbf0fa71bcc0f863c0f7cbcea502349f67f72f8172223d4a9e963ba6bd335dce5
+"dompurify@npm:2.4.3":
+  version: 2.4.3
+  resolution: "dompurify@npm:2.4.3"
+  checksum: b440981f2a38cada2085759cc3d1e2f94571afc34343d011a8a6aa1ad91ae6abf651adbfa4994b0e2283f0ce81f7891cdb04b67d0b234c8d190cb70e9691f026
   languageName: node
   linkType: hard
 
@@ -18397,7 +18397,7 @@ __metadata:
     classnames: 2.3.2
     cookies-next: 2.1.1
     cypress: 12.3.0
-    dompurify: 2.4.2
+    dompurify: 2.4.3
     eslint-plugin-cypress: 2.12.1
     formidable: 2.1.1
     framer-motion: 8.2.4
