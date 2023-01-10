@@ -3,7 +3,7 @@
   "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Da din forsikring hos {{company}} snart udløber, skal du selv afmelde den. Bare rolig, vi sender dig en mail med instruktioner.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Slutdato {{company}}",
   "CART_TOAST_CART_LINK": "Fortsæt til indkøbskurv",
-  "CART_TOAST_HEADING": "Forsikring føjet til indkøbskurv",
+  "CART_TOAST_HEADING": "Føjet til indkøbskurv",
   "CART_TOAST_STORE_LINK": "Find flere løsninger",
   "DIALOG_BUTTON_CANCEL": "Annuller",
   "FIELD_ANCILLARY_AREA_LABEL": "Biareal",
