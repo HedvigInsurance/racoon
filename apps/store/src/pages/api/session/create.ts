@@ -134,3 +134,5 @@ const addProduct = async ({
     throw new Error('Unable to add cart entry')
   }
 }
+
+console.log('Hello world')
