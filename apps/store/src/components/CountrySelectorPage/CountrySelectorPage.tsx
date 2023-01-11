@@ -16,34 +16,30 @@ export const CountrySelectorPage = (props: { className?: string }) => {
 
   return (
     <Wrapper {...props}>
-      <Section>
-        <Space y={3}>
-          <Heading as="h1">
-            {t('COUNTRY_NOT_DETECTED', { defaultValue: 'COUNTRY_NOT_DETECTED' })}
-          </Heading>
-          <Space y={0.5}>
-            {Object.entries(countries).map(([country, countryData]) => (
-              <Button
-                key={country}
-                href={`/${toRoutingLocale(countryData.defaultLocale)}`}
-                onClick={() => onHandleClick(countryData.defaultLocale)}
-              >
-                {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
-              </Button>
-            ))}
-          </Space>
+      <Space y={3}>
+        <Heading as="h1">
+          {t('COUNTRY_NOT_DETECTED', { defaultValue: 'COUNTRY_NOT_DETECTED' })}
+        </Heading>
+        <Space y={0.5}>
+          {Object.entries(countries).map(([country, countryData]) => (
+            <Button
+              key={country}
+              href={`/${toRoutingLocale(countryData.defaultLocale)}`}
+              onClick={() => onHandleClick(countryData.defaultLocale)}
+            >
+              {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
+            </Button>
+          ))}
         </Space>
-      </Section>
+      </Space>
     </Wrapper>
   )
 }
 
-const Wrapper = styled(Space)({
+const Wrapper = styled(Space)(({ theme }) => ({
   maxWidth: '40rem',
+  minHeight: '100vh',
   marginLeft: 'auto',
   marginRight: 'auto',
-})
-
-const Section = styled(Space)(({ theme }) => ({
   padding: `${theme.space.xxl} ${theme.space.md} `,
 }))
