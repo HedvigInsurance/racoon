@@ -51,7 +51,7 @@ export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
 }
 
-export type ExpectedBlockType<T> = T extends { blok: SbBlokData }
+export type ExpectedBlockType<T> = [T] extends [{ blok: SbBlokData }]
   ? T['blok'][]
   : `ExpectedBlock expects an argument which extends SbBlockData.
      These are likely the props of the block you are looking to render`
