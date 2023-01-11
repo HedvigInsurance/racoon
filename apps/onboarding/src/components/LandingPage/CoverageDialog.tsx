@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import type { Dispatch, SetStateAction } from 'react'
-import { Dialog, CrossIcon, TickIcon, theme, mq } from 'ui'
+import { Dialog, CrossIcon, CheckIcon, theme, mq } from 'ui'
 
 export type CoverageDialogProps = {
   open: boolean
@@ -26,7 +26,7 @@ export const CoverageDialog = ({ open, onOpenChange, title, perils }: CoverageDi
             {perils.map((peril, index) => (
               <Peril key={index}>
                 <span>{peril}</span>
-                <TickIcon color={theme.colors.gray500} />
+                <CheckIcon color={theme.colors.gray500} />
               </Peril>
             ))}
           </PerilsList>
