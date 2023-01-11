@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const cspReports = (req: NextApiRequest, res: NextApiResponse<void>) => {
   try {
-    const report = JSON.parse(req.body)['csp-report']
+    const report = req.body['csp-report']
     if (report) {
       console.log('csp_violation', JSON.stringify(report))
     }
