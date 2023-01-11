@@ -1,7 +1,8 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && yarn turbo run build --filter=store",
+  "buildCommand": "cd ../.. && yarn config --why && yarn turbo run codegen --filter=store --force && yarn turbo run build --filter=store",
   "ignoreCommand": "../../bin/vercel-ignore-step.sh",
+  "installCommand": "cd ../.. && yarn config --why && yarn install",
   "regions": ["arn1"],
   "github": {
     "autoJobCancelation": false
