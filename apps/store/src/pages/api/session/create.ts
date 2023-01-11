@@ -18,6 +18,7 @@ import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const LOGGER = logger.child({ module: 'api/session/create' })
 const TEST_SSN = '199808302393'
+const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -29,31 +30,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
 
-    const emailAddress = randomEmail()
+    const emailAddress = getRandomEmailAddress()
     const ssn = (req.query.ssn ?? TEST_SSN) as string
     const maskedSsn = ssn.replace(/(\d{4})$/, '****')
     LOGGER.info(`Using SSN: ${maskedSsn} and email: ${emailAddress}`)
 
-    await Promise.all([
-      addProduct({
-        ssn,
-        emailAddress,
-        apolloClient,
-        priceIntentService,
-        productName: 'SE_APARTMENT_RENT',
-        shopSessionId: shopSession.id,
-        cartId: shopSession.cart.id,
-      }),
-      addProduct({
-        ssn,
-        emailAddress,
-        apolloClient,
-        priceIntentService,
-        productName: 'SE_ACCIDENT',
-        shopSessionId: shopSession.id,
-        cartId: shopSession.cart.id,
-      }),
-    ])
+    await Promise.all(
+      productNames.map((productName) =>
+        addProduct({
+          ssn,
+          emailAddress,
+          apolloClient,
+          priceIntentService,
+          productName,
+          shopSessionId: shopSession.id,
+          cartId: shopSession.cart.id,
+        }),
+      ),
+    )
 
     shopSessionService.saveId(shopSession.id)
   } catch (error) {
@@ -69,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default handler
 
-const randomEmail = () => {
+const getRandomEmailAddress = () => {
   const randomId = Math.random().toString(36).substring(2, 5)
   return `sven.svensson.${randomId}@hedvig.com`
 }
@@ -101,7 +95,7 @@ const addProduct = async ({
   }
   const priceIntent = await priceIntentService.create({
     shopSessionId: shopSessionId,
-    productName: productName,
+    productName,
     priceTemplate,
   })
 
