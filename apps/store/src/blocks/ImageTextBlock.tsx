@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 import { Wrapper as ButtonBlockWrapper } from '@/blocks/ButtonBlock'
 import { Wrapper as HeadingBlockWrapper } from '@/blocks/HeadingBlock'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
@@ -35,7 +35,7 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 }
 ImageTextBlock.blockName = 'imageText'
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   paddingInline: theme.space[2],
@@ -52,7 +52,7 @@ const Wrapper = styled.div(({ theme }) => ({
   [mq.lg]: {
     paddingInline: theme.space[4],
   },
-}))
+})
 
 const ImageWrapper = styled.div({
   flex: 1,
@@ -60,12 +60,12 @@ const ImageWrapper = styled.div({
   aspectRatio: '1 / 1',
 })
 
-const Image = styled(NextImage)(({ theme }) => ({
+const Image = styled(NextImage)({
   objectFit: 'cover',
   borderRadius: theme.radius.lg,
-}))
+})
 
-const BodyWrapper = styled.div(({ theme }) => ({
+const BodyWrapper = styled.div({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
@@ -89,4 +89,4 @@ const BodyWrapper = styled.div(({ theme }) => ({
     display: 'inline-block',
     padding: 0,
   },
-}))
+})
