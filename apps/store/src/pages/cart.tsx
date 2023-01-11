@@ -72,14 +72,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const { countryCode } = getCountryByLocale(locale)
-
-  logger.info('Test: cart info', { countryCode })
-  logger.warn('Test: cart warning')
+  console.log('test: cart')
+  console.warn('test: cart warn')
+  if (Date.now() > 1) {
+    throw new Error('something went wrong')
+  }
 
   try {
-    if (Date.now() > 1) {
-      throw new Error('test error')
-    }
     const apolloClient = initializeApollo({ req, res })
     const [shopSession, translations] = await Promise.all([
       getShopSessionServerSide({ apolloClient, countryCode, req, res }),
