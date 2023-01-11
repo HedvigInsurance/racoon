@@ -29,7 +29,7 @@ const targets = [
       ddsource: 'nodejs',
       ddtags: `env:${SERVER_CONFIG.env}`,
       service: SERVER_CONFIG.service,
-      sendImmediate: isLocalDev, // send logs immediately for local dev instead of bulking
+      sendImmediate: true, // send logs immediately instead of bulking
     },
   } as any,
 ]
