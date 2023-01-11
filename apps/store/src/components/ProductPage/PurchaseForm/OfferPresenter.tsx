@@ -157,83 +157,88 @@ export const OfferPresenter = (props: Props) => {
 
   return (
     <>
-      <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
-        <Space y={2}>
-          <Space y={0.5}>
-            <Text as="p" align="center" size="xxl">
-              {displayPrice}
-            </Text>
-            <FullWidthButton onClick={onClickEdit}>
-              <Text align="center" size="xs">
-                {t('PRESENT_OFFER_EDIT_BUTTON')}
+      <Space y={1}>
+        <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
+          <Space y={2}>
+            <Space y={0.5}>
+              <Text as="p" align="center" size="xxl">
+                {displayPrice}
               </Text>
-            </FullWidthButton>
+              <FullWidthButton onClick={onClickEdit}>
+                <Text align="center" size="xs">
+                  {t('PRESENT_OFFER_EDIT_BUTTON')}
+                </Text>
+              </FullWidthButton>
 
-            {priceMatch && <PriceMatchBubble {...priceMatch} />}
+              {priceMatch && <PriceMatchBubble {...priceMatch} />}
+            </Space>
+
+            <Space y={0.25}>
+              <TierSelector
+                offers={priceIntent.offers}
+                selectedOfferId={selectedOfferId}
+                onValueChange={handleTierSelectorValueChange}
+                currencyCode={shopSession.currencyCode}
+              />
+
+              <CancellationForm
+                option={cancellationOption}
+                startDate={startDate}
+                onAutoSwitchChange={handleUpdateCancellation}
+                onStartDateChange={handleStartDateChange}
+              />
+
+              <SubmitButton loading={loading} />
+            </Space>
           </Space>
+        </form>
+        {priceIntent.offers.length > 1 && (
+          <SpaceFlex direction="vertical" align="center">
+            <Button variant="ghost" size="small" onClick={toggleComparisonTable}>
+              <StyledCrossIcon
+                transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
+                size="0.875rem"
+              />
+              Compare coverage
+            </Button>
+          </SpaceFlex>
+        )}
 
-          <Space y={0.25}>
-            <TierSelector
-              offers={priceIntent.offers}
-              selectedOfferId={selectedOfferId}
-              onValueChange={handleTierSelectorValueChange}
-              currencyCode={shopSession.currencyCode}
-            />
-
-            <CancellationForm
-              option={cancellationOption}
-              startDate={startDate}
-              onAutoSwitchChange={handleUpdateCancellation}
-              onStartDateChange={handleStartDateChange}
-            />
-
-            <SubmitButton loading={loading} />
-          </Space>
-        </Space>
-      </form>
-      {priceIntent.offers.length > 1 && (
-        <TextButton onClick={toggleComparisonTable}>
-          <StyledCrossIcon
-            transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
-            size="0.875rem"
-          />
-          Compare coverage
-        </TextButton>
-      )}
-      {isComparisonTableOpen && (
-        <ComparisonTable.Root>
-          <ComparisonTable.Head>
-            <ComparisonTable.Header />
-            {priceIntent.offers.map((offer) => (
-              <ComparisonTable.Header
-                key={offer.id}
-                active={isSelectedOffer(offer, selectedOfferId)}
-              >
-                {offer.variant.displayName}Trafik
-              </ComparisonTable.Header>
-            ))}
-          </ComparisonTable.Head>
-          <ComparisonTable.Body>
-            {getUniquePerilTitles().map((perilTitle) => (
-              <ComparisonTable.Row key={perilTitle}>
-                <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
-                {priceIntent.offers.map((offer) => (
-                  <ComparisonTable.DataCell
-                    key={offer.id}
-                    active={isSelectedOffer(offer, selectedOfferId)}
-                  >
-                    {offerHasPeril(offer, perilTitle) ? (
-                      <ComparisonTable.CheckIcon />
-                    ) : (
-                      <ComparisonTable.MissingIcon />
-                    )}
-                  </ComparisonTable.DataCell>
-                ))}
-              </ComparisonTable.Row>
-            ))}
-          </ComparisonTable.Body>
-        </ComparisonTable.Root>
-      )}
+        {isComparisonTableOpen && (
+          <ComparisonTable.Root>
+            <ComparisonTable.Head>
+              <ComparisonTable.Header />
+              {priceIntent.offers.map((offer) => (
+                <ComparisonTable.Header
+                  key={offer.id}
+                  active={isSelectedOffer(offer, selectedOfferId)}
+                >
+                  {offer.variant.displayName}Trafik
+                </ComparisonTable.Header>
+              ))}
+            </ComparisonTable.Head>
+            <ComparisonTable.Body>
+              {getUniquePerilTitles().map((perilTitle) => (
+                <ComparisonTable.Row key={perilTitle}>
+                  <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
+                  {priceIntent.offers.map((offer) => (
+                    <ComparisonTable.DataCell
+                      key={offer.id}
+                      active={isSelectedOffer(offer, selectedOfferId)}
+                    >
+                      {offerHasPeril(offer, perilTitle) ? (
+                        <ComparisonTable.CheckIcon />
+                      ) : (
+                        <ComparisonTable.MissingIcon />
+                      )}
+                    </ComparisonTable.DataCell>
+                  ))}
+                </ComparisonTable.Row>
+              ))}
+            </ComparisonTable.Body>
+          </ComparisonTable.Root>
+        )}
+      </Space>
       <ScrollPast targetRef={scrollPastRef}>
         <ScrollToButton targetRef={scrollPastRef} type="button">
           <ScrollPastButtonContent>
@@ -273,21 +278,9 @@ const Separator = styled.div(({ theme }) => ({
   alignSelf: 'stretch',
 }))
 
-const TextButton = styled.button(({ theme }) => ({
-  border: 'none',
-  backgroundColor: 'inherit',
-  cursor: 'pointer',
-  fontSize: theme.fontSizes[1],
-  width: '100%',
-  margin: `${theme.space[4]} 0`,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+const StyledCrossIcon = styled(CrossIcon)(({ theme }) => ({
+  marginRight: theme.space[1],
 }))
-
-const StyledCrossIcon = styled(CrossIcon)({
-  marginRight: '0.375rem',
-})
 
 type GetCancellationOptionParams = {
   priceIntent: PriceIntent
