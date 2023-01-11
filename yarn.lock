@@ -2049,26 +2049,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-api-client@npm:^1.2.0":
-  version: 1.3.0
-  resolution: "@datadog/datadog-api-client@npm:1.3.0"
-  dependencies:
-    "@types/buffer-from": ^1.1.0
-    "@types/node": "*"
-    "@types/pako": ^1.0.3
-    btoa: ^1.2.1
-    buffer-from: ^1.1.2
-    cross-fetch: ^3.1.5
-    durations: ^3.4.2
-    es6-promise: ^4.2.4
-    form-data: ^3.0.0
-    loglevel: ^1.7.1
-    pako: ^2.0.4
-    url-parse: ^1.4.3
-  checksum: ea5a170006a8f797a8a9bccc5afe2c6c98228de2370838c7cbcddb0281b70916fb9fd76da03230963bfe9a43183d7820c7e41f93d5ca7f3b8099f7d59e4a1d27
-  languageName: node
-  linkType: hard
-
 "@datadog/native-appsec@npm:2.0.0":
   version: 2.0.0
   resolution: "@datadog/native-appsec@npm:2.0.0"
@@ -6324,15 +6304,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/buffer-from@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@types/buffer-from@npm:1.1.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: 9b4e9d4e936fba541dea1bdc75d73d76be00f417a0d7305aa96525dab8ad0a11fa9b4196e5474c7a3dfbdfb0b4a6927d9e41355225f687c21f87b9aa0ecef73a
-  languageName: node
-  linkType: hard
-
 "@types/cookie@npm:^0.4.1":
   version: 0.4.1
   resolution: "@types/cookie@npm:0.4.1"
@@ -6669,13 +6640,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pako@npm:^1.0.3":
-  version: 1.0.4
-  resolution: "@types/pako@npm:1.0.4"
-  checksum: a7ee316fad8e01b895d97fd6db771624d28d7bab43693db563dba768ca6d563aacf99e6d1045288366fec5cd2cb379bf86ef947848690ea648470b21d9a572c5
-  languageName: node
-  linkType: hard
-
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -6755,13 +6719,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: b62f0ea3cdfa68e106391728325057ad36f1bde7ba2dfae029472c47e01e482bc77c6ba4f1dad59f3f04ee81cb597618ff7c30a33c157c0a20462b6dd6aa2d4d
-  languageName: node
-  linkType: hard
-
-"@types/retry@npm:0.12.0":
-  version: 0.12.0
-  resolution: "@types/retry@npm:0.12.0"
-  checksum: 61a072c7639f6e8126588bf1eb1ce8835f2cb9c2aba795c4491cf6310e013267b0c8488039857c261c387e9728c1b43205099223f160bb6a76b4374f741b5603
   languageName: node
   linkType: hard
 
@@ -9137,15 +9094,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"btoa@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "btoa@npm:1.2.1"
-  bin:
-    btoa: bin/btoa.js
-  checksum: afbf004fb1b1d530e053ffa66ef5bd3878b101c59d808ac947fcff96810b4452abba2b54be687adadea2ba9efc7af48b04228742789bf824ef93f103767e690c
-  languageName: node
-  linkType: hard
-
 "buffer-crc32@npm:~0.2.3":
   version: 0.2.13
   resolution: "buffer-crc32@npm:0.2.13"
@@ -9167,7 +9115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer-from@npm:^1.0.0, buffer-from@npm:^1.1.2":
+"buffer-from@npm:^1.0.0":
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
   checksum: 0448524a562b37d4d7ed9efd91685a5b77a50672c556ea254ac9a6d30e3403a517d8981f10e565db24e8339413b43c97ca2951f10e399c6125a0d8911f5679bb
@@ -11386,13 +11334,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"durations@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "durations@npm:3.4.2"
-  checksum: 40904f7e7621a3f6302648fd003dfedab6bf700e7b54bc79821c47c321e7f212fdecf01e8021ba07fe99e7b1ff862042c21c0b583de2303800fa959e3df56699
-  languageName: node
-  linkType: hard
-
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -11719,13 +11660,6 @@ __metadata:
   version: 4.6.5
   resolution: "es5-shim@npm:4.6.5"
   checksum: 55556f800b80d6a875bc8342ea4ac99e678718e01f8e4e2744427061fb23de75a54edec8a6a3b0bb2a4a358103db73492d063b44c7938ea2cd2168ce500e4920
-  languageName: node
-  linkType: hard
-
-"es6-promise@npm:^4.2.4":
-  version: 4.2.8
-  resolution: "es6-promise@npm:4.2.8"
-  checksum: 95614a88873611cb9165a85d36afa7268af5c03a378b35ca7bda9508e1d4f1f6f19a788d4bc755b3fd37c8ebba40782018e02034564ff24c9d6fa37e959ad57d
   languageName: node
   linkType: hard
 
@@ -12379,13 +12313,6 @@ __metadata:
   dependencies:
     pify: ^2.2.0
   checksum: f01927ce59bccec804e171bf859a26e362c1f50aa9ebc69f7cafdcce3859d29d4b6267fd47237c18b0a1830614bd3f0ee14b7380d9bad18a4e7af9b5f0b6984f
-  languageName: node
-  linkType: hard
-
-"exit-hook@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "exit-hook@npm:2.2.1"
-  checksum: 1aa8359b6c5590a012d6cadf9cd337d227291bfcaa8970dc585d73dffef0582af34ed8ac56f6164f8979979fb417cff1eb49f03cdfd782f9332a30c773f0ada0
   languageName: node
   linkType: hard
 
@@ -16955,13 +16882,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loglevel@npm:^1.7.1":
-  version: 1.8.0
-  resolution: "loglevel@npm:1.8.0"
-  checksum: 41aeea17de24aba8dba68084a31fe9189648bce4f39c1277e021bb276c3c53a75b0d337395919cf271068ad40ecefabad0e4fdeb4a8f11908beee532b898f4a7
-  languageName: node
-  linkType: hard
-
 "long@npm:^5.0.0":
   version: 5.2.0
   resolution: "long@npm:5.2.0"
@@ -18718,16 +18638,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-retry@npm:^4.6.2":
-  version: 4.6.2
-  resolution: "p-retry@npm:4.6.2"
-  dependencies:
-    "@types/retry": 0.12.0
-    retry: ^0.13.1
-  checksum: 45c270bfddaffb4a895cea16cb760dcc72bdecb6cb45fef1971fa6ea2e91ddeafddefe01e444ac73e33b1b3d5d29fb0dd18a7effb294262437221ddc03ce0f2e
-  languageName: node
-  linkType: hard
-
 "p-timeout@npm:^3.1.0":
   version: 3.2.0
   resolution: "p-timeout@npm:3.2.0"
@@ -18748,13 +18658,6 @@ __metadata:
   version: 2.2.0
   resolution: "p-try@npm:2.2.0"
   checksum: f8a8e9a7693659383f06aec604ad5ead237c7a261c18048a6e1b5b85a5f8a067e469aa24f5bc009b991ea3b058a87f5065ef4176793a200d4917349881216cae
-  languageName: node
-  linkType: hard
-
-"pako@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "pako@npm:2.0.4"
-  checksum: 82b9b0b99dd830c9103856a6dbd10f0cb2c8c32b9768184727ea381a99666de9a47a069d2e6efe6acf09336f363956b50835c196ef9311b34b7274d420eb0d88
   languageName: node
   linkType: hard
 
@@ -19200,18 +19103,6 @@ __metadata:
     duplexify: ^4.1.2
     split2: ^4.0.0
   checksum: c503f867de3189f8217ab9cf794e8a631dddd0029a829f0f985f5511308152ebd53e363764fbc5570b3d1c715b341e3923456ce16ad84cd41be2b9a074ada234
-  languageName: node
-  linkType: hard
-
-"pino-datadog-transport@npm:1.2.2":
-  version: 1.2.2
-  resolution: "pino-datadog-transport@npm:1.2.2"
-  dependencies:
-    "@datadog/datadog-api-client": ^1.2.0
-    exit-hook: ^2.2.1
-    p-retry: ^4.6.2
-    pino-abstract-transport: ^1.0.0
-  checksum: fb756cad82f756c4b5141dbec1e43e715665f4e2d6c7e2404e7ce91a57f60dc3430348896974e886df6fb812c40860dee0e4fc783cc8994559015c82ce1cf651
   languageName: node
   linkType: hard
 
@@ -20923,13 +20814,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"retry@npm:^0.13.1":
-  version: 0.13.1
-  resolution: "retry@npm:0.13.1"
-  checksum: 47c4d5be674f7c13eee4cfe927345023972197dbbdfba5d3af7e461d13b44de1bfd663bfc80d2f601f8ef3fc8164c16dd99655a221921954a65d044a2fc1233b
-  languageName: node
-  linkType: hard
-
 "reusify@npm:^1.0.4":
   version: 1.0.4
   resolution: "reusify@npm:1.0.4"
@@ -22033,7 +21917,6 @@ __metadata:
     next-router-mock: 0.8.0
     personnummer: 3.1.4
     pino: 8.8.0
-    pino-datadog-transport: 1.2.2
     pino-pretty: 9.1.1
     prettier: 2.8.2
     react: 18.2.0
@@ -23796,7 +23679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-parse@npm:^1.4.3, url-parse@npm:^1.5.3":
+"url-parse@npm:^1.5.3":
   version: 1.5.10
   resolution: "url-parse@npm:1.5.10"
   dependencies:
