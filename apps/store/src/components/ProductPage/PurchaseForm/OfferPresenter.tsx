@@ -36,6 +36,14 @@ type Props = {
   onClickEdit: () => void
 }
 
+const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
+  offer.variant.perils.some((peril) => peril.title === perilTitle)
+
+const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
+  if (offer.id === selectedOfferId) return true
+  return false
+}
+
 export const OfferPresenter = (props: Props) => {
   const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
   const { t } = useTranslation('purchase-form')
@@ -145,14 +153,6 @@ export const OfferPresenter = (props: Props) => {
     const allPerils = getAllPerils()
     const perilTitles = allPerils.map((peril) => peril.title)
     return removeDuplicates(perilTitles)
-  }
-
-  const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
-    offer.variant.perils.some((peril) => peril.title === perilTitle)
-
-  const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
-    if (offer.id === selectedOfferId) return true
-    return false
   }
 
   return (
