@@ -18,12 +18,12 @@ export const CartEntryItem = (props: Props) => {
 
   return (
     <Wrapper>
-      <div>
-        <DesktopPillowWithTitle>
+      <DesktopPillowWithTitle>
+        <DesktopPillowWrapper>
           <Pillow size="small" {...pillow} />
-          <DesktopTitle size="md">{title}</DesktopTitle>
-        </DesktopPillowWithTitle>
-      </div>
+        </DesktopPillowWrapper>
+        <DesktopTitle size="md">{title}</DesktopTitle>
+      </DesktopPillowWithTitle>
       <Space y={1}>
         <div>
           <MobileTitle size="md">{title}</MobileTitle>
@@ -62,13 +62,16 @@ const Wrapper = styled.li(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '3rem minmax(0, 1fr) auto',
   gap: theme.space.sm,
+
   [mq.lg]: {
-    gridTemplateColumns: '3fr 2fr 2fr',
+    paddingTop: theme.space.sm,
+    gridTemplateColumns: '1fr minmax(0, 1fr) auto',
   },
 }))
 
 const DesktopTitle = styled(Text)({
   display: 'none',
+
   [mq.lg]: {
     display: 'revert',
   },
@@ -82,6 +85,11 @@ const MobileTitle = styled(Text)({
 
 const DesktopPillowWithTitle = styled.div(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
   gap: theme.space.sm,
+}))
+
+const DesktopPillowWrapper = styled.div(({ theme }) => ({
+  [mq.lg]: {
+    marginTop: `-${theme.space.sm}`,
+  },
 }))
