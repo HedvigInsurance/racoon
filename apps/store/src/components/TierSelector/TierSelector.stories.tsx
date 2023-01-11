@@ -37,6 +37,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
       option: ExternalInsuranceCancellationOption.None,
       requested: false,
     },
+    priceIntentData: {},
   },
   {
     id: '1',
@@ -60,6 +61,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
       option: ExternalInsuranceCancellationOption.None,
       requested: false,
     },
+    priceIntentData: {},
   },
   {
     id: '2',
@@ -83,6 +85,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
       option: ExternalInsuranceCancellationOption.None,
       requested: false,
     },
+    priceIntentData: {},
   },
 ]
 

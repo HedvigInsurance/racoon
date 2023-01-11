@@ -11,6 +11,7 @@ import {
   ExternalInsurer,
   useInsurelyDataCollectionCreateMutation,
 } from '@/services/apollo/generated'
+import { Flags } from '@/services/Flags/Flags'
 import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
@@ -19,6 +20,8 @@ import {
 import { PERSONAL_NUMBER_FIELD_NAME } from '@/services/priceIntent/priceIntent.constants'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
+
+const INSURELY_IS_ENABLED = Flags.getFeature('INSURELY')
 
 type Props = {
   label: string
@@ -52,7 +55,7 @@ export const CurrentInsuranceField = (props: Props) => {
     (externalInsurer: ExternalInsurer) => setState({ type: 'CONFIRMED', externalInsurer }),
     [],
   )
-  const isDialogOpen = state.type === 'COMPARE' || state.type === 'SUCCESS'
+  const isDialogOpen = INSURELY_IS_ENABLED && (state.type === 'COMPARE' || state.type === 'SUCCESS')
 
   const companyOptions = useCompanyOptions(productName)
   const updateExternalInsurer = useUpdateExternalInsurer({

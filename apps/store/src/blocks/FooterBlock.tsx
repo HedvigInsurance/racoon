@@ -1,6 +1,8 @@
+import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
+import { addLocale } from 'next/dist/client/add-locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useRef } from 'react'
@@ -9,17 +11,19 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CookiePersister } from '@/services/persister/CookiePersister'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { countries } from '@/utils/l10n/countries'
-import { getCountryLocale } from '@/utils/l10n/countryUtils'
+import { getCountryByLocale, getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField, LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
 import {
   getLocaleOrFallback,
   toRoutingLocale,
+  translateCountryName,
   translateLanguageName,
 } from '@/utils/l10n/localeUtils'
-import { IsoLocale } from '@/utils/l10n/types'
+import { CountryLabel, IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
@@ -70,9 +74,10 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const currentCountry = useCurrentCountry()
   const { t } = useTranslation()
   const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
+  const apolloClient = useApolloClient()
 
   const countryList = Object.keys(countries).map((country) => ({
-    name: t(`COUNTRY_LABEL_${country}`, { defaultValue: country }),
+    name: translateCountryName(country as CountryLabel, t),
     value: country,
   }))
 
@@ -90,8 +95,17 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
-    cookiePersister.save(toRoutingLocale(locale), undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
-    router.push(router.asPath, undefined, { locale: toRoutingLocale(locale) })
+    const nextLocale = toRoutingLocale(locale)
+    cookiePersister.save(nextLocale, undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
+    const nextCountry = getCountryByLocale(nextLocale)
+    if (nextCountry === currentCountry) {
+      router.push(router.asPath, undefined, { locale: nextLocale })
+    } else {
+      // Country change should be full app reload to maintain our programming assumptions
+      // We may clean any previous shop session while we're at it
+      setupShopSessionServiceClientSide(apolloClient).reset()
+      window.location.href = addLocale(router.asPath, nextLocale)
+    }
   }
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()

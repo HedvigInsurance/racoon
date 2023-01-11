@@ -62,3 +62,9 @@ Optional query parameters:
 
 > **Note**
 > This endpoint only supports Sweden for now.
+
+## Feature Flags
+
+Feature flags are used to enable/disable features in the app. They are stored in `/src/services/Flags`. Currenyly, we define all flags in code. In the future, we might want to move them to a 3rd party service.
+
+You enable a feature flag by supplying the `NEXT_PUBLIC_FEATURE_XXX` environment variable. For example, to enable the `INSURELY` feature, you would set the `NEXT_PUBLIC_FEATURE_INSURELY=true`.

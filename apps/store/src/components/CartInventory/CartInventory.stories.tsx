@@ -106,6 +106,7 @@ const MOCK_CART: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
     {
@@ -138,6 +139,7 @@ const MOCK_CART: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
     {
@@ -170,6 +172,7 @@ const MOCK_CART: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
   ],
@@ -244,6 +247,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
     {
@@ -276,6 +280,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
     {
@@ -308,6 +313,7 @@ const MOCK_CART_TWO: CartFragmentFragment = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
       },
+      priceIntentData: {},
       __typename: 'ProductOffer',
     },
   ],

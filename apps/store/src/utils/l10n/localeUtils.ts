@@ -1,6 +1,13 @@
 import { TFunction } from 'next-i18next'
 import { FALLBACK_LOCALE, LocaleData, locales } from '@/utils/l10n/locales'
-import { CountryCode, IsoLocale, Language, RoutingLocale, UiLocale } from '@/utils/l10n/types'
+import {
+  CountryCode,
+  CountryLabel,
+  IsoLocale,
+  Language,
+  RoutingLocale,
+  UiLocale,
+} from '@/utils/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
@@ -41,7 +48,12 @@ export const getLocaleOrFallback = (locale: UiLocale | string | undefined): Loca
   return locales[toIsoLocale(locale)]
 }
 
-export const translateCountryName = (countryCode: CountryCode, t: TFunction) => {
+export const getUrlLocale = (url: string): RoutingLocale => {
+  const routingLocale = url.split('/')[0]
+  return getLocaleOrFallback(routingLocale).routingLocale
+}
+
+export const translateCountryName = (countryCode: CountryCode | CountryLabel, t: TFunction) => {
   switch (countryCode) {
     case CountryCode.Dk:
       return t('COUNTRY_LABEL_DK')

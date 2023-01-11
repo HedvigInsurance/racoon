@@ -36,9 +36,13 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
   return (
     <Wrapper {...animationProps} isActive={!!inputValue}>
       <Label htmlFor={props.id}>
-        <Text as="span" size={labelSize} color={props.disabled ? 'textDisabled' : 'textPrimary'}>
+        <LabelText
+          as="span"
+          size={labelSize}
+          color={props.disabled ? 'textDisabled' : 'textPrimary'}
+        >
           {label}
-        </Text>
+        </LabelText>
       </Label>
       <SpaceFlex align="center" space={0}>
         <Input {...props} onKeyDown={highlight} onChange={handleChange} />
@@ -60,6 +64,7 @@ const LargeWrapper = styled(motion.div, {
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
   height: '4rem',
+  width: '100%',
 
   [':focus-within > label']: {
     transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
@@ -86,6 +91,8 @@ const Label = styled.label(({ theme }) => ({
   whiteSpace: 'nowrap',
 }))
 
+const LabelText = styled(Text)({ lineHeight: 1 })
+
 const LargeInput = styled.input(({ theme }) => ({
   width: '100%',
   fontSize: theme.fontSizes.xl,
@@ -106,7 +113,6 @@ const LargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md 
 LargeSuffix.defaultProps = { size: 'xl', color: 'textSecondary', as: 'span' }
 
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
-  width: '100%',
   height: '3.25rem',
 
   [':focus-within > label']: {

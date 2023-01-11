@@ -61,10 +61,10 @@ const getAligmentStyles = (aligment: Alignment) => {
         // flex container. There is a CSS working draft that solves this
         // issue: justify-content: center safe; However it's not well support yet.
         // More info --> http://bitly.ws/y7ak
-        [`& ${ScrollableItem}:first-child`]: {
+        [`& ${ScrollableItem}:first-of-type`]: {
           marginLeft: 'auto',
         },
-        [`& ${ScrollableItem}:last-child`]: {
+        [`& ${ScrollableItem}:last-of-type`]: {
           marginRight: 'auto',
         },
       }

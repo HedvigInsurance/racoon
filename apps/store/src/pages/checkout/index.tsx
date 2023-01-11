@@ -48,6 +48,8 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
         alt: item.variant.product.pillowImage.alt ?? undefined,
       },
       documents: item.variant.documents,
+      productName: item.variant.product.name,
+      data: item.priceIntentData,
     })),
     campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
       id: item.id,
@@ -108,7 +110,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       personalNumber,
-      collectName: !checkout.contactDetails.firstName || !checkout.contactDetails.lastName,
+      collectName: !(checkout.contactDetails.firstName && checkout.contactDetails.lastName),
       checkoutSigningId: checkoutSigning?.id ?? null,
     }
 

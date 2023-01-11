@@ -141,6 +141,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       </Wrapper>
 
       <FullscreenDialog.Modal
+        center
         Footer={
           <FullscreenDialog.Close asChild>
             <Button type="button" variant="primary">
@@ -191,9 +192,10 @@ const HeaderHeading = styled(Heading)(({ theme }) => ({
 }))
 
 const HeaderLink = styled(Link)(({ theme }) => ({
+  backgroundColor: theme.colors.light,
   ':focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.light}, 0 0 0 4px ${theme.colors.textPrimary}`,
     borderRadius: theme.radius.xs,
+    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
   },
 
   [mq.lg]: {

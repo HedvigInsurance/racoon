@@ -7194,6 +7194,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/edge-config@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@vercel/edge-config@npm:0.1.0"
+  checksum: 2da09a664b848e7c64354857affcab8c92d100e8153f6f1569422129dcae057ba035ac77ddd28e82a4156c5ae29557abe055d7346db1ede804dc6593a44ac241
+  languageName: node
+  linkType: hard
+
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
   resolution: "@webassemblyjs/ast@npm:1.11.1"
@@ -10698,9 +10705,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.2.0":
-  version: 12.2.0
-  resolution: "cypress@npm:12.2.0"
+"cypress@npm:12.3.0":
+  version: 12.3.0
+  resolution: "cypress@npm:12.3.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -10746,7 +10753,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: fae721114f2001705cdd59a031d5d41d93092e4bc66561021e7890cd01004ac8e037dbd22e22fe0fac325e8e4420a52e1d75254f4e8b7f7a63e84d3fdb86626c
+  checksum: 00658996bcca918254348eb42bc03079ccf2d583e5c9c04190267edcbc542d4a22835d7399711c99f7aa7334412104b23cc5a1aa7f02b8b541c12298bf3f63f0
   languageName: node
   linkType: hard
 
@@ -11281,10 +11288,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.4.2":
-  version: 2.4.2
-  resolution: "dompurify@npm:2.4.2"
-  checksum: 5b01e377755f8f3b5d4e30fc3292e060ece66874b50b35e19f601f1e671d6cefbf0fa71bcc0f863c0f7cbcea502349f67f72f8172223d4a9e963ba6bd335dce5
+"dompurify@npm:2.4.3":
+  version: 2.4.3
+  resolution: "dompurify@npm:2.4.3"
+  checksum: b440981f2a38cada2085759cc3d1e2f94571afc34343d011a8a6aa1ad91ae6abf651adbfa4994b0e2283f0ce81f7891cdb04b67d0b234c8d190cb70e9691f026
   languageName: node
   linkType: hard
 
@@ -11883,14 +11890,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:8.5.0":
-  version: 8.5.0
-  resolution: "eslint-config-prettier@npm:8.5.0"
+"eslint-config-prettier@npm:8.6.0":
+  version: 8.6.0
+  resolution: "eslint-config-prettier@npm:8.6.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
+  checksum: ff0d0dfc839a556355422293428637e8d35693de58dabf8638bf0b6529131a109d0b2ade77521aa6e54573bb842d7d9d322e465dd73dd61c7590fa3834c3fa81
   languageName: node
   linkType: hard
 
@@ -11966,9 +11973,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:27.2.0":
-  version: 27.2.0
-  resolution: "eslint-plugin-jest@npm:27.2.0"
+"eslint-plugin-jest@npm:27.2.1":
+  version: 27.2.1
+  resolution: "eslint-plugin-jest@npm:27.2.1"
   dependencies:
     "@typescript-eslint/utils": ^5.10.0
   peerDependencies:
@@ -11979,7 +11986,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 83554bb8eed289f903e2e03871a42a9b7b37b5e443d4a1501a42e004db49cddad894592ccec9840221b412ea3d2388428a1b11938031e5628d21c5a3210f1240
+  checksum: 579a4d26304cc6748b2e6dff6c965ea7a21b618d8b051eb02727d25cf5c7767f6db8ef5237531635ff77e242b983b973e7cb8c820a4d20d5bda73358c452a8ab
   languageName: node
   linkType: hard
 
@@ -13084,21 +13091,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:8.0.2":
-  version: 8.0.2
-  resolution: "framer-motion@npm:8.0.2"
+"framer-motion@npm:8.2.4":
+  version: 8.2.4
+  resolution: "framer-motion@npm:8.2.4"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": ^10.15.3
     hey-listen: ^1.0.8
-    tslib: 2.4.0
+    tslib: ^2.4.0
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: 7c1df1b35d8b91f2458f2c9deb9f2af159d965e0d3e15f6535cd51bd9563ed22e28a407a8a3b6f21d76651bb109af98db1db9013967db03957583f9d949540c3
+  checksum: e5598a84a9f6446ba15b73b89513faf20fa680d1045588bb8708479245806d921d52f9ba494858ce862a9b791050ac23732f22d23a6e3c443516f77f21fc49a2
   languageName: node
   linkType: hard
 
@@ -18396,11 +18403,11 @@ __metadata:
     "@types/react": 18.0.26
     classnames: 2.3.2
     cookies-next: 2.1.1
-    cypress: 12.2.0
-    dompurify: 2.4.2
+    cypress: 12.3.0
+    dompurify: 2.4.3
     eslint-plugin-cypress: 2.12.1
     formidable: 2.1.1
-    framer-motion: 8.0.2
+    framer-motion: 8.2.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.8
@@ -21212,9 +21219,9 @@ __metadata:
     "@typescript-eslint/parser": 5.47.1
     eslint: 8.31.0
     eslint-config-next: 13.1.1
-    eslint-config-prettier: 8.5.0
+    eslint-config-prettier: 8.6.0
     eslint-plugin-import: 2.26.0
-    eslint-plugin-jest: 27.2.0
+    eslint-plugin-jest: 27.2.1
     eslint-plugin-jsx-a11y: 6.6.1
     eslint-plugin-testing-library: 5.9.1
     identity-obj-proxy: ^3.0.0
@@ -22005,6 +22012,7 @@ __metadata:
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/uuid": 9.0.0
+    "@vercel/edge-config": 0.1.0
     ajv: 8.12.0
     babel-loader: 9.1.2
     cookies-next: 2.1.1
@@ -22012,7 +22020,7 @@ __metadata:
     eslint: 8.31.0
     eslint-config-next: 13.1.1
     eslint-plugin-cypress: 2.12.1
-    framer-motion: 8.0.2
+    framer-motion: 8.2.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.8
