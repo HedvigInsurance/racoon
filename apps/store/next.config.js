@@ -24,6 +24,11 @@ module.exports = {
   },
 }
 
+// FIXME: Restore connect-src https://*.google-analytics.com after testing
+//
+// NOTE: report-to rule with Report-to header is recommended, but it's not universally supported and
+// is impossible to test on localhost with non-TLS, so we're not using it
+//
 // script-src: NOT SAFE - https://www.hyperxiao.top/en/posts/6
 // style-src: consider emotion + nonce: https://emotion.sh/docs/@emotion/cache#nonce
 const ContentSecurityPolicy = `
@@ -33,10 +38,11 @@ const ContentSecurityPolicy = `
   font-src https://fonts.intercomcdn.com 'self';
   img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com blob: data: 'self';
   media-src https://*.storyblok.com;
-  connect-src https://*.browser-intake-datadoghq.eu https://*.google-analytics.com https://api-iam.intercom.io wss://*.intercom.io https://*.hedvigit.com 'self';
+  connect-src https://*.browser-intake-datadoghq.eu https://api-iam.intercom.io wss://*.intercom.io https://*.hedvigit.com 'self';
   worker-src blob:;
   object-src data:;
   frame-src https://dc.insurely.com;
+  report-uri /api/csp-reports;
 `
 
 const securityHeaders = [
