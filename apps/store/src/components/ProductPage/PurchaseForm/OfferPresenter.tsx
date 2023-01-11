@@ -12,7 +12,6 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
-  PerilFragment,
   ProductOfferFragment,
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -142,15 +141,8 @@ export const OfferPresenter = (props: Props) => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
   }
 
-  const getAllPerils = () => {
-    return priceIntent.offers.reduce(
-      (accumulatedPerils, offer) => accumulatedPerils.concat(offer.variant.perils),
-      [] as PerilFragment[],
-    )
-  }
-
   const getUniquePerilTitles = () => {
-    const allPerils = getAllPerils()
+    const allPerils = priceIntent.offers.flatMap((offer) => offer.variant.perils)
     const perilTitles = allPerils.map((peril) => peril.title)
     return removeDuplicates(perilTitles)
   }
