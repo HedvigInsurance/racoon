@@ -15,22 +15,20 @@ export const CountrySelectorPage = (props: { className?: string }) => {
     cookiePersister.save(toRoutingLocale(locale), undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
 
   return (
-    <Wrapper {...props}>
-      <Space y={3}>
-        <Heading as="h1">
-          {t('COUNTRY_NOT_DETECTED', { defaultValue: 'COUNTRY_NOT_DETECTED' })}
-        </Heading>
-        <Space y={0.5}>
-          {Object.entries(countries).map(([country, countryData]) => (
-            <Button
-              key={country}
-              href={`/${toRoutingLocale(countryData.defaultLocale)}`}
-              onClick={() => onHandleClick(countryData.defaultLocale)}
-            >
-              {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
-            </Button>
-          ))}
-        </Space>
+    <Wrapper y={3} {...props}>
+      <Heading as="h1">
+        {t('COUNTRY_NOT_DETECTED', { defaultValue: 'COUNTRY_NOT_DETECTED' })}
+      </Heading>
+      <Space y={0.5}>
+        {Object.entries(countries).map(([country, countryData]) => (
+          <Button
+            key={country}
+            href={`/${toRoutingLocale(countryData.defaultLocale)}`}
+            onClick={() => onHandleClick(countryData.defaultLocale)}
+          >
+            {t(`COUNTRY_LABEL_${country}`, { defaultValue: `MISSING ${country}` })}
+          </Button>
+        ))}
       </Space>
     </Wrapper>
   )
