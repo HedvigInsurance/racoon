@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import logger from '@/services/logger/server'
 
 const cspReports = (req: NextApiRequest, res: NextApiResponse<void>) => {
   try {
+    // NOTE: Requests get application/csp-report content-type and aren't automatically identified as JSON
     const report = JSON.parse(req.body)['csp-report']
     if (report) {
-      logger.child({ csp: report }).info('csp violation')
+      console.log('csp_violation', JSON.stringify(report))
     }
   } catch (err) {
-    logger.error('Failed to parse CSP report', err)
+    console.error('Failed to parse CSP report', err)
   }
   return res.status(204).send()
 }
