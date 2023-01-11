@@ -36,9 +36,13 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
   return (
     <Wrapper {...animationProps} isActive={!!inputValue}>
       <Label htmlFor={props.id}>
-        <Text as="span" size={labelSize} color={props.disabled ? 'textDisabled' : 'textPrimary'}>
+        <LabelText
+          as="span"
+          size={labelSize}
+          color={props.disabled ? 'textDisabled' : 'textPrimary'}
+        >
           {label}
-        </Text>
+        </LabelText>
       </Label>
       <SpaceFlex align="center" space={0}>
         <Input {...props} onKeyDown={highlight} onChange={handleChange} />
@@ -86,6 +90,8 @@ const Label = styled.label(({ theme }) => ({
   paddingInline: theme.space.md,
   whiteSpace: 'nowrap',
 }))
+
+const LabelText = styled(Text)({ lineHeight: 1 })
 
 const LargeInput = styled.input(({ theme }) => ({
   width: '100%',
