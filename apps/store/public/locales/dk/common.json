@@ -1,5 +1,11 @@
 {
   "COUNTRY_LABEL_DK": "Danmark",
+  "COUNTRY_LABEL_NO": "Norge",
+  "COUNTRY_LABEL_SE": "Sverige",
+  "COUNTRY_NOT_DETECTED": "Vi er ikke helt sikre på, hvor du besøger os fra. Vælg din placering herunder.",
   "LANGUAGE_LABEL_da": "Dansk",
-  "LANGUAGE_LABEL_en": "Engelsk"
+  "LANGUAGE_LABEL_en": "Engelsk",
+  "LANGUAGE_LABEL_no": "Norsk",
+  "LANGUAGE_LABEL_sv": "Svensk",
+  "UNKNOWN_ERROR_MESSAGE": "Noget gik galt, prøv venligst igen."
 }

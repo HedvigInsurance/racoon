@@ -191,7 +191,7 @@ export const OfferPresenter = (props: Props) => {
                 transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
                 size="0.875rem"
               />
-              Compare coverage
+              {t('COMPARE_COVERAGE_BUTTON')}{' '}
             </Button>
           </SpaceFlex>
         )}
