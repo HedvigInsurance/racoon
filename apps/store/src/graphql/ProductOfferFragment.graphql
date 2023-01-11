@@ -41,4 +41,5 @@ fragment ProductOffer on ProductOffer {
       currencyCode
     }
   }
+  priceIntentData
 }
