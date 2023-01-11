@@ -18,7 +18,7 @@ import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const LOGGER = logger.child({ module: 'api/session/create' })
 const TEST_SSN = '199808302393'
-const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT', 'SE_APARTMENT_BRF'] as const
+const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
