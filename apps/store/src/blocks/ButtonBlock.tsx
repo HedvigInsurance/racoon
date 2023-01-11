@@ -27,7 +27,7 @@ export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
 }
 ButtonBlock.blockName = 'button'
 
-const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   paddingLeft: theme.space[4],
