@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
@@ -12,8 +13,8 @@ export const ProductItem = ({ name, price }: ProductItemProps) => {
     <SpaceFlex space={1} align="center">
       <Pillow size="small" />
       <SpaceBetween>
-        <BodyText>{name}</BodyText>
-        <BodyText>{price}</BodyText>
+        <Text size="lg">{name}</Text>
+        <Text size="lg">{price}</Text>
       </SpaceBetween>
     </SpaceFlex>
   )
@@ -24,10 +25,5 @@ const SpaceBetween = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: theme.space[2],
-}))
-
-const BodyText = styled.p(({ theme }) => ({
-  color: theme.colors.gray900,
-  fontSize: theme.fontSizes.body,
+  gap: theme.space.xs,
 }))

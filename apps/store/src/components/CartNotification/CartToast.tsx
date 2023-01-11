@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Heading, Space, Dialog } from 'ui'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { Heading, Space, Dialog, CrossIcon } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
@@ -34,22 +33,23 @@ type Props = ProductItemProps & {
   onClose: () => void
 }
 
-const CartNotificationContent = ({ name, price, onClose }: Props) => {
+export const CartNotificationContent = ({ name, price, onClose }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.entries.length ?? 1
 
   return (
-    <Dialog.Content onClose={onClose}>
-      <DialogContentWrapper y={1.5}>
-        <Heading as="h2" variant="standard.18">
+    <DialogContent onClose={onClose}>
+      <DialogContentWrapper>
+        <TopRightCloseButton>
+          <CrossIcon size="1rem" />
+        </TopRightCloseButton>
+        <Heading as="h2" variant="standard.24">
           {t('CART_TOAST_HEADING')}
         </Heading>
         <ProductItem name={name} price={price} />
 
         <Space y={0.5}>
           <ButtonNextLink href={PageLink.cart()} variant="primary">
-            {t('CART_TOAST_CART_LINK', { count: cartLineCount })}
+            {t('CART_TOAST_CART_LINK')}
           </ButtonNextLink>
 
           <ButtonNextLink href={PageLink.store()} onClick={onClose} variant="ghost">
@@ -57,15 +57,38 @@ const CartNotificationContent = ({ name, price, onClose }: Props) => {
           </ButtonNextLink>
         </Space>
       </DialogContentWrapper>
-    </Dialog.Content>
+    </DialogContent>
   )
 }
 
-const DialogContentWrapper = styled(Space)(({ theme }) => ({
-  paddingTop: theme.space[5],
-  paddingLeft: theme.space[3],
-  paddingRight: theme.space[3],
-  paddingBottom: theme.space[3],
-  backgroundColor: theme.colors.white,
-  textAlign: 'center',
+const DialogContent = styled(Dialog.Content)(({ theme }) => ({
+  padding: theme.space.xs,
+}))
+
+const DialogContentWrapper = styled.div(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space.lg,
+
+  paddingInline: theme.space.md,
+  paddingTop: theme.space.lg,
+  paddingBottom: theme.space.xs,
+
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.light,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+}))
+
+const TopRightCloseButton = styled(Dialog.Close)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.space.md,
+  right: theme.space.md,
+  cursor: 'pointer',
+
+  backgroundColor: theme.colors.light,
+  ':focus-visible': {
+    borderRadius: theme.radius.xs,
+    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+  },
 }))

@@ -82,7 +82,7 @@ export const PurchaseForm = () => {
           const handleAddedToCart = async (item: ProductOfferFragment) => {
             notifyProductAdded({
               name: productData.displayNameFull,
-              price: formatter.money(item.price),
+              price: formatter.monthlyPrice(item.price),
             })
 
             const service = priceIntentServiceInitClientSide(apolloClient)
