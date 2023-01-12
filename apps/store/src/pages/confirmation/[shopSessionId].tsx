@@ -6,7 +6,6 @@ import { ConfirmationPageProps } from '@/components/ConfirmationPage/Confirmatio
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
@@ -26,32 +25,27 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = initializeApollo({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  try {
-    const [shopSession, globalStory, translations] = await Promise.all([
-      shopSessionService.fetchById(shopSessionId),
-      getGlobalStory({ locale }),
-      serverSideTranslations(locale),
-    ])
+  const [shopSession, globalStory, translations] = await Promise.all([
+    shopSessionService.fetchById(shopSessionId),
+    getGlobalStory({ locale }),
+    serverSideTranslations(locale),
+  ])
 
-    // @TODO: uncomment after implementing signing
-    // if (shopSession.checkout.completedAt === null) {
-    //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
-    // }
+  // @TODO: uncomment after implementing signing
+  // if (shopSession.checkout.completedAt === null) {
+  //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
+  // }
 
-    return addApolloState(apolloClient, {
-      props: {
-        ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        [GLOBAL_STORY_PROP_NAME]: globalStory,
-        cart: shopSession.cart,
-        currency: shopSession.currencyCode,
-        platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
-      },
-    })
-  } catch (error) {
-    logger.error(error, 'Unable to render confirmation page')
-    return { notFound: true }
-  }
+  return addApolloState(apolloClient, {
+    props: {
+      ...translations,
+      [SHOP_SESSION_PROP_NAME]: shopSession.id,
+      [GLOBAL_STORY_PROP_NAME]: globalStory,
+      cart: shopSession.cart,
+      currency: shopSession.currencyCode,
+      platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
+    },
+  })
 }
 
 const CheckoutConfirmationPage: NextPageWithLayout<ConfirmationPageProps> = (props) => {

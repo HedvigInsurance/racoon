@@ -1,7 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import logger from '@/services/logger/server'
 import {
   getStoryBySlug,
   ReusableStory,
@@ -36,20 +35,15 @@ export const getServerSideProps: GetServerSideProps<
 
   const slug = (params?.slug ?? []).join('/')
 
-  try {
-    const story = (await getStoryBySlug(`/reusable-blocks/${slug}`, {
-      locale,
-      version,
-    })) as ReusableStory
+  const story = (await getStoryBySlug(`/reusable-blocks/${slug}`, {
+    locale,
+    version,
+  })) as ReusableStory
 
-    return {
-      props: {
-        story,
-      },
-    }
-  } catch (error) {
-    logger.error(error)
-    return { notFound: true }
+  return {
+    props: {
+      story,
+    },
   }
 }
 

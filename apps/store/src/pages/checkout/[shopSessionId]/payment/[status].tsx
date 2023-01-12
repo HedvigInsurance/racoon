@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
@@ -27,24 +26,19 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!isRoutingLocale(locale)) return { notFound: true }
   if (!shopSessionId) return { notFound: true }
 
-  try {
-    const apolloClient = initializeApollo({ req, res })
-    const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    const shopSession = await shopSessionService.fetchById(shopSessionId)
+  const apolloClient = initializeApollo({ req, res })
+  const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
+  const shopSession = await shopSessionService.fetchById(shopSessionId)
 
-    if (status === 'success') {
-      return {
-        redirect: {
-          destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
-          permanent: false,
-        },
-      }
-    } else {
-      return { props: { shopSessionId } }
+  if (status === 'success') {
+    return {
+      redirect: {
+        destination: PageLink.confirmation({ locale, shopSessionId: shopSession.id }),
+        permanent: false,
+      },
     }
-  } catch (error) {
-    logger.error(error, 'Failed to get server side props for checkout page')
-    return { notFound: true }
+  } else {
+    return { props: { shopSessionId } }
   }
 }
 
