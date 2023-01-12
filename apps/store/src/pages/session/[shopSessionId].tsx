@@ -1,11 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
-
-const LOGGER = logger.child({ module: 'pages/session' })
 
 type Props = Record<string, unknown>
 type Params = { shopSessionId: string }
@@ -22,7 +19,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) {
-    logger.error('No shop session in URL')
+    console.error('No shop session in URL')
     return fallbackRedirect
   }
 
@@ -32,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     const shopSession = await shopSessionService.fetchById(shopSessionId)
     shopSessionService.saveId(shopSession.id)
   } catch (error) {
-    logger.error(error, `Unable to fetch ShopSession: ${shopSessionId}`)
+    console.error(`Unable to fetch ShopSession: ${shopSessionId}`, error)
     return fallbackRedirect
   }
 
@@ -45,7 +42,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 
   const destination = nextURL.toString()
-  LOGGER.info(`Re-directing to destination: ${destination}`)
+  console.log(`Re-directing to destination: ${destination}`)
   return { redirect: { destination, permanent: false } }
 }
 

@@ -11,7 +11,6 @@ import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
-import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -83,42 +82,37 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  try {
-    const apolloClient = initializeApollo({ req, res })
-    const [shopSession, translations] = await Promise.all([
-      getCurrentShopSessionServerSide({ apolloClient, req, res }),
-      serverSideTranslations(locale),
-    ])
+  const apolloClient = initializeApollo({ req, res })
+  const [shopSession, translations] = await Promise.all([
+    getCurrentShopSessionServerSide({ apolloClient, req, res }),
+    serverSideTranslations(locale),
+  ])
 
-    const { checkout } = shopSession
-    if (!checkout) {
-      throw new Error('No checkout info in shopSession')
-    }
-
-    const personalNumber = checkout.contactDetails.ssn
-    if (!personalNumber) {
-      throw new Error('No personal number in shopSession')
-    }
-
-    const checkoutSigning = await fetchCurrentCheckoutSigning({
-      req,
-      apolloClient,
-      checkoutId: checkout.id,
-    })
-
-    const pageProps: NextPageProps = {
-      ...translations,
-      [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      personalNumber,
-      collectName: !(checkout.contactDetails.firstName && checkout.contactDetails.lastName),
-      checkoutSigningId: checkoutSigning?.id ?? null,
-    }
-
-    return addApolloState(apolloClient, { props: pageProps })
-  } catch (error) {
-    logger.error(error, 'Failed to get server side props for checkout page')
-    return { notFound: true }
+  const { checkout } = shopSession
+  if (!checkout) {
+    throw new Error('No checkout info in shopSession')
   }
+
+  const personalNumber = checkout.contactDetails.ssn
+  if (!personalNumber) {
+    throw new Error('No personal number in shopSession')
+  }
+
+  const checkoutSigning = await fetchCurrentCheckoutSigning({
+    req,
+    apolloClient,
+    checkoutId: checkout.id,
+  })
+
+  const pageProps: NextPageProps = {
+    ...translations,
+    [SHOP_SESSION_PROP_NAME]: shopSession.id,
+    personalNumber,
+    collectName: !(checkout.contactDetails.firstName && checkout.contactDetails.lastName),
+    checkoutSigningId: checkoutSigning?.id ?? null,
+  }
+
+  return addApolloState(apolloClient, { props: pageProps })
 }
 
 export default NextCheckoutPage

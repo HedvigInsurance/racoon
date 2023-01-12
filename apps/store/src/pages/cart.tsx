@@ -8,7 +8,6 @@ import {
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -73,24 +72,19 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
   const { countryCode } = getCountryByLocale(locale)
 
-  try {
-    const apolloClient = initializeApollo({ req, res })
-    const [shopSession, translations] = await Promise.all([
-      getShopSessionServerSide({ apolloClient, countryCode, req, res }),
-      serverSideTranslations(locale),
-    ])
+  const apolloClient = initializeApollo({ req, res })
+  const [shopSession, translations] = await Promise.all([
+    getShopSessionServerSide({ apolloClient, countryCode, req, res }),
+    serverSideTranslations(locale),
+  ])
 
-    return addApolloState(apolloClient, {
-      props: {
-        ...translations,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
-        prevURL: getPrevURL(context, locale),
-      },
-    })
-  } catch (error) {
-    logger.error(error)
-    return { notFound: true }
-  }
+  return addApolloState(apolloClient, {
+    props: {
+      ...translations,
+      [SHOP_SESSION_PROP_NAME]: shopSession.id,
+      prevURL: getPrevURL(context, locale),
+    },
+  })
 }
 
 const getPrevURL = (context: GetServerSidePropsContext, locale: RoutingLocale) => {

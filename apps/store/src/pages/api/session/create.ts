@@ -7,7 +7,6 @@ import {
   CartEntryAddMutationVariables,
 } from '@/services/apollo/generated'
 import { CountryCode } from '@/services/apollo/generated'
-import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   PriceIntentService,
@@ -16,7 +15,6 @@ import {
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
-const LOGGER = logger.child({ module: 'api/session/create' })
 const TEST_SSN = '199808302393'
 const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
 
@@ -26,14 +24,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
     const shopSession = await shopSessionService.create({ countryCode: CountryCode.Se })
-    LOGGER.info(`Created new ShopSession: ${shopSession.id}`)
+    console.log(`Created new ShopSession: ${shopSession.id}`)
 
     const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
 
     const emailAddress = getRandomEmailAddress()
     const ssn = (req.query.ssn ?? TEST_SSN) as string
     const maskedSsn = ssn.replace(/(\d{4})$/, '****')
-    LOGGER.info(`Using SSN: ${maskedSsn} and email: ${emailAddress}`)
+    console.log(`Using SSN: ${maskedSsn} and email: ${emailAddress}`)
 
     await Promise.all(
       productNames.map((productName) =>
@@ -51,13 +49,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     shopSessionService.saveId(shopSession.id)
   } catch (error) {
-    LOGGER.error(error, 'Unable to create ShopSession with products')
+    throw new Error('Unable to create ShopSession with products', { cause: error })
   }
 
   const nextURL = new URL(ORIGIN_URL)
   nextURL.pathname = PageLink.cart({ locale: 'en-se' })
   const destination = nextURL.toString()
-  LOGGER.info(`Re-directing to destination: ${destination}`)
+  console.log(`Re-directing to destination: ${destination}`)
   return res.redirect(destination)
 }
 
@@ -87,11 +85,10 @@ const addProduct = async ({
   apolloClient,
   cartId,
 }: AddProductParams) => {
-  LOGGER.info(`Adding product to cart: ${productName}`)
+  console.log(`Adding product to cart: ${productName}`)
   const priceTemplate = fetchPriceTemplate(productName)
   if (!priceTemplate) {
-    LOGGER.error({ productName }, 'Price template not found')
-    throw new Error('Price template not found')
+    throw new Error(`Price template not found: ${productName}`)
   }
   const priceIntent = await priceIntentService.create({
     shopSessionId: shopSessionId,
@@ -118,13 +115,12 @@ const addProduct = async ({
     variables: { cartId, offerId: updatedPriceIntent.offers[0].id },
   })
   if (!results.data?.cartEntriesAdd.cart) {
-    LOGGER.error(
-      {
+    throw new Error(
+      `Unable to add cart entry, ${JSON.stringify({
         priceIntentId: priceIntent.id,
         cartId,
-      },
-      `Unable to add cart entry: ${productName}`,
+        productName,
+      })}`,
     )
-    throw new Error('Unable to add cart entry')
   }
 }

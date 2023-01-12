@@ -1,13 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
 import { createAuthorizationCode } from '@/utils/auth'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
-
-const LOGGER = logger.child({ module: 'pages/checkout/[shopSessionId]/payment' })
 
 type Props = Record<string, unknown>
 type Params = { shopSessionId: string }
@@ -28,16 +25,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId)
     // TODO: validate ShopSession
   } catch (error) {
-    logger.error(error, `Unable to fetch ShopSession: ${shopSessionId}`)
-    return { notFound: true }
+    throw new Error(`Unable to fetch ShopSession: ${shopSessionId}`, { cause: error })
   }
 
   let authorizationCode
   try {
     authorizationCode = await createAuthorizationCode({ req, res })
   } catch (error) {
-    LOGGER.error(error, 'Failed to create authorization code')
-    return { notFound: true }
+    throw new Error('Failed to create authorization code', { cause: error })
   }
 
   const redirectBaseURL = PageLink.checkoutPaymentRedirectBase({ locale, shopSessionId })
@@ -45,17 +40,15 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   try {
     redirectURL = new URL(redirectBaseURL)
   } catch (error) {
-    LOGGER.error(error, `Invalid redirect base URL: ${redirectBaseURL}`)
-    return { notFound: true }
+    throw new Error(`Invalid redirect base URL: ${redirectBaseURL}`)
   }
 
   const woPaymentURL = getWebOnboardingPaymentURL({ authorizationCode, locale, redirectURL })
   if (!woPaymentURL) {
-    LOGGER.error('Web Onboarding payment URL not configured')
-    return { notFound: true }
+    throw new Error('Web Onboarding payment URL not configured')
   }
 
-  LOGGER.info('Re-directing to Web Onboarding for payment connection')
+  console.log('Re-directing to Web Onboarding for payment connection')
   return { redirect: { destination: woPaymentURL, permanent: false } }
 }
 

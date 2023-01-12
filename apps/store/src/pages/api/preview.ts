@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
-import logger from '@/services/logger/server'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 
 const preview = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -30,7 +29,7 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const targetUrl = `/${story.full_slug}`
-  logger.debug(`Previewing ${targetUrl}`)
+  console.debug(`Previewing ${targetUrl}`)
   res.redirect(targetUrl)
 }
 
