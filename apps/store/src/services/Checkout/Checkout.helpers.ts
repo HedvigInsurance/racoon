@@ -36,7 +36,7 @@ export const fetchCurrentCheckoutSigning = async ({
       return await fetchCheckoutSigning({ ...params, checkoutSigningId })
     }
   } catch (error) {
-    console.warn(`Unable to fetch checkout signing ${JSON.stringify({ checkoutSigningId, error })}`)
+    console.warn('Unable to fetch checkout signing %j', { checkoutSigningId, error })
   }
 
   return null
