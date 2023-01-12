@@ -34,12 +34,12 @@ const ContentSecurityPolicy = `
   script-src https://app.storyblok.com https://widget.intercom.io https://js.intercomcdn.com https://www.googletagmanager.com https://dc.insurely.com https://vercel.live 'unsafe-inline' 'unsafe-eval' 'self';
   style-src fonts.googleapis.com 'unsafe-inline' 'self';
   font-src https://fonts.intercomcdn.com fonts.gstatic.com 'self';
-  img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com blob: data: 'self';
+  img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com https://assets.vercel.com blob: data: 'self';
   media-src https://*.storyblok.com;
   connect-src https://*.browser-intake-datadoghq.eu https://*.google-analytics.com  https://api-iam.intercom.io https://app.storyblok.com https://sockjs-eu.pusher.com/ wss://ws-eu.pusher.com wss://*.intercom.io https://*.hedvigit.com 'self';
   worker-src blob:;
   object-src data:;
-  frame-src https://dc.insurely.com 'self';
+  frame-src https://dc.insurely.com https://vercel.live 'self';
   report-uri /api/csp-reports;
 `
 
