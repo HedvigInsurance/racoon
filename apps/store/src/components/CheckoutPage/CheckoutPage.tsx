@@ -13,7 +13,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import * as Auth from '@/services/Auth/Auth'
+import { saveAccessToken } from '@/services/authApi/persist'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -37,7 +37,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
-      Auth.save(accessToken)
+      saveAccessToken(accessToken)
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
