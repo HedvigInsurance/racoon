@@ -10,6 +10,7 @@ export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
   link: LinkField
   variant: ComponentProps<typeof Button>['variant']
+  size: ComponentProps<typeof Button>['size']
 }>
 
 export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
@@ -17,8 +18,8 @@ export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
     <Wrapper {...storyblokEditable(blok)}>
       <ButtonNextLink
         href={getLinkFieldURL(blok.link, blok.text)}
-        variant={blok.variant}
-        size="large"
+        variant={blok.variant ?? 'primary'}
+        size={blok.size ?? 'medium'}
       >
         {blok.text}
       </ButtonNextLink>
