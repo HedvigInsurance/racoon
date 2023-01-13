@@ -187,6 +187,9 @@ export const initStoryblok = () => {
     ...blockAliases,
   }
 
+  // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
+  const shouldUseBridge =
+    typeof window !== 'undefined' ? window.location !== window.parent.location : false
   storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
     apiOptions: {
@@ -197,6 +200,7 @@ export const initStoryblok = () => {
       },
     },
     use: [apiPlugin],
+    bridge: shouldUseBridge,
     components,
   })
 }
