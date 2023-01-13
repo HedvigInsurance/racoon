@@ -11804,7 +11804,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:3.5.2, eslint-import-resolver-typescript@npm:^3.5.2":
+"eslint-import-resolver-typescript@npm:^3.5.2":
   version: 3.5.2
   resolution: "eslint-import-resolver-typescript@npm:3.5.2"
   dependencies:
@@ -19865,7 +19865,6 @@ __metadata:
   resolution: "racoon@workspace:."
   dependencies:
     eslint: 8.31.0
-    eslint-import-resolver-typescript: 3.5.2
     husky: 8.0.3
     lint-staged: 13.1.0
     prettier: 2.8.2

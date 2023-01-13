@@ -13,9 +13,6 @@ module.exports = {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
-    'import/resolver': {
-      typescript: {},
-    },
   },
   rules: {
     'no-unneeded-ternary': 'error',
