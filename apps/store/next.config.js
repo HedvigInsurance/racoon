@@ -67,14 +67,15 @@ const connectSrcDirectives = [
   'https://*.google-analytics.com',
   'https://api-iam.intercom.io',
   'https://app.storyblok.com', // Stortblok editor
-  'https://sockjs-eu.pusher.com/', // Stortblok editor
-  'wss://ws-eu.pusher.com', // Stortblok editor
+  'https://*.pusher.com/', // Stortblok editor & Vercel preview comments
+  'wss://*.pusher.com', // Stortblok editor & Vercel preview comments
   'wss://*.intercom.io',
   'https://*.hedvigit.com',
   "'self'",
 ]
 const frameSrcDirectives = [
   'https://dc.insurely.com',
+  'https://player.vimeo.com',
   'https://vercel.live',
   "'self'", // Storyblok editor
 ]
