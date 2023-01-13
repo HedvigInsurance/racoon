@@ -5,7 +5,7 @@ const cspReports = (req: NextApiRequest, res: NextApiResponse<void>) => {
     // NOTE: Requests get application/csp-report content-type and aren't automatically identified as JSON
     const report = JSON.parse(req.body)['csp-report']
     if (report) {
-      console.log('csp_violation', JSON.stringify(report))
+      console.log('csp_violation %j', report)
     }
   } catch (err) {
     console.error('Failed to parse CSP report', err)
