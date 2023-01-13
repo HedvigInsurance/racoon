@@ -1,8 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
+import { createAuthorizationCode } from '@/services/authApi/oauth'
+import { getAuthHeaders } from '@/services/authApi/persist'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getWebOnboardingPaymentURL } from '@/services/WebOnboarding/WebOnboarding.helpers'
-import { createAuthorizationCode } from '@/utils/auth'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
@@ -30,7 +31,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   let authorizationCode
   try {
-    authorizationCode = await createAuthorizationCode({ req, res })
+    const authHeaders = getAuthHeaders({ req, res })
+    authorizationCode = await createAuthorizationCode(authHeaders)
   } catch (error) {
     throw new Error('Failed to create authorization code', { cause: error })
   }

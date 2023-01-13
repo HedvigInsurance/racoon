@@ -6,9 +6,9 @@ import { GetServerSidePropsContext } from 'next'
 import { i18n } from 'next-i18next'
 import { AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
-import * as Auth from '@/services/Auth/Auth'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
+import { getAuthHeaders } from '../authApi/persist'
 
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -26,7 +26,7 @@ const authLink = setContext((_, { headers = {}, context }) => {
   return {
     headers: {
       ...headers,
-      ...Auth.getAuthHeader(),
+      ...getAuthHeaders(),
     },
     ...context,
   }
@@ -79,7 +79,7 @@ export const initializeApollo = ({
 }: InitializeApolloParams = {}) => {
   const headers = {
     ...getDeviceIdHeader({ req, res }),
-    ...Auth.getAuthHeader({ req, res }),
+    ...getAuthHeaders({ req, res }),
   }
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
