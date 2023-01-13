@@ -5,6 +5,9 @@ import {
   CartEntryAddDocument,
   CartEntryAddMutation,
   CartEntryAddMutationVariables,
+  ShopSessionCustomerUpdateDocument,
+  ShopSessionCustomerUpdateMutation,
+  ShopSessionCustomerUpdateMutationVariables,
 } from '@/services/apollo/generated'
 import { CountryCode } from '@/services/apollo/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
@@ -26,18 +29,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const shopSession = await shopSessionService.create({ countryCode: CountryCode.Se })
     console.log(`Created new ShopSession: ${shopSession.id}`)
 
-    const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
-
-    const emailAddress = getRandomEmailAddress()
     const ssn = (req.query.ssn ?? TEST_SSN) as string
     const maskedSsn = ssn.replace(/(\d{4})$/, '****')
+    const emailAddress = getRandomEmailAddress()
     console.log(`Using SSN: ${maskedSsn} and email: ${emailAddress}`)
+    await updateCustomer({
+      apolloClient,
+      shopSessionId: shopSession.id,
+      ssn,
+      emailAddress,
+    })
+
+    const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
 
     await Promise.all(
       productNames.map((productName) =>
         addProduct({
-          ssn,
-          emailAddress,
           apolloClient,
           priceIntentService,
           productName,
@@ -70,8 +77,6 @@ type AddProductParams = {
   productName: string
   priceIntentService: PriceIntentService
   shopSessionId: string
-  ssn: string
-  emailAddress: string
   apolloClient: ApolloClient<unknown>
   cartId: string
 }
@@ -80,8 +85,6 @@ const addProduct = async ({
   productName,
   priceIntentService,
   shopSessionId,
-  ssn,
-  emailAddress,
   apolloClient,
   cartId,
 }: AddProductParams) => {
@@ -99,12 +102,10 @@ const addProduct = async ({
   await priceIntentService.update({
     priceIntentId: priceIntent.id,
     data: {
-      ssn: ssn,
       street: 'Testgatan 1',
       zipCode: '12345',
       livingSpace: 50,
       numberCoInsured: 0,
-      email: emailAddress,
     },
   })
 
@@ -121,6 +122,36 @@ const addProduct = async ({
         cartId,
         productName,
       })}`,
+    )
+  }
+}
+
+type UpdateCustomerParams = {
+  shopSessionId: string
+  ssn: string
+  emailAddress: string
+  apolloClient: ApolloClient<unknown>
+}
+
+const updateCustomer = async ({
+  apolloClient,
+  shopSessionId,
+  ssn,
+  emailAddress,
+}: UpdateCustomerParams) => {
+  const result = await apolloClient.mutate<
+    ShopSessionCustomerUpdateMutation,
+    ShopSessionCustomerUpdateMutationVariables
+  >({
+    mutation: ShopSessionCustomerUpdateDocument,
+    variables: {
+      input: { shopSessionId, ssn, email: emailAddress },
+    },
+  })
+
+  if (!result.data?.shopSessionCustomerUpdate.shopSession) {
+    throw new Error(
+      `Unable to update customer, ${JSON.stringify({ shopSessionId, ssn, emailAddress })}`,
     )
   }
 }

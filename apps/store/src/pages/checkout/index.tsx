@@ -17,10 +17,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextPageProps = Pick<
-  CheckoutPageProps,
-  'checkoutSigningId' | 'personalNumber' | 'collectName'
-> & {
+type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'ssn' | 'collectName'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -29,7 +26,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
-  if (!shopSession || !shopSession.checkout) return null
+  if (!shopSession || !shopSession.checkout || !shopSession.customer) return null
 
   const cart = {
     id: shopSession.cart.id,
@@ -61,16 +58,16 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     })),
   }
 
-  const contactDetails = shopSession.checkout.contactDetails
   const prefilledData = {
-    [FormElement.Email]: contactDetails.email ?? undefined,
-    [FormElement.FirstName]: contactDetails.firstName ?? undefined,
-    [FormElement.LastName]: contactDetails.lastName ?? undefined,
+    [FormElement.Email]: shopSession.customer.email ?? undefined,
+    [FormElement.FirstName]: shopSession.customer.firstName ?? undefined,
+    [FormElement.LastName]: shopSession.customer.lastName ?? undefined,
   }
 
   return (
     <CheckoutPage
       {...props}
+      shopSessionId={shopSession.id}
       checkoutId={shopSession.checkout.id}
       cart={cart}
       prefilledData={prefilledData}
@@ -88,15 +85,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     serverSideTranslations(locale),
   ])
 
-  const { checkout } = shopSession
-  if (!checkout) {
-    throw new Error('No checkout info in shopSession')
-  }
-
-  const personalNumber = checkout.contactDetails.ssn
-  if (!personalNumber) {
-    throw new Error('No personal number in shopSession')
-  }
+  const { customer, checkout } = shopSession
+  if (!customer) throw new Error('No Customer info in Shop Session')
+  if (!customer.ssn) throw new Error('No SSN in Shop Session')
+  if (!checkout) throw new Error('No Checkout in Shop Session')
 
   const checkoutSigning = await fetchCurrentCheckoutSigning({
     req,
@@ -107,8 +99,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const pageProps: NextPageProps = {
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
-    personalNumber,
-    collectName: !(checkout.contactDetails.firstName && checkout.contactDetails.lastName),
+    ssn: customer.ssn,
+    collectName: !(customer.firstName && customer.lastName),
     checkoutSigningId: checkoutSigning?.id ?? null,
   }
 

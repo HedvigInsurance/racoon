@@ -1,7 +1,7 @@
-mutation ContactDetailsUpdate($input: CheckoutContactDetailsUpdateInput) {
-  checkoutContactDetailsUpdate(input: $input) {
-    checkout {
-      ...Checkout
+mutation ShopSessionCustomerUpdate($input: ShopSessionCustomerUpdateInput!) {
+  shopSessionCustomerUpdate(input: $input) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

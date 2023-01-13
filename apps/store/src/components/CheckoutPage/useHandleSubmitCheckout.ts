@@ -4,14 +4,15 @@ import {
   useHandleSignCheckout,
   Params as SignCheckoutParams,
 } from '@/services/Checkout/useHandleSignCheckout'
-import { useUpdateContactDetails } from './useUpdateContactDetails'
+import { useUpdateCustomer } from './useUpdateCustomer'
 
 type Params = SignCheckoutParams & {
+  shopSessionId: string
   checkoutId: string
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { checkoutId, checkoutSigningId, onSuccess, onError } = params
+  const { shopSessionId, checkoutId, checkoutSigningId, onSuccess, onError } = params
   const [startSign, signResult] = useHandleSignCheckout({
     checkoutId,
     checkoutSigningId,
@@ -19,8 +20,8 @@ export const useHandleSubmitCheckout = (params: Params) => {
     onError,
   })
 
-  const [updateContactDetails, contactDetailsResult] = useUpdateContactDetails({
-    checkoutId,
+  const [updateCustomer, updateCustomerResult] = useUpdateCustomer({
+    shopSessionId,
     onSuccess: startSign,
   })
 
@@ -28,15 +29,15 @@ export const useHandleSubmitCheckout = (params: Params) => {
     event.preventDefault()
     datadogLogs.logger.debug('Checkout | Submit')
     const formData = new FormData(event.currentTarget)
-    updateContactDetails(formData)
+    updateCustomer(formData)
   }
 
-  const userError = contactDetailsResult.userError || signResult.userError
+  const userError = updateCustomerResult.userError || signResult.userError
 
   return [
     handleSubmit,
     {
-      loading: signResult.loading || contactDetailsResult.loading,
+      loading: signResult.loading || updateCustomerResult.loading,
       userError,
       signingStatus: signResult.signingStatus,
     },

@@ -25,7 +25,8 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData, collectName } = props
+  const { shopSessionId, checkoutId, checkoutSigningId } = props
+  const { cart, ssn, prefilledData, collectName } = props
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
@@ -34,6 +35,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const apolloClient = useApolloClient()
   const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
+    shopSessionId,
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
@@ -98,7 +100,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <Space y={0.25}>
               <PersonalNumberField
                 label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-                value={personalNumber}
+                value={ssn}
                 readOnly
                 disabled
               />
