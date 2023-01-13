@@ -1,15 +1,14 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { addLocale } from 'next/dist/client/add-locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useRef } from 'react'
-import { Space } from 'ui'
-import * as Accordion from '@/components/Accordion/Accordion'
+import { ChangeEventHandler } from 'react'
+import { mq, Space, Text, theme } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -23,7 +22,7 @@ import {
   translateCountryName,
   translateLanguageName,
 } from '@/utils/l10n/localeUtils'
-import { CountryLabel, IsoLocale } from '@/utils/l10n/types'
+import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
@@ -49,18 +48,16 @@ type FooterSectionProps = SbBaseBlockProps<{
 export const FooterSection = ({ blok }: FooterSectionProps) => {
   const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLink.blockName)
   return (
-    <Accordion.Item key={blok._uid} value={blok.title.toString()} {...storyblokEditable(blok)}>
-      <Accordion.HeaderWithTrigger>{blok.title}</Accordion.HeaderWithTrigger>
-      <StyledAccordionContent>
-        <Space y={1}>
-          {filteredFooterLinks.map((nestedBlock) => (
-            <div key={nestedBlock._uid}>
-              <FooterLink blok={nestedBlock} />
-            </div>
-          ))}
-        </Space>
-      </StyledAccordionContent>
-    </Accordion.Item>
+    <Space y={1.5} {...storyblokEditable(blok)}>
+      <Text size="sm" color="textSecondary">
+        {blok.title}
+      </Text>
+      <Space y={0.5}>
+        {filteredFooterLinks.map((nestedBlock) => (
+          <FooterLink key={nestedBlock._uid} blok={nestedBlock} />
+        ))}
+      </Space>
+    </Space>
   )
 }
 FooterSection.blockName = 'footerSection' as const
@@ -69,11 +66,9 @@ export type FooterBlockProps = SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
 }>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
-  const formRef = useRef<HTMLFormElement>(null)
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
   const { t } = useTranslation()
-  const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
   const apolloClient = useApolloClient()
 
   const countryList = Object.keys(countries).map((country) => ({
@@ -89,13 +84,10 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     }
   })
 
-  const handleSelectChange = () => {
-    formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
-  }
-
   const router = useRouter()
   const onChangeLocale = (locale: IsoLocale) => {
     const nextLocale = toRoutingLocale(locale)
+    const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
     cookiePersister.save(nextLocale, undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
     const nextCountry = getCountryByLocale(nextLocale)
     if (nextCountry === currentCountry) {
@@ -107,68 +99,125 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
       window.location.href = addLocale(router.asPath, nextLocale)
     }
   }
-  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    onChangeLocale(
-      getCountryLocale(
-        event.target[LocaleField.Country].value,
-        event.target[LocaleField.Language].value,
-      ),
-    )
+
+  const handleChangeCountry: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    try {
+      const newCountry = event.target.value as CountryLabel
+      const newLocale = getCountryLocale(newCountry, currentLanguage)
+      onChangeLocale(newLocale)
+    } catch (error) {
+      datadogLogs.logger.error('Failed to change country', { error, country: event.target.value })
+      router.reload()
+    }
   }
+
+  const handleChangeLanguage: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    try {
+      const newLanguage = event.target.value as Language
+      const newLocale = getCountryLocale(currentCountry.id, newLanguage)
+      onChangeLocale(newLocale)
+    } catch (error) {
+      datadogLogs.logger.error('Failed to change language', { error, language: event.target.value })
+      router.reload()
+    }
+  }
+
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
-    <Wrapper as="footer" y={2}>
-      <Accordion.Root type="multiple">
+    <Wrapper>
+      <Content>
         {footerSections.map((nestedBlok) => (
           <FooterSection key={nestedBlok._uid} blok={nestedBlok} />
         ))}
-      </Accordion.Root>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <SpaceFlex>
-          <Flex>
-            <InputSelect
+
+        <Bottom>
+          <Disclaimer>
+            <Text color="textSecondary" size="sm">
+              © Hedvig 2023
+            </Text>
+          </Disclaimer>
+
+          <LocaleForm>
+            <StyledInputSelect
               name={LocaleField.Country}
-              onChange={handleSelectChange}
-              value={currentCountry.id}
+              onChange={handleChangeCountry}
+              defaultValue={currentCountry.id}
               options={countryList}
             />
-          </Flex>
-
-          <Flex>
-            <InputSelect
+            <StyledInputSelect
               name={LocaleField.Language}
-              onChange={handleSelectChange}
-              value={currentLanguage}
+              onChange={handleChangeLanguage}
+              defaultValue={currentLanguage}
               options={languageList}
             />
-          </Flex>
-        </SpaceFlex>
-      </form>
-
-      <TextMuted>Hedvig © 2022, All rights reserved</TextMuted>
+          </LocaleForm>
+        </Bottom>
+      </Content>
     </Wrapper>
   )
 }
 FooterBlock.blockName = 'footer' as const
 
-export const Wrapper = styled(Space)(({ theme }) => ({
+const Wrapper = styled.footer({
   width: '100%',
-  backgroundColor: theme.colors.gray200,
-  padding: `${theme.space[6]} ${theme.space[4]}`,
+  backgroundColor: theme.colors.gray100,
+  paddingInline: theme.space.md,
+  paddingTop: theme.space.xxl,
+
+  // Clear floating price calculator button
   paddingBottom: theme.space[9],
-}))
+})
 
-export const Flex = styled.div({ flex: 1 })
+const Content = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gridTemplateRows: 'repeat(2, auto)',
+  columnGap: theme.space.md,
+  rowGap: theme.space.xxl,
 
-export const TextMuted = styled.p(({ theme }) => ({
-  color: theme.colors.gray600,
-  fontSize: theme.fontSizes[1],
-}))
+  maxWidth: `calc(8 * 6.25rem + 7 * ${theme.space.md})`,
+  marginInline: 'auto',
 
-export const StyledAccordionContent = styled(Accordion.Content)(({ theme }) => ({
-  padding: theme.space[4],
-  paddingTop: theme.space[2],
-}))
+  [mq.md]: {
+    gridTemplateColumns: 'repeat(4, 1fr)',
+  },
+})
 
-export const StyledLink = styled(Link)({ textDecoration: 'none' })
+const Bottom = styled.div({
+  gridColumn: '1 / -1',
+  display: 'grid',
+  gridTemplateAreas: `
+    'form'
+    'disclaimer'
+  `,
+  columnGap: theme.space.md,
+  rowGap: theme.space.xxl,
+
+  [mq.md]: {
+    gridTemplateColumns: 'repeat(8, 1fr)',
+    gridTemplateAreas: `
+      'disclaimer disclaimer none none form form form form'
+    `,
+    alignItems: 'center',
+  },
+})
+
+const Disclaimer = styled.div({
+  gridArea: 'disclaimer',
+  textAlign: 'center',
+
+  [mq.md]: { textAlign: 'left' },
+})
+
+const LocaleForm = styled.div({
+  gridArea: 'form',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.space.md,
+})
+
+const StyledLink = styled(Link)({ textDecoration: 'none', display: 'block' })
+
+const StyledInputSelect = styled(InputSelect)({
+  backgroundColor: theme.colors.gray300,
+})
