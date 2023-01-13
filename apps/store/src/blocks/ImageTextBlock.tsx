@@ -6,24 +6,32 @@ import { Wrapper as ButtonBlockWrapper } from '@/blocks/ButtonBlock'
 import { Wrapper as HeadingBlockWrapper } from '@/blocks/HeadingBlock'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
-type Orientation = 'left' | 'right'
-
+type Orientation = 'vertical' | 'horizontal' | 'fluid'
 type Alignment = 'top' | 'center' | 'bottom'
+
+const DEFAULT_ORIENTATION: Orientation = 'vertical'
+const DEFAULT_ALIGNMENT: Alignment = 'top'
 
 type ImageTextBlockProps = SbBaseBlockProps<{
   image: StoryblokAsset
   body?: SbBlokData[]
   orientation?: Orientation
   alignment?: Alignment
+  reverse?: boolean
 }>
 
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
   return (
-    <Wrapper data-orientation={blok.orientation ?? 'left'} {...storyblokEditable(blok)}>
+    <Wrapper
+      data-orientation={blok.orientation ?? DEFAULT_ORIENTATION}
+      data-alignment={blok.alignment ?? DEFAULT_ALIGNMENT}
+      reverse={blok.reverse ?? false}
+      {...storyblokEditable(blok)}
+    >
       <ImageWrapper>
         <Image src={blok.image.filename} alt={blok.image.alt} fill={true} />
       </ImageWrapper>
-      <BodyWrapper data-alignment={blok.alignment ?? 'top'}>
+      <BodyWrapper>
         <div>
           {blok.body?.map((nestedBlock) => (
             <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
@@ -35,29 +43,33 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 }
 ImageTextBlock.blockName = 'imageText'
 
-const Wrapper = styled.div({
+const Wrapper = styled.div<{ reverse: boolean }>(({ reverse }) => ({
   display: 'flex',
-  flexDirection: 'column',
-  paddingInline: theme.space[2],
-  minHeight: '37.5rem',
-  [mq.md]: {
-    minHeight: 'revert',
-    "&[data-orientation='left']": {
-      flexDirection: 'row',
-    },
-    "&[data-orientation='right']": {
-      flexDirection: 'row-reverse',
-    },
-  },
+  paddingInline: theme.space.xs,
   [mq.lg]: {
-    paddingInline: theme.space[4],
+    paddingInline: theme.space.md,
   },
-})
+
+  '&[data-orientation="horizontal"]': {
+    flexFlow: `${reverse ? 'row-reverse' : 'row'} nowrap`,
+  },
+  '&[data-orientation="vertical"]': {
+    flexFlow: `${reverse ? 'column-reverse' : 'column'} nowrap`,
+  },
+  '&[data-orientation="fluid"]': {
+    flexFlow: `${reverse ? 'row-reverse wrap-reverse' : 'row wrap'}`,
+  },
+}))
 
 const ImageWrapper = styled.div({
-  flex: 1,
+  flex: '1',
   position: 'relative',
   aspectRatio: '1 / 1',
+
+  [`${Wrapper}[data-orientation="fluid"] &`]: {
+    // This constraint helps flex algorithm to decide when to wrap
+    minWidth: '22rem',
+  },
 })
 
 const Image = styled(NextImage)({
@@ -69,19 +81,26 @@ const BodyWrapper = styled.div({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
-  padding: `${theme.space[5]} ${theme.space[4]}`,
+  padding: theme.space.sm,
   [mq.md]: {
-    padding: `${theme.space[4]} ${theme.space[6]}`,
-    "&[data-alignment='top']": {
-      justifyContent: 'flex-start',
-    },
-    "&[data-alignment='center']": {
-      justifyContent: 'center',
-    },
-    "&[data-alignment='bottom']": {
-      justifyContent: 'flex-end',
-    },
+    padding: theme.space.md,
   },
+
+  [`${Wrapper}[data-orientation="fluid"] &`]: {
+    // This constraint helps flex algorithm to decide when to wrap
+    minWidth: '35ch',
+  },
+
+  [`${Wrapper}[data-alignment='top'] &`]: {
+    justifyContent: 'flex-start',
+  },
+  [`${Wrapper}[data-alignment='center'] &`]: {
+    justifyContent: 'center',
+  },
+  [`${Wrapper}[data-alignment='bottom'] &`]: {
+    justifyContent: 'flex-end',
+  },
+
   [`${HeadingBlockWrapper}`]: {
     padding: 0,
   },
