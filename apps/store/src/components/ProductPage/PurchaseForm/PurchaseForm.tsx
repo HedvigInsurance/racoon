@@ -46,6 +46,7 @@ export const PurchaseForm = () => {
           return (
             <>
               <EditingState
+                shopSession={shopSession}
                 priceIntent={priceIntent}
                 onToggleDialog={() => setFormState('IDLE')}
                 onComplete={(success) => setFormState(success ? 'IDLE' : 'ERROR')}
@@ -212,13 +213,14 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 }
 
 type EditingStateProps = {
+  shopSession: ShopSession
   priceIntent: PriceIntent
   onToggleDialog: (open: boolean) => void
   onComplete: (success: boolean) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { onToggleDialog, priceIntent, onComplete } = props
+  const { onToggleDialog, shopSession, priceIntent, onComplete } = props
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
   const tracking = useTracking()
@@ -261,6 +263,7 @@ const EditingState = (props: EditingStateProps) => {
   ) : (
     <PriceCalculatorWrapper>
       <PriceCalculator
+        shopSession={shopSession}
         priceTemplate={priceTemplate}
         priceIntent={priceIntent}
         onConfirm={handleConfirm}

@@ -7,6 +7,7 @@ import {
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { Form, Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -14,15 +15,19 @@ import { PriceCalculatorSection } from './PriceCalculatorSection'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
+  shopSession: ShopSession
   priceIntent: PriceIntent
   priceTemplate: Template
   onConfirm: () => void
 }
 
-export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm }: Props) => {
+export const PriceCalculator = (props: Props) => {
+  const { shopSession, priceTemplate, priceIntent, onConfirm } = props
+
   const form = useMemo(() => {
-    return setupForm(priceTemplate, priceIntent.data, priceIntent.suggestedData)
-  }, [priceTemplate, priceIntent])
+    const userData = { ...priceIntent.data, ...shopSession.customer }
+    return setupForm(priceTemplate, userData, priceIntent.suggestedData)
+  }, [priceTemplate, priceIntent, shopSession.customer])
 
   const [activeSectionId, setActiveSectionId] = useState(() => {
     const firstIncompleteSection = form.sections.find(({ state }) => state !== 'valid')
@@ -31,6 +36,7 @@ export const PriceCalculator = ({ priceTemplate, priceIntent, onConfirm }: Props
   })
 
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
+    shopSessionId: shopSession.id,
     priceIntent,
     onSuccess(updatedPriceIntent) {
       if (isFormReadyToConfirm({ form, priceIntent: updatedPriceIntent })) {

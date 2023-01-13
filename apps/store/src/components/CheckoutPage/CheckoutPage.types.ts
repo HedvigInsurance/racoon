@@ -1,6 +1,7 @@
 import { CartCampaign, CartCost, CartEntry } from '@/components/CartInventory/CartInventory.types'
 
 export type CheckoutPageProps = {
+  shopSessionId: string
   checkoutId: string
   checkoutSigningId: string | null
   cart: {
@@ -9,7 +10,7 @@ export type CheckoutPageProps = {
     cost: CartCost
     campaigns: Array<CartCampaign>
   }
-  personalNumber: string
+  ssn: string
   prefilledData: {
     email?: string
     firstName?: string

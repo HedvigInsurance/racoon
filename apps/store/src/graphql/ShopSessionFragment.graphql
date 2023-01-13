@@ -2,6 +2,12 @@ fragment ShopSession on ShopSession {
   id
   countryCode
   currencyCode
+  customer {
+    firstName
+    lastName
+    email
+    ssn
+  }
   cart {
     ...CartFragment
   }

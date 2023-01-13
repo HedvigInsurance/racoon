@@ -1,19 +1,19 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useContactDetailsUpdateMutation } from '@/services/apollo/generated'
+import { useShopSessionCustomerUpdateMutation } from '@/services/apollo/generated'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import { FormElement } from './CheckoutPage.constants'
 
 type Params = {
-  checkoutId: string
+  shopSessionId: string
   onSuccess: () => void
 }
 
-export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
+export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
   const getMutationError = useGetMutationError()
-  const [updateContactDetails, result] = useContactDetailsUpdateMutation({
+  const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     onCompleted(data) {
-      if (!data.checkoutContactDetailsUpdate.userError) {
+      if (!data.shopSessionCustomerUpdate.userError) {
         onSuccess()
       }
     },
@@ -27,8 +27,8 @@ export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
     const email = getOrThrowFormValue(formData, FormElement.Email)
     const firstName = formData.get(FormElement.FirstName) as string | null
     const lastName = formData.get(FormElement.LastName) as string | null
-    updateContactDetails({
-      variables: { input: { checkoutId, email, firstName, lastName } },
+    updateCustomer({
+      variables: { input: { shopSessionId, email, firstName, lastName } },
     })
   }
 
@@ -36,7 +36,7 @@ export const useUpdateContactDetails = ({ checkoutId, onSuccess }: Params) => {
     handleSubmit,
     {
       loading: result.loading,
-      userError: getMutationError(result, result.data?.checkoutContactDetailsUpdate),
+      userError: getMutationError(result, result.data?.shopSessionCustomerUpdate),
     },
   ] as const
 }
