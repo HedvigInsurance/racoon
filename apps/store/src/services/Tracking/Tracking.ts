@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
   AppTrackingContext,
@@ -151,6 +152,7 @@ export class Tracking {
   private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
     const { event, ...dataFields } = ecommerceEvent
     this.logger.log(event, dataFields)
+    datadogRum.addAction(event, dataFields)
     pushToGTMDataLayer(ecommerceEvent)
   }
 }
