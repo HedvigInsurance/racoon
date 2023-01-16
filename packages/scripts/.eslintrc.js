@@ -1,13 +1,13 @@
-// eslint-disable-next-line no-undef
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier', // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
-    'plugin:jsx-a11y/recommended',
+    // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
+    'prettier',
   ],
-  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint', 'jsx-a11y'],
+  plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
   ignorePatterns: ['next.config.js'],
   settings: {
     'import/parsers': {
