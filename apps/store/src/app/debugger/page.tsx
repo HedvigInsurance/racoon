@@ -1,5 +1,4 @@
 'use client'
-
 import styled from '@emotion/styled'
 import { FormEventHandler, useState } from 'react'
 import { Button, Space, theme } from 'ui'
@@ -10,6 +9,12 @@ const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
 
 export default function Page() {
   const [loading, setLoading] = useState(false)
+  const [defaultSsn] = useState<string | undefined>(() => {
+    if (typeof window === 'undefined') {
+      return undefined
+    }
+    return window.localStorage.getItem(HEDVIG_DEBUGGER_SSN) || undefined
+  })
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -24,16 +29,12 @@ export default function Page() {
     window.localStorage.setItem(HEDVIG_DEBUGGER_SSN, ssn)
     window.location.href = PageLink.cart({ locale: 'en-se' })
   }
+
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
         <Space y={0.25}>
-          <TextField
-            label="YYYYMMDDXXXX"
-            defaultValue={window.localStorage.getItem(HEDVIG_DEBUGGER_SSN) ?? ''}
-            autoFocus
-            name="ssn"
-          />
+          <TextField label="YYYYMMDDXXXX" defaultValue={defaultSsn} autoFocus name="ssn" />
           <Button loading={loading}>Create session</Button>
         </Space>
       </form>
