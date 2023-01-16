@@ -3,7 +3,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import { Tracking } from '@/services/Tracking/Tracking'
 
 const CLIENT_CONFIG = {
-  service: process.env.DD_SERVICE || process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
+  service: process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
   site: 'datadoghq.eu',
   env: process.env.NEXT_PUBLIC_DATADOG_ENV || 'local',
   sampleRate: 100,
