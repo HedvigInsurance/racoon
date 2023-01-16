@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Checkbox } from 'ui'
-import { Card, CardContent } from 'onboarding/src/components/Card/Card'
-import { SelectableCard, SelectableCardProps } from 'onboarding/src/components/Card/SelectableCard'
+import { Card, CardContent } from '../Card/Card'
+import { SelectableCard, SelectableCardProps } from '../Card/SelectableCard'
 
 const HeaderElement = styled.div({
   display: 'grid',
