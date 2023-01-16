@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { handleStartPageForm } from '@/components/StartPage/StartPage.action'
 import { getFormData } from '@/lib/get-form-data'
-import logger from '@/services/logger'
 
 export const config = {
   api: {
@@ -14,7 +13,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const result = await handleStartPageForm(formData)
 
   if (result.type === 'ERROR') {
-    logger.error(`Error handling start page form: "${result.json}"`)
+    console.error('Error handling start page form: %j', result.json)
     return res.status(400).json(result.json)
   }
 

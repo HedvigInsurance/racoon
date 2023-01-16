@@ -11,12 +11,6 @@ const nextConfig = {
     emotion: true,
   },
   productionBrowserSourceMaps: true,
-  // We need to enable topLevelAwait for the Pino logger
-  webpack: (config) => {
-    config.experiments = config.experiments || {}
-    config.experiments.topLevelAwait = true
-    return config
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
