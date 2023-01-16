@@ -9,7 +9,6 @@ import { LocaleData, LocaleLabel, locales, LOCALE_URL_PARAMS } from '@/lib/l10n/
 import { MarketLabel } from '@/lib/types'
 import { TypeOfContract } from '@/services/graphql/generated'
 import { Insurances, Insurance } from '@/services/insurances'
-import logger from '@/services/logger'
 
 const SELECTED_INSURANCE_QUERY_KEY = 'type'
 
@@ -59,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
     const insurances = await Insurances.getInsurancesByLocaleLabel(locale)
 
     if (insurances.length === 0) {
-      logger.error('Cannot render new-member page; no insurances found')
+      console.error('Cannot render new-member page; no insurances found')
       return {
         notFound: true,
       }
@@ -79,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<LandingPageProps> = async (c
       },
     }
   } catch (error) {
-    logger.error(error)
+    console.error(error)
     return { notFound: true }
   }
 }
