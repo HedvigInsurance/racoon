@@ -7,12 +7,10 @@ import { PageLink } from '@/utils/PageLink'
 
 const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
 
-export default function Page() {
+const Page = () => {
   const [loading, setLoading] = useState(false)
   const [defaultSsn] = useState<string | undefined>(() => {
-    if (typeof window === 'undefined') {
-      return undefined
-    }
+    if (typeof window === 'undefined') return undefined
     return window.localStorage.getItem(HEDVIG_DEBUGGER_SSN) || undefined
   })
 
@@ -21,6 +19,7 @@ export default function Page() {
     const ssn = event.currentTarget.ssn.value
     setLoading(true)
     const response = await fetch(PageLink.apiSessionCreate(ssn))
+    // TODO: Handle error
     if (!response.ok) {
       setLoading(false)
       throw new Error("Couldn't create session")
@@ -41,6 +40,8 @@ export default function Page() {
     </Wrapper>
   )
 }
+
+export default Page
 
 const Wrapper = styled.div({
   display: 'flex',
