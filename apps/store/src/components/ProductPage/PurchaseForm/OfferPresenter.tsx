@@ -38,6 +38,7 @@ type Props = {
 const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
   offer.variant.perils.some((peril) => peril.title === perilTitle)
 
+//@TODO - base on selected offer
 const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
   if (offer.id === selectedOfferId) return true
   return false
@@ -193,7 +194,7 @@ export const OfferPresenter = (props: Props) => {
                 transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
                 size="0.875rem"
               />
-              {t('COMPARE_COVERAGE_BUTTON')}{' '}
+              {t('COMPARE_COVERAGE_BUTTON')}
             </Button>
           </SpaceFlex>
         )}
@@ -207,6 +208,7 @@ export const OfferPresenter = (props: Props) => {
                   key={offer.id}
                   active={isSelectedOffer(offer, selectedOfferId)}
                 >
+                  {/* @TODO - fix short names for header */}
                   {offer.variant.displayName}Trafik
                 </ComparisonTable.Header>
               ))}
