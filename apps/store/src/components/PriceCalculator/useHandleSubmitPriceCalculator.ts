@@ -1,54 +1,65 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import {
   usePriceIntentDataUpdateMutation,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type Params = {
-  shopSessionId: string
-  priceIntent: PriceIntent
-  onSuccess: (priceIntent: PriceIntent) => void
+  onSuccess: (values: { priceIntent: PriceIntent; customer: ShopSession['customer'] }) => void
 }
 
-export const useHandleSubmitPriceCalculator = ({
-  shopSessionId,
-  priceIntent,
-  onSuccess,
-}: Params) => {
+export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
+  const { shopSession } = useShopSession()
+  const [{ priceIntent }] = usePriceIntent()
   const [updateData, { loading: loadingData }] = usePriceIntentDataUpdateMutation({
     onCompleted: (data) => {
-      if (data.priceIntentDataUpdate.priceIntent) {
-        onSuccess(data.priceIntentDataUpdate.priceIntent)
+      const { priceIntent } = data.priceIntentDataUpdate
+      if (shopSession && priceIntent) {
+        onSuccess({ priceIntent, customer: shopSession.customer })
       }
     },
     onError(error) {
       datadogLogs.logger.error("Couldn't update price intent", {
         error,
-        priceIntentId: priceIntent.id,
+        priceIntentId: priceIntent?.id,
       })
     },
   })
   const [updateCustomer, { loading: loadingCustomer }] = useShopSessionCustomerUpdateMutation({
+    // priceIntent.suggestedData may be updated based on customer.ssn
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
     onCompleted: (data) => {
-      if (data.shopSessionCustomerUpdate.shopSession) {
-        onSuccess(priceIntent)
+      const { shopSession } = data.shopSessionCustomerUpdate
+      if (shopSession && priceIntent) {
+        onSuccess({ priceIntent, customer: shopSession.customer })
       }
     },
   })
 
   const handleSubmit = async (data: JSONData) => {
-    return await updateData({ variables: { priceIntentId: priceIntent.id, data } })
+    const [customerData, priceIntentData] = separateCustomerData(data)
+    if (customerData) {
+      throw new Error('Submitting customer data out of section is not supported')
+    }
+    return await updateData({
+      variables: { priceIntentId: priceIntent!.id, data: priceIntentData },
+    })
   }
 
   const handleSubmitSection = async (data: JSONData) => {
+    if (!shopSession || !priceIntent) throw new Error('Not enough data to submit price calculator')
     const [customerData, priceIntentData] = separateCustomerData(data)
 
+    // Intentionally not waiting for responses since we can handle any order of updates
     if (customerData) {
-      updateCustomer({ variables: { input: { shopSessionId, ...customerData } } })
+      updateCustomer({ variables: { input: { shopSessionId: shopSession.id, ...customerData } } })
     }
-
     if (priceIntentData) {
       updateData({ variables: { priceIntentId: priceIntent.id, data: priceIntentData } })
     }

@@ -222,7 +222,7 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { onToggleDialog, shopSession, priceIntent, onComplete } = props
-  const { priceTemplate, productData } = useProductPageContext()
+  const { productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
   const tracking = useTracking()
 
@@ -264,12 +264,7 @@ const EditingState = (props: EditingStateProps) => {
     </PriceLoaderWrapper>
   ) : (
     <PriceCalculatorWrapper>
-      <PriceCalculator
-        shopSession={shopSession}
-        priceTemplate={priceTemplate}
-        priceIntent={priceIntent}
-        onConfirm={handleConfirm}
-      />
+      <PriceCalculator onConfirm={handleConfirm} />
     </PriceCalculatorWrapper>
   )
 
