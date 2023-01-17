@@ -1,6 +1,6 @@
 import { createContext, ProviderProps, useEffect } from 'react'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { Tracking } from '@/services/Tracking/Tracking'
+import { Tracking, TrackingContextKey } from '@/services/Tracking/Tracking'
 
 export const TrackingContext = createContext(new Tracking())
 
@@ -14,7 +14,7 @@ export const useTrackShopSession = (tracking: Tracking) => {
   const { onReady } = useShopSession()
   useEffect(() => {
     return onReady((shopSession) => {
-      tracking.setContext('shopSessionId', shopSession.id)
+      tracking.setContext(TrackingContextKey.ShopSessionId, shopSession.id)
     })
   }, [onReady, tracking])
 }
