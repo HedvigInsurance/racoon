@@ -36,7 +36,7 @@ export const PurchaseForm = () => {
   const { shopSession } = useShopSession()
   const apolloClient = useApolloClient()
   const formatter = useFormatter()
-  const [{ data: { priceIntent = null } = {} }, setupPriceIntent] = usePriceIntent()
+  const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
 
   return (
     <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
