@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { PropsWithChildren } from 'react'
-import { TickIcon } from 'ui'
+import { CheckIcon } from 'ui'
 
 export const Root = styled.ul({
   padding: 0,
@@ -10,7 +10,7 @@ export const Item = ({ children }: PropsWithChildren<unknown>) => {
   return (
     <StyledItem>
       <IconWrapper>
-        <TickIcon width={0} size="2.5rem" />
+        <CheckIcon size="1.5rem" />
       </IconWrapper>
       <Content>{children}</Content>
     </StyledItem>
