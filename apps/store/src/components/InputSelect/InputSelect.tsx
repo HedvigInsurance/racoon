@@ -4,7 +4,7 @@ import { ChangeEventHandler } from 'react'
 import { ChevronIcon, InputBase, InputBaseProps, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-const Wrapper = styled.div({
+const Wrapper = styled(motion.div)({
   position: 'relative',
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.sm,
@@ -17,7 +17,7 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   transform: 'translateY(-50%)',
 }))
 
-const StyledSelect = styled(motion.select)(({ theme }) => ({
+const StyledSelect = styled.select(({ theme }) => ({
   color: theme.colors.textPrimary,
   fontSize: theme.fontSizes.xl,
   borderRadius: theme.radius.sm,
