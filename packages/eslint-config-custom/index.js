@@ -1,19 +1,23 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   parser: '@typescript-eslint/parser',
+
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'next/core-web-vitals',
     // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
     'prettier',
   ],
+
   plugins: ['import', 'testing-library', 'jest', '@typescript-eslint'],
-  ignorePatterns: ['next.config.js'],
+
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
+
   rules: {
     'no-unneeded-ternary': 'error',
     'no-nested-ternary': 'error',
@@ -47,6 +51,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@next/next/no-html-link-for-pages': 'off',
+    // For Storybook stories
+    'import/no-anonymous-default-export': 'off',
   },
   overrides: [
     // Only uses Testing Library lint rules in test files

@@ -26,7 +26,7 @@ const Template: ComponentStory<typeof Icon> = () => {
         <Heading as="h1">Icons</Heading>
         <IconGrid>
           {AllIconNames.map((icon) => (
-            <IconWrapper onClick={() => updateClipboard(icon)}>
+            <IconWrapper key={icon} onClick={() => updateClipboard(icon)}>
               <Icon icon={icon} />
               <IconName>{icon}</IconName>
             </IconWrapper>
