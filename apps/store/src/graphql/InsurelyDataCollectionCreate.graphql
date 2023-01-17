@@ -1,5 +1,5 @@
 mutation InsurelyDataCollectionCreate($collectionId: String!) {
-  externalInsuranceProvider {
-    initiateIframeDataCollection(input: { collectionId: $collectionId })
+  insurelyInitiateIframeDataCollection(input: { collectionId: $collectionId }) {
+    dataCollectionId
   }
 }
