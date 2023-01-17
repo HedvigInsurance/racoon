@@ -51,7 +51,7 @@ export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
 }
 
-export type ExpectedBlockType<T> = T extends { blok: SbBlokData }
+export type ExpectedBlockType<T> = [T] extends [{ blok: SbBlokData }]
   ? T['blok'][]
   : `ExpectedBlock expects an argument which extends SbBlockData.
      These are likely the props of the block you are looking to render`
@@ -187,6 +187,9 @@ export const initStoryblok = () => {
     ...blockAliases,
   }
 
+  // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
+  const shouldUseBridge =
+    typeof window !== 'undefined' ? window.location !== window.parent.location : false
   storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
     apiOptions: {
@@ -197,6 +200,7 @@ export const initStoryblok = () => {
       },
     },
     use: [apiPlugin],
+    bridge: shouldUseBridge,
     components,
   })
 }

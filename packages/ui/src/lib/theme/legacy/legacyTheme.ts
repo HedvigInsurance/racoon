@@ -1,7 +1,7 @@
 import { radius } from '../radius'
 import { space } from '../space'
-import { fonts, fontSizes } from '../typography'
 import { legacyColors } from './legacyColors'
+import { fonts, fontSizes } from '../typography'
 
 export const legacyTheme = {
   colors: legacyColors,

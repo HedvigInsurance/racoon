@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
   AppTrackingContext,
@@ -7,9 +8,10 @@ import {
   setGtmContext,
 } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { newSiteAbTest } from '../../newSiteAbTest'
 
-type TrackingContext = Record<string, unknown>
+type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
 
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
@@ -24,6 +26,15 @@ export enum TrackingEvent {
   ViewItem = 'view_item',
 }
 
+export enum TrackingContextKey {
+  City = 'city',
+  CountryCode = 'countryCode',
+  Customer = 'customer',
+  NumberOfPeople = 'numberOfPeople',
+  ShopSessionId = 'shopSessionId',
+  ZipCode = 'zipCode',
+}
+
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
   static LOGGER_NAME = 'tracking'
@@ -32,7 +43,7 @@ export class Tracking {
 
   private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
 
-  public setContext = (key: string, value: unknown) => {
+  public setContext = (key: TrackingContextKey, value: unknown) => {
     if (this.context[key] !== value) {
       console.debug(`tracking context ${key}:`, value)
     }
@@ -44,16 +55,18 @@ export class Tracking {
   }
 
   public setAppContext = (context: AppTrackingContext) => {
-    this.setContext('countryCode', context.countryCode)
+    this.setContext(TrackingContextKey.CountryCode, context.countryCode)
     setGtmContext(context)
   }
 
   public setPriceIntentContext = (priceIntent: PriceIntent) => {
     const { numberCoInsured } = priceIntent.data
     this.setContext(
-      'number_of_people',
+      TrackingContextKey.NumberOfPeople,
       numberCoInsured ? parseInt(numberCoInsured, 10) + 1 : undefined,
     )
+    this.setContext(TrackingContextKey.ZipCode, priceIntent.data.zipCode)
+    this.setContext(TrackingContextKey.City, priceIntent.data.city)
   }
 
   public reportPageView(urlPath: string) {
@@ -81,9 +94,9 @@ export class Tracking {
   }
 
   // Legacy event in market-web format
-  public reportOfferCreated(offer: ProductOfferFragment) {
-    const event = {
-      event: TrackingEvent.OfferCreated,
+  public async reportOfferCreated(offer: ProductOfferFragment) {
+    const event = TrackingEvent.OfferCreated
+    const eventData = {
       offerData: {
         insurance_price: offer.price.amount,
         currency: offer.price.currencyCode as string,
@@ -92,15 +105,16 @@ export class Tracking {
         flow_type: offer.variant.product.name,
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
+      userData: await getLegacyUserData(this.context),
     }
-    this.logger.log(event.event, event.offerData)
-    pushToGTMDataLayer(event)
+    this.logger.log(event, eventData)
+    pushToGTMDataLayer({ event, ...eventData })
   }
 
   // Legacy event in market-web format
-  public reportSignedCustomer(cart: CartFragmentFragment) {
-    const event = {
-      event: TrackingEvent.SignedCustomer,
+  public async reportSignedCustomer(cart: CartFragmentFragment) {
+    const event = TrackingEvent.SignedCustomer
+    const eventData = {
       offerData: {
         quote_cart_id: cart.id,
         transaction_id: cart.id,
@@ -113,9 +127,10 @@ export class Tracking {
         flow_type: cart.entries[0].variant.product.name,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
+      userData: await getLegacyUserData(this.context),
     }
-    this.logger.log(event.event, event.offerData)
-    pushToGTMDataLayer(event)
+    this.logger.log(event, eventData)
+    pushToGTMDataLayer({ event, ...eventData })
   }
 
   public reportViewItem(offer: ProductOfferFragment) {
@@ -151,6 +166,7 @@ export class Tracking {
   private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
     const { event, ...dataFields } = ecommerceEvent
     this.logger.log(event, dataFields)
+    datadogRum.addAction(event, dataFields)
     pushToGTMDataLayer(ecommerceEvent)
   }
 }
@@ -206,4 +222,47 @@ const getLegacyEventFlags = (typesOfContract: Array<string>) => {
     is_student: typesOfContract.some((type) => type.includes('STUDENT')),
     car_sub_type: typesOfContract.find((type) => type.includes('_CAR_')),
   } as const
+}
+
+// Retargeting info for web-onboarding compatibility
+// Reference for formatting user data
+// https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/customer-information-parameters
+const getLegacyUserData = async (context: TrackingContext) => {
+  const customer = context.customer as ShopSession['customer']
+  if (!customer) return {}
+  const firstName = await hashValue(normalizeUserValue(customer.firstName))
+  const lastName = await hashValue(normalizeUserValue(customer.lastName))
+  const email = await hashValue(normalizeUserValue(customer.email))
+  const zipCode = await hashValue(normalizeUserValue(context.zipCode))
+  const city = await hashValue(normalizeUserValue(context.city))
+  const country = await hashValue(normalizeUserValue(context.countryCode))
+  return {
+    fn: firstName,
+    ln: lastName,
+    em: email,
+    ad: {
+      zp: zipCode,
+      ct: city,
+      co: country,
+    },
+  } as const
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#converting_a_digest_to_a_hex_string
+export const hashValue = async (value?: string) => {
+  const msgUint8 = new TextEncoder().encode(value)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+  return hashHex
+}
+
+const normalizeUserValue = (value: unknown) => {
+  if (value && typeof value !== 'string' && typeof value !== 'number') {
+    throw new Error(`Unexpected type for userData normalization ${typeof value}`)
+  }
+  const punctuationAndWhitespaceRegex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\s]/g
+  return (
+    value?.toString().toLowerCase().trim().replace(punctuationAndWhitespaceRegex, '') ?? undefined
+  )
 }

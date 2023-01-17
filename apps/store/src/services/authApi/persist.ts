@@ -13,13 +13,13 @@ const OPTIONS: OptionsType = {
   }),
 }
 
-export const save = (accessToken: string) => {
-  setCookie(COOKIE_KEY, serialize(accessToken), OPTIONS)
+export const saveAccessToken = (accessToken: string, { req, res }: CookieParams = {}) => {
+  setCookie(COOKIE_KEY, serialize(accessToken), { req, res, ...OPTIONS })
 }
 
 export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
-export const reset = ({ req, res }: CookieParams) => {
+export const resetAccessToken = ({ req, res }: CookieParams) => {
   deleteCookie(COOKIE_KEY, { req, res, ...OPTIONS })
 }
 
@@ -29,7 +29,7 @@ const getAccessToken = ({ req, res }: CookieParams) => {
   return deserialize(cookieValue)
 }
 
-export const getAuthHeader = (params: CookieParams = {}): Record<string, string> => {
+export const getAuthHeaders = (params: CookieParams = {}): Record<string, string> => {
   const accessToken = getAccessToken(params)
   if (accessToken) return { authorization: `Bearer ${accessToken}` }
   return {}

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Button, Space, Text } from 'ui'
 import { PriceBreakdown } from '@/components/PriceBreakdown/PriceBreakdown'
 import { AdyenCheckout } from '@/services/adyen/AdyenCheckout'
-import * as Auth from '@/services/Auth/Auth'
+import { saveAccessToken } from '@/services/authApi/persist'
 import { useHandleSignCheckout } from '@/services/Checkout/useHandleSignCheckout'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { PageLink } from '@/utils/PageLink'
@@ -25,7 +25,7 @@ export const CheckoutPaymentPageAdyen = ({
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
-      Auth.save(accessToken)
+      saveAccessToken(accessToken)
       setupShopSessionServiceClientSide(apolloClient).reset()
 
       router.push(PageLink.confirmation({ shopSessionId }))

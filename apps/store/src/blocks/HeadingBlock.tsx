@@ -3,7 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { Heading, HeadingProps } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
 }))

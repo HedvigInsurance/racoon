@@ -1,12 +1,14 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler } from 'react'
-import { ChevronIcon, InputBase, InputBaseProps } from 'ui'
+import { ChevronIcon, InputBase, InputBaseProps, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-const Wrapper = styled.div(() => ({
+const Wrapper = styled(motion.div)({
   position: 'relative',
-}))
+  backgroundColor: theme.colors.gray100,
+  borderRadius: theme.radius.sm,
+})
 
 const StyledChevronIcon = styled(ChevronIcon)(() => ({
   position: 'absolute',
@@ -15,12 +17,11 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   transform: 'translateY(-50%)',
 }))
 
-const StyledSelect = styled(motion.select)(({ theme }) => ({
-  backgroundColor: theme.colors.gray100,
+const StyledSelect = styled.select(({ theme }) => ({
   color: theme.colors.textPrimary,
   fontSize: theme.fontSizes.xl,
-  width: '100%',
   borderRadius: theme.radius.sm,
+  width: '100%',
   padding: `${theme.space.xs} ${theme.space.xxl} ${theme.space.xs} ${theme.space.md}`,
 
   '&:hover': {
@@ -71,7 +72,7 @@ export const InputSelect = ({
   return (
     <InputBase {...rest}>
       {() => (
-        <Wrapper className={className}>
+        <Wrapper className={className} {...animationProps}>
           <StyledSelect
             name={name}
             onChange={handleChange}
@@ -79,7 +80,6 @@ export const InputSelect = ({
             defaultValue={value ? undefined : defaultValue ?? ''}
             placeholder={placeholder}
             {...rest}
-            {...animationProps}
           >
             {labelText && (
               <Placeholder value="" disabled>

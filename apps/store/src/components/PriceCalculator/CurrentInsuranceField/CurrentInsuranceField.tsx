@@ -106,7 +106,7 @@ export const CurrentInsuranceField = (props: Props) => {
 
   const [createDataCollection] = useInsurelyDataCollectionCreateMutation({
     onCompleted(data) {
-      const dataCollectionId = data.externalInsuranceProvider?.initiateIframeDataCollection
+      const { dataCollectionId } = data.insurelyInitiateIframeDataCollection
       if (dataCollectionId) {
         setDataCollectionId(dataCollectionId)
       } else {

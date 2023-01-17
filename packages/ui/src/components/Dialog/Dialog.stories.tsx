@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { Meta, Story } from '@storybook/react'
 import { useState } from 'react'
+import * as Dialog from './Dialog'
 import { Heading } from '../Heading/Heading'
 import { Space } from '../Space'
-import * as Dialog from './Dialog'
 
 const storyMeta: Meta = {
   title: 'Dialog',

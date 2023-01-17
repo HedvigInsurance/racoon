@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
-import * as Auth from '@/services/Auth/Auth'
-import logger from '@/services/logger/server'
+import { getAuthHeaders, resetAccessToken } from '@/services/authApi/persist'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
@@ -20,30 +19,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     nextURL.pathname = nextQueryParam
   }
 
-  try {
-    const apolloClient = initializeApollo({ req, res })
-    const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
-    const shopSessionId = shopSessionService.shopSessionId()
+  const apolloClient = initializeApollo({ req, res })
+  const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
+  const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
+  const shopSessionId = shopSessionService.shopSessionId()
 
-    if (Auth.getAuthHeader({ req, res })) {
-      logger.debug('Resetting auth session')
-      Auth.reset({ req, res })
-    }
+  if (getAuthHeaders({ req, res })) {
+    console.debug('Resetting auth session')
+    resetAccessToken({ req, res })
+  }
 
-    if (shopSessionId) {
-      logger.debug({ shopSessionId }, 'Resetting shop session')
-      shopSessionService.reset()
-
-      logger.info({ shopSessionId }, 'Deleting price intent cookies')
-      priceIntentService.clearAll(shopSessionId)
-    }
-  } catch (error) {
-    logger.error(error, 'Unable to reset ShopSession')
+  if (shopSessionId) {
+    console.debug(`Resetting shop session, shopSessionId=${shopSessionId}`)
+    shopSessionService.reset()
+    priceIntentService.clearAll(shopSessionId)
   }
 
   const destination = nextURL.toString()
-  logger.info(`Re-directing to destination: ${destination}`)
+  console.log(`Re-directing to destination: ${destination}`)
   return res.redirect(destination)
 }
 

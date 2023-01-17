@@ -5,7 +5,6 @@ import {
   CheckoutSigningQuery,
   CheckoutSigningQueryVariables,
 } from '@/services/apollo/generated'
-import logger from '@/services/logger/server'
 
 type FetchParams = CheckoutSigningQueryVariables & {
   apolloClient: ApolloClient<unknown>
@@ -37,7 +36,7 @@ export const fetchCurrentCheckoutSigning = async ({
       return await fetchCheckoutSigning({ ...params, checkoutSigningId })
     }
   } catch (error) {
-    logger.warn('Unable to fetch checkout signing', { checkoutSigningId, error })
+    console.warn('Unable to fetch checkout signing %j', { checkoutSigningId, error })
   }
 
   return null

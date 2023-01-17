@@ -37,4 +37,6 @@ export const PageLink = {
 
   apiPaymentAdyenCallback: ({ locale, shopSessionId }: AdyenCallbackRoute) =>
     `/api/payment/adyen-callback/${shopSessionId}/${locale}`,
+
+  apiLoginSe: () => `/api/auth/login/se`,
 } as const

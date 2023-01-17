@@ -18,6 +18,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
@@ -35,7 +36,7 @@ export const PurchaseForm = () => {
   const { shopSession } = useShopSession()
   const apolloClient = useApolloClient()
   const formatter = useFormatter()
-  const [{ data: { priceIntent = null } = {} }, setupPriceIntent] = usePriceIntent()
+  const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
 
   return (
     <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
@@ -46,6 +47,7 @@ export const PurchaseForm = () => {
           return (
             <>
               <EditingState
+                shopSession={shopSession}
                 priceIntent={priceIntent}
                 onToggleDialog={() => setFormState('IDLE')}
                 onComplete={(success) => setFormState(success ? 'IDLE' : 'ERROR')}
@@ -212,13 +214,14 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 }
 
 type EditingStateProps = {
+  shopSession: ShopSession
   priceIntent: PriceIntent
   onToggleDialog: (open: boolean) => void
   onComplete: (success: boolean) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { onToggleDialog, priceIntent, onComplete } = props
+  const { onToggleDialog, shopSession, priceIntent, onComplete } = props
   const { priceTemplate, productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
   const tracking = useTracking()
@@ -242,6 +245,7 @@ const EditingState = (props: EditingStateProps) => {
       const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
       const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
+        tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
         onComplete(true)
@@ -261,6 +265,7 @@ const EditingState = (props: EditingStateProps) => {
   ) : (
     <PriceCalculatorWrapper>
       <PriceCalculator
+        shopSession={shopSession}
         priceTemplate={priceTemplate}
         priceIntent={priceIntent}
         onConfirm={handleConfirm}

@@ -8,7 +8,6 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { initializeApollo } from '@/services/apollo/client'
-import logger from '@/services/logger/server'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   getGlobalStory,
@@ -93,8 +92,7 @@ export const getStaticProps: GetStaticProps<
   if (isProductStory(story)) {
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
     if (priceTemplate === undefined) {
-      logger.error(new Error(`Unknown price template: ${story.content.priceFormTemplateId}`))
-      return { notFound: true }
+      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
     }
 
     const productData = await getProductData({
@@ -120,7 +118,7 @@ export const getStaticProps: GetStaticProps<
 export const getStaticPaths: GetStaticPaths = async () => {
   // When this is true (preview env) don't prerender any static pages
   if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
-    logger.info('Skipping static generation...')
+    console.log('Skipping static generation...')
     return {
       paths: [],
       fallback: 'blocking',

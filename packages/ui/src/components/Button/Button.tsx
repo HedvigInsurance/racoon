@@ -1,7 +1,8 @@
-import { css, useTheme } from '@emotion/react'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { LoadingSpinner } from './LoadingSpinner'
+import { theme } from '../../lib/theme/theme'
 
 const HEIGHT = {
   large: '3.25rem',
@@ -26,7 +27,6 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { variant = 'primary', loading, children, ...baseProps } = props
 
-  const theme = useTheme()
   const buttonChildren = loading ? (
     <Centered>
       <LoadingSpinner size={props.size === 'small' ? theme.fontSizes.xs : theme.fontSizes.md} />
@@ -39,8 +39,8 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...baseProps,
     children: buttonChildren,
     as: props.href ? 'a' : 'button',
-    loading,
     ref,
+    ...(loading && { 'data-loading': true }),
   } as const
 
   switch (variant) {
@@ -57,12 +57,9 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
 Button.displayName = 'Button'
 
-const Centered = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-})
+const Centered = styled.div({ display: 'flex', justifyContent: 'center' })
 
-const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }) => ({
+const StyledButton = styled.button<CustomButtonProps>(({ size = 'large' }) => ({
   // opt out of double tap to zoom to immediately respond to taps
   touchAction: 'manipulation',
 
@@ -108,7 +105,7 @@ const StyledButton = styled.button<CustomButtonProps>(({ theme, size = 'large' }
   },
 }))
 
-const PrimaryButton = styled(StyledButton)(({ theme, loading }) => ({
+const PrimaryButton = styled(StyledButton)({
   backgroundColor: theme.colors.gray1000,
   color: theme.colors.textNegative,
 
@@ -117,17 +114,17 @@ const PrimaryButton = styled(StyledButton)(({ theme, loading }) => ({
     backgroundColor: theme.colors.gray900,
   },
 
-  ...(!loading && {
+  '&:not([data-loading])': {
     '&:disabled': {
       backgroundColor: theme.colors.gray200,
       color: theme.colors.textDisabled,
     },
-  }),
+  },
 
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
   },
-}))
+})
 
 const shadow = css({
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
@@ -135,7 +132,7 @@ const shadow = css({
 })
 
 const PrimaryAltButton = styled(StyledButton)(
-  ({ theme, loading }) => ({
+  {
     backgroundColor: theme.colors.green50,
     color: theme.colors.textPrimary,
 
@@ -143,20 +140,20 @@ const PrimaryAltButton = styled(StyledButton)(
       backgroundColor: theme.colors.green100,
     },
 
-    ...(!loading && {
+    '&:not([data-loading])': {
       '&:disabled': {
         backgroundColor: theme.colors.gray200,
         color: theme.colors.textDisabled,
         boxShadow: 'none',
         backdropFilter: 'none',
       },
-    }),
-  }),
+    },
+  },
   shadow,
 )
 
 const SecondaryButton = styled(StyledButton)(
-  ({ theme, loading }) => ({
+  {
     // TODO: update to use translucent gray100
     backgroundColor: theme.colors.gray100,
     color: theme.colors.textPrimary,
@@ -166,19 +163,19 @@ const SecondaryButton = styled(StyledButton)(
       backgroundColor: theme.colors.gray200,
     },
 
-    ...(!loading && {
+    '&:not([data-loading])': {
       '&:disabled': {
         backgroundColor: theme.colors.gray200,
         color: theme.colors.textDisabled,
         boxShadow: 'none',
         backdropFilter: 'none',
       },
-    }),
-  }),
+    },
+  },
   shadow,
 )
 
-const GhostButton = styled(StyledButton)(({ theme, loading }) => ({
+const GhostButton = styled(StyledButton)({
   backgroundColor: 'transparent',
   color: theme.colors.textPrimary,
 
@@ -187,10 +184,10 @@ const GhostButton = styled(StyledButton)(({ theme, loading }) => ({
     backgroundColor: theme.colors.gray100,
   },
 
-  ...(!loading && {
+  '&:not([data-loading])': {
     '&:disabled': {
       color: theme.colors.textDisabled,
       backgroundColor: 'transparent',
     },
-  }),
-}))
+  },
+})

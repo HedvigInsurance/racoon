@@ -13,7 +13,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import * as Auth from '@/services/Auth/Auth'
+import { saveAccessToken } from '@/services/authApi/persist'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -25,7 +25,8 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { checkoutId, checkoutSigningId, cart, personalNumber, prefilledData, collectName } = props
+  const { shopSessionId, checkoutId, checkoutSigningId } = props
+  const { cart, ssn, prefilledData, collectName } = props
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
@@ -34,10 +35,11 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const apolloClient = useApolloClient()
   const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
+    shopSessionId,
     checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
-      Auth.save(accessToken)
+      saveAccessToken(accessToken)
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
@@ -98,7 +100,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <Space y={0.25}>
               <PersonalNumberField
                 label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-                value={personalNumber}
+                value={ssn}
                 readOnly
                 disabled
               />

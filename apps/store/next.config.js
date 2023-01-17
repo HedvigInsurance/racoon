@@ -24,19 +24,83 @@ module.exports = {
   },
 }
 
+const scriptSrcDirectives = [
+  'https://app.storyblok.com',
+  'https://widget.intercom.io',
+  'https://js.intercomcdn.com',
+  'https://www.googletagmanager.com',
+  'https://dc.insurely.com',
+  'https://vercel.live',
+  "'unsafe-inline'",
+  "'unsafe-eval'",
+  "'self'",
+]
+const styleSrcDirectives = [
+  'fonts.googleapis.com', // GTM preview mode
+  "'unsafe-inline'",
+  "'self'",
+]
+const fontSrcDirectives = [
+  'https://fonts.intercomcdn.com',
+  'fonts.gstatic.com', // GTM preview mode
+  "'self'",
+]
+const imgSrcDirectives = [
+  'https://promise.hedvig.com',
+  'https://*.storyblok.com',
+  'https://downloads.intercomcdn.com',
+  'https://static.intercomassets.com',
+  'https://www.googletagmanager.com',
+  'https://assets.vercel.com',
+  'https://vercel.com', // Vercel Live
+  'blob:',
+  'data:',
+  "'self'",
+]
+const mediaSrcDirectives = [
+  'https://dc.insurely.com',
+  'https://vercel.live',
+  'https://a.storyblok.com', // Stortblok editor
+  "'self'",
+]
+const connectSrcDirectives = [
+  'https://*.browser-intake-datadoghq.eu',
+  'https://*.google-analytics.com',
+  'https://api-iam.intercom.io',
+  'https://app.storyblok.com', // Stortblok editor
+  'https://*.pusher.com/', // Stortblok editor & Vercel preview comments
+  'wss://*.pusher.com', // Stortblok editor & Vercel preview comments
+  'wss://*.intercom.io',
+  'https://*.hedvigit.com',
+  'https://vercel.live', // Vercel Live
+  'https://www.gstatic.com', // Google
+  "'self'",
+]
+const frameSrcDirectives = [
+  'https://dc.insurely.com',
+  'https://player.vimeo.com',
+  'https://vercel.live', // Vercel Live
+  "'self'", // Storyblok editor
+]
+
+// NOTE: report-to rule with Report-to header is recommended, but it's not universally supported and
+// is impossible to test on localhost with non-TLS, so we're not using it
+//
 // script-src: NOT SAFE - https://www.hyperxiao.top/en/posts/6
 // style-src: consider emotion + nonce: https://emotion.sh/docs/@emotion/cache#nonce
+
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src https://app.storyblok.com https://widget.intercom.io https://js.intercomcdn.com https://www.googletagmanager.com https://dc.insurely.com https://vercel.live 'unsafe-inline' 'unsafe-eval' 'self';
-  style-src fonts.googleapis.com 'unsafe-inline' 'self';
-  font-src https://fonts.intercomcdn.com fonts.gstatic.com 'self';
-  img-src https://promise.hedvig.com https://*.storyblok.com https://downloads.intercomcdn.com https://static.intercomassets.com https://www.googletagmanager.com blob: data: 'self';
-  media-src https://*.storyblok.com;
-  connect-src https://*.browser-intake-datadoghq.eu https://*.google-analytics.com  https://api-iam.intercom.io https://app.storyblok.com https://sockjs-eu.pusher.com/ wss://ws-eu.pusher.com wss://*.intercom.io https://*.hedvigit.com 'self';
+  script-src ${scriptSrcDirectives.join(' ')};
+  style-src ${styleSrcDirectives.join(' ')}; 
+  font-src ${fontSrcDirectives.join(' ')};
+  img-src ${imgSrcDirectives.join(' ')};
+  media-src ${mediaSrcDirectives.join(' ')};
+  connect-src ${connectSrcDirectives.join(' ')};
   worker-src blob:;
   object-src data:;
-  frame-src https://dc.insurely.com 'self';
+  frame-src ${frameSrcDirectives.join(' ')};
+  report-uri /api/csp-reports;
 `
 
 const securityHeaders = [
@@ -59,4 +123,4 @@ const securityHeaders = [
 ]
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
-console.log('next.config.js', JSON.stringify(module.exports, null, 2))
+console.log('next.config.js %O', module.exports)
