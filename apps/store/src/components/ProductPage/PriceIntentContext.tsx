@@ -1,12 +1,18 @@
 import { useApolloClient } from '@apollo/client'
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { PriceIntentQueryResult, usePriceIntentLazyQuery } from '@/services/apollo/generated'
+import {
+  PriceIntentFragmentFragment,
+  PriceIntentQueryResult,
+  usePriceIntentLazyQuery,
+} from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
-type PriceIntentResult = PriceIntentQueryResult
+type PriceIntentResult = PriceIntentQueryResult & {
+  priceIntent?: PriceIntentFragmentFragment
+}
 type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
 type ContextValue = readonly [PriceIntentResult, SetupPriceIntent] | null
 
@@ -28,6 +34,9 @@ const usePriceIntentContextValue = () => {
     fetchPolicy: 'cache-only',
   })
 
+  const { priceIntent } = queryResult.data ?? {}
+  const result = Object.assign(queryResult, { priceIntent }) satisfies PriceIntentResult
+
   const setupPriceIntent = useCallback(
     async (shopSession: ShopSession) => {
       const service = priceIntentServiceInitClientSide(apolloClient)
@@ -45,7 +54,7 @@ const usePriceIntentContextValue = () => {
 
   useEffect(() => onReady(setupPriceIntent), [onReady, setupPriceIntent])
 
-  return [queryResult, setupPriceIntent] as const
+  return [result, setupPriceIntent] as const
 }
 
 export const usePriceIntent = () => {
