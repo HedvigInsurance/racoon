@@ -8,7 +8,6 @@ export const Root = styled(Space)(({ theme }) => ({
     paddingTop: theme.space.xxxl,
   },
 }))
-Root.defaultProps = { y: 1.5 }
 
 export const Header = styled.header(({ theme }) => ({
   display: 'flex',

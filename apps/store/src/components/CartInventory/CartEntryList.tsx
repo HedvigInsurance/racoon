@@ -6,7 +6,9 @@ type Props = { children: ReactNode }
 
 export const CartEntryList = ({ children }: Props) => {
   return (
-    <StyledCartEntryList Separator={<HorizontalLineWithSpace />}>{children}</StyledCartEntryList>
+    <StyledCartEntryList as="ul" Separator={<HorizontalLineWithSpace />}>
+      {children}
+    </StyledCartEntryList>
   )
 }
 
@@ -15,7 +17,6 @@ const StyledCartEntryList = styled(Separate)({
   listStyleType: 'none',
   width: '100%',
 })
-StyledCartEntryList.defaultProps = { as: 'ul' }
 
 const HorizontalLineWithSpace = styled.hr(({ theme }) => ({
   backgroundColor: theme.colors.gray300,

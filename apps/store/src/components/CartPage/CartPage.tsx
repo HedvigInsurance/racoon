@@ -110,7 +110,7 @@ const Header = ({ prevURL }: HeaderProps) => {
   const { t } = useTranslation('cart')
 
   return (
-    <StyledHeader>
+    <StyledHeader as="header">
       <HeaderHeading as="h1" variant="standard.24">
         {t('CART_PAGE_HEADING')}
       </HeaderHeading>
@@ -152,4 +152,3 @@ const StyledHeader = styled(Space)({
     height: '7rem',
   },
 })
-Header.defaultProps = { as: 'header' }

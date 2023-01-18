@@ -30,7 +30,7 @@ export const DetailsSheetDialog = (props: Props) => {
           </FullscreenDialog.Close>
         }
       >
-        <DetailsSheet.Root>
+        <DetailsSheet.Root y={1.5}>
           <DetailsSheet.Header>
             <Pillow size="large" {...pillow} />
             <div>
