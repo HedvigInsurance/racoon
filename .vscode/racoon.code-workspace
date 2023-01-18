@@ -29,6 +29,7 @@
     "jest.disabledWorkspaceFolders": ["ROOT", "packages/scripts", "packages/tsconfig"],
     "jest.jestCommandLine": "yarn test",
     "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
     "search.exclude": {
       "**/.next": true,
       "**/coverage": true,

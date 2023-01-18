@@ -2,7 +2,7 @@
   "exclude": ["node_modules"],
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
@@ -16,7 +16,12 @@
       "@/test/*": ["test/*"],
       "@/utils/*": ["utils/*"]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "*.d.ts"]
+  "include": ["src", "*.d.ts", ".next/types/**/*.ts"]
 }

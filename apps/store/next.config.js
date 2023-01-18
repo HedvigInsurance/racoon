@@ -7,6 +7,9 @@ module.exports = {
   compiler: {
     emotion: true,
   },
+  experimental: {
+    appDir: true,
+  },
   images: {
     domains: ['a.storyblok.com', 'promise.hedvig.com'],
   },
