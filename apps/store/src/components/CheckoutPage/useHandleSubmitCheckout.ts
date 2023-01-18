@@ -1,20 +1,19 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
 import {
-  useHandleSignCheckout,
+  useHandleSignShopSession,
   Params as SignCheckoutParams,
-} from '@/services/Checkout/useHandleSignCheckout'
+} from '@/services/Checkout/useHandleSignShopSession'
 import { useUpdateCustomer } from './useUpdateCustomer'
 
 type Params = SignCheckoutParams & {
   shopSessionId: string
-  checkoutId: string
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { shopSessionId, checkoutId, checkoutSigningId, onSuccess, onError } = params
-  const [startSign, signResult] = useHandleSignCheckout({
-    checkoutId,
+  const { shopSessionId, checkoutSigningId, onSuccess, onError } = params
+  const [startSign, signResult] = useHandleSignShopSession({
+    shopSessionId,
     checkoutSigningId,
     onSuccess,
     onError,
@@ -22,6 +21,7 @@ export const useHandleSubmitCheckout = (params: Params) => {
 
   const [updateCustomer, updateCustomerResult] = useUpdateCustomer({
     shopSessionId,
+    // TODO: Move to handleSubmit, easier to read
     onSuccess: startSign,
   })
 

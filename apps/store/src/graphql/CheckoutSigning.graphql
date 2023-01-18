@@ -1,5 +1,0 @@
-query CheckoutSigning($checkoutSigningId: ID!) {
-  checkoutSigning(id: $checkoutSigningId) {
-    ...CheckoutSigning
-  }
-}

@@ -1,38 +1,39 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { deleteCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
-  CheckoutSigningStatus,
-  useCheckoutSigningQuery,
-  useCheckoutStartSignMutation,
+  ShopSessionSigningStatus,
+  useShopSessionSigningQuery,
+  useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import { exchangeAuthorizationCode } from '../authApi/oauth'
 
 export type Params = {
-  checkoutId: string
+  shopSessionId: string
   checkoutSigningId: string | null
   onSuccess: (accessToken: string) => void
   onError?: () => void
 }
 
-export const useHandleSignCheckout = (params: Params) => {
+export const useHandleSignShopSession = (params: Params) => {
   const getMutationError = useGetMutationError()
-  const { checkoutId, checkoutSigningId: initialCheckoutSigningId, onSuccess, onError } = params
+  const { checkoutSigningId: initialCheckoutSigningId, shopSessionId, onSuccess, onError } = params
+  // FIXME: Rename
   const [checkoutSigningId, setCheckoutSigningId] = useState(initialCheckoutSigningId)
 
-  const queryResult = useCheckoutSigningQuery({
+  const queryResult = useShopSessionSigningQuery({
     skip: checkoutSigningId === null,
-    variables: checkoutSigningId ? { checkoutSigningId } : undefined,
+    variables: checkoutSigningId ? { shopSessionSigningId: checkoutSigningId } : undefined,
     pollInterval: 1000,
     async onCompleted(data) {
-      const { status, completion } = data.checkoutSigning
-      if (status === CheckoutSigningStatus.Signed && completion) {
+      const { status, completion } = data.shopSessionSigning
+      if (status === ShopSessionSigningStatus.Signed && completion) {
         setCheckoutSigningId(null)
         // TODO: Handle errors
         console.debug('Congratulations, signing complete!', completion)
         const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
-        deleteCookie(checkoutId)
+        // FIXME: Update, make it session scoped (maybe)
+        // deleteCookie(checkoutId)
         onSuccess(accessToken)
       }
     },
@@ -41,13 +42,14 @@ export const useHandleSignCheckout = (params: Params) => {
     },
   })
 
-  const [startSign, result] = useCheckoutStartSignMutation({
-    variables: { checkoutId },
+  const [startSign, result] = useShopSessionStartSignMutation({
+    variables: { shopSessionId },
     onCompleted(data) {
-      const { signing } = data.checkoutStartSign
-      if (signing && !data.checkoutStartSign.userError) {
+      const { signing, userError } = data.shopSessionStartSign
+      if (signing && !userError) {
         setCheckoutSigningId(signing.id)
-        setCookie(checkoutId, signing.id)
+        // FIXME: Clean up, no need to set it (probably)
+        // setCookie(checkoutId, signing.id)
       }
     },
     onError(error) {
@@ -60,8 +62,8 @@ export const useHandleSignCheckout = (params: Params) => {
     startSign,
     {
       loading: result.loading || Boolean(checkoutSigningId),
-      signingStatus: queryResult.data?.checkoutSigning.status,
-      userError: getMutationError(result, result.data?.checkoutStartSign),
+      signingStatus: queryResult.data?.shopSessionSigning.status,
+      userError: getMutationError(result, result.data?.shopSessionStartSign),
     },
   ] as const
 }

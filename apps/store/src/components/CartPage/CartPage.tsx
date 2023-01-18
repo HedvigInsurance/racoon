@@ -2,9 +2,8 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { FormEventHandler, ReactNode, useEffect } from 'react'
-import { Button, Heading, mq, Space, Text } from 'ui'
+import { ReactNode, useEffect } from 'react'
+import { Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -14,10 +13,9 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
-import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
-  const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
+  const { cartId, entries, campaigns, cost, prevURL } = props
   const { onReady } = useShopSession()
   const { t } = useTranslation('cart')
 
@@ -34,19 +32,6 @@ export const CartPage = (props: CartPageProps) => {
       }),
     [onReady, tracking],
   )
-
-  const router = useRouter()
-  const [startCheckout, { loading }] = useStartCheckout({
-    shopSessionId,
-    onCompleted() {
-      router.push(PageLink.checkout())
-    },
-  })
-
-  const handleSubmit: FormEventHandler = (event) => {
-    event.preventDefault()
-    startCheckout()
-  }
 
   if (entries.length === 0) {
     return (
@@ -74,11 +59,7 @@ export const CartPage = (props: CartPageProps) => {
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
         <HorizontalLine />
         <CostSummary {...cost} campaigns={campaigns} />
-        <form onSubmit={handleSubmit}>
-          <Button disabled={loading} loading={loading}>
-            {t('CHECKOUT_BUTTON')}
-          </Button>
-        </form>
+        <ButtonNextLink href={PageLink.checkout()}>{t('CHECKOUT_BUTTON')}</ButtonNextLink>
       </Space>
     </Wrapper>
   )

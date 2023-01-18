@@ -1,3 +1,0 @@
-fragment Checkout on Checkout {
-  id
-}

@@ -25,7 +25,7 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { shopSessionId, checkoutId, checkoutSigningId } = props
+  const { shopSessionId, checkoutSigningId } = props
   const { cart, ssn, prefilledData, collectName } = props
   const { t } = useTranslation('checkout')
 
@@ -36,7 +36,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId,
-    checkoutId,
     checkoutSigningId,
     onSuccess(accessToken) {
       saveAccessToken(accessToken)
