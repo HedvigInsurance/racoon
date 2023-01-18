@@ -1,8 +1,8 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { PropsWithChildren, useState } from 'react'
 import { Button, Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
@@ -25,8 +25,7 @@ import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { shopSessionId, checkoutSigningId } = props
-  const { cart, ssn, prefilledData, collectName } = props
+  const { cart, ssn, prefilledData, collectName, shopSessionId, shopSessionSigningId } = props
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
@@ -36,7 +35,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId,
-    checkoutSigningId,
+    shopSessionSigningId,
     onSuccess(accessToken) {
       saveAccessToken(accessToken)
       const shopSessionId = shopSession?.id

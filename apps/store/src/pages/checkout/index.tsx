@@ -17,7 +17,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextPageProps = Pick<CheckoutPageProps, 'checkoutSigningId' | 'ssn' | 'collectName'> & {
+type NextPageProps = Pick<CheckoutPageProps, 'shopSessionSigningId' | 'ssn' | 'collectName'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
     collectName: !(customer.firstName && customer.lastName),
-    checkoutSigningId: checkoutSigning?.id ?? null,
+    shopSessionSigningId: checkoutSigning?.id ?? null,
   }
 
   return addApolloState(apolloClient, { props: pageProps })

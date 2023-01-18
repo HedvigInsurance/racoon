@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
