@@ -72,5 +72,4 @@ const ContentWrapper = styled.div(({ theme }) => ({
   paddingLeft: theme.space[6],
   paddingBottom: theme.space[4],
   fontSize: theme.fontSizes[1],
-  color: theme.colors.gray700,
 }))

@@ -1,100 +1,112 @@
-import { Theme } from '@emotion/react'
+import { CSSObject } from '@emotion/react'
+import { mq, Level } from '../../lib/media-query'
+import { theme } from '../../lib/theme/theme'
 
-type HeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
+type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
+type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>
+type PossibleHeadingVariant = `standard.${StandardHeadingSize}` | `serif.${SerifHeadingSize}`
 
-type HeadingStyles = {
-  [key in HeadingSize]: object
+const headings: Record<PossibleHeadingVariant, CSSObject> = {
+  'standard.18': {
+    fontSize: theme.fontSizes[3],
+  },
+  'standard.20': {
+    fontSize: theme.fontSizes[4],
+  },
+  'standard.24': {
+    fontSize: theme.fontSizes[5],
+  },
+  'standard.32': {
+    fontSize: theme.fontSizes[6],
+    letterSpacing: '-0.01em',
+  },
+  'standard.40': {
+    fontSize: theme.fontSizes[7],
+    letterSpacing: '-0.01em',
+  },
+  'standard.48': {
+    fontSize: theme.fontSizes[8],
+    letterSpacing: '-0.01em',
+  },
+  'standard.56': {
+    fontSize: theme.fontSizes[9],
+    letterSpacing: '-0.02em',
+  },
+  'standard.72': {
+    fontSize: theme.fontSizes[10],
+    letterSpacing: '-0.02em',
+  },
+  'standard.96': {
+    fontSize: theme.fontSizes[11],
+    letterSpacing: '-0.02em',
+  },
+  'serif.20': {
+    fontSize: theme.fontSizes[4],
+    fontFamily: theme.fonts.small,
+  },
+  'serif.24': {
+    fontSize: theme.fontSizes[5],
+    fontFamily: theme.fonts.small,
+  },
+  'serif.32': {
+    fontSize: theme.fontSizes[6],
+    letterSpacing: '-0.01em',
+    fontFamily: theme.fonts.small,
+  },
+  'serif.40': {
+    fontSize: theme.fontSizes[7],
+    letterSpacing: '-0.01em',
+    fontFamily: theme.fonts.small,
+  },
+  'serif.48': {
+    fontSize: theme.fontSizes[8],
+    letterSpacing: '-0.01em',
+    fontFamily: theme.fonts.small,
+  },
+  'serif.56': {
+    fontSize: theme.fontSizes[9],
+    fontFamily: theme.fonts.big,
+  },
+  'serif.72': {
+    fontSize: theme.fontSizes[10],
+    fontFamily: theme.fonts.big,
+  },
+  'serif.96': {
+    fontSize: theme.fontSizes[11],
+    fontFamily: theme.fonts.big,
+  },
 }
 
-type HeadingVariants = {
-  standard: HeadingStyles
-  serif: Omit<HeadingStyles, '18'>
-}
+export type HeadingVariant =
+  | PossibleHeadingVariant
+  | Partial<Record<Level | '_', PossibleHeadingVariant>>
 
-export type HeadingVariant = `standard.${HeadingSize}` | `serif.${Exclude<HeadingSize, '18'>}`
-
-export const getHeadingVariant = (variant: HeadingVariant, theme: Theme) => {
-  const headings = {
-    standard: {
-      18: {
-        fontSize: theme.fontSizes[3],
-      },
-      20: {
-        fontSize: theme.fontSizes[4],
-      },
-      24: {
-        fontSize: theme.fontSizes[5],
-      },
-      32: {
-        fontSize: theme.fontSizes[6],
-        letterSpacing: '-0.01em',
-      },
-      40: {
-        fontSize: theme.fontSizes[7],
-        letterSpacing: '-0.01em',
-      },
-      48: {
-        fontSize: theme.fontSizes[8],
-        letterSpacing: '-0.01em',
-      },
-      56: {
-        fontSize: theme.fontSizes[9],
-        letterSpacing: '-0.02em',
-      },
-      72: {
-        fontSize: theme.fontSizes[10],
-        letterSpacing: '-0.02em',
-      },
-      96: {
-        fontSize: theme.fontSizes[11],
-        letterSpacing: '-0.02em',
-      },
-    },
-    serif: {
-      18: {
-        fontSize: theme.fontSizes[3],
-        fontFamily: theme.fonts.small,
-      },
-      20: {
-        fontSize: theme.fontSizes[4],
-        fontFamily: theme.fonts.small,
-      },
-      24: {
-        fontSize: theme.fontSizes[5],
-        fontFamily: theme.fonts.small,
-      },
-      32: {
-        fontSize: theme.fontSizes[6],
-        letterSpacing: '-0.01em',
-        fontFamily: theme.fonts.small,
-      },
-      40: {
-        fontSize: theme.fontSizes[7],
-        letterSpacing: '-0.01em',
-        fontFamily: theme.fonts.small,
-      },
-      48: {
-        fontSize: theme.fontSizes[8],
-        letterSpacing: '-0.01em',
-        fontFamily: theme.fonts.small,
-      },
-      56: {
-        fontSize: theme.fontSizes[9],
-        fontFamily: theme.fonts.big,
-      },
-      72: {
-        fontSize: theme.fontSizes[10],
-        fontFamily: theme.fonts.big,
-      },
-      96: {
-        fontSize: theme.fontSizes[11],
-        fontFamily: theme.fonts.big,
-      },
-    },
+export const getHeadingVariantStyles = (variant: HeadingVariant) => {
+  if (typeof variant !== 'object') {
+    return headings[variant]
   }
-  const variantProperties = variant.split('.')
-  const flavour = variantProperties[0] as keyof HeadingVariants
-  const size = variantProperties[1] as HeadingSize
-  const headingVariant = headings[flavour][size]
-  return headingVariant
+
+  let styles: CSSObject = {}
+  const breakpoints = Object.keys(variant) as Array<keyof typeof variant>
+  breakpoints.forEach((breakpoint) => {
+    const variantAtBreakpoint = variant[breakpoint]
+
+    if (!variantAtBreakpoint) {
+      return
+    }
+
+    if (breakpoint === '_') {
+      // Default breakpoint
+      styles = { ...styles, ...headings[variantAtBreakpoint] }
+    } else {
+      styles = {
+        ...styles,
+        [mq[breakpoint as Level]]: {
+          ...headings[variantAtBreakpoint],
+        },
+      }
+    }
+  })
+
+  return styles
 }
