@@ -1,8 +1,8 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import { LoadingSpinner } from './LoadingSpinner'
 import { theme } from '../../lib/theme/theme'
+import { LoadingSpinner } from './LoadingSpinner'
 
 const HEIGHT = {
   large: '3.25rem',

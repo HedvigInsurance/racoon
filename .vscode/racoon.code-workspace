@@ -17,12 +17,12 @@
       "path": "../packages/ui"
     },
     {
-      "name": "packages/scripts",
-      "path": "../packages/scripts"
-    },
-    {
       "name": "packages/tsconfig",
       "path": "../packages/tsconfig"
+    },
+    {
+      "name": "packages/eslint-config-custom",
+      "path": "../packages/eslint-config-custom"
     }
   ],
   "settings": {

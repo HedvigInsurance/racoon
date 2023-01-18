@@ -16,8 +16,8 @@ const Palette = ({ colors, name }: Props) => (
     <ColorName>{name}</ColorName>
     <ColorGrid>
       {Object.entries(colors).map((color) => (
-        <div>
-          <ColorSwatch key={color[0]} hue={color[1]} />
+        <div key={color[0]}>
+          <ColorSwatch hue={color[1]} />
           <HueName>{`${name}-${color[0]}`}</HueName>
           <HueValue>{color[1]}</HueValue>
         </div>

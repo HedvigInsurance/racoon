@@ -29,11 +29,12 @@
     ],
     "*.{js,jsx,ts,tsx}": [
       "prettier --ignore-unknown --write",
-      "eslint --fix --ignore-pattern 'generated.ts'"
+      "eslint --fix"
     ]
   },
   "devDependencies": {
     "eslint": "8.31.0",
+    "eslint-config-custom": "workspace:",
     "husky": "8.0.3",
     "lint-staged": "13.1.0",
     "prettier": "2.8.2",

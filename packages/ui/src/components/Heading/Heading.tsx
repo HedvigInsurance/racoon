@@ -1,10 +1,10 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import React from 'react'
-import { getHeadingVariant, HeadingVariant } from './Heading.helpers'
 import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor } from '../../lib/theme/theme'
+import { getHeadingVariant, HeadingVariant } from './Heading.helpers'
 
 type HeadingColors = Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textNegative'>
 

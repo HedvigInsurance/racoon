@@ -1,1 +1,5 @@
-module.exports = require('scripts/eslint-preset-next')
+/** @type {import('eslint').Linter.Config} */
+module.exports = {
+  root: true,
+  extends: ['custom', 'plugin:cypress/recommended'],
+}
