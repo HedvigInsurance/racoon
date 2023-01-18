@@ -1,26 +1,32 @@
-import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { Space, UIColors, getColor } from 'ui'
+import { UIColors, Text, FontSizes } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type TextColor = keyof Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textTertiary'>
 
-export type TextBlockProps = SbBaseBlockProps<{ body: ISbRichtext; color?: TextColor }>
+export type TextBlockProps = SbBaseBlockProps<{
+  body: ISbRichtext
+  color?: TextColor
+  fontSize?: FontSizes
+  fontSizeDesktop?: FontSizes
+}>
 
 export const TextBlock = ({ blok }: TextBlockProps) => {
   const contentHtml = useMemo(() => renderRichText(blok.body), [blok.body])
+  const fontSizes = {
+    _: blok.fontSize ?? 'md',
+    ...(blok.fontSizeDesktop && { lg: blok.fontSizeDesktop }),
+  }
   return (
     <Text
       {...storyblokEditable(blok)}
+      as="div"
       color={blok.color ?? 'textPrimary'}
       y={1}
+      size={fontSizes}
       dangerouslySetInnerHTML={{ __html: contentHtml }}
     />
   )
 }
 TextBlock.blockName = 'text'
-
-const Text = styled(Space)<{ color: TextColor }>(({ color }) => ({
-  color: getColor(color),
-}))
