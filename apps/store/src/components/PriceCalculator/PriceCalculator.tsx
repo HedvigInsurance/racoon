@@ -1,16 +1,14 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useMemo, useState } from 'react'
-import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
   prefillData,
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Form } from '@/services/PriceCalculator/PriceCalculator.types'
+import { Form, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -18,26 +16,18 @@ import { PriceCalculatorSection } from './PriceCalculatorSection'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
+  priceIntent: PriceIntent
+  shopSession: ShopSession
   onConfirm: () => void
 }
 
 export const PriceCalculator = (props: Props) => {
-  const { onConfirm } = props
-  const { shopSession } = useShopSession()
+  const { priceIntent, shopSession, onConfirm } = props
   const { priceTemplate } = useProductPageContext()
-  const [{ priceIntent }] = usePriceIntent()
-
-  if (!priceIntent || !shopSession) {
-    throw new Error(
-      `PriceCalculator used without priceIntent (${typeof priceIntent}) or shopSession (${typeof shopSession}`,
-    )
-  }
-
   const { customer = {} } = shopSession
 
   const form = useMemo(() => {
-    const userData = { ...customer, ...priceIntent.data }
-    return setupForm(priceTemplate, userData, priceIntent.suggestedData)
+    return setupForm(priceTemplate, getFormData(priceIntent, customer), priceIntent.suggestedData)
   }, [priceIntent, customer, priceTemplate])
 
   const [activeSectionId, setActiveSectionId] = useState(() => {
@@ -116,8 +106,15 @@ type IsFormReadyToConfirmParams = {
 }
 
 const isFormReadyToConfirm = ({ form, customer, priceIntent }: IsFormReadyToConfirmParams) => {
-  const data = { ...customer, ...priceIntent.data }
-  const filledForm = prefillData({ form, data, valueField: 'value' })
+  const filledForm = prefillData({
+    form,
+    data: getFormData(priceIntent, customer),
+    valueField: 'value',
+  })
   const updatedForm = updateFormState(filledForm)
   return updatedForm.sections.every((section) => section.state === 'valid')
+}
+
+const getFormData = (priceIntent: PriceIntent, customer: ShopSession['customer']): JSONData => {
+  return { ...customer, ...priceIntent.data } as const
 }
