@@ -1,0 +1,13 @@
+fragment Peril on Peril {
+  title
+  description
+  covered
+  exceptions
+  icon {
+    variants {
+      light {
+        svgUrl
+      }
+    }
+  }
+}

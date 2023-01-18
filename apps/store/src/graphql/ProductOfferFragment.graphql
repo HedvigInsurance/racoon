@@ -12,6 +12,9 @@ fragment ProductOffer on ProductOffer {
         src
       }
     }
+    perils {
+      ...Peril
+    }
     documents {
       type
       displayName

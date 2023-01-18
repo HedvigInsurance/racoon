@@ -52,6 +52,7 @@ const imgSrcDirectives = [
   'https://static.intercomassets.com',
   'https://www.googletagmanager.com',
   'https://assets.vercel.com',
+  'https://vercel.com', // Vercel Live
   'blob:',
   'data:',
   "'self'",
@@ -71,12 +72,14 @@ const connectSrcDirectives = [
   'wss://*.pusher.com', // Stortblok editor & Vercel preview comments
   'wss://*.intercom.io',
   'https://*.hedvigit.com',
+  'https://vercel.live', // Vercel Live
+  'https://www.gstatic.com', // Google
   "'self'",
 ]
 const frameSrcDirectives = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
-  'https://vercel.live',
+  'https://vercel.live', // Vercel Live
   "'self'", // Storyblok editor
 ]
 

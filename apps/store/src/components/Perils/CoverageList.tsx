@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { CrossIcon } from 'ui'
-import { CheckIcon } from './CheckIcon'
+import { CrossIcon, CheckIcon } from 'ui'
 
 export type CoverageListProps = {
   heading: string

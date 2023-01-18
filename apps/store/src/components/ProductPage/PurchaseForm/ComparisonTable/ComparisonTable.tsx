@@ -1,8 +1,6 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Text } from 'ui'
-import { CheckIcon as PerilsCheckIcon } from '@/components/Perils/CheckIcon'
-import { MinusIcon } from '@/components/Perils/MinusIcon'
+import { Text, CheckIcon as PerilsCheckIcon, MinusIcon } from 'ui'
 
 export const Root = styled.table({
   width: '100%',
@@ -33,7 +31,7 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
   const Component = active ? ActiveTableHeader : TableHeader
   return (
     <Component {...props}>
-      <Text size="sm" color="textSecondary" align="center">
+      <Text size="xs" color="textSecondary" align="center">
         {children}
       </Text>
     </Component>
@@ -55,7 +53,7 @@ type TitleDataCellProps = { children: React.ReactNode; className?: string }
 export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
   return (
     <TableDataCell {...props}>
-      <Text size="sm">{children}</Text>
+      <Text size="xs">{children}</Text>
     </TableDataCell>
   )
 }
@@ -86,9 +84,9 @@ const Centered = styled.div({
   justifyContent: 'center',
 })
 
-export const CheckIcon = () => <PerilsCheckIcon size="1.5rem" />
+export const CheckIcon = () => <PerilsCheckIcon size="1rem" />
 
 export const MissingIcon = () => {
   const theme = useTheme()
-  return <MinusIcon size="1.5rem" color={theme.colors.gray500} />
+  return <MinusIcon size="1.25rem" color={theme.colors.gray500} />
 }

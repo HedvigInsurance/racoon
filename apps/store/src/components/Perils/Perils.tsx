@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
+import Image from 'next/image'
 import React, { useState, useCallback, ReactNode } from 'react'
 import { mq } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
-import { Peril } from './Perils.types'
 
 const MAX_COLS = 4
 
 type Props = {
-  items: Array<Peril>
+  items: Array<PerilFragment>
 }
 
 export const Perils = ({ items }: Props) => {
@@ -32,7 +33,7 @@ const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boo
   },
 }))
 
-const PerilsAccordion = ({ perils }: { perils: Array<Peril> }) => {
+const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
@@ -41,20 +42,20 @@ const PerilsAccordion = ({ perils }: { perils: Array<Peril> }) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ id, icon, name, description, covered, notCovered }) => {
+      {perils.map(({ icon, title, description, covered, exceptions }) => {
         return (
-          <Accordion.Item key={id} value={name}>
+          <Accordion.Item key={title} value={title}>
             <Accordion.HeaderWithTrigger>
               <SpaceFlex space={0.5}>
-                {icon}
-                {name}
+                <Image src={icon.variants.light.svgUrl} alt="" width={24} height={24} />
+                {title}
               </SpaceFlex>
             </Accordion.HeaderWithTrigger>
             <Accordion.Content>
               <ContentWrapper>
                 <p>{description}</p>
                 <CoverageList variant="covered" heading="Covered" items={covered} />
-                <CoverageList variant="not-covered" heading="Not Covered" items={notCovered} />
+                <CoverageList variant="not-covered" heading="Not Covered" items={exceptions} />
               </ContentWrapper>
             </Accordion.Content>
           </Accordion.Item>

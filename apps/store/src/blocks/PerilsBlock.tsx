@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/image'
 import { useMemo } from 'react'
 import { HeadingLabel, Space } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
@@ -23,11 +22,7 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
 
     return productVariant.perils.map((item) => ({
       id: item.title,
-      name: item.title,
-      description: item.description,
-      covered: item.covered,
-      notCovered: item.exceptions,
-      icon: <Image src={item.icon.variants.light.svgUrl} alt="" width={24} height={24} />,
+      ...item,
     }))
   }, [productData, selectedVariant])
 
