@@ -26,6 +26,7 @@
   "DISCOUNT_STATE_FREE_MONTHS": "Gratis i {{count}} mån",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% rabatt i {{count}} mån",
+  "RECOMMENDATIONS_HEADING": "Andra har köpt",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Avbryt",
   "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Ja, ta bort",

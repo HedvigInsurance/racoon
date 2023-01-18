@@ -1,0 +1,6 @@
+fragment ProductRecommendation on Product {
+  id
+  displayNameFull
+  displayNameShort
+  pageLink
+}
