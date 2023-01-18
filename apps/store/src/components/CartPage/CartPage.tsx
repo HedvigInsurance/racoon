@@ -4,9 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, ReactNode, useEffect } from 'react'
-import { CartPageProps } from './CartPageProps.types'
 import { Button, Heading, mq, Space, Text } from 'ui'
-import { useStartCheckout } from './useStartCheckout'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -15,6 +13,8 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
+import { CartPageProps } from './CartPageProps.types'
+import { useStartCheckout } from './useStartCheckout'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, cartId, entries, campaigns, cost, prevURL } = props
