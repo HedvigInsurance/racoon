@@ -1,0 +1,10 @@
+mutation ShopSessionStartSign($shopSessionId: ID!) {
+  shopSessionStartSign(shopSessionId: $shopSessionId) {
+    signing {
+      ...ShopSessionSigning
+    }
+    userError {
+      message
+    }
+  }
+}

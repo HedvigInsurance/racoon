@@ -1,4 +1,4 @@
-fragment CheckoutSigning on CheckoutSigning {
+fragment ShopSessionSigning on ShopSessionSigning {
   id
   status
   completion {

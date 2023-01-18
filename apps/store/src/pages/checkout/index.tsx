@@ -10,7 +10,7 @@ import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { fetchCurrentCheckoutSigning } from '@/services/Checkout/Checkout.helpers'
+import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -26,7 +26,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
-  if (!shopSession || !shopSession.checkout || !shopSession.customer) return null
+  if (!shopSession || !shopSession.customer) return null
 
   const cart = {
     id: shopSession.cart.id,
@@ -64,15 +64,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     [FormElement.LastName]: shopSession.customer.lastName ?? undefined,
   }
 
-  return (
-    <CheckoutPage
-      {...props}
-      shopSessionId={shopSession.id}
-      checkoutId={shopSession.checkout.id}
-      cart={cart}
-      prefilledData={prefilledData}
-    />
-  )
+  return <CheckoutPage {...props} cart={cart} prefilledData={prefilledData} />
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
@@ -85,15 +77,13 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     serverSideTranslations(locale),
   ])
 
-  const { customer, checkout } = shopSession
+  const { customer } = shopSession
   if (!customer) throw new Error('No Customer info in Shop Session')
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
-  if (!checkout) throw new Error('No Checkout in Shop Session')
 
-  const checkoutSigning = await fetchCurrentCheckoutSigning({
-    req,
+  const checkoutSigning = await fetchCurrentShopSessionSigning({
     apolloClient,
-    checkoutId: checkout.id,
+    req,
   })
 
   const pageProps: NextPageProps = {

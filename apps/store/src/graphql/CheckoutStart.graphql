@@ -1,5 +1,0 @@
-mutation CheckoutStart($shopSessionId: ID!) {
-  shopSessionCheckoutStart(sessionId: $shopSessionId) {
-    ...ShopSession
-  }
-}

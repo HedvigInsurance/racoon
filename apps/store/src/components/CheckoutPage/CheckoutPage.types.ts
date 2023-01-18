@@ -2,7 +2,6 @@ import { CartCampaign, CartCost, CartEntry } from '@/components/CartInventory/Ca
 
 export type CheckoutPageProps = {
   shopSessionId: string
-  checkoutId: string
   checkoutSigningId: string | null
   cart: {
     id: string

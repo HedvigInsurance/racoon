@@ -1,0 +1,5 @@
+query ShopSessionSigning($shopSessionSigningId: ID!) {
+  shopSessionSigning(id: $shopSessionSigningId) {
+    ...ShopSessionSigning
+  }
+}
