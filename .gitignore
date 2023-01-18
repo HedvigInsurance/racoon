@@ -19,6 +19,7 @@ dist
 .DS_Store
 *.pem
 .idea
+.vscode
 audit
 
 # debug
