@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { Heading, Text, theme } from 'ui'
+import { Heading, Text, theme, mq } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -18,12 +18,12 @@ export const AccordionBlock = ({ blok }: Props) => {
     <Wrapper {...storyblokEditable(blok)}>
       <TitleDescriptionWrapper>
         {blok.title && (
-          <Heading as="h2" variant={{ _: 'standard.20', md: 'standard.24' }}>
+          <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
             {blok.title}
           </Heading>
         )}
         {blok.description && (
-          <Text color="textSecondary" size={{ _: 'lg', md: 'xl' }}>
+          <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
             {blok.description}
           </Text>
         )}
@@ -49,10 +49,13 @@ const Wrapper = styled.div({
 
 const TitleDescriptionWrapper = styled.div({
   flex: 1,
-  minWidth: '23.75rem',
+  minWidth: 'min(23.75rem, 100%)',
 })
 
 const StyledAccordion = styled(Accordion.Root)({
   flex: 1,
-  minWidth: '28.125rem',
+  minWidth: 'min(28.125rem, 100%)',
+  [mq.md]: {
+    gap: theme.space.xs,
+  },
 })
