@@ -14,20 +14,23 @@ type Props = SbBaseBlockProps<{
 
 export const AccordionBlock = ({ blok }: Props) => {
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
+  const displayTitleDescriptionSection = blok.title || blok.description
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <TitleDescriptionWrapper>
-        {blok.title && (
-          <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
-            {blok.title}
-          </Heading>
-        )}
-        {blok.description && (
-          <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
-            {blok.description}
-          </Text>
-        )}
-      </TitleDescriptionWrapper>
+      {displayTitleDescriptionSection && (
+        <TitleDescriptionWrapper>
+          {blok.title && (
+            <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
+              {blok.title}
+            </Heading>
+          )}
+          {blok.description && (
+            <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
+              {blok.description}
+            </Text>
+          )}
+        </TitleDescriptionWrapper>
+      )}
       <StyledAccordion type="multiple">
         {accordionItems.map((nestedBlock) => (
           <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
