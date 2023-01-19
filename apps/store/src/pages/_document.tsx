@@ -13,6 +13,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang={this.lang()} dir="ltr">
         <Head>
+          {/*TODO: Allow indexing right before going live*/}
+          <meta name="robots" content="none" />
           <meta name="twitter:site" content="@hedvigapp" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="theme-color" content={theme.colors.light} />
