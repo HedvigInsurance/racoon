@@ -1,5 +1,4 @@
 {
-  "ADDRESS_FILED_LABEL": "Din adresse",
   "AUTO_SWITCH_FIELD_LABEL": "Automatisk bytte",
   "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Din forsikring hos {{company}}har snart forfall. Derfor må du manuelt si den opp. Ta det med ro, vi sender fremgangsmåte til din e-post.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Sluttdato hos {{company}}",
@@ -38,8 +37,6 @@
   "LABEL_YES": "Ja",
   "OPEN_PRICE_CALCULATOR_BUTTON": "Beregner pris",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Endre",
-  "PRICE_MATCH_BUBBLE_EXPIRY_LABEL": "Avsluttes den {{date}}",
-  "PRICE_MATCH_BUBBLE_FAIL_TITLE": "Vi klarer ikke å gi deg samme pris",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparer {{amount}}",
   "SECTION_TITLE_PERSONAL_NUMBER": "Telefonnummer",
   "SECTION_TITLE_YOUR_ADDRESS": "Din adresse",
@@ -47,10 +44,8 @@
   "SECTION_TITLE_YOUR_FAMILY": "Din familie",
   "SECTION_TITLE_YOUR_HOME": "Ditt hjem",
   "START_DATE_FIELD_LABEL": "Startdato",
-  "START_DATE_FIELD_TODAY": "I dag",
   "SUBMIT_LABEL_FINISH": "Beregn pris",
   "SUBMIT_LABEL_PROCEED": "Neste steg",
-  "SWITCH_ALREADY_HAVE_INSURANCE_MESSAGE": "Har du allerede en innboforsikring for {{ADDRESS}}",
   "TIER_SELECTOR_DEFAULT_LABEL": "Velg dekning",
   "TIER_SELECTOR_SELECTED_LABEL": "Dekningsnivå",
   "YEARLY_MILEAGE_VALUE": "{{value}} km/år"
