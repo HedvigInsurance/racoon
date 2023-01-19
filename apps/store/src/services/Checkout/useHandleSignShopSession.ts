@@ -54,7 +54,7 @@ export const useHandleSignShopSession = (params: Params) => {
       if (signing && !userError) {
         setShopSessionSigningId(signing.id)
         // FIXME: Clean up, no need to set it (probably)
-        // setCookie(`WOOT WOOT - ${shopSessionId}`, signing.id)
+        // setCookie(shopSessionId, signing.id)
       }
     },
     onError(error) {
