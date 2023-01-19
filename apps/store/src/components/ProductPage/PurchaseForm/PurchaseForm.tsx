@@ -139,7 +139,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
               {...productData.pillowImage}
             />
             <Space y={0.5}>
-              <Heading as="h2" variant="standard.24" align="center">
+              <Heading as="h1" variant="standard.24" align="center">
                 {productData.displayNameShort}
                 <CircledHSuperscript />
               </Heading>
