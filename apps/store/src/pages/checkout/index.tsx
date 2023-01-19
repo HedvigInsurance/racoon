@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   if (!customer) throw new Error('No Customer info in Shop Session')
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
 
-  const checkoutSigning = await fetchCurrentShopSessionSigning({
+  const shopSessionSigning = await fetchCurrentShopSessionSigning({
     apolloClient,
     req,
   })
@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
     collectName: !(customer.firstName && customer.lastName),
-    shopSessionSigningId: checkoutSigning?.id ?? null,
+    shopSessionSigningId: shopSessionSigning?.id ?? null,
   }
 
   return addApolloState(apolloClient, { props: pageProps })

@@ -1,5 +1,4 @@
 import { datadogLogs } from '@datadog/browser-logs'
-// import { deleteCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
   ShopSessionSigningStatus,
@@ -28,7 +27,7 @@ export const useHandleSignShopSession = (params: Params) => {
 
   const queryResult = useShopSessionSigningQuery({
     skip: shopSessionSigningId === null,
-    variables: shopSessionSigningId ? { shopSessionSigningId: shopSessionSigningId } : undefined,
+    variables: shopSessionSigningId ? { shopSessionSigningId } : undefined,
     pollInterval: 1000,
     async onCompleted(data) {
       const { status, completion } = data.shopSessionSigning
