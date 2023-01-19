@@ -38,11 +38,12 @@ export const useGetDiscountDurationExplanation = () => {
     switch (discount.type) {
       case CampaignDiscountType.FreeMonths:
       case CampaignDiscountType.MonthlyPercentage:
-        // A workaround to escape the '/' in the monthly price.
-        return `${t('DISCOUNT_DURATION_EXPLANATION', {
+        return t('DISCOUNT_DURATION_EXPLANATION', {
           count: discount.months,
-        })} ${formatter.monthlyPrice(total)}`
-
+          monthlyPrice: formatter.monthlyPrice(total),
+          // Avoid double escaping / in price.  Safe since we're not using dangerouslySetInnerHtml
+          interpolation: { escapeValue: false },
+        })
       case CampaignDiscountType.MonthlyCost:
       case CampaignDiscountType.IndefinitePercentage:
       default:
