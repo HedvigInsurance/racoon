@@ -13,6 +13,7 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint src",
+    "lint:fix": "yarn lint --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook --quiet -o dist",
     "typecheck": "tsc --noEmit"

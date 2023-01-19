@@ -3,4 +3,6 @@
 
 yarn typecheck
 
+yarn lint:fix
+
 yarn lint-staged
