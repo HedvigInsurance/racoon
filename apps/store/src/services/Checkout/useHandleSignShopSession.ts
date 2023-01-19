@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { deleteCookie, setCookie } from 'cookies-next'
+// import { deleteCookie, setCookie } from 'cookies-next'
 import { useState } from 'react'
 import {
   ShopSessionSigningStatus,
@@ -54,7 +54,7 @@ export const useHandleSignShopSession = (params: Params) => {
       if (signing && !userError) {
         setShopSessionSigningId(signing.id)
         // FIXME: Clean up, no need to set it (probably)
-        // setCookie(shopSessionId, signing.id)
+        // setCookie(`WOOT WOOT - ${shopSessionId}`, signing.id)
       }
     },
     onError(error) {
