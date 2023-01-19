@@ -103,6 +103,9 @@ const getPrevURL = (context: GetServerSidePropsContext, locale: RoutingLocale) =
   // Page reload
   if (url.pathname.replace(`/${locale}`, '') === context.resolvedUrl) return storeURL
 
+  // Checkout page
+  if (url.pathname === PageLink.checkout({ locale })) return storeURL
+
   return url.pathname
 }
 
