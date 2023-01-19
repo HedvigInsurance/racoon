@@ -4,6 +4,7 @@ import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 
 const Wrapper = styled.div({
   minHeight: '100vh',
@@ -22,6 +23,8 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
 
+  const handleLocaleChange = useChangeLocale(story)
+
   return (
     <Wrapper className={className}>
       {(!story || !story.content.hideMenu) &&
@@ -31,7 +34,11 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
       {children}
       {(!story || !story.content.hideMenu) &&
         footerBlock?.map((nestedBlock) => (
-          <FooterBlock key={nestedBlock._uid} blok={nestedBlock as any} />
+          <FooterBlock
+            key={nestedBlock._uid}
+            blok={nestedBlock}
+            onLocaleChange={handleLocaleChange}
+          />
         ))}
     </Wrapper>
   )
