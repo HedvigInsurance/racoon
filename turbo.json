@@ -10,7 +10,6 @@
       "outputs": [],
       "cache": false
     },
-    "lint:fix": { "cache": false },
     "typecheck": {
       "dependsOn": ["codegen"],
       "outputs": []
