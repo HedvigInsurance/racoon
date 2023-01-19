@@ -34,9 +34,11 @@ type DateFormatOptions = { locale: IsoLocale }
 
 export const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
   const today = new Date()
-  const diff = Math.abs(today.getTime() - date.getTime())
-  const diffDays = Math.floor(diff / (1000 * 3600 * 24))
-  if (diffDays == 0) {
+  const isSameDay =
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  if (isSameDay) {
     return new Intl.RelativeTimeFormat(options.locale, { numeric: 'auto' }).format(0, 'day')
   }
   return date.toLocaleDateString(options.locale)

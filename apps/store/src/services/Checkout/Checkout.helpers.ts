@@ -1,42 +1,41 @@
 import { ApolloClient } from '@apollo/client'
 import { GetServerSidePropsContext } from 'next'
 import {
-  CheckoutSigningDocument,
-  CheckoutSigningQuery,
-  CheckoutSigningQueryVariables,
+  ShopSessionSigningDocument,
+  ShopSessionSigningQuery,
+  ShopSessionSigningQueryVariables,
 } from '@/services/apollo/generated'
 
-type FetchParams = CheckoutSigningQueryVariables & {
+type FetchParams = ShopSessionSigningQueryVariables & {
   apolloClient: ApolloClient<unknown>
 }
 
-const fetchCheckoutSigning = async ({ apolloClient, ...variables }: FetchParams) => {
-  const result = await apolloClient.query<CheckoutSigningQuery, CheckoutSigningQueryVariables>({
-    query: CheckoutSigningDocument,
+const fetchShopSessionSigning = async ({ apolloClient, ...variables }: FetchParams) => {
+  const result = await apolloClient.query<
+    ShopSessionSigningQuery,
+    ShopSessionSigningQueryVariables
+  >({
+    query: ShopSessionSigningDocument,
     variables,
   })
 
-  return result.data.checkoutSigning
+  return result.data.shopSessionSigning
 }
 
-type FetchCurrentParams = Omit<FetchParams, 'checkoutSigningId'> & {
+type FetchCurrentParams = Omit<FetchParams, 'shopSessionSigningId'> & {
   req: GetServerSidePropsContext['req']
-  checkoutId: string
 }
 
-export const fetchCurrentCheckoutSigning = async ({
-  req,
-  checkoutId,
-  ...params
-}: FetchCurrentParams) => {
-  const checkoutSigningId = req.cookies[checkoutId]
+export const fetchCurrentShopSessionSigning = async ({ req, ...params }: FetchCurrentParams) => {
+  // TODO: Set it. Maybe make it session scoped?
+  const shopSessionSigningId = req.cookies.shopSessionSigningId
 
   try {
-    if (checkoutSigningId) {
-      return await fetchCheckoutSigning({ ...params, checkoutSigningId })
+    if (shopSessionSigningId) {
+      return await fetchShopSessionSigning({ ...params, shopSessionSigningId })
     }
   } catch (error) {
-    console.warn('Unable to fetch checkout signing %j', { checkoutSigningId, error })
+    console.warn('Unable to fetch checkout signing %j', { shopSessionSigningId, error })
   }
 
   return null

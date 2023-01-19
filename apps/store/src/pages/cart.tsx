@@ -55,12 +55,15 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     crossOut: getCrossOut(shopSession),
   }
 
+  const productRecommendations = shopSession.recommendations.map((item) => item.product)
+
   return (
     <CartPage
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
       cost={{ ...cost }}
+      recommendations={productRecommendations}
       {...props}
     />
   )

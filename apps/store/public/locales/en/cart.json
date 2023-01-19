@@ -27,6 +27,7 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE": "{{percentage}}% discount for {{count}} mth.",
   "GO_TO_STORE_BUTTON": "Go to Store",
+  "RECOMMENDATIONS_HEADING": "Others also bought",
   "REMOVE_ENTRY_BUTTON": "Remove",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
   "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Yes, remove",

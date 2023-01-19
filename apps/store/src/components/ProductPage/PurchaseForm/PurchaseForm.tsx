@@ -139,7 +139,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
               {...productData.pillowImage}
             />
             <Space y={0.5}>
-              <Heading as="h2" variant="standard.24" align="center">
+              <Heading as="h1" variant="standard.24" align="center">
                 {productData.displayNameShort}
                 <CircledHSuperscript />
               </Heading>
@@ -222,7 +222,7 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { onToggleDialog, shopSession, priceIntent, onComplete } = props
-  const { priceTemplate, productData } = useProductPageContext()
+  const { productData } = useProductPageContext()
   const isLarge = useBreakpoint('lg')
   const tracking = useTracking()
 
@@ -265,9 +265,8 @@ const EditingState = (props: EditingStateProps) => {
   ) : (
     <PriceCalculatorWrapper>
       <PriceCalculator
-        shopSession={shopSession}
-        priceTemplate={priceTemplate}
         priceIntent={priceIntent}
+        shopSession={shopSession}
         onConfirm={handleConfirm}
       />
     </PriceCalculatorWrapper>

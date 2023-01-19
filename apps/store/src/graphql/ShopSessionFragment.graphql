@@ -11,7 +11,9 @@ fragment ShopSession on ShopSession {
   cart {
     ...CartFragment
   }
-  checkout {
-    ...Checkout
+  recommendations {
+    product {
+      ...ProductRecommendation
+    }
   }
 }
