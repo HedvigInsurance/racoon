@@ -88,7 +88,6 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
             {t('CART_EMPTY_SUMMARY')}
           </Text>
         </Space>
-
         <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
       </Space>
       {children}
@@ -117,7 +116,7 @@ const Header = ({ prevURL }: HeaderProps) => {
   const { t } = useTranslation('cart')
 
   return (
-    <StyledHeader>
+    <StyledHeader as="header">
       <HeaderHeading as="h1" variant="standard.24">
         {t('CART_PAGE_HEADING')}
       </HeaderHeading>
@@ -160,4 +159,3 @@ const StyledHeader = styled(Space)({
     height: '7rem',
   },
 })
-Header.defaultProps = { as: 'header' }
