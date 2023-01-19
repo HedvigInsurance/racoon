@@ -4,7 +4,7 @@ import { theme } from '../../lib/theme/theme'
 
 type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
 type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>
-type PossibleHeadingVariant = `standard.${StandardHeadingSize}` | `serif.${SerifHeadingSize}`
+export type PossibleHeadingVariant = `standard.${StandardHeadingSize}` | `serif.${SerifHeadingSize}`
 
 const headings: Record<PossibleHeadingVariant, CSSObject> = {
   'standard.18': {
