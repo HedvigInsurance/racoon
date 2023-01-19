@@ -1,8 +1,7 @@
-import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import { isValidMotionProp, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
-import { Text } from 'ui'
+import { Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -34,7 +33,7 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
       : ([SmallWrapper, SmallInput, SmallSuffix, 'lg'] as const)
 
   return (
-    <Wrapper {...animationProps} isActive={!!inputValue}>
+    <Wrapper {...animationProps} data-active={!!inputValue}>
       <Label htmlFor={props.id}>
         <LabelText
           as="span"
@@ -52,11 +51,7 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
   )
 }
 
-type WrapperProps = { isActive: boolean }
-
-const LargeWrapper = styled(motion.div, {
-  shouldForwardProp: (propName) => isPropValid(propName) || isValidMotionProp(propName),
-})<WrapperProps>(({ theme, isActive }) => ({
+const LargeWrapper = styled(motion.div)({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -66,20 +61,17 @@ const LargeWrapper = styled(motion.div, {
   height: '4rem',
   width: '100%',
 
-  [':focus-within > label']: {
-    transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
-  },
-
-  ...(isActive && {
+  ':focus-within, &[data-active=true]': {
     '> label': {
       transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
+      overflow: 'visible',
     },
-  }),
+  },
 
   ':has(input:focus-visible)': {
     boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
   },
-}))
+})
 
 const Label = styled.label(({ theme }) => ({
   position: 'absolute',
@@ -89,11 +81,16 @@ const Label = styled.label(({ theme }) => ({
   transform: `translate(0, 0) scale(1)`,
   paddingInline: theme.space.md,
   whiteSpace: 'nowrap',
+
+  left: 0,
+  right: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }))
 
 const LabelText = styled(Text)({ lineHeight: 1 })
 
-const LargeInput = styled.input(({ theme }) => ({
+const LargeInput = styled.input({
   width: '100%',
   fontSize: theme.fontSizes.xl,
   paddingInline: theme.space.md,
@@ -107,29 +104,25 @@ const LargeInput = styled.input(({ theme }) => ({
     WebkitTextFillColor: theme.colors.textDisabled,
     opacity: 1,
   },
-}))
+})
 
 type BaseProps = { children: React.ReactNode }
-const StyledLargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md }))
+const StyledLargeSuffix = styled(Text)({ paddingRight: theme.space.md })
 const LargeSuffix = (props: BaseProps) => (
   <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
 )
 
-const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
+const SmallWrapper = styled(LargeWrapper)({
   height: '3.25rem',
 
-  [':focus-within > label']: {
-    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
-  },
-
-  ...(isActive && {
+  ':focus-within, &[data-active=true]': {
     '> label': {
       transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
     },
-  }),
-}))
+  },
+})
 
-const SmallInput = styled(LargeInput)(({ theme }) => ({ fontSize: theme.fontSizes.lg }))
+const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 
 const StyledSmallSuffix = styled(StyledLargeSuffix)()
 const SmallSuffix = (props: BaseProps) => (
