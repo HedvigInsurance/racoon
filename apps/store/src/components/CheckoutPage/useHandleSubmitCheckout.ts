@@ -11,10 +11,10 @@ type Params = SignCheckoutParams & {
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { shopSessionId, checkoutSigningId, onSuccess, onError } = params
+  const { shopSessionId, shopSessionSigningId, onSuccess, onError } = params
   const [startSign, signResult] = useHandleSignShopSession({
     shopSessionId,
-    checkoutSigningId,
+    shopSessionSigningId,
     onSuccess,
     onError,
   })
