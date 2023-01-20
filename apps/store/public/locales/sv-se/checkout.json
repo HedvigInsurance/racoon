@@ -2,7 +2,7 @@
   "BACK_BUTTON": "Tillbaka",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 försäkring",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} försäkringar",
-  "CHECKOUT_PAGE_HEADING": "Checkout",
+  "CHECKOUT_PAGE_HEADING": "Se över dina uppgifter och signera enkelt med BankID",
   "CONTACT_DETAILS_FORM_TITLE": "Dina kontaktuppgifter",
   "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Försök igen",
   "ERROR_GENERAL_DIALOG_PROMPT": "Något gick fel. Testa gärna igen, och kontakta oss på hedvig@hedvig.com om det inte löser sig.",
@@ -11,7 +11,7 @@
   "FORM_FIRST_NAME_LABEL": "Förnamn",
   "FORM_LAST_NAME_LABEL": "Efternamn",
   "OPEN_BANKID_DESCRIPTION": "Öppna BankID-appen på din telefon.",
-  "SIGN_BUTTON_one": "Teckna en försäkring",
-  "SIGN_BUTTON_other": "Teckna {{count}} försäkringar",
+  "SIGN_BUTTON_one": "Teckna försäkring",
+  "SIGN_BUTTON_other": "Teckna försäkringar",
   "SIGN_DISCLAIMER": "Efter att du tecknat Hedvig kopplar du Autogiro. Vi hanterar det tryggt via Trustly."
 }

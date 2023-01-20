@@ -9,7 +9,5 @@
   "FORM_FIRST_NAME_LABEL": "Fornavn(e)",
   "FORM_LAST_NAME_LABEL": "Efternavn",
   "OPEN_BANKID_DESCRIPTION": "Åbn BankID appen på din telefon.",
-  "SIGN_BUTTON_one": "Underskriv en forsikring",
-  "SIGN_BUTTON_other": "Underskriv {{count}} forsikringer",
   "SIGN_DISCLAIMER": "Du forbinder autogiro efter du tilmelder dig Hedvig. Det håndteres sikkert via Trustly."
 }

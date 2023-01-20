@@ -1,7 +1,6 @@
 {
   "BACK_BUTTON": "Tilbage",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Tilføj",
-  "CHECKOUT_BUTTON": "Checkout",
   "CHECKOUT_PRICE_TOTAL": "Total",
   "DETAILS_SHEET_DISMISS_BUTTON": "Færdig",
   "DISCOUNT_DURATION_EXPLANATION_one": "I {{count}} måned, derefter {{monthlyPrice}}",
