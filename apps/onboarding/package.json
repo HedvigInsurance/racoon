@@ -10,6 +10,7 @@
     "e2e": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress",
     "e2e:headless": "start-server-and-test 'yarn start --port 3001' http://localhost:3001 cypress:headless",
     "lint": "next lint --ignore-path .gitignore",
+    "lint:fix": "yarn lint --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
     "download-translations": "./scripts/download-translations.sh",
     "codegen": "graphql-codegen",

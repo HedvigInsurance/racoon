@@ -109,8 +109,11 @@ const LargeInput = styled.input(({ theme }) => ({
   },
 }))
 
-const LargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md }))
-LargeSuffix.defaultProps = { size: 'xl', color: 'textSecondary', as: 'span' }
+type BaseProps = { children: React.ReactNode }
+const StyledLargeSuffix = styled(Text)(({ theme }) => ({ paddingRight: theme.space.md }))
+const LargeSuffix = (props: BaseProps) => (
+  <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
+)
 
 const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
   height: '3.25rem',
@@ -128,5 +131,7 @@ const SmallWrapper = styled(LargeWrapper)(({ theme, isActive }) => ({
 
 const SmallInput = styled(LargeInput)(({ theme }) => ({ fontSize: theme.fontSizes.lg }))
 
-const SmallSuffix = styled(LargeSuffix)()
-SmallSuffix.defaultProps = { size: 'lg' }
+const StyledSmallSuffix = styled(StyledLargeSuffix)()
+const SmallSuffix = (props: BaseProps) => (
+  <StyledSmallSuffix as="span" size="lg" color="textSecondary" {...props} />
+)

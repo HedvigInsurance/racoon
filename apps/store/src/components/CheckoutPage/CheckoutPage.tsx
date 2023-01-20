@@ -56,7 +56,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   return (
     <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
       <Wrapper y={{ base: 1, lg: 4 }}>
-        <Header>
+        <Header as="header">
           <HeaderHeading as="h1" variant="standard.24">
             {t('CHECKOUT_PAGE_HEADING')}
           </HeaderHeading>
@@ -69,7 +69,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
               cost={cart.cost}
             >
-              <CartCollapsibleInner>
+              <CartCollapsibleInner y={1.5}>
                 <CartEntryList>
                   {cart.entries.map((item) => (
                     <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
@@ -182,7 +182,6 @@ const Header = styled(Section)({
     height: '7rem',
   },
 })
-Header.defaultProps = { as: 'header' }
 
 const HeaderHeading = styled(Heading)(({ theme }) => ({
   [mq.lg]: {
@@ -233,7 +232,6 @@ const CartCollapsibleInner = styled(Space)(({ theme }) => ({
   paddingTop: theme.space[4],
   paddingBottom: theme.space[4],
 }))
-CartCollapsibleInner.defaultProps = { y: 1.5 }
 
 const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean }>) => {
   return (
