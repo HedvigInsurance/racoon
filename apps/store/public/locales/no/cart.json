@@ -1,7 +1,6 @@
 {
   "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkode",
   "CART_ENTRY_DATE_LABEL": "Starter den {{date}}",
-  "CART_PAGE_HEADING": "Handlevogn",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Legg til",
   "DATA_TABLE_MILEAGE_VALUE": "{{value}} km/år",
   "DATA_TABLE_START_DATE_LABEL": "Startdato",

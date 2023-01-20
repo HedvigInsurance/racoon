@@ -2,7 +2,7 @@
   "BACK_BUTTON": "Back",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 insurance",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} insurances",
-  "CHECKOUT_PAGE_HEADING": "Checkout",
+  "CHECKOUT_PAGE_HEADING": "Review your contact details and sign with BankID",
   "CONTACT_DETAILS_FORM_TITLE": "Your contact details",
   "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Try again",
   "ERROR_GENERAL_DIALOG_PROMPT": "Something went wrong. Please try again, and contact us at hedvig@hedvig.com if the problem persists.",
@@ -11,7 +11,7 @@
   "FORM_FIRST_NAME_LABEL": "First name",
   "FORM_LAST_NAME_LABEL": "Last name",
   "OPEN_BANKID_DESCRIPTION": "Open the BankID app on your phone.",
-  "SIGN_BUTTON_one": "Sign one insurance",
-  "SIGN_BUTTON_other": "Sign {{count}} insurances",
+  "SIGN_BUTTON_one": "Sign insurance",
+  "SIGN_BUTTON_other": "Sign insurances",
   "SIGN_DISCLAIMER": "You connect autogiro after you sign Hedvig. It's safely handled with Trustly."
 }

@@ -101,10 +101,13 @@ const HorizontalLine = styled.hr({
 })
 
 const Wrapper = styled(Space)({
-  maxWidth: '40rem',
-  marginLeft: 'auto',
-  marginRight: 'auto',
   paddingInline: theme.space.md,
+
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
+  },
 })
 
 // Header
