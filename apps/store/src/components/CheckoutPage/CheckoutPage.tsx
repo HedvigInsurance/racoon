@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
-import { Button, Heading, mq, Space, Text } from 'ui'
+import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -90,7 +90,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           <SpaceBetween>
             <SpaceFlex space={0.5} align="center">
               <StepIcon />
-              <Text size="md">{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
+              <Text>{t('CONTACT_DETAILS_FORM_TITLE')}</Text>
             </SpaceFlex>
           </SpaceBetween>
 
@@ -158,17 +158,16 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   )
 }
 
-const Wrapper = styled(Space)(({ theme }) => ({
-  paddingBottom: theme.space[6],
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.xl,
   maxWidth: '40rem',
   marginLeft: 'auto',
   marginRight: 'auto',
-}))
+})
 
-const Section = styled(Space)(({ theme }) => ({
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
-}))
+const Section = styled(Space)({
+  paddingInline: theme.space.md,
+})
 
 const Header = styled(Section)({
   height: '3.5rem',
@@ -183,15 +182,17 @@ const Header = styled(Section)({
   },
 })
 
-const HeaderHeading = styled(Heading)(({ theme }) => ({
+const HeaderHeading = styled(Heading)({
   [mq.lg]: {
     textAlign: 'center',
-    fontSize: theme.fontSizes[8],
+    fontSize: theme.fontSizes.xxl,
   },
-}))
+})
 
-const HeaderLink = styled(Link)(({ theme }) => ({
+const HeaderLink = styled(Link)({
   backgroundColor: theme.colors.light,
+  fontSize: theme.fontSizes.md,
+
   ':focus-visible': {
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
@@ -199,39 +200,37 @@ const HeaderLink = styled(Link)(({ theme }) => ({
 
   [mq.lg]: {
     position: 'absolute',
-    top: theme.space[4],
-    right: theme.space[4],
+    top: theme.space.md,
+    right: theme.space.md,
   },
-}))
+})
 
-const HorizontalLine = styled.hr(({ theme }) => ({
+const HorizontalLine = styled.hr({
   backgroundColor: theme.colors.gray300,
   height: 1,
-}))
+})
 
-const HorizontalLineStandalone = styled(HorizontalLine)(({ theme }) => ({
-  marginLeft: theme.space[4],
-  marginRight: theme.space[4],
-}))
+const HorizontalLineStandalone = styled(HorizontalLine)({
+  marginInline: theme.space.md,
+})
 
-const StepIcon = styled.div(({ theme }) => ({
+const StepIcon = styled.div({
   width: '1rem',
   height: '1rem',
   borderRadius: '50%',
   backgroundColor: theme.colors.gray900,
-}))
+})
 
-const SpaceBetween = styled.div(({ theme }) => ({
+const SpaceBetween = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: theme.space[4],
-}))
+  gap: theme.space.md,
+})
 
-const CartCollapsibleInner = styled(Space)(({ theme }) => ({
-  paddingTop: theme.space[4],
-  paddingBottom: theme.space[4],
-}))
+const CartCollapsibleInner = styled(Space)({
+  paddingBlock: theme.space.md,
+})
 
 const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean }>) => {
   return (
@@ -244,13 +243,13 @@ const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean 
   )
 }
 
-const StyledSignButtonContent = styled.div(({ theme }) => ({
+const StyledSignButtonContent = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: theme.space[3],
+  gap: theme.space.sm,
   width: '100%',
-}))
+})
 
 const ErrorPrompt = styled(Text)({
   maxWidth: '42rem',
