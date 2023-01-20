@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, mq, Space, Text } from 'ui'
+import { Button, Dialog, mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
@@ -22,12 +22,12 @@ export const CartEntryItem = (props: Props) => {
         <DesktopPillowWrapper>
           <Pillow size="small" {...pillow} />
         </DesktopPillowWrapper>
-        <DesktopTitle size="md">{title}</DesktopTitle>
+        <DesktopTitle>{title}</DesktopTitle>
       </DesktopPillowWithTitle>
       <Space y={1}>
         <div>
-          <MobileTitle size="md">{title}</MobileTitle>
-          <Text size="md" color="textSecondary">
+          <MobileTitle>{title}</MobileTitle>
+          <Text color="textSecondary">
             {/* @TODO: display "automatically switches" if cancellation is requested" */}
             {startDate
               ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
@@ -51,14 +51,12 @@ export const CartEntryItem = (props: Props) => {
           </RemoveEntryDialog>
         </SpaceFlex>
       </Space>
-      <Text align="right" size="md">
-        {formatter.monthlyPrice(cost)}
-      </Text>
+      <Text align="right">{formatter.monthlyPrice(cost)}</Text>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.li(({ theme }) => ({
+const Wrapper = styled.li({
   display: 'grid',
   gridTemplateColumns: '3rem minmax(0, 1fr) auto',
   gap: theme.space.sm,
@@ -67,7 +65,7 @@ const Wrapper = styled.li(({ theme }) => ({
     paddingTop: theme.space.sm,
     gridTemplateColumns: '1fr minmax(0, 1fr) auto',
   },
-}))
+})
 
 const DesktopTitle = styled(Text)({
   display: 'none',
@@ -83,13 +81,13 @@ const MobileTitle = styled(Text)({
   },
 })
 
-const DesktopPillowWithTitle = styled.div(({ theme }) => ({
+const DesktopPillowWithTitle = styled.div({
   display: 'flex',
   gap: theme.space.sm,
-}))
+})
 
-const DesktopPillowWrapper = styled.div(({ theme }) => ({
+const DesktopPillowWrapper = styled.div({
   [mq.lg]: {
     marginTop: `-${theme.space.sm}`,
   },
-}))
+})

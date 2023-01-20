@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Text } from 'ui'
+import { Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartCampaign, CartCost } from './CartInventory.types'
@@ -44,11 +44,11 @@ const SpaceBetweenWrapper = styled.div({
 
 const CrossOutText = styled(Text)({ textDecoration: 'line-through' })
 
-const PriceWrapper = styled.div(({ theme }) => ({
+const PriceWrapper = styled.div({
   display: 'flex',
   justifyContent: 'flex-end',
-  gap: theme.space[2],
-}))
+  gap: theme.space.xs,
+})
 
 const FlexEnd = styled.div({
   display: 'flex',

@@ -40,9 +40,7 @@ export const RecommendationList = ({ recommendations }: Props) => {
                 <Heading as="h3" variant="standard.18">
                   {recommendation.displayNameShort}
                 </Heading>
-                <Text size="lg" color="textSecondary">
-                  {recommendation.displayNameFull}
-                </Text>
+                <Text color="textSecondary">{recommendation.displayNameFull}</Text>
               </ListItemContent>
             </Space>
           </Link>
