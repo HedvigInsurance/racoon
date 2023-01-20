@@ -27,21 +27,15 @@ export const TextField = ({ label, variant = 'large', suffix, ...props }: Props)
 
   const inputValue = props.value || value
 
-  const [Wrapper, Input, Suffix, labelSize] =
+  const [Wrapper, Input, Suffix] =
     variant === 'large'
-      ? ([LargeWrapper, LargeInput, LargeSuffix, 'xl'] as const)
-      : ([SmallWrapper, SmallInput, SmallSuffix, 'lg'] as const)
+      ? ([LargeWrapper, LargeInput, LargeSuffix] as const)
+      : ([SmallWrapper, SmallInput, SmallSuffix] as const)
 
   return (
     <Wrapper {...animationProps} data-active={!!inputValue}>
-      <Label htmlFor={props.id}>
-        <LabelText
-          as="span"
-          size={labelSize}
-          color={props.disabled ? 'textDisabled' : 'textPrimary'}
-        >
-          {label}
-        </LabelText>
+      <Label htmlFor={props.id} data-disabled={props.disabled} data-variant={variant}>
+        {label}
       </Label>
       <SpaceFlex align="center" space={0}>
         <Input {...props} onKeyDown={highlight} onChange={handleChange} />
@@ -75,20 +69,27 @@ const LargeWrapper = styled(motion.div)({
 
 const Label = styled.label(({ theme }) => ({
   position: 'absolute',
+  left: 0,
+  right: 0,
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+
   pointerEvents: 'none',
   transformOrigin: 'top left',
   transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   transform: `translate(0, 0) scale(1)`,
   paddingInline: theme.space.md,
-  whiteSpace: 'nowrap',
 
-  left: 0,
-  right: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+  fontSize: theme.fontSizes.xl,
+  '&[data-variant=small]': {
+    fontSize: theme.fontSizes.lg,
+  },
+
+  '&[data-disabled=true]': {
+    color: theme.colors.textDisabled,
+  },
 }))
-
-const LabelText = styled(Text)({ lineHeight: 1 })
 
 const LargeInput = styled.input({
   width: '100%',
