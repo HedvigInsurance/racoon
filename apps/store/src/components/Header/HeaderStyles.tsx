@@ -79,7 +79,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   flexDirection: 'column',
   gap: theme.space[5],
   padding: `${theme.space[8]} ${theme.space[4]} 0`,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.light,
 
   [mq.md]: {
     position: 'static',
