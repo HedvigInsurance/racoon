@@ -64,7 +64,7 @@ const Wrapper = styled.div<{ reverse: boolean }>(({ reverse }) => ({
 const ImageWrapper = styled.div({
   flex: '1',
   position: 'relative',
-  aspectRatio: '1 / 1',
+  aspectRatio: '3 / 2',
 
   [`${Wrapper}[data-orientation="fluid"] &`]: {
     // This constraint helps flex algorithm to decide when to wrap
