@@ -13,8 +13,8 @@ export const ProductItem = ({ name, price }: ProductItemProps) => {
     <SpaceFlex space={1} align="center">
       <Pillow size="small" />
       <SpaceBetween>
-        <Text size="lg">{name}</Text>
-        <Text size="lg">{price}</Text>
+        <Text>{name}</Text>
+        <Text>{price}</Text>
       </SpaceBetween>
     </SpaceFlex>
   )
