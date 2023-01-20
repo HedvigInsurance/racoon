@@ -64,7 +64,7 @@ export const ExtraBuildingsField = ({
   return (
     <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
       <Card y={1}>
-        <Text size="lg">{translateLabel(field.label)}</Text>
+        <Text>{translateLabel(field.label)}</Text>
 
         <Space y={0.5} as="ul">
           {field.value?.map((item) => {

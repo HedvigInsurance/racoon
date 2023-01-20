@@ -34,10 +34,8 @@ export const DetailsSheetDialog = (props: Props) => {
           <DetailsSheet.Header>
             <Pillow size="large" {...pillow} />
             <div>
-              <Text size="lg" align="center">
-                {title}
-              </Text>
-              <Text size="lg" color="textSecondary" align="center">
+              <Text align="center">{title}</Text>
+              <Text color="textSecondary" align="center">
                 {formatter.monthlyPrice(cost)}
               </Text>
             </div>
@@ -45,10 +43,8 @@ export const DetailsSheetDialog = (props: Props) => {
           <DetailsSheet.Main>
             <DetailsSheet.Table>
               <DetailsSheet.Row>
-                <Text size="lg" color="textSecondary">
-                  {t('DATA_TABLE_START_DATE_LABEL')}
-                </Text>
-                <Text size="lg">
+                <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
+                <Text>
                   {startDate ? (
                     <Capitalize>{formatter.fromNow(startDate)}</Capitalize>
                   ) : (
@@ -58,10 +54,10 @@ export const DetailsSheetDialog = (props: Props) => {
               </DetailsSheet.Row>
               {dataTableRows?.map((item) => (
                 <DetailsSheet.Row key={item.label}>
-                  <Text size="lg" color="textSecondary">
+                  <Text color="textSecondary">
                     {t(item.label, { defaultValue: `${item.label} MISSING` })}
                   </Text>
-                  <Text size="lg">{getDataTableValue(item, data)}</Text>
+                  <Text>{getDataTableValue(item, data)}</Text>
                 </DetailsSheet.Row>
               ))}
             </DetailsSheet.Table>
