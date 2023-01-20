@@ -104,8 +104,7 @@ const Wrapper = styled(Space)({
   maxWidth: '40rem',
   marginLeft: 'auto',
   marginRight: 'auto',
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.md,
+  paddingInline: theme.space.md,
 })
 
 // Header
@@ -127,6 +126,7 @@ const Header = ({ prevURL }: HeaderProps) => {
 
 const HeaderLink = styled(Link)({
   backgroundColor: theme.colors.light,
+  fontSize: theme.fontSizes.md,
 
   ':focus-visible': {
     borderRadius: theme.radius.xs,
@@ -143,7 +143,7 @@ const HeaderLink = styled(Link)({
 const HeaderHeading = styled(Heading)({
   [mq.lg]: {
     textAlign: 'center',
-    fontSize: theme.fontSizes[8],
+    fontSize: theme.fontSizes.xxl,
   },
 })
 

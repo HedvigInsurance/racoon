@@ -77,22 +77,22 @@ const StyledButton = styled.button<CustomButtonProps>(({ size = 'large' }) => ({
   ...(size === 'large' && {
     height: HEIGHT.large,
     width: '100%',
-    paddingInline: theme.space[6],
+    paddingInline: theme.space.xl,
 
     textAlign: 'center',
-    fontSize: theme.fontSizes[3],
+    fontSize: theme.fontSizes.md,
   }),
 
   ...(size === 'medium' && {
     height: HEIGHT.medium,
-    paddingInline: theme.space[4],
-    fontSize: theme.fontSizes[3],
+    paddingInline: theme.space.md,
+    fontSize: theme.fontSizes.md,
   }),
 
   ...(size === 'small' && {
     height: HEIGHT.small,
-    paddingInline: theme.space[4],
-    fontSize: theme.fontSizes[1],
+    paddingInline: theme.space.md,
+    fontSize: theme.fontSizes.xs,
   }),
 
   cursor: 'pointer',
