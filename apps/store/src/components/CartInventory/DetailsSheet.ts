@@ -17,8 +17,11 @@ export const Header = styled.header(({ theme }) => ({
 }))
 
 export const Main = styled.main({
-  maxWidth: '42rem',
-  margin: '0 auto',
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
+  },
 })
 
 export const Table = styled.div(({ theme }) => ({
