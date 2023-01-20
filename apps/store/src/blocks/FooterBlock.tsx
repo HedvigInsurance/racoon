@@ -56,7 +56,7 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
 FooterSection.blockName = 'footerSection' as const
 
 export type FooterBlockProps = {
-  onLocaleChange?: (newLocale: IsoLocale) => void
+  onLocaleChange: (newLocale: IsoLocale) => void
 } & SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
 }>
@@ -81,13 +81,13 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const handleChangeCountry: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const newCountry = event.target.value as CountryLabel
     const newLocale = getCountryLocale(newCountry, currentLanguage)
-    onLocaleChange?.(newLocale)
+    onLocaleChange(newLocale)
   }
 
   const handleChangeLanguage: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const newLanguage = event.target.value as Language
     const newLocale = getCountryLocale(currentCountry.id, newLanguage)
-    onLocaleChange?.(newLocale)
+    onLocaleChange(newLocale)
   }
 
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
