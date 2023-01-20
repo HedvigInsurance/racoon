@@ -1,24 +1,17 @@
-import { useApolloClient } from '@apollo/client'
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
-import { addLocale } from 'next/dist/client/add-locale'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { CookiePersister } from '@/services/persister/CookiePersister'
-import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { countries } from '@/utils/l10n/countries'
-import { getCountryByLocale, getCountryLocale } from '@/utils/l10n/countryUtils'
-import { LocaleField, LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
+import { getCountryLocale } from '@/utils/l10n/countryUtils'
+import { LocaleField } from '@/utils/l10n/locales'
 import {
   getLocaleOrFallback,
-  toRoutingLocale,
   translateCountryName,
   translateLanguageName,
 } from '@/utils/l10n/localeUtils'
@@ -62,14 +55,15 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
 }
 FooterSection.blockName = 'footerSection' as const
 
-export type FooterBlockProps = SbBaseBlockProps<{
+export type FooterBlockProps = {
+  onLocaleChange: (newLocale: IsoLocale) => void
+} & SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
 }>
-export const FooterBlock = ({ blok }: FooterBlockProps) => {
+export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
   const { t } = useTranslation()
-  const apolloClient = useApolloClient()
 
   const countryList = Object.keys(countries).map((country) => ({
     name: translateCountryName(country as CountryLabel, t),
@@ -84,42 +78,16 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
     }
   })
 
-  const router = useRouter()
-  const onChangeLocale = (locale: IsoLocale) => {
-    const nextLocale = toRoutingLocale(locale)
-    const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
-    cookiePersister.save(nextLocale, undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
-    const nextCountry = getCountryByLocale(nextLocale)
-    if (nextCountry === currentCountry) {
-      router.push(router.asPath, undefined, { locale: nextLocale })
-    } else {
-      // Country change should be full app reload to maintain our programming assumptions
-      // We may clean any previous shop session while we're at it
-      setupShopSessionServiceClientSide(apolloClient).reset()
-      window.location.href = addLocale(router.asPath, nextLocale)
-    }
-  }
-
   const handleChangeCountry: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    try {
-      const newCountry = event.target.value as CountryLabel
-      const newLocale = getCountryLocale(newCountry, currentLanguage)
-      onChangeLocale(newLocale)
-    } catch (error) {
-      datadogLogs.logger.error('Failed to change country', { error, country: event.target.value })
-      router.reload()
-    }
+    const newCountry = event.target.value as CountryLabel
+    const newLocale = getCountryLocale(newCountry, currentLanguage)
+    onLocaleChange(newLocale)
   }
 
   const handleChangeLanguage: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    try {
-      const newLanguage = event.target.value as Language
-      const newLocale = getCountryLocale(currentCountry.id, newLanguage)
-      onChangeLocale(newLocale)
-    } catch (error) {
-      datadogLogs.logger.error('Failed to change language', { error, language: event.target.value })
-      router.reload()
-    }
+    const newLanguage = event.target.value as Language
+    const newLocale = getCountryLocale(currentCountry.id, newLanguage)
+    onLocaleChange(newLocale)
   }
 
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
