@@ -54,12 +54,13 @@ const Wrapper = styled(Space)({
   paddingInline: theme.space.xs,
   paddingBottom: theme.space.xl,
 
-  maxWidth: '40rem',
-  marginInline: 'auto',
-
-  [mq.lg]: {
-    maxWidth: '100%',
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
   },
+
+  [mq.lg]: { display: 'block' },
 })
 
 const MobileHeader = styled.div({
@@ -84,7 +85,7 @@ const List = styled.div({
   gridGap: theme.space.md,
 
   [mq.sm]: {
-    gridTemplateColumns: 'repeat(auto-fit, 19rem)',
+    gridTemplateColumns: 'repeat(auto-fit, 13rem)',
   },
 
   [mq.lg]: {
