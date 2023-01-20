@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useEffect, useRef, useId, forwardRef, ReactNode, ComponentPropsWithRef } from 'react'
 import { CheckIcon } from '../../icons/CheckIcon'
 import { mergeRefs } from '../../lib/merge-refs'
+import { theme } from '../../lib/theme/theme'
 
 export type CheckboxProps = ComponentPropsWithRef<'input'> & {
   label?: ReactNode
@@ -35,30 +36,31 @@ const ControlLabel = styled.label<{ disabled?: boolean }>(
     cursor: 'default',
     fontStyle: 'normal',
     fontWeight: 400,
-    fontSize: '0.875rem',
+    fontSize: theme.fontSizes.xs,
     lineHeight: 1.25,
   },
   (props) => ({
-    fontFamily: props.theme.fonts.body,
-    color: props.disabled ? props.theme.colors.gray500 : props.theme.colors.textPrimary,
+    fontFamily: theme.fonts.body,
+    color: props.disabled ? theme.colors.gray500 : theme.colors.textPrimary,
   }),
 )
 
 const Icon = styled(CheckIcon)({
+  color: theme.colors.white,
   // Its appearance is controlled by StyledCheckboxElement
   visibility: 'hidden',
 })
 
-const DisabledTick = styled.div(({ theme }) => ({
+const DisabledTick = styled.div({
   position: 'absolute',
   // Its appearance is controlled by StyledCheckboxElement
   display: 'none',
   width: 10,
   height: 2,
   backgroundColor: theme.colors.gray500,
-}))
+})
 
-const StyledCheckboxElement = styled.div<CheckboxProps>(({ theme, circle }) => ({
+const StyledCheckboxElement = styled.div<CheckboxProps>(({ circle }) => ({
   position: 'relative',
   display: 'inline-flex',
   justifyContent: 'center',
@@ -72,13 +74,14 @@ const StyledCheckboxElement = styled.div<CheckboxProps>(({ theme, circle }) => (
   // checked/unchecked backgorund
   [`${HiddenInput}:checked + &`]: {
     background: theme.colors.dark,
+    border: `1px solid ${theme.colors.dark}`,
   },
   [`${HiddenInput}:disabled + &`]: {
     background: theme.colors.gray300,
   },
   // hover/focus-visible
   [`${HiddenInput}:enabled:hover + &, ${HiddenInput}:focus-visible + &`]: {
-    border: `2px solid ${theme.colors.dark}`,
+    border: `1px solid ${theme.colors.dark}`,
   },
   // checked/disabled icons
   [`${HiddenInput}:enabled${HiddenInput}:checked + & > ${Icon}`]: {
