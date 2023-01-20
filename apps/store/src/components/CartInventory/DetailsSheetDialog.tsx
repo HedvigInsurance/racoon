@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import type { TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -41,6 +42,21 @@ export const DetailsSheetDialog = (props: Props) => {
             </div>
           </DetailsSheet.Header>
           <DetailsSheet.Main>
+            <DetailsSheet.HorizontalList>
+              {documents.map((item) => (
+                <Button
+                  key={item.url}
+                  size="small"
+                  variant="secondary"
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.displayName}
+                </Button>
+              ))}
+            </DetailsSheet.HorizontalList>
+
             <DetailsSheet.Table>
               <DetailsSheet.Row>
                 <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
@@ -61,21 +77,6 @@ export const DetailsSheetDialog = (props: Props) => {
                 </DetailsSheet.Row>
               ))}
             </DetailsSheet.Table>
-
-            <DetailsSheet.HorizontalList>
-              {documents.map((item) => (
-                <Button
-                  key={item.url}
-                  size="small"
-                  variant="secondary"
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.displayName}
-                </Button>
-              ))}
-            </DetailsSheet.HorizontalList>
           </DetailsSheet.Main>
         </DetailsSheet.Root>
       </FullscreenDialog.Modal>
@@ -99,9 +100,7 @@ const useGetDataTableValue = () => {
         } else return null
 
       case 'HOUSEHOLD_SIZE':
-        if (typeof data['numberCoInsured'] === 'number') {
-          return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: data['numberCoInsured'] + 1 })
-        } else return null
+        return formatHouseholdSize(t, data)
 
       case 'MILEAGE':
         if (typeof data['mileage'] === 'number') {
@@ -112,4 +111,13 @@ const useGetDataTableValue = () => {
         return null
     }
   }
+}
+
+const formatHouseholdSize = (
+  t: TFunction<'cart', undefined, 'cart'>,
+  data: Record<string, unknown>,
+) => {
+  const count = parseInt(String(data['numberCoInsured']), 10)
+  if (isNaN(count)) return null
+  return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })
 }
