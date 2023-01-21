@@ -49,7 +49,7 @@
     "@graphql-codegen/typescript-generic-sdk": "3.0.4",
     "@graphql-codegen/typescript-operations": "2.5.12",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
-    "@testing-library/dom": "8.19.1",
+    "@testing-library/dom": "8.20.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
