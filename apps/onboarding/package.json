@@ -24,7 +24,7 @@
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@next/font": "13.1.2",
-    "@radix-ui/react-radio-group": "1.1.0",
+    "@radix-ui/react-radio-group": "1.1.1",
     "classnames": "2.3.2",
     "cookies-next": "2.1.1",
     "dompurify": "2.4.3",
