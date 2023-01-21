@@ -13,6 +13,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
+import { ShopSessionSigningStatus } from '@/services/apollo/generated'
 import { saveAccessToken } from '@/services/authApi/persist'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -23,6 +24,7 @@ import { Breadcrumbs } from './Breadcrumbs'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
+import { TickIcon } from './TickIcon'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
@@ -34,7 +36,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const router = useRouter()
   const apolloClient = useApolloClient()
   const tracking = useTracking()
-  const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
+  const [hideLoading, setHideLoading] = useState(false)
+  const [handleSubmitSign, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
     shopSessionId,
     shopSessionSigningId,
     onSuccess(accessToken) {
@@ -49,13 +52,19 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     },
     onError() {
       setShowSignError(true)
+      setHideLoading(false)
     },
   })
 
-  const submitButtonMessage = loading ? t('OPEN_BANKID_DESCRIPTION') : t('SIGN_DISCLAIMER')
+  const signFailed = signingStatus === ShopSessionSigningStatus.Failed
+  const signFailedMessage = signFailed ? t('UNKNOWN_ERROR_MESSAGE', { ns: 'common' }) : undefined
+  const userErrorMessage = userError?.message ?? signFailedMessage
+
+  const isSigned = signingStatus === ShopSessionSigningStatus.Signed
+  const showLoading = (loading || isSigned) && !hideLoading
 
   return (
-    <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+    <>
       <Space y={{ base: 1, lg: 2.5 }}>
         <Header>
           <HeaderLogo>
@@ -131,7 +140,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     {t('SIGN_BUTTON', { count: cart.entries.length })}
                   </SignButton>
                   <Text size="sm" color="textSecondary" align="center">
-                    {userError?.message ?? submitButtonMessage}
+                    {userErrorMessage ?? t('SIGN_DISCLAIMER')}
                   </Text>
                 </Space>
               </Space>
@@ -140,21 +149,51 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         </Wrapper>
       </Space>
 
-      <FullscreenDialog.Modal
-        center
-        Footer={
-          <FullscreenDialog.Close asChild>
-            <Button type="button" variant="primary">
-              {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-            </Button>
-          </FullscreenDialog.Close>
-        }
-      >
-        <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-          {t('ERROR_GENERAL_DIALOG_PROMPT')}
-        </ErrorPrompt>
-      </FullscreenDialog.Modal>
-    </FullscreenDialog.Root>
+      <FullscreenDialog.Root open={showLoading} onOpenChange={(open) => setHideLoading(!open)}>
+        <FullscreenDialog.Modal center Footer={null}>
+          <SpaceFlex direction="vertical" align="center" space={1.5}>
+            {isSigned ? (
+              <>
+                <TickIcon size="3rem" />
+                <Text align="center">{t('BANKID_MODAL_SUCCESS_PROMPT')}</Text>
+              </>
+            ) : (
+              <>
+                <BankIdIcon size="3rem" color="gray1000" />
+                <div>
+                  <Text align="center">{t('BANKID_MODAL_PROMPT')}</Text>
+                  <Text align="center" color="textSecondary">
+                    {t('BANKID_MODAL_DESCRIPTION')}
+                  </Text>
+                </div>
+                <FullscreenDialog.Close asChild>
+                  <Button size="small" variant="secondary">
+                    {t('BANKID_MODAL_CANCEL')}
+                  </Button>
+                </FullscreenDialog.Close>
+              </>
+            )}
+          </SpaceFlex>
+        </FullscreenDialog.Modal>
+      </FullscreenDialog.Root>
+
+      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+        <FullscreenDialog.Modal
+          center
+          Footer={
+            <FullscreenDialog.Close asChild>
+              <Button type="button" variant="primary">
+                {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+              </Button>
+            </FullscreenDialog.Close>
+          }
+        >
+          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+            {t('ERROR_GENERAL_DIALOG_PROMPT')}
+          </ErrorPrompt>
+        </FullscreenDialog.Modal>
+      </FullscreenDialog.Root>
+    </>
   )
 }
 
@@ -223,7 +262,7 @@ const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean 
   return (
     <Button type="submit" loading={loading} disabled={loading}>
       <StyledSignButtonContent>
-        <BankIdIcon />
+        <BankIdIcon color="white" />
         {children}
       </StyledSignButtonContent>
     </Button>

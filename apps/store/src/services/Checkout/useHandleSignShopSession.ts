@@ -32,7 +32,6 @@ export const useHandleSignShopSession = (params: Params) => {
     async onCompleted(data) {
       const { status, completion } = data.shopSessionSigning
       if (status === ShopSessionSigningStatus.Signed && completion) {
-        setShopSessionSigningId(null)
         // TODO: Handle errors
         console.debug('Congratulations, signing complete!', completion)
         const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
@@ -43,6 +42,7 @@ export const useHandleSignShopSession = (params: Params) => {
     },
     onError(error) {
       datadogLogs.logger.warn('Checkout | SigningQuery | Failed to sign', { error })
+      setShopSessionSigningId(null)
     },
   })
 
@@ -62,11 +62,15 @@ export const useHandleSignShopSession = (params: Params) => {
     },
   })
 
+  const signingStatus = queryResult.data?.shopSessionSigning.status
+  const signingFailed = signingStatus === ShopSessionSigningStatus.Failed
+  const isSigning = Boolean(shopSessionSigningId) && !signingFailed
+
   return [
     startSign,
     {
-      loading: result.loading || Boolean(shopSessionSigningId),
-      signingStatus: queryResult.data?.shopSessionSigning.status,
+      loading: result.loading || isSigning,
+      signingStatus,
       userError: getMutationError(result, result.data?.shopSessionStartSign),
     },
   ] as const
