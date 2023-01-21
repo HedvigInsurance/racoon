@@ -18559,10 +18559,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"personnummer@npm:3.1.4":
-  version: 3.1.4
-  resolution: "personnummer@npm:3.1.4"
-  checksum: 25bd050637e42ba6db1cd9fb5bdfb2fdfbe04fe3d44225bf6514cc5b08f62d9ce68db3b8c79444bd0b2d67601eba888307459b037310eb45e3b0b631a0f61889
+"personnummer@npm:3.1.5":
+  version: 3.1.5
+  resolution: "personnummer@npm:3.1.5"
+  checksum: ab76f69f64ddd4646122d258940e99d608795c177e2ed88337c6541354cb7bb922303e9624e09a87e1737e5fafdf25a5f58cae0a75bd23c387e69716b85c05a1
   languageName: node
   linkType: hard
 
@@ -21171,7 +21171,7 @@ __metadata:
     next: 13.1.2
     next-i18next: 13.0.3
     next-router-mock: 0.8.0
-    personnummer: 3.1.4
+    personnummer: 3.1.5
     prettier: 2.8.3
     react: 18.2.0
     react-dom: 18.2.0
