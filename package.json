@@ -29,7 +29,8 @@
       "prettier --ignore-unknown --write"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "prettier --ignore-unknown --write"
+      "prettier --ignore-unknown --write",
+      "eslint --fix"
     ]
   },
   "devDependencies": {
