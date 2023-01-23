@@ -20,5 +20,12 @@
   "FORM_LAST_NAME_LABEL": "Last name",
   "SIGN_BUTTON_one": "Sign insurance",
   "SIGN_BUTTON_other": "Sign insurances",
-  "SIGN_DISCLAIMER": "You connect autogiro after you sign Hedvig. It's safely handled with Trustly."
+  "SIGN_DISCLAIMER": "You connect autogiro after you sign Hedvig. It's safely handled with Trustly.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Approve cancellation ↗︎",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Approve cancellation latest {{date}}.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING": "Awaiting approval",
+  "SWITCHING_ASSISTANT_CARD_EXPAND": "Read more",
+  "SWITCHING_ASSISTANT_SKIP_LINK": "Remind me later",
+  "SWITCHING_ASSISTANT_SUPPORT_LINK": "Help",
+  "SWITCHING_ASSISTANT_TITLE": "Cancel your old car insurance"
 }

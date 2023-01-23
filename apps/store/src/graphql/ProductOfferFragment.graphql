@@ -29,6 +29,7 @@ fragment ProductOffer on ProductOffer {
   cancellation {
     option
     requested
+    bankSigneringUrl
   }
   priceMatch {
     externalInsurer {
