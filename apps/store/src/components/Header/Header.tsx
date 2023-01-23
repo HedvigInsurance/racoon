@@ -10,7 +10,7 @@ export const Wrapper = styled.header(({ theme }) => ({
   justifyContent: 'space-between',
   width: '100%',
   height: MENU_BAR_HEIGHT_MOBILE,
-  padding: theme.space[4],
+  padding: ` 0 ${theme.space[4]}`,
   position: 'sticky',
   zIndex: zIndexes.header,
 

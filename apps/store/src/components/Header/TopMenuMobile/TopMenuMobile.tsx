@@ -2,25 +2,25 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
-export const DialogTrigger = styled(DialogPrimitive.Trigger)(({ theme }) => ({
+const triggerStyles = {
   ...focusableStyles,
   fontSize: theme.fontSizes[3],
   marginRight: theme.space[4],
-  '&[data-state=open]': {
-    visibility: 'hidden',
-  },
   [mq.lg]: {
     display: 'none',
   },
-}))
+}
 
-export const DialogClose = styled(DialogPrimitive.DialogClose)(({ theme }) => ({
-  ...focusableStyles,
-  fontSize: theme.fontSizes[3],
-}))
+export const DialogTrigger = styled(DialogPrimitive.Trigger)({
+  ...triggerStyles,
+})
+
+export const DialogClose = styled(DialogPrimitive.DialogClose)({
+  ...triggerStyles,
+})
 
 export type TopMenuMobileProps = {
   isOpen?: boolean
@@ -40,12 +40,11 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogTrigger>Menu</DialogTrigger>
+        {open ? <DialogClose>Close</DialogClose> : <DialogTrigger>Menu</DialogTrigger>}
         <DialogContent>
           <Navigation>
             <NavigationPrimaryList>{children}</NavigationPrimaryList>
           </Navigation>
-          <DialogClose>Close</DialogClose>
         </DialogContent>
       </DialogPrimitive.Root>
     </>

@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { ChevronIcon, mq, theme } from 'ui'
 
-export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
+export const MENU_BAR_HEIGHT_MOBILE = '3rem'
 
 export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
 
@@ -16,19 +16,20 @@ export const focusableStyles = {
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
   backgroundColor: theme.colors.light,
   fontSize: theme.fontSizes[5],
-  [mq.md]: {
+  [mq.lg]: {
     fontSize: theme.fontSizes[3],
+    top: 0,
   },
 })
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
-  [mq.md]: {
+  [mq.lg]: {
     padding: `0 ${theme.space[4]}`,
   },
 }))
 
 export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
-  [mq.md]: {
+  [mq.lg]: {
     position: 'absolute',
     top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
   },
@@ -56,14 +57,14 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   all: 'unset',
   listStyle: 'none',
   position: 'fixed',
-  inset: 0,
+  inset: `${MENU_BAR_HEIGHT_MOBILE} 0 0 0`,
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space[5],
   padding: `${theme.space[8]} ${theme.space[4]} 0`,
   backgroundColor: theme.colors.light,
 
-  [mq.md]: {
+  [mq.lg]: {
     position: 'static',
     flexDirection: 'row',
     alignItems: 'center',
@@ -82,7 +83,7 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
   fontSize: theme.fontSizes[2],
   paddingTop: theme.space[6],
 
-  [mq.md]: {
+  [mq.lg]: {
     gap: 'none',
     rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
