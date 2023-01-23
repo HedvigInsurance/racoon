@@ -53,7 +53,7 @@ export const CartInventory = ({ cart, readOnly = false }: Props) => {
             productName={item.variant.product.name}
             data={item.priceIntentData}
             cartId={cart.id}
-            startDate={convertToDate(item.startDate) ?? undefined}
+            startDate={convertToDate(item.startDate)}
             readOnly={readOnly}
           />
         ))}

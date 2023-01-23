@@ -5,7 +5,7 @@ export type CartEntry = {
   offerId: string
   title: string
   cost: Money
-  startDate?: Date
+  startDate: Date | null
   pillow: { src: string; alt?: string }
   documents: CartFragmentFragment['entries'][number]['variant']['documents']
   productName: string
