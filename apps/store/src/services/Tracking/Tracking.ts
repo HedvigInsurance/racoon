@@ -96,6 +96,7 @@ export class Tracking {
   // Legacy event in market-web format
   public async reportOfferCreated(offer: ProductOfferFragment) {
     const event = TrackingEvent.OfferCreated
+    const userData = await getLegacyUserData(this.context)
     const eventData = {
       offerData: {
         insurance_price: offer.price.amount,
@@ -105,7 +106,10 @@ export class Tracking {
         flow_type: offer.variant.product.name,
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
-      userData: await getLegacyUserData(this.context),
+      userData,
+      showSession: {
+        id: this.context[TrackingContextKey.ShopSessionId],
+      },
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
@@ -114,6 +118,7 @@ export class Tracking {
   // Legacy event in market-web format
   public async reportSignedCustomer(cart: CartFragmentFragment) {
     const event = TrackingEvent.SignedCustomer
+    const userData = await getLegacyUserData(this.context)
     const eventData = {
       offerData: {
         quote_cart_id: cart.id,
@@ -127,34 +132,39 @@ export class Tracking {
         flow_type: cart.entries[0].variant.product.name,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
-      userData: await getLegacyUserData(this.context),
+      showSession: {
+        id: this.context[TrackingContextKey.ShopSessionId],
+      },
+      userData,
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
   }
 
   public reportViewItem(offer: ProductOfferFragment) {
-    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.ViewItem, offer))
+    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.ViewItem, offer, this.context))
   }
 
   public reportAddToCart(offer: ProductOfferFragment) {
-    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.AddToCart, offer))
+    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.AddToCart, offer, this.context))
   }
 
   public reportDeleteFromCart(offer: ProductOfferFragment) {
-    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.DeleteFromCart, offer))
+    this.reportEcommerceEvent(
+      offerToEcommerceEvent(TrackingEvent.DeleteFromCart, offer, this.context),
+    )
   }
 
   public reportViewCart(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart))
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context))
   }
 
   public reportBeginCheckout(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart))
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
   }
 
   public reportPurchase(cart: CartFragmentFragment) {
-    const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart)
+    const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
     event.ecommerce.transaction_id = cart.id
     this.reportEcommerceEvent(event)
     // Also report in web-onboarding format
@@ -176,6 +186,7 @@ datadogLogs.createLogger(Tracking.LOGGER_NAME)
 const offerToEcommerceEvent = (
   event: TrackingEvent,
   offer: ProductOfferFragment,
+  context: TrackingContext,
 ): EcommerceEvent => {
   return {
     event,
@@ -190,12 +201,19 @@ const offerToEcommerceEvent = (
         },
       ],
     },
+    shopSession: {
+      id: context[TrackingContextKey.ShopSessionId] as string,
+    },
   } as const
 }
 
 // NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics
 // Let's figure it out later when/if it becomes a priority
-const cartToEcommerceEvent = (event: TrackingEvent, cart: CartFragmentFragment): EcommerceEvent => {
+const cartToEcommerceEvent = (
+  event: TrackingEvent,
+  cart: CartFragmentFragment,
+  context: TrackingContext,
+): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -206,6 +224,9 @@ const cartToEcommerceEvent = (event: TrackingEvent, cart: CartFragmentFragment):
         item_name: entry.variant.displayName,
         price: entry.price.amount,
       })),
+    },
+    shopSession: {
+      id: context[TrackingContextKey.ShopSessionId] as string,
     },
   } as const
 }
