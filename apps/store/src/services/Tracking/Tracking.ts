@@ -107,8 +107,8 @@ export class Tracking {
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
       userData,
-      showSession: {
-        id: this.context[TrackingContextKey.ShopSessionId],
+      shopSession: {
+        id: this.context[TrackingContextKey.ShopSessionId] as string,
       },
     }
     this.logger.log(event, eventData)
@@ -132,8 +132,8 @@ export class Tracking {
         flow_type: cart.entries[0].variant.product.name,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
-      showSession: {
-        id: this.context[TrackingContextKey.ShopSessionId],
+      shopSession: {
+        id: this.context[TrackingContextKey.ShopSessionId] as string,
       },
       userData,
     }
