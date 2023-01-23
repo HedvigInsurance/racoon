@@ -11,7 +11,7 @@ const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 const GTM_ENVIRONMENT = process.env.NEXT_PUBLIC_GTM_ENV
 
 const GTM_ENVIRONMENTS = ['local', 'staging', 'prod'] as const
-type GTMEnvironment = typeof GTM_ENVIRONMENTS[number]
+type GTMEnvironment = (typeof GTM_ENVIRONMENTS)[number]
 
 const getGtmEnvironment = () => {
   if (isGTMEnvironment(GTM_ENVIRONMENT)) return GTM_ENVIRONMENT
@@ -42,6 +42,10 @@ type GTMPageData = {
 
 export type GTMEcommerceData = Record<string, unknown>
 
+export type GTMShopSessionData = {
+  id: string | undefined
+}
+
 type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
@@ -49,11 +53,13 @@ type DataLayerObject = {
   eventData?: Record<string, string>
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData
+  shopSession?: GTMShopSessionData
 }
 
 export type EcommerceEvent = {
   event: TrackingEvent
   ecommerce: GTMEcommerceData
+  shopSession: GTMShopSessionData
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
