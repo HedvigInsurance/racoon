@@ -87,6 +87,6 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
     rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
     borderRadius: '0.5rem',
-    backgroundColor: theme.colors.gray25,
+    backgroundColor: theme.colors.light,
   },
 }))

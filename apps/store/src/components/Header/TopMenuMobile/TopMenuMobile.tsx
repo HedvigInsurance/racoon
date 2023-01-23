@@ -2,33 +2,25 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { CrossIcon, mq } from 'ui'
+import { mq } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
-export const IconButton = styled.button({
-  position: 'absolute',
-  top: '1rem',
-  left: '1rem',
-  lineHeight: 0,
+export const DialogTrigger = styled(DialogPrimitive.Trigger)(({ theme }) => ({
   ...focusableStyles,
-  [mq.lg]: {
-    display: 'none',
-  },
-})
-
-export const ToggleMenu = styled.button({
-  ...focusableStyles,
+  fontSize: theme.fontSizes[3],
+  marginRight: theme.space[4],
   '&[data-state=open]': {
     visibility: 'hidden',
   },
   [mq.lg]: {
     display: 'none',
   },
-})
+}))
 
-export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
-  position: 'fixed',
-})
+export const DialogClose = styled(DialogPrimitive.DialogClose)(({ theme }) => ({
+  ...focusableStyles,
+  fontSize: theme.fontSizes[3],
+}))
 
 export type TopMenuMobileProps = {
   isOpen?: boolean
@@ -48,18 +40,12 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogPrimitive.Trigger asChild>Menu</DialogPrimitive.Trigger>
-
+        <DialogTrigger>Menu</DialogTrigger>
         <DialogContent>
           <Navigation>
             <NavigationPrimaryList>{children}</NavigationPrimaryList>
           </Navigation>
-
-          <DialogCloseIcon asChild>
-            <IconButton>
-              <CrossIcon />
-            </IconButton>
-          </DialogCloseIcon>
+          <DialogClose>Close</DialogClose>
         </DialogContent>
       </DialogPrimitive.Root>
     </>
