@@ -52,7 +52,7 @@ export const CartPage = (props: CartPageProps) => {
         <Space y={1.5}>
           <CartEntryList>
             {entries.map((item) => (
-              <CartEntryItem readOnly={false} key={item.offerId} cartId={cartId} {...item} />
+              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
             ))}
           </CartEntryList>
           <HorizontalLine />
