@@ -5,6 +5,7 @@ import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor } from '../../lib/theme/theme'
 import { getHeadingVariantStyles, HeadingVariant } from './Heading.helpers'
+export type { PossibleHeadingVariant } from './Heading.helpers'
 
 type HeadingColors = Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textNegative'>
 

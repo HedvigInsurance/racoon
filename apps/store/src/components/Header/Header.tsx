@@ -17,7 +17,7 @@ export const Wrapper = styled.header(({ theme }) => ({
   [mq.lg]: {
     flexDirection: 'row',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    backgroundColor: theme.colors.gray25,
+    backgroundColor: theme.colors.light,
     top: 0,
   },
 }))

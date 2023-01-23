@@ -18,5 +18,5 @@ export type CheckoutPaymentPageAdyenProps = CheckoutPaymentPageProps & {
 
   shopSessionId: string
   checkoutId: string
-  checkoutSigningId: string | null
+  shopSessionSigningId: string | null
 }

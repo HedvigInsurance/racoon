@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, mq, Space, Text } from 'ui'
+import { Button, Dialog, mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
@@ -12,84 +12,75 @@ type Props = CartEntry & { cartId: string }
 
 export const CartEntryItem = (props: Props) => {
   const { cartId, ...cartEntry } = props
-  const { title, startDate, cost, pillow } = cartEntry
+  const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
   return (
-    <Wrapper>
-      <DesktopPillowWithTitle>
-        <DesktopPillowWrapper>
-          <Pillow size="small" {...pillow} />
-        </DesktopPillowWrapper>
-        <DesktopTitle size="md">{title}</DesktopTitle>
-      </DesktopPillowWithTitle>
-      <Space y={1}>
-        <div>
-          <MobileTitle size="md">{title}</MobileTitle>
-          <Text size="md" color="textSecondary">
-            {/* @TODO: display "automatically switches" if cancellation is requested" */}
-            {startDate
-              ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
-              : 'Starts sometime...'}
-          </Text>
-        </div>
-        <SpaceFlex space={0.25}>
-          <DetailsSheetDialog {...cartEntry}>
-            <Dialog.Trigger asChild>
-              <Button variant="secondary" size="small">
-                {t('VIEW_ENTRY_DETAILS_BUTTON')}
-              </Button>
-            </Dialog.Trigger>
-          </DetailsSheetDialog>
-          <RemoveEntryDialog cartId={cartId} {...cartEntry}>
-            <Dialog.Trigger asChild>
-              <Button variant="ghost" size="small">
-                {t('REMOVE_ENTRY_BUTTON')}
-              </Button>
-            </Dialog.Trigger>
-          </RemoveEntryDialog>
-        </SpaceFlex>
-      </Space>
-      <Text align="right" size="md">
-        {formatter.monthlyPrice(cost)}
-      </Text>
-    </Wrapper>
+    <Layout>
+      <LayoutPillow>
+        <Pillow size="small" {...pillow} />
+      </LayoutPillow>
+
+      <LayoutText>
+        <Text>{titleLabel}</Text>
+        <Text color="textSecondary">
+          {/* @TODO: display "automatically switches" if cancellation is requested" */}
+          {startDate
+            ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
+            : 'Starts sometime...'}
+        </Text>
+      </LayoutText>
+
+      <LayoutPrice>
+        <Text>{formatter.monthlyPrice(cost)}</Text>
+      </LayoutPrice>
+
+      <LayoutActions>
+        <Space y={1}>
+          <SpaceFlex space={0.25}>
+            <DetailsSheetDialog {...cartEntry}>
+              <Dialog.Trigger asChild>
+                <Button variant="secondary" size="small">
+                  {t('VIEW_ENTRY_DETAILS_BUTTON')}
+                </Button>
+              </Dialog.Trigger>
+            </DetailsSheetDialog>
+            <RemoveEntryDialog cartId={cartId} {...cartEntry}>
+              <Dialog.Trigger asChild>
+                <Button variant="ghost" size="small">
+                  {t('REMOVE_ENTRY_BUTTON')}
+                </Button>
+              </Dialog.Trigger>
+            </RemoveEntryDialog>
+          </SpaceFlex>
+        </Space>
+      </LayoutActions>
+    </Layout>
   )
 }
 
-const Wrapper = styled.li(({ theme }) => ({
+const Layout = styled.li({
   display: 'grid',
-  gridTemplateColumns: '3rem minmax(0, 1fr) auto',
-  gap: theme.space.sm,
+  columnGap: theme.space.sm,
+  rowGap: theme.space.md,
+  gridTemplateAreas: `
+    "pillow title"
+    "empty price"
+    "empty actions"
+  `,
+  gridTemplateColumns: '3rem minmax(0, 1fr)',
 
-  [mq.lg]: {
-    paddingTop: theme.space.sm,
-    gridTemplateColumns: '1fr minmax(0, 1fr) auto',
-  },
-}))
-
-const DesktopTitle = styled(Text)({
-  display: 'none',
-
-  [mq.lg]: {
-    display: 'revert',
-  },
-})
-
-const MobileTitle = styled(Text)({
-  [mq.lg]: {
-    display: 'none',
+  [mq.md]: {
+    gridTemplateAreas: `
+      "pillow title price"
+      "empty actions actions"
+    `,
+    gridTemplateColumns: '3rem minmax(0, 1fr) auto',
   },
 })
 
-const DesktopPillowWithTitle = styled.div(({ theme }) => ({
-  display: 'flex',
-  gap: theme.space.sm,
-}))
-
-const DesktopPillowWrapper = styled.div(({ theme }) => ({
-  [mq.lg]: {
-    marginTop: `-${theme.space.sm}`,
-  },
-}))
+const LayoutPillow = styled.div({ gridArea: 'pillow' })
+const LayoutText = styled.div({ gridArea: 'title' })
+const LayoutPrice = styled.div({ gridArea: 'price' })
+const LayoutActions = styled.div({ gridArea: 'actions' })

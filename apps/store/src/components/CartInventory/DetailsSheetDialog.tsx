@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import type { TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -30,42 +31,17 @@ export const DetailsSheetDialog = (props: Props) => {
           </FullscreenDialog.Close>
         }
       >
-        <DetailsSheet.Root>
+        <DetailsSheet.Root y={1.5}>
           <DetailsSheet.Header>
             <Pillow size="large" {...pillow} />
             <div>
-              <Text size="lg" align="center">
-                {title}
-              </Text>
-              <Text size="lg" color="textSecondary" align="center">
+              <Text align="center">{title}</Text>
+              <Text color="textSecondary" align="center">
                 {formatter.monthlyPrice(cost)}
               </Text>
             </div>
           </DetailsSheet.Header>
           <DetailsSheet.Main>
-            <DetailsSheet.Table>
-              <DetailsSheet.Row>
-                <Text size="lg" color="textSecondary">
-                  {t('DATA_TABLE_START_DATE_LABEL')}
-                </Text>
-                <Text size="lg">
-                  {startDate ? (
-                    <Capitalize>{formatter.fromNow(startDate)}</Capitalize>
-                  ) : (
-                    t('DATA_TABLE_START_DATE_AUTO_SWITCH')
-                  )}
-                </Text>
-              </DetailsSheet.Row>
-              {dataTableRows?.map((item) => (
-                <DetailsSheet.Row key={item.label}>
-                  <Text size="lg" color="textSecondary">
-                    {t(item.label, { defaultValue: `${item.label} MISSING` })}
-                  </Text>
-                  <Text size="lg">{getDataTableValue(item, data)}</Text>
-                </DetailsSheet.Row>
-              ))}
-            </DetailsSheet.Table>
-
             <DetailsSheet.HorizontalList>
               {documents.map((item) => (
                 <Button
@@ -80,6 +56,27 @@ export const DetailsSheetDialog = (props: Props) => {
                 </Button>
               ))}
             </DetailsSheet.HorizontalList>
+
+            <DetailsSheet.Table>
+              <DetailsSheet.Row>
+                <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
+                <Text>
+                  {startDate ? (
+                    <Capitalize>{formatter.fromNow(startDate)}</Capitalize>
+                  ) : (
+                    t('DATA_TABLE_START_DATE_AUTO_SWITCH')
+                  )}
+                </Text>
+              </DetailsSheet.Row>
+              {dataTableRows?.map((item) => (
+                <DetailsSheet.Row key={item.label}>
+                  <Text color="textSecondary">
+                    {t(item.label, { defaultValue: `${item.label} MISSING` })}
+                  </Text>
+                  <Text>{getDataTableValue(item, data)}</Text>
+                </DetailsSheet.Row>
+              ))}
+            </DetailsSheet.Table>
           </DetailsSheet.Main>
         </DetailsSheet.Root>
       </FullscreenDialog.Modal>
@@ -103,9 +100,7 @@ const useGetDataTableValue = () => {
         } else return null
 
       case 'HOUSEHOLD_SIZE':
-        if (typeof data['numberCoInsured'] === 'number') {
-          return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: data['numberCoInsured'] + 1 })
-        } else return null
+        return formatHouseholdSize(t, data)
 
       case 'MILEAGE':
         if (typeof data['mileage'] === 'number') {
@@ -116,4 +111,13 @@ const useGetDataTableValue = () => {
         return null
     }
   }
+}
+
+const formatHouseholdSize = (
+  t: TFunction<'cart', undefined, 'cart'>,
+  data: Record<string, unknown>,
+) => {
+  const count = parseInt(String(data['numberCoInsured']), 10)
+  if (isNaN(count)) return null
+  return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })
 }

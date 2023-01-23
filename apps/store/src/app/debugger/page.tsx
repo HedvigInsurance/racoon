@@ -1,6 +1,6 @@
 'use client'
 import styled from '@emotion/styled'
-import { FormEventHandler, useState } from 'react'
+import { FormEventHandler, useEffect, useState } from 'react'
 import { Button, Space, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { PageLink } from '@/utils/PageLink'
@@ -9,10 +9,12 @@ const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
 
 const Page = () => {
   const [loading, setLoading] = useState(false)
-  const [defaultSsn] = useState<string | undefined>(() => {
-    if (typeof window === 'undefined') return undefined
-    return window.localStorage.getItem(HEDVIG_DEBUGGER_SSN) || undefined
-  })
+  const [defaultSsn, setDefaultSsn] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    const ssn = window.localStorage.getItem(HEDVIG_DEBUGGER_SSN)
+    if (ssn) setDefaultSsn(ssn)
+  }, [])
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -33,7 +35,13 @@ const Page = () => {
     <Wrapper>
       <form onSubmit={handleSubmit}>
         <Space y={0.25}>
-          <TextField label="YYYYMMDDXXXX" defaultValue={defaultSsn} autoFocus name="ssn" />
+          <TextField
+            key={defaultSsn}
+            defaultValue={defaultSsn}
+            label="YYYYMMDDXXXX"
+            autoFocus
+            name="ssn"
+          />
           <Button loading={loading}>Create session</Button>
         </Space>
       </form>

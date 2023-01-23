@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
-import { Button, CrossIcon, Text } from 'ui'
+import { Button, CrossIcon, Text, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
@@ -64,7 +64,7 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
                 <Text as="span" size="xs">
                   {item.code}
                 </Text>
-                <CrossIcon size={theme.fontSizes[1]} color={theme.colors.gray500} />
+                <CrossIcon size={theme.fontSizes.xs} color={theme.colors.gray500} />
               </ChipButton>
             </form>
 
@@ -76,32 +76,32 @@ export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
   )
 }
 
-const SpaceBetween = styled.div(({ theme }) => ({
+const SpaceBetween = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: theme.space[2],
-}))
+  gap: theme.space.xs,
+})
 
 const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })
 
-const DiscountFormWrapper = styled.div(({ theme }) => ({
+const DiscountFormWrapper = styled.div({
   display: 'grid',
   gridTemplateColumns: '1fr minmax(33%, min-content)',
   gap: theme.space.xs,
-}))
+})
 
-const ChipButton = styled.button(({ theme }) => ({
+const ChipButton = styled.button({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.space[1],
+  gap: theme.space.xxs,
   borderRadius: theme.radius.xs,
   backgroundColor: theme.colors.gray200,
   textTransform: 'uppercase',
-  paddingTop: theme.space[1],
-  paddingBottom: theme.space[1],
-  paddingLeft: theme.space[2],
-  paddingRight: theme.space[2],
+  paddingTop: theme.space.xxs,
+  paddingBottom: theme.space.xxs,
+  paddingLeft: theme.space.xs,
+  paddingRight: theme.space.xs,
 
   ':focus-visible': {
     boxShadow: `0 0 0 1px ${theme.colors.gray1000}`,
@@ -110,4 +110,4 @@ const ChipButton = styled.button(({ theme }) => ({
   ':disabled': {
     opacity: 0.6,
   },
-}))
+})

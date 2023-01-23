@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { ReactNode, useEffect } from 'react'
-import { Heading, mq, Space, Text } from 'ui'
+import { Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -13,9 +13,10 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
+import { RecommendationList } from './RecommendationList'
 
 export const CartPage = (props: CartPageProps) => {
-  const { cartId, entries, campaigns, cost, prevURL } = props
+  const { cartId, entries, campaigns, cost, recommendations, prevURL } = props
   const { onReady } = useShopSession()
   const { t } = useTranslation('cart')
 
@@ -33,35 +34,42 @@ export const CartPage = (props: CartPageProps) => {
     [onReady, tracking],
   )
 
-  if (entries.length === 0) {
-    return (
-      <EmptyState prevURL={prevURL}>
-        <Space y={1.5}>
-          <HorizontalLine />
-          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-          <HorizontalLine />
-          <CostSummary {...cost} campaigns={campaigns} />
-        </Space>
-      </EmptyState>
-    )
-  }
-
-  return (
-    <Wrapper y={{ base: 1, lg: 4 }}>
-      <Header prevURL={prevURL} />
+  let body = (
+    <EmptyState prevURL={prevURL}>
       <Space y={1.5}>
-        <CartEntryList>
-          {entries.map((item) => (
-            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-          ))}
-        </CartEntryList>
         <HorizontalLine />
         <CampaignCodeList cartId={cartId} campaigns={campaigns} />
         <HorizontalLine />
         <CostSummary {...cost} campaigns={campaigns} />
-        <ButtonNextLink href={PageLink.checkout()}>{t('CHECKOUT_BUTTON')}</ButtonNextLink>
       </Space>
-    </Wrapper>
+    </EmptyState>
+  )
+
+  if (entries.length > 0) {
+    body = (
+      <Wrapper y={{ base: 1, lg: 4 }}>
+        <Header prevURL={prevURL} />
+        <Space y={1.5}>
+          <CartEntryList>
+            {entries.map((item) => (
+              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
+            ))}
+          </CartEntryList>
+          <HorizontalLine />
+          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+          <HorizontalLine />
+          <CostSummary {...cost} campaigns={campaigns} />
+          <ButtonNextLink href={PageLink.checkout()}>{t('CHECKOUT_BUTTON')}</ButtonNextLink>
+        </Space>
+      </Wrapper>
+    )
+  }
+
+  return (
+    <Space y={2}>
+      {body}
+      <RecommendationList recommendations={recommendations} />
+    </Space>
   )
 }
 
@@ -80,7 +88,6 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
             {t('CART_EMPTY_SUMMARY')}
           </Text>
         </Space>
-
         <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
       </Space>
       {children}
@@ -88,19 +95,20 @@ const EmptyState = ({ children, prevURL }: EmptyStateProps) => {
   )
 }
 
-const HorizontalLine = styled.hr(({ theme }) => ({
+const HorizontalLine = styled.hr({
   backgroundColor: theme.colors.gray300,
   height: 1,
-}))
+})
 
-const Wrapper = styled(Space)(({ theme }) => ({
-  paddingBottom: theme.space.xl,
-  maxWidth: '40rem',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.md,
-}))
+const Wrapper = styled(Space)({
+  paddingInline: theme.space.md,
+
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
+  },
+})
 
 // Header
 
@@ -110,7 +118,7 @@ const Header = ({ prevURL }: HeaderProps) => {
   const { t } = useTranslation('cart')
 
   return (
-    <StyledHeader>
+    <StyledHeader as="header">
       <HeaderHeading as="h1" variant="standard.24">
         {t('CART_PAGE_HEADING')}
       </HeaderHeading>
@@ -119,8 +127,10 @@ const Header = ({ prevURL }: HeaderProps) => {
   )
 }
 
-const HeaderLink = styled(Link)(({ theme }) => ({
+const HeaderLink = styled(Link)({
   backgroundColor: theme.colors.light,
+  fontSize: theme.fontSizes.md,
+
   ':focus-visible': {
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
@@ -131,14 +141,14 @@ const HeaderLink = styled(Link)(({ theme }) => ({
     top: theme.space.md,
     right: theme.space.md,
   },
-}))
+})
 
-const HeaderHeading = styled(Heading)(({ theme }) => ({
+const HeaderHeading = styled(Heading)({
   [mq.lg]: {
     textAlign: 'center',
-    fontSize: theme.fontSizes[8],
+    fontSize: theme.fontSizes.xxl,
   },
-}))
+})
 
 const StyledHeader = styled(Space)({
   height: '3.5rem',
@@ -152,4 +162,3 @@ const StyledHeader = styled(Space)({
     height: '7rem',
   },
 })
-Header.defaultProps = { as: 'header' }
