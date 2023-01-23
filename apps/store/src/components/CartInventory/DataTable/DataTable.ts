@@ -27,7 +27,7 @@ const HOUSEHOLD_SIZE_ROW = {
 
 const DATA_TABLE = {
   SE_APARTMENT_RENT: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
-  SE_APARTEMENT_BRF: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
+  SE_APARTMENT_BRF: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
   SE_APARTMENT_STUDENT: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
   SE_HOUSE: [
     STREET_ROW,
@@ -55,7 +55,7 @@ const DATA_TABLE = {
 } as const
 
 type DataTableKey = keyof typeof DATA_TABLE
-type DataTable = typeof DATA_TABLE[DataTableKey]
+type DataTable = (typeof DATA_TABLE)[DataTableKey]
 export type DataTableRow = DataTable[number]
 
 export const getDataTable = (key: string): DataTable | undefined => DATA_TABLE[key as DataTableKey]
