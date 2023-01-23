@@ -1,9 +1,21 @@
 import styled from '@emotion/styled'
+import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
+import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+import { ListItemChecked, ListItemUnchecked, StyledCheckList } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
+const appStoreLinks = {
+  apple: 'https://apps.apple.com/se/app/id1303668531?l=en',
+  google: 'https://play.google.com/store/apps/details?id=com.hedvig.app',
+} as const
+
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
+  const { locale } = useCurrentLocale()
+
   const { cart } = props
   return (
     <Wrapper>
@@ -17,8 +29,42 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
           </Text>
         </header>
         <main>
-          <Space y={1}>
-            <CartInventory cart={cart} readOnly />
+          <Space y={4}>
+            <section>
+              <CartInventory cart={cart} readOnly />
+            </section>
+            <section>
+              <Space y={1}>
+                <div>
+                  <Heading as="h1" variant="standard.24">
+                    Vad händer nu?
+                  </Heading>
+                  <Text as="p" color="textSecondary" size="xl">
+                    Ladda ner Hedvig appen till din mobil och kom igång med din nya försäkring.
+                  </Text>
+                </div>
+                <Space y={0.5}>
+                  <StyledCheckList>
+                    <ListItemChecked title="Teckna Hedvig" />
+                    <ListItemChecked title="Koppla autogiro" />
+                    <ListItemUnchecked title="Ladda ner Hedvig appen">
+                      {props.platform ? (
+                        <AppStoreBadge type={props.platform} locale={locale} />
+                      ) : (
+                        <SpaceFlex space={0.5}>
+                          <Link href={appStoreLinks.apple} passHref>
+                            <AppStoreBadge type={'apple'} locale={locale} />
+                          </Link>
+                          <Link href={appStoreLinks.google} passHref>
+                            <AppStoreBadge type={'google'} locale={locale} />
+                          </Link>
+                        </SpaceFlex>
+                      )}
+                    </ListItemUnchecked>
+                  </StyledCheckList>
+                </Space>
+              </Space>
+            </section>
           </Space>
         </main>
       </Space>
