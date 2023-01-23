@@ -1,26 +1,38 @@
 import styled from '@emotion/styled'
-import { mq } from 'ui'
+import { HedvigLogo, mq } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 export const Wrapper = styled.header(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center',
+  justifyContent: 'space-between',
   width: '100%',
   height: MENU_BAR_HEIGHT_MOBILE,
   padding: theme.space[4],
   position: 'sticky',
   zIndex: zIndexes.header,
 
-  [mq.md]: {
+  [mq.lg]: {
+    flexDirection: 'row',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    backgroundColor: theme.colors.gray100,
-    position: 'sticky',
+    backgroundColor: theme.colors.gray25,
     top: 0,
   },
 }))
+
+const LogoWrapper = styled.div({
+  flex: 1,
+})
+
+const ContentWrapper = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  flex: 1,
+})
 
 type HeaderProps = {
   children: React.ReactNode
@@ -28,8 +40,13 @@ type HeaderProps = {
 export const Header = ({ children }: HeaderProps) => {
   return (
     <Wrapper>
-      {children}
-      <ShoppingCartMenuItem />
+      <LogoWrapper>
+        <HedvigLogo />
+      </LogoWrapper>
+      <ContentWrapper>
+        {children}
+        <ShoppingCartMenuItem />
+      </ContentWrapper>
     </Wrapper>
   )
 }

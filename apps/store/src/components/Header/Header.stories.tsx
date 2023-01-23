@@ -8,9 +8,9 @@ import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationSecondaryList,
+  NavigationTrigger,
 } from './HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from './NavigationLink'
-import { ResponsiveNavTrigger } from './ResponsiveNavTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
@@ -49,7 +49,7 @@ const MockedNavItems = () => {
         <NavigationLink href="#">Home</NavigationLink>
       </NavigationMenuPrimitiveItem>
       <NavigationMenuPrimitiveItem value="Insurances">
-        <ResponsiveNavTrigger name="Insurances" />
+        <NavigationTrigger name="Insurances" />
         <NavigationMenuPrimitiveContent>
           <NavigationMenuPrimitive.Sub defaultValue="Insurances">
             <NavigationSecondaryList>

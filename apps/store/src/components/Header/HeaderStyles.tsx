@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { ArrowForwardIcon, ChevronIcon, CrossIcon, mq, theme } from 'ui'
+import { ChevronIcon, mq, theme } from 'ui'
 
 export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
 
@@ -45,29 +45,11 @@ export const navigationTriggerStyles = {
   gap: '0.5rem',
 }
 
-export const NavigationTriggerDesktop = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'none',
-  [mq.md]: {
-    ...navigationTriggerStyles,
-    ...focusableStyles,
-  },
-})
-
-export const StyledCrossIcon = styled(CrossIcon)()
-export const StyledArrowForwardIcon = styled(ArrowForwardIcon)()
-
-export const NavigationTriggerMobile = styled(NavigationMenuPrimitive.Trigger)({
-  ...navigationTriggerStyles,
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
   ...focusableStyles,
-  ['&[data-state=open]']: {
-    [StyledArrowForwardIcon.toString()]: { display: 'none' },
-  },
-  '&[data-state=closed]': {
-    [StyledCrossIcon.toString()]: { display: 'none' },
-  },
-  [mq.md]: {
-    display: 'none',
-  },
 })
 
 export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
@@ -79,7 +61,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   flexDirection: 'column',
   gap: theme.space[5],
   padding: `${theme.space[8]} ${theme.space[4]} 0`,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.gray25,
 
   [mq.md]: {
     position: 'static',
@@ -105,6 +87,6 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
     rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
     borderRadius: '0.5rem',
-    backgroundColor: theme.colors.gray100,
+    backgroundColor: theme.colors.gray25,
   },
 }))

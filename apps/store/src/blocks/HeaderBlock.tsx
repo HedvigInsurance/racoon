@@ -5,9 +5,9 @@ import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationSecondaryList,
+  NavigationTrigger,
 } from '@/components/Header/HeaderStyles'
 import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
-import { ResponsiveNavTrigger } from '@/components/Header/ResponsiveNavTrigger'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -42,7 +42,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <ResponsiveNavTrigger name={blok.name} />
+      <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>

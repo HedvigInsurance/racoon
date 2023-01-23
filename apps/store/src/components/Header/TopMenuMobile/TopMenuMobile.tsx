@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { CrossIcon, mq } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
-import { MenuIcon } from '../MenuIcon'
 
 export const IconButton = styled.button({
   position: 'absolute',
@@ -12,7 +11,7 @@ export const IconButton = styled.button({
   left: '1rem',
   lineHeight: 0,
   ...focusableStyles,
-  [mq.md]: {
+  [mq.lg]: {
     display: 'none',
   },
 })
@@ -22,7 +21,7 @@ export const ToggleMenu = styled.button({
   '&[data-state=open]': {
     visibility: 'hidden',
   },
-  [mq.md]: {
+  [mq.lg]: {
     display: 'none',
   },
 })
@@ -49,11 +48,7 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogPrimitive.Trigger asChild>
-          <ToggleMenu>
-            <MenuIcon />
-          </ToggleMenu>
-        </DialogPrimitive.Trigger>
+        <DialogPrimitive.Trigger asChild>Menu</DialogPrimitive.Trigger>
 
         <DialogContent>
           <Navigation>
