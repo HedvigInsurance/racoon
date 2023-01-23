@@ -7,7 +7,9 @@ const CLIENT_CONFIG = {
   site: 'datadoghq.eu',
   env: process.env.NEXT_PUBLIC_DATADOG_ENV || 'local',
   sampleRate: 100,
-  version: process.env.NEXT_PUBLIC_DATADOG_VERSION || process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
+  version:
+    process.env.NEXT_PUBLIC_DATADOG_VERSION ||
+    `${process.env.VERCEL_GIT_COMMIT_REF}_${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`,
 }
 
 const applicationId = process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID

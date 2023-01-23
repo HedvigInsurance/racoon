@@ -1,4 +1,6 @@
 {
+  "BANKID_MODAL_CANCEL": "Annuller",
+  "BANKID_MODAL_DESCRIPTION": "Åbn BankID appen på din telefon.",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer",
   "CONTACT_DETAILS_FORM_TITLE": "Dine kontaktoplysninger",
@@ -7,6 +9,5 @@
   "FORM_EMAIL_LABEL": "Email",
   "FORM_FIRST_NAME_LABEL": "Fornavn(e)",
   "FORM_LAST_NAME_LABEL": "Efternavn",
-  "OPEN_BANKID_DESCRIPTION": "Åbn BankID appen på din telefon.",
   "SIGN_DISCLAIMER": "Du forbinder autogiro efter du tilmelder dig Hedvig. Det håndteres sikkert via Trustly."
 }
