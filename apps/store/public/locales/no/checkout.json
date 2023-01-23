@@ -1,8 +1,8 @@
 {
+  "BANKID_MODAL_DESCRIPTION": "Åpne BankID-appen på din telefon.",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer",
   "CONTACT_DETAILS_FORM_TITLE": "Din kontaktinformasjon",
   "FORM_EMAIL_LABEL": "E-post",
-  "OPEN_BANKID_DESCRIPTION": "Åpne BankID-appen på din telefon.",
   "SIGN_DISCLAIMER": "Du kobler Autogiro etter at du har signert med Hedvig. Det er trygt ivaretatt av vår partner Trustly."
 }
