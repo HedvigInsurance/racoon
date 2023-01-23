@@ -19,6 +19,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { BankIdIcon } from './BankIdIcon'
+import { Breadcrumbs } from './Breadcrumbs'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
@@ -57,8 +58,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
       <Space y={{ base: 1, lg: 2.5 }}>
         <Header>
-          <HedvigLogo width={78} />
-          <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
+          <HeaderLogo>
+            <HedvigLogo width={78} />
+          </HeaderLogo>
+          <HeaderBreadcrumbs>
+            <Breadcrumbs />
+          </HeaderBreadcrumbs>
+          <HeaderBack>
+            <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
+          </HeaderBack>
         </Header>
         <Wrapper y={{ base: 2, lg: 3.5 }}>
           <Heading as="h1" variant="standard.24" align="center">
@@ -163,11 +171,28 @@ const Wrapper = styled(Space)({
 
 const Header = styled.header({
   paddingInline: theme.space.md,
-  height: '3.5rem',
-  display: 'flex',
+
+  display: 'grid',
+  gridTemplateAreas: `
+    'logo back'
+    'breadcrumbs breadcrumbs'
+  `,
+  gridTemplateColumns: '1fr auto',
+  gridTemplateRows: '3rem 3rem',
   alignItems: 'center',
-  justifyContent: 'space-between',
+
+  [mq.md]: {
+    gridTemplateAreas: `
+      'logo breadcrumbs back'
+    `,
+    gridTemplateColumns: '1fr minmax(28rem, 33%) 1fr',
+    gridTemplateRows: '3.5rem',
+  },
 })
+
+const HeaderLogo = styled.div({ gridArea: 'logo' })
+const HeaderBreadcrumbs = styled.div({ gridArea: 'breadcrumbs' })
+const HeaderBack = styled.div({ gridArea: 'back', justifySelf: 'flex-end' })
 
 const HeaderLink = styled(Link)({
   backgroundColor: theme.colors.light,
