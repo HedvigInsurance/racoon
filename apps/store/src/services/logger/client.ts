@@ -47,11 +47,11 @@ export const initDatadog = () => {
     ...CLIENT_CONFIG,
     clientToken,
     applicationId,
-    trackInteractions: true,
+    trackUserInteractions: true,
     defaultPrivacyLevel: 'mask-user-input',
     silentMultipleInit: true,
 
-    allowedTracingOrigins: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
+    allowedTracingUrls: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
       ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
       : undefined,
   })
