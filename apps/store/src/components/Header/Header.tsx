@@ -29,9 +29,12 @@ const LogoWrapper = styled.div({
 const ContentWrapper = styled.div({
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
   alignItems: 'center',
   flex: 1,
+  [mq.lg]: {
+    justifyContent: 'space-between',
+  },
 })
 
 type HeaderProps = {
