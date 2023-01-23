@@ -1,32 +1,32 @@
 {
   "folders": [
     {
-      "name": "ROOT",
+      "name": "✨ ROOT",
       "path": "../"
     },
     {
-      "name": "apps/onboarding",
+      "name": "📱 onboarding",
       "path": "../apps/onboarding"
     },
     {
-      "name": "apps/store",
+      "name": "📱 store",
       "path": "../apps/store"
     },
     {
-      "name": "packages/ui",
+      "name": "📦 ui",
       "path": "../packages/ui"
     },
     {
-      "name": "packages/tsconfig",
+      "name": "📦 tsconfig",
       "path": "../packages/tsconfig"
     },
     {
-      "name": "packages/eslint-config-custom",
+      "name": "📦 eslint-config-custom",
       "path": "../packages/eslint-config-custom"
     }
   ],
   "settings": {
-    "jest.disabledWorkspaceFolders": ["ROOT", "packages/scripts", "packages/tsconfig"],
+    "jest.disabledWorkspaceFolders": ["✨ ROOT", "📦 eslint-config-custom", "📦 tsconfig"],
     "jest.jestCommandLine": "yarn test",
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
