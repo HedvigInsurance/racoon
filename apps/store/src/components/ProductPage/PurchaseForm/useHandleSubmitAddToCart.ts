@@ -1,4 +1,3 @@
-import { BaseMutationOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler, useCallback } from 'react'
 import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
@@ -34,31 +33,33 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
 }
 
 type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]
-type CartEntryAddOnCompletedOptions = BaseMutationOptions<CartEntryAddMutation>
 
 const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
   const tracking = useTracking()
+  const [mutate, mutationResult] = useCartEntryAddMutation(mutationOptions)
+  const addCartEntry = useCallback(
+    (options: CartEntryAddOptions = {}) => {
+      const handleCompleted = (data: CartEntryAddMutation) => {
+        if (!data.cartEntriesAdd.cart) return
 
-  const handleCompleted = useCallback(
-    (data: CartEntryAddMutation, options: CartEntryAddOnCompletedOptions = {}) => {
-      if (!data.cartEntriesAdd.cart) return
+        const { variables } = options
+        const addedOffer = data.cartEntriesAdd.cart.entries.find(
+          (entry) => entry.id === variables?.offerId,
+        )
+        if (addedOffer) {
+          tracking.reportAddToCart(addedOffer)
+        } else {
+          datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
+            ...variables,
+          })
+        }
 
-      const { variables } = options
-
-      const addedOffer = data.cartEntriesAdd.cart.entries.find(
-        (entry) => entry.id === variables?.offerId,
-      )
-      if (addedOffer) {
-        tracking.reportAddToCart(addedOffer)
-      } else {
-        datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
-          ...variables,
-        })
+        options.onCompleted?.(data)
       }
 
-      options.onCompleted?.(data)
+      return mutate({ ...options, onCompleted: handleCompleted })
     },
-    [tracking],
+    [mutate, tracking],
   )
-  return useCartEntryAddMutation({ ...mutationOptions, onCompleted: handleCompleted })
+  return [addCartEntry, mutationResult] as const
 }
