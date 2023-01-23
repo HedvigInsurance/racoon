@@ -8,7 +8,7 @@ import { CartEntry } from './CartInventory.types'
 import { DetailsSheetDialog } from './DetailsSheetDialog'
 import { RemoveEntryDialog } from './RemoveEntryDialog'
 
-type Props = CartEntry & { cartId: string; readOnly: boolean }
+type Props = CartEntry & { cartId: string; readOnly?: boolean }
 
 export const CartEntryItem = (props: Props) => {
   const { cartId, readOnly, ...cartEntry } = props

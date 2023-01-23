@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-// import { useTranslation } from 'next-i18next'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
