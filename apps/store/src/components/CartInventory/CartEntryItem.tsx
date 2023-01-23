@@ -8,10 +8,10 @@ import { CartEntry } from './CartInventory.types'
 import { DetailsSheetDialog } from './DetailsSheetDialog'
 import { RemoveEntryDialog } from './RemoveEntryDialog'
 
-type Props = CartEntry & { cartId: string }
+type Props = CartEntry & { cartId: string; readOnly: boolean }
 
 export const CartEntryItem = (props: Props) => {
-  const { cartId, ...cartEntry } = props
+  const { cartId, readOnly, ...cartEntry } = props
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
@@ -46,13 +46,15 @@ export const CartEntryItem = (props: Props) => {
                 </Button>
               </Dialog.Trigger>
             </DetailsSheetDialog>
-            <RemoveEntryDialog cartId={cartId} {...cartEntry}>
-              <Dialog.Trigger asChild>
-                <Button variant="ghost" size="small">
-                  {t('REMOVE_ENTRY_BUTTON')}
-                </Button>
-              </Dialog.Trigger>
-            </RemoveEntryDialog>
+            {!readOnly && (
+              <RemoveEntryDialog cartId={cartId} {...cartEntry}>
+                <Dialog.Trigger asChild>
+                  <Button variant="ghost" size="small">
+                    {t('REMOVE_ENTRY_BUTTON')}
+                  </Button>
+                </Dialog.Trigger>
+              </RemoveEntryDialog>
+            )}
           </SpaceFlex>
         </Space>
       </LayoutActions>

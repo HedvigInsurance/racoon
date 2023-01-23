@@ -1,99 +1,111 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
-import { ReactNode } from 'react'
-import { Heading, Space, Text } from 'ui'
-import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
-import { useFormatter } from '@/utils/useFormatter'
-import { useGetDiscountDurationExplanation } from './CartInventory.helpers'
+// import { useTranslation } from 'next-i18next'
+import { Space, theme } from 'ui'
+import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
+import { convertToDate } from '@/utils/date'
+import { CampaignCodeList } from './CampaignCodeList'
+import { CartEntryItem } from './CartEntryItem'
+import { CartEntryList } from './CartEntryList'
+import {
+  useGetDiscountDurationExplanation,
+  useGetDiscountExplanation,
+} from './CartInventory.helpers'
+import { CostSummary } from './CostSummary'
+import { ReadOnlyCampaignCodeList } from './ReadOnlyCampaignCodeList'
 
 type Props = {
   cart: CartFragmentFragment
-  children: (offer: ProductOfferFragment) => ReactNode
+  readOnly?: boolean
 }
 
-export const CartInventory = ({ cart, children }: Props) => {
-  const { t } = useTranslation('cart')
+export const CartInventory = ({ cart, readOnly = false }: Props) => {
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+  const getDiscountExplanation = useGetDiscountExplanation()
+
   const campaigns = cart.redeemedCampaigns.map((item) => ({
-    discount: item.discount,
+    id: item.id,
+    code: item.code,
+    discountExplanation: getDiscountExplanation(item.discount),
+    discountDurationExplanation: getDiscountDurationExplanation(
+      cart.redeemedCampaigns[0].discount,
+      cart.cost.gross,
+    ),
   }))
-  const hasDiscount = cart.redeemedCampaigns.length !== 0
+
+  const cost = {
+    total: getCartTotal(cart),
+    crossOut: getCartCrossOut(cart),
+  }
 
   return (
-    <Space y={1}>
-      <List>
-        {cart.entries.map((offer) => (
-          <li key={offer.id}>{children(offer)}</li>
+    <Space y={1.5}>
+      <CartEntryList>
+        {cart.entries.map((item) => (
+          <CartEntryItem
+            key={item.id}
+            offerId={item.id}
+            title={item.variant.product.displayNameFull}
+            cost={item.price}
+            pillow={{
+              src: item.variant.product.pillowImage.src,
+              alt: item.variant.product.pillowImage.alt ?? '',
+            }}
+            documents={item.variant.documents}
+            productName={item.variant.product.name}
+            data={item.priceIntentData}
+            cartId={cart.id}
+            startDate={convertToDate(item.startDate) ?? undefined}
+            readOnly={readOnly}
+          />
         ))}
-      </List>
-      <Footer>
-        <TotalWrapper>
-          <Heading as="h3" variant="standard.18">
-            {t('CHECKOUT_PRICE_TOTAL')}
-          </Heading>
-          <DisplayTotalAmount cost={cart.cost} hasDiscount={hasDiscount} />
-        </TotalWrapper>
-        {campaigns.map((campaign) => (
-          <DiscountMessage key={campaign.discount.type}>
-            {getDiscountDurationExplanation(campaign.discount, cart.cost.gross)}
-          </DiscountMessage>
-        ))}
-      </Footer>
+      </CartEntryList>
+      <HorizontalLine />
+      {!readOnly && (
+        <>
+          <CampaignCodeList cartId={cart.id} campaigns={campaigns} />
+          <HorizontalLine />
+        </>
+      )}
+      {readOnly && campaigns.length > 0 && (
+        <>
+          <ReadOnlyCampaignCodeList campaigns={campaigns} />
+          <HorizontalLine />
+        </>
+      )}
+
+      <CostSummary {...cost} campaigns={campaigns} />
     </Space>
   )
 }
 
-type DisplayTotalAmountProps = {
-  cost: CartFragmentFragment['cost']
-  hasDiscount: boolean
-}
-const DisplayTotalAmount = ({ cost, hasDiscount }: DisplayTotalAmountProps) => {
-  const formatter = useFormatter()
-  const { gross, net } = cost
+const getCartTotal = (cart: CartFragmentFragment) => {
+  const hasDiscount = cart.redeemedCampaigns.length !== 0
 
-  if (hasDiscount) {
-    return (
-      <SpaceBetweenPrice>
-        <LineThroughPrice>{formatter.monthlyPrice(gross)}</LineThroughPrice>
-        <Text>{formatter.monthlyPrice(net)}</Text>
-      </SpaceBetweenPrice>
-    )
+  if (!hasDiscount) return cart.cost.net
+  // TODO: Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
+  switch (cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+      return cart.cost.discount
+    default:
+      return cart.cost.net
   }
-
-  return <Text>{formatter.monthlyPrice(gross)}</Text>
 }
 
-const LineThroughPrice = styled(Text)(({ theme }) => ({
-  color: theme.colors.textSecondary,
-  textDecoration: 'line-through',
-}))
+const getCartCrossOut = (cart: CartFragmentFragment) => {
+  const hasDiscount = cart.redeemedCampaigns.length !== 0
 
-const SpaceBetweenPrice = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: theme.space[2],
-}))
+  if (!hasDiscount) return undefined
+  switch (cart.redeemedCampaigns[0].discount.type) {
+    case CampaignDiscountType.FreeMonths:
+    case CampaignDiscountType.MonthlyPercentage:
+      return cart.cost.gross
+    case CampaignDiscountType.IndefinitePercentage:
+    case CampaignDiscountType.MonthlyCost:
+      return cart.cost.discount
+  }
+}
 
-const List = styled.ul(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space[4],
-}))
-
-const Footer = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+const HorizontalLine = styled.hr({
+  backgroundColor: theme.colors.gray300,
+  height: 1,
 })
-
-const TotalWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-})
-
-const DiscountMessage = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  color: theme.colors.textSecondary,
-  fontSize: theme.fontSizes[1],
-}))
