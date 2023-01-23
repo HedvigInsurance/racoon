@@ -14,7 +14,7 @@ export const focusableStyles = {
 }
 
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  backgroundColor: theme.colors.gray200,
+  backgroundColor: theme.colors.light,
   fontSize: theme.fontSizes[5],
   [mq.md]: {
     fontSize: theme.fontSizes[3],
