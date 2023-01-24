@@ -7,35 +7,32 @@ type ListItemProps = {
   children?: React.ReactNode
 }
 
-export const ListItemChecked = ({ title }: ListItemProps) => {
-  return (
-    <CheckListItem checked>
-      <SpaceFlex align="center" space={0.5}>
-        <PresentationCheckboxChecked>
-          <CheckIcon size="1rem" />
-        </PresentationCheckboxChecked>
-        <Text>{title}</Text>
-      </SpaceFlex>
-    </CheckListItem>
-  )
-}
-export const ListItemUnchecked = ({ children, title }: ListItemProps) => {
-  return (
-    <CheckListItem>
-      <SpaceFlex align="center" space={0.5}>
-        <PresentationCheckboxUnchecked />
-        <Text>{title}</Text>
-      </SpaceFlex>
-      <CheckListItemContent>{children}</CheckListItemContent>
-    </CheckListItem>
-  )
-}
+export const CheckedListItem = ({ title }: ListItemProps) => (
+  <CheckListItem checked>
+    <SpaceFlex align="center" space={0.5}>
+      <PresentationCheckboxChecked>
+        <CheckIcon size="1rem" />
+      </PresentationCheckboxChecked>
+      <Text>{title}</Text>
+    </SpaceFlex>
+  </CheckListItem>
+)
+
+export const UncheckedListItem = ({ children, title }: ListItemProps) => (
+  <CheckListItem>
+    <SpaceFlex align="center" space={0.5}>
+      <PresentationCheckboxUnchecked />
+      <Text>{title}</Text>
+    </SpaceFlex>
+    <CheckListItemContent>{children}</CheckListItemContent>
+  </CheckListItem>
+)
 
 export const StyledCheckList = styled.ul({
-  listStyle: 'none',
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
+  listStyle: 'none',
 })
 
 const CheckListItem = styled.li<{ checked?: boolean }>(({ checked = false }) => ({
@@ -60,20 +57,20 @@ const CheckListItemContent = styled.div({
   paddingLeft: `calc(${theme.space.lg} + ${theme.space.xs})`,
 })
 
-const PresentationCheckboxChecked = styled.div({
+const PresentationCheckboxBase = styled.div({
+  height: theme.space.lg,
+  width: theme.space.lg,
+  color: theme.colors.white,
+  borderRadius: theme.radius.xs,
+})
+
+const PresentationCheckboxChecked = styled(PresentationCheckboxBase)({
   display: 'grid  ',
   placeItems: 'center',
   backgroundColor: theme.colors.green600,
-  borderRadius: theme.radius.xs,
-  color: theme.colors.white,
-  height: theme.space.lg,
-  width: theme.space.lg,
 })
-const PresentationCheckboxUnchecked = styled.div({
+
+const PresentationCheckboxUnchecked = styled(PresentationCheckboxBase)({
   backgroundColor: 'transparent',
-  height: theme.space.lg,
   border: `2px solid ${theme.colors.gray300}`,
-  borderRadius: theme.radius.xs,
-  color: theme.colors.white,
-  width: theme.space.lg,
 })

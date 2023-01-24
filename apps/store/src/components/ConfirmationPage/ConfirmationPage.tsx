@@ -5,7 +5,7 @@ import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
-import { ListItemChecked, ListItemUnchecked, StyledCheckList } from './CheckList'
+import { CheckedListItem, UncheckedListItem, StyledCheckList } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
 const appStoreLinks = {
@@ -45,9 +45,9 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                 </div>
                 <Space y={0.5}>
                   <StyledCheckList>
-                    <ListItemChecked title="Teckna Hedvig" />
-                    <ListItemChecked title="Koppla autogiro" />
-                    <ListItemUnchecked title="Ladda ner Hedvig appen">
+                    <CheckedListItem title="Teckna Hedvig" />
+                    <CheckedListItem title="Koppla autogiro" />
+                    <UncheckedListItem title="Ladda ner Hedvig appen">
                       {props.platform ? (
                         <AppStoreBadge type={props.platform} locale={locale} />
                       ) : (
@@ -60,7 +60,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                           </Link>
                         </SpaceFlex>
                       )}
-                    </ListItemUnchecked>
+                    </UncheckedListItem>
                   </StyledCheckList>
                 </Space>
               </Space>
