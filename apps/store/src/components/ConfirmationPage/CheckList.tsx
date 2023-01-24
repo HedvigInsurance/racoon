@@ -9,7 +9,7 @@ type ListItemProps = {
 }
 
 const CheckedListItem = ({ title, children }: ListItemProps) => (
-  <StyledListItem.Checked>
+  <StyledCheckListItem.Checked>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxChecked>
         <CheckIcon size="1rem" />
@@ -17,17 +17,17 @@ const CheckedListItem = ({ title, children }: ListItemProps) => (
       <Text>{title}</Text>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
-  </StyledListItem.Checked>
+  </StyledCheckListItem.Checked>
 )
 
 const UncheckedListItem = ({ title, children }: ListItemProps) => (
-  <StyledListItem.Unchecked>
+  <StyledCheckListItem.Unchecked>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxUnchecked />
       <Text>{title}</Text>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
-  </StyledListItem.Unchecked>
+  </StyledCheckListItem.Unchecked>
 )
 
 export const CheckListItem = {
@@ -61,7 +61,7 @@ const StyledCheckedListItem = styled.li(
 
 const StyledUncheckedListItem = styled.li({}, ListItemBase)
 
-const StyledListItem = {
+const StyledCheckListItem = {
   Checked: StyledCheckedListItem,
   Unchecked: StyledUncheckedListItem,
 }
