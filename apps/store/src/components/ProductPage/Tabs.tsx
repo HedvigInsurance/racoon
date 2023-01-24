@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { zIndexes } from '@/utils/zIndex'
 
+export type { TabsProps } from '@radix-ui/react-tabs'
+
 export const Tabs = styled(RadixTabs.Root)({
   position: 'relative',
   display: 'flex',
