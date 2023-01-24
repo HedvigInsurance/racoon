@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
-import { getMobilePlatform } from '@/components/ConfirmationPage/ConfirmationPage.helpers'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 // import { PageLink } from '@/lib/PageLink'
@@ -10,6 +9,7 @@ import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.const
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Params = { shopSessionId: string }
