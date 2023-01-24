@@ -15,8 +15,8 @@ const appStoreLinks = {
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
   const { locale } = useCurrentLocale()
+  const { platform, cart } = props
 
-  const { cart } = props
   return (
     <Wrapper>
       <Space y={4}>
@@ -48,8 +48,8 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                     <CheckedListItem title="Teckna Hedvig" />
                     <CheckedListItem title="Koppla autogiro" />
                     <UncheckedListItem title="Ladda ner Hedvig appen">
-                      {props.platform ? (
-                        <AppStoreBadge type={props.platform} locale={locale} />
+                      {platform ? (
+                        <AppStoreBadge type={platform} locale={locale} />
                       ) : (
                         <SpaceFlex space={0.5}>
                           <Link href={appStoreLinks.apple} passHref>
