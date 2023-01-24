@@ -9,7 +9,7 @@ type ListItemProps = {
 }
 
 const CheckedListItem = ({ title, children }: ListItemProps) => (
-  <StyledCheckListItem.Checked>
+  <StyledCheckedListItem>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxChecked>
         <CheckIcon size="1rem" />
@@ -17,17 +17,17 @@ const CheckedListItem = ({ title, children }: ListItemProps) => (
       <Text>{title}</Text>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
-  </StyledCheckListItem.Checked>
+  </StyledCheckedListItem>
 )
 
 const UncheckedListItem = ({ title, children }: ListItemProps) => (
-  <StyledCheckListItem.Unchecked>
+  <StyledUncheckedListItem>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxUnchecked />
       <Text>{title}</Text>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
-  </StyledCheckListItem.Unchecked>
+  </StyledUncheckedListItem>
 )
 
 export const CheckListItem = {
@@ -41,7 +41,7 @@ export const CheckList = styled.ul({
   gap: theme.space.xxs,
 })
 
-const ListItemBase = css({
+const CheckListItemBase = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -56,15 +56,10 @@ const StyledCheckedListItem = styled.li(
     color: theme.colors.textDisabled,
     textDecoration: 'line-through',
   },
-  ListItemBase,
+  CheckListItemBase,
 )
 
-const StyledUncheckedListItem = styled.li({}, ListItemBase)
-
-const StyledCheckListItem = {
-  Checked: StyledCheckedListItem,
-  Unchecked: StyledUncheckedListItem,
-}
+const StyledUncheckedListItem = styled.li({}, CheckListItemBase)
 
 const CheckListItemContent = styled.div({
   paddingLeft: `calc(${theme.space.lg} + ${theme.space.xs})`,
