@@ -20,5 +20,12 @@
   "FORM_LAST_NAME_LABEL": "Efternamn",
   "SIGN_BUTTON_one": "Teckna försäkring",
   "SIGN_BUTTON_other": "Teckna försäkringar",
-  "SIGN_DISCLAIMER": "Efter att du tecknat Hedvig kopplar du Autogiro. Vi hanterar det tryggt via Trustly."
+  "SIGN_DISCLAIMER": "Efter att du tecknat Hedvig kopplar du Autogiro. Vi hanterar det tryggt via Trustly.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Godkänn uppsägning ↗︎",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Godkänn uppsägning senast {{date}}.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING": "Väntar på godkännande",
+  "SWITCHING_ASSISTANT_CARD_EXPAND": "Läs mer",
+  "SWITCHING_ASSISTANT_SKIP_LINK": "Påminn mig senare",
+  "SWITCHING_ASSISTANT_SUPPORT_LINK": "Hjälp",
+  "SWITCHING_ASSISTANT_TITLE": "Säg upp din gamla bilförsäkring"
 }
