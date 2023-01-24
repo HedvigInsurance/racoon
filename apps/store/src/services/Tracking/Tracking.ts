@@ -21,6 +21,7 @@ export enum TrackingEvent {
   OfferCreated = 'offer_created',
   PageView = 'virtual_page_view',
   Purchase = 'purchase',
+  SelectItem = 'select_item',
   SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
@@ -91,6 +92,27 @@ export class Tracking {
     }
     console.debug(event.event, variantId)
     pushToGTMDataLayer(event)
+  }
+
+  public reportViewProductPage(productData: { id: string; displayNameShort: string }) {
+    const event = {
+      event: TrackingEvent.SelectItem,
+      ecommerce: {
+        // TODO: Support recommendations as separate list
+        item_list_id: 'store',
+        item_list_name: 'Store',
+        items: [
+          {
+            item_id: productData.id,
+            item_name: productData.displayNameShort,
+          },
+        ],
+      },
+      shopSession: {
+        id: this.context[TrackingContextKey.ShopSessionId] as string,
+      },
+    }
+    this.reportEcommerceEvent(event)
   }
 
   // Legacy event in market-web format
