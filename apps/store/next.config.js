@@ -39,23 +39,28 @@ const scriptSrcDirectives = [
   "'self'",
 ]
 const styleSrcDirectives = [
-  'fonts.googleapis.com', // GTM preview mode
+  'https://fonts.googleapis.com', // GTM preview mode
   "'unsafe-inline'",
   "'self'",
 ]
 const fontSrcDirectives = [
   'https://fonts.intercomcdn.com',
-  'fonts.gstatic.com', // GTM preview mode
+  'https://fonts.gstatic.com', // GTM preview mode
   "'self'",
 ]
 const imgSrcDirectives = [
   'https://promise.hedvig.com',
   'https://*.storyblok.com',
+  // Intercom
   'https://downloads.intercomcdn.com',
   'https://static.intercomassets.com',
+  // Google
+  'https://www.gstatic.com',
   'https://www.googletagmanager.com',
+  // Vercel
   'https://assets.vercel.com',
-  'https://vercel.com', // Vercel Live
+  'https://vercel.com',
+
   'blob:',
   'data:',
   "'self'",
