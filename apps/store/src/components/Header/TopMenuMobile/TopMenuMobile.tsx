@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { Button, mq, theme } from 'ui'
+import { Button, mq, Space, theme } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
 const triggerStyles = {
@@ -21,6 +21,14 @@ export const DialogTrigger = styled(DialogPrimitive.Trigger)({
 export const DialogClose = styled(DialogPrimitive.DialogClose)({
   ...triggerStyles,
 })
+
+const ButtonWrapper = styled(Space)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingTop: theme.space[4],
+}))
 
 export type TopMenuMobileProps = {
   isOpen?: boolean
@@ -43,14 +51,18 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
         {open ? <DialogClose>Close</DialogClose> : <DialogTrigger>Menu</DialogTrigger>}
         <DialogContent>
           <Navigation>
-            <NavigationPrimaryList>{children}</NavigationPrimaryList>
+            <NavigationPrimaryList>
+              {children}
+              <ButtonWrapper x={0.25}>
+                <Button variant="secondary" size="medium">
+                  App Store
+                </Button>
+                <Button variant="secondary" size="medium">
+                  Google Play
+                </Button>
+              </ButtonWrapper>
+            </NavigationPrimaryList>
           </Navigation>
-          <Button variant="secondary" size="medium">
-            App Store
-          </Button>
-          <Button variant="secondary" size="medium">
-            Google Play
-          </Button>
         </DialogContent>
       </DialogPrimitive.Root>
     </>

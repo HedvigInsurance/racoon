@@ -1,6 +1,5 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { Space } from 'ui'
 import { Header } from '@/components/Header/Header'
 import {
   NavigationMenuPrimitiveContent,
@@ -50,28 +49,24 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <Space y={1}>
-        <NavigationTrigger>{blok.name}</NavigationTrigger>
-        <NavigationMenuPrimitiveContent>
-          <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-            <NavigationSecondaryList>
-              {filteredNavItems.map((nestedBlock) => (
-                <NavigationMenuSecondaryItem
-                  key={nestedBlock._uid}
-                  value={nestedBlock.name}
-                  {...storyblokEditable(nestedBlock)}
-                >
-                  <SecondaryNavigationLink
-                    href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
-                  >
-                    {nestedBlock.name}
-                  </SecondaryNavigationLink>
-                </NavigationMenuSecondaryItem>
-              ))}
-            </NavigationSecondaryList>
-          </NavigationMenuPrimitive.Sub>
-        </NavigationMenuPrimitiveContent>
-      </Space>
+      <NavigationTrigger>{blok.name}</NavigationTrigger>
+      <NavigationMenuPrimitiveContent>
+        <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+          <NavigationSecondaryList>
+            {filteredNavItems.map((nestedBlock) => (
+              <NavigationMenuSecondaryItem
+                key={nestedBlock._uid}
+                value={nestedBlock.name}
+                {...storyblokEditable(nestedBlock)}
+              >
+                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
+                  {nestedBlock.name}
+                </SecondaryNavigationLink>
+              </NavigationMenuSecondaryItem>
+            ))}
+          </NavigationSecondaryList>
+        </NavigationMenuPrimitive.Sub>
+      </NavigationMenuPrimitiveContent>
     </NavigationMenuPrimitiveItem>
   )
 }

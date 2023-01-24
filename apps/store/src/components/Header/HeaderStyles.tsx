@@ -23,27 +23,39 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 })
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.colors.border}`,
   padding: `${theme.space[5]} 0`,
+  '&:not(:last-child)': {
+    borderBottom: `1px solid ${theme.colors.border}`,
+  },
   [mq.lg]: {
     padding: `0 ${theme.space[4]}`,
   },
 }))
 
 export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
-  padding: `${theme.space[4]} 0`,
+  padding: `${theme.space[4]} 0 `,
+  marginLeft: theme.space[4],
 
   [mq.lg]: {
-    padding: `0 ${theme.space[4]}`,
+    padding: `${theme.space[4]} 0`,
+    margin: 0,
   },
 }))
 
-export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
-  [mq.lg]: {
-    position: 'absolute',
-    top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
-  },
-}))
+export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(
+  ({ theme }) => ({
+    [mq.lg]: {
+      position: 'absolute',
+      top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space[2]})`,
+      backgroundColor: theme.colors.light,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      borderRadius: theme.radius[1],
+      padding: `${theme.space[5]}`,
+    },
+  }),
+)
 
 export const TriggerIcon = styled(ChevronIcon)({
   transition: 'transform 300ms',
@@ -78,7 +90,6 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
     flexDirection: 'row',
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    padding: '0 0 0 0.5rem',
   },
 }))
 
@@ -86,14 +97,6 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
   all: 'unset',
   listStyle: 'none',
   padding: `${theme.space[4]} 0`,
-
-  [mq.lg]: {
-    gap: 'none',
-    rowGap: theme.space[4],
-    padding: `${theme.space[4]} 0`,
-    borderRadius: '0.5rem',
-    backgroundColor: theme.colors.light,
-  },
 }))
 
 export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
@@ -110,7 +113,6 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ the
     gap: 'none',
     rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
-    borderRadius: '0.5rem',
-    backgroundColor: theme.colors.light,
+    gridTemplateColumns: '1fr 1fr 1fr 1fr',
   },
 }))

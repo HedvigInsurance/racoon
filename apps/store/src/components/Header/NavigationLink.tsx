@@ -10,11 +10,10 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   ...focusableStyles,
 })
 
-const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)(({ theme }) => ({
+const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
   textDecoration: 'none',
-  marginLeft: theme.space[4],
   ...focusableStyles,
-}))
+})
 
 const ProductNavigationLinkCard = styled(Space)({
   display: 'flex',
