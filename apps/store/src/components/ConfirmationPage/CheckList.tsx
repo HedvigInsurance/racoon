@@ -30,12 +30,12 @@ const UncheckedListItem = ({ title, children }: ListItemProps) => (
   </StyledListItem.Unchecked>
 )
 
-export const ListItem = {
+export const CheckListItem = {
   Checked: CheckedListItem,
   Unchecked: UncheckedListItem,
 }
 
-export const StyledCheckList = styled.ul({
+export const CheckList = styled.ul({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
