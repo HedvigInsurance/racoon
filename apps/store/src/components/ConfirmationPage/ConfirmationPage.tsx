@@ -1,70 +1,72 @@
 import styled from '@emotion/styled'
-import { Heading, Space, Text } from 'ui'
-import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
+import Link from 'next/link'
+import { Heading, mq, Space, Text, theme } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
-import * as InventoryItem from '@/components/CartInventory/InventoryItem'
-import { Pillow } from '@/components/Pillow/Pillow'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useFormatter } from '@/utils/useFormatter'
+import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
+import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
+const appStoreLinks = {
+  apple: 'https://apps.apple.com/se/app/id1303668531?l=en',
+  google: 'https://play.google.com/store/apps/details?id=com.hedvig.app',
+} as const
+
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
-  const { cart, platform } = props
   const { locale } = useCurrentLocale()
-  const formatter = useFormatter()
+  const { platform, cart } = props
 
   return (
     <Wrapper>
       <Space y={4}>
         <header>
-          <Space y={2.5}>
-            <Space y={1}>
-              <CenteredHeading as="h1" variant="standard.24">
-                Welcome to Hedvig!
-              </CenteredHeading>
-            </Space>
-
-            <CenteredList>
-              {platform ? (
-                <AppStoreBadge type={platform} locale={locale} />
-              ) : (
-                <>
-                  <AppStoreBadge type="apple" locale={locale} />
-                  <AppStoreBadge type="google" locale={locale} />
-                </>
-              )}
-            </CenteredList>
-          </Space>
+          <Heading as="h1" variant="standard.24">
+            Ditt köp är klart!
+          </Heading>
+          <Text as="p" color="textSecondary" size="xl">
+            En bekräftelse har skickats via mail.
+          </Text>
         </header>
-
         <main>
-          <Space y={1}>
-            <Heading as="h2" variant="standard.18">
-              Your purchase
-            </Heading>
-
-            <CartInventory cart={cart}>
-              {(offer) => (
-                <InventoryItem.Root>
-                  <InventoryItem.Left>
-                    <Pillow size="small" />
-                  </InventoryItem.Left>
-                  <InventoryItem.Main>
-                    <InventoryItem.MainLeft>
-                      <p>{offer.variant.product.displayNameFull}</p>
-                    </InventoryItem.MainLeft>
-                    <InventoryItem.MainRight>
-                      {formatter.monthlyPrice(offer.price)}
-                    </InventoryItem.MainRight>
-                    <InventoryItem.MainBottom>
-                      <Text as="p" color="textSecondary" size="xs">
-                        Activates {formatter.fromNow(new Date(offer.startDate))}
-                      </Text>
-                    </InventoryItem.MainBottom>
-                  </InventoryItem.Main>
-                </InventoryItem.Root>
-              )}
-            </CartInventory>
+          <Space y={4}>
+            <section>
+              <CartInventory cart={cart} readOnly />
+            </section>
+            <section>
+              <Space y={1}>
+                <div>
+                  <Heading as="h1" variant="standard.24">
+                    Vad händer nu?
+                  </Heading>
+                  <Text as="p" color="textSecondary" size="xl">
+                    Ladda ner Hedvig appen till din mobil och kom igång med din nya försäkring.
+                  </Text>
+                </div>
+                <Space y={0.5}>
+                  <CheckList>
+                    <CheckListItem.Checked title="Teckna Hedvig" />
+                    <CheckListItem.Checked title="Koppla autogiro" />
+                    <CheckListItem.Unchecked title="Ladda ner Hedvig appen">
+                      {platform ? (
+                        <Link href={appStoreLinks[platform]} passHref>
+                          <AppStoreBadge type={platform} locale={locale} />
+                        </Link>
+                      ) : (
+                        <SpaceFlex space={0.5}>
+                          <Link href={appStoreLinks.apple} passHref>
+                            <AppStoreBadge type="apple" locale={locale} />
+                          </Link>
+                          <Link href={appStoreLinks.google} passHref>
+                            <AppStoreBadge type="google" locale={locale} />
+                          </Link>
+                        </SpaceFlex>
+                      )}
+                    </CheckListItem.Unchecked>
+                  </CheckList>
+                </Space>
+              </Space>
+            </section>
           </Space>
         </main>
       </Space>
@@ -72,19 +74,12 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
   )
 }
 
-const Wrapper = styled.div(({ theme }) => ({
-  padding: theme.space[4],
-  paddingTop: theme.space[8],
-  minHeight: '100vh',
-  width: '100%',
-}))
+const Wrapper = styled(Space)({
+  paddingInline: theme.space.md,
 
-const CenteredHeading = styled(Heading)({
-  textAlign: 'center',
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
+  },
 })
-
-const CenteredList = styled.div(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  gap: theme.space[2],
-}))

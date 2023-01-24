@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { CrossIcon, Space, Dialog } from 'ui'
+import { CrossIcon, Space, Dialog, theme } from 'ui'
 
 type Props = {
   header?: React.ReactNode
@@ -11,35 +11,32 @@ type Props = {
 export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }: Props) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={toggleDialog}>
-      <Dialog.Content frostedOverlay>
-        <ContentWrapper>
-          <Dialog.Close asChild>
-            <IconButton>
-              <CrossIcon size="1.25rem" />
-            </IconButton>
-          </Dialog.Close>
-          <Space y={4}>
-            <HeaderWrapper>{header}</HeaderWrapper>
-            {children}
-          </Space>
-        </ContentWrapper>
-      </Dialog.Content>
+      <DialogContent frostedOverlay>
+        <Dialog.Close asChild>
+          <IconButton>
+            <CrossIcon size="1.25rem" />
+          </IconButton>
+        </Dialog.Close>
+        <Space y={4}>
+          <HeaderWrapper>{header}</HeaderWrapper>
+          {children}
+        </Space>
+      </DialogContent>
     </Dialog.Root>
   )
 }
 
-const HeaderWrapper = styled.div(({ theme }) => ({
-  paddingTop: theme.space[8],
-}))
+const HeaderWrapper = styled.div({
+  paddingTop: theme.space.xxxl,
+})
 
-const ContentWrapper = styled(Dialog.Window)(({ theme }) => ({
+const DialogContent = styled(Dialog.Content)({
   position: 'relative',
-  width: '100vw',
-  height: '100vh',
+  height: '100%',
   overflow: 'auto',
-  padding: theme.space[4],
+  padding: theme.space.md,
   backgroundColor: 'transparent',
-}))
+})
 
 export const IconButton = styled.button({
   position: 'absolute',

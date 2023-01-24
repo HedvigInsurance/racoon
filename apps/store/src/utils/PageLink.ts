@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
@@ -38,7 +39,21 @@ export const PageLink = {
   apiPaymentAdyenCallback: ({ locale, shopSessionId }: AdyenCallbackRoute) =>
     `/api/payment/adyen-callback/${shopSessionId}/${locale}`,
 
+  customerService: ({ locale }: Required<BaseParams>) => {
+    const url = CUSTOMER_SERVICE_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing support link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+
   apiLoginSe: () => `/api/auth/login/se`,
   apiSessionReset: () => '/api/session/reset',
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
 } as const
+
+const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
+  'sv-se': '/se/hjalp/kundservice',
+  'en-se': '/se-en/help/customer-service',
+}

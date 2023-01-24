@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
+import { theme } from 'ui'
 import { ProductCardBlock, ProductCardBlockProps } from '@/blocks/ProductCardBlock'
 import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -25,7 +26,7 @@ export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
 }
 ProductGridBlock.blockName = 'productGrid'
 
-const Wrapper = styled.div(({ theme }) => ({
-  paddingLeft: theme.space[3],
-  paddingRight: theme.space[3],
-}))
+const Wrapper = styled.div({
+  paddingLeft: theme.space.lg,
+  paddingRight: theme.space.lg,
+})

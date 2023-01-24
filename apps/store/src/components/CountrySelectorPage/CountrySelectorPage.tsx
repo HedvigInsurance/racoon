@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Space, Heading, Button } from 'ui'
+import { Space, Heading, Button, theme, mq } from 'ui'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { countries } from '@/utils/l10n/countries'
 import { LOCALE_COOKIE_MAX_AGE, LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
@@ -34,10 +34,12 @@ export const CountrySelectorPage = (props: { className?: string }) => {
   )
 }
 
-const Wrapper = styled(Space)(({ theme }) => ({
-  maxWidth: '40rem',
-  minHeight: '100vh',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  padding: `${theme.space.xxl} ${theme.space.md} `,
-}))
+const Wrapper = styled(Space)({
+  paddingInline: theme.space.md,
+
+  [mq.sm]: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(28rem, 33%)',
+    justifyContent: 'center',
+  },
+})

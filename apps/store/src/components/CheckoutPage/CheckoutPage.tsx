@@ -90,7 +90,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
                 <CartEntryList>
                   {cart.entries.map((item) => (
-                    <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+                    <CartEntryItem readOnly key={item.offerId} cartId={cart.id} {...item} />
                   ))}
                 </CartEntryList>
                 <HorizontalLine />
