@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
@@ -12,7 +13,7 @@ import { useFormatter } from '@/utils/useFormatter'
 
 type Props = { shopSession: ShopSession }
 
-type CancellableEntry = { key: string; name: string; company: string; url: string; date: Date }
+type CancellableEntry = { key: string; name: string; company?: string; url: string; date: Date }
 
 export const SwitchingAssistantPage = ({ shopSession }: Props) => {
   const { routingLocale } = useCurrentLocale()
@@ -21,11 +22,17 @@ export const SwitchingAssistantPage = ({ shopSession }: Props) => {
   const entriesToCancel = shopSession.cart.entries.reduce<Array<CancellableEntry>>(
     (entries, entry) => {
       if (entry.cancellation.option === ExternalInsuranceCancellationOption.Banksignering) {
+        const company = entry.cancellation.externalInsurer?.displayName
+        if (!company) {
+          datadogLogs.logger.warn('Missing company name for Banksignering cancellation', {
+            entryId: entry.id,
+          })
+        }
+
         entries.push({
           key: entry.id,
           name: entry.variant.product.displayNameFull,
-          // TODO: get from API
-          company: 'Company name',
+          company: entry.cancellation.externalInsurer?.displayName,
           // TODO: get from API
           url: '/',
           // TODO: get from API
@@ -64,9 +71,7 @@ export const SwitchingAssistantPage = ({ shopSession }: Props) => {
                     </Pill>
                     <Space y={1}>
                       <div>
-                        <Text>
-                          {item.name} · {item.company}
-                        </Text>
+                        <Text>{[item.name, item.company].filter(Boolean).join(' · ')}</Text>
                         <Text color="textSecondary">
                           {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
                             date: formatter.fromNow(item.date),
