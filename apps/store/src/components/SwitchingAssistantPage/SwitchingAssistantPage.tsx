@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
+import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -19,13 +20,14 @@ export const SwitchingAssistantPage = ({ shopSession }: Props) => {
   const formatter = useFormatter()
   const entriesToCancel = shopSession.cart.entries.reduce<Array<CancellableEntry>>(
     (entries, entry) => {
-      if (entry.cancellation.bankSigneringUrl) {
+      if (entry.cancellation.option === ExternalInsuranceCancellationOption.Banksignering) {
         entries.push({
           key: entry.id,
           name: entry.variant.product.displayNameFull,
           // TODO: get from API
           company: 'Company name',
-          url: entry.cancellation.bankSigneringUrl,
+          // TODO: get from API
+          url: '/',
           // TODO: get from API
           date: new Date(),
         })
