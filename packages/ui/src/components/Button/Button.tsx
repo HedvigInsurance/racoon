@@ -68,7 +68,7 @@ const StyledButton = styled.button<CustomButtonProps>(({ size = 'large' }) => ({
   whiteSpace: 'nowrap',
   lineHeight: 1,
   transition:
-    'background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
+    'background-color 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
 
   display: 'inline-flex',
   alignItems: 'center',
@@ -109,9 +109,11 @@ const PrimaryButton = styled(StyledButton)({
   backgroundColor: theme.colors.gray1000,
   color: theme.colors.textNegative,
 
-  '&:hover': {
-    // TODO: update to use translucent gray900
-    backgroundColor: theme.colors.gray900,
+  '@media (hover: hover)': {
+    ':hover': {
+      // TODO: update to use translucent gray900
+      backgroundColor: theme.colors.gray900,
+    },
   },
 
   '&:not([data-loading])': {
@@ -136,8 +138,10 @@ const PrimaryAltButton = styled(StyledButton)(
     backgroundColor: theme.colors.green50,
     color: theme.colors.textPrimary,
 
-    '&:hover': {
-      backgroundColor: theme.colors.green100,
+    '@media (hover: hover)': {
+      ':hover': {
+        backgroundColor: theme.colors.green100,
+      },
     },
 
     '&:not([data-loading])': {
@@ -158,9 +162,11 @@ const SecondaryButton = styled(StyledButton)(
     backgroundColor: theme.colors.gray100,
     color: theme.colors.textPrimary,
 
-    '&:hover': {
-      // TODO: update to use translucent gray200
-      backgroundColor: theme.colors.gray200,
+    '@media (hover: hover)': {
+      ':hover': {
+        // TODO: update to use translucent gray200
+        backgroundColor: theme.colors.gray200,
+      },
     },
 
     '&:not([data-loading])': {
@@ -179,9 +185,11 @@ const GhostButton = styled(StyledButton)({
   backgroundColor: 'transparent',
   color: theme.colors.textPrimary,
 
-  '&:hover': {
-    // TODO: update to use translucent gray100
-    backgroundColor: theme.colors.gray100,
+  '@media (hover: hover)': {
+    '&:hover': {
+      // TODO: update to use translucent gray100
+      backgroundColor: theme.colors.gray100,
+    },
   },
 
   '&:not([data-loading])': {
