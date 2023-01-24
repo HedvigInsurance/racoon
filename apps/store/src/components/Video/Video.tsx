@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useId, useRef, useState } from 'react'
 import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 
@@ -46,6 +46,7 @@ export const Video = ({
   ...delegated
 }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const playButtonId = useId()
   const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, setState] = useState<State>(State.Paused)
@@ -130,12 +131,20 @@ export const Video = ({
       </StyledVideo>
       {controls && (
         <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
-          <Controls>
-            <PlayPauseButton ref={playPauseButtonRef} onClick={togglePlay} variant="secondary">
+          <div>
+            <PlayPauseButton
+              ref={playPauseButtonRef}
+              onClick={togglePlay}
+              variant="secondary"
+              size="small"
+              aria-labelledby={playButtonId}
+            >
               {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-              {state === State.Paused ? 'Play' : null}
+              <span id={playButtonId} hidden>
+                {state === State.Paused ? 'Play' : 'Pause'}
+              </span>
             </PlayPauseButton>
-          </Controls>
+          </div>
         </VideoControls>
       )}
     </VideoWrapper>
@@ -180,27 +189,14 @@ const VideoControls = styled.div({
   display: 'flex',
   flexDirection: 'column',
   padding: theme.space.sm,
-  [`&[data-state="${State.Paused}"]`]: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  [`&[data-state="${State.Playing}"]`]: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-  },
-})
-
-const Controls = styled.div({
-  opacity: 0,
-  visibility: 'hidden',
-  [`${VideoControls}[data-state=${State.Paused}] > &, ${VideoControls}:hover > &`]: {
-    opacity: 1,
-    visibility: 'visible',
-  },
+  justifyContent: 'flex-end',
+  alignItems: 'flex-start',
 })
 
 const PlayPauseButton = styled(Button)({
   display: 'inline-flex',
   alignItems: 'center',
   gap: theme.space.xs,
+  height: '2rem',
+  paddingInline: theme.space.xs,
 })
