@@ -38,9 +38,6 @@ export const ProductCard = ({
           <Button href={link} size="medium" variant="secondary">
             {t('READ_MORE')}
           </Button>
-          <Button href={link} size="medium" variant="primary-alt">
-            {t('CALCULATE_PRICE')}
-          </Button>
         </CallToAction>
       </ContentWrapper>
     </Wrapper>
