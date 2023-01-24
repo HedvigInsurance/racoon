@@ -1,7 +1,9 @@
 {
+  "CALCULATE_PRICE": "Beräkna pris",
   "COUNTRY_LABEL_SE": "Sverige",
   "LANGUAGE_LABEL_en": "Engelska",
   "LANGUAGE_LABEL_sv": "Svenska",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",
+  "READ_MORE": "Läs mer",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, vänligen försök igen."
 }
