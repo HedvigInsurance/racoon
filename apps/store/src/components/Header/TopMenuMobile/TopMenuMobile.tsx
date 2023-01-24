@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { mq, theme } from 'ui'
+import { Button, mq, theme } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
 const triggerStyles = {
@@ -45,6 +45,12 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
           <Navigation>
             <NavigationPrimaryList>{children}</NavigationPrimaryList>
           </Navigation>
+          <Button variant="secondary" size="medium">
+            App Store
+          </Button>
+          <Button variant="secondary" size="medium">
+            Google Play
+          </Button>
         </DialogContent>
       </DialogPrimitive.Root>
     </>

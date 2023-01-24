@@ -95,3 +95,22 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
     backgroundColor: theme.colors.light,
   },
 }))
+
+export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+  all: 'unset',
+  listStyle: 'none',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: theme.space[1],
+  rowGap: theme.space[4],
+  fontSize: theme.fontSizes[2],
+  paddingTop: theme.space[6],
+
+  [mq.lg]: {
+    gap: 'none',
+    rowGap: theme.space[4],
+    padding: `${theme.space[4]} 0`,
+    borderRadius: '0.5rem',
+    backgroundColor: theme.colors.light,
+  },
+}))
