@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { CheckIcon, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -7,70 +8,88 @@ type ListItemProps = {
   children?: React.ReactNode
 }
 
-export const CheckedListItem = ({ title }: ListItemProps) => (
-  <CheckListItem checked>
+const CheckedListItem = ({ title, children }: ListItemProps) => (
+  <StyledListItem.Checked>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxChecked>
         <CheckIcon size="1rem" />
       </PresentationCheckboxChecked>
       <Text>{title}</Text>
     </SpaceFlex>
-  </CheckListItem>
+    {children && <CheckListItemContent>{children}</CheckListItemContent>}
+  </StyledListItem.Checked>
 )
 
-export const UncheckedListItem = ({ children, title }: ListItemProps) => (
-  <CheckListItem>
+const UncheckedListItem = ({ title, children }: ListItemProps) => (
+  <StyledListItem.Unchecked>
     <SpaceFlex align="center" space={0.5}>
       <PresentationCheckboxUnchecked />
       <Text>{title}</Text>
     </SpaceFlex>
-    <CheckListItemContent>{children}</CheckListItemContent>
-  </CheckListItem>
+    {children && <CheckListItemContent>{children}</CheckListItemContent>}
+  </StyledListItem.Unchecked>
 )
+
+export const ListItem = {
+  Checked: CheckedListItem,
+  Unchecked: UncheckedListItem,
+}
 
 export const StyledCheckList = styled.ul({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
-  listStyle: 'none',
 })
 
-const CheckListItem = styled.li<{ checked?: boolean }>(({ checked = false }) => ({
+const ListItemBase = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.sm,
   padding: theme.space.md,
-  paddingInline: theme.space.md,
-  color: theme.colors.textPrimary,
-  textDecoration: 'none',
   gap: theme.space.md,
+})
 
-  ...(checked && {
+const StyledCheckedListItem = styled.li(
+  {
     color: theme.colors.textDisabled,
     textDecoration: 'line-through',
-  }),
-}))
+  },
+  ListItemBase,
+)
+
+const StyledUncheckedListItem = styled.li({}, ListItemBase)
+
+const StyledListItem = {
+  Checked: StyledCheckedListItem,
+  Unchecked: StyledUncheckedListItem,
+}
 
 const CheckListItemContent = styled.div({
   paddingLeft: `calc(${theme.space.lg} + ${theme.space.xs})`,
 })
 
-const PresentationCheckboxBase = styled.div({
+const PresentationCheckboxBase = css({
   height: theme.space.lg,
   width: theme.space.lg,
   color: theme.colors.white,
   borderRadius: theme.radius.xs,
 })
 
-const PresentationCheckboxChecked = styled(PresentationCheckboxBase)({
-  display: 'grid  ',
-  placeItems: 'center',
-  backgroundColor: theme.colors.green600,
-})
+const PresentationCheckboxChecked = styled.div(
+  {
+    display: 'grid  ',
+    placeItems: 'center',
+    backgroundColor: theme.colors.green600,
+  },
+  PresentationCheckboxBase,
+)
 
-const PresentationCheckboxUnchecked = styled(PresentationCheckboxBase)({
-  backgroundColor: 'transparent',
-  border: `2px solid ${theme.colors.gray300}`,
-})
+const PresentationCheckboxUnchecked = styled.div(
+  {
+    backgroundColor: 'transparent',
+    border: `2px solid ${theme.colors.gray300}`,
+  },
+  PresentationCheckboxBase,
+)
