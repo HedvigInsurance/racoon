@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
-import { Space } from 'ui'
+import { mq, Space, theme } from 'ui'
+import { ImageSize } from '@/blocks/ProductCardBlock'
 
 type ImageProps = {
   src: string
@@ -13,16 +14,17 @@ export type ProductCardProps = {
   title: string
   subtitle: string
   image: ImageProps
-}
+} & ImageSize
 
 export const ProductCard = ({
   title,
   subtitle,
   image: { alt = '', ...imageProps },
+  aspectRatio,
 }: ProductCardProps) => {
   return (
     <Wrapper y={0.25}>
-      <ImageWrapper>
+      <ImageWrapper aspectRatio={aspectRatio}>
         <Image {...imageProps} alt={alt} fill sizes="100vw" />
       </ImageWrapper>
       <Space y={0.125}>
@@ -37,9 +39,9 @@ const Wrapper = styled(Space)({
   height: '100%',
 })
 
-const ImageWrapper = styled.div(() => ({
+const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
   position: 'relative',
-  aspectRatio: '5 / 6',
+  ...(aspectRatio && { aspectRatio: aspectRatio }),
 
   '@supports not (aspect-ratio: auto)': {
     height: '0',
@@ -50,13 +52,18 @@ const ImageWrapper = styled.div(() => ({
 
 const Image = styled(NextImage)({
   objectFit: 'cover',
+  borderRadius: theme.radius.md,
+
+  [mq.md]: {
+    borderRadius: theme.radius.lg,
+  },
 })
 
 const Title = styled.p(({ theme }) => ({
-  fontSize: theme.fontSizes[2],
+  fontSize: theme.fontSizes.md,
 }))
 
 const Subtitle = styled.p(({ theme }) => ({
-  fontSize: theme.fontSizes[1],
+  fontSize: theme.fontSizes.md,
   color: theme.colors.gray600,
 }))
