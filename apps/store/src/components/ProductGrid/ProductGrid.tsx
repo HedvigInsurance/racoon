@@ -38,11 +38,11 @@ const Title = styled.p(({ theme }) => ({
 
 const Grid = styled.div({
   display: 'grid',
-  gridTemplateColumns: `repeat(2, 1fr)`,
   gap: '1.5rem 0.5rem',
+  alignItems: 'baseline',
+  gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
 
   [mq.md]: {
-    gridTemplateColumns: `repeat(4, 1fr)`,
-    gap: '2.5rem 1.5rem',
+    gap: '2rem 1rem',
   },
 })
