@@ -43,14 +43,14 @@ if (typeof window !== 'undefined') {
 
   initDatadog()
 
-  handleNewSiteExperimentQueryParam()
-  trackNewSiteExperimentImpression(tracking)
-  trackPageViews(tracking)
-
   Router.ready(() => {
     const { routingLocale } = getLocaleOrFallback(Router.locale)
     const { countryCode } = getCountryByLocale(routingLocale)
-    tracking.setAppContext({ countryCode })
+    tracking.reportAppInit({ countryCode })
+
+    handleNewSiteExperimentQueryParam()
+    trackNewSiteExperimentImpression(tracking)
+    trackPageViews(tracking)
   })
 }
 

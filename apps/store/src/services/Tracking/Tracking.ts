@@ -5,7 +5,7 @@ import {
   AppTrackingContext,
   EcommerceEvent,
   pushToGTMDataLayer,
-  setGtmContext,
+  initializeGtm,
 } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -54,11 +54,6 @@ export class Tracking {
     }
   }
 
-  public setAppContext = (context: AppTrackingContext) => {
-    this.setContext(TrackingContextKey.CountryCode, context.countryCode)
-    setGtmContext(context)
-  }
-
   public setPriceIntentContext = (priceIntent: PriceIntent) => {
     const { numberCoInsured } = priceIntent.data
     this.setContext(
@@ -67,6 +62,11 @@ export class Tracking {
     )
     this.setContext(TrackingContextKey.ZipCode, priceIntent.data.zipCode)
     this.setContext(TrackingContextKey.City, priceIntent.data.city)
+  }
+
+  public reportAppInit = (context: AppTrackingContext) => {
+    this.setContext(TrackingContextKey.CountryCode, context.countryCode)
+    initializeGtm(context)
   }
 
   public reportPageView(urlPath: string) {

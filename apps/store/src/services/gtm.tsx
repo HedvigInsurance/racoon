@@ -110,7 +110,7 @@ export type AppTrackingContext = {
   countryCode: CountryCode
 }
 
-export const setGtmContext = (context: AppTrackingContext) => {
+export const initializeGtm = (context: AppTrackingContext) => {
   const { countryCode } = context
   pushToGTMDataLayer({
     event: 'initiate_gtm',
