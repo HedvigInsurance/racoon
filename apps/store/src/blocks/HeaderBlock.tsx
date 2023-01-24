@@ -1,13 +1,19 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
+import { Space } from 'ui'
 import { Header } from '@/components/Header/Header'
 import {
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
+  NavigationMenuSecondaryItem,
   NavigationSecondaryList,
   NavigationTrigger,
 } from '@/components/Header/HeaderStyles'
-import { NavigationLink, SecondaryNavigationLink } from '@/components/Header/NavigationLink'
+import {
+  NavigationLink,
+  ProductNavigationLink,
+  SecondaryNavigationLink,
+} from '@/components/Header/NavigationLink'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -42,20 +48,52 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+      <Space y={1}>
+        <NavigationTrigger>{blok.name}</NavigationTrigger>
+        <NavigationMenuPrimitiveContent>
+          <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+            <NavigationSecondaryList>
+              {filteredNavItems.map((nestedBlock) => (
+                <NavigationMenuSecondaryItem
+                  key={nestedBlock._uid}
+                  value={nestedBlock.name}
+                  {...storyblokEditable(nestedBlock)}
+                >
+                  <SecondaryNavigationLink
+                    href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
+                  >
+                    {nestedBlock.name}
+                  </SecondaryNavigationLink>
+                </NavigationMenuSecondaryItem>
+              ))}
+            </NavigationSecondaryList>
+          </NavigationMenuPrimitive.Sub>
+        </NavigationMenuPrimitiveContent>
+      </Space>
+    </NavigationMenuPrimitiveItem>
+  )
+}
+NestedNavContainerBlock.blockName = 'nestedNavContainer'
+
+export const ProductNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
+  const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
+
+  return (
+    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
       <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <NavigationSecondaryList>
             {filteredNavItems.map((nestedBlock) => (
-              <NavigationMenuPrimitiveItem
+              <NavigationMenuSecondaryItem
                 key={nestedBlock._uid}
                 value={nestedBlock.name}
                 {...storyblokEditable(nestedBlock)}
               >
-                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
+                <ProductNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
                   {nestedBlock.name}
-                </SecondaryNavigationLink>
-              </NavigationMenuPrimitiveItem>
+                </ProductNavigationLink>
+              </NavigationMenuSecondaryItem>
             ))}
           </NavigationSecondaryList>
         </NavigationMenuPrimitive.Sub>
@@ -63,7 +101,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
     </NavigationMenuPrimitiveItem>
   )
 }
-NestedNavContainerBlock.blockName = 'nestedNavContainer'
+ProductNavContainerBlock.blockName = 'productNavContainer'
 
 const NestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(

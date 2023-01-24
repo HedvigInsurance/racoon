@@ -23,6 +23,16 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 })
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  borderBottom: `1px solid ${theme.colors.border}`,
+  padding: `${theme.space[5]} 0`,
+  [mq.lg]: {
+    padding: `0 ${theme.space[4]}`,
+  },
+}))
+
+export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  padding: `${theme.space[4]} 0`,
+
   [mq.lg]: {
     padding: `0 ${theme.space[4]}`,
   },
@@ -60,8 +70,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
   inset: `${MENU_BAR_HEIGHT_MOBILE} 0 0 0`,
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[5],
-  padding: `${theme.space[8]} ${theme.space[4]} 0`,
+  padding: `0 ${theme.space[4]} `,
   backgroundColor: theme.colors.light,
 
   [mq.lg]: {
@@ -76,12 +85,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
   all: 'unset',
   listStyle: 'none',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: theme.space[1],
-  rowGap: theme.space[4],
-  fontSize: theme.fontSizes[2],
-  paddingTop: theme.space[6],
+  padding: `${theme.space[4]} 0`,
 
   [mq.lg]: {
     gap: 'none',

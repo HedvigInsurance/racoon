@@ -117,6 +117,7 @@ export const colors = {
   textTertiary: gray[500],
   textDisabled: gray[400],
   textNegative: gray[25],
+  border: gray[400],
 } as const
 
 export type UIColors = typeof colors
