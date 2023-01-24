@@ -2,14 +2,19 @@ import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { Tracking } from '@/services/Tracking/Tracking'
 
+const env = process.env.NEXT_PUBLIC_DATADOG_ENV || 'local'
+let version = process.env.NEXT_PUBLIC_DATADOG_VERSION
+if (!version) {
+  if (env === 'local') version = 'local'
+  else
+    version = `${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}_${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`
+}
 const CLIENT_CONFIG = {
+  env,
+  sampleRate: 100,
   service: process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
   site: 'datadoghq.eu',
-  env: process.env.NEXT_PUBLIC_DATADOG_ENV || 'local',
-  sampleRate: 100,
-  version:
-    process.env.NEXT_PUBLIC_DATADOG_VERSION ||
-    `${process.env.VERCEL_GIT_COMMIT_REF}_${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`,
+  version,
 }
 
 const applicationId = process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
@@ -24,7 +29,7 @@ export const initDatadog = () => {
     forwardErrorsToLogs: true,
   }
 
-  if (CLIENT_CONFIG.env === 'local') {
+  if (env === 'local') {
     datadogLogsConfig.beforeSend = (event) => {
       // Must exclude console origin to avoid endless loop.  Feel free to experiment with other values
       if (event.origin === 'logger') {
@@ -42,11 +47,11 @@ export const initDatadog = () => {
     ...CLIENT_CONFIG,
     clientToken,
     applicationId,
-    trackInteractions: true,
+    trackUserInteractions: true,
     defaultPrivacyLevel: 'mask-user-input',
     silentMultipleInit: true,
 
-    allowedTracingOrigins: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
+    allowedTracingUrls: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
       ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
       : undefined,
   })
