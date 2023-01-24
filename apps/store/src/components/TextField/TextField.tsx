@@ -61,10 +61,6 @@ const LargeWrapper = styled(motion.div)({
       overflow: 'visible',
     },
   },
-
-  ':has(input:focus-visible)': {
-    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
-  },
 })
 
 const Label = styled.label(({ theme }) => ({
