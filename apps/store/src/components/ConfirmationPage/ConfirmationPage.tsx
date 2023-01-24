@@ -2,9 +2,9 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { CheckedListItem, UncheckedListItem, StyledCheckList } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
@@ -49,14 +49,16 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                     <CheckedListItem title="Koppla autogiro" />
                     <UncheckedListItem title="Ladda ner Hedvig appen">
                       {platform ? (
-                        <AppStoreBadge type={platform} locale={locale} />
+                        <Link href={appStoreLinks[platform]} passHref>
+                          <AppStoreBadge type={platform} locale={locale} />
+                        </Link>
                       ) : (
                         <SpaceFlex space={0.5}>
                           <Link href={appStoreLinks.apple} passHref>
-                            <AppStoreBadge type={'apple'} locale={locale} />
+                            <AppStoreBadge type="apple" locale={locale} />
                           </Link>
                           <Link href={appStoreLinks.google} passHref>
-                            <AppStoreBadge type={'google'} locale={locale} />
+                            <AppStoreBadge type="google" locale={locale} />
                           </Link>
                         </SpaceFlex>
                       )}
