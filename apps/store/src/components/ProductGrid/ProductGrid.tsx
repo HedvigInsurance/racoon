@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Fragment } from 'react'
-import { mq, Space } from 'ui'
+import { mq, Space, theme } from 'ui'
 
 export type ProductGridProps<Item> = {
   title?: string
@@ -38,7 +38,7 @@ const Title = styled.p(({ theme }) => ({
 
 const Grid = styled.div({
   display: 'grid',
-  gap: '1.5rem 0.5rem',
+  gap: `${theme.space.xxxl} ${theme.space.xs}`,
   alignItems: 'baseline',
   gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
 

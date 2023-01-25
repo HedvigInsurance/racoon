@@ -13,14 +13,21 @@ import { newSiteAbTest } from '../../newSiteAbTest'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
 
+type TrackingProductData = {
+  id: string
+  displayNameShort: string
+}
+
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
   ExperimentImpression = 'experiment_impression',
   OfferCreated = 'offer_created',
+  OpenPriceCalculator = 'open_price_calculator',
   PageView = 'virtual_page_view',
   Purchase = 'purchase',
+  SelectItem = 'select_item',
   SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
@@ -91,6 +98,22 @@ export class Tracking {
     }
     console.debug(event.event, variantId)
     pushToGTMDataLayer(event)
+  }
+
+  public reportViewProductPage(productData: { id: string; displayNameShort: string }) {
+    const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
+    Object.assign(event.ecommerce, {
+      // TODO: Support recommendations as separate list
+      item_list_id: 'store',
+      item_list_name: 'Store',
+    })
+    this.reportEcommerceEvent(event)
+  }
+
+  public reportOpenPriceCalculator(productData: { id: string; displayNameShort: string }) {
+    this.reportEcommerceEvent(
+      productDataToEcommerceEvent(TrackingEvent.OpenPriceCalculator, productData, this.context),
+    )
   }
 
   // Legacy event in market-web format
@@ -224,6 +247,27 @@ const cartToEcommerceEvent = (
         item_name: entry.variant.displayName,
         price: entry.price.amount,
       })),
+    },
+    shopSession: {
+      id: context[TrackingContextKey.ShopSessionId] as string,
+    },
+  } as const
+}
+
+const productDataToEcommerceEvent = (
+  event: TrackingEvent,
+  productData: TrackingProductData,
+  context: TrackingContext,
+): EcommerceEvent => {
+  return {
+    event,
+    ecommerce: {
+      items: [
+        {
+          item_id: productData.id,
+          item_name: productData.displayNameShort,
+        },
+      ],
     },
     shopSession: {
       id: context[TrackingContextKey.ShopSessionId] as string,

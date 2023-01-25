@@ -37,6 +37,15 @@ export const PurchaseForm = () => {
   const apolloClient = useApolloClient()
   const formatter = useFormatter()
   const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
+  const tracking = useTracking()
+
+  const handleOpen = () => {
+    tracking.reportOpenPriceCalculator({
+      id: productData.id,
+      displayNameShort: productData.displayNameShort,
+    })
+    setFormState('EDIT')
+  }
 
   return (
     <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
@@ -110,7 +119,7 @@ export const PurchaseForm = () => {
           )
         }
 
-        return <IdleState onClick={() => setFormState('EDIT')} />
+        return <IdleState onClick={handleOpen} />
       }}
     </Layout>
   )
