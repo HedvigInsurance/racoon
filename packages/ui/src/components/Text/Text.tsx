@@ -6,7 +6,14 @@ import { FontSizeProps, getFontSize } from '../../lib/fontSizes'
 
 type TextColor = Pick<
   UIColors,
-  'textPrimary' | 'textSecondary' | 'textTertiary' | 'textDisabled' | 'textNegative'
+  | 'textPrimary'
+  | 'textSecondary'
+  | 'textTertiary'
+  | 'textDisabled'
+  | 'textNegative'
+  | 'textGreen'
+  | 'textAmber'
+  | 'textRed'
 >
 
 export type TextProps = {
