@@ -1,17 +1,22 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import {
-  useHandleSignShopSession,
   Params as SignCheckoutParams,
+  useHandleSignShopSession,
 } from '@/services/Checkout/useHandleSignShopSession'
 import { useUpdateCustomer } from './useUpdateCustomer'
 
 type Params = SignCheckoutParams & {
   shopSessionId: string
+  customerAuthenticationStatus:
+    | ShopSessionAuthenticationStatus.Authenticated
+    | ShopSessionAuthenticationStatus.None
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { shopSessionId, shopSessionSigningId, onSuccess, onError } = params
+  const { customerAuthenticationStatus, shopSessionId, shopSessionSigningId, onSuccess, onError } =
+    params
   const [startSign, signResult] = useHandleSignShopSession({
     shopSessionId,
     shopSessionSigningId,
@@ -21,15 +26,16 @@ export const useHandleSubmitCheckout = (params: Params) => {
 
   const [updateCustomer, updateCustomerResult] = useUpdateCustomer({
     shopSessionId,
-    // TODO: Move to handleSubmit, easier to read
-    onSuccess: startSign,
   })
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
     datadogLogs.logger.debug('Checkout | Submit')
-    const formData = new FormData(event.currentTarget)
-    updateCustomer(formData)
+    if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.None) {
+      const formData = new FormData(event.currentTarget)
+      await updateCustomer(formData)
+    }
+    await startSign()
   }
 
   const userError = updateCustomerResult.userError || signResult.userError

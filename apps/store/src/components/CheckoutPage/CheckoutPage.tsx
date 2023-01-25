@@ -28,7 +28,15 @@ import { TickIcon } from './TickIcon'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const { cart, ssn, prefilledData, collectName, shopSessionId, shopSessionSigningId } = props
+  const {
+    cart,
+    ssn,
+    prefilledData,
+    collectName,
+    customerAuthenticationStatus,
+    shopSessionId,
+    shopSessionSigningId,
+  } = props
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
@@ -39,6 +47,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const [hideLoading, setHideLoading] = useState(false)
   const [handleSubmitSign, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
     shopSessionId,
+    customerAuthenticationStatus,
     shopSessionSigningId,
     onSuccess(accessToken) {
       saveAccessToken(accessToken)
