@@ -21,6 +21,8 @@ const Template: ComponentStory<typeof TextField> = ({ defaultValue, ...props }) 
       <TextField {...props} defaultValue={defaultValue} />
       <div style={{ marginTop: '0.25rem' }}></div>
       <TextField {...props} defaultValue={defaultValue} disabled />
+      <div style={{ marginTop: '0.25rem' }}></div>
+      <TextField {...props} defaultValue={defaultValue} warning message="Wrong input, try again" />
     </>
   )
 }
