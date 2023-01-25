@@ -11,7 +11,6 @@ export const Wrapper = styled.header(({ theme }) => ({
   width: '100%',
   height: MENU_BAR_HEIGHT_MOBILE,
   padding: theme.space[4],
-  position: 'sticky',
   zIndex: zIndexes.header,
 
   [mq.md]: {
