@@ -2,6 +2,7 @@ import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react
 import { useId } from 'react'
 import { Text } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
+import { RichTextContent } from '@/components/RichTextContent/RichTextContent'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type AccordionItemBlockProps = SbBaseBlockProps<{
@@ -17,8 +18,8 @@ export const AccordionItemBlock = ({ blok }: AccordionItemBlockProps) => {
       <Accordion.HeaderWithTrigger>
         <Text size={{ _: 'md', md: 'xl' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
-      <Accordion.Content>
-        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      <Accordion.Content asChild>
+        <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
       </Accordion.Content>
     </Accordion.Item>
   )
