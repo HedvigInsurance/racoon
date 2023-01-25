@@ -27,6 +27,7 @@ export const ContentBlock = ({ blok }: Props) => {
 ContentBlock.blockName = 'content'
 
 const Wrapper = styled(Space)(({ theme }) => ({
+  maxWidth: '37.5rem',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
 }))
