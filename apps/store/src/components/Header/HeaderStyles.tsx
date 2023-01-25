@@ -25,7 +25,7 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
   padding: `${theme.space.lg} 0`,
   ':not(:last-child)': {
-    borderBottom: `1px solid ${theme.colors.border}`,
+    borderBottom: `1px solid ${theme.colors.borderOpaque}`,
   },
   [mq.lg]: {
     display: 'flex',

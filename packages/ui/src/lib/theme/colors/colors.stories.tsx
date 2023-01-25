@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { theme } from '../theme'
-import { gray, green, highlight, red, signal, yellow } from './colors'
+import { gray, grayTranslucent, green, highlight, red, signal, yellow } from './colors'
 
 export default {
   title: 'Theme / Colors',
@@ -29,6 +29,9 @@ const Palette = ({ colors, name }: Props) => (
 export const Colors = () => (
   <>
     <Palette name="Gray" colors={gray} />
+    <TranslucentWrapper>
+      <Palette name="Gray Translucent" colors={grayTranslucent} />
+    </TranslucentWrapper>
     <Palette name="Green" colors={green} />
     <Palette name="Yellow" colors={yellow} />
     <Palette name="Red" colors={red} />
@@ -70,7 +73,13 @@ const HueName = styled.p({
   fontSize: '1.125rem',
 })
 
-const HueValue = styled.p(({ theme }) => ({
+const HueValue = styled.p({
   color: theme.colors.textSecondary,
   textTransform: 'uppercase',
-}))
+})
+
+const TranslucentWrapper = styled.div({
+  padding: '1rem',
+  backgroundColor: green[50],
+  borderRadius: 16,
+})

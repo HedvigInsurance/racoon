@@ -13,6 +13,21 @@ export const gray = {
   1000: 'hsl(0, 0%, 7%)',
 } as const
 
+export const grayTranslucent = {
+  25: 'hsla(0, 0%, 98%, 0.6)',
+  50: 'hsla(0, 0%, 96%, 0.6)',
+  100: 'hsla(0, 0%, 94%, 0.6)',
+  200: 'hsla(0, 0%, 92%, 0.6)',
+  300: 'hsla(0, 0%, 88%, 0.7)',
+  400: 'hsla(0, 0%, 81%, 0.7)',
+  500: 'hsla(0, 0%, 71%, 0.7)',
+  600: 'hsla(0, 0%, 59%, 0.74)',
+  700: 'hsla(0, 0%, 45%, 0.8)',
+  800: 'hsla(0, 0%, 31%, 0.84)',
+  900: 'hsla(0, 0%, 19%, 0.87)',
+  1000: 'hsla(0, 0%, 7%, 0.92)',
+} as const
+
 export const green = {
   50: 'hsl(85, 100%, 90%)',
   100: 'hsl(85, 73%, 87%)',
@@ -142,12 +157,28 @@ export const colors = {
   dark: gray[1000],
   light: gray[25],
   lavender: oldPurple[500],
+
+  // Text colors
   textPrimary: gray[1000],
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[400],
   textNegative: gray[25],
-  border: gray[400],
+  textGreen: signal.green.text,
+  textAmber: signal.amber.text,
+  textRed: signal.red.text,
+
+  // Semantic colors
+  backgroundStandard: gray[25],
+  backgroundFrostedGlass: grayTranslucent[25],
+  borderOpaque: gray[400],
+  borderTranslucent: grayTranslucent[400],
+  opaque1: gray[100],
+  translucent1: grayTranslucent[100],
+  opaque2: gray[300],
+  translucent2: grayTranslucent[300],
+  opaque3: gray[400],
+  translucent3: grayTranslucent[400],
 
   // Highlight colors
   // Used as fill on light backgrounds
