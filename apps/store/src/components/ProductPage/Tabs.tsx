@@ -37,8 +37,6 @@ export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
   borderRadius: theme.radius.sm,
   cursor: 'pointer',
 
-  '&:hover': { color: theme.colors.purple900 },
-
   '&[data-state=active]': {
     paddingInline: '3.75rem',
     color: theme.colors.dark,
