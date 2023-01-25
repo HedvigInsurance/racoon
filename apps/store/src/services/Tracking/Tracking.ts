@@ -15,7 +15,7 @@ type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
 
 type TrackingProductData = {
   id: string
-  displayNameShort: string
+  displayNameFull: string
 }
 
 export enum TrackingEvent {
@@ -100,7 +100,7 @@ export class Tracking {
     pushToGTMDataLayer(event)
   }
 
-  public reportViewProductPage(productData: { id: string; displayNameShort: string }) {
+  public reportViewProductPage(productData: TrackingProductData) {
     const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
     Object.assign(event.ecommerce, {
       // TODO: Support recommendations as separate list
@@ -110,7 +110,7 @@ export class Tracking {
     this.reportEcommerceEvent(event)
   }
 
-  public reportOpenPriceCalculator(productData: { id: string; displayNameShort: string }) {
+  public reportOpenPriceCalculator(productData: TrackingProductData) {
     this.reportEcommerceEvent(
       productDataToEcommerceEvent(TrackingEvent.OpenPriceCalculator, productData, this.context),
     )
@@ -218,9 +218,10 @@ const offerToEcommerceEvent = (
       currency: offer.price.currencyCode,
       items: [
         {
-          item_id: offer.variant.typeOfContract,
-          item_name: offer.variant.displayName,
+          item_id: offer.variant.product.name,
+          item_name: offer.variant.product.displayNameFull,
           price: offer.price.amount,
+          variant: offer.variant.typeOfContract,
         },
       ],
     },
@@ -243,9 +244,10 @@ const cartToEcommerceEvent = (
       value: cart.cost.net.amount,
       currency: cart.cost.net.currencyCode,
       items: cart.entries.map((entry) => ({
-        item_id: entry.variant.typeOfContract,
-        item_name: entry.variant.displayName,
+        item_id: entry.variant.product.name,
+        item_name: entry.variant.product.displayNameFull,
         price: entry.price.amount,
+        variant: entry.variant.typeOfContract,
       })),
     },
     shopSession: {
@@ -265,7 +267,7 @@ const productDataToEcommerceEvent = (
       items: [
         {
           item_id: productData.id,
-          item_name: productData.displayNameShort,
+          item_name: productData.displayNameFull,
         },
       ],
     },
