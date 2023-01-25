@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react'
 import { useId } from 'react'
-import { Text, theme } from 'ui'
+import { Text } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
+import { RichTextContent } from '@/components/RichTextContent/RichTextContent'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type AccordionItemBlockProps = SbBaseBlockProps<{
@@ -25,28 +25,3 @@ export const AccordionItemBlock = ({ blok }: AccordionItemBlockProps) => {
   )
 }
 AccordionItemBlock.blockName = 'accordionItem'
-
-const RichTextContent = styled.div({
-  '& b': {
-    fontWeight: 'bold',
-  },
-  '& i': {
-    fontStyle: 'italic',
-  },
-  '& strike': {
-    textDecoration: 'line-through',
-  },
-  '& u': {
-    textDecoration: 'underline',
-  },
-  '& :where(ul, ol)': {
-    paddingLeft: theme.space.xl,
-    marginBlock: theme.space.md,
-  },
-  '& ul': {
-    listStyle: 'disc',
-  },
-  '& ol': {
-    listStyle: 'decimal',
-  },
-})
