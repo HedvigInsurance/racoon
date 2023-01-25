@@ -52,7 +52,37 @@ export const yellow = {
   900: 'hsl(50, 80%, 20%)',
 } as const
 
+const blue = {
+  50: 'hsl(202, 100%, 96%)',
+  100: 'hsl(202, 68%, 93%)',
+  200: 'hsl(202, 57%, 88%)',
+  300: 'hsl(202, 57%, 84%)',
+  400: 'hsl(202, 50%, 77%)',
+  500: 'hsl(202, 47%, 73%)',
+  600: 'hsl(202, 94%, 66%)',
+  700: 'hsl(210, 35%, 45%)',
+  800: 'hsl(210, 45%, 34%)',
+  900: 'hsl(210, 50%, 24%)',
+} as const
+
 const purple = {
+  100: 'hsl(265, 51%, 93%)',
+  200: 'hsl(265, 31%, 87%)',
+} as const
+
+export const highlight = {
+  blue: { fill1: blue[100], fill2: blue[200] },
+  purple: { fill1: purple[100], fill2: purple[200] },
+  yellow: { fill1: yellow[100], fill2: yellow[200] },
+} as const
+
+export const signal = {
+  green: { fill1: green[100], fill3: green[300], element: green[600], text: green[800] },
+  amber: { fill1: yellow[100], fill3: yellow[300], element: yellow[600], text: yellow[800] },
+  red: { fill1: red[100], fill3: red[300], element: red[600], text: red[800] },
+} as const
+
+const oldPurple = {
   100: '#f5ebf5',
   300: '#e3d7ee',
   500: '#d7c6e6',
@@ -82,12 +112,12 @@ export const colors = {
   green700: green[700],
   green800: green[800],
   green900: green[900],
-  purple100: purple[100],
-  purple300: purple[300],
-  purple500: purple[500],
-  purple700: purple[700],
-  purple800: purple[800],
-  purple900: purple[900],
+  purple100: oldPurple[100],
+  purple300: oldPurple[300],
+  purple500: oldPurple[500],
+  purple700: oldPurple[700],
+  purple800: oldPurple[800],
+  purple900: oldPurple[900],
   red50: red[50],
   red100: red[100],
   red200: red[200],
@@ -111,12 +141,35 @@ export const colors = {
   // Alias colors
   dark: gray[1000],
   light: gray[25],
-  lavender: purple[500],
+  lavender: oldPurple[500],
   textPrimary: gray[1000],
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[400],
   textNegative: gray[25],
+
+  // Highlight colors
+  // Used as fill on light backgrounds
+  blueFill1: highlight.blue.fill1,
+  purpleFill1: highlight.purple.fill1,
+  yellowFill1: highlight.yellow.fill1,
+  // Used as fill on gray backgrounds
+  blueFill2: highlight.blue.fill2,
+  purpleFill2: highlight.purple.fill2,
+  yellowFill2: highlight.yellow.fill2,
+  // Signal colors
+  greenFill1: signal.green.fill1,
+  greenFill3: signal.green.fill3,
+  greenElement: signal.green.element,
+  greenText: signal.green.text,
+  amberFill1: signal.amber.fill1,
+  amberFill3: signal.amber.fill3,
+  amberElement: signal.amber.element,
+  amberText: signal.amber.text,
+  redFill1: signal.red.fill1,
+  redFill3: signal.red.fill3,
+  redElement: signal.red.element,
+  redText: signal.red.text,
 } as const
 
 export type UIColors = typeof colors

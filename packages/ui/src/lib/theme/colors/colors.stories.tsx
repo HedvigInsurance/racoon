@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { theme } from '../theme'
-import { gray, green, red, yellow } from './colors'
+import { gray, green, highlight, red, signal, yellow } from './colors'
 
 export default {
   title: 'Theme / Colors',
@@ -32,6 +32,14 @@ export const Colors = () => (
     <Palette name="Green" colors={green} />
     <Palette name="Yellow" colors={yellow} />
     <Palette name="Red" colors={red} />
+
+    <Palette name="Highlight Blue" colors={highlight.blue} />
+    <Palette name="Highlight Green" colors={highlight.purple} />
+    <Palette name="Highlight Yellow" colors={highlight.yellow} />
+
+    <Palette name="Signal Green" colors={signal.green} />
+    <Palette name="Signal Amber" colors={signal.amber} />
+    <Palette name="Signal Red" colors={signal.red} />
   </>
 )
 
