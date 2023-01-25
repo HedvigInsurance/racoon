@@ -86,7 +86,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
   const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
 
   return (
-    <NavigationMenuPrimitiveItem value="hello" {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
       <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
