@@ -1,4 +1,3 @@
-import { f } from 'msw/lib/glossary-297d38ba'
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
@@ -10,7 +9,6 @@ import {
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
-import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
@@ -86,7 +84,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
   // Cart page handles authentication requirement before checkout
   if (customer.authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-    return { redirect: { destination: PageLink.cart(), permanent: false } }
+    console.log('Customer authentication required, redirecting checkout -> cart')
+    return { redirect: { destination: PageLink.cart({ locale }), permanent: false } }
   }
 
   const shopSessionSigning = await fetchCurrentShopSessionSigning({
