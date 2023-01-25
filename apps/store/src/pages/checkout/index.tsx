@@ -1,3 +1,4 @@
+import { f } from 'msw/lib/glossary-297d38ba'
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
@@ -9,13 +10,16 @@ import {
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
+import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Pick<CheckoutPageProps, 'shopSessionSigningId' | 'ssn' | 'collectName'> & {
   [SHOP_SESSION_PROP_NAME]: string
@@ -80,6 +84,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { customer } = shopSession
   if (!customer) throw new Error('No Customer info in Shop Session')
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
+  // Cart page handles authentication requirement before checkout
+  if (customer.authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+    return { redirect: { destination: PageLink.cart(), permanent: false } }
+  }
 
   const shopSessionSigning = await fetchCurrentShopSessionSigning({
     apolloClient,
