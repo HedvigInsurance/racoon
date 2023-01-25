@@ -32,7 +32,7 @@ export const PriceCalculatorAccordion = (props: Props) => {
         const isValid = section.state === 'valid'
         const showMutedHeading = !(isActive || isValid)
         const showEditButton = isValid && !isActive
-        const stepIconState = isValid ? 'muted' : 'outline'
+        const stepIconState = isValid ? 'valid' : 'outline'
 
         return (
           <Accordion.Item key={section.id} value={section.id}>

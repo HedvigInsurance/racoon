@@ -2,7 +2,7 @@ import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 
 type Props = {
-  state: 'outline' | 'filled' | 'muted'
+  state: 'outline' | 'filled' | 'valid'
 }
 
 const checkProps = { shouldForwardProp: isValidProp }
@@ -27,8 +27,9 @@ export const StepIcon = styled(
     borderColor: 'transparent',
   }),
 
-  ...(state === 'muted' && {
-    backgroundColor: theme.colors.gray600,
+  ...(state === 'valid' && {
+    // TODO: use theme color: green element
+    backgroundColor: '#24CC5C',
     borderColor: 'transparent',
   }),
 }))
