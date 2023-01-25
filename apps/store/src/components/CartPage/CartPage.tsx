@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { MouseEventHandler, ReactNode, useEffect, useState } from 'react'
+import { FormEventHandler, ReactNode, useEffect, useState } from 'react'
 import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
@@ -149,7 +149,7 @@ const BankIdLogin = (props: { shopSessionId: string; ssn: string; onComplete: ()
   const [authenticateShopSession] = useShopSessionAuthenticateMutation({
     variables: { shopSessionId },
   })
-  const onLogin: MouseEventHandler = async (event) => {
+  const handleSubmit: FormEventHandler = async (event) => {
     event.preventDefault()
     setState('PROGRESS')
     try {
@@ -164,16 +164,16 @@ const BankIdLogin = (props: { shopSessionId: string; ssn: string; onComplete: ()
     }
   }
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <Text>
         Looks like you&quot;re returning member. You need to login before proceeding to checkout
       </Text>
-      <Button onClick={onLogin} loading={state !== 'IDLE'}>
+      <Button type="submit" loading={state !== 'IDLE'}>
         BankID Login
       </Button>
       {state === 'PROGRESS' && <Text>Pleas open BankID app now</Text>}
       {state === 'ERROR' && <Text>Something went wrong</Text>}
-    </>
+    </form>
   )
 }
 
