@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { ChevronIcon, mq, theme } from 'ui'
+import { mq, theme } from 'ui'
 
 export const MENU_BAR_HEIGHT_MOBILE = '3rem'
 
@@ -24,21 +24,37 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
   padding: `${theme.space[5]} 0`,
-  '&:not(:last-child)': {
+  ':not(:last-child)': {
     borderBottom: `1px solid ${theme.colors.border}`,
   },
   [mq.lg]: {
-    padding: `0 ${theme.space[4]}`,
+    display: 'flex',
+    padding: `${theme.space[2]} ${theme.space[4]}`,
+    ':not(:last-child)': {
+      borderBottom: 'none',
+    },
+    borderRadius: theme.radius[1],
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
   },
 }))
 
 export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
-  padding: `${theme.space[4]} 0 `,
+  padding: `${theme.space[4]} ${theme.space[4]} `,
   marginLeft: theme.space[4],
 
   [mq.lg]: {
-    padding: `${theme.space[4]} 0`,
+    padding: `${theme.space[2]} ${theme.space[3]}`,
     margin: 0,
+    borderRadius: theme.radius[1],
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
   },
 }))
 
@@ -51,16 +67,12 @@ export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Con
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
+      justifyContent: 'center',
       borderRadius: theme.radius[1],
-      padding: `${theme.space[5]}`,
+      padding: `${theme.space[4]} ${theme.space[4]}`,
     },
   }),
 )
-
-export const TriggerIcon = styled(ChevronIcon)({
-  transition: 'transform 300ms',
-  '[data-state=open] &': { transform: 'rotate(180deg)' },
-})
 
 export const navigationTriggerStyles = {
   display: 'flex',
@@ -96,7 +108,12 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
   all: 'unset',
   listStyle: 'none',
-  padding: `${theme.space[4]} 0`,
+  display: 'block',
+  paddingTop: theme.space[6],
+
+  [mq.lg]: {
+    padding: `${theme.space[4]} 0`,
+  },
 }))
 
 export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
@@ -111,8 +128,19 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ the
 
   [mq.lg]: {
     gap: 'none',
+    display: 'flex',
+    flexDirection: 'row',
     rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+  },
+}))
+
+export const ButtonWrapper = styled.div(({ theme }) => ({
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingTop: theme.space[4],
+  [mq.lg]: {
+    paddingTop: 0,
   },
 }))

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import React from 'react'
 import { mq } from 'ui'
 import { Navigation } from '../HeaderStyles'
@@ -20,6 +21,7 @@ export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
     <Wrapper>
       <Navigation>
         <NavigationPrimaryList>{children}</NavigationPrimaryList>
+        <NavigationMenuPrimitive.Viewport />
       </Navigation>
     </Wrapper>
   )

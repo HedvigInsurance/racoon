@@ -11,16 +11,25 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
 })
 
 const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
+  alignSelf: 'center',
   textDecoration: 'none',
   ...focusableStyles,
 })
 
-const ProductNavigationLinkCard = styled(Space)({
+const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
+  ...focusableStyles,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-})
+  [mq.lg]: {
+    padding: `${theme.space[4]} ${theme.space[5]}`,
+    borderRadius: theme.radius[1],
+    ':hover': {
+      backgroundColor: theme.colors.gray100,
+    },
+  },
+}))
 
 const StyledPillow = styled(Pillow)({
   height: '6rem',

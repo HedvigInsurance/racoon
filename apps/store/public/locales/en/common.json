@@ -1,4 +1,5 @@
 {
+  "CALCULATE_PRICE": "Calculate price",
   "COUNTRY_LABEL_DK": "Denmark",
   "COUNTRY_LABEL_NO": "Norway",
   "COUNTRY_LABEL_SE": "Sweden",
@@ -8,5 +9,8 @@
   "LANGUAGE_LABEL_no": "Norwegian",
   "LANGUAGE_LABEL_sv": "Swedish",
   "MONTHLY_PRICE": "{{displayAmount}}/mo.",
+  "NAV_MENU_DIALOG_CLOSE": "Close",
+  "NAV_MENU_DIALOG_OPEN": "Menu",
+  "READ_MORE": "Read more",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }

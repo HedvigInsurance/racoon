@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { Button, mq, Space, theme } from 'ui'
@@ -27,7 +28,7 @@ const ButtonWrapper = styled(Space)(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  paddingTop: theme.space[4],
+  paddingTop: theme.space[7],
 }))
 
 export type TopMenuMobileProps = {
@@ -38,6 +39,7 @@ export type TopMenuMobileProps = {
 export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     const closeDialog = () => setOpen(false)
@@ -48,11 +50,15 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        {open ? <DialogClose>Close</DialogClose> : <DialogTrigger>Menu</DialogTrigger>}
+        {open ? (
+          <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
+        ) : (
+          <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
+        )}
         <DialogContent>
           <Navigation>
             <NavigationPrimaryList>
-              {children}
+              <div>{children}</div>
               <ButtonWrapper x={0.25}>
                 <Button variant="secondary" size="medium">
                   App Store

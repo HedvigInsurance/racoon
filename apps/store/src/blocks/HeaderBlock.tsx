@@ -2,6 +2,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { Header } from '@/components/Header/Header'
 import {
+  ButtonWrapper,
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationMenuSecondaryItem,
@@ -75,7 +76,7 @@ NestedNavContainerBlock.blockName = 'nestedNavContainer'
 type ProductNavContainerBlockProps = SbBaseBlockProps<{
   name: string
   navItems: ExpectedBlockType<NavItemBlockProps>
-  buttons?: ExpectedBlockType<ButtonBlockProps>
+  buttons: ExpectedBlockType<ButtonBlockProps>
   currentActiveItem?: string
 }>
 
@@ -101,10 +102,12 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
               </NavigationMenuSecondaryItem>
             ))}
           </ProductNavigationList>
-          {buttonBlocks.map((nestedBlock) => (
-            <ButtonBlock blok={nestedBlock} key={nestedBlock._uid} />
-          ))}
         </NavigationMenuPrimitive.Sub>
+        {buttonBlocks.map((nestedBlock) => (
+          <ButtonWrapper key={nestedBlock._uid}>
+            <ButtonBlock blok={nestedBlock} />
+          </ButtonWrapper>
+        ))}
       </NavigationMenuPrimitiveContent>
     </NavigationMenuPrimitiveItem>
   )
