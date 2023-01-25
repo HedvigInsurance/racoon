@@ -72,12 +72,13 @@ const mediaSrcDirectives = [
   "'self'",
 ]
 const connectSrcDirectives = [
+  'https://sgtm.hedvig.com', // Server-side Google Tag Manager
   'https://*.browser-intake-datadoghq.eu',
   'https://*.google-analytics.com',
   'https://api-iam.intercom.io',
-  'https://app.storyblok.com', // Stortblok editor
-  'https://*.pusher.com/', // Stortblok editor & Vercel preview comments
-  'wss://*.pusher.com', // Stortblok editor & Vercel preview comments
+  'https://app.storyblok.com', // Storyblok editor
+  'https://*.pusher.com/', // Storyblok editor & Vercel preview comments
+  'wss://*.pusher.com', // Storyblok editor & Vercel preview comments
   'wss://*.intercom.io',
   'https://*.hedvigit.com',
   'https://vercel.live', // Vercel Live
