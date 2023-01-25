@@ -21,14 +21,24 @@ type Props = {
   onConfirm: () => void
 }
 
+type CustomerData = {
+  ssn?: string | null
+  email?: string | null
+}
+
 export const PriceCalculator = (props: Props) => {
   const { priceIntent, shopSession, onConfirm } = props
   const { priceTemplate } = useProductPageContext()
-  const { customer = {} } = shopSession
 
   const form = useMemo(() => {
-    return setupForm(priceTemplate, getFormData(priceIntent, customer), priceIntent.suggestedData)
-  }, [priceIntent, customer, priceTemplate])
+    const { ssn, email } = shopSession.customer ?? {}
+    const customerData = { ssn, email }
+    return setupForm(
+      priceTemplate,
+      getFormData(priceIntent, customerData),
+      priceIntent.suggestedData,
+    )
+  }, [priceIntent, shopSession.customer, priceTemplate])
 
   const [activeSectionId, setActiveSectionId] = useState(() => {
     const firstIncompleteSection = form.sections.find(({ state }) => state !== 'valid')
@@ -101,7 +111,7 @@ export const PriceCalculator = (props: Props) => {
 
 type IsFormReadyToConfirmParams = {
   form: Form
-  customer: ShopSession['customer']
+  customer?: CustomerData | null
   priceIntent: PriceIntent
 }
 
@@ -115,6 +125,6 @@ const isFormReadyToConfirm = ({ form, customer, priceIntent }: IsFormReadyToConf
   return updatedForm.sections.every((section) => section.state === 'valid')
 }
 
-const getFormData = (priceIntent: PriceIntent, customer: ShopSession['customer']): JSONData => {
+const getFormData = (priceIntent: PriceIntent, customer?: CustomerData | null): JSONData => {
   return { ...customer, ...priceIntent.data } as const
 }
