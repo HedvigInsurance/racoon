@@ -24,8 +24,8 @@ const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
   flexDirection: 'column',
   flexShrink: 0,
   [mq.lg]: {
-    padding: `${theme.space[4]} ${theme.space[5]}`,
-    borderRadius: theme.radius[1],
+    padding: `${theme.space.md} ${theme.space.lg}`,
+    borderRadius: theme.radius.sm,
     ':hover': {
       backgroundColor: theme.colors.gray100,
     },

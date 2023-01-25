@@ -8,8 +8,8 @@ import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderSty
 
 const triggerStyles = {
   ...focusableStyles,
-  fontSize: theme.fontSizes[3],
-  marginRight: theme.space[4],
+  fontSize: theme.fontSizes.md,
+  marginRight: theme.space.md,
   [mq.lg]: {
     display: 'none',
   },
@@ -28,15 +28,15 @@ const ButtonWrapper = styled(Space)(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  paddingTop: theme.space[7],
+  paddingTop: theme.space.xxl,
 }))
 
 const StyledAppleIcon = styled(AppleIcon)(({ theme }) => ({
-  marginRight: theme.space[2],
+  marginRight: theme.space.xs,
 }))
 
 const StyledAndroidIcon = styled(AndroidIcon)(({ theme }) => ({
-  marginRight: theme.space[2],
+  marginRight: theme.space.xs,
 }))
 
 export type TopMenuMobileProps = {
