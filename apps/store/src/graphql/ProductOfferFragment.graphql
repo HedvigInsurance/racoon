@@ -29,6 +29,10 @@ fragment ProductOffer on ProductOffer {
   cancellation {
     option
     requested
+    externalInsurer {
+      id
+      displayName
+    }
   }
   priceMatch {
     externalInsurer {
