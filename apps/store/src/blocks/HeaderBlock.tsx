@@ -5,6 +5,7 @@ import {
   ButtonWrapper,
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
+  NavigationMenuProductItem,
   NavigationMenuSecondaryItem,
   NavigationSecondaryList,
   NavigationTrigger,
@@ -85,13 +86,13 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
   const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
 
   return (
-    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitiveItem value="hello" {...storyblokEditable(blok)}>
       <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
           <ProductNavigationList>
             {filteredNavItems.map((nestedBlock) => (
-              <NavigationMenuSecondaryItem
+              <NavigationMenuProductItem
                 key={nestedBlock._uid}
                 value={nestedBlock.name}
                 {...storyblokEditable(nestedBlock)}
@@ -99,7 +100,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
                 <ProductNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
                   {nestedBlock.name}
                 </ProductNavigationLink>
-              </NavigationMenuSecondaryItem>
+              </NavigationMenuProductItem>
             ))}
           </ProductNavigationList>
         </NavigationMenuPrimitive.Sub>

@@ -22,6 +22,7 @@ const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
+  flexShrink: 0,
   [mq.lg]: {
     padding: `${theme.space[4]} ${theme.space[5]}`,
     borderRadius: theme.radius[1],

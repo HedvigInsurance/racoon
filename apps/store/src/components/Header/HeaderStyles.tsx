@@ -39,6 +39,7 @@ export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(
         backgroundColor: theme.colors.gray100,
       },
     },
+    justifyContent: 'center',
   },
 }))
 
@@ -49,6 +50,20 @@ export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(
   [mq.lg]: {
     padding: `${theme.space[2]} ${theme.space[3]}`,
     margin: 0,
+    borderRadius: theme.radius[1],
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
+  },
+}))
+
+export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  padding: `${theme.space[4]} ${theme.space[4]} `,
+
+  [mq.lg]: {
+    padding: `${theme.space[2]} ${theme.space[3]}`,
     borderRadius: theme.radius[1],
     '@media (hover: hover)': {
       '&:hover': {
@@ -112,7 +127,7 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
   paddingTop: theme.space[6],
 
   [mq.lg]: {
-    padding: `${theme.space[4]} 0`,
+    padding: 0,
   },
 }))
 
@@ -127,10 +142,6 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ the
   paddingTop: theme.space[6],
 
   [mq.lg]: {
-    gap: 'none',
-    display: 'flex',
-    flexDirection: 'row',
-    rowGap: theme.space[4],
     padding: `${theme.space[4]} 0`,
   },
 }))

@@ -3,7 +3,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { Button, mq, Space, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, mq, Space, theme } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
 const triggerStyles = {
@@ -29,6 +29,14 @@ const ButtonWrapper = styled(Space)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   paddingTop: theme.space[7],
+}))
+
+const StyledAppleIcon = styled(AppleIcon)(({ theme }) => ({
+  marginRight: theme.space[2],
+}))
+
+const StyledAndroidIcon = styled(AndroidIcon)(({ theme }) => ({
+  marginRight: theme.space[2],
 }))
 
 export type TopMenuMobileProps = {
@@ -61,9 +69,11 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
               <div>{children}</div>
               <ButtonWrapper x={0.25}>
                 <Button variant="secondary" size="medium">
+                  <StyledAppleIcon />
                   App Store
                 </Button>
                 <Button variant="secondary" size="medium">
+                  <StyledAndroidIcon />
                   Google Play
                 </Button>
               </ButtonWrapper>
