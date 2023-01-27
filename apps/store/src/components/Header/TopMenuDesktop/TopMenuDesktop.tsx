@@ -10,7 +10,7 @@ export type TopMenuDesktopProps = {
 
 const Wrapper = styled.div({
   display: 'none',
-  [mq.md]: {
+  [mq.lg]: {
     display: 'block',
   },
 })

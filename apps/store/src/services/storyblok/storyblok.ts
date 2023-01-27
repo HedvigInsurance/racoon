@@ -18,6 +18,7 @@ import {
   HeaderBlockProps,
   NavItemBlock,
   NestedNavContainerBlock,
+  ProductNavContainerBlock,
 } from '@/blocks/HeaderBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
@@ -178,6 +179,7 @@ export const initStoryblok = () => {
     TopPickCardBlock,
     VideoBlock,
     VideoListBlock,
+    ProductNavContainerBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { ArrowForwardIcon, ChevronIcon, CrossIcon, mq, theme } from 'ui'
+import { mq, theme } from 'ui'
 
-export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
+export const MENU_BAR_HEIGHT_MOBILE = '3rem'
 
 export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
 
@@ -14,30 +14,80 @@ export const focusableStyles = {
 }
 
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  backgroundColor: theme.colors.gray200,
-  fontSize: theme.fontSizes[5],
-  [mq.md]: {
-    fontSize: theme.fontSizes[3],
+  backgroundColor: theme.colors.light,
+  fontSize: theme.fontSizes.xl,
+  [mq.lg]: {
+    fontSize: theme.fontSizes.sm,
+    top: 0,
   },
 })
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
-  [mq.md]: {
-    padding: `0 ${theme.space[4]}`,
+  padding: `${theme.space.lg} 0`,
+  ':not(:last-child)': {
+    borderBottom: `1px solid ${theme.colors.borderOpaque}`,
+  },
+  [mq.lg]: {
+    display: 'flex',
+    padding: `${theme.space.xs} ${theme.space.md}`,
+    ':not(:last-child)': {
+      borderBottom: 'none',
+    },
+    borderRadius: theme.radius.sm,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
+    justifyContent: 'center',
   },
 }))
 
-export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(() => ({
-  [mq.md]: {
-    position: 'absolute',
-    top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + 0.5rem)`,
+export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  padding: `${theme.space.md} ${theme.space.md} `,
+  marginLeft: theme.space.md,
+
+  [mq.lg]: {
+    padding: `${theme.space.xs} ${theme.space.sm}`,
+    margin: 0,
+    borderRadius: theme.radius.sm,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
   },
 }))
 
-export const TriggerIcon = styled(ChevronIcon)({
-  transition: 'transform 300ms',
-  '[data-state=open] &': { transform: 'rotate(180deg)' },
-})
+export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+  padding: `${theme.space.md} ${theme.space.md} `,
+
+  [mq.lg]: {
+    padding: `${theme.space.xs} ${theme.space.sm}`,
+    borderRadius: theme.radius.sm,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.gray100,
+      },
+    },
+  },
+}))
+
+export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(
+  ({ theme }) => ({
+    [mq.lg]: {
+      position: 'absolute',
+      top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`,
+      backgroundColor: theme.colors.light,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      borderRadius: theme.radius.sm,
+      padding: `${theme.space.md} ${theme.space.md}`,
+    },
+  }),
+)
 
 export const navigationTriggerStyles = {
   display: 'flex',
@@ -45,66 +95,63 @@ export const navigationTriggerStyles = {
   gap: '0.5rem',
 }
 
-export const NavigationTriggerDesktop = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'none',
-  [mq.md]: {
-    ...navigationTriggerStyles,
-    ...focusableStyles,
-  },
-})
-
-export const StyledCrossIcon = styled(CrossIcon)()
-export const StyledArrowForwardIcon = styled(ArrowForwardIcon)()
-
-export const NavigationTriggerMobile = styled(NavigationMenuPrimitive.Trigger)({
-  ...navigationTriggerStyles,
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xs,
   ...focusableStyles,
-  ['&[data-state=open]']: {
-    [StyledArrowForwardIcon.toString()]: { display: 'none' },
-  },
-  '&[data-state=closed]': {
-    [StyledCrossIcon.toString()]: { display: 'none' },
-  },
-  [mq.md]: {
-    display: 'none',
-  },
-})
+}))
 
 export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
   all: 'unset',
   listStyle: 'none',
   position: 'fixed',
-  inset: 0,
+  inset: `${MENU_BAR_HEIGHT_MOBILE} 0 0 0`,
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[5],
-  padding: `${theme.space[8]} ${theme.space[4]} 0`,
+  padding: `0 ${theme.space.md} `,
   backgroundColor: theme.colors.light,
 
-  [mq.md]: {
+  [mq.lg]: {
     position: 'static',
     flexDirection: 'row',
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    padding: '0 0 0 0.5rem',
   },
 }))
 
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
   all: 'unset',
   listStyle: 'none',
+  display: 'block',
+  paddingTop: theme.space.xl,
+
+  [mq.lg]: {
+    padding: 0,
+  },
+}))
+
+export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+  all: 'unset',
+  listStyle: 'none',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  gap: theme.space[1],
-  rowGap: theme.space[4],
-  fontSize: theme.fontSizes[2],
-  paddingTop: theme.space[6],
+  gap: theme.space.xxs,
+  rowGap: theme.space.md,
+  fontSize: theme.fontSizes.sm,
+  paddingTop: theme.space.xl,
 
-  [mq.md]: {
-    gap: 'none',
-    rowGap: theme.space[4],
-    padding: `${theme.space[4]} 0`,
-    borderRadius: '0.5rem',
-    backgroundColor: theme.colors.gray100,
+  [mq.lg]: {
+    padding: `${theme.space.md} 0`,
+  },
+}))
+
+export const ButtonWrapper = styled.div(({ theme }) => ({
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingTop: theme.space.md,
+  [mq.lg]: {
+    paddingTop: 0,
   },
 }))

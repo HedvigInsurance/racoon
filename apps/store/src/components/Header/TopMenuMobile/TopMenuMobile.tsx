@@ -1,35 +1,43 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { CrossIcon, mq } from 'ui'
+import { AndroidIcon, AppleIcon, Button, mq, Space, theme } from 'ui'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
-import { MenuIcon } from '../MenuIcon'
 
-export const IconButton = styled.button({
-  position: 'absolute',
-  top: '1rem',
-  left: '1rem',
-  lineHeight: 0,
+const triggerStyles = {
   ...focusableStyles,
-  [mq.md]: {
+  fontSize: theme.fontSizes.md,
+  marginRight: theme.space.md,
+  [mq.lg]: {
     display: 'none',
   },
+}
+
+export const DialogTrigger = styled(DialogPrimitive.Trigger)({
+  ...triggerStyles,
 })
 
-export const ToggleMenu = styled.button({
-  ...focusableStyles,
-  '&[data-state=open]': {
-    visibility: 'hidden',
-  },
-  [mq.md]: {
-    display: 'none',
-  },
+export const DialogClose = styled(DialogPrimitive.DialogClose)({
+  ...triggerStyles,
 })
 
-export const DialogCloseIcon = styled(DialogPrimitive.DialogClose)({
-  position: 'fixed',
-})
+const ButtonWrapper = styled(Space)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingTop: theme.space.xxl,
+}))
+
+const StyledAppleIcon = styled(AppleIcon)(({ theme }) => ({
+  marginRight: theme.space.xs,
+}))
+
+const StyledAndroidIcon = styled(AndroidIcon)(({ theme }) => ({
+  marginRight: theme.space.xs,
+}))
 
 export type TopMenuMobileProps = {
   isOpen?: boolean
@@ -39,6 +47,7 @@ export type TopMenuMobileProps = {
 export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     const closeDialog = () => setOpen(false)
@@ -49,22 +58,27 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        <DialogPrimitive.Trigger asChild>
-          <ToggleMenu>
-            <MenuIcon />
-          </ToggleMenu>
-        </DialogPrimitive.Trigger>
-
+        {open ? (
+          <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
+        ) : (
+          <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
+        )}
         <DialogContent>
           <Navigation>
-            <NavigationPrimaryList>{children}</NavigationPrimaryList>
+            <NavigationPrimaryList>
+              <div>{children}</div>
+              <ButtonWrapper x={0.25}>
+                <Button variant="secondary" size="medium">
+                  <StyledAppleIcon />
+                  App Store
+                </Button>
+                <Button variant="secondary" size="medium">
+                  <StyledAndroidIcon />
+                  Google Play
+                </Button>
+              </ButtonWrapper>
+            </NavigationPrimaryList>
           </Navigation>
-
-          <DialogCloseIcon asChild>
-            <IconButton>
-              <CrossIcon />
-            </IconButton>
-          </DialogCloseIcon>
         </DialogContent>
       </DialogPrimitive.Root>
     </>

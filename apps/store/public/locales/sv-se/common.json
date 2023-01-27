@@ -4,6 +4,8 @@
   "LANGUAGE_LABEL_en": "Engelska",
   "LANGUAGE_LABEL_sv": "Svenska",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",
+  "NAV_MENU_DIALOG_CLOSE": "Stäng",
+  "NAV_MENU_DIALOG_OPEN": "Meny",
   "READ_MORE": "Läs mer",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, vänligen försök igen."
 }
