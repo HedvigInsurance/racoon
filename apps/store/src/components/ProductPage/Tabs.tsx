@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { zIndexes } from '@/utils/zIndex'
 
+export type { TabsProps } from '@radix-ui/react-tabs'
+
 export const Tabs = styled(RadixTabs.Root)({
   position: 'relative',
   display: 'flex',
@@ -34,8 +36,6 @@ export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
   backdropFilter: 'blur(20px)',
   borderRadius: theme.radius.sm,
   cursor: 'pointer',
-
-  '&:hover': { color: theme.colors.purple900 },
 
   '&[data-state=active]': {
     paddingInline: '3.75rem',

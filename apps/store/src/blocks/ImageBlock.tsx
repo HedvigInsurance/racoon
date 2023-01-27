@@ -2,28 +2,37 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
+export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
+
 type ImageBlockProps = SbBaseBlockProps<{
   image: StoryblokAsset
+  aspectRatioLandscape?: ImageAspectRatio
+  aspectRatioPortrait?: ImageAspectRatio
   fullBleed?: boolean
   body?: ExpectedBlockType<HeadingBlockProps>
 }>
 
 export const ImageBlock = ({ blok }: ImageBlockProps) => {
-  const sizeProps = getSizeFromURL(blok.image.filename)
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
   return (
-    <Wrapper {...storyblokEditable(blok)} includePadding={!blok.fullBleed}>
+    <Wrapper
+      {...storyblokEditable(blok)}
+      aspectRatioLandscape={blok.aspectRatioLandscape}
+      aspectRatioPortrait={blok.aspectRatioPortrait}
+      includePadding={!blok.fullBleed}
+    >
       <Image
+        style={{ objectFit: 'cover' }}
         src={blok.image.filename}
         roundedCorners={!blok.fullBleed}
-        {...sizeProps}
         alt={blok.image.alt}
+        fill
       />
       <BodyWrapper>
         {headingBlocks.map((nestedBlock) => (
@@ -35,20 +44,30 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
 }
 ImageBlock.blockName = 'image'
 
-type WrapperProps = { includePadding: boolean }
+type WrapperProps = {
+  includePadding: boolean
+  aspectRatioLandscape?: ImageAspectRatio
+  aspectRatioPortrait?: ImageAspectRatio
+}
 
 const Wrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperProps>(
-  ({ theme, includePadding }) => ({
-    paddingLeft: includePadding ? theme.space[4] : 0,
-    paddingRight: includePadding ? theme.space[4] : 0,
+  ({ includePadding, aspectRatioLandscape = '3 / 2', aspectRatioPortrait = '3 / 2' }) => ({
     position: 'relative',
+    paddingLeft: includePadding ? theme.space.md : 0,
+    paddingRight: includePadding ? theme.space.md : 0,
+    ['@media (orientation: landscape)']: {
+      aspectRatio: aspectRatioLandscape,
+    },
+    ['@media (orientation: portrait)']: {
+      aspectRatio: aspectRatioPortrait,
+    },
   }),
 )
 
 type ImageProps = { roundedCorners: boolean }
 
 const Image = styled(NextImage, { shouldForwardProp: isPropValid })<ImageProps>(
-  ({ theme, roundedCorners }) => ({
+  ({ roundedCorners }) => ({
     ...(roundedCorners && {
       borderRadius: theme.radius.md,
       [mq.lg]: {
@@ -58,18 +77,9 @@ const Image = styled(NextImage, { shouldForwardProp: isPropValid })<ImageProps>(
   }),
 )
 
-const BodyWrapper = styled.div(({ theme }) => ({
+const BodyWrapper = styled.div({
   position: 'absolute',
-  top: theme.space[4],
-  left: theme.space[4],
-  right: theme.space[4],
-}))
-
-export const getSizeFromURL = (url: string) => {
-  const [, rawWidth, rawHeight] = url.match(/\/(\d+)x(\d+)\//) || []
-
-  const width = parseInt(rawWidth, 10) || 0
-  const height = parseInt(rawHeight, 10) || 0
-
-  return { width, height }
-}
+  top: theme.space.md,
+  left: theme.space.md,
+  right: theme.space.md,
+})

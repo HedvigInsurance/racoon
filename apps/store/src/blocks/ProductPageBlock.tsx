@@ -1,12 +1,16 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { useState } from 'react'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
+import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
+import type { TabsProps } from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+
+const TABLIST_HEIGHT = '2.5rem'
 
 type ProductPageBlockProps = SbBaseBlockProps<{
   overviewLabel: string
@@ -26,49 +30,25 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
     <Main {...storyblokEditable(blok)}>
       <MobileLayout>
         <PurchaseForm />
-        <Tabs.Tabs value={selectedTab} onValueChange={setSelectedTab}>
-          <Tabs.TabsList>
-            <TablistWrapper>
-              <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
-              <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
-            </TablistWrapper>
-            {shouldRenderVariantSelector && <StyledProductVariantSelector />}
-          </Tabs.TabsList>
-
-          <OverviewSectionMobile>
-            <Tabs.TabsContent value="overview">
-              {blok.overview?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </Tabs.TabsContent>
-          </OverviewSectionMobile>
-
-          <Tabs.TabsContent value="coverage">
-            {blok.coverage?.map((nestedBlock) => (
-              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-            ))}
-          </Tabs.TabsContent>
-        </Tabs.Tabs>
+        <ProducPageTabs
+          blok={blok}
+          renderVariantSelector={shouldRenderVariantSelector}
+          value={selectedTab}
+          onValueChange={setSelectedTab}
+        />
       </MobileLayout>
 
       <DesktopLayout>
-        <>
-          <ProductUpper>
-            <div>
-              {blok.overview?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </div>
+        <ProducPageTabs
+          blok={blok}
+          renderVariantSelector={shouldRenderVariantSelector}
+          value={selectedTab}
+          onValueChange={setSelectedTab}
+        />
 
-            <PurchaseFormWrapper>
-              <PurchaseForm />
-            </PurchaseFormWrapper>
-          </ProductUpper>
-
-          {blok.coverage?.map((nestedBlock) => (
-            <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-          ))}
-        </>
+        <PurchaseFormWrapper>
+          <PurchaseForm />
+        </PurchaseFormWrapper>
       </DesktopLayout>
 
       {blok.body.map((nestedBlock) => (
@@ -77,17 +57,48 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
     </Main>
   )
 }
-
 ProductPageBlock.blockName = 'product'
+
+type ProductPageTabsProps = {
+  blok: ProductPageBlockProps['blok']
+  renderVariantSelector?: boolean
+} & Pick<TabsProps, 'value' | 'onValueChange'>
+
+const ProducPageTabs = ({ blok, renderVariantSelector, ...delegated }: ProductPageTabsProps) => {
+  const handleValueChange = (value: string) => {
+    delegated.onValueChange?.(value)
+    window?.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  return (
+    <Tabs.Tabs {...delegated} onValueChange={handleValueChange}>
+      <TabList>
+        <TablistWrapper>
+          <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
+          <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
+        </TablistWrapper>
+        {renderVariantSelector && <StyledProductVariantSelector />}
+      </TabList>
+
+      <OverviewSection>
+        <Tabs.TabsContent value="overview">
+          {blok.overview?.map((nestedBlock) => (
+            <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+          ))}
+        </Tabs.TabsContent>
+      </OverviewSection>
+
+      <Tabs.TabsContent value="coverage">
+        {blok.coverage?.map((nestedBlock) => (
+          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
+      </Tabs.TabsContent>
+    </Tabs.Tabs>
+  )
+}
 
 const Main = styled.main({
   width: '100%',
-})
-
-const ProductUpper = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  alignItems: 'flex-start',
 })
 
 const PurchaseFormWrapper = styled.div({
@@ -98,9 +109,15 @@ const PurchaseFormWrapper = styled.div({
   overflow: 'auto',
 })
 
-const OverviewSectionMobile = styled.div(({ theme }) => ({
-  marginTop: `-${theme.space[7]}`,
-}))
+const OverviewSection = styled.div({
+  marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.xs})`,
+  [mq.md]: {
+    marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})`,
+  },
+  [mq.lg]: {
+    marginTop: `-${TABLIST_HEIGHT}`,
+  },
+})
 
 const MobileLayout = styled.div({
   [mq.lg]: {
@@ -111,7 +128,9 @@ const MobileLayout = styled.div({
 const DesktopLayout = styled.div({
   display: 'none',
   [mq.lg]: {
-    display: 'block',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    alignItems: 'flex-start',
   },
 })
 
@@ -120,7 +139,19 @@ const StyledProductVariantSelector = styled(ProductVariantSelector)({
   width: 'fit-content',
 })
 
-const TablistWrapper = styled.div(({ theme }) => ({
+const TabList = styled(Tabs.TabsList)({
+  [mq.md]: {
+    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.lg,
+  },
+  [mq.lg]: {
+    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.xl,
+  },
+})
+
+const TablistWrapper = styled.div({
   display: 'flex',
   gap: theme.space[2],
-}))
+  height: TABLIST_HEIGHT,
+})
