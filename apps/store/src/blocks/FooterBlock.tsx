@@ -93,95 +93,86 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
     <Wrapper>
-      <Content>
-        {footerSections.map((nestedBlok) => (
-          <FooterSection key={nestedBlok._uid} blok={nestedBlok} />
-        ))}
+      {footerSections.map((nestedBlok) => (
+        <Column key={nestedBlok._uid}>
+          <FooterSection blok={nestedBlok} />
+        </Column>
+      ))}
 
-        <Bottom>
-          <Disclaimer>
-            <Text color="textSecondary" size="sm">
-              © Hedvig 2023
-            </Text>
-          </Disclaimer>
+      <LocaleForm>
+        <StyledInputSelect
+          name={LocaleField.Country}
+          onChange={handleChangeCountry}
+          defaultValue={currentCountry.id}
+          options={countryList}
+        />
+        <StyledInputSelect
+          name={LocaleField.Language}
+          onChange={handleChangeLanguage}
+          defaultValue={currentLanguage}
+          options={languageList}
+        />
+      </LocaleForm>
 
-          <LocaleForm>
-            <StyledInputSelect
-              name={LocaleField.Country}
-              onChange={handleChangeCountry}
-              defaultValue={currentCountry.id}
-              options={countryList}
-            />
-            <StyledInputSelect
-              name={LocaleField.Language}
-              onChange={handleChangeLanguage}
-              defaultValue={currentLanguage}
-              options={languageList}
-            />
-          </LocaleForm>
-        </Bottom>
-      </Content>
+      <Disclaimer>
+        <Text color="textSecondary" size="sm">
+          © Hedvig 2023
+        </Text>
+      </Disclaimer>
     </Wrapper>
   )
 }
 FooterBlock.blockName = 'footer' as const
 
 const Wrapper = styled.footer({
-  width: '100%',
   backgroundColor: theme.colors.gray100,
   paddingInline: theme.space.md,
   paddingTop: theme.space.xxl,
 
   // Clear floating price calculator button
-  paddingBottom: theme.space[9],
-})
+  paddingBottom: theme.space[10],
 
-const Content = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gridTemplateRows: 'repeat(2, auto)',
+  gridTemplateColumns: 'repeat(12, 1fr)',
   columnGap: theme.space.md,
   rowGap: theme.space.xxl,
-
-  maxWidth: `calc(8 * 6.25rem + 7 * ${theme.space.md})`,
-  marginInline: 'auto',
-
-  [mq.md]: {
-    gridTemplateColumns: 'repeat(4, 1fr)',
-  },
 })
 
-const Bottom = styled.div({
-  gridColumn: '1 / -1',
-  display: 'grid',
-  gridTemplateAreas: `
-    'form'
-    'disclaimer'
-  `,
-  columnGap: theme.space.md,
-  rowGap: theme.space.xxl,
+const Column = styled.div({
+  gridColumn: 'span 6',
 
-  [mq.md]: {
-    gridTemplateColumns: 'repeat(8, 1fr)',
-    gridTemplateAreas: `
-      'disclaimer disclaimer none none form form form form'
-    `,
-    alignItems: 'center',
+  [mq.md]: { gridColumn: 'span 3' },
+  [mq.xxl]: {
+    gridColumn: 'auto / span 2',
+    ':first-child': { gridColumnStart: 3 },
   },
-})
-
-const Disclaimer = styled.div({
-  gridArea: 'disclaimer',
-  textAlign: 'center',
-
-  [mq.md]: { textAlign: 'left' },
 })
 
 const LocaleForm = styled.div({
-  gridArea: 'form',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: theme.space.md,
+
+  gridColumn: '1 / -1',
+
+  [mq.md]: {
+    gridRow: 2,
+    gridColumn: '7 / -1',
+  },
+  [mq.xxl]: { gridColumn: '7 / span 4' },
+})
+
+const Disclaimer = styled.div({
+  gridColumn: '1 / -1',
+  textAlign: 'center',
+
+  [mq.md]: {
+    gridRow: 2,
+    gridColumn: 'span 2',
+    textAlign: 'left',
+  },
+
+  [mq.xxl]: { gridColumn: '3 / span 2' },
 })
 
 const StyledLink = styled(Link)({ textDecoration: 'none', display: 'block' })
