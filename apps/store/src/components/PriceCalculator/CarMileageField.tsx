@@ -23,7 +23,7 @@ export const CarMileageField = ({ field, autoFocus }: Props) => {
       name={field.name}
       placeholder={t(field.label.key, { defaultValue: t('FIELD_MILEAGE_LABEL') })}
       required={field.required}
-      defaultValue={field.defaultValue}
+      defaultValue={field.value ?? field.defaultValue}
       options={options.map((option) => ({
         name: t('YEARLY_MILEAGE_VALUE', { value: option.displayValue }),
         value: option.value,
