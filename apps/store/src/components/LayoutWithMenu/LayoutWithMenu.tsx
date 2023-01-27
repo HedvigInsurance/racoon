@@ -8,9 +8,6 @@ import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 
 const Wrapper = styled.div({
   minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   isolation: 'isolate',
 })
 

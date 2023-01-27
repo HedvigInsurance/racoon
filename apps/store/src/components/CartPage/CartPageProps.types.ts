@@ -7,5 +7,4 @@ export type CartPageProps = {
   campaigns: Array<CartCampaign>
   entries: Array<CartEntry>
   recommendations: Array<ProductRecommendationFragment>
-  prevURL: string
 }
