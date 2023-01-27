@@ -2,20 +2,22 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
   getCrossOut,
+  getTotal,
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
-  getTotal,
 } from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { PageLink } from '@/utils/PageLink'
 
 type NextPageProps = Pick<CheckoutPageProps, 'shopSessionSigningId' | 'ssn' | 'collectName'> & {
   [SHOP_SESSION_PROP_NAME]: string
@@ -27,6 +29,12 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
   if (!shopSession || !shopSession.customer) return null
+
+  const { authenticationStatus } = shopSession.customer
+  if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired)
+    throw new Error(
+      'Authentication required when rendering checkout page, this should be prevented by server side redirect',
+    )
 
   const cart = {
     id: shopSession.cart.id,
@@ -64,7 +72,14 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     [FormElement.LastName]: shopSession.customer.lastName ?? undefined,
   }
 
-  return <CheckoutPage {...props} cart={cart} prefilledData={prefilledData} />
+  return (
+    <CheckoutPage
+      {...props}
+      cart={cart}
+      customerAuthenticationStatus={authenticationStatus}
+      prefilledData={prefilledData}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
@@ -80,6 +95,11 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { customer } = shopSession
   if (!customer) throw new Error('No Customer info in Shop Session')
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
+  // Cart page handles authentication requirement before checkout
+  if (customer.authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+    console.log('Customer authentication required, redirecting checkout -> cart')
+    return { redirect: { destination: PageLink.cart({ locale }), permanent: false } }
+  }
 
   const shopSessionSigning = await fetchCurrentShopSessionSigning({
     apolloClient,

@@ -1,0 +1,5 @@
+mutation ShopSessionAuthenticate($shopSessionId: ID!) {
+  shopSessionAuthenticate(id: $shopSessionId) {
+    ...ShopSession
+  }
+}

@@ -6,7 +6,7 @@ import { FormElement } from './CheckoutPage.constants'
 
 type Params = {
   shopSessionId: string
-  onSuccess: () => void
+  onSuccess?: () => void
 }
 
 export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
@@ -14,7 +14,7 @@ export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     onCompleted(data) {
       if (!data.shopSessionCustomerUpdate.userError) {
-        onSuccess()
+        onSuccess?.()
       }
     },
     onError(error) {
