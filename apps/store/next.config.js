@@ -45,7 +45,10 @@ const styleSrcDirectives = [
 ]
 const fontSrcDirectives = [
   'https://fonts.intercomcdn.com',
-  'https://fonts.gstatic.com', // GTM preview mode
+  // GTM preview mode
+  'https://fonts.gstatic.com',
+  // Vercel
+  'https://*.vercel.com',
   "'self'",
 ]
 const imgSrcDirectives = [
@@ -55,11 +58,12 @@ const imgSrcDirectives = [
   'https://downloads.intercomcdn.com',
   'https://static.intercomassets.com',
   // Google
-  'https://www.gstatic.com',
+  'https://*.gstatic.com', // www + fonts
   'https://www.googletagmanager.com',
   // Vercel
   'https://assets.vercel.com',
   'https://vercel.com',
+  'https://vercel.live',
 
   'blob:',
   'data:',
@@ -68,21 +72,32 @@ const imgSrcDirectives = [
 const mediaSrcDirectives = [
   'https://dc.insurely.com',
   'https://vercel.live',
-  'https://a.storyblok.com', // Stortblok editor
+  // Storyblok
+  'https://a.storyblok.com',
   "'self'",
 ]
 const connectSrcDirectives = [
-  'https://sgtm.hedvig.com', // Server-side Google Tag Manager
+  // Server-side Google Tag Manager
+  'https://sgtm.hedvig.com',
+  // Our logging
   'https://*.browser-intake-datadoghq.eu',
-  'https://*.google-analytics.com',
+  // Storyblok logging
+  'https://*.sentry.io',
+  // Intercom
   'https://api-iam.intercom.io',
-  'https://app.storyblok.com', // Storyblok editor
-  'https://*.pusher.com/', // Storyblok editor & Vercel preview comments
-  'wss://*.pusher.com', // Storyblok editor & Vercel preview comments
   'wss://*.intercom.io',
+  // Storyblok editor
+  'https://app.storyblok.com',
+  // Storyblok editor & Vercel preview comments
+  'https://*.pusher.com/',
+  'wss://*.pusher.com',
+  // Vercel Live
+  'https://vercel.live',
+  // Google
+  'https://www.gstatic.com',
+  'https://*.google-analytics.com',
+
   'https://*.hedvigit.com',
-  'https://vercel.live', // Vercel Live
-  'https://www.gstatic.com', // Google
   "'self'",
 ]
 const frameSrcDirectives = [
