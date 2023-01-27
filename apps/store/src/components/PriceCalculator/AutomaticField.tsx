@@ -80,7 +80,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           name={field.name}
           label={translateLabel(field.label)}
           required={field.required}
-          defaultValue={field.defaultValue}
+          defaultValue={field.value ?? field.defaultValue}
         >
           {field.options.map((option, index) => (
             <InputRadio.Item
@@ -99,7 +99,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           name={field.name}
           label={field.label ? translateLabel(field.label) : undefined}
           required={field.required}
-          defaultValue={field.defaultValue}
+          defaultValue={field.value ?? field.defaultValue}
           options={field.options.map((option) => ({
             ...option,
             name: translateLabel(option.label),
