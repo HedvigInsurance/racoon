@@ -13,7 +13,7 @@ import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
-import { SsnSection } from './SsnSection/SsnSection'
+import { SsnSection } from './SsnSection'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
