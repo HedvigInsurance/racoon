@@ -42,7 +42,7 @@ export const PurchaseForm = () => {
   const handleOpen = () => {
     tracking.reportOpenPriceCalculator({
       id: productData.id,
-      displayNameShort: productData.displayNameShort,
+      displayNameFull: productData.displayNameFull,
     })
     setFormState('EDIT')
   }
