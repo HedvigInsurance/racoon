@@ -1,48 +1,23 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { Heading, mq, Space, Text, theme } from 'ui'
+import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
-type Props = { shopSession: ShopSession }
+export type SwitchingAssistantPageProps = {
+  entries: Array<CancellableEntry>
+  shopSessionId: string
+}
+type CancellableEntry = { key: string; name: string; company: string; url: string; date: string }
 
-type CancellableEntry = { key: string; name: string; company?: string; url: string; date: Date }
-
-export const SwitchingAssistantPage = ({ shopSession }: Props) => {
+export const SwitchingAssistantPage = ({ entries, shopSessionId }: SwitchingAssistantPageProps) => {
   const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
-  const entriesToCancel = shopSession.cart.entries.reduce<Array<CancellableEntry>>(
-    (entries, entry) => {
-      if (entry.cancellation.option === ExternalInsuranceCancellationOption.Banksignering) {
-        const company = entry.cancellation.externalInsurer?.displayName
-        if (!company) {
-          datadogLogs.logger.warn('Missing company name for Banksignering cancellation', {
-            entryId: entry.id,
-          })
-        }
-
-        entries.push({
-          key: entry.id,
-          name: entry.variant.product.displayNameFull,
-          company: entry.cancellation.externalInsurer?.displayName,
-          // TODO: get from API
-          url: '/',
-          // TODO: get from API
-          date: new Date(),
-        })
-      }
-      return entries
-    },
-    [],
-  )
 
   return (
     <Space y={{ base: 1, lg: 2.5 }}>
@@ -60,7 +35,7 @@ export const SwitchingAssistantPage = ({ shopSession }: Props) => {
         <Main>
           <Space y={1.5}>
             <Space y={0.25}>
-              {entriesToCancel.map((item) => (
+              {entries.map((item) => (
                 <Card key={item.key}>
                   <Space y={1}>
                     <Pill>
@@ -74,23 +49,20 @@ export const SwitchingAssistantPage = ({ shopSession }: Props) => {
                         <Text>{[item.name, item.company].filter(Boolean).join(' · ')}</Text>
                         <Text color="textSecondary">
                           {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
-                            date: formatter.fromNow(item.date),
+                            date: formatter.fromNow(new Date(item.date)),
                           })}
                         </Text>
                       </div>
-                      <ButtonNextLink href={item.url}>
+                      <Button href={item.url} target="_blank" rel="noopener noreferrer">
                         {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
-                      </ButtonNextLink>
+                      </Button>
                     </Space>
                   </Space>
                 </Card>
               ))}
             </Space>
             <Footer>
-              <ButtonNextLink
-                variant="ghost"
-                href={PageLink.confirmation({ shopSessionId: shopSession.id })}
-              >
+              <ButtonNextLink variant="ghost" href={PageLink.confirmation({ shopSessionId })}>
                 {t('SWITCHING_ASSISTANT_SKIP_LINK')}
               </ButtonNextLink>
             </Footer>
