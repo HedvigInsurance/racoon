@@ -71,9 +71,11 @@ export const CartPage = (props: CartPageProps) => {
               <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
             ))}
           </CartEntryList>
-          <HorizontalLine />
-          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-          <HorizontalLine />
+          <Space y={{ base: 1, sm: 1.5 }}>
+            <HorizontalLine />
+            <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+            <HorizontalLine />
+          </Space>
           <CostSummary {...cost} campaigns={campaigns} />
           {shopSession && <CartNextStep shopSession={shopSession} />}
         </Space>
