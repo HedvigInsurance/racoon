@@ -6,17 +6,20 @@ import { Wrapper as ButtonBlockWrapper } from '@/blocks/ButtonBlock'
 import { Wrapper as HeadingBlockWrapper } from '@/blocks/HeadingBlock'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
-type Orientation = 'vertical' | 'horizontal' | 'fluid'
-type Alignment = 'top' | 'center' | 'bottom'
+type Orientation = 'vertical' | 'fluid'
+type TextAlignment = 'top' | 'center' | 'bottom'
+type ImagePlacement = 'left' | 'right'
 
 const DEFAULT_ORIENTATION: Orientation = 'vertical'
-const DEFAULT_ALIGNMENT: Alignment = 'top'
+const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
+const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
 type ImageTextBlockProps = SbBaseBlockProps<{
   image: StoryblokAsset
   body?: SbBlokData[]
   orientation?: Orientation
-  alignment?: Alignment
+  textAlignment?: TextAlignment
+  imagePlacement?: ImagePlacement
   reverse?: boolean
 }>
 
@@ -24,8 +27,8 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
   return (
     <Wrapper
       data-orientation={blok.orientation ?? DEFAULT_ORIENTATION}
-      data-alignment={blok.alignment ?? DEFAULT_ALIGNMENT}
-      reverse={blok.reverse ?? false}
+      data-text-alignment={blok.textAlignment ?? DEFAULT_TEXT_ALIGNMENT}
+      imagePlacement={blok.imagePlacement ?? DEFAULT_IMAGE_PLACEMENT}
       {...storyblokEditable(blok)}
     >
       <ImageWrapper>
@@ -43,21 +46,19 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 }
 ImageTextBlock.blockName = 'imageText'
 
-const Wrapper = styled.div<{ reverse: boolean }>(({ reverse }) => ({
+const Wrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlacement }) => ({
   display: 'flex',
   paddingInline: theme.space.xs,
-  [mq.lg]: {
-    paddingInline: theme.space.md,
-  },
 
-  '&[data-orientation="horizontal"]': {
-    flexFlow: `${reverse ? 'row-reverse' : 'row'} nowrap`,
-  },
   '&[data-orientation="vertical"]': {
-    flexFlow: `${reverse ? 'column-reverse' : 'column'} nowrap`,
+    flexFlow: `${imagePlacement === 'right' ? 'column-reverse' : 'column'} nowrap`,
   },
   '&[data-orientation="fluid"]': {
-    flexFlow: `${reverse ? 'row-reverse wrap-reverse' : 'row wrap'}`,
+    flexFlow: `${imagePlacement === 'right' ? 'row-reverse' : 'row'} wrap`,
+  },
+
+  [mq.lg]: {
+    paddingInline: theme.space.md,
   },
 }))
 
@@ -91,13 +92,13 @@ const BodyWrapper = styled.div({
     minWidth: '35ch',
   },
 
-  [`${Wrapper}[data-alignment='top'] &`]: {
+  [`${Wrapper}[data-text-alignment='top'] &`]: {
     justifyContent: 'flex-start',
   },
-  [`${Wrapper}[data-alignment='center'] &`]: {
+  [`${Wrapper}[data-text-alignment='center'] &`]: {
     justifyContent: 'center',
   },
-  [`${Wrapper}[data-alignment='bottom'] &`]: {
+  [`${Wrapper}[data-text-alignment='bottom'] &`]: {
     justifyContent: 'flex-end',
   },
 
