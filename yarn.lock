@@ -17419,13 +17419,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-router-mock@npm:0.8.0":
-  version: 0.8.0
-  resolution: "next-router-mock@npm:0.8.0"
+"next-router-mock@npm:0.9.1":
+  version: 0.9.1
+  resolution: "next-router-mock@npm:0.9.1"
   peerDependencies:
     next: ">=10.0.0"
     react: ">=17.0.0"
-  checksum: b0fe784feafba7f84179dd9d0787f3b0c6f23a959ec995a49b074f163bcc261819c220567f370621fee1f132e6e28e1f514e38ccca0c39d68725f740e654c092
+  checksum: 8553765b2edddf36f49c205624d9e11396f4c14f33f0e440362f7eb1bb5eadb5aed5176fbd21c75c277554023aa8c2b22aa503de2065a1e36f55d783575ef3ce
   languageName: node
   linkType: hard
 
@@ -17928,7 +17928,7 @@ __metadata:
     msw: 0.47.3
     next: 13.1.5
     next-i18next: 13.0.3
-    next-router-mock: 0.8.0
+    next-router-mock: 0.9.1
     prettier: 2.8.3
     react: 18.2.0
     react-dom: 18.2.0
@@ -21187,7 +21187,7 @@ __metadata:
     msw: 0.44.2
     next: 13.1.5
     next-i18next: 13.0.3
-    next-router-mock: 0.8.0
+    next-router-mock: 0.9.1
     personnummer: 3.1.5
     prettier: 2.8.3
     react: 18.2.0
