@@ -32,8 +32,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const {
     cart,
     ssn,
-    collectEmail,
-    collectName,
+    shouldCollectEmail,
+    shouldCollectName,
     customerAuthenticationStatus,
     shopSessionId,
     shopSessionSigningId,
@@ -122,7 +122,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       readOnly
                       disabled
                     />
-                    {collectName && (
+                    {shouldCollectName && (
                       <SpaceFlex space={0.25}>
                         <TextField
                           type="text"
@@ -138,7 +138,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                         />
                       </SpaceFlex>
                     )}
-                    {collectEmail && (
+                    {shouldCollectEmail && (
                       <TextField
                         type="email"
                         label={t('FORM_EMAIL_LABEL')}

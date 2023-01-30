@@ -33,11 +33,12 @@ export const PriceCalculator = (props: Props) => {
   const form = useMemo(() => {
     const { ssn, email } = shopSession.customer ?? {}
     const customerData = { ssn, email }
-    return setupForm(
-      priceTemplate,
-      getFormData(priceIntent, customerData),
-      priceIntent.suggestedData,
-    )
+    return setupForm({
+      customer: shopSession.customer,
+      suggestedData: priceIntent.suggestedData,
+      template: priceTemplate,
+      userData: getFormData(priceIntent, customerData),
+    })
   }, [priceIntent, shopSession.customer, priceTemplate])
 
   const [activeSectionId, setActiveSectionId] = useState(() => {
@@ -48,8 +49,12 @@ export const PriceCalculator = (props: Props) => {
 
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     onSuccess({ priceIntent, customer }) {
-      const userData = { ...customer, ...priceIntent.data }
-      const form = setupForm(priceTemplate, userData, priceIntent.suggestedData)
+      const form = setupForm({
+        customer: shopSession.customer,
+        suggestedData: priceIntent.suggestedData,
+        template: priceTemplate,
+        userData: { ...customer, ...priceIntent.data },
+      })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
       } else {

@@ -14,6 +14,6 @@ export type CheckoutPageProps = {
     campaigns: Array<CartCampaign>
   }
   ssn: string
-  collectEmail: boolean
-  collectName: boolean
+  shouldCollectEmail: boolean
+  shouldCollectName: boolean
 }

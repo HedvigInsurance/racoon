@@ -14,14 +14,12 @@ import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.hel
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { shouldCollectEmail, shouldCollectName } from '@/utils/customer'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Pick<
-  CheckoutPageProps,
-  'shopSessionSigningId' | 'ssn' | 'collectEmail' | 'collectName'
-> & {
+type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -98,14 +96,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     req,
   })
 
-  const isNewMember = customer.authenticationStatus === ShopSessionAuthenticationStatus.None
-
   const pageProps: NextPageProps = {
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
-    collectEmail: isNewMember,
-    collectName: isNewMember && !(customer.firstName && customer.lastName),
+    shouldCollectEmail: shouldCollectEmail(customer),
+    shouldCollectName: shouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
   }
 

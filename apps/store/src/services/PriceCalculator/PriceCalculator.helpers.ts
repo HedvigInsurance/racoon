@@ -1,3 +1,5 @@
+import { ShopSessionCustomer } from '@/services/apollo/generated'
+import { shouldCollectEmail } from '@/utils/customer'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
 import { SE_APARTMENT_BRF } from './data/SE_APARTMENT_BRF'
 import { SE_APARTMENT_RENT } from './data/SE_APARTMENT_RENT'
@@ -49,8 +51,19 @@ export const prefillData = ({ form, data, valueField }: FillDataParams): Form =>
   }
 }
 
-export const setupForm = (template: Template, userData: JSONData, suggestedData: JSONData) => {
+type SetupFormOptions = {
+  customer: ShopSessionCustomer | null | undefined
+  suggestedData: JSONData
+  template: Template
+  userData: JSONData
+}
+export const setupForm = ({ customer, suggestedData, template, userData }: SetupFormOptions) => {
   const form = convertTemplateIntoForm(template)
+  form.sections.forEach((section) => {
+    section.items = section.items.filter(
+      (item) => item.field.name !== 'email' || shouldCollectEmail(customer),
+    )
+  })
 
   const formWithDefaultValues = prefillData({
     form,
