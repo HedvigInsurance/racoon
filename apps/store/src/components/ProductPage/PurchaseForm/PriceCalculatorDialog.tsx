@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { CrossIcon, Space, Dialog, theme } from 'ui'
+import { sendDialogEvent } from '@/utils/dialogEvent'
 
 type Props = {
   header?: React.ReactNode
@@ -9,8 +10,13 @@ type Props = {
 }
 
 export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }: Props) => {
+  const handleOpenChange = (open: boolean) => {
+    sendDialogEvent(open ? 'open' : 'close')
+    toggleDialog(open)
+  }
+
   return (
-    <Dialog.Root open={isOpen} onOpenChange={toggleDialog}>
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent frostedOverlay>
         <Dialog.Close asChild>
           <IconButton>

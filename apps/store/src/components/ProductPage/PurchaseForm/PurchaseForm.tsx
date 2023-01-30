@@ -20,6 +20,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { CircledHSuperscript } from './CircledHSuperscript'
@@ -38,13 +39,20 @@ export const PurchaseForm = () => {
   const formatter = useFormatter()
   const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
   const tracking = useTracking()
+  const isLarge = useBreakpoint('lg')
 
+  const editForm = () => {
+    setFormState('EDIT')
+    if (!isLarge) {
+      sendDialogEvent('open')
+    }
+  }
   const handleOpen = () => {
     tracking.reportOpenPriceCalculator({
       id: productData.id,
       displayNameFull: productData.displayNameFull,
     })
-    setFormState('EDIT')
+    editForm()
   }
 
   return (
@@ -69,7 +77,7 @@ export const PurchaseForm = () => {
                   center
                   Footer={
                     <>
-                      <Button type="button" onClick={() => setFormState('EDIT')}>
+                      <Button type="button" onClick={editForm}>
                         {t('GENERAL_ERROR_DIALOG_PRIMARY_BUTTON')}
                       </Button>
                       <FullscreenDialog.Close asChild>
@@ -114,7 +122,7 @@ export const PurchaseForm = () => {
               shopSession={shopSession}
               priceIntent={priceIntent}
               onAddedToCart={handleAddedToCart}
-              onClickEdit={() => setFormState('EDIT')}
+              onClickEdit={editForm}
             />
           )
         }
