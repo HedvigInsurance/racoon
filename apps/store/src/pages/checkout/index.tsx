@@ -88,9 +88,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
   const apolloClient = initializeApollo({ req, res })
   const [shopSession, translations] = await Promise.all([
-    getCurrentShopSessionServerSide({ apolloClient, req, res }),
+    getCurrentShopSessionServerSide({ apolloClient, req, res }).catch(() => null),
     serverSideTranslations(locale),
   ])
+  if (!shopSession) {
+    return { redirect: { destination: PageLink.home({ locale }), permanent: false } }
+  }
 
   const { customer } = shopSession
   if (!customer) throw new Error('No Customer info in Shop Session')
