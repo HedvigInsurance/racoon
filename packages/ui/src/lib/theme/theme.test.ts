@@ -8,7 +8,7 @@ describe('theme', () => {
     })
 
     it('should return a simplified color when found in simplifiedColors', () => {
-      expect(getColor('lavender')).toEqual(colors.purple500)
+      expect(getColor('lavender')).toEqual(colors.lavender)
     })
   })
 })
