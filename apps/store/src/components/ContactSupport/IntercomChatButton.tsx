@@ -1,19 +1,23 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { IntercomProvider, useIntercom } from 'react-use-intercom'
-import { Button } from 'ui'
 
-const WithIntercom = () => {
-  const { show } = useIntercom()
-
-  return (
-    <Button variant="ghost" onClick={show}>
-      Chat with us
-    </Button>
-  )
+type Props = {
+  children: React.ReactNode
 }
 
-export const IntercomChatButton = () => {
+const IntercomButton = styled.button({
+  cursor: 'pointer',
+})
+
+const WithIntercom = ({ children }: Props) => {
+  const { show } = useIntercom()
+
+  return <IntercomButton onClick={show}>{children}</IntercomButton>
+}
+
+export const IntercomChatButton = ({ children }: Props) => {
   const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
 
   useEffect(() => {
@@ -23,11 +27,7 @@ export const IntercomChatButton = () => {
   }, [appId])
 
   if (!appId) {
-    return (
-      <Button variant="ghost" disabled>
-        Chat with us
-      </Button>
-    )
+    return <div>{children}</div>
   }
 
   return (
@@ -37,7 +37,7 @@ export const IntercomChatButton = () => {
       autoBootProps={{ hideDefaultLauncher: true }}
       initializeDelay={1000}
     >
-      <WithIntercom />
+      <WithIntercom>{children}</WithIntercom>
     </IntercomProvider>
   )
 }
