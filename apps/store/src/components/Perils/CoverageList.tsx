@@ -1,56 +1,41 @@
 import styled from '@emotion/styled'
-import { CrossIcon, CheckIcon } from 'ui'
+import { theme, Text } from 'ui'
 
 export type CoverageListProps = {
-  heading: string
   items: Array<string>
-  variant: 'covered' | 'not-covered'
 }
 
-export const CoverageList = ({ heading, items, variant }: CoverageListProps) => {
+export const CoverageList = ({ items }: CoverageListProps) => {
   if (items.length === 0) return null
 
   return (
-    <Wrapper>
-      <Heading>{heading}</Heading>
-      <List>
-        {items.map((item, index) => (
-          <Item key={index}>
-            <NoShrink>
-              {variant === 'covered' ? (
-                <CheckIcon color="currentColor" size="0.75rem" />
-              ) : (
-                <CrossIcon color="currentColor" size="0.75rem" />
-              )}
-            </NoShrink>
+    <List>
+      {items.map((item, index) => (
+        <Item key={item}>
+          <NumberText size="xs" color="textSecondary">
+            {String(index + 1).padStart(2, '0')}
+          </NumberText>
+          <Text size="xs" color="textPrimary">
             {item}
-          </Item>
-        ))}
-      </List>
-    </Wrapper>
+          </Text>
+        </Item>
+      ))}
+    </List>
   )
 }
 
-const Wrapper = styled.section(({ theme }) => ({
+const List = styled.ul({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[1],
-}))
-
-const Heading = styled.h3({
-  fontWeight: 'bold',
+  gap: theme.space.sm,
 })
 
-const List = styled.ul(({ theme }) => ({
+const Item = styled.li({
   display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space[1],
-}))
+  gap: theme.space.xs,
+})
 
-const Item = styled.li(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space[2],
-}))
-
-const NoShrink = styled.div({ flexShrink: 0 })
+const NumberText = styled(Text)({
+  flexShrink: 0,
+  fontVariantNumeric: 'tabular-nums',
+})

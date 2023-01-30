@@ -1,6 +1,19 @@
 import styled from '@emotion/styled'
 import { theme } from '../theme'
-import { gray, grayTranslucent, green, highlight, red, signal, yellow } from './colors'
+import {
+  amber,
+  blue,
+  gray,
+  grayTranslucent,
+  green,
+  highlight,
+  pink,
+  purple,
+  red,
+  signal,
+  teal,
+  yellow,
+} from './colors'
 
 export default {
   title: 'Theme / Colors',
@@ -34,7 +47,12 @@ export const Colors = () => (
     </TranslucentWrapper>
     <Palette name="Green" colors={green} />
     <Palette name="Yellow" colors={yellow} />
+    <Palette name="Amber" colors={amber} />
     <Palette name="Red" colors={red} />
+    <Palette name="Pink" colors={pink} />
+    <Palette name="Purple" colors={purple} />
+    <Palette name="Blue" colors={blue} />
+    <Palette name="Teal" colors={teal} />
 
     <Palette name="Highlight Blue" colors={highlight.blue} />
     <Palette name="Highlight Green" colors={highlight.purple} />

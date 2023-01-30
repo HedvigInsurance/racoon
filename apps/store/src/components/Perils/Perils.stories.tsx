@@ -1,9 +1,8 @@
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { PerilFragment } from '@/services/apollo/generated'
 import { Perils } from './Perils'
 
-export const mockedPerils: PerilFragment[] = [
+const mockedPerils: PerilFragment[] = [
   {
     icon: {
       variants: {
@@ -119,12 +118,6 @@ export const mockedPerils: PerilFragment[] = [
 export default {
   title: 'Perils',
   component: Perils,
-  parameters: {
-    viewport: {
-      viewports: INITIAL_VIEWPORTS,
-      defaultViewport: 'iphonese2',
-    },
-  },
 } as ComponentMeta<typeof Perils>
 
 const Template: ComponentStory<typeof Perils> = (props) => <Perils {...props} />

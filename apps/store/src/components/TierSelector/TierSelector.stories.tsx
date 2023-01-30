@@ -1,7 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
 import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
-import { mockedPerils } from '../Perils/Perils.stories'
 import { TierSelector, TierSelectorProps } from './TierSelector'
 
 export default {
@@ -30,7 +29,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
         },
       },
       documents: [],
-      perils: mockedPerils,
+      perils: [],
     },
     price: { amount: 199, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
@@ -54,7 +53,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
         },
       },
       documents: [],
-      perils: mockedPerils,
+      perils: [],
     },
     price: { amount: 399, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
@@ -78,7 +77,7 @@ const MockedOffers: TierSelectorProps['offers'] = [
         },
       },
       documents: [],
-      perils: mockedPerils,
+      perils: [],
     },
     price: { amount: 999, currencyCode: CurrencyCode.Sek, __typename: 'Money' },
     cancellation: {
