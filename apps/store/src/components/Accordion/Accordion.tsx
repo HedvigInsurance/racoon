@@ -1,35 +1,46 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { PropsWithChildren, ReactElement } from 'react'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 import { PlusIcon } from '@/components/Perils/PlusIcon'
 
-export const Root = styled(AccordionPrimitives.Root)(({ theme }) => ({
+export const Root = styled(AccordionPrimitives.Root)({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[1],
-}))
+  gap: theme.space.xxs,
 
-export const Item = styled(AccordionPrimitives.Item)(({ theme }) => ({
-  backgroundColor: theme.colors.gray200,
-  borderRadius: theme.radius.xs,
-  padding: `${theme.space[3]} ${theme.space[4]}`,
-  [mq.md]: {
-    padding: `${theme.space[4]} ${theme.space[5]}`,
+  [mq.lg]: {
+    gap: theme.space.xs,
   },
-}))
+})
+
+export const Item = styled(AccordionPrimitives.Item)({
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.sm,
+  paddingInline: theme.space.md,
+  paddingBlock: theme.space.sm,
+
+  [mq.lg]: {
+    paddingInline: theme.space.lg,
+    paddingBlock: theme.space.md,
+  },
+})
 
 const Header = AccordionPrimitives.Header
 
-const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
+const Trigger = styled(AccordionPrimitives.Trigger)({
   width: '100%',
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  fontSize: theme.fontSizes[3],
-  lineHeight: '1.375rem',
-}))
+  fontSize: theme.fontSizes.md,
+  WebkitTapHighlightColor: 'transparent',
+
+  [mq.lg]: {
+    fontSize: theme.fontSizes.lg,
+  },
+})
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
@@ -54,7 +65,9 @@ const TriggerIcon = styled(PlusIcon)({
   '[data-state=open] &': { transform: 'rotate(-45deg)' },
 })
 
-export const Content = styled(AccordionPrimitives.Content)(({ theme }) => ({
-  paddingTop: theme.space[4],
-  color: theme.colors.gray700,
-}))
+export const Content = styled(AccordionPrimitives.Content)({
+  paddingTop: theme.space.md,
+  fontSize: theme.fontSizes.md,
+  color: theme.colors.textSecondary,
+  lineHeight: 1.32,
+})
