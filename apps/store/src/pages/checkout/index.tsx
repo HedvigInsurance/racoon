@@ -46,7 +46,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
       offerId: item.id,
       title: item.variant.product.displayNameFull,
       cost: item.price,
-      startDate: convertToDate(item.startDate) ?? undefined,
+      startDate: !item.cancellation.requested ? convertToDate(item.startDate) : undefined,
       pillow: {
         src: item.variant.product.pillowImage.src,
         alt: item.variant.product.pillowImage.alt ?? undefined,
