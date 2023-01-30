@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
+import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { appStoreLinks } from '@/utils/appStoreLinks'
@@ -11,7 +12,7 @@ import { ConfirmationPageProps } from './ConfirmationPage.types'
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
   const { locale } = useCurrentLocale()
-  const { platform, cart } = props
+  const { platform, cart, story } = props
 
   return (
     <Wrapper>
@@ -66,6 +67,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
           </Space>
         </main>
       </Space>
+      <ConfirmationPageBlock blok={story.content} />
     </Wrapper>
   )
 }
