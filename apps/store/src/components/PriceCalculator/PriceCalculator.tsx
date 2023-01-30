@@ -77,35 +77,38 @@ export const PriceCalculator = (props: Props) => {
   })
 
   return (
-    <PriceCalculatorAccordion
-      form={form}
-      activeSectionId={activeSectionId}
-      onActiveSectionChange={setActiveSectionId}
-    >
-      {(section, sectionIndex) => (
-        <PriceCalculatorSection
-          section={section}
-          onSubmit={handleSubmitSection}
-          loading={isLoading}
-        >
-          <FormGrid items={section.items}>
-            {(field, index) => (
-              <AutomaticField
-                field={field}
-                onSubmit={handleSubmit}
-                loading={isLoading}
-                priceIntent={priceIntent}
-                // We don't want to mess up focusing for the user by setting autoFocus on the
-                // first item in the form, since that would make it unintuitive to navigate our
-                // site. But when the user is in the form editing, even having submitted the first
-                // section, we want to set autoFocus for the next section. Hence sectionIndex > 0
-                autoFocus={sectionIndex > 0 && index === 0}
-              />
-            )}
-          </FormGrid>
-        </PriceCalculatorSection>
-      )}
-    </PriceCalculatorAccordion>
+    <>
+      <PriceCalculatorAccordion
+        activeSectionId={activeSectionId}
+        form={form}
+        shopSession={shopSession}
+        onActiveSectionChange={setActiveSectionId}
+      >
+        {(section, sectionIndex) => (
+          <PriceCalculatorSection
+            section={section}
+            onSubmit={handleSubmitSection}
+            loading={isLoading}
+          >
+            <FormGrid items={section.items}>
+              {(field, index) => (
+                <AutomaticField
+                  field={field}
+                  onSubmit={handleSubmit}
+                  loading={isLoading}
+                  priceIntent={priceIntent}
+                  // We don't want to mess up focusing for the user by setting autoFocus on the
+                  // first item in the form, since that would make it unintuitive to navigate our
+                  // site. But when the user is in the form editing, even having submitted the first
+                  // section, we want to set autoFocus for the next section. Hence sectionIndex > 0
+                  autoFocus={sectionIndex > 0 && index === 0}
+                />
+              )}
+            </FormGrid>
+          </PriceCalculatorSection>
+        )}
+      </PriceCalculatorAccordion>
+    </>
   )
 }
 
