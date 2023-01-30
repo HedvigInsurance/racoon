@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import { Heading, Space, Text, theme } from 'ui'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { Message } from '../Animations/Message/Message'
+import { NumberPad } from '../Animations/NumberPad/NumberPad'
 import { ContactCard } from '../ContactCard/ContactCard'
 import { IntercomChatButton } from './IntercomChatButton'
 
@@ -36,7 +38,7 @@ export const ContactSupport = ({
         </Heading>
         <CardWrapper>
           <IntercomChatButton>
-            <ContactCard icon="icon">
+            <ContactCard icon={<Message />}>
               <Text size={{ _: 'sm', md: 'md' }}>{chatTitle}</Text>
               {chatOpeningHours && (
                 <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
@@ -46,7 +48,7 @@ export const ContactSupport = ({
             </ContactCard>
           </IntercomChatButton>
           <PhoneLink href={getLinkFieldURL(phoneLink)}>
-            <ContactCard icon="icon">
+            <ContactCard icon={<NumberPad />}>
               <Text size={{ _: 'sm', md: 'md' }}>{phoneTitle}</Text>
               {phoneOpeningHours && (
                 <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">

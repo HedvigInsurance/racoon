@@ -26,17 +26,13 @@ const Card = styled.div({
 
 const Icon = styled.div({
   display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '80px',
-  height: '80px',
-  color: theme.colors.gray900,
-  backgroundColor: '#D8EFB6', // Swap with token when available
-  borderRadius: theme.radius.md,
+  placeItems: 'center',
+  width: '5rem',
+  height: '5rem',
 })
 
 type Props = {
-  icon: string
+  icon?: React.ReactNode
   children?: React.ReactNode
 }
 export const ContactCard = ({ icon, children }: Props) => {
