@@ -29,6 +29,7 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_one": "{{percentage}}% rabatt i {{count}} månad",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_other": "{{percentage}}% rabatt i {{count}} månader",
+  "GO_TO_STORE_BUTTON": "Handla försäkringar",
   "RECOMMENDATIONS_HEADING": "Andra har köpt",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Avbryt",
