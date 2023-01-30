@@ -54,6 +54,6 @@ export const PageLink = {
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
-  'sv-se': '/se/hjalp/kundservice',
+  se: '/se/hjalp/kundservice',
   'en-se': '/se-en/help/customer-service',
 }
