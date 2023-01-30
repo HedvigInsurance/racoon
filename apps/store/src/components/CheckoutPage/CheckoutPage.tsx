@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
@@ -74,7 +75,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   return (
     <>
-      <Space y={{ base: 1, lg: 2.5 }}>
+      <Space y={{ base: 1, lg: 3 }}>
         <Header>
           <HeaderLogo>
             <HedvigLogo width={78} />
@@ -86,76 +87,80 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
           </HeaderBack>
         </Header>
-        <Wrapper y={{ base: 2, lg: 3.5 }}>
-          <Heading as="h1" variant="standard.24" align="center">
-            {t('CHECKOUT_PAGE_HEADING')}
-          </Heading>
+        <Layout>
+          <Content y={{ base: 1, lg: 3 }}>
+            <Heading as="h1" variant="standard.24" align="center">
+              {t('CHECKOUT_PAGE_HEADING')}
+            </Heading>
 
-          <Space y={{ base: 1, lg: 1.5 }}>
-            <CartCollapsible
-              title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
-              cost={cart.cost}
-            >
-              <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
-                <CartEntryList>
-                  {cart.entries.map((item) => (
-                    <CartEntryItem readOnly key={item.offerId} cartId={cart.id} {...item} />
-                  ))}
-                </CartEntryList>
+            <div>
+              <CartCollapsible
+                title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
+                cost={cart.cost}
+              >
+                <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
+                  <CartEntryList>
+                    {cart.entries.map((item) => (
+                      <CartEntryItem readOnly key={item.offerId} cartId={cart.id} {...item} />
+                    ))}
+                  </CartEntryList>
+                  <HorizontalLine />
+                  <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+                  <HorizontalLine />
+                  <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+                </CartCollapsibleInner>
+              </CartCollapsible>
+
+              <Space y={{ base: 1, lg: 2 }}>
                 <HorizontalLine />
-                <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
-                <HorizontalLine />
-                <CostSummary {...cart.cost} campaigns={cart.campaigns} />
-              </CartCollapsibleInner>
-            </CartCollapsible>
 
-            <HorizontalLine />
-
-            <form onSubmit={handleSubmitSign}>
-              <Space y={0.25}>
-                <PersonalNumberField
-                  label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-                  value={ssn}
-                  readOnly
-                  disabled
-                />
-                {collectName && (
-                  <SpaceFlex space={0.25}>
+                <form onSubmit={handleSubmitSign}>
+                  <Space y={0.25}>
+                    <PersonalNumberField
+                      label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+                      value={ssn}
+                      readOnly
+                      disabled
+                    />
+                    {collectName && (
+                      <SpaceFlex space={0.25}>
+                        <TextField
+                          type="text"
+                          label={t('FORM_FIRST_NAME_LABEL')}
+                          name={FormElement.FirstName}
+                          defaultValue={prefilledData.firstName}
+                          required
+                        />
+                        <TextField
+                          type="text"
+                          label={t('FORM_LAST_NAME_LABEL')}
+                          name={FormElement.LastName}
+                          defaultValue={prefilledData.lastName}
+                          required
+                        />
+                      </SpaceFlex>
+                    )}
                     <TextField
-                      type="text"
-                      label={t('FORM_FIRST_NAME_LABEL')}
-                      name={FormElement.FirstName}
-                      defaultValue={prefilledData.firstName}
+                      type="email"
+                      label={t('FORM_EMAIL_LABEL')}
+                      name={FormElement.Email}
+                      defaultValue={prefilledData.email}
                       required
                     />
-                    <TextField
-                      type="text"
-                      label={t('FORM_LAST_NAME_LABEL')}
-                      name={FormElement.LastName}
-                      defaultValue={prefilledData.lastName}
-                      required
-                    />
-                  </SpaceFlex>
-                )}
-                <TextField
-                  type="email"
-                  label={t('FORM_EMAIL_LABEL')}
-                  name={FormElement.Email}
-                  defaultValue={prefilledData.email}
-                  required
-                />
-                <Space y={0.5}>
-                  <SignButton loading={loading}>
-                    {t('SIGN_BUTTON', { count: cart.entries.length })}
-                  </SignButton>
-                  <Text size="sm" color="textSecondary" align="center">
-                    {userErrorMessage ?? t('SIGN_DISCLAIMER')}
-                  </Text>
-                </Space>
+                    <Space y={0.5}>
+                      <SignButton loading={loading}>
+                        {t('SIGN_BUTTON', { count: cart.entries.length })}
+                      </SignButton>
+                      <Text size="sm" color="textSecondary" align="center">
+                        {userErrorMessage ?? t('SIGN_DISCLAIMER')}
+                      </Text>
+                    </Space>
+                  </Space>
+                </form>
               </Space>
-            </form>
-          </Space>
-        </Wrapper>
+            </div>
+          </Content>
+        </Layout>
       </Space>
 
       <FullscreenDialog.Root open={showLoading} onOpenChange={(open) => setHideLoading(!open)}>
@@ -206,41 +211,69 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   )
 }
 
-const Wrapper = styled(Space)({
-  paddingBottom: theme.space.xl,
+const Layout = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(12, 1fr)',
+  columnGap: theme.space.md,
   paddingInline: theme.space.md,
 
-  [mq.sm]: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(28rem, 33%)',
-    justifyContent: 'center',
+  [mq.lg]: {
+    paddingInline: theme.space.xl,
   },
 })
 
-const Header = styled.header({
-  paddingInline: theme.space.md,
+const gridCenterStyles = css({
+  [mq.sm]: {
+    gridColumn: '3 / span 8',
+  },
 
-  display: 'grid',
-  gridTemplateAreas: `
-    'logo back'
-    'breadcrumbs breadcrumbs'
-  `,
-  gridTemplateColumns: '1fr auto',
-  gridTemplateRows: '3rem 3rem',
+  [mq.lg]: {
+    gridColumn: '4 / span 6',
+  },
+
+  [mq.xl]: {
+    gridColumn: '5 / span 4',
+  },
+})
+
+const Content = styled(Space)(gridCenterStyles, {
+  gridColumn: '1 / -1',
+  paddingBottom: theme.space.xl,
+  columnGap: theme.space.md,
+})
+
+const Header = styled(Layout)({
+  gridAutoRows: '3rem',
   alignItems: 'center',
 
-  [mq.md]: {
-    gridTemplateAreas: `
-      'logo breadcrumbs back'
-    `,
-    gridTemplateColumns: '1fr minmax(28rem, 33%) 1fr',
-    gridTemplateRows: '3.5rem',
+  [mq.sm]: {
+    gridAutoRows: '3.5rem',
   },
 })
 
-const HeaderLogo = styled.div({ gridArea: 'logo' })
-const HeaderBreadcrumbs = styled.div({ gridArea: 'breadcrumbs' })
-const HeaderBack = styled.div({ gridArea: 'back', justifySelf: 'flex-end' })
+const HeaderLogo = styled.div({
+  gridColumn: 'span 6',
+
+  [mq.sm]: {
+    gridColumn: 1,
+  },
+})
+const HeaderBreadcrumbs = styled.div(gridCenterStyles, {
+  gridRow: 2,
+  gridColumn: '1 / -1',
+
+  [mq.sm]: {
+    gridRow: 1,
+  },
+})
+const HeaderBack = styled.div({
+  gridColumn: 'span 6',
+  justifySelf: 'flex-end',
+
+  [mq.sm]: {
+    gridColumn: -1,
+  },
+})
 
 const HeaderLink = styled(Link)({
   backgroundColor: theme.colors.light,
