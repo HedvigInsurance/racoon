@@ -3,7 +3,7 @@ import {
   emailField,
   LAYOUT,
   mileageField,
-  personalNumberSection,
+  ssnSeSection,
   postalCodeField,
   streetAddressField,
 } from '@/services/PriceCalculator/formFragments'
@@ -15,7 +15,7 @@ setI18nNamespace('purchase-form')
 export const SE_CAR: Template = {
   name: 'SE_CAR',
   sections: [
-    personalNumberSection,
+    ssnSeSection,
     {
       id: 'your-car',
       title: { key: tKey('SECTION_TITLE_YOUR_CAR') },

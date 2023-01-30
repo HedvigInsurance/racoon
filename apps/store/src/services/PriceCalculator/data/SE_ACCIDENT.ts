@@ -1,7 +1,7 @@
 import {
   LAYOUT,
   livingSpaceField,
-  personalNumberSection,
+  ssnSeSection,
   postalCodeField,
   streetAddressField,
   yourFamilySection,
@@ -14,7 +14,7 @@ setI18nNamespace('purchase-form')
 export const SE_ACCIDENT: Template = {
   name: 'SE_ACCIDENT',
   sections: [
-    personalNumberSection,
+    ssnSeSection,
     {
       id: 'your-home',
       title: { key: tKey('SECTION_TITLE_YOUR_HOME') },

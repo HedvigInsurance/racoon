@@ -90,19 +90,20 @@ export const apartmentSubTypeField: InputField = {
   required: true,
 }
 
-export const personalNumberSection: TemplateSection = {
+export const ssnSeSection: TemplateSection = {
   id: 'ssn-se',
   title: { key: tKey('SECTION_TITLE_PERSONAL_NUMBER') },
+  // TODO: Ignored, remove or remodel
   submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
   items: [
     {
       field: {
-        type: 'ssn-se',
+        type: 'text',
         name: 'ssn',
         label: { key: tKey('FIELD_SSN_SE_LABEL') },
         required: true,
       },
-      layout: { columnSpan: 6 },
+      layout: LAYOUT.FULL_WIDTH,
     },
   ],
 }
