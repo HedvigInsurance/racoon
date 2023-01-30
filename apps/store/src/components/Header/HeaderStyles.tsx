@@ -73,21 +73,25 @@ export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)(({
   },
 }))
 
-export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(
-  ({ theme }) => ({
-    [mq.lg]: {
-      position: 'absolute',
-      top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`,
-      backgroundColor: theme.colors.light,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-      borderRadius: theme.radius.sm,
-      padding: `${theme.space.md} ${theme.space.md}`,
-    },
-  }),
-)
+export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)({
+  [mq.lg]: {
+    position: 'absolute',
+    top: MENU_BAR_HEIGHT_DESKTOP,
+  },
+})
+
+export const NavigationMenuListWrapper = styled.div(({ theme }) => ({
+  [mq.lg]: {
+    backgroundColor: theme.colors.light,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    borderRadius: theme.radius.sm,
+    padding: `${theme.space.md} ${theme.space.md}`,
+    marginTop: theme.space.xs,
+  },
+}))
 
 export const navigationTriggerStyles = {
   display: 'flex',
