@@ -31,7 +31,17 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   ) {
     return <NewMemberSsnSection shopSession={shopSession} onCompleted={onCompleted} />
   } else if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-    return <AuthenticationRequiredSsnSection shopSession={shopSession} onCompleted={onCompleted} />
+    const { ssn } = shopSession.customer ?? {}
+    if (!ssn) {
+      throw new Error('Must have ssn at this point')
+    }
+    return (
+      <AuthenticationRequiredSsnSection
+        shopSessionId={shopSession.id}
+        ssn={ssn}
+        onCompleted={onCompleted}
+      />
+    )
   } else if (authenticationStatus === ShopSessionAuthenticationStatus.Authenticated) {
     return <AuthenticatedSsnSection shopSession={shopSession} onCompleted={onCompleted} />
   } else {
@@ -85,16 +95,21 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
 }
 SsnSeSection.sectionId = 'ssn-se'
 
-const AuthenticationRequiredSsnSection = ({ shopSession, onCompleted }: Props) => {
-  const { ssn } = shopSession.customer ?? {}
-  if (!ssn) {
-    throw new Error('Must have ssn at this point')
-  }
+type AuthenticationRequiredProps = {
+  shopSessionId: string
+  ssn: string
+  onCompleted: Props['onCompleted']
+}
+const AuthenticationRequiredSsnSection = ({
+  shopSessionId,
+  ssn,
+  onCompleted,
+}: AuthenticationRequiredProps) => {
   return (
     <div>
       <Text>ssn: {ssn}</Text>
       <Text>Looks like you are returning member. Login to pre-fill you information</Text>
-      <BankIdLogin shopSessionId={shopSession.id} ssn={ssn} onCompleted={onCompleted} />
+      <BankIdLogin shopSessionId={shopSessionId} ssn={ssn} onCompleted={onCompleted} />
       <Button variant="ghost" onClick={onCompleted}>
         Skip for now, login at checkout
       </Button>

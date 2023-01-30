@@ -7,11 +7,13 @@ import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
 
-export const BankIdLogin = (props: {
+type Props = {
   shopSessionId: string
   ssn: string
   onCompleted: () => void
-}) => {
+}
+
+export const BankIdLogin = (props: Props) => {
   const [state, setState] = useState<'IDLE' | 'PROGRESS' | 'ERROR'>('IDLE')
   const { shopSessionId } = props
   const [authenticateShopSession] = useShopSessionAuthenticateMutation({
@@ -33,7 +35,7 @@ export const BankIdLogin = (props: {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="submit" loading={state !== 'IDLE'}>
+      <Button type="submit" loading={state === 'PROGRESS'}>
         BankID Login
       </Button>
       {state === 'PROGRESS' && <Text>Pleas open BankID app now</Text>}
