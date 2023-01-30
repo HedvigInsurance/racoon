@@ -1,7 +1,7 @@
 import {
   apartmentSubTypeField,
   LAYOUT,
-  personalNumberSection,
+  ssnSeSection,
   yourApartmentSection,
   yourFamilySection,
 } from '@/services/PriceCalculator/formFragments'
@@ -10,7 +10,7 @@ import { Template } from '../PriceCalculator.types'
 export const SE_STUDENT_APARTMENT: Template = {
   name: 'SE_STUDENT_APARTMENT',
   sections: [
-    personalNumberSection,
+    ssnSeSection,
     {
       ...yourApartmentSection,
       items: [
