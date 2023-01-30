@@ -1,14 +1,3 @@
-// States
-// 1. IDLE => empty input, no customer information
-// [2. KNOKWN => not needed, section collapsed]
-// 3. LOADING => updating customer information
-// 4. ERROR => error updating customer information
-// 5. VALID => customer information updated
-// 6. AUTH_REQUIRED => Sign in required
-// 7. AUTH_LOADING => Sign in loading
-// 8. AUTH_ERROR => Sign in error
-// [9. AUTH_SUCCESS => Sign in success, not needed, section collapsed]
-
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
@@ -27,6 +16,11 @@ type Props = {
   shopSession: ShopSession
   onCompleted: () => void
 }
+
+// States
+// - Empty input, no customer information
+// - Auth required => Sign in required
+// - Authenticated
 
 export const SsnSection = ({ shopSession, onCompleted }: Props) => {
   const { authenticationStatus } = shopSession.customer ?? {}
