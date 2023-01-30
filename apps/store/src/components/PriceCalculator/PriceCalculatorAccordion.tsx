@@ -2,16 +2,19 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 import { Heading, Text } from 'ui'
+import { SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
-  form: Form
-  children(section: FormSection, index: number): ReactNode
   activeSectionId?: string
+  children(section: FormSection, index: number): ReactNode
+  form: Form
+  shopSession: ShopSession
   onActiveSectionChange(sectionId: string): void
 }
 
@@ -19,6 +22,15 @@ export const PriceCalculatorAccordion = (props: Props) => {
   const { form, children, activeSectionId, onActiveSectionChange } = props
   const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
+
+  const handleSsnSectionCompleted = () => {
+    const nextSectionIndex =
+      form.sections.findIndex((section) => section.id === SsnSeSection.sectionId) + 1
+    if (!form.sections[nextSectionIndex]) {
+      throw new Error(`Failed to find section after ${SsnSeSection.sectionId}`)
+    }
+    onActiveSectionChange(form.sections[nextSectionIndex].id)
+  }
 
   return (
     <Accordion.Root
@@ -33,6 +45,15 @@ export const PriceCalculatorAccordion = (props: Props) => {
         const showMutedHeading = !(isActive || isValid)
         const showEditButton = isValid && !isActive
         const stepIconState = isValid ? 'valid' : 'outline'
+
+        let content
+        if (section.id === SsnSeSection.sectionId) {
+          content = (
+            <SsnSeSection shopSession={props.shopSession} onCompleted={handleSsnSectionCompleted} />
+          )
+        } else {
+          content = children(section, index)
+        }
 
         return (
           <Accordion.Item key={section.id} value={section.id}>
@@ -55,7 +76,7 @@ export const PriceCalculatorAccordion = (props: Props) => {
                 </Accordion.Trigger>
               )}
             </Accordion.Header>
-            <Accordion.Content>{children(section, index)}</Accordion.Content>
+            <Accordion.Content>{content}</Accordion.Content>
           </Accordion.Item>
         )
       })}

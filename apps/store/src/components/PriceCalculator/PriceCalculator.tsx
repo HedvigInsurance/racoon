@@ -13,7 +13,6 @@ import { AutomaticField } from './AutomaticField'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
-import { SsnSection } from './SsnSection'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
@@ -77,16 +76,12 @@ export const PriceCalculator = (props: Props) => {
     },
   })
 
-  const handleSsnCompleted = () => {
-    console.log('handleSsnCompleted')
-  }
-
   return (
     <>
-      <SsnSection shopSession={shopSession} onCompleted={handleSsnCompleted} />
       <PriceCalculatorAccordion
-        form={form}
         activeSectionId={activeSectionId}
+        form={form}
+        shopSession={shopSession}
         onActiveSectionChange={setActiveSectionId}
       >
         {(section, sectionIndex) => (

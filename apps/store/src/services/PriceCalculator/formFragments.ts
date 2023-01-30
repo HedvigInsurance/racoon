@@ -91,7 +91,7 @@ export const apartmentSubTypeField: InputField = {
 }
 
 export const personalNumberSection: TemplateSection = {
-  id: 'personal-number',
+  id: 'ssn-se',
   title: { key: tKey('SECTION_TITLE_PERSONAL_NUMBER') },
   submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
   items: [

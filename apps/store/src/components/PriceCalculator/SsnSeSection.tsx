@@ -22,7 +22,7 @@ type Props = {
 // - Auth required => Sign in required
 // - Authenticated
 
-export const SsnSection = ({ shopSession, onCompleted }: Props) => {
+export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   const { authenticationStatus } = shopSession.customer ?? {}
   if (
     !shopSession.customer ||
@@ -83,6 +83,7 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
     </>
   )
 }
+SsnSeSection.sectionId = 'ssn-se'
 
 const AuthenticationRequiredSsnSection = ({ shopSession, onCompleted }: Props) => {
   const { ssn } = shopSession.customer ?? {}
@@ -101,6 +102,12 @@ const AuthenticationRequiredSsnSection = ({ shopSession, onCompleted }: Props) =
   )
 }
 
-const AuthenticatedSsnSection = ({ shopSession }: Props) => {
-  return <div>Authenticated: {JSON.stringify(shopSession.customer, null, 2)}</div>
+const AuthenticatedSsnSection = ({ shopSession, onCompleted }: Props) => {
+  const { t } = useTranslation('purchase-form')
+  return (
+    <div>
+      Authenticated: {JSON.stringify(shopSession.customer, null, 2)}
+      <Button onClick={onCompleted}>{t('SUBMIT_LABEL_PROCEED')}</Button>
+    </div>
+  )
 }
