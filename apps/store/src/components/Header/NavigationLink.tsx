@@ -1,33 +1,31 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
-import { mq, Space } from 'ui'
+import { mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { focusableStyles } from './HeaderStyles'
-
-const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
-  textDecoration: 'none',
-  ...focusableStyles,
-})
 
 const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
   alignSelf: 'center',
   textDecoration: 'none',
+  whiteSpace: 'nowrap',
   ...focusableStyles,
 })
 
 const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
   ...focusableStyles,
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  placeItems: 'center',
   flexDirection: 'column',
   flexShrink: 0,
+
   [mq.lg]: {
     padding: `${theme.space.md} ${theme.space.lg}`,
     borderRadius: theme.radius.sm,
-    ':hover': {
-      backgroundColor: theme.colors.gray100,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.grayTranslucent100,
+      },
     },
   },
 }))
@@ -52,16 +50,32 @@ export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps)
   )
 }
 
-export const ProductNavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
+const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
+  ...focusableStyles,
+  display: 'block',
+  paddingBlock: theme.space.lg,
+
+  [mq.lg]: {
+    paddingBlock: theme.space.xs,
+    paddingInline: theme.space.md,
+
+    borderRadius: theme.radius.sm,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.grayTranslucent100,
+      },
+    },
+  },
+})
+
+export const ProductNavigationLink = ({ href, children }: NavigationLinkProps) => {
   return (
-    <>
+    <Link href={href}>
       <ProductNavigationLinkCard y={0.75}>
         <StyledPillow size="large" />
-        <Link href={href} passHref legacyBehavior>
-          <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
-        </Link>
+        <Text>{children}</Text>
       </ProductNavigationLinkCard>
-    </>
+    </Link>
   )
 }
 
