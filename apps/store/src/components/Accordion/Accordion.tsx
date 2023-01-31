@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { PropsWithChildren, ReactElement } from 'react'
-import { mq, theme } from 'ui'
-import { PlusIcon } from '@/components/Perils/PlusIcon'
+import { MinusIcon, mq, PlusIcon, theme } from 'ui'
 
 export const Root = styled(AccordionPrimitives.Root)({
   display: 'flex',
@@ -46,23 +45,27 @@ type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
 }
 
-export const HeaderWithTrigger = ({
-  children,
-  icon = <TriggerIcon size="1.375rem" />,
-}: HeaderWithTriggerProps) => {
+export const HeaderWithTrigger = ({ children }: HeaderWithTriggerProps) => {
   return (
     <Header>
       <Trigger>
         {children}
-        {icon}
+
+        <OpenIcon size="1rem" />
+        <CloseIcon size="1rem" />
       </Trigger>
     </Header>
   )
 }
 
-const TriggerIcon = styled(PlusIcon)({
-  transition: 'transform 200ms',
-  '[data-state=open] &': { transform: 'rotate(-45deg)' },
+const OpenIcon = styled(PlusIcon)({
+  display: 'block',
+  '[data-state=open] &': { display: 'none' },
+})
+
+const CloseIcon = styled(MinusIcon)({
+  display: 'none',
+  '[data-state=open] &': { display: 'block' },
 })
 
 export const Content = styled(AccordionPrimitives.Content)({
