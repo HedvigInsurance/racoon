@@ -1,6 +1,12 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApollo } from '@/services/apollo/client'
+import {
+  RedeemCampaignDocument,
+  RedeemCampaignMutation,
+  RedeemCampaignMutationVariables,
+} from '@/services/apollo/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
@@ -23,14 +29,27 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return fallbackRedirect
   }
 
+  const apolloClient = initializeApollo({ req, res })
+  let shopSession: ShopSession
   try {
-    const apolloClient = initializeApollo({ req, res })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-    const shopSession = await shopSessionService.fetchById(shopSessionId)
+    shopSession = await shopSessionService.fetchById(shopSessionId)
     shopSessionService.saveId(shopSession.id)
   } catch (error) {
     console.error(`Unable to fetch ShopSession: ${shopSessionId}`, error)
     return fallbackRedirect
+  }
+
+  const campaignCode = query['code']
+  if (typeof campaignCode === 'string') {
+    try {
+      await apolloClient.mutate<RedeemCampaignMutation, RedeemCampaignMutationVariables>({
+        mutation: RedeemCampaignDocument,
+        variables: { cartId: shopSession.cart.id, code: campaignCode },
+      })
+    } catch (error) {
+      console.warn(`Unable to redeem campaign: ${campaignCode}`, error)
+    }
   }
 
   const nextURL = new URL(ORIGIN_URL)
