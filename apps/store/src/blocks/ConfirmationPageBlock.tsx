@@ -15,4 +15,4 @@ export const ConfirmationPageBlock = ({ blok }: ConfirmationPageBlockProps) => {
   )
 }
 
-ConfirmationPageBlock.blockName = 'confirmation'
+ConfirmationPageBlock.blockName = 'confirmationPage'
