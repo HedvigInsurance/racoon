@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
+import Head from 'next/head'
 import { useState } from 'react'
 import { mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
@@ -8,17 +9,26 @@ import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm
 import * as Tabs from '@/components/ProductPage/Tabs'
 import type { TabsProps } from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 const TABLIST_HEIGHT = '2.5rem'
 
-type ProductPageBlockProps = SbBaseBlockProps<{
-  overviewLabel: string
-  coverageLabel: string
-  overview: SbBlokData[]
-  coverage: SbBlokData[]
-  body: SbBlokData[]
-}>
+type SEOData = {
+  robots: 'index' | 'noindex'
+  seoMetaTitle?: string
+  seoMetaDescription?: string
+  seoMetaOgImage?: StoryblokAsset
+}
+
+type ProductPageBlockProps = SbBaseBlockProps<
+  {
+    overviewLabel: string
+    coverageLabel: string
+    overview: SbBlokData[]
+    coverage: SbBlokData[]
+    body: SbBlokData[]
+  } & SEOData
+>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
@@ -27,34 +37,52 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const shouldRenderVariantSelector = selectedTab === 'coverage' && productData.variants.length > 1
 
   return (
-    <Main {...storyblokEditable(blok)}>
-      <MobileLayout>
-        <PurchaseForm />
-        <ProducPageTabs
-          blok={blok}
-          renderVariantSelector={shouldRenderVariantSelector}
-          value={selectedTab}
-          onValueChange={setSelectedTab}
-        />
-      </MobileLayout>
-
-      <DesktopLayout>
-        <ProducPageTabs
-          blok={blok}
-          renderVariantSelector={shouldRenderVariantSelector}
-          value={selectedTab}
-          onValueChange={setSelectedTab}
-        />
-
-        <PurchaseFormWrapper>
+    <>
+      <Head>
+        <meta name="robots" content={blok.robots} />
+        {blok.seoMetaTitle && (
+          <>
+            <meta name="title" content={blok.seoMetaTitle} />
+            <meta property="og:title" content={blok.seoMetaTitle} />
+          </>
+        )}
+        {blok.seoMetaDescription && (
+          <>
+            <meta name="description" content={blok.seoMetaDescription} />
+            <meta property="og:description" content={blok.seoMetaDescription} />
+          </>
+        )}
+        {blok.seoMetaOgImage && <meta property="og:image" content={blok.seoMetaOgImage.filename} />}
+      </Head>
+      <Main {...storyblokEditable(blok)}>
+        <MobileLayout>
           <PurchaseForm />
-        </PurchaseFormWrapper>
-      </DesktopLayout>
+          <ProducPageTabs
+            blok={blok}
+            renderVariantSelector={shouldRenderVariantSelector}
+            value={selectedTab}
+            onValueChange={setSelectedTab}
+          />
+        </MobileLayout>
 
-      {blok.body.map((nestedBlock) => (
-        <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-      ))}
-    </Main>
+        <DesktopLayout>
+          <ProducPageTabs
+            blok={blok}
+            renderVariantSelector={shouldRenderVariantSelector}
+            value={selectedTab}
+            onValueChange={setSelectedTab}
+          />
+
+          <PurchaseFormWrapper>
+            <PurchaseForm />
+          </PurchaseFormWrapper>
+        </DesktopLayout>
+
+        {blok.body.map((nestedBlock) => (
+          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
+      </Main>
+    </>
   )
 }
 ProductPageBlock.blockName = 'product'
