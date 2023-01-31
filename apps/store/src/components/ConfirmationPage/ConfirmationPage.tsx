@@ -5,15 +5,11 @@ import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
+import { appStoreLinks } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
-
-const appStoreLinks = {
-  apple: 'https://apps.apple.com/se/app/id1303668531?l=en',
-  google: 'https://play.google.com/store/apps/details?id=com.hedvig.app',
-} as const
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
