@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, Dialog } from 'ui'
+import { Space, Dialog, mq } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
-import { MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderStyles'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderStyles'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -57,6 +57,11 @@ export const CartNotificationContent = ({ name, price, startDate, onClose }: Pro
 
 const DialogContent = styled(Dialog.Content)({
   marginTop: MENU_BAR_HEIGHT_MOBILE,
+  [mq.lg]: {
+    marginTop: MENU_BAR_HEIGHT_DESKTOP,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 })
 
 const DialogContentWrapper = styled.div(({ theme }) => ({
@@ -69,9 +74,14 @@ const DialogContentWrapper = styled.div(({ theme }) => ({
   paddingTop: theme.space.lg,
   paddingBottom: theme.space.xs,
 
-  borderBottomLeftRadius: theme.radius.sm,
-  borderBottomRightRadius: theme.radius.sm,
+  borderBottomLeftRadius: theme.radius.md,
+  borderBottomRightRadius: theme.radius.md,
 
   backgroundColor: theme.colors.light,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  [mq.lg]: {
+    margin: `${theme.space.xs} ${theme.space.md} 0 0`,
+    borderRadius: theme.radius.md,
+    maxWidth: '28rem',
+  },
 }))

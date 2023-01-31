@@ -13,7 +13,6 @@ export type ProductItemProps = {
 export const ProductItem = ({ name, price, startDate }: ProductItemProps) => {
   const { t } = useTranslation('cart')
 
-  console.log(startDate)
   return (
     <SpaceFlex space={1} align="start">
       <Pillow size="small" />
