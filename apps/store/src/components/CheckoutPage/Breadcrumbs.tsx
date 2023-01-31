@@ -1,14 +1,13 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { theme } from 'ui'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const Breadcrumbs = () => {
   const { t } = useTranslation('checkout')
   const { shopSession } = useShopSession()
   const switchingEntry = shopSession?.cart.entries.find(
-    (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
+    ({ cancellation: { bankSignering } }) => !!bankSignering,
   )
   const showSwitchingAssistant = !!switchingEntry
 

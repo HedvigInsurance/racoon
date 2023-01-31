@@ -29,6 +29,10 @@ fragment ProductOffer on ProductOffer {
   cancellation {
     option
     requested
+    bankSignering {
+      url
+      approveByDate
+    }
     externalInsurer {
       id
       displayName
