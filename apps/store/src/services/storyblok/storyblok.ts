@@ -124,7 +124,6 @@ export type GlobalStory = ISbStoryData & {
 export type ReusableStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     body: Array<SbBlokData>
-    global: Array<SbBlokData>
   }
 }
 
