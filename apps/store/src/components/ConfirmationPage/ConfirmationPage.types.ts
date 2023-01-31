@@ -1,9 +1,8 @@
 import { CartFragmentFragment } from '@/services/apollo/generated'
-import { ConfirmationStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
-export type ConfirmationPageProps = StoryblokPageProps & {
+export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
   currency: string
   platform: 'apple' | 'google' | null
   cart: CartFragmentFragment
-  story: ConfirmationStory
 }

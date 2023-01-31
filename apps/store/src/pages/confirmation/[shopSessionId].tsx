@@ -6,7 +6,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
+import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -52,9 +52,9 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   })
 }
 
-const CheckoutConfirmationPage: NextPageWithLayout<ConfirmationPageProps> = (props) => (
-  <ConfirmationPage {...props} />
-)
+const CheckoutConfirmationPage: NextPageWithLayout<
+  ConfirmationPageProps & { story: ConfirmationStory }
+> = (props) => <ConfirmationPage {...props} />
 
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
