@@ -69,11 +69,23 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
             <NavigationPrimaryList>
               <div>{children}</div>
               <ButtonWrapper x={0.25}>
-                <Button href={appStoreLinks.apple} variant="secondary" size="medium">
+                <Button
+                  href={appStoreLinks.apple}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="medium"
+                >
                   <StyledAppleIcon />
                   App Store
                 </Button>
-                <Button href={appStoreLinks.google} variant="secondary" size="medium">
+                <Button
+                  href={appStoreLinks.google}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="medium"
+                >
                   <StyledAndroidIcon />
                   Google Play
                 </Button>

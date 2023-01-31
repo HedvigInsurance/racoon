@@ -1,13 +1,12 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { HedvigLogo, mq } from 'ui'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { HedvigLogo, mq, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { zIndexes } from '@/utils/zIndex'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
-export const Wrapper = styled.header(({ theme }) => ({
+export const Wrapper = styled.header({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -23,7 +22,7 @@ export const Wrapper = styled.header(({ theme }) => ({
     backgroundColor: theme.colors.light,
     top: 0,
   },
-}))
+})
 
 const LogoWrapper = styled(Link)({
   flex: 1,
@@ -44,11 +43,9 @@ type HeaderProps = {
   children: React.ReactNode
 }
 export const Header = ({ children }: HeaderProps) => {
-  const { routingLocale } = useCurrentLocale()
-
   return (
     <Wrapper>
-      <LogoWrapper href={PageLink.home({ locale: routingLocale })}>
+      <LogoWrapper href={PageLink.home()}>
         <HedvigLogo />
       </LogoWrapper>
       <ContentWrapper>
