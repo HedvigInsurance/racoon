@@ -1,15 +1,16 @@
-import styled from '@emotion/styled'
+import styled, { CSSObject } from '@emotion/styled'
+import * as RadixTabs from '@radix-ui/react-tabs'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import Head from 'next/head'
 import { useState } from 'react'
 import { mq, theme } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
+import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
-import type { TabsProps } from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
 
@@ -32,9 +33,10 @@ type ProductPageBlockProps = SbBaseBlockProps<
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
-  const [selectedTab, setSelectedTab] = useState('overview')
+  const [activeSection, setActiveSection] = useState('overview')
 
-  const shouldRenderVariantSelector = selectedTab === 'coverage' && productData.variants.length > 1
+  const shouldRenderVariantSelector =
+    activeSection === 'coverage' && productData.variants.length > 1
 
   return (
     <>
@@ -57,22 +59,74 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
       <Main {...storyblokEditable(blok)}>
         <MobileLayout>
           <PurchaseForm />
-          <ProducPageTabs
-            blok={blok}
-            renderVariantSelector={shouldRenderVariantSelector}
-            value={selectedTab}
-            onValueChange={setSelectedTab}
-          />
+          <Content>
+            <RadixTabs.Tabs
+              value={activeSection}
+              onValueChange={(value) => {
+                setActiveSection(value)
+                window?.scrollTo({ top: 0 })
+              }}
+            >
+              <TabList>
+                <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
+                <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
+                {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+              </TabList>
+
+              <OverviewSection>
+                <Tabs.TabsContent value="overview">
+                  {blok.overview?.map((nestedBlock) => (
+                    <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                  ))}
+                </Tabs.TabsContent>
+              </OverviewSection>
+
+              <Tabs.TabsContent value="coverage">
+                {blok.coverage?.map((nestedBlock) => (
+                  <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                ))}
+              </Tabs.TabsContent>
+            </RadixTabs.Tabs>
+          </Content>
         </MobileLayout>
 
         <DesktopLayout>
-          <ProducPageTabs
-            blok={blok}
-            renderVariantSelector={shouldRenderVariantSelector}
-            value={selectedTab}
-            onValueChange={setSelectedTab}
-          />
+          <Content>
+            <ContentNavigation aria-label="content">
+              <ContentNavigationList>
+                <li>
+                  <ContentNavigationTrigger
+                    href="#overview"
+                    onClick={() => setActiveSection('overview')}
+                    data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                  >
+                    {blok.overviewLabel}
+                  </ContentNavigationTrigger>
+                </li>
+                <li>
+                  <ContentNavigationTrigger
+                    href="#coverage"
+                    onClick={() => setActiveSection('coverage')}
+                    data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                  >
+                    {blok.coverageLabel}
+                  </ContentNavigationTrigger>
+                </li>
+              </ContentNavigationList>
+            </ContentNavigation>
 
+            <OverviewSection>
+              <PageContentSentinel id="overview" aria-hidden="true" />
+              {blok.overview?.map((nestedBlock) => (
+                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+              ))}
+            </OverviewSection>
+
+            <PageContentSentinel id="coverage" aria-hidden="true" />
+            {blok.coverage?.map((nestedBlock) => (
+              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+            ))}
+          </Content>
           <PurchaseFormWrapper>
             <PurchaseForm />
           </PurchaseFormWrapper>
@@ -87,42 +141,53 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 }
 ProductPageBlock.blockName = 'product'
 
-type ProductPageTabsProps = {
-  blok: ProductPageBlockProps['blok']
-  renderVariantSelector?: boolean
-} & Pick<TabsProps, 'value' | 'onValueChange'>
+const sharedListStyles: CSSObject = {
+  display: 'flex',
+  gap: theme.space.xs,
+  height: TABLIST_HEIGHT,
+  paddingInline: theme.space.md,
+}
 
-const ProducPageTabs = ({ blok, renderVariantSelector, ...delegated }: ProductPageTabsProps) => {
-  const handleValueChange = (value: string) => {
-    delegated.onValueChange?.(value)
-    window?.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+const sharedStickyStyles: CSSObject = {
+  position: 'sticky',
+  top: theme.space.sm,
+  zIndex: zIndexes.tabs,
 
-  return (
-    <Tabs.Tabs {...delegated} onValueChange={handleValueChange}>
-      <TabList>
-        <TablistWrapper>
-          <Tabs.TabsTrigger value="overview">{blok.overviewLabel}</Tabs.TabsTrigger>
-          <Tabs.TabsTrigger value="coverage">{blok.coverageLabel}</Tabs.TabsTrigger>
-        </TablistWrapper>
-        {renderVariantSelector && <StyledProductVariantSelector />}
-      </TabList>
+  [mq.md]: {
+    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.lg,
+  },
+  [mq.lg]: {
+    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.xl,
+  },
+}
 
-      <OverviewSection>
-        <Tabs.TabsContent value="overview">
-          {blok.overview?.map((nestedBlock) => (
-            <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-          ))}
-        </Tabs.TabsContent>
-      </OverviewSection>
+const sharedTriggerStyles: CSSObject = {
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  textAlign: 'center',
+  paddingInline: theme.space.md,
+  paddingBlock: theme.space.xs,
+  fontSize: theme.fontSizes.md,
+  lineHeight: theme.fontSizes.xl,
+  color: theme.colors.dark,
+  backgroundColor: 'rgba(242, 242, 242, 0.6)',
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  backdropFilter: 'blur(20px)',
+  borderRadius: theme.radius.sm,
 
-      <Tabs.TabsContent value="coverage">
-        {blok.coverage?.map((nestedBlock) => (
-          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-        ))}
-      </Tabs.TabsContent>
-    </Tabs.Tabs>
-  )
+  '&[data-state=active]': {
+    paddingInline: '3.75rem',
+    color: theme.colors.dark,
+    backgroundColor: 'rgba(205, 205, 205, 0.6)',
+  },
+
+  '&:focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
+  },
 }
 
 const Main = styled.main({
@@ -167,19 +232,48 @@ const StyledProductVariantSelector = styled(ProductVariantSelector)({
   width: 'fit-content',
 })
 
-const TabList = styled(Tabs.TabsList)({
-  [mq.md]: {
-    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
-    paddingInline: theme.space.lg,
-  },
-  [mq.lg]: {
-    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
-    paddingInline: theme.space.xl,
-  },
+const Content = styled.div({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  isolation: 'isolate',
 })
 
-const TablistWrapper = styled.div({
-  display: 'flex',
-  gap: theme.space.xs,
-  height: TABLIST_HEIGHT,
+const TabList = styled(RadixTabs.TabsList)({
+  ...sharedListStyles,
+  ...sharedStickyStyles,
+})
+
+const TabTrigger = styled(RadixTabs.Trigger)({
+  ...sharedTriggerStyles,
+})
+
+const ContentNavigation = styled.nav({
+  ...sharedStickyStyles,
+})
+
+const ContentNavigationList = styled.ul({
+  ...sharedListStyles,
+})
+
+const ContentNavigationTrigger = styled.a({
+  ...sharedTriggerStyles,
+})
+
+const PageContentSentinel = styled.div({
+  '::before': {
+    content: '""',
+    display: 'block',
+    // Add some 'padding top' that matches menu bar height while scrolling
+    // until an element gets into viewport. Another alternative would be to
+    // use 'scroll-padding-top' property. However I would to touch global styles
+    // that are defined into 'package/ui': html { scroll-padding-top: <menu-height> }
+    height: MENU_BAR_HEIGHT_MOBILE,
+    marginTop: `-${MENU_BAR_HEIGHT_MOBILE}`,
+
+    [mq.md]: {
+      height: MENU_BAR_HEIGHT_DESKTOP,
+      marginTop: `-${MENU_BAR_HEIGHT_DESKTOP}`,
+    },
+  },
 })
