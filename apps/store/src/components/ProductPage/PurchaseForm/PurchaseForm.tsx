@@ -94,6 +94,7 @@ export const PurchaseForm = () => {
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
+              startDate: formatter.fromNow(new Date(item.startDate)),
             })
 
             const service = priceIntentServiceInitClientSide(apolloClient)
