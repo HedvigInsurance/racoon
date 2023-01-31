@@ -3692,6 +3692,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lottiefiles/react-lottie-player@npm:3.5.2":
+  version: 3.5.2
+  resolution: "@lottiefiles/react-lottie-player@npm:3.5.2"
+  dependencies:
+    lottie-web: ^5.10.0
+  peerDependencies:
+    react: 16 - 18
+  checksum: 60c6842f5ed88971ff1a943b1cc6ef0d3c56f6fee4da5a74c027543e5370b1803377aca68f7e3c683e975c449a85a2c348368e7412febc36623a9b3a4f3e317b
+  languageName: node
+  linkType: hard
+
 "@mdx-js/mdx@npm:^1.6.22":
   version: 1.6.22
   resolution: "@mdx-js/mdx@npm:1.6.22"
@@ -16532,6 +16543,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-web@npm:^5.10.0":
+  version: 5.10.2
+  resolution: "lottie-web@npm:5.10.2"
+  checksum: 9ec80b479d8d03c079bd4f246d301f0c4aac2c4d6f8daaa79f6f3fc285aaba377c64879f6748d49c1db52b9854aea81c3203d858e9c686f7a47cd8b771d112d0
+  languageName: node
+  linkType: hard
+
 "loud-rejection@npm:^1.0.0":
   version: 1.6.0
   resolution: "loud-rejection@npm:1.6.0"
@@ -21150,6 +21168,7 @@ __metadata:
     "@graphql-codegen/typescript": 2.8.7
     "@graphql-codegen/typescript-operations": 2.5.12
     "@graphql-codegen/typescript-react-apollo": 3.3.7
+    "@lottiefiles/react-lottie-player": 3.5.2
     "@next/font": 13.1.6
     "@radix-ui/react-accordion": 1.1.0
     "@radix-ui/react-collapsible": 1.0.1
