@@ -93,7 +93,6 @@ const Color = styled.div<{ color?: string }>(({ color }) => ({
   backgroundColor: color,
 }))
 
-// FYI: temporary solution until we get the colors from the backend
 const titleToColor = (title: string) => {
   switch (title) {
     case 'Fire':
@@ -114,7 +113,7 @@ const titleToColor = (title: string) => {
       return theme.colors.gray700
     case 'Liability protection':
     case 'Ansvarsskydd':
-      return theme.colors.yellow300
+      return theme.colors.yellow500
     case 'Legal protection':
     case 'Rättskydd':
       return theme.colors.yellow500
@@ -123,7 +122,7 @@ const titleToColor = (title: string) => {
       return theme.colors.amber600
     case 'Assault':
     case 'Överfall':
-      return theme.colors.amber800
+      return theme.colors.amber500
     case 'Travel illness':
     case 'Sjuk på resa':
       return theme.colors.teal500
@@ -134,38 +133,38 @@ const titleToColor = (title: string) => {
     case 'Drulle':
       return theme.colors.yellow700
     case 'Criminal damage':
-      // TODO: no swedish title, no color
-      return 'hsla(184, 38%, 75%, 1)'
+    case 'Skadegörelse':
+      return theme.colors.gray700
     case 'Tenant ownership':
     case 'Bostadsrättstillägg':
-      return theme.colors.green700
+      return theme.colors.green600
     case 'Care and treatment':
     case 'Vård & Behandling':
       return theme.colors.teal500
     case 'Dental injury':
     case 'Tandskada':
-      return theme.colors.teal300
+      return theme.colors.teal500
     case 'Hospitalisation':
     case 'Sjukhusvistelse':
-      return theme.colors.teal500
+      return theme.colors.teal700
     case 'Scarring':
     case 'Ärr':
       return theme.colors.yellow500
     case 'Crisis cover':
     case 'Krishjälp':
-      return theme.colors.teal800
+      return theme.colors.teal700
     case 'Permanent injury':
     case 'Bestående men':
-      return theme.colors.purple300
+      return theme.colors.purple500
     case 'Lost or reduced working capacity':
     case 'Förlorad arbetsförmåga':
       return theme.colors.purple500
     case 'Death':
     case 'Dödsfall':
-      return theme.colors.purple900
+      return theme.colors.purple700
     case 'Pests':
     case 'Skadedjur':
-      return theme.colors.gray900
+      return theme.colors.gray700
     case 'Rebuilding':
     case 'Ombyggnation':
       return theme.colors.pink700
@@ -174,7 +173,7 @@ const titleToColor = (title: string) => {
       return theme.colors.amber700
     case 'Traffic insurance, third-party property':
     case 'Trafikförsäkring, annans egendom':
-      return theme.colors.yellow800
+      return theme.colors.yellow700
     case 'Theft & burglary':
     case 'Stöld & inbrott':
       return theme.colors.gray700
@@ -182,7 +181,7 @@ const titleToColor = (title: string) => {
       return theme.colors.red700
     case 'Glass damage':
     case 'Glas':
-      return theme.colors.blue300
+      return theme.colors.blue500
     case 'Roadside assistance':
     case 'Räddningshjälp och bärgning':
       return theme.colors.red600
@@ -194,7 +193,7 @@ const titleToColor = (title: string) => {
       return theme.colors.yellow500
     case 'Crisis counseling':
     case 'Kristerapi':
-      return theme.colors.teal800
+      return theme.colors.teal700
     case 'Car body damage':
     case 'Vagnskada':
       return theme.colors.green500
