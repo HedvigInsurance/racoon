@@ -41,6 +41,7 @@ import { TextBlock } from '@/blocks/TextBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
+import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
@@ -180,6 +181,8 @@ export const initStoryblok = () => {
     VideoBlock,
     VideoListBlock,
     ProductNavContainerBlock,
+    USPBlock,
+    USPBlockItem,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
