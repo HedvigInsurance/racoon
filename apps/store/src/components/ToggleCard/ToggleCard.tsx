@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { useId } from 'react'
-import { Space } from 'ui'
+import { Space, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { Switch, SwitchProps } from './Switch'
 
@@ -32,24 +32,24 @@ export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxPr
   )
 }
 
-const InputWrapper = styled(motion.div)(({ theme }) => ({
-  backgroundColor: theme.colors.gray300,
-  padding: theme.space[4],
+const InputWrapper = styled(motion.div)({
+  backgroundColor: theme.colors.opaque1,
+  padding: theme.space.md,
   borderRadius: theme.radius.sm,
-}))
+})
 
-const CheckboxHeader = styled.div(({ theme }) => ({
+const CheckboxHeader = styled.div({
   display: 'flex',
-  gap: theme.space[3],
+  gap: theme.space.sm,
   justifyContent: 'space-between',
   alignItems: 'center',
-}))
+})
 
-const StyledLabel = styled.label(({ theme }) => ({
+const StyledLabel = styled.label({
   fontFamily: theme.fonts.body,
-  fontSize: theme.fontSizes[3],
+  fontSize: theme.fontSizes.md,
 
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
-}))
+})

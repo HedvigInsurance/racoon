@@ -48,12 +48,11 @@ export const PageLink = {
     return url
   },
 
-  apiLoginSe: () => `/api/auth/login/se`,
   apiSessionReset: () => '/api/session/reset',
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
-  'sv-se': '/se/hjalp/kundservice',
+  se: '/se/hjalp/kundservice',
   'en-se': '/se-en/help/customer-service',
 }

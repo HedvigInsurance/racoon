@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { HeadingLabel, Space } from 'ui'
+import { HeadingLabel, Space, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -38,6 +38,6 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
 
 PerilsBlock.blockName = 'perils'
 
-const Wrapper = styled.div(({ theme }) => ({
-  paddingInline: theme.space[4],
-}))
+const Wrapper = styled.div({
+  paddingInline: theme.space.md,
+})

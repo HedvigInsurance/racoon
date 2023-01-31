@@ -11,7 +11,6 @@ import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import * as InputRadio from './InputRadio'
-import { SsnSeField } from './SsnSeField'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
@@ -124,8 +123,6 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
     case 'householdSize':
       return <HouseholdSizeField field={field} autoFocus={autoFocus} />
 
-    case 'ssn-se':
-      return <SsnSeField field={field} />
     case 'car-registration-number':
       return <CarRegistrationNumberField field={field} />
     case 'car-mileage':

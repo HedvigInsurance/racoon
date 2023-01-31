@@ -1,20 +1,19 @@
 import { storyblokEditable } from '@storyblok/react'
-import { ContactSupport } from '@/components/ContactSupport/ContactSupport'
+import { ContactSupport, ContactSupportProps } from '@/components/ContactSupport/ContactSupport'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type ContactSupportBlockProps = SbBaseBlockProps<{
-  title: string
-  showCallButton: boolean
-  availabilityText?: string
-}>
+type ContactSupportBlockProps = SbBaseBlockProps<ContactSupportProps>
 
 export const ContactSupportBlock = ({ blok }: ContactSupportBlockProps) => {
   return (
     <ContactSupport
       {...storyblokEditable(blok)}
       title={blok.title}
-      showCallButton={blok.showCallButton}
-      availabilityText={blok.availabilityText}
+      chatTitle={blok.chatTitle}
+      chatOpeningHours={blok.chatOpeningHours}
+      phoneTitle={blok.phoneTitle}
+      phoneOpeningHours={blok.phoneOpeningHours}
+      phoneLink={blok.phoneLink}
     />
   )
 }

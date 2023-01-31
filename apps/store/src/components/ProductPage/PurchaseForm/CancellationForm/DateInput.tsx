@@ -103,7 +103,6 @@ const Floating = styled.div({
   right: 0,
   pointerEvents: 'none',
   cursor: 'pointer',
-  textTransform: 'capitalize',
 })
 
 const IconWrapper = styled.div({

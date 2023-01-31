@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import Image from 'next/image'
 import React, { useState, useCallback, ReactNode } from 'react'
-import { mq } from 'ui'
+import { mq, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PerilFragment } from '@/services/apollo/generated'
@@ -26,10 +25,10 @@ export const Perils = ({ items }: Props) => {
 
 const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boolean }) => ({
   display: 'grid',
-  gap: '0.25rem',
+  gap: theme.space.xxs,
+
   [mq.md]: {
     gridTemplateColumns: `repeat(auto-fit, ${fixedCols ? '20.75rem' : 'minmax(20.75rem, 1fr)'})`,
-    gap: '1rem',
   },
 }))
 
@@ -42,34 +41,162 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ icon, title, description, covered, exceptions }) => {
+      {perils.map(({ title, description, covered }) => {
         return (
-          <Accordion.Item key={title} value={title}>
+          <AccordionItem key={title} value={title}>
             <Accordion.HeaderWithTrigger>
-              <SpaceFlex space={0.5}>
-                <Image src={icon.variants.light.svgUrl} alt="" width={24} height={24} />
-                {title}
+              <SpaceFlex space={0.75} align="center">
+                <Color color={titleToColor(title)} />
+                <Text size="lg">{title}</Text>
               </SpaceFlex>
             </Accordion.HeaderWithTrigger>
             <Accordion.Content>
               <ContentWrapper>
-                <p>{description}</p>
-                <CoverageList variant="covered" heading="Covered" items={covered} />
-                <CoverageList variant="not-covered" heading="Not Covered" items={exceptions} />
+                <Text as="p" size="xs" color="textPrimary">
+                  {description}
+                </Text>
+                <CoverageList items={covered} />
               </ContentWrapper>
             </Accordion.Content>
-          </Accordion.Item>
+          </AccordionItem>
         )
       })}
     </Accordion.Root>
   )
 }
 
-const ContentWrapper = styled.div(({ theme }) => ({
+const AccordionItem = styled(Accordion.Item)({
+  [mq.md]: {
+    paddingInline: theme.space.md,
+  },
+
+  '@media (hover: hover)': {
+    '&:hover': {
+      backgroundColor: theme.colors.gray200,
+    },
+  },
+})
+
+const ContentWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space[4],
-  paddingLeft: theme.space[6],
-  paddingBottom: theme.space[4],
-  fontSize: theme.fontSizes[1],
+  gap: theme.space.md,
+  paddingLeft: theme.space.xl,
+  paddingBottom: theme.space.md,
+  fontSize: theme.fontSizes.xs,
+})
+
+const Color = styled.div<{ color?: string }>(({ color }) => ({
+  width: '1rem',
+  height: '1rem',
+  borderRadius: '50%',
+  backgroundColor: color,
 }))
+
+// FYI: temporary solution until we get the colors from the backend
+const titleToColor = (title: string) => {
+  switch (title) {
+    case 'Fire':
+    case 'Eldsvåda':
+      return theme.colors.red700
+    case 'Water leaks':
+    case 'Vattenläcka':
+      return theme.colors.blue500
+    case 'Storms':
+    case 'Oväder':
+      // TODO: double-check english title
+      return theme.colors.blue700
+    case 'Burglary':
+    case 'Inbrott':
+      return theme.colors.gray500
+    case 'Theft and damage':
+    case 'Stöld och skadegörelse':
+      return theme.colors.gray700
+    case 'Liability protection':
+    case 'Ansvarsskydd':
+      return theme.colors.yellow300
+    case 'Legal protection':
+    case 'Rättskydd':
+      return theme.colors.yellow500
+    case 'Travel insurance':
+    case 'Resetrubbel':
+      return theme.colors.amber600
+    case 'Assault':
+    case 'Överfall':
+      return theme.colors.amber800
+    case 'Travel illness':
+    case 'Sjuk på resa':
+      return theme.colors.teal500
+    case 'White goods':
+    case 'Vitvaror':
+      return theme.colors.grayTranslucent25
+    case 'All-risk':
+    case 'Drulle':
+      return theme.colors.yellow700
+    case 'Criminal damage':
+      // TODO: no swedish title, no color
+      return 'hsla(184, 38%, 75%, 1)'
+    case 'Tenant ownership':
+    case 'Bostadsrättstillägg':
+      return theme.colors.green700
+    case 'Care and treatment':
+    case 'Vård & Behandling':
+      return theme.colors.teal500
+    case 'Dental injury':
+    case 'Tandskada':
+      return theme.colors.teal300
+    case 'Hospitalisation':
+    case 'Sjukhusvistelse':
+      return theme.colors.teal500
+    case 'Scarring':
+    case 'Ärr':
+      return theme.colors.yellow500
+    case 'Crisis cover':
+    case 'Krishjälp':
+      return theme.colors.teal800
+    case 'Permanent injury':
+    case 'Bestående men':
+      return theme.colors.purple300
+    case 'Lost or reduced working capacity':
+    case 'Förlorad arbetsförmåga':
+      return theme.colors.purple500
+    case 'Death':
+    case 'Dödsfall':
+      return theme.colors.purple900
+    case 'Pests':
+    case 'Skadedjur':
+      return theme.colors.gray900
+    case 'Rebuilding':
+    case 'Ombyggnation':
+      return theme.colors.pink700
+    case 'Traffic insurance, personal injury':
+    case 'Trafikförsäkring, personskador':
+      return theme.colors.amber700
+    case 'Traffic insurance, third-party property':
+    case 'Trafikförsäkring, annans egendom':
+      return theme.colors.yellow800
+    case 'Theft & burglary':
+    case 'Stöld & inbrott':
+      return theme.colors.gray700
+    case 'Brand':
+      return theme.colors.red700
+    case 'Glass damage':
+    case 'Glas':
+      return theme.colors.blue300
+    case 'Roadside assistance':
+    case 'Räddningshjälp och bärgning':
+      return theme.colors.red600
+    case 'Motor insurance':
+    case 'Maskinskydd':
+      return theme.colors.green600
+    case 'Liability coverage':
+    case 'Rättsskydd':
+      return theme.colors.yellow500
+    case 'Crisis counseling':
+    case 'Kristerapi':
+      return theme.colors.teal800
+    case 'Car body damage':
+    case 'Vagnskada':
+      return theme.colors.green500
+  }
+}

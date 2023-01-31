@@ -17,10 +17,6 @@ export type TextField = BaseField<string> & {
   inputType?: 'text' | 'tel' | 'email'
 }
 
-export type SsnSeField = BaseField<string> & {
-  type: 'ssn-se'
-}
-
 export type NumberField = BaseField<number> & {
   type: 'number'
   min?: number
@@ -81,7 +77,6 @@ export type InputField =
   | SelectField
   | ExtraBuildingsField
   | HouseholdSizeField
-  | SsnSeField
   | CarRegistrationNumberField
   | CarMileageField
   | CurrentInsuranceField
