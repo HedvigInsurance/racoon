@@ -52,7 +52,6 @@ export const RecommendationList = ({ recommendations }: Props) => {
 
 const Wrapper = styled(Space)({
   paddingInline: theme.space.xs,
-  paddingBottom: theme.space.xl,
 
   [mq.sm]: {
     display: 'grid',

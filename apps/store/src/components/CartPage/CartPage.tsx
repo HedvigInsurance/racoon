@@ -79,10 +79,12 @@ export const CartPage = (props: CartPageProps) => {
   }
 
   return (
-    <Space y={{ base: 3, sm: 6 }}>
-      {body}
-      <RecommendationList recommendations={recommendations} />
-    </Space>
+    <PageWrapper>
+      <Space y={{ base: 3, sm: 6 }}>
+        {body}
+        {recommendations.length > 0 && <RecommendationList recommendations={recommendations} />}
+      </Space>
+    </PageWrapper>
   )
 }
 
@@ -157,6 +159,10 @@ const CartNextStep = ({ shopSession }: { shopSession: ShopSession }) => {
     )
   }
 }
+
+const PageWrapper = styled.div({
+  paddingBottom: theme.space.xxl,
+})
 
 const HorizontalLine = styled.hr({
   backgroundColor: theme.colors.gray300,
