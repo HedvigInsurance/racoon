@@ -3,14 +3,15 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-// import { PageLink } from '@/lib/PageLink'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getGlobalStory } from '@/services/storyblok/storyblok'
+import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+
+const CONFIRMATION_PAGE_SLUG = 'confirmation'
 
 type Params = { shopSessionId: string }
 
@@ -18,6 +19,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   context,
 ) => {
   const { req, res, locale, params } = context
+
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const shopSessionId = params?.shopSessionId
@@ -25,10 +27,11 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = initializeApollo({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  const [shopSession, globalStory, translations] = await Promise.all([
+  const [shopSession, translations, globalStory, story] = await Promise.all([
     shopSessionService.fetchById(shopSessionId),
-    getGlobalStory({ locale }),
     serverSideTranslations(locale),
+    getGlobalStory({ locale }),
+    getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
   ])
 
   // @TODO: uncomment after implementing signing
@@ -44,13 +47,14 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
       platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
+      story,
     },
   })
 }
 
-const CheckoutConfirmationPage: NextPageWithLayout<ConfirmationPageProps> = (props) => {
-  return <ConfirmationPage {...props} />
-}
+const CheckoutConfirmationPage: NextPageWithLayout<
+  ConfirmationPageProps & { story: ConfirmationStory }
+> = (props) => <ConfirmationPage {...props} />
 
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 

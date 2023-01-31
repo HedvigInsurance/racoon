@@ -10,6 +10,7 @@ import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
+import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
@@ -126,6 +127,12 @@ export type ReusableStory = ISbStoryData & {
   }
 }
 
+export type ConfirmationStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
+    body: Array<SbBlokData>
+  }
+}
+
 type LinkData = Pick<
   ISbStoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -150,6 +157,7 @@ export const initStoryblok = () => {
     CheckListBlock,
     ContactSupportBlock,
     ContentBlock,
+    ConfirmationPageBlock,
     FooterBlock,
     FooterLink,
     FooterSection,

@@ -1,17 +1,23 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
+import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { appStoreLinks } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 
-export const ConfirmationPage = (props: ConfirmationPageProps) => {
+type Props = ConfirmationPageProps & {
+  story: ConfirmationStory
+}
+
+export const ConfirmationPage = (props: Props) => {
   const { locale } = useCurrentLocale()
-  const { platform, cart } = props
+  const { platform, cart, story } = props
 
   return (
     <Wrapper>
@@ -66,6 +72,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
           </Space>
         </main>
       </Space>
+      <ConfirmationPageBlock blok={story.content} />
     </Wrapper>
   )
 }
