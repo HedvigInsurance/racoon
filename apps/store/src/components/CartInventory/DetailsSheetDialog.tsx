@@ -103,7 +103,7 @@ const useGetDataTableValue = () => {
         return formatHouseholdSize(t, data)
 
       case 'MILEAGE':
-        if (typeof data['mileage'] === 'number') {
+        if (data['mileage']) {
           return t('DATA_TABLE_MILEAGE_VALUE', { value: data['mileage'] })
         } else return null
 
