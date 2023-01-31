@@ -22,7 +22,7 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
   },
 })
 
-export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)({
   padding: `${theme.space.lg} 0`,
   ':not(:last-child)': {
     borderBottom: `1px solid ${theme.colors.borderOpaque}`,
@@ -41,9 +41,9 @@ export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(
     },
     justifyContent: 'center',
   },
-}))
+})
 
-export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)({
   padding: `${theme.space.md} ${theme.space.md} `,
   marginLeft: theme.space.md,
 
@@ -57,9 +57,9 @@ export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(
       },
     },
   },
-}))
+})
 
-export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)(({ theme }) => ({
+export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)({
   padding: `${theme.space.md} ${theme.space.md} `,
 
   [mq.lg]: {
@@ -71,23 +71,27 @@ export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)(({
       },
     },
   },
-}))
+})
 
-export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)(
-  ({ theme }) => ({
-    [mq.lg]: {
-      position: 'absolute',
-      top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`,
-      backgroundColor: theme.colors.light,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-      borderRadius: theme.radius.sm,
-      padding: `${theme.space.md} ${theme.space.md}`,
-    },
-  }),
-)
+export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)({
+  [mq.lg]: {
+    position: 'absolute',
+    top: MENU_BAR_HEIGHT_DESKTOP,
+  },
+})
+
+export const NavigationMenuListWrapper = styled.div({
+  [mq.lg]: {
+    backgroundColor: theme.colors.light,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    borderRadius: theme.radius.sm,
+    padding: `${theme.space.md} ${theme.space.md}`,
+    marginTop: theme.space.xs,
+  },
+})
 
 export const navigationTriggerStyles = {
   display: 'flex',
@@ -95,14 +99,14 @@ export const navigationTriggerStyles = {
   gap: '0.5rem',
 }
 
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)(({ theme }) => ({
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
   display: 'flex',
   alignItems: 'center',
   gap: theme.space.xs,
   ...focusableStyles,
-}))
+})
 
-export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
   position: 'fixed',
@@ -118,9 +122,9 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)(({ the
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
   },
-}))
+})
 
-export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
   display: 'block',
@@ -129,9 +133,9 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)(({ t
   [mq.lg]: {
     padding: 0,
   },
-}))
+})
 
-export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ theme }) => ({
+export const ProductNavigationList = styled(NavigationMenuPrimitive.List)({
   all: 'unset',
   listStyle: 'none',
   display: 'grid',
@@ -144,9 +148,9 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)(({ the
   [mq.lg]: {
     padding: `${theme.space.md} 0`,
   },
-}))
+})
 
-export const ButtonWrapper = styled.div(({ theme }) => ({
+export const ButtonWrapper = styled.div({
   width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
@@ -154,4 +158,4 @@ export const ButtonWrapper = styled.div(({ theme }) => ({
   [mq.lg]: {
     paddingTop: 0,
   },
-}))
+})

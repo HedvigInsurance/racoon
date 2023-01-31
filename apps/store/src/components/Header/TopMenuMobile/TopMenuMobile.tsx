@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { AndroidIcon, AppleIcon, Button, mq, Space, theme } from 'ui'
+import { appStoreLinks } from '@/utils/appStoreLinks'
 import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
 const triggerStyles = {
@@ -68,11 +69,23 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
             <NavigationPrimaryList>
               <div>{children}</div>
               <ButtonWrapper x={0.25}>
-                <Button variant="secondary" size="medium">
+                <Button
+                  href={appStoreLinks.apple}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="medium"
+                >
                   <StyledAppleIcon />
                   App Store
                 </Button>
-                <Button variant="secondary" size="medium">
+                <Button
+                  href={appStoreLinks.google}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="medium"
+                >
                   <StyledAndroidIcon />
                   Google Play
                 </Button>

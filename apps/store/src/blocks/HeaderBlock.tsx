@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { Header } from '@/components/Header/Header'
 import {
   ButtonWrapper,
+  NavigationMenuListWrapper,
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
   NavigationMenuProductItem,
@@ -53,21 +54,25 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
       <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
-        <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-          <NavigationSecondaryList>
-            {filteredNavItems.map((nestedBlock) => (
-              <NavigationMenuSecondaryItem
-                key={nestedBlock._uid}
-                value={nestedBlock.name}
-                {...storyblokEditable(nestedBlock)}
-              >
-                <SecondaryNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
-                  {nestedBlock.name}
-                </SecondaryNavigationLink>
-              </NavigationMenuSecondaryItem>
-            ))}
-          </NavigationSecondaryList>
-        </NavigationMenuPrimitive.Sub>
+        <NavigationMenuListWrapper>
+          <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+            <NavigationSecondaryList>
+              {filteredNavItems.map((nestedBlock) => (
+                <NavigationMenuSecondaryItem
+                  key={nestedBlock._uid}
+                  value={nestedBlock.name}
+                  {...storyblokEditable(nestedBlock)}
+                >
+                  <SecondaryNavigationLink
+                    href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
+                  >
+                    {nestedBlock.name}
+                  </SecondaryNavigationLink>
+                </NavigationMenuSecondaryItem>
+              ))}
+            </NavigationSecondaryList>
+          </NavigationMenuPrimitive.Sub>
+        </NavigationMenuListWrapper>
       </NavigationMenuPrimitiveContent>
     </NavigationMenuPrimitiveItem>
   )
@@ -89,26 +94,28 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
       <NavigationTrigger>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
-        <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-          <ProductNavigationList>
-            {filteredNavItems.map((nestedBlock) => (
-              <NavigationMenuProductItem
-                key={nestedBlock._uid}
-                value={nestedBlock.name}
-                {...storyblokEditable(nestedBlock)}
-              >
-                <ProductNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
-                  {nestedBlock.name}
-                </ProductNavigationLink>
-              </NavigationMenuProductItem>
-            ))}
-          </ProductNavigationList>
-        </NavigationMenuPrimitive.Sub>
-        {buttonBlocks.map((nestedBlock) => (
-          <ButtonWrapper key={nestedBlock._uid}>
-            <ButtonBlock blok={nestedBlock} />
-          </ButtonWrapper>
-        ))}
+        <NavigationMenuListWrapper>
+          <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+            <ProductNavigationList>
+              {filteredNavItems.map((nestedBlock) => (
+                <NavigationMenuProductItem
+                  key={nestedBlock._uid}
+                  value={nestedBlock.name}
+                  {...storyblokEditable(nestedBlock)}
+                >
+                  <ProductNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
+                    {nestedBlock.name}
+                  </ProductNavigationLink>
+                </NavigationMenuProductItem>
+              ))}
+            </ProductNavigationList>
+          </NavigationMenuPrimitive.Sub>
+          {buttonBlocks.map((nestedBlock) => (
+            <ButtonWrapper key={nestedBlock._uid}>
+              <ButtonBlock blok={nestedBlock} />
+            </ButtonWrapper>
+          ))}
+        </NavigationMenuListWrapper>
       </NavigationMenuPrimitiveContent>
     </NavigationMenuPrimitiveItem>
   )
