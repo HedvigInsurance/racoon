@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { ReactNode, useState } from 'react'
-import { MinusIcon, Text, theme } from 'ui'
+import { MinusIcon, PlusIcon, Text, theme } from 'ui'
 import { CartCost } from '@/components/CartInventory/CartInventory.types'
-import { PlusIcon } from '@/components/Perils/PlusIcon'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
@@ -29,7 +28,7 @@ export const CartCollapsible = ({ children, title, cost }: Props) => {
             </Text>
           )}
         </SpaceBetween>
-        {open ? <MinusIcon size="1.25rem" /> : <PlusIcon size="1.25rem" />}
+        {open ? <MinusIcon size="1rem" /> : <PlusIcon size="1rem" />}
       </Trigger>
       <Collapsible.Content>{children}</Collapsible.Content>
     </Collapsible.Root>
