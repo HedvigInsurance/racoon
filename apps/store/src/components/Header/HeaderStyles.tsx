@@ -90,6 +90,7 @@ export const NavigationMenuListWrapper = styled.div({
     borderRadius: theme.radius.sm,
     padding: `${theme.space.md} ${theme.space.md}`,
     marginTop: theme.space.xs,
+    boxShadow: theme.effects.shadow,
   },
 })
 
