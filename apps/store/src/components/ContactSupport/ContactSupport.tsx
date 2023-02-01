@@ -63,12 +63,12 @@ export const ContactSupport = ({
   )
 }
 
-const Main = styled.main(({ theme }) => ({
+const Main = styled.main({
   padding: theme.space[4],
   paddingTop: theme.space[5],
   paddingBottom: theme.space[5],
   textAlign: 'center',
-}))
+})
 
 const CardWrapper = styled.div({
   display: 'grid',

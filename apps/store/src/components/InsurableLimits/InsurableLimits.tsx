@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 
 type InsurableLimitsProps = {
   children: React.ReactNode
@@ -17,7 +17,7 @@ export const InsurableLimits = ({ children, className }: InsurableLimitsProps) =
   )
 }
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   display: 'flex',
   gap: theme.space[2],
   scrollSnapType: 'x mandatory',
@@ -26,7 +26,7 @@ const Wrapper = styled.div(({ theme }) => ({
   [mq.lg]: {
     gap: theme.space[4],
   },
-}))
+})
 
 const ScrollableItem = styled.div({
   scrollSnapAlign: 'center',

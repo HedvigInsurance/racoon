@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'framer-motion'
-import { Space, Text } from 'ui'
+import { Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -35,11 +35,11 @@ export const Root = ({ children, label, onValueChange, ...props }: RootProps) =>
   )
 }
 
-const Card = styled(motion(Space))(({ theme }) => ({
+const Card = styled(motion(Space))({
   padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-}))
+})
 
 type ItemProps = {
   label: string
@@ -61,7 +61,7 @@ export const Item = ({ value, label, id, autoFocus }: ItemProps) => {
   )
 }
 
-const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
+const StyledItem = styled(RadioGroup.Item)({
   width: '1.375rem',
   height: '1.375rem',
 
@@ -76,12 +76,12 @@ const StyledItem = styled(RadioGroup.Item)(({ theme }) => ({
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
   },
-}))
+})
 
-const StyledIndicator = styled(RadioGroup.Indicator)(({ theme }) => ({
+const StyledIndicator = styled(RadioGroup.Indicator)({
   display: 'block',
   backgroundColor: theme.colors.gray1000,
   borderRadius: '50%',
   width: '100%',
   height: '100%',
-}))
+})

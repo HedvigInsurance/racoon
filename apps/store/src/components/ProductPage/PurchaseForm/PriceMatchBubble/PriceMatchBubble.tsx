@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Text } from 'ui'
+import { Text, theme } from 'ui'
 
 type Props = {
   title: string
@@ -32,12 +32,12 @@ const Root = styled.div({
   position: 'relative',
 })
 
-const Bubble = styled.div(({ theme }) => ({
+const Bubble = styled.div({
   backgroundColor: LIGHT_BLUE,
   paddingBlock: theme.space[3],
   paddingInline: theme.space[4],
   borderRadius: theme.radius.sm,
-}))
+})
 
 const Tip = styled.div({
   position: 'absolute',

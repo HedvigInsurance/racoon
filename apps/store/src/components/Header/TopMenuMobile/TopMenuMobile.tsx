@@ -24,21 +24,21 @@ export const DialogClose = styled(DialogPrimitive.DialogClose)({
   ...triggerStyles,
 })
 
-const ButtonWrapper = styled(Space)(({ theme }) => ({
+const ButtonWrapper = styled(Space)({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
   paddingTop: theme.space.xxl,
-}))
+})
 
-const StyledAppleIcon = styled(AppleIcon)(({ theme }) => ({
+const StyledAppleIcon = styled(AppleIcon)({
   marginRight: theme.space.xs,
-}))
+})
 
-const StyledAndroidIcon = styled(AndroidIcon)(({ theme }) => ({
+const StyledAndroidIcon = styled(AndroidIcon)({
   marginRight: theme.space.xs,
-}))
+})
 
 export type TopMenuMobileProps = {
   isOpen?: boolean

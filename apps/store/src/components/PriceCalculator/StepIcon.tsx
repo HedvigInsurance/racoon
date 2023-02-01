@@ -1,5 +1,6 @@
 import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
+import { theme } from 'ui'
 
 type Props = {
   state: 'outline' | 'filled' | 'valid'
@@ -10,7 +11,7 @@ const checkProps = { shouldForwardProp: isValidProp }
 export const StepIcon = styled(
   'div',
   checkProps,
-)<Props>(({ theme, state }) => ({
+)<Props>(({ state }) => ({
   width: '1rem',
   height: '1rem',
   borderRadius: '50%',

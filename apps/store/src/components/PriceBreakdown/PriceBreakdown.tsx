@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
-import { ChevronIcon, Space, Text } from 'ui'
+import { ChevronIcon, Space, Text, theme } from 'ui'
 import { useFormatter } from '@/utils/useFormatter'
 import { CheckoutPaymentPageProps } from '../CheckoutPaymentPage/CheckoutPaymentPage.types'
 
@@ -68,15 +68,15 @@ const DataRowStyles = css({
 
 const DataRow = styled.div(() => ({}), DataRowStyles)
 
-const CollapsibleHeader = styled(RadixCollapsible.Trigger)(DataRowStyles, ({ theme }) => ({
+const CollapsibleHeader = styled(RadixCollapsible.Trigger)(DataRowStyles, {
   paddingRight: theme.space[1],
   width: '100%',
-}))
+})
 
-const CrossOutText = styled.p(({ theme }) => ({
+const CrossOutText = styled.p({
   color: theme.colors.gray500,
   textDecoration: 'line-through',
-}))
+})
 
 const SpaceFlex = styled(Space)(() => ({
   display: 'flex',
@@ -90,14 +90,14 @@ const TriggerIcon = styled(ChevronIcon)({
 
 const CollapsibleContent = styled(RadixCollapsible.Content)(() => ({}))
 
-const CollapsibleDivider = styled.div(({ theme }) => ({
+const CollapsibleDivider = styled.div({
   borderTop: `1px solid ${theme.colors.gray300}`,
   height: theme.space[2],
   marginTop: '0.75rem',
   marginBottom: theme.space[3],
-}))
+})
 
-const Price = styled.p(({ theme }) => ({
+const Price = styled.p({
   fontSize: theme.fontSizes[1],
   color: theme.colors.gray600,
-}))
+})

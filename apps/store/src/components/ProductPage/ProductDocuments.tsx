@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Card, CardContent } from 'ui/src/components/Card/Card'
-import { getColor, HeadingLabel, mq, Space, Text } from 'ui'
+import { getColor, HeadingLabel, mq, Space, Text, theme } from 'ui'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {
@@ -36,14 +36,14 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   )
 }
 
-const ProductDocumentsWrapper = styled.div(({ theme }) => ({
+const ProductDocumentsWrapper = styled.div({
   paddingInline: theme.space[4],
   marginBlock: theme.space[4],
 
   [mq.lg]: {
     maxWidth: '32rem',
   },
-}))
+})
 
 // TODO: Add hover style to Card or LinkCard component
 // TODO: Provide default card background in app theme

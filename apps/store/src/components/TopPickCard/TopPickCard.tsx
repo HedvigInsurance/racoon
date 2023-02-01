@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
-import { Space } from 'ui'
+import { Space, theme } from 'ui'
 
 const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
 const PRODUCT_CARD_IMAGE_HEIGHT_SMALL = '25rem'
@@ -51,11 +51,11 @@ const Image = styled(NextImage)({
   objectFit: 'cover',
 })
 
-const Title = styled.h1(({ theme }) => ({
+const Title = styled.h1({
   fontSize: theme.fontSizes[2],
-}))
+})
 
-const Subtitle = styled.p(({ theme }) => ({
+const Subtitle = styled.p({
   fontSize: theme.fontSizes[1],
   color: theme.colors.gray600,
-}))
+})

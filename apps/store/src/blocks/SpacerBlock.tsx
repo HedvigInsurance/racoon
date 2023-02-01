@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
+import { theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = {
@@ -13,6 +14,6 @@ export const SpacerBlock = ({ blok }: SpacerBlockProps) => {
 }
 SpacerBlock.blockName = 'spacer'
 
-const Spacer = styled.div<Props>(({ theme, size }) => ({
+const Spacer = styled.div<Props>(({ size }) => ({
   height: theme.space[size as keyof typeof theme.space] ?? size,
 }))

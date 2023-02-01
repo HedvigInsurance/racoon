@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { Space } from 'ui'
+import { Space, theme } from 'ui'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { FormElement } from './PurchaseForm.constants'
@@ -43,16 +43,16 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: Props) 
   )
 }
 
-const StyledRadioGroup = styled(RadioGroup.Root)(({ theme }) => ({
+const StyledRadioGroup = styled(RadioGroup.Root)({
   display: 'flex',
   gap: theme.space[2],
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
   scrollSnapType: 'x mandatory',
   overflowX: 'auto',
-}))
+})
 
-const OfferItem = styled(RadioGroup.Item)(({ theme }) => ({
+const OfferItem = styled(RadioGroup.Item)({
   scrollSnapAlign: 'center',
   flex: '0 0 85%',
 
@@ -70,13 +70,13 @@ const OfferItem = styled(RadioGroup.Item)(({ theme }) => ({
   '&[data-state=checked]': {
     borderColor: theme.colors.gray900,
   },
-}))
+})
 
 const IndicatorBox = styled.div({
   gridArea: '1 / 1 / 3 / 2',
 })
 
-const IndicatorWrapper = styled.div(({ theme }) => ({
+const IndicatorWrapper = styled.div({
   borderWidth: 2,
   borderStyle: 'solid',
   borderColor: theme.colors.gray900,
@@ -86,14 +86,14 @@ const IndicatorWrapper = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-}))
-const Indicator = styled(RadioGroup.Indicator)(({ theme }) => ({
+})
+const Indicator = styled(RadioGroup.Indicator)({
   display: 'block',
   width: '0.625rem',
   height: '0.625rem',
   borderRadius: '0.3125rem',
   backgroundColor: theme.colors.gray900,
-}))
+})
 
 const TitleBox = styled.div({
   gridArea: '1 / 2 / 2 / 3',

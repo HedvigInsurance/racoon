@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
-import { HedvigLogo, mq } from 'ui'
+import { HedvigLogo, mq, theme } from 'ui'
 
-const Container = styled.div(({ theme }) => ({
+const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: theme.colors.gray100,
   height: '100vh',
-}))
+})
 
-const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) => ({
+const Header = styled.header<{ variant: HeaderVariant }>(({ variant }) => ({
   position: 'absolute',
   display: 'flex',
   width: '100%',
@@ -22,7 +22,7 @@ const Header = styled.header<{ variant: HeaderVariant }>(({ theme, variant }) =>
   },
 }))
 
-const SiteLink = styled.a<{ variant: HeaderVariant }>(({ theme, variant }) => ({
+const SiteLink = styled.a<{ variant: HeaderVariant }>(({ variant }) => ({
   color: 'inherit',
 
   '&:hover': {

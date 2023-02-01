@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ComponentMeta, Story } from '@storybook/react'
 import { useRef } from 'react'
-import { Button } from 'ui'
+import { Button, theme } from 'ui'
 import { ScrollPast, ScrollPastProps } from './ScrollPast'
 
 export default {
@@ -132,7 +132,7 @@ const Template: Story<ScrollPastProps> = (props) => {
   )
 }
 
-const FixedFooter = styled.div(({ theme }) => ({
+const FixedFooter = styled.div({
   position: 'fixed',
   bottom: 0,
   right: 0,
@@ -140,7 +140,7 @@ const FixedFooter = styled.div(({ theme }) => ({
   padding: theme.space[4],
   display: 'flex',
   justifyContent: 'center',
-}))
+})
 
 export const Default = Template.bind({})
 Default.args = {}

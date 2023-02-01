@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
+import { theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
 export type { TabsProps } from '@radix-ui/react-tabs'
@@ -11,16 +12,16 @@ export const Tabs = styled(RadixTabs.Root)({
   isolation: 'isolate',
 })
 
-export const TabsList = styled(RadixTabs.TabsList)(({ theme }) => ({
+export const TabsList = styled(RadixTabs.TabsList)({
   display: 'grid',
   gap: theme.space[2],
   position: 'sticky',
   top: theme.space[3],
   paddingInline: theme.space[4],
   zIndex: zIndexes.tabs,
-}))
+})
 
-export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
+export const TabsTrigger = styled(RadixTabs.Trigger)({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'center',
@@ -46,6 +47,6 @@ export const TabsTrigger = styled(RadixTabs.Trigger)(({ theme }) => ({
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
   },
-}))
+})
 
 export const TabsContent = styled(RadixTabs.Content)({})

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { Button, mq } from 'ui'
+import { Button, mq, theme } from 'ui'
 
 export type ScrollToButtonProps = {
   type: 'button' | 'submit'
@@ -20,9 +20,9 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
   )
 }
 
-const Wrappper = styled.div(({ theme }) => ({
+const Wrappper = styled.div({
   paddingInline: theme.space[4],
   width: '100%',
 
   [mq.lg]: { display: 'none' },
-}))
+})

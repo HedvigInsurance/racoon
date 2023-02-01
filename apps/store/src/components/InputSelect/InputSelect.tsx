@@ -17,7 +17,7 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   transform: 'translateY(-50%)',
 }))
 
-const StyledSelect = styled.select(({ theme }) => ({
+const StyledSelect = styled.select({
   color: theme.colors.textPrimary,
   fontSize: theme.fontSizes.xl,
   borderRadius: theme.radius.sm,
@@ -31,11 +31,11 @@ const StyledSelect = styled.select(({ theme }) => ({
   '&:focus-visible': {
     boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
   },
-}))
+})
 
-const Placeholder = styled.option(({ theme }) => ({
+const Placeholder = styled.option({
   color: theme.colors.textSecondary,
-}))
+})
 
 type InputSelectProps = InputBaseProps & {
   name: string

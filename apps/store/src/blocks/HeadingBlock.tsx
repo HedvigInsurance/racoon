@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { Heading, HeadingProps, PossibleHeadingVariant } from 'ui'
+import { Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div({
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-}))
+})
 
 export type HeadingBlockProps = SbBaseBlockProps<{
   text: string

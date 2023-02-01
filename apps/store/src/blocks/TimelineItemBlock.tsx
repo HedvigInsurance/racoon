@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText } from '@storyblok/react'
-import { Heading } from 'ui'
+import { Heading, theme } from 'ui'
 import * as Timeline from '@/components/Timeline/Timeline'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -32,7 +32,7 @@ export const TimelineItemBlock = ({ blok, isFirst, isLast }: TimelineItemBlockPr
 }
 TimelineItemBlock.blockName = 'timelineItem'
 
-const StyledBody = styled.div(({ theme }) => ({
+const StyledBody = styled.div({
   color: theme.colors.gray600,
-  marginTop: theme.space[2],
-}))
+  marginTop: theme.space.xs,
+})

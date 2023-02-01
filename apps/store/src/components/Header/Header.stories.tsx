@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { ComponentMeta, Story } from '@storybook/react'
 import Link from 'next/link'
+import { theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
 import {
@@ -25,12 +26,12 @@ const ShoppingCartMenuItemWrapper = styled.div({
   lineHeight: 0,
 })
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link)({
   display: 'inline-block',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },
-}))
+})
 
 export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
   return (

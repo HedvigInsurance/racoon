@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
-import { Button, Dialog, Heading, Space } from 'ui'
+import { Button, Dialog, Heading, Space, theme } from 'ui'
 import { PURCHASE_FORM_MAX_WIDTH } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
   useExternalInsurersQuery,
@@ -221,26 +221,26 @@ const useUpdateExternalInsurer = (params: UseUpdateExternalInsurerParams) => {
   }
 }
 
-const StyledDialogContent = styled(Dialog.Content)(({ theme }) => ({
+const StyledDialogContent = styled(Dialog.Content)({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   padding: theme.space[2],
-}))
+})
 
-const DialogIframeWindow = styled(Dialog.Window)(({ theme }) => ({
+const DialogIframeWindow = styled(Dialog.Window)({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
   height: '100%',
   maxHeight: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
   borderRadius: theme.radius.xs,
-}))
+})
 
-const DialogSuccessWindow = styled(Dialog.Window)(({ theme }) => ({
+const DialogSuccessWindow = styled(Dialog.Window)({
   padding: theme.space[4],
   borderRadius: theme.radius.xs,
   width: '100%',
   maxWidth: `calc(${PURCHASE_FORM_MAX_WIDTH} + 1rem)`,
-}))
+})

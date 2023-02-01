@@ -1,6 +1,6 @@
 import styled, { StyledComponent } from '@emotion/styled'
 import React from 'react'
-import { mq } from 'ui/src/lib/media-query'
+import { mq, theme } from 'ui'
 
 export type HeadingProps = {
   variant: 'xl' | 'l' | 'm' | 's' | 'xs' | 'overline'
@@ -15,7 +15,7 @@ type StyleProps = {
   as: HeadingProps['headingLevel']
 } & ColorProp
 
-const HeadingBase = styled.span<ColorProp>(({ theme, colorVariant }) => ({
+const HeadingBase = styled.span<ColorProp>(({ colorVariant }) => ({
   color: colorVariant === 'light' ? theme.colors.gray100 : theme.colors.gray900,
   margin: 0,
   padding: 0,

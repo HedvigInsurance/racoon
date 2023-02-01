@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Text, CheckIcon as PerilsCheckIcon, MinusIcon } from 'ui'
+import { Text, CheckIcon as PerilsCheckIcon, MinusIcon, theme } from 'ui'
 
 export const Root = styled.table({
   width: '100%',
@@ -10,7 +10,7 @@ export const Root = styled.table({
 export const Head = styled.thead({})
 export const Body = styled.tbody({})
 
-export const Row = styled.tr(({ theme }) => ({
+export const Row = styled.tr({
   ':not(:last-child)': {
     borderBottom: `1px solid ${theme.colors.gray300}`,
   },
@@ -21,7 +21,7 @@ export const Row = styled.tr(({ theme }) => ({
       borderBottomRightRadius: theme.radius.xs,
     },
   },
-}))
+})
 
 type HeaderProps = { children?: React.ReactNode; className?: string; active?: boolean }
 
@@ -38,15 +38,15 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
   )
 }
 
-const TableHeader = styled.th(({ theme }) => ({
+const TableHeader = styled.th({
   paddingBlock: theme.space.xxs,
-}))
+})
 
-const ActiveTableHeader = styled(TableHeader)(({ theme }) => ({
+const ActiveTableHeader = styled(TableHeader)({
   backgroundColor: theme.colors.green100,
   borderTopLeftRadius: theme.radius.xs,
   borderTopRightRadius: theme.radius.xs,
-}))
+})
 
 type TitleDataCellProps = { children: React.ReactNode; className?: string }
 
@@ -69,15 +69,15 @@ export const DataCell = ({ children, active, ...props }: DataCellProps) => {
   )
 }
 
-const TableDataCell = styled.td(({ theme }) => ({
+const TableDataCell = styled.td({
   paddingBlock: theme.space.xs,
   verticalAlign: 'middle',
   minWidth: '2.5rem',
-}))
+})
 
-const ActiveTableDataCell = styled(TableDataCell)(({ theme }) => ({
+const ActiveTableDataCell = styled(TableDataCell)({
   backgroundColor: theme.colors.green100,
-}))
+})
 
 const Centered = styled.div({
   display: 'flex',

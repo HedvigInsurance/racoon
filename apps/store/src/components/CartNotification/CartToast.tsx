@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, Dialog, mq } from 'ui'
+import { Space, Dialog, mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
@@ -64,7 +64,7 @@ const DialogContent = styled(Dialog.Content)({
   },
 })
 
-const DialogContentWrapper = styled.div(({ theme }) => ({
+const DialogContentWrapper = styled.div({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -84,4 +84,4 @@ const DialogContentWrapper = styled.div(({ theme }) => ({
     borderRadius: theme.radius.md,
     maxWidth: '28rem',
   },
-}))
+})

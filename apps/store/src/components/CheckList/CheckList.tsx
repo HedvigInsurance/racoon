@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { PropsWithChildren } from 'react'
-import { CheckIcon } from 'ui'
+import { CheckIcon, theme } from 'ui'
 
 export const Root = styled.ul({
   padding: 0,
@@ -17,11 +17,11 @@ export const Item = ({ children }: PropsWithChildren<unknown>) => {
   )
 }
 
-const StyledItem = styled.li(({ theme }) => ({
+const StyledItem = styled.li({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.space[2],
-}))
+  gap: theme.space.xs,
+})
 
 const IconWrapper = styled.div({ flexShrink: 0 })
 const Content = styled.div({ flex: 1 })

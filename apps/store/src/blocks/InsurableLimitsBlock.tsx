@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { HeadingLabel } from 'ui'
+import { HeadingLabel, theme } from 'ui'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import * as Statistic from '@/components/Statistic/Statistic'
@@ -31,6 +31,6 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
 }
 InsurableLimitsBlock.blockName = 'insurableLimits'
 
-const StyledInsurableLimits = styled(InsurableLimits)(({ theme }) => ({
+const StyledInsurableLimits = styled(InsurableLimits)({
   padding: theme.space[4],
-}))
+})

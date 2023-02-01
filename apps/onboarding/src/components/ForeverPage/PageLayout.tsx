@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
-import { HedvigLogo, Space, mq } from 'ui'
+import { HedvigLogo, Space, mq, theme } from 'ui'
 import { LanguageSwitcher } from '@/components/language-switcher'
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   padding: '2rem',
@@ -14,7 +14,7 @@ const Wrapper = styled.div(({ theme }) => ({
   [mq.lg]: {
     padding: '2.5rem 3.5rem',
   },
-}))
+})
 
 const Header = styled.header({
   display: 'flex',
@@ -26,13 +26,13 @@ const Header = styled.header({
   },
 })
 
-const SiteLink = styled.a(({ theme }) => ({
+const SiteLink = styled.a({
   color: theme.colors.gray900,
 
   '&:hover': {
     color: theme.colors.purple900,
   },
-}))
+})
 
 const Main = styled(Space)({
   flex: '1 1 0%',
@@ -49,7 +49,7 @@ const Footer = styled(Space)({
   alignItems: 'center',
 })
 
-const Paragraph = styled.div(({ theme }) => ({
+const Paragraph = styled.div({
   fontSize: '0.75rem',
   color: theme.colors.gray700,
   textAlign: 'center',
@@ -63,7 +63,7 @@ const Paragraph = styled.div(({ theme }) => ({
     color: theme.colors.purple900,
     textDecoration: 'underline',
   },
-}))
+})
 
 const Content = styled.div({
   flex: '1 1 0%',

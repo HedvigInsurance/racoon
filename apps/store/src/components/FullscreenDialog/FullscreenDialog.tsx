@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { CrossIcon, Dialog, mq } from 'ui'
+import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
   children: React.ReactNode
@@ -35,7 +35,7 @@ const Content = styled(Dialog.Content)({
 })
 
 const HEADER_HEIGHT = '3.5rem'
-const Header = styled.header(({ theme }) => ({
+const Header = styled.header({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -49,7 +49,7 @@ const Header = styled.header(({ theme }) => ({
   [mq.lg]: {
     paddingInline: theme.space.xl,
   },
-}))
+})
 
 const CloseButton = styled(Dialog.Close)({ cursor: 'pointer' })
 
@@ -57,26 +57,26 @@ const Main = styled.main({
   height: '100%',
 })
 
-const CenteredMain = styled(Main)(({ theme }) => ({
+const CenteredMain = styled(Main)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   paddingInline: theme.space.md,
-}))
+})
 
 const ClearHeader = styled.div({
   height: HEADER_HEIGHT,
 })
 
 const BUTTON_HEIGHT = '3.25rem'
-const ClearFooter = styled.div(({ theme }) => ({
+const ClearFooter = styled.div({
   height: `calc(${BUTTON_HEIGHT} + ${theme.space.md} * 2)`,
   [mq.lg]: {
     height: `calc(${BUTTON_HEIGHT} + ${theme.space.xxl} * 2)`,
   },
-}))
+})
 
-const FooterWrapper = styled.footer(({ theme }) => ({
+const FooterWrapper = styled.footer({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -92,7 +92,7 @@ const FooterWrapper = styled.footer(({ theme }) => ({
   [mq.lg]: {
     paddingBottom: theme.space.xxl,
   },
-}))
+})
 
 export const Root = Dialog.Root
 export const Close = Dialog.Close

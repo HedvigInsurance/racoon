@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
+import { theme } from 'ui'
 
-export const AdyenDropinStyles = styled.div(({ theme }) => ({
+export const AdyenDropinStyles = styled.div({
   '.adyen-checkout__dropin': {
     backgroundColor: theme.colors.white,
     border: `1px solid ${theme.colors.gray500}`,
@@ -35,4 +36,4 @@ export const AdyenDropinStyles = styled.div(({ theme }) => ({
   },
 
   '.adyen-checkout__button__icon': { display: 'none' },
-}))
+})

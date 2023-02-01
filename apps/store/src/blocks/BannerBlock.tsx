@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
-import { Heading, Text, mq } from 'ui'
+import { Heading, Text, mq, theme } from 'ui'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 type ImageSize = {
@@ -46,32 +46,30 @@ export const BannerBlock = ({ blok }: BannerBlockProps) => {
 }
 BannerBlock.blockName = 'banner'
 
-const Wrapper = styled('div')<ImageSize>(
-  ({ theme, aspectRatioLandscape, aspectRatioPortrait }) => ({
-    position: 'relative',
-    marginInline: theme.space.xs,
-    borderRadius: theme.radius.md,
-    overflow: 'hidden',
+const Wrapper = styled('div')<ImageSize>(({ aspectRatioLandscape, aspectRatioPortrait }) => ({
+  position: 'relative',
+  marginInline: theme.space.xs,
+  borderRadius: theme.radius.md,
+  overflow: 'hidden',
 
-    [mq.md]: {
-      marginInline: theme.space.md,
-      borderRadius: theme.radius.lg,
-    },
+  [mq.md]: {
+    marginInline: theme.space.md,
+    borderRadius: theme.radius.lg,
+  },
 
-    ['@media (orientation: portrait)']: {
-      ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),
-    },
-    ['@media (orientation: landscape)']: {
-      ...(aspectRatioLandscape && { aspectRatio: aspectRatioLandscape }),
-    },
-  }),
-)
+  ['@media (orientation: portrait)']: {
+    ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),
+  },
+  ['@media (orientation: landscape)']: {
+    ...(aspectRatioLandscape && { aspectRatio: aspectRatioLandscape }),
+  },
+}))
 
 const Image = styled(NextImage)({
   objectFit: 'cover',
 })
 
-const BodyWrapper = styled.div(({ theme }) => ({
+const BodyWrapper = styled.div({
   position: 'absolute',
   inset: 0,
   display: 'grid',
@@ -86,16 +84,16 @@ const BodyWrapper = styled.div(({ theme }) => ({
   [mq.md]: {
     padding: theme.space.xl,
   },
-}))
+})
 
-const Title = styled(Heading)(({ theme }) => ({
+const Title = styled(Heading)({
   gridArea: 'title',
   fontSize: theme.fontSizes[6],
 
   [mq.md]: {
     fontSize: theme.fontSizes[10],
   },
-}))
+})
 
 const Description = styled(Text)({
   gridArea: 'content',
