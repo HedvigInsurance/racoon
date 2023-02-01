@@ -29,12 +29,12 @@ const Wrapper = styled(Space)({
   height: '100%',
 })
 
-const Title = styled.p(({ theme }) => ({
+const Title = styled.p({
   fontSize: theme.fontSizes[2],
   color: theme.colors.gray600,
   textTransform: 'uppercase',
   textAlign: 'center',
-}))
+})
 
 const Grid = styled.div({
   display: 'grid',

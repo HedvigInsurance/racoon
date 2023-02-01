@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
+import { theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { HouseholdSizeField as HouseholdSizeFieldType } from '@/services/PriceCalculator/Field.types'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -86,7 +87,7 @@ export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => 
   )
 }
 
-const Wrapper = styled(motion.div)(({ theme }) => ({
+const Wrapper = styled(motion.div)({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -96,18 +97,18 @@ const Wrapper = styled(motion.div)(({ theme }) => ({
   padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-}))
+})
 
-const StyledSelect = styled.select(({ theme }) => ({
+const StyledSelect = styled.select({
   fontSize: theme.fontSizes.xl,
   color: theme.colors.textPrimary,
-}))
+})
 
-const Minus = styled.div(({ theme }) => ({
+const Minus = styled.div({
   width: '1.25rem',
   height: '0.0625rem', // 1px
   backgroundColor: theme.colors.textPrimary,
-}))
+})
 
 const Plus = () => {
   return (
@@ -118,12 +119,12 @@ const Plus = () => {
   )
 }
 
-const PlusVerticalLine = styled.div(({ theme }) => ({
+const PlusVerticalLine = styled.div({
   height: '1.25rem',
   width: '0.0625rem', // 1px
   backgroundColor: theme.colors.textPrimary,
   position: 'absolute',
-}))
+})
 
 const PlusWrapper = styled.div({
   position: 'relative',
@@ -132,7 +133,7 @@ const PlusWrapper = styled.div({
   justifyContent: 'center',
 })
 
-const StyledButton = styled.button(({ theme }) => ({
+const StyledButton = styled.button({
   cursor: 'pointer',
   height: '1.5rem',
   width: '1.5rem',
@@ -143,4 +144,4 @@ const StyledButton = styled.button(({ theme }) => ({
   '&[disabled] div': {
     backgroundColor: theme.colors.textDisabled,
   },
-}))
+})

@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { PropsWithChildren, ReactElement } from 'react'
-import { ChevronIcon } from 'ui'
+import { ChevronIcon, theme } from 'ui'
 
 export const Root = AccordionPrimitives.Root
 export const Content = AccordionPrimitives.Content
 export const Item = AccordionPrimitives.Item
 const Header = AccordionPrimitives.Header
 
-const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
+const Trigger = styled(AccordionPrimitives.Trigger)({
   height: theme.space[7],
   width: '100%',
   cursor: 'pointer',
@@ -23,7 +23,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)(({ theme }) => ({
   '[data-state=open] &': {
     borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0`,
   },
-}))
+})
 
 const CenteredHeader = styled.div({
   width: '100%',
@@ -56,18 +56,18 @@ export const HeaderWithTrigger = ({
   )
 }
 
-const RecommendedContainer = styled.div(({ theme }) => ({
+const RecommendedContainer = styled.div({
   paddingTop: theme.space[2],
-}))
+})
 
-const SuggestedDot = styled.span(({ theme }) => ({
+const SuggestedDot = styled.span({
   display: 'inline-block',
   height: theme.radius.sm,
   width: theme.radius.sm,
   backgroundColor: theme.colors.black,
   borderRadius: '50%',
   marginRight: '.5rem',
-}))
+})
 
 type SuggestedItemProps = {
   children: React.ReactNode
@@ -80,7 +80,7 @@ export const SuggestedItem = ({ children }: SuggestedItemProps) => (
   </RecommendedContainer>
 )
 
-export const TierItemWrapper = styled.div<{ isSelected: boolean }>(({ theme }) => ({
+export const TierItemWrapper = styled.div<{ isSelected: boolean }>({
   cursor: 'pointer',
   padding: theme.space[2],
   backgroundColor: theme.colors.gray200,
@@ -95,37 +95,35 @@ export const TierItemWrapper = styled.div<{ isSelected: boolean }>(({ theme }) =
   '&:last-of-type': {
     borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
   },
+})
+
+export const TierItemContainer = styled.div<{ isSelected: boolean }>(({ isSelected = false }) => ({
+  cursor: 'pointer',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  padding: theme.space[2],
+  borderRadius: `${theme.radius.xs}px`,
+
+  boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
+  backgroundColor: isSelected ? '#E9FFC8' : theme.colors.gray200,
 }))
 
-export const TierItemContainer = styled.div<{ isSelected: boolean }>(
-  ({ theme, isSelected = false }) => ({
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    padding: theme.space[2],
-    borderRadius: `${theme.radius.xs}px`,
-
-    boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
-    backgroundColor: isSelected ? '#E9FFC8' : theme.colors.gray200,
-  }),
-)
-
-export const TitleContainer = styled.div(({ theme }) => ({
+export const TitleContainer = styled.div({
   fontSize: theme.fontSizes[3],
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-}))
+})
 
-export const TitleItem = styled.div(({ theme }) => ({
+export const TitleItem = styled.div({
   paddingBottom: theme.space[1],
-}))
+})
 
-export const SecondaryText = styled.div(({ theme }) => ({
+export const SecondaryText = styled.div({
   color: theme.colors.gray600,
-}))
+})
 
-export const PriceText = styled.div<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+export const PriceText = styled.div<{ isSelected: boolean }>(({ isSelected }) => ({
   color: isSelected ? theme.colors.gray900 : theme.colors.gray600,
 }))

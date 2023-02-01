@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, FocusEventHandler, InputHTMLAttributes, useId, useState } from 'react'
-import { ChevronIcon, Space, Text } from 'ui'
+import { ChevronIcon, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
@@ -76,20 +76,20 @@ export const DateInput = (props: Props) => {
   )
 }
 
-const InputWrapper = styled(motion(Space))(({ theme }) => ({
+const InputWrapper = styled(motion(Space))({
   backgroundColor: theme.colors.gray100,
   padding: theme.space.md,
   borderRadius: theme.radius.sm,
   width: '100%',
-}))
+})
 
-const CheckboxHeader = styled.div(({ theme }) => ({
+const CheckboxHeader = styled.div({
   position: 'relative',
   display: 'flex',
   gap: theme.space.sm,
   justifyContent: 'space-between',
   alignItems: 'center',
-}))
+})
 
 const StyledLabel = styled.label({
   overflow: 'hidden',
@@ -113,7 +113,7 @@ const IconWrapper = styled.div({
   justifyContent: 'center',
 })
 
-const StyledInput = styled.input(({ theme }) => ({
+const StyledInput = styled.input({
   fontFamily: theme.fonts.body,
   fontSize: theme.fontSizes.md,
   cursor: 'pointer',
@@ -128,4 +128,4 @@ const StyledInput = styled.input(({ theme }) => ({
     textAlign: 'right',
     paddingRight: theme.space.xxs,
   },
-}))
+})

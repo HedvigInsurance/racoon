@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, CrossIcon, Space, Text } from 'ui'
+import { Button, CrossIcon, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -258,7 +258,7 @@ const Centered = styled.div({
   justifyContent: 'center',
 })
 
-const TextButton = styled.button(({ theme }) => ({
+const TextButton = styled.button({
   cursor: 'pointer',
 
   backgroundColor: theme.colors.light,
@@ -266,7 +266,7 @@ const TextButton = styled.button(({ theme }) => ({
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
   },
-}))
+})
 
 const SubmitButton = ({ loading }: { loading: boolean }) => {
   const { t } = useTranslation('purchase-form')
@@ -280,16 +280,16 @@ const SubmitButton = ({ loading }: { loading: boolean }) => {
   )
 }
 
-const Separator = styled.div(({ theme }) => ({
+const Separator = styled.div({
   width: 1,
   backgroundColor: theme.colors.gray600,
   margin: `0 ${theme.space[3]}`,
   alignSelf: 'stretch',
-}))
+})
 
-const StyledCrossIcon = styled(CrossIcon)(({ theme }) => ({
+const StyledCrossIcon = styled(CrossIcon)({
   marginRight: theme.space[1],
-}))
+})
 
 type GetCancellationOptionParams = {
   priceIntent: PriceIntent

@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useRef, useState } from 'react'
-import { Button, Heading, mq, Space, Text, useBreakpoint } from 'ui'
+import { Button, Heading, mq, Space, Text, theme, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -351,23 +351,23 @@ const PriceLoader = () => {
   )
 }
 
-const PriceLoaderWrapper = styled.div(({ theme }) => ({
+const PriceLoaderWrapper = styled.div({
   paddingTop: theme.space[7],
-}))
+})
 
-const Bar = styled.div(({ theme }) => ({
+const Bar = styled.div({
   height: theme.space[1],
   maxWidth: '16rem',
   marginInline: 'auto',
   backgroundColor: theme.colors.gray500,
   borderRadius: theme.radius.xs,
-}))
+})
 
-const ProgressBar = styled(motion.div)(({ theme }) => ({
+const ProgressBar = styled(motion.div)({
   height: '100%',
   backgroundColor: theme.colors.gray1000,
   borderRadius: theme.radius.xs,
-}))
+})
 
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
@@ -393,21 +393,21 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   )
 }
 
-const PurchaseFormTop = styled.div(({ theme }) => ({
+const PurchaseFormTop = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '4.5rem',
   paddingBlock: '9vh',
   paddingInline: theme.space.md,
-}))
+})
 
-const StickyButtonWrapper = styled.div(({ theme }) => ({
+const StickyButtonWrapper = styled.div({
   paddingInline: theme.space[4],
   [mq.lg]: {
     display: 'none',
   },
-}))
+})
 
 const SectionWrapper = styled.div({
   width: '100%',

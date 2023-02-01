@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { motion, useScroll } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
 export type ScrollPastProps = {
@@ -35,10 +36,10 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
   )
 }
 
-const StyledWrapper = styled(motion.div)(({ theme }) => ({
+const StyledWrapper = styled(motion.div)({
   position: 'fixed',
   bottom: theme.space[4],
   left: 0,
   right: 0,
   zIndex: zIndexes.scrollPast,
-}))
+})

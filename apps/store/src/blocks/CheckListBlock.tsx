@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { SbBlokData, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
+import { theme } from 'ui'
 import { TextBlock, TextBlockProps } from '@/blocks/TextBlock'
 import * as CheckList from '@/components/CheckList/CheckList'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -31,7 +32,7 @@ const isTextBlock = (blok: SbBlokData): blok is TextBlockProps['blok'] => {
   return blok.component === TextBlock.blockName
 }
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-}))
+})

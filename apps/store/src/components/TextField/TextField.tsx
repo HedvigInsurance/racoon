@@ -76,7 +76,7 @@ const LargeWrapper = styled(motion.div)({
   },
 })
 
-const Label = styled.label(({ theme }) => ({
+const Label = styled.label({
   position: 'absolute',
   left: 0,
   right: 0,
@@ -103,7 +103,7 @@ const Label = styled.label(({ theme }) => ({
     // TODO: use theme color: amber text
     color: '#8A4C0F',
   },
-}))
+})
 
 const LargeInput = styled.input({
   width: '100%',

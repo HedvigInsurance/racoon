@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { theme } from 'ui'
 
 const HEIGHT = '20rem'
 
@@ -8,7 +9,7 @@ export type StatisticProps = {
   label: string
 }
 
-export const Root = styled.div(({ theme }) => ({
+export const Root = styled.div({
   padding: theme.space[5],
   borderRadius: theme.radius.lg,
   backgroundColor: theme.colors.gray200,
@@ -23,18 +24,18 @@ export const Root = styled.div(({ theme }) => ({
     'description'
     'value'
   `,
-}))
+})
 
-export const Description = styled.p(({ theme }) => ({
+export const Description = styled.p({
   gridArea: 'description',
 
   fontSize: theme.fontSizes[3],
-}))
+})
 
-export const Value = styled.p(({ theme }) => ({
+export const Value = styled.p({
   gridArea: 'value',
   alignSelf: 'flex-end',
 
   color: theme.colors.black,
   fontSize: theme.fontSizes[6],
-}))
+})

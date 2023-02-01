@@ -73,14 +73,14 @@ const ContentWrapper = styled.div({
   marginInline: theme.space.xs,
 })
 
-const Title = styled.p(({ theme }) => ({
+const Title = styled.p({
   fontSize: theme.fontSizes.md,
-}))
+})
 
-const Subtitle = styled.p(({ theme }) => ({
+const Subtitle = styled.p({
   fontSize: theme.fontSizes.md,
   color: theme.colors.gray600,
-}))
+})
 
 const CallToAction = styled.div({
   display: 'flex',

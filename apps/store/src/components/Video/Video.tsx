@@ -173,7 +173,7 @@ const StyledVideo = styled.video(
   }),
 )
 
-const VideoControls = styled.div(({ theme }) => ({
+const VideoControls = styled.div({
   cursor: 'pointer',
   position: 'absolute',
   inset: 0,
@@ -188,7 +188,7 @@ const VideoControls = styled.div(({ theme }) => ({
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
   },
-}))
+})
 
 const Controls = styled.div({
   opacity: 0,
@@ -199,8 +199,8 @@ const Controls = styled.div({
   },
 })
 
-const PlayPauseButton = styled(Button)(({ theme }) => ({
+const PlayPauseButton = styled(Button)({
   display: 'inline-flex',
   alignItems: 'center',
   gap: theme.space[2],
-}))
+})
