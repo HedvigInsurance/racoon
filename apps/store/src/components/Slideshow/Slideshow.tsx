@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { mq, Space } from 'ui'
+import { mq, Space, theme } from 'ui'
 
 type Alignment = 'left' | 'center' | 'right'
 
@@ -23,14 +23,14 @@ export const Slideshow = ({ children, title, alignment = 'left' }: SlideshowProp
   )
 }
 
-const Title = styled.h2(({ theme }) => ({
+const Title = styled.h2({
   fontSize: theme.fontSizes[2],
   color: theme.colors.gray600,
   textTransform: 'uppercase',
   textAlign: 'center',
-}))
+})
 
-const ScollableContainer = styled.div<{ alignment: Alignment }>(({ theme, alignment }) => ({
+const ScollableContainer = styled.div<{ alignment: Alignment }>(({ alignment }) => ({
   display: 'flex',
   gap: theme.space[2],
   paddingInline: theme.space[2],
@@ -47,8 +47,8 @@ const ScrollableItem = styled.div({
   scrollSnapAlign: 'center',
 })
 
-const getAligmentStyles = (aligment: Alignment) => {
-  switch (aligment) {
+const getAligmentStyles = (alignment: Alignment) => {
+  switch (alignment) {
     case 'left':
       return {
         justifyContent: 'flex-start',
