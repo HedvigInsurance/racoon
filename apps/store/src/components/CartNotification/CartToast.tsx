@@ -2,9 +2,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Space, Dialog, mq } from 'ui'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderStyles'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
