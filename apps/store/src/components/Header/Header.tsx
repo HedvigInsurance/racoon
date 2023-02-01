@@ -15,12 +15,12 @@ export const Wrapper = styled.header({
   padding: ` 0 ${theme.space.md}`,
   position: 'sticky',
   zIndex: zIndexes.header,
+  top: 0,
+  backgroundColor: theme.colors.light,
 
   [mq.lg]: {
     flexDirection: 'row',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    backgroundColor: theme.colors.light,
-    top: 0,
   },
 })
 

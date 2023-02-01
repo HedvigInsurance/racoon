@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Heading, Space, Dialog, CrossIcon } from 'ui'
+import { Space, Dialog, mq } from 'ui'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
@@ -33,20 +34,13 @@ type Props = ProductItemProps & {
   onClose: () => void
 }
 
-export const CartNotificationContent = ({ name, price, onClose }: Props) => {
+export const CartNotificationContent = ({ name, price, startDate, onClose }: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
     <DialogContent onClose={onClose}>
       <DialogContentWrapper>
-        <TopRightCloseButton>
-          <CrossIcon size="1rem" />
-        </TopRightCloseButton>
-        <Heading as="h2" variant="standard.24">
-          {t('CART_TOAST_HEADING')}
-        </Heading>
-        <ProductItem name={name} price={price} />
-
+        <ProductItem name={name} price={price} startDate={startDate} />
         <Space y={0.5}>
           <ButtonNextLink href={PageLink.cart()} variant="primary">
             {t('CART_TOAST_CART_LINK')}
@@ -61,9 +55,14 @@ export const CartNotificationContent = ({ name, price, onClose }: Props) => {
   )
 }
 
-const DialogContent = styled(Dialog.Content)(({ theme }) => ({
-  padding: theme.space.xs,
-}))
+const DialogContent = styled(Dialog.Content)({
+  marginTop: MENU_BAR_HEIGHT_MOBILE,
+  [mq.lg]: {
+    marginTop: MENU_BAR_HEIGHT_DESKTOP,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+})
 
 const DialogContentWrapper = styled.div(({ theme }) => ({
   position: 'relative',
@@ -75,20 +74,14 @@ const DialogContentWrapper = styled.div(({ theme }) => ({
   paddingTop: theme.space.lg,
   paddingBottom: theme.space.xs,
 
-  borderRadius: theme.radius.sm,
+  borderBottomLeftRadius: theme.radius.md,
+  borderBottomRightRadius: theme.radius.md,
+
   backgroundColor: theme.colors.light,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-}))
-
-const TopRightCloseButton = styled(Dialog.Close)(({ theme }) => ({
-  position: 'absolute',
-  top: theme.space.md,
-  right: theme.space.md,
-  cursor: 'pointer',
-
-  backgroundColor: theme.colors.light,
-  ':focus-visible': {
-    borderRadius: theme.radius.xs,
-    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+  [mq.lg]: {
+    margin: `${theme.space.xs} ${theme.space.md} 0 0`,
+    borderRadius: theme.radius.md,
+    maxWidth: '28rem',
   },
 }))
