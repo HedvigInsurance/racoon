@@ -3,8 +3,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { mq, theme } from 'ui'
 
 export const MENU_BAR_HEIGHT_MOBILE = '3rem'
-
-export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
+export const MENU_BAR_HEIGHT_DESKTOP = '4rem'
 
 export const focusableStyles = {
   cursor: 'pointer',
@@ -16,6 +15,7 @@ export const focusableStyles = {
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
   backgroundColor: theme.colors.light,
   fontSize: theme.fontSizes.xl,
+
   [mq.lg]: {
     fontSize: theme.fontSizes.sm,
     top: 0,
@@ -23,23 +23,34 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 })
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)({
-  padding: `${theme.space.lg} 0`,
   ':not(:last-child)': {
     borderBottom: `1px solid ${theme.colors.borderOpaque}`,
   },
+
+  [mq.lg]: { '&&': { borderBottom: 'unset' } },
+})
+
+export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+  paddingBlock: theme.space.lg,
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xs,
+  ...focusableStyles,
+
   [mq.lg]: {
-    display: 'flex',
-    padding: `${theme.space.xs} ${theme.space.md}`,
-    ':not(:last-child)': {
-      borderBottom: 'none',
-    },
+    paddingBlock: theme.space.xs,
+    paddingInline: theme.space.md,
+
     borderRadius: theme.radius.sm,
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: theme.colors.gray100,
+        backgroundColor: theme.colors.grayTranslucent100,
       },
     },
-    justifyContent: 'center',
+
+    '&[data-state="open"]': {
+      backgroundColor: theme.colors.grayTranslucent100,
+    },
   },
 })
 
@@ -53,57 +64,30 @@ export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)(
     borderRadius: theme.radius.sm,
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: theme.colors.gray100,
+        backgroundColor: theme.colors.grayTranslucent100,
       },
     },
   },
 })
 
-export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)({
-  padding: `${theme.space.md} ${theme.space.md} `,
-
-  [mq.lg]: {
-    padding: `${theme.space.xs} ${theme.space.sm}`,
-    borderRadius: theme.radius.sm,
-    '@media (hover: hover)': {
-      '&:hover': {
-        backgroundColor: theme.colors.gray100,
-      },
-    },
-  },
-})
+export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)()
 
 export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)({
   [mq.lg]: {
     position: 'absolute',
-    top: MENU_BAR_HEIGHT_DESKTOP,
+    top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`,
+    left: '50%',
+    transform: 'translate(-50%, 0)',
   },
 })
 
 export const NavigationMenuListWrapper = styled.div({
   [mq.lg]: {
     backgroundColor: theme.colors.light,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
     borderRadius: theme.radius.sm,
-    padding: `${theme.space.md} ${theme.space.md}`,
-    marginTop: theme.space.xs,
+    padding: theme.space.md,
   },
-})
-
-export const navigationTriggerStyles = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-}
-
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space.xs,
-  ...focusableStyles,
 })
 
 export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
@@ -125,8 +109,6 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
 })
 
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
-  all: 'unset',
-  listStyle: 'none',
   display: 'block',
   paddingTop: theme.space.xl,
 
@@ -136,26 +118,16 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
 })
 
 export const ProductNavigationList = styled(NavigationMenuPrimitive.List)({
-  all: 'unset',
-  listStyle: 'none',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  gap: theme.space.xxs,
-  rowGap: theme.space.md,
-  fontSize: theme.fontSizes.sm,
-  paddingTop: theme.space.xl,
+  columnGap: theme.space.md,
+  rowGap: theme.space.lg,
+  fontSize: theme.fontSizes.md,
 
   [mq.lg]: {
-    padding: `${theme.space.md} 0`,
-  },
-})
-
-export const ButtonWrapper = styled.div({
-  width: '100%',
-  justifyContent: 'center',
-  alignItems: 'center',
-  paddingTop: theme.space.md,
-  [mq.lg]: {
-    paddingTop: 0,
+    columnGap: 0,
+    gridTemplateColumns: 'none',
+    gridAutoColumns: '7.5rem',
+    gridAutoFlow: 'column',
   },
 })

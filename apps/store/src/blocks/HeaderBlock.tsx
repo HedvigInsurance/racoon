@@ -1,8 +1,11 @@
+import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
+import { useTranslation } from 'next-i18next'
+import { Space } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
 import {
-  ButtonWrapper,
   NavigationMenuListWrapper,
   NavigationMenuPrimitiveContent,
   NavigationMenuPrimitiveItem,
@@ -25,7 +28,8 @@ import {
   filterByBlockType,
   getLinkFieldURL,
 } from '@/services/storyblok/Storyblok.helpers'
-import { ButtonBlock, ButtonBlockProps } from './ButtonBlock'
+import { PageLink } from '@/utils/PageLink'
+import { ButtonBlockProps } from './ButtonBlock'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string
@@ -87,40 +91,46 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
+  const { t } = useTranslation()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
-  const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationTrigger>{blok.name}</NavigationTrigger>
-      <NavigationMenuPrimitiveContent>
-        <NavigationMenuListWrapper>
-          <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-            <ProductNavigationList>
-              {filteredNavItems.map((nestedBlock) => (
-                <NavigationMenuProductItem
-                  key={nestedBlock._uid}
-                  value={nestedBlock.name}
-                  {...storyblokEditable(nestedBlock)}
-                >
-                  <ProductNavigationLink href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}>
-                    {nestedBlock.name}
-                  </ProductNavigationLink>
-                </NavigationMenuProductItem>
-              ))}
-            </ProductNavigationList>
-          </NavigationMenuPrimitive.Sub>
-          {buttonBlocks.map((nestedBlock) => (
-            <ButtonWrapper key={nestedBlock._uid}>
-              <ButtonBlock blok={nestedBlock} />
-            </ButtonWrapper>
-          ))}
-        </NavigationMenuListWrapper>
-      </NavigationMenuPrimitiveContent>
+      <Space y={{ base: 1.5, lg: 0 }}>
+        <NavigationTrigger>{blok.name}</NavigationTrigger>
+        <NavigationMenuPrimitiveContent>
+          <NavigationMenuListWrapper>
+            <Space y={{ base: 1.5, lg: 1 }}>
+              <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+                <ProductNavigationList>
+                  {filteredNavItems.map((nestedBlock) => (
+                    <NavigationMenuProductItem
+                      key={nestedBlock._uid}
+                      value={nestedBlock.name}
+                      {...storyblokEditable(nestedBlock)}
+                    >
+                      <ProductNavigationLink
+                        href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
+                      >
+                        {nestedBlock.name}
+                      </ProductNavigationLink>
+                    </NavigationMenuProductItem>
+                  ))}
+                </ProductNavigationList>
+              </NavigationMenuPrimitive.Sub>
+              <ButtonNextLinkFullWidth href={PageLink.store()} variant="secondary" size="medium">
+                {t('NAVIGATION_STORE_LINK')}
+              </ButtonNextLinkFullWidth>
+            </Space>
+          </NavigationMenuListWrapper>
+        </NavigationMenuPrimitiveContent>
+      </Space>
     </NavigationMenuPrimitiveItem>
   )
 }
 ProductNavContainerBlock.blockName = 'productNavContainer'
+
+const ButtonNextLinkFullWidth = styled(ButtonNextLink)({ width: '100%' })
 
 const NestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
