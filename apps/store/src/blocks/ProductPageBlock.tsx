@@ -14,6 +14,8 @@ import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
 
+type PageSection = 'overview' | 'coverage'
+
 type SEOData = {
   robots: 'index' | 'noindex'
   seoMetaTitle?: string
@@ -33,7 +35,7 @@ type ProductPageBlockProps = SbBaseBlockProps<
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
-  const [activeSection, setActiveSection] = useState('overview')
+  const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
   const shouldRenderVariantSelector =
     activeSection === 'coverage' && productData.variants.length > 1
@@ -63,7 +65,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
             <RadixTabs.Tabs
               value={activeSection}
               onValueChange={(value) => {
-                setActiveSection(value)
+                setActiveSection(value as PageSection)
                 window?.scrollTo({ top: 0 })
               }}
             >
@@ -91,45 +93,48 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </MobileLayout>
 
         <DesktopLayout>
-          <Content>
-            <ContentNavigation aria-label="content">
-              <ContentNavigationList>
-                <li>
-                  <ContentNavigationTrigger
-                    href="#overview"
-                    onClick={() => setActiveSection('overview')}
-                    data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-                  >
-                    {blok.overviewLabel}
-                  </ContentNavigationTrigger>
-                </li>
-                <li>
-                  <ContentNavigationTrigger
-                    href="#coverage"
-                    onClick={() => setActiveSection('coverage')}
-                    data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
-                  >
-                    {blok.coverageLabel}
-                  </ContentNavigationTrigger>
-                </li>
-              </ContentNavigationList>
-            </ContentNavigation>
-
-            <OverviewSection>
-              <PageContentSentinel id="overview" aria-hidden="true" />
-              {blok.overview?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </OverviewSection>
+          <>
+            <Grid>
+              <Content>
+                <ContentNavigation aria-label="page content">
+                  <ContentNavigationList>
+                    <li>
+                      <ContentNavigationTrigger
+                        href="#overview"
+                        onClick={() => setActiveSection('overview')}
+                        data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                      >
+                        {blok.overviewLabel}
+                      </ContentNavigationTrigger>
+                    </li>
+                    <li>
+                      <ContentNavigationTrigger
+                        href="#coverage"
+                        onClick={() => setActiveSection('coverage')}
+                        data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                      >
+                        {blok.coverageLabel}
+                      </ContentNavigationTrigger>
+                    </li>
+                  </ContentNavigationList>
+                </ContentNavigation>
+                <OverviewSection>
+                  <PageContentSentinel id="overview" aria-hidden="true" />
+                  {blok.overview?.map((nestedBlock) => (
+                    <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                  ))}
+                </OverviewSection>
+              </Content>
+              <PurchaseFormWrapper>
+                <PurchaseForm />
+              </PurchaseFormWrapper>
+            </Grid>
 
             <PageContentSentinel id="coverage" aria-hidden="true" />
             {blok.coverage?.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
-          </Content>
-          <PurchaseFormWrapper>
-            <PurchaseForm />
-          </PurchaseFormWrapper>
+          </>
         </DesktopLayout>
 
         {blok.body.map((nestedBlock) => (
@@ -150,7 +155,7 @@ const sharedListStyles: CSSObject = {
 
 const sharedStickyStyles: CSSObject = {
   position: 'sticky',
-  top: theme.space.sm,
+  top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_MOBILE})`,
   zIndex: zIndexes.tabs,
 
   [mq.md]: {
@@ -174,15 +179,15 @@ const sharedTriggerStyles: CSSObject = {
   fontSize: theme.fontSizes.md,
   lineHeight: theme.fontSizes.xl,
   color: theme.colors.dark,
-  backgroundColor: 'rgba(242, 242, 242, 0.6)',
+  backgroundColor: theme.colors.grayTranslucent100,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
   backdropFilter: 'blur(20px)',
   borderRadius: theme.radius.sm,
 
   '&[data-state=active]': {
-    paddingInline: '3.75rem',
+    paddingInline: theme.space.xxxl,
     color: theme.colors.dark,
-    backgroundColor: 'rgba(205, 205, 205, 0.6)',
+    backgroundColor: theme.colors.grayTranslucent400,
   },
 
   '&:focus-visible': {
@@ -221,15 +226,14 @@ const MobileLayout = styled.div({
 const DesktopLayout = styled.div({
   display: 'none',
   [mq.lg]: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    alignItems: 'flex-start',
+    display: 'block',
   },
 })
 
-const StyledProductVariantSelector = styled(ProductVariantSelector)({
-  minWidth: '12.5rem',
-  width: 'fit-content',
+const Grid = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  alignItems: 'flex-start',
 })
 
 const Content = styled.div({
@@ -264,9 +268,9 @@ const PageContentSentinel = styled.div({
   '::before': {
     content: '""',
     display: 'block',
-    // Add some 'padding top' that matches menu bar height while scrolling
+    // Workaround: Add some 'padding top' that matches menu bar height while scrolling
     // until an element gets into viewport. Another alternative would be to
-    // use 'scroll-padding-top' property. However I would to touch global styles
+    // use 'scroll-padding-top' property. However that would required thouching global styles
     // that are defined into 'package/ui': html { scroll-padding-top: <menu-height> }
     height: MENU_BAR_HEIGHT_MOBILE,
     marginTop: `-${MENU_BAR_HEIGHT_MOBILE}`,
@@ -276,4 +280,9 @@ const PageContentSentinel = styled.div({
       marginTop: `-${MENU_BAR_HEIGHT_DESKTOP}`,
     },
   },
+})
+
+const StyledProductVariantSelector = styled(ProductVariantSelector)({
+  minWidth: '12.5rem',
+  width: 'fit-content',
 })
