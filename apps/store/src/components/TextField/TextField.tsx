@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
@@ -51,6 +52,19 @@ export const TextField = (props: Props) => {
   )
 }
 
+const warningAnimation = keyframes({
+  '0%': {
+    backgroundColor: theme.colors.amber100,
+    borderColor: theme.colors.amber300,
+    color: theme.colors.amberText,
+  },
+  '100%': {
+    backgroundColor: theme.colors.gray100,
+    borderColor: 'transparent',
+    color: theme.colors.textPrimary,
+  },
+})
+
 const LargeWrapper = styled(motion.div)({
   position: 'relative',
   display: 'flex',
@@ -68,11 +82,9 @@ const LargeWrapper = styled(motion.div)({
     },
   },
 
+  border: '1px solid transparent',
   '&[data-warning=true]': {
-    // TODO: use theme color: amber fill 1
-    backgroundColor: '#FBEDC5',
-    // TODO: use theme color: amber fill 3
-    border: '1px solid #F5E0A3',
+    animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
   },
 })
 
@@ -98,11 +110,6 @@ const Label = styled.label({
   '&[data-disabled=true]': {
     color: theme.colors.textDisabled,
   },
-
-  '[data-warning=true] &': {
-    // TODO: use theme color: amber text
-    color: '#8A4C0F',
-  },
 })
 
 const LargeInput = styled.input({
@@ -119,23 +126,11 @@ const LargeInput = styled.input({
     WebkitTextFillColor: theme.colors.textDisabled,
     opacity: 1,
   },
-
-  '[data-warning=true] &': {
-    // TODO: use theme color: amber text
-    color: '#8A4C0F',
-  },
 })
 
 type BaseProps = { children: React.ReactNode }
 
-const StyledLargeSuffix = styled(Text)({
-  paddingRight: theme.space.md,
-
-  '[data-warning=true] &': {
-    // TODO: use theme color: amber text
-    color: '#8A4C0F',
-  },
-})
+const StyledLargeSuffix = styled(Text)({ paddingRight: theme.space.md })
 
 const LargeSuffix = (props: BaseProps) => (
   <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
@@ -158,10 +153,4 @@ const SmallSuffix = (props: BaseProps) => (
   <StyledSmallSuffix as="span" size="lg" color="textSecondary" {...props} />
 )
 
-const MessageText = styled(Text)({
-  paddingLeft: theme.space.md,
-  '[data-warning=true] ~ &': {
-    // TODO: use theme color: amber text
-    color: '#8A4C0F',
-  },
-})
+const MessageText = styled(Text)({ paddingLeft: theme.space.md })
