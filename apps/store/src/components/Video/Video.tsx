@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useCallback, useRef, useState } from 'react'
 import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
+import { useDialogEvent } from '@/utils/dialogEvent'
 
 enum State {
   Playing = 'playing',
@@ -51,13 +52,23 @@ export const Video = ({
 
   const autoplayAttributes = delegated.autoPlay ? autoplaySettings : {}
 
+  const playVideo = useCallback(() => {
+    videoRef.current?.play()
+    setState(State.Playing)
+  }, [])
+
+  const pauseVideo = useCallback(() => {
+    videoRef.current?.pause()
+    setState(State.Paused)
+  }, [])
+
   const togglePlay = useCallback(() => {
     if (state === State.Paused) {
-      videoRef.current?.play()
+      playVideo()
     } else {
-      videoRef.current?.pause()
+      pauseVideo()
     }
-  }, [state])
+  }, [state, playVideo, pauseVideo])
 
   const handlePlaying: React.ReactEventHandler<HTMLVideoElement> = useCallback(
     (event) => {
@@ -74,6 +85,20 @@ export const Video = ({
     },
     [setState, onPause],
   )
+
+  const handleDialogOpen = useCallback(() => {
+    if (state === State.Playing) {
+      pauseVideo()
+    }
+  }, [state, pauseVideo])
+  useDialogEvent('open', handleDialogOpen)
+
+  const handleDialogClose = useCallback(() => {
+    if (state === State.Paused) {
+      playVideo()
+    }
+  }, [state, playVideo])
+  useDialogEvent('close', handleDialogClose)
 
   return (
     <VideoWrapper>
