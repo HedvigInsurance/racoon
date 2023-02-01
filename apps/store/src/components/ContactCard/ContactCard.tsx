@@ -27,8 +27,6 @@ const Card = styled.div({
 const Icon = styled.div({
   display: 'grid',
   placeItems: 'center',
-  width: '5rem',
-  height: '5rem',
 })
 
 type Props = {
