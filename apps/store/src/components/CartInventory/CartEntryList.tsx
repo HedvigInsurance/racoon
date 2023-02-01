@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
-import { Separate } from 'ui'
+import { Separate, theme } from 'ui'
 
 type Props = { children: ReactNode }
 
@@ -18,9 +18,9 @@ const StyledCartEntryList = styled(Separate)({
   width: '100%',
 })
 
-const HorizontalLineWithSpace = styled.hr(({ theme }) => ({
+const HorizontalLineWithSpace = styled.hr({
   backgroundColor: theme.colors.gray300,
   height: 1,
   marginTop: theme.space.lg,
   marginBottom: theme.space.lg,
-}))
+})

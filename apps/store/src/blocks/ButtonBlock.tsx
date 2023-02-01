@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ComponentProps } from 'react'
-import { Button } from 'ui'
+import { Button, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -28,9 +28,9 @@ export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
 }
 ButtonBlock.blockName = 'button'
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   paddingLeft: theme.space[4],
   paddingRight: theme.space[4],
-}))
+})

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { Space } from 'ui'
+import { Space, theme } from 'ui'
 import { Button } from '@/components/Button/Button'
 import { FixedFooter } from '@/components/FixedFooter'
 import { useForm } from '@/hooks/useForm'
@@ -10,10 +10,10 @@ import { FORMS_PER_MARKET, MARKETS, PageInput, PAGE_WIDTH } from './DebuggerPage
 import { DynamicInput } from './DynamicInput'
 import { InputSelect } from './InputSelect'
 
-const PageWrapper = styled.div(({ theme }) => ({
+const PageWrapper = styled.div({
   backgroundColor: theme.colors.gray200,
   minHeight: '100vh',
-}))
+})
 
 const Content = styled.div(() => ({
   maxWidth: PAGE_WIDTH,
@@ -22,16 +22,16 @@ const Content = styled.div(() => ({
   paddingBottom: `calc(${FixedFooter.HEIGHT} + 1rem)`,
 }))
 
-const InputGroup = styled.div(({ theme }) => ({
+const InputGroup = styled.div({
   backgroundColor: theme.colors.gray100,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
   padding: '1rem',
   borderRadius: '0.75rem',
-}))
+})
 
-const ErrorText = styled.p(({ theme }) => ({
+const ErrorText = styled.p({
   color: theme.colors.red600,
-}))
+})
 
 export const DebuggerPage = () => {
   const pageForm = useForm({ action: PageLink.debuggerFormApi() })

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, Space, Dialog, Text } from 'ui'
+import { Button, Heading, Space, Dialog, Text, theme } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
@@ -174,28 +174,28 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
   }
 }
 
-const Card = styled(Space)(({ theme }) => ({
+const Card = styled(Space)({
   padding: `${theme.space[3]} ${theme.space[4]}`,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray300,
-}))
+})
 
-const DialogContent = styled(Dialog.Content)(({ theme }) => ({
+const DialogContent = styled(Dialog.Content)({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   padding: theme.space[2],
-}))
+})
 
-const DialogContentWrapper = styled(Dialog.Window)(({ theme }) => ({
+const DialogContentWrapper = styled(Dialog.Window)({
   marginRight: theme.space[3],
   marginLeft: theme.space[3],
   padding: theme.space[4],
   borderRadius: 8,
   width: '100%',
   maxWidth: '32rem',
-}))
+})
 
 const Preview = styled.li({
   display: 'flex',

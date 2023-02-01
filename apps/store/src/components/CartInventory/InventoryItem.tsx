@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
+import { theme } from 'ui'
 
-export const Root = styled.div(({ theme }) => ({
+export const Root = styled.div({
   display: 'grid',
   columnGap: theme.space[4],
   rowGap: theme.space[1],
@@ -11,13 +12,13 @@ export const Root = styled.div(({ theme }) => ({
     'left  main'
     'empty bottom'
   `,
-}))
+})
 
 export const Left = styled.div({
   gridArea: 'left',
 })
 
-export const Main = styled.div(({ theme }) => ({
+export const Main = styled.div({
   gridArea: 'main',
 
   display: 'grid',
@@ -29,7 +30,7 @@ export const Main = styled.div(({ theme }) => ({
     'main-left   main-right'
     'main-bottom main-bottom'
   `,
-}))
+})
 
 export const MainLeft = styled.div({
   gridArea: 'main-left',

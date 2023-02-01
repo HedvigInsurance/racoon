@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { mq } from 'ui'
+import { mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
@@ -36,9 +36,9 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
 }
 VideoBlock.blockName = 'videoBlock'
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   paddingInline: theme.space[2],
   [mq.lg]: {
     paddingInline: theme.space[4],
   },
-}))
+})

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
+import { theme } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
@@ -22,9 +23,9 @@ const Wrapper = styled.div({
   lineHeight: 0,
 })
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link)({
   display: 'inline-block',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },
-}))
+})

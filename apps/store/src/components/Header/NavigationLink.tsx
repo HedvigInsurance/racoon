@@ -12,7 +12,7 @@ const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
   ...focusableStyles,
 })
 
-const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
+const ProductNavigationLinkCard = styled(Space)({
   ...focusableStyles,
   display: 'flex',
   placeItems: 'center',
@@ -28,7 +28,7 @@ const ProductNavigationLinkCard = styled(Space)(({ theme }) => ({
       },
     },
   },
-}))
+})
 
 const StyledPillow = styled(Pillow)({
   height: '6rem',

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Heading, Space } from 'ui'
+import { Heading, Space, theme } from 'ui'
 
 type Props = {
   children: React.ReactNode
@@ -24,17 +24,17 @@ export const CheckoutPaymentPage = ({ children, Header }: Props) => {
   )
 }
 
-const HeaderWrapper = styled.header(({ theme }) => ({
+const HeaderWrapper = styled.header({
   padding: theme.space[3],
-}))
+})
 
-const PageHeader = styled.header(({ theme }) => ({
+const PageHeader = styled.header({
   display: 'flex',
   justifyContent: 'center',
   paddingLeft: theme.space[3],
   paddingRight: theme.space[3],
-}))
+})
 
-const Main = styled.main(({ theme }) => ({
+const Main = styled.main({
   padding: theme.space[3],
-}))
+})

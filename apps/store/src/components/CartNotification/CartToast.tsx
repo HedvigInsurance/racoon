@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, Dialog, mq } from 'ui'
+import { Heading, Space, Dialog, CrossIcon, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
@@ -64,7 +64,7 @@ const DialogContent = styled(Dialog.Content)({
   },
 })
 
-const DialogContentWrapper = styled.div(({ theme }) => ({
+const DialogContentWrapper = styled.div({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -74,8 +74,18 @@ const DialogContentWrapper = styled.div(({ theme }) => ({
   paddingTop: theme.space.lg,
   paddingBottom: theme.space.xs,
 
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.light,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+})
   borderBottomLeftRadius: theme.radius.md,
   borderBottomRightRadius: theme.radius.md,
+
+const TopRightCloseButton = styled(Dialog.Close)({
+  position: 'absolute',
+  top: theme.space.md,
+  right: theme.space.md,
+  cursor: 'pointer',
 
   backgroundColor: theme.colors.light,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
@@ -84,4 +94,4 @@ const DialogContentWrapper = styled.div(({ theme }) => ({
     borderRadius: theme.radius.md,
     maxWidth: '28rem',
   },
-}))
+})

@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Space } from 'ui'
+import { Space, theme } from 'ui'
 import { LinkButton } from '@/components/Button/Button'
 import { useCurrentLocale } from '@/lib/l10n'
 import { PageLink } from '@/lib/PageLink'
@@ -25,10 +25,10 @@ const Wrapper = styled(Space)({
   alignItems: 'center',
 })
 
-const Paragraph = styled.p(({ theme }) => ({
+const Paragraph = styled.p({
   textAlign: 'center',
   color: theme.colors.gray700,
-}))
+})
 
 export const ForeverCodeReadyPage = () => {
   const { t } = useTranslation()

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
+import { theme } from 'ui'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -25,7 +26,7 @@ export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
 }
 ProductSlideshowBlock.blockName = 'productSlideshow'
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div({
   paddingLeft: theme.space[3],
   paddingRight: theme.space[3],
-}))
+})

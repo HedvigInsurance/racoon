@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Separate } from 'ui'
+import { Separate, theme } from 'ui'
 import { useCurrentMarket } from '@/lib/l10n'
 
 const FALLBACK_PATH = '/'
@@ -32,15 +32,15 @@ const Wrapper = styled(Separate)({
   height: '1.5rem',
 })
 
-const Separator = styled.div(({ theme }) => ({
+const Separator = styled.div({
   width: 1,
   height: '100%',
   backgroundColor: theme.colors.gray700,
   marginLeft: '0.5rem',
   marginRight: '0.5rem',
-}))
+})
 
-const StyledLink = styled(Link)<{ active: boolean }>(({ active, theme }) => ({
+const StyledLink = styled(Link)<{ active: boolean }>(({ active }) => ({
   textDecoration: 'none',
   '&:hover': {
     color: theme.colors.gray900,

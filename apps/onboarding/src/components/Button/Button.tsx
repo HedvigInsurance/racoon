@@ -4,7 +4,7 @@ import { ElementType, forwardRef } from 'react'
 import { ReactNode } from 'react'
 import { getMargins, Margins } from 'ui/src/lib/margins'
 import { getPaddings, Paddings } from 'ui/src/lib/paddings'
-import { getColor } from 'ui'
+import { getColor, theme } from 'ui'
 
 export type ButtonVariant = 'filled' | 'outlined' | 'text'
 export type ButtonSize = 'sm' | 'lg'
@@ -57,7 +57,7 @@ const paddingsForSize: Record<ButtonSize, string> = {
 }
 
 const ButtonElement = styled(UnstyledButton)<ButtonProps>(
-  ({ theme, variant = 'filled', fullWidth, color, size = 'lg', ...props }) => ({
+  ({ variant = 'filled', fullWidth, color, size = 'lg', ...props }) => ({
     width: fullWidth ? '100%' : 'auto',
     padding: paddingsForSize[size],
     lineHeight: size === 'lg' ? '1.5rem' : '1rem',
