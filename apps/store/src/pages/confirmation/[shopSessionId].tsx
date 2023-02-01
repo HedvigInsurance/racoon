@@ -2,6 +2,10 @@ import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
+import {
+  fetchGlobalProductMetadata,
+  GLOBAL_PRODUCT_METADATA_PROP_NAME,
+} from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -27,11 +31,12 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = initializeApollo({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  const [shopSession, translations, globalStory, story] = await Promise.all([
+  const [shopSession, translations, globalStory, story, productMetadata] = await Promise.all([
     shopSessionService.fetchById(shopSessionId),
     serverSideTranslations(locale),
     getGlobalStory({ locale }),
     getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
+    fetchGlobalProductMetadata({ apolloClient }),
   ])
 
   // @TODO: uncomment after implementing signing
@@ -44,6 +49,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       ...translations,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       [GLOBAL_STORY_PROP_NAME]: globalStory,
+      [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
       platform: getMobilePlatform(req.headers['user-agent'] ?? ''),

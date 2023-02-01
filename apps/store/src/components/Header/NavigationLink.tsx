@@ -40,7 +40,9 @@ const StyledPillow = styled(Pillow)({
 })
 
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
-  Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'>
+  Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'> & {
+    pillowImageSrc?: string
+  }
 
 export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
   return (
@@ -68,11 +70,11 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   },
 })
 
-export const ProductNavigationLink = ({ href, children }: NavigationLinkProps) => {
+export const ProductNavigationLink = ({ href, children, pillowImageSrc }: NavigationLinkProps) => {
   return (
     <Link href={href}>
       <ProductNavigationLinkCard y={0.75}>
-        <StyledPillow size="large" />
+        <StyledPillow size="large" src={pillowImageSrc} />
         <Text>{children}</Text>
       </ProductNavigationLinkCard>
     </Link>
