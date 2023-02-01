@@ -18,7 +18,7 @@ export const Row = styled.tr({})
 type CellProps = { align?: 'left' | 'right' | 'center' }
 
 export const Cell = styled.td<CellProps>(({ align = 'left' }) => ({
-  padding: theme.space[2],
+  padding: theme.space.xs,
   border: `1px solid ${theme.colors.gray500}`,
 
   textAlign: align,

@@ -33,6 +33,6 @@ const isTextBlock = (blok: SbBlokData): blok is TextBlockProps['blok'] => {
 }
 
 const Wrapper = styled.div({
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
 })

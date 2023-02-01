@@ -31,6 +31,6 @@ ButtonBlock.blockName = 'button'
 export const Wrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
 })

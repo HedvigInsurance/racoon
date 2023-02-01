@@ -64,9 +64,9 @@ export const ContactSupport = ({
 }
 
 const Main = styled.main({
-  padding: theme.space[4],
-  paddingTop: theme.space[5],
-  paddingBottom: theme.space[5],
+  padding: theme.space.md,
+  paddingTop: theme.space.lg,
+  paddingBottom: theme.space.lg,
   textAlign: 'center',
 })
 

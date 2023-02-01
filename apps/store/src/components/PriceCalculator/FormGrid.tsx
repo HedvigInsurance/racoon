@@ -7,7 +7,7 @@ import { SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 const Grid = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
-  gap: theme.space[1],
+  gap: theme.space.xxs,
 })
 
 type GridItemProps = { columnSpan: number }

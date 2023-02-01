@@ -24,7 +24,7 @@ export const Slideshow = ({ children, title, alignment = 'left' }: SlideshowProp
 }
 
 const Title = styled.h2({
-  fontSize: theme.fontSizes[2],
+  fontSize: theme.fontSizes.sm,
   color: theme.colors.gray600,
   textTransform: 'uppercase',
   textAlign: 'center',
@@ -32,13 +32,13 @@ const Title = styled.h2({
 
 const ScollableContainer = styled.div<{ alignment: Alignment }>(({ alignment }) => ({
   display: 'flex',
-  gap: theme.space[2],
-  paddingInline: theme.space[2],
-  paddingBottom: theme.space[4],
+  gap: theme.space.xs,
+  paddingInline: theme.space.xs,
+  paddingBottom: theme.space.md,
   scrollSnapType: 'x mandatory',
   overflowX: 'auto',
   [mq.md]: {
-    gap: theme.space[4],
+    gap: theme.space.md,
   },
   ...getAligmentStyles(alignment),
 }))

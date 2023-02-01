@@ -352,11 +352,11 @@ const PriceLoader = () => {
 }
 
 const PriceLoaderWrapper = styled.div({
-  paddingTop: theme.space[7],
+  paddingTop: theme.space.xxl,
 })
 
 const Bar = styled.div({
-  height: theme.space[1],
+  height: theme.space.xxs,
   maxWidth: '16rem',
   marginInline: 'auto',
   backgroundColor: theme.colors.gray500,
@@ -403,7 +403,7 @@ const PurchaseFormTop = styled.div({
 })
 
 const StickyButtonWrapper = styled.div({
-  paddingInline: theme.space[4],
+  paddingInline: theme.space.md,
   [mq.lg]: {
     display: 'none',
   },

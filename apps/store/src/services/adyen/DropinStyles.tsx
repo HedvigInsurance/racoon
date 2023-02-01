@@ -14,8 +14,8 @@ export const AdyenDropinStyles = styled.div({
   },
 
   '.adyen-checkout__payment-method__details': {
-    paddingLeft: theme.space[2],
-    paddingRight: theme.space[2],
+    paddingLeft: theme.space.xs,
+    paddingRight: theme.space.xs,
   },
 
   '.adyen-checkout__button': {

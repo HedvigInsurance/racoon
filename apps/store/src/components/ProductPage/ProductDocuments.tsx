@@ -37,8 +37,8 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
 }
 
 const ProductDocumentsWrapper = styled.div({
-  paddingInline: theme.space[4],
-  marginBlock: theme.space[4],
+  paddingInline: theme.space.md,
+  marginBlock: theme.space.md,
 
   [mq.lg]: {
     maxWidth: '32rem',

@@ -10,13 +10,13 @@ export type StatisticProps = {
 }
 
 export const Root = styled.div({
-  padding: theme.space[5],
+  padding: theme.space.lg,
   borderRadius: theme.radius.lg,
   backgroundColor: theme.colors.gray200,
   minHeight: HEIGHT,
 
   display: 'grid',
-  rowGap: theme.space[3],
+  rowGap: theme.space.sm,
   justifyItems: 'flex-start',
   gridTemplateRows: 'auto auto 1fr',
   gridTemplateAreas: `

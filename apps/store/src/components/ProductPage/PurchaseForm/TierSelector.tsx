@@ -45,9 +45,9 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: Props) 
 
 const StyledRadioGroup = styled(RadioGroup.Root)({
   display: 'flex',
-  gap: theme.space[2],
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  gap: theme.space.xs,
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
   scrollSnapType: 'x mandatory',
   overflowX: 'auto',
 })
@@ -59,7 +59,7 @@ const OfferItem = styled(RadioGroup.Item)({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr auto',
   gridTemplateRows: 'repeat(2, 1fr)',
-  gap: theme.space[2],
+  gap: theme.space.xs,
 
   padding: '1rem',
   borderWidth: 2,

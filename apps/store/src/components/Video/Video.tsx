@@ -179,7 +179,7 @@ const VideoControls = styled.div({
   inset: 0,
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.space[3],
+  padding: theme.space.sm,
   [`&[data-state="${State.Paused}"]`]: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -202,5 +202,5 @@ const Controls = styled.div({
 const PlayPauseButton = styled(Button)({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: theme.space[2],
+  gap: theme.space.xs,
 })

@@ -283,12 +283,12 @@ const SubmitButton = ({ loading }: { loading: boolean }) => {
 const Separator = styled.div({
   width: 1,
   backgroundColor: theme.colors.gray600,
-  margin: `0 ${theme.space[3]}`,
+  margin: `0 ${theme.space.sm}`,
   alignSelf: 'stretch',
 })
 
 const StyledCrossIcon = styled(CrossIcon)({
-  marginRight: theme.space[1],
+  marginRight: theme.space.xxs,
 })
 
 type GetCancellationOptionParams = {

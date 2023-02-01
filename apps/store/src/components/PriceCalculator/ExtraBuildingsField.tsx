@@ -175,7 +175,7 @@ const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBu
 }
 
 const Card = styled(Space)({
-  padding: `${theme.space[3]} ${theme.space[4]}`,
+  padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray300,
 })
@@ -185,13 +185,13 @@ const DialogContent = styled(Dialog.Content)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: theme.space[2],
+  padding: theme.space.xs,
 })
 
 const DialogContentWrapper = styled(Dialog.Window)({
-  marginRight: theme.space[3],
-  marginLeft: theme.space[3],
-  padding: theme.space[4],
+  marginRight: theme.space.sm,
+  marginLeft: theme.space.sm,
+  padding: theme.space.md,
   borderRadius: 8,
   width: '100%',
   maxWidth: '32rem',

@@ -38,7 +38,7 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
 
 const StyledWrapper = styled(motion.div)({
   position: 'fixed',
-  bottom: theme.space[4],
+  bottom: theme.space.md,
   left: 0,
   right: 0,
   zIndex: zIndexes.scrollPast,

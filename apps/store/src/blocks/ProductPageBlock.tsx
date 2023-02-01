@@ -180,6 +180,6 @@ const TabList = styled(Tabs.TabsList)({
 
 const TablistWrapper = styled.div({
   display: 'flex',
-  gap: theme.space[2],
+  gap: theme.space.xs,
   height: TABLIST_HEIGHT,
 })

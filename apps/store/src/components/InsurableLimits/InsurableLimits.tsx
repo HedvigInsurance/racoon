@@ -19,12 +19,12 @@ export const InsurableLimits = ({ children, className }: InsurableLimitsProps) =
 
 const Wrapper = styled.div({
   display: 'flex',
-  gap: theme.space[2],
+  gap: theme.space.xs,
   scrollSnapType: 'x mandatory',
   overflowX: 'auto',
 
   [mq.lg]: {
-    gap: theme.space[4],
+    gap: theme.space.md,
   },
 })
 

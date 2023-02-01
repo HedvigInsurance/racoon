@@ -52,10 +52,10 @@ const Image = styled(NextImage)({
 })
 
 const Title = styled.h1({
-  fontSize: theme.fontSizes[2],
+  fontSize: theme.fontSizes.sm,
 })
 
 const Subtitle = styled.p({
-  fontSize: theme.fontSizes[1],
+  fontSize: theme.fontSizes.xs,
   color: theme.colors.gray600,
 })
