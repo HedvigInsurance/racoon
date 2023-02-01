@@ -1,4 +1,5 @@
 import { CartCampaign, CartCost, CartEntry } from '@/components/CartInventory/CartInventory.types'
+import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 
 export type CheckoutPageProps = {
@@ -16,4 +17,5 @@ export type CheckoutPageProps = {
   ssn: string
   shouldCollectEmail: boolean
   shouldCollectName: boolean
+  checkoutSteps: Array<CheckoutStep>
 }

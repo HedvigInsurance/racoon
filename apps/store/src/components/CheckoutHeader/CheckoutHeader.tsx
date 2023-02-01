@@ -3,18 +3,18 @@ import type { ReactNode } from 'react'
 import { HedvigLogo, mq, theme } from 'ui'
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs'
 
-type Props = Pick<BreadcrumbsProps, 'activeStep'> & {
+type Props = BreadcrumbsProps & {
   children: ReactNode
 }
 
-export const CheckoutHeader = ({ children, activeStep }: Props) => {
+export const CheckoutHeader = ({ children, steps, activeStep }: Props) => {
   return (
     <Header>
       <HeaderLogo>
         <HedvigLogo width={78} />
       </HeaderLogo>
       <HeaderBreadcrumbs>
-        <Breadcrumbs activeStep={activeStep} />
+        <Breadcrumbs steps={steps} activeStep={activeStep} />
       </HeaderBreadcrumbs>
       <HeaderBack>
         <HeaderLink>{children}</HeaderLink>

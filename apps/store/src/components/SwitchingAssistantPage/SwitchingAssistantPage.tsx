@@ -3,18 +3,21 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
 export type SwitchingAssistantPageProps = {
+  checkoutSteps: Array<CheckoutStep>
   entries: Array<CancellableEntry>
   shopSessionId: string
 }
 type CancellableEntry = { key: string; name: string; company: string; url: string; date: string }
 
-export const SwitchingAssistantPage = ({ entries, shopSessionId }: SwitchingAssistantPageProps) => {
+export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
+  const { checkoutSteps, entries, shopSessionId } = props
   const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
@@ -22,7 +25,7 @@ export const SwitchingAssistantPage = ({ entries, shopSessionId }: SwitchingAssi
   return (
     <Space y={{ base: 1, lg: 2.5 }}>
       <Header>
-        <CheckoutHeader activeStep="switching-assistant">
+        <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.SwitchingAssistant}>
           <TextLink
             href={PageLink.customerService({ locale: routingLocale })}
             target="_blank"

@@ -5,11 +5,14 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
-import { Button, Heading, HedvigLogo, mq, Space, Text, theme } from 'ui'
+import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
+import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
+import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -21,7 +24,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { BankIdIcon } from './BankIdIcon'
-import { Breadcrumbs } from './Breadcrumbs'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
@@ -37,6 +39,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     customerAuthenticationStatus,
     shopSessionId,
     shopSessionSigningId,
+    checkoutSteps,
   } = props
   const { t } = useTranslation('checkout')
 
@@ -58,7 +61,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       }
       tracking.reportPurchase(shopSession.cart)
       setupShopSessionServiceClientSide(apolloClient).reset()
-      router.push(PageLink.checkoutPayment({ shopSessionId }))
+      router.push(
+        getCheckoutStepLink(
+          checkoutSteps[checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout) + 1],
+          shopSession,
+        ),
+      )
     },
     onError() {
       setShowSignError(true)
@@ -76,17 +84,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   return (
     <>
       <Space y={{ base: 1, lg: 3 }}>
-        <Header>
-          <HeaderLogo>
-            <HedvigLogo width={78} />
-          </HeaderLogo>
-          <HeaderBreadcrumbs>
-            <Breadcrumbs />
-          </HeaderBreadcrumbs>
-          <HeaderBack>
-            <HeaderLink href={PageLink.cart()}>{t('BACK_BUTTON')}</HeaderLink>
-          </HeaderBack>
-        </Header>
+        <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
+          <TextLink href={PageLink.cart()}>{t('BACK_BUTTON')}</TextLink>
+        </CheckoutHeader>
         <Layout>
           <Content y={{ base: 1, lg: 3 }}>
             <Heading as="h1" variant="standard.24" align="center">
@@ -241,52 +241,12 @@ const Content = styled(Space)(gridCenterStyles, {
   columnGap: theme.space.md,
 })
 
-const Header = styled(Layout)({
-  gridAutoRows: '3rem',
-  alignItems: 'center',
-
-  [mq.sm]: {
-    gridAutoRows: '3.5rem',
-  },
-})
-
-const HeaderLogo = styled.div({
-  gridColumn: 'span 6',
-
-  [mq.sm]: {
-    gridColumn: 1,
-  },
-})
-const HeaderBreadcrumbs = styled.div(gridCenterStyles, {
-  gridRow: 2,
-  gridColumn: '1 / -1',
-
-  [mq.sm]: {
-    gridRow: 1,
-  },
-})
-const HeaderBack = styled.div({
-  gridColumn: 'span 6',
-  justifySelf: 'flex-end',
-
-  [mq.sm]: {
-    gridColumn: -1,
-  },
-})
-
-const HeaderLink = styled(Link)({
+const TextLink = styled(Link)({
   backgroundColor: theme.colors.light,
-  fontSize: theme.fontSizes.md,
 
   ':focus-visible': {
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
-  },
-
-  [mq.lg]: {
-    position: 'absolute',
-    top: theme.space.md,
-    right: theme.space.md,
   },
 })
 
