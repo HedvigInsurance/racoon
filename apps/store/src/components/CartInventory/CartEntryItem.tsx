@@ -25,10 +25,9 @@ export const CartEntryItem = (props: Props) => {
       <LayoutText>
         <Text>{titleLabel}</Text>
         <Text color="textSecondary">
-          {/* @TODO: display "automatically switches" if cancellation is requested" */}
           {startDate
             ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
-            : 'Starts sometime...'}
+            : t('CART_ENTRY_AUTO_SWITCH')}
         </Text>
       </LayoutText>
 
