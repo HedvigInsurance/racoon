@@ -26,19 +26,18 @@ Requirements:
 
 - Add `APOLLO_KEY` to `.env.local` (see Vercel)
 
-## Sharing Shop Session
+## Share / Resume a Shop Session
 
 It can be useful to share a shop session with someone. Perhaps you've got into a strange state and want to share the session with a colleague so you can debug together.
 
-You do this by sending them a link:
+You do this by sending them a link: `/{LOCALE}/session/{SHOP_SESSION_ID}`
 
-```html
-https://www.store.dev.hedvigit.com/{LOCALE}/session/{SHOP_SESSION_ID}?next={REDIRECT_URL}
-```
+Optional query parameters:
 
-You can optionally provide a `?next=/se/cart` query parameter with the relative link to route to redirect the user. By default, the user is redirected to the home page.
+- `?next={REDIRECT_URL}`: Relative URL to redirect to (default: home page)
+- `?code={CAMPAIGN_CODE}`: Set a campaign code for the session
 
-## Resetting current Shop Session
+## Reset current Shop Session
 
 If you want to reset the current shop session, you can do so by visiting the following URL:
 
