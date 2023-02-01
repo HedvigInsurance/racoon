@@ -56,6 +56,6 @@ const Title = styled.h1({
 })
 
 const Subtitle = styled.p({
-  fontSize: theme.fontSizes.sm,
+  fontSize: theme.fontSizes.xs,
   color: theme.colors.gray600,
 })
