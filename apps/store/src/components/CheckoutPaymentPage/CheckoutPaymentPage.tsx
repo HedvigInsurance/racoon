@@ -25,16 +25,16 @@ export const CheckoutPaymentPage = ({ children, Header }: Props) => {
 }
 
 const HeaderWrapper = styled.header({
-  padding: theme.space[3],
+  padding: theme.space.sm,
 })
 
 const PageHeader = styled.header({
   display: 'flex',
   justifyContent: 'center',
-  paddingLeft: theme.space[3],
-  paddingRight: theme.space[3],
+  paddingLeft: theme.space.sm,
+  paddingRight: theme.space.sm,
 })
 
 const Main = styled.main({
-  padding: theme.space[3],
+  padding: theme.space.sm,
 })

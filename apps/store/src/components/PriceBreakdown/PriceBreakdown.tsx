@@ -92,12 +92,12 @@ const CollapsibleContent = styled(RadixCollapsible.Content)(() => ({}))
 
 const CollapsibleDivider = styled.div({
   borderTop: `1px solid ${theme.colors.gray300}`,
-  height: theme.space[2],
+  height: theme.space.xs,
   marginTop: '0.75rem',
-  marginBottom: theme.space[3],
+  marginBottom: theme.space.sm,
 })
 
 const Price = styled.p({
-  fontSize: theme.fontSizes[1],
+  fontSize: theme.fontSizes.xs,
   color: theme.colors.gray600,
 })

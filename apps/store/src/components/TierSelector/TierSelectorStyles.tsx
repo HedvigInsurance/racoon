@@ -9,7 +9,7 @@ export const Item = AccordionPrimitives.Item
 const Header = AccordionPrimitives.Header
 
 const Trigger = styled(AccordionPrimitives.Trigger)({
-  height: theme.space[7],
+  height: theme.space.xxl,
   width: '100%',
   cursor: 'pointer',
   display: 'flex',
@@ -18,7 +18,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)({
   justifyContent: 'space-between',
   backgroundColor: theme.colors.gray200,
   borderRadius: theme.radius.xs,
-  padding: `0 ${theme.space[4]}`,
+  padding: `0 ${theme.space.md}`,
 
   '[data-state=open] &': {
     borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0`,
@@ -57,7 +57,7 @@ export const HeaderWithTrigger = ({
 }
 
 const RecommendedContainer = styled.div({
-  paddingTop: theme.space[2],
+  paddingTop: theme.space.xs,
 })
 
 const SuggestedDot = styled.span({
@@ -82,7 +82,7 @@ export const SuggestedItem = ({ children }: SuggestedItemProps) => (
 
 export const TierItemWrapper = styled.div<{ isSelected: boolean }>({
   cursor: 'pointer',
-  padding: theme.space[2],
+  padding: theme.space.xs,
   backgroundColor: theme.colors.gray200,
 
   ':not(:first-of-type)': {
@@ -102,7 +102,7 @@ export const TierItemContainer = styled.div<{ isSelected: boolean }>(({ isSelect
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  padding: theme.space[2],
+  padding: theme.space.xs,
   borderRadius: `${theme.radius.xs}px`,
 
   boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
@@ -117,7 +117,7 @@ export const TitleContainer = styled.div({
 })
 
 export const TitleItem = styled.div({
-  paddingBottom: theme.space[1],
+  paddingBottom: theme.space.xxs,
 })
 
 export const SecondaryText = styled.div({

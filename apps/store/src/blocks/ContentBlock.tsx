@@ -28,8 +28,8 @@ ContentBlock.blockName = 'content'
 
 const Wrapper = styled(Space)({
   maxWidth: '37.5rem',
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
 })
 
 const TextWrapper = styled.div<{ alignment: Alignment }>(({ alignment }) => ({

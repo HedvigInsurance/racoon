@@ -10,15 +10,15 @@ export const Header = styled(Accordion.Header)(() => ({
 }))
 
 export const Content = styled(Accordion.Content)({
-  paddingTop: theme.space[3],
+  paddingTop: theme.space.sm,
 })
 
 export const Root = Accordion.Root
 export const Item = styled(Accordion.Item)({
-  paddingTop: theme.space[3],
+  paddingTop: theme.space.sm,
   '&:not(:last-child)': {
     borderBottom: '1px solid hsla(0, 0%, 7%, 0.15)',
-    paddingBottom: theme.space[3],
+    paddingBottom: theme.space.sm,
   },
 })
 

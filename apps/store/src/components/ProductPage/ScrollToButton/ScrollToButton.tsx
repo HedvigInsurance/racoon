@@ -12,16 +12,16 @@ export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProp
   const handleClick = () => targetRef.current?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <Wrappper>
+    <Wrapper>
       <Button type={type} onClick={handleClick}>
         {children}
       </Button>
-    </Wrappper>
+    </Wrapper>
   )
 }
 
-const Wrappper = styled.div({
-  paddingInline: theme.space[4],
+const Wrapper = styled.div({
+  paddingInline: theme.space.md,
   width: '100%',
 
   [mq.lg]: { display: 'none' },

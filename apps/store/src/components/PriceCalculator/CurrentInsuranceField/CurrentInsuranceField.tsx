@@ -226,7 +226,7 @@ const StyledDialogContent = styled(Dialog.Content)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: theme.space[2],
+  padding: theme.space.xs,
 })
 
 const DialogIframeWindow = styled(Dialog.Window)({
@@ -239,7 +239,7 @@ const DialogIframeWindow = styled(Dialog.Window)({
 })
 
 const DialogSuccessWindow = styled(Dialog.Window)({
-  padding: theme.space[4],
+  padding: theme.space.md,
   borderRadius: theme.radius.xs,
   width: '100%',
   maxWidth: `calc(${PURCHASE_FORM_MAX_WIDTH} + 1rem)`,

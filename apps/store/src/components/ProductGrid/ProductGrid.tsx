@@ -30,7 +30,7 @@ const Wrapper = styled(Space)({
 })
 
 const Title = styled.p({
-  fontSize: theme.fontSizes[2],
+  fontSize: theme.fontSizes.xs,
   color: theme.colors.gray600,
   textTransform: 'uppercase',
   textAlign: 'center',

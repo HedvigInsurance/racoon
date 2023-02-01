@@ -14,10 +14,10 @@ export const Tabs = styled(RadixTabs.Root)({
 
 export const TabsList = styled(RadixTabs.TabsList)({
   display: 'grid',
-  gap: theme.space[2],
+  gap: theme.space.xs,
   position: 'sticky',
-  top: theme.space[3],
-  paddingInline: theme.space[4],
+  top: theme.space.sm,
+  paddingInline: theme.space.md,
   zIndex: zIndexes.tabs,
 })
 
@@ -26,10 +26,10 @@ export const TabsTrigger = styled(RadixTabs.Trigger)({
   alignItems: 'flex-end',
   justifyContent: 'center',
   textAlign: 'center',
-  paddingInline: theme.space[4],
-  paddingBlock: theme.space[2],
-  fontSize: theme.fontSizes[3],
-  lineHeight: theme.fontSizes[5],
+  paddingInline: theme.space.md,
+  paddingBlock: theme.space.xs,
+  fontSize: theme.fontSizes.md,
+  lineHeight: theme.fontSizes.xl,
   color: theme.colors.dark,
   // TODO: See if we should define translucent colors in theme
   backgroundColor: 'rgba(242, 242, 242, 0.6)',

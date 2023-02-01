@@ -32,5 +32,5 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
 InsurableLimitsBlock.blockName = 'insurableLimits'
 
 const StyledInsurableLimits = styled(InsurableLimits)({
-  padding: theme.space[4],
+  padding: theme.space.md,
 })

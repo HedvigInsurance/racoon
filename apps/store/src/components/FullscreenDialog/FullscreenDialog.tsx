@@ -85,7 +85,7 @@ const FooterWrapper = styled.footer({
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 24rem)',
   justifyContent: 'center',
-  gap: theme.space[1],
+  gap: theme.space.xxs,
   paddingInline: theme.space.md,
   paddingBottom: theme.space.md,
 

@@ -34,8 +34,8 @@ const Root = styled.div({
 
 const Bubble = styled.div({
   backgroundColor: LIGHT_BLUE,
-  paddingBlock: theme.space[3],
-  paddingInline: theme.space[4],
+  paddingBlock: theme.space.sm,
+  paddingInline: theme.space.md,
   borderRadius: theme.radius.sm,
 })
 

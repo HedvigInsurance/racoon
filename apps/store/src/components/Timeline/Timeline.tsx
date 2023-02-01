@@ -7,14 +7,14 @@ const ICON_SIZE = '2.5rem'
 export const Root = styled.ul({
   display: 'flex',
   flexDirection: 'column',
-  paddingRight: theme.space[4],
+  paddingRight: theme.space.md,
 })
 
 export const Item = styled.li({
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-  gap: theme.space[2],
+  gap: theme.space.xs,
 })
 
 export const Icon = () => {
@@ -26,8 +26,8 @@ export const Icon = () => {
 }
 
 const IconWrapper = styled.div({
-  paddingTop: theme.space[1],
-  paddingBottom: theme.space[1],
+  paddingTop: theme.space.xxs,
+  paddingBottom: theme.space.xxs,
 })
 
 export const Separator = styled.div({
@@ -46,6 +46,6 @@ export const Connector = styled.div({
 
 export const Content = styled.div({
   flex: 1,
-  paddingTop: theme.space[3],
-  paddingBottom: theme.space[3],
+  paddingTop: theme.space.sm,
+  paddingBottom: theme.space.sm,
 })

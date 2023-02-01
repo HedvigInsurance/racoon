@@ -4,8 +4,8 @@ import { Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export const Wrapper = styled.div({
-  paddingLeft: theme.space[4],
-  paddingRight: theme.space[4],
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.md,
 })
 
 export type HeadingBlockProps = SbBaseBlockProps<{

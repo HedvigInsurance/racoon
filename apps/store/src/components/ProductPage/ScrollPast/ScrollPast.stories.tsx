@@ -137,7 +137,7 @@ const FixedFooter = styled.div({
   bottom: 0,
   right: 0,
   left: 0,
-  padding: theme.space[4],
+  padding: theme.space.md,
   display: 'flex',
   justifyContent: 'center',
 })

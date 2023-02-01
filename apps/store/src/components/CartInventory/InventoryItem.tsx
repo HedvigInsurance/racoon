@@ -3,8 +3,8 @@ import { theme } from 'ui'
 
 export const Root = styled.div({
   display: 'grid',
-  columnGap: theme.space[4],
-  rowGap: theme.space[1],
+  columnGap: theme.space.md,
+  rowGap: theme.space.xxs,
   alignItems: 'center',
   gridTemplateColumns: 'auto 1fr',
   gridTemplateRows: 'auto auto',
@@ -24,7 +24,7 @@ export const Main = styled.div({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
   gridTemplateRows: 'auto auto',
-  columnGap: theme.space[4],
+  columnGap: theme.space.md,
   rowGap: theme.space[1],
   gridTemplateAreas: `
     'main-left   main-right'

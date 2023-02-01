@@ -37,8 +37,8 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
 VideoBlock.blockName = 'videoBlock'
 
 const Wrapper = styled.div({
-  paddingInline: theme.space[2],
+  paddingInline: theme.space.xs,
   [mq.lg]: {
-    paddingInline: theme.space[4],
+    paddingInline: theme.space.md,
   },
 })
