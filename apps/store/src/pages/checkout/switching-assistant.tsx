@@ -5,7 +5,6 @@ import {
   SwitchingAssistantPageProps,
 } from '@/components/SwitchingAssistantPage/SwitchingAssistantPage'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -31,13 +30,14 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
   // TODO: check if user is authenticated
 
-  const entriesToCancel = shopSession.cart.entries.filter(
-    (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
-  )
-
   const entries: SwitchingAssistantPageProps['entries'] = []
-  entriesToCancel.forEach((item) => {
-    const company = item.cancellation.externalInsurer?.displayName
+  shopSession.cart.entries.forEach((item) => {
+    const { bankSignering, externalInsurer } = item.cancellation
+    const { url, approveByDate } = bankSignering || {}
+
+    if (!url || typeof approveByDate !== 'string') return
+
+    const company = externalInsurer?.displayName
     if (!company) {
       console.warn('Missing company name for Banksignering cancellation', {
         entryId: item.id,
@@ -49,8 +49,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
       key: item.id,
       name: item.variant.product.displayNameFull,
       company,
-      url: '/',
-      date: new Date().toJSON(),
+      url,
+      date: approveByDate,
     })
   })
 

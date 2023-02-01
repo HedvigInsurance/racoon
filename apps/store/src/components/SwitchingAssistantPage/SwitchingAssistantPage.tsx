@@ -23,7 +23,11 @@ export const SwitchingAssistantPage = ({ entries, shopSessionId }: SwitchingAssi
     <Space y={{ base: 1, lg: 2.5 }}>
       <Header>
         <CheckoutHeader activeStep="switching-assistant">
-          <TextLink href={PageLink.customerService({ locale: routingLocale })}>
+          <TextLink
+            href={PageLink.customerService({ locale: routingLocale })}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Text>{t('SWITCHING_ASSISTANT_SUPPORT_LINK')}</Text>
           </TextLink>
         </CheckoutHeader>
@@ -118,8 +122,7 @@ const PillStatus = styled.div({
   height: theme.space.xs,
   width: theme.space.xs,
   borderRadius: '50%',
-  // TODO: use theme color: Amber 600
-  backgroundColor: '#FFBF00',
+  backgroundColor: theme.colors.amber600,
 })
 
 const Footer = styled.footer({
