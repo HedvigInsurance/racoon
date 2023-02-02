@@ -5,6 +5,8 @@ import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
+import { GlobalProductMetadata, GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
+import { ProductMetadataProvider } from './ProductMetadataContext'
 
 const Wrapper = styled.div({
   minHeight: '100vh',
@@ -12,31 +14,43 @@ const Wrapper = styled.div({
 })
 
 type LayoutWithMenuProps = {
-  children: ReactElement<StoryblokPageProps & { className: string }>
+  children: ReactElement<
+    StoryblokPageProps & {
+      className: string
+      [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
+    }
+  >
 }
 
 export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
-  const { story, globalStory, className } = children.props
+  const {
+    story,
+    globalStory,
+    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: globalProductMetadata,
+    className,
+  } = children.props
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
 
   const handleLocaleChange = useChangeLocale(story)
 
   return (
-    <Wrapper className={className}>
-      {(!story || !story.content.hideMenu) &&
-        headerBlock?.map((nestedBlock) => (
-          <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
-        ))}
-      {children}
-      {(!story || !story.content.hideMenu) &&
-        footerBlock?.map((nestedBlock) => (
-          <FooterBlock
-            key={nestedBlock._uid}
-            blok={nestedBlock}
-            onLocaleChange={handleLocaleChange}
-          />
-        ))}
-    </Wrapper>
+    <ProductMetadataProvider value={globalProductMetadata}>
+      <Wrapper className={className}>
+        {(!story || !story.content.hideMenu) &&
+          headerBlock?.map((nestedBlock) => (
+            <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        {children}
+        {(!story || !story.content.hideMenu) &&
+          footerBlock?.map((nestedBlock) => (
+            <FooterBlock
+              key={nestedBlock._uid}
+              blok={nestedBlock}
+              onLocaleChange={handleLocaleChange}
+            />
+          ))}
+      </Wrapper>
+    </ProductMetadataProvider>
   )
 }

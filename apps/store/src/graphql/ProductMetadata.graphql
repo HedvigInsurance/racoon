@@ -1,0 +1,13 @@
+query ProductMetadata {
+  availableProducts {
+    id
+    name
+    displayNameShort
+    pageLink
+    pillowImage {
+      id
+      alt
+      src
+    }
+  }
+}

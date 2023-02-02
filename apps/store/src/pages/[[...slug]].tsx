@@ -3,6 +3,10 @@ import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import {
+  fetchGlobalProductMetadata,
+  GLOBAL_PRODUCT_METADATA_PROP_NAME,
+} from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
@@ -69,11 +73,14 @@ export const getStaticProps: GetStaticProps<
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
+
+  const apolloClient = initializeApollo()
   console.time('getStoryblokData')
-  const [story, globalStory, translations] = await Promise.all([
+  const [story, globalStory, translations, productMetadata] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
+    fetchGlobalProductMetadata({ apolloClient }),
   ])
   console.timeEnd('getStoryblokData')
 
@@ -86,6 +93,7 @@ export const getStaticProps: GetStaticProps<
     ...translations,
     [STORY_PROP_NAME]: story,
     [GLOBAL_STORY_PROP_NAME]: globalStory,
+    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
   }
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
@@ -96,7 +104,7 @@ export const getStaticProps: GetStaticProps<
     }
 
     const productData = await getProductData({
-      apolloClient: initializeApollo(),
+      apolloClient,
       productName: story.content.productId,
     })
 
