@@ -1,7 +1,6 @@
-import { Player } from '@lottiefiles/react-lottie-player'
-import React from 'react'
+import { LottieAnimation } from '../Root'
 import animationData from './numberPad.json'
 
 export const NumberPad = () => {
-  return <Player autoplay loop src={animationData} />
+  return <LottieAnimation autoplay loop src={animationData} />
 }
