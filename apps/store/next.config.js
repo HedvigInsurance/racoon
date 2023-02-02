@@ -1,7 +1,10 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 const { i18n } = require('./next-i18next.config')
 
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
@@ -25,7 +28,7 @@ module.exports = {
       },
     ]
   },
-}
+})
 
 const scriptSrcDirectives = [
   'https://app.storyblok.com',
