@@ -40,6 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     children: buttonChildren,
     as: props.href ? 'a' : 'button',
     ref,
+    disabled: props.disabled || loading,
     ...(loading && { 'data-loading': true }),
   } as const
 

@@ -140,7 +140,7 @@ export const highlight = {
 
 export const signal = {
   green: { fill1: green[100], fill3: green[300], element: green[600], text: green[800] },
-  amber: { fill1: yellow[100], fill3: yellow[300], element: yellow[600], text: yellow[800] },
+  amber: { fill1: amber[100], fill3: amber[300], element: amber[600], text: amber[800] },
   red: { fill1: red[100], fill3: red[300], element: red[600], text: red[800] },
 } as const
 
