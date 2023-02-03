@@ -14,7 +14,7 @@ import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.hel
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { shouldCollectEmail, shouldCollectName } from '@/utils/customer'
+import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
@@ -100,8 +100,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
-    shouldCollectEmail: shouldCollectEmail(customer),
-    shouldCollectName: shouldCollectName(customer),
+    shouldCollectEmail: getShouldCollectEmail(customer),
+    shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
   }
 

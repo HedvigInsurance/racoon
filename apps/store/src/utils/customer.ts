@@ -3,10 +3,10 @@ import { ShopSessionAuthenticationStatus, ShopSessionCustomer } from '@/services
 const isNewMember = (customer: ShopSessionCustomer) =>
   customer.authenticationStatus === ShopSessionAuthenticationStatus.None
 
-export const shouldCollectEmail = (customer?: ShopSessionCustomer | null) => {
+export const getShouldCollectEmail = (customer?: ShopSessionCustomer | null) => {
   return !customer || customer.authenticationStatus === ShopSessionAuthenticationStatus.None
 }
 
-export const shouldCollectName = (customer: ShopSessionCustomer) => {
+export const getShouldCollectName = (customer: ShopSessionCustomer) => {
   return isNewMember(customer) && !(customer.firstName && customer.lastName)
 }

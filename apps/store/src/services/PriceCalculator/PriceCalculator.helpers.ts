@@ -1,5 +1,5 @@
 import { ShopSessionCustomer } from '@/services/apollo/generated'
-import { shouldCollectEmail } from '@/utils/customer'
+import { getShouldCollectEmail } from '@/utils/customer'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
 import { SE_APARTMENT_BRF } from './data/SE_APARTMENT_BRF'
 import { SE_APARTMENT_RENT } from './data/SE_APARTMENT_RENT'
@@ -61,7 +61,7 @@ export const setupForm = ({ customer, suggestedData, template, userData }: Setup
   const form = convertTemplateIntoForm(template)
   form.sections.forEach((section) => {
     section.items = section.items.filter(
-      (item) => item.field.name !== 'email' || shouldCollectEmail(customer),
+      (item) => item.field.name !== 'email' || getShouldCollectEmail(customer),
     )
   })
 
