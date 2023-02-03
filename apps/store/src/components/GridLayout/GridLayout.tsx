@@ -31,7 +31,7 @@ const Content = styled.div({
   },
 })
 
-export const Layout = {
+export const GridLayout = {
   Root,
   Content,
 }

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { appStoreLinks } from '@/utils/appStoreLinks'
@@ -11,7 +12,6 @@ import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 import { FooterSection } from './FooterSection'
-import { Layout } from './Layout'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
@@ -41,8 +41,8 @@ export const ConfirmationPage = (props: Props) => {
   return (
     <Wrapper>
       <Space y={4}>
-        <Layout.Root>
-          <Layout.Content>
+        <GridLayout.Root>
+          <GridLayout.Content>
             <Space y={4}>
               <Space y={1}>
                 <div>
@@ -93,8 +93,8 @@ export const ConfirmationPage = (props: Props) => {
                 </BlockLayoutReset>
               </Space>
             </Space>
-          </Layout.Content>
-        </Layout.Root>
+          </GridLayout.Content>
+        </GridLayout.Root>
 
         <FooterSection
           image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
