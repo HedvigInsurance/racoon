@@ -25,11 +25,9 @@ export const DialogClose = styled(DialogPrimitive.DialogClose)({
 })
 
 const ButtonWrapper = styled(Space)({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  paddingTop: theme.space.xxl,
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  paddingTop: theme.space.lg,
 })
 
 const StyledAppleIcon = styled(AppleIcon)({
