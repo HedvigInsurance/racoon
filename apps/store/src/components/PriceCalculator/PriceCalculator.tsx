@@ -6,7 +6,7 @@ import {
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Form, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import { Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
@@ -31,13 +31,11 @@ export const PriceCalculator = (props: Props) => {
   const { priceTemplate } = useProductPageContext()
 
   const form = useMemo(() => {
-    const { ssn, email } = shopSession.customer ?? {}
-    const customerData = { ssn, email }
-    return setupForm(
-      priceTemplate,
-      getFormData(priceIntent, customerData),
-      priceIntent.suggestedData,
-    )
+    return setupForm({
+      customer: shopSession.customer,
+      priceIntent,
+      template: priceTemplate,
+    })
   }, [priceIntent, shopSession.customer, priceTemplate])
 
   const [activeSectionId, setActiveSectionId] = useState(() => {
@@ -48,8 +46,11 @@ export const PriceCalculator = (props: Props) => {
 
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     onSuccess({ priceIntent, customer }) {
-      const userData = { ...customer, ...priceIntent.data }
-      const form = setupForm(priceTemplate, userData, priceIntent.suggestedData)
+      const form = setupForm({
+        customer,
+        priceIntent,
+        template: priceTemplate,
+      })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
       } else {
@@ -121,13 +122,9 @@ type IsFormReadyToConfirmParams = {
 const isFormReadyToConfirm = ({ form, customer, priceIntent }: IsFormReadyToConfirmParams) => {
   const filledForm = prefillData({
     form,
-    data: getFormData(priceIntent, customer),
+    data: { ...customer, ...priceIntent.data },
     valueField: 'value',
   })
   const updatedForm = updateFormState(filledForm)
   return updatedForm.sections.every((section) => section.state === 'valid')
-}
-
-const getFormData = (priceIntent: PriceIntent, customer?: CustomerData | null): JSONData => {
-  return { ...customer, ...priceIntent.data } as const
 }

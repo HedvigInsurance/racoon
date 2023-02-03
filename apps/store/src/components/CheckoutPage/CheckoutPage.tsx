@@ -32,8 +32,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const {
     cart,
     ssn,
-    prefilledData,
-    collectName,
+    shouldCollectEmail,
+    shouldCollectName,
     customerAuthenticationStatus,
     shopSessionId,
     shopSessionSigningId,
@@ -122,31 +122,30 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       readOnly
                       disabled
                     />
-                    {collectName && (
+                    {shouldCollectName && (
                       <SpaceFlex space={0.25}>
                         <TextField
                           type="text"
                           label={t('FORM_FIRST_NAME_LABEL')}
                           name={FormElement.FirstName}
-                          defaultValue={prefilledData.firstName}
                           required
                         />
                         <TextField
                           type="text"
                           label={t('FORM_LAST_NAME_LABEL')}
                           name={FormElement.LastName}
-                          defaultValue={prefilledData.lastName}
                           required
                         />
                       </SpaceFlex>
                     )}
-                    <TextField
-                      type="email"
-                      label={t('FORM_EMAIL_LABEL')}
-                      name={FormElement.Email}
-                      defaultValue={prefilledData.email}
-                      required
-                    />
+                    {shouldCollectEmail && (
+                      <TextField
+                        type="email"
+                        label={t('FORM_EMAIL_LABEL')}
+                        name={FormElement.Email}
+                        required
+                      />
+                    )}
                     <Space y={0.5}>
                       <SignButton loading={loading}>
                         {t('SIGN_BUTTON', { count: cart.entries.length })}

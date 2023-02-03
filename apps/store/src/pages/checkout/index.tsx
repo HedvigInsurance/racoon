@@ -7,7 +7,6 @@ import {
   useGetDiscountExplanation,
 } from '@/components/CartInventory/CartInventory.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
-import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
@@ -15,11 +14,12 @@ import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.hel
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Pick<CheckoutPageProps, 'shopSessionSigningId' | 'ssn' | 'collectName'> & {
+type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'> & {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
@@ -66,20 +66,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     })),
   }
 
-  const prefilledData = {
-    [FormElement.Email]: shopSession.customer.email ?? undefined,
-    [FormElement.FirstName]: shopSession.customer.firstName ?? undefined,
-    [FormElement.LastName]: shopSession.customer.lastName ?? undefined,
-  }
-
-  return (
-    <CheckoutPage
-      {...props}
-      cart={cart}
-      customerAuthenticationStatus={authenticationStatus}
-      prefilledData={prefilledData}
-    />
-  )
+  return <CheckoutPage {...props} cart={cart} customerAuthenticationStatus={authenticationStatus} />
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
@@ -113,7 +100,8 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
-    collectName: !(customer.firstName && customer.lastName),
+    shouldCollectEmail: getShouldCollectEmail(customer),
+    shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
   }
 
