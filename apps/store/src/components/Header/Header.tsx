@@ -21,7 +21,7 @@ export const Wrapper = styled.header({
   [mq.lg]: {
     flexDirection: 'row',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    padding: ` 0 ${theme.space.xl}`,
+    padding: `0 ${theme.space.xl}`,
   },
 })
 
