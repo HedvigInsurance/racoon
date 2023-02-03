@@ -20,7 +20,7 @@ type ConfirmationPage = BaseParams & { shopSessionId: string }
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
 export const PageLink = {
-  home: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}`,
+  home: ({ locale }: BaseParams = {}) => localePrefix(locale) || '/',
   store: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/store`,
   product: ({ locale, slug }: ProductPage) => `${localePrefix(locale)}/products/${slug}`,
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
