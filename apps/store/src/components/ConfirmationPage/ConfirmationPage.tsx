@@ -10,6 +10,8 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
+import { FooterSection } from './FooterSection'
+import { Layout } from './Layout'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
@@ -19,70 +21,109 @@ export const ConfirmationPage = (props: Props) => {
   const { locale } = useCurrentLocale()
   const { platform, cart, story } = props
 
+  const appStoreButton = platform ? (
+    <Link href={appStoreLinks[platform]} passHref>
+      <AppStoreBadge type={platform} locale={locale} />
+    </Link>
+  ) : (
+    <SpaceFlex space={0.5}>
+      <Link href={appStoreLinks.apple} passHref>
+        <AppStoreBadge type="apple" locale={locale} />
+      </Link>
+      <Link href={appStoreLinks.google} passHref>
+        <AppStoreBadge type="google" locale={locale} />
+      </Link>
+    </SpaceFlex>
+  )
+
+  const checklistItems = story.content.checklist.split('\n')
+
   return (
     <Wrapper>
       <Space y={4}>
-        <header>
-          <Heading as="h1" variant="standard.24">
-            Ditt köp är klart!
-          </Heading>
-          <Text as="p" color="textSecondary" size="xl">
-            En bekräftelse har skickats via mail.
-          </Text>
-        </header>
-        <main>
-          <Space y={4}>
-            <section>
-              <CartInventory cart={cart} readOnly />
-            </section>
-            <section>
+        <Layout.Root>
+          <Layout.Content>
+            <Space y={4}>
               <Space y={1}>
                 <div>
                   <Heading as="h1" variant="standard.24">
-                    Vad händer nu?
+                    {story.content.title}
                   </Heading>
                   <Text as="p" color="textSecondary" size="xl">
-                    Ladda ner Hedvig appen till din mobil och kom igång med din nya försäkring.
+                    {story.content.subtitle}
                   </Text>
                 </div>
-                <Space y={0.5}>
-                  <CheckList>
-                    <CheckListItem.Checked title="Teckna Hedvig" />
-                    <CheckListItem.Checked title="Koppla autogiro" />
-                    <CheckListItem.Unchecked title="Ladda ner Hedvig appen">
-                      {platform ? (
-                        <Link href={appStoreLinks[platform]} passHref>
-                          <AppStoreBadge type={platform} locale={locale} />
-                        </Link>
-                      ) : (
-                        <SpaceFlex space={0.5}>
-                          <Link href={appStoreLinks.apple} passHref>
-                            <AppStoreBadge type="apple" locale={locale} />
-                          </Link>
-                          <Link href={appStoreLinks.google} passHref>
-                            <AppStoreBadge type="google" locale={locale} />
-                          </Link>
-                        </SpaceFlex>
-                      )}
-                    </CheckListItem.Unchecked>
-                  </CheckList>
-                </Space>
+                <CartInventory cart={cart} readOnly />
               </Space>
-            </section>
+
+              <Space y={1}>
+                <div>
+                  <Heading as="h2" variant="standard.24">
+                    {story.content.checklistTitle}
+                  </Heading>
+                  <Text as="p" color="textSecondary" size="xl">
+                    {story.content.checklistSubtitle}
+                  </Text>
+                </div>
+                <CheckList>
+                  {checklistItems.map((item, index) => {
+                    const isLast = index === checklistItems.length - 1
+                    return isLast ? (
+                      <CheckListItem.Unchecked title={item}>
+                        {appStoreButton}
+                      </CheckListItem.Unchecked>
+                    ) : (
+                      <CheckListItem.Checked title={item} />
+                    )
+                  })}
+                </CheckList>
+              </Space>
+
+              <Space y={1}>
+                <div>
+                  <Heading as="h2" variant="standard.24">
+                    {story.content.faqTitle}
+                  </Heading>
+                  <Text as="p" color="textSecondary" size="xl">
+                    {story.content.faqSubtitle}
+                  </Text>
+                </div>
+                <BlockLayoutReset>
+                  <ConfirmationPageBlock blok={story.content} />
+                </BlockLayoutReset>
+              </Space>
+            </Space>
+          </Layout.Content>
+        </Layout.Root>
+
+        <FooterSection
+          image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
+        >
+          <Space y={1.5}>
+            <div>
+              <Heading as="h2" variant="standard.24">
+                {story.content.footerTitle}
+              </Heading>
+              <Text as="p" color="textSecondary" size="xl">
+                {story.content.footerSubtitle}
+              </Text>
+            </div>
+            <div>{appStoreButton}</div>
           </Space>
-        </main>
+        </FooterSection>
       </Space>
-      <ConfirmationPageBlock blok={story.content} />
     </Wrapper>
   )
 }
 
-const Wrapper = styled(Space)({
-  paddingInline: theme.space.md,
+const Wrapper = styled.div({
+  paddingTop: theme.space.md,
 
-  [mq.sm]: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(28rem, 33%)',
-    justifyContent: 'center',
+  [mq.lg]: {
+    paddingTop: theme.space.xxxl,
   },
+})
+
+const BlockLayoutReset = styled.div({
+  marginInline: `calc(-1 * ${theme.space.md})`,
 })
