@@ -30,6 +30,7 @@ export const Default = () => {
           discount: { amount: 10, currencyCode: CurrencyCode.Sek },
         },
         redeemedCampaigns: [],
+        campaignsEnabled: true,
         entries: [
           {
             id: '123',

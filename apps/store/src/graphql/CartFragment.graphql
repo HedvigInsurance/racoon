@@ -1,5 +1,6 @@
 fragment CartFragment on Cart {
   id
+  campaignsEnabled
   cost {
     gross {
       amount

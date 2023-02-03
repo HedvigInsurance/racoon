@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
-import { CampaignCodeList } from './CampaignCodeList'
+import { CampaignsSection } from './CampaignsSection'
 import { CartEntryItem } from './CartEntryItem'
 import { CartEntryList } from './CartEntryList'
 import {
@@ -61,7 +61,7 @@ export const CartInventory = ({ cart, readOnly = false }: Props) => {
       <HorizontalLine />
       {!readOnly && (
         <>
-          <CampaignCodeList cartId={cart.id} campaigns={campaigns} />
+          <CampaignsSection cartId={cart.id} campaigns={campaigns} />
           <HorizontalLine />
         </>
       )}

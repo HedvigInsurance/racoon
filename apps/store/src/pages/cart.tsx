@@ -71,7 +71,8 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
       cartId={shopSession.cart.id}
       entries={entries}
       campaigns={campaigns}
-      cost={{ ...cost }}
+      campaignsEnabled={shopSession.cart.campaignsEnabled}
+      cost={cost}
       recommendations={productRecommendations}
       {...props}
     />
