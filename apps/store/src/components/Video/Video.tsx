@@ -40,7 +40,6 @@ export const Video = ({
   aspectRatioPortrait,
   maxHeightLandscape,
   maxHeightPortrait,
-  controls,
   onPlaying,
   onPause,
   ...delegated
@@ -129,24 +128,22 @@ export const Video = ({
           <source key={source.url} src={source.url} />
         ))}
       </StyledVideo>
-      {controls && (
-        <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
-          <div>
-            <PlayPauseButton
-              ref={playPauseButtonRef}
-              onClick={togglePlay}
-              variant="secondary"
-              size="small"
-              aria-labelledby={playButtonId}
-            >
-              {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-              <span id={playButtonId} hidden>
-                {state === State.Paused ? 'Play' : 'Pause'}
-              </span>
-            </PlayPauseButton>
-          </div>
-        </VideoControls>
-      )}
+      <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
+        <Controls>
+          <PlayPauseButton
+            ref={playPauseButtonRef}
+            onClick={togglePlay}
+            variant="secondary"
+            size="small"
+            aria-labelledby={playButtonId}
+          >
+            {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
+            <span id={playButtonId} hidden>
+              {state === State.Paused ? 'Play' : 'Pause'}
+            </span>
+          </PlayPauseButton>
+        </Controls>
+      </VideoControls>
     </VideoWrapper>
   )
 }
@@ -191,6 +188,19 @@ const VideoControls = styled.div({
   padding: theme.space.sm,
   justifyContent: 'flex-end',
   alignItems: 'flex-start',
+})
+
+const Controls = styled.div({
+  '@media (hover: hover)': {
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'all 200ms cubic-bezier(0, 0, 0.2, 1) 2s',
+    [`${VideoControls}[data-state=${State.Paused}] > &, ${VideoControls}:hover > &`]: {
+      opacity: 1,
+      visibility: 'visible',
+      transitionDelay: '0s',
+    },
+  },
 })
 
 const PlayPauseButton = styled(Button)({
