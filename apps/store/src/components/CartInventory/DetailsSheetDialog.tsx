@@ -33,7 +33,7 @@ export const DetailsSheetDialog = (props: Props) => {
       >
         <DetailsSheet.Root y={1.5}>
           <DetailsSheet.Header>
-            <Pillow size="large" {...pillow} />
+            <Pillow size="xlarge" {...pillow} />
             <div>
               <Text align="center">{title}</Text>
               <Text color="textSecondary" align="center">

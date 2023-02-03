@@ -4,7 +4,7 @@ import Image from 'next/image'
 const PLACEHOLDER = 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png'
 
 type PillowProps = {
-  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
   src?: string
   alt?: string | null
 }
@@ -15,7 +15,7 @@ export const Pillow = ({ alt, src = PLACEHOLDER, ...props }: PillowProps) => (
 
 const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => getSize(size))
 
-const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
+const getSize = (size: PillowProps['size']) => {
   switch (size) {
     case 'xsmall':
       return { width: '2.25rem', height: '2.25rem' }
@@ -24,8 +24,10 @@ const getSize = (size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge') => {
     case 'medium':
       return { width: '3.5rem', height: '3.5rem' }
     case 'large':
-      return { width: '8rem', height: '8rem' }
+      return { width: '5rem', height: '5rem' }
     case 'xlarge':
-      return { width: '13.75rem', height: '13.75rem' }
+      return { width: '6rem', height: '6rem' }
+    case 'xxlarge':
+      return { width: '13rem', height: '13rem' }
   }
 }
