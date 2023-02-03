@@ -9,6 +9,7 @@ import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -51,7 +52,7 @@ export const CartPage = (props: CartPageProps) => {
 
   if (entries.length > 0) {
     body = (
-      <Wrapper>
+      <>
         <DesktopOnly>
           <Space y={4}>
             <Heading as="h1" variant="standard.32" align="center">
@@ -74,14 +75,16 @@ export const CartPage = (props: CartPageProps) => {
           <CostSummary {...cost} campaigns={campaigns} />
           {shopSession && <CartNextStep shopSession={shopSession} />}
         </Space>
-      </Wrapper>
+      </>
     )
   }
 
   return (
     <PageWrapper>
       <Space y={{ base: 3, sm: 6 }}>
-        {body}
+        <GridLayout.Root>
+          <GridLayout.Content>{body}</GridLayout.Content>
+        </GridLayout.Root>
         {recommendations.length > 0 && <RecommendationList recommendations={recommendations} />}
       </Space>
     </PageWrapper>
@@ -94,27 +97,25 @@ const EmptyState = ({ children }: EmptyStateProps) => {
   const { t } = useTranslation('cart')
 
   return (
-    <Wrapper y={4}>
-      <div>
-        <DesktopOnly>
-          <Heading as="h1" variant="standard.32" align="center">
-            {t('CART_PAGE_HEADING')}
-          </Heading>
-        </DesktopOnly>
-        <EmptyStateWrapper>
-          <Space y={2}>
-            <Space y={1}>
-              <Text align="center">¯\_(ツ)_/¯</Text>
-              <Text align="center" color="textSecondary">
-                {t('CART_EMPTY_SUMMARY')}
-              </Text>
-            </Space>
-            <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
+    <>
+      <DesktopOnly>
+        <Heading as="h1" variant="standard.32" align="center">
+          {t('CART_PAGE_HEADING')}
+        </Heading>
+      </DesktopOnly>
+      <EmptyStateWrapper>
+        <Space y={2}>
+          <Space y={1}>
+            <Text align="center">¯\_(ツ)_/¯</Text>
+            <Text align="center" color="textSecondary">
+              {t('CART_EMPTY_SUMMARY')}
+            </Text>
           </Space>
-        </EmptyStateWrapper>
-      </div>
+          <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
+        </Space>
+      </EmptyStateWrapper>
       {children}
-    </Wrapper>
+    </>
   )
 }
 
@@ -161,24 +162,17 @@ const CartNextStep = ({ shopSession }: { shopSession: ShopSession }) => {
 }
 
 const PageWrapper = styled.div({
+  paddingTop: theme.space.md,
   paddingBottom: theme.space.xxl,
+
+  [mq.sm]: {
+    paddingTop: theme.space.xxl,
+  },
 })
 
 const HorizontalLine = styled.hr({
   backgroundColor: theme.colors.gray300,
   height: 1,
-})
-
-const Wrapper = styled(Space)({
-  paddingTop: theme.space.md,
-  paddingInline: theme.space.md,
-
-  [mq.sm]: {
-    paddingTop: theme.space.xxl,
-    display: 'grid',
-    gridTemplateColumns: 'minmax(28rem, 33%)',
-    justifyContent: 'center',
-  },
 })
 
 const EmptyStateWrapper = styled.div({
