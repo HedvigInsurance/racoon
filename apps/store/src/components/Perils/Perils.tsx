@@ -41,12 +41,12 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ title, description, covered }) => {
+      {perils.map(({ title, description, covered, colorCode }) => {
         return (
           <AccordionItem key={title} value={title}>
             <Accordion.HeaderWithTrigger>
               <SpaceFlex space={0.75} align="center">
-                <Color color={titleToColor(title)} />
+                <Color color={colorCode ?? titleToColor(title)} />
                 <Text size="lg">{title}</Text>
               </SpaceFlex>
             </Accordion.HeaderWithTrigger>

@@ -3,11 +3,5 @@ fragment Peril on Peril {
   description
   covered
   exceptions
-  icon {
-    variants {
-      light {
-        svgUrl
-      }
-    }
-  }
+  colorCode
 }
