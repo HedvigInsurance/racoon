@@ -77,3 +77,11 @@ The `next` query parameter is required. When creating a new shop session, we bas
 Feature flags are used to enable/disable features in the app. They are stored in `/src/services/Flags`. Currenyly, we define all flags in code. In the future, we might want to move them to a 3rd party service.
 
 You enable a feature flag by supplying the `NEXT_PUBLIC_FEATURE_XXX` environment variable. For example, to enable the `INSURELY` feature, you would set the `NEXT_PUBLIC_FEATURE_INSURELY=true`.
+
+## Analyze bundle
+
+To analyze bundle size run the following command and this will open a report in the browser
+
+```bash
+yarn workspace store analyze-bundle
+```
