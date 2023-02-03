@@ -19,7 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apollo/client": "3.7.5",
+    "@apollo/client": "3.7.6",
     "@datadog/browser-rum": "4.31.0",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
