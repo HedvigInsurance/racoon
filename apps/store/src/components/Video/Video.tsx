@@ -188,7 +188,7 @@ const VideoControls = styled.div({
   inset: 0,
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.space.sm,
+  padding: theme.space.md,
   justifyContent: 'flex-end',
   alignItems: 'flex-start',
 })
