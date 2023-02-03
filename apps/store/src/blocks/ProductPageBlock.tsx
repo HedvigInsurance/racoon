@@ -201,10 +201,11 @@ const Main = styled.main({
 
 const PurchaseFormWrapper = styled.div({
   position: 'sticky',
-  top: 0,
+  top: '9vh',
   // Scroll independently if content is too long
   maxHeight: '100vh',
   overflow: 'auto',
+  paddingBottom: theme.space.xl,
 })
 
 const OverviewSection = styled.div({

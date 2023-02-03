@@ -154,7 +154,7 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
         <SectionWrapper>
           <SpaceFlex space={1} align="center" direction="vertical">
             <Pillow
-              size={pillowSize === 'large' ? 'xlarge' : 'large'}
+              size={pillowSize === 'large' ? 'xxlarge' : 'large'}
               {...productData.pillowImage}
             />
             <Space y={0.5}>
@@ -398,8 +398,13 @@ const PurchaseFormTop = styled.div({
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '4.5rem',
-  paddingBlock: '9vh',
+  paddingTop: '3vw',
+  paddingBottom: theme.space.xxl,
   paddingInline: theme.space.md,
+
+  [mq.xl]: {
+    paddingTop: '6vw',
+  },
 })
 
 const StickyButtonWrapper = styled.div({
