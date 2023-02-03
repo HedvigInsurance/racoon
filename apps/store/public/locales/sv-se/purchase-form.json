@@ -62,6 +62,7 @@
   "LOADING_PRICE_ANIMATION_LABEL": "Ditt pris beräknas...",
   "LOGIN_BANK_ID": "Logga in med BankID",
   "LOGIN_BANK_ID_EXPLANATION": "Om du har eller haft en försäkring hos oss kan du logga in, så hämtar vi dina uppgifter automatiskt.",
+  "LOGIN_BANK_ID_SKIP": "Hoppa över",
   "OPEN_PRICE_CALCULATOR_BUTTON": "Beräkna pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
