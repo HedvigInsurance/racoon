@@ -6,6 +6,7 @@ import {
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
 } from '@/components/CartInventory/CartInventory.helpers'
+import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
@@ -19,9 +20,10 @@ import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'> & {
-  [SHOP_SESSION_PROP_NAME]: string
-}
+type NextPageProps = Omit<
+  CheckoutPageProps,
+  'cart' | 'prefilledData' | 'customerAuthenticationStatus'
+>
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
@@ -91,10 +93,10 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     return { redirect: { destination: PageLink.cart({ locale }), permanent: false } }
   }
 
-  const shopSessionSigning = await fetchCurrentShopSessionSigning({
-    apolloClient,
-    req,
-  })
+  const [checkoutSteps, shopSessionSigning] = await Promise.all([
+    fetchCheckoutSteps({ apolloClient, shopSession }),
+    fetchCurrentShopSessionSigning({ apolloClient, req }),
+  ])
 
   const pageProps: NextPageProps = {
     ...translations,
@@ -103,6 +105,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     shouldCollectEmail: getShouldCollectEmail(customer),
     shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
+    checkoutSteps,
   }
 
   return addApolloState(apolloClient, { props: pageProps })

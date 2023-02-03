@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import {
   SwitchingAssistantPage,
   SwitchingAssistantPageProps,
@@ -63,10 +64,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     }
   }
 
+  const checkoutSteps = await fetchCheckoutSteps({ apolloClient, shopSession })
   const pageProps = {
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     entries,
+    checkoutSteps,
   } satisfies NextPageProps
 
   return addApolloState(apolloClient, { props: pageProps })

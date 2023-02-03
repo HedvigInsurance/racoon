@@ -1,0 +1,6 @@
+query CurrentMember {
+  currentMember {
+    id
+    hasActivePaymentConnection
+  }
+}
