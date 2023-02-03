@@ -75,13 +75,15 @@ export const NavigationMenuProductItem = styled(NavigationMenuPrimitive.Item)()
 export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Content)({
   [mq.lg]: {
     position: 'absolute',
-    top: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`,
+    paddingTop: `calc(${theme.space.sm} + ${theme.space.xs})`,
     left: '50%',
     transform: 'translate(-50%, 0)',
   },
 })
 
 export const NavigationMenuListWrapper = styled.div({
+  paddingBottom: theme.space.lg,
+
   [mq.lg]: {
     backgroundColor: theme.colors.light,
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
@@ -105,12 +107,13 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
     flexDirection: 'row',
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
+    padding: theme.space.none,
+    gap: theme.space.xxs,
   },
 })
 
 export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
   display: 'block',
-  paddingTop: theme.space.xl,
 
   [mq.lg]: {
     padding: 0,
