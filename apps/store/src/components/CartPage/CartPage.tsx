@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
-import { Heading, mq, Space, Text, theme } from 'ui'
+import { mq, Space, Text, theme } from 'ui'
 import { BankIdLogin } from '@/components/BankIdLogin'
 import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
@@ -23,7 +23,6 @@ import { RecommendationList } from './RecommendationList'
 export const CartPage = (props: CartPageProps) => {
   const { cartId, entries, campaigns, cost, recommendations } = props
   const { onReady, shopSession } = useShopSession()
-  const { t } = useTranslation('cart')
 
   const tracking = useTracking()
   useEffect(
@@ -52,30 +51,20 @@ export const CartPage = (props: CartPageProps) => {
 
   if (entries.length > 0) {
     body = (
-      <>
-        <DesktopOnly>
-          <Space y={4}>
-            <Heading as="h1" variant="standard.32" align="center">
-              {t('CART_PAGE_HEADING')}
-            </Heading>
-            <div />
-          </Space>
-        </DesktopOnly>
-        <Space y={1.5}>
-          <CartEntryList>
-            {entries.map((item) => (
-              <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-            ))}
-          </CartEntryList>
-          <Space y={{ base: 1, sm: 1.5 }}>
-            <HorizontalLine />
-            <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-            <HorizontalLine />
-          </Space>
-          <CostSummary {...cost} campaigns={campaigns} />
-          {shopSession && <CartNextStep shopSession={shopSession} />}
+      <Space y={1.5}>
+        <CartEntryList>
+          {entries.map((item) => (
+            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
+          ))}
+        </CartEntryList>
+        <Space y={{ base: 1, sm: 1.5 }}>
+          <HorizontalLine />
+          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
+          <HorizontalLine />
         </Space>
-      </>
+        <CostSummary {...cost} campaigns={campaigns} />
+        {shopSession && <CartNextStep shopSession={shopSession} />}
+      </Space>
     )
   }
 
@@ -98,11 +87,6 @@ const EmptyState = ({ children }: EmptyStateProps) => {
 
   return (
     <>
-      <DesktopOnly>
-        <Heading as="h1" variant="standard.32" align="center">
-          {t('CART_PAGE_HEADING')}
-        </Heading>
-      </DesktopOnly>
       <EmptyStateWrapper>
         <Space y={2}>
           <Space y={1}>
@@ -180,9 +164,4 @@ const EmptyStateWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-})
-
-const DesktopOnly = styled.div({
-  display: 'none',
-  [mq.sm]: { display: 'block' },
 })
