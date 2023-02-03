@@ -86,18 +86,21 @@ export const Video = ({
     [setState, onPause],
   )
 
+  const [wasPlaying, setWasPlaying] = useState(false)
   const handleDialogOpen = useCallback(() => {
     if (state === State.Playing) {
+      setWasPlaying(true)
       pauseVideo()
     }
   }, [state, pauseVideo])
   useDialogEvent('open', handleDialogOpen)
 
   const handleDialogClose = useCallback(() => {
-    if (state === State.Paused) {
+    if (wasPlaying) {
+      setWasPlaying(false)
       playVideo()
     }
-  }, [state, playVideo])
+  }, [wasPlaying, playVideo])
   useDialogEvent('close', handleDialogClose)
 
   return (
