@@ -75,3 +75,11 @@ const makeAbsolute = (url: string) => {
 export const isProductStory = (story: ISbStoryData): story is ProductStory => {
   return story.content.component === 'product'
 }
+
+export const getStoryblokImageSize = (filename: string) => {
+  const [, width, height] = filename.match(/\/(\d+)x(\d+)\//) ?? []
+
+  if (!width || !height) return null
+
+  return { width: Number(width), height: Number(height) }
+}

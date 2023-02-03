@@ -3,4 +3,9 @@ fragment ProductRecommendation on Product {
   displayNameFull
   displayNameShort
   pageLink
+  featuredImage {
+    id
+    src
+    alt
+  }
 }

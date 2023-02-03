@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ProductRecommendationFragment } from '@/services/apollo/generated'
+import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = {
   recommendations: Array<ProductRecommendationFragment>
@@ -29,13 +30,7 @@ export const RecommendationList = ({ recommendations }: Props) => {
         {recommendations.map((recommendation) => (
           <Link key={recommendation.id} href={recommendation.pageLink}>
             <Space y={0.5}>
-              <StyledImage
-                // TODO: Use the correct image
-                src="https://a.storyblok.com/f/165473/330x396/573a75c77d/home-low.png"
-                alt=""
-                width={330}
-                height={396}
-              />
+              <FeaturedImage image={recommendation.featuredImage} />
               <ListItemContent>
                 <Heading as="h3" variant="standard.18">
                   {recommendation.displayNameShort}
@@ -48,6 +43,20 @@ export const RecommendationList = ({ recommendations }: Props) => {
       </List>
     </Wrapper>
   )
+}
+
+const FALLBACK_IMAGE = 'https://a.storyblok.com/f/165473/330x396/573a75c77d/home-low.png'
+
+type FeaturedImageProps = {
+  image: ProductRecommendationFragment['featuredImage']
+}
+
+const FeaturedImage = ({ image }: FeaturedImageProps) => {
+  if (!image) {
+    return <Image src={FALLBACK_IMAGE} alt="" width={330} height={396} />
+  }
+
+  return <StyledImage src={image.src} alt={image.alt ?? ''} {...getStoryblokImageSize(image.src)} />
 }
 
 const Wrapper = styled(Space)({
