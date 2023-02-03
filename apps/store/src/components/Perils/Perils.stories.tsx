@@ -4,13 +4,6 @@ import { Perils } from './Perils'
 
 const mockedPerils: PerilFragment[] = [
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_traffic_personal_injury_a14171ca7a.svg',
-        },
-      },
-    },
     title: 'Water leaks',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -23,13 +16,6 @@ const mockedPerils: PerilFragment[] = [
     exceptions: ['Morbi vitae elit sapien', 'Duis sed viverra nibh'],
   },
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_traffic_thrid_party_property_0a6eef1ac9.svg',
-        },
-      },
-    },
     title: 'Fire',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -42,13 +28,6 @@ const mockedPerils: PerilFragment[] = [
     ],
   },
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_theft_burglary_c98ad8e370.svg',
-        },
-      },
-    },
     title: 'Storms',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -60,13 +39,6 @@ const mockedPerils: PerilFragment[] = [
     exceptions: ['Morbi vitae elit sapien'],
   },
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_theft_burglary_c98ad8e370.svg',
-        },
-      },
-    },
     title: 'Assault',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -78,13 +50,6 @@ const mockedPerils: PerilFragment[] = [
     exceptions: ['Morbi vitae elit sapien'],
   },
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_theft_burglary_c98ad8e370.svg',
-        },
-      },
-    },
     title: 'White Goods',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
@@ -96,13 +61,6 @@ const mockedPerils: PerilFragment[] = [
     exceptions: ['Morbi vitae elit sapien'],
   },
   {
-    icon: {
-      variants: {
-        light: {
-          svgUrl: 'https://promise.hedvig.com/car_theft_burglary_c98ad8e370.svg',
-        },
-      },
-    },
     title: 'Criminal Damage',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dictum urna. Pellentesque gravida, sapien ut maximus cursus, dui ligula sodales nisl, sed placerat felis metus quis dolor.',
