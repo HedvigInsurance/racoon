@@ -6,7 +6,7 @@ import {
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Form, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import { Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
@@ -31,13 +31,10 @@ export const PriceCalculator = (props: Props) => {
   const { priceTemplate } = useProductPageContext()
 
   const form = useMemo(() => {
-    const { ssn, email } = shopSession.customer ?? {}
-    const customerData = { ssn, email }
     return setupForm({
       customer: shopSession.customer,
-      suggestedData: priceIntent.suggestedData,
+      priceIntent,
       template: priceTemplate,
-      userData: getFormData(priceIntent, customerData),
     })
   }, [priceIntent, shopSession.customer, priceTemplate])
 
@@ -50,10 +47,9 @@ export const PriceCalculator = (props: Props) => {
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
-        customer: shopSession.customer,
-        suggestedData: priceIntent.suggestedData,
+        customer,
+        priceIntent,
         template: priceTemplate,
-        userData: { ...customer, ...priceIntent.data },
       })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
@@ -126,13 +122,9 @@ type IsFormReadyToConfirmParams = {
 const isFormReadyToConfirm = ({ form, customer, priceIntent }: IsFormReadyToConfirmParams) => {
   const filledForm = prefillData({
     form,
-    data: getFormData(priceIntent, customer),
+    data: { ...customer, ...priceIntent.data },
     valueField: 'value',
   })
   const updatedForm = updateFormState(filledForm)
   return updatedForm.sections.every((section) => section.state === 'valid')
-}
-
-const getFormData = (priceIntent: PriceIntent, customer?: CustomerData | null): JSONData => {
-  return { ...customer, ...priceIntent.data } as const
 }

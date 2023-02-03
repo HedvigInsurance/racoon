@@ -1,4 +1,5 @@
 import { ShopSessionCustomer } from '@/services/apollo/generated'
+import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { getShouldCollectEmail } from '@/utils/customer'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
 import { SE_APARTMENT_BRF } from './data/SE_APARTMENT_BRF'
@@ -53,11 +54,10 @@ export const prefillData = ({ form, data, valueField }: FillDataParams): Form =>
 
 type SetupFormOptions = {
   customer: ShopSessionCustomer | null | undefined
-  suggestedData: JSONData
+  priceIntent: PriceIntent
   template: Template
-  userData: JSONData
 }
-export const setupForm = ({ customer, suggestedData, template, userData }: SetupFormOptions) => {
+export const setupForm = ({ customer, priceIntent, template }: SetupFormOptions) => {
   const form = convertTemplateIntoForm(template)
   form.sections.forEach((section) => {
     section.items = section.items.filter(
@@ -67,13 +67,13 @@ export const setupForm = ({ customer, suggestedData, template, userData }: Setup
 
   const formWithDefaultValues = prefillData({
     form,
-    data: suggestedData,
+    data: { ...customer, ...priceIntent.suggestedData },
     valueField: 'defaultValue',
   })
 
   const formWithValues = prefillData({
     form: formWithDefaultValues,
-    data: userData,
+    data: { ...customer, ...priceIntent.data },
     valueField: 'value',
   })
 
