@@ -159,14 +159,12 @@ const PrimaryAltButton = styled(StyledButton)(
 
 const SecondaryButton = styled(StyledButton)(
   {
-    // TODO: update to use translucent gray100
-    backgroundColor: theme.colors.gray100,
+    backgroundColor: theme.colors.translucent1,
     color: theme.colors.textPrimary,
 
     '@media (hover: hover)': {
       ':hover': {
-        // TODO: update to use translucent gray200
-        backgroundColor: theme.colors.gray200,
+        backgroundColor: theme.colors.translucent2,
       },
     },
 

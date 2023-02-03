@@ -10,7 +10,6 @@ export type VideoBlockProps = SbBaseBlockProps<
   } & Pick<
     VideoProps,
     | 'autoPlay'
-    | 'controls'
     | 'aspectRatioLandscape'
     | 'aspectRatioPortrait'
     | 'maxHeightLandscape'
@@ -25,7 +24,6 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
         sources={[{ url: blok.video.filename }]}
         poster={blok.poster?.filename}
         autoPlay={blok.autoPlay}
-        controls={blok.controls}
         aspectRatioLandscape={blok.aspectRatioLandscape}
         aspectRatioPortrait={blok.aspectRatioPortrait}
         maxHeightLandscape={blok.maxHeightLandscape}
