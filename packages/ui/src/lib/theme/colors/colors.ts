@@ -170,6 +170,7 @@ export const colors = {
   grayTranslucent100: grayTranslucent[100],
   grayTranslucent200: grayTranslucent[200],
   grayTranslucent300: grayTranslucent[300],
+  grayTranslucent400: grayTranslucent[400],
   grayTranslucent500: grayTranslucent[500],
   grayTranslucent600: grayTranslucent[600],
   grayTranslucent700: grayTranslucent[700],

@@ -22,6 +22,15 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   /* Set default font rules and color on body */
   body {
     color: ${getColor('textPrimary')};
