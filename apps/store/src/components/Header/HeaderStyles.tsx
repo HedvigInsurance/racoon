@@ -107,7 +107,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
     flexDirection: 'row',
     alignItems: 'center',
     height: MENU_BAR_HEIGHT_DESKTOP,
-    padding: 0,
+    padding: theme.space.none,
     gap: theme.space.xxs,
   },
 })
