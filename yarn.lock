@@ -4680,7 +4680,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^2.0.12":
+"@storyblok/js@npm:^2.0.13":
   version: 2.0.14
   resolution: "@storyblok/js@npm:2.0.14"
   dependencies:
@@ -4689,15 +4689,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:2.0.9":
-  version: 2.0.9
-  resolution: "@storyblok/react@npm:2.0.9"
+"@storyblok/react@npm:2.0.10":
+  version: 2.0.10
+  resolution: "@storyblok/react@npm:2.0.10"
   dependencies:
-    "@storyblok/js": ^2.0.12
+    "@storyblok/js": ^2.0.13
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: a16e47d8b6fd95ff9a102c6dad0075c329e0d4cefb95d29e3a9f3dc60c6d4b08993a49493f98d0b99f2db08c5a2c3cd7111ac6a1c6ba43581189ad37de8b81a0
+  checksum: 54cca067dc17f457e803232496bffc8822a4c656f1e3d7c11545451c07ce21c5ebbbc8b31ce5db7f19fd5d12053da3ae15b3de06b31f68774d5e04155c9d4537
   languageName: node
   linkType: hard
 
@@ -21246,7 +21246,7 @@ __metadata:
     "@radix-ui/react-radio-group": 1.1.1
     "@radix-ui/react-switch": 1.0.1
     "@radix-ui/react-tabs": 1.0.2
-    "@storyblok/react": 2.0.9
+    "@storyblok/react": 2.0.10
     "@storybook/addon-actions": 6.5.16
     "@storybook/addon-essentials": 6.5.16
     "@storybook/addon-links": 6.5.16
