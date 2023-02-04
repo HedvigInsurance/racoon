@@ -23,7 +23,7 @@
     "storybook:build": "turbo run storybook:build",
     "chromatic": "turbo run chromatic"
   },
-  "packageManager": "yarn@3.3.1",
+  "packageManager": "yarn@3.4.1",
   "lint-staged": {
     "*.md": [
       "prettier --ignore-unknown --write"
