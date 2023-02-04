@@ -34,7 +34,7 @@
     "@radix-ui/react-radio-group": "1.1.1",
     "@radix-ui/react-switch": "1.0.1",
     "@radix-ui/react-tabs": "1.0.2",
-    "@storyblok/react": "2.0.8",
+    "@storyblok/react": "2.0.9",
     "@types/uuid": "9.0.0",
     "@vercel/edge-config": "0.1.1",
     "ajv": "8.12.0",
