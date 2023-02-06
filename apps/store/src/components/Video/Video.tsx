@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import React, { useCallback, useId, useRef, useState } from 'react'
-import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
+import React, { useCallback, useId, useRef, useState, forwardRef } from 'react'
+import { mq, theme, PlayIcon, PauseIcon, Button, mergeRefs } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 
 enum State {
@@ -33,123 +33,129 @@ const autoplaySettings = {
   loop: true,
 }
 
-export const Video = ({
-  sources,
-  poster,
-  aspectRatioLandscape,
-  aspectRatioPortrait,
-  maxHeightLandscape,
-  maxHeightPortrait,
-  onPlaying,
-  onPause,
-  ...delegated
-}: VideoProps) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-  const playButtonId = useId()
-  const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
+export const Video = forwardRef<HTMLVideoElement, VideoProps>(
+  (
+    {
+      sources,
+      poster,
+      aspectRatioLandscape,
+      aspectRatioPortrait,
+      maxHeightLandscape,
+      maxHeightPortrait,
+      onPlaying,
+      onPause,
+      ...delegated
+    },
+    ref,
+  ) => {
+    const videoRef = useRef<HTMLVideoElement | null>(null)
+    const playButtonId = useId()
+    const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
-  const [state, setState] = useState<State>(State.Paused)
+    const [state, setState] = useState<State>(State.Paused)
 
-  const autoplayAttributes = delegated.autoPlay ? autoplaySettings : {}
+    const autoplayAttributes = delegated.autoPlay ? autoplaySettings : {}
 
-  const playVideo = useCallback(() => {
-    videoRef.current?.play()
-    setState(State.Playing)
-  }, [])
-
-  const pauseVideo = useCallback(() => {
-    videoRef.current?.pause()
-    setState(State.Paused)
-  }, [])
-
-  const togglePlay = useCallback(() => {
-    if (state === State.Paused) {
-      playVideo()
-    } else {
-      pauseVideo()
-    }
-  }, [state, playVideo, pauseVideo])
-
-  const handlePlaying: React.ReactEventHandler<HTMLVideoElement> = useCallback(
-    (event) => {
+    const playVideo = useCallback(() => {
+      videoRef.current?.play()
       setState(State.Playing)
-      onPlaying?.(event)
-    },
-    [setState, onPlaying],
-  )
+    }, [])
 
-  const handlePause: React.ReactEventHandler<HTMLVideoElement> = useCallback(
-    (event) => {
+    const pauseVideo = useCallback(() => {
+      videoRef.current?.pause()
       setState(State.Paused)
-      onPause?.(event)
-    },
-    [setState, onPause],
-  )
+    }, [])
 
-  const [wasPlaying, setWasPlaying] = useState(false)
-  const handleDialogOpen = useCallback(() => {
-    if (state === State.Playing) {
-      setWasPlaying(true)
-      pauseVideo()
-    }
-  }, [state, pauseVideo])
-  useDialogEvent('open', handleDialogOpen)
+    const togglePlay = useCallback(() => {
+      if (state === State.Paused) {
+        playVideo()
+      } else {
+        pauseVideo()
+      }
+    }, [state, playVideo, pauseVideo])
 
-  const handleDialogClose = useCallback(() => {
-    if (wasPlaying) {
-      setWasPlaying(false)
-      playVideo()
-    }
-  }, [wasPlaying, playVideo])
-  useDialogEvent('close', handleDialogClose)
+    const handlePlaying: React.ReactEventHandler<HTMLVideoElement> = useCallback(
+      (event) => {
+        setState(State.Playing)
+        onPlaying?.(event)
+      },
+      [setState, onPlaying],
+    )
 
-  return (
-    <VideoWrapper>
-      {/*
+    const handlePause: React.ReactEventHandler<HTMLVideoElement> = useCallback(
+      (event) => {
+        setState(State.Paused)
+        onPause?.(event)
+      },
+      [setState, onPause],
+    )
+
+    const [wasPlaying, setWasPlaying] = useState(false)
+    const handleDialogOpen = useCallback(() => {
+      if (state === State.Playing) {
+        setWasPlaying(true)
+        pauseVideo()
+      }
+    }, [state, pauseVideo])
+    useDialogEvent('open', handleDialogOpen)
+
+    const handleDialogClose = useCallback(() => {
+      if (wasPlaying) {
+        setWasPlaying(false)
+        playVideo()
+      }
+    }, [wasPlaying, playVideo])
+    useDialogEvent('close', handleDialogClose)
+
+    return (
+      <VideoWrapper>
+        {/*
     Some special attributes here need more explanation.
     - Safari on iOS only allows autoplay when the video is `muted`.
     - Safari on iOS will default to autoplay videos in fullscreen unless `playsInline` is added
     Read more: https://webkit.org/blog/6784/new-video-policies-for-ios/
     */}
-      <StyledVideo
-        ref={videoRef}
-        playsInline
-        preload="auto"
-        poster={poster}
-        aspectRatioLandscape={aspectRatioLandscape}
-        aspectRatioPortrait={aspectRatioPortrait}
-        maxHeightLandscape={maxHeightLandscape}
-        maxHeightPortrait={maxHeightPortrait}
-        onPlaying={handlePlaying}
-        onPause={handlePause}
-        {...autoplayAttributes}
-        {...delegated}
-      >
-        {sources.map((source) => (
-          // TODO: its adivided to provide the media format type ('type' attribute)
-          // More info http://bitly.ws/y4Jf
-          <source key={source.url} src={source.url} />
-        ))}
-      </StyledVideo>
-      <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
-        <Controls>
-          <PlayPauseButton
-            ref={playPauseButtonRef}
-            onClick={togglePlay}
-            variant="secondary"
-            size="small"
-            aria-labelledby={playButtonId}
-          >
-            {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-            <span id={playButtonId} hidden>
-              {state === State.Paused ? 'Play' : 'Pause'}
-            </span>
-          </PlayPauseButton>
-        </Controls>
-      </VideoControls>
-    </VideoWrapper>
-  )
-}
+        <StyledVideo
+          ref={mergeRefs([videoRef, ref])}
+          playsInline
+          preload="auto"
+          poster={poster}
+          aspectRatioLandscape={aspectRatioLandscape}
+          aspectRatioPortrait={aspectRatioPortrait}
+          maxHeightLandscape={maxHeightLandscape}
+          maxHeightPortrait={maxHeightPortrait}
+          onPlaying={handlePlaying}
+          onPause={handlePause}
+          {...autoplayAttributes}
+          {...delegated}
+        >
+          {sources.map((source) => (
+            // TODO: its adivided to provide the media format type ('type' attribute)
+            // More info http://bitly.ws/y4Jf
+            <source key={source.url} src={source.url} />
+          ))}
+        </StyledVideo>
+        <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
+          <Controls>
+            <PlayPauseButton
+              ref={playPauseButtonRef}
+              onClick={togglePlay}
+              variant="secondary"
+              size="small"
+              aria-labelledby={playButtonId}
+            >
+              {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
+              <span id={playButtonId} hidden>
+                {state === State.Paused ? 'Play' : 'Pause'}
+              </span>
+            </PlayPauseButton>
+          </Controls>
+        </VideoControls>
+      </VideoWrapper>
+    )
+  },
+)
+Video.displayName = 'Video'
 
 const VideoWrapper = styled.div({
   position: 'relative',

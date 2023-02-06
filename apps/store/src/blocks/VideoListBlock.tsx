@@ -1,41 +1,38 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
+import { useCallback, useRef } from 'react'
 import { mq } from 'ui'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { VideoBlock, VideoBlockProps } from './VideoBlock'
-
-const playVideoExclusively = (
-  videoList: Array<HTMLVideoElement>,
-  videoToBePlayed: HTMLVideoElement,
-) => {
-  videoList.forEach((videoNode) => {
-    if (videoNode === videoToBePlayed) return
-    if (videoNode.played.length > 0 && !videoNode.paused) {
-      videoNode.pause()
-    }
-  })
-}
 
 type VideoListBlockProps = SbBaseBlockProps<{
   videos: ExpectedBlockType<VideoBlockProps>
 }>
 
 export const VideoListBlock = ({ blok }: VideoListBlockProps) => {
-  return (
-    <Slideshow
-      ref={(node) => {
-        const videos = Array.from(node?.querySelectorAll('video') ?? [])
+  const videos = useRef<Array<HTMLVideoElement>>([])
 
-        videos.forEach((video) => {
-          video.addEventListener('play', () => playVideoExclusively(videos, video))
-        })
-      }}
-      alignment="center"
-      {...storyblokEditable(blok)}
-    >
+  const handlePlay = useCallback<React.ReactEventHandler<HTMLVideoElement>>((event) => {
+    videos.current.forEach((video) => {
+      const shouldVideoBePaused =
+        video !== event.currentTarget && video.played.length > 0 && !video.paused
+
+      if (shouldVideoBePaused) {
+        video.pause()
+      }
+    })
+  }, [])
+
+  return (
+    <Slideshow alignment="center" {...storyblokEditable(blok)}>
       {blok.videos.map((nestedVideoBlock) => (
-        <StyledVideoBlock key={nestedVideoBlock._uid} blok={nestedVideoBlock} />
+        <StyledVideoBlock
+          ref={(node) => node && videos.current.push(node)}
+          key={nestedVideoBlock._uid}
+          blok={nestedVideoBlock}
+          onPlay={handlePlay}
+        />
       ))}
     </Slideshow>
   )
