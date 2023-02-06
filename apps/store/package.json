@@ -20,7 +20,7 @@
     "scan-translations": "yarn i18next && yarn dlx i18next-v4-format-converter public/locales"
   },
   "dependencies": {
-    "@adyen/adyen-web": "5.31.3",
+    "@adyen/adyen-web": "5.32.0",
     "@apollo/client": "3.7.6",
     "@datadog/browser-logs": "4.31.0",
     "@emotion/react": "11.10.5",
