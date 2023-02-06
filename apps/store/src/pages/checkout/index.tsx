@@ -10,7 +10,6 @@ import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.h
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -33,10 +32,6 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   if (!shopSession || !shopSession.customer) return null
 
   const { authenticationStatus } = shopSession.customer
-  if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired)
-    throw new Error(
-      'Authentication required when rendering checkout page, this should be prevented by server side redirect',
-    )
 
   const cart = {
     id: shopSession.cart.id,
@@ -80,18 +75,12 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     getCurrentShopSessionServerSide({ apolloClient, req, res }).catch(() => null),
     serverSideTranslations(locale),
   ])
-  if (!shopSession) {
+  if (!shopSession?.customer) {
     return { redirect: { destination: PageLink.home({ locale }), permanent: false } }
   }
 
   const { customer } = shopSession
-  if (!customer) throw new Error('No Customer info in Shop Session')
   if (!customer.ssn) throw new Error('No SSN in Shop Session')
-  // Cart page handles authentication requirement before checkout
-  if (customer.authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-    console.log('Customer authentication required, redirecting checkout -> cart')
-    return { redirect: { destination: PageLink.cart({ locale }), permanent: false } }
-  }
 
   const [checkoutSteps, shopSessionSigning] = await Promise.all([
     fetchCheckoutSteps({ apolloClient, shopSession }),

@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { BankIdState, useBankIdLogin } from '@/services/bankId'
 import {
   Params as SignCheckoutParams,
   useHandleSignShopSession,
@@ -9,14 +10,19 @@ import { useUpdateCustomer } from './useUpdateCustomer'
 
 type Params = SignCheckoutParams & {
   shopSessionId: string
-  customerAuthenticationStatus:
-    | ShopSessionAuthenticationStatus.Authenticated
-    | ShopSessionAuthenticationStatus.None
+  ssn: string
+  customerAuthenticationStatus: ShopSessionAuthenticationStatus
 }
 
 export const useHandleSubmitCheckout = (params: Params) => {
-  const { customerAuthenticationStatus, shopSessionId, shopSessionSigningId, onSuccess, onError } =
-    params
+  const {
+    customerAuthenticationStatus,
+    shopSessionId,
+    ssn,
+    shopSessionSigningId,
+    onSuccess,
+    onError,
+  } = params
   const [startSign, signResult] = useHandleSignShopSession({
     shopSessionId,
     shopSessionSigningId,
@@ -28,23 +34,48 @@ export const useHandleSubmitCheckout = (params: Params) => {
     shopSessionId,
   })
 
+  const [startLogin, loginState] = useBankIdLogin({
+    shopSessionId,
+    ssn,
+    onCompleted() {
+      startSign()
+    },
+  })
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
     datadogLogs.logger.debug('Checkout | Submit')
-    if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.None) {
-      const formData = new FormData(event.currentTarget)
-      await updateCustomer(formData)
+    switch (customerAuthenticationStatus) {
+      case ShopSessionAuthenticationStatus.None: {
+        const formData = new FormData(event.currentTarget)
+        await updateCustomer(formData)
+        await startSign()
+        break
+      }
+      case ShopSessionAuthenticationStatus.Authenticated: {
+        await startSign()
+        break
+      }
+      case ShopSessionAuthenticationStatus.AuthenticationRequired: {
+        startLogin()
+        break
+      }
+      default: {
+        const status: never = customerAuthenticationStatus
+        throw new Error(`Unexpected authentication status: ${status}`)
+      }
     }
-    await startSign()
   }
 
+  const loginLoading = [BankIdState.Starting, BankIdState.Pending].includes(loginState)
   const userError = updateCustomerResult.userError || signResult.userError
 
   return [
     handleSubmit,
     {
-      loading: signResult.loading || updateCustomerResult.loading,
+      loading: signResult.loading || updateCustomerResult.loading || loginLoading,
       userError,
+      // TODO: Unify with login status for returning member
       signingStatus: signResult.signingStatus,
     },
   ] as const

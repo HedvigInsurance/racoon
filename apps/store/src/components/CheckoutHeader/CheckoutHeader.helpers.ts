@@ -36,7 +36,6 @@ export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) 
   if (showSwitchingAssistant) steps.push(CheckoutStep.SwitchingAssistant)
   if (steps.length < 3) steps.push(CheckoutStep.Confirmation)
   if (steps.length < 3) steps.push(CheckoutStep.Done)
-
   return steps
 }
 
