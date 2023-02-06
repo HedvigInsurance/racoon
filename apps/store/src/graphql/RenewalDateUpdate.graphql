@@ -1,0 +1,13 @@
+mutation RenewalDateUpdate($productOfferIds: [ID!]!, $renewalDate: Date!) {
+  productOffersExistingInsuranceRenewalDateUpdate(
+    productOfferIds: $productOfferIds
+    renewalDate: $renewalDate
+  ) {
+    productOffers {
+      ...ProductOffer
+    }
+    userError {
+      message
+    }
+  }
+}

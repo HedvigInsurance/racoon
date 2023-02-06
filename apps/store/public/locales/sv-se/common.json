@@ -1,8 +1,10 @@
 {
   "CALCULATE_PRICE": "Beräkna pris",
   "COUNTRY_LABEL_SE": "Sverige",
+  "DATE_INPUT_EMPTY_LABEL": "Välj",
   "LANGUAGE_LABEL_en": "Engelska",
   "LANGUAGE_LABEL_sv": "Svenska",
+  "LOGIN_BUTTON_TEXT": "Logga in",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",
   "NAVIGATION_STORE_LINK": "Se alla försäkringar",
   "NAV_MENU_DIALOG_CLOSE": "Stäng",
