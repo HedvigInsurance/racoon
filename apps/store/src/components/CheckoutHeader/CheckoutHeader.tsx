@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { ReactNode } from 'react'
 import { HedvigLogo, mq, theme } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs'
 
 type Props = BreadcrumbsProps & {
@@ -9,47 +10,51 @@ type Props = BreadcrumbsProps & {
 
 export const CheckoutHeader = ({ children, steps, activeStep }: Props) => {
   return (
-    <Header>
+    <HeaderLayout>
       <HeaderLogo>
         <HedvigLogo width={78} />
       </HeaderLogo>
       <HeaderBreadcrumbs>
         <Breadcrumbs steps={steps} activeStep={activeStep} />
       </HeaderBreadcrumbs>
-      <HeaderBack>
-        <HeaderLink>{children}</HeaderLink>
-      </HeaderBack>
-    </Header>
+      <HeaderBack>{children}</HeaderBack>
+    </HeaderLayout>
   )
 }
 
-const Header = styled.header({
-  display: 'grid',
-  gridTemplateAreas: `
-    'logo back'
-    'breadcrumbs breadcrumbs'
-  `,
-  gridTemplateColumns: '1fr auto',
+const HeaderLayout = styled(GridLayout.Root)({
+  paddingInline: theme.space.md,
   gridTemplateRows: '3rem 3rem',
   alignItems: 'center',
 
   [mq.md]: {
-    gridTemplateAreas: `
-      'logo breadcrumbs back'
-    `,
-    gridTemplateColumns: '1fr minmax(28rem, 33%) 1fr',
+    paddingInline: theme.space.xl,
     gridTemplateRows: '3.5rem',
   },
 })
 
-const HeaderLogo = styled.div({ gridArea: 'logo' })
-const HeaderBreadcrumbs = styled.div({ gridArea: 'breadcrumbs' })
-const HeaderBack = styled.div({ gridArea: 'back', justifySelf: 'flex-end' })
+const HeaderLogo = styled.div({
+  gridColumn: '1 / span 6',
 
-const HeaderLink = styled.div({
-  [mq.lg]: {
-    position: 'absolute',
-    top: theme.space.md,
-    right: theme.space.md,
+  [mq.md]: {
+    gridColumn: '1 / span 2',
+  },
+})
+
+const HeaderBreadcrumbs = styled(GridLayout.Content)({
+  gridRow: 2,
+  gridColumn: '1 / span 12',
+
+  [mq.md]: {
+    gridRow: 1,
+  },
+})
+
+const HeaderBack = styled.div({
+  gridColumn: '7 / span 6',
+  justifySelf: 'flex-end',
+
+  [mq.md]: {
+    gridColumn: '11 / span 2',
   },
 })

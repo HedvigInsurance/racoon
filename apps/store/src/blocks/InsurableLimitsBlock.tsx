@@ -1,12 +1,13 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { HeadingLabel, theme } from 'ui'
+import { HeadingLabel, Space, theme } from 'ui'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import * as Statistic from '@/components/Statistic/Statistic'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type InsurableLimitsBlockProps = SbBaseBlockProps<unknown>
+type InsurableLimitsBlockProps = SbBaseBlockProps<{
+  headline: string
+}>
 
 export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
   const { productData, selectedVariant } = useProductPageContext()
@@ -17,20 +18,21 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
 
   const productVariant = selectedProductVariant ?? productData.variants[0]
 
+  const items = productVariant.insurableLimits.map((item) => ({
+    label: item.label,
+    description: item.description,
+    value: item.limit,
+  }))
+
   return (
-    <StyledInsurableLimits {...storyblokEditable(blok)}>
-      {productVariant.insurableLimits.map((item) => (
-        <Statistic.Root key={item.label}>
-          <HeadingLabel color="#D2E6F1">{item.label}</HeadingLabel>
-          <Statistic.Description>{item.description}</Statistic.Description>
-          <Statistic.Value>{item.limit}</Statistic.Value>
-        </Statistic.Root>
-      ))}
-    </StyledInsurableLimits>
+    <Wrapper {...storyblokEditable}>
+      <Space y={1}>
+        <HeadingLabel>{blok.headline}</HeadingLabel>
+        <InsurableLimits items={items} />
+      </Space>
+    </Wrapper>
   )
 }
 InsurableLimitsBlock.blockName = 'insurableLimits'
 
-const StyledInsurableLimits = styled(InsurableLimits)({
-  padding: theme.space.md,
-})
+const Wrapper = styled.div({ padding: theme.space.md })
