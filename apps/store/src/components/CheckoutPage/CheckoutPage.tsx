@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { Button, Heading, mq, Space, Text, theme } from 'ui'
-import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
+import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
@@ -105,7 +105,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     ))}
                   </CartEntryList>
                   <HorizontalLine />
-                  <CampaignCodeList cartId={cart.id} campaigns={cart.campaigns} />
+                  <CampaignsSection cartId={cart.id} campaigns={cart.campaigns} />
                   <HorizontalLine />
                   <CostSummary {...cart.cost} campaigns={cart.campaigns} />
                 </CartCollapsibleInner>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { BankIdLogin } from '@/components/BankIdLogin'
-import { CampaignCodeList } from '@/components/CartInventory/CampaignCodeList'
+import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
@@ -21,7 +21,7 @@ import { CartPageProps } from './CartPageProps.types'
 import { RecommendationList } from './RecommendationList'
 
 export const CartPage = (props: CartPageProps) => {
-  const { cartId, entries, campaigns, cost, recommendations } = props
+  const { cartId, entries, campaigns, campaignsEnabled, cost, recommendations } = props
   const { onReady, shopSession } = useShopSession()
 
   const tracking = useTracking()
@@ -42,8 +42,12 @@ export const CartPage = (props: CartPageProps) => {
     <EmptyState>
       <Space y={1.5}>
         <HorizontalLine />
-        <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-        <HorizontalLine />
+        {campaignsEnabled && (
+          <>
+            <CampaignsSection cartId={cartId} campaigns={campaigns} />
+            <HorizontalLine />
+          </>
+        )}
         <CostSummary {...cost} campaigns={campaigns} />
       </Space>
     </EmptyState>
@@ -57,11 +61,13 @@ export const CartPage = (props: CartPageProps) => {
             <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
           ))}
         </CartEntryList>
-        <Space y={{ base: 1, sm: 1.5 }}>
-          <HorizontalLine />
-          <CampaignCodeList cartId={cartId} campaigns={campaigns} />
-          <HorizontalLine />
-        </Space>
+        {campaignsEnabled && (
+          <Space y={{ base: 1, sm: 1.5 }}>
+            <HorizontalLine />
+            <CampaignsSection cartId={cartId} campaigns={campaigns} />
+            <HorizontalLine />
+          </Space>
+        )}
         <CostSummary {...cost} campaigns={campaigns} />
         {shopSession && <CartNextStep shopSession={shopSession} />}
       </Space>

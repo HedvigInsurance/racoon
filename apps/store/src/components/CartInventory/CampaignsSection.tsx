@@ -14,7 +14,7 @@ type Props = {
   campaigns: Array<CartCampaign>
 }
 
-export const CampaignCodeList = ({ cartId, campaigns }: Props) => {
+export const CampaignsSection = ({ cartId, campaigns }: Props) => {
   const { t } = useTranslation('cart')
   const theme = useTheme()
 
