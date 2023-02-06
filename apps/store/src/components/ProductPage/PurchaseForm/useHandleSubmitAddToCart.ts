@@ -1,6 +1,10 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler, useCallback } from 'react'
-import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
+import {
+  CartEntryAddMutation,
+  ShopSessionDocument,
+  useCartEntryAddMutation,
+} from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './PurchaseForm.constants'
@@ -11,9 +15,11 @@ type Params = {
   onSuccess: (productOfferId: string) => void
 }
 
-// Temporary implementation, we should set startDate on priceIntent before adding to cart
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
-  const [addEntry, { loading }] = useCartEntryAdd()
+  const [addEntry, { loading }] = useCartEntryAdd({
+    // Refetch recommendations
+    refetchQueries: [ShopSessionDocument],
+  })
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
 

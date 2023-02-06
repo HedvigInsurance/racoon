@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
+import { ShopSessionDocument } from '@/services/apollo/generated'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -8,7 +9,11 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
   const { shopSession } = useShopSession()
 
   const tracking = useTracking()
-  const [runMutation, mutationResult] = useCartEntryRemoveMutation()
+  const [runMutation, mutationResult] = useCartEntryRemoveMutation({
+    // Refetch recommendations
+    refetchQueries: [ShopSessionDocument],
+  })
+
   const removeCartEntry = useCallback(() => {
     runMutation({
       variables: { cartId, offerId },
@@ -28,5 +33,6 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
       },
     })
   }, [cartId, offerId, runMutation, shopSession, tracking])
+
   return [removeCartEntry, mutationResult] as const
 }
