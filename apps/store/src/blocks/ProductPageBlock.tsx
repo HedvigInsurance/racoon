@@ -1,8 +1,9 @@
+import { Global } from '@emotion/react'
 import styled, { CSSObject } from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
@@ -37,6 +38,10 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
+  useActiveSectionChangeListener(['overview', 'coverage'], (sectionId) =>
+    setActiveSection(sectionId as PageSection),
+  )
+
   const shouldRenderVariantSelector =
     activeSection === 'coverage' && productData.variants.length > 1
 
@@ -58,6 +63,15 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         )}
         {blok.seoMetaOgImage && <meta property="og:image" content={blok.seoMetaOgImage.filename} />}
       </Head>
+      <Global
+        styles={{
+          html: {
+            [mq.md]: {
+              scrollPaddingTop: MENU_BAR_HEIGHT_DESKTOP,
+            },
+          },
+        }}
+      />
       <Main {...storyblokEditable(blok)}>
         <MobileLayout>
           <PurchaseForm />
@@ -101,8 +115,8 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
                     <li>
                       <ContentNavigationTrigger
                         href="#overview"
-                        onClick={() => setActiveSection('overview')}
                         data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                        aria-current={activeSection === 'overview' ? 'true' : undefined}
                       >
                         {blok.overviewLabel}
                       </ContentNavigationTrigger>
@@ -110,16 +124,15 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
                     <li>
                       <ContentNavigationTrigger
                         href="#coverage"
-                        onClick={() => setActiveSection('coverage')}
                         data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                        aria-current={activeSection === 'coverage' ? 'true' : undefined}
                       >
                         {blok.coverageLabel}
                       </ContentNavigationTrigger>
                     </li>
                   </ContentNavigationList>
                 </ContentNavigation>
-                <OverviewSection>
-                  <PageContentSentinel id="overview" aria-hidden="true" />
+                <OverviewSection id="overview">
                   {blok.overview?.map((nestedBlock) => (
                     <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
                   ))}
@@ -130,10 +143,11 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
               </PurchaseFormWrapper>
             </Grid>
 
-            <PageContentSentinel id="coverage" aria-hidden="true" />
-            {blok.coverage?.map((nestedBlock) => (
-              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-            ))}
+            <section id="coverage">
+              {blok.coverage?.map((nestedBlock) => (
+                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+              ))}
+            </section>
           </>
         </DesktopLayout>
 
@@ -208,7 +222,7 @@ const PurchaseFormWrapper = styled.div({
   paddingBottom: theme.space.xl,
 })
 
-const OverviewSection = styled.div({
+const OverviewSection = styled.section({
   marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.xs})`,
   [mq.md]: {
     marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})`,
@@ -257,7 +271,7 @@ const ContentNavigation = styled.nav({
   ...sharedStickyStyles,
 })
 
-const ContentNavigationList = styled.ul({
+const ContentNavigationList = styled.ol({
   ...sharedListStyles,
 })
 
@@ -265,25 +279,57 @@ const ContentNavigationTrigger = styled.a({
   ...sharedTriggerStyles,
 })
 
-const PageContentSentinel = styled.div({
-  '::before': {
-    content: '""',
-    display: 'block',
-    // Workaround: Add some 'padding top' that matches menu bar height while scrolling
-    // until an element gets into viewport. Another alternative would be to
-    // use 'scroll-padding-top' property. However that would required thouching global styles
-    // that are defined into 'package/ui': html { scroll-padding-top: <menu-height> }
-    height: MENU_BAR_HEIGHT_MOBILE,
-    marginTop: `-${MENU_BAR_HEIGHT_MOBILE}`,
-
-    [mq.md]: {
-      height: MENU_BAR_HEIGHT_DESKTOP,
-      marginTop: `-${MENU_BAR_HEIGHT_DESKTOP}`,
-    },
-  },
-})
-
 const StyledProductVariantSelector = styled(ProductVariantSelector)({
   minWidth: '12.5rem',
   width: 'fit-content',
 })
+
+function useActiveSectionChangeListener(
+  sectionsId: Array<string>,
+  callback: (activeSectionId: string) => void,
+) {
+  // Used to determine if user is scrolling up
+  const scrollPositionRef = useRef(0)
+
+  useEffect(
+    function identifyActiveSection() {
+      const instersectionObserverCb = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id
+          const diff = scrollPositionRef.current - window.scrollY
+          const isScrollingUp = diff > 0
+
+          if (isScrollingUp) {
+            if (!entry.isIntersecting) {
+              const activeSectionIndex = sectionsId.findIndex((sectionId) => sectionId === id)
+              const previousSectionId = sectionsId[activeSectionIndex - 1]
+              if (previousSectionId) {
+                callback(previousSectionId)
+                scrollPositionRef.current = window.scrollY
+              }
+            }
+          } else {
+            if (entry.isIntersecting) {
+              callback(id)
+              scrollPositionRef.current = window.scrollY
+            }
+          }
+        })
+      }
+
+      const observer = new IntersectionObserver(instersectionObserverCb, {
+        // Observe only the top 15% of the screen
+        rootMargin: '0% 0% -85% 0%',
+      })
+      sectionsId.forEach((sectionId) => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          observer.observe(element)
+        }
+      })
+
+      return () => observer.disconnect()
+    },
+    [sectionsId, callback],
+  )
+}
