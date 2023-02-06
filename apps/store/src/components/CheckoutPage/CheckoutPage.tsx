@@ -107,12 +107,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   <CampaignsSection cartId={cart.id} campaigns={cart.campaigns} />
                   <HorizontalLine />
                   <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+                  <div />
                 </CartCollapsibleInner>
               </CartCollapsible>
 
-              <Space y={{ base: 1, lg: 2 }}>
+              <Space y={{ base: 1, lg: 1.5 }}>
                 <HorizontalLine />
-
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>
                     <PersonalNumberField
