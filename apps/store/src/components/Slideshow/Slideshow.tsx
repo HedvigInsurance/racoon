@@ -10,21 +10,18 @@ export type SlideshowProps = {
   title?: string
 }
 
-export const Slideshow = React.forwardRef<HTMLDivElement, SlideshowProps>(
-  ({ children, title, alignment = 'left' }, ref) => {
-    return (
-      <Space y={1.5}>
-        {title && <Title>{title}</Title>}
-        <ScollableContainer ref={ref} alignment={alignment}>
-          {React.Children.map(children, (child, index) => (
-            <ScrollableItem key={index}>{child}</ScrollableItem>
-          ))}
-        </ScollableContainer>
-      </Space>
-    )
-  },
-)
-Slideshow.displayName = 'Slideshow'
+export const Slideshow = ({ children, title, alignment = 'left' }: SlideshowProps) => {
+  return (
+    <Space y={1.5}>
+      {title && <Title>{title}</Title>}
+      <ScollableContainer alignment={alignment}>
+        {React.Children.map(children, (child, index) => (
+          <ScrollableItem key={index}>{child}</ScrollableItem>
+        ))}
+      </ScollableContainer>
+    </Space>
+  )
+}
 
 const Title = styled.h2({
   fontSize: theme.fontSizes.sm,
