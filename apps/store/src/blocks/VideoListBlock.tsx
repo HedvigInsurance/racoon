@@ -5,13 +5,35 @@ import { Slideshow } from '@/components/Slideshow/Slideshow'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { VideoBlock, VideoBlockProps } from './VideoBlock'
 
+const playVideoExclusively = (
+  videoList: Array<HTMLVideoElement>,
+  videoToBePlayed: HTMLVideoElement,
+) => {
+  videoList.forEach((videoNode) => {
+    if (videoNode === videoToBePlayed) return
+    if (videoNode.played.length > 0 && !videoNode.paused) {
+      videoNode.pause()
+    }
+  })
+}
+
 type VideoListBlockProps = SbBaseBlockProps<{
   videos: ExpectedBlockType<VideoBlockProps>
 }>
 
 export const VideoListBlock = ({ blok }: VideoListBlockProps) => {
   return (
-    <Slideshow alignment="center" {...storyblokEditable(blok)}>
+    <Slideshow
+      ref={(node) => {
+        const videos = Array.from(node?.querySelectorAll('video') ?? [])
+
+        videos.forEach((video) => {
+          video.addEventListener('play', () => playVideoExclusively(videos, video))
+        })
+      }}
+      alignment="center"
+      {...storyblokEditable(blok)}
+    >
       {blok.videos.map((nestedVideoBlock) => (
         <StyledVideoBlock key={nestedVideoBlock._uid} blok={nestedVideoBlock} />
       ))}
