@@ -38,7 +38,7 @@ export const CartNotificationContent = ({ name, price, startDate, onClose }: Pro
   const { t } = useTranslation('purchase-form')
 
   return (
-    <DialogContent onClose={onClose}>
+    <DialogContent onClose={onClose} isToast>
       <DialogContentWrapper>
         <ProductItem name={name} price={price} startDate={startDate} />
         <Space y={0.5}>
