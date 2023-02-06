@@ -1,4 +1,4 @@
-mutation PriceIntentConfirm($priceIntentId: ID!) {
+mutation PriceIntentConfirm($priceIntentId: UUID!) {
   priceIntentConfirm(priceIntentId: $priceIntentId) {
     priceIntent {
       ...PriceIntentFragment

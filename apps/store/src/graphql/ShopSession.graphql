@@ -1,4 +1,4 @@
-query ShopSession($shopSessionId: ID!) {
+query ShopSession($shopSessionId: UUID!) {
   shopSession(id: $shopSessionId) {
     ...ShopSession
   }

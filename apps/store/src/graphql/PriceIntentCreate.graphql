@@ -1,4 +1,4 @@
-mutation PriceIntentCreate($shopSessionId: ID!, $productName: String!) {
+mutation PriceIntentCreate($shopSessionId: UUID!, $productName: String!) {
   priceIntentCreate(input: { shopSessionId: $shopSessionId, productName: $productName }) {
     ...PriceIntentFragment
   }

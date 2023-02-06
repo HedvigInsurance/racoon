@@ -1,4 +1,4 @@
-mutation PriceIntentDataUpdate($priceIntentId: ID!, $data: PricingFormData!) {
+mutation PriceIntentDataUpdate($priceIntentId: UUID!, $data: PricingFormData!) {
   priceIntentDataUpdate(priceIntentId: $priceIntentId, data: $data) {
     priceIntent {
       ...PriceIntentFragment

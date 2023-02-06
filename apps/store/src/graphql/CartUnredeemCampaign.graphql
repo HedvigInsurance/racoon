@@ -1,4 +1,4 @@
-mutation UnredeemCampaign($cartId: ID!, $campaignId: String!) {
+mutation UnredeemCampaign($cartId: UUID!, $campaignId: String!) {
   cartUnredeemCampaign(input: { cartId: $cartId, campaignId: $campaignId }) {
     ...CartFragment
   }

@@ -1,4 +1,4 @@
-mutation ExternalInsurerUpdate($priceIntentId: ID!, $externalInsurerId: String) {
+mutation ExternalInsurerUpdate($priceIntentId: UUID!, $externalInsurerId: String) {
   priceIntentExternalInsurerUpdate(
     priceIntentId: $priceIntentId
     externalInsurerId: $externalInsurerId
