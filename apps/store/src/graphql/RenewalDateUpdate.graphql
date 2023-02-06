@@ -1,4 +1,4 @@
-mutation RenewalDateUpdate($productOfferIds: [ID!]!, $renewalDate: Date!) {
+mutation RenewalDateUpdate($productOfferIds: [UUID!]!, $renewalDate: Date!) {
   productOffersExistingInsuranceRenewalDateUpdate(
     productOfferIds: $productOfferIds
     renewalDate: $renewalDate

@@ -1,4 +1,4 @@
-mutation StartDateUpdate($productOfferIds: [ID!]!, $startDate: Date!) {
+mutation StartDateUpdate($productOfferIds: [UUID!]!, $startDate: Date!) {
   productOffersStartDateUpdate(productOfferIds: $productOfferIds, startDate: $startDate) {
     productOffers {
       ...ProductOffer

@@ -1,4 +1,4 @@
-mutation ShopSessionStartSign($shopSessionId: ID!) {
+mutation ShopSessionStartSign($shopSessionId: UUID!) {
   shopSessionStartSign(shopSessionId: $shopSessionId) {
     signing {
       ...ShopSessionSigning

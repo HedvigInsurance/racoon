@@ -1,4 +1,4 @@
-mutation ShopSessionAuthenticate($shopSessionId: ID!) {
+mutation ShopSessionAuthenticate($shopSessionId: UUID!) {
   shopSessionAuthenticate(id: $shopSessionId) {
     ...ShopSession
   }

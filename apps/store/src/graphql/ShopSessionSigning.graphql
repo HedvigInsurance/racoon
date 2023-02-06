@@ -1,4 +1,4 @@
-query ShopSessionSigning($shopSessionSigningId: ID!) {
+query ShopSessionSigning($shopSessionSigningId: UUID!) {
   shopSessionSigning(id: $shopSessionSigningId) {
     ...ShopSessionSigning
   }

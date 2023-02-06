@@ -1,4 +1,4 @@
-mutation CancellationRequestedUpdate($productOfferIds: [ID!]!, $requested: Boolean!) {
+mutation CancellationRequestedUpdate($productOfferIds: [UUID!]!, $requested: Boolean!) {
   productOffersCancellationRequestedUpdate(
     productOfferIds: $productOfferIds
     requested: $requested

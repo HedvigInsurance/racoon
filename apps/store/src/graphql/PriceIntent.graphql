@@ -1,4 +1,4 @@
-query PriceIntent($priceIntentId: ID!) {
+query PriceIntent($priceIntentId: UUID!) {
   priceIntent(id: $priceIntentId) {
     ...PriceIntentFragment
   }
