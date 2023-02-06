@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, FocusEventHandler, InputHTMLAttributes, useId, useState } from 'react'
 import { ChevronIcon, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -16,6 +17,7 @@ type Props = InputProps & {
 }
 
 export const DateInput = (props: Props) => {
+  const { t } = useTranslation()
   const { label, children, onFocus, onBlur, onChange, value, defaultValue, ...inputProps } = props
   const [focused, setFocused] = useState(props.autoFocus ?? false)
   const [internalValue, setInternalValue] = useState(defaultValue)
@@ -41,10 +43,16 @@ export const DateInput = (props: Props) => {
     onBlur?.(event)
   }
 
+  const floatingLabel = dateValue ? (
+    <Text>{formatter.fromNow(dateValue)}</Text>
+  ) : (
+    <Text color="textSecondary">{t('DATE_INPUT_EMPTY_LABEL')}</Text>
+  )
+
   return (
     <InputWrapper y={0.5} {...animationProps}>
-      <CheckboxHeader>
-        <StyledLabel htmlFor={identifier}>
+      <Main>
+        <StyledLabel htmlFor={identifier} title={label}>
           <Text as="span">{label}</Text>
         </StyledLabel>
         <StyledInput
@@ -59,14 +67,14 @@ export const DateInput = (props: Props) => {
         {!focused && (
           <Floating>
             <SpaceFlex align="center" space={0.25}>
-              <Text>{dateValue ? formatter.fromNow(dateValue) : inputValue}</Text>
+              {floatingLabel}
               <IconWrapper>
                 <ChevronIcon size="1rem" />
               </IconWrapper>
             </SpaceFlex>
           </Floating>
         )}
-      </CheckboxHeader>
+      </Main>
       {children && (
         <Text size="sm" color="textSecondary">
           {children}
@@ -83,10 +91,10 @@ const InputWrapper = styled(motion(Space))({
   width: '100%',
 })
 
-const CheckboxHeader = styled.div({
+const Main = styled.div({
   position: 'relative',
   display: 'flex',
-  gap: theme.space.sm,
+  gap: theme.space.xxs,
   justifyContent: 'space-between',
   alignItems: 'center',
 })

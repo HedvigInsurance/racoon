@@ -60,6 +60,8 @@
   "LABEL_NO": "Nej",
   "LABEL_YES": "Ja",
   "LOADING_PRICE_ANIMATION_LABEL": "Ditt pris beräknas...",
+  "LOGIN_BANK_ID": "Logga in med BankID",
+  "LOGIN_BANK_ID_EXPLANATION": "Om du har eller haft en försäkring hos oss kan du logga in, så hämtar vi dina uppgifter automatiskt.",
   "OPEN_PRICE_CALCULATOR_BUTTON": "Beräkna pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",

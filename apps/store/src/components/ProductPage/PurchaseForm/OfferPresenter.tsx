@@ -23,6 +23,7 @@ import { CancellationForm, CancellationOption } from './CancellationForm/Cancell
 import * as ComparisonTable from './ComparisonTable/ComparisonTable'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
+import { useUpdateRenewalDate } from './useUpdateRenewalDate'
 
 const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
 
@@ -92,10 +93,7 @@ export const OfferPresenter = (props: Props) => {
   }, [selectedOffer, tracking, isInView])
 
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
-
-  const handleStartDateChange = (startDate: Date) => {
-    updateStartDate({ dateValue: startDate })
-  }
+  const [updateRenewalDate, updateRenewalDateInfo] = useUpdateRenewalDate({ priceIntent })
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
@@ -120,7 +118,8 @@ export const OfferPresenter = (props: Props) => {
     productOffer: selectedOffer,
   })
 
-  const loading = loadingAddToCart || updateCancellationInfo.loading || updateStartDateInfo.loading
+  const dateLoading = updateStartDateInfo.loading || updateRenewalDateInfo.loading
+  const loading = loadingAddToCart || updateCancellationInfo.loading || dateLoading
 
   const priceMatch = useMemo(() => {
     if (!selectedOffer.priceMatch) return null
@@ -137,6 +136,7 @@ export const OfferPresenter = (props: Props) => {
   }, [selectedOffer.priceMatch, formatter, t])
 
   const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
+  const renewalDate = convertToDate(selectedOffer.cancellation.existingInsuranceRenewalDate)
 
   const toggleComparisonTable = () => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
@@ -179,8 +179,10 @@ export const OfferPresenter = (props: Props) => {
               <CancellationForm
                 option={cancellationOption}
                 startDate={startDate}
+                renewalDate={renewalDate ?? undefined}
                 onAutoSwitchChange={handleUpdateCancellation}
-                onStartDateChange={handleStartDateChange}
+                onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
+                onRenewalDateChange={(renewalDate) => updateRenewalDate({ dateValue: renewalDate })}
               />
 
               <SubmitButton loading={loading} />

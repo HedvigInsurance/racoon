@@ -33,6 +33,7 @@ fragment ProductOffer on ProductOffer {
       url
       approveByDate
     }
+    existingInsuranceRenewalDate
     externalInsurer {
       id
       displayName

@@ -20,7 +20,9 @@ export type CancellationOption =
 type Props = {
   option: CancellationOption
   startDate: Date
+  renewalDate?: Date
   onStartDateChange?: (date: Date) => void
+  onRenewalDateChange?: (date: Date) => void
   onAutoSwitchChange?: (checked: boolean) => void
 }
 
@@ -50,12 +52,10 @@ export const CancellationForm = ({ option, ...props }: Props) => {
   }
 }
 
-type NoCancellationProps = Pick<Props, 'onStartDateChange'> & {
-  startDate: Date
-}
+type NoCancellationProps = Pick<Props, 'onStartDateChange' | 'startDate'>
 
-const NoCancellation = ({ onStartDateChange, ...props }: NoCancellationProps) => {
-  return <StartDateInput {...props} onChange={onStartDateChange} />
+const NoCancellation = ({ onStartDateChange, startDate, ...props }: NoCancellationProps) => {
+  return <SmartDateInput {...props} date={startDate} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<
@@ -80,15 +80,21 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         companyName={companyName}
       />
 
-      {!requested && <StartDateInput startDate={props.startDate} onChange={onStartDateChange} />}
+      {!requested && <SmartDateInput date={props.startDate} onChange={onStartDateChange} />}
     </Space>
   )
 }
 
-type BankSigneringCancellationProps = IEXCancellationProps
+type BankSigneringCancellationProps = Pick<
+  Props,
+  'onRenewalDateChange' | 'onStartDateChange' | 'onAutoSwitchChange' | 'renewalDate' | 'startDate'
+> & {
+  companyName: string
+  requested: boolean
+}
 
 const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
-  const { onStartDateChange, onAutoSwitchChange, companyName, requested } = props
+  const { onRenewalDateChange, onAutoSwitchChange, companyName, requested } = props
   const { t } = useTranslation('purchase-form')
 
   const handleCheckedChange = (newValue: boolean) => {
@@ -105,25 +111,37 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
         companyName={companyName}
       />
 
-      <StartDateInput
-        label={requested ? renewalDateLabel : undefined}
-        startDate={props.startDate}
-        onChange={onStartDateChange}
-      />
+      {requested ? (
+        <SmartDateInput
+          label={renewalDateLabel}
+          date={props.renewalDate}
+          onChange={onRenewalDateChange}
+        />
+      ) : (
+        <SmartDateInput date={props.startDate} onChange={props.onStartDateChange} />
+      )}
     </Space>
   )
 }
 
-type BankSigneringInvalidStartDateProps = Pick<Props, 'onStartDateChange'> & {
-  startDate: Date
+type BankSigneringInvalidStartDateProps = Pick<
+  Props,
+  'onStartDateChange' | 'onRenewalDateChange' | 'startDate'
+> & {
   companyName: string
 }
 
 const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
-  const { onStartDateChange, companyName } = props
+  const { onStartDateChange, onRenewalDateChange, companyName, startDate } = props
   const { t } = useTranslation('purchase-form')
   const message = t('AUTO_SWITCH_INVALID_START_DATE_MESSAGE', { company: companyName })
-  return <StartDateInput {...props} onChange={onStartDateChange} message={message} />
+
+  const handleChange = (date: Date) => {
+    onStartDateChange?.(date)
+    onRenewalDateChange?.(date)
+  }
+
+  return <SmartDateInput {...props} date={startDate} onChange={handleChange} message={message} />
 }
 
 type AutoSwitchInputProps = {
@@ -151,14 +169,14 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
   )
 }
 
-type StartDateInputProps = {
+type SmartDateInputProps = {
   label?: string
   message?: string
-  startDate: Date
+  date?: Date
   onChange?: (date: Date) => void
 }
 
-const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputProps) => {
+const SmartDateInput = ({ label, message, date, onChange }: SmartDateInputProps) => {
   const { t } = useTranslation('purchase-form')
   const dateToday = new Date()
 
@@ -168,7 +186,7 @@ const StartDateInput = ({ label, message, startDate, onChange }: StartDateInputP
     }
   }
 
-  const inputValue = formatInputDateValue(startDate)
+  const inputValue = date ? formatInputDateValue(date) : undefined
   const inputValueToday = formatInputDateValue(dateToday)
 
   return (
