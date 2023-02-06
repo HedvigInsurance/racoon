@@ -111,13 +111,13 @@ const AuthenticationRequiredSsnSection = ({
   return (
     <AuthPromptWrapper>
       <BankIdTextSection y={0.5}>
-        <Text align="center">{t('LOGIN_BANK_ID')}</Text>
-        <Text color="textSecondary">{t('LOGIN_BANK_ID_EXPLANATION')}</Text>
+        <Text align="center">{t('LOGIN_BANKID')}</Text>
+        <Text color="textSecondary">{t('LOGIN_BANKID_EXPLANATION')}</Text>
       </BankIdTextSection>
       <Space y={0.5}>
         <BankIdLogin shopSessionId={shopSessionId} ssn={ssn} onCompleted={onCompleted} />
         <Button variant="ghost" onClick={onCompleted}>
-          {t('LOGIN_BANK_ID_SKIP')}
+          {t('LOGIN_BANKID_SKIP')}
         </Button>
       </Space>
     </AuthPromptWrapper>
