@@ -49,6 +49,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const [hideLoading, setHideLoading] = useState(false)
   const [handleSubmitSign, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
     shopSessionId,
+    ssn,
     customerAuthenticationStatus,
     shopSessionSigningId,
     onSuccess(accessToken) {

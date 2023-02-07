@@ -4,9 +4,7 @@ import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 
 export type CheckoutPageProps = {
   shopSessionId: string
-  customerAuthenticationStatus:
-    | ShopSessionAuthenticationStatus.Authenticated
-    | ShopSessionAuthenticationStatus.None
+  customerAuthenticationStatus: ShopSessionAuthenticationStatus
   shopSessionSigningId: string | null
   cart: {
     id: string

@@ -84,6 +84,7 @@ export const initializeApollo = ({
     ...getDeviceIdHeader({ req, res }),
     ...getAuthHeaders({ req, res }),
   }
+  // console.trace('ah', headers)
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
 
