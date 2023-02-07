@@ -81,7 +81,7 @@ const MockedNavItems = () => {
 }
 
 export type TopMenuProps = {
-  isOpen?: boolean
+  isOpen: boolean
   currentActiveItem?: string
   count?: number
 }
@@ -89,12 +89,12 @@ export type TopMenuProps = {
 const Template: Story<TopMenuProps> = (props) => {
   return (
     <>
-      <MockedHeaderWrapper>
+      <MockedHeaderWrapper opaque={false}>
         <TopMenuDesktop>
           <MockedNavItems />
         </TopMenuDesktop>
 
-        <TopMenuMobile>
+        <TopMenuMobile isOpen={props.isOpen} setIsOpen={() => {}}>
           <MockedNavItems />
         </TopMenuMobile>
 
