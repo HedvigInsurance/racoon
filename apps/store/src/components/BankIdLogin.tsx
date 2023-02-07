@@ -1,7 +1,9 @@
 // TODO: Localize texts
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Text } from 'ui'
+import { BankIdIcon, Button, Text, theme } from 'ui'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
@@ -14,6 +16,7 @@ type Props = {
 }
 
 export const BankIdLogin = (props: Props) => {
+  const { t } = useTranslation('common')
   const [state, setState] = useState<'IDLE' | 'PROGRESS' | 'ERROR'>('IDLE')
   const { shopSessionId } = props
   const [authenticateShopSession] = useShopSessionAuthenticateMutation({
@@ -35,11 +38,16 @@ export const BankIdLogin = (props: Props) => {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="submit" loading={state === 'PROGRESS'}>
-        BankID Login
-      </Button>
+      <BankIdButton type="submit" loading={state === 'PROGRESS'}>
+        <BankIdIcon color="white" />
+        {t('LOGIN_BUTTON_TEXT')}
+      </BankIdButton>
       {state === 'PROGRESS' && <Text>Pleas open BankID app now</Text>}
       {state === 'ERROR' && <Text>Something went wrong</Text>}
     </form>
   )
 }
+
+const BankIdButton = styled(Button)({
+  gap: theme.space.xs,
+})

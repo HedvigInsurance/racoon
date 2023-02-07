@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
-import { Button, Space, Text } from 'ui'
+import { Button, Space, Text, theme } from 'ui'
 import { BankIdLogin } from '@/components/BankIdLogin'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
@@ -105,17 +106,41 @@ const AuthenticationRequiredSsnSection = ({
   ssn,
   onCompleted,
 }: AuthenticationRequiredProps) => {
+  const { t } = useTranslation('purchase-form')
+
   return (
-    <div>
-      <Text>ssn: {ssn}</Text>
-      <Text>Looks like you are returning member. Login to pre-fill you information</Text>
-      <BankIdLogin shopSessionId={shopSessionId} ssn={ssn} onCompleted={onCompleted} />
-      <Button variant="ghost" onClick={onCompleted}>
-        Skip for now, login at checkout
-      </Button>
-    </div>
+    <AuthPromptWrapper>
+      <BankIdTextSection y={0.5}>
+        <Text align="center">{t('LOGIN_BANK_ID')}</Text>
+        <Text color="textSecondary">{t('LOGIN_BANK_ID_EXPLANATION')}</Text>
+      </BankIdTextSection>
+      <Space y={0.5}>
+        <BankIdLogin shopSessionId={shopSessionId} ssn={ssn} onCompleted={onCompleted} />
+        <Button variant="ghost" onClick={onCompleted}>
+          {t('LOGIN_BANK_ID_SKIP')}
+        </Button>
+      </Space>
+    </AuthPromptWrapper>
   )
 }
+
+const AuthPromptWrapper = styled.div({
+  position: 'absolute',
+  inset: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  backdropFilter: 'blur(64px)',
+  paddingInline: theme.space.md,
+  paddingBlock: theme.space.md,
+})
+
+const BankIdTextSection = styled(Space)({
+  flexGrow: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+})
 
 const AuthenticatedSsnSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
