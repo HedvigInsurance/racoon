@@ -1,14 +1,15 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
-import { Button, Space, Text, theme } from 'ui'
-import { BankIdLogin } from '@/components/BankIdLogin'
+import { FormEventHandler, ReactElement } from 'react'
+import { BankIdIcon, Button, Space, Text, TickIcon, theme, WarningTriangleIcon } from 'ui'
+import { BankIdLoginForm } from '@/components/BankIdLogin'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
+import { BankIdState, useBankIdLogin } from '@/services/bankId'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 const SsnFieldName = 'ssn'
@@ -107,22 +108,98 @@ const AuthenticationRequiredSsnSection = ({
   onCompleted,
 }: AuthenticationRequiredProps) => {
   const { t } = useTranslation('purchase-form')
+  const [startLogin, loginState] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
+
+  let textBlock: ReactElement
+  let actionBlock: ReactElement | null
+  switch (loginState) {
+    case BankIdState.Idle: {
+      textBlock = (
+        <>
+          <Text align="center">{t('LOGIN_BANKID')}</Text>
+          <Text align="center" color="textSecondary">
+            {t('LOGIN_BANKID_EXPLANATION')}
+          </Text>
+        </>
+      )
+      actionBlock = (
+        <>
+          <BankIdLoginForm
+            state={loginState}
+            title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
+            onLoginStart={startLogin}
+          />
+          <Button variant="ghost" onClick={onCompleted}>
+            {t('LOGIN_BANKID_SKIP')}
+          </Button>
+        </>
+      )
+      break
+    }
+    case BankIdState.Pending:
+    case BankIdState.Starting: {
+      textBlock = (
+        <>
+          <IconWithText>
+            <BankIdIcon />
+            {t('LOGIN_BANKID_WAITING')}
+          </IconWithText>
+          <Text align="center" color="textSecondary">
+            {loginState === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
+          </Text>
+        </>
+      )
+      // TODO: Cancel button (GRW-2183)
+      actionBlock = null
+      break
+    }
+    case BankIdState.Success: {
+      textBlock = (
+        <IconWithText>
+          <TickIcon size="1rem" color={theme.colors.greenElement} />
+          {t('LOGIN_BANKID_SUCCESS')}
+        </IconWithText>
+      )
+      actionBlock = null
+      break
+    }
+    case BankIdState.Error: {
+      textBlock = (
+        <IconWithText>
+          <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
+          <Text align="center">{t('LOGIN_BANKID_ERROR')}</Text>
+        </IconWithText>
+      )
+      actionBlock = (
+        <>
+          <BankIdLoginForm
+            state={loginState}
+            title={t('LOGIN_BANKID_TRY_AGAIN')}
+            onLoginStart={startLogin}
+          />
+          <Button variant="ghost" onClick={onCompleted}>
+            {t('LOGIN_BANKID_SKIP')}
+          </Button>
+        </>
+      )
+      break
+    }
+  }
 
   return (
     <AuthPromptWrapper>
-      <BankIdTextSection y={0.5}>
-        <Text align="center">{t('LOGIN_BANKID')}</Text>
-        <Text color="textSecondary">{t('LOGIN_BANKID_EXPLANATION')}</Text>
-      </BankIdTextSection>
-      <Space y={0.5}>
-        <BankIdLogin shopSessionId={shopSessionId} ssn={ssn} onCompleted={onCompleted} />
-        <Button variant="ghost" onClick={onCompleted}>
-          {t('LOGIN_BANKID_SKIP')}
-        </Button>
-      </Space>
+      <BankIdTextSection y={0.5}>{textBlock}</BankIdTextSection>
+      <Space y={0.5}>{actionBlock}</Space>
     </AuthPromptWrapper>
   )
 }
+
+const IconWithText = styled(Text)({
+  gap: theme.space.xs,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
 
 const AuthPromptWrapper = styled.div({
   position: 'absolute',

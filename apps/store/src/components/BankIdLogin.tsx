@@ -1,13 +1,8 @@
-// TODO: Localize texts
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, useState } from 'react'
+import { FormEventHandler } from 'react'
 import { BankIdIcon, Button, Text, theme } from 'ui'
-import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
-import { loginMemberSeBankId } from '@/services/authApi/login'
-import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { saveAccessToken } from '@/services/authApi/persist'
+import { BankIdState, useBankIdLogin } from '@/services/bankId'
 
 type Props = {
   shopSessionId: string
@@ -15,35 +10,43 @@ type Props = {
   onCompleted: () => void
 }
 
-export const BankIdLogin = (props: Props) => {
+// TODO: To be replaced with new UI when login is removed from cart page
+export const BankIdLogin = ({ shopSessionId, ssn, onCompleted }: Props) => {
   const { t } = useTranslation('common')
-  const [state, setState] = useState<'IDLE' | 'PROGRESS' | 'ERROR'>('IDLE')
-  const { shopSessionId } = props
-  const [authenticateShopSession] = useShopSessionAuthenticateMutation({
-    variables: { shopSessionId },
-  })
+  const [startLogin, loginState] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
+  return (
+    <>
+      <BankIdLoginForm
+        title={t('LOGIN_BUTTON_TEXT')}
+        state={loginState}
+        onLoginStart={startLogin}
+      />
+      {loginState === BankIdState.Pending && <Text>Pleas open BankID app now</Text>}
+      {loginState === BankIdState.Success && <Text>Login success</Text>}
+      {loginState === BankIdState.Error && <Text>Something went wrong</Text>}
+    </>
+  )
+}
+
+type BankIdLoginProps = {
+  state: BankIdState
+  title: string
+  onLoginStart: () => void
+}
+export const BankIdLoginForm = ({ state, title, onLoginStart }: BankIdLoginProps) => {
   const handleSubmit: FormEventHandler = async (event) => {
     event.preventDefault()
-    setState('PROGRESS')
-    try {
-      const authorizationCode = await loginMemberSeBankId(props.ssn)
-      const accessToken = await exchangeAuthorizationCode(authorizationCode)
-      saveAccessToken(accessToken)
-      await authenticateShopSession()
-      props.onCompleted()
-    } catch (error) {
-      datadogLogs.logger.warn('Failed to authenticate', { error })
-      setState('ERROR')
-    }
+    onLoginStart()
   }
   return (
     <form onSubmit={handleSubmit}>
-      <BankIdButton type="submit" loading={state === 'PROGRESS'}>
+      <BankIdButton
+        type="submit"
+        loading={state !== BankIdState.Idle && state !== BankIdState.Error}
+      >
         <BankIdIcon color="white" />
-        {t('LOGIN_BUTTON_TEXT')}
+        {title}
       </BankIdButton>
-      {state === 'PROGRESS' && <Text>Pleas open BankID app now</Text>}
-      {state === 'ERROR' && <Text>Something went wrong</Text>}
     </form>
   )
 }

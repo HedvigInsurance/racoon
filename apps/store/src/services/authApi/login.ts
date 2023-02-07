@@ -5,9 +5,11 @@ enum MemberLoginMethod {
   SE_BANKID = 'SE_BANKID',
 }
 
-export const loginMemberSeBankId = async (ssn: string) => {
+type StatusChangeCallback = (status: MemberLoginStatusResponse['status']) => void
+
+export const loginMemberSeBankId = async (ssn: string, onStatusChange: StatusChangeCallback) => {
   const { statusUrl } = await memberLoginCreateSE(ssn)
-  return await memberLoginStatusPoll(AuthEndpoint.LOGIN_STATUS(statusUrl))
+  return await memberLoginStatusPoll(AuthEndpoint.LOGIN_STATUS(statusUrl), onStatusChange)
 }
 
 type MemberLoginStatusResponse =
@@ -24,8 +26,12 @@ const memberLoginStatus = async (statusUrl: string) => {
   return await fetchJson<MemberLoginStatusResponse>(statusUrl)
 }
 
-const memberLoginStatusPoll = async (statusUrl: string): Promise<string> => {
+const memberLoginStatusPoll = async (
+  statusUrl: string,
+  onStatusChange: StatusChangeCallback,
+): Promise<string> => {
   const result = await memberLoginStatus(statusUrl)
+  onStatusChange(result.status)
 
   if (result.status === 'COMPLETED') {
     return result.authorizationCode
@@ -37,7 +43,7 @@ const memberLoginStatusPoll = async (statusUrl: string): Promise<string> => {
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(memberLoginStatusPoll(statusUrl))
+      resolve(memberLoginStatusPoll(statusUrl, onStatusChange))
     }, 1000)
   })
 }
