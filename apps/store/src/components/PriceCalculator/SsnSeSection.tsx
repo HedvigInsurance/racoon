@@ -2,10 +2,8 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, ReactElement } from 'react'
-import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
-import { BankIdIcon, Button, Space, Text, theme } from 'ui'
+import { BankIdIcon, Button, Space, Text, TickIcon, theme, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLogin'
-import { TickIcon } from '@/components/CheckoutPage/TickIcon'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   ShopSessionAuthenticationStatus,
@@ -158,7 +156,7 @@ const AuthenticationRequiredSsnSection = ({
     case BankIdState.Success: {
       textBlock = (
         <IconWithText>
-          <TickIcon color="greenElement" />
+          <TickIcon size="1rem" color={theme.colors.greenElement} />
           {t('LOGIN_BANKID_SUCCESS')}
         </IconWithText>
       )

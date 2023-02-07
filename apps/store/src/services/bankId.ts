@@ -20,6 +20,7 @@ type BankIdLoginOptions = {
 }
 export const useBankIdLogin = ({ shopSessionId, ssn, onCompleted }: BankIdLoginOptions) => {
   const [state, setState] = useState(BankIdState.Idle)
+  // TODO: Expose and handle errors
   const [authenticateShopSession] = useShopSessionAuthenticateMutation({
     variables: { shopSessionId },
   })
