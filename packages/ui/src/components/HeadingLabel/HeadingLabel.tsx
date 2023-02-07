@@ -1,7 +1,7 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 
-export type LabelProps = {
+export type HeadingLabelProps = {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   color?: string
   children: React.ReactNode
@@ -14,7 +14,7 @@ const elementConfig = {
 export const LabelBase = styled(
   'div',
   elementConfig,
-)<Pick<LabelProps, 'color'>>(({ color, theme }) => ({
+)<Pick<HeadingLabelProps, 'color'>>(({ color, theme }) => ({
   display: 'inline-block',
   padding: `${theme.space[2]} ${theme.space[3]}`,
   fontSize: theme.fontSizes[1],
@@ -24,7 +24,7 @@ export const LabelBase = styled(
   borderRadius: theme.radius.xs,
 }))
 
-export const HeadingLabel = ({ as, children, color }: LabelProps) => (
+export const HeadingLabel = ({ as, children, color }: HeadingLabelProps) => (
   <LabelBase as={as} color={color}>
     {children}
   </LabelBase>
