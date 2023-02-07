@@ -1,8 +1,8 @@
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
+import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import { FormElement } from '../ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
   SuggestedItem,
   SecondaryText,
@@ -20,7 +20,7 @@ import {
 type TierItemProps = {
   title: string
   price: string
-  description: string
+  description?: string
   isSelected?: boolean
   suggestedText?: string
   children?: React.ReactNode
@@ -43,7 +43,7 @@ const TierItem = ({
           <PriceText isSelected={isSelected}>{price}</PriceText>
         </TitleItem>
       </TitleContainer>
-      <SecondaryText>{description}</SecondaryText>
+      {description && <SecondaryText>{description}</SecondaryText>}
       {suggestedText ? <SuggestedItem>{suggestedText}</SuggestedItem> : null}
     </TierItemContainer>
   </TierItemWrapper>
@@ -59,6 +59,7 @@ export type TierSelectorProps = {
 }
 export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSelectorProps) => {
   const { t } = useTranslation('purchase-form')
+  const getVariantDescription = useGetVariantDescription()
   const formatter = useFormatter()
 
   const selectedOffer = offers.find((offer) => offer.id === selectedOfferId)
@@ -98,7 +99,7 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
                 key={offer.id}
                 value={offer.id}
                 title={offer.variant.displayName}
-                description="Description here"
+                description={getVariantDescription(offer.variant.typeOfContract)}
                 price={formatter.monthlyPrice(offer.price)}
                 isSelected={selectedOffer?.id === offer.id}
                 handleClick={() => handleClick(offer.id)}
@@ -109,4 +110,20 @@ export const TierSelector = ({ offers, selectedOfferId, onValueChange }: TierSel
       </Root>
     </>
   )
+}
+
+// TODO: fetch product variant descriptions from the API
+const useGetVariantDescription = () => {
+  const { t } = useTranslation('purchase-form')
+
+  return (typeOfContract: string) => {
+    switch (typeOfContract) {
+      case 'SE_CAR_TRAFFIC':
+        return t('SE_CAR_TRAFFIC_DESCRIPTION')
+      case 'SE_CAR_HALF':
+        return t('SE_CAR_HALF_DESCRIPTION')
+      case 'SE_CAR_FULL':
+        return t('SE_CAR_FULL_DESCRIPTION')
+    }
+  }
 }
