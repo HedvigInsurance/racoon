@@ -64,7 +64,7 @@ export type StoryblokQueryParams = {
 }
 
 export type StoryblokPageProps = {
-  [STORY_PROP_NAME]: ISbStoryData
+  [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
 }
 
@@ -99,6 +99,14 @@ export type LinkField = {
     // Can be overridden in Storyblok editor: "Entry configuration" > "Real path".
     url: string
     full_slug: string
+  }
+}
+
+export type PageStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
+    hideMenu?: boolean
+    overlayMenu?: boolean
+    hideFooter?: boolean
   }
 }
 

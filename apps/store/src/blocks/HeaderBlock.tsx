@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
+import { useState } from 'react'
 import { Space } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
@@ -181,13 +182,19 @@ export type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: ExpectedBlockType<
     NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
   >
-}>
+}> & {
+  overlay?: boolean
+}
 
-export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
+export const HeaderBlock = ({ blok, overlay }: HeaderBlockProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <Header {...storyblokEditable(blok)}>
+    <Header {...storyblokEditable(blok)} opaque={isOpen} overlay={overlay}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
-      <TopMenuMobile>{blok.navMenuContainer.map(NestedNavigationBlock)} </TopMenuMobile>
+      <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen}>
+        {blok.navMenuContainer.map(NestedNavigationBlock)}
+      </TopMenuMobile>
     </Header>
   )
 }

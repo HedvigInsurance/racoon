@@ -8,13 +8,6 @@ export type TopMenuDesktopProps = {
   children: React.ReactNode
 }
 
-const Wrapper = styled.div({
-  display: 'none',
-  [mq.lg]: {
-    display: 'block',
-  },
-})
-
 export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
   return (
     <Wrapper>
@@ -24,3 +17,11 @@ export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
     </Wrapper>
   )
 }
+
+const Wrapper = styled.div({
+  display: 'none',
+
+  [mq.lg]: {
+    display: 'block',
+  },
+})
