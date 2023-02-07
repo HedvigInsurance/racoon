@@ -15,16 +15,16 @@ import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-const CONFIRMATION_PAGE_SLUG = 'confirmation'
-
 type Params = { shopSessionId: string }
 
 export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Params> = async (
   context,
 ) => {
-  const { req, res, locale, params } = context
+  const { req, res, locale, params, resolvedUrl } = context
 
   if (!isRoutingLocale(locale)) return { notFound: true }
+
+  const slug = getConfirmationPageSlugByUrl(resolvedUrl)
 
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     shopSessionService.fetchById(shopSessionId),
     serverSideTranslations(locale),
     getGlobalStory({ locale }),
-    getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
+    getStoryBySlug(slug, { locale }),
     fetchGlobalProductMetadata({ apolloClient }),
   ])
 
@@ -43,6 +43,11 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   // if (shopSession.checkout.completedAt === null) {
   //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
   // }
+
+  if (story === undefined) {
+    console.warn(`Page not found: ${slug}, locale: ${locale}`)
+    return { notFound: true }
+  }
 
   return addApolloState(apolloClient, {
     props: {
@@ -65,3 +70,9 @@ const CheckoutConfirmationPage: NextPageWithLayout<
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default CheckoutConfirmationPage
+
+const getConfirmationPageSlugByUrl = (url: string) => {
+  const urlParts = url.split('/')
+  const slug = urlParts[1]
+  return slug
+}
