@@ -13,13 +13,17 @@ type Props = {
 // TODO: To be replaced with new UI when login is removed from cart page
 export const BankIdLogin = ({ shopSessionId, ssn, onCompleted }: Props) => {
   const { t } = useTranslation('common')
-  const [state, startLogin] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
+  const [startLogin, loginState] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
   return (
     <>
-      <BankIdLoginForm title={t('LOGIN_BUTTON_TEXT')} state={state} onLoginStart={startLogin} />
-      {state === BankIdState.Pending && <Text>Pleas open BankID app now</Text>}
-      {state === BankIdState.Success && <Text>Login success</Text>}
-      {state === BankIdState.Error && <Text>Something went wrong</Text>}
+      <BankIdLoginForm
+        title={t('LOGIN_BUTTON_TEXT')}
+        state={loginState}
+        onLoginStart={startLogin}
+      />
+      {loginState === BankIdState.Pending && <Text>Pleas open BankID app now</Text>}
+      {loginState === BankIdState.Success && <Text>Login success</Text>}
+      {loginState === BankIdState.Error && <Text>Something went wrong</Text>}
     </>
   )
 }

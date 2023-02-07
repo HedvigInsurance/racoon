@@ -19,16 +19,16 @@ type BankIdLoginOptions = {
   onCompleted: () => void
 }
 export const useBankIdLogin = ({ shopSessionId, ssn, onCompleted }: BankIdLoginOptions) => {
-  const [state, setState] = useState(BankIdState.Idle)
+  const [loginState, setLoginState] = useState(BankIdState.Idle)
   // TODO: Expose and handle errors
   const [authenticateShopSession] = useShopSessionAuthenticateMutation({
     variables: { shopSessionId },
   })
   const startLogin = useCallback(async () => {
-    setState(BankIdState.Starting)
+    setLoginState(BankIdState.Starting)
     try {
       const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
-        setState(() => {
+        setLoginState(() => {
           switch (status) {
             case 'PENDING':
               return BankIdState.Pending
@@ -45,8 +45,8 @@ export const useBankIdLogin = ({ shopSessionId, ssn, onCompleted }: BankIdLoginO
       onCompleted()
     } catch (error) {
       datadogLogs.logger.warn('Failed to authenticate', { error })
-      setState(BankIdState.Error)
+      setLoginState(BankIdState.Error)
     }
   }, [authenticateShopSession, onCompleted, ssn])
-  return [state, startLogin] as const
+  return [startLogin, loginState] as const
 }

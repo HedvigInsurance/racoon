@@ -108,11 +108,11 @@ const AuthenticationRequiredSsnSection = ({
   onCompleted,
 }: AuthenticationRequiredProps) => {
   const { t } = useTranslation('purchase-form')
-  const [state, startLogin] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
+  const [startLogin, loginState] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
 
   let textBlock: ReactElement
   let actionBlock: ReactElement | null
-  switch (state) {
+  switch (loginState) {
     case BankIdState.Idle: {
       textBlock = (
         <>
@@ -125,7 +125,7 @@ const AuthenticationRequiredSsnSection = ({
       actionBlock = (
         <>
           <BankIdLoginForm
-            state={state}
+            state={loginState}
             title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
             onLoginStart={startLogin}
           />
@@ -145,7 +145,7 @@ const AuthenticationRequiredSsnSection = ({
             {t('LOGIN_BANKID_WAITING')}
           </IconWithText>
           <Text align="center" color="textSecondary">
-            {state === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
+            {loginState === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
           </Text>
         </>
       )
@@ -173,7 +173,7 @@ const AuthenticationRequiredSsnSection = ({
       actionBlock = (
         <>
           <BankIdLoginForm
-            state={state}
+            state={loginState}
             title={t('LOGIN_BANKID_TRY_AGAIN')}
             onLoginStart={startLogin}
           />
