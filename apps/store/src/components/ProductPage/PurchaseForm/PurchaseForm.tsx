@@ -415,6 +415,7 @@ const StickyButtonWrapper = styled.div({
 })
 
 const SectionWrapper = styled.div({
+  position: 'relative',
   width: '100%',
   [mq.sm]: {
     maxWidth: PURCHASE_FORM_MAX_WIDTH,
