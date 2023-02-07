@@ -1,16 +1,19 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { appStoreLinks } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
+// TODO: update to point to production deployment
+import qrCodeImage from './download-app-qrcode.png'
 import { FooterSection } from './FooterSection'
 
 type Props = ConfirmationPageProps & {
@@ -18,22 +21,16 @@ type Props = ConfirmationPageProps & {
 }
 
 export const ConfirmationPage = (props: Props) => {
+  const { t } = useTranslation('checkout')
   const { locale } = useCurrentLocale()
   const { platform, cart, story } = props
 
-  const appStoreButton = platform ? (
+  const appDownloadAction = platform ? (
     <Link href={appStoreLinks[platform]} passHref>
       <AppStoreBadge type={platform} locale={locale} />
     </Link>
   ) : (
-    <SpaceFlex space={0.5}>
-      <Link href={appStoreLinks.apple} passHref>
-        <AppStoreBadge type="apple" locale={locale} />
-      </Link>
-      <Link href={appStoreLinks.google} passHref>
-        <AppStoreBadge type="google" locale={locale} />
-      </Link>
-    </SpaceFlex>
+    <Image src={qrCodeImage} alt={t('APP_DOWNLOAD_QRCODE_ALT')} width={128} height={128} />
   )
 
   const checklistItems = story.content.checklist.split('\n')
@@ -69,11 +66,11 @@ export const ConfirmationPage = (props: Props) => {
                   {checklistItems.map((item, index) => {
                     const isLast = index === checklistItems.length - 1
                     return isLast ? (
-                      <CheckListItem.Unchecked title={item}>
-                        {appStoreButton}
+                      <CheckListItem.Unchecked key={item} title={item}>
+                        {appDownloadAction}
                       </CheckListItem.Unchecked>
                     ) : (
-                      <CheckListItem.Checked title={item} />
+                      <CheckListItem.Checked key={item} title={item} />
                     )
                   })}
                 </CheckList>
@@ -108,7 +105,7 @@ export const ConfirmationPage = (props: Props) => {
                 {story.content.footerSubtitle}
               </Text>
             </div>
-            <div>{appStoreButton}</div>
+            {appDownloadAction}
           </Space>
         </FooterSection>
       </Space>
