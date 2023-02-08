@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { BankIdState, useBankIdLogin } from '@/services/bankId'
+import { BankIdState } from '@/services/bankId/bankId.types'
+import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import {
   Params as SignCheckoutParams,
   useHandleSignShopSession,
@@ -34,9 +35,8 @@ export const useHandleSubmitCheckout = (params: Params) => {
     shopSessionId,
   })
 
+  // TODO: Initialize login from BankIdContext instead
   const [startLogin, loginState] = useBankIdLogin({
-    shopSessionId,
-    ssn,
     onCompleted() {
       startSign()
     },
@@ -57,7 +57,7 @@ export const useHandleSubmitCheckout = (params: Params) => {
         break
       }
       case ShopSessionAuthenticationStatus.AuthenticationRequired: {
-        startLogin()
+        startLogin({ shopSessionId, ssn })
         break
       }
       default: {

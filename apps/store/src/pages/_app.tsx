@@ -5,7 +5,9 @@ import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
 import { globalStyles, theme } from 'ui'
+import { BankIdDialog } from '@/components/BankIdDialog'
 import { useApollo } from '@/services/apollo/client'
+import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -75,7 +77,10 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <ThemeProvider theme={theme}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <TrackingProvider value={tracking}>
-              {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+              <BankIdContextProvider>
+                {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                <BankIdDialog />
+              </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
         </ThemeProvider>
