@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { FormEventHandler } from 'react'
 import { BankIdIcon, Button, theme } from 'ui'
-import { BankIdState } from '@/services/bankId'
+import { BankIdState } from '@/services/bankId/bankId.types'
 
 type Props = {
   state: BankIdState

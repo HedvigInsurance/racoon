@@ -16,7 +16,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
   const contentHtml = useMemo(() => renderRichText(blok.body), [blok.body])
   const fontSizes = {
     _: blok.fontSize ?? 'md',
-    ...(blok.fontSizeDesktop && { lg: blok.fontSizeDesktop }),
+    ...(blok.fontSizeDesktop && { md: blok.fontSizeDesktop }),
   }
   return (
     <Text
