@@ -5,3 +5,9 @@ export enum BankIdState {
   Success = 'Success',
   Error = 'Error',
 }
+
+export type BankIdOperationOptions = {
+  onCancel: () => void
+  onSuccess: () => void
+  onError?: () => void
+}

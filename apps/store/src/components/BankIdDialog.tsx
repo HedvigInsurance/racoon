@@ -21,7 +21,8 @@ export const BankIdDialog = () => {
   let content: ReactElement | null = null
   let footer: ReactElement | null = null
 
-  if (currentOperation?.type === 'login') {
+  if (currentOperation !== null) {
+    console.debug('BankID dialog', currentOperation.type, currentOperation.state)
     switch (currentOperation.state) {
       case BankIdState.Idle: {
         content = (

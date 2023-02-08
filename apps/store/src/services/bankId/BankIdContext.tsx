@@ -1,25 +1,34 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { createContext, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react'
-import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
-import { loginMemberSeBankId } from '@/services/authApi/login'
-import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdState } from '@/services/bankId/bankId.types'
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { BankIdOperationOptions, BankIdState } from '@/services/bankId/bankId.types'
+import { useBankIdCheckoutSign } from '@/services/bankId/useBankIdCheckoutSign'
+import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type BankIdOperation = {
-  type: 'login'
+  type: 'login' | 'sign'
   state: BankIdState
-  onCompleted: () => void
+  onCancel: () => void
+  onSuccess: () => void
+  onError?: () => void
 }
-
-type LoginPromptOptions = { onCompleted: () => void }
 
 type BankIdContextValue = {
   currentOperation: BankIdOperation | null
   cancelCurrentOperation: () => void
 
-  showLoginPrompt: (options: LoginPromptOptions) => void
+  showLoginPrompt: (options: BankIdOperationOptions) => void
+
+  startCheckoutSign: (options: BankIdOperationOptions) => void
+
   startLogin: () => void
 }
 
@@ -31,64 +40,102 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
     useState<BankIdContextValue['currentOperation']>(null)
 
   // TODO: Expose and handle errors
-  const [authenticateShopSession] = useShopSessionAuthenticateMutation()
 
-  const showLoginPrompt: BankIdContextValue['showLoginPrompt'] = useCallback(({ onCompleted }) => {
-    console.log('show login', { onCompleted })
+  const showLoginPrompt: BankIdContextValue['showLoginPrompt'] = useCallback((options) => {
     setCurrentOperation({
       type: 'login',
       state: BankIdState.Idle,
-      onCompleted,
+      ...options,
     })
   }, [])
 
-  const shopSessionId = shopSession?.id
-  const ssn = shopSession?.customer?.ssn
+  const handleStateChange = useCallback((nextState: BankIdState) => {
+    setCurrentOperation((currentOperation) => {
+      if (!currentOperation) return currentOperation
+      return {
+        ...currentOperation,
+        state: nextState,
+      }
+    })
+  }, [])
 
-  const startLogin = useCallback(async () => {
-    if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
-    if (!currentOperation) throw new Error('Must have currentOperation')
+  // Ensure we pass down stable callbacks than read latest currentOperation
+  // TODO: Try refactoring with useReducer and pass down dispatch
+  const handleSuccess = useRef<() => void>()
+  handleSuccess.current = () => {
+    currentOperation?.onSuccess()
+  }
+  const handleError = useRef<() => void>()
+  handleError.current = () => {
+    currentOperation?.onError?.()
+  }
 
-    const setOperationState = (nextState: BankIdState) => {
-      setCurrentOperation({ ...currentOperation, state: nextState })
-    }
-
-    datadogLogs.logger.log('Starting BankId login')
-    setOperationState(BankIdState.Starting)
-    try {
-      const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
-        switch (status) {
-          case 'PENDING':
-            setOperationState(BankIdState.Pending)
-            break
-          case 'COMPLETED':
-            setOperationState(BankIdState.Success)
-            break
-          case 'FAILED':
-            setOperationState(BankIdState.Error)
-            break
-        }
-      })
-      const accessToken = await exchangeAuthorizationCode(authorizationCode)
-      saveAccessToken(accessToken)
-      await authenticateShopSession({ variables: { shopSessionId } })
-      currentOperation?.onCompleted()
-      setCurrentOperation(null)
-    } catch (error) {
-      datadogLogs.logger.warn('Failed to authenticate', { error })
-      setOperationState(BankIdState.Error)
-    }
-  }, [authenticateShopSession, currentOperation, shopSessionId, ssn])
-
-  const cancelCurrentOperation = useCallback(() => {
-    console.log('TODO: Unsubscribe, stop polling, etc')
-    currentOperation?.onCompleted()
+  const cancelCurrentOperation = useRef<() => void>()
+  cancelCurrentOperation.current = () => {
+    console.debug('TODO: Unsubscribe, stop polling, etc')
+    currentOperation?.onCancel()
     setCurrentOperation(null)
-  }, [currentOperation])
+  }
 
+  const shopSessionId = shopSession?.id
+  const ssn = shopSession?.customer?.ssn ?? ''
+  const startLogin = useBankIdLogin({
+    shopSessionId,
+    ssn,
+    onError: handleError.current!,
+    onStateChange: handleStateChange,
+    onSuccess: handleSuccess.current!,
+    onCancel: cancelCurrentOperation.current!,
+  })
+
+  const startSign = useBankIdCheckoutSign({
+    shopSessionId,
+    onError: handleError.current!,
+    onStateChange: handleStateChange,
+    onSuccess: handleSuccess.current!,
+    onCancel: cancelCurrentOperation.current!,
+  })
+
+  const { authenticationStatus } = shopSession?.customer ?? {}
+
+  const startCheckoutSign: BankIdContextValue['startCheckoutSign'] = useCallback(
+    (options) => {
+      console.debug('startCheckoutSign', options)
+      const showBankIdDialog =
+        authenticationStatus !== ShopSessionAuthenticationStatus.Authenticated
+      if (showBankIdDialog) {
+        setCurrentOperation({
+          type: 'sign',
+          state: BankIdState.Starting,
+          ...options,
+        })
+      }
+
+      if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+        startLogin({
+          async onSuccess() {
+            await startSign()
+            handleSuccess.current!()
+          },
+        })
+      } else {
+        startSign(options)
+      }
+    },
+    [authenticationStatus, startLogin, startSign],
+  )
+
+  // TODO: Try to make it work with ref, not memo
+  //  Perhaps setCurrentOperation should take a callback to update value and make context consumers rerender?
   const value = useMemo(
-    () => ({ currentOperation, cancelCurrentOperation, showLoginPrompt, startLogin }),
-    [currentOperation, cancelCurrentOperation, showLoginPrompt, startLogin],
+    () => ({
+      currentOperation,
+      cancelCurrentOperation: cancelCurrentOperation.current!,
+      showLoginPrompt,
+      startCheckoutSign,
+      startLogin,
+    }),
+    [currentOperation, showLoginPrompt, startCheckoutSign, startLogin],
   )
   return <BankIdContext.Provider value={value}>{children}</BankIdContext.Provider>
 }

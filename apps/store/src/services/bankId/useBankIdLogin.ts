@@ -1,48 +1,46 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdOperationOptions, BankIdState } from '@/services/bankId/bankId.types'
+import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
 
-type BankIdLoginOptions = {
-  onCompleted: () => void
-}
-type StartLoginOptions = {
-  shopSessionId: string
-  ssn: string
-}
-export const useBankIdLogin = ({ onCompleted }: BankIdLoginOptions) => {
-  const [loginState, setLoginState] = useState(BankIdState.Idle)
-  // TODO: Expose and handle errors
+type Options = {
+  shopSessionId?: string
+  ssn?: string
+  onStateChange: (newState: BankIdState) => void
+} & BankIdOperationOptions
+export const useBankIdLogin = ({
+  shopSessionId,
+  ssn,
+  onError,
+  onStateChange,
+  onSuccess,
+}: Options) => {
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
-  const startLogin = useCallback(
-    async ({ shopSessionId, ssn }: StartLoginOptions) => {
-      setLoginState(BankIdState.Starting)
+  return useCallback(
+    async (options?: { onSuccess: BankIdOperationOptions['onSuccess'] }) => {
+      if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
+
+      datadogLogs.logger.log('Starting BankId login')
+      onStateChange(BankIdState.Starting)
       try {
         const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
-          setLoginState(() => {
-            switch (status) {
-              case 'PENDING':
-                return BankIdState.Pending
-              case 'COMPLETED':
-                return BankIdState.Success
-              case 'FAILED':
-                return BankIdState.Error
-            }
-          })
+          onStateChange(apiStatusToBankIdState(status))
         })
         const accessToken = await exchangeAuthorizationCode(authorizationCode)
         saveAccessToken(accessToken)
         await authenticateShopSession({ variables: { shopSessionId } })
-        onCompleted()
+        const handleSuccess = options?.onSuccess || onSuccess
+        handleSuccess()
       } catch (error) {
         datadogLogs.logger.warn('Failed to authenticate', { error })
-        setLoginState(BankIdState.Error)
+        onStateChange(BankIdState.Error)
+        onError?.()
       }
     },
-    [authenticateShopSession, onCompleted],
+    [authenticateShopSession, onError, onStateChange, onSuccess, shopSessionId, ssn],
   )
-  return [startLogin, loginState] as const
 }
