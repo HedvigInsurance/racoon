@@ -113,6 +113,11 @@ const AccordionPrimitivesTrigger = styled(AccordionPrimitives.Trigger)({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr auto',
   gap: '0.75rem',
+  '@media (hover: hover)': {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
 })
 
 const TriggerText = styled(Text)({
