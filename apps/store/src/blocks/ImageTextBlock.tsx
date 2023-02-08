@@ -34,7 +34,7 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
       <ImageWrapper>
         <Image src={blok.image.filename} alt={blok.image.alt} fill={true} />
       </ImageWrapper>
-      <BodyWrapper>
+      <BodyWrapper imagePlacement={blok.imagePlacement ?? DEFAULT_IMAGE_PLACEMENT}>
         <div>
           {blok.body?.map((nestedBlock) => (
             <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
@@ -48,17 +48,23 @@ ImageTextBlock.blockName = 'imageText'
 
 const Wrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlacement }) => ({
   display: 'flex',
-  paddingInline: theme.space.xs,
+  flexDirection: 'column',
 
   '&[data-orientation="vertical"]': {
-    flexFlow: `${imagePlacement === 'right' ? 'column-reverse' : 'column'} nowrap`,
+    paddingInline: theme.space.xs,
+    [mq.md]: {
+      paddingInline: theme.space.md,
+    },
   },
   '&[data-orientation="fluid"]': {
-    flexFlow: `${imagePlacement === 'right' ? 'row-reverse' : 'row'} wrap`,
-  },
-
-  [mq.lg]: {
-    paddingInline: theme.space.md,
+    paddingInline: theme.space.xs,
+    [mq.md]: {
+      paddingInline: theme.space.md,
+    },
+    [mq.lg]: {
+      flexDirection: imagePlacement === 'right' ? 'row-reverse' : 'row',
+      justifyContent: 'space-between',
+    },
   },
 }))
 
@@ -66,10 +72,12 @@ const ImageWrapper = styled.div({
   flex: '1',
   position: 'relative',
   aspectRatio: '3 / 2',
+  minWidth: '22rem',
 
   [`${Wrapper}[data-orientation="fluid"] &`]: {
-    // This constraint helps flex algorithm to decide when to wrap
-    minWidth: '22rem',
+    [mq.lg]: {
+      maxWidth: '43.5rem',
+    },
   },
 })
 
@@ -78,18 +86,27 @@ const Image = styled(NextImage)({
   borderRadius: theme.radius.lg,
 })
 
-const BodyWrapper = styled.div({
+const BodyWrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlacement }) => ({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.space.sm,
-  [mq.md]: {
-    padding: theme.space.md,
-  },
 
+  [`${Wrapper}[data-orientation="vertical"] &`]: {
+    padding: theme.space.xs,
+    [mq.md]: {
+      paddingBlock: theme.space.md,
+    },
+  },
   [`${Wrapper}[data-orientation="fluid"] &`]: {
-    // This constraint helps flex algorithm to decide when to wrap
-    minWidth: '35ch',
+    paddingBlock: theme.space.md,
+    paddingInline: theme.space.xs,
+    [mq.lg]: {
+      maxWidth: '37.5rem',
+      paddingInline:
+        imagePlacement === 'right'
+          ? `${theme.space.xs} ${theme.space.xxl}`
+          : `${theme.space.xxl} ${theme.space.xs}`,
+    },
   },
 
   [`${Wrapper}[data-text-alignment='top'] &`]: {
@@ -109,4 +126,4 @@ const BodyWrapper = styled.div({
     display: 'inline-block',
     padding: 0,
   },
-})
+}))
