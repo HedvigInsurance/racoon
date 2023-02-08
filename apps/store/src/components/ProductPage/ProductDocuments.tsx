@@ -1,22 +1,31 @@
 import styled from '@emotion/styled'
-import { Button, HeadingLabel, mq, NeArrow, Space, theme } from 'ui'
+import { Button, mq, NeArrow, Space, Text, theme } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {
   heading: string
+  description: string
   docs: Array<InsuranceDocument>
 }
 
-export const ProductDocuments = ({ heading, docs }: Props) => {
+export const ProductDocuments = ({ heading, description, docs }: Props) => {
   return (
-    <ProductDocumentsWrapper>
-      <Space y={1}>
-        <HeadingLabel>{heading}</HeadingLabel>
-        {docs.map((doc, index) => (
-          <ProductDocument key={index} doc={doc} />
-        ))}
-      </Space>
-    </ProductDocumentsWrapper>
+    <Layout>
+      <Column>
+        <Text size={{ _: 'xl', lg: 'xxl' }}>{heading}</Text>
+        <Text size={{ _: 'xl', lg: 'xxl' }} color="textSecondary">
+          {description}
+        </Text>
+      </Column>
+      <Column>
+        <Space y={0.5}>
+          {docs.map((doc, index) => (
+            <ProductDocument key={index} doc={doc} />
+          ))}
+        </Space>
+      </Column>
+    </Layout>
   )
 }
 
@@ -39,11 +48,21 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   )
 }
 
-const ProductDocumentsWrapper = styled.div({
-  padding: theme.space.md,
+const Layout = styled(GridLayout.Root)({
+  gap: theme.space.lg,
+  [mq.lg]: {
+    gap: theme.space.md,
+
+    // TODO: harmonize with other grid layouts
+    paddingInline: theme.space.md,
+  },
+})
+
+const Column = styled.div({
+  gridColumn: '1 / -1',
 
   [mq.lg]: {
-    maxWidth: '32rem',
+    gridColumn: 'span 6',
   },
 })
 
