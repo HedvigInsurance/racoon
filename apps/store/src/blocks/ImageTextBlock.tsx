@@ -20,7 +20,6 @@ type ImageTextBlockProps = SbBaseBlockProps<{
   orientation?: Orientation
   textAlignment?: TextAlignment
   imagePlacement?: ImagePlacement
-  reverse?: boolean
 }>
 
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
