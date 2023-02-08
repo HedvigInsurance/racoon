@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { Card, CardContent } from 'ui/src/components/Card/Card'
-import { getColor, HeadingLabel, mq, Space, Text, theme } from 'ui'
+import { Button, HeadingLabel, mq, NeArrow, Space, theme } from 'ui'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {
@@ -23,35 +22,54 @@ export const ProductDocuments = ({ heading, docs }: Props) => {
 
 const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
+
   return (
-    <DocumentCard>
-      <a href={doc.url} target="_blank" rel="noopener noreferrer">
-        <CardContent>
-          <Text size="sm">
-            {doc.displayName} <DocumentType>{documentType}</DocumentType>
-          </Text>
-        </CardContent>
-      </a>
-    </DocumentCard>
+    <DownloadFileButton
+      variant="secondary"
+      href={doc.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Ellipsis>
+        {doc.displayName} <DocumentType>{documentType}</DocumentType>
+      </Ellipsis>
+
+      <StyledNeArrow size="1rem" />
+    </DownloadFileButton>
   )
 }
 
 const ProductDocumentsWrapper = styled.div({
-  paddingInline: theme.space.md,
-  marginBlock: theme.space.md,
+  padding: theme.space.md,
 
   [mq.lg]: {
     maxWidth: '32rem',
   },
 })
 
-// TODO: Add hover style to Card or LinkCard component
-// TODO: Provide default card background in app theme
-const DocumentCard = styled(Card)({
-  backgroundColor: getColor('gray200'),
+const DownloadFileButton = styled(Button)({
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: theme.space.md,
+  // Counter the padding from the "DocumentType"
+  paddingTop: theme.space.xs,
+  height: 'auto',
+  fontSize: theme.fontSizes.xl,
+})
+
+const Ellipsis = styled.span({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 })
 
 const DocumentType = styled.sup({
   fontVariant: 'small-caps',
   verticalAlign: 'super',
+})
+
+const StyledNeArrow = styled(NeArrow)({
+  flexShrink: 0,
+  position: 'relative',
+  top: theme.space.xxs,
 })
