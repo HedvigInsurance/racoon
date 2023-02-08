@@ -14,6 +14,7 @@ export type CheckoutPageProps = {
   }
   ssn: string
   shouldCollectEmail: boolean
+  suggestedEmail?: string
   shouldCollectName: boolean
   checkoutSteps: Array<CheckoutStep>
 }

@@ -19,10 +19,7 @@ import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Omit<
-  CheckoutPageProps,
-  'cart' | 'prefilledData' | 'customerAuthenticationStatus'
->
+type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'>
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
@@ -92,6 +89,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
     shouldCollectEmail: getShouldCollectEmail(customer),
+    ...(customer.email && { suggestedEmail: customer.email }),
     shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
     checkoutSteps,

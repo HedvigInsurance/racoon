@@ -32,6 +32,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     cart,
     ssn,
     shouldCollectEmail,
+    suggestedEmail,
     shouldCollectName,
     customerAuthenticationStatus,
     shopSessionId,
@@ -131,6 +132,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                         type="email"
                         label={t('FORM_EMAIL_LABEL')}
                         name={FormElement.Email}
+                        defaultValue={suggestedEmail}
                         required
                       />
                     )}
