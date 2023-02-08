@@ -49,14 +49,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     ssn,
     customerAuthenticationStatus,
     onSuccess() {
-      console.log('os')
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
       }
       tracking.reportPurchase(shopSession.cart)
       setupShopSessionServiceClientSide(apolloClient).reset()
-      router.push(
+      return router.push(
         getCheckoutStepLink(
           checkoutSteps[checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout) + 1],
           shopSession,

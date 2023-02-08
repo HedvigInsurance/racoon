@@ -11,7 +11,8 @@ import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
-  const { t } = useTranslation('purchase-form')
+  // TODO: Move texts to bankid namespace
+  const { t } = useTranslation(['purchase-form', 'checkout'])
   const { shopSession } = useShopSession()
   const { currentOperation, dispatch } = useBankIdContext()
   const isOpen =
@@ -60,9 +61,9 @@ export const BankIdDialog = () => {
       case BankIdState.Idle: {
         content = (
           <>
-            <Text align="center">{t('LOGIN_BANKID')}</Text>
+            <Text align="center">{t('LOGIN_BANKID', { ns: 'purchase-form' })}</Text>
             <Text align="center" color="textSecondary">
-              {t('LOGIN_BANKID_EXPLANATION')}
+              {t('LOGIN_BANKID_EXPLANATION', { ns: 'purchase-form' })}
             </Text>
           </>
         )
@@ -74,7 +75,7 @@ export const BankIdDialog = () => {
               onLoginStart={startLogin}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
-              {t('LOGIN_BANKID_SKIP')}
+              {t('LOGIN_BANKID_SKIP', { ns: 'purchase-form' })}
             </Button>
           </>
         )
@@ -86,10 +87,12 @@ export const BankIdDialog = () => {
           <>
             <IconWithText>
               <BankIdIcon />
-              {t('LOGIN_BANKID_WAITING')}
+              {t('LOGIN_BANKID_WAITING', { ns: 'purchase-form' })}
             </IconWithText>
             <Text align="center" color="textSecondary">
-              {currentOperation.state === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
+              {currentOperation.state === BankIdState.Pending
+                ? t('LOGIN_BANKID_OPEN_APP', { ns: 'purchase-form' })
+                : ''}
             </Text>
           </>
         )
@@ -99,7 +102,9 @@ export const BankIdDialog = () => {
         content = (
           <IconWithText>
             <TickIcon size="1rem" color={theme.colors.greenElement} />
-            {t('LOGIN_BANKID_SUCCESS')}
+            {currentOperation.type === 'login'
+              ? t('LOGIN_BANKID_SUCCESS', { ns: 'purchase-form' })
+              : t('BANKID_MODAL_SUCCESS_PROMPT', { ns: 'checkout' })}
           </IconWithText>
         )
         break
@@ -108,18 +113,20 @@ export const BankIdDialog = () => {
         content = (
           <IconWithText>
             <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-            <Text align="center">{t('LOGIN_BANKID_ERROR')}</Text>
+            <Text align="center">{t('LOGIN_BANKID_ERROR', { ns: 'purchase-form' })}</Text>
           </IconWithText>
         )
         footer = (
           <>
             <BankIdLoginForm
               state={currentOperation.state}
-              title={t('LOGIN_BANKID_TRY_AGAIN')}
+              title={t('LOGIN_BANKID_TRY_AGAIN', { ns: 'purchase-form' })}
               onLoginStart={startLogin}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
-              {t('LOGIN_BANKID_SKIP')}
+              {currentOperation.type === 'login'
+                ? t('LOGIN_BANKID_SKIP', { ns: 'purchase-form' })
+                : t('BANKID_MODAL_CANCEL', { ns: 'checkout' })}
             </Button>
           </>
         )

@@ -98,10 +98,13 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   const startSign = useBankIdCheckoutSign({
     shopSessionId,
     dispatch,
-    onSuccess() {
-      console.log('success', state.currentOperation)
-      state.currentOperation?.onSuccess()
-      dispatch({ type: 'success' })
+    async onSuccess() {
+      // NOTE: Keep dialog open until onSuccess resolves -> prevents returning to original checkout page state while waiting for redirect
+      try {
+        await state.currentOperation?.onSuccess()
+      } finally {
+        dispatch({ type: 'success' })
+      }
     },
   })
 
