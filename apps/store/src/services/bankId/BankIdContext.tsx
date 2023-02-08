@@ -10,13 +10,16 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 type BankIdOperation = {
   type: 'login'
   state: BankIdState
+  onCompleted: () => void
 }
+
+type LoginPromptOptions = { onCompleted: () => void }
 
 type BankIdContextValue = {
   currentOperation: BankIdOperation | null
   cancelCurrentOperation: () => void
 
-  showLoginPrompt: () => void
+  showLoginPrompt: (options: LoginPromptOptions) => void
   startLogin: () => void
 }
 
@@ -30,11 +33,12 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   // TODO: Expose and handle errors
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
 
-  const showLoginPrompt = useCallback(() => {
-    console.log('init login')
+  const showLoginPrompt: BankIdContextValue['showLoginPrompt'] = useCallback(({ onCompleted }) => {
+    console.log('show login', { onCompleted })
     setCurrentOperation({
       type: 'login',
       state: BankIdState.Idle,
+      onCompleted,
     })
   }, [])
 
@@ -68,6 +72,7 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
       const accessToken = await exchangeAuthorizationCode(authorizationCode)
       saveAccessToken(accessToken)
       await authenticateShopSession({ variables: { shopSessionId } })
+      currentOperation?.onCompleted()
       setCurrentOperation(null)
     } catch (error) {
       datadogLogs.logger.warn('Failed to authenticate', { error })
@@ -77,8 +82,9 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
 
   const cancelCurrentOperation = useCallback(() => {
     console.log('TODO: Unsubscribe, stop polling, etc')
+    currentOperation?.onCompleted()
     setCurrentOperation(null)
-  }, [])
+  }, [currentOperation])
 
   const value = useMemo(
     () => ({ currentOperation, cancelCurrentOperation, showLoginPrompt, startLogin }),
