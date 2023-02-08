@@ -1,16 +1,49 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ReactElement } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { BankIdIcon, Button, Text, theme, TickIcon, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
   const { t } = useTranslation('purchase-form')
-  const { currentOperation, cancelCurrentOperation, startLogin } = useBankIdContext()
-  const isOpen = !!currentOperation
+  const { shopSession } = useShopSession()
+  const { currentOperation, dispatch } = useBankIdContext()
+  const isOpen =
+    !!currentOperation &&
+    // Don't open dialog when signing as authenticated member
+    !(
+      currentOperation.type == 'sign' &&
+      shopSession?.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
+    )
+
+  const cancelCurrentOperation = useCallback(() => {
+    currentOperation?.onCancel()
+    dispatch({ type: 'cancel' })
+  }, [currentOperation, dispatch])
+
+  // TODO: Expose and handle errors
+  const shopSessionId = shopSession?.id
+  const ssn = shopSession?.customer?.ssn ?? ''
+  const bankIdLogin = useBankIdLogin({
+    shopSessionId,
+    ssn,
+    dispatch,
+  })
+  const startLogin = useCallback(async () => {
+    try {
+      await bankIdLogin()
+      currentOperation?.onSuccess()
+      dispatch({ type: 'success' })
+    } catch (error) {
+      currentOperation?.onError?.()
+    }
+  }, [currentOperation, dispatch, bankIdLogin])
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {

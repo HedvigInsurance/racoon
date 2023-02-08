@@ -11,3 +11,16 @@ export type BankIdOperationOptions = {
   onSuccess: () => void
   onError?: () => void
 }
+
+export type BankIdAction = {
+  type:
+    | 'showLoginPrompt'
+    | 'operationStateChange'
+    | 'startCheckoutSign'
+    | 'success'
+    | 'cancel'
+    | 'error'
+  options?: BankIdOperationOptions
+  nextOperationState?: BankIdState
+  error?: unknown
+}

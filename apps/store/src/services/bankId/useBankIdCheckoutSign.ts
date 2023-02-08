@@ -1,27 +1,22 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useState } from 'react'
+import { Dispatch, useState } from 'react'
 import {
   ShopSessionSigningStatus,
   useShopSessionSigningQuery,
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdOperationOptions, BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdAction } from '@/services/bankId/bankId.types'
 import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
 import { exchangeAuthorizationCode } from '../authApi/oauth'
 
 export type Options = {
   shopSessionId: string
-  onStateChange: (state: BankIdState) => void
-} & BankIdOperationOptions
+  dispatch: Dispatch<BankIdAction>
+  onSuccess: () => void
+}
 
-export const useBankIdCheckoutSign = ({
-  shopSessionId,
-  onError,
-  onStateChange,
-  onSuccess,
-}: Options) => {
-  // TODO: Handle and expose errors
+export const useBankIdCheckoutSign = ({ shopSessionId, dispatch, onSuccess }: Options) => {
   const [shopSessionSigningId, setShopSessionSigningId] = useState(null)
 
   useShopSessionSigningQuery({
@@ -30,7 +25,7 @@ export const useBankIdCheckoutSign = ({
     pollInterval: 1000,
     async onCompleted(data) {
       const { status, completion } = data.shopSessionSigning
-      onStateChange(apiStatusToBankIdState(status))
+      dispatch({ type: 'operationStateChange', nextOperationState: apiStatusToBankIdState(status) })
       if (status === ShopSessionSigningStatus.Signed && completion) {
         datadogLogs.logger.debug('Checkout | Signing complete')
         const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
@@ -41,7 +36,7 @@ export const useBankIdCheckoutSign = ({
     onError(error) {
       datadogLogs.logger.warn('Checkout | SigningQuery | Failed to sign', { error })
       setShopSessionSigningId(null)
-      onError?.()
+      dispatch({ type: 'error', error })
     },
   })
 
@@ -49,13 +44,15 @@ export const useBankIdCheckoutSign = ({
     variables: { shopSessionId },
     onCompleted(data) {
       const { signing, userError } = data.shopSessionStartSign
-      if (signing && !userError) {
+      if (userError) {
+        dispatch({ type: 'error', error: userError })
+      } else if (signing) {
         setShopSessionSigningId(signing.id)
       }
     },
     onError(error) {
       datadogLogs.logger.warn('Checkout | StartSign | Failed to sign', { error })
-      onError?.()
+      dispatch({ type: 'error', error })
     },
   })
 

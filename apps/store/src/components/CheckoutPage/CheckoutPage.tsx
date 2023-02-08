@@ -49,6 +49,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     ssn,
     customerAuthenticationStatus,
     onSuccess() {
+      console.log('os')
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
@@ -63,7 +64,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       )
     },
     onError() {
-      console.log('err')
       setShowSignError(true)
     },
   })

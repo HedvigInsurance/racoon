@@ -51,7 +51,7 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
       const { shopSession } = data.shopSessionCustomerUpdate
       const { authenticationStatus } = shopSession?.customer ?? {}
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-        showLoginPrompt({ onSuccess: onCompleted, onCancel: onCompleted })
+        showLoginPrompt({ onCompleted })
       } else {
         onCompleted()
       }

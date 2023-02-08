@@ -1,22 +1,26 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { Options as SignCheckoutParams } from '@/services/bankId/useBankIdCheckoutSign'
 import { useUpdateCustomer } from './useUpdateCustomer'
 
-type Options = Omit<SignCheckoutParams, 'onCancel' | 'onStateChange'> & {
+type Options = {
+  shopSessionId: string
   ssn: string
   customerAuthenticationStatus: ShopSessionAuthenticationStatus
+  onError: () => void
+  onSuccess: () => void
 }
 
 export const useHandleSubmitCheckout = (options: Options) => {
-  const { customerAuthenticationStatus, shopSessionId, onSuccess, onError } = options
+  const { t } = useTranslation('common')
+  const { customerAuthenticationStatus, shopSessionId, onError, onSuccess } = options
   const [updateCustomer, updateCustomerResult] = useUpdateCustomer({
     shopSessionId,
   })
 
-  const { startCheckoutSign } = useBankIdContext()
+  const { lastError, startCheckoutSign } = useBankIdContext()
   const handleCancel = () => {
     console.debug('TODO: Handle cancel sign')
   }
@@ -35,7 +39,16 @@ export const useHandleSubmitCheckout = (options: Options) => {
     })
   }
 
-  const userError = updateCustomerResult.userError
+  let userError = updateCustomerResult.userError
+  if (lastError) {
+    const lastErrorMessage =
+      (typeof lastError === 'object' && (lastError as Record<string, string>)?.message) ?? ''
+    if (lastErrorMessage) {
+      userError = { message: lastErrorMessage }
+    } else {
+      userError = { message: t('UNKNOWN_ERROR_MESSAGE') }
+    }
+  }
 
   return [
     handleSubmit,

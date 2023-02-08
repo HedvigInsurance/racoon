@@ -1,14 +1,14 @@
 import {
   createContext,
+  Dispatch,
   PropsWithChildren,
   useCallback,
   useContext,
   useMemo,
-  useRef,
-  useState,
+  useReducer,
 } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { BankIdOperationOptions, BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdAction, BankIdOperationOptions, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdCheckoutSign } from '@/services/bankId/useBankIdCheckoutSign'
 import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -21,121 +21,122 @@ type BankIdOperation = {
   onError?: () => void
 }
 
-type BankIdContextValue = {
+type BankdIdReducerState = {
   currentOperation: BankIdOperation | null
-  cancelCurrentOperation: () => void
+  lastError?: unknown
+}
 
-  showLoginPrompt: (options: BankIdOperationOptions) => void
+type LoginPromptOptions = { onCompleted: () => void }
 
+type BankIdContextValue = BankdIdReducerState & {
+  dispatch: Dispatch<BankIdAction>
+
+  showLoginPrompt: (options: LoginPromptOptions) => void
   startCheckoutSign: (options: BankIdOperationOptions) => void
-
-  startLogin: () => void
 }
 
 export const BankIdContext = createContext<BankIdContextValue | null>(null)
 
-export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
-  const { shopSession } = useShopSession()
-  const [currentOperation, setCurrentOperation] =
-    useState<BankIdContextValue['currentOperation']>(null)
-
-  // TODO: Expose and handle errors
-
-  const showLoginPrompt: BankIdContextValue['showLoginPrompt'] = useCallback((options) => {
-    setCurrentOperation({
-      type: 'login',
-      state: BankIdState.Idle,
-      ...options,
-    })
-  }, [])
-
-  const handleStateChange = useCallback((nextState: BankIdState) => {
-    setCurrentOperation((currentOperation) => {
-      if (!currentOperation) return currentOperation
+const bankdIdReducer = (state: BankdIdReducerState, action: BankIdAction): BankdIdReducerState => {
+  switch (action.type) {
+    case 'showLoginPrompt':
+      console.log('slp', action.options)
       return {
-        ...currentOperation,
-        state: nextState,
+        currentOperation: {
+          type: 'login',
+          state: BankIdState.Idle,
+          ...action.options!,
+        },
       }
-    })
-  }, [])
-
-  // Ensure we pass down stable callbacks than read latest currentOperation
-  // TODO: Try refactoring with useReducer and pass down dispatch
-  const handleSuccess = useRef<() => void>()
-  handleSuccess.current = () => {
-    currentOperation?.onSuccess()
+    case 'operationStateChange': {
+      if (action.nextOperationState === state.currentOperation?.state) {
+        break
+      }
+      if (!state.currentOperation || !action.nextOperationState) {
+        break
+      }
+      return {
+        currentOperation: {
+          ...state.currentOperation,
+          state: action.nextOperationState,
+        },
+      }
+    }
+    case 'startCheckoutSign':
+      return {
+        currentOperation: {
+          type: 'sign',
+          state: BankIdState.Starting,
+          ...action.options!,
+        },
+      }
+    case 'success':
+    case 'cancel':
+      return {
+        currentOperation: null,
+      }
+    case 'error': {
+      return { currentOperation: null, lastError: action.error }
+    }
   }
-  const handleError = useRef<() => void>()
-  handleError.current = () => {
-    currentOperation?.onError?.()
-  }
+  return state
+}
 
-  const cancelCurrentOperation = useRef<() => void>()
-  cancelCurrentOperation.current = () => {
-    console.debug('TODO: Unsubscribe, stop polling, etc')
-    currentOperation?.onCancel()
-    setCurrentOperation(null)
-  }
+export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
+  const [state, dispatch] = useReducer(bankdIdReducer, { currentOperation: null })
 
+  // // TODO: Expose and handle errors
+  const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
   const ssn = shopSession?.customer?.ssn ?? ''
-  const startLogin = useBankIdLogin({
+  const bankIdLogin = useBankIdLogin({
     shopSessionId,
     ssn,
-    onError: handleError.current!,
-    onStateChange: handleStateChange,
-    onSuccess: handleSuccess.current!,
-    onCancel: cancelCurrentOperation.current!,
+    dispatch,
   })
 
   const startSign = useBankIdCheckoutSign({
     shopSessionId,
-    onError: handleError.current!,
-    onStateChange: handleStateChange,
-    onSuccess: handleSuccess.current!,
-    onCancel: cancelCurrentOperation.current!,
+    dispatch,
+    onSuccess() {
+      console.log('success', state.currentOperation)
+      state.currentOperation?.onSuccess()
+      dispatch({ type: 'success' })
+    },
   })
 
   const { authenticationStatus } = shopSession?.customer ?? {}
 
   const startCheckoutSign: BankIdContextValue['startCheckoutSign'] = useCallback(
-    (options) => {
+    async (options: BankIdOperationOptions) => {
       console.debug('startCheckoutSign', options)
-      const showBankIdDialog =
-        authenticationStatus !== ShopSessionAuthenticationStatus.Authenticated
-      if (showBankIdDialog) {
-        setCurrentOperation({
-          type: 'sign',
-          state: BankIdState.Starting,
-          ...options,
-        })
-      }
-
+      dispatch({
+        type: 'startCheckoutSign',
+        options,
+      })
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-        startLogin({
-          async onSuccess() {
-            await startSign()
-            handleSuccess.current!()
-          },
-        })
-      } else {
-        startSign(options)
+        await bankIdLogin()
       }
+      startSign(options)
     },
-    [authenticationStatus, startLogin, startSign],
+    [authenticationStatus, bankIdLogin, startSign],
   )
 
   // TODO: Try to make it work with ref, not memo
   //  Perhaps setCurrentOperation should take a callback to update value and make context consumers rerender?
   const value = useMemo(
     () => ({
-      currentOperation,
-      cancelCurrentOperation: cancelCurrentOperation.current!,
-      showLoginPrompt,
+      ...state,
+      dispatch,
+      showLoginPrompt({ onCompleted }: LoginPromptOptions) {
+        dispatch({
+          type: 'showLoginPrompt',
+          options: { onSuccess: onCompleted, onCancel: onCompleted },
+        })
+      },
       startCheckoutSign,
-      startLogin,
     }),
-    [currentOperation, showLoginPrompt, startCheckoutSign, startLogin],
+    [startCheckoutSign, state],
   )
   return <BankIdContext.Provider value={value}>{children}</BankIdContext.Provider>
 }
