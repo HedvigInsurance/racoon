@@ -79,6 +79,7 @@ const LargeWrapper = styled(motion.div)({
     '> label': {
       transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
       overflow: 'visible',
+      color: theme.colors.textPrimary,
     },
   },
 
@@ -95,6 +96,7 @@ const Label = styled.label({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  color: theme.colors.textSecondary,
 
   pointerEvents: 'none',
   transformOrigin: 'top left',
