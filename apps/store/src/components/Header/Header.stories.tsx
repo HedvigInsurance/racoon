@@ -89,7 +89,7 @@ export type TopMenuProps = {
 const Template: Story<TopMenuProps> = (props) => {
   return (
     <>
-      <MockedHeaderWrapper opaque={false}>
+      <MockedHeaderWrapper>
         <TopMenuDesktop>
           <MockedNavItems />
         </TopMenuDesktop>
