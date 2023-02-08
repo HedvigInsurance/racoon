@@ -112,9 +112,12 @@ const PrimaryButton = styled(StyledButton)({
 
   '@media (hover: hover)': {
     ':hover': {
-      // TODO: update to use translucent gray900
-      backgroundColor: theme.colors.gray900,
+      backgroundColor: theme.colors.grayTranslucent900,
     },
+  },
+
+  ':active': {
+    backgroundColor: theme.colors.grayTranslucent900,
   },
 
   '&:not([data-loading])': {
@@ -145,6 +148,10 @@ const PrimaryAltButton = styled(StyledButton)(
       },
     },
 
+    ':active': {
+      backgroundColor: theme.colors.green100,
+    },
+
     '&:not([data-loading])': {
       '&:disabled': {
         backgroundColor: theme.colors.gray200,
@@ -168,6 +175,10 @@ const SecondaryButton = styled(StyledButton)(
       },
     },
 
+    ':active': {
+      backgroundColor: theme.colors.translucent2,
+    },
+
     '&:not([data-loading])': {
       '&:disabled': {
         backgroundColor: theme.colors.gray200,
@@ -189,6 +200,10 @@ const GhostButton = styled(StyledButton)({
       // TODO: update to use translucent gray100
       backgroundColor: theme.colors.gray100,
     },
+  },
+
+  '&:active': {
+    backgroundColor: theme.colors.gray100,
   },
 
   '&:not([data-loading])': {

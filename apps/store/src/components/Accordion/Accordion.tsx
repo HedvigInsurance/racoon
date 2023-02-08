@@ -30,7 +30,6 @@ const Trigger = styled(AccordionPrimitives.Trigger)({
   alignItems: 'center',
   justifyContent: 'space-between',
   fontSize: theme.fontSizes.md,
-  WebkitTapHighlightColor: 'transparent',
 
   [mq.lg]: {
     fontSize: theme.fontSizes.lg,

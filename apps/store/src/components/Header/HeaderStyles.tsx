@@ -7,7 +7,6 @@ export const MENU_BAR_HEIGHT_DESKTOP = '4rem'
 
 export const focusableStyles = {
   cursor: 'pointer',
-  WebkitTapHighlightColor: 'transparent',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },

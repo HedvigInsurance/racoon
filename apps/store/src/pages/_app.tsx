@@ -25,6 +25,7 @@ import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
+import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
 
 // Enable API mocking
@@ -60,6 +61,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useRemoveExperimentQueryParam()
   useDebugTranslationKeys()
   useReloadOnCountryChange()
+  useAllowActiveStylesInSafari()
 
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout || ((page) => page)
