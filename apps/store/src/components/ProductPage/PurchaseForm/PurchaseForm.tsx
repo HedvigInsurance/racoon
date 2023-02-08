@@ -199,11 +199,11 @@ const PendingState = () => {
 
   return (
     <SectionWrapper>
-      <Space y={0.5}>
-        <Tagline />
+      <Space y={1}>
         <Button loading disabled>
           {t('OPEN_PRICE_CALCULATOR_BUTTON')}
         </Button>
+        <Tagline />
       </Space>
     </SectionWrapper>
   )
@@ -220,9 +220,9 @@ const IdleState = ({ onClick }: IdleStateProps) => {
   return (
     <>
       <SectionWrapper ref={ref}>
-        <Space y={0.5}>
-          <Tagline />
+        <Space y={1}>
           {button}
+          <Tagline />
         </Space>
       </SectionWrapper>
       <ScrollPast targetRef={ref}>
