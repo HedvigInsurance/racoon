@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
 import { mq, theme } from 'ui'
 import { Wrapper as ButtonBlockWrapper } from '@/blocks/ButtonBlock'
 import { Wrapper as HeadingBlockWrapper } from '@/blocks/HeadingBlock'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 type Orientation = 'vertical' | 'fluid'
@@ -23,61 +24,71 @@ type ImageTextBlockProps = SbBaseBlockProps<{
 }>
 
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
-  return (
-    <Wrapper
-      data-orientation={blok.orientation ?? DEFAULT_ORIENTATION}
-      data-text-alignment={blok.textAlignment ?? DEFAULT_TEXT_ALIGNMENT}
-      imagePlacement={blok.imagePlacement ?? DEFAULT_IMAGE_PLACEMENT}
-      {...storyblokEditable(blok)}
-    >
-      <ImageWrapper>
-        <Image src={blok.image.filename} alt={blok.image.alt} fill={true} />
-      </ImageWrapper>
-      <BodyWrapper imagePlacement={blok.imagePlacement ?? DEFAULT_IMAGE_PLACEMENT}>
-        <div>
-          {blok.body?.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
-          ))}
-        </div>
-      </BodyWrapper>
-    </Wrapper>
-  )
+  const { orientation = DEFAULT_ORIENTATION } = blok
+
+  switch (orientation) {
+    case 'fluid':
+      return (
+        <FluidImageTextBlock
+          image={blok.image}
+          body={blok.body}
+          textAlignment={blok.textAlignment}
+          imagePlacement={blok.imagePlacement}
+        />
+      )
+    case 'vertical':
+      return <VerticalImageTextBlock image={blok.image} body={blok.body} />
+    default:
+      console.warn(`orientation type '${orientation}' is not valid`)
+      return null
+  }
 }
 ImageTextBlock.blockName = 'imageText'
 
-const Wrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlacement }) => ({
-  display: 'flex',
-  flexDirection: 'column',
+type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'image' | 'body'>
 
-  '&[data-orientation="vertical"]': {
-    paddingInline: theme.space.xs,
-    [mq.md]: {
-      paddingInline: theme.space.md,
-    },
-  },
-  '&[data-orientation="fluid"]': {
-    paddingInline: theme.space.xs,
-    [mq.md]: {
-      paddingInline: theme.space.md,
-    },
-    [mq.lg]: {
-      flexDirection: imagePlacement === 'right' ? 'row-reverse' : 'row',
-      justifyContent: 'space-between',
-    },
-  },
-}))
+const VerticalImageTextBlock = ({ image, body }: VerticalImageTextBlockProps) => {
+  return (
+    <VerticalImageTextBlockWrapper>
+      <VerticalImageWrapper>
+        <Image src={image.filename} alt={image.alt} fill={true} />
+      </VerticalImageWrapper>
+      <VerticalBodyWrapper>
+        <div>
+          {body?.map((nestedBlock) => (
+            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        </div>
+      </VerticalBodyWrapper>
+    </VerticalImageTextBlockWrapper>
+  )
+}
 
-const ImageWrapper = styled.div({
-  flex: '1',
+const VerticalImageTextBlockWrapper = styled.div({
+  paddingInline: theme.space.xs,
+  [mq.md]: {
+    paddingInline: theme.space.md,
+  },
+})
+
+const VerticalBodyWrapper = styled.div({
+  padding: theme.space.xs,
+  [mq.md]: {
+    paddingBlock: theme.space.md,
+  },
+
+  [`${HeadingBlockWrapper}`]: {
+    padding: 0,
+  },
+  [`${ButtonBlockWrapper}`]: {
+    display: 'inline-block',
+    padding: 0,
+  },
+})
+
+const VerticalImageWrapper = styled.div({
   position: 'relative',
   aspectRatio: '3 / 2',
-  minWidth: '22rem',
-
-  [`${Wrapper}[data-orientation="fluid"] &`]: {
-    [mq.lg]: {
-      maxWidth: '43.5rem',
-    },
-  },
 })
 
 const Image = styled(NextImage)({
@@ -85,37 +96,67 @@ const Image = styled(NextImage)({
   borderRadius: theme.radius.lg,
 })
 
-const BodyWrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlacement }) => ({
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
+type FluidImageTextBlockProps = Pick<
+  ImageTextBlockProps['blok'],
+  'image' | 'body' | 'textAlignment' | 'imagePlacement'
+>
 
-  [`${Wrapper}[data-orientation="vertical"] &`]: {
-    padding: theme.space.xs,
-    [mq.md]: {
-      paddingBlock: theme.space.md,
-    },
-  },
-  [`${Wrapper}[data-orientation="fluid"] &`]: {
-    paddingBlock: theme.space.md,
-    paddingInline: theme.space.xs,
-    [mq.lg]: {
-      maxWidth: '37.5rem',
-      paddingInline:
-        imagePlacement === 'right'
-          ? `${theme.space.xs} ${theme.space.xxl}`
-          : `${theme.space.xxl} ${theme.space.xs}`,
-    },
-  },
+const FluidImageTextBlock = ({
+  image,
+  body,
+  textAlignment = DEFAULT_TEXT_ALIGNMENT,
+  imagePlacement = DEFAULT_IMAGE_PLACEMENT,
+}: FluidImageTextBlockProps) => {
+  return (
+    <FluidImageTextBlockWrapper>
+      <FluidImageWrapper>
+        <Image src={image.filename} alt={image.alt} fill={true} />
+      </FluidImageWrapper>
+      <FluidBodyWrapper textAlignment={textAlignment} imagePlacement={imagePlacement}>
+        <div>
+          {body?.map((nestedBlock) => (
+            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        </div>
+      </FluidBodyWrapper>
+    </FluidImageTextBlockWrapper>
+  )
+}
 
-  [`${Wrapper}[data-text-alignment='top'] &`]: {
-    justifyContent: 'flex-start',
+const FluidImageTextBlockWrapper = styled(GridLayout.Root)({
+  paddingInline: theme.space.xs,
+  [mq.md]: {
+    paddingInline: theme.space.md,
   },
-  [`${Wrapper}[data-text-alignment='center'] &`]: {
-    justifyContent: 'center',
+})
+
+const FluidImageWrapper = styled.div({
+  position: 'relative',
+  aspectRatio: '3 / 2',
+  gridColumn: '1 / -1',
+  [mq.lg]: {
+    gridColumn: 'span 6',
   },
-  [`${Wrapper}[data-text-alignment='bottom'] &`]: {
-    justifyContent: 'flex-end',
+})
+
+const FluidBodyWrapper = styled.div<{
+  textAlignment: TextAlignment
+  imagePlacement: ImagePlacement
+}>(({ textAlignment, imagePlacement }) => ({
+  paddingBlock: theme.space.md,
+  paddingInline: theme.space.xs,
+  gridColumn: '1 / -1',
+  [mq.lg]: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: getTextAlignmentStyles(textAlignment),
+    gridColumn: 'span 6',
+    order: imagePlacement === 'right' ? -1 : 'initial',
+    maxWidth: '37.5rem',
+    paddingInline:
+      imagePlacement === 'right'
+        ? `${theme.space.xs} ${theme.space.xxl}`
+        : `${theme.space.xxl} ${theme.space.xs}`,
   },
 
   [`${HeadingBlockWrapper}`]: {
@@ -126,3 +167,16 @@ const BodyWrapper = styled.div<{ imagePlacement: ImagePlacement }>(({ imagePlace
     padding: 0,
   },
 }))
+
+const getTextAlignmentStyles = (textAlignment: TextAlignment) => {
+  switch (textAlignment) {
+    case 'top':
+      return 'flex-start'
+    case 'center':
+      return 'center'
+    case 'bottom':
+      return 'flex-end'
+    default:
+      return 'initial'
+  }
+}
