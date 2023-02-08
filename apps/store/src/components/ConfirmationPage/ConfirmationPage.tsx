@@ -41,7 +41,7 @@ export const ConfirmationPage = (props: Props) => {
         <GridLayout.Root>
           <GridLayout.Content>
             <Space y={4}>
-              <Space y={1}>
+              <Space y={{ base: 1.5, lg: 3 }}>
                 <div>
                   <Heading as="h1" variant="standard.24">
                     {story.content.title}
