@@ -1,4 +1,3 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { useState } from 'react'
 import {
   ShopSessionSigningStatus,
@@ -6,7 +5,7 @@ import {
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
+import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
 import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 import { exchangeAuthorizationCode } from '../authApi/oauth'
 
@@ -27,14 +26,14 @@ export const useBankIdCheckoutSign = ({ shopSessionId, dispatch, onSuccess }: Op
       const { status, completion } = data.shopSessionSigning
       dispatch({ type: 'operationStateChange', nextOperationState: apiStatusToBankIdState(status) })
       if (status === ShopSessionSigningStatus.Signed && completion) {
-        datadogLogs.logger.debug('Checkout | Signing complete')
+        bankIdLogger.debug('Signing complete')
         const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
         saveAccessToken(accessToken)
         onSuccess()
       }
     },
     onError(error) {
-      datadogLogs.logger.warn('Checkout | SigningQuery | Failed to sign', { error })
+      bankIdLogger.warn('SigningQuery | Failed to sign', { error })
       setShopSessionSigningId(null)
       dispatch({ type: 'error', error })
     },
@@ -48,10 +47,11 @@ export const useBankIdCheckoutSign = ({ shopSessionId, dispatch, onSuccess }: Op
         dispatch({ type: 'error', error: userError })
       } else if (signing) {
         setShopSessionSigningId(signing.id)
+        bankIdLogger.debug('Signing started')
       }
     },
     onError(error) {
-      datadogLogs.logger.warn('Checkout | StartSign | Failed to sign', { error })
+      bankIdLogger.warn('StartSign | Failed to sign', { error })
       dispatch({ type: 'error', error })
     },
   })

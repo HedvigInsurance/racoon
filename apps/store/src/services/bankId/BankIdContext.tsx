@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdOperationOptions } from '@/services/bankId/bankId.types'
+import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { BankIdDispatch, bankIdReducer, BankIdReducerState } from '@/services/bankId/bankIdReducer'
 import { useBankIdCheckoutSign } from '@/services/bankId/useBankIdCheckoutSign'
 import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
@@ -58,6 +59,7 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
         options,
       })
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+        bankIdLogger.debug('Authentication required for returning member')
         await bankIdLogin()
       }
       startSign(options)

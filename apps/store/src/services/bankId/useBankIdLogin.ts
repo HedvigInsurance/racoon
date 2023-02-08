@@ -1,11 +1,10 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
 import { BankIdState } from '@/services/bankId/bankId.types'
-import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
+import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
 import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 
 type Options = {
@@ -18,7 +17,7 @@ export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
   return useCallback(async () => {
     if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
 
-    datadogLogs.logger.log('Starting BankId login')
+    bankIdLogger.debug('Starting BankId login')
     dispatch({ type: 'operationStateChange', nextOperationState: BankIdState.Starting })
     try {
       const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
@@ -29,9 +28,11 @@ export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
       })
       const accessToken = await exchangeAuthorizationCode(authorizationCode)
       saveAccessToken(accessToken)
+      bankIdLogger.debug('Got access token, authenticating shopSession')
       await authenticateShopSession({ variables: { shopSessionId } })
+      bankIdLogger.debug('shopSession authenticated')
     } catch (error) {
-      datadogLogs.logger.warn('Failed to authenticate', { error })
+      bankIdLogger.warn('Failed to authenticate', { error })
       dispatch({ type: 'error', error })
     }
   }, [authenticateShopSession, dispatch, shopSessionId, ssn])
