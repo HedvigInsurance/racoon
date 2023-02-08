@@ -1,20 +1,15 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { mq, Space, Text, theme } from 'ui'
-import { BankIdLogin } from '@/components/BankIdLogin'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
@@ -22,6 +17,7 @@ import { RecommendationList } from './RecommendationList'
 
 export const CartPage = (props: CartPageProps) => {
   const { cartId, entries, campaigns, campaignsEnabled, cost, recommendations } = props
+  const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
 
   const tracking = useTracking()
@@ -69,7 +65,16 @@ export const CartPage = (props: CartPageProps) => {
           </Space>
         )}
         <CostSummary {...cost} campaigns={campaigns} />
-        {shopSession && <CartNextStep shopSession={shopSession} />}
+        {shopSession && (
+          <ButtonNextLink
+            href={PageLink.checkout()}
+            onClick={() => {
+              tracking.reportBeginCheckout(shopSession.cart)
+            }}
+          >
+            {t('CHECKOUT_BUTTON')}
+          </ButtonNextLink>
+        )}
       </Space>
     )
   }
@@ -107,48 +112,6 @@ const EmptyState = ({ children }: EmptyStateProps) => {
       {children}
     </>
   )
-}
-
-const CartNextStep = ({ shopSession }: { shopSession: ShopSession }) => {
-  if (!shopSession.customer?.ssn) {
-    throw new Error('shopSession.customer.ssn must exist at this point')
-  }
-
-  const tracking = useTracking()
-  const reportCheckout = () => {
-    tracking.reportBeginCheckout(shopSession.cart)
-  }
-  const { t } = useTranslation('cart')
-  const router = useRouter()
-  const { routingLocale } = useCurrentLocale()
-  const handleAuthSuccess = () => {
-    reportCheckout()
-    router.push(PageLink.checkout({ locale: routingLocale }))
-  }
-
-  if (
-    shopSession.customer.authenticationStatus ===
-    ShopSessionAuthenticationStatus.AuthenticationRequired
-  ) {
-    return (
-      <>
-        <Text>
-          Looks like you&quot;re returning member. You need to login before proceeding to checkout
-        </Text>
-        <BankIdLogin
-          shopSessionId={shopSession.id}
-          ssn={shopSession.customer.ssn}
-          onCompleted={handleAuthSuccess}
-        />
-      </>
-    )
-  } else {
-    return (
-      <ButtonNextLink href={PageLink.checkout()} onClick={reportCheckout}>
-        {t('CHECKOUT_BUTTON')}
-      </ButtonNextLink>
-    )
-  }
 }
 
 const PageWrapper = styled.div({

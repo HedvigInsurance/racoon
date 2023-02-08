@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
-import { Button, Heading, mq, Space, Text, theme } from 'ui'
+import { BankIdIcon, Button, Heading, mq, Space, Text, TickIcon, theme } from 'ui'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -23,11 +23,9 @@ import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSe
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
-import { BankIdIcon } from './BankIdIcon'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
-import { TickIcon } from './TickIcon'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
@@ -51,6 +49,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const [hideLoading, setHideLoading] = useState(false)
   const [handleSubmitSign, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
     shopSessionId,
+    ssn,
     customerAuthenticationStatus,
     shopSessionSigningId,
     onSuccess(accessToken) {
@@ -108,12 +107,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   <CampaignsSection cartId={cart.id} campaigns={cart.campaigns} />
                   <HorizontalLine />
                   <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+                  <div />
                 </CartCollapsibleInner>
               </CartCollapsible>
 
-              <Space y={{ base: 1, lg: 2 }}>
+              <Space y={{ base: 1, lg: 1.5 }}>
                 <HorizontalLine />
-
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>
                     <PersonalNumberField

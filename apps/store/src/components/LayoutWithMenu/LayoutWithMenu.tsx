@@ -37,12 +37,16 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
   return (
     <ProductMetadataProvider value={globalProductMetadata}>
       <Wrapper className={className}>
-        {(!story || !story.content.hideMenu) &&
+        {!(story && story.content.hideMenu) &&
           headerBlock?.map((nestedBlock) => (
-            <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
+            <HeaderBlock
+              key={nestedBlock._uid}
+              blok={nestedBlock}
+              overlay={story?.content.overlayMenu}
+            />
           ))}
         {children}
-        {(!story || !story.content.hideMenu) &&
+        {!(story && story.content.hideFooter) &&
           footerBlock?.map((nestedBlock) => (
             <FooterBlock
               key={nestedBlock._uid}

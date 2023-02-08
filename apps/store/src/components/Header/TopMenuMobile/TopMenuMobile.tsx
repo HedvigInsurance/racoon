@@ -2,10 +2,15 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { AndroidIcon, AppleIcon, Button, mq, Space, theme } from 'ui'
 import { appStoreLinks } from '@/utils/appStoreLinks'
-import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
+import {
+  focusableStyles,
+  MENU_BAR_HEIGHT_MOBILE,
+  Navigation,
+  NavigationPrimaryList,
+} from '../HeaderStyles'
 
 const triggerStyles = {
   ...focusableStyles,
@@ -39,25 +44,25 @@ const StyledAndroidIcon = styled(AndroidIcon)({
 })
 
 export type TopMenuMobileProps = {
-  isOpen?: boolean
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
   children: React.ReactNode
 }
 
-export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
-  const [open, setOpen] = useState(false)
+export const TopMenuMobile = ({ children, isOpen, setIsOpen }: TopMenuMobileProps) => {
   const router = useRouter()
   const { t } = useTranslation('common')
 
   useEffect(() => {
-    const closeDialog = () => setOpen(false)
-    router.events.on('routeChangeComplete', closeDialog)
-    return () => router.events.off('routeChangeComplete', closeDialog)
-  }, [router.events])
+    const closeDialog = () => setIsOpen(false)
+    router.events.on('routeChangeStart', closeDialog)
+    return () => router.events.off('routeChangeStart', closeDialog)
+  }, [router.events, setIsOpen])
 
   return (
     <>
-      <DialogPrimitive.Root open={open} onOpenChange={() => setOpen((prevOpen) => !prevOpen)}>
-        {open ? (
+      <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
+        {isOpen ? (
           <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
         ) : (
           <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
@@ -96,11 +101,6 @@ export const TopMenuMobile = ({ children }: TopMenuMobileProps) => {
   )
 }
 
-export const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
-  position: 'fixed',
-  inset: 0,
-})
-
 export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
   return (
     <DialogPrimitive.Portal>
@@ -109,3 +109,10 @@ export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
     </DialogPrimitive.Portal>
   )
 }
+
+const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
+  position: 'fixed',
+  inset: 0,
+  top: MENU_BAR_HEIGHT_MOBILE,
+  backgroundColor: theme.colors.light,
+})

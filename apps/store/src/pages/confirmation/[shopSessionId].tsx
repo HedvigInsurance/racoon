@@ -44,6 +44,11 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
   // }
 
+  if (story === undefined) {
+    console.warn(`Page not found: ${CONFIRMATION_PAGE_SLUG}, locale: ${locale}`)
+    return { notFound: true }
+  }
+
   return addApolloState(apolloClient, {
     props: {
       ...translations,

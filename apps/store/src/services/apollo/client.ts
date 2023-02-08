@@ -7,6 +7,7 @@ import { i18n } from 'next-i18next'
 import { AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
+import { isBrowser } from '@/utils/env'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { getAuthHeaders } from '../authApi/persist'
 
@@ -22,16 +23,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const authLink = setContext((_, { headers = {}, context }) => {
-  return {
-    headers: {
-      ...headers,
-      ...getAuthHeaders(),
-    },
-    ...context,
-  }
-})
-
 const languageLink = setContext((_, { headers = {}, ...context }) => {
   const locale = getLocaleOrFallback(i18n?.language).locale
   return {
@@ -45,11 +36,24 @@ const languageLink = setContext((_, { headers = {}, ...context }) => {
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
 
-const createApolloClient = (headers?: Record<string, string>) => {
+const createApolloClient = (defaultHeaders?: Record<string, string>) => {
+  const headersLink = setContext((_, prevContext) => {
+    const headers = {
+      ...defaultHeaders,
+    }
+    if (isBrowser()) {
+      Object.assign(headers, getAuthHeaders())
+    }
+    return {
+      headers,
+      ...prevContext,
+    }
+  })
+
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, authLink, languageLink, httpLink]),
+    link: from([errorLink, headersLink, languageLink, httpLink]),
     cache: new InMemoryCache({
       typePolicies: {
         Cart: {
@@ -61,7 +65,6 @@ const createApolloClient = (headers?: Record<string, string>) => {
         },
       },
     }),
-    headers,
     connectToDevTools: process.env.NODE_ENV === 'development',
   })
 }
@@ -81,6 +84,7 @@ export const initializeApollo = ({
     ...getDeviceIdHeader({ req, res }),
     ...getAuthHeaders({ req, res }),
   }
+  // console.trace('ah', headers)
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
 

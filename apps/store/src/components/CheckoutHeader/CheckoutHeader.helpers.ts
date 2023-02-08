@@ -20,7 +20,7 @@ export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) 
   )
   const showSwitchingAssistant = !!switchingEntry
 
-  let showPayment = false
+  let showPayment = true
   if (
     shopSession.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
   ) {
@@ -36,7 +36,6 @@ export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) 
   if (showSwitchingAssistant) steps.push(CheckoutStep.SwitchingAssistant)
   if (steps.length < 3) steps.push(CheckoutStep.Confirmation)
   if (steps.length < 3) steps.push(CheckoutStep.Done)
-
   return steps
 }
 

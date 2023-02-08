@@ -84,8 +84,10 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
               }}
             >
               <TabList>
-                <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
-                <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
+                <TablistWrapper>
+                  <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
+                  <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
+                </TablistWrapper>
                 {shouldRenderVariantSelector && <StyledProductVariantSelector />}
               </TabList>
 
@@ -131,6 +133,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
                       </ContentNavigationTrigger>
                     </li>
                   </ContentNavigationList>
+                  {shouldRenderVariantSelector && <StyledProductVariantSelector />}
                 </ContentNavigation>
                 <OverviewSection id="overview">
                   {blok.overview?.map((nestedBlock) => (
@@ -164,12 +167,12 @@ const sharedListStyles: CSSObject = {
   display: 'flex',
   gap: theme.space.xs,
   height: TABLIST_HEIGHT,
-  paddingInline: theme.space.md,
 }
 
 const sharedStickyStyles: CSSObject = {
   position: 'sticky',
   top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_MOBILE})`,
+  paddingInline: theme.space.md,
   zIndex: zIndexes.tabs,
 
   [mq.md]: {
@@ -259,8 +262,11 @@ const Content = styled.div({
 })
 
 const TabList = styled(RadixTabs.TabsList)({
-  ...sharedListStyles,
   ...sharedStickyStyles,
+})
+
+const TablistWrapper = styled.div({
+  ...sharedListStyles,
 })
 
 const TabTrigger = styled(RadixTabs.Trigger)({
@@ -282,6 +288,7 @@ const ContentNavigationTrigger = styled.a({
 const StyledProductVariantSelector = styled(ProductVariantSelector)({
   minWidth: '12.5rem',
   width: 'fit-content',
+  marginTop: theme.space.xs,
 })
 
 function useActiveSectionChangeListener(

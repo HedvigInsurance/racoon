@@ -37,6 +37,5 @@ export const fetchCurrentShopSessionSigning = async ({ req, ...params }: FetchCu
   } catch (error) {
     console.warn('Unable to fetch checkout signing %j', { shopSessionSigningId, error })
   }
-
   return null
 }

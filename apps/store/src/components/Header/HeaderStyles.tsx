@@ -7,13 +7,13 @@ export const MENU_BAR_HEIGHT_DESKTOP = '4rem'
 
 export const focusableStyles = {
   cursor: 'pointer',
+  WebkitTapHighlightColor: 'transparent',
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
   },
 }
 
 export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  backgroundColor: theme.colors.light,
   fontSize: theme.fontSizes.xl,
 
   [mq.lg]: {
@@ -100,7 +100,6 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
   display: 'flex',
   flexDirection: 'column',
   padding: `0 ${theme.space.md} `,
-  backgroundColor: theme.colors.light,
 
   [mq.lg]: {
     position: 'static',
