@@ -1,16 +1,17 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { Dispatch, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdAction, BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdState } from '@/services/bankId/bankId.types'
 import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
+import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 
 type Options = {
   shopSessionId?: string
   ssn?: string
-  dispatch: Dispatch<BankIdAction>
+  dispatch: BankIdDispatch
 }
 export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()

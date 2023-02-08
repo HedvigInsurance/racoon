@@ -1,18 +1,18 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { Dispatch, useState } from 'react'
+import { useState } from 'react'
 import {
   ShopSessionSigningStatus,
   useShopSessionSigningQuery,
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdAction } from '@/services/bankId/bankId.types'
 import { apiStatusToBankIdState } from '@/services/bankId/bankId.utils'
+import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 import { exchangeAuthorizationCode } from '../authApi/oauth'
 
 export type Options = {
   shopSessionId: string
-  dispatch: Dispatch<BankIdAction>
+  dispatch: BankIdDispatch
   onSuccess: () => void
 }
 

@@ -6,21 +6,13 @@ export enum BankIdState {
   Error = 'Error',
 }
 
+export type BankIdOperation = {
+  type: 'login' | 'sign'
+  state: BankIdState
+} & BankIdOperationOptions
+
 export type BankIdOperationOptions = {
   onCancel: () => void
   onSuccess: () => void
   onError?: () => void
-}
-
-export type BankIdAction = {
-  type:
-    | 'showLoginPrompt'
-    | 'operationStateChange'
-    | 'startCheckoutSign'
-    | 'success'
-    | 'cancel'
-    | 'error'
-  options?: BankIdOperationOptions
-  nextOperationState?: BankIdState
-  error?: unknown
 }
