@@ -13,6 +13,7 @@ export type { HeadingProps, PossibleHeadingVariant } from './components/Heading/
 export { Text } from './components/Text/Text'
 export * as Dialog from './components/Dialog/Dialog'
 export { HeadingLabel } from './components/HeadingLabel/HeadingLabel'
+export { ConditionalWrapper } from './components/ConditionalWrapper'
 
 export type { Level } from './lib/media-query'
 export { mq, useBreakpoint } from './lib/media-query'

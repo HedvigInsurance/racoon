@@ -22,6 +22,7 @@ import {
   ProductNavContainerBlock,
 } from '@/blocks/HeaderBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
+import { HeadingLabelBlock } from '@/blocks/HeadingLabelBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
 import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
 import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
@@ -39,6 +40,7 @@ import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
+import { TextContentBlock } from '@/blocks/TextContentBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
@@ -183,6 +185,7 @@ export const initStoryblok = () => {
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
     HeaderBlock,
     HeadingBlock,
+    HeadingLabelBlock,
     HeroBlock,
     HeroVideoBlock,
     HeroVideoVimeoBlock,
@@ -203,6 +206,7 @@ export const initStoryblok = () => {
     TimelineBlock,
     TimelineItemBlock,
     TextBlock,
+    TextContentBlock,
     TopPickCardBlock,
     VideoBlock,
     VideoListBlock,
