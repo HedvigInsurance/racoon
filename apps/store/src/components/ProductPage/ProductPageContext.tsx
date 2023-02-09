@@ -9,6 +9,13 @@ type ProductDataVariant =
 type ProductPageContextData = ProductPageProps & {
   selectedVariant: ProductDataVariant
   selectedVariantUpdate: (variant: ProductDataVariant) => void
+  content: {
+    product: {
+      name: string
+      description: string
+      tagline?: string
+    }
+  }
 }
 
 const ProductPageContext = createContext<ProductPageContextData | null>(null)
@@ -22,7 +29,6 @@ type Props = PropsWithChildren<
 export const ProductPageContextProvider = ({
   children,
   initialSelectedVariant = null,
-  productData,
   ...rest
 }: Props) => {
   const [selectedVariant, setSelectVariant] = useState(initialSelectedVariant)
@@ -32,13 +38,15 @@ export const ProductPageContextProvider = ({
       ...rest,
       selectedVariant,
       selectedVariantUpdate: setSelectVariant,
-      productData: {
-        ...productData,
-        displayNameShort: rest.story.content.name || productData.displayNameShort,
-        displayNameFull: rest.story.content.description || productData.displayNameFull,
+      content: {
+        product: {
+          name: rest.story.content.name || rest.productData.displayNameShort,
+          description: rest.story.content.description || rest.productData.displayNameFull,
+          tagline: rest.story.content.tagline,
+        },
       },
     }),
-    [rest, productData, selectedVariant],
+    [rest, selectedVariant],
   )
 
   return <ProductPageContext.Provider value={contextValue}>{children}</ProductPageContext.Provider>
