@@ -1,7 +1,7 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { default as NextImage } from 'next/image'
+import NextImage from 'next/image'
 import { mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
@@ -20,12 +20,11 @@ type ImageBlockProps = SbBaseBlockProps<{
 export const ImageBlock = ({ blok }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
-  return (
+  const content = (
     <Wrapper
       {...storyblokEditable(blok)}
       aspectRatioLandscape={blok.aspectRatioLandscape}
       aspectRatioPortrait={blok.aspectRatioPortrait}
-      includePadding={!blok.fullBleed}
     >
       <Image
         style={{ objectFit: 'cover' }}
@@ -41,20 +40,23 @@ export const ImageBlock = ({ blok }: ImageBlockProps) => {
       </BodyWrapper>
     </Wrapper>
   )
+
+  if (blok.fullBleed) return content
+
+  return <Layout>{content}</Layout>
 }
 ImageBlock.blockName = 'image'
 
+const Layout = styled.div({ paddingInline: theme.space.md })
+
 type WrapperProps = {
-  includePadding: boolean
   aspectRatioLandscape?: ImageAspectRatio
   aspectRatioPortrait?: ImageAspectRatio
 }
 
 const Wrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperProps>(
-  ({ includePadding, aspectRatioLandscape = '3 / 2', aspectRatioPortrait = '3 / 2' }) => ({
+  ({ aspectRatioLandscape = '3 / 2', aspectRatioPortrait = '3 / 2' }) => ({
     position: 'relative',
-    paddingLeft: includePadding ? theme.space.md : 0,
-    paddingRight: includePadding ? theme.space.md : 0,
     ['@media (orientation: landscape)']: {
       aspectRatio: aspectRatioLandscape,
     },
