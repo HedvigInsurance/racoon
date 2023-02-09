@@ -60,6 +60,7 @@ const IconWrapper = styled.div(({ theme }) => ({
     cursor: 'pointer',
   },
   ':active': { backgroundColor: theme.colors.green50 },
+  ' svg': { border: 'dotted 1px green' },
 }))
 
 const IconGrid = styled.div({
