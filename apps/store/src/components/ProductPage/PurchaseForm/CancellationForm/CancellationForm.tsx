@@ -15,7 +15,10 @@ export type CancellationOption =
       companyName: string
       requested: boolean
     }
-  | { type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate; companyName: string }
+  | {
+      type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+      companyName: string
+    }
 
 type Props = {
   option: CancellationOption
@@ -42,7 +45,7 @@ export const CancellationForm = ({ option, ...props }: Props) => {
         />
       )
 
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
       return (
         <BankSigneringInvalidStartDateCancellation {...props} companyName={option.companyName} />
       )

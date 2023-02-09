@@ -74,7 +74,7 @@ export const BankSigneringInvalidStartDate: ComponentStoryFn<typeof Cancellation
     <CancellationForm
       {...props}
       option={{
-        type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate,
+        type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate,
         companyName: 'Trygg Hansa',
       }}
     />
