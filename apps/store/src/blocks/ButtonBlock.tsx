@@ -5,6 +5,7 @@ import { Button, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { VerticalBodyWrapper, FluidBodyWrapper } from './ImageTextBlock'
 
 export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
@@ -28,9 +29,14 @@ export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
 }
 ButtonBlock.blockName = 'button'
 
-export const Wrapper = styled.div({
+const Wrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
+
+  [`${VerticalBodyWrapper} &, ${FluidBodyWrapper} &`]: {
+    display: 'inline-block',
+    padding: 0,
+  },
 })
