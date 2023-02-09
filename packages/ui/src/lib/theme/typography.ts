@@ -39,6 +39,7 @@ export const fontSizes = {
   lg: fontSizeScale[4],
   xl: fontSizeScale[5],
   xxl: fontSizeScale[6],
+  xxxl: fontSizeScale[8],
 } as const
 
 export type FontSizes = keyof typeof fontSizes

@@ -5,7 +5,9 @@ import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
 import { globalStyles, theme } from 'ui'
+import { BankIdDialog } from '@/components/BankIdDialog'
 import { useApollo } from '@/services/apollo/client'
+import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -23,6 +25,7 @@ import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
+import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
 
 // Enable API mocking
@@ -58,6 +61,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useRemoveExperimentQueryParam()
   useDebugTranslationKeys()
   useReloadOnCountryChange()
+  useAllowActiveStylesInSafari()
 
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout || ((page) => page)
@@ -75,7 +79,10 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <ThemeProvider theme={theme}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <TrackingProvider value={tracking}>
-              {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+              <BankIdContextProvider>
+                {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                <BankIdDialog />
+              </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
         </ThemeProvider>

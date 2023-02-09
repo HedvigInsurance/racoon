@@ -71,6 +71,7 @@ const TitleDescriptionWrapper = styled.div({
 const StyledAccordion = styled(Accordion.Root)({
   flex: 1,
   minWidth: 'min(28.125rem, 100%)',
+
   [mq.md]: {
     gap: theme.space.xs,
   },

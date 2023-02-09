@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
+import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import React, { useState, useCallback, ReactNode } from 'react'
-import { mq, Text, theme } from 'ui'
+import { MinusIcon, mq, PlusIcon, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
 
@@ -29,6 +29,7 @@ const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boo
 
   [mq.md]: {
     gridTemplateColumns: `repeat(auto-fit, ${fixedCols ? '20.75rem' : 'minmax(20.75rem, 1fr)'})`,
+    columnGap: theme.space.md,
   },
 }))
 
@@ -44,12 +45,16 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
       {perils.map(({ title, description, covered, colorCode }) => {
         return (
           <AccordionItem key={title} value={title}>
-            <Accordion.HeaderWithTrigger>
-              <SpaceFlex space={0.75} align="center">
+            <AccordionPrimitivesTrigger>
+              <IconWrapper>
                 <Color color={colorCode ?? titleToColor(title)} />
-                <Text size="lg">{title}</Text>
-              </SpaceFlex>
-            </Accordion.HeaderWithTrigger>
+              </IconWrapper>
+              <TriggerText size="lg">{title}</TriggerText>
+              <IconWrapper>
+                <OpenIcon size="1rem" />
+                <CloseIcon size="1rem" />
+              </IconWrapper>
+            </AccordionPrimitivesTrigger>
             <Accordion.Content>
               <ContentWrapper>
                 <Text as="p" size="xs" color="textPrimary">
@@ -84,6 +89,44 @@ const ContentWrapper = styled.div({
   paddingLeft: theme.space.xl,
   paddingBottom: theme.space.md,
   fontSize: theme.fontSizes.xs,
+})
+
+const OpenIcon = styled(PlusIcon)({
+  display: 'block',
+  '[data-state=open] &': { display: 'none' },
+})
+
+const CloseIcon = styled(MinusIcon)({
+  display: 'none',
+  '[data-state=open] &': { display: 'block' },
+})
+
+const IconWrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+  // Match text line-height to align with first text row
+  height: `calc(${theme.fontSizes.lg} * 1.4)`,
+  alignItems: 'center',
+})
+
+const AccordionPrimitivesTrigger = styled(AccordionPrimitives.Trigger)({
+  width: '100%',
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr auto',
+  gap: theme.space.sm,
+  '@media (hover: hover)': {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+})
+
+const TriggerText = styled(Text)({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+
+  '[data-state=open] &': { whiteSpace: 'normal' },
 })
 
 const Color = styled.div<{ color?: string }>(({ color }) => ({

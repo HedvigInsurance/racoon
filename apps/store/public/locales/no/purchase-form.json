@@ -1,6 +1,6 @@
 {
   "AUTO_SWITCH_FIELD_LABEL": "Automatisk bytte",
-  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Din forsikring hos {{company}}har snart forfall. Derfor må du manuelt si den opp. Ta det med ro, vi sender fremgangsmåte til din e-post.",
+  "AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE": "Din forsikring hos {{company}}har snart forfall. Derfor må du manuelt si den opp. Ta det med ro, vi sender fremgangsmåte til din e-post.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Sluttdato hos {{company}}",
   "CURRENT_INSURANCE_FIELD_PLACEHOLDER": "Velg selskap",
   "FIELD_ANCILLARY_AREA_LABEL": "Sekundærrom",

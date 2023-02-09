@@ -42,7 +42,7 @@ type HeaderProps = {
 export const Header = ({ children, opaque = false, overlay = false }: HeaderProps) => {
   const scrollState = useScrollState({ threshold: 128 })
 
-  const defaultPosition = overlay ? 'absolute' : 'static'
+  const defaultPosition = overlay ? 'absolute' : 'relative'
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
 
   const initial = { position: defaultPosition, backgroundColor } as const
@@ -100,7 +100,6 @@ export const Wrapper = styled(motion.header)({
 
 const LogoWrapper = styled(Link)({
   flex: 1,
-  WebkitTapHighlightColor: 'transparent',
   ':active': { opacity: 0.75 },
 })
 

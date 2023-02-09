@@ -7,10 +7,6 @@ export const Root = styled(AccordionPrimitives.Root)({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
-
-  [mq.lg]: {
-    gap: theme.space.xs,
-  },
 })
 
 export const Item = styled(AccordionPrimitives.Item)({
@@ -34,7 +30,6 @@ const Trigger = styled(AccordionPrimitives.Trigger)({
   alignItems: 'center',
   justifyContent: 'space-between',
   fontSize: theme.fontSizes.md,
-  WebkitTapHighlightColor: 'transparent',
 
   [mq.lg]: {
     fontSize: theme.fontSizes.lg,

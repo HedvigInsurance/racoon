@@ -1,6 +1,6 @@
 {
   "ADD_TO_CART_BUTTON_LABEL": "Føj til indkøbskurv",
-  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Da din forsikring hos {{company}} snart udløber, skal du selv afmelde den. Bare rolig, vi sender dig en mail med instruktioner.",
+  "AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE": "Da din forsikring hos {{company}} snart udløber, skal du selv afmelde den. Bare rolig, vi sender dig en mail med instruktioner.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Slutdato {{company}}",
   "CART_TOAST_CART_LINK": "Fortsæt til indkøbskurv",
   "CART_TOAST_HEADING": "Føjet til indkøbskurv",

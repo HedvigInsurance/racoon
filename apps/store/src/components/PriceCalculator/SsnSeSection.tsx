@@ -1,15 +1,13 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, ReactElement } from 'react'
-import { BankIdIcon, Button, Space, Text, TickIcon, theme, WarningTriangleIcon } from 'ui'
-import { BankIdLoginForm } from '@/components/BankIdLoginForm'
+import { FormEventHandler } from 'react'
+import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
-import { BankIdState, useBankIdLogin } from '@/services/bankId'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 const SsnFieldName = 'ssn'
@@ -29,21 +27,10 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   if (
     !shopSession.customer ||
     !authenticationStatus ||
-    authenticationStatus === ShopSessionAuthenticationStatus.None
+    authenticationStatus === ShopSessionAuthenticationStatus.None ||
+    authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired
   ) {
     return <NewMemberSsnSection shopSession={shopSession} onCompleted={onCompleted} />
-  } else if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-    const { ssn } = shopSession.customer ?? {}
-    if (!ssn) {
-      throw new Error('Must have ssn at this point')
-    }
-    return (
-      <AuthenticationRequiredSsnSection
-        shopSessionId={shopSession.id}
-        ssn={ssn}
-        onCompleted={onCompleted}
-      />
-    )
   } else if (authenticationStatus === ShopSessionAuthenticationStatus.Authenticated) {
     return <AuthenticatedSsnSection shopSession={shopSession} onCompleted={onCompleted} />
   } else {
@@ -54,6 +41,7 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
 
 const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const { showLoginPrompt } = useBankIdContext()
   // TODO: Show error message if customer update fails
   const [updateCustomer, { loading }] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
@@ -61,7 +49,10 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
     awaitRefetchQueries: true,
     onCompleted(data) {
       const { shopSession } = data.shopSessionCustomerUpdate
-      if (shopSession?.customer?.authenticationStatus === ShopSessionAuthenticationStatus.None) {
+      const { authenticationStatus } = shopSession?.customer ?? {}
+      if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+        showLoginPrompt({ onCompleted })
+      } else {
         onCompleted()
       }
     },
@@ -96,128 +87,6 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
   )
 }
 SsnSeSection.sectionId = 'ssn-se'
-
-type AuthenticationRequiredProps = {
-  shopSessionId: string
-  ssn: string
-  onCompleted: Props['onCompleted']
-}
-const AuthenticationRequiredSsnSection = ({
-  shopSessionId,
-  ssn,
-  onCompleted,
-}: AuthenticationRequiredProps) => {
-  const { t } = useTranslation('purchase-form')
-  const [startLogin, loginState] = useBankIdLogin({ shopSessionId, ssn, onCompleted })
-
-  let textBlock: ReactElement
-  let actionBlock: ReactElement | null
-  switch (loginState) {
-    case BankIdState.Idle: {
-      textBlock = (
-        <>
-          <Text align="center">{t('LOGIN_BANKID')}</Text>
-          <Text align="center" color="textSecondary">
-            {t('LOGIN_BANKID_EXPLANATION')}
-          </Text>
-        </>
-      )
-      actionBlock = (
-        <>
-          <BankIdLoginForm
-            state={loginState}
-            title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-            onLoginStart={startLogin}
-          />
-          <Button variant="ghost" onClick={onCompleted}>
-            {t('LOGIN_BANKID_SKIP')}
-          </Button>
-        </>
-      )
-      break
-    }
-    case BankIdState.Pending:
-    case BankIdState.Starting: {
-      textBlock = (
-        <>
-          <IconWithText>
-            <BankIdIcon />
-            {t('LOGIN_BANKID_WAITING')}
-          </IconWithText>
-          <Text align="center" color="textSecondary">
-            {loginState === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
-          </Text>
-        </>
-      )
-      // TODO: Cancel button (GRW-2183)
-      actionBlock = null
-      break
-    }
-    case BankIdState.Success: {
-      textBlock = (
-        <IconWithText>
-          <TickIcon size="1rem" color={theme.colors.greenElement} />
-          {t('LOGIN_BANKID_SUCCESS')}
-        </IconWithText>
-      )
-      actionBlock = null
-      break
-    }
-    case BankIdState.Error: {
-      textBlock = (
-        <IconWithText>
-          <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-          <Text align="center">{t('LOGIN_BANKID_ERROR')}</Text>
-        </IconWithText>
-      )
-      actionBlock = (
-        <>
-          <BankIdLoginForm
-            state={loginState}
-            title={t('LOGIN_BANKID_TRY_AGAIN')}
-            onLoginStart={startLogin}
-          />
-          <Button variant="ghost" onClick={onCompleted}>
-            {t('LOGIN_BANKID_SKIP')}
-          </Button>
-        </>
-      )
-      break
-    }
-  }
-
-  return (
-    <AuthPromptWrapper>
-      <BankIdTextSection y={0.5}>{textBlock}</BankIdTextSection>
-      <Space y={0.5}>{actionBlock}</Space>
-    </AuthPromptWrapper>
-  )
-}
-
-const IconWithText = styled(Text)({
-  gap: theme.space.xs,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
-const AuthPromptWrapper = styled.div({
-  position: 'absolute',
-  inset: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  backdropFilter: 'blur(64px)',
-  paddingInline: theme.space.md,
-  paddingBlock: theme.space.md,
-})
-
-const BankIdTextSection = styled(Space)({
-  flexGrow: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-})
 
 const AuthenticatedSsnSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')

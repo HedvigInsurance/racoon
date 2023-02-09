@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
+import { ConditionalWrapper, Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export const Wrapper = styled.div({
@@ -15,11 +15,15 @@ export type HeadingBlockProps = SbBaseBlockProps<{
   variant?: PossibleHeadingVariant
   variantDesktop?: PossibleHeadingVariant
   textAlignment?: HeadingProps['align']
+  nested?: boolean
 }>
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
   return (
-    <Wrapper>
+    <ConditionalWrapper
+      condition={!blok.nested}
+      wrapWith={(children) => <Wrapper>{children}</Wrapper>}
+    >
       <Heading
         as={blok.as}
         variant={{ _: blok.variant ?? 'standard.32', md: blok.variantDesktop ?? 'standard.40' }}
@@ -29,7 +33,7 @@ export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
       >
         {blok.text}
       </Heading>
-    </Wrapper>
+    </ConditionalWrapper>
   )
 }
 HeadingBlock.blockName = 'heading'

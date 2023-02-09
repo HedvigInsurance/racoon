@@ -142,7 +142,7 @@ type LayoutProps = {
 
 const Layout = ({ children, pillowSize }: LayoutProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const { productData } = useProductPageContext()
+  const { productData, content } = useProductPageContext()
 
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
@@ -159,11 +159,11 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
             />
             <Space y={0.5}>
               <Heading as="h1" variant="standard.24" align="center">
-                {productData.displayNameShort}
+                {content.product.name}
                 <CircledHSuperscript />
               </Heading>
               <Text size="xs" color="textSecondary" align="center">
-                {productData.displayNameFull}
+                {content.product.description}
               </Text>
             </Space>
           </SpaceFlex>
@@ -177,33 +177,27 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
 }
 
 const Tagline = () => {
-  const { story } = useProductPageContext()
+  const { content } = useProductPageContext()
+
+  if (!content.product.tagline) return null
+
   return (
-    <TaglineWrapper>
-      <Text color="textSecondary" size="xs">
-        {story.content.tagline}
-      </Text>
-    </TaglineWrapper>
+    <Text color="textSecondary" size="xs" align="center">
+      {content.product.tagline}
+    </Text>
   )
 }
-
-const TaglineWrapper = styled.div({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
 
 const PendingState = () => {
   const { t } = useTranslation('purchase-form')
 
   return (
     <SectionWrapper>
-      <Space y={0.5}>
-        <Tagline />
+      <Space y={1}>
         <Button loading disabled>
           {t('OPEN_PRICE_CALCULATOR_BUTTON')}
         </Button>
+        <Tagline />
       </Space>
     </SectionWrapper>
   )
@@ -220,9 +214,9 @@ const IdleState = ({ onClick }: IdleStateProps) => {
   return (
     <>
       <SectionWrapper ref={ref}>
-        <Space y={0.5}>
-          <Tagline />
+        <Space y={1}>
           {button}
+          <Tagline />
         </Space>
       </SectionWrapper>
       <ScrollPast targetRef={ref}>

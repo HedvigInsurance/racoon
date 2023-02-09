@@ -75,18 +75,13 @@ const LargeWrapper = styled(motion.div)({
   height: '4rem',
   width: '100%',
 
-  ':focus-within, &[data-active=true]': {
-    '> label': {
-      transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
-      overflow: 'visible',
-    },
-  },
-
   border: '1px solid transparent',
   '&[data-warning=true]': {
     animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
   },
 })
+
+const SmallWrapper = styled(LargeWrapper)({ height: '3.25rem' })
 
 const Label = styled.label({
   position: 'absolute',
@@ -95,6 +90,7 @@ const Label = styled.label({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  color: theme.colors.textSecondary,
 
   pointerEvents: 'none',
   transformOrigin: 'top left',
@@ -107,8 +103,18 @@ const Label = styled.label({
     fontSize: theme.fontSizes.lg,
   },
 
-  '&[data-disabled=true]': {
-    color: theme.colors.textDisabled,
+  [`${LargeWrapper}:focus-within > &, ${LargeWrapper}[data-active=true] > &`]: {
+    overflow: 'visible',
+    color: theme.colors.textPrimary,
+    transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
+  },
+
+  [`${SmallWrapper}:focus-within > &, ${SmallWrapper}[data-active=true] > &`]: {
+    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
+  },
+
+  '&&[data-disabled=true]': {
+    color: theme.colors.textSecondary,
   },
 })
 
@@ -119,11 +125,11 @@ const LargeInput = styled.input({
   paddingTop: theme.space.md,
 
   ':disabled': {
-    color: theme.colors.textDisabled,
+    color: theme.colors.textSecondary,
     cursor: 'not-allowed',
 
     // Webkit overrides
-    WebkitTextFillColor: theme.colors.textDisabled,
+    WebkitTextFillColor: theme.colors.textSecondary,
     opacity: 1,
   },
 })
@@ -135,16 +141,6 @@ const StyledLargeSuffix = styled(Text)({ paddingRight: theme.space.md })
 const LargeSuffix = (props: BaseProps) => (
   <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
 )
-
-const SmallWrapper = styled(LargeWrapper)({
-  height: '3.25rem',
-
-  ':focus-within, &[data-active=true]': {
-    '> label': {
-      transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
-    },
-  },
-})
 
 const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 
