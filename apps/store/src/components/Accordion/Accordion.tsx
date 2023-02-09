@@ -29,6 +29,7 @@ const Trigger = styled(AccordionPrimitives.Trigger)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  gap: theme.space.xs,
   fontSize: theme.fontSizes.md,
 
   [mq.lg]: {

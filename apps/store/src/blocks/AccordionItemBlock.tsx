@@ -17,7 +17,7 @@ export const AccordionItemBlock = ({ blok }: AccordionItemBlockProps) => {
   return (
     <Accordion.Item value={blok._uid || defaultId} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>
-        <Text size={{ _: 'md', md: 'xl' }}>{blok.title}</Text>
+        <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
       <Content asChild>
         <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
