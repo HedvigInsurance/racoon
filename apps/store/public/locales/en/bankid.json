@@ -1,0 +1,12 @@
+{
+  "BANKID_MODAL_CANCEL": "Cancel",
+  "BANKID_MODAL_SUCCESS_PROMPT": "Signing approved",
+  "LOGIN_BANKID": "Log in with BankID",
+  "LOGIN_BANKID_ERROR": "Failed to log in",
+  "LOGIN_BANKID_EXPLANATION": "If you have or had insurance with us, you can log in, and we will retrieve your data automatically.",
+  "LOGIN_BANKID_OPEN_APP": "Open BankID on your phone",
+  "LOGIN_BANKID_SKIP": "Skip",
+  "LOGIN_BANKID_SUCCESS": "Identified successfully",
+  "LOGIN_BANKID_TRY_AGAIN": "Try again",
+  "LOGIN_BANKID_WAITING": "Waiting for BankID..."
+}

@@ -1,0 +1,12 @@
+{
+  "BANKID_MODAL_CANCEL": "Avbryt",
+  "BANKID_MODAL_SUCCESS_PROMPT": "Signering godkänd",
+  "LOGIN_BANKID": "Logga in med BankID",
+  "LOGIN_BANKID_ERROR": "Kunde inte logga in",
+  "LOGIN_BANKID_EXPLANATION": "Om du har eller haft en försäkring hos oss kan du logga in, så hämtar vi dina uppgifter automatiskt.",
+  "LOGIN_BANKID_OPEN_APP": "Öppna BankID på din telefon",
+  "LOGIN_BANKID_SKIP": "Hoppa över",
+  "LOGIN_BANKID_SUCCESS": "Identifierad framgångsrikt",
+  "LOGIN_BANKID_TRY_AGAIN": "Försök igen",
+  "LOGIN_BANKID_WAITING": "Väntar på BankID..."
+}
