@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Button, mq, NeArrow, Space, Text, theme } from 'ui'
+import { mq, NeArrow, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
@@ -33,18 +33,13 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
 
   return (
-    <DownloadFileButton
-      variant="secondary"
-      href={doc.url}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <DownloadFileLink href={doc.url} target="_blank" rel="noopener noreferrer">
       <Ellipsis>
         {doc.displayName} <DocumentType>{documentType}</DocumentType>
       </Ellipsis>
 
       <StyledNeArrow size="1rem" />
-    </DownloadFileButton>
+    </DownloadFileLink>
   )
 }
 
@@ -69,7 +64,8 @@ const Column = styled.div({
   },
 })
 
-const DownloadFileButton = styled(Button)({
+const DownloadFileLink = styled.a({
+  display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: theme.space.md,
@@ -77,6 +73,20 @@ const DownloadFileButton = styled(Button)({
   paddingTop: theme.space.xs,
   height: 'auto',
   fontSize: theme.fontSizes.md,
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.sm,
+
+  ':hover': {
+    backgroundColor: theme.colors.opaque2,
+  },
+
+  ':active': {
+    backgroundColor: theme.colors.opaque3,
+  },
+
+  ':focus-visible': {
+    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
+  },
 
   [mq.lg]: {
     fontSize: theme.fontSizes.lg,
