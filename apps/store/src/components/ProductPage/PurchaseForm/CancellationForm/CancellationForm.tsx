@@ -15,7 +15,10 @@ export type CancellationOption =
       companyName: string
       requested: boolean
     }
-  | { type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate; companyName: string }
+  | {
+      type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+      companyName: string
+    }
 
 type Props = {
   option: CancellationOption
@@ -42,9 +45,9 @@ export const CancellationForm = ({ option, ...props }: Props) => {
         />
       )
 
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
       return (
-        <BankSigneringInvalidStartDateCancellation {...props} companyName={option.companyName} />
+        <BankSigneringInvalidRenewalDateCancellation {...props} companyName={option.companyName} />
       )
 
     case ExternalInsuranceCancellationOption.None:
@@ -124,21 +127,21 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   )
 }
 
-type BankSigneringInvalidStartDateProps = Pick<
-  Props,
-  'onStartDateChange' | 'onRenewalDateChange' | 'startDate'
-> & {
+type BankSigneringInvalidRenewalDateProps = Pick<Props, 'onStartDateChange' | 'startDate'> & {
   companyName: string
 }
 
-const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
-  const { onStartDateChange, onRenewalDateChange, companyName, startDate } = props
+const BankSigneringInvalidRenewalDateCancellation = (
+  props: BankSigneringInvalidRenewalDateProps,
+) => {
+  const { onStartDateChange, companyName, startDate } = props
   const { t } = useTranslation('purchase-form')
-  const message = t('AUTO_SWITCH_INVALID_START_DATE_MESSAGE', { company: companyName })
+  const message = t('AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE', { company: companyName })
 
+  // TODO: figure out how to get back to BANKSIGNERING option
+  // Right now, if the user ends up here, they can't go back to the BANKSIGNERING...
   const handleChange = (date: Date) => {
     onStartDateChange?.(date)
-    onRenewalDateChange?.(date)
   }
 
   return <SmartDateInput {...props} date={startDate} onChange={handleChange} message={message} />
