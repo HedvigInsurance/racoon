@@ -16,6 +16,11 @@ const triggerStyles = {
   ...focusableStyles,
   fontSize: theme.fontSizes.md,
   marginRight: theme.space.md,
+
+  ':active': {
+    color: theme.colors.textSecondary,
+  },
+
   [mq.lg]: {
     display: 'none',
   },

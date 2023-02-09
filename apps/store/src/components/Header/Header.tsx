@@ -100,7 +100,6 @@ export const Wrapper = styled(motion.header)({
 
 const LogoWrapper = styled(Link)({
   flex: 1,
-  WebkitTapHighlightColor: 'transparent',
   ':active': { opacity: 0.75 },
 })
 

@@ -24,6 +24,7 @@ export const globalStyles = css`
 
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
   @media screen and (prefers-reduced-motion: reduce) {
     html {
