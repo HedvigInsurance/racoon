@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 import { mq } from 'ui'
 import { Navigation } from '../HeaderStyles'
 import { NavigationPrimaryList } from '../HeaderStyles'
@@ -9,9 +10,18 @@ export type TopMenuDesktopProps = {
 }
 
 export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
+  const [activeItem, setActiveItem] = React.useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    const handleRouteChange = () => setActiveItem('')
+    router.events.on('routeChangeStart', handleRouteChange)
+    return () => router.events.off('routeChangeStart', handleRouteChange)
+  }, [router.events])
+
   return (
     <Wrapper>
-      <Navigation>
+      <Navigation value={activeItem} onValueChange={setActiveItem}>
         <NavigationPrimaryList>{children}</NavigationPrimaryList>
       </Navigation>
     </Wrapper>
