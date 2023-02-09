@@ -70,6 +70,7 @@ const slideDown = keyframes({
     height: 0,
   },
   to: {
+    // custom property reference: https://www.radix-ui.com/docs/primitives/components/accordion
     height: 'var(--radix-accordion-content-height)',
   },
 })
