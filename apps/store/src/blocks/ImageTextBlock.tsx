@@ -2,8 +2,6 @@ import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { default as NextImage } from 'next/image'
 import { mq, theme } from 'ui'
-import { Wrapper as ButtonBlockWrapper } from '@/blocks/ButtonBlock'
-import { Wrapper as HeadingBlockWrapper } from '@/blocks/HeadingBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
@@ -71,18 +69,10 @@ const VerticalImageTextBlockWrapper = styled.div({
   },
 })
 
-const VerticalBodyWrapper = styled.div({
+export const VerticalBodyWrapper = styled.div({
   padding: theme.space.xs,
   [mq.md]: {
     paddingBlock: theme.space.md,
-  },
-
-  [`${HeadingBlockWrapper}`]: {
-    padding: 0,
-  },
-  [`${ButtonBlockWrapper}`]: {
-    display: 'inline-block',
-    padding: 0,
   },
 })
 
@@ -139,7 +129,7 @@ const FluidImageWrapper = styled.div({
   },
 })
 
-const FluidBodyWrapper = styled.div<{
+export const FluidBodyWrapper = styled.div<{
   textAlignment: TextAlignment
   imagePlacement: ImagePlacement
 }>(({ textAlignment, imagePlacement }) => ({
@@ -157,14 +147,6 @@ const FluidBodyWrapper = styled.div<{
       imagePlacement === 'right'
         ? `${theme.space.xs} ${theme.space.xxl}`
         : `${theme.space.xxl} ${theme.space.xs}`,
-  },
-
-  [`${HeadingBlockWrapper}`]: {
-    padding: 0,
-  },
-  [`${ButtonBlockWrapper}`]: {
-    display: 'inline-block',
-    padding: 0,
   },
 }))
 
