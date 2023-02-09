@@ -154,12 +154,12 @@ export const OfferPresenter = (props: Props) => {
         <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
           <Space y={2}>
             <Space y={0.5}>
-              <Text as="p" align="center" size="xxl">
+              <Text as="p" align="center" size="xl">
                 {displayPrice}
               </Text>
               <Centered>
                 <TextButton onClick={onClickEdit}>
-                  <Text align="center" size="xs">
+                  <Text align="center" size="xs" color="textSecondary">
                     {t('PRESENT_OFFER_EDIT_BUTTON')}
                   </Text>
                 </TextButton>
