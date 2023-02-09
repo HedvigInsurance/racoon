@@ -1,48 +1,39 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
 import { BankIdState } from '@/services/bankId/bankId.types'
+import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
+import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 
-type BankIdLoginOptions = {
-  onCompleted: () => void
+type Options = {
+  shopSessionId?: string
+  ssn?: string
+  dispatch: BankIdDispatch
 }
-type StartLoginOptions = {
-  shopSessionId: string
-  ssn: string
-}
-export const useBankIdLogin = ({ onCompleted }: BankIdLoginOptions) => {
-  const [loginState, setLoginState] = useState(BankIdState.Idle)
-  // TODO: Expose and handle errors
+export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
-  const startLogin = useCallback(
-    async ({ shopSessionId, ssn }: StartLoginOptions) => {
-      setLoginState(BankIdState.Starting)
-      try {
-        const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
-          setLoginState(() => {
-            switch (status) {
-              case 'PENDING':
-                return BankIdState.Pending
-              case 'COMPLETED':
-                return BankIdState.Success
-              case 'FAILED':
-                return BankIdState.Error
-            }
-          })
+  return useCallback(async () => {
+    if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
+
+    bankIdLogger.debug('Starting BankId login')
+    dispatch({ type: 'operationStateChange', nextOperationState: BankIdState.Starting })
+    try {
+      const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
+        dispatch({
+          type: 'operationStateChange',
+          nextOperationState: apiStatusToBankIdState(status),
         })
-        const accessToken = await exchangeAuthorizationCode(authorizationCode)
-        saveAccessToken(accessToken)
-        await authenticateShopSession({ variables: { shopSessionId } })
-        onCompleted()
-      } catch (error) {
-        datadogLogs.logger.warn('Failed to authenticate', { error })
-        setLoginState(BankIdState.Error)
-      }
-    },
-    [authenticateShopSession, onCompleted],
-  )
-  return [startLogin, loginState] as const
+      })
+      const accessToken = await exchangeAuthorizationCode(authorizationCode)
+      saveAccessToken(accessToken)
+      bankIdLogger.debug('Got access token, authenticating shopSession')
+      await authenticateShopSession({ variables: { shopSessionId } })
+      bankIdLogger.debug('shopSession authenticated')
+    } catch (error) {
+      bankIdLogger.warn('Failed to authenticate', { error })
+      dispatch({ type: 'error', error })
+    }
+  }, [authenticateShopSession, dispatch, shopSessionId, ssn])
 }

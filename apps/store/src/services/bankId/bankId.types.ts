@@ -5,3 +5,14 @@ export enum BankIdState {
   Success = 'Success',
   Error = 'Error',
 }
+
+export type BankIdOperation = {
+  type: 'login' | 'sign'
+  state: BankIdState
+} & BankIdOperationOptions
+
+export type BankIdOperationOptions = {
+  onCancel: () => void
+  onSuccess: () => void
+  onError?: () => void
+}

@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
-import { BankIdIcon, Button, Heading, mq, Space, Text, TickIcon, theme } from 'ui'
+import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -17,8 +17,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import { ShopSessionSigningStatus } from '@/services/apollo/generated'
-import { saveAccessToken } from '@/services/authApi/persist'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -36,7 +35,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     shouldCollectName,
     customerAuthenticationStatus,
     shopSessionId,
-    shopSessionSigningId,
     checkoutSteps,
   } = props
   const { t } = useTranslation('checkout')
@@ -46,21 +44,18 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const router = useRouter()
   const apolloClient = useApolloClient()
   const tracking = useTracking()
-  const [hideLoading, setHideLoading] = useState(false)
-  const [handleSubmitSign, { loading, userError, signingStatus }] = useHandleSubmitCheckout({
+  const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId,
     ssn,
     customerAuthenticationStatus,
-    shopSessionSigningId,
-    onSuccess(accessToken) {
-      saveAccessToken(accessToken)
+    onSuccess() {
       const shopSessionId = shopSession?.id
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
       }
       tracking.reportPurchase(shopSession.cart)
       setupShopSessionServiceClientSide(apolloClient).reset()
-      router.push(
+      return router.push(
         getCheckoutStepLink(
           checkoutSteps[checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout) + 1],
           shopSession,
@@ -69,16 +64,10 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     },
     onError() {
       setShowSignError(true)
-      setHideLoading(false)
     },
   })
 
-  const signFailed = signingStatus === ShopSessionSigningStatus.Failed
-  const signFailedMessage = signFailed ? t('UNKNOWN_ERROR_MESSAGE', { ns: 'common' }) : undefined
-  const userErrorMessage = userError?.message ?? signFailedMessage
-
-  const isSigned = signingStatus === ShopSessionSigningStatus.Signed
-  const showLoading = (loading || isSigned) && !hideLoading
+  const userErrorMessage = userError?.message
 
   return (
     <>
@@ -146,7 +135,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       />
                     )}
                     <Space y={0.5}>
-                      <SignButton loading={loading}>
+                      <SignButton
+                        loading={loading}
+                        showBankIdIcon={
+                          customerAuthenticationStatus !==
+                          ShopSessionAuthenticationStatus.Authenticated
+                        }
+                      >
                         {t('SIGN_BUTTON', { count: cart.entries.length })}
                       </SignButton>
                       <Text size="sm" color="textSecondary" align="center">
@@ -160,34 +155,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           </Content>
         </Layout>
       </Space>
-
-      <FullscreenDialog.Root open={showLoading} onOpenChange={(open) => setHideLoading(!open)}>
-        <FullscreenDialog.Modal center Footer={null}>
-          <SpaceFlex direction="vertical" align="center" space={1.5}>
-            {isSigned ? (
-              <>
-                <TickIcon size="3rem" />
-                <Text align="center">{t('BANKID_MODAL_SUCCESS_PROMPT')}</Text>
-              </>
-            ) : (
-              <>
-                <BankIdIcon size="3rem" color="gray1000" />
-                <div>
-                  <Text align="center">{t('BANKID_MODAL_PROMPT')}</Text>
-                  <Text align="center" color="textSecondary">
-                    {t('BANKID_MODAL_DESCRIPTION')}
-                  </Text>
-                </div>
-                <FullscreenDialog.Close asChild>
-                  <Button size="small" variant="secondary">
-                    {t('BANKID_MODAL_CANCEL')}
-                  </Button>
-                </FullscreenDialog.Close>
-              </>
-            )}
-          </SpaceFlex>
-        </FullscreenDialog.Modal>
-      </FullscreenDialog.Root>
 
       <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
         <FullscreenDialog.Modal
@@ -258,11 +225,12 @@ const CartCollapsibleInner = styled(Space)({
   paddingTop: theme.space.md,
 })
 
-const SignButton = ({ children, loading }: PropsWithChildren<{ loading: boolean }>) => {
+type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
+const SignButton = ({ children, loading, showBankIdIcon }: SignButtonProps) => {
   return (
-    <Button type="submit" loading={loading} disabled={loading}>
+    <Button type="submit" loading={loading}>
       <StyledSignButtonContent>
-        <BankIdIcon color="white" />
+        {showBankIdIcon && <BankIdIcon color="white" />}
         {children}
       </StyledSignButtonContent>
     </Button>
