@@ -8,7 +8,6 @@ export const ContactSupportBlock = ({ blok }: ContactSupportBlockProps) => {
   return (
     <ContactSupport
       {...storyblokEditable(blok)}
-      title={blok.title}
       chatTitle={blok.chatTitle}
       chatOpeningHours={blok.chatOpeningHours}
       phoneTitle={blok.phoneTitle}
