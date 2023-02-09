@@ -2,7 +2,6 @@ import isPropValid from '@emotion/is-prop-valid'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { mq } from '../../lib/media-query'
 
 type OverlayProps = {
   frosted?: boolean
@@ -34,13 +33,6 @@ const StyledOverlay = styled(DialogPrimitive.Overlay, {
   }),
 }))
 
-const ToastOverlay = styled(StyledOverlay)({
-  top: '3rem',
-  [mq.lg]: {
-    top: 0,
-  },
-})
-
 export const Window = styled.div(({ theme }) => ({
   backgroundColor: theme.colors.white,
   boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
@@ -54,25 +46,15 @@ type ContentProps = {
   onClose?: () => void
   className?: string
   frostedOverlay?: boolean
-  isToast?: boolean
 }
 
-export const Content = ({
-  children,
-  onClose,
-  className,
-  frostedOverlay,
-  isToast,
-}: ContentProps) => {
+export const Content = ({ children, onClose, className, frostedOverlay }: ContentProps) => {
   const handleClose = () => onClose?.()
 
   return (
     <DialogPrimitive.Portal>
-      {isToast ? (
-        <ToastOverlay frosted={frostedOverlay} />
-      ) : (
-        <StyledOverlay frosted={frostedOverlay} />
-      )}
+      <StyledOverlay frosted={frostedOverlay} />
+
       <StyledContentWrapper>
         <DialogPrimitive.Content
           className={className}
