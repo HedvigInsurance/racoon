@@ -1,3 +1,4 @@
+import { Observable } from 'zen-observable-ts'
 import { AuthEndpoint } from './authEndpoint'
 import { fetchJson } from './fetchJson'
 
@@ -5,14 +6,31 @@ enum MemberLoginMethod {
   SE_BANKID = 'SE_BANKID',
 }
 
-type StatusChangeCallback = (status: MemberLoginStatusResponse['status']) => void
+export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusResponse> => {
+  return new Observable((subscriber) => {
+    let pollTimeoutId: number
+    const poll = async (statusUrl: string) => {
+      if (subscriber.closed) return
+      const result = await memberLoginStatus(statusUrl)
+      subscriber.next(result)
+      if (result.status === 'COMPLETED') {
+        subscriber.complete()
+      } else if (result.status === 'FAILED') {
+        throw new Error('Login failed: ' + result.statusText)
+      } else {
+        pollTimeoutId = window.setTimeout(() => poll(statusUrl), 1000)
+      }
+    }
 
-export const loginMemberSeBankId = async (ssn: string, onStatusChange: StatusChangeCallback) => {
-  const { statusUrl } = await memberLoginCreateSE(ssn)
-  return await memberLoginStatusPoll(AuthEndpoint.LOGIN_STATUS(statusUrl), onStatusChange)
+    memberLoginCreateSE(ssn)
+      .then(({ statusUrl }) => poll(AuthEndpoint.LOGIN_STATUS(statusUrl)))
+      .catch((err) => subscriber.error(err))
+
+    return () => clearTimeout(pollTimeoutId)
+  })
 }
 
-type MemberLoginStatusResponse =
+export type MemberLoginStatusResponse =
   | {
       status: 'PENDING' | 'FAILED'
       statusText: string
@@ -24,28 +42,6 @@ type MemberLoginStatusResponse =
 
 const memberLoginStatus = async (statusUrl: string) => {
   return await fetchJson<MemberLoginStatusResponse>(statusUrl)
-}
-
-const memberLoginStatusPoll = async (
-  statusUrl: string,
-  onStatusChange: StatusChangeCallback,
-): Promise<string> => {
-  const result = await memberLoginStatus(statusUrl)
-  onStatusChange(result.status)
-
-  if (result.status === 'COMPLETED') {
-    return result.authorizationCode
-  }
-
-  if (result.status === 'FAILED') {
-    throw new Error('Login failed: ' + result.statusText)
-  }
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(memberLoginStatusPoll(statusUrl, onStatusChange))
-    }, 1000)
-  })
 }
 
 type MemberLoginResponseSuccess = {

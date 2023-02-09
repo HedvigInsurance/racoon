@@ -64,12 +64,19 @@ export const bankIdReducer = (
           ...action.options!,
         },
       }
-    case 'success':
+    case 'success': {
+      state.currentOperation?.onSuccess()
+      return {
+        currentOperation: null,
+      }
+    }
     case 'cancel':
+      state.currentOperation?.onCancel()
       return {
         currentOperation: null,
       }
     case 'error': {
+      state.currentOperation?.onError?.()
       return { currentOperation: null, lastError: action.error }
     }
   }

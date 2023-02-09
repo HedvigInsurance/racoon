@@ -31,7 +31,7 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
   const ssn = shopSession?.customer?.ssn ?? ''
-  const bankIdLogin = useBankIdLogin({
+  const { startLogin } = useBankIdLogin({
     shopSessionId,
     ssn,
     dispatch,
@@ -60,11 +60,12 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
       })
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         bankIdLogger.debug('Authentication required for returning member')
-        await bankIdLogin()
+        // TODO: Use observable to make it cancellable
+        startLogin()
       }
       startSign(options)
     },
-    [authenticationStatus, bankIdLogin, startSign],
+    [authenticationStatus, startLogin, startSign],
   )
 
   const contextValue = useMemo(

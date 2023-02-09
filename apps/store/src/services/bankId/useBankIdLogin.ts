@@ -1,9 +1,9 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
+import { Subscription } from 'zen-observable-ts'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
-import { loginMemberSeBankId } from '@/services/authApi/login'
+import { loginMemberSeBankId, MemberLoginStatusResponse } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdState } from '@/services/bankId/bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
 import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 
@@ -13,27 +13,39 @@ type Options = {
   dispatch: BankIdDispatch
 }
 export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
+  const subscriptionRef = useRef<Subscription | null>(null)
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
-  return useCallback(async () => {
+  const startLogin = useCallback(async () => {
     if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
 
     bankIdLogger.debug('Starting BankId login')
-    dispatch({ type: 'operationStateChange', nextOperationState: BankIdState.Starting })
-    try {
-      const authorizationCode = await loginMemberSeBankId(ssn, (status) => {
+    subscriptionRef.current = loginMemberSeBankId(ssn).subscribe({
+      async next(statusResponse: MemberLoginStatusResponse) {
         dispatch({
           type: 'operationStateChange',
-          nextOperationState: apiStatusToBankIdState(status),
+          nextOperationState: apiStatusToBankIdState(statusResponse.status),
         })
-      })
-      const accessToken = await exchangeAuthorizationCode(authorizationCode)
-      saveAccessToken(accessToken)
-      bankIdLogger.debug('Got access token, authenticating shopSession')
-      await authenticateShopSession({ variables: { shopSessionId } })
-      bankIdLogger.debug('shopSession authenticated')
-    } catch (error) {
-      bankIdLogger.warn('Failed to authenticate', { error })
-      dispatch({ type: 'error', error })
-    }
+        if (statusResponse.status === 'COMPLETED') {
+          const accessToken = await exchangeAuthorizationCode(statusResponse.authorizationCode)
+          saveAccessToken(accessToken)
+          bankIdLogger.debug('Got access token, authenticating shopSession')
+          await authenticateShopSession({ variables: { shopSessionId } })
+          bankIdLogger.debug('shopSession authenticated')
+          dispatch({ type: 'success' })
+        }
+      },
+      complete() {
+        subscriptionRef.current = null
+      },
+      error(error: unknown) {
+        subscriptionRef.current = null
+        dispatch({ type: 'error', error })
+      },
+    })
   }, [authenticateShopSession, dispatch, shopSessionId, ssn])
+  const cancelLogin = useCallback(() => {
+    subscriptionRef.current?.unsubscribe()
+    dispatch({ type: 'cancel' })
+  }, [dispatch])
+  return { startLogin, cancelLogin }
 }

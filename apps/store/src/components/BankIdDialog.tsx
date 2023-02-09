@@ -30,20 +30,11 @@ export const BankIdDialog = () => {
   // TODO: Expose and handle errors
   const shopSessionId = shopSession?.id
   const ssn = shopSession?.customer?.ssn ?? ''
-  const bankIdLogin = useBankIdLogin({
+  const { startLogin, cancelLogin } = useBankIdLogin({
     shopSessionId,
     ssn,
     dispatch,
   })
-  const startLogin = useCallback(async () => {
-    try {
-      await bankIdLogin()
-      currentOperation?.onSuccess()
-      dispatch({ type: 'success' })
-    } catch (error) {
-      currentOperation?.onError?.()
-    }
-  }, [currentOperation, dispatch, bankIdLogin])
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -91,6 +82,11 @@ export const BankIdDialog = () => {
               {currentOperation.state === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
             </Text>
           </>
+        )
+        footer = (
+          <Button variant="ghost" onClick={cancelLogin}>
+            {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
+          </Button>
         )
         break
       }
