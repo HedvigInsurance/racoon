@@ -11,13 +11,13 @@ type SpaceSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 const spaceBlockScale = {
   _: {
-    xs: '1.5rem',
-    sm: '3rem',
+    xs: '2rem',
+    sm: '3.5rem',
     md: '5rem',
     lg: '6rem',
     xl: '9rem',
   },
-  lg: {
+  md: {
     xs: '3rem',
     sm: '5rem',
     md: '9rem',
@@ -37,7 +37,7 @@ SpacerBlock.blockName = 'spacer'
 const Spacer = styled.div<Props>(({ size }) => ({
   height: spaceBlockScale['_'][size as SpaceSize],
 
-  [mq.lg]: {
-    height: spaceBlockScale['lg'][size as SpaceSize],
+  [mq.md]: {
+    height: spaceBlockScale['md'][size as SpaceSize],
   },
 }))
