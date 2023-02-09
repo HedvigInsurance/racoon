@@ -7,15 +7,17 @@
  */
 import 'i18next'
 
+import type bankid from '../../public/locales/en/bankid.json'
 import type cart from '../../public/locales/en/cart.json'
 import type checkout from '../../public/locales/en/checkout.json'
 import type common from '../../public/locales/en/common.json'
 import type purchaseForm from '../../public/locales/en/purchase-form.json'
 
 interface I18nNamespaces {
-  common: typeof common
+  bankid: typeof bankid
   cart: typeof cart
   checkout: typeof checkout
+  common: typeof common
   'purchase-form': typeof purchaseForm
 }
 

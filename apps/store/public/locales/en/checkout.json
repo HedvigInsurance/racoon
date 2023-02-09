@@ -1,10 +1,6 @@
 {
   "APP_DOWNLOAD_QRCODE_ALT": "Scan to download the app (QR code)",
   "BACK_BUTTON": "Back to cart",
-  "BANKID_MODAL_CANCEL": "Cancel",
-  "BANKID_MODAL_DESCRIPTION": "Open the BankID app on your phone.",
-  "BANKID_MODAL_PROMPT": "Waiting for BankID...",
-  "BANKID_MODAL_SUCCESS_PROMPT": "Signing approved",
   "BREADCRUMB_CHECKOUT": "Checkout",
   "BREADCRUMB_CONFIRMATION": "Confirmation",
   "BREADCRUMB_DONE": "Done",
