@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
+import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation'
 import {
   fetchGlobalProductMetadata,
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
@@ -65,7 +66,13 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
 const CheckoutConfirmationPage: NextPageWithLayout<
   ConfirmationPageProps & { story: ConfirmationStory }
-> = (props) => <ConfirmationPage {...props} />
+> = (props) => {
+  return (
+    <SuccessAnimation>
+      <ConfirmationPage {...props} />
+    </SuccessAnimation>
+  )
+}
 
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
