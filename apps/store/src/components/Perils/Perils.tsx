@@ -86,7 +86,8 @@ const ContentWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.md,
-  paddingLeft: theme.space.xl,
+  paddingTop: theme.space.md,
+  paddingLeft: '1.75rem',
   paddingBottom: theme.space.md,
   fontSize: theme.fontSizes.xs,
 })
