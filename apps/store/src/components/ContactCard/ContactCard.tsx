@@ -20,7 +20,7 @@ const Card = styled.div({
   },
 
   [mq.sm]: {
-    paddingBlock: theme.space.xxxl,
+    paddingBlock: theme.space.xxl,
   },
 })
 

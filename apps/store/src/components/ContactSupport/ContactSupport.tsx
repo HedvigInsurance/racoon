@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Heading, Space, Text, theme } from 'ui'
+import { Space, Text, theme } from 'ui'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Message } from '../Animations/Message/Message'
@@ -8,7 +8,6 @@ import { ContactCard } from '../ContactCard/ContactCard'
 import { IntercomChatButton } from './IntercomChatButton'
 
 export type ContactSupportProps = {
-  title: string
   chatTitle: string
   chatOpeningHours?: string
   phoneTitle: string
@@ -17,7 +16,6 @@ export type ContactSupportProps = {
 }
 
 export const ContactSupport = ({
-  title,
   chatTitle,
   chatOpeningHours,
   phoneTitle,
@@ -27,15 +25,6 @@ export const ContactSupport = ({
   return (
     <Main>
       <Space y={1.5}>
-        <Heading
-          as="h2"
-          align="center"
-          color="textPrimary"
-          variant={{ _: 'standard.24', lg: 'standard.24' }}
-          mb={theme.space.lg}
-        >
-          {title}
-        </Heading>
         <CardWrapper>
           <IntercomChatButton>
             <ContactCard icon={<Message />}>
@@ -72,7 +61,7 @@ const Main = styled.main({
 
 const CardWrapper = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(2,minmax(min-content, 14rem))',
+  gridTemplateColumns: 'repeat(2,minmax(min-content, 13rem))',
   justifyContent: 'center',
   gap: theme.space.md,
 })
