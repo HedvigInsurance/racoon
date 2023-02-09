@@ -49,13 +49,16 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
 }
 
 const Layout = styled(GridLayout.Root)({
+  // TODO: harmonize with other grid layouts
+
   gap: theme.space.lg,
   [mq.lg]: {
     gap: theme.space.md,
-
-    // TODO: harmonize with other grid layouts
     paddingInline: theme.space.md,
   },
+
+  maxWidth: '90rem',
+  marginInline: 'auto',
 })
 
 const Column = styled.div({
@@ -73,7 +76,11 @@ const DownloadFileButton = styled(Button)({
   // Counter the padding from the "DocumentType"
   paddingTop: theme.space.xs,
   height: 'auto',
-  fontSize: theme.fontSizes.xl,
+  fontSize: theme.fontSizes.md,
+
+  [mq.lg]: {
+    fontSize: theme.fontSizes.lg,
+  },
 })
 
 const Ellipsis = styled.span({
