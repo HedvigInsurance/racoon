@@ -89,10 +89,10 @@ export const Content = styled(AccordionPrimitives.Content)({
   overflow: 'hidden',
 
   '[data-state=open] &': {
-    animation: `${slideDown} 640ms cubic-bezier(0.65,0.05,0.36,1)`,
+    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
   },
 
   '[data-state=closed] &': {
-    animation: `${slideUp} 640ms cubic-bezier(0.65,0.05,0.36,1)`,
+    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
   },
 })
