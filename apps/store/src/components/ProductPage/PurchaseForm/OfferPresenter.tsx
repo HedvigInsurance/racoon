@@ -319,9 +319,9 @@ const getCancellationOption = (params: GetCancellationOptionParams): Cancellatio
         requested: cancellation.requested,
       }
 
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate:
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
       return {
-        type: ExternalInsuranceCancellationOption.BanksigneringInvalidStartDate,
+        type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate,
         companyName: externalInsurer?.displayName ?? 'Unknown',
       }
 

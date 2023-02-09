@@ -2,7 +2,7 @@
   "ADD_TO_CART_BUTTON_LABEL": "Add to cart",
   "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
   "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires.",
-  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Because your insurance at {{company}} expires soon, you have to manually cancel it. Don't worry, we will email instructions.",
+  "AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE": "Because your insurance at {{company}} expires soon, you have to manually cancel it. Don't worry, we will email instructions.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "End date {{company}}",
   "CART_TOAST_CART_LINK": "Proceed to cart",
   "CART_TOAST_HEADING": "Added to cart",

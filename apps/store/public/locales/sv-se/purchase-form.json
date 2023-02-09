@@ -2,7 +2,7 @@
   "ADD_TO_CART_BUTTON_LABEL": "Lägg i varukorgen",
   "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
   "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",
-  "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Eftersom din försäkring hos {{company}} går ut ganska snart behöver du själv säga upp den. Oroa dig inte, vi mejlar instruktioner till dig.",
+  "AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE": "Eftersom din försäkring hos {{company}} går ut ganska snart behöver du själv säga upp den. Oroa dig inte, vi mejlar instruktioner till dig.",
   "AUTO_SWITCH_RENEWAL_DATE_LABEL": "Startdatum {{company}}",
   "CART_TOAST_CART_LINK": "Fortsätt till varukorgen",
   "CART_TOAST_HEADING": "Tillagd i varukorgen",
