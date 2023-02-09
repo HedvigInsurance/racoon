@@ -27,7 +27,7 @@ export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
         })
       })
       const accessToken = await exchangeAuthorizationCode(authorizationCode)
-      saveAccessToken(accessToken, {})
+      saveAccessToken(accessToken)
       bankIdLogger.debug('Got access token, authenticating shopSession')
       await authenticateShopSession({ variables: { shopSessionId } })
       bankIdLogger.debug('shopSession authenticated')

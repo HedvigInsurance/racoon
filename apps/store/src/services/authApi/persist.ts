@@ -13,17 +13,17 @@ const OPTIONS: OptionsType = {
   }),
 }
 
-export const saveAccessToken = (accessToken: string, cookieParams: CookieParams) => {
+export const saveAccessToken = (accessToken: string, cookieParams: CookieParams = {}) => {
   setCookie(COOKIE_KEY, serialize(accessToken), { ...cookieParams, ...OPTIONS })
 }
 
 export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
-export const resetAccessToken = (cookieParams: CookieParams) => {
+export const resetAccessToken = (cookieParams: CookieParams = {}) => {
   deleteCookie(COOKIE_KEY, { ...cookieParams, ...OPTIONS })
 }
 
-const getAccessToken = (cookieParams: CookieParams) => {
+const getAccessToken = (cookieParams: CookieParams = {}) => {
   const cookieValue = getCookie(COOKIE_KEY, cookieParams)
   if (typeof cookieValue !== 'string') return undefined
   return deserialize(cookieValue)

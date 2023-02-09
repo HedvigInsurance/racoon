@@ -76,7 +76,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 
   queryResult.reset = useCallback(() => {
     shopSessionServiceClientSide.reset()
-    resetAccessToken({})
+    resetAccessToken()
     return shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
       setShopSessionId(shopSession.id)
     })

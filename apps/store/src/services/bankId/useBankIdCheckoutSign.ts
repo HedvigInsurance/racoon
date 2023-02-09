@@ -28,7 +28,7 @@ export const useBankIdCheckoutSign = ({ shopSessionId, dispatch, onSuccess }: Op
       if (status === ShopSessionSigningStatus.Signed && completion) {
         bankIdLogger.debug('Signing complete')
         const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
-        saveAccessToken(accessToken, {})
+        saveAccessToken(accessToken)
         onSuccess()
       }
     },
