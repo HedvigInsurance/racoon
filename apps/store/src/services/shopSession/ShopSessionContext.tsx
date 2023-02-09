@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
+import { resetAccessToken } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
@@ -20,6 +21,7 @@ type OnReadyCallback = (shopSession: ShopSession) => unknown
 type ShopSessionResult = ShopSessionQueryResult & {
   shopSession?: ShopSession
   onReady: (callback: OnReadyCallback) => () => void
+  reset: () => Promise<void>
 }
 
 export const ShopSessionContext = createContext<ShopSessionResult | null>(null)
@@ -71,6 +73,14 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     },
     [queryResult.shopSession],
   )
+
+  queryResult.reset = useCallback(() => {
+    shopSessionServiceClientSide.reset()
+    resetAccessToken({})
+    return shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
+      setShopSessionId(shopSession.id)
+    })
+  }, [countryCode, shopSessionServiceClientSide])
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {

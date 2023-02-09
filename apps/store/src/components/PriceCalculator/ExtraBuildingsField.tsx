@@ -144,7 +144,7 @@ export const ExtraBuildingsField = ({
                   </Button>
                   <Dialog.Close asChild>
                     <Button type="button" variant="ghost">
-                      {t('DIALOG_BUTTON_CANCEL')}
+                      {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
                     </Button>
                   </Dialog.Close>
                 </Space>
