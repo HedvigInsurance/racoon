@@ -54,6 +54,7 @@ export const Content = ({ children, onClose, className, frostedOverlay }: Conten
   return (
     <DialogPrimitive.Portal>
       <StyledOverlay frosted={frostedOverlay} />
+
       <StyledContentWrapper>
         <DialogPrimitive.Content
           className={className}
