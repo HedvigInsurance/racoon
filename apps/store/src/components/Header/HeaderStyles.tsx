@@ -16,7 +16,7 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
   fontSize: theme.fontSizes.xl,
 
   [mq.lg]: {
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.md,
     top: 0,
   },
 })
