@@ -1,7 +1,9 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, Dialog, mq, theme } from 'ui'
+import { Space, mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
@@ -22,9 +24,9 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
   }))
 
   return (
-    <Dialog.Root open={isOpen}>
+    <DialogPrimitive.Root open={isOpen}>
       {product && <CartNotificationContent onClose={handleClose} {...product} />}
-    </Dialog.Root>
+    </DialogPrimitive.Root>
   )
 })
 
@@ -36,32 +38,61 @@ type Props = ProductItemProps & {
 
 export const CartNotificationContent = ({ name, price, startDateDescription, onClose }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const handleClose = () => onClose?.()
 
   return (
-    <DialogContent onClose={onClose}>
-      <DialogContentWrapper>
-        <ProductItem name={name} price={price} startDateDescription={startDateDescription} />
-        <Space y={0.5}>
-          <ButtonNextLink href={PageLink.cart()} variant="primary">
-            {t('CART_TOAST_CART_LINK')}
-          </ButtonNextLink>
+    <DialogPrimitive.Portal>
+      <StyledOverlay />
+      <StyledContentWrapper>
+        <DialogContent onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
+          <DialogContentWrapper>
+            <ProductItem name={name} price={price} startDateDescription={startDateDescription} />
+            <Space y={0.5}>
+              <ButtonNextLink href={PageLink.cart()} variant="primary">
+                {t('CART_TOAST_CART_LINK')}
+              </ButtonNextLink>
 
-          <ButtonNextLink href={PageLink.store()} onClick={onClose} variant="ghost">
-            {t('CART_TOAST_STORE_LINK')}
-          </ButtonNextLink>
-        </Space>
-      </DialogContentWrapper>
-    </DialogContent>
+              <ButtonNextLink href={PageLink.store()} onClick={onClose} variant="ghost">
+                {t('CART_TOAST_STORE_LINK')}
+              </ButtonNextLink>
+            </Space>
+          </DialogContentWrapper>
+        </DialogContent>
+      </StyledContentWrapper>
+    </DialogPrimitive.Portal>
   )
 }
 
-const DialogContent = styled(Dialog.Content)({
+const DialogContent = styled(DialogPrimitive.Content)({
   marginTop: MENU_BAR_HEIGHT_MOBILE,
   [mq.lg]: {
     marginTop: MENU_BAR_HEIGHT_DESKTOP,
     display: 'flex',
     justifyContent: 'flex-end',
   },
+})
+
+const overlayShow = keyframes({
+  '0%': { opacity: 0 },
+  '100%': { opacity: 1 },
+})
+
+const StyledOverlay = styled(DialogPrimitive.Overlay)({
+  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+  position: 'fixed',
+  inset: 0,
+  top: MENU_BAR_HEIGHT_MOBILE,
+  [mq.lg]: {
+    top: 0,
+  },
+  '@media (prefers-reduced-motion: no-preference)': {
+    animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+  },
+})
+
+const StyledContentWrapper = styled.div({
+  position: 'fixed',
+  inset: 0,
 })
 
 const DialogContentWrapper = styled.div({

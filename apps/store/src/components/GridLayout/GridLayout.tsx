@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
 
+export const TEXT_CONTENT_MAX_WIDTH = '37.5rem' // 600px
+
 const Root = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(12, 1fr)',

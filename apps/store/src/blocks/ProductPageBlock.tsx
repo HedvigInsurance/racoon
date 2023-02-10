@@ -1,19 +1,28 @@
-import { Global } from '@emotion/react'
-import styled, { CSSObject } from '@emotion/styled'
+import { css, Global } from '@emotion/react'
+import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
+import { motion, Transition } from 'framer-motion'
 import Head from 'next/head'
 import { useRef, useState, useEffect } from 'react'
 import { mq, theme } from 'ui'
-import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
+import {
+  MENU_BAR_HEIGHT_MOBILE,
+  MENU_BAR_HEIGHT_DESKTOP,
+  MENU_BAR_HEIGHT_PX,
+} from '@/components/Header/HeaderStyles'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
+
+// TODO: move to theme
+const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 type PageSection = 'overview' | 'coverage'
 
@@ -83,13 +92,15 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
                 window?.scrollTo({ top: 0 })
               }}
             >
-              <TabList>
-                <TablistWrapper>
-                  <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
-                  <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
-                </TablistWrapper>
-                {shouldRenderVariantSelector && <StyledProductVariantSelector />}
-              </TabList>
+              <AnimatedHeader>
+                <RadixTabs.TabsList>
+                  <TablistWrapper>
+                    <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
+                    <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
+                  </TablistWrapper>
+                  {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+                </RadixTabs.TabsList>
+              </AnimatedHeader>
 
               <OverviewSection>
                 <Tabs.TabsContent value="overview">
@@ -112,29 +123,31 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
           <>
             <Grid>
               <Content>
-                <ContentNavigation aria-label="page content">
-                  <ContentNavigationList>
-                    <li>
-                      <ContentNavigationTrigger
-                        href="#overview"
-                        data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-                        aria-current={activeSection === 'overview' ? 'true' : undefined}
-                      >
-                        {blok.overviewLabel}
-                      </ContentNavigationTrigger>
-                    </li>
-                    <li>
-                      <ContentNavigationTrigger
-                        href="#coverage"
-                        data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
-                        aria-current={activeSection === 'coverage' ? 'true' : undefined}
-                      >
-                        {blok.coverageLabel}
-                      </ContentNavigationTrigger>
-                    </li>
-                  </ContentNavigationList>
-                  {shouldRenderVariantSelector && <StyledProductVariantSelector />}
-                </ContentNavigation>
+                <AnimatedHeader>
+                  <nav aria-label="page content">
+                    <ContentNavigationList>
+                      <li>
+                        <ContentNavigationTrigger
+                          href="#overview"
+                          data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                          aria-current={activeSection === 'overview' ? 'true' : undefined}
+                        >
+                          {blok.overviewLabel}
+                        </ContentNavigationTrigger>
+                      </li>
+                      <li>
+                        <ContentNavigationTrigger
+                          href="#coverage"
+                          data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                          aria-current={activeSection === 'coverage' ? 'true' : undefined}
+                        >
+                          {blok.coverageLabel}
+                        </ContentNavigationTrigger>
+                      </li>
+                    </ContentNavigationList>
+                    {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+                  </nav>
+                </AnimatedHeader>
                 <OverviewSection id="overview">
                   {blok.overview?.map((nestedBlock) => (
                     <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
@@ -163,29 +176,13 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 }
 ProductPageBlock.blockName = 'product'
 
-const sharedListStyles: CSSObject = {
+const sharedListStyles = css({
   display: 'flex',
   gap: theme.space.xs,
   height: TABLIST_HEIGHT,
-}
+})
 
-const sharedStickyStyles: CSSObject = {
-  position: 'sticky',
-  top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_MOBILE})`,
-  paddingInline: theme.space.md,
-  zIndex: zIndexes.tabs,
-
-  [mq.md]: {
-    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
-    paddingInline: theme.space.lg,
-  },
-  [mq.lg]: {
-    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
-    paddingInline: theme.space.xl,
-  },
-}
-
-const sharedTriggerStyles: CSSObject = {
+const sharedTriggerStyles = css({
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'flex-end',
@@ -210,11 +207,9 @@ const sharedTriggerStyles: CSSObject = {
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
   },
-}
-
-const Main = styled.main({
-  width: '100%',
 })
+
+const Main = styled.main({ width: '100%' })
 
 const PurchaseFormWrapper = styled.div({
   position: 'sticky',
@@ -261,29 +256,40 @@ const Content = styled.div({
   isolation: 'isolate',
 })
 
-const TabList = styled(RadixTabs.TabsList)({
-  ...sharedStickyStyles,
+const TablistWrapper = styled.div(sharedListStyles)
+
+const TabTrigger = styled(RadixTabs.Trigger)(sharedTriggerStyles)
+
+const AnimatedHeader = ({ children }: { children: React.ReactNode }) => {
+  const state = useScrollState({ threshold: MENU_BAR_HEIGHT_PX })
+  const scrollUp = state === 'SCROLL_DOWN' || state === 'BELOW'
+
+  return (
+    <StickyHeader animate={{ top: scrollUp ? theme.space.md : undefined }} transition={TRANSITION}>
+      {children}
+    </StickyHeader>
+  )
+}
+
+const StickyHeader = styled(motion.div)({
+  position: 'sticky',
+  top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_MOBILE})`,
+  zIndex: zIndexes.tabs,
+  paddingInline: theme.space.md,
+
+  [mq.md]: {
+    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.lg,
+  },
+  [mq.lg]: {
+    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    paddingInline: theme.space.xl,
+  },
 })
 
-const TablistWrapper = styled.div({
-  ...sharedListStyles,
-})
+const ContentNavigationList = styled.ol(sharedListStyles)
 
-const TabTrigger = styled(RadixTabs.Trigger)({
-  ...sharedTriggerStyles,
-})
-
-const ContentNavigation = styled.nav({
-  ...sharedStickyStyles,
-})
-
-const ContentNavigationList = styled.ol({
-  ...sharedListStyles,
-})
-
-const ContentNavigationTrigger = styled.a({
-  ...sharedTriggerStyles,
-})
+const ContentNavigationTrigger = styled.a(sharedTriggerStyles)
 
 const StyledProductVariantSelector = styled(ProductVariantSelector)({
   minWidth: '12.5rem',
