@@ -82,7 +82,7 @@ const StyledOverlay = styled(DialogPrimitive.Overlay)({
   backgroundColor: 'rgba(0, 0, 0, 0.15)',
   position: 'fixed',
   inset: 0,
-  top: '3rem',
+  top: MENU_BAR_HEIGHT_MOBILE,
   [mq.lg]: {
     top: 0,
   },
