@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactElement, useCallback } from 'react'
-import { BankIdIcon, Button, Text, theme, TickIcon, WarningTriangleIcon } from 'ui'
+import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
@@ -97,7 +97,7 @@ export const BankIdDialog = () => {
       case BankIdState.Success: {
         content = (
           <IconWithText>
-            <TickIcon size="1rem" color={theme.colors.greenElement} />
+            <CheckIcon size="1rem" color={theme.colors.greenElement} />
             {currentOperation.type === 'login'
               ? t('LOGIN_BANKID_SUCCESS')
               : t('BANKID_MODAL_SUCCESS_PROMPT')}
