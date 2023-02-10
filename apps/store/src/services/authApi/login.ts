@@ -11,14 +11,18 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
     let pollTimeoutId: number
     const poll = async (statusUrl: string) => {
       if (subscriber.closed) return
-      const result = await memberLoginStatus(statusUrl)
-      subscriber.next(result)
-      if (result.status === 'COMPLETED') {
-        subscriber.complete()
-      } else if (result.status === 'FAILED') {
-        throw new Error('Login failed: ' + result.statusText)
-      } else {
-        pollTimeoutId = window.setTimeout(() => poll(statusUrl), 1000)
+      try {
+        const result = await memberLoginStatus(statusUrl)
+        subscriber.next(result)
+        if (result.status === 'COMPLETED') {
+          subscriber.complete()
+        } else if (result.status === 'FAILED') {
+          subscriber.error(new Error('Login failed: ' + result.statusText))
+        } else {
+          pollTimeoutId = window.setTimeout(() => poll(statusUrl), 1000)
+        }
+      } catch (error) {
+        subscriber.error(error)
       }
     }
 

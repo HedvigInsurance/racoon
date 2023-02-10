@@ -68,19 +68,21 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
     [authenticationStatus, startLogin, startSign],
   )
 
+  const showLoginPrompt = useCallback(({ onCompleted }: LoginPromptOptions) => {
+    dispatch({
+      type: 'showLoginPrompt',
+      options: { onSuccess: onCompleted, onCancel: onCompleted },
+    })
+  }, [])
+
   const contextValue = useMemo(
     () => ({
       ...state,
       dispatch,
-      showLoginPrompt({ onCompleted }: LoginPromptOptions) {
-        dispatch({
-          type: 'showLoginPrompt',
-          options: { onSuccess: onCompleted, onCancel: onCompleted },
-        })
-      },
+      showLoginPrompt,
       startCheckoutSign,
     }),
-    [startCheckoutSign, state],
+    [showLoginPrompt, startCheckoutSign, state],
   )
   return <BankIdContext.Provider value={contextValue}>{children}</BankIdContext.Provider>
 }

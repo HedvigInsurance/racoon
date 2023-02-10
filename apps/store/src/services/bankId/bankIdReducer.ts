@@ -76,8 +76,12 @@ export const bankIdReducer = (
         currentOperation: null,
       }
     case 'error': {
+      if (!state.currentOperation) break
       state.currentOperation?.onError?.()
-      return { currentOperation: null, lastError: action.error }
+      return {
+        currentOperation: { ...state.currentOperation, state: BankIdState.Error },
+        lastError: action.error,
+      }
     }
   }
   return state
