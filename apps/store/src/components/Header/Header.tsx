@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { HedvigLogo, mq, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 import { zIndexes } from '@/utils/zIndex'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './HeaderStyles'
+import { useScrollState } from '../../utils/useScrollState'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_PX } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
-import { useScrollState } from './useScrollState'
 
 // Not possible to animate HSL to "transparent"
 const TRANSPARENT_HSL_COLOR = 'hsla(0, 0%, 98%, 0)'
@@ -40,7 +40,7 @@ type HeaderProps = {
 }
 
 export const Header = ({ children, opaque = false, overlay = false }: HeaderProps) => {
-  const scrollState = useScrollState({ threshold: 128 })
+  const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const defaultPosition = overlay ? 'absolute' : 'relative'
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
