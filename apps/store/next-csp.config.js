@@ -1,4 +1,4 @@
-const scriptSrcDirectives = [
+const scriptSrc = [
   'https://app.storyblok.com',
   'https://widget.intercom.io',
   'https://js.intercomcdn.com',
@@ -9,12 +9,12 @@ const scriptSrcDirectives = [
   "'unsafe-eval'",
   "'self'",
 ]
-const styleSrcDirectives = [
+const styleSrc = [
   'https://fonts.googleapis.com', // GTM preview mode
   "'unsafe-inline'",
   "'self'",
 ]
-const fontSrcDirectives = [
+const fontSrc = [
   'https://fonts.intercomcdn.com',
   // GTM preview mode
   'https://fonts.gstatic.com',
@@ -22,7 +22,7 @@ const fontSrcDirectives = [
   'https://*.vercel.com',
   "'self'",
 ]
-const imgSrcDirectives = [
+const imgSrc = [
   'https://promise.hedvig.com',
   'https://*.storyblok.com',
   // Intercom
@@ -40,14 +40,14 @@ const imgSrcDirectives = [
   'data:',
   "'self'",
 ]
-const mediaSrcDirectives = [
+const mediaSrc = [
   'https://dc.insurely.com',
   'https://vercel.live',
   // Storyblok
   'https://a.storyblok.com',
   "'self'",
 ]
-const connectSrcDirectives = [
+const connectSrc = [
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
   // Our logging
@@ -72,7 +72,7 @@ const connectSrcDirectives = [
   'https://*.hedvigit.com',
   "'self'",
 ]
-const frameSrcDirectives = [
+const frameSrc = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
@@ -87,15 +87,15 @@ const frameSrcDirectives = [
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src ${scriptSrcDirectives.join(' ')};
-  style-src ${styleSrcDirectives.join(' ')}; 
-  font-src ${fontSrcDirectives.join(' ')};
-  img-src ${imgSrcDirectives.join(' ')};
-  media-src ${mediaSrcDirectives.join(' ')};
-  connect-src ${connectSrcDirectives.join(' ')};
+  script-src ${scriptSrc.join(' ')};
+  style-src ${styleSrc.join(' ')}; 
+  font-src ${fontSrc.join(' ')};
+  img-src ${imgSrc.join(' ')};
+  media-src ${mediaSrc.join(' ')};
+  connect-src ${connectSrc.join(' ')};
   worker-src blob:;
   object-src data:;
-  frame-src ${frameSrcDirectives.join(' ')};
+  frame-src ${frameSrc.join(' ')};
   report-uri /api/csp-reports;
 `
 
