@@ -1,7 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
-import { Button, Space } from 'ui'
+import { FormEventHandler, useState } from 'react'
+import { Button, Space, Text, theme, WarningTriangleIcon } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   ShopSessionAuthenticationStatus,
@@ -9,6 +11,8 @@ import {
 } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import useRouterRefresh from '@/utils/useRouterRefresh'
 
 const SsnFieldName = 'ssn'
 
@@ -18,10 +22,8 @@ type Props = {
 }
 
 // States
-// - Empty input, no customer information
-// - Auth required => Sign in required
-// - Authenticated
-
+// - Empty or auth required => Sign in offered
+// - Member authenticated => Warning to reset session in order to edit
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   const { authenticationStatus } = shopSession.customer ?? {}
   if (
@@ -88,12 +90,53 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
 }
 SsnSeSection.sectionId = 'ssn-se'
 
-const AuthenticatedSsnSection = ({ shopSession, onCompleted }: Props) => {
+const AuthenticatedSsnSection = ({ onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
   return (
-    <div>
-      Authenticated: {JSON.stringify(shopSession.customer, null, 2)}
-      <Button onClick={onCompleted}>{t('SUBMIT_LABEL_PROCEED')}</Button>
-    </div>
+    <FullscreenDialog.Root open={true} onOpenChange={onCompleted}>
+      <FullscreenDialog.Modal
+        center
+        Footer={
+          <>
+            <ResetSessionButton />
+            <Button variant="ghost" onClick={onCompleted}>
+              {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
+            </Button>
+          </>
+        }
+      >
+        <IconWithText>
+          <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
+          <Text align="center">{t('CHANGE_SSN_TITLE')}</Text>
+        </IconWithText>
+        <Text color="textSecondary" align="center">
+          {t('CHANGE_SSN_DESCRIPTION')}
+        </Text>
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
   )
 }
+
+const ResetSessionButton = () => {
+  const { t } = useTranslation('purchase-form')
+  const refreshRouter = useRouterRefresh()
+  const [loading, setLoading] = useState(false)
+  const { reset: resetShopSession } = useShopSession()
+  const handleClick = async () => {
+    setLoading(true)
+    await resetShopSession()
+    await refreshRouter()
+  }
+  return (
+    <Button loading={loading} onClick={handleClick}>
+      {t('CHANGE_SSN_BUTTON')}
+    </Button>
+  )
+}
+
+const IconWithText = styled(Text)({
+  gap: theme.space.xs,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})

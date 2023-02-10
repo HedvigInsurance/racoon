@@ -20,7 +20,6 @@ const linkField: LinkField = {
 
 export const Default = Template.bind({})
 Default.args = {
-  title: 'Våra specialister finns här för dig',
   chatTitle: 'Chatta med oss',
   phoneTitle: 'Teckna via telefon',
   chatOpeningHours: '9.00–22.00',

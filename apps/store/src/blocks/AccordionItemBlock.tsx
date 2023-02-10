@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react'
 import { useId } from 'react'
-import { Text } from 'ui'
+import { Text, mq, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { RichTextContent } from '@/components/RichTextContent/RichTextContent'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -17,16 +17,23 @@ export const AccordionItemBlock = ({ blok }: AccordionItemBlockProps) => {
   return (
     <Accordion.Item value={blok._uid || defaultId} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>
-        <Text size={{ _: 'md', md: 'xl' }}>{blok.title}</Text>
+        <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
-      <Content asChild>
-        <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
-      </Content>
+      <Accordion.Content>
+        <ContentWrapper>
+          <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
+        </ContentWrapper>
+      </Accordion.Content>
     </Accordion.Item>
   )
 }
 AccordionItemBlock.blockName = 'accordionItem'
 
-const Content = styled(Accordion.Content)({
-  paddingTop: 0,
+const ContentWrapper = styled.div({
+  paddingTop: theme.space.md,
+  paddingBottom: theme.space.xxs,
+
+  [mq.lg]: {
+    paddingBottom: theme.space.xs,
+  },
 })

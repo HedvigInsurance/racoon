@@ -82,7 +82,7 @@ export const PurchaseForm = () => {
                       </Button>
                       <FullscreenDialog.Close asChild>
                         <Button type="button" variant="ghost">
-                          {t('DIALOG_BUTTON_CANCEL')}
+                          {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
                         </Button>
                       </FullscreenDialog.Close>
                     </>

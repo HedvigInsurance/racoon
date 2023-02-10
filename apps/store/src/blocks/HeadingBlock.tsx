@@ -2,10 +2,15 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ConditionalWrapper, Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { VerticalBodyWrapper, FluidBodyWrapper } from './ImageTextBlock'
 
-export const Wrapper = styled.div({
+const Wrapper = styled.div({
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
+
+  [`${VerticalBodyWrapper} &, ${FluidBodyWrapper} &`]: {
+    padding: 0,
+  },
 })
 
 export type HeadingBlockProps = SbBaseBlockProps<{

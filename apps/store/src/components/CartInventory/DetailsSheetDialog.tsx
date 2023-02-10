@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import type { TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Button, Text } from 'ui'
@@ -61,11 +60,9 @@ export const DetailsSheetDialog = (props: Props) => {
               <DetailsSheet.Row>
                 <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
                 <Text>
-                  {startDate ? (
-                    <Capitalize>{formatter.fromNow(startDate)}</Capitalize>
-                  ) : (
-                    t('DATA_TABLE_START_DATE_AUTO_SWITCH')
-                  )}
+                  {startDate
+                    ? formatter.fromNow(startDate)
+                    : t('DATA_TABLE_START_DATE_AUTO_SWITCH')}
                 </Text>
               </DetailsSheet.Row>
               {dataTableRows?.map((item) => (
@@ -83,8 +80,6 @@ export const DetailsSheetDialog = (props: Props) => {
     </FullscreenDialog.Root>
   )
 }
-
-const Capitalize = styled.span({ textTransform: 'capitalize' })
 
 const useGetDataTableValue = () => {
   const { t } = useTranslation('cart')

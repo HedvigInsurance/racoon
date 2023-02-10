@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { mq, theme } from 'ui'
+import { ConditionalWrapper, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
@@ -7,6 +7,7 @@ export type VideoBlockProps = SbBaseBlockProps<
   {
     video: StoryblokAsset
     poster?: StoryblokAsset
+    fullBleed?: boolean
   } & Pick<
     VideoProps,
     | 'autoPlay'
@@ -19,7 +20,10 @@ export type VideoBlockProps = SbBaseBlockProps<
 
 export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
   return (
-    <Wrapper className={className}>
+    <ConditionalWrapper
+      condition={!blok.fullBleed}
+      wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
+    >
       <Video
         sources={[{ url: blok.video.filename }]}
         poster={blok.poster?.filename}
@@ -28,8 +32,9 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
         aspectRatioPortrait={blok.aspectRatioPortrait}
         maxHeightLandscape={blok.maxHeightLandscape}
         maxHeightPortrait={blok.maxHeightPortrait}
+        roundedCorners={!blok.fullBleed}
       />
-    </Wrapper>
+    </ConditionalWrapper>
   )
 }
 VideoBlock.blockName = 'videoBlock'

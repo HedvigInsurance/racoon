@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import { theme } from 'ui'
 
 export const RichTextContent = styled.div({
-  '& > p': {
-    marginBlock: theme.space.md,
+  '& > p:not(:last-of-type)': {
+    marginBottom: theme.space.md,
   },
   '& b': {
     fontWeight: 'bold',
