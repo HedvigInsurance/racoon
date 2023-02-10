@@ -8,6 +8,10 @@ export const Root = styled(AccordionPrimitives.Root)({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
+
+  [mq.lg]: {
+    gap: theme.space.xs,
+  },
 })
 
 const Trigger = styled(AccordionPrimitives.Trigger)({

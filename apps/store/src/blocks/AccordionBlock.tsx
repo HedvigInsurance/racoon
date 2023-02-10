@@ -4,11 +4,9 @@ import Head from 'next/head'
 import { Heading, Text, theme, mq } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-
-const TEXTUAL_CONTENT_MAX_WIDTH = '37.5rem'
 
 type Props = SbBaseBlockProps<{
   items: ExpectedBlockType<AccordionItemBlockProps>
@@ -33,24 +31,28 @@ export const AccordionBlock = ({ blok }: Props) => {
       )}
       <Wrapper {...storyblokEditable(blok)}>
         {displayTitleDescriptionSection && (
-          <TitleDescriptionWrapper>
-            {blok.title && (
-              <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
-                {blok.title}
-              </Heading>
-            )}
-            {blok.description && (
-              <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
-                {blok.description}
-              </Text>
-            )}
-          </TitleDescriptionWrapper>
+          <Column>
+            <TextContent>
+              {blok.title && (
+                <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
+                  {blok.title}
+                </Heading>
+              )}
+              {blok.description && (
+                <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
+                  {blok.description}
+                </Text>
+              )}
+            </TextContent>
+          </Column>
         )}
-        <StyledAccordion type="multiple">
-          {accordionItems.map((nestedBlock) => (
-            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
-          ))}
-        </StyledAccordion>
+        <Column center={!displayTitleDescriptionSection}>
+          <Accordion.Root type="multiple">
+            {accordionItems.map((nestedBlock) => (
+              <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+            ))}
+          </Accordion.Root>
+        </Column>
       </Wrapper>
     </>
   )
@@ -58,28 +60,23 @@ export const AccordionBlock = ({ blok }: Props) => {
 AccordionBlock.blockName = 'accordion'
 
 const Wrapper = styled(GridLayout.Root)({
-  paddingInline: theme.space.md,
+  // TODO: harmonize with other grid layouts
+  gap: theme.space.lg,
   [mq.lg]: {
-    paddingInline: theme.space.lg,
+    gap: theme.space.md,
+    paddingInline: theme.space.md,
   },
 })
 
-const TitleDescriptionWrapper = styled.div({
+const Column = styled.div<{ center?: boolean }>(({ center = false }) => ({
   gridColumn: '1 / -1',
   [mq.lg]: {
-    gridColumn: 'span 6',
-    maxWidth: TEXTUAL_CONTENT_MAX_WIDTH,
+    gridColumn: center ? '4 / span 6' : 'span 6',
   },
-})
+}))
 
-const StyledAccordion = styled(Accordion.Root)({
-  gridColumn: '1 / -1',
-  marginTop: theme.space.lg,
-  [mq.lg]: {
-    gridColumn: 'span 6',
-    marginTop: 0,
-    marginLeft: theme.space.xxl,
-  },
+const TextContent = styled.div({
+  maxWidth: TEXT_CONTENT_MAX_WIDTH,
 })
 
 const getFAQStructuredData = (

@@ -13,13 +13,15 @@ export const ProductDocuments = ({ heading, description, docs }: Props) => {
   return (
     <Layout>
       <Column>
-        <Text size={{ _: 'xl', lg: 'xxl' }}>{heading}</Text>
-        <Text size={{ _: 'xl', lg: 'xxl' }} color="textSecondary">
-          {description}
-        </Text>
+        <Content>
+          <Text size={{ _: 'xl', lg: 'xxl' }}>{heading}</Text>
+          <Text size={{ _: 'xl', lg: 'xxl' }} color="textSecondary">
+            {description}
+          </Text>
+        </Content>
       </Column>
       <Column>
-        <Space y={0.5}>
+        <Space y={{ base: 0.25, lg: 0.5 }}>
           {docs.map((doc, index) => (
             <ProductDocument key={index} doc={doc} />
           ))}
@@ -51,9 +53,6 @@ const Layout = styled(GridLayout.Root)({
     gap: theme.space.md,
     paddingInline: theme.space.md,
   },
-
-  maxWidth: '90rem',
-  marginInline: 'auto',
 })
 
 const Column = styled.div({
@@ -62,6 +61,10 @@ const Column = styled.div({
   [mq.lg]: {
     gridColumn: 'span 6',
   },
+})
+
+const Content = styled.div({
+  maxWidth: '37.5rem', // 600px
 })
 
 const DownloadFileLink = styled.a({
