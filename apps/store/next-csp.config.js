@@ -99,4 +99,6 @@ const ContentSecurityPolicy = `
   report-uri /api/csp-reports;
 `
 
-export const CspHeaderValue = ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+module.exports = {
+  CspHeaderValue: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+}
