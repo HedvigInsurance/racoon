@@ -64,6 +64,7 @@ const connectSrcDirectives = [
   'wss://*.pusher.com',
   // Vercel Live
   'https://vercel.live',
+  'https://vercel.com',
   // Google
   'https://www.gstatic.com',
   'https://*.google-analytics.com',
