@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import React, { useState, useCallback, ReactNode } from 'react'
-import { MinusIcon, mq, PlusIcon, Text, theme } from 'ui'
+import { mq, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
@@ -44,17 +43,13 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       {perils.map(({ title, description, covered, colorCode }) => {
         return (
-          <AccordionItem key={title} value={title}>
-            <AccordionPrimitivesTrigger>
-              <IconWrapper>
+          <Accordion.Item key={title} value={title}>
+            <Accordion.HeaderWithTrigger>
+              <HeaderWrapper>
                 <Color color={colorCode ?? titleToColor(title)} />
-              </IconWrapper>
-              <TriggerText size="lg">{title}</TriggerText>
-              <IconWrapper>
-                <OpenIcon size="1rem" />
-                <CloseIcon size="1rem" />
-              </IconWrapper>
-            </AccordionPrimitivesTrigger>
+                <TriggerText size="lg">{title}</TriggerText>
+              </HeaderWrapper>
+            </Accordion.HeaderWithTrigger>
             <Accordion.Content>
               <ContentWrapper>
                 <Text as="p" size="xs" color="textPrimary">
@@ -63,63 +58,31 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
                 <CoverageList items={covered} />
               </ContentWrapper>
             </Accordion.Content>
-          </AccordionItem>
+          </Accordion.Item>
         )
       })}
     </Accordion.Root>
   )
 }
 
-const AccordionItem = styled(Accordion.Item)({
-  [mq.md]: {
-    paddingInline: theme.space.md,
-  },
-
-  '@media (hover: hover)': {
-    '&:hover': {
-      backgroundColor: theme.colors.gray200,
-    },
-  },
-})
-
 const ContentWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.md,
-  paddingTop: theme.space.md,
   paddingLeft: '1.75rem',
-  paddingBottom: theme.space.md,
+  paddingBlock: `${theme.space.md} ${theme.space.xxs}`,
   fontSize: theme.fontSizes.xs,
-})
 
-const OpenIcon = styled(PlusIcon)({
-  display: 'block',
-  '[data-state=open] &': { display: 'none' },
-})
-
-const CloseIcon = styled(MinusIcon)({
-  display: 'none',
-  '[data-state=open] &': { display: 'block' },
-})
-
-const IconWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  // Match text line-height to align with first text row
-  height: `calc(${theme.fontSizes.lg} * 1.4)`,
-  alignItems: 'center',
-})
-
-const AccordionPrimitivesTrigger = styled(AccordionPrimitives.Trigger)({
-  width: '100%',
-  display: 'grid',
-  gridTemplateColumns: 'auto 1fr auto',
-  gap: theme.space.sm,
-  '@media (hover: hover)': {
-    '&:hover': {
-      cursor: 'pointer',
-    },
+  [mq.lg]: {
+    paddingTop: theme.space.lg,
+    paddingBottom: theme.space.xs,
   },
+})
+
+const HeaderWrapper = styled.span({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.sm,
 })
 
 const TriggerText = styled(Text)({
