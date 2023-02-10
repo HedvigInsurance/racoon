@@ -14,9 +14,10 @@ type VideoSource = {
 
 type VideoSize = {
   aspectRatioLandscape?: '1 / 1' | '16 / 9'
-  aspectRatioPortrait?: '4 / 5' | '4 / 6'
+  aspectRatioPortrait?: '4 / 5' | '4 / 6' | '9 / 16'
   maxHeightLandscape?: number
   maxHeightPortrait?: number
+  roundedCorners?: boolean
 }
 
 export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
@@ -40,6 +41,7 @@ export const Video = ({
   aspectRatioPortrait,
   maxHeightLandscape,
   maxHeightPortrait,
+  roundedCorners,
   onPlaying,
   onPause,
   ...delegated
@@ -120,6 +122,7 @@ export const Video = ({
         aspectRatioPortrait={aspectRatioPortrait}
         maxHeightLandscape={maxHeightLandscape}
         maxHeightPortrait={maxHeightPortrait}
+        roundedCorners={roundedCorners}
         onPlaying={handlePlaying}
         onPause={handlePause}
         {...autoplayAttributes}
@@ -162,12 +165,12 @@ const StyledVideo = styled.video(
     aspectRatioPortrait,
     maxHeightLandscape,
     maxHeightPortrait,
+    roundedCorners,
   }: Omit<VideoProps, 'sources'>) => ({
     width: '100%',
     background: `url(${poster}) no-repeat`,
     backgroundSize: 'cover',
     objectFit: 'cover',
-    borderRadius: theme.radius.md,
     ['@media (orientation: portrait)']: {
       ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),
       ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),
@@ -176,9 +179,13 @@ const StyledVideo = styled.video(
       ...(aspectRatioLandscape && { aspectRatio: aspectRatioLandscape }),
       ...(maxHeightLandscape && { maxHeight: `${maxHeightLandscape}vh` }),
     },
-    [mq.lg]: {
-      borderRadius: theme.radius.xl,
-    },
+
+    ...(roundedCorners && {
+      borderRadius: theme.radius.md,
+      [mq.lg]: {
+        borderRadius: theme.radius.xl,
+      },
+    }),
   }),
 )
 
