@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Heading, mq, Space, Text, theme } from 'ui'
+import { Heading, mq, Space, theme } from 'ui'
+import { ImageSize } from '@/blocks/ProductCardBlock'
 import { ProductRecommendationFragment } from '@/services/apollo/generated'
 import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
+import { ProductCard } from '../ProductCard/ProductCard'
 
 type Props = {
   recommendations: Array<ProductRecommendationFragment>
@@ -27,18 +27,8 @@ export const RecommendationList = ({ recommendations }: Props) => {
       </DesktopHeader>
 
       <List>
-        {recommendations.map((recommendation) => (
-          <Link key={recommendation.id} href={recommendation.pageLink}>
-            <Space y={0.5}>
-              <FeaturedImage image={recommendation.featuredImage} />
-              <ListItemContent>
-                <Heading as="h3" variant="standard.18">
-                  {recommendation.displayNameShort}
-                </Heading>
-                <Text color="textSecondary">{recommendation.displayNameFull}</Text>
-              </ListItemContent>
-            </Space>
-          </Link>
+        {recommendations.map((item) => (
+          <FeaturedProduct key={item.id} recommendation={item} />
         ))}
       </List>
     </Wrapper>
@@ -47,20 +37,42 @@ export const RecommendationList = ({ recommendations }: Props) => {
 
 const FALLBACK_IMAGE = 'https://a.storyblok.com/f/165473/330x396/573a75c77d/home-low.png'
 
-type FeaturedImageProps = {
-  image: ProductRecommendationFragment['featuredImage']
+type FeaturedProductProps = {
+  recommendation: ProductRecommendationFragment
 }
 
-const FeaturedImage = ({ image }: FeaturedImageProps) => {
-  if (!image) {
-    return <Image src={FALLBACK_IMAGE} alt="" width={330} height={396} />
-  }
+const FeaturedProduct = ({ recommendation }: FeaturedProductProps) => {
+  const imageSrc = recommendation.featuredImage?.src ?? FALLBACK_IMAGE
+  const imageSize = getStoryblokImageSize(imageSrc)
+  const aspectRatio = imageSize ? calculateAspectRatio(imageSize) : undefined
 
-  return <StyledImage src={image.src} alt={image.alt ?? ''} {...getStoryblokImageSize(image.src)} />
+  return (
+    <ProductCard
+      key={recommendation.id}
+      title={recommendation.displayNameShort}
+      subtitle={recommendation.displayNameFull}
+      image={{ src: imageSrc, alt: recommendation.featuredImage?.alt ?? '' }}
+      aspectRatio={aspectRatio}
+      link={recommendation.pageLink}
+    />
+  )
+}
+
+type CalculateAspectRatioParams = {
+  width: number
+  height: number
+}
+
+const calculateAspectRatio = ({
+  width,
+  height,
+}: CalculateAspectRatioParams): ImageSize['aspectRatio'] => {
+  // TODO: properly evaluate aspect ratio
+  return `${width} / ${height}` as ImageSize['aspectRatio']
 }
 
 const Wrapper = styled(Space)({
-  paddingInline: theme.space.xs,
+  paddingInline: theme.space.md,
 
   [mq.sm]: {
     display: 'grid',
@@ -88,23 +100,14 @@ const DesktopHeader = styled.div({
   },
 })
 
+// TODO: reuse styles as product grid
 const List = styled.div({
   display: 'grid',
-  gridGap: theme.space.md,
+  gap: `${theme.space.xxxl} ${theme.space.xs}`,
+  alignItems: 'baseline',
+  gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
 
-  [mq.sm]: {
-    gridTemplateColumns: 'repeat(auto-fit, 13rem)',
-  },
-
-  [mq.lg]: {
-    justifyContent: 'center',
+  [mq.md]: {
+    gap: '2rem 1rem',
   },
 })
-
-const ListItemContent = styled.div({
-  paddingInline: theme.space.xs,
-
-  [mq.lg]: { paddingInline: 0 },
-})
-
-const StyledImage = styled(Image)({ width: '100%' })
