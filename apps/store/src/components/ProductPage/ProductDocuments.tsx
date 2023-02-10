@@ -77,7 +77,7 @@ const DownloadFileLink = styled.a({
   borderRadius: theme.radius.sm,
 
   ':hover': {
-    backgroundColor: theme.colors.opaque2,
+    backgroundColor: theme.colors.gray200,
   },
 
   ':active': {
