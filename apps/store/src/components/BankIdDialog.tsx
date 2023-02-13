@@ -28,11 +28,7 @@ export const BankIdDialog = () => {
   }, [currentOperation, dispatch])
 
   // TODO: Expose and handle errors
-  const shopSessionId = shopSession?.id
-  const ssn = shopSession?.customer?.ssn ?? ''
   const { startLogin, cancelLogin } = useBankIdLogin({
-    shopSessionId,
-    ssn,
     dispatch,
   })
 
@@ -45,7 +41,9 @@ export const BankIdDialog = () => {
   let content: ReactElement | null = null
   let footer: ReactElement | null = null
 
-  if (currentOperation !== null) {
+  const shopSessionId = shopSession?.id
+  const ssn = shopSession?.customer?.ssn ?? ''
+  if (currentOperation !== null && shopSessionId && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Idle: {
         content = (
@@ -61,7 +59,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={startLogin}
+              onLoginStart={() => startLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {t('LOGIN_BANKID_SKIP')}
@@ -113,7 +111,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BANKID_TRY_AGAIN')}
-              onLoginStart={startLogin}
+              onLoginStart={() => startLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {currentOperation.type === 'login'

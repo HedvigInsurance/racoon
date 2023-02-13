@@ -30,10 +30,7 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   // // TODO: Expose and handle errors
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
-  const ssn = shopSession?.customer?.ssn ?? ''
   const { startLogin } = useBankIdLogin({
-    shopSessionId,
-    ssn,
     dispatch,
   })
 
@@ -50,22 +47,28 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
     },
   })
 
-  const { authenticationStatus } = shopSession?.customer ?? {}
-
   const startCheckoutSign: BankIdContextValue['startCheckoutSign'] = useCallback(
     async (options: BankIdOperationOptions) => {
       dispatch({
         type: 'startCheckoutSign',
         options,
       })
-      if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+
+      if (
+        shopSession &&
+        shopSession.customer?.authenticationStatus ===
+          ShopSessionAuthenticationStatus.AuthenticationRequired
+      ) {
+        const { ssn } = shopSession.customer
+        if (!shopSessionId || !ssn)
+          throw new Error('Must have shopSession with ID and customer SSN')
         bankIdLogger.debug('Authentication required for returning member')
         // TODO: Use observable to make it cancellable
-        startLogin()
+        startLogin({ shopSessionId, ssn })
       }
       startSign(options)
     },
-    [authenticationStatus, startLogin, startSign],
+    [shopSession, shopSessionId, startLogin, startSign],
   )
 
   const showLoginPrompt = useCallback(({ onCompleted }: LoginPromptOptions) => {
