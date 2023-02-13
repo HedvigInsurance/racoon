@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react'
 import { Subscription } from 'zen-observable-ts'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
-import { loginMemberSeBankId, MemberLoginStatusResponse } from '@/services/authApi/login'
+import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
 import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
@@ -19,8 +19,10 @@ export const useBankIdLogin = ({ shopSessionId, ssn, dispatch }: Options) => {
     if (!shopSessionId || !ssn) throw new Error('Must have shopSession with ID and customer SSN')
 
     bankIdLogger.debug('Starting BankId login')
+    // Future ideas
+    // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
     subscriptionRef.current = loginMemberSeBankId(ssn).subscribe({
-      async next(statusResponse: MemberLoginStatusResponse) {
+      async next(statusResponse) {
         dispatch({
           type: 'operationStateChange',
           nextOperationState: apiStatusToBankIdState(statusResponse.status),
