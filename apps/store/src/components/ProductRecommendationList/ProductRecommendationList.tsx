@@ -2,9 +2,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Heading, mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
+import { ProductCard } from '@/components/ProductCard/ProductCard'
 import { ProductRecommendationFragment } from '@/services/apollo/generated'
 import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
-import { ProductCard } from '../ProductCard/ProductCard'
 
 type Props = {
   recommendations: Array<ProductRecommendationFragment>
@@ -14,7 +14,7 @@ export const ProductRecommendationList = ({ recommendations }: Props) => {
   const { t } = useTranslation('cart')
 
   return (
-    <Wrapper y={1.5}>
+    <Wrapper y={{ base: 1.5, md: 3 }}>
       <MobileHeader>
         <Heading as="h2" variant="standard.24">
           {t('RECOMMENDATIONS_HEADING')}
@@ -72,29 +72,20 @@ const calculateAspectRatio = ({
 }
 
 const Wrapper = styled(Space)({
-  paddingInline: theme.space.md,
-
-  [mq.sm]: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(28rem, 33%)',
-    justifyContent: 'center',
-  },
-
-  [mq.lg]: { display: 'block' },
+  paddingInline: theme.space.xs,
+  [mq.lg]: { paddingInline: theme.space.lg },
 })
 
 const MobileHeader = styled.div({
   paddingInline: theme.space.xs,
 
-  [mq.lg]: {
-    display: 'none',
-  },
+  [mq.md]: { display: 'none' },
 })
 
 const DesktopHeader = styled.div({
   display: 'none',
 
-  [mq.lg]: {
+  [mq.md]: {
     display: 'flex',
     justifyContent: 'center',
   },
@@ -103,11 +94,13 @@ const DesktopHeader = styled.div({
 // TODO: reuse styles as product grid
 const List = styled.div({
   display: 'grid',
-  gap: `${theme.space.xxxl} ${theme.space.xs}`,
-  alignItems: 'baseline',
+  rowGap: theme.space.xxxl,
+  columnGap: theme.space.xs,
+  alignItems: 'end',
   gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
 
   [mq.md]: {
-    gap: '2rem 1rem',
+    rowGap: theme.space.xl,
+    columnGap: theme.space.md,
   },
 })

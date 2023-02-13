@@ -39,7 +39,7 @@ const Title = styled.p({
 const Grid = styled.div({
   display: 'grid',
   gap: `${theme.space.xxxl} ${theme.space.xs}`,
-  alignItems: 'baseline',
+  alignItems: 'end',
   gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
 
   [mq.md]: {
