@@ -20,6 +20,7 @@ type BankIdContextValue = BankIdReducerState & {
   dispatch: BankIdDispatch
   showLoginPrompt: (options: LoginPromptOptions) => void
   startCheckoutSign: (options: BankIdOperationOptions) => void
+  cancelCheckoutSign: () => void
 }
 
 export const BankIdContext = createContext<BankIdContextValue | null>(null)
@@ -30,12 +31,11 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   // // TODO: Expose and handle errors
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
-  const { startLogin } = useBankIdLogin({
+  const { startLogin, cancelLogin } = useBankIdLogin({
     dispatch,
   })
 
-  const startSign = useBankIdCheckoutSign({
-    shopSessionId,
+  const { startSign, cancelSign } = useBankIdCheckoutSign({
     dispatch,
     async onSuccess() {
       // NOTE: Keep dialog open until onSuccess resolves -> prevents returning to original checkout page state while waiting for redirect
@@ -63,13 +63,24 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
         if (!shopSessionId || !ssn)
           throw new Error('Must have shopSession with ID and customer SSN')
         bankIdLogger.debug('Authentication required for returning member')
-        // TODO: Use observable to make it cancellable
-        startLogin({ shopSessionId, ssn })
+        startLogin({
+          shopSessionId,
+          ssn,
+          onSuccess() {
+            startSign({ shopSessionId })
+          },
+        })
+      } else {
+        startSign({ shopSessionId })
       }
-      startSign(options)
     },
     [shopSession, shopSessionId, startLogin, startSign],
   )
+
+  const cancelCheckoutSign = useCallback(() => {
+    cancelLogin()
+    cancelSign()
+  }, [cancelLogin, cancelSign])
 
   const showLoginPrompt = useCallback(({ onCompleted }: LoginPromptOptions) => {
     dispatch({
@@ -84,8 +95,9 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
       dispatch,
       showLoginPrompt,
       startCheckoutSign,
+      cancelCheckoutSign,
     }),
-    [showLoginPrompt, startCheckoutSign, state],
+    [cancelCheckoutSign, showLoginPrompt, startCheckoutSign, state],
   )
   return <BankIdContext.Provider value={contextValue}>{children}</BankIdContext.Provider>
 }

@@ -20,10 +20,7 @@ export const useHandleSubmitCheckout = (options: Options) => {
     shopSessionId,
   })
 
-  const { lastError, startCheckoutSign } = useBankIdContext()
-  const handleCancel = () => {
-    console.debug('TODO: Handle cancel sign')
-  }
+  const { cancelCheckoutSign, startCheckoutSign, lastError } = useBankIdContext()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -35,7 +32,7 @@ export const useHandleSubmitCheckout = (options: Options) => {
     await startCheckoutSign({
       onSuccess,
       onError,
-      onCancel: handleCancel,
+      onCancel: cancelCheckoutSign,
     })
   }
 

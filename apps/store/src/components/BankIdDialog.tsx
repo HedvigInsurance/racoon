@@ -7,7 +7,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
+import { BankIdLoginOption, useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
@@ -28,9 +28,19 @@ export const BankIdDialog = () => {
   }, [currentOperation, dispatch])
 
   // TODO: Expose and handle errors
-  const { startLogin, cancelLogin } = useBankIdLogin({
-    dispatch,
-  })
+  const { startLogin, cancelLogin } = useBankIdLogin({ dispatch })
+
+  const handleLogin = useCallback(
+    ({ shopSessionId, ssn }: Omit<BankIdLoginOption, 'onSuccess'>) =>
+      startLogin({
+        shopSessionId,
+        ssn,
+        onSuccess() {
+          dispatch({ type: 'success' })
+        },
+      }),
+    [dispatch, startLogin],
+  )
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -59,7 +69,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={() => startLogin({ shopSessionId, ssn })}
+              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {t('LOGIN_BANKID_SKIP')}
@@ -111,7 +121,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BANKID_TRY_AGAIN')}
-              onLoginStart={() => startLogin({ shopSessionId, ssn })}
+              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {currentOperation.type === 'login'

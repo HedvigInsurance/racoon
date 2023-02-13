@@ -11,15 +11,16 @@ type Options = {
   dispatch: BankIdDispatch
 }
 
-type LoginOptions = {
+export type BankIdLoginOption = {
   shopSessionId: string
   ssn: string
+  onSuccess: () => void
 }
 export const useBankIdLogin = ({ dispatch }: Options) => {
   const subscriptionRef = useRef<Subscription | null>(null)
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
   const startLogin = useCallback(
-    async ({ shopSessionId, ssn }: LoginOptions) => {
+    ({ shopSessionId, ssn, onSuccess }: BankIdLoginOption) => {
       bankIdLogger.debug('Starting BankId login')
       // Future ideas
       // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
@@ -35,7 +36,7 @@ export const useBankIdLogin = ({ dispatch }: Options) => {
             bankIdLogger.debug('Got access token, authenticating shopSession')
             await authenticateShopSession({ variables: { shopSessionId } })
             bankIdLogger.debug('shopSession authenticated')
-            dispatch({ type: 'success' })
+            onSuccess()
           }
         },
         complete() {
