@@ -47,15 +47,20 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
 
 const Layout = styled(GridLayout.Root)({
   // TODO: harmonize with other grid layouts
-
   gap: theme.space.lg,
   [mq.lg]: {
     gap: theme.space.md,
-    paddingInline: theme.space.md,
+    paddingInline: theme.space.lg,
   },
 })
 
-const Content = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
+const Content = styled.div({
+  maxWidth: TEXT_CONTENT_MAX_WIDTH,
+
+  [mq.lg]: {
+    paddingRight: theme.space.xl,
+  },
+})
 
 const DownloadFileLink = styled.a({
   display: 'flex',
