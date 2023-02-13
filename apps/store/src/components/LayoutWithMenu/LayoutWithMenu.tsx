@@ -20,9 +20,10 @@ type LayoutWithMenuProps = {
       [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
     }
   >
+  overlayMenu?: boolean
 }
 
-export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
+export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenuProps) => {
   const {
     story,
     globalStory,
@@ -42,7 +43,7 @@ export const LayoutWithMenu = ({ children }: LayoutWithMenuProps) => {
             <HeaderBlock
               key={nestedBlock._uid}
               blok={nestedBlock}
-              overlay={story?.content.overlayMenu}
+              overlay={story?.content.overlayMenu ?? overlayMenu}
             />
           ))}
         {children}

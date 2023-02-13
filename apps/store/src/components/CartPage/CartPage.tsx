@@ -8,12 +8,12 @@ import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
-import { RecommendationList } from './RecommendationList'
 
 export const CartPage = (props: CartPageProps) => {
   const { cartId, entries, campaigns, campaignsEnabled, cost, recommendations } = props
@@ -85,7 +85,9 @@ export const CartPage = (props: CartPageProps) => {
         <GridLayout.Root>
           <GridLayout.Content>{body}</GridLayout.Content>
         </GridLayout.Root>
-        {recommendations.length > 0 && <RecommendationList recommendations={recommendations} />}
+        {recommendations.length > 0 && (
+          <ProductRecommendationList recommendations={recommendations} />
+        )}
       </Space>
     </PageWrapper>
   )

@@ -2,13 +2,8 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { theme } from '../../lib/theme/theme'
+import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
 import { LoadingSpinner } from './LoadingSpinner'
-
-const HEIGHT = {
-  large: '3.25rem',
-  medium: '2.5rem',
-  small: '2.125rem',
-}
 
 type LinkProps = {
   href?: string
@@ -18,7 +13,7 @@ type LinkProps = {
 
 export type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'ghost'
-  size?: 'large' | 'medium' | 'small'
+  size?: ButtonSize
   loading?: boolean
 } & LinkProps
 
@@ -60,51 +55,33 @@ Button.displayName = 'Button'
 
 const Centered = styled.div({ display: 'flex', justifyContent: 'center' })
 
-const StyledButton = styled.button<CustomButtonProps>(({ size = 'large' }) => ({
-  // opt out of double tap to zoom to immediately respond to taps
-  touchAction: 'manipulation',
+const StyledButton = styled.button<CustomButtonProps>(
+  {
+    // opt out of double tap to zoom to immediately respond to taps
+    touchAction: 'manipulation',
 
-  borderRadius: theme.radius.sm,
+    borderRadius: theme.radius.sm,
 
-  whiteSpace: 'nowrap',
-  lineHeight: 1,
-  transition:
-    'background-color 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
+    whiteSpace: 'nowrap',
+    lineHeight: 1,
+    transition:
+      'background-color 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s',
 
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 
-  ...(size === 'large' && {
-    height: HEIGHT.large,
-    width: '100%',
-    paddingInline: theme.space.xl,
+    cursor: 'pointer',
+    '&:disabled': {
+      cursor: 'default',
+    },
 
-    textAlign: 'center',
-    fontSize: theme.fontSizes.md,
-  }),
-
-  ...(size === 'medium' && {
-    height: HEIGHT.medium,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.md,
-  }),
-
-  ...(size === 'small' && {
-    height: HEIGHT.small,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.xs,
-  }),
-
-  cursor: 'pointer',
-  '&:disabled': {
-    cursor: 'default',
+    '&:focus-visible': {
+      boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+    },
   },
-
-  '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
-  },
-}))
+  ({ size = 'large' }) => getButtonSizeStyles(size),
+)
 
 const PrimaryButton = styled(StyledButton)({
   backgroundColor: theme.colors.gray1000,

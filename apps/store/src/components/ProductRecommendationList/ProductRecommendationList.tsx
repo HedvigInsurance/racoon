@@ -10,7 +10,7 @@ type Props = {
   recommendations: Array<ProductRecommendationFragment>
 }
 
-export const RecommendationList = ({ recommendations }: Props) => {
+export const ProductRecommendationList = ({ recommendations }: Props) => {
   const { t } = useTranslation('cart')
 
   return (
