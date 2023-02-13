@@ -1,14 +1,9 @@
 import { Dispatch } from 'react'
-import {
-  BankIdOperation,
-  BankIdOperationOptions,
-  BankIdState,
-} from '@/services/bankId/bankId.types'
+import { BankIdOperation, BankIdState } from './bankId.types'
 
 export type BankIdAction = StartAction | FinalAction | OperationStateChangeAction | ErrorAction
 type StartAction = {
   type: 'showLoginPrompt' | 'startCheckoutSign'
-  options: BankIdOperationOptions
 }
 type FinalAction = {
   type: 'cancel' | 'success'
@@ -24,7 +19,6 @@ type ErrorAction = {
 
 export type BankIdReducerState = {
   currentOperation: BankIdOperation | null
-  lastError?: unknown
 }
 
 export type BankIdDispatch = Dispatch<BankIdAction>
@@ -39,14 +33,13 @@ export const bankIdReducer = (
         currentOperation: {
           type: 'login',
           state: BankIdState.Idle,
-          ...action.options!,
         },
       }
     case 'operationStateChange': {
-      if (action.nextOperationState === state.currentOperation?.state) {
+      if (!state.currentOperation || !action.nextOperationState) {
         break
       }
-      if (!state.currentOperation || !action.nextOperationState) {
+      if (action.nextOperationState === state.currentOperation?.state) {
         break
       }
       return {
@@ -61,26 +54,22 @@ export const bankIdReducer = (
         currentOperation: {
           type: 'sign',
           state: BankIdState.Starting,
-          ...action.options!,
         },
       }
+    case 'cancel':
     case 'success': {
-      state.currentOperation?.onSuccess()
       return {
         currentOperation: null,
       }
     }
-    case 'cancel':
-      state.currentOperation?.onCancel()
-      return {
-        currentOperation: null,
-      }
     case 'error': {
       if (!state.currentOperation) break
-      state.currentOperation?.onError?.()
       return {
-        currentOperation: { ...state.currentOperation, state: BankIdState.Error },
-        lastError: action.error,
+        currentOperation: {
+          ...state.currentOperation,
+          state: BankIdState.Error,
+          error: action.error,
+        },
       }
     }
   }

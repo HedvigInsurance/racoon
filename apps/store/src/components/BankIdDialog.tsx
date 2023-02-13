@@ -7,31 +7,26 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { BankIdLoginOption, useBankIdLogin } from '@/services/bankId/useBankIdLogin'
+import { BankIdLoginOptions } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
   const { t } = useTranslation('bankid')
   const { shopSession } = useShopSession()
-  const { currentOperation, dispatch } = useBankIdContext()
+  const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation, dispatch } =
+    useBankIdContext()
   const isOpen =
     !!currentOperation &&
     // Don't open dialog when signing as authenticated member
     !(
       currentOperation.type == 'sign' &&
       shopSession?.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
-    )
-
-  const cancelCurrentOperation = useCallback(() => {
-    currentOperation?.onCancel()
-    dispatch({ type: 'cancel' })
-  }, [currentOperation, dispatch])
-
-  // TODO: Expose and handle errors
-  const { startLogin, cancelLogin } = useBankIdLogin({ dispatch })
+    ) &&
+    // Show sign errors on sign page
+    !(currentOperation.type == 'sign' && currentOperation.state === BankIdState.Error)
 
   const handleLogin = useCallback(
-    ({ shopSessionId, ssn }: Omit<BankIdLoginOption, 'onSuccess'>) =>
+    ({ shopSessionId, ssn }: Omit<BankIdLoginOptions, 'onSuccess'>) =>
       startLogin({
         shopSessionId,
         ssn,
@@ -44,7 +39,7 @@ export const BankIdDialog = () => {
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      cancelCurrentOperation()
+      cancelLogin()
     }
   }
 
@@ -56,6 +51,10 @@ export const BankIdDialog = () => {
   if (currentOperation !== null && shopSessionId && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Idle: {
+        // Sign operations don't need dialog in idle state
+        if (currentOperation.type !== 'login') {
+          break
+        }
         content = (
           <>
             <Text align="center">{t('LOGIN_BANKID')}</Text>
@@ -71,7 +70,7 @@ export const BankIdDialog = () => {
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
               onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
-            <Button variant="ghost" onClick={cancelCurrentOperation}>
+            <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
             </Button>
           </>
@@ -91,8 +90,10 @@ export const BankIdDialog = () => {
             </Text>
           </>
         )
+        const cancelCurrentOperation =
+          currentOperation.type === 'login' ? cancelLogin : cancelCheckoutSign
         footer = (
-          <Button variant="ghost" onClick={cancelLogin}>
+          <Button variant="ghost" onClick={cancelCurrentOperation}>
             {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
           </Button>
         )
@@ -110,6 +111,10 @@ export const BankIdDialog = () => {
         break
       }
       case BankIdState.Error: {
+        // Sign errors are shown elsewhere
+        if (currentOperation.type !== 'login') {
+          break
+        }
         content = (
           <IconWithText>
             <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
@@ -123,7 +128,7 @@ export const BankIdDialog = () => {
               title={t('LOGIN_BANKID_TRY_AGAIN')}
               onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
-            <Button variant="ghost" onClick={cancelCurrentOperation}>
+            <Button variant="ghost" onClick={cancelLogin}>
               {currentOperation.type === 'login'
                 ? t('LOGIN_BANKID_SKIP')
                 : t('BANKID_MODAL_CANCEL')}

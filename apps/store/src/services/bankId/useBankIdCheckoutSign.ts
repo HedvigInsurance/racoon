@@ -1,33 +1,86 @@
 import { useCallback, useRef } from 'react'
 import { Observable, Subscription } from 'zen-observable-ts'
 import {
+  ShopSessionAuthenticationStatus,
   ShopSessionSigningStatus,
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { BankIdState } from '@/services/bankId/bankId.types'
-import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
-import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
 import { exchangeAuthorizationCode } from '../authApi/oauth'
+import { BankIdState, CheckoutSignOptions } from './bankId.types'
+import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
+import { BankIdDispatch } from './bankIdReducer'
+import { useBankIdLoginApi } from './useBankIdLogin'
 
 export type Options = {
   dispatch: BankIdDispatch
-  onSuccess: () => void
+}
+
+export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
+  const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
+
+  const { startSign, cancelSign } = useBankIdCheckoutSignApi({ dispatch })
+
+  const startCheckoutSign = useCallback(
+    async ({
+      customerAuthenticationStatus,
+      shopSessionId,
+      ssn,
+      onSuccess,
+    }: CheckoutSignOptions) => {
+      const handleSuccess = async () => {
+        // Delay marking operation as success until handler resolves
+        try {
+          await onSuccess()
+        } finally {
+          dispatch({ type: 'success' })
+        }
+      }
+
+      dispatch({ type: 'startCheckoutSign' })
+
+      if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+        bankIdLogger.debug('Authentication required for returning member')
+        startLogin({
+          shopSessionId,
+          ssn,
+          onSuccess() {
+            startSign({ shopSessionId, onSuccess: handleSuccess })
+          },
+        })
+      } else {
+        startSign({ shopSessionId, onSuccess: handleSuccess })
+      }
+    },
+    [dispatch, startLogin, startSign],
+  )
+
+  const cancelCheckoutSign = useCallback(() => {
+    cancelLogin()
+    cancelSign()
+    dispatch({ type: 'cancel' })
+  }, [cancelLogin, cancelSign, dispatch])
+
+  return {
+    startCheckoutSign,
+    cancelCheckoutSign,
+  }
 }
 
 type SignOptions = {
   shopSessionId: string
+  onSuccess: () => void
 }
 
-export const useBankIdCheckoutSign = ({ dispatch, onSuccess }: Options) => {
+export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
   const [fetchSigning, signingResult] = useShopSessionSigningLazyQuery({})
 
   const [starSignMutate] = useShopSessionStartSignMutation()
 
   const subscriptionRef = useRef<Subscription | null>(null)
   const startSign = useCallback(
-    ({ shopSessionId }: SignOptions) => {
+    ({ shopSessionId, onSuccess }: SignOptions) => {
       subscriptionRef.current = new Observable<BankIdState>((subscriber) => {
         const startPolling = (shopSessionSigningId: string) => {
           fetchSigning({
@@ -71,11 +124,9 @@ export const useBankIdCheckoutSign = ({ dispatch, onSuccess }: Options) => {
         })
       }).subscribe({
         next(value) {
-          console.log('next', value)
           dispatch({ type: 'operationStateChange', nextOperationState: value })
         },
         complete() {
-          console.log('complete')
           onSuccess()
           subscriptionRef.current = null
         },
@@ -85,12 +136,11 @@ export const useBankIdCheckoutSign = ({ dispatch, onSuccess }: Options) => {
         },
       })
     },
-    [dispatch, onSuccess, fetchSigning, signingResult, starSignMutate],
+    [dispatch, fetchSigning, signingResult, starSignMutate],
   )
   const cancelSign = () => {
     signingResult.stopPolling()
     subscriptionRef.current?.unsubscribe()
-    dispatch({ type: 'cancel' })
   }
 
   return { startSign, cancelSign }

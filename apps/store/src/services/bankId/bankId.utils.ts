@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { ShopSessionSigningStatus } from '@/services/apollo/generated'
-import { BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdState } from './bankId.types'
 
 const stateMapping = {
   CREATING: BankIdState.Starting, // ShopSessionSigningStatus only
