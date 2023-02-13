@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import { SSRConfig } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import {
   getCrossOut,
@@ -6,13 +7,16 @@ import {
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
 } from '@/components/CartInventory/CartInventory.helpers'
+import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
 import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { ShopSessionSigning } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { convertToDate } from '@/utils/date'
@@ -67,22 +71,43 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
+  const fallbackRedirect = {
+    redirect: { destination: PageLink.home({ locale }), permanent: false },
+  } as const
+
   const apolloClient = initializeApollo({ req, res })
-  const [shopSession, translations] = await Promise.all([
-    getCurrentShopSessionServerSide({ apolloClient, req, res }).catch(() => null),
-    serverSideTranslations(locale),
-  ])
-  if (!shopSession?.customer) {
-    return { redirect: { destination: PageLink.home({ locale }), permanent: false } }
+  let shopSession: ShopSession, translations: SSRConfig
+  try {
+    ;[shopSession, translations] = await Promise.all([
+      getCurrentShopSessionServerSide({ apolloClient, req, res }),
+      serverSideTranslations(locale),
+    ])
+  } catch (error) {
+    console.warn('Checkout | Unable to fetch shop session', error)
+    return fallbackRedirect
   }
 
-  const { customer } = shopSession
-  if (!customer.ssn) throw new Error('No SSN in Shop Session')
+  const customer = shopSession.customer
+  if (!customer) {
+    console.warn('Checkout | No customer in shop session', shopSession.id)
+    return fallbackRedirect
+  }
 
-  const [checkoutSteps, shopSessionSigning] = await Promise.all([
-    fetchCheckoutSteps({ apolloClient, shopSession }),
-    fetchCurrentShopSessionSigning({ apolloClient, req }),
-  ])
+  if (!customer.ssn) {
+    console.warn('Checkout | No SSN in shop session', shopSession.id)
+    return fallbackRedirect
+  }
+
+  let checkoutSteps: Array<CheckoutStep>, shopSessionSigning: ShopSessionSigning | null
+  try {
+    ;[checkoutSteps, shopSessionSigning] = await Promise.all([
+      fetchCheckoutSteps({ apolloClient, shopSession }),
+      fetchCurrentShopSessionSigning({ apolloClient, req }),
+    ])
+  } catch (error) {
+    console.warn('Checkout | Unable to fetch checkout data', error)
+    return fallbackRedirect
+  }
 
   const pageProps: NextPageProps = {
     ...translations,
