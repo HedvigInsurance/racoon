@@ -120,51 +120,48 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </MobileLayout>
 
         <DesktopLayout>
-          <>
-            <Grid>
-              <Content>
-                <AnimatedHeader>
-                  <nav aria-label="page content">
-                    <ContentNavigationList>
-                      <li>
-                        <ContentNavigationTrigger
-                          href="#overview"
-                          data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-                          aria-current={activeSection === 'overview' ? 'true' : undefined}
-                        >
-                          {blok.overviewLabel}
-                        </ContentNavigationTrigger>
-                      </li>
-                      <li>
-                        <ContentNavigationTrigger
-                          href="#coverage"
-                          data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
-                          aria-current={activeSection === 'coverage' ? 'true' : undefined}
-                        >
-                          {blok.coverageLabel}
-                        </ContentNavigationTrigger>
-                      </li>
-                    </ContentNavigationList>
-                    {shouldRenderVariantSelector && <StyledProductVariantSelector />}
-                  </nav>
-                </AnimatedHeader>
-                <OverviewSection id="overview">
-                  {blok.overview?.map((nestedBlock) => (
-                    <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-                  ))}
-                </OverviewSection>
-              </Content>
-              <PurchaseFormWrapper>
-                <PurchaseForm />
-              </PurchaseFormWrapper>
-            </Grid>
-
-            <section id="coverage">
-              {blok.coverage?.map((nestedBlock) => (
-                <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-              ))}
-            </section>
-          </>
+          <Grid>
+            <Content>
+              <AnimatedHeader>
+                <nav aria-label="page content">
+                  <ContentNavigationList>
+                    <li>
+                      <ContentNavigationTrigger
+                        href="#overview"
+                        data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                        aria-current={activeSection === 'overview' ? 'true' : undefined}
+                      >
+                        {blok.overviewLabel}
+                      </ContentNavigationTrigger>
+                    </li>
+                    <li>
+                      <ContentNavigationTrigger
+                        href="#coverage"
+                        data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                        aria-current={activeSection === 'coverage' ? 'true' : undefined}
+                      >
+                        {blok.coverageLabel}
+                      </ContentNavigationTrigger>
+                    </li>
+                  </ContentNavigationList>
+                  {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+                </nav>
+              </AnimatedHeader>
+              <OverviewSection id="overview">
+                {blok.overview?.map((nestedBlock) => (
+                  <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                ))}
+              </OverviewSection>
+              <section id="coverage">
+                {blok.coverage?.map((nestedBlock) => (
+                  <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                ))}
+              </section>
+            </Content>
+            <PurchaseFormWrapper>
+              <PurchaseForm />
+            </PurchaseFormWrapper>
+          </Grid>
         </DesktopLayout>
 
         {blok.body.map((nestedBlock) => (
