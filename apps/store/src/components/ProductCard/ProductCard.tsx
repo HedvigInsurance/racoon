@@ -2,8 +2,9 @@ import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import { Button, mq, Space, theme } from 'ui'
+import { mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 
 type ImageProps = {
   src: string
@@ -28,28 +29,30 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
   return (
-    <Space y={0.25}>
-      <Link href={link} legacyBehavior passHref>
-        <ImageWrapper aspectRatio={aspectRatio} tabIndex={-1} aria-hidden={true}>
+    <Wrapper y={1.5}>
+      <Link href={link} tabIndex={-1} aria-hidden={true}>
+        <ImageWrapper aspectRatio={aspectRatio}>
           <Image {...imageProps} alt={alt} fill sizes="100vw" />
         </ImageWrapper>
-      </Link>
-      <Link href={link}>
         <ContentWrapper>
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
-          <CallToAction>
-            <Button size="medium" variant="secondary">
-              {t('READ_MORE')}
-            </Button>
-          </CallToAction>
         </ContentWrapper>
       </Link>
+      <CallToAction>
+        <ButtonNextLink href={link} size="medium" variant="secondary">
+          {t('READ_MORE')}
+        </ButtonNextLink>
+      </CallToAction>
     </Wrapper>
   )
 }
 
-const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
+const Wrapper = styled(Space)({
+  height: '100%',
+})
+
+const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
   display: 'block',
   position: 'relative',
   marginBottom: theme.space.md,
@@ -63,6 +66,7 @@ const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
 
   ':hover, :active': {
     opacity: 0.95,
+    transition: 'opacity 0.1s ease-out',
   },
 }))
 
@@ -91,5 +95,5 @@ const Subtitle = styled.p({
 const CallToAction = styled.div({
   display: 'flex',
   gap: theme.space.sm,
-  marginTop: theme.space.lg,
+  marginInline: theme.space.xs,
 })
