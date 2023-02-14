@@ -29,7 +29,7 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
   return (
-    <Wrapper y={0.25}>
+    <Space y={0.25}>
       <Link href={link} legacyBehavior passHref>
         <ImageWrapper aspectRatio={aspectRatio} tabIndex={-1} aria-hidden={true}>
           <Image {...imageProps} alt={alt} fill sizes="100vw" />
@@ -44,13 +44,9 @@ export const ProductCard = ({
           </ButtonNextLink>
         </CallToAction>
       </ContentWrapper>
-    </Wrapper>
+    </Space>
   )
 }
-
-const Wrapper = styled(Space)({
-  height: '100%',
-})
 
 const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
   display: 'block',
