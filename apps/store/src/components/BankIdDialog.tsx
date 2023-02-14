@@ -129,9 +129,7 @@ export const BankIdDialog = () => {
               onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelLogin}>
-              {currentOperation.type === 'login'
-                ? t('LOGIN_BANKID_SKIP')
-                : t('BANKID_MODAL_CANCEL')}
+              {t('LOGIN_BANKID_SKIP')}
             </Button>
           </>
         )
