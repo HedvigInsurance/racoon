@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { motion, Transition } from 'framer-motion'
-import Head from 'next/head'
 import { useRef, useState, useEffect } from 'react'
 import { mq, theme } from 'ui'
 import {
@@ -15,7 +14,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
-import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 
@@ -26,22 +25,13 @@ const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 type PageSection = 'overview' | 'coverage'
 
-type SEOData = {
-  robots: 'index' | 'noindex'
-  seoMetaTitle?: string
-  seoMetaDescription?: string
-  seoMetaOgImage?: StoryblokAsset
-}
-
-type ProductPageBlockProps = SbBaseBlockProps<
-  {
-    overviewLabel: string
-    coverageLabel: string
-    overview: SbBlokData[]
-    coverage: SbBlokData[]
-    body: SbBlokData[]
-  } & SEOData
->
+type ProductPageBlockProps = SbBaseBlockProps<{
+  overviewLabel: string
+  coverageLabel: string
+  overview: SbBlokData[]
+  coverage: SbBlokData[]
+  body: SbBlokData[]
+}>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
@@ -56,22 +46,6 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 
   return (
     <>
-      <Head>
-        <meta name="robots" content={blok.robots} />
-        {blok.seoMetaTitle && (
-          <>
-            <meta name="title" content={blok.seoMetaTitle} />
-            <meta property="og:title" content={blok.seoMetaTitle} />
-          </>
-        )}
-        {blok.seoMetaDescription && (
-          <>
-            <meta name="description" content={blok.seoMetaDescription} />
-            <meta property="og:description" content={blok.seoMetaDescription} />
-          </>
-        )}
-        {blok.seoMetaOgImage && <meta property="og:image" content={blok.seoMetaOgImage.filename} />}
-      </Head>
       <Global
         styles={{
           html: {

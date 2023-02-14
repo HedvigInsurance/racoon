@@ -35,11 +35,11 @@ export type StoryblokFetchParams = {
   resolve_relations?: string
 }
 
-export const fetchStory = async (
+export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   storyblokClient: StoryblokClient,
   slug: string,
   params: StoryblokFetchParams,
-): Promise<ISbStoryData | undefined> => {
+): Promise<StoryData> => {
   const response = await storyblokClient.get(`cdn/stories/${slug}`, {
     ...params,
     resolve_links: 'url',
