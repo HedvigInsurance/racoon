@@ -10,17 +10,18 @@ import { initializeApollo } from '@/services/apollo/client'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 
 const NextPage: NextPageWithLayout = () => {
   return <FourOhFourPage />
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  let locale = context.locale ?? context.defaultLocale
+  const rawLocale = context.locale ?? context.defaultLocale
   // TODO: Remove this when we have a global 404 page
-  if (!isRoutingLocale(locale)) locale = 'en-se'
+  const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'en-se'
 
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo({ locale })
   const [globalStory, translations, productMetadata] = await Promise.all([
     getGlobalStory({ locale }),
     serverSideTranslations(locale),

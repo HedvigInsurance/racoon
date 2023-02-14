@@ -8,7 +8,8 @@ import { AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
 import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 import { isBrowser } from '@/utils/env'
-import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
+import { getLocaleOrFallback, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { getAuthHeaders } from '../authApi/persist'
 
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
@@ -24,11 +25,13 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const languageLink = setContext((_, { headers = {}, ...context }) => {
-  const locale = getLocaleOrFallback(i18n?.language).locale
+  if (!isBrowser()) return context
+
+  const locale = getLocaleOrFallback(i18n?.language).routingLocale
   return {
     headers: {
       ...headers,
-      'Hedvig-Language': locale,
+      ...(locale && getHedvigLanguageHeader(locale)),
     },
     ...context,
   }
@@ -73,18 +76,16 @@ type InitializeApolloParams = {
   initialState?: unknown
   req?: GetServerSidePropsContext['req']
   res?: GetServerSidePropsContext['res']
+  locale?: RoutingLocale
 }
 
-export const initializeApollo = ({
-  initialState = null,
-  req,
-  res,
-}: InitializeApolloParams = {}) => {
+export const initializeApollo = (params: InitializeApolloParams = {}) => {
+  const { initialState = null, req, res, locale } = params
   const headers = {
     ...getDeviceIdHeader({ req, res }),
     ...getAuthHeaders({ req, res }),
+    ...(locale && getHedvigLanguageHeader(locale)),
   }
-  // console.trace('ah', headers)
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
 
@@ -120,3 +121,7 @@ export const addApolloState = <Props>(
     },
   }
 }
+
+const getHedvigLanguageHeader = (locale: RoutingLocale) => ({
+  'hedvig-language': toIsoLocale(locale),
+})

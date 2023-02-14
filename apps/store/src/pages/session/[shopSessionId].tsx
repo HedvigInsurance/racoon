@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return fallbackRedirect
   }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   let shopSession: ShopSession
   try {
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })

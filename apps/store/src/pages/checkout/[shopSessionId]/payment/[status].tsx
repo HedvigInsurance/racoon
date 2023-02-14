@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!isRoutingLocale(locale)) return { notFound: true }
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const shopSession = await shopSessionService.fetchById(shopSessionId)
 

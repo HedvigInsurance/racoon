@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { countryCode } = getCountryByLocale(locale)
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
   let shopSession: ShopSession
