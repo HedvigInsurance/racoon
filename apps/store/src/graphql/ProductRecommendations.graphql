@@ -1,0 +1,9 @@
+query ProductRecommendations($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    recommendations {
+      product {
+        ...ProductRecommendation
+      }
+    }
+  }
+}

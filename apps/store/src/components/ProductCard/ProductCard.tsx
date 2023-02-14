@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
@@ -28,10 +29,12 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
   return (
-    <Wrapper y={0.25}>
-      <ImageWrapper aspectRatio={aspectRatio}>
-        <Image {...imageProps} alt={alt} fill sizes="100vw" />
-      </ImageWrapper>
+    <Space y={0.25}>
+      <Link href={link} legacyBehavior passHref>
+        <ImageWrapper aspectRatio={aspectRatio} tabIndex={-1} aria-hidden={true}>
+          <Image {...imageProps} alt={alt} fill sizes="100vw" />
+        </ImageWrapper>
+      </Link>
       <ContentWrapper>
         <Title>{title}</Title>
         <Subtitle>{subtitle}</Subtitle>
@@ -41,15 +44,12 @@ export const ProductCard = ({
           </ButtonNextLink>
         </CallToAction>
       </ContentWrapper>
-    </Wrapper>
+    </Space>
   )
 }
 
-const Wrapper = styled(Space)({
-  height: '100%',
-})
-
-const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
+const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
+  display: 'block',
   position: 'relative',
   marginBottom: theme.space.md,
   ...(aspectRatio && { aspectRatio: aspectRatio }),
@@ -58,6 +58,10 @@ const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
     height: '0',
     paddingTop: 'calc((6/5 * 100%))',
     overflow: 'hidden',
+  },
+
+  ':hover, :active': {
+    opacity: 0.95,
   },
 }))
 

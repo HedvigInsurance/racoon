@@ -20,6 +20,8 @@ import {
   StoryblokQueryParams,
   getFilteredPageLinks,
   StoryblokPreviewData,
+  PageStory,
+  ProductStory,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -74,10 +76,10 @@ export const getStaticProps: GetStaticProps<
 
   const slug = (params?.slug ?? []).join('/')
 
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo({ locale })
   console.time('getStoryblokData')
   const [story, globalStory, translations, productMetadata] = await Promise.all([
-    getStoryBySlug(slug, { version, locale }),
+    getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
     fetchGlobalProductMetadata({ apolloClient }),

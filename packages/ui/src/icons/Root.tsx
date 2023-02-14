@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 
 export type IconRootProps = {
@@ -7,7 +8,13 @@ export type IconRootProps = {
   transform?: string
 }
 
-export const IconRoot = styled.svg<IconRootProps>(({ size, color, transform }) => ({
+const elementConfig = {
+  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'width' && prop !== 'height',
+}
+export const IconRoot = styled(
+  'svg',
+  elementConfig,
+)<IconRootProps>(({ size, color, transform }) => ({
   width: size ? size : '1rem',
   height: size ? size : '1rem',
   fill: color ? color : 'currentColor',

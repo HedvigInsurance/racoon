@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   const [shopSession, translations] = await Promise.all([
     getCurrentShopSessionServerSide({ apolloClient, req, res }),
     serverSideTranslations(locale),

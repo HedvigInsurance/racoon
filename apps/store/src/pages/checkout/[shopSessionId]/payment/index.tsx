@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!shopSessionId) return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo({ req, res })
+    const apolloClient = initializeApollo({ req, res, locale })
     await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId)
     // TODO: validate ShopSession
   } catch (error) {

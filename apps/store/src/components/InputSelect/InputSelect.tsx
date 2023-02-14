@@ -15,6 +15,7 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   top: '50%',
   right: '1.125rem',
   transform: 'translateY(-50%)',
+  pointerEvents: 'none',
 }))
 
 const StyledSelect = styled.select({

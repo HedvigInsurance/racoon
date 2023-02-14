@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const [shopSession, translations, globalStory, story, productMetadata] = await Promise.all([
     shopSessionService.fetchById(shopSessionId),

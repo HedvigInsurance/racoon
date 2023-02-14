@@ -55,12 +55,19 @@ export const TextField = (props: Props) => {
 const warningAnimation = keyframes({
   '0%': {
     backgroundColor: theme.colors.amber100,
-    borderColor: theme.colors.amber300,
     color: theme.colors.amberText,
   },
   '100%': {
     backgroundColor: theme.colors.gray100,
-    borderColor: 'transparent',
+    color: theme.colors.textPrimary,
+  },
+})
+
+const warningColorAnimation = keyframes({
+  '0%': {
+    color: theme.colors.amberText,
+  },
+  '100%': {
     color: theme.colors.textPrimary,
   },
 })
@@ -75,7 +82,6 @@ const LargeWrapper = styled(motion.div)({
   height: '4rem',
   width: '100%',
 
-  border: '1px solid transparent',
   '&[data-warning=true]': {
     animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
   },
@@ -115,6 +121,10 @@ const Label = styled.label({
 
   '&&[data-disabled=true]': {
     color: theme.colors.textSecondary,
+  },
+
+  [`${LargeWrapper}[data-warning=true] > &`]: {
+    animation: `${warningColorAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
   },
 })
 
