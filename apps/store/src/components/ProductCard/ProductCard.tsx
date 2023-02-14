@@ -2,9 +2,8 @@ import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import { mq, Space, theme } from 'ui'
+import { Button, mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
 
 type ImageProps = {
   src: string
@@ -35,16 +34,18 @@ export const ProductCard = ({
           <Image {...imageProps} alt={alt} fill sizes="100vw" />
         </ImageWrapper>
       </Link>
-      <ContentWrapper>
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
-        <CallToAction>
-          <ButtonNextLink href={link} size="medium" variant="secondary">
-            {t('READ_MORE')}
-          </ButtonNextLink>
-        </CallToAction>
-      </ContentWrapper>
-    </Space>
+      <Link href={link}>
+        <ContentWrapper>
+          <Title>{title}</Title>
+          <Subtitle>{subtitle}</Subtitle>
+          <CallToAction>
+            <Button size="medium" variant="secondary">
+              {t('READ_MORE')}
+            </Button>
+          </CallToAction>
+        </ContentWrapper>
+      </Link>
+    </Wrapper>
   )
 }
 
