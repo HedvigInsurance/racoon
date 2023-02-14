@@ -30,7 +30,6 @@ const Trigger = styled(AccordionPrimitives.Trigger)({
   '@media (hover: hover)': {
     ':hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.gray200,
     },
   },
 })
