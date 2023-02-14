@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<
 
   const slug = (params?.slug ?? []).join('/')
 
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo({ locale })
   console.time('getStoryblokData')
   const [story, globalStory, translations, productMetadata] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),

@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     redirect: { destination: PageLink.home({ locale }), permanent: false },
   } as const
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = initializeApollo({ req, res, locale })
   let shopSession: ShopSession, translations: SSRConfig
   try {
     ;[shopSession, translations] = await Promise.all([
