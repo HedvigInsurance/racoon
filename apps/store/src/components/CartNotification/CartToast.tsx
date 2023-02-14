@@ -36,7 +36,7 @@ type Props = ProductItemProps & {
   onClose: () => void
 }
 
-export const CartNotificationContent = ({ name, price, startDateDescription, onClose }: Props) => {
+export const CartNotificationContent = ({ name, price, description, onClose }: Props) => {
   const { t } = useTranslation('purchase-form')
   const handleClose = () => onClose?.()
 
@@ -46,7 +46,7 @@ export const CartNotificationContent = ({ name, price, startDateDescription, onC
       <StyledContentWrapper>
         <DialogContent onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
           <DialogContentWrapper>
-            <ProductItem name={name} price={price} startDateDescription={startDateDescription} />
+            <ProductItem name={name} price={price} description={description} />
             <Space y={0.5}>
               <ButtonNextLink href={PageLink.cart()} variant="primary">
                 {t('CART_TOAST_CART_LINK')}

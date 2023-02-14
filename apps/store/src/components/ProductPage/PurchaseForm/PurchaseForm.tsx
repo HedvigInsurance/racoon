@@ -102,7 +102,7 @@ export const PurchaseForm = () => {
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
-              startDateDescription: item.cancellation.requested
+              description: item.cancellation.requested
                 ? t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
                 : t('CART_ENTRY_DATE_LABEL', {
                     date: formatter.fromNow(new Date(item.startDate)),
