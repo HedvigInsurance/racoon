@@ -28,7 +28,6 @@ type Props = {
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   const { authenticationStatus } = shopSession.customer ?? {}
   if (
-    !shopSession.customer ||
     !authenticationStatus ||
     authenticationStatus === ShopSessionAuthenticationStatus.None ||
     authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired
