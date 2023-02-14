@@ -4,23 +4,65 @@ import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAccessToken } from '@/services/authApi/persist'
-import { apiStatusToBankIdState, bankIdLogger } from '@/services/bankId/bankId.utils'
-import { BankIdDispatch } from '@/services/bankId/bankIdReducer'
+import { LoginPromptOptions } from './bankId.types'
+import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
+import { BankIdDispatch } from './bankIdReducer'
 
-type Options = {
+type HookOptions = {
   dispatch: BankIdDispatch
 }
 
-export type BankIdLoginOption = {
+export type BankIdLoginOptions = {
   shopSessionId: string
   ssn: string
   onSuccess: () => void
 }
-export const useBankIdLogin = ({ dispatch }: Options) => {
+
+export const useBankIdLogin = ({ dispatch }: HookOptions) => {
+  const onLoginPromptCompletedRef = useRef<(() => void) | null>(null)
+  const showLoginPrompt = useCallback(
+    ({ onCompleted }: LoginPromptOptions) => {
+      onLoginPromptCompletedRef.current = onCompleted
+      dispatch({
+        type: 'showLoginPrompt',
+      })
+    },
+    [dispatch],
+  )
+
+  const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
+
+  const startLoginWithCallbacks = useCallback(
+    (options: BankIdLoginOptions) => {
+      startLogin({
+        ...options,
+        onSuccess() {
+          onLoginPromptCompletedRef.current?.()
+          options.onSuccess()
+        },
+      })
+    },
+    [startLogin],
+  )
+
+  const cancelLoginWithCallbacks = useCallback(() => {
+    cancelLogin()
+    onLoginPromptCompletedRef.current?.()
+    dispatch({ type: 'cancel' })
+  }, [cancelLogin, dispatch])
+
+  return {
+    showLoginPrompt,
+    startLogin: startLoginWithCallbacks,
+    cancelLogin: cancelLoginWithCallbacks,
+  }
+}
+
+export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
   const subscriptionRef = useRef<Subscription | null>(null)
   const [authenticateShopSession] = useShopSessionAuthenticateMutation()
   const startLogin = useCallback(
-    ({ shopSessionId, ssn, onSuccess }: BankIdLoginOption) => {
+    ({ shopSessionId, ssn, onSuccess }: BankIdLoginOptions) => {
       bankIdLogger.debug('Starting BankId login')
       // Future ideas
       // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
@@ -52,7 +94,6 @@ export const useBankIdLogin = ({ dispatch }: Options) => {
   )
   const cancelLogin = useCallback(() => {
     subscriptionRef.current?.unsubscribe()
-    dispatch({ type: 'cancel' })
-  }, [dispatch])
+  }, [])
   return { startLogin, cancelLogin }
 }
