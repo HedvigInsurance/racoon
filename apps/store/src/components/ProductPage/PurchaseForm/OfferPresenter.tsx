@@ -159,7 +159,7 @@ export const OfferPresenter = (props: Props) => {
               </Text>
               <Centered>
                 <TextButton onClick={onClickEdit}>
-                  <Text align="center" size="xs" color="textSecondary">
+                  <Text align="center" size="xs" color="textSecondary" as="span">
                     {t('PRESENT_OFFER_EDIT_BUTTON')}
                   </Text>
                 </TextButton>
@@ -262,11 +262,18 @@ const Centered = styled.div({
 
 const TextButton = styled.button({
   cursor: 'pointer',
+  lineHeight: 1,
 
   backgroundColor: theme.colors.light,
   ':focus-visible': {
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+  },
+
+  '@media (hover: hover)': {
+    ':hover > span': {
+      color: theme.colors.textPrimary,
+    },
   },
 })
 
