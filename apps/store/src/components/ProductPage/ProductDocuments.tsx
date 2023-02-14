@@ -35,7 +35,7 @@ const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
   const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
 
   return (
-    <DownloadFileLink href={doc.url} target="_blank" rel="noopener noreferrer">
+    <DownloadFileLink href={doc.url} target="_blank" rel="noopener nofollow">
       <Ellipsis>
         {doc.displayName} <DocumentType>{documentType}</DocumentType>
       </Ellipsis>
