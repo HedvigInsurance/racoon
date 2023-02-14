@@ -15,15 +15,17 @@ export const BankIdDialog = () => {
   const { shopSession } = useShopSession()
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation, dispatch } =
     useBankIdContext()
-  const isOpen =
-    !!currentOperation &&
-    // Don't open dialog when signing as authenticated member
-    !(
-      currentOperation.type == 'sign' &&
+
+  let isOpen = !!currentOperation
+  if (currentOperation?.type === 'sign') {
+    const isSigningAuthenticatedMember =
       shopSession?.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
-    ) &&
-    // Show sign errors on sign page
-    !(currentOperation.type == 'sign' && currentOperation.state === BankIdState.Error)
+    const hasError = currentOperation.state === BankIdState.Error
+    // In some cases we show error and progress on signing page, not in dialog
+    if (isSigningAuthenticatedMember || hasError) {
+      isOpen = false
+    }
+  }
 
   const handleLogin = useCallback(
     ({ shopSessionId, ssn }: Omit<BankIdLoginOptions, 'onSuccess'>) =>
