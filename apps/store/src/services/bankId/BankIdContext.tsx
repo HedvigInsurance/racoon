@@ -20,6 +20,7 @@ type BankIdContextValue = BankIdReducerState & {
   dispatch: BankIdDispatch
   showLoginPrompt: (options: LoginPromptOptions) => void
   startCheckoutSign: (options: BankIdOperationOptions) => void
+  cancelCheckoutSign: () => void
 }
 
 export const BankIdContext = createContext<BankIdContextValue | null>(null)
@@ -30,15 +31,11 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
   // // TODO: Expose and handle errors
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
-  const ssn = shopSession?.customer?.ssn ?? ''
-  const bankIdLogin = useBankIdLogin({
-    shopSessionId,
-    ssn,
+  const { startLogin, cancelLogin } = useBankIdLogin({
     dispatch,
   })
 
-  const startSign = useBankIdCheckoutSign({
-    shopSessionId,
+  const { startSign, cancelSign } = useBankIdCheckoutSign({
     dispatch,
     async onSuccess() {
       // NOTE: Keep dialog open until onSuccess resolves -> prevents returning to original checkout page state while waiting for redirect
@@ -50,36 +47,57 @@ export const BankIdContextProvider = ({ children }: PropsWithChildren) => {
     },
   })
 
-  const { authenticationStatus } = shopSession?.customer ?? {}
-
   const startCheckoutSign: BankIdContextValue['startCheckoutSign'] = useCallback(
     async (options: BankIdOperationOptions) => {
       dispatch({
         type: 'startCheckoutSign',
         options,
       })
-      if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
+
+      if (
+        shopSession &&
+        shopSession.customer?.authenticationStatus ===
+          ShopSessionAuthenticationStatus.AuthenticationRequired
+      ) {
+        const { ssn } = shopSession.customer
+        if (!shopSessionId || !ssn)
+          throw new Error('Must have shopSession with ID and customer SSN')
         bankIdLogger.debug('Authentication required for returning member')
-        await bankIdLogin()
+        startLogin({
+          shopSessionId,
+          ssn,
+          onSuccess() {
+            startSign({ shopSessionId })
+          },
+        })
+      } else {
+        startSign({ shopSessionId })
       }
-      startSign(options)
     },
-    [authenticationStatus, bankIdLogin, startSign],
+    [shopSession, shopSessionId, startLogin, startSign],
   )
+
+  const cancelCheckoutSign = useCallback(() => {
+    cancelLogin()
+    cancelSign()
+  }, [cancelLogin, cancelSign])
+
+  const showLoginPrompt = useCallback(({ onCompleted }: LoginPromptOptions) => {
+    dispatch({
+      type: 'showLoginPrompt',
+      options: { onSuccess: onCompleted, onCancel: onCompleted },
+    })
+  }, [])
 
   const contextValue = useMemo(
     () => ({
       ...state,
       dispatch,
-      showLoginPrompt({ onCompleted }: LoginPromptOptions) {
-        dispatch({
-          type: 'showLoginPrompt',
-          options: { onSuccess: onCompleted, onCancel: onCompleted },
-        })
-      },
+      showLoginPrompt,
       startCheckoutSign,
+      cancelCheckoutSign,
     }),
-    [startCheckoutSign, state],
+    [cancelCheckoutSign, showLoginPrompt, startCheckoutSign, state],
   )
   return <BankIdContext.Provider value={contextValue}>{children}</BankIdContext.Provider>
 }

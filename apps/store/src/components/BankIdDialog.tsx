@@ -7,7 +7,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { useBankIdLogin } from '@/services/bankId/useBankIdLogin'
+import { BankIdLoginOption, useBankIdLogin } from '@/services/bankId/useBankIdLogin'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
@@ -28,22 +28,19 @@ export const BankIdDialog = () => {
   }, [currentOperation, dispatch])
 
   // TODO: Expose and handle errors
-  const shopSessionId = shopSession?.id
-  const ssn = shopSession?.customer?.ssn ?? ''
-  const bankIdLogin = useBankIdLogin({
-    shopSessionId,
-    ssn,
-    dispatch,
-  })
-  const startLogin = useCallback(async () => {
-    try {
-      await bankIdLogin()
-      currentOperation?.onSuccess()
-      dispatch({ type: 'success' })
-    } catch (error) {
-      currentOperation?.onError?.()
-    }
-  }, [currentOperation, dispatch, bankIdLogin])
+  const { startLogin, cancelLogin } = useBankIdLogin({ dispatch })
+
+  const handleLogin = useCallback(
+    ({ shopSessionId, ssn }: Omit<BankIdLoginOption, 'onSuccess'>) =>
+      startLogin({
+        shopSessionId,
+        ssn,
+        onSuccess() {
+          dispatch({ type: 'success' })
+        },
+      }),
+    [dispatch, startLogin],
+  )
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -54,7 +51,9 @@ export const BankIdDialog = () => {
   let content: ReactElement | null = null
   let footer: ReactElement | null = null
 
-  if (currentOperation !== null) {
+  const shopSessionId = shopSession?.id
+  const ssn = shopSession?.customer?.ssn ?? ''
+  if (currentOperation !== null && shopSessionId && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Idle: {
         content = (
@@ -70,7 +69,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={startLogin}
+              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {t('LOGIN_BANKID_SKIP')}
@@ -91,6 +90,11 @@ export const BankIdDialog = () => {
               {currentOperation.state === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
             </Text>
           </>
+        )
+        footer = (
+          <Button variant="ghost" onClick={cancelLogin}>
+            {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
+          </Button>
         )
         break
       }
@@ -117,7 +121,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BANKID_TRY_AGAIN')}
-              onLoginStart={startLogin}
+              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
             />
             <Button variant="ghost" onClick={cancelCurrentOperation}>
               {currentOperation.type === 'login'

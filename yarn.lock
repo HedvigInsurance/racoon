@@ -21375,6 +21375,7 @@ __metadata:
     ui: "workspace:"
     uuid: 9.0.0
     whatwg-fetch: 3.6.2
+    zen-observable-ts: 1.2.5
   languageName: unknown
   linkType: soft
 
@@ -24295,7 +24296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zen-observable-ts@npm:^1.2.5":
+"zen-observable-ts@npm:1.2.5, zen-observable-ts@npm:^1.2.5":
   version: 1.2.5
   resolution: "zen-observable-ts@npm:1.2.5"
   dependencies:
