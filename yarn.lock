@@ -19734,16 +19734,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use-intercom@npm:2.1.0":
-  version: 2.1.0
-  resolution: "react-use-intercom@npm:2.1.0"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 14984d7835cf72f923907faaff7d70a5206b96f9297707b127feb84279faf3a406429e94e1ffb69df65da788c0fac413e51faf7712fb0e7dad5b2ccac555ffda
-  languageName: node
-  linkType: hard
-
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -21376,7 +21366,6 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 12.1.5
-    react-use-intercom: 2.1.0
     storybook-addon-next: 1.7.1
     storybook-addon-next-router: 4.0.2
     subscriptions-transport-ws: 0.11.0
