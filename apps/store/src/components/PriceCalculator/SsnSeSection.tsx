@@ -12,6 +12,7 @@ import {
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useGetMutationError } from '@/utils/useGetMutationError'
 import useRouterRefresh from '@/utils/useRouterRefresh'
 
 const SsnFieldName = 'ssn'
@@ -43,14 +44,16 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
 
 const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const getMutationError = useGetMutationError()
   const { showLoginPrompt } = useBankIdContext()
-  // TODO: Show error message if customer update fails
-  const [updateCustomer, { loading }] = useShopSessionCustomerUpdateMutation({
+  const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
     refetchQueries: 'active',
     awaitRefetchQueries: true,
     onCompleted(data) {
       const { shopSession } = data.shopSessionCustomerUpdate
+      if (!shopSession) return
+
       const { authenticationStatus } = shopSession?.customer ?? {}
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         showLoginPrompt({ onCompleted })
@@ -70,6 +73,7 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
     updateCustomer({ variables: { input: { shopSessionId: shopSession.id, ssn } } })
   }
 
+  const mutationError = getMutationError(result, result.data?.shopSessionCustomerUpdate)
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -78,9 +82,10 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
             label={t('FIELD_SSN_SE_LABEL')}
             name={SsnFieldName}
             defaultValue={shopSession.customer?.ssn ?? ''}
-            required
+            required={true}
+            warning={!!mutationError}
           />
-          <Button type="submit" loading={loading}>
+          <Button type="submit" loading={result.loading}>
             {t('SUBMIT_LABEL_PROCEED')}
           </Button>
         </Space>

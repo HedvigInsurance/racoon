@@ -7,6 +7,7 @@ type Props = Omit<
   'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
 > & {
   label: string
+  warning?: boolean
 }
 
 /**
@@ -14,7 +15,7 @@ type Props = Omit<
  * Only supports Swedish personal numbers.
  */
 export const PersonalNumberField = (props: Props) => {
-  const { value: propValue, defaultValue, label, ...baseProps } = props
+  const { value: propValue, defaultValue, label, warning, ...baseProps } = props
 
   const [value, setValue] = useState(() => {
     if (typeof propValue === 'string') return propValue
@@ -47,6 +48,7 @@ export const PersonalNumberField = (props: Props) => {
         // https://github.com/personnummer/js
         pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
         onChange={handleOnChange}
+        warning={warning}
       />
     </>
   )
