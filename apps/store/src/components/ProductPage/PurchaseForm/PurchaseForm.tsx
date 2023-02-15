@@ -109,8 +109,12 @@ export const PurchaseForm = () => {
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
-              /* @TODO: display "automatically switches" if cancellation is requested" */
-              startDate: formatter.fromNow(new Date(item.startDate)),
+              description: item.cancellation.requested
+                ? t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
+                : t('CART_ENTRY_DATE_LABEL', {
+                    date: formatter.fromNow(new Date(item.startDate)),
+                    ns: 'cart',
+                  }),
             })
 
             const service = priceIntentServiceInitClientSide(apolloClient)
