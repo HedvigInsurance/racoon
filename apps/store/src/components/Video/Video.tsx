@@ -112,11 +112,13 @@ export const Video = ({
     - Safari on iOS only allows autoplay when the video is `muted`.
     - Safari on iOS will default to autoplay videos in fullscreen unless `playsInline` is added
     Read more: https://webkit.org/blog/6784/new-video-policies-for-ios/
+
+    - We don't want to preload full video.  This is ignored by browsers if autoPlay is set
     */}
       <StyledVideo
         ref={videoRef}
         playsInline
-        preload="auto"
+        preload="metadata"
         poster={poster}
         aspectRatioLandscape={aspectRatioLandscape}
         aspectRatioPortrait={aspectRatioPortrait}
