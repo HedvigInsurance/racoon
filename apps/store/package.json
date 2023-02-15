@@ -49,7 +49,8 @@
     "react-dom": "18.2.0",
     "react-i18next": "12.1.5",
     "ui": "workspace:",
-    "uuid": "9.0.0"
+    "uuid": "9.0.0",
+    "zen-observable-ts": "1.2.5"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",
@@ -69,7 +70,7 @@
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
     "@types/node": "18.13.0",
-    "@types/react": "18.0.27",
+    "@types/react": "18.0.28",
     "babel-loader": "9.1.2",
     "eslint-config-custom": "workspace:",
     "graphql-tag": "2.12.6",

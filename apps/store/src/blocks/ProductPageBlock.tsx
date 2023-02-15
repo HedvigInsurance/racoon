@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { motion, Transition } from 'framer-motion'
-import Head from 'next/head'
 import { useRef, useState, useEffect } from 'react'
 import { mq, theme } from 'ui'
 import {
@@ -15,7 +14,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
-import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 
@@ -26,22 +25,13 @@ const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 type PageSection = 'overview' | 'coverage'
 
-type SEOData = {
-  robots: 'index' | 'noindex'
-  seoMetaTitle?: string
-  seoMetaDescription?: string
-  seoMetaOgImage?: StoryblokAsset
-}
-
-type ProductPageBlockProps = SbBaseBlockProps<
-  {
-    overviewLabel: string
-    coverageLabel: string
-    overview: SbBlokData[]
-    coverage: SbBlokData[]
-    body: SbBlokData[]
-  } & SEOData
->
+type ProductPageBlockProps = SbBaseBlockProps<{
+  overviewLabel: string
+  coverageLabel: string
+  overview: SbBlokData[]
+  coverage: SbBlokData[]
+  body: SbBlokData[]
+}>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
@@ -56,22 +46,6 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 
   return (
     <>
-      <Head>
-        <meta name="robots" content={blok.robots} />
-        {blok.seoMetaTitle && (
-          <>
-            <meta name="title" content={blok.seoMetaTitle} />
-            <meta property="og:title" content={blok.seoMetaTitle} />
-          </>
-        )}
-        {blok.seoMetaDescription && (
-          <>
-            <meta name="description" content={blok.seoMetaDescription} />
-            <meta property="og:description" content={blok.seoMetaDescription} />
-          </>
-        )}
-        {blok.seoMetaOgImage && <meta property="og:image" content={blok.seoMetaOgImage.filename} />}
-      </Head>
       <Global
         styles={{
           html: {
@@ -120,48 +94,48 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </MobileLayout>
 
         <DesktopLayout>
+          <AnimatedHeader>
+            <nav aria-label="page content">
+              <ContentNavigationList>
+                <li>
+                  <ContentNavigationTrigger
+                    href="#overview"
+                    data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                    aria-current={activeSection === 'overview' ? 'true' : undefined}
+                  >
+                    {blok.overviewLabel}
+                  </ContentNavigationTrigger>
+                </li>
+                <li>
+                  <ContentNavigationTrigger
+                    href="#coverage"
+                    data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                    aria-current={activeSection === 'coverage' ? 'true' : undefined}
+                  >
+                    {blok.coverageLabel}
+                  </ContentNavigationTrigger>
+                </li>
+              </ContentNavigationList>
+              {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+            </nav>
+          </AnimatedHeader>
           <Grid>
             <Content>
-              <AnimatedHeader>
-                <nav aria-label="page content">
-                  <ContentNavigationList>
-                    <li>
-                      <ContentNavigationTrigger
-                        href="#overview"
-                        data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-                        aria-current={activeSection === 'overview' ? 'true' : undefined}
-                      >
-                        {blok.overviewLabel}
-                      </ContentNavigationTrigger>
-                    </li>
-                    <li>
-                      <ContentNavigationTrigger
-                        href="#coverage"
-                        data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
-                        aria-current={activeSection === 'coverage' ? 'true' : undefined}
-                      >
-                        {blok.coverageLabel}
-                      </ContentNavigationTrigger>
-                    </li>
-                  </ContentNavigationList>
-                  {shouldRenderVariantSelector && <StyledProductVariantSelector />}
-                </nav>
-              </AnimatedHeader>
               <OverviewSection id="overview">
                 {blok.overview?.map((nestedBlock) => (
                   <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
                 ))}
               </OverviewSection>
-              <section id="coverage">
-                {blok.coverage?.map((nestedBlock) => (
-                  <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-                ))}
-              </section>
             </Content>
             <PurchaseFormWrapper>
               <PurchaseForm />
             </PurchaseFormWrapper>
           </Grid>
+          <section id="coverage">
+            {blok.coverage?.map((nestedBlock) => (
+              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+            ))}
+          </section>
         </DesktopLayout>
 
         {blok.body.map((nestedBlock) => (
@@ -223,7 +197,7 @@ const OverviewSection = styled.section({
     marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})`,
   },
   [mq.lg]: {
-    marginTop: `-${TABLIST_HEIGHT}`,
+    marginTop: 0,
   },
 })
 
@@ -279,6 +253,7 @@ const StickyHeader = styled(motion.div)({
     paddingInline: theme.space.lg,
   },
   [mq.lg]: {
+    position: 'fixed',
     top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
     paddingInline: theme.space.xl,
   },

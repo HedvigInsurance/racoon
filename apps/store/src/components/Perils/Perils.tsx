@@ -30,6 +30,9 @@ const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boo
     gridTemplateColumns: `repeat(auto-fit, ${fixedCols ? '20.75rem' : 'minmax(20.75rem, 1fr)'})`,
     columnGap: theme.space.md,
   },
+  [mq.lg]: {
+    rowGap: theme.space.xs,
+  },
 }))
 
 const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {

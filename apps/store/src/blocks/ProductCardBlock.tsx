@@ -17,13 +17,15 @@ export type ProductCardBlockProps = SbBaseBlockProps<
 >
 
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
+  const link = getLinkFieldURL(blok.link, blok.title)
+
   return (
     <ProductCard
       title={blok.title}
       subtitle={blok.subtitle}
       image={{ src: blok.image.filename, alt: blok.image.alt }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
-      link={getLinkFieldURL(blok.link, blok.title)}
+      link={link}
       {...storyblokEditable(blok)}
     />
   )

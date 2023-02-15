@@ -12,6 +12,7 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { useOpenPriceCalculatorQueryParam } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -40,6 +41,12 @@ export const PurchaseForm = () => {
   const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
+
+  useOpenPriceCalculatorQueryParam({
+    onQueryParamDetected() {
+      setFormState((formState) => (formState === 'IDLE' ? 'EDIT' : formState))
+    },
+  })
 
   const editForm = () => {
     setFormState('EDIT')
@@ -102,8 +109,12 @@ export const PurchaseForm = () => {
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
-              /* @TODO: display "automatically switches" if cancellation is requested" */
-              startDate: formatter.fromNow(new Date(item.startDate)),
+              description: item.cancellation.requested
+                ? t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
+                : t('CART_ENTRY_DATE_LABEL', {
+                    date: formatter.fromNow(new Date(item.startDate)),
+                    ns: 'cart',
+                  }),
             })
 
             const service = priceIntentServiceInitClientSide(apolloClient)

@@ -104,16 +104,24 @@ export type LinkField = {
   }
 }
 
-export type PageStory = ISbStoryData & {
-  content: ISbStoryData['content'] & {
+export type SEOData = {
+  robots: 'index' | 'noindex'
+  seoTitle?: string
+  seoMetaDescription?: string
+  seoMetaOgImage?: StoryblokAsset
+  canonicalUrl?: string
+}
+
+export type PageStory = ISbStoryData<
+  {
     hideMenu?: boolean
     overlayMenu?: boolean
     hideFooter?: boolean
-  }
-}
+  } & SEOData
+>
 
-export type ProductStory = ISbStoryData & {
-  content: ISbStoryData['content'] & {
+export type ProductStory = ISbStoryData<
+  {
     name?: string
     description?: string
     tagline?: string
@@ -121,8 +129,8 @@ export type ProductStory = ISbStoryData & {
     priceFormTemplateId: string
     body: Array<SbBlokData>
     global: Array<SbBlokData>
-  }
-}
+  } & SEOData
+>
 
 export type GlobalStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
@@ -245,12 +253,15 @@ type StoryOptions = {
   version?: StoryblokVersion
 }
 
-export const getStoryBySlug = async (slug: string, { version, locale }: StoryOptions) => {
+export const getStoryBySlug = async <StoryData extends ISbStoryData | undefined>(
+  slug: string,
+  { version, locale }: StoryOptions,
+) => {
   const params: StoryblokFetchParams = {
     version: version ?? 'published',
     resolve_relations: 'reusableBlockReference.reference',
   }
-  return await fetchStory(getStoryblokApi(), `${locale}/${slug}`, params)
+  return await fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {

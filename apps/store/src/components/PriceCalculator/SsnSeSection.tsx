@@ -1,10 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
 import { Button, Space, Text, theme, WarningTriangleIcon } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
@@ -13,7 +15,6 @@ import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useGetMutationError } from '@/utils/useGetMutationError'
-import useRouterRefresh from '@/utils/useRouterRefresh'
 
 const SsnFieldName = 'ssn'
 
@@ -28,7 +29,6 @@ type Props = {
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   const { authenticationStatus } = shopSession.customer ?? {}
   if (
-    !shopSession.customer ||
     !authenticationStatus ||
     authenticationStatus === ShopSessionAuthenticationStatus.None ||
     authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired
@@ -124,13 +124,17 @@ const AuthenticatedSsnSection = ({ onCompleted }: Props) => {
 
 const ResetSessionButton = () => {
   const { t } = useTranslation('purchase-form')
-  const refreshRouter = useRouterRefresh()
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const { reset: resetShopSession } = useShopSession()
   const handleClick = async () => {
     setLoading(true)
+    datadogLogs.logger.info('Cleared shopSession to change SSN in price calculator')
     await resetShopSession()
-    await refreshRouter()
+    router.replace({
+      pathname: router.pathname,
+      query: { ...router.query, [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1 },
+    })
   }
   return (
     <Button loading={loading} onClick={handleClick}>

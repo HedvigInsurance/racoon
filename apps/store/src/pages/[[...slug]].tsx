@@ -1,7 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import {
   fetchGlobalProductMetadata,
@@ -20,6 +19,8 @@ import {
   StoryblokQueryParams,
   getFilteredPageLinks,
   StoryblokPreviewData,
+  PageStory,
+  ProductStory,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -40,9 +41,6 @@ const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
 
   return (
     <>
-      <Head>
-        <title>{story.name}</title>
-      </Head>
       <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
     </>
@@ -55,9 +53,6 @@ const NextProductPage = (props: ProductPageProps) => {
 
   return (
     <>
-      <Head>
-        <title>{story.name}</title>
-      </Head>
       <HeadSeoInfo story={story} />
       <ProductPage {...pageProps} story={story} />
     </>
@@ -77,7 +72,7 @@ export const getStaticProps: GetStaticProps<
   const apolloClient = initializeApollo({ locale })
   console.time('getStoryblokData')
   const [story, globalStory, translations, productMetadata] = await Promise.all([
-    getStoryBySlug(slug, { version, locale }),
+    getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
     fetchGlobalProductMetadata({ apolloClient }),

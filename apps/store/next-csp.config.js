@@ -1,8 +1,23 @@
+const gtmInjectedOrigins = [
+  'https://*.onetrust.com',
+  'https://*.cookielaw.org',
+  'https://*.hotjar.com',
+  'https://sc-static.net',
+  'https://*.snapchat.com',
+  'https://*.facebook.net',
+  'https://*.facebook.com',
+  'https://*.doubleclick.net',
+]
+
 const scriptSrc = [
   'https://app.storyblok.com',
-  'https://widget.intercom.io',
-  'https://js.intercomcdn.com',
-  'https://www.googletagmanager.com',
+  // Google
+  'https://*.googletagmanager.com',
+  'https://*.google-analytics.com',
+
+  // GTM injected scripts
+  ...gtmInjectedOrigins,
+
   'https://dc.insurely.com',
   'https://vercel.live',
   "'unsafe-inline'",
@@ -10,7 +25,10 @@ const scriptSrc = [
   "'self'",
 ]
 const styleSrc = [
-  'https://fonts.googleapis.com', // GTM preview mode
+  // GTM preview mode
+  'https://fonts.googleapis.com',
+  'https://*.googletagmanager.com',
+
   "'unsafe-inline'",
   "'self'",
 ]
@@ -35,6 +53,8 @@ const imgSrc = [
   'https://assets.vercel.com',
   'https://vercel.com',
   'https://vercel.live',
+
+  ...gtmInjectedOrigins,
 
   'blob:',
   'data:',
@@ -69,6 +89,8 @@ const connectSrc = [
   'https://www.gstatic.com',
   'https://*.google-analytics.com',
 
+  ...gtmInjectedOrigins,
+
   'https://*.hedvigit.com',
   "'self'",
 ]
@@ -76,6 +98,10 @@ const frameSrc = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
+
+  // GTM-injected scripts
+  'https://*.snapchat.com',
+
   "'self'", // Storyblok editor
 ]
 

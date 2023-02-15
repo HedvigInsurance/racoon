@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'react-i18next'
 import { Space, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -7,19 +6,17 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 export type ProductItemProps = {
   name: string
   price: string
-  startDate?: string
+  description?: string
 }
 
-export const ProductItem = ({ name, price, startDate }: ProductItemProps) => {
-  const { t } = useTranslation('cart')
-
+export const ProductItem = ({ name, price, description }: ProductItemProps) => {
   return (
     <SpaceFlex space={1} align="start">
       <Pillow size="small" />
       <TextWrapper>
         <Text>{name}</Text>
         <Space y={1}>
-          <Text color="textSecondary">{t('CART_ENTRY_DATE_LABEL', { date: startDate })}</Text>
+          <Text color="textSecondary">{description}</Text>
           <Text>{price}</Text>
         </Space>
       </TextWrapper>
