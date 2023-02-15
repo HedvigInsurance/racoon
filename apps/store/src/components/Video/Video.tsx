@@ -168,9 +168,11 @@ const StyledVideo = styled.video(
     roundedCorners,
   }: Omit<VideoProps, 'sources'>) => ({
     width: '100%',
-    background: `url(${poster}) no-repeat`,
-    backgroundSize: 'cover',
-    objectFit: 'cover',
+    ...(poster && {
+      background: `url(${poster}) no-repeat`,
+      backgroundSize: 'cover',
+      objectFit: 'cover',
+    }),
     ['@media (orientation: portrait)']: {
       ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),
       ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),

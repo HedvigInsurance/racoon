@@ -38,9 +38,11 @@ const StyledVideo = styled.video(
   ({ poster, height }: Pick<HeroVideoProps, 'poster' | 'height'>) => ({
     width: '100%',
     height: height ?? '80vh',
-    background: `url(${poster}) no-repeat`,
-    backgroundSize: 'cover',
-    objectFit: 'cover',
+    ...(poster && {
+      background: `url(${poster}) no-repeat`,
+      backgroundSize: 'cover',
+      objectFit: 'cover',
+    }),
   }),
 )
 
