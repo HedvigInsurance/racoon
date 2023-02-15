@@ -125,6 +125,7 @@ export type ProductStory = ISbStoryData<
     name?: string
     description?: string
     tagline?: string
+    defaultProductVariant?: string
     productId: string
     priceFormTemplateId: string
     body: Array<SbBlokData>
