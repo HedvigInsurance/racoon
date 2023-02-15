@@ -1,3 +1,4 @@
+import { UrlObject } from 'url'
 import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
 import Link from 'next/link'
@@ -13,11 +14,14 @@ type ImageProps = {
   objectPosition?: string
 }
 
+type LinkHref = string | UrlObject
+
 export type ProductCardProps = {
   title: string
   subtitle: string
   image: ImageProps
-  link: string
+  link: LinkHref
+  getPriceLink?: LinkHref
 } & ImageSize
 
 export const ProductCard = ({
@@ -26,8 +30,10 @@ export const ProductCard = ({
   image: { alt = '', ...imageProps },
   aspectRatio,
   link,
+  getPriceLink,
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
+
   return (
     <Space y={1.5}>
       <Link href={link} tabIndex={-1} aria-hidden={true}>
@@ -43,6 +49,11 @@ export const ProductCard = ({
         <ButtonNextLink href={link} size="medium" variant="secondary">
           {t('READ_MORE')}
         </ButtonNextLink>
+        {getPriceLink && (
+          <ButtonNextLink href={getPriceLink} size="medium" variant="primary-alt">
+            {t('GET_PRICE_LINK')}
+          </ButtonNextLink>
+        )}
       </CallToAction>
     </Space>
   )
