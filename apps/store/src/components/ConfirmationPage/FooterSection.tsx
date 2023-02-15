@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { mq } from 'ui'
-import { Layout } from './Layout'
+import { GridLayout } from '../GridLayout/GridLayout'
 
 type Props = {
   image: { src: string; alt: string }
@@ -13,9 +13,11 @@ export const FooterSection = ({ image, children }: Props) => {
   return (
     <Wrapper>
       <FooterImage {...image} fill />
-      <Layout.Root>
-        <Layout.Content>{children}</Layout.Content>
-      </Layout.Root>
+      <GridLayout.Root>
+        <GridLayout.Content width="1/2" align="center">
+          {children}
+        </GridLayout.Content>
+      </GridLayout.Root>
     </Wrapper>
   )
 }
