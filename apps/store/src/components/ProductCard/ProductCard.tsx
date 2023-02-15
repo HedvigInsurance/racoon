@@ -29,26 +29,26 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
   return (
-    <Space y={0.25}>
-      <Link href={link} legacyBehavior passHref>
-        <ImageWrapper aspectRatio={aspectRatio} tabIndex={-1} aria-hidden={true}>
+    <Space y={1.5}>
+      <Link href={link} tabIndex={-1} aria-hidden={true}>
+        <ImageWrapper aspectRatio={aspectRatio}>
           <Image {...imageProps} alt={alt} fill sizes="100vw" />
         </ImageWrapper>
+        <ContentWrapper>
+          <Title>{title}</Title>
+          <Subtitle>{subtitle}</Subtitle>
+        </ContentWrapper>
       </Link>
-      <ContentWrapper>
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
-        <CallToAction>
-          <ButtonNextLink href={link} size="medium" variant="secondary">
-            {t('READ_MORE')}
-          </ButtonNextLink>
-        </CallToAction>
-      </ContentWrapper>
+      <CallToAction>
+        <ButtonNextLink href={link} size="medium" variant="secondary">
+          {t('READ_MORE')}
+        </ButtonNextLink>
+      </CallToAction>
     </Space>
   )
 }
 
-const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
+const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
   display: 'block',
   position: 'relative',
   marginBottom: theme.space.md,
@@ -62,6 +62,7 @@ const ImageWrapper = styled.a<ImageSize>(({ aspectRatio }) => ({
 
   ':hover, :active': {
     opacity: 0.95,
+    transition: 'opacity 0.1s ease-out',
   },
 }))
 
@@ -90,5 +91,5 @@ const Subtitle = styled.p({
 const CallToAction = styled.div({
   display: 'flex',
   gap: theme.space.sm,
-  marginTop: theme.space.lg,
+  marginInline: theme.space.xs,
 })
