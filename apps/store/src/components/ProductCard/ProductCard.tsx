@@ -1,3 +1,4 @@
+import { UrlObject } from 'url'
 import styled from '@emotion/styled'
 import { default as NextImage } from 'next/image'
 import Link from 'next/link'
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 
 type ImageProps = {
   src: string
@@ -12,6 +14,8 @@ type ImageProps = {
   blurDataURL?: string
   objectPosition?: string
 }
+
+type LinkHref = string | UrlObject
 
 export type ProductCardProps = {
   title: string
@@ -28,6 +32,8 @@ export const ProductCard = ({
   link,
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
+  const priceLink = getPriceLink(link)
+
   return (
     <Space y={1.5}>
       <Link href={link} tabIndex={-1} aria-hidden={true}>
@@ -43,9 +49,27 @@ export const ProductCard = ({
         <ButtonNextLink href={link} size="medium" variant="secondary">
           {t('READ_MORE')}
         </ButtonNextLink>
+        {priceLink && (
+          <ButtonNextLink href={priceLink} size="medium" variant="primary-alt">
+            {t('GET_PRICE_LINK')}
+          </ButtonNextLink>
+        )}
       </CallToAction>
     </Space>
   )
+}
+
+const getPriceLink = (productLink: string): LinkHref | undefined => {
+  if (productLink.includes('?')) {
+    console.warn(
+      "Product link has unexpected parameters, skipping price link generation.  Let's support it when we need it",
+    )
+    return
+  }
+  return {
+    pathname: productLink,
+    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: true },
+  } as const
 }
 
 const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({

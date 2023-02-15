@@ -23,6 +23,6 @@ Default.args = {
   title: 'Hedvig Car',
   subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
   image: { src: 'https://s3.eu-central-1.amazonaws.com/cdn.dev.hedvigit.com/giraffe_wallpaper.jpg' },
-  link: '',
   aspectRatio: '4 / 5',
+  link: '',
 }
