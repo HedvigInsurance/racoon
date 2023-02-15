@@ -6,7 +6,7 @@ import { ORIGIN_URL } from '@/utils/PageLink'
 
 export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
   // AB testing
-  const { canonicalUrl, robots, seoMetaTitle, seoMetaDescription, seoMetaOgImage } = story.content
+  const { canonicalUrl, robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
   // Translations and other alternates
   const { alternates } = story
 
@@ -15,12 +15,6 @@ export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
       <Head>
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta name="robots" content={robots} />
-        {seoMetaTitle && (
-          <>
-            <meta name="title" content={seoMetaTitle} />
-            <meta property="og:title" content={seoMetaTitle} />
-          </>
-        )}
         {seoMetaDescription && (
           <>
             <meta name="description" content={seoMetaDescription} />
@@ -28,6 +22,12 @@ export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
           </>
         )}
         {seoMetaOgImage?.filename && <meta property="og:image" content={seoMetaOgImage.filename} />}
+        {seoTitle && (
+          <>
+            <meta property="og:title" content={seoTitle} />
+            <title>{seoTitle}</title>
+          </>
+        )}
       </Head>
       {/* Must include link to self along with other variants */}
 

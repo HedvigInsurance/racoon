@@ -1,7 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import {
   fetchGlobalProductMetadata,
@@ -42,9 +41,6 @@ const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
 
   return (
     <>
-      <Head>
-        <title>{story.name}</title>
-      </Head>
       <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
     </>
@@ -57,9 +53,6 @@ const NextProductPage = (props: ProductPageProps) => {
 
   return (
     <>
-      <Head>
-        <title>{story.name}</title>
-      </Head>
       <HeadSeoInfo story={story} />
       <ProductPage {...pageProps} story={story} />
     </>

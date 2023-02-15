@@ -106,7 +106,7 @@ export type LinkField = {
 
 export type SEOData = {
   robots: 'index' | 'noindex'
-  seoMetaTitle?: string
+  seoTitle?: string
   seoMetaDescription?: string
   seoMetaOgImage?: StoryblokAsset
   canonicalUrl?: string
