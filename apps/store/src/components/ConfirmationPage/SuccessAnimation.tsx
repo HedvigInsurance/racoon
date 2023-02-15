@@ -1,6 +1,7 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
@@ -11,20 +12,32 @@ type Props = {
 }
 
 export const SuccessAnimation = ({ children }: Props) => {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [showVideo, setShowVideo] = useState(true)
   const handleEnded = () => setShowVideo(false)
+
+  const playVideo = async () => {
+    try {
+      await videoRef.current?.play()
+    } catch (error) {
+      console.error("Couldn't play video", error)
+      datadogLogs.logger.info("Couldn't play video", { error })
+      setShowVideo(false)
+    }
+  }
 
   return (
     <AnimatePresence initial={false}>
       {showVideo ? (
         <VideoWrapper exit={{ opacity: 0 }}>
           <StyledVideo
-            autoPlay={true}
+            ref={videoRef}
             muted={true}
+            autoPlay={true}
             playsInline={true}
             preload="auto"
             onEnded={handleEnded}
-            poster={SUCCESS_ANIMATION_URL.replace('.mp4', '.jpg')}
+            onCanPlayThrough={playVideo}
           >
             <source src={SUCCESS_ANIMATION_URL} type="video/mp4" />
           </StyledVideo>
