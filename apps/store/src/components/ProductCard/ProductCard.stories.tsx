@@ -25,5 +25,4 @@ Default.args = {
   image: { src: 'https://s3.eu-central-1.amazonaws.com/cdn.dev.hedvigit.com/giraffe_wallpaper.jpg' },
   aspectRatio: '4 / 5',
   link: '',
-  getPriceLink: '#TODO',
 }

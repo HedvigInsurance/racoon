@@ -1,6 +1,5 @@
 import { storyblokEditable } from '@storyblok/react'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
-import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQuery'
 import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -27,22 +26,8 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
       image={{ src: blok.image.filename, alt: blok.image.alt }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
       link={link}
-      getPriceLink={getPriceLink(link)}
       {...storyblokEditable(blok)}
     />
   )
 }
 ProductCardBlock.blockName = 'productCard'
-
-const getPriceLink = (productLink: string) => {
-  if (productLink.includes('?')) {
-    console.warn(
-      "Product link has unexpected parameters, skipping price link generation.  Let's support it when we need it",
-    )
-    return
-  }
-  return {
-    pathname: productLink,
-    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: true },
-  } as const
-}

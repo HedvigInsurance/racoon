@@ -31,7 +31,6 @@ Default.args = {
       subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
       image: { src: 'https://via.placeholder.com/336x400' },
       link: '',
-      getPriceLink: '#TODO',
     },
     {
       key: '3',
@@ -46,7 +45,6 @@ Default.args = {
       subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
       image: { src: 'https://via.placeholder.com/336x400' },
       link: '',
-      getPriceLink: '#TODO',
     },
     {
       key: '3',

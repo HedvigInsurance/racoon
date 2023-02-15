@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 
 type ImageProps = {
   src: string
@@ -20,8 +21,7 @@ export type ProductCardProps = {
   title: string
   subtitle: string
   image: ImageProps
-  link: LinkHref
-  getPriceLink?: LinkHref
+  link: string
 } & ImageSize
 
 export const ProductCard = ({
@@ -30,9 +30,9 @@ export const ProductCard = ({
   image: { alt = '', ...imageProps },
   aspectRatio,
   link,
-  getPriceLink,
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
+  const priceLink = getPriceLink(link)
 
   return (
     <Space y={1.5}>
@@ -49,14 +49,27 @@ export const ProductCard = ({
         <ButtonNextLink href={link} size="medium" variant="secondary">
           {t('READ_MORE')}
         </ButtonNextLink>
-        {getPriceLink && (
-          <ButtonNextLink href={getPriceLink} size="medium" variant="primary-alt">
+        {priceLink && (
+          <ButtonNextLink href={priceLink} size="medium" variant="primary-alt">
             {t('GET_PRICE_LINK')}
           </ButtonNextLink>
         )}
       </CallToAction>
     </Space>
   )
+}
+
+const getPriceLink = (productLink: string): LinkHref | undefined => {
+  if (productLink.includes('?')) {
+    console.warn(
+      "Product link has unexpected parameters, skipping price link generation.  Let's support it when we need it",
+    )
+    return
+  }
+  return {
+    pathname: productLink,
+    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: true },
+  } as const
 }
 
 const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
