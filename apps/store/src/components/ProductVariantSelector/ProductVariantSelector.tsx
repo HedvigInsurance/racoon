@@ -5,7 +5,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 type Props = { className?: string }
 
 export const ProductVariantSelector = ({ className }: Props) => {
-  const { productData, selectedVariantUpdate } = useProductPageContext()
+  const { productData, selectedVariant, selectedVariantUpdate } = useProductPageContext()
 
   const variantOptions = useMemo(
     () =>
@@ -26,7 +26,7 @@ export const ProductVariantSelector = ({ className }: Props) => {
     }
   }
 
-  const defaultValue = productData.variants[0].typeOfContract
+  const defaultValue = selectedVariant?.typeOfContract ?? productData.variants[0].typeOfContract
 
   return (
     <InputSelect
