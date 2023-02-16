@@ -18,7 +18,6 @@ export const HeroVideoBlock = ({ blok }: HeroVideoBlockProps) => {
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
         maxWidth: breakpoints.xxl,
-        maxHeight: blok.height,
       })
     : undefined
 
