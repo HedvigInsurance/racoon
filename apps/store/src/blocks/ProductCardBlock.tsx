@@ -25,7 +25,8 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
       subtitle={blok.subtitle}
       image={{ src: blok.image.filename, alt: blok.image.alt }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
-      link={link}
+      // TODO: determine if link is to a product or content page
+      link={{ url: link, type: 'product' }}
       {...storyblokEditable(blok)}
     />
   )

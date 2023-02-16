@@ -21,7 +21,7 @@ export type ProductCardProps = {
   title: string
   subtitle: string
   image: ImageProps
-  link: string
+  link: { url: string; type: 'product' | 'content' }
 } & ImageSize
 
 export const ProductCard = ({
@@ -32,11 +32,11 @@ export const ProductCard = ({
   link,
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
-  const priceLink = getPriceLink(link)
+  const priceLink = link.type === 'product' ? getPriceLink(link.url) : undefined
 
   return (
     <Space y={1.5}>
-      <Link href={link} tabIndex={-1} aria-hidden={true}>
+      <Link href={link.url} tabIndex={-1} aria-hidden={true}>
         <ImageWrapper aspectRatio={aspectRatio}>
           <Image {...imageProps} alt={alt} fill sizes="100vw" />
         </ImageWrapper>
@@ -46,7 +46,7 @@ export const ProductCard = ({
         </ContentWrapper>
       </Link>
       <CallToAction>
-        <ButtonNextLink href={link} size="medium" variant="secondary">
+        <ButtonNextLink href={link.url} size="medium" variant="secondary">
           {t('READ_MORE')}
         </ButtonNextLink>
         {priceLink && (
