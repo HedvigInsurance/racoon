@@ -31,11 +31,13 @@ function getWindowDimensions() {
  */
 export const useBreakpoint = (level: Level) => {
   // Initial value must be the same on SSR and CSR to prevent hydration errors
-  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 })
+  const [isLarger, setIsLarger] = useState(false)
 
   useIsomorphicLayoutEffect(() => {
     const handleResize = () => {
-      setWindowDimensions(getWindowDimensions())
+      const breakpointWidth = breakpoints[level]
+      if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
+      setIsLarger(getWindowDimensions().width >= breakpointWidth)
     }
 
     handleResize()
@@ -44,10 +46,7 @@ export const useBreakpoint = (level: Level) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const breakpointWidth = breakpoints[level]
-  if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
-
-  return windowDimensions.width >= breakpointWidth
+  return isLarger
 }
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
