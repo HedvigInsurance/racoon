@@ -175,6 +175,17 @@ const sharedTriggerStyles = css({
     backgroundColor: theme.colors.grayTranslucent400,
   },
 
+  '@media (hover: hover)': {
+    ':hover': {
+      backgroundColor: theme.colors.gray200,
+      transition: `background-color ${theme.transitions.hover}`,
+
+      '&[data-state=active]': {
+        backgroundColor: theme.colors.grayTranslucent500,
+      },
+    },
+  },
+
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
   },
