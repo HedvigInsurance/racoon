@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import { breakpoints } from 'ui/src/lib/media-query'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
@@ -19,6 +21,12 @@ export type VideoBlockProps = SbBaseBlockProps<
 > & { className?: string }
 
 export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
+  const posterUrl = blok.poster?.filename
+    ? getOptimizedImageUrl(blok.poster.filename, {
+        maxHeight: Math.max(blok.maxHeightLandscape ?? 0, blok.maxHeightPortrait ?? 0),
+        maxWidth: breakpoints.lg,
+      })
+    : undefined
   return (
     <ConditionalWrapper
       condition={!blok.fullBleed}
@@ -26,7 +34,7 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
     >
       <Video
         sources={[{ url: blok.video.filename }]}
-        poster={blok.poster?.filename}
+        poster={posterUrl}
         autoPlay={blok.autoPlay}
         aspectRatioLandscape={blok.aspectRatioLandscape}
         aspectRatioPortrait={blok.aspectRatioPortrait}
