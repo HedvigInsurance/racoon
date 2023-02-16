@@ -23,8 +23,7 @@ export type VideoBlockProps = SbBaseBlockProps<
 export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
-        maxHeight: Math.max(blok.maxHeightLandscape ?? 0, blok.maxHeightPortrait ?? 0),
-        maxWidth: breakpoints.lg,
+        maxWidth: breakpoints.xxl,
       })
     : undefined
   return (
