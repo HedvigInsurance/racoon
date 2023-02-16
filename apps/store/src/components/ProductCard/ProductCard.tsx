@@ -68,7 +68,7 @@ const getPriceLink = (productLink: string): LinkHref | undefined => {
   }
   return {
     pathname: productLink,
-    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: true },
+    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1 },
   } as const
 }
 
