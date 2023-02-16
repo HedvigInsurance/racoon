@@ -43,7 +43,6 @@
   "INSURELY_SUCCESS_CONTINUE_BUTTON": "Fortsæt",
   "INSURELY_SUCCESS_PROMPT": "Vi fandt din forsikring hos {{company}}",
   "LOADING_PRICE_ANIMATION_LABEL": "Beregner din pris...",
-  "OPEN_PRICE_CALCULATOR_BUTTON": "Beregn pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Rediger dine informationer",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Rediger",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparer {{amount}}"
