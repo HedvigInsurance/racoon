@@ -71,11 +71,13 @@ export const HeaderWithTrigger = ({ children }: HeaderWithTriggerProps) => {
 }
 
 const OpenIcon = styled(PlusIcon)({
+  flexShrink: 0,
   display: 'block',
   '[data-state=open] &': { display: 'none' },
 })
 
 const CloseIcon = styled(MinusIcon)({
+  flexShrink: 0,
   display: 'none',
   '[data-state=open] &': { display: 'block' },
 })

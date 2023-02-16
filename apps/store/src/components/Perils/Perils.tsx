@@ -86,6 +86,7 @@ const HeaderWrapper = styled.span({
   display: 'flex',
   alignItems: 'center',
   gap: theme.space.sm,
+  overflow: 'hidden',
 })
 
 const TriggerText = styled(Text)({
@@ -97,6 +98,7 @@ const TriggerText = styled(Text)({
 })
 
 const Color = styled.div<{ color?: string }>(({ color }) => ({
+  flexShrink: 0,
   width: '1rem',
   height: '1rem',
   borderRadius: '50%',
