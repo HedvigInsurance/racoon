@@ -75,23 +75,11 @@ export const ConfirmationPage = (props: Props) => {
                   })}
                 </CheckList>
               </Space>
-
-              <Space y={1}>
-                <div>
-                  <Heading as="h2" variant="standard.24">
-                    {story.content.faqTitle}
-                  </Heading>
-                  <Text as="p" color="textSecondary" size="xl">
-                    {story.content.faqSubtitle}
-                  </Text>
-                </div>
-                <BlockLayoutReset>
-                  <ConfirmationPageBlock blok={story.content} />
-                </BlockLayoutReset>
-              </Space>
             </Space>
           </GridLayout.Content>
         </GridLayout.Root>
+
+        <ConfirmationPageBlock blok={story.content} />
 
         <FooterSection
           image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
@@ -119,8 +107,4 @@ const Wrapper = styled.div({
   [mq.lg]: {
     paddingTop: theme.space.xxxl,
   },
-})
-
-const BlockLayoutReset = styled.div({
-  marginInline: `calc(-1 * ${theme.space.md})`,
 })
