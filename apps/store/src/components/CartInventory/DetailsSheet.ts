@@ -3,6 +3,8 @@ import { mq, Space, theme } from 'ui'
 
 export const Root = styled(Space)({
   paddingTop: theme.space.md,
+  // Clear dialog footer
+  paddingBottom: theme.space[9],
 
   [mq.lg]: {
     paddingTop: theme.space.xxxl,
@@ -16,14 +18,6 @@ export const Header = styled.header({
   alignItems: 'center',
 })
 
-export const Main = styled.main({
-  [mq.sm]: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(28rem, 33%)',
-    justifyContent: 'center',
-  },
-})
-
 export const Table = styled.div({
   paddingInline: theme.space.md,
 })
@@ -33,8 +27,7 @@ export const Row = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  // @TODO: update to "border opaque" color
-  borderBottom: `1px solid ${theme.colors.gray300}`,
+  borderBottom: `1px solid ${theme.colors.borderOpaque}`,
 })
 
 export const HorizontalList = styled.div({
@@ -44,4 +37,7 @@ export const HorizontalList = styled.div({
 
   paddingInline: theme.space.md,
   overflow: 'auto',
+
+  marginRight: `calc(${theme.space.md} * -1)`,
+  [mq.sm]: { marginRight: 0 },
 })
