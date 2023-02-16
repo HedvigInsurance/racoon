@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { appStoreLinks } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -14,7 +15,6 @@ import { ConfirmationPageProps } from './ConfirmationPage.types'
 // TODO: update to point to production deployment
 import qrCodeImage from './download-app-qrcode.png'
 import { FooterSection } from './FooterSection'
-import { Layout } from './Layout'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
@@ -38,8 +38,8 @@ export const ConfirmationPage = (props: Props) => {
   return (
     <Wrapper>
       <Space y={4}>
-        <Layout.Root>
-          <Layout.Content>
+        <GridLayout.Root>
+          <GridLayout.Content width="1/2" align="center">
             <Space y={4}>
               <Space y={{ base: 1.5, lg: 3 }}>
                 <div>
@@ -90,8 +90,8 @@ export const ConfirmationPage = (props: Props) => {
                 </BlockLayoutReset>
               </Space>
             </Space>
-          </Layout.Content>
-        </Layout.Root>
+          </GridLayout.Content>
+        </GridLayout.Root>
 
         <FooterSection
           image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}

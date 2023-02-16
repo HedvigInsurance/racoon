@@ -14,7 +14,7 @@ export const CheckoutHeader = ({ children, steps, activeStep }: Props) => {
       <HeaderLogo>
         <HedvigLogo width={78} />
       </HeaderLogo>
-      <HeaderBreadcrumbs>
+      <HeaderBreadcrumbs width="1/3" align="center">
         <Breadcrumbs steps={steps} activeStep={activeStep} />
       </HeaderBreadcrumbs>
       <HeaderBack>{children}</HeaderBack>
@@ -43,7 +43,6 @@ const HeaderLogo = styled.div({
 
 const HeaderBreadcrumbs = styled(GridLayout.Content)({
   gridRow: 2,
-  gridColumn: '1 / span 12',
 
   [mq.md]: {
     gridRow: 1,
