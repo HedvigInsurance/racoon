@@ -8,6 +8,7 @@ export type ShoppingBagIconProps = {
 
 export const ShoppingBagIcon = ({ count }: ShoppingBagIconProps) => {
   const hasItemsInCart = count > 0
+  console.log('hasItemsInCart', hasItemsInCart)
 
   return (
     <>
