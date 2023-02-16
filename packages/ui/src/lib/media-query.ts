@@ -10,6 +10,7 @@ const breakpoints: Array<[Level, number]> = [
   ['xl', 1280],
   ['xxl', 1536],
 ]
+// FIXME: export enum with values
 
 export const mq = breakpoints.reduce((mediaQueries, [name, value]) => {
   mediaQueries[name] = `@media (min-width: ${value}px)`

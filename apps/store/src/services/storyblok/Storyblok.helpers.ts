@@ -83,3 +83,18 @@ export const getStoryblokImageSize = (filename: string) => {
 
   return { width: Number(width), height: Number(height) }
 }
+
+type ImageOptimizationOptions = {
+  maxHeight?: number
+  maxWidth?: number
+}
+export const getOptimizedImageUrl = (
+  originalUrl: string,
+  options: ImageOptimizationOptions = {},
+) => {
+  let optimizationRules = ''
+  if (options.maxHeight || options.maxWidth) {
+    optimizationRules = `fit-in/${options.maxWidth ?? 0}x${options.maxHeight ?? 0}`
+  }
+  return `${originalUrl}/m/${optimizationRules}`
+}
