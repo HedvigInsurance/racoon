@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { breakpoints } from 'ui/src/lib/media-query'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
@@ -23,7 +24,7 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
         maxHeight: Math.max(blok.maxHeightLandscape ?? 0, blok.maxHeightPortrait ?? 0),
-        maxWidth: 1024,
+        maxWidth: breakpoints.lg,
       })
     : undefined
   return (

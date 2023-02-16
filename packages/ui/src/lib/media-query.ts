@@ -2,20 +2,20 @@ import { useState, useLayoutEffect, useEffect } from 'react'
 
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-const breakpoints: Array<[Level, number]> = [
-  ['xs', 480],
-  ['sm', 640],
-  ['md', 768],
-  ['lg', 1024],
-  ['xl', 1280],
-  ['xxl', 1536],
-]
-// FIXME: export enum with values
+export const breakpoints: Record<Level, number> = {
+  xs: 480,
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  xxl: 1536,
+}
 
-export const mq = breakpoints.reduce((mediaQueries, [name, value]) => {
-  mediaQueries[name] = `@media (min-width: ${value}px)`
-  return mediaQueries
-}, {} as Record<Level, string>)
+export const mq = Object.fromEntries(
+  Object.entries(breakpoints).map(([name, width]) => {
+    return [name, `@media (min-width: ${width}px)`]
+  }),
+)
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -44,11 +44,8 @@ export const useBreakpoint = (level: Level) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const breakpoint = breakpoints.find(([breakpointName]) => breakpointName === level)
-
-  if (!breakpoint) throw new Error(`Unknown breakpoint ${level}`)
-
-  const [, breakpointWidth] = breakpoint
+  const breakpointWidth = breakpoints[level]
+  if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
 
   return windowDimensions.width >= breakpointWidth
 }
