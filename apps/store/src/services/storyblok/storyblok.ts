@@ -235,7 +235,9 @@ export const initStoryblok = () => {
   storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
     apiOptions: {
-      // ~290ms -> ~15ms for subsequent page renders
+      // ~290ms -> ~15ms for subsequent page renders locally
+      // Does not work on Vercel due to never sharing memory between requests.  We're using cv there
+      //
       cache: {
         type: 'memory',
         clear: 'auto',

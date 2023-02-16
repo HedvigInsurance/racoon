@@ -1,5 +1,6 @@
 import { StoryblokClient } from '@storyblok/js'
 import { SbBlokData, ISbStoryData } from '@storyblok/react'
+import { get as getFromConfig } from '@vercel/edge-config'
 import { Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
@@ -40,8 +41,13 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   slug: string,
   params: StoryblokFetchParams,
 ): Promise<StoryData> => {
+  let cv: number | undefined
+  if (params.version === 'published') {
+    cv = await getFromConfig('storyblokCacheVersion')
+  }
   const response = await storyblokClient.get(`cdn/stories/${slug}`, {
     ...params,
+    cv,
     resolve_links: 'url',
   })
 
