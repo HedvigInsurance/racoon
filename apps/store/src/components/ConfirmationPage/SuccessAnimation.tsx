@@ -18,7 +18,14 @@ export const SuccessAnimation = ({ children }: Props) => {
     <AnimatePresence initial={false}>
       {showVideo ? (
         <VideoWrapper exit={{ opacity: 0 }}>
-          <StyledVideo autoPlay={true} muted={true} preload="auto" onEnded={handleEnded}>
+          <StyledVideo
+            autoPlay={true}
+            muted={true}
+            playsInline={true}
+            preload="auto"
+            onEnded={handleEnded}
+            poster={SUCCESS_ANIMATION_URL.replace('.mp4', '.jpg')}
+          >
             <source src={SUCCESS_ANIMATION_URL} type="video/mp4" />
           </StyledVideo>
         </VideoWrapper>
