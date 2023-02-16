@@ -53,7 +53,7 @@ const FeaturedProduct = ({ recommendation }: FeaturedProductProps) => {
       subtitle={recommendation.displayNameFull}
       image={{ src: imageSrc, alt: recommendation.featuredImage?.alt ?? '' }}
       aspectRatio={aspectRatio}
-      link={recommendation.pageLink}
+      link={{ url: recommendation.pageLink, type: 'product' }}
     />
   )
 }

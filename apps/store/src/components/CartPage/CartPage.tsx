@@ -83,7 +83,9 @@ export const CartPage = (props: CartPageProps) => {
     <PageWrapper>
       <Space y={{ base: 3, sm: 6 }}>
         <GridLayout.Root>
-          <GridLayout.Content>{body}</GridLayout.Content>
+          <GridLayout.Content width="1/3" align="center">
+            {body}
+          </GridLayout.Content>
         </GridLayout.Root>
         {recommendations.length > 0 && (
           <ProductRecommendationList recommendations={recommendations} />
