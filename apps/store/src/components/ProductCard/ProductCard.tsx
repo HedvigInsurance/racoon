@@ -86,7 +86,7 @@ const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
 
   ':hover, :active': {
     opacity: 0.95,
-    transition: 'opacity 0.1s ease-out',
+    transition: `opacity ${theme.transitions.hover}`,
   },
 }))
 

@@ -48,6 +48,7 @@ export const Item = styled(AccordionPrimitives.Item)({
   '@media (hover: hover)': {
     [`:has(${Trigger}:hover)`]: {
       backgroundColor: theme.colors.gray200,
+      transition: `background ${theme.transitions.hover}`,
     },
   },
 })
