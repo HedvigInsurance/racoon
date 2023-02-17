@@ -48,6 +48,7 @@ import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { isBrowser } from '@/utils/env'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
@@ -230,8 +231,13 @@ export const initStoryblok = () => {
   }
 
   // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
-  const shouldUseBridge =
-    typeof window !== 'undefined' ? window.location !== window.parent.location : false
+  let shouldUseBridge = false
+  if (isBrowser()) {
+    shouldUseBridge = window.location.toString() !== window.parent.location.toString()
+    if (shouldUseBridge) {
+      console.log('Using Storyblok editor bridge')
+    }
+  }
   storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
     apiOptions: {
