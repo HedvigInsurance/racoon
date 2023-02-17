@@ -5,6 +5,7 @@ import {
   postalCodeField,
   streetAddressField,
   yourFamilySection,
+  currentInsuranceField,
 } from '@/services/PriceCalculator/formFragments'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
@@ -26,18 +27,9 @@ export const SE_HOUSE: Template = {
         },
         {
           field: postalCodeField,
-          layout: LAYOUT.HALF_WIDTH,
+          layout: LAYOUT.FULL_WIDTH,
         },
-        {
-          field: {
-            type: 'number',
-            name: 'yearOfConstruction',
-            label: { key: tKey('FIELD_YEAR_OF_CONSTRUCTION_LABEL') },
-            required: true,
-            min: 0,
-          },
-          layout: LAYOUT.HALF_WIDTH,
-        },
+
         {
           field: livingSpaceField,
           layout: LAYOUT.HALF_WIDTH,
@@ -53,6 +45,28 @@ export const SE_HOUSE: Template = {
           layout: LAYOUT.HALF_WIDTH,
         },
         {
+          field: currentInsuranceField,
+          layout: LAYOUT.FULL_WIDTH,
+        },
+      ],
+    },
+
+    {
+      id: 'building-details',
+      title: { key: tKey('SECTION_TITLE_BUILDING_DETAILS') },
+      submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
+      items: [
+        {
+          field: {
+            type: 'number',
+            name: 'yearOfConstruction',
+            label: { key: tKey('FIELD_YEAR_OF_CONSTRUCTION_LABEL') },
+            required: true,
+            min: 0,
+          },
+          layout: LAYOUT.HALF_WIDTH,
+        },
+        {
           field: {
             type: 'number',
             name: 'numberOfBathrooms',
@@ -60,7 +74,7 @@ export const SE_HOUSE: Template = {
             required: true,
             min: 0,
           },
-          layout: LAYOUT.FULL_WIDTH,
+          layout: LAYOUT.HALF_WIDTH,
         },
         {
           field: {

@@ -35,7 +35,7 @@ export const livingSpaceField: InputField = {
   suffix: 'm²',
 }
 
-const currentInsuranceField: InputField = {
+export const currentInsuranceField: InputField = {
   type: 'current-insurance',
   name: 'externalInsurer',
   // TODO: Do we want promise-specific labels?
