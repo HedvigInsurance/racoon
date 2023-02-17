@@ -3,12 +3,11 @@ export const fetchJson = async <T extends object>(
   options?: Partial<RequestInit>,
 ): Promise<T> => {
   const resp = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...(options?.headers ?? {}),
-    },
     ...options,
+    headers: {
+      'Content-type': 'application/json',
+      ...options?.headers,
+    },
   })
   const data = await resp.json()
   if (!resp.ok) {

@@ -1,6 +1,7 @@
 import { StoryblokClient } from '@storyblok/js'
 import { SbBlokData, ISbStoryData } from '@storyblok/react'
 import { get as getFromConfig } from '@vercel/edge-config'
+import { fetchJson } from '@/services/authApi/fetchJson'
 import { Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
@@ -43,7 +44,7 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
 ): Promise<StoryData> => {
   let cv: number | undefined
   if (params.version === 'published') {
-    cv = await getFromConfig('storyblokCacheVersion')
+    cv = await getStoryblokCacheVersion()
   }
   const response = await storyblokClient.get(`cdn/stories/${slug}`, {
     ...params,
@@ -103,4 +104,35 @@ export const getOptimizedImageUrl = (
     optimizationRules = `fit-in/${options.maxWidth ?? 0}x${options.maxHeight ?? 0}`
   }
   return `${originalUrl}/m/${optimizationRules}`
+}
+
+export const getStoryblokCacheVersion = async () => {
+  return await getFromConfig<number>('storyblokCacheVersion')
+}
+
+export const publishStoryblokCacheVersion = async (cacheVersion: number) => {
+  console.log('Updating Storyblok cache version in Edge config', cacheVersion)
+  const manageApiUrl = process.env.EDGE_CONFIG_MANAGE_API_URL
+  if (!manageApiUrl) {
+    throw new Error('EDGE_CONFIG_MANAGE_API_URL not configured')
+  }
+  const manageApiToken = process.env.EDGE_CONFIG_MANAGE_API_TOKEN
+  if (!manageApiToken) {
+    throw new Error('EDGE_CONFIG_MANAGE_API_TOKEN not configured')
+  }
+  return fetchJson(manageApiUrl, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${manageApiToken}`,
+    },
+    body: JSON.stringify({
+      items: [
+        {
+          operation: 'upsert',
+          key: 'storyblokCacheVersion',
+          value: cacheVersion,
+        },
+      ],
+    }),
+  })
 }
