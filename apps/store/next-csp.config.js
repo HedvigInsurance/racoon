@@ -101,6 +101,7 @@ const frameSrc = [
 
   // GTM-injected scripts
   'https://*.snapchat.com',
+  'https://*.hotjar.com',
 
   "'self'", // Storyblok editor
 ]
