@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useCallback, useId, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 
@@ -34,6 +34,7 @@ const autoplaySettings = {
   loop: true,
 }
 
+const missingPosters = new Set()
 export const Video = ({
   sources,
   poster,
@@ -51,6 +52,14 @@ export const Video = ({
   const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, setState] = useState<State>(State.Paused)
+
+  const videoUrl = sources[0].url
+  useEffect(() => {
+    if (!poster && !missingPosters.has(videoUrl)) {
+      console.log('Video block has no poster', videoUrl)
+      missingPosters.add(videoUrl)
+    }
+  }, [poster, videoUrl])
 
   const autoplayAttributes = delegated.autoPlay ? autoplaySettings : {}
 
