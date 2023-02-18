@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { StoryblokComponent } from '@storyblok/react'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
@@ -20,6 +20,11 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
   const { productData } = useProductPageContext()
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
+  const handleTabClick = useCallback((value: string) => {
+    setActiveSection(value as PageSection)
+    window?.scrollTo({ top: 0 })
+  }, [])
+
   const shouldRenderVariantSelector =
     activeSection === 'coverage' && productData.variants.length > 1
 
@@ -27,13 +32,7 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
     <>
       <PurchaseForm />
       <Content>
-        <RadixTabs.Tabs
-          value={activeSection}
-          onValueChange={(value) => {
-            setActiveSection(value as PageSection)
-            window?.scrollTo({ top: 0 })
-          }}
-        >
+        <RadixTabs.Tabs value={activeSection} onValueChange={handleTabClick}>
           <AnimatedHeader>
             <RadixTabs.TabsList>
               <TablistWrapper>
