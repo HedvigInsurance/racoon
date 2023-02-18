@@ -5,7 +5,7 @@ const Card = styled.div({
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-  padding: `${theme.space.xl} ${theme.space.lg}`,
+  padding: `${theme.space.xl} ${theme.space.sm}`,
   backdropFilter: 'blur(20px)',
   display: 'grid',
   justifyContent: 'center',
@@ -15,12 +15,12 @@ const Card = styled.div({
   textAlign: 'center',
   height: '100%',
 
-  '@media (hover: hover)': {
-    ':hover': { backgroundColor: theme.colors.gray200 },
-  },
-
   [mq.sm]: {
     paddingBlock: theme.space.xxl,
+  },
+
+  '@media (hover: hover)': {
+    ':hover': { backgroundColor: theme.colors.gray200 },
   },
 })
 
