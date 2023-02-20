@@ -6,8 +6,8 @@ import {
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
-import { saveAccessToken } from '@/services/authApi/persist'
-import { exchangeAuthorizationCode } from '../authApi/oauth'
+import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
+import { saveAuthTokens } from '@/services/authApi/persist'
 import { BankIdState, CheckoutSignOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import { BankIdDispatch } from './bankIdReducer'
@@ -93,8 +93,10 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
               if (status === ShopSessionSigningStatus.Signed && completion) {
                 signingResult.stopPolling()
                 bankIdLogger.debug('Signing complete')
-                const accessToken = await exchangeAuthorizationCode(completion.authorizationCode)
-                saveAccessToken(accessToken)
+                const { accessToken, refreshToken } = await exchangeAuthorizationCode(
+                  completion.authorizationCode,
+                )
+                saveAuthTokens({ accessToken, refreshToken })
                 subscriber.complete()
               }
             },

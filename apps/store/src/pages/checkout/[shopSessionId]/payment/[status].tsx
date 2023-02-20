@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
-import { initializeApollo } from '@/services/apollo/client'
+import { initializeApolloServerSide } from '@/services/apollo/client'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!isRoutingLocale(locale)) return { notFound: true }
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const shopSession = await shopSessionService.fetchById(shopSessionId)
 

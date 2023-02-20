@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
+import { initializeApolloServerSide } from '@/services/apollo/client'
 import { createAuthorizationCode } from '@/services/authApi/oauth'
 import { getAuthHeaders } from '@/services/authApi/persist'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!shopSessionId) return { notFound: true }
 
   try {
-    const apolloClient = initializeApollo({ req, res, locale })
+    const apolloClient = await initializeApolloServerSide({ req, res, locale })
     await setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId)
     // TODO: validate ShopSession
   } catch (error) {

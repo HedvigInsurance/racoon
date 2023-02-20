@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
-import { getAuthHeaders, resetAccessToken } from '@/services/authApi/persist'
+import { initializeApolloServerSide } from '@/services/apollo/client'
+import { getAuthHeaders, resetAuthTokens } from '@/services/authApi/persist'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
@@ -19,14 +19,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     nextURL.pathname = nextQueryParam
   }
 
-  const apolloClient = initializeApollo({ req, res })
+  const apolloClient = await initializeApolloServerSide({ req, res })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
   const shopSessionId = shopSessionService.shopSessionId()
 
   if (getAuthHeaders({ req, res })) {
     console.debug('Resetting auth session')
-    resetAccessToken({ req, res })
+    resetAuthTokens({ req, res })
   }
 
   if (shopSessionId) {

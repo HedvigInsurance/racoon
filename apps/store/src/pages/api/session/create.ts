@@ -1,6 +1,6 @@
 import { ApolloClient } from '@apollo/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
+import { initializeApolloServerSide } from '@/services/apollo/client'
 import {
   CartEntryAddDocument,
   CartEntryAddMutation,
@@ -10,6 +10,7 @@ import {
   ShopSessionCustomerUpdateMutationVariables,
 } from '@/services/apollo/generated'
 import { CountryCode } from '@/services/apollo/generated'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   PriceIntentService,
@@ -26,7 +27,9 @@ const DEFAULT_COUNTRY_CODE = CountryCode.Se
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const apolloClient = initializeApollo({ req, res, locale: DEFAULT_LOCALE })
+    resetAuthTokens({ req, res })
+
+    const apolloClient = await initializeApolloServerSide({ req, res, locale: DEFAULT_LOCALE })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
     const shopSession = await shopSessionService.create({ countryCode: DEFAULT_COUNTRY_CODE })

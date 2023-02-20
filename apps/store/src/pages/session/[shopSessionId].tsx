@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
+import { initializeApolloServerSide } from '@/services/apollo/client'
 import {
   RedeemCampaignDocument,
   RedeemCampaignMutation,
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return fallbackRedirect
   }
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   let shopSession: ShopSession
   try {
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })

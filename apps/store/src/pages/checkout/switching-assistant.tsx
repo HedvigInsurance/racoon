@@ -5,7 +5,7 @@ import {
   SwitchingAssistantPage,
   SwitchingAssistantPageProps,
 } from '@/components/SwitchingAssistantPage/SwitchingAssistantPage'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const [shopSession, translations] = await Promise.all([
     getCurrentShopSessionServerSide({ apolloClient, req, res }),
     serverSideTranslations(locale),
