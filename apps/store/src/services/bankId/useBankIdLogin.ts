@@ -3,7 +3,7 @@ import { Subscription } from 'zen-observable-ts'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { saveAccessToken } from '@/services/authApi/persist'
+import { saveAuthTokens } from '@/services/authApi/persist'
 import { LoginPromptOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import { BankIdDispatch } from './bankIdReducer'
@@ -73,8 +73,10 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
             nextOperationState: apiStatusToBankIdState(statusResponse.status),
           })
           if (statusResponse.status === 'COMPLETED') {
-            const accessToken = await exchangeAuthorizationCode(statusResponse.authorizationCode)
-            saveAccessToken(accessToken)
+            const { accessToken, refreshToken } = await exchangeAuthorizationCode(
+              statusResponse.authorizationCode,
+            )
+            saveAuthTokens({ accessToken, refreshToken })
             bankIdLogger.debug('Got access token, authenticating shopSession')
             await authenticateShopSession({ variables: { shopSessionId } })
             bankIdLogger.debug('shopSession authenticated')

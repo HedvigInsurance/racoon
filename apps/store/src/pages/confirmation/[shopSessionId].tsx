@@ -8,7 +8,7 @@ import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const [shopSession, translations, globalStory, story, productMetadata] = await Promise.all([
     shopSessionService.fetchById(shopSessionId),

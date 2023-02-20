@@ -1,20 +1,26 @@
 import { AuthEndpoint } from './authEndpoint'
 import { fetchJson } from './fetchJson'
 
-type TokenResponse = { access_token?: string }
+type TokenResponse = {
+  token_type: 'Bearer'
+  access_token: string
+  refresh_token: string
+  expires_in: number
+  refresh_token_expires_in: number
+}
 
-export const exchangeAuthorizationCode = async (authorizationCode: string): Promise<string> => {
-  const { access_token: accessToken } = await fetchJson<TokenResponse>(AuthEndpoint.TOKEN, {
+export const exchangeAuthorizationCode = async (authorizationCode: string) => {
+  const result = await fetchJson<TokenResponse>(AuthEndpoint.TOKEN, {
     method: 'POST',
     body: JSON.stringify({
       grant_type: 'authorization_code',
       authorization_code: authorizationCode,
     }),
   })
-  if (!accessToken) {
-    throw new Error('No access_token field in response')
+  return {
+    accessToken: result.access_token,
+    refreshToken: result.refresh_token,
   }
-  return accessToken
 }
 
 type MemberAuthCodeResponse = { authorizationCode: string }
@@ -25,4 +31,22 @@ export const createAuthorizationCode = async (authHeaders: HeadersInit) => {
     headers: authHeaders,
   })
   return data.authorizationCode
+}
+
+export const refreshAccessToken = async (refreshToken: string) => {
+  const result = await fetchJson<TokenResponse>(AuthEndpoint.TOKEN, {
+    method: 'POST',
+    body: JSON.stringify({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    }),
+  })
+  if (!result.access_token) {
+    throw new Error('No access_token field in response')
+  }
+
+  return {
+    accessToken: result.access_token,
+    refreshToken: result.refresh_token,
+  }
 }
