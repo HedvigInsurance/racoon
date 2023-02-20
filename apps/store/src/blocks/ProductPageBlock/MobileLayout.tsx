@@ -4,7 +4,6 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useState, useCallback, useRef } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
-import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductPageBlockProps } from './ProductPageBlock'
 import { PageSection } from './ProductPageBlock.types'
 import {
@@ -45,18 +44,18 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
           </StickyHeader>
 
           <OverviewSection>
-            <Tabs.TabsContent value="overview">
+            <RadixTabs.TabsContent value="overview">
               {blok.overview?.map((nestedBlock) => (
                 <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
               ))}
-            </Tabs.TabsContent>
+            </RadixTabs.TabsContent>
           </OverviewSection>
 
-          <Tabs.TabsContent value="coverage">
+          <RadixTabs.TabsContent value="coverage">
             {blok.coverage?.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
-          </Tabs.TabsContent>
+          </RadixTabs.TabsContent>
         </RadixTabs.Tabs>
       </Content>
     </>
