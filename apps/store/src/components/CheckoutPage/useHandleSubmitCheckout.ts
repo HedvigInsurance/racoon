@@ -28,7 +28,7 @@ export const useHandleSubmitCheckout = (options: Options) => {
       const formData = new FormData(event.currentTarget)
       await updateCustomer(formData)
     }
-    await startCheckoutSign({ customerAuthenticationStatus, shopSessionId, ssn, onSuccess })
+    startCheckoutSign({ customerAuthenticationStatus, shopSessionId, ssn, onSuccess })
   }
 
   let userError = updateCustomerResult.userError
