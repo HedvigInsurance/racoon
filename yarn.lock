@@ -2004,48 +2004,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/browser-core@npm:4.34.0":
-  version: 4.34.0
-  resolution: "@datadog/browser-core@npm:4.34.0"
-  checksum: 6d9f55a43d7cd0be036324454c91c66837755d5e303b971195e8ab894aa7d3a4bb9c382a7096715408fbb2dcd3299734bc14cf93e53682e1c375fb46b469afb5
+"@datadog/browser-core@npm:4.34.1":
+  version: 4.34.1
+  resolution: "@datadog/browser-core@npm:4.34.1"
+  checksum: af46e3d809e53942e88771617477aad5c686777bc39835ae46aa23c676d989d28a3fd1d3abcf29f027a8597b0e96fb1ff2329a9d0229616ff202d922b8102b62
   languageName: node
   linkType: hard
 
-"@datadog/browser-logs@npm:4.34.0":
-  version: 4.34.0
-  resolution: "@datadog/browser-logs@npm:4.34.0"
+"@datadog/browser-logs@npm:4.34.1":
+  version: 4.34.1
+  resolution: "@datadog/browser-logs@npm:4.34.1"
   dependencies:
-    "@datadog/browser-core": 4.34.0
+    "@datadog/browser-core": 4.34.1
   peerDependencies:
-    "@datadog/browser-rum": 4.34.0
+    "@datadog/browser-rum": 4.34.1
   peerDependenciesMeta:
     "@datadog/browser-rum":
       optional: true
-  checksum: 8265edb903afff31dffc6fa5a64c2fb50729c4f4b94c8e86655990621c44078f4eef147e6c777198504e5e5168479d098176660792542536c82e100aa5aef2fd
+  checksum: d8dd82b8009a1d80e5908d39fcbbf63a8ffcfd78dbbb5bb3ca926dd7b4156faf0c520b8feb92ff8ded7dd7299137adc3ff15f10ef5076b16208693acfdc8202b
   languageName: node
   linkType: hard
 
-"@datadog/browser-rum-core@npm:4.34.0":
-  version: 4.34.0
-  resolution: "@datadog/browser-rum-core@npm:4.34.0"
+"@datadog/browser-rum-core@npm:4.34.1":
+  version: 4.34.1
+  resolution: "@datadog/browser-rum-core@npm:4.34.1"
   dependencies:
-    "@datadog/browser-core": 4.34.0
-  checksum: b5e13c6a7abcc8fdcbb0d7cb0595b7f14ff224064236bbd350b0371d08156b33fee413ba2829e18d933aad836df9dc525a712d802adebed47e69d0da48c68023
+    "@datadog/browser-core": 4.34.1
+  checksum: 7897f64bc4149a6fd9493b508b932d6d008afa5e4b2e0b802e4a3b454b3c421b05674bae6b605ab7254734aa8b3893cef474a6eca1b004448cbf2797011a9671
   languageName: node
   linkType: hard
 
-"@datadog/browser-rum@npm:4.34.0":
-  version: 4.34.0
-  resolution: "@datadog/browser-rum@npm:4.34.0"
+"@datadog/browser-rum@npm:4.34.1":
+  version: 4.34.1
+  resolution: "@datadog/browser-rum@npm:4.34.1"
   dependencies:
-    "@datadog/browser-core": 4.34.0
-    "@datadog/browser-rum-core": 4.34.0
+    "@datadog/browser-core": 4.34.1
+    "@datadog/browser-rum-core": 4.34.1
   peerDependencies:
-    "@datadog/browser-logs": 4.34.0
+    "@datadog/browser-logs": 4.34.1
   peerDependenciesMeta:
     "@datadog/browser-logs":
       optional: true
-  checksum: 2609feb1a754dfcfb333f761ad5cc44eeeac70c1e848b164cb175fd25adc70bfc756d0334ce04929f563ae095465572c44502f038136956f27900bf764f4e52d
+  checksum: 81f96508fd8dc4151d7741b2144a77a1604bc488f2627b6171de18ca6bb31bf9b148ad7699f7d1ff2b58d31a17200691dba1e9b0f99ed1c6bca58d7c14b14067
   languageName: node
   linkType: hard
 
@@ -18061,7 +18061,7 @@ __metadata:
   resolution: "onboarding@workspace:apps/onboarding"
   dependencies:
     "@apollo/client": 3.7.7
-    "@datadog/browser-rum": 4.34.0
+    "@datadog/browser-rum": 4.34.1
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graphql-codegen/cli": 3.0.0
@@ -21325,7 +21325,7 @@ __metadata:
     "@adyen/adyen-web": 5.33.0
     "@apollo/client": 3.7.7
     "@babel/core": 7.20.12
-    "@datadog/browser-logs": 4.34.0
+    "@datadog/browser-logs": 4.34.1
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graphql-codegen/cli": 3.0.0
