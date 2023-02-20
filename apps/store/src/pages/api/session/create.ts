@@ -20,13 +20,16 @@ import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const TEST_SSN = '199808302393'
 const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
+// TODO: iternationalize
+const DEFAULT_LOCALE = 'en-se'
+const DEFAULT_COUNTRY_CODE = CountryCode.Se
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const apolloClient = initializeApollo({ req, res })
+    const apolloClient = initializeApollo({ req, res, locale: DEFAULT_LOCALE })
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
-    const shopSession = await shopSessionService.create({ countryCode: CountryCode.Se })
+    const shopSession = await shopSessionService.create({ countryCode: DEFAULT_COUNTRY_CODE })
     console.log(`Created new ShopSession: ${shopSession.id}`)
 
     const ssn = (req.query.ssn ?? TEST_SSN) as string
@@ -60,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const nextURL = new URL(ORIGIN_URL)
-  nextURL.pathname = PageLink.cart({ locale: 'en-se' })
+  nextURL.pathname = PageLink.cart({ locale: DEFAULT_LOCALE })
   const destination = nextURL.toString()
   console.log(`Re-directing to destination: ${destination}`)
   return res.redirect(destination)
