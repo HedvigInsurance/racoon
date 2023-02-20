@@ -12877,9 +12877,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:8.5.5":
-  version: 8.5.5
-  resolution: "framer-motion@npm:8.5.5"
+"framer-motion@npm:9.0.4":
+  version: 9.0.4
+  resolution: "framer-motion@npm:9.0.4"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": ^10.15.3
@@ -12891,7 +12891,7 @@ __metadata:
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: 25912b88eaa954d641f0b5f2b811badfb9ca0dbff659cb0dfdae79216ee917b0004d43b9eeb3f74144f4924cf63d8fbd1c93de519eadd8968b6344ed0d5d9d4c
+  checksum: 9ef23d81c78785dd2f7f278bad133d96c22fd3a9dcc310521ea220873b0a923ca927dc2d3e8000e221edfcc5bfd6272f752435472e3a8f9b1ef476202ede1ce2
   languageName: node
   linkType: hard
 
@@ -18089,7 +18089,7 @@ __metadata:
     eslint-config-custom: "workspace:"
     eslint-plugin-cypress: 2.12.1
     formidable: 2.1.1
-    framer-motion: 8.5.5
+    framer-motion: 9.0.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.9
@@ -21361,7 +21361,7 @@ __metadata:
     babel-loader: 9.1.2
     cookies-next: 2.1.1
     eslint-config-custom: "workspace:"
-    framer-motion: 8.5.5
+    framer-motion: 9.0.4
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.9
