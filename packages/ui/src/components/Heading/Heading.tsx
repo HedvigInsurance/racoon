@@ -1,10 +1,12 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import React from 'react'
+import Balancer from 'react-wrap-balancer'
 import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor } from '../../lib/theme/theme'
 import { getHeadingVariantStyles, HeadingVariant } from './Heading.helpers'
+
 export type { PossibleHeadingVariant } from './Heading.helpers'
 
 type HeadingColors = Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textNegative'>
@@ -43,7 +45,7 @@ const HeadingBase = styled(
 export const Heading = ({ as, color, children, variant, align, ...rest }: HeadingProps) => {
   return (
     <HeadingBase as={as} color={color} variant={variant} align={align} {...rest}>
-      {children}
+      <Balancer>{children}</Balancer>
     </HeadingBase>
   )
 }

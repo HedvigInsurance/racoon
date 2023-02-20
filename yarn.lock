@@ -19745,6 +19745,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-wrap-balancer@npm:0.4.0":
+  version: 0.4.0
+  resolution: "react-wrap-balancer@npm:0.4.0"
+  peerDependencies:
+    react: ^18.0.0
+  checksum: c43e9ecc5737ecd67a5f38f4ed928a489dd20bf63b24bb31abc94c6e8605e1df7302196b74e5805528c7044864ac7ea1eea64117b74b8a91066f781e3239e9cc
+  languageName: node
+  linkType: hard
+
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -21377,6 +21386,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 12.1.5
+    react-wrap-balancer: 0.4.0
     storybook-addon-next: 1.7.1
     storybook-addon-next-router: 4.0.2
     subscriptions-transport-ws: 0.11.0
