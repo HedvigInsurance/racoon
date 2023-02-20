@@ -4,6 +4,7 @@ import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useFormatter } from '@/utils/useFormatter'
+import { GridLayout } from '../GridLayout/GridLayout'
 import { CartEntry } from './CartInventory.types'
 import { DataTableRow, getDataTable } from './DataTable/DataTable'
 import * as DetailsSheet from './DetailsSheet'
@@ -30,52 +31,56 @@ export const DetailsSheetDialog = (props: Props) => {
           </FullscreenDialog.Close>
         }
       >
-        <DetailsSheet.Root y={1.5}>
-          <DetailsSheet.Header>
-            <Pillow size="xlarge" {...pillow} />
-            <div>
-              <Text align="center">{title}</Text>
-              <Text color="textSecondary" align="center">
-                {formatter.monthlyPrice(cost)}
-              </Text>
-            </div>
-          </DetailsSheet.Header>
-          <DetailsSheet.Main>
-            <DetailsSheet.HorizontalList>
-              {documents.map((item) => (
-                <Button
-                  key={item.url}
-                  size="small"
-                  variant="secondary"
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.displayName}
-                </Button>
-              ))}
-            </DetailsSheet.HorizontalList>
-
-            <DetailsSheet.Table>
-              <DetailsSheet.Row>
-                <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
-                <Text>
-                  {startDate
-                    ? formatter.fromNow(startDate)
-                    : t('DATA_TABLE_START_DATE_AUTO_SWITCH')}
-                </Text>
-              </DetailsSheet.Row>
-              {dataTableRows?.map((item) => (
-                <DetailsSheet.Row key={item.label}>
-                  <Text color="textSecondary">
-                    {t(item.label, { defaultValue: `${item.label} MISSING` })}
+        <GridLayout.Root>
+          <GridLayout.Content width="1/3" align="center">
+            <DetailsSheet.Root y={1.5}>
+              <DetailsSheet.Header>
+                <Pillow size="xlarge" {...pillow} />
+                <div>
+                  <Text align="center">{title}</Text>
+                  <Text color="textSecondary" align="center">
+                    {formatter.monthlyPrice(cost)}
                   </Text>
-                  <Text>{getDataTableValue(item, data)}</Text>
-                </DetailsSheet.Row>
-              ))}
-            </DetailsSheet.Table>
-          </DetailsSheet.Main>
-        </DetailsSheet.Root>
+                </div>
+              </DetailsSheet.Header>
+              <main>
+                <DetailsSheet.HorizontalList>
+                  {documents.map((item) => (
+                    <Button
+                      key={item.url}
+                      size="small"
+                      variant="secondary"
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.displayName}
+                    </Button>
+                  ))}
+                </DetailsSheet.HorizontalList>
+
+                <DetailsSheet.Table>
+                  <DetailsSheet.Row>
+                    <Text color="textSecondary">{t('DATA_TABLE_START_DATE_LABEL')}</Text>
+                    <Text>
+                      {startDate
+                        ? formatter.fromNow(startDate)
+                        : t('DATA_TABLE_START_DATE_AUTO_SWITCH')}
+                    </Text>
+                  </DetailsSheet.Row>
+                  {dataTableRows?.map((item) => (
+                    <DetailsSheet.Row key={item.label}>
+                      <Text color="textSecondary">
+                        {t(item.label, { defaultValue: `${item.label} MISSING` })}
+                      </Text>
+                      <Text>{getDataTableValue(item, data)}</Text>
+                    </DetailsSheet.Row>
+                  ))}
+                </DetailsSheet.Table>
+              </main>
+            </DetailsSheet.Root>
+          </GridLayout.Content>
+        </GridLayout.Root>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )

@@ -31,7 +31,7 @@ export const AccordionBlock = ({ blok }: Props) => {
       )}
       <Wrapper {...storyblokEditable(blok)}>
         {displayTitleDescriptionSection && (
-          <Column>
+          <GridLayout.Content width="1/2" align="left">
             <TextContent>
               {blok.title && (
                 <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
@@ -44,15 +44,15 @@ export const AccordionBlock = ({ blok }: Props) => {
                 </Text>
               )}
             </TextContent>
-          </Column>
+          </GridLayout.Content>
         )}
-        <Column center={!displayTitleDescriptionSection}>
+        <GridLayout.Content width="1/2" align={displayTitleDescriptionSection ? 'right' : 'center'}>
           <Accordion.Root type="multiple">
             {accordionItems.map((nestedBlock) => (
               <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
             ))}
           </Accordion.Root>
-        </Column>
+        </GridLayout.Content>
       </Wrapper>
     </>
   )
@@ -68,16 +68,7 @@ const Wrapper = styled(GridLayout.Root)({
   },
 })
 
-const Column = styled.div<{ center?: boolean }>(({ center = false }) => ({
-  gridColumn: '1 / -1',
-  [mq.lg]: {
-    gridColumn: center ? '4 / span 6' : 'span 6',
-  },
-}))
-
-const TextContent = styled.div({
-  maxWidth: TEXT_CONTENT_MAX_WIDTH,
-})
+const TextContent = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
 
 const getFAQStructuredData = (
   accordions: ReadonlyArray<Pick<AccordionItemBlockProps['blok'], 'title' | 'body'>>,

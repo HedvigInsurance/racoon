@@ -1,6 +1,7 @@
+import { breakpoints } from 'ui/src/lib/media-query'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
-import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { filterByBlockType, getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
 import { HeadingBlockProps, HeadingBlock } from './HeadingBlock'
 
 type HeroVideoBlockProps = SbBaseBlockProps<{
@@ -14,12 +15,17 @@ type HeroVideoBlockProps = SbBaseBlockProps<{
 
 export const HeroVideoBlock = ({ blok }: HeroVideoBlockProps) => {
   const headingBlocks = filterByBlockType(blok.headings, HeadingBlock.blockName)
+  const posterUrl = blok.poster?.filename
+    ? getOptimizedImageUrl(blok.poster.filename, {
+        maxWidth: breakpoints.xxl,
+      })
+    : undefined
 
   return (
     <HeroVideo
       sources={[{ url: blok.video.filename, format: blok.format }]}
       height={blok.height}
-      poster={blok.poster?.filename}
+      poster={posterUrl}
       childrenPadding={blok.headingsPadding}
     >
       {headingBlocks.map((nestedBlock) => (

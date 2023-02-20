@@ -20,12 +20,10 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
-import * as ComparisonTable from './ComparisonTable/ComparisonTable'
+import { ComparisonTableContainer } from './ComparisonTableContainer'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 import { useUpdateRenewalDate } from './useUpdateRenewalDate'
-
-const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
 
 type Props = {
   priceIntent: PriceIntent
@@ -34,15 +32,6 @@ type Props = {
   // TODO: Use better type
   onAddedToCart: (productOffer: ProductOfferFragment) => void
   onClickEdit: () => void
-}
-
-const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
-  offer.variant.perils.some((peril) => peril.title === perilTitle)
-
-//@TODO - base on selected offer
-const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
-  if (offer.id === selectedOfferId) return true
-  return false
 }
 
 export const OfferPresenter = (props: Props) => {
@@ -142,12 +131,6 @@ export const OfferPresenter = (props: Props) => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
   }
 
-  const getUniquePerilTitles = () => {
-    const allPerils = priceIntent.offers.flatMap((offer) => offer.variant.perils)
-    const perilTitles = allPerils.map((peril) => peril.title)
-    return removeDuplicates(perilTitles)
-  }
-
   return (
     <>
       <Space y={1}>
@@ -202,39 +185,7 @@ export const OfferPresenter = (props: Props) => {
         )}
 
         {isComparisonTableOpen && (
-          <ComparisonTable.Root>
-            <ComparisonTable.Head>
-              <ComparisonTable.Header />
-              {priceIntent.offers.map((offer) => (
-                <ComparisonTable.Header
-                  key={offer.id}
-                  active={isSelectedOffer(offer, selectedOfferId)}
-                >
-                  {/* @TODO - fix short names for header */}
-                  {offer.variant.displayName}Trafik
-                </ComparisonTable.Header>
-              ))}
-            </ComparisonTable.Head>
-            <ComparisonTable.Body>
-              {getUniquePerilTitles().map((perilTitle) => (
-                <ComparisonTable.Row key={perilTitle}>
-                  <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
-                  {priceIntent.offers.map((offer) => (
-                    <ComparisonTable.DataCell
-                      key={offer.id}
-                      active={isSelectedOffer(offer, selectedOfferId)}
-                    >
-                      {offerHasPeril(offer, perilTitle) ? (
-                        <ComparisonTable.CheckIcon />
-                      ) : (
-                        <ComparisonTable.MissingIcon />
-                      )}
-                    </ComparisonTable.DataCell>
-                  ))}
-                </ComparisonTable.Row>
-              ))}
-            </ComparisonTable.Body>
-          </ComparisonTable.Root>
+          <ComparisonTableContainer offers={priceIntent.offers} selectedOfferId={selectedOfferId} />
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>

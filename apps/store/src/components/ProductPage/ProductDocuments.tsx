@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { mq, NeArrow, Space, Text, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { InsuranceDocument } from '@/services/apollo/generated'
 
 type Props = {
@@ -12,21 +12,21 @@ type Props = {
 export const ProductDocuments = ({ heading, description, docs }: Props) => {
   return (
     <Layout>
-      <Column>
+      <GridLayout.Content width="1/2" align="left">
         <Content>
           <Text size={{ _: 'xl', lg: 'xxl' }}>{heading}</Text>
           <Text size={{ _: 'xl', lg: 'xxl' }} color="textSecondary">
             {description}
           </Text>
         </Content>
-      </Column>
-      <Column>
+      </GridLayout.Content>
+      <GridLayout.Content width="1/2" align="right">
         <Space y={{ base: 0.25, lg: 0.5 }}>
           {docs.map((doc, index) => (
             <ProductDocument key={index} doc={doc} />
           ))}
         </Space>
-      </Column>
+      </GridLayout.Content>
     </Layout>
   )
 }
@@ -55,17 +55,7 @@ const Layout = styled(GridLayout.Root)({
   },
 })
 
-const Column = styled.div({
-  gridColumn: '1 / -1',
-
-  [mq.lg]: {
-    gridColumn: 'span 6',
-  },
-})
-
-const Content = styled.div({
-  maxWidth: '37.5rem', // 600px
-})
+const Content = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
 
 const DownloadFileLink = styled.a({
   display: 'flex',

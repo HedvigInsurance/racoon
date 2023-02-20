@@ -1,10 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react'
-import { ProductDataQuery } from '@/services/apollo/generated'
-import { ProductPageProps } from './ProductPage.types'
-
-type ProductDataVariant =
-  | Exclude<ProductDataQuery['product'], undefined | null>['variants'][number]
-  | null
+import { ProductPageProps, ProductDataVariant } from './ProductPage.types'
 
 type ProductPageContextData = ProductPageProps & {
   selectedVariant: ProductDataVariant

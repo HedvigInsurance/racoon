@@ -2,19 +2,20 @@ import { useState, useLayoutEffect, useEffect } from 'react'
 
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-const breakpoints: Array<[Level, number]> = [
-  ['xs', 480],
-  ['sm', 640],
-  ['md', 768],
-  ['lg', 1024],
-  ['xl', 1280],
-  ['xxl', 1536],
-]
+export const breakpoints: Record<Level, number> = {
+  xs: 480,
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  xxl: 1536,
+}
 
-export const mq = breakpoints.reduce((mediaQueries, [name, value]) => {
-  mediaQueries[name] = `@media (min-width: ${value}px)`
-  return mediaQueries
-}, {} as Record<Level, string>)
+export const mq = Object.fromEntries(
+  Object.entries(breakpoints).map(([name, width]) => {
+    return [name, `@media (min-width: ${width}px)`]
+  }),
+)
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -30,11 +31,13 @@ function getWindowDimensions() {
  */
 export const useBreakpoint = (level: Level) => {
   // Initial value must be the same on SSR and CSR to prevent hydration errors
-  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 })
+  const [isLarger, setIsLarger] = useState(false)
 
   useIsomorphicLayoutEffect(() => {
     const handleResize = () => {
-      setWindowDimensions(getWindowDimensions())
+      const breakpointWidth = breakpoints[level]
+      if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
+      setIsLarger(getWindowDimensions().width >= breakpointWidth)
     }
 
     handleResize()
@@ -43,13 +46,7 @@ export const useBreakpoint = (level: Level) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const breakpoint = breakpoints.find(([breakpointName]) => breakpointName === level)
-
-  if (!breakpoint) throw new Error(`Unknown breakpoint ${level}`)
-
-  const [, breakpointWidth] = breakpoint
-
-  return windowDimensions.width >= breakpointWidth
+  return isLarger
 }
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect

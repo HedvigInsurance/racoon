@@ -103,6 +103,11 @@ export const getStaticProps: GetStaticProps<
       productName: story.content.productId,
     })
 
+    const initialSelectedVariant =
+      productData.variants.find(
+        (variant) => variant.typeOfContract === story.content.defaultProductVariant,
+      ) ?? null
+
     return {
       props: {
         type: 'product',
@@ -110,6 +115,7 @@ export const getStaticProps: GetStaticProps<
         [STORY_PROP_NAME]: story,
         productData,
         priceTemplate,
+        initialSelectedVariant,
       },
       revalidate,
     }

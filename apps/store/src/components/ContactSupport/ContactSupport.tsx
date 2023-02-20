@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Space, Text, theme } from 'ui'
+import { Space, Text, theme, mq } from 'ui'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Message } from '../Animations/Message/Message'
@@ -60,7 +60,11 @@ const CardWrapper = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(2,minmax(min-content, 13rem))',
   justifyContent: 'center',
-  gap: theme.space.md,
+  gap: theme.space.xs,
+
+  [mq.sm]: {
+    gap: theme.space.md,
+  },
 })
 
 const PhoneLink = styled.a({})

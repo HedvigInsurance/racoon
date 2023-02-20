@@ -1,35 +1,18 @@
 import { css, Global, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
-import { Heading, theme } from 'ui'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { theme } from 'ui'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { PageLink } from '@/utils/PageLink'
 
-export const FourOhFourPage = () => {
-  const { t } = useTranslation()
+type ErrorPageProps = { children: React.ReactNode }
+
+export const ErrorPage = ({ children }: ErrorPageProps) => {
   const productRecommendations = useProductRecommendations()
 
   return (
     <Layout>
       <Global styles={animation} />
-      <Wrapper>
-        <SpaceFlex direction="vertical" align="center" space={1.5}>
-          <Heading as="h1" variant={{ _: 'standard.24', lg: 'standard.32' }}>
-            {t('404_PAGE_MESSAGE')}
-          </Heading>
-
-          <ButtonNextLink
-            variant="primary"
-            size={{ base: 'small', lg: 'medium' }}
-            href={PageLink.home()}
-          >
-            {t('404_PAGE_BUTTON')}
-          </ButtonNextLink>
-        </SpaceFlex>
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
 
       {productRecommendations && productRecommendations.length > 0 && (
         <ProductRecommendationList recommendations={productRecommendations} />
