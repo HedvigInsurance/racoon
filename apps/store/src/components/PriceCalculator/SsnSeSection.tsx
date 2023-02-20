@@ -27,22 +27,14 @@ type Props = {
 // - Empty or auth required => Sign in offered
 // - Member authenticated => Warning to reset session in order to edit
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
-  const { authenticationStatus } = shopSession.customer ?? {}
-  if (
-    !authenticationStatus ||
-    authenticationStatus === ShopSessionAuthenticationStatus.None ||
-    authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired
-  ) {
-    return <NewMemberSsnSection shopSession={shopSession} onCompleted={onCompleted} />
-  } else if (authenticationStatus === ShopSessionAuthenticationStatus.Authenticated) {
-    return <AuthenticatedSsnSection shopSession={shopSession} onCompleted={onCompleted} />
+  if (shopSession.customer?.ssn) {
+    return <ChangeSsnWarning shopSession={shopSession} onCompleted={onCompleted} />
   } else {
-    const status: never = authenticationStatus
-    throw new Error(`Unexpected authenticationStatus: ${status}`)
+    return <SsnInputSection shopSession={shopSession} onCompleted={onCompleted} />
   }
 }
 
-const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
+const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
   const getMutationError = useGetMutationError()
   const { showLoginPrompt } = useBankIdContext()
@@ -95,7 +87,7 @@ const NewMemberSsnSection = ({ shopSession, onCompleted }: Props) => {
 }
 SsnSeSection.sectionId = 'ssn-se'
 
-const AuthenticatedSsnSection = ({ onCompleted }: Props) => {
+const ChangeSsnWarning = ({ onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
   return (
     <FullscreenDialog.Root open={true} onOpenChange={onCompleted}>
