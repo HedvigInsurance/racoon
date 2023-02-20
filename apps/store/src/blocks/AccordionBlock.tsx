@@ -64,11 +64,17 @@ const Wrapper = styled(GridLayout.Root)({
   gap: theme.space.lg,
   [mq.lg]: {
     gap: theme.space.md,
-    paddingInline: theme.space.md,
+    paddingInline: theme.space.lg,
   },
 })
 
-const TextContent = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
+const TextContent = styled.div({
+  maxWidth: TEXT_CONTENT_MAX_WIDTH,
+
+  [mq.lg]: {
+    paddingRight: theme.space.xl,
+  },
+})
 
 const getFAQStructuredData = (
   accordions: ReadonlyArray<Pick<AccordionItemBlockProps['blok'], 'title' | 'body'>>,
