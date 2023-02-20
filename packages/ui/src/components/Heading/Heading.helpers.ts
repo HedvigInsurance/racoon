@@ -61,7 +61,7 @@ const headings: Record<PossibleHeadingVariant, CSSObject> = {
   'serif.48': {
     fontSize: theme.fontSizes[8],
     letterSpacing: '-0.01em',
-    fontFamily: theme.fonts.small,
+    fontFamily: theme.fonts.big,
   },
   'serif.56': {
     fontSize: theme.fontSizes[9],
