@@ -42,7 +42,9 @@ const fontSrc = [
 ]
 const imgSrc = [
   'https://promise.hedvig.com',
+  // Storyblok
   'https://*.storyblok.com',
+  'https://s3.amazonaws.com',
   // Intercom
   'https://downloads.intercomcdn.com',
   'https://static.intercomassets.com',
@@ -65,6 +67,7 @@ const mediaSrc = [
   'https://vercel.live',
   // Storyblok
   'https://a.storyblok.com',
+  'https://s3.amazonaws.com',
   "'self'",
 ]
 const connectSrc = [
@@ -79,6 +82,7 @@ const connectSrc = [
   'wss://*.intercom.io',
   // Storyblok editor
   'https://app.storyblok.com',
+  'https://s3.amazonaws.com',
   // Storyblok editor & Vercel preview comments
   'https://*.pusher.com/',
   'wss://*.pusher.com',
