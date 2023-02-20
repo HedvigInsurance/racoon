@@ -57,7 +57,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const nextQueryParam = query['next']
   if (typeof nextQueryParam === 'string') {
-    nextURL.pathname = nextQueryParam
+    const queryLocale = nextQueryParam.split('/')[1]
+    if (isRoutingLocale(queryLocale)) {
+      nextURL.pathname = nextQueryParam
+    } else {
+      nextURL.pathname = `/${locale}${nextQueryParam}`
+    }
   }
 
   const destination = nextURL.toString()
