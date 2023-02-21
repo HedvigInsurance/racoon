@@ -29,7 +29,6 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
 
-
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   require('../mocks')
