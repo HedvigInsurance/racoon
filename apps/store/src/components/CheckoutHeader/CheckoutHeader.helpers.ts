@@ -4,6 +4,7 @@ import {
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
   ShopSessionAuthenticationStatus,
+  ExternalInsuranceCancellationOption as CancellationOption,
 } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { PageLink } from '@/utils/PageLink'
@@ -16,7 +17,7 @@ type Params = {
 
 export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) => {
   const switchingEntry = shopSession.cart.entries.find(
-    ({ cancellation: { bankSignering } }) => !!bankSignering,
+    ({ cancellation }) => cancellation.option === CancellationOption.Banksignering,
   )
   const showSwitchingAssistant = !!switchingEntry
 

@@ -4,6 +4,7 @@ import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
+import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { useApollo } from '@/services/apollo/client'
@@ -27,6 +28,7 @@ import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -80,7 +82,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <TrackingProvider value={tracking}>
               <BankIdContextProvider>
-                {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                <BalancerProvider>
+                  {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                </BalancerProvider>
                 <BankIdDialog />
               </BankIdContextProvider>
             </TrackingProvider>

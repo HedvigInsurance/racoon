@@ -11,7 +11,7 @@ import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { ShopSessionSigning } from '@/services/apollo/generated'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     redirect: { destination: PageLink.home({ locale }), permanent: false },
   } as const
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   let shopSession: ShopSession, translations: SSRConfig
   try {
     ;[shopSession, translations] = await Promise.all([

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { motion, Transition } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { theme, mq } from 'ui'
 import {
   MENU_BAR_HEIGHT_MOBILE,
@@ -12,9 +12,6 @@ import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
-
-// TODO: move to theme
-const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 export const Content = styled.div({
   position: 'relative',
@@ -55,7 +52,10 @@ export const AnimatedHeader = ({ children }: { children: React.ReactNode }) => {
   const scrollUp = state === 'SCROLL_DOWN' || state === 'BELOW'
 
   return (
-    <StickyHeader animate={{ top: scrollUp ? theme.space.md : undefined }} transition={TRANSITION}>
+    <StickyHeader
+      animate={{ top: scrollUp ? theme.space.md : undefined }}
+      transition={theme.transitions.framer.easeInOutCubic}
+    >
       {children}
     </StickyHeader>
   )

@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react'
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
-import { resetAccessToken } from '@/services/authApi/persist'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
@@ -76,7 +76,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 
   queryResult.reset = useCallback(() => {
     shopSessionServiceClientSide.reset()
-    resetAccessToken()
+    resetAuthTokens()
     return shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
       setShopSessionId(shopSession.id)
     })
