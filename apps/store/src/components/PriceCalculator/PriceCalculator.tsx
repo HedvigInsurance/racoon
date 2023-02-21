@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useMemo, useState } from 'react'
-import { useBreakpoint } from 'ui'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
   prefillData,
@@ -30,7 +29,6 @@ type CustomerData = {
 export const PriceCalculator = (props: Props) => {
   const { priceIntent, shopSession, onConfirm } = props
   const { priceTemplate } = useProductPageContext()
-  const isLarge = useBreakpoint('lg')
 
   const form = useMemo(() => {
     return setupForm({
@@ -55,7 +53,6 @@ export const PriceCalculator = (props: Props) => {
       })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
-        !isLarge && window.scrollTo(0, 0)
       } else {
         setActiveSectionId((prevSectionId) => {
           const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
