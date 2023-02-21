@@ -1,3 +1,4 @@
+import isPropValid from '@emotion/is-prop-valid'
 import styled, { CSSObject } from '@emotion/styled'
 import { mq, theme } from 'ui'
 
@@ -13,7 +14,7 @@ const Root = styled.div({
   marginInline: 'auto',
 
   [mq.lg]: {
-    paddingInline: theme.space.xl,
+    paddingInline: theme.space.lg,
   },
 })
 
@@ -25,7 +26,14 @@ type ContentProps = {
   align?: ContentAlignment
 }
 
-const Content = styled.div<ContentProps>(({ width, align }) => ({
+const elementConfig = {
+  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'width',
+}
+
+const Content = styled(
+  'div',
+  elementConfig,
+)<ContentProps>(({ width, align }) => ({
   gridColumn: '1 / span 12',
   ...STYLES[width][align ?? 'left'],
 }))
@@ -58,6 +66,12 @@ const thirdCenterStyles: CSSObject = {
   [mq.xl]: { gridColumn: '5 / span 4' },
 }
 
+const thirdLeftStyles: CSSObject = {
+  [mq.md]: { gridColumn: 'auto / span 8' },
+  [mq.lg]: { gridColumn: 'auto / span 6' },
+  [mq.xl]: { gridColumn: 'auto / span 4' },
+}
+
 const STYLES: Record<ContentWidth, Record<ContentAlignment, CSSObject>> = {
   '1': { left: {}, center: {}, right: {} },
   '2/3': {
@@ -71,7 +85,7 @@ const STYLES: Record<ContentWidth, Record<ContentAlignment, CSSObject>> = {
     right: halfRightStyles,
   },
   '1/3': {
-    left: {},
+    left: thirdLeftStyles,
     center: thirdCenterStyles,
     right: {},
   },

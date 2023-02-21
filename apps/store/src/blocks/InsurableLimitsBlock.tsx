@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { HeadingLabel, Space, theme } from 'ui'
+import { HeadingLabel, mq, Space, theme } from 'ui'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -25,14 +25,20 @@ export const InsurableLimitsBlock = ({ blok }: InsurableLimitsBlockProps) => {
   }))
 
   return (
-    <Wrapper {...storyblokEditable}>
-      <Space y={1}>
+    <Space y={1} {...storyblokEditable}>
+      <Wrapper>
         <HeadingLabel>{blok.headline}</HeadingLabel>
-        <InsurableLimits items={items} />
-      </Space>
-    </Wrapper>
+      </Wrapper>
+      <InsurableLimits items={items} />
+    </Space>
   )
 }
 InsurableLimitsBlock.blockName = 'insurableLimits'
 
-const Wrapper = styled.div({ padding: theme.space.md })
+const Wrapper = styled.div({
+  paddingInline: theme.space.md,
+
+  [mq.lg]: {
+    paddingInline: theme.space.lg,
+  },
+})
