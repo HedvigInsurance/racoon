@@ -23,7 +23,9 @@ export const InsurableLimits = ({ items }: InsurableLimitsProps) => {
               <Accordion.Header>
                 <AccordionTrigger>
                   <SingleLineText size="xl">{item.label}</SingleLineText>
-                  <PlusIcon />
+                  <div>
+                    <PlusIcon />
+                  </div>
                 </AccordionTrigger>
               </Accordion.Header>
               <Accordion.Content>
