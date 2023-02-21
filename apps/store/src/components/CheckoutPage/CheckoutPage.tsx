@@ -72,13 +72,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   return (
     <>
-      <Space y={{ base: 1, lg: 3 }}>
+      <Space y={{ base: 2.5}}>
         <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
           <TextLink href={PageLink.cart()}>{t('BACK_BUTTON')}</TextLink>
         </CheckoutHeader>
         <Layout>
-          <Content y={{ base: 1, lg: 3 }}>
-            <Heading as="h1" variant="standard.24" align="center">
+          <Content y={{ base: 2.5 }}>
+            <Heading balance as="h1" variant="standard.24" align="center">
               {t('CHECKOUT_PAGE_HEADING')}
             </Heading>
 
@@ -185,7 +185,7 @@ const Layout = styled.div({
   paddingInline: theme.space.md,
 
   [mq.lg]: {
-    paddingInline: theme.space.xl,
+    paddingInline: theme.space.lg,
   },
 })
 
