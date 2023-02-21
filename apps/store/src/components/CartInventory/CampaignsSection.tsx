@@ -65,7 +65,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
                 <Text as="span" size="xs">
                   {item.code}
                 </Text>
-                <CrossIcon size={theme.fontSizes.xs} color={theme.colors.gray500} />
+                <CrossIcon size={theme.fontSizes.sm} color={theme.colors.gray500} />
               </ChipButton>
             </form>
 
@@ -95,7 +95,7 @@ const DiscountFormWrapper = styled.div({
 const ChipButton = styled.button({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.space.xxs,
+  gap: theme.space.xs,
   borderRadius: theme.radius.xs,
   backgroundColor: theme.colors.gray200,
   textTransform: 'uppercase',
