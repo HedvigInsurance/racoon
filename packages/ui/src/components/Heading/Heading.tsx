@@ -17,6 +17,7 @@ export type HeadingProps = Margins & {
   children: React.ReactNode
   variant?: HeadingVariant
   align?: 'center' | 'left' | 'right'
+  balance?: boolean
 }
 
 const elementConfig = {
@@ -42,10 +43,16 @@ const HeadingBase = styled(
   }
 })
 
-export const Heading = ({ as, color, children, variant, align, ...rest }: HeadingProps) => {
-  return (
-    <HeadingBase as={as} color={color} variant={variant} align={align} {...rest}>
-      <Balancer>{children}</Balancer>
-    </HeadingBase>
-  )
-}
+export const Heading = ({
+  as,
+  color,
+  children,
+  variant,
+  align,
+  balance,
+  ...rest
+}: HeadingProps) => (
+  <HeadingBase as={as} color={color} variant={variant} align={align} {...rest}>
+    {!balance ? children : <Balancer>{children}</Balancer>}
+  </HeadingBase>
+)
