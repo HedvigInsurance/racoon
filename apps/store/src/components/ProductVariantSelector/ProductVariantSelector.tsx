@@ -35,6 +35,7 @@ export const ProductVariantSelector = ({ className }: Props) => {
       options={variantOptions}
       onChange={handleChange}
       defaultValue={defaultValue}
+      size="small"
     />
   )
 }

@@ -31,8 +31,7 @@ export const TabsTrigger = styled(RadixTabs.Trigger)({
   fontSize: theme.fontSizes.md,
   lineHeight: theme.fontSizes.xl,
   color: theme.colors.dark,
-  // TODO: See if we should define translucent colors in theme
-  backgroundColor: 'rgba(242, 242, 242, 0.6)',
+  backgroundColor: theme.colors.grayTranslucent50,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
   backdropFilter: 'blur(20px)',
   borderRadius: theme.radius.sm,
@@ -41,7 +40,7 @@ export const TabsTrigger = styled(RadixTabs.Trigger)({
   '&[data-state=active]': {
     paddingInline: '3.75rem',
     color: theme.colors.dark,
-    backgroundColor: 'rgba(205, 205, 205, 0.6)',
+    backgroundColor: theme.colors.grayTranslucent300,
   },
 
   '&:focus-visible': {
