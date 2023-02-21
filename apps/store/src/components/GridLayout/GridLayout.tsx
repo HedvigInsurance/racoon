@@ -48,7 +48,7 @@ const twoThirdsCenterStyles: CSSObject = {
 }
 
 const halfCenterStyles: CSSObject = {
-  [mq.md]: { gridColumn: '2 / span 8' },
+  [mq.md]: { gridColumn: '2 / span 10' },
   [mq.lg]: { gridColumn: '4 / span 6' },
 }
 
