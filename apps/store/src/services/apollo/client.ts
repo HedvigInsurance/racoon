@@ -7,7 +7,6 @@ import { i18n } from 'next-i18next'
 import { AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
 import { getAuthHeaders } from '@/services/authApi/persist'
-import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 import { isBrowser } from '@/utils/env'
 import { getLocaleOrFallback, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -82,7 +81,6 @@ type InitializeApolloParams = {
 export const initializeApollo = (params: InitializeApolloParams = {}) => {
   const { initialState = null, req, res, locale, authHeaders } = params
   const headers = {
-    ...getDeviceIdHeader({ req, res }),
     ...(authHeaders ?? getAuthHeaders({ req, res })),
     ...(locale && getHedvigLanguageHeader(locale)),
     ...getShopSessionHeader({ req, res }),
