@@ -3,6 +3,7 @@ import { storyblokEditable, renderRichText } from '@storyblok/react'
 import Head from 'next/head'
 import { Heading, Text, theme, mq } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
+import { Wrapper as TabsBlockWrapper } from '@/blocks/TabsBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -65,6 +66,10 @@ const Wrapper = styled(GridLayout.Root)({
   [mq.lg]: {
     gap: theme.space.md,
     paddingInline: theme.space.lg,
+  },
+
+  [`${TabsBlockWrapper} &`]: {
+    all: 'unset',
   },
 })
 
