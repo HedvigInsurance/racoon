@@ -4,6 +4,8 @@
   "500_PAGE_BUTTON": "Försök igen",
   "500_PAGE_MESSAGE": "Något gick fel, försök igen",
   "CALCULATE_PRICE": "Beräkna pris",
+  "COUNTRY_LABEL_DK": "Danmark",
+  "COUNTRY_LABEL_NO": "Norge",
   "COUNTRY_LABEL_SE": "Sverige",
   "DATE_INPUT_EMPTY_LABEL": "Välj",
   "DIALOG_BUTTON_CANCEL": "Avbryt",
