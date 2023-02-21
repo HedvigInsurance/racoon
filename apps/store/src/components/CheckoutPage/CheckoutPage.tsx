@@ -211,6 +211,7 @@ const Content = styled(Space)(gridCenterStyles, {
 
 const TextLink = styled(Link)({
   backgroundColor: theme.colors.light,
+  fontSize: theme.fontSizes.md,
 
   ':focus-visible': {
     borderRadius: theme.radius.xs,
