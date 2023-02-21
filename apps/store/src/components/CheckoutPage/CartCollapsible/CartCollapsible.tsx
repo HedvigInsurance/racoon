@@ -42,6 +42,7 @@ const Trigger = styled(Collapsible.Trigger)({
   justifyContent: 'space-between',
   alignItems: 'center',
   gap: theme.space.xxs,
+  cursor: 'pointer',
 
   backgroundColor: theme.colors.light,
   ':focus-visible': {

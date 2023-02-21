@@ -29,14 +29,6 @@ export const SE_CAR: Template = {
           field: mileageField,
           layout: LAYOUT.FULL_WIDTH,
         },
-        {
-          field: {
-            type: 'current-insurance',
-            name: 'externalInsurer',
-            label: { key: tKey('FIELD_EXTERNAL_INSURER_CAR_LABEL') },
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
       ],
     },
     {

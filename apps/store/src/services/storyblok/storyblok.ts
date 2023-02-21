@@ -9,6 +9,8 @@ import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
+import { CardLinkBlock } from '@/blocks/CardLinkBlock'
+import { CardLinkListBlock } from '@/blocks/CardLinkListBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
@@ -221,6 +223,8 @@ export const initStoryblok = () => {
     ProductNavContainerBlock,
     USPBlock,
     USPBlockItem,
+    CardLinkBlock,
+    CardLinkListBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {

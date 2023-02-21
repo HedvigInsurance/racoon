@@ -25,6 +25,8 @@ export const Perils = ({ items }: Props) => {
 const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boolean }) => ({
   display: 'grid',
   gap: theme.space.xxs,
+  // It needs a defined width to trigger ellipses on mobile
+  gridTemplateColumns: '100%',
 
   [mq.md]: {
     gridTemplateColumns: `repeat(auto-fit, ${fixedCols ? '20.75rem' : 'minmax(20.75rem, 1fr)'})`,

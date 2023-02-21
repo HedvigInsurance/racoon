@@ -2,6 +2,7 @@ import { getCookie, setCookie, deleteCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
 
 const COOKIE_KEY = '_hvsession'
+const REFRESH_TOKEN_COOKIE_KEY = '_hvrefresh'
 const ACCESS_TOKEN_SESSION_FIELD = 'token'
 const MAX_AGE = 60 * 60 * 24 // 24 hours
 
@@ -13,17 +14,30 @@ const OPTIONS: OptionsType = {
   }),
 }
 
-export const saveAccessToken = (accessToken: string, cookieParams: CookieParams = {}) => {
-  setCookie(COOKIE_KEY, serialize(accessToken), { ...cookieParams, ...OPTIONS })
-}
-
 export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
-export const resetAccessToken = (cookieParams: CookieParams = {}) => {
-  deleteCookie(COOKIE_KEY, { ...cookieParams, ...OPTIONS })
+type SaveAuthTokensParams = CookieParams & {
+  accessToken: string
+  refreshToken: string
 }
 
-const getAccessToken = (cookieParams: CookieParams = {}) => {
+export const saveAuthTokens = (params: SaveAuthTokensParams) => {
+  const { accessToken, refreshToken, ...cookieParams } = params
+  setCookie(COOKIE_KEY, serialize(accessToken), { ...cookieParams, ...OPTIONS })
+  setCookie(REFRESH_TOKEN_COOKIE_KEY, refreshToken, { ...cookieParams, ...OPTIONS })
+}
+
+export const resetAuthTokens = (cookieParams: CookieParams = {}) => {
+  deleteCookie(COOKIE_KEY, { ...cookieParams, ...OPTIONS })
+  deleteCookie(REFRESH_TOKEN_COOKIE_KEY, { ...cookieParams, ...OPTIONS })
+}
+
+export const getRefreshToken = (cookieParams: CookieParams = {}) => {
+  const cookieValue = getCookie(REFRESH_TOKEN_COOKIE_KEY, cookieParams)
+  if (typeof cookieValue === 'string') return cookieValue
+}
+
+export const getAccessToken = (cookieParams: CookieParams = {}) => {
   const cookieValue = getCookie(COOKIE_KEY, cookieParams)
   if (typeof cookieValue !== 'string') return undefined
   return deserialize(cookieValue)

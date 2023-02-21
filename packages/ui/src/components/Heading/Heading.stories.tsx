@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { ComponentMeta, Story } from '@storybook/react'
 import { Heading, HeadingProps } from './Heading'
 
@@ -26,3 +27,11 @@ LightBackground.args = { color: 'textPrimary' }
 export const DarkBackground = Template.bind({})
 DarkBackground.parameters = { backgrounds: { default: 'Dark' } }
 DarkBackground.args = { color: 'textNegative' }
+
+export const WithBoarder: Story<HeadingProps> = ({ children, ...rest }) => (
+  <StyledHeading {...rest}>{children}</StyledHeading>
+)
+
+const StyledHeading = styled(Heading)({
+  border: '2px dotted black',
+})

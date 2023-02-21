@@ -1,4 +1,6 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { AnimatePresence, motion, Target, TargetAndTransition, Transition } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactElement, useCallback } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
@@ -47,6 +49,7 @@ export const BankIdDialog = () => {
 
   let content: ReactElement | null = null
   let footer: ReactElement | null = null
+  let animationState = currentOperation?.state
 
   const shopSessionId = shopSession?.id
   const ssn = shopSession?.customer?.ssn ?? ''
@@ -84,11 +87,13 @@ export const BankIdDialog = () => {
         content = (
           <>
             <IconWithText>
-              <BankIdIcon />
-              {t('LOGIN_BANKID_WAITING')}
+              <Pulsating>
+                <BankIdIcon />
+              </Pulsating>
+              <span>{t('LOGIN_BANKID_WAITING')}</span>
             </IconWithText>
             <Text align="center" color="textSecondary">
-              {currentOperation.state === BankIdState.Pending ? t('LOGIN_BANKID_OPEN_APP') : ''}
+              {t('LOGIN_BANKID_OPEN_APP')}
             </Text>
           </>
         )
@@ -99,6 +104,7 @@ export const BankIdDialog = () => {
             {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
           </Button>
         )
+        animationState = BankIdState.Pending
         break
       }
       case BankIdState.Success: {
@@ -143,7 +149,19 @@ export const BankIdDialog = () => {
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <FullscreenDialog.Modal Footer={footer}>
-        <ContentWrapper>{content}</ContentWrapper>
+        <ContentWrapper>
+          <AnimatePresence>
+            <motion.div
+              key={animationState}
+              initial={ANIMATE_INITIAL}
+              animate={ANIMATE_ANIMATE}
+              exit={ANIMATE_EXIT}
+              transition={ANIMATE_TRANSITION}
+            >
+              {content}
+            </motion.div>
+          </AnimatePresence>
+        </ContentWrapper>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
@@ -162,3 +180,19 @@ const IconWithText = styled(Text)({
   justifyContent: 'center',
   alignItems: 'center',
 })
+
+const pulseAnimation = keyframes({
+  '0%': { opacity: 0.2 },
+  '50%': { opacity: 1 },
+  '100%': { opacity: 0.2 },
+})
+const Pulsating = styled.div({ animation: `${pulseAnimation} 2s ease-in-out infinite` })
+
+const ANIMATE_TRANSITION: Transition = { duration: 0.6, ...theme.transitions.framer.easeInOutCubic }
+const ANIMATE_INITIAL: Target = { opacity: 0, y: 40 }
+const ANIMATE_ANIMATE: TargetAndTransition = {
+  opacity: 1,
+  y: 0,
+  transition: { delay: 0.3, ...ANIMATE_TRANSITION },
+}
+const ANIMATE_EXIT: TargetAndTransition = { opacity: 0, y: -40 }
