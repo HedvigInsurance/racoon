@@ -37,9 +37,11 @@ type HeaderProps = {
   children: React.ReactNode
   opaque?: boolean
   overlay?: boolean
+  static?: boolean
 }
 
-export const Header = ({ children, opaque = false, overlay = false }: HeaderProps) => {
+export const Header = (props: HeaderProps) => {
+  const { children, opaque = false, overlay = false, static: staticPosition = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const defaultPosition = overlay ? 'absolute' : 'relative'
@@ -50,6 +52,7 @@ export const Header = ({ children, opaque = false, overlay = false }: HeaderProp
   let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
   animate = scrollState === 'BELOW' ? 'HIDE' : animate
   animate = scrollState === 'SCROLL_DOWN' ? 'SLIDE_OUT' : animate
+  animate = staticPosition ? undefined : animate
 
   return (
     <GhostWrapper style={{ position: defaultPosition, backgroundColor }}>
@@ -77,8 +80,8 @@ const GhostWrapper = styled.div({
   right: 0,
   zIndex: zIndexes.header,
 
-  height: MENU_BAR_HEIGHT_MOBILE,
-  [mq.lg]: { height: MENU_BAR_HEIGHT_DESKTOP },
+  height: `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`,
+  [mq.lg]: { height: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})` },
 })
 
 export const Wrapper = styled(motion.header)({
