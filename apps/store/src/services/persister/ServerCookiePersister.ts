@@ -1,13 +1,13 @@
 import { deleteCookie, getCookie, getCookies, setCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
-import { GetServerSidePropsContext } from 'next'
+import { CookieParams } from '@/utils/types'
 import { SimplePersister } from './Persister.types'
 
 export class ServerCookiePersister implements SimplePersister {
   constructor(
     private readonly cookieKey: string,
-    private readonly request: GetServerSidePropsContext['req'],
-    private readonly response: GetServerSidePropsContext['res'],
+    private readonly request: CookieParams['req'],
+    private readonly response: CookieParams['res'],
   ) {}
 
   public save(value: string, cookieKey = this.cookieKey, options?: OptionsType) {

@@ -85,3 +85,15 @@ To analyze bundle size run the following command and this will open a report in 
 ```bash
 yarn workspace store analyze-bundle
 ```
+
+## HTTP Headers
+
+We use a few custom headers when communicating with the API. These are:
+
+- `Hedvig-ShopSessionID`: The ID of the current shop session, used for debugging purposes.
+- `Hedvig-Language`: Java Locale code (e.g. `ca-ES`), used for API localisation including error messages.
+- `Hedvig-Device-ID`: A unique ID for the current device.
+
+  > :warning: What are we using this for? 🤔
+
+- `Authorization`: Bearer token for the currently authenticated user.

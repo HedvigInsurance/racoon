@@ -1,5 +1,6 @@
 import { getCookie, setCookie, deleteCookie } from 'cookies-next'
 import { OptionsType } from 'cookies-next/lib/types'
+import { CookieParams } from '@/utils/types'
 
 const COOKIE_KEY = '_hvsession'
 const REFRESH_TOKEN_COOKIE_KEY = '_hvrefresh'
@@ -13,8 +14,6 @@ const OPTIONS: OptionsType = {
     secure: true,
   }),
 }
-
-export type CookieParams = Pick<OptionsType, 'req' | 'res'>
 
 type SaveAuthTokensParams = CookieParams & {
   accessToken: string
