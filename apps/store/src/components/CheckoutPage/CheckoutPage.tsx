@@ -146,7 +146,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       >
                         {t('SIGN_BUTTON', { count: cart.entries.length })}
                       </SignButton>
-                      <Text size="sm" color="textSecondary" align="center">
+                      <Text size="xs" color="textSecondary" align="center">
                         {userErrorMessage ?? t('SIGN_DISCLAIMER')}
                       </Text>
                     </Space>
