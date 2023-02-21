@@ -140,7 +140,7 @@ export const Video = ({
         {...delegated}
       >
         {sources.map((source) => (
-          // TODO: its adivided to provide the media format type ('type' attribute)
+          // TODO: its adviced to provide the media format type ('type' attribute)
           // More info http://bitly.ws/y4Jf
           <source key={source.url} src={source.url} />
         ))}

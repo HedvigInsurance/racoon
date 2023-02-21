@@ -1,5 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
+import { theme } from '../../lib/theme/theme'
 
 export type HeadingLabelProps = {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -16,15 +17,20 @@ export const LabelBase = styled(
   elementConfig,
 )<Pick<HeadingLabelProps, 'color'>>(({ color, theme }) => ({
   display: 'inline-block',
-  padding: `${theme.space[2]} ${theme.space[3]}`,
-  fontSize: theme.fontSizes[1],
+  paddingBlock: theme.space.xs,
+  paddingInline: theme.space.sm,
+  fontSize: theme.fontSizes.xs,
   color: theme.colors.dark,
-  // TODO: use colors from theme once defined
+  // TODO: Use theme color when we remove the old theme
   backgroundColor: color ?? '#E0F0F9',
   borderRadius: theme.radius.xs,
 }))
 
-export const HeadingLabel = ({ as, children, color }: HeadingLabelProps) => (
+export const HeadingLabel = ({
+  as,
+  children,
+  color = theme.colors.blueFill1,
+}: HeadingLabelProps) => (
   <LabelBase as={as} color={color}>
     {children}
   </LabelBase>

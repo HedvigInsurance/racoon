@@ -1,10 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler, useCallback } from 'react'
-import {
-  CartEntryAddMutation,
-  ShopSessionDocument,
-  useCartEntryAddMutation,
-} from '@/services/apollo/generated'
+import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './PurchaseForm.constants'
@@ -18,7 +14,7 @@ type Params = {
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
   const [addEntry, { loading }] = useCartEntryAdd({
     // Refetch recommendations
-    refetchQueries: [ShopSessionDocument],
+    refetchQueries: 'active',
   })
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
