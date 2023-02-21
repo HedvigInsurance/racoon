@@ -1,5 +1,8 @@
 import styled from '@emotion/styled'
+import { DialogProps } from '@radix-ui/react-dialog'
+import { useEffect, useRef } from 'react'
 import { CrossIcon, Dialog, mq, theme } from 'ui'
+import { sendDialogEvent } from '@/utils/dialogEvent'
 
 type Props = {
   children: React.ReactNode
@@ -96,5 +99,26 @@ const FooterWrapper = styled.footer({
   },
 })
 
-export const Root = Dialog.Root
+export const Root = (props: DialogProps) => {
+  useSendDialogEvents(!!(props.open || props.defaultOpen))
+  return <Dialog.Root {...props} />
+}
 export const Close = Dialog.Close
+
+// Reliably trigger open | close events for mount, unmount and prop change
+// Too bad onOpenChange only notifies about prop change
+const useSendDialogEvents = (open: boolean) => {
+  const openRef = useRef<boolean | null>(null)
+  useEffect(() => {
+    if (open && openRef.current === null) {
+      sendDialogEvent('open')
+    }
+    if (!open && openRef.current) {
+      sendDialogEvent('close')
+    }
+    openRef.current = open
+    return () => {
+      openRef.current && sendDialogEvent('close')
+    }
+  }, [open])
+}

@@ -90,7 +90,7 @@ SsnSeSection.sectionId = 'ssn-se'
 const ChangeSsnWarning = ({ onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
   return (
-    <FullscreenDialog.Root open={true} onOpenChange={onCompleted}>
+    <FullscreenDialog.Root defaultOpen={true} onOpenChange={onCompleted}>
       <FullscreenDialog.Modal
         center
         Footer={
