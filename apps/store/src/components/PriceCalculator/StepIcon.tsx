@@ -29,8 +29,7 @@ export const StepIcon = styled(
   }),
 
   ...(state === 'valid' && {
-    // TODO: use theme color: green element
-    backgroundColor: '#24CC5C',
+    backgroundColor: theme.colors.greenElement,
     borderColor: 'transparent',
   }),
 }))

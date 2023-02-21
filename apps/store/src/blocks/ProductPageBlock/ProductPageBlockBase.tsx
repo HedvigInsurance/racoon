@@ -65,6 +65,13 @@ export const StyledProductVariantSelector = styled(ProductVariantSelector)({
   minWidth: '12.5rem',
   width: 'fit-content',
   marginTop: theme.space.xs,
+
+  backgroundColor: theme.colors.greenFill1,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+
+  ':hover, :focus-within': {
+    backgroundColor: theme.colors.greenFill3,
+  },
 })
 
 export const triggerListStyles = css({
@@ -92,7 +99,7 @@ export const triggerStyles = css({
   '&[data-state=active]': {
     paddingInline: theme.space.xxxl,
     color: theme.colors.dark,
-    backgroundColor: theme.colors.grayTranslucent400,
+    backgroundColor: theme.colors.grayTranslucent300,
   },
 
   '@media (hover: hover)': {
@@ -101,7 +108,7 @@ export const triggerStyles = css({
       transition: `background-color ${theme.transitions.hover}`,
 
       '&[data-state=active]': {
-        backgroundColor: theme.colors.grayTranslucent500,
+        backgroundColor: theme.colors.grayTranslucent400,
       },
     },
   },
