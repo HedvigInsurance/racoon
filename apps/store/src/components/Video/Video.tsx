@@ -107,7 +107,10 @@ export const Video = ({
   useDialogEvent('open', handleDialogOpen)
 
   const handleDialogClose = useCallback(() => {
-    if (wasPlaying) {
+    // We may have dialogs on top of dialogs.  Need to check that all are closed to resume video
+    // Since we don't have anything stable like data attribute for it, let's check styles
+    const hasOpenDialog = window.getComputedStyle(document.body).pointerEvents === 'none'
+    if (wasPlaying && !hasOpenDialog) {
       setWasPlaying(false)
       playVideo()
     }
