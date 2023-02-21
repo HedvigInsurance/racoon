@@ -11,7 +11,7 @@ import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
 import { isBrowser } from '@/utils/env'
 import { getLocaleOrFallback, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { performTokenRefreshIfNeeded } from './apollo.helpers'
+import { getShopSessionHeader, performTokenRefreshIfNeeded } from './apollo.helpers'
 
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -44,7 +44,10 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   const headersLink = setContext(async (_, prevContext) => {
     const headers = { ...defaultHeaders }
     if (isBrowser()) {
-      Object.assign(headers, await performTokenRefreshIfNeeded())
+      Object.assign(headers, {
+        ...(await performTokenRefreshIfNeeded()),
+        ...getShopSessionHeader(),
+      })
     }
     return { headers, ...prevContext }
   })
@@ -82,6 +85,7 @@ export const initializeApollo = (params: InitializeApolloParams = {}) => {
     ...getDeviceIdHeader({ req, res }),
     ...(authHeaders ?? getAuthHeaders({ req, res })),
     ...(locale && getHedvigLanguageHeader(locale)),
+    ...getShopSessionHeader({ req, res }),
   }
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
