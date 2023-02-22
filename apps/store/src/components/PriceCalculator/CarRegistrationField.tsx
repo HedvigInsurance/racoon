@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react'
+import { useState } from 'react'
 import { TextField } from '@/components/TextField/TextField'
 import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceCalculator/Field.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -14,8 +14,7 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
   const translateLabel = useTranslateFieldLabel()
   const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
 
-  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target
+  const handleValueChange = (value: string) => {
     const maskedValue = value
       .replace(/\s/, '')
       .replace(/(\w{3})(\w{1,3})/, '$1 $2')
@@ -34,7 +33,7 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
       required={field.required}
       value={value}
       defaultValue={field.defaultValue}
-      onChange={handleOnChange}
+      onValueChange={handleValueChange}
     />
   )
 }

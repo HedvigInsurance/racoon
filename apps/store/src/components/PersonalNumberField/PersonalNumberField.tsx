@@ -1,5 +1,5 @@
 import Personnummer from 'personnummer'
-import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 import { TextField } from '@/components/TextField/TextField'
 
 type Props = Omit<
@@ -24,9 +24,7 @@ export const PersonalNumberField = (props: Props) => {
     return ''
   })
 
-  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    let value = event.target.value
-
+  const handleValueChange = (value: string) => {
     if (Personnummer.valid(value)) {
       value = Personnummer.parse(value).format(true)
     }
@@ -48,7 +46,7 @@ export const PersonalNumberField = (props: Props) => {
         maxLength={13}
         // https://github.com/personnummer/js
         pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
-        onChange={handleOnChange}
+        onValueChange={handleValueChange}
         warning={warning}
       />
     </>

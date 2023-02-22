@@ -1,14 +1,13 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
-import { LockIcon, Space, Text, theme } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, useState } from 'react'
+import { CrossIcon, LockIcon, Space, Text, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type BaseInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
+  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'onChange'
 >
 
 type Props = BaseInputProps & {
@@ -17,6 +16,7 @@ type Props = BaseInputProps & {
   suffix?: string
   warning?: boolean
   message?: string
+  onValueChange?: (value: string) => void
 }
 
 export const TextField = (props: Props) => {
@@ -25,8 +25,15 @@ export const TextField = (props: Props) => {
   const { highlight, animationProps } = useHighlightAnimation()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setValue(event.target.value)
-    inputProps.onChange?.(event)
+    const newValue = event.target.value
+    setValue(newValue)
+    inputProps.onValueChange?.(newValue)
+  }
+
+  const handleClickDelete: MouseEventHandler<HTMLButtonElement> = () => {
+    const newValue = ''
+    setValue(newValue)
+    inputProps.onValueChange?.(newValue)
   }
 
   const inputValue = inputProps.value || value
@@ -43,17 +50,21 @@ export const TextField = (props: Props) => {
           {label}
         </Label>
         <InputWrapper>
-          <Input {...inputProps} onKeyDown={highlight} onChange={handleChange} />
-          <SpaceFlex align="center" space={0.5}>
-            {suffix && inputValue && (
-              <Text as="span" size={variant === 'large' ? 'xl' : 'lg'} color="textSecondary">
-                {suffix}
-              </Text>
-            )}
-            {inputProps.disabled && inputValue && (
+          <Input {...inputProps} onKeyDown={highlight} onChange={handleChange} value={inputValue} />
+          {suffix && inputValue && (
+            <Text as="span" size={variant === 'large' ? 'xl' : 'lg'} color="textSecondary">
+              {suffix}
+            </Text>
+          )}
+
+          {inputValue &&
+            (inputProps.disabled ? (
               <LockIcon size="1rem" color={theme.colors.textSecondary} />
-            )}
-          </SpaceFlex>
+            ) : (
+              <DeleteButton type="button" onClick={handleClickDelete}>
+                <CrossIcon size="1rem" />
+              </DeleteButton>
+            ))}
         </InputWrapper>
       </Wrapper>
       {message && <MessageText size="sm">{message}</MessageText>}
@@ -81,14 +92,13 @@ const warningColorAnimation = keyframes({
   },
 })
 
-const LargeWrapper = styled(motion.div)({
+const BaseWrapper = styled(motion.div)({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-  height: '4.5rem',
   width: '100%',
 
   '&[data-warning=true]': {
@@ -96,7 +106,8 @@ const LargeWrapper = styled(motion.div)({
   },
 })
 
-const SmallWrapper = styled(LargeWrapper)({ height: '3.25rem' })
+const LargeWrapper = styled(BaseWrapper)({ height: '4.5rem' })
+const SmallWrapper = styled(BaseWrapper)({ height: '3.25rem' })
 
 const Label = styled.label({
   position: 'absolute',
@@ -125,11 +136,11 @@ const Label = styled.label({
     transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
   },
 
-  [`${LargeWrapper}[data-highlight=true] > &`]: {
+  [`${LargeWrapper}[data-highlight=true] > &, ${SmallWrapper}[data-highlight=true] > &`]: {
     color: theme.colors.greenText,
   },
 
-  [`${LargeWrapper}[data-warning=true] > &`]: {
+  [`${LargeWrapper}[data-warning=true] > &, ${SmallWrapper}[data-warning=true] > &`]: {
     animation: `${warningColorAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
   },
 
@@ -145,6 +156,7 @@ const LargeInputWrapper = styled.div({
 
   display: 'flex',
   alignItems: 'center',
+  gap: theme.space.xs,
   paddingRight: theme.space.md,
 })
 
@@ -153,7 +165,7 @@ const SmallInputWrapper = styled(LargeInputWrapper)({ bottom: '0.3125rem' })
 const LargeInput = styled.input({
   width: '100%',
   fontSize: theme.fontSizes.xl,
-  paddingInline: theme.space.md,
+  paddingLeft: theme.space.md,
 
   ':disabled': {
     color: theme.colors.textSecondary,
@@ -168,3 +180,12 @@ const LargeInput = styled.input({
 const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 
 const MessageText = styled(Text)({ paddingLeft: theme.space.md })
+
+const DeleteButton = styled.button({
+  display: 'none',
+  cursor: 'pointer',
+
+  [`${LargeWrapper}:focus-within &, ${SmallWrapper}:focus-within &`]: {
+    display: 'block',
+  },
+})
