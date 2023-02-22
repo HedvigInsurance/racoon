@@ -32,14 +32,14 @@ const Root = styled.ul({
 })
 
 const Step = styled.li<{ active?: boolean }>(({ active }) => ({
-  fontSize: theme.fontSizes.sm,
+  fontSize: theme.fontSizes.xs,
   height: theme.space.xl,
   display: 'flex',
   alignItems: 'center',
 
   color: theme.colors.textTertiary,
   ...(active && {
-    backgroundColor: theme.colors.gray200,
+    backgroundColor: theme.colors.gray300,
     color: theme.colors.textPrimary,
     paddingInline: theme.space.sm,
     borderRadius: theme.radius.xs,
