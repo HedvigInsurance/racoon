@@ -15,7 +15,7 @@ type Params = {
 
 export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
   const { shopSession } = useShopSession()
-  const [{ priceIntent }] = usePriceIntent()
+  const [priceIntent] = usePriceIntent()
   const [updateData, { loading: loadingData }] = usePriceIntentDataUpdateMutation({
     onCompleted: (data) => {
       const { priceIntent } = data.priceIntentDataUpdate
