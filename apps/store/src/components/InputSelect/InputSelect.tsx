@@ -25,7 +25,6 @@ export const InputSelect = ({
   defaultValue,
   placeholder,
   label,
-  className,
   size = 'large',
   ...rest
 }: InputSelectProps) => {
@@ -41,7 +40,7 @@ export const InputSelect = ({
   return (
     <InputBase {...rest}>
       {() => (
-        <Wrapper className={className} {...animationProps}>
+        <Wrapper>
           <StyledSelect
             name={name}
             onChange={handleChange}
@@ -49,6 +48,7 @@ export const InputSelect = ({
             defaultValue={value ? undefined : defaultValue ?? ''}
             placeholder={placeholder}
             variantSize={size}
+            {...animationProps}
             {...rest}
           >
             {labelText && (
@@ -70,15 +70,7 @@ export const InputSelect = ({
   )
 }
 
-const Wrapper = styled(motion.div)({
-  position: 'relative',
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.sm,
-
-  ':hover, :focus-within': {
-    backgroundColor: theme.colors.gray300,
-  },
-})
+const Wrapper = styled.div({ position: 'relative' })
 
 const StyledChevronIcon = styled(ChevronIcon)({
   position: 'absolute',
@@ -90,14 +82,17 @@ const StyledChevronIcon = styled(ChevronIcon)({
 
 type SelectProps = { variantSize: Required<InputSelectProps['size']> }
 
-const StyledSelect = styled.select<SelectProps>(({ variantSize }) => ({
+const StyledSelect = styled(motion.select)<SelectProps>(({ variantSize }) => ({
   color: theme.colors.textPrimary,
   borderRadius: theme.radius.sm,
   width: '100%',
-  paddingBlock: theme.space.xs,
+  height: '3rem',
+  display: 'flex',
+  alignItems: 'center',
   paddingLeft: theme.space.md,
   paddingRight: theme.space.xxl,
   cursor: 'pointer',
+  backgroundColor: theme.colors.opaque1,
 
   ...(variantSize === 'small' && {
     fontSize: theme.fontSizes.md,
