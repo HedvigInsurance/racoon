@@ -100,6 +100,7 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
   display: 'flex',
   flexDirection: 'column',
   padding: `0 ${theme.space.md} `,
+  overflowY: 'auto',
 
   [mq.lg]: {
     position: 'static',

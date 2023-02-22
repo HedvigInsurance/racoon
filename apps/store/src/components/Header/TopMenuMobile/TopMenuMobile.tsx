@@ -51,10 +51,12 @@ const StyledAndroidIcon = styled(AndroidIcon)({
 export type TopMenuMobileProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  defaultValue?: string
   children: React.ReactNode
 }
 
-export const TopMenuMobile = ({ children, isOpen, setIsOpen }: TopMenuMobileProps) => {
+export const TopMenuMobile = (props: TopMenuMobileProps) => {
+  const { children, isOpen, setIsOpen, defaultValue } = props
   const router = useRouter()
   const { t } = useTranslation('common')
 
@@ -73,7 +75,7 @@ export const TopMenuMobile = ({ children, isOpen, setIsOpen }: TopMenuMobileProp
           <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
         )}
         <DialogContent>
-          <Navigation>
+          <Navigation defaultValue={defaultValue}>
             <NavigationPrimaryList>
               <div>{children}</div>
               <ButtonWrapper x={0.25}>
