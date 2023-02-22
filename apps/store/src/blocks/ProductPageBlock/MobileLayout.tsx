@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { StoryblokComponent } from '@storyblok/react'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductPageBlockProps } from './ProductPageBlock'
 import { PageSection } from './ProductPageBlock.types'
 import {
-  AnimatedHeader,
+  StickyHeader,
   Content,
   OverviewSection,
   StyledProductVariantSelector,
@@ -17,12 +17,13 @@ import {
 } from './ProductPageBlockBase'
 
 export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
+  const contentRef = useRef<HTMLDivElement>(null)
   const { productData } = useProductPageContext()
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
   const handleTabClick = useCallback((value: string) => {
     setActiveSection(value as PageSection)
-    window?.scrollTo({ top: 0 })
+    contentRef.current?.scrollIntoView()
   }, [])
 
   const shouldRenderVariantSelector =
@@ -31,9 +32,9 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
   return (
     <>
       <PurchaseForm />
-      <Content>
+      <Content ref={contentRef}>
         <RadixTabs.Tabs value={activeSection} onValueChange={handleTabClick}>
-          <AnimatedHeader>
+          <StickyHeader>
             <RadixTabs.TabsList>
               <TablistWrapper>
                 <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
@@ -41,7 +42,7 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
               </TablistWrapper>
               {shouldRenderVariantSelector && <StyledProductVariantSelector />}
             </RadixTabs.TabsList>
-          </AnimatedHeader>
+          </StickyHeader>
 
           <OverviewSection>
             <Tabs.TabsContent value="overview">

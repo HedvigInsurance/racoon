@@ -69,12 +69,5 @@ export const getCrossOut = (shopSession: ShopSession) => {
   const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
 
   if (!hasDiscount) return undefined
-  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
-    case CampaignDiscountType.FreeMonths:
-    case CampaignDiscountType.MonthlyPercentage:
-      return shopSession.cart.cost.gross
-    case CampaignDiscountType.IndefinitePercentage:
-    case CampaignDiscountType.MonthlyCost:
-      return shopSession.cart.cost.discount
-  }
+  return shopSession.cart.cost.gross
 }

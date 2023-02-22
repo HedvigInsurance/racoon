@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -93,32 +94,34 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
     <Wrapper>
-      {footerSections.map((nestedBlok) => (
-        <Column key={nestedBlok._uid}>
-          <FooterSection blok={nestedBlok} />
-        </Column>
-      ))}
+      <RootLayout>
+        {footerSections.map((nestedBlok) => (
+          <Column key={nestedBlok._uid}>
+            <FooterSection blok={nestedBlok} />
+          </Column>
+        ))}
 
-      <LocaleForm>
-        <StyledInputSelect
-          name={LocaleField.Country}
-          onChange={handleChangeCountry}
-          defaultValue={currentCountry.id}
-          options={countryList}
-        />
-        <StyledInputSelect
-          name={LocaleField.Language}
-          onChange={handleChangeLanguage}
-          defaultValue={currentLanguage}
-          options={languageList}
-        />
-      </LocaleForm>
+        <LocaleForm>
+          <StyledInputSelect
+            name={LocaleField.Country}
+            onChange={handleChangeCountry}
+            defaultValue={currentCountry.id}
+            options={countryList}
+          />
+          <StyledInputSelect
+            name={LocaleField.Language}
+            onChange={handleChangeLanguage}
+            defaultValue={currentLanguage}
+            options={languageList}
+          />
+        </LocaleForm>
 
-      <Disclaimer>
-        <Text color="textSecondary" size="sm">
-          © Hedvig 2023
-        </Text>
-      </Disclaimer>
+        <Disclaimer>
+          <Text color="textSecondary" size="sm">
+            © Hedvig 2023
+          </Text>
+        </Disclaimer>
+      </RootLayout>
     </Wrapper>
   )
 }
@@ -126,15 +129,13 @@ FooterBlock.blockName = 'footer' as const
 
 const Wrapper = styled.footer({
   backgroundColor: theme.colors.gray100,
-  paddingInline: theme.space.md,
   paddingTop: theme.space.xxl,
 
   // Clear floating price calculator button
   paddingBottom: theme.space[10],
+})
 
-  display: 'grid',
-  gridTemplateColumns: 'repeat(12, 1fr)',
-  columnGap: theme.space.md,
+const RootLayout = styled(GridLayout.Root)({
   rowGap: theme.space.xxl,
 })
 

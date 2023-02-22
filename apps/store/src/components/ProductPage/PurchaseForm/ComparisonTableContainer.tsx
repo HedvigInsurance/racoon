@@ -55,7 +55,6 @@ const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
 const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
   offer.variant.perils.some((peril) => peril.title === perilTitle)
 
-//@TODO - base on selected offer
 const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
   if (offer.id === selectedOfferId) return true
   return false

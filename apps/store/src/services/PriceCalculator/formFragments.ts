@@ -54,6 +54,7 @@ const householdSizeField: InputField = {
 export const emailField: InputField = {
   type: 'text',
   inputType: 'email',
+  inputMode: 'email',
   name: 'email',
   label: { key: tKey('FIELD_EMAIL_LABEL') },
   required: true,

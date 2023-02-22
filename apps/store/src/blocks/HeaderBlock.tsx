@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Space } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
@@ -184,15 +184,27 @@ export type HeaderBlockProps = SbBaseBlockProps<{
   >
 }> & {
   overlay?: boolean
+  static?: boolean
 }
 
-export const HeaderBlock = ({ blok, overlay }: HeaderBlockProps) => {
+export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const productNavItem = useMemo(
+    () =>
+      blok.navMenuContainer.find((item) =>
+        checkBlockType<ProductNavContainerBlockProps['blok']>(
+          item,
+          ProductNavContainerBlock.blockName,
+        ),
+      )?.name,
+    [blok.navMenuContainer],
+  )
+
   return (
-    <Header {...storyblokEditable(blok)} opaque={isOpen} overlay={overlay}>
+    <Header {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
-      <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen}>
+      <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
       </TopMenuMobile>
     </Header>

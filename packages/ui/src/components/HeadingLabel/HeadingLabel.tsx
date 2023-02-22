@@ -1,9 +1,14 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
+import { getMargins, Margins } from '../../lib/margins'
+import { UIColors } from '../../lib/theme/colors/colors'
+import { getColor } from '../../lib/theme/theme'
 
-export type HeadingLabelProps = {
+type HeadingLabelColors = Pick<UIColors, 'blueFill1' | 'blueFill2'>
+
+export type HeadingLabelProps = Margins & {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  color?: string
+  color?: keyof HeadingLabelColors
   children: React.ReactNode
 }
 
@@ -11,21 +16,27 @@ const elementConfig = {
   shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
 }
 
+type HeadingLabelBaseProps = Pick<HeadingLabelProps, 'color'> & Margins
+
 export const LabelBase = styled(
   'div',
   elementConfig,
-)<Pick<HeadingLabelProps, 'color'>>(({ color, theme }) => ({
-  display: 'inline-block',
-  padding: `${theme.space[2]} ${theme.space[3]}`,
-  fontSize: theme.fontSizes[1],
-  color: theme.colors.dark,
-  // TODO: use colors from theme once defined
-  backgroundColor: color ?? '#E0F0F9',
-  borderRadius: theme.radius.xs,
-}))
+)<HeadingLabelBaseProps>(({ color, theme, ...props }) => {
+  color = color || 'blueFill1'
+  return {
+    display: 'inline-block',
+    paddingBlock: theme.space.xs,
+    paddingInline: theme.space.sm,
+    fontSize: theme.fontSizes.xs,
+    color: theme.colors.dark,
+    backgroundColor: getColor(color),
+    borderRadius: theme.radius.xs,
+    ...getMargins(props),
+  }
+})
 
-export const HeadingLabel = ({ as, children, color }: HeadingLabelProps) => (
-  <LabelBase as={as} color={color}>
+export const HeadingLabel = ({ as, children, color, ...rest }: HeadingLabelProps) => (
+  <LabelBase as={as} color={color} {...rest}>
     {children}
   </LabelBase>
 )

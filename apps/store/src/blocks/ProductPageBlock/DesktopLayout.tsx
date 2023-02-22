@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent } from '@storyblok/react'
 import { useRef, useEffect, useState } from 'react'
-import { theme } from 'ui'
+import { mq, theme } from 'ui'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import { ProductPageBlockProps } from './ProductPageBlock'
 import { PageSection } from './ProductPageBlock.types'
 import {
-  AnimatedHeader,
+  StickyHeader,
   Content,
   OverviewSection,
   StyledProductVariantSelector,
@@ -27,8 +27,8 @@ export const DesktopLayout = ({ blok }: ProductPageBlockProps) => {
     activeSection === 'coverage' && productData.variants.length > 1
 
   return (
-    <>
-      <AnimatedHeader>
+    <Wrapper>
+      <StickyHeader>
         <nav aria-label="page content">
           <ContentNavigationList>
             <li>
@@ -52,7 +52,7 @@ export const DesktopLayout = ({ blok }: ProductPageBlockProps) => {
           </ContentNavigationList>
           {shouldRenderVariantSelector && <StyledProductVariantSelector />}
         </nav>
-      </AnimatedHeader>
+      </StickyHeader>
       <Grid>
         <Content>
           <OverviewSection id="overview">
@@ -70,9 +70,11 @@ export const DesktopLayout = ({ blok }: ProductPageBlockProps) => {
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
         ))}
       </section>
-    </>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div({ [mq.lg]: { paddingTop: theme.space.sm } })
 
 const Grid = styled.div({
   display: 'grid',
@@ -86,11 +88,14 @@ const ContentNavigationTrigger = styled.a(triggerStyles)
 
 const PurchaseFormWrapper = styled.div({
   position: 'sticky',
-  top: '9vh',
+  top: 0,
   // Scroll independently if content is too long
   maxHeight: '100vh',
   overflow: 'auto',
-  paddingBottom: theme.space.xl,
+  paddingBlock: theme.space.xl,
+
+  paddingTop: '3vw',
+  [mq.lg]: { paddingTop: '6vw' },
 })
 
 const useActiveSectionChangeListener = (

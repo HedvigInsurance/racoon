@@ -6,11 +6,11 @@ import { GetServerSidePropsContext } from 'next'
 import { i18n } from 'next-i18next'
 import { AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
-import { getDeviceIdHeader } from '@/services/LocalContext/LocalContext.helpers'
+import { getAuthHeaders } from '@/services/authApi/persist'
 import { isBrowser } from '@/utils/env'
 import { getLocaleOrFallback, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { getAuthHeaders } from '../authApi/persist'
+import { getShopSessionHeader, performTokenRefreshIfNeeded } from './apollo.helpers'
 
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -40,17 +40,15 @@ const languageLink = setContext((_, { headers = {}, ...context }) => {
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
 
 const createApolloClient = (defaultHeaders?: Record<string, string>) => {
-  const headersLink = setContext((_, prevContext) => {
-    const headers = {
-      ...defaultHeaders,
-    }
+  const headersLink = setContext(async (_, prevContext) => {
+    const headers = { ...defaultHeaders }
     if (isBrowser()) {
-      Object.assign(headers, getAuthHeaders())
+      Object.assign(headers, {
+        ...(await performTokenRefreshIfNeeded()),
+        ...getShopSessionHeader(),
+      })
     }
-    return {
-      headers,
-      ...prevContext,
-    }
+    return { headers, ...prevContext }
   })
 
   return new ApolloClient({
@@ -77,14 +75,15 @@ type InitializeApolloParams = {
   req?: GetServerSidePropsContext['req']
   res?: GetServerSidePropsContext['res']
   locale?: RoutingLocale
+  authHeaders?: Record<string, string>
 }
 
 export const initializeApollo = (params: InitializeApolloParams = {}) => {
-  const { initialState = null, req, res, locale } = params
+  const { initialState = null, req, res, locale, authHeaders } = params
   const headers = {
-    ...getDeviceIdHeader({ req, res }),
-    ...getAuthHeaders({ req, res }),
+    ...(authHeaders ?? getAuthHeaders({ req, res })),
     ...(locale && getHedvigLanguageHeader(locale)),
+    ...getShopSessionHeader({ req, res }),
   }
 
   const _apolloClient = apolloClient ?? createApolloClient(headers)
@@ -96,12 +95,25 @@ export const initializeApollo = (params: InitializeApolloParams = {}) => {
   }
 
   // always create new Apollo Client for SSG/SSR
-  if (typeof window === 'undefined') return _apolloClient
+  if (!isBrowser()) return _apolloClient
 
   // reuse client on the client-side
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient
+}
+
+type InitializeApolloServerSideParams = InitializeApolloParams & {
+  req: GetServerSidePropsContext['req']
+  res: GetServerSidePropsContext['res']
+}
+
+export const initializeApolloServerSide = async (params: InitializeApolloServerSideParams) => {
+  const { req, res } = params
+  return initializeApollo({
+    ...params,
+    authHeaders: await performTokenRefreshIfNeeded({ req, res }),
+  })
 }
 
 export const useApollo = (pageProps: AppInitialProps['pageProps']) => {

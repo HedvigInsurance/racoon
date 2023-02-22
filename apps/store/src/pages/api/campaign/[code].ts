@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { initializeApollo } from '@/services/apollo/client'
+import { initializeApolloServerSide } from '@/services/apollo/client'
 import {
   RedeemCampaignDocument,
   RedeemCampaignMutation,
@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { countryCode } = getCountryByLocale(locale)
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
   let shopSession: ShopSession

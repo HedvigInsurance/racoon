@@ -78,7 +78,6 @@ export class PriceIntentService {
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
-      // @TODO: check if price intent is linked to the product
       if (priceIntent) return priceIntent
     }
 

@@ -140,7 +140,7 @@ export const Video = ({
         {...delegated}
       >
         {sources.map((source) => (
-          // TODO: its adivided to provide the media format type ('type' attribute)
+          // TODO: its adviced to provide the media format type ('type' attribute)
           // More info http://bitly.ws/y4Jf
           <source key={source.url} src={source.url} />
         ))}
@@ -179,10 +179,10 @@ const StyledVideo = styled.video(
     roundedCorners,
   }: Omit<VideoProps, 'sources'>) => ({
     width: '100%',
+    objectFit: 'cover',
     ...(poster && {
       background: `url(${poster}) no-repeat`,
       backgroundSize: 'cover',
-      objectFit: 'cover',
     }),
     ['@media (orientation: portrait)']: {
       ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),

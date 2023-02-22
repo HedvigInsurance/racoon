@@ -38,5 +38,9 @@ const Wrapper = styled.div({
   [`${VerticalBodyWrapper} &, ${FluidBodyWrapper} &`]: {
     display: 'inline-block',
     padding: 0,
+    '&:not(:last-of-type)': {
+      marginBottom: theme.space.xs,
+      marginRight: theme.space.xs,
+    },
   },
 })

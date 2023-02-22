@@ -173,8 +173,7 @@ const GhostButton = styled(StyledButton)({
 
   '@media (hover: hover)': {
     '&:hover': {
-      // TODO: update to use translucent gray100
-      backgroundColor: theme.colors.gray100,
+      backgroundColor: theme.colors.grayTranslucent100,
     },
   },
 

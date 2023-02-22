@@ -1,7 +1,7 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const { CspHeaderValue } = require('./next-csp.config')
+const { SiteCsp, StoryblokCsp } = require('./next-csp.config')
 const { i18n } = require('./next-i18next.config')
 
 /** @type {import('next').NextConfig} */
@@ -27,6 +27,15 @@ module.exports = withBundleAnalyzer({
         source: '/:path*',
         headers: securityHeaders,
       },
+      {
+        source: '/editor(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: StoryblokCsp,
+          },
+        ],
+      },
     ]
   },
 })
@@ -41,7 +50,7 @@ const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   {
     key: 'Content-Security-Policy',
-    value: CspHeaderValue,
+    value: SiteCsp,
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {

@@ -409,13 +409,11 @@ const PurchaseFormTop = styled.div({
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '4.5rem',
-  paddingTop: '3vw',
-  paddingBottom: theme.space.xxl,
+  minHeight: '80vh',
   paddingInline: theme.space.md,
+  paddingBottom: theme.space.xl,
 
-  [mq.xl]: {
-    paddingTop: '6vw',
-  },
+  [mq.lg]: { minHeight: 'revert' },
 })
 
 const StickyButtonWrapper = styled.div({

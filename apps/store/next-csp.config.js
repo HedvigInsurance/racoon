@@ -63,7 +63,6 @@ const imgSrc = [
 const mediaSrc = [
   'https://dc.insurely.com',
   'https://vercel.live',
-  // Storyblok
   'https://a.storyblok.com',
   "'self'",
 ]
@@ -72,14 +71,10 @@ const connectSrc = [
   'https://sgtm.hedvig.com',
   // Our logging
   'https://*.browser-intake-datadoghq.eu',
-  // Storyblok logging
-  'https://*.sentry.io',
   // Intercom
   'https://api-iam.intercom.io',
   'wss://*.intercom.io',
-  // Storyblok editor
-  'https://app.storyblok.com',
-  // Storyblok editor & Vercel preview comments
+  // Vercel preview comments
   'https://*.pusher.com/',
   'wss://*.pusher.com',
   // Vercel Live
@@ -103,7 +98,7 @@ const frameSrc = [
   'https://*.snapchat.com',
   'https://*.hotjar.com',
 
-  "'self'", // Storyblok editor
+  "'self'",
 ]
 
 // NOTE: report-to rule with Report-to header is recommended, but it's not universally supported and
@@ -127,5 +122,7 @@ const ContentSecurityPolicy = `
 `
 
 module.exports = {
-  CspHeaderValue: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  SiteCsp: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // Remove CSP from Storyblok editor - only internal users need it, and we don't want to maintain another whitelist
+  StoryblokCsp: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;",
 }

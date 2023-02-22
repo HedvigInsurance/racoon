@@ -12,7 +12,7 @@ import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { addApolloState, initializeApollo } from '@/services/apollo/client'
+import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps<
 
   const { countryCode } = getCountryByLocale(locale)
 
-  const apolloClient = initializeApollo({ req, res, locale })
+  const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const [shopSession, translations, globalStory, productMetadata] = await Promise.all([
     getShopSessionServerSide({ apolloClient, countryCode, req, res }),
     serverSideTranslations(locale),

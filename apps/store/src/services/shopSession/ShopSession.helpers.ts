@@ -1,15 +1,13 @@
 import { ApolloClient } from '@apollo/client'
-import type { GetServerSidePropsContext } from 'next'
 import type { CountryCode } from '@/services/apollo/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
+import { CookieParams } from '@/utils/types'
 import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
 import { ShopSessionService } from './ShopSessionService'
 
-type Params = {
+type Params = CookieParams & {
   apolloClient: ApolloClient<unknown>
-  req: GetServerSidePropsContext['req']
-  res: GetServerSidePropsContext['res']
 }
 
 export const getCurrentShopSessionServerSide = async (params: Params) => {
@@ -39,4 +37,9 @@ export const setupShopSessionServiceServerSide = (params: Omit<Params, 'locale'>
     new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res),
     apolloClient,
   )
+}
+
+export const getShopSessionId = ({ req, res }: CookieParams = {}) => {
+  if (req && res) return new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res).fetch()
+  return new CookiePersister(COOKIE_KEY_SHOP_SESSION).fetch()
 }

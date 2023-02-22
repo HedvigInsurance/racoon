@@ -21,6 +21,7 @@ export type HeadingBlockProps = SbBaseBlockProps<{
   variantDesktop?: PossibleHeadingVariant
   textAlignment?: HeadingProps['align']
   nested?: boolean
+  balance?: boolean
 }>
 
 export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
@@ -34,6 +35,7 @@ export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
         variant={{ _: blok.variant ?? 'standard.32', md: blok.variantDesktop ?? 'standard.40' }}
         color={blok.color}
         align={blok.textAlignment}
+        balance={blok.balance}
         {...storyblokEditable(blok)}
       >
         {blok.text}

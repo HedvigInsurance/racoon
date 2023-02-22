@@ -1,20 +1,10 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { motion, Transition } from 'framer-motion'
 import { theme, mq } from 'ui'
-import {
-  MENU_BAR_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
-  MENU_BAR_HEIGHT_PX,
-} from '@/components/Header/HeaderStyles'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
-import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
-
-// TODO: move to theme
-const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 export const Content = styled.div({
   position: 'relative',
@@ -25,46 +15,35 @@ export const Content = styled.div({
 
 export const OverviewSection = styled.section({
   marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.xs})`,
-  [mq.md]: {
-    marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})`,
-  },
-  [mq.lg]: {
-    marginTop: 0,
-  },
+  [mq.md]: { marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})` },
 })
 
-const StickyHeader = styled(motion.div)({
+export const StickyHeader = styled.div({
   position: 'sticky',
-  top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_MOBILE})`,
+  top: theme.space.sm,
   zIndex: zIndexes.tabs,
   paddingInline: theme.space.md,
 
   [mq.md]: {
-    top: `calc(${theme.space.sm} + ${MENU_BAR_HEIGHT_DESKTOP})`,
     paddingInline: theme.space.lg,
   },
   [mq.lg]: {
-    position: 'fixed',
-    top: `calc(${theme.space.md} + ${MENU_BAR_HEIGHT_DESKTOP})`,
+    top: theme.space.md,
     paddingInline: theme.space.xl,
   },
 })
-
-export const AnimatedHeader = ({ children }: { children: React.ReactNode }) => {
-  const state = useScrollState({ threshold: MENU_BAR_HEIGHT_PX })
-  const scrollUp = state === 'SCROLL_DOWN' || state === 'BELOW'
-
-  return (
-    <StickyHeader animate={{ top: scrollUp ? theme.space.md : undefined }} transition={TRANSITION}>
-      {children}
-    </StickyHeader>
-  )
-}
 
 export const StyledProductVariantSelector = styled(ProductVariantSelector)({
   minWidth: '12.5rem',
   width: 'fit-content',
   marginTop: theme.space.xs,
+
+  backgroundColor: theme.colors.greenFill1,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+
+  ':hover, :focus-within': {
+    backgroundColor: theme.colors.greenFill3,
+  },
 })
 
 export const triggerListStyles = css({
@@ -92,7 +71,7 @@ export const triggerStyles = css({
   '&[data-state=active]': {
     paddingInline: theme.space.xxxl,
     color: theme.colors.dark,
-    backgroundColor: theme.colors.grayTranslucent400,
+    backgroundColor: theme.colors.grayTranslucent300,
   },
 
   '@media (hover: hover)': {
@@ -101,7 +80,7 @@ export const triggerStyles = css({
       transition: `background-color ${theme.transitions.hover}`,
 
       '&[data-state=active]': {
-        backgroundColor: theme.colors.grayTranslucent500,
+        backgroundColor: theme.colors.grayTranslucent400,
       },
     },
   },
