@@ -62,6 +62,12 @@ export const PurchaseForm = () => {
     editForm()
   }
 
+  const handleComplete = (success: boolean) => {
+    setFormState(success ? 'IDLE' : 'ERROR')
+    // @ts-expect-error - "instant" behavior is not documented/typed but we still want to use it to avoid scroll animations behind the form
+    !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }
+
   return (
     <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
       {(notifyProductAdded) => {
@@ -74,7 +80,7 @@ export const PurchaseForm = () => {
                 shopSession={shopSession}
                 priceIntent={priceIntent}
                 onToggleDialog={() => setFormState('IDLE')}
-                onComplete={(success) => setFormState(success ? 'IDLE' : 'ERROR')}
+                onComplete={handleComplete}
               />
               <FullscreenDialog.Root
                 open={formState === 'ERROR'}
