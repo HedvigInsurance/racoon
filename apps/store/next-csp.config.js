@@ -2,11 +2,16 @@ const gtmInjectedOrigins = [
   'https://*.onetrust.com',
   'https://*.cookielaw.org',
   'https://*.hotjar.com',
+  'https://*.hotjar.io',
   'https://sc-static.net',
   'https://*.snapchat.com',
   'https://*.facebook.net',
   'https://*.facebook.com',
   'https://*.doubleclick.net',
+  'https://*.google.com',
+  'https://*.google.se',
+  'https://*.googleadservices.com',
+  'https://*.google-analytics.com',
 ]
 
 const scriptSrc = [
@@ -82,7 +87,6 @@ const connectSrc = [
   'https://vercel.com',
   // Google
   'https://www.gstatic.com',
-  'https://*.google-analytics.com',
 
   ...gtmInjectedOrigins,
 
