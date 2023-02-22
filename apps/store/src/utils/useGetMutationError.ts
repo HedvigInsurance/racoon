@@ -3,6 +3,9 @@ import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
 import { UserError } from '@/services/apollo/generated'
 
+/**
+ * @deprecated Use useErrorMessage() instead
+ */
 export const useGetMutationError = () => {
   const { t } = useTranslation('common')
 

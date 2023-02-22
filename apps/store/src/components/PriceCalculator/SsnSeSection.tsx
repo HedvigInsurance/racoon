@@ -14,7 +14,7 @@ import {
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useGetMutationError } from '@/utils/useGetMutationError'
+import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'
 
@@ -36,7 +36,6 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
 
 const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const getMutationError = useGetMutationError()
   const { showLoginPrompt } = useBankIdContext()
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
@@ -65,7 +64,7 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
     updateCustomer({ variables: { input: { shopSessionId: shopSession.id, ssn } } })
   }
 
-  const mutationError = getMutationError(result, result.data?.shopSessionCustomerUpdate)
+  const errorMessage = useErrorMessage(result.error)
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -75,7 +74,8 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
             name={SsnFieldName}
             defaultValue={shopSession.customer?.ssn ?? ''}
             required={true}
-            warning={!!mutationError}
+            warning={!!errorMessage}
+            message={errorMessage}
           />
           <Button type="submit" loading={result.loading}>
             {t('SUBMIT_LABEL_PROCEED')}
