@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
-import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { GlobalProductMetadata, GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
 import { ProductMetadataProvider } from './ProductMetadataContext'
@@ -44,6 +44,7 @@ export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenu
               key={nestedBlock._uid}
               blok={nestedBlock}
               overlay={story?.content.overlayMenu ?? overlayMenu}
+              static={story && isProductStory(story)}
             />
           ))}
         {children}

@@ -184,9 +184,10 @@ export type HeaderBlockProps = SbBaseBlockProps<{
   >
 }> & {
   overlay?: boolean
+  static?: boolean
 }
 
-export const HeaderBlock = ({ blok, overlay }: HeaderBlockProps) => {
+export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const productNavItem = useMemo(
@@ -201,7 +202,7 @@ export const HeaderBlock = ({ blok, overlay }: HeaderBlockProps) => {
   )
 
   return (
-    <Header {...storyblokEditable(blok)} opaque={isOpen} overlay={overlay}>
+    <Header {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}

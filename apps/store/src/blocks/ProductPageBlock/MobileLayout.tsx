@@ -8,7 +8,7 @@ import * as Tabs from '@/components/ProductPage/Tabs'
 import { ProductPageBlockProps } from './ProductPageBlock'
 import { PageSection } from './ProductPageBlock.types'
 import {
-  AnimatedHeader,
+  StickyHeader,
   Content,
   OverviewSection,
   StyledProductVariantSelector,
@@ -33,7 +33,7 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
       <PurchaseForm />
       <Content>
         <RadixTabs.Tabs value={activeSection} onValueChange={handleTabClick}>
-          <AnimatedHeader>
+          <StickyHeader>
             <RadixTabs.TabsList>
               <TablistWrapper>
                 <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
@@ -41,7 +41,7 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
               </TablistWrapper>
               {shouldRenderVariantSelector && <StyledProductVariantSelector />}
             </RadixTabs.TabsList>
-          </AnimatedHeader>
+          </StickyHeader>
 
           <OverviewSection>
             <Tabs.TabsContent value="overview">
