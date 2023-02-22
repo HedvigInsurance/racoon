@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ComponentProps } from 'react'
-import { Button, theme } from 'ui'
+import { Button, ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
-import { VerticalBodyWrapper, FluidBodyWrapper } from './ImageTextBlock'
 
 export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
@@ -14,17 +13,18 @@ export type ButtonBlockProps = SbBaseBlockProps<{
   size: ComponentProps<typeof Button>['size']
 }>
 
-export const ButtonBlock = ({ blok }: ButtonBlockProps) => {
+export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
   return (
-    <Wrapper {...storyblokEditable(blok)}>
+    <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
       <ButtonNextLink
+        {...storyblokEditable(blok)}
         href={getLinkFieldURL(blok.link, blok.text)}
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
       >
         {blok.text}
       </ButtonNextLink>
-    </Wrapper>
+    </ConditionalWrapper>
   )
 }
 ButtonBlock.blockName = 'button'
@@ -34,13 +34,4 @@ const Wrapper = styled.div({
   justifyContent: 'center',
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
-
-  [`${VerticalBodyWrapper} &, ${FluidBodyWrapper} &`]: {
-    display: 'inline-block',
-    padding: 0,
-    '&:not(:last-of-type)': {
-      marginBottom: theme.space.xs,
-      marginRight: theme.space.xs,
-    },
-  },
 })

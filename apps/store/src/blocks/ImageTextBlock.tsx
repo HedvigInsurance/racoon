@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
-import { default as NextImage } from 'next/image'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps, StoryblokAsset, ExpectedBlockType } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { ImageBlock, ImageBlockProps } from './ImageBlock'
 
 type Orientation = 'vertical' | 'fluid'
 type TextAlignment = 'top' | 'center' | 'bottom'
@@ -15,6 +16,7 @@ const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
 type ImageTextBlockProps = SbBaseBlockProps<{
   image: StoryblokAsset
+  imageBlock: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
   textAlignment?: TextAlignment
@@ -23,19 +25,21 @@ type ImageTextBlockProps = SbBaseBlockProps<{
 
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
   const { orientation = DEFAULT_ORIENTATION } = blok
+  // We only expect only one image from Storyblok
+  const imageBlock = filterByBlockType(blok.imageBlock, ImageBlock.blockName)[0]
 
   switch (orientation) {
     case 'fluid':
       return (
         <FluidImageTextBlock
-          image={blok.image}
+          imageBlock={imageBlock}
           body={blok.body}
           textAlignment={blok.textAlignment}
           imagePlacement={blok.imagePlacement}
         />
       )
     case 'vertical':
-      return <VerticalImageTextBlock image={blok.image} body={blok.body} />
+      return <VerticalImageTextBlock imageBlock={imageBlock} body={blok.body} />
     default:
       console.warn(`orientation type '${orientation}' is not valid`)
       return null
@@ -43,20 +47,18 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 }
 ImageTextBlock.blockName = 'imageText'
 
-type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'image' | 'body'>
+type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'body'> & {
+  imageBlock?: ImageBlockProps['blok']
+}
 
-const VerticalImageTextBlock = ({ image, body }: VerticalImageTextBlockProps) => {
+const VerticalImageTextBlock = ({ imageBlock, body }: VerticalImageTextBlockProps) => {
   return (
     <VerticalImageTextBlockWrapper>
-      <VerticalImageWrapper>
-        <Image src={image.filename} alt={image.alt} fill={true} />
-      </VerticalImageWrapper>
+      {imageBlock && <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />}
       <VerticalBodyWrapper>
-        <div>
-          {body?.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
-          ))}
-        </div>
+        {body?.map((nestedBlock) => (
+          <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
+        ))}
       </VerticalBodyWrapper>
     </VerticalImageTextBlockWrapper>
   )
@@ -64,48 +66,42 @@ const VerticalImageTextBlock = ({ image, body }: VerticalImageTextBlockProps) =>
 
 const VerticalImageTextBlockWrapper = styled.div({
   paddingInline: theme.space.xs,
+
   [mq.md]: {
     paddingInline: theme.space.md,
   },
 })
 
-export const VerticalBodyWrapper = styled.div({
+const VerticalBodyWrapper = styled.div({
   padding: theme.space.xs,
+
   [mq.md]: {
     paddingBlock: theme.space.md,
   },
 })
 
-const VerticalImageWrapper = styled.div({
-  position: 'relative',
-  aspectRatio: '3 / 2',
-})
-
-const Image = styled(NextImage)({
-  objectFit: 'cover',
-  borderRadius: theme.radius.lg,
-})
-
 type FluidImageTextBlockProps = Pick<
   ImageTextBlockProps['blok'],
-  'image' | 'body' | 'textAlignment' | 'imagePlacement'
->
+  'body' | 'textAlignment' | 'imagePlacement'
+> & { imageBlock?: ImageBlockProps['blok'] }
 
 const FluidImageTextBlock = ({
-  image,
+  imageBlock,
   body,
   textAlignment = DEFAULT_TEXT_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
 }: FluidImageTextBlockProps) => {
   return (
     <FluidImageTextBlockWrapper>
-      <FluidImageWrapper>
-        <Image src={image.filename} alt={image.alt} fill={true} />
-      </FluidImageWrapper>
+      {imageBlock && (
+        <GridLayout.Content width="1/2">
+          <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />
+        </GridLayout.Content>
+      )}
       <FluidBodyWrapper textAlignment={textAlignment} imagePlacement={imagePlacement}>
         <div>
           {body?.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
           ))}
         </div>
       </FluidBodyWrapper>
@@ -115,17 +111,9 @@ const FluidImageTextBlock = ({
 
 const FluidImageTextBlockWrapper = styled(GridLayout.Root)({
   paddingInline: theme.space.xs,
+
   [mq.md]: {
     paddingInline: theme.space.md,
-  },
-})
-
-const FluidImageWrapper = styled.div({
-  position: 'relative',
-  aspectRatio: '3 / 2',
-  gridColumn: '1 / -1',
-  [mq.lg]: {
-    gridColumn: 'span 6',
   },
 })
 
@@ -136,6 +124,7 @@ export const FluidBodyWrapper = styled.div<{
   paddingBlock: theme.space.md,
   paddingInline: theme.space.xs,
   gridColumn: '1 / -1',
+
   [mq.lg]: {
     display: 'flex',
     flexDirection: 'column',
