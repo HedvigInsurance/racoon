@@ -99,7 +99,8 @@ export const NavigationPrimaryList = styled(NavigationMenuPrimitive.List)({
   inset: `${MENU_BAR_HEIGHT_MOBILE} 0 0 0`,
   display: 'flex',
   flexDirection: 'column',
-  padding: `0 ${theme.space.md} `,
+  paddingInline: theme.space.md,
+  paddingBottom: theme.space.xl,
   overflowY: 'auto',
 
   [mq.lg]: {
