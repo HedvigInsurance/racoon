@@ -113,7 +113,7 @@ const Label = styled.label({
   },
 
   [`${SmallWrapper}:focus-within > &, ${SmallWrapper}[data-active=true] > &`]: {
-    transform: `translate(calc(${theme.space.md} * 0.2), -0.8rem) scale(0.8)`,
+    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
   },
 
   [`${LargeWrapper}[data-highlight=true] > &`]: {
@@ -155,7 +155,10 @@ const LargeSuffix = (props: BaseProps) => (
   <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
 )
 
-const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
+const SmallInput = styled(LargeInput)({
+  fontSize: theme.fontSizes.lg,
+  bottom: '0.3125rem',
+})
 
 const StyledSmallSuffix = styled(StyledLargeSuffix)()
 const SmallSuffix = (props: BaseProps) => (
