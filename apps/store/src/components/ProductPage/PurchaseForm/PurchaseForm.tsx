@@ -1,4 +1,3 @@
-import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
@@ -16,7 +15,6 @@ import { useOpenPriceCalculatorQueryParam } from '@/components/ProductPage/Purch
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingContextKey } from '@/services/Tracking/Tracking'
@@ -36,9 +34,8 @@ export const PurchaseForm = () => {
   const [formState, setFormState] = useState<FormState>('IDLE')
   const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
-  const apolloClient = useApolloClient()
   const formatter = useFormatter()
-  const [{ priceIntent }, setupPriceIntent] = usePriceIntent()
+  const [priceIntent, , createNewPriceIntent] = usePriceIntent()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
 
@@ -117,10 +114,8 @@ export const PurchaseForm = () => {
                   }),
             })
 
-            const service = priceIntentServiceInitClientSide(apolloClient)
-            service.clear(priceTemplate.name, shopSession.id)
             try {
-              await setupPriceIntent(shopSession)
+              await createNewPriceIntent(shopSession)
             } catch (error) {
               datadogLogs.logger.error('Failed to create new price intent', {
                 error,
