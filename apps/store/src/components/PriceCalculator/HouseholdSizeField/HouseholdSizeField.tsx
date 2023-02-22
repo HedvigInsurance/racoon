@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
-import { theme } from 'ui'
+import { MinusIcon, PlusIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { HouseholdSizeField as HouseholdSizeFieldType } from '@/services/PriceCalculator/Field.types'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -45,6 +45,9 @@ export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => 
     value: count,
   }))
 
+  const isDecrementDisabled = value === minValue
+  const isIncrementDisabled = value === maxValue
+
   return (
     <>
       <Wrapper {...animationProps}>
@@ -68,18 +71,24 @@ export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => 
             onClick={decrement}
             tabIndex={-1}
             aria-hidden={true}
-            disabled={value === minValue}
+            disabled={isDecrementDisabled}
           >
-            <Minus />
+            <MinusIcon
+              size="1rem"
+              color={isDecrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
+            />
           </StyledButton>
           <StyledButton
             type="button"
             onClick={increment}
             tabIndex={-1}
             aria-hidden={true}
-            disabled={value === maxValue}
+            disabled={isIncrementDisabled}
           >
-            <Plus />
+            <PlusIcon
+              size="1rem"
+              color={isIncrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
+            />
           </StyledButton>
         </SpaceFlex>
       </Wrapper>
@@ -93,8 +102,9 @@ const Wrapper = styled(motion.div)({
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
+  height: '3rem',
 
-  padding: `${theme.space.sm} ${theme.space.md}`,
+  paddingInline: theme.space.md,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
 })
@@ -104,35 +114,6 @@ const StyledSelect = styled.select({
   color: theme.colors.textPrimary,
 })
 
-const Minus = styled.div({
-  width: '1.25rem',
-  height: '0.0625rem', // 1px
-  backgroundColor: theme.colors.textPrimary,
-})
-
-const Plus = () => {
-  return (
-    <PlusWrapper>
-      <Minus />
-      <PlusVerticalLine />
-    </PlusWrapper>
-  )
-}
-
-const PlusVerticalLine = styled.div({
-  height: '1.25rem',
-  width: '0.0625rem', // 1px
-  backgroundColor: theme.colors.textPrimary,
-  position: 'absolute',
-})
-
-const PlusWrapper = styled.div({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
-
 const StyledButton = styled.button({
   cursor: 'pointer',
   height: '1.5rem',
@@ -140,8 +121,4 @@ const StyledButton = styled.button({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
-  '&[disabled] div': {
-    backgroundColor: theme.colors.textDisabled,
-  },
 })
