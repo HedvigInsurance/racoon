@@ -4,9 +4,8 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Space, mq, theme } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { PageLink } from '@/utils/PageLink'
-import { ButtonNextLink } from '../ButtonNextLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -64,9 +63,7 @@ export const CartNotificationContent = ({ name, price, description, onClose }: P
 }
 
 const DialogContent = styled(DialogPrimitive.Content)({
-  marginTop: MENU_BAR_HEIGHT_MOBILE,
   [mq.lg]: {
-    marginTop: MENU_BAR_HEIGHT_DESKTOP,
     display: 'flex',
     justifyContent: 'flex-end',
   },
@@ -81,10 +78,6 @@ const StyledOverlay = styled(DialogPrimitive.Overlay)({
   backgroundColor: 'rgba(0, 0, 0, 0.15)',
   position: 'fixed',
   inset: 0,
-  top: MENU_BAR_HEIGHT_MOBILE,
-  [mq.lg]: {
-    top: 0,
-  },
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
   },
