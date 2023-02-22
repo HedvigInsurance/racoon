@@ -116,12 +116,16 @@ const Label = styled.label({
     transform: `translate(calc(${theme.space.md} * 0.2), -0.8rem) scale(0.8)`,
   },
 
-  '&&[data-disabled=true]': {
-    color: theme.colors.textSecondary,
+  [`${LargeWrapper}[data-highlight=true] > &`]: {
+    color: theme.colors.greenText,
   },
 
   [`${LargeWrapper}[data-warning=true] > &`]: {
     animation: `${warningColorAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
+  },
+
+  '&&[data-disabled=true]': {
+    color: theme.colors.textSecondary,
   },
 })
 
