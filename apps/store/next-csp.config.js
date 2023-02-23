@@ -34,6 +34,8 @@ const styleSrc = [
   'https://fonts.googleapis.com',
   'https://*.googletagmanager.com',
 
+  'https://*.gstatic.com',
+
   "'unsafe-inline'",
   "'self'",
 ]
