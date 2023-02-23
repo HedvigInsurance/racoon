@@ -6,6 +6,7 @@ import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Space, mq, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { PageLink } from '@/utils/PageLink'
+import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/HeaderStyles'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -103,8 +104,10 @@ const DialogContentWrapper = styled.div({
 
   backgroundColor: theme.colors.light,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+
   [mq.lg]: {
-    margin: `${theme.space.xs} ${theme.space.md} 0 0`,
+    top: MENU_BAR_HEIGHT_DESKTOP,
+    right: theme.space.md,
     borderRadius: theme.radius.md,
     maxWidth: '28rem',
   },
