@@ -144,7 +144,3 @@ const EmptyStateWrapper = styled.div({
   flexDirection: 'column',
   justifyContent: 'center',
 })
-
-const TitleWrapper = styled(Space)({
-  paddingBottom: theme.space.md,
-})
