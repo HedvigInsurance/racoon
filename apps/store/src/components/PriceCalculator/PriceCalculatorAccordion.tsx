@@ -44,7 +44,7 @@ export const PriceCalculatorAccordion = (props: Props) => {
         const isValid = section.state === 'valid'
         const showMutedHeading = !(isActive || isValid)
         const showEditButton = isValid && !isActive
-        const stepIconState = isValid ? 'valid' : 'outline'
+        const stepIconState = isValid ? 'valid' : 'muted'
 
         let content
         if (section.id === SsnSeSection.sectionId) {
