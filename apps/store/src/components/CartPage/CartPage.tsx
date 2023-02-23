@@ -53,7 +53,7 @@ export const CartPage = (props: CartPageProps) => {
     body = (
       <Space y={1.5}>
         <Heading mb="2.5rem" as={'h2'} align="center">
-          {t('CART_TITLE')}
+          {t('CART_PAGE_HEADING')}
         </Heading>
         <CartEntryList>
           {entries.map((item) => (
@@ -106,7 +106,7 @@ const EmptyState = ({ children }: EmptyStateProps) => {
   return (
     <>
       <Heading as={'h2'} align="center">
-        {t('CART_TITLE')}
+        {t('CART_PAGE_HEADING')}
       </Heading>
       <EmptyStateWrapper>
         <Space y={2}>
