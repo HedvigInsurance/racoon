@@ -8,6 +8,7 @@ type Props = Omit<
 > & {
   label: string
   warning?: boolean
+  message?: string
 }
 
 /**

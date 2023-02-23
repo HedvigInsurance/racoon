@@ -1,6 +1,14 @@
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloError,
+  ApolloLink,
+  from,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import { onError } from '@apollo/client/link/error'
+import { ErrorResponse, onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
 import { GetServerSidePropsContext } from 'next'
 import { i18n } from 'next-i18next'
@@ -16,12 +24,26 @@ const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
+const errorLink = onError((error: ErrorResponse) => {
+  if (error.graphQLErrors)
+    error.graphQLErrors.forEach(({ message, locations, path }) =>
       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
     )
-  if (networkError) console.log(`[Network error]: ${networkError}`)
+  if (error.networkError) console.log(`[Network error]: ${error.networkError}`)
+})
+
+const userErrorLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((fetchResult) => {
+    for (const result of Object.values(fetchResult?.data ?? {})) {
+      if (result.userError) {
+        throw new ApolloError({
+          errorMessage: result.userError.message,
+          extraInfo: { userError: result.userError },
+        })
+      }
+    }
+    return fetchResult
+  })
 })
 
 const languageLink = setContext((_, { headers = {}, ...context }) => {
@@ -54,7 +76,15 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
-    link: from([errorLink, headersLink, languageLink, httpLink]),
+    link: from([
+      // Has to be the first to process output last
+      // We re-raise userError results as errors, we don't want errorLink to see those
+      userErrorLink,
+      errorLink,
+      headersLink,
+      languageLink,
+      httpLink,
+    ]),
     cache: new InMemoryCache({
       typePolicies: {
         Cart: {

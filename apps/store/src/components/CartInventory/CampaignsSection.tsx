@@ -18,7 +18,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
   const { t } = useTranslation('cart')
   const theme = useTheme()
 
-  const [redeemCampaign, { loading: loadingRedeem, userError }] = useRedeemCampaign({ cartId })
+  const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({ cartId })
   const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -44,8 +44,8 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
             name={FORM_CAMPAIGN_CODE}
             label={t('CAMPAIGN_CODE_INPUT_LABEL')}
             variant="small"
-            warning={!!userError}
-            message={userError?.message}
+            warning={!!errorMessage}
+            message={errorMessage}
           />
           <Button variant="primary-alt" loading={loadingRedeem}>
             {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
