@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, useState } from 'react'
-import { Space, Text, theme } from 'ui'
+import { LockIcon, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -31,10 +31,10 @@ export const TextField = (props: Props) => {
 
   const inputValue = inputProps.value || value
 
-  const [Wrapper, Input, Suffix] =
+  const [Wrapper, InputWrapper, Input] =
     variant === 'large'
-      ? ([LargeWrapper, LargeInput, LargeSuffix] as const)
-      : ([SmallWrapper, SmallInput, SmallSuffix] as const)
+      ? ([LargeWrapper, LargeInputWrapper, LargeInput] as const)
+      : ([SmallWrapper, SmallInputWrapper, SmallInput] as const)
 
   return (
     <Space y={0.25}>
@@ -42,10 +42,19 @@ export const TextField = (props: Props) => {
         <Label htmlFor={inputProps.id} data-disabled={inputProps.disabled} data-variant={variant}>
           {label}
         </Label>
-        <SpaceFlex align="center" space={0}>
+        <InputWrapper>
           <Input {...inputProps} onKeyDown={highlight} onChange={handleChange} />
-          {suffix && inputValue && <Suffix>{suffix}</Suffix>}
-        </SpaceFlex>
+          <SpaceFlex align="center" space={0.5}>
+            {suffix && inputValue && (
+              <Text as="span" size={variant === 'large' ? 'xl' : 'lg'} color="textSecondary">
+                {suffix}
+              </Text>
+            )}
+            {inputProps.disabled && inputValue && (
+              <LockIcon size="1rem" color={theme.colors.textSecondary} />
+            )}
+          </SpaceFlex>
+        </InputWrapper>
       </Wrapper>
       {message && <MessageText size="sm">{message}</MessageText>}
     </Space>
@@ -113,7 +122,7 @@ const Label = styled.label({
   },
 
   [`${SmallWrapper}:focus-within > &, ${SmallWrapper}[data-active=true] > &`]: {
-    transform: `translate(calc(${theme.space.md} * 0.2), -0.8rem) scale(0.8)`,
+    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
   },
 
   [`${LargeWrapper}[data-highlight=true] > &`]: {
@@ -125,17 +134,26 @@ const Label = styled.label({
   },
 
   '&&[data-disabled=true]': {
-    color: theme.colors.textSecondary,
+    color: theme.colors.textTertiary,
   },
 })
+
+const LargeInputWrapper = styled.div({
+  position: 'absolute',
+  bottom: '0.625rem',
+  width: '100%',
+
+  display: 'flex',
+  alignItems: 'center',
+  paddingRight: theme.space.md,
+})
+
+const SmallInputWrapper = styled(LargeInputWrapper)({ bottom: '0.3125rem' })
 
 const LargeInput = styled.input({
   width: '100%',
   fontSize: theme.fontSizes.xl,
   paddingInline: theme.space.md,
-  position: 'absolute',
-  bottom: '0.625rem',
-  left: 0,
 
   ':disabled': {
     color: theme.colors.textSecondary,
@@ -147,22 +165,6 @@ const LargeInput = styled.input({
   },
 })
 
-type BaseProps = { children: React.ReactNode }
-
-const StyledLargeSuffix = styled(Text)({ paddingRight: theme.space.md })
-
-const LargeSuffix = (props: BaseProps) => (
-  <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
-)
-
-const SmallInput = styled(LargeInput)({
-  fontSize: theme.fontSizes.lg,
-  bottom: '0.3125rem',
-})
-
-const StyledSmallSuffix = styled(StyledLargeSuffix)()
-const SmallSuffix = (props: BaseProps) => (
-  <StyledSmallSuffix as="span" size="lg" color="textSecondary" {...props} />
-)
+const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 
 const MessageText = styled(Text)({ paddingLeft: theme.space.md })
