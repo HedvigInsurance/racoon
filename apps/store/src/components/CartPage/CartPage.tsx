@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
-import { mq, Space, Text, theme } from 'ui'
+import { Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -53,6 +53,9 @@ export const CartPage = (props: CartPageProps) => {
   if (entries.length > 0) {
     body = (
       <Space y={1.5}>
+        <Heading mb="2.5rem" as={'h2'} align="center">
+          {t('CART_PAGE_HEADING')}
+        </Heading>
         <CartEntryList>
           {entries.map((item) => (
             <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
@@ -104,6 +107,9 @@ const EmptyState = ({ children }: EmptyStateProps) => {
 
   return (
     <>
+      <Heading as={'h2'} align="center">
+        {t('CART_PAGE_HEADING')}
+      </Heading>
       <EmptyStateWrapper>
         <Space y={2}>
           <Space y={1}>
