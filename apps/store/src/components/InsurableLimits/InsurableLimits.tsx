@@ -34,7 +34,7 @@ export const InsurableLimits = ({ items }: InsurableLimitsProps) => {
             {item.label}
           </HeadingLabel>
           <Text size="xl">{item.value}</Text>
-          <Balancer ratio={0.6}>
+          <Balancer ratio={0.65}>
             <Text size="xl" color="textSecondary">
               {item.description}
             </Text>
