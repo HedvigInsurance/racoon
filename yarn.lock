@@ -19567,16 +19567,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-animate-height@npm:3.1.0":
-  version: 3.1.0
-  resolution: "react-animate-height@npm:3.1.0"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 46f802fe1e70d5d451d74fabece0dc8e2060543ea106dd56fc0ff544391e8939f8876af480323854dc39cbefd286d8cece29e509de3fb2d231fa9f77097532af
-  languageName: node
-  linkType: hard
-
 "react-docgen-typescript@npm:^2.1.1":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
@@ -22768,7 +22758,6 @@ __metadata:
     eslint-config-custom: "workspace:"
     jest: 29.4.3
     react: 18.2.0
-    react-animate-height: 3.1.0
     react-dom: 18.2.0
     ts-jest: 29.0.5
     tsconfig: "workspace:"
