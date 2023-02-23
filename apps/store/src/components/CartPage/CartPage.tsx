@@ -52,7 +52,7 @@ export const CartPage = (props: CartPageProps) => {
   if (entries.length > 0) {
     body = (
       <Space y={1.5}>
-        <Heading as={'h2'} align="center">
+        <Heading mb='2.5rem' as={'h2'} align="center">
           {t('CART_TITLE')}
         </Heading>
         <CartEntryList>
@@ -143,4 +143,8 @@ const EmptyStateWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+})
+
+const TitleWrapper = styled(Space)({
+  paddingBottom: theme.space.md,
 })
