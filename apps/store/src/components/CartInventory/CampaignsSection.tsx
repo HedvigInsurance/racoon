@@ -46,6 +46,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
             variant="small"
             warning={!!errorMessage}
             message={errorMessage}
+            required={true}
           />
           <Button variant="primary-alt" loading={loadingRedeem}>
             {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}

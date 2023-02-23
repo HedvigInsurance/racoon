@@ -77,7 +77,7 @@ export const TextField = (props: Props) => {
             (inputProps.disabled ? (
               <LockIcon size="1rem" color={theme.colors.textSecondary} />
             ) : (
-              <DeleteButton type="button" onClick={handleClickDelete}>
+              <DeleteButton type="button" onClick={handleClickDelete} aria-hidden={true}>
                 <CrossIcon size="1rem" />
               </DeleteButton>
             ))}
@@ -104,7 +104,7 @@ const warningColorAnimation = keyframes({
     color: theme.colors.amberText,
   },
   '100%': {
-    color: theme.colors.textPrimary,
+    color: theme.colors.textSecondary,
   },
 })
 
@@ -119,7 +119,7 @@ const BaseWrapper = styled(motion.div)({
   cursor: 'text',
 
   '&[data-warning=true]': {
-    animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
+    animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 1`,
   },
 })
 
@@ -158,7 +158,7 @@ const Label = styled.label({
   },
 
   [`${LargeWrapper}[data-warning=true] > &, ${SmallWrapper}[data-warning=true] > &`]: {
-    animation: `${warningColorAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 2`,
+    animation: `${warningColorAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 1`,
   },
 
   '&&[data-disabled=true]': {
@@ -199,10 +199,10 @@ const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 const MessageText = styled(Text)({ paddingLeft: theme.space.md })
 
 const DeleteButton = styled.button({
-  display: 'none',
   cursor: 'pointer',
+  opacity: 0,
 
   [`${LargeWrapper}:focus-within &, ${SmallWrapper}:focus-within &`]: {
-    display: 'block',
+    opacity: 1,
   },
 })
