@@ -134,17 +134,14 @@ type BankSigneringInvalidRenewalDateProps = Pick<Props, 'onStartDateChange' | 's
 const BankSigneringInvalidRenewalDateCancellation = (
   props: BankSigneringInvalidRenewalDateProps,
 ) => {
-  const { onStartDateChange, companyName, startDate } = props
-  const { t } = useTranslation('purchase-form')
-  const message = t('AUTO_SWITCH_INVALID_RENEWAL_DATE_MESSAGE', { company: companyName })
-
+  const { onStartDateChange, startDate } = props
   // TODO: figure out how to get back to BANKSIGNERING option
   // Right now, if the user ends up here, they can't go back to the BANKSIGNERING...
   const handleChange = (date: Date) => {
     onStartDateChange?.(date)
   }
 
-  return <SmartDateInput {...props} date={startDate} onChange={handleChange} message={message} />
+  return <SmartDateInput {...props} date={startDate} onChange={handleChange} />
 }
 
 type AutoSwitchInputProps = {
@@ -174,12 +171,11 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
 
 type SmartDateInputProps = {
   label?: string
-  message?: string
   date?: Date
   onChange?: (date: Date) => void
 }
 
-const SmartDateInput = ({ label, message, date, onChange }: SmartDateInputProps) => {
+const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
   const { t } = useTranslation('purchase-form')
   const dateToday = new Date()
 
@@ -201,8 +197,6 @@ const SmartDateInput = ({ label, message, date, onChange }: SmartDateInputProps)
       value={inputValue}
       min={inputValueToday}
       onChange={handleChange}
-    >
-      {message}
-    </DateInput>
+    />
   )
 }
