@@ -24,8 +24,10 @@ export const Root = ({ children, label, onValueChange, ...props }: RootProps) =>
   }
 
   return (
-    <Card y={0.75} {...animationProps}>
-      <Text size="md">{label}</Text>
+    <Card y={0.5} {...animationProps}>
+      <Text size="xs" color="textSecondary">
+        {label}
+      </Text>
       <RadioGroup.Root onValueChange={handleValueChange} {...props}>
         <SpaceFlex space={1} align="center">
           {children}
@@ -56,7 +58,11 @@ export const Item = ({ value, label, id, autoFocus }: ItemProps) => {
       <StyledItem id={identifier} value={value} autoFocus={autoFocus}>
         <StyledIndicator />
       </StyledItem>
-      <label htmlFor={identifier}>{label}</label>
+      <label htmlFor={identifier}>
+        <Text as="span" size="xl">
+          {label}
+        </Text>
+      </label>
     </SpaceFlex>
   )
 }
