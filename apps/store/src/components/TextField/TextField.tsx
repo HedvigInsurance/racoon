@@ -155,7 +155,10 @@ const LargeSuffix = (props: BaseProps) => (
   <StyledLargeSuffix as="span" size="xl" color="textSecondary" {...props} />
 )
 
-const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
+const SmallInput = styled(LargeInput)({
+  fontSize: theme.fontSizes.lg,
+  bottom: '0.3125rem',
+})
 
 const StyledSmallSuffix = styled(StyledLargeSuffix)()
 const SmallSuffix = (props: BaseProps) => (
