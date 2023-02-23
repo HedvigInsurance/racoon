@@ -1,5 +1,6 @@
-import { useTheme } from '@emotion/react'
+import { Variants } from 'framer-motion'
 import { KeyboardEvent, useCallback, useState } from 'react'
+import { theme } from 'ui'
 
 enum AnimationState {
   Idle = 'IDLE',
@@ -7,12 +8,7 @@ enum AnimationState {
 }
 
 export const useHighlightAnimation = () => {
-  const theme = useTheme()
   const [isInteractive, setIsInteractive] = useState(false)
-
-  const animationVariants = {
-    [AnimationState.Active]: { backgroundColor: theme.colors.green100 },
-  } as const
 
   const highlight = useCallback((event?: KeyboardEvent<HTMLElement>) => {
     if (!event) return setIsInteractive(true)
@@ -22,13 +18,22 @@ export const useHighlightAnimation = () => {
   return {
     highlight,
     animationProps: {
-      variants: animationVariants,
+      variants: ANIMATION_VARIANTS,
       initial: AnimationState.Idle,
       animate: isInteractive ? AnimationState.Active : AnimationState.Idle,
+      transition: { ...theme.transitions.framer.easeInOutCubic, duration: 0.2, delay: 0.2 },
       onAnimationComplete: () => setIsInteractive(false),
+      'data-highlight': isInteractive,
     },
   } as const
 }
+
+const ANIMATION_VARIANTS: Variants = {
+  [AnimationState.Active]: {
+    backgroundColor: theme.colors.green100,
+    transition: { ...theme.transitions.framer.easeInOutCubic, duration: 0.4 },
+  },
+} as const
 
 const EXCLUDE_SET = new Set([
   'Tab',
