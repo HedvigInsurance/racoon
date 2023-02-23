@@ -11,6 +11,7 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
@@ -98,6 +99,7 @@ export const CartPage = (props: CartPageProps) => {
 type EmptyStateProps = { children: ReactNode }
 
 const EmptyState = ({ children }: EmptyStateProps) => {
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('cart')
 
   return (
@@ -110,7 +112,9 @@ const EmptyState = ({ children }: EmptyStateProps) => {
               {t('CART_EMPTY_SUMMARY')}
             </Text>
           </Space>
-          <ButtonNextLink href={PageLink.store()}>{t('GO_TO_STORE_BUTTON')}</ButtonNextLink>
+          <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
+            {t('GO_TO_STORE_BUTTON')}
+          </ButtonNextLink>
         </Space>
       </EmptyStateWrapper>
       {children}
