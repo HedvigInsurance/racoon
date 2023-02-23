@@ -35,6 +35,7 @@ import {
   filterByBlockType,
   getLinkFieldURL,
 } from '@/services/storyblok/Storyblok.helpers'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonBlockProps } from './ButtonBlock'
 
@@ -101,6 +102,7 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
 type ProductNavItem = { name: string; url: string; image?: string }
 
 export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation()
   const productMetadata = useProductMetadata()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
@@ -141,7 +143,11 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
                   ))}
                 </ProductNavigationList>
               </NavigationMenuPrimitive.Sub>
-              <ButtonNextLinkFullWidth href={PageLink.store()} variant="secondary" size="medium">
+              <ButtonNextLinkFullWidth
+                href={PageLink.store({ locale: routingLocale })}
+                variant="secondary"
+                size="medium"
+              >
                 {t('NAVIGATION_STORE_LINK')}
               </ButtonNextLinkFullWidth>
             </Space>

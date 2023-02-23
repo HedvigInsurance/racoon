@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Space, mq, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
@@ -36,6 +37,7 @@ type Props = ProductItemProps & {
 }
 
 export const CartNotificationContent = ({ name, price, description, onClose }: Props) => {
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('purchase-form')
   const handleClose = () => onClose?.()
 
@@ -51,7 +53,11 @@ export const CartNotificationContent = ({ name, price, description, onClose }: P
                 {t('CART_TOAST_CART_LINK')}
               </ButtonNextLink>
 
-              <ButtonNextLink href={PageLink.store()} onClick={onClose} variant="ghost">
+              <ButtonNextLink
+                href={PageLink.store({ locale: routingLocale })}
+                onClick={onClose}
+                variant="ghost"
+              >
                 {t('CART_TOAST_STORE_LINK')}
               </ButtonNextLink>
             </Space>
