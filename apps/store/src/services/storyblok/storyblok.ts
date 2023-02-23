@@ -57,6 +57,7 @@ import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
+  nested?: boolean
 }
 
 export type ExpectedBlockType<T> = [T] extends [{ blok: SbBlokData }]
