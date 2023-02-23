@@ -10,7 +10,6 @@ export const ORIGIN_URL =
 
 type BaseParams = { locale?: RoutingLocale }
 
-type ProductPage = BaseParams & { slug: string }
 type CheckoutPaymentPage = BaseParams & { shopSessionId: string; authStatus?: AuthStatus }
 type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
 type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
@@ -21,8 +20,15 @@ const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
 export const PageLink = {
   home: ({ locale }: BaseParams = {}) => localePrefix(locale) || '/',
-  store: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/store`,
-  product: ({ locale, slug }: ProductPage) => `${localePrefix(locale)}/products/${slug}`,
+  // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
+  // and manually maintaining consistency between CMS and code
+  store: ({ locale }: Required<BaseParams>) => {
+    let slug = 'store'
+    if (locale === 'se') {
+      slug = 'forsakringar'
+    }
+    return `${localePrefix(locale)}/${slug}`
+  },
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
   checkout: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout`,
   checkoutPayment: ({ locale, authStatus, shopSessionId }: CheckoutPaymentPage) => {

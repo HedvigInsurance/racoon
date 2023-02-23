@@ -6,8 +6,10 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
+import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { useApollo } from '@/services/apollo/client'
+import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
@@ -82,7 +84,10 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
             <TrackingProvider value={tracking}>
               <BankIdContextProvider>
                 <BalancerProvider>
-                  {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                  <AppErrorProvider>
+                    <AppErrorDialog />
+                    {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                  </AppErrorProvider>
                 </BalancerProvider>
                 <BankIdDialog />
               </BankIdContextProvider>
