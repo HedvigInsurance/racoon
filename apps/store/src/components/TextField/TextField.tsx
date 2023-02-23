@@ -79,7 +79,7 @@ const LargeWrapper = styled(motion.div)({
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-  height: '4rem',
+  height: '4.5rem',
   width: '100%',
 
   '&[data-warning=true]': {
@@ -101,22 +101,19 @@ const Label = styled.label({
   pointerEvents: 'none',
   transformOrigin: 'top left',
   transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-  transform: `translate(0, 0) scale(1)`,
+  transform: 'translate(0, 0) scale(1)',
   paddingInline: theme.space.md,
 
   fontSize: theme.fontSizes.xl,
-  '&[data-variant=small]': {
-    fontSize: theme.fontSizes.lg,
-  },
+  '&[data-variant=small]': { fontSize: theme.fontSizes.lg },
 
   [`${LargeWrapper}:focus-within > &, ${LargeWrapper}[data-active=true] > &`]: {
     overflow: 'visible',
-    color: theme.colors.textPrimary,
-    transform: `translate(calc(${theme.space.md} * 0.4), -0.5rem) scale(0.6)`,
+    transform: `translate(calc(${theme.space.md} * 0.4), -0.6rem) scale(0.6)`,
   },
 
   [`${SmallWrapper}:focus-within > &, ${SmallWrapper}[data-active=true] > &`]: {
-    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
+    transform: `translate(calc(${theme.space.md} * 0.2), -0.8rem) scale(0.8)`,
   },
 
   '&&[data-disabled=true]': {
@@ -132,7 +129,9 @@ const LargeInput = styled.input({
   width: '100%',
   fontSize: theme.fontSizes.xl,
   paddingInline: theme.space.md,
-  paddingTop: theme.space.md,
+  position: 'absolute',
+  bottom: '0.625rem',
+  left: 0,
 
   ':disabled': {
     color: theme.colors.textSecondary,
