@@ -54,7 +54,7 @@ const Wrapper = styled(motion.div)({
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-  height: '3.25rem',
+  height: '3rem',
   width: '100%',
   cursor: 'pointer',
 })
