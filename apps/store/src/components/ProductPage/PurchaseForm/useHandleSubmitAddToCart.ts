@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { FormEventHandler, useCallback } from 'react'
 import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './PurchaseForm.constants'
@@ -16,18 +17,20 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     // Refetch recommendations
     refetchQueries: 'active',
   })
+
+  const { showApolloError } = useAppErrorHandleContext()
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
     const productOfferId = getOrThrowFormValue(formData, FormElement.ProductOfferId)
 
-    // @TODO: expose and handle errors
     addEntry({
       variables: { cartId, offerId: productOfferId },
       onCompleted() {
         onSuccess(productOfferId)
       },
+      onError: showApolloError,
     })
   }
 
