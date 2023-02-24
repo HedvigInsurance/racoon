@@ -24,10 +24,10 @@ const getPerilColumns = (items: PerilFragment[], columns: number) => {
 
 export const Perils = ({ items }: Props) => {
   const BREAKPOINTS = {
-    sm: useBreakpoint('sm'),
-    md: useBreakpoint('md'),
-    lg: useBreakpoint('lg'),
     xl: useBreakpoint('xl'),
+    lg: useBreakpoint('lg'),
+    md: useBreakpoint('md'),
+    sm: useBreakpoint('sm'),
   } as const
 
   const getColumnCountByBreakpoint = (breakpoints: typeof BREAKPOINTS) => {
