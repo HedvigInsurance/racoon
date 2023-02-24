@@ -1,43 +1,75 @@
 import styled from '@emotion/styled'
-import React, { useState, useCallback, ReactNode } from 'react'
-import { mq, Text, theme } from 'ui'
+import React, { useState, useCallback } from 'react'
+import { mq, Text, theme, useBreakpoint } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
-
-const MAX_COLS = 4
 
 type Props = {
   items: Array<PerilFragment>
 }
 
-export const Perils = ({ items }: Props) => {
-  const numberOfItemsPerColumn = Math.ceil(items.length / MAX_COLS)
-  const accordions: Array<ReactNode> = []
-  for (let i = 0; i < items.length; i += numberOfItemsPerColumn) {
-    const perils = items.slice(i, i + numberOfItemsPerColumn)
-    accordions.push(<PerilsAccordion key={i} perils={perils} />)
-  }
+const getPerilColumns = (items: PerilFragment[], columns: number) => {
+  const accordions = items.reduce((acc, item, index) => {
+    const columnIndex = index % columns
+    if (!acc[columnIndex]) {
+      acc[columnIndex] = []
+    }
+    acc[columnIndex].push(item)
+    return acc
+  }, [] as Array<Array<PerilFragment>>)
 
-  return <PerilsAccordionGrid fixedCols={items.length < 4}>{accordions}</PerilsAccordionGrid>
+  return accordions
 }
 
-const PerilsAccordionGrid = styled.div(({ fixedCols = false }: { fixedCols?: boolean }) => ({
+export const Perils = ({ items }: Props) => {
+  const BREAKPOINTS = {
+    xl: useBreakpoint('xl'),
+    lg: useBreakpoint('lg'),
+    md: useBreakpoint('md'),
+    sm: useBreakpoint('sm'),
+  } as const
+
+  const getColumnCountByBreakpoint = (breakpoints: typeof BREAKPOINTS) => {
+    if (breakpoints.xl) return 4
+    if (breakpoints.lg) return 3
+    if (breakpoints.md) return 2
+    return 1
+  }
+
+  return (
+    <PerilsAccordionGrid>
+      {getPerilColumns(items, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
+        <PerilColumnFlex key={index}>
+          {perils.map((peril) => (
+            <PerilsAccordion key={index} peril={peril} />
+          ))}
+        </PerilColumnFlex>
+      ))}
+    </PerilsAccordionGrid>
+  )
+}
+
+const PerilsAccordionGrid = styled.div(() => ({
   display: 'grid',
   gap: theme.space.xxs,
-  // It needs a defined width to trigger ellipses on mobile
-  gridTemplateColumns: '100%',
-
+  gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
   [mq.md]: {
-    gridTemplateColumns: `repeat(auto-fit, ${fixedCols ? '20.75rem' : 'minmax(20.75rem, 1fr)'})`,
     columnGap: theme.space.md,
-  },
-  [mq.lg]: {
-    rowGap: theme.space.xs,
   },
 }))
 
-const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
+const PerilColumnFlex = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space.xxs,
+  [mq.md]: {
+    gap: theme.space.xs,
+  },
+}))
+
+const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
+  const { title, description, covered, colorCode } = peril
   const [openedItems, setOpenedItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
@@ -46,26 +78,22 @@ const PerilsAccordion = ({ perils }: { perils: Array<PerilFragment> }) => {
 
   return (
     <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
-      {perils.map(({ title, description, covered, colorCode }) => {
-        return (
-          <Accordion.Item key={title} value={title}>
-            <Accordion.HeaderWithTrigger>
-              <HeaderWrapper>
-                <Color color={colorCode ?? titleToColor(title)} />
-                <TriggerText size="lg">{title}</TriggerText>
-              </HeaderWrapper>
-            </Accordion.HeaderWithTrigger>
-            <Accordion.Content>
-              <ContentWrapper>
-                <Text as="p" size="xs" color="textPrimary">
-                  {description}
-                </Text>
-                <CoverageList items={covered} />
-              </ContentWrapper>
-            </Accordion.Content>
-          </Accordion.Item>
-        )
-      })}
+      <Accordion.Item key={title} value={title}>
+        <Accordion.HeaderWithTrigger>
+          <HeaderWrapper>
+            <Color color={colorCode ?? titleToColor(title)} />
+            <TriggerText size="lg">{title}</TriggerText>
+          </HeaderWrapper>
+        </Accordion.HeaderWithTrigger>
+        <Accordion.Content>
+          <ContentWrapper>
+            <Text as="p" size="xs" color="textPrimary">
+              {description}
+            </Text>
+            <CoverageList items={covered} />
+          </ContentWrapper>
+        </Accordion.Content>
+      </Accordion.Item>
     </Accordion.Root>
   )
 }
