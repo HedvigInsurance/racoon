@@ -1,4 +1,5 @@
 import { storyblokEditable } from '@storyblok/react'
+import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
 import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -18,6 +19,10 @@ export type ProductCardBlockProps = SbBaseBlockProps<
 
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   const link = getLinkFieldURL(blok.link, blok.title)
+  const productMetadata = useProductMetadata()
+  const linkType = productMetadata?.some((product) => isSameLink(link, product.pageLink))
+    ? 'product'
+    : 'content'
 
   return (
     <ProductCard
@@ -25,10 +30,15 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
       subtitle={blok.subtitle}
       image={{ src: blok.image.filename, alt: blok.image.alt }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
-      // TODO: determine if link is to a product or content page
-      link={{ url: link, type: 'product' }}
+      link={{ url: link, type: linkType }}
       {...storyblokEditable(blok)}
     />
   )
 }
 ProductCardBlock.blockName = 'productCard'
+
+// Make sure /en-se/products/home == en-se/products/home
+const isSameLink = (a: string, b: string) => {
+  const normalize = (url: string) => url.replace(/^\//, '')
+  return normalize(a) === normalize(b)
+}

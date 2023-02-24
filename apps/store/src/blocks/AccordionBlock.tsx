@@ -48,7 +48,7 @@ export const AccordionBlock = ({ blok }: Props) => {
           </GridLayout.Content>
         )}
         <GridLayout.Content width="1/2" align={displayTitleDescriptionSection ? 'right' : 'center'}>
-          <Accordion.Root type="multiple">
+          <Accordion.Root type="single">
             {accordionItems.map((nestedBlock) => (
               <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
             ))}

@@ -1,3 +1,4 @@
+import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler } from 'react'
@@ -82,7 +83,11 @@ const StyledChevronIcon = styled(ChevronIcon)({
 
 type SelectProps = { variantSize: Required<InputSelectProps['size']> }
 
-const StyledSelect = styled(motion.select)<SelectProps>(({ variantSize }) => ({
+const elementConfig = { shouldForwardProp: isValidProp }
+const StyledSelect = styled(
+  motion.select,
+  elementConfig,
+)<SelectProps>(({ variantSize }) => ({
   color: theme.colors.textPrimary,
   borderRadius: theme.radius.sm,
   width: '100%',
