@@ -71,7 +71,7 @@ const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
   }, [])
 
   return (
-    <Accordion.Root type="single" value={openedItems} onValueChange={handleValueChange}>
+    <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
       <Accordion.Item key={title} value={title}>
         <Accordion.HeaderWithTrigger>
           <HeaderWrapper>
