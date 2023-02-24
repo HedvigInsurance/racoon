@@ -25,10 +25,7 @@ export const TextContentBlock = ({ blok }: Props) => {
       >
         <Space y={1}>
           {blok.body?.map((nestedBlock) => (
-            <StoryblokComponent
-              key={nestedBlock._uid}
-              blok={{ ...nestedBlock, ...{ nested: true } }}
-            />
+            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
           ))}
         </Space>
       </GridLayout.Content>

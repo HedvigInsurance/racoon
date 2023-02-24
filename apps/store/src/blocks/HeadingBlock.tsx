@@ -20,16 +20,12 @@ export type HeadingBlockProps = SbBaseBlockProps<{
   variant?: PossibleHeadingVariant
   variantDesktop?: PossibleHeadingVariant
   textAlignment?: HeadingProps['align']
-  nested?: boolean
   balance?: boolean
 }>
 
-export const HeadingBlock = ({ blok }: HeadingBlockProps) => {
+export const HeadingBlock = ({ blok, nested }: HeadingBlockProps) => {
   return (
-    <ConditionalWrapper
-      condition={!blok.nested}
-      wrapWith={(children) => <Wrapper>{children}</Wrapper>}
-    >
+    <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
       <Heading
         as={blok.as}
         variant={{ _: blok.variant ?? 'standard.32', md: blok.variantDesktop ?? 'standard.40' }}
