@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { theme } from '../../lib/theme/theme'
 import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
-import { LoadingSpinner } from './LoadingSpinner'
+import { DotPulse } from './DotPulse'
 
 type LinkProps = {
   href?: string
@@ -24,7 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const buttonChildren = loading ? (
     <Centered>
-      <LoadingSpinner size={props.size === 'small' ? theme.fontSizes.xs : theme.fontSizes.md} />
+      <DotPulse />
     </Centered>
   ) : (
     children
