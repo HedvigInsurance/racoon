@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
-import { Button, CrossIcon, Text, theme } from 'ui'
+import { Button, CrossIconSmall, Text, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
@@ -66,7 +66,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
                 <Text as="span" size="xs">
                   {item.code}
                 </Text>
-                <CrossIcon size={theme.fontSizes.sm} color={theme.colors.gray500} />
+                <CrossIconSmall color={theme.colors.textTertiary} />
               </ChipButton>
             </form>
 

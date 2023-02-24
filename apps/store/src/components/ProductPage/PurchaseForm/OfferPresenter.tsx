@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, CrossIcon, Space, Text, theme } from 'ui'
+import { Button, PlusIcon, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -175,11 +175,10 @@ export const OfferPresenter = (props: Props) => {
         {priceIntent.offers.length > 1 && (
           <SpaceFlex direction="vertical" align="center">
             <Button variant="ghost" size="small" onClick={toggleComparisonTable}>
-              <StyledCrossIcon
-                transform={isComparisonTableOpen ? 'rotate(0)' : 'rotate(-45)'}
-                size="0.875rem"
-              />
-              {t('COMPARE_COVERAGE_BUTTON')}
+              <SpaceFlex space={0.5} align="center">
+                <PlusIcon transform={isComparisonTableOpen ? 'rotate(-45)' : 'rotate(0)'} />
+                {t('COMPARE_COVERAGE_BUTTON')}
+              </SpaceFlex>
             </Button>
           </SpaceFlex>
         )}
@@ -245,10 +244,6 @@ const Separator = styled.div({
   backgroundColor: theme.colors.gray600,
   margin: `0 ${theme.space.sm}`,
   alignSelf: 'stretch',
-})
-
-const StyledCrossIcon = styled(CrossIcon)({
-  marginRight: theme.space.xxs,
 })
 
 type GetCancellationOptionParams = {
