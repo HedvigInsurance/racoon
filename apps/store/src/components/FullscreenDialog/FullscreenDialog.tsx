@@ -12,7 +12,7 @@ export const Modal = ({ children, Footer, center = false }: Props) => {
     <Content frostedOverlay={true}>
       <Header>
         <CloseButton>
-          <CrossIcon size="1.5rem" />
+          <CrossIcon />
         </CloseButton>
       </Header>
       {center ? (

@@ -1,7 +1,17 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, Space, Dialog, Text, theme, PlusIcon, CrossIcon } from 'ui'
+import {
+  Button,
+  Heading,
+  Space,
+  Dialog,
+  Text,
+  theme,
+  PlusIcon,
+  CrossIcon,
+  CrossIconSmall,
+} from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
@@ -95,7 +105,7 @@ export const ExtraBuildingsField = ({
                   onClick={() => handleRemove(item)}
                   aria-label={t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
                 >
-                  <CrossIcon size="1rem" />
+                  <CrossIconSmall />
                 </InvisibleButton>
               </Preview>
             )

@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, useRef, useState } from 'react'
-import { CrossIcon, LockIcon, Space, Text, theme } from 'ui'
+import { CrossIconSmall, LockIcon, Space, Text, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type BaseInputProps = Omit<
@@ -78,7 +78,7 @@ export const TextField = (props: Props) => {
               <LockIcon size="1rem" color={theme.colors.textSecondary} />
             ) : (
               <DeleteButton type="button" onClick={handleClickDelete} aria-hidden={true}>
-                <CrossIcon size="1rem" />
+                <CrossIconSmall />
               </DeleteButton>
             ))}
         </InputWrapper>
