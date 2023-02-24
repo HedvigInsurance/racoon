@@ -1,18 +1,29 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Heading, Space, Dialog, Text, theme } from 'ui'
+import { Button, Heading, Space, Dialog, Text, theme, PlusIcon, CrossIcon } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import {
   ExtraBuildingsField as InputFieldExtraBuildings,
   ExtraBuilding,
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import * as InputRadio from './InputRadio'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
+
+enum RadioOption {
+  YES = 'YES',
+  NO = 'NO',
+}
+
+enum Field {
+  Type = 'type',
+  Area = 'area',
+  HasWaterConnected = 'hasWaterConnected',
+}
 
 type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
@@ -62,9 +73,11 @@ export const ExtraBuildingsField = ({
   }
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
-      <Card y={1}>
-        <Text>{translateLabel(field.label)}</Text>
+    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Card y={0.5}>
+        <Text size="xs" color="textSecondary">
+          {translateLabel(field.label)}
+        </Text>
 
         <Space y={0.5} as="ul">
           {field.value?.map((item) => {
@@ -73,81 +86,80 @@ export const ExtraBuildingsField = ({
             const buildingOptionName = buildingOption?.label ?? { key: item.type }
             return (
               <Preview key={identifier}>
-                <SpaceFlex space={0.25} align="end">
-                  <Text>{translateLabel(buildingOptionName)}</Text>
-                  <Text as="span" color="textSecondary">
-                    {item.area} m<Sup>2</Sup>
-                  </Text>
-                </SpaceFlex>
-                <div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="small"
-                    onClick={() => handleRemove(item)}
-                  >
-                    {t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
-                  </Button>
-                </div>
+                <Text size="xl">
+                  {/* TODO: Properly localize without string concatenation */}
+                  {translateLabel(buildingOptionName)}, {item.area} m<Sup>2</Sup>
+                </Text>
+                <InvisibleButton
+                  type="button"
+                  onClick={() => handleRemove(item)}
+                  aria-label={t('FIELD_EXTRA_BUILDINGS_DELETE_BUTTON')}
+                >
+                  <CrossIcon size="1rem" />
+                </InvisibleButton>
               </Preview>
             )
           })}
         </Space>
 
         <Dialog.Trigger asChild>
-          <Button type="button" variant="secondary">
-            {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
+          <Button type="button" variant="primary-alt" size="medium">
+            <SpaceFlex space={0.5} align="center">
+              <PlusIcon size="1rem" />
+              <div>{t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}</div>
+            </SpaceFlex>
           </Button>
         </Dialog.Trigger>
       </Card>
 
-      <DialogContent>
+      <DialogContent onClose={() => setIsOpen(false)}>
         <DialogContentWrapper>
           <Space y={1.5}>
-            <SpaceFlex align="center" direction="vertical">
-              <Heading as="h2" variant="standard.18">
+            <Header>
+              <Heading as="h3" variant="standard.24">
                 {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
               </Heading>
-            </SpaceFlex>
+
+              <DialogClose type="button">
+                <CrossIcon />
+              </DialogClose>
+            </Header>
 
             <form onSubmit={handleSubmit}>
-              <Space y={1}>
-                <Space y={1}>
-                  <Space y={0.25}>
-                    <InputSelect
-                      name="type"
-                      label={t('FIELD_EXTRA_BUILDINGS_TYPE_LABEL')}
-                      options={buildingOptionsInput}
-                      required={true}
-                    />
-                    <TextField
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      autoComplete="off"
-                      name="area"
-                      label={t('FIELD_EXTRA_BUILDINGS_AREA_LABEL')}
-                      min={0}
-                      suffix="m²"
-                      required
-                    />
-                    <ToggleCard
-                      name="hasWaterConnected"
-                      label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
-                    />
-                  </Space>
+              <Space y={1.5}>
+                <Space y={0.25}>
+                  <InputSelect
+                    name={Field.Type}
+                    placeholder={t('FIELD_EXTRA_BUILDINGS_TYPE_LABEL')}
+                    options={buildingOptionsInput}
+                    required={true}
+                  />
+                  <TextField
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete="off"
+                    name={Field.Area}
+                    label={t('FIELD_EXTRA_BUILDINGS_AREA_LABEL')}
+                    min={0}
+                    suffix="m²"
+                    required
+                  />
+                  <InputRadio.Root
+                    name={Field.HasWaterConnected}
+                    label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
+                  >
+                    <InputRadio.Item label={t('LABEL_NO')} value={RadioOption.NO} />
+                    <InputRadio.Item label={t('LABEL_YES')} value={RadioOption.YES} />
+                  </InputRadio.Root>
                 </Space>
 
-                <Space y={0.25}>
-                  <Button type="submit" variant="primary" loading={loading} disabled={loading}>
-                    {t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}
-                  </Button>
-                  <Dialog.Close asChild>
-                    <Button type="button" variant="ghost">
-                      {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
-                    </Button>
-                  </Dialog.Close>
-                </Space>
+                <Button type="submit" variant="primary" loading={loading} disabled={loading}>
+                  <SpaceFlex space={0.5} align="center">
+                    <PlusIcon size="1rem" />
+                    <div>{t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}</div>
+                  </SpaceFlex>
+                </Button>
               </Space>
             </form>
           </Space>
@@ -158,19 +170,20 @@ export const ExtraBuildingsField = ({
 }
 
 const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBuilding => {
-  if (typeof data.type !== 'string') {
+  const type = data[Field.Type]
+  if (typeof type !== 'string') {
     throw new Error(`ExtraBuilding.type must be a string: ${data.type}`)
   }
 
-  const area = parseInt(data.area.toString(), 10)
+  const area = parseInt(data[Field.Area].toString(), 10)
   if (typeof area !== 'number') {
     throw new Error(`ExtraBuilding.area must be a number: ${data.area}`)
   }
 
   return {
-    type: data.type,
+    type,
     area,
-    hasWaterConnected: data.hasConnectedWater === 'YES',
+    hasWaterConnected: data[Field.HasWaterConnected] === RadioOption.YES,
   }
 }
 
@@ -189,13 +202,26 @@ const DialogContent = styled(Dialog.Content)({
 })
 
 const DialogContentWrapper = styled(Dialog.Window)({
-  marginRight: theme.space.sm,
-  marginLeft: theme.space.sm,
-  padding: theme.space.md,
-  borderRadius: 8,
+  marginInline: theme.space.xs,
+  paddingInline: theme.space.sm,
+  paddingBlock: theme.space.lg,
+  borderRadius: theme.radius.md,
   width: '100%',
   maxWidth: '32rem',
 })
+
+const Header = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '1fr auto',
+  alignItems: 'center',
+  justifyItems: 'center',
+
+  paddingInline: theme.space.xxs,
+})
+
+const ButtonStyles = { cursor: 'pointer' }
+const DialogClose = styled(Dialog.Close)(ButtonStyles)
+const InvisibleButton = styled.button(ButtonStyles)
 
 const Preview = styled.li({
   display: 'flex',

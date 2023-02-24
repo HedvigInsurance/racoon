@@ -64,7 +64,7 @@ export const SE_HOUSE: Template = {
             required: true,
             min: 0,
           },
-          layout: LAYOUT.HALF_WIDTH,
+          layout: LAYOUT.FULL_WIDTH,
         },
         {
           field: {
@@ -74,17 +74,17 @@ export const SE_HOUSE: Template = {
             required: true,
             min: 0,
           },
-          layout: LAYOUT.HALF_WIDTH,
+          layout: LAYOUT.FULL_WIDTH,
         },
         {
           field: {
-            type: 'select',
+            type: 'radio',
             name: 'isSubleted',
             label: { key: tKey('FIELD_IS_SUBLETED_LABEL') },
             required: true,
             options: [
-              { label: { key: tKey('FIELD_IS_SUBLETED_OPTION_YES') }, value: 'true' },
               { label: { key: tKey('FIELD_IS_SUBLETED_OPTION_NO') }, value: 'false' },
+              { label: { key: tKey('FIELD_IS_SUBLETED_OPTION_YES') }, value: 'true' },
             ],
           },
           layout: LAYOUT.FULL_WIDTH,
