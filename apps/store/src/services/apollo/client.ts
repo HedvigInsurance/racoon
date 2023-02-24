@@ -2,14 +2,15 @@ import {
   ApolloClient,
   ApolloError,
   ApolloLink,
+  createHttpLink,
   from,
-  HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { ErrorResponse, onError } from '@apollo/client/link/error'
 import { mergeDeep } from '@apollo/client/utilities'
+import ApolloLinkTimeout from 'apollo-link-timeout'
 import { GetServerSidePropsContext } from 'next'
 import { i18n } from 'next-i18next'
 import { AppInitialProps } from 'next/app'
@@ -59,7 +60,10 @@ const languageLink = setContext((_, { headers = {}, ...context }) => {
   }
 })
 
-const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
+const httpLink = createHttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
+
+const DEFAULT_TIMEOUT = 50 * 1000
+const timeoutLink = new ApolloLinkTimeout(DEFAULT_TIMEOUT) as unknown as ApolloLink
 
 const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   const headersLink = setContext(async (_, prevContext) => {
@@ -83,6 +87,7 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
       errorLink,
       headersLink,
       languageLink,
+      timeoutLink,
       httpLink,
     ]),
     cache: new InMemoryCache({
