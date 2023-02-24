@@ -54,7 +54,7 @@ const Wrapper = styled(motion.div)({
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.gray100,
-  height: '3rem',
+  height: '4.5rem',
   width: '100%',
   cursor: 'pointer',
 })
@@ -74,12 +74,11 @@ const Label = styled.label({
   transform: `translate(0, 0) scale(1)`,
   paddingInline: theme.space.md,
 
-  fontSize: theme.fontSizes.lg,
+  fontSize: theme.fontSizes.xl,
 
-  ':focus-within > &, [data-active=true] > &': {
+  [`${Wrapper}:focus-within &, ${Wrapper}[data-active=true] &`]: {
     overflow: 'visible',
-    color: theme.colors.textPrimary,
-    transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
+    transform: `translate(calc(${theme.space.md} * 0.4), -0.6rem) scale(0.6)`,
   },
 
   '&&[data-disabled=true]': {
@@ -89,9 +88,10 @@ const Label = styled.label({
 
 const StyledInput = styled.input({
   width: '100%',
-  fontSize: theme.fontSizes.lg,
+  fontSize: theme.fontSizes.xl,
   paddingInline: theme.space.md,
   paddingTop: theme.space.md,
+  textAlign: 'left',
 
   ':disabled': {
     color: theme.colors.textSecondary,
@@ -114,6 +114,16 @@ const StyledInput = styled.input({
     top: 0,
     width: 'auto',
   },
+
+  '::-webkit-datetime-edit-fields-wrapper': {
+    [`${Wrapper}[data-active=false] &`]: {
+      display: 'none',
+    },
+
+    [`${Wrapper}:focus-within &`]: {
+      display: 'block',
+    },
+  },
 })
 
 const StyledChevronIcon = styled(ChevronIcon)(() => ({
@@ -122,6 +132,7 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   right: '1.125rem',
   pointerEvents: 'none',
   transform: 'translateY(-50%)',
+  transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
 
   [`${Wrapper}:focus-within &`]: {
     transform: 'translateY(-50%) rotate(180deg)',
