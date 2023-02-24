@@ -9,7 +9,7 @@ type Props = {
   items: Array<PerilFragment>
 }
 
-const createPerilColumns = (items: PerilFragment[], columns: number) => {
+const getPerilColumns = (items: PerilFragment[], columns: number) => {
   const accordions = items.reduce((acc, item, index) => {
     const columnIndex = index % columns
     if (!acc[columnIndex]) {
@@ -23,34 +23,23 @@ const createPerilColumns = (items: PerilFragment[], columns: number) => {
 }
 
 export const Perils = ({ items }: Props) => {
-  const twoCols = createPerilColumns(items, 2)
-  const threeCols = createPerilColumns(items, 3)
-  const fourCols = createPerilColumns(items, 4)
-
-  const breakpoints = {
+  const BREAKPOINTS = {
     sm: useBreakpoint('sm'),
     md: useBreakpoint('md'),
     lg: useBreakpoint('lg'),
     xl: useBreakpoint('xl'),
-  }
+  } as const
 
-  const columnCount = () => {
-    if (breakpoints.xl) {
-      return 4
-    }
-    if (breakpoints.lg) {
-      return 4
-    }
-    if (breakpoints.md) {
-      return 3
-    }
+  const getColumnCountByBreakpoint = (breakpoints: typeof BREAKPOINTS) => {
+    if (breakpoints.xl) return 4
+    if (breakpoints.lg) return 3
+    if (breakpoints.md) return 2
     return 1
   }
 
-  console.log(columnCount())
   return (
     <PerilsAccordionGrid>
-      {createPerilColumns(items, columnCount()).map((perils, index) => (
+      {getPerilColumns(items, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
         <div key={index}>
           {perils.map((peril) => (
             <PerilsAccordion key={index} peril={peril} />
@@ -65,14 +54,9 @@ const PerilsAccordionGrid = styled.div(() => ({
   display: 'grid',
   gap: theme.space.xxs,
   // It needs a defined width to trigger ellipses on mobile
-  gridTemplateColumns: '100%',
+  // gridTemplateColumns: '100%',
 
-  [mq.md]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
-  },
-  [mq.lg]: {
-    // gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
-  },
+  gridTemplateColumns: 'repeat(auto-fit, minmax(17rem, 1fr))',
 }))
 
 const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
