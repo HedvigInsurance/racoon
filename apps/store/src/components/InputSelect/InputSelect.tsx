@@ -47,15 +47,14 @@ export const InputSelect = ({
             onChange={handleChange}
             value={value}
             defaultValue={value ? undefined : defaultValue ?? ''}
-            placeholder={placeholder}
             variantSize={size}
             {...animationProps}
             {...rest}
           >
             {labelText && (
-              <Placeholder value="" disabled>
+              <option value="" disabled>
                 {labelText}
-              </Placeholder>
+              </option>
             )}
             {options.map(({ name, value }) => (
               <option key={value} value={value}>
@@ -106,8 +105,8 @@ const StyledSelect = styled(
   ...(variantSize === 'large' && {
     fontSize: theme.fontSizes.xl,
   }),
-}))
 
-const Placeholder = styled.option({
-  color: theme.colors.textSecondary,
-})
+  '&:invalid, [disabled]': {
+    color: theme.colors.textSecondary,
+  },
+}))
