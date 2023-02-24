@@ -77,7 +77,7 @@ const PageWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  height: '95dvh',
+  height: ['95dvh', '95vh'],
 })
 
 const PerilsWrapper = styled.div({
