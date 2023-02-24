@@ -12,9 +12,4 @@ fragment ShopSession on ShopSession {
   cart {
     ...CartFragment
   }
-  recommendations {
-    product {
-      ...ProductRecommendation
-    }
-  }
 }
