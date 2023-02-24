@@ -40,11 +40,11 @@ export const Perils = ({ items }: Props) => {
   return (
     <PerilsAccordionGrid>
       {getPerilColumns(items, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
-        <div key={index}>
+        <PerilColumnFlex key={index}>
           {perils.map((peril) => (
             <PerilsAccordion key={index} peril={peril} />
           ))}
-        </div>
+        </PerilColumnFlex>
       ))}
     </PerilsAccordionGrid>
   )
@@ -53,10 +53,13 @@ export const Perils = ({ items }: Props) => {
 const PerilsAccordionGrid = styled.div(() => ({
   display: 'grid',
   gap: theme.space.xxs,
-  // It needs a defined width to trigger ellipses on mobile
-  // gridTemplateColumns: '100%',
-
   gridTemplateColumns: 'repeat(auto-fit, minmax(17rem, 1fr))',
+}))
+
+const PerilColumnFlex = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space.xxs,
 }))
 
 const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
@@ -68,7 +71,7 @@ const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
   }, [])
 
   return (
-    <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
+    <Accordion.Root type="single" value={openedItems} onValueChange={handleValueChange}>
       <Accordion.Item key={title} value={title}>
         <Accordion.HeaderWithTrigger>
           <HeaderWrapper>
