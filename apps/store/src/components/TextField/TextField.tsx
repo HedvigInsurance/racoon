@@ -77,7 +77,12 @@ export const TextField = (props: Props) => {
             (inputProps.disabled ? (
               <LockIcon size="1rem" color={theme.colors.textSecondary} />
             ) : (
-              <DeleteButton type="button" onClick={handleClickDelete} aria-hidden={true}>
+              <DeleteButton
+                type="button"
+                onClick={handleClickDelete}
+                aria-hidden={true}
+                tabIndex={-1}
+              >
                 <CrossIconSmall />
               </DeleteButton>
             ))}
