@@ -91,6 +91,7 @@ export const Default = () => {
           Download the app`,
           faqTitle: 'Frequently asked questions',
           faqSubtitle: 'Here are some answers to the most common questions.',
+          seoTitle: 'Your purchase is complete | Hedvig',
         },
       }}
     />

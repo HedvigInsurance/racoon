@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation'
@@ -68,9 +69,14 @@ const CheckoutConfirmationPage: NextPageWithLayout<
   ConfirmationPageProps & { story: ConfirmationStory }
 > = (props) => {
   return (
-    <SuccessAnimation>
-      <ConfirmationPage {...props} />
-    </SuccessAnimation>
+    <>
+      <Head>
+        <title>{props.story.content.seoTitle}</title>
+      </Head>
+      <SuccessAnimation>
+        <ConfirmationPage {...props} />
+      </SuccessAnimation>
+    </>
   )
 }
 
