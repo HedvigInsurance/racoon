@@ -1,14 +1,14 @@
-import { ComponentMeta, Story } from '@storybook/react'
-import { ScrollToButton, ScrollToButtonProps } from './ScrollToButton'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ScrollToTopButton } from './ScrollToButton'
 
 export default {
-  title: 'Product Page / Scroll To Button',
-  component: ScrollToButton,
+  title: 'Product Page / Scroll To Top Button',
+  component: ScrollToTopButton,
   argTypes: {},
-} as ComponentMeta<typeof ScrollToButton>
+} as ComponentMeta<typeof ScrollToTopButton>
 
-const Template: Story<ScrollToButtonProps> = (props) => {
-  return <ScrollToButton {...props} />
+const Template: ComponentStory<typeof ScrollToTopButton> = (props) => {
+  return <ScrollToTopButton {...props} />
 }
 
 export const Default = Template.bind({})
