@@ -7,6 +7,5 @@
   "ERROR_GENERAL_DIALOG_PROMPT": "Noget gik galt. Forsøg venligst igen og kontakt os på hedvig@hedvig.com hvis problemet fortsætter.",
   "FORM_EMAIL_LABEL": "Email",
   "FORM_FIRST_NAME_LABEL": "Fornavn(e)",
-  "FORM_LAST_NAME_LABEL": "Efternavn",
-  "SIGN_DISCLAIMER": "Du forbinder autogiro efter du tilmelder dig Hedvig. Det håndteres sikkert via Trustly."
+  "FORM_LAST_NAME_LABEL": "Efternavn"
 }
