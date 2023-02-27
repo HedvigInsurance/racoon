@@ -2,14 +2,14 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import NextImage from 'next/image'
-import { mq, theme } from 'ui'
+import { ConditionalWrapper, mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
 
-type ImageBlockProps = SbBaseBlockProps<{
+export type ImageBlockProps = SbBaseBlockProps<{
   image: StoryblokAsset
   aspectRatioLandscape?: ImageAspectRatio
   aspectRatioPortrait?: ImageAspectRatio
@@ -17,33 +17,34 @@ type ImageBlockProps = SbBaseBlockProps<{
   body?: ExpectedBlockType<HeadingBlockProps>
 }>
 
-export const ImageBlock = ({ blok }: ImageBlockProps) => {
+export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
   const headingBlocks = filterByBlockType(blok.body, HeadingBlock.blockName)
 
-  const content = (
-    <Wrapper
-      {...storyblokEditable(blok)}
-      aspectRatioLandscape={blok.aspectRatioLandscape}
-      aspectRatioPortrait={blok.aspectRatioPortrait}
+  return (
+    <ConditionalWrapper
+      condition={!blok.fullBleed && !nested}
+      wrapWith={(children) => <Layout>{children}</Layout>}
     >
-      <Image
-        style={{ objectFit: 'cover' }}
-        src={blok.image.filename}
-        roundedCorners={!blok.fullBleed}
-        alt={blok.image.alt}
-        fill
-      />
-      <BodyWrapper>
-        {headingBlocks.map((nestedBlock) => (
-          <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
-        ))}
-      </BodyWrapper>
-    </Wrapper>
+      <ImageWrapper
+        {...storyblokEditable(blok)}
+        aspectRatioLandscape={blok.aspectRatioLandscape}
+        aspectRatioPortrait={blok.aspectRatioPortrait}
+      >
+        <Image
+          style={{ objectFit: 'cover' }}
+          src={blok.image.filename}
+          roundedCorners={!blok.fullBleed}
+          alt={blok.image.alt}
+          fill
+        />
+        <BodyWrapper>
+          {headingBlocks.map((nestedBlock) => (
+            <HeadingBlock key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        </BodyWrapper>
+      </ImageWrapper>
+    </ConditionalWrapper>
   )
-
-  if (blok.fullBleed) return content
-
-  return <Layout>{content}</Layout>
 }
 ImageBlock.blockName = 'image'
 
@@ -54,7 +55,7 @@ type WrapperProps = {
   aspectRatioPortrait?: ImageAspectRatio
 }
 
-const Wrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperProps>(
+const ImageWrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperProps>(
   ({ aspectRatioLandscape = '3 / 2', aspectRatioPortrait = '3 / 2' }) => ({
     position: 'relative',
     ['@media (orientation: landscape)']: {
