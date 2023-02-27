@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, InputHTMLAttributes, useId, useState } from 'react'
-import { ChevronIcon, Space, theme } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { ChevronIcon, Space, theme, Text } from 'ui'
+import { convertToDate } from '@/utils/date'
+import { useFormatter } from '@/utils/useFormatter'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'children'>
@@ -13,9 +15,12 @@ type Props = InputProps & {
 }
 
 export const DateInput = (props: Props) => {
+  const { t } = useTranslation()
   const { label, onChange, value, defaultValue, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(defaultValue)
   const inputValue = value || internalValue
+  const dateValue = convertToDate(inputValue)
+  const formatter = useFormatter()
 
   const identifier = useId()
   const { highlight, animationProps } = useHighlightAnimation()
@@ -26,21 +31,28 @@ export const DateInput = (props: Props) => {
     onChange?.(event)
   }
 
+  const displayValue = dateValue ? (
+    <InputText size="xl">{formatter.fromNow(dateValue)}</InputText>
+  ) : (
+    <InputText size="xl" color="textTertiary">
+      {t('DATE_INPUT_EMPTY_LABEL')}
+    </InputText>
+  )
+
   return (
     <Space y={0.25}>
       <Wrapper {...animationProps} data-active={!!inputValue}>
         <Label htmlFor={inputProps.id} data-disabled={inputProps.disabled}>
           {label}
         </Label>
-        <SpaceFlex align="center" space={0}>
-          <StyledInput
-            type="date"
-            id={identifier}
-            value={inputValue}
-            onChange={handleChange}
-            {...inputProps}
-          />
-        </SpaceFlex>
+        <StyledInput
+          type="date"
+          id={identifier}
+          value={inputValue}
+          onChange={handleChange}
+          {...inputProps}
+        />
+        {displayValue}
         <StyledChevronIcon size="1rem" />
       </Wrapper>
     </Space>
@@ -61,25 +73,13 @@ const Wrapper = styled(motion.div)({
 
 const Label = styled.label({
   position: 'absolute',
-  left: 0,
-  right: 0,
-  overflow: 'hidden',
+  left: theme.space.md,
+  top: theme.space.sm,
+  fontSize: theme.fontSizes.xs,
+  overflow: 'visible',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
   color: theme.colors.textSecondary,
-
-  pointerEvents: 'none',
-  transformOrigin: 'top left',
-  transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-  transform: `translate(0, 0) scale(1)`,
-  paddingInline: theme.space.md,
-
-  fontSize: theme.fontSizes.xl,
-
-  [`${Wrapper}:focus-within &, ${Wrapper}[data-active=true] &`]: {
-    overflow: 'visible',
-    transform: `translate(calc(${theme.space.md} * 0.4), -0.6rem) scale(0.6)`,
-  },
 
   '&&[data-disabled=true]': {
     color: theme.colors.textSecondary,
@@ -88,11 +88,7 @@ const Label = styled.label({
 
 const StyledInput = styled.input({
   width: '100%',
-  fontSize: theme.fontSizes.xl,
-  paddingInline: theme.space.md,
-  paddingTop: theme.space.md,
-  textAlign: 'left',
-
+  height: '100%',
   ':disabled': {
     color: theme.colors.textSecondary,
     cursor: 'not-allowed',
@@ -116,14 +112,14 @@ const StyledInput = styled.input({
   },
 
   '::-webkit-datetime-edit-fields-wrapper': {
-    [`${Wrapper}[data-active=false] &`]: {
-      display: 'none',
-    },
-
-    [`${Wrapper}:focus-within &`]: {
-      display: 'block',
-    },
+    display: 'none',
   },
+})
+
+const InputText = styled(Text)({
+  position: 'absolute',
+  left: theme.space.md,
+  top: theme.space.xl,
 })
 
 const StyledChevronIcon = styled(ChevronIcon)(() => ({
