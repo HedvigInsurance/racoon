@@ -7,7 +7,7 @@ import { Button, PlusIcon, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
-import { ScrollToButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
+import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
@@ -188,13 +188,13 @@ export const OfferPresenter = (props: Props) => {
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>
-        <ScrollToButton targetRef={scrollPastRef} type="button">
+        <ScrollToTopButton type="button">
           <ScrollPastButtonContent>
             <span>{displayPrice}</span>
             <Separator />
             <span>{t('ADD_TO_CART_BUTTON_LABEL')}</span>
           </ScrollPastButtonContent>
-        </ScrollToButton>
+        </ScrollToTopButton>
       </ScrollPast>
     </>
   )

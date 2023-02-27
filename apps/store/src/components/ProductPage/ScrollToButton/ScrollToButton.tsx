@@ -1,15 +1,14 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Button, mq, theme } from 'ui'
 
-export type ScrollToButtonProps = {
+type ScrollToTopButtonProps = {
   type: 'button' | 'submit'
-  targetRef: React.RefObject<HTMLElement>
   children: ReactNode
 }
 
-export const ScrollToButton = ({ children, type, targetRef }: ScrollToButtonProps) => {
-  const handleClick = () => targetRef.current?.scrollIntoView({ behavior: 'smooth' })
+export const ScrollToTopButton = ({ children, type }: ScrollToTopButtonProps) => {
+  const handleClick = () => window.scrollTo({ top: 0 })
 
   return (
     <Wrapper>
