@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { SbBaseBlockProps, StoryblokAsset, ExpectedBlockType } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { ImageBlock, ImageBlockProps } from './ImageBlock'
 
@@ -15,8 +15,7 @@ const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
 type ImageTextBlockProps = SbBaseBlockProps<{
-  image: StoryblokAsset
-  imageBlock: ExpectedBlockType<ImageBlockProps>
+  image: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
   textAlignment?: TextAlignment
@@ -25,8 +24,8 @@ type ImageTextBlockProps = SbBaseBlockProps<{
 
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
   const { orientation = DEFAULT_ORIENTATION } = blok
-  // We only expect only one image from Storyblok
-  const imageBlock = filterByBlockType(blok.imageBlock, ImageBlock.blockName)[0]
+  // We expect only one image from Storyblok
+  const imageBlock = filterByBlockType(blok.image, ImageBlock.blockName)[0]
 
   switch (orientation) {
     case 'fluid':
