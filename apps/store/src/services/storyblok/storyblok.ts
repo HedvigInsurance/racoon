@@ -161,6 +161,7 @@ export type ConfirmationStory = ISbStoryData & {
     checklistTitle: string
     checklistSubtitle: string
     checklist: string
+    seoTitle: string
   }
 }
 
