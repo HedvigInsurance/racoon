@@ -8,6 +8,7 @@
   "COUNTRY_LABEL_NO": "Norway",
   "COUNTRY_LABEL_SE": "Sweden",
   "COUNTRY_NOT_DETECTED": "We’re not quite sure where you’re visiting us from. Select your country below.",
+  "DATE_INPUT_EMPTY_LABEL": "Choose...",
   "DIALOG_BUTTON_CANCEL": "Cancel",
   "ERROR_DIALOG_CLOSE": "Close",
   "GET_PRICE_LINK": "See you price",
