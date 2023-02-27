@@ -9,6 +9,7 @@ import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
+import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -17,9 +18,10 @@ import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
-  const { cartId, entries, campaigns, campaignsEnabled, cost, recommendations } = props
+  const { cartId, entries, campaigns, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
+  const productRecommendations = useProductRecommendations()
 
   const tracking = useTracking()
   useEffect(
@@ -91,8 +93,8 @@ export const CartPage = (props: CartPageProps) => {
             {body}
           </GridLayout.Content>
         </GridLayout.Root>
-        {recommendations.length > 0 && (
-          <ProductRecommendationList recommendations={recommendations} />
+        {productRecommendations && productRecommendations.length > 0 && (
+          <ProductRecommendationList recommendations={productRecommendations} />
         )}
       </Space>
     </PageWrapper>
