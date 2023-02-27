@@ -22,7 +22,6 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
-import { CircledHSuperscript } from './CircledHSuperscript'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
@@ -172,7 +171,6 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
             <Space y={0.5}>
               <Heading as="h1" variant="standard.24" align="center">
                 {content.product.name}
-                <CircledHSuperscript />
               </Heading>
               <Text size="xs" color="textSecondary" align="center">
                 {content.product.description}
@@ -308,7 +306,6 @@ const EditingState = (props: EditingStateProps) => {
           <Pillow size="large" {...productData.pillowImage} />
           <Heading as="h2" variant="standard.18">
             {productData.displayNameShort}
-            <CircledHSuperscript />
           </Heading>
         </SpaceFlex>
       }
