@@ -45,6 +45,7 @@ export const DateInput = (props: Props) => {
         <Label htmlFor={inputProps.id} data-disabled={inputProps.disabled}>
           {label}
         </Label>
+        {displayValue}
         <StyledInput
           type="date"
           id={identifier}
@@ -52,7 +53,7 @@ export const DateInput = (props: Props) => {
           onChange={handleChange}
           {...inputProps}
         />
-        {displayValue}
+
         <StyledChevronIcon size="1rem" />
       </Wrapper>
     </Space>
@@ -87,8 +88,8 @@ const Label = styled.label({
 })
 
 const StyledInput = styled.input({
-  width: '100%',
-  height: '100%',
+  position: 'absolute',
+  inset: 0,
   ':disabled': {
     color: theme.colors.textSecondary,
     cursor: 'not-allowed',
