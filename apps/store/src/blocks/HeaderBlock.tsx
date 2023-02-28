@@ -225,6 +225,7 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 }
 
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
   const productNavItem = useMemo(
@@ -239,7 +240,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   )
 
   return (
-    <Header {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
+    <Header key={router.asPath} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
