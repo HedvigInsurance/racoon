@@ -31,11 +31,11 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  const withoutIntercom = <div>{children}</div>
+  const withoutIntercom = <>{children}</>
 
   if (!appId) return withoutIntercom
 
-  if (!INTERCOM_ENABLED) return withoutIntercom
+  if (INTERCOM_ENABLED) return withoutIntercom
 
   return (
     <IntercomProvider
