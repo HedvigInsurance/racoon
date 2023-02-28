@@ -13,6 +13,7 @@ type Props = {
   value?: number
   defaultValue?: number
   required?: boolean
+  label?: string
   optionLabel: (count: number) => string
 }
 
@@ -21,7 +22,7 @@ type Props = {
  * Based on: https://www.magentaa11y.com/checklist-web/stepper-input/
  */
 export const StepperInput = (props: Props) => {
-  const { max, min = 0, value, defaultValue, optionLabel, ...inputProps } = props
+  const { max, min = 0, value, defaultValue, label, optionLabel, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(value || defaultValue || min)
   const { highlight, animationProps } = useHighlightAnimation()
 
@@ -53,7 +54,12 @@ export const StepperInput = (props: Props) => {
   return (
     <>
       <Wrapper {...animationProps}>
-        <StyledSelect {...inputProps} value={internalValue} onChange={handleChange}>
+        <StyledSelect
+          {...inputProps}
+          value={internalValue}
+          onChange={handleChange}
+          aria-label={label}
+        >
           {options.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}

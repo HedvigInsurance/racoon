@@ -43,9 +43,10 @@ export const currentInsuranceField: InputField = {
 }
 
 const householdSizeField: InputField = {
-  type: 'householdSize',
+  type: 'stepper',
   name: 'numberCoInsured',
   label: { key: tKey('FIELD_HOUSEHOLD_SIZE_LABEL') },
+  valueLabel: { key: tKey('HOUSEHOLD_SIZE_VALUE') },
   required: true,
   defaultValue: 0,
   max: 5,

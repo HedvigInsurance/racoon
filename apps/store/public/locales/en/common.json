@@ -1,8 +1,8 @@
 {
   "404_PAGE_BUTTON": "Go to start page",
   "404_PAGE_MESSAGE": "The page could not be found",
-  "500_PAGE_BUTTON": "Try again",
-  "500_PAGE_MESSAGE": "Something went wrong, try again",
+  "500_PAGE_BUTTON": "Go to start page",
+  "500_PAGE_MESSAGE": "Something went wrong",
   "CALCULATE_PRICE": "Calculate price",
   "COUNTRY_LABEL_DK": "Denmark",
   "COUNTRY_LABEL_NO": "Norway",

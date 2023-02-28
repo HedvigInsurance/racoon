@@ -1,8 +1,8 @@
 {
   "404_PAGE_BUTTON": "Gå till startsidan",
   "404_PAGE_MESSAGE": "Sidan kunde inte hittas",
-  "500_PAGE_BUTTON": "Försök igen",
-  "500_PAGE_MESSAGE": "Något gick fel, försök igen",
+  "500_PAGE_BUTTON": "Gå till startsidan",
+  "500_PAGE_MESSAGE": "Något gick fel",
   "CALCULATE_PRICE": "Beräkna pris",
   "COUNTRY_LABEL_DK": "Danmark",
   "COUNTRY_LABEL_NO": "Norge",

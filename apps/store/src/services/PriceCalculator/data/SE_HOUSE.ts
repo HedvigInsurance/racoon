@@ -68,11 +68,13 @@ export const SE_HOUSE: Template = {
         },
         {
           field: {
-            type: 'number',
+            type: 'stepper',
             name: 'numberOfBathrooms',
             label: { key: tKey('FIELD_NUMBER_OF_BATHROOMS_LABEL') },
+            valueLabel: { key: tKey('FIELD_NUMBER_OF_BATHROOMS_VALUE') },
             required: true,
-            min: 0,
+            min: 1,
+            max: 10,
           },
           layout: LAYOUT.FULL_WIDTH,
         },
