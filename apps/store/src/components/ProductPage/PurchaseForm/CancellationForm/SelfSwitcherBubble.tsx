@@ -1,14 +1,17 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { theme, Text, InfoIcon } from 'ui'
+import { useFormatter } from '@/utils/useFormatter'
 
-export const SelfSwitcherBubble = (date?: Date) => {
+export const SelfSwitcherBubble = ({ date }: { date: Date }) => {
   const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
 
+  const formattedDate = formatter.fromNow(date)
   return (
     <Wrapper>
       <StyledInfoIcon color={theme.colors.blue600} />
-      <Text size="xs"> {t('SELF_SWICHER_MESSAGE', { date: date })}</Text>
+      <Text size="xs"> {t('SELF_SWICHER_MESSAGE', { date: formattedDate })}</Text>
     </Wrapper>
   )
 }

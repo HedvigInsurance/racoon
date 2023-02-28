@@ -77,7 +77,7 @@
   "SECTION_TITLE_YOUR_CAR": "Your car",
   "SECTION_TITLE_YOUR_FAMILY": "Number of people",
   "SECTION_TITLE_YOUR_HOME": "Your home",
-  "SELF_SWICHER_MESSAGE": "Hedvig will be activated on {{date}}. Remember to cancel your old insurance before that.",
+  "SELF_SWICHER_MESSAGE": "Hedvig will be activated {{date}}. Remember to cancel your old insurance before that.",
   "SE_CAR_FULL_DESCRIPTION": "All in traffic and half, plus carriage damage",
   "SE_CAR_HALF_DESCRIPTION": "Theft & burglary, fire, glass damage, etc.",
   "SE_CAR_TRAFFIC_DESCRIPTION": "Basic coverage for driving a car",
