@@ -11,7 +11,7 @@ export const SelfSwitcherBubble = ({ date }: { date: Date }) => {
   return (
     <Wrapper>
       <StyledInfoIcon color={theme.colors.blue600} />
-      <Text size="xs"> {t('SELF_SWICHER_MESSAGE', { date: formattedDate })}</Text>
+      <Text size="xs">{t('SELF_SWICHER_MESSAGE', { date: formattedDate })}</Text>
     </Wrapper>
   )
 }
