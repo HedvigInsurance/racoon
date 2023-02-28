@@ -25,7 +25,9 @@ type ImageTextBlockProps = SbBaseBlockProps<{
 export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
   const { orientation = DEFAULT_ORIENTATION } = blok
   // We expect only one image from Storyblok
-  const imageBlock = filterByBlockType(blok.image, ImageBlock.blockName)[0]
+  const imageBlock = Array.isArray(blok.image)
+    ? filterByBlockType(blok.image, ImageBlock.blockName)[0]
+    : undefined
 
   switch (orientation) {
     case 'fluid':
