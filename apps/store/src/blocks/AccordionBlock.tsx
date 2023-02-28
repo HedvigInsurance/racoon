@@ -17,42 +17,30 @@ type Props = SbBaseBlockProps<{
   centerLayout?: boolean
 }>
 
-export const AccordionBlock = ({ blok }: Props) => {
+export const AccordionBlock = ({ blok, nested }: Props) => {
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   const enableFAQStructuredData = blok.isFAQ ?? false
   const displayTitleDescriptionSection = blok.title || blok.description
   const isCentered = blok.centerLayout || !displayTitleDescriptionSection
 
-  return (
-    <>
-      {enableFAQStructuredData && (
-        <Head>
-          <script key="accordion-faq-sctructured-data" type="application/ld+json">
-            {getFAQStructuredData(accordionItems)}
-          </script>
-        </Head>
-      )}
+  let content: React.ReactNode = null
+  if (nested) {
+    content = (
+      <>
+        {displayTitleDescriptionSection && <AccodrionTitleDescription blok={blok} />}
+        <StyledAccordionRoot type="single" collapsible>
+          {accordionItems.map((nestedBlock) => (
+            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        </StyledAccordionRoot>
+      </>
+    )
+  } else {
+    content = (
       <Wrapper {...storyblokEditable(blok)}>
         {displayTitleDescriptionSection && (
           <GridLayout.Content width="1/2" align={isCentered ? 'center' : 'left'}>
-            <TextContent>
-              {blok.title && (
-                <Heading
-                  as="h2"
-                  variant={{ _: 'standard.24', ...(!blok.centerLayout && { md: 'standard.32' }) }}
-                >
-                  {blok.title}
-                </Heading>
-              )}
-              {blok.description && (
-                <Text
-                  color="textSecondary"
-                  size={{ _: 'xl', ...(!blok.centerLayout && { md: 'xxl' }) }}
-                >
-                  {blok.description}
-                </Text>
-              )}
-            </TextContent>
+            <AccodrionTitleDescription blok={blok} />
           </GridLayout.Content>
         )}
         <GridLayout.Content width="1/2" align={isCentered ? 'center' : 'right'}>
@@ -63,25 +51,61 @@ export const AccordionBlock = ({ blok }: Props) => {
           </Accordion.Root>
         </GridLayout.Content>
       </Wrapper>
+    )
+  }
+
+  return (
+    <>
+      {enableFAQStructuredData && (
+        <Head>
+          <script key="accordion-faq-sctructured-data" type="application/ld+json">
+            {getFAQStructuredData(accordionItems)}
+          </script>
+        </Head>
+      )}
+      {content}
     </>
   )
 }
 AccordionBlock.blockName = 'accordion'
 
+const AccodrionTitleDescription = ({ blok }: { blok: Props['blok'] }) => {
+  return (
+    <TextContent>
+      {blok.title && (
+        <Heading
+          as="h2"
+          variant={{ _: 'standard.24', ...(!blok.centerLayout && { md: 'standard.32' }) }}
+        >
+          {blok.title}
+        </Heading>
+      )}
+      {blok.description && (
+        <Text color="textSecondary" size={{ _: 'xl', ...(!blok.centerLayout && { md: 'xxl' }) }}>
+          {blok.description}
+        </Text>
+      )}
+    </TextContent>
+  )
+}
+
 const Wrapper = styled(GridLayout.Root)({
   // TODO: harmonize with other grid layouts
   gap: theme.space.lg,
+
   [mq.lg]: {
     gap: theme.space.md,
     paddingInline: theme.space.lg,
   },
-
-  [`${TabsBlockWrapper} &`]: {
-    all: 'unset',
-  },
 })
 
 const TextContent = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
+
+const StyledAccordionRoot = styled(Accordion.Root)({
+  [`${TabsBlockWrapper} &`]: {
+    gap: theme.space.xxs,
+  },
+})
 
 const getFAQStructuredData = (
   accordions: ReadonlyArray<Pick<AccordionItemBlockProps['blok'], 'title' | 'body'>>,
