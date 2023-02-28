@@ -10,6 +10,7 @@ export type TextBlockProps = SbBaseBlockProps<{
   color?: TextColor
   fontSize?: FontSizes
   fontSizeDesktop?: FontSizes
+  textAlignment?: 'left' | 'center' | 'right'
 }>
 
 export const TextBlock = ({ blok }: TextBlockProps) => {
@@ -22,6 +23,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     <Text
       {...storyblokEditable(blok)}
       as="div"
+      align={blok.textAlignment}
       color={blok.color ?? 'textPrimary'}
       y={1}
       size={fontSizes}

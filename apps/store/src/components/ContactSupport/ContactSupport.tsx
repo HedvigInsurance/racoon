@@ -5,6 +5,7 @@ import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Message } from '../Animations/Message/Message'
 import { NumberPad } from '../Animations/NumberPad/NumberPad'
 import { ContactCard } from '../ContactCard/ContactCard'
+import { IntercomChatButton } from './IntercomChatButton'
 
 export type ContactSupportProps = {
   chatTitle: string
@@ -25,14 +26,16 @@ export const ContactSupport = ({
     <Main>
       <Space y={1.5}>
         <CardWrapper>
-          <ContactCard icon={<Message />}>
-            <Text size={{ _: 'sm', md: 'md' }}>{chatTitle}</Text>
-            {chatOpeningHours && (
-              <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
-                {chatOpeningHours}
-              </Text>
-            )}
-          </ContactCard>
+          <IntercomChatButton>
+            <ContactCard icon={<Message />}>
+              <Text size={{ _: 'sm', md: 'md' }}>{chatTitle}</Text>
+              {chatOpeningHours && (
+                <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
+                  {chatOpeningHours}
+                </Text>
+              )}
+            </ContactCard>
+          </IntercomChatButton>
           <PhoneLink href={getLinkFieldURL(phoneLink)}>
             <ContactCard icon={<NumberPad />}>
               <Text size={{ _: 'sm', md: 'md' }}>{phoneTitle}</Text>

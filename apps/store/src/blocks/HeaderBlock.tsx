@@ -4,7 +4,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
-import { mq, Space, theme, useBreakpoint } from 'ui'
+import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
 import {
@@ -108,7 +108,6 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
   const { t } = useTranslation()
   const productMetadata = useProductMetadata()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
-  const isLarge = useBreakpoint('lg')
 
   const productNavItems: Array<ProductNavItem> = []
   filteredNavItems.forEach((item) => {
@@ -153,24 +152,26 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
     </NavigationMenuListWrapper>
   )
 
-  if (isLarge) {
-    return (
-      <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-        <Space y={{ base: 1.5, lg: 0 }}>
-          <DesktopOnly>
-            <NavigationTrigger
-              onClick={() => router.push(PageLink.store({ locale: routingLocale }))}
-            >
-              {blok.name}
-            </NavigationTrigger>
-          </DesktopOnly>
-          <NavigationMenuPrimitiveContent>{content}</NavigationMenuPrimitiveContent>
-        </Space>
-      </NavigationMenuPrimitiveItem>
-    )
-  }
+  return (
+    <>
+      <MobileWrapper>{content}</MobileWrapper>
 
-  return <MobileWrapper>{content}</MobileWrapper>
+      <DesktopOnly>
+        <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+          <Space y={{ base: 1.5, lg: 0 }}>
+            <DesktopOnly>
+              <NavigationTrigger
+                onClick={() => router.push(PageLink.store({ locale: routingLocale }))}
+              >
+                {blok.name}
+              </NavigationTrigger>
+            </DesktopOnly>
+            <NavigationMenuPrimitiveContent>{content}</NavigationMenuPrimitiveContent>
+          </Space>
+        </NavigationMenuPrimitiveItem>
+      </DesktopOnly>
+    </>
+  )
 }
 ProductNavContainerBlock.blockName = 'productNavContainer'
 
@@ -178,6 +179,7 @@ const DesktopOnly = styled.div({ display: 'none', [mq.lg]: { display: 'block' } 
 const MobileWrapper = styled.div({
   paddingTop: theme.space.lg,
   borderBottom: `1px solid ${theme.colors.borderOpaque}`,
+  [mq.lg]: { display: 'none' },
 })
 
 const ButtonNextLinkFullWidth = styled(ButtonNextLink)({ width: '100%' })
