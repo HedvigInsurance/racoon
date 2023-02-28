@@ -151,7 +151,7 @@ export const OfferPresenter = (props: Props) => {
             <Space y={0.25}>
               <TierSelector
                 offers={priceIntent.offers}
-                selectedOfferId={selectedOfferId}
+                selectedOffer={selectedOffer}
                 onValueChange={handleTierSelectorValueChange}
                 currencyCode={shopSession.currencyCode}
               />

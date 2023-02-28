@@ -1,28 +1,62 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { PropsWithChildren, ReactElement } from 'react'
-import { ChevronIcon, theme } from 'ui'
+import { ChevronIcon, Text, theme } from 'ui'
 
 export const Root = AccordionPrimitives.Root
-export const Content = AccordionPrimitives.Content
-export const Item = AccordionPrimitives.Item
+
+// TODO: unify accordion animation with the one in the block
+const slideDown = keyframes({
+  from: {
+    height: 0,
+  },
+  to: {
+    // custom property reference: https://www.radix-ui.com/docs/primitives/components/accordion
+    height: 'var(--radix-accordion-content-height)',
+  },
+})
+const slideUp = keyframes({
+  from: {
+    height: 'var(--radix-accordion-content-height)',
+  },
+  to: {
+    height: 0,
+  },
+})
+
+export const Content = styled(AccordionPrimitives.Content)({
+  overflow: 'hidden',
+
+  '[data-state=open] &': {
+    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
+  },
+  '[data-state=closed] &': {
+    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
+  },
+})
+
+export const Item = styled(AccordionPrimitives.Item)({
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.sm,
+})
+
 const Header = AccordionPrimitives.Header
 
+export const ToggleText = styled(Text)({
+  '[data-state=open] &': { display: 'none' },
+})
+
 const Trigger = styled(AccordionPrimitives.Trigger)({
-  height: theme.space.xxl,
+  height: '3rem',
   width: '100%',
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
   textAlign: 'center',
   justifyContent: 'space-between',
-  backgroundColor: theme.colors.gray200,
   borderRadius: theme.radius.xs,
-  padding: `0 ${theme.space.md}`,
-
-  '[data-state=open] &': {
-    borderRadius: `${theme.radius.xs}px ${theme.radius.xs}px 0 0`,
-  },
+  paddingInline: theme.space.md,
 })
 
 const CenteredHeader = styled.div({
@@ -30,7 +64,7 @@ const CenteredHeader = styled.div({
   display: 'flex',
   alignContent: 'center',
   justifyContent: 'space-between',
-  paddingRight: '1rem',
+  paddingRight: theme.space.md,
 })
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
@@ -66,7 +100,7 @@ const SuggestedDot = styled.span({
   width: theme.radius.sm,
   backgroundColor: theme.colors.black,
   borderRadius: '50%',
-  marginRight: '.5rem',
+  marginRight: theme.space.xs,
 })
 
 type SuggestedItemProps = {
@@ -83,30 +117,32 @@ export const SuggestedItem = ({ children }: SuggestedItemProps) => (
 export const TierItemWrapper = styled.div<{ isSelected: boolean }>({
   cursor: 'pointer',
   padding: theme.space.xs,
-  backgroundColor: theme.colors.gray200,
 
   ':not(:first-of-type)': {
     paddingTop: 0,
   },
 
-  '&:first-of-type': {
-    borderTop: `1px solid ${theme.colors.gray300}`,
-  },
   '&:last-of-type': {
     borderRadius: `0 0 ${theme.radius.xs}px ${theme.radius.xs}px`,
   },
+})
+
+export const Separator = styled.hr({
+  height: 1,
+  backgroundColor: theme.colors.borderOpaque,
+  marginInline: theme.space.md,
 })
 
 export const TierItemContainer = styled.div<{ isSelected: boolean }>(({ isSelected = false }) => ({
   cursor: 'pointer',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
+  gap: theme.space.xs,
   padding: theme.space.xs,
-  borderRadius: `${theme.radius.xs}px`,
+  borderRadius: theme.radius.xs,
 
   boxShadow: isSelected ? '0px 1px 2px rgba(0, 0, 0, 0.15)' : '',
-  backgroundColor: isSelected ? '#E9FFC8' : theme.colors.gray200,
+  backgroundColor: isSelected ? theme.colors.green50 : 'transparent',
 }))
 
 export const TitleContainer = styled.div({
@@ -119,11 +155,3 @@ export const TitleContainer = styled.div({
 export const TitleItem = styled.div({
   paddingBottom: theme.space.xxs,
 })
-
-export const SecondaryText = styled.div({
-  color: theme.colors.gray600,
-})
-
-export const PriceText = styled.div<{ isSelected: boolean }>(({ isSelected }) => ({
-  color: isSelected ? theme.colors.gray900 : theme.colors.gray600,
-}))
