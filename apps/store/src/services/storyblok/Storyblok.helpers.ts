@@ -42,13 +42,13 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   slug: string,
   params: StoryblokFetchParams,
 ): Promise<StoryData> => {
-  let cv: number | undefined
-  if (params.version === 'published') {
-    cv = await getStoryblokCacheVersion()
-  }
+  // let cv: number | undefined
+  // if (params.version === 'published') {
+  //   cv = await getStoryblokCacheVersion()
+  // }
   const response = await storyblokClient.get(`cdn/stories/${slug}`, {
     ...params,
-    cv,
+    // cv,
     resolve_links: 'url',
   })
 
