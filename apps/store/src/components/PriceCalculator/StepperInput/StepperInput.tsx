@@ -1,63 +1,59 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
 import { MinusIcon, PlusIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { HouseholdSizeField as HouseholdSizeFieldType } from '@/services/PriceCalculator/Field.types'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-type FieldProps = {
-  field: HouseholdSizeFieldType
+type Props = {
+  name?: string
   autoFocus?: boolean
+  min?: number
+  max: number
+  value?: number
+  defaultValue?: number
+  required?: boolean
+  optionLabel: (count: number) => string
 }
 
 /**
  * Specialized Stepper Input
  * Based on: https://www.magentaa11y.com/checklist-web/stepper-input/
  */
-export const HouseholdSizeField = ({ field, autoFocus = false }: FieldProps) => {
-  const { t } = useTranslation('purchase-form')
-  const minValue = 0
-  const maxValue = field.max
-  const [value, setValue] = useState(field.value || field.defaultValue || minValue)
+export const StepperInput = (props: Props) => {
+  const { max, min = 0, value, defaultValue, optionLabel, ...inputProps } = props
+  const [internalValue, setInternalValue] = useState(value || defaultValue || min)
   const { highlight, animationProps } = useHighlightAnimation()
 
   const increment: MouseEventHandler = (event) => {
     event.preventDefault()
     highlight()
-    setValue((value) => Math.min(maxValue, value + 1))
+    setInternalValue((value) => Math.min(max, value + 1))
   }
 
   const decrement: MouseEventHandler = (event) => {
     event.preventDefault()
     highlight()
-    setValue((value) => Math.max(value - 1, minValue))
+    setInternalValue((value) => Math.max(value - 1, min))
   }
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const numberValue = parseInt(event.target.value, 10)
-    setValue(numberValue)
+    setInternalValue(numberValue)
   }
 
-  const options = Array.from({ length: maxValue + 1 }, (_, count) => ({
-    label: t('HOUSEHOLD_SIZE_VALUE', { count }),
+  const options = Array.from({ length: max + 1 }, (_, count) => ({
+    label: optionLabel(count),
     value: count,
   }))
 
-  const isDecrementDisabled = value === minValue
-  const isIncrementDisabled = value === maxValue
+  const isDecrementDisabled = internalValue === min
+  const isIncrementDisabled = internalValue === max
 
   return (
     <>
       <Wrapper {...animationProps}>
-        <StyledSelect
-          name={field.name}
-          required={field.required}
-          value={value}
-          onChange={handleChange}
-          autoFocus={autoFocus}
-        >
+        <StyledSelect {...inputProps} value={internalValue} onChange={handleChange}>
           {options.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}
