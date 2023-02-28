@@ -23,7 +23,6 @@ import { CancellationForm, CancellationOption } from './CancellationForm/Cancell
 import { ComparisonTableContainer } from './ComparisonTableContainer'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
-import { useUpdateRenewalDate } from './useUpdateRenewalDate'
 
 type Props = {
   priceIntent: PriceIntent
@@ -82,7 +81,6 @@ export const OfferPresenter = (props: Props) => {
   }, [selectedOffer, tracking, isInView])
 
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
-  const [updateRenewalDate, updateRenewalDateInfo] = useUpdateRenewalDate({ priceIntent })
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
@@ -107,7 +105,7 @@ export const OfferPresenter = (props: Props) => {
     productOffer: selectedOffer,
   })
 
-  const dateLoading = updateStartDateInfo.loading || updateRenewalDateInfo.loading
+  const dateLoading = updateStartDateInfo.loading
   const loading = loadingAddToCart || updateCancellationInfo.loading || dateLoading
 
   const priceMatch = useMemo(() => {
@@ -125,7 +123,6 @@ export const OfferPresenter = (props: Props) => {
   }, [selectedOffer.priceMatch, formatter, t])
 
   const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
-  const renewalDate = convertToDate(selectedOffer.cancellation.existingInsuranceRenewalDate)
 
   const toggleComparisonTable = () => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
@@ -162,10 +159,8 @@ export const OfferPresenter = (props: Props) => {
               <CancellationForm
                 option={cancellationOption}
                 startDate={startDate}
-                renewalDate={renewalDate ?? undefined}
                 onAutoSwitchChange={handleUpdateCancellation}
                 onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
-                onRenewalDateChange={(renewalDate) => updateRenewalDate({ dateValue: renewalDate })}
               />
 
               <SubmitButton loading={loading} />

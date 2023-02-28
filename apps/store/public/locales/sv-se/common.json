@@ -7,10 +7,11 @@
   "COUNTRY_LABEL_DK": "Danmark",
   "COUNTRY_LABEL_NO": "Norge",
   "COUNTRY_LABEL_SE": "Sverige",
+  "DATE_INPUT_EMPTY_LABEL": "Välj...",
   "DIALOG_BUTTON_CANCEL": "Avbryt",
   "ERROR_DIALOG_CLOSE": "Stäng",
   "GET_PRICE_LINK": "Se ditt pris",
-  "LANGUAGE_LABEL_en": "Engelska",
+  "LANGUAGE_LABEL_en": "English",
   "LANGUAGE_LABEL_sv": "Svenska",
   "LOGIN_BUTTON_TEXT": "Logga in",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",
@@ -18,5 +19,5 @@
   "NAV_MENU_DIALOG_CLOSE": "Stäng",
   "NAV_MENU_DIALOG_OPEN": "Meny",
   "READ_MORE": "Läs mer",
-  "UNKNOWN_ERROR_MESSAGE": "Något gick fel, vänligen försök igen."
+  "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
 }
