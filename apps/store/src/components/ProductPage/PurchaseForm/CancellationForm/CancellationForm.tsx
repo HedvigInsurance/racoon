@@ -24,7 +24,7 @@ export type CancellationOption =
 
 type Props = {
   option: CancellationOption
-  startDate: Date
+  startDate: Date | null
   onStartDateChange?: (date: Date) => void
   onAutoSwitchChange?: (checked: boolean) => void
 }
@@ -58,7 +58,9 @@ export const CancellationForm = ({ option, ...props }: Props) => {
 type NoCancellationProps = Pick<Props, 'onStartDateChange' | 'startDate'>
 
 const NoCancellation = ({ onStartDateChange, startDate, ...props }: NoCancellationProps) => {
-  return <SmartDateInput {...props} date={startDate} onChange={onStartDateChange} />
+  const date = startDate ?? new Date()
+
+  return <SmartDateInput {...props} date={date} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<
@@ -70,10 +72,11 @@ type IEXCancellationProps = Pick<
 }
 
 const IEXCancellation = (props: IEXCancellationProps) => {
-  const { onStartDateChange, onAutoSwitchChange, companyName, requested } = props
+  const { onStartDateChange, onAutoSwitchChange, companyName, requested, startDate } = props
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
   }
+  const date = startDate ?? new Date()
 
   return (
     <Space y={0.25}>
@@ -83,7 +86,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         companyName={companyName}
       />
 
-      {!requested && <SmartDateInput date={props.startDate} onChange={onStartDateChange} />}
+      {!requested && <SmartDateInput date={date} onChange={onStartDateChange} />}
     </Space>
   )
 }
@@ -102,6 +105,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   const formatter = useFormatter()
 
   const formattedCompanyName = formatter.titleCase(companyName)
+  const date = startDate ?? new Date()
 
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
@@ -112,9 +116,9 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   return (
     <Space y={0.25}>
       {requested ? (
-        <SmartDateInput label={startDateLabel} date={startDate} onChange={onStartDateChange} />
+        <SmartDateInput label={startDateLabel} date={date} onChange={onStartDateChange} />
       ) : (
-        <SmartDateInput date={startDate} onChange={props.onStartDateChange} />
+        <SmartDateInput date={date} onChange={props.onStartDateChange} />
       )}
       <AutoSwitchInput
         value={requested}
@@ -130,17 +134,24 @@ type BankSigneringInvalidStartDateProps = Pick<Props, 'onStartDateChange' | 'sta
 }
 
 const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
-  const { onStartDateChange, startDate } = props
-  // TODO: figure out how to get back to BANKSIGNERING option
-  // Right now, if the user ends up here, they can't go back to the BANKSIGNERING...
+  const { onStartDateChange, startDate, companyName } = props
+  const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
+
+  const date = startDate ?? undefined
+
+  const formattedCompanyName = formatter.titleCase(companyName)
+
   const handleChange = (date: Date) => {
     onStartDateChange?.(date)
   }
 
+  const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
+
   return (
     <Space y={0.25}>
-      <SmartDateInput {...props} date={startDate} onChange={handleChange} />
-      <SelfSwitcherBubble date={startDate} />
+      <SmartDateInput label={startDateLabel} date={date} onChange={handleChange} />
+      {startDate && <SelfSwitcherBubble date={startDate} />}
     </Space>
   )
 }
@@ -165,7 +176,7 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
       onCheckedChange={onCheckedChange}
     >
       {value && (
-        <Text as="p" size="sm" color="textSecondary">
+        <Text as="p" size="xs" color="textSecondary">
           {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: formattedCompanyName })}
         </Text>
       )}

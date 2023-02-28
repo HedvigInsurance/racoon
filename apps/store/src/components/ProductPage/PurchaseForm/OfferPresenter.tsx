@@ -122,7 +122,7 @@ export const OfferPresenter = (props: Props) => {
     }
   }, [selectedOffer.priceMatch, formatter, t])
 
-  const startDate = convertToDate(selectedOffer.startDate) ?? new Date()
+  const startDate = convertToDate(selectedOffer.startDate)
 
   const toggleComparisonTable = () => {
     setIsComparisonTableOpen(!isComparisonTableOpen)
