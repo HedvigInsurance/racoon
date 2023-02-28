@@ -6,6 +6,7 @@ import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated
 import { formatInputDateValue } from '@/utils/date'
 import { FormElement } from '../PurchaseForm.constants'
 import { DateInput } from './DateInput'
+import { SelfSwitcherBubble } from './SelfSwitcherBubble'
 
 export type CancellationOption =
   | { type: ExternalInsuranceCancellationOption.None; message?: string }
@@ -95,7 +96,7 @@ type BankSigneringCancellationProps = Pick<
 }
 
 const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
-  const { onAutoSwitchChange, companyName, requested, onStartDateChange } = props
+  const { onAutoSwitchChange, companyName, requested, onStartDateChange, startDate } = props
   const { t } = useTranslation('purchase-form')
 
   const handleCheckedChange = (newValue: boolean) => {
@@ -106,21 +107,17 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
 
   return (
     <Space y={0.25}>
+      {requested ? (
+        <SmartDateInput label={startDateLabel} date={startDate} onChange={onStartDateChange} />
+      ) : (
+        <SmartDateInput date={props.startDate} onChange={props.onStartDateChange} />
+      )}
       <AutoSwitchInput
         value={requested}
         onCheckedChange={handleCheckedChange}
         companyName={companyName}
       />
-
-      {requested ? (
-        <SmartDateInput
-          label={startDateLabel}
-          date={props.startDate}
-          onChange={onStartDateChange}
-        />
-      ) : (
-        <SmartDateInput date={props.startDate} onChange={props.onStartDateChange} />
-      )}
+      <SelfSwitcherBubble date={startDate} />
     </Space>
   )
 }
