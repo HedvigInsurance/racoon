@@ -12,7 +12,6 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
-// TODO: update to point to production deployment
 import qrCodeImage from './download-app-qrcode.png'
 import { FooterSection } from './FooterSection'
 
