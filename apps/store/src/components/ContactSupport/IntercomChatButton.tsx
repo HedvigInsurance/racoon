@@ -6,7 +6,7 @@ import { Flags } from '@/services/Flags/Flags'
 
 const ONE_SECOND = 1000
 
-const INTERCOM_ENABLED = Flags.getFeature("INTERCOM")
+const INTERCOM_ENABLED = Flags.getFeature('INTERCOM')
 
 type Props = {
   children: React.ReactNode
@@ -31,7 +31,7 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  const withoutIntercom =  <div>{children}</div>
+  const withoutIntercom = <div>{children}</div>
 
   if (!appId) return withoutIntercom
 
