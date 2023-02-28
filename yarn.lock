@@ -14214,12 +14214,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:22.4.9":
-  version: 22.4.9
-  resolution: "i18next@npm:22.4.9"
+"i18next@npm:22.4.10":
+  version: 22.4.10
+  resolution: "i18next@npm:22.4.10"
   dependencies:
     "@babel/runtime": ^7.20.6
-  checksum: 8cce4aaced4857e006fab2c9d4adb0eb1375829e459076be79d4d3532b1be6342b7003a720e187098f17bb276bea46df8b3fc2cf21f0f3a230bd519243048d1a
+  checksum: 731423e3fafe4ecaf0fc3c5867b69ae5c35c9021f7b5aad8392a9bf5cf56fbf1503376ba5aa935f2b21e12a97862fa31be0e4b35e98eefb747e2008b5808e35c
   languageName: node
   linkType: hard
 
@@ -18133,7 +18133,7 @@ __metadata:
     framer-motion: 9.0.7
     graphql: 16.6.0
     graphql-tag: 2.12.6
-    i18next: 22.4.9
+    i18next: 22.4.10
     jest: 29.4.3
     jsdom: 21.1.0
     lodash-es: 4.17.21
@@ -21404,7 +21404,7 @@ __metadata:
     framer-motion: 9.0.7
     graphql: 16.6.0
     graphql-tag: 2.12.6
-    i18next: 22.4.9
+    i18next: 22.4.10
     i18next-parser: 7.6.0
     jest: 29.4.3
     jest-environment-jsdom: 29.4.3
