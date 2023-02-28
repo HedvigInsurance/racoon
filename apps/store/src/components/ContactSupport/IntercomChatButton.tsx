@@ -35,7 +35,7 @@ export const IntercomChatButton = ({ children }: Props) => {
 
   if (!appId) return withoutIntercom
 
-  if (INTERCOM_ENABLED) return withoutIntercom
+  if (!INTERCOM_ENABLED) return withoutIntercom
 
   return (
     <IntercomProvider
