@@ -105,7 +105,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   const formatter = useFormatter()
 
   const formattedCompanyName = formatter.titleCase(companyName)
-  const date = startDate ?? new Date()
+  const date = startDate ?? undefined
 
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
