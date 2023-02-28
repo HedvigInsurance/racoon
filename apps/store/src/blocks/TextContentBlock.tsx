@@ -2,26 +2,29 @@ import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { Space, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { HeadingBlockProps } from './HeadingBlock'
 import { HeadingLabelBlockProps } from './HeadingLabelBlock'
 import { TextBlockProps } from './TextBlock'
 
-type Alignment = 'left' | 'center' | 'right' | 'justify'
+export type Layout = {
+  widths: ContentWidth
+  alignment: ContentAlignment
+}
 
 export type Props = SbBaseBlockProps<{
   heading?: ExpectedBlockType<HeadingBlockProps | HeadingLabelBlockProps>
   body: ExpectedBlockType<TextBlockProps>
-  alignment?: Alignment
+  layout?: Layout
 }>
 
 export const TextContentBlock = ({ blok }: Props) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <GridLayout.Content
-        width="2/3"
-        align="center"
-        style={{ textAlign: blok.alignment ?? 'left' }}
+        width={blok.layout?.widths ?? '2/3'}
+        align={blok.layout?.alignment ?? 'center'}
       >
         <Space y={1}>
           {blok.body?.map((nestedBlock) => (

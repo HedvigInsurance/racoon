@@ -8,7 +8,7 @@ export default {
 } as ComponentMeta<typeof Accordion.Root>
 
 const Template: ComponentStory<typeof Accordion.Root> = () => (
-  <Accordion.Root type="multiple">
+  <Accordion.Root type="single" collapsible>
     <Accordion.Item value="item-1">
       <Accordion.HeaderWithTrigger>Header 1</Accordion.HeaderWithTrigger>
       <Accordion.Content>

@@ -51,8 +51,9 @@ import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { Language, RoutingLocale } from '@/utils/l10n/types'
+import { Flags } from '../Flags/Flags'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
 export type SbBaseBlockProps<T> = {
@@ -292,6 +293,10 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
     }
     const [locale, ...slugParts] = link.slug.split('/')
     if (!isRoutingLocale(locale)) return
+
+    const { language } = getLocaleOrFallback(locale)
+    if (language === Language.En && !Flags.getFeature('ENGLISH_LANGUAGE')) return
+
     if (slugParts[0] === 'global') return
     pageLinks.push({
       link,

@@ -42,7 +42,7 @@ export const Perils = ({ items }: Props) => {
       {getPerilColumns(items, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
         <PerilColumnFlex key={index}>
           {perils.map((peril) => (
-            <PerilsAccordion key={index} peril={peril} />
+            <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
           ))}
         </PerilColumnFlex>
       ))}
