@@ -7,16 +7,4 @@ mutation StartDateUpdate($productOfferIds: [UUID!]!, $startDate: Date!) {
       message
     }
   }
-
-  productOffersExistingInsuranceRenewalDateUpdate(
-    productOfferIds: $productOfferIds
-    renewalDate: $startDate
-  ) {
-    productOffers {
-      ...ProductOffer
-    }
-    userError {
-      message
-    }
-  }
 }

@@ -9,7 +9,6 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_one": "{{percentage}}% rabatt i {{count}} måned",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_other": "{{percentage}}% rabatt i {{count}} måneder",
-  "GO_TO_STORE_BUTTON": "Gå til markedsplass",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "VIEW_ENTRY_DETAILS_BUTTON": "Detaljer"
 }

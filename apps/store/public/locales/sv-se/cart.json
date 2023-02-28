@@ -1,7 +1,7 @@
 {
   "BACK_BUTTON": "Tillbaka",
   "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkod",
-  "CART_EMPTY_SUMMARY": "Din vagn är tom",
+  "CART_EMPTY_SUMMARY": "Din varukorg är tom",
   "CART_ENTRY_AUTO_SWITCH": "Automatiskt byte",
   "CART_ENTRY_DATE_LABEL": "Aktiveras {{date}}",
   "CART_PAGE_HEADING": "Din varukorg",
@@ -30,7 +30,7 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_one": "{{percentage}}% rabatt i {{count}} månad",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_other": "{{percentage}}% rabatt i {{count}} månader",
-  "GO_TO_STORE_BUTTON": "Handla försäkringar",
+  "GO_TO_STORE_BUTTON": "Se våra försäkringar",
   "RECOMMENDATIONS_HEADING": "Andra har köpt",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Avbryt",
