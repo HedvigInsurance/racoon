@@ -47,7 +47,7 @@ export const Header = (props: HeaderProps) => {
   const defaultPosition = overlay ? 'absolute' : 'relative'
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
 
-  const initial = { position: defaultPosition, backgroundColor } as const
+  const initialStyles = { position: defaultPosition, backgroundColor } as const
 
   let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
   animate = scrollState === 'BELOW' ? 'HIDE' : animate
@@ -55,9 +55,9 @@ export const Header = (props: HeaderProps) => {
   animate = staticPosition ? undefined : animate
 
   return (
-    <GhostWrapper style={{ position: defaultPosition, backgroundColor }}>
+    <GhostWrapper style={initialStyles}>
       <Wrapper
-        initial={initial}
+        initial={initialStyles}
         variants={ANIMATION_VARIANTS}
         animate={animate}
         transition={TRANSITION}
