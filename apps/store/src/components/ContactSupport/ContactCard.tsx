@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { mq, theme } from 'ui'
+import { Space, theme } from 'ui'
 import { Message } from '../Animations/Message/Message'
 import { NumberPad } from '../Animations/NumberPad/NumberPad'
 
@@ -21,18 +21,13 @@ export const ContactCard = ({ icon, children }: ContactCardProps) => {
 
   return (
     <Card>
-      <IconContainer>
+      <Space y={1.5}>
         <IconComponent />
-      </IconContainer>
-      {children}
+        <div>{children}</div>
+      </Space>
     </Card>
   )
 }
-
-const IconContainer = styled.div({
-  display: 'grid',
-  placeItems: 'center',
-})
 
 const Card = styled.div({
   backgroundColor: theme.colors.gray100,
@@ -40,17 +35,6 @@ const Card = styled.div({
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
   padding: `${theme.space.xl} ${theme.space.sm}`,
   backdropFilter: 'blur(20px)',
-  display: 'grid',
-  justifyContent: 'center',
-  alignItems: 'center',
-  justifyItems: 'center',
-  gap: theme.space.lg,
-  textAlign: 'center',
-  height: '100%',
-
-  [mq.sm]: {
-    paddingBlock: theme.space.xxl,
-  },
 
   '@media (hover: hover)': {
     ':hover': { backgroundColor: theme.colors.gray200 },
