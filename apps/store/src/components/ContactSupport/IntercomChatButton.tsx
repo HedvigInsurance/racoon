@@ -2,8 +2,11 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { IntercomProvider, useIntercom } from 'react-use-intercom'
+import { Flags } from '@/services/Flags/Flags'
 
 const ONE_SECOND = 1000
+
+const INTERCOM_ENABLED = Flags.getFeature("INTERCOM")
 
 type Props = {
   children: React.ReactNode
@@ -28,9 +31,11 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  if (!appId) {
-    return <div>{children}</div>
-  }
+  const withoutIntercom =  <div>{children}</div>
+
+  if (!appId) return withoutIntercom
+
+  if (!INTERCOM_ENABLED) return withoutIntercom
 
   return (
     <IntercomProvider
