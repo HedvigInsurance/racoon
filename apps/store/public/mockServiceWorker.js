@@ -2,7 +2,7 @@
 /* tslint:disable */
 
 /**
- * Mock Service Worker (0.44.2).
+ * Mock Service Worker (0.47.3).
  * @see https://github.com/mswjs/msw
  * - Please do NOT modify this file.
  * - Please do NOT serve this file on production.
@@ -155,8 +155,7 @@ async function handleRequest(event, requestId) {
           ok: clonedResponse.ok,
           status: clonedResponse.status,
           statusText: clonedResponse.statusText,
-          body:
-            clonedResponse.body === null ? null : await clonedResponse.text(),
+          body: clonedResponse.body === null ? null : await clonedResponse.text(),
           headers: Object.fromEntries(clonedResponse.headers.entries()),
           redirected: clonedResponse.redirected,
         },
@@ -200,7 +199,7 @@ async function getResponse(event, client, requestId) {
 
   function passthrough() {
     // Clone the request because it might've been already used
-    // (i.e. its body has been read and sent to the cilent).
+    // (i.e. its body has been read and sent to the client).
     const headers = Object.fromEntries(clonedRequest.headers.entries())
 
     // Remove MSW-specific request headers so the bypassed requests
