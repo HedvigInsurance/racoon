@@ -1,16 +1,16 @@
 import { InputField } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { CarMileageField } from '@/components/PriceCalculator/CarMileageField'
-import { HouseholdSizeField } from '@/components/PriceCalculator/HouseholdSizeField'
 import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
+import { CarMileageField } from './CarMileageField'
 import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import * as InputRadio from './InputRadio'
+import { StepperInput } from './StepperInput/StepperInput'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
@@ -120,9 +120,6 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
         />
       )
 
-    case 'householdSize':
-      return <HouseholdSizeField field={field} autoFocus={autoFocus} />
-
     case 'car-registration-number':
       return <CarRegistrationNumberField field={field} />
     case 'car-mileage':
@@ -139,6 +136,20 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
         />
       ) : // TODO: Add a fallback for when we don't have an insurelyClientId
       null
+
+    case 'stepper':
+      return (
+        <StepperInput
+          name={field.name}
+          max={field.max}
+          min={field.min}
+          required={field.required}
+          defaultValue={field.value ?? field.defaultValue}
+          autoFocus={autoFocus}
+          optionLabel={(count) => translateLabel(field.valueLabel, { count })}
+        />
+      )
+
     default: {
       const badField: never = field
       console.warn(`Did not find field type=${(badField as any).type}.  Field not displayed`)
