@@ -6,13 +6,14 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 export type ProductItemProps = {
   name: string
   price: string
+  pillowSrc: string
   description?: string
 }
 
-export const ProductItem = ({ name, price, description }: ProductItemProps) => {
+export const ProductItem = ({ name, price, description, pillowSrc }: ProductItemProps) => {
   return (
     <SpaceFlex space={1} align="start">
-      <Pillow size="small" />
+      <Pillow size="small" src={pillowSrc} />
       <TextWrapper>
         <Text>{name}</Text>
         <Space y={1}>

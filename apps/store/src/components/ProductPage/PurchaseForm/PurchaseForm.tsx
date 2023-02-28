@@ -111,6 +111,7 @@ export const PurchaseForm = () => {
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
+              pillowSrc: productData.pillowImage.src,
               description: item.cancellation.requested
                 ? t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
                 : t('CART_ENTRY_DATE_LABEL', {
