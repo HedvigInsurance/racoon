@@ -15,7 +15,11 @@ const gtmInjectedOrigins = [
 ]
 
 const scriptSrc = [
+  // Storyblok
   'https://app.storyblok.com',
+  // Intercom
+  'https://widget.intercom.io',
+  'https://js.intercomcdn.com',
   // Google
   'https://*.googletagmanager.com',
   'https://*.google-analytics.com',
