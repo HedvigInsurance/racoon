@@ -93,7 +93,7 @@ export const ConfirmationPage = (props: Props) => {
                 {story.content.footerSubtitle}
               </Text>
             </div>
-            {appDownloadAction}
+            <div>{appDownloadAction}</div>
           </Space>
         </FooterSection>
       </Space>
