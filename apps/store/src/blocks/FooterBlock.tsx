@@ -6,6 +6,7 @@ import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { Flags } from '@/services/Flags/Flags'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { countries } from '@/utils/l10n/countries'
@@ -19,6 +20,8 @@ import {
 import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+
+const ENGLISH_LANGUAGE_ENABLED = Flags.getFeature('ENGLISH_LANGUAGE')
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -108,12 +111,14 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
             defaultValue={currentCountry.id}
             options={countryList}
           />
-          <StyledInputSelect
-            name={LocaleField.Language}
-            onChange={handleChangeLanguage}
-            defaultValue={currentLanguage}
-            options={languageList}
-          />
+          {ENGLISH_LANGUAGE_ENABLED && (
+            <StyledInputSelect
+              name={LocaleField.Language}
+              onChange={handleChangeLanguage}
+              defaultValue={currentLanguage}
+              options={languageList}
+            />
+          )}
         </LocaleForm>
 
         <Disclaimer>
@@ -151,7 +156,7 @@ const Column = styled.div({
 
 const LocaleForm = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
+  gridTemplateColumns: ENGLISH_LANGUAGE_ENABLED ? 'repeat(2, 1fr)' : '1fr',
   gap: theme.space.md,
 
   gridColumn: '1 / -1',

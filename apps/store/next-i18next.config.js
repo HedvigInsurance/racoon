@@ -1,5 +1,7 @@
 const englishFallback = ['en']
 
+const englishLanguageEnabled = process.env.NEXT_PUBLIC_FEATURE_ENGLISH_LANGUAGE === 'true'
+
 /**
  * @type {import('next-i18next').UserConfig}
  */
@@ -17,11 +19,10 @@ module.exports = {
     locales: [
       // Technical value for "locale not selected", see https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale
       'default',
+
       // Generic English with optional country-specific variants (generally should be empty)
-      'en',
-      'en-dk',
-      'en-no',
-      'en-se',
+      ...(englishLanguageEnabled ? ['en', 'en-dk', 'en-no', 'en-se'] : []),
+
       // Swedish, see note in fallbackLng
       'se',
       'sv-se',
