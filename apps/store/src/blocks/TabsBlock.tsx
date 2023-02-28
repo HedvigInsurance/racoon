@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { mq, theme } from 'ui'
-import { Heading } from 'ui'
+import { Heading, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -32,7 +31,7 @@ export const TabsBlock = ({ blok }: TabsBlockProps) => {
       )}
       <RadixTabs.Tabs defaultValue={firstTabValue}>
         <GridLayout.Root>
-          <GridLayout.Content width="1/2" align="center">
+          <TabListWrapper width="2/3" align="center">
             <TabList>
               {tabBlocks.map((tabBlock) => {
                 const tabId = tabBlock._uid || tabBlock.title
@@ -43,6 +42,9 @@ export const TabsBlock = ({ blok }: TabsBlockProps) => {
                 )
               })}
             </TabList>
+          </TabListWrapper>
+
+          <GridLayout.Content width="1/2" align="center">
             {tabBlocks.map((tabBlock) => (
               <TabBlock key={tabBlock._uid || tabBlock.title} blok={tabBlock} />
             ))}
@@ -58,7 +60,7 @@ const TabBlock = ({ blok }: TabBlockProps) => {
   return (
     <RadixTabs.TabsContent value={blok._uid || blok.title}>
       {blok.body.map((nestedBlock) => (
-        <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+        <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
       ))}
     </RadixTabs.TabsContent>
   )
@@ -75,6 +77,21 @@ const Title = styled(Heading)({
   [mq.lg]: {
     marginBottom: theme.space.xl,
   },
+})
+
+const TabListWrapper = styled(GridLayout.Content)({
+  marginBottom: theme.space.md,
+
+  [mq.lg]: {
+    marginBottom: theme.space.xl,
+  },
+})
+
+const TabList = styled(RadixTabs.TabsList)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xxs,
+  overflowX: 'auto',
 })
 
 const TabTrigger = styled(RadixTabs.Trigger)({
@@ -103,17 +120,5 @@ const TabTrigger = styled(RadixTabs.Trigger)({
     ':hover': {
       backgroundColor: theme.colors.translucent1,
     },
-  },
-})
-
-const TabList = styled(RadixTabs.TabsList)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space.xs,
-  paddingBottom: theme.space.lg,
-  overflowX: 'auto',
-
-  [mq.lg]: {
-    paddingBottom: theme.space.xl,
   },
 })
