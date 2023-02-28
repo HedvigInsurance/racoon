@@ -59,7 +59,7 @@ const RESPONSIVE_STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>
 }
 
 const twoThirdsCenterStyles: CSSObject = {
-  [mq.lg]: { gridColumn: '4 / span 6' },
+  [mq.lg]: { gridColumn: '3 / span 8' },
 }
 
 const halfCenterStyles: CSSObject = {
