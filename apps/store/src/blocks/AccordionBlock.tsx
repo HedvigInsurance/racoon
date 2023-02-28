@@ -14,12 +14,14 @@ type Props = SbBaseBlockProps<{
   title?: string
   description?: string
   isFAQ?: boolean
+  centerLayout?: boolean
 }>
 
 export const AccordionBlock = ({ blok }: Props) => {
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   const enableFAQStructuredData = blok.isFAQ ?? false
   const displayTitleDescriptionSection = blok.title || blok.description
+  const isCentered = blok.centerLayout || !displayTitleDescriptionSection
 
   return (
     <>
@@ -32,22 +34,28 @@ export const AccordionBlock = ({ blok }: Props) => {
       )}
       <Wrapper {...storyblokEditable(blok)}>
         {displayTitleDescriptionSection && (
-          <GridLayout.Content width="1/2" align="left">
+          <GridLayout.Content width="1/2" align={isCentered ? 'center' : 'left'}>
             <TextContent>
               {blok.title && (
-                <Heading as="h2" variant={{ _: 'standard.24', md: 'standard.32' }}>
+                <Heading
+                  as="h2"
+                  variant={{ _: 'standard.24', ...(!blok.centerLayout && { md: 'standard.32' }) }}
+                >
                   {blok.title}
                 </Heading>
               )}
               {blok.description && (
-                <Text color="textSecondary" size={{ _: 'xl', md: 'xxl' }}>
+                <Text
+                  color="textSecondary"
+                  size={{ _: 'xl', ...(!blok.centerLayout && { md: 'xxl' }) }}
+                >
                   {blok.description}
                 </Text>
               )}
             </TextContent>
           </GridLayout.Content>
         )}
-        <GridLayout.Content width="1/2" align={displayTitleDescriptionSection ? 'right' : 'center'}>
+        <GridLayout.Content width="1/2" align={isCentered ? 'center' : 'right'}>
           <Accordion.Root type="single" collapsible>
             {accordionItems.map((nestedBlock) => (
               <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
@@ -73,13 +81,7 @@ const Wrapper = styled(GridLayout.Root)({
   },
 })
 
-const TextContent = styled.div({
-  maxWidth: TEXT_CONTENT_MAX_WIDTH,
-
-  [mq.lg]: {
-    paddingRight: theme.space.xl,
-  },
-})
+const TextContent = styled.div({ maxWidth: TEXT_CONTENT_MAX_WIDTH })
 
 const getFAQStructuredData = (
   accordions: ReadonlyArray<Pick<AccordionItemBlockProps['blok'], 'title' | 'body'>>,
