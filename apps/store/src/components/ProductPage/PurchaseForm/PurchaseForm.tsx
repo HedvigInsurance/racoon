@@ -289,6 +289,7 @@ const EditingState = (props: EditingStateProps) => {
   ) : (
     <PriceCalculatorWrapper>
       <PriceCalculator
+        key={priceIntent.id}
         priceIntent={priceIntent}
         shopSession={shopSession}
         onConfirm={handleConfirm}
