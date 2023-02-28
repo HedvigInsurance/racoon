@@ -139,20 +139,21 @@ export class Tracking {
   }
 
   // Legacy event in market-web format
-  public async reportSignedCustomer(cart: CartFragmentFragment) {
+  public async reportSignedCustomer(cart: CartFragmentFragment, memberId: string) {
     const event = TrackingEvent.SignedCustomer
     const userData = await getLegacyUserData(this.context)
+
     const eventData = {
       offerData: {
         quote_cart_id: cart.id,
         transaction_id: cart.id,
-
         discounted_premium: cart.cost.net.amount,
         insurance_price: cart.cost.gross.amount,
         currency: cart.cost.net.currencyCode as string,
 
         insurance_type: cart.entries[0].variant.typeOfContract,
         flow_type: cart.entries[0].variant.product.name,
+        memberId: memberId,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
       shopSession: {
@@ -186,12 +187,12 @@ export class Tracking {
     this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
   }
 
-  public reportPurchase(cart: CartFragmentFragment) {
+  public reportPurchase(cart: CartFragmentFragment, memberId: string) {
     const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
     event.ecommerce.transaction_id = cart.id
     this.reportEcommerceEvent(event)
     // Also report in web-onboarding format
-    this.reportSignedCustomer(cart)
+    this.reportSignedCustomer(cart, memberId)
   }
 
   // Google Analytics ecommerce events
