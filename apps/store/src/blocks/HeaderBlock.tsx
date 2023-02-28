@@ -62,11 +62,19 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 }>
 
 export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
+  const router = useRouter()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
+
+  const handleClickTrigger = () => {
+    const firstNavItem = filteredNavItems[0]
+    if (firstNavItem) {
+      router.push(getLinkFieldURL(firstNavItem.link, firstNavItem.name))
+    }
+  }
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationTrigger>{blok.name}</NavigationTrigger>
+      <NavigationTrigger onClick={handleClickTrigger}>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuListWrapper>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
