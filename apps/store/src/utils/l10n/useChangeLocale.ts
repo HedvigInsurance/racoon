@@ -23,6 +23,7 @@ export const useChangeLocale = (currentPageStory: ISbStoryData) => {
         const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
         cookiePersister.save(routingLocale, undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
 
+        // TODO: this doesn't handle changing country + cross domain
         const newCountry = getCountryByLocale(routingLocale)
         if (newCountry !== currentCountry) {
           // Country change should be full app reload to maintain our programming assumptions
