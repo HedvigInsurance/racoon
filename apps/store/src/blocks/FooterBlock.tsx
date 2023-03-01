@@ -21,6 +21,7 @@ import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
+const COUNTRY_SELECTOR_ENABLED = Flags.getFeature('COUNTRY_SELECTOR')
 const ENGLISH_LANGUAGE_ENABLED = Flags.getFeature('ENGLISH_LANGUAGE')
 
 type FooterLinkProps = SbBaseBlockProps<{
@@ -105,12 +106,14 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
         ))}
 
         <LocaleForm>
-          <StyledInputSelect
-            name={LocaleField.Country}
-            onChange={handleChangeCountry}
-            defaultValue={currentCountry.id}
-            options={countryList}
-          />
+          {COUNTRY_SELECTOR_ENABLED && (
+            <StyledInputSelect
+              name={LocaleField.Country}
+              onChange={handleChangeCountry}
+              defaultValue={currentCountry.id}
+              options={countryList}
+            />
+          )}
           {ENGLISH_LANGUAGE_ENABLED && (
             <StyledInputSelect
               name={LocaleField.Language}
