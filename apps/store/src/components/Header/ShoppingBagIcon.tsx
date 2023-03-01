@@ -1,6 +1,5 @@
-import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Text } from 'ui'
+import { Text, theme } from 'ui'
 
 export type ShoppingBagIconProps = {
   count: number
@@ -14,7 +13,7 @@ export const ShoppingBagIcon = ({ count }: ShoppingBagIconProps) => {
       {hasItemsInCart ? (
         <Wrapper>
           <ShoppingBagIconDark />
-          <Count color="textNegative" size="xs">
+          <Count as="span" color="textNegative" size="xs">
             {count}
           </Count>
         </Wrapper>
@@ -35,16 +34,18 @@ const Wrapper = styled.div({
   justifyContent: 'center',
 })
 
-const Count = styled(Text)({ position: 'absolute' })
+const Count = styled(Text)({
+  position: 'absolute',
+  // Center vertically
+  marginTop: -1,
+})
 
 const ShoppingBagIconLight = () => {
-  const theme = useTheme()
-
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        d="M18.9833 22.9188L18.9824 22.9188C14.3376 23.3604 9.66131 23.3604 5.01645 22.9188L5.01549 22.9187C4.00396 22.8239 3.0573 22.3788 2.339 21.6603C1.6207 20.9419 1.17586 19.9951 1.08127 18.9836L1.08116 18.9824C0.639613 14.3379 0.639613 9.66206 1.08116 5.01759L1.08126 5.01657C1.17603 4.00505 1.62096 3.05837 2.33925 2.3399C3.05754 1.62143 4.00413 1.17627 5.01562 1.08124L5.01645 1.08116C9.66131 0.639612 14.3376 0.639612 18.9824 1.08116L18.9831 1.08123C19.9947 1.17641 20.9414 1.62164 21.6599 2.34011C22.3784 3.05858 22.8236 4.00525 22.9188 5.01686L22.9188 5.01759C23.3604 9.66206 23.3604 14.3379 22.9188 18.9824L22.9188 18.9833C22.8238 19.9949 22.3786 20.9417 21.6601 21.6601C20.9416 22.3786 19.9949 22.8238 18.9833 22.9188Z"
-        stroke={theme.colors.gray900}
+        d="M11.9851 0.75C16.0249 0.75 18.7908 1.58865 20.5594 3.31458C22.3242 5.03683 23.25 7.79409 23.25 12C23.25 16.2059 22.3242 18.9632 20.5594 20.6854C18.7908 22.4114 16.0249 23.25 11.9851 23.25C7.93771 23.25 5.18225 22.4458 3.42411 20.7405C1.67072 19.0397 0.75 16.2866 0.75 12C0.75 7.7134 1.67072 4.96031 3.42411 3.25954C5.18225 1.55416 7.93771 0.75 11.9851 0.75Z"
+        stroke={theme.colors.textPrimary}
         strokeWidth="1.5"
       />
     </svg>
@@ -52,13 +53,11 @@ const ShoppingBagIconLight = () => {
 }
 
 const ShoppingBagIconDark = () => {
-  const theme = useTheme()
-
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        d="M0 12C0 21.4491 2.91946 24 12.0146 24C21.1097 24 24 21.6003 24 12C24 2.39973 21.1097 0 12.0146 0C2.91946 0 0 2.55088 0 12Z"
-        fill={theme.colors.gray1000}
+        d="M24 12C24 3.40752 20.2268 0 11.9851 0C3.7434 0 5.42085e-08 3.25652 1.99754e-07 12C3.45299e-07 20.7435 3.7434 24 11.9851 24C20.2268 24 24 20.5925 24 12Z"
+        fill={theme.colors.textPrimary}
       />
     </svg>
   )
