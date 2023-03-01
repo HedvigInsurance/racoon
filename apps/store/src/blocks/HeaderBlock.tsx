@@ -62,11 +62,19 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 }>
 
 export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
+  const router = useRouter()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
+
+  const handleClickTrigger = () => {
+    const firstNavItem = filteredNavItems[0]
+    if (firstNavItem) {
+      router.push(getLinkFieldURL(firstNavItem.link, firstNavItem.name))
+    }
+  }
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationTrigger>{blok.name}</NavigationTrigger>
+      <NavigationTrigger onClick={handleClickTrigger}>{blok.name}</NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuListWrapper>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
@@ -217,6 +225,7 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 }
 
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
   const productNavItem = useMemo(
@@ -231,7 +240,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   )
 
   return (
-    <Header {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
+    <Header key={router.asPath} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
