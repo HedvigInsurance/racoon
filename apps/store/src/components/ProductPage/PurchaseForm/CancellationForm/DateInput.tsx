@@ -89,7 +89,6 @@ const Label = styled.label({
 
 const StyledInput = styled.input({
   position: 'absolute',
-
   inset: 0,
   ':disabled': {
     color: theme.colors.textSecondary,
