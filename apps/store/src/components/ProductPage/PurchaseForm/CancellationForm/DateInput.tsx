@@ -89,6 +89,7 @@ const Label = styled.label({
 
 const StyledInput = styled.input({
   position: 'absolute',
+
   inset: 0,
   ':disabled': {
     color: theme.colors.textSecondary,
@@ -113,7 +114,7 @@ const StyledInput = styled.input({
   },
 
   '::-webkit-datetime-edit-fields-wrapper': {
-    display: 'none',
+    display: 'none!important',
   },
 })
 
