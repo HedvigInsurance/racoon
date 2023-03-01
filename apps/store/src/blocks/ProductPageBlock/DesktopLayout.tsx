@@ -10,7 +10,7 @@ import {
   StickyHeader,
   Content,
   OverviewSection,
-  StyledProductVariantSelector,
+  VariantSelector,
   triggerListStyles,
   triggerStyles,
 } from './ProductPageBlockBase'
@@ -50,7 +50,7 @@ export const DesktopLayout = ({ blok }: ProductPageBlockProps) => {
               </ContentNavigationTrigger>
             </li>
           </ContentNavigationList>
-          {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+          {shouldRenderVariantSelector && <VariantSelector />}
         </nav>
       </StickyHeader>
       <Grid>

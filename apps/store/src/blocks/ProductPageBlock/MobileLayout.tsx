@@ -10,7 +10,7 @@ import {
   StickyHeader,
   Content,
   OverviewSection,
-  StyledProductVariantSelector,
+  VariantSelector,
   triggerListStyles,
   triggerStyles,
 } from './ProductPageBlockBase'
@@ -39,7 +39,7 @@ export const MobileLayout = ({ blok }: ProductPageBlockProps) => {
                 <TabTrigger value="overview">{blok.overviewLabel}</TabTrigger>
                 <TabTrigger value="coverage">{blok.coverageLabel}</TabTrigger>
               </TablistWrapper>
-              {shouldRenderVariantSelector && <StyledProductVariantSelector />}
+              {shouldRenderVariantSelector && <VariantSelector />}
             </RadixTabs.TabsList>
           </StickyHeader>
 

@@ -6,6 +6,23 @@ import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
 
+export const VariantSelector = () => {
+  return (
+    <VariantSelectorWrapper>
+      <StyledProductVariantSelector />
+    </VariantSelectorWrapper>
+  )
+}
+
+const StyledProductVariantSelector = styled(ProductVariantSelector)({
+  backgroundColor: theme.colors.greenFill1,
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+
+  ':hover, :focus-within': {
+    backgroundColor: theme.colors.greenFill3,
+  },
+})
+
 export const Content = styled.div({
   position: 'relative',
   display: 'flex',
@@ -33,17 +50,10 @@ export const StickyHeader = styled.div({
   },
 })
 
-export const StyledProductVariantSelector = styled(ProductVariantSelector)({
-  minWidth: '12.5rem',
+const VariantSelectorWrapper = styled.div({
   width: 'fit-content',
+  minWidth: '12.5rem',
   marginTop: theme.space.xs,
-
-  backgroundColor: theme.colors.greenFill1,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-
-  ':hover, :focus-within': {
-    backgroundColor: theme.colors.greenFill3,
-  },
 })
 
 export const triggerListStyles = css({
