@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
-  "ignoreDeps": ["msw"],
   "labels": ["needs approval/merge"],
   "packageRules": [
     {
