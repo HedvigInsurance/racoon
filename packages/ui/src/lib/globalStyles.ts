@@ -46,6 +46,13 @@ export const globalStyles = css`
     height: auto;
   }
 
+  /* Remove gray border from loading images https://nextjs.org/docs/api-reference/next/image#known-browser-bugs */
+  @supports (font: -apple-system-body) and (-webkit-appearance: none) {
+    img[loading='lazy'] {
+      clip-path: inset(0.6px);
+    }
+  }
+
   /* Sane display value for media elements */
   img,
   iframe,
