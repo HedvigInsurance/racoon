@@ -13,7 +13,11 @@ import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useOpenPriceCalculatorQueryParam } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { ProductOfferFragment, usePriceIntentConfirmMutation } from '@/services/apollo/generated'
+import {
+  ExternalInsuranceCancellationOption,
+  ProductOfferFragment,
+  usePriceIntentConfirmMutation,
+} from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -112,14 +116,16 @@ export const PurchaseForm = () => {
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
               pillowSrc: productData.pillowImage.src,
-              description: item.cancellation.requested
-                ? t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
-                : t('CART_ENTRY_DATE_LABEL', {
-                    date: formatter.fromNow(new Date(item.startDate)),
-                    ns: 'cart',
-                  }),
+              description:
+                !item.cancellation.requested ||
+                item.cancellation.option ===
+                  ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+                  ? t('CART_ENTRY_DATE_LABEL', {
+                      date: formatter.fromNow(new Date(item.startDate)),
+                      ns: 'cart',
+                    })
+                  : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
             })
-
             try {
               await createNewPriceIntent(shopSession)
             } catch (error) {
@@ -159,7 +165,6 @@ const Layout = ({ children, pillowSize }: LayoutProps) => {
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
   }
-
   return (
     <>
       <PurchaseFormTop>

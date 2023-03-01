@@ -13,6 +13,7 @@ import {
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
+import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -39,7 +40,12 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     offerId: item.id,
     title: item.variant.product.displayNameFull,
     cost: item.price,
-    startDate: !item.cancellation.requested ? convertToDate(item.startDate) : undefined,
+    startDate:
+      !item.cancellation.requested ||
+      item.cancellation.option ===
+        ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+        ? convertToDate(item.startDate)
+        : undefined,
     pillow: {
       src: item.variant.product.pillowImage.src,
       alt: item.variant.product.pillowImage.alt ?? undefined,
