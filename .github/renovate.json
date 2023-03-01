@@ -5,13 +5,17 @@
   "labels": ["needs approval/merge"],
   "packageRules": [
     {
-      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchDepTypes": ["dependencies"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
       "labels": ["deps"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true,
+      "labels": ["dev-deps"]
     }
   ],
   "prCreation": "not-pending",
-  "prConcurrentLimit": 4,
   "stabilityDays": 2
 }
