@@ -4,8 +4,10 @@ import { Space, Text } from 'ui'
 import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
+import { useFormatter } from '@/utils/useFormatter'
 import { FormElement } from '../PurchaseForm.constants'
 import { DateInput } from './DateInput'
+import { SelfSwitcherBubble } from './SelfSwitcherBubble'
 
 export type CancellationOption =
   | { type: ExternalInsuranceCancellationOption.None; message?: string }
@@ -22,7 +24,7 @@ export type CancellationOption =
 
 type Props = {
   option: CancellationOption
-  startDate: Date
+  startDate: Date | null
   onStartDateChange?: (date: Date) => void
   onAutoSwitchChange?: (checked: boolean) => void
 }
@@ -56,7 +58,9 @@ export const CancellationForm = ({ option, ...props }: Props) => {
 type NoCancellationProps = Pick<Props, 'onStartDateChange' | 'startDate'>
 
 const NoCancellation = ({ onStartDateChange, startDate, ...props }: NoCancellationProps) => {
-  return <SmartDateInput {...props} date={startDate} onChange={onStartDateChange} />
+  const date = startDate ?? new Date()
+
+  return <SmartDateInput {...props} date={date} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<
@@ -68,10 +72,11 @@ type IEXCancellationProps = Pick<
 }
 
 const IEXCancellation = (props: IEXCancellationProps) => {
-  const { onStartDateChange, onAutoSwitchChange, companyName, requested } = props
+  const { onStartDateChange, onAutoSwitchChange, companyName, requested, startDate } = props
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
   }
+  const date = startDate ?? new Date()
 
   return (
     <Space y={0.25}>
@@ -81,7 +86,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         companyName={companyName}
       />
 
-      {!requested && <SmartDateInput date={props.startDate} onChange={onStartDateChange} />}
+      {!requested && <SmartDateInput date={date} onChange={onStartDateChange} />}
     </Space>
   )
 }
@@ -95,32 +100,31 @@ type BankSigneringCancellationProps = Pick<
 }
 
 const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
-  const { onAutoSwitchChange, companyName, requested, onStartDateChange } = props
+  const { onAutoSwitchChange, companyName, requested, onStartDateChange, startDate } = props
   const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
+
+  const formattedCompanyName = formatter.titleCase(companyName)
+  const date = startDate ?? undefined
 
   const handleCheckedChange = (newValue: boolean) => {
     onAutoSwitchChange?.(newValue)
   }
 
-  const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: companyName })
+  const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
 
   return (
     <Space y={0.25}>
+      {requested ? (
+        <SmartDateInput label={startDateLabel} date={date} onChange={onStartDateChange} />
+      ) : (
+        <SmartDateInput date={date} onChange={props.onStartDateChange} />
+      )}
       <AutoSwitchInput
         value={requested}
         onCheckedChange={handleCheckedChange}
         companyName={companyName}
       />
-
-      {requested ? (
-        <SmartDateInput
-          label={startDateLabel}
-          date={props.startDate}
-          onChange={onStartDateChange}
-        />
-      ) : (
-        <SmartDateInput date={props.startDate} onChange={props.onStartDateChange} />
-      )}
     </Space>
   )
 }
@@ -130,14 +134,26 @@ type BankSigneringInvalidStartDateProps = Pick<Props, 'onStartDateChange' | 'sta
 }
 
 const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
-  const { onStartDateChange, startDate } = props
-  // TODO: figure out how to get back to BANKSIGNERING option
-  // Right now, if the user ends up here, they can't go back to the BANKSIGNERING...
+  const { onStartDateChange, startDate, companyName } = props
+  const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
+
+  const date = startDate ?? undefined
+
+  const formattedCompanyName = formatter.titleCase(companyName)
+
   const handleChange = (date: Date) => {
     onStartDateChange?.(date)
   }
 
-  return <SmartDateInput {...props} date={startDate} onChange={handleChange} />
+  const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
+
+  return (
+    <Space y={0.25}>
+      <SmartDateInput label={startDateLabel} date={date} onChange={handleChange} />
+      {startDate && <SelfSwitcherBubble date={startDate} />}
+    </Space>
+  )
 }
 
 type AutoSwitchInputProps = {
@@ -148,6 +164,9 @@ type AutoSwitchInputProps = {
 
 const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInputProps) => {
   const { t } = useTranslation('purchase-form')
+  const formatter = useFormatter()
+
+  const formattedCompanyName = formatter.titleCase(companyName)
 
   return (
     <ToggleCard
@@ -157,8 +176,8 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
       onCheckedChange={onCheckedChange}
     >
       {value && (
-        <Text as="p" size="sm" color="textSecondary">
-          {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
+        <Text as="p" size="xs" color="textSecondary">
+          {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: formattedCompanyName })}
         </Text>
       )}
     </ToggleCard>

@@ -44,6 +44,16 @@ export const formatDateFromNow = (date: Date, options: DateFormatOptions): strin
   return date.toLocaleDateString(options.locale)
 }
 
+export const formatTitleCase = (str: string): string => {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    })
+    .join(' ')
+}
+
 type FormatterOptions = MoneyFormatOptions & { t: TFunction }
 
 export class Formatter {
@@ -55,4 +65,5 @@ export class Formatter {
   public money = (money: Money) => formatMoney(money, this.options)
   public monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
   public fromNow = (date: Date) => formatDateFromNow(date, this.options)
+  public titleCase = (str: string) => formatTitleCase(str)
 }
