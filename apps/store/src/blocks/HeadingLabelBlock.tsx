@@ -12,15 +12,11 @@ export const Wrapper = styled.div({
 export type HeadingLabelBlockProps = SbBaseBlockProps<{
   text: string
   as: HeadingLabelProps['as']
-  nested?: boolean
 }>
 
-export const HeadingLabelBlock = ({ blok }: HeadingLabelBlockProps) => {
+export const HeadingLabelBlock = ({ blok, nested }: HeadingLabelBlockProps) => {
   return (
-    <ConditionalWrapper
-      condition={!blok.nested}
-      wrapWith={(children) => <Wrapper>{children}</Wrapper>}
-    >
+    <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
       <HeadingLabel as={blok.as} {...storyblokEditable(blok)}>
         {blok.text}
       </HeadingLabel>
