@@ -115,6 +115,10 @@ const StyledInput = styled.input({
   '::-webkit-datetime-edit-fields-wrapper': {
     display: 'none',
   },
+
+  '::-webkit-date-and-time-value': {
+    visibility: 'hidden',
+  },
 })
 
 const InputText = styled(Text)({
