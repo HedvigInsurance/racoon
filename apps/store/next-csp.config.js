@@ -64,6 +64,8 @@ const imgSrc = [
   'https://assets.vercel.com',
   'https://vercel.com',
   'https://vercel.live',
+  // Server-side Google Tag Manager
+  'https://sgtm.hedvig.com',
 
   ...gtmInjectedOrigins,
 
