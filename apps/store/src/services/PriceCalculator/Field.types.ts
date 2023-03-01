@@ -52,11 +52,6 @@ export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
 
 export type ExtraBuilding = { area: number; type: string; hasWaterConnected: boolean }
 
-export type HouseholdSizeField = BaseField<number> & {
-  type: 'householdSize'
-  max: number
-}
-
 export type CarRegistrationNumberField = BaseField<string> & {
   type: 'car-registration-number'
 }
@@ -69,6 +64,13 @@ export type CurrentInsuranceField = BaseField<string> & {
   type: 'current-insurance'
 }
 
+export type StepperField = BaseField<number> & {
+  type: 'stepper'
+  min?: number
+  max: number
+  valueLabel: Label
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -76,7 +78,7 @@ export type InputField =
   | RadioField
   | SelectField
   | ExtraBuildingsField
-  | HouseholdSizeField
   | CarRegistrationNumberField
   | CarMileageField
   | CurrentInsuranceField
+  | StepperField

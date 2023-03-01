@@ -17,7 +17,12 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import {
+  CurrentMemberDocument,
+  CurrentMemberQuery,
+  CurrentMemberQueryVariables,
+  ShopSessionAuthenticationStatus,
+} from '@/services/apollo/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -54,7 +59,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       if (!shopSessionId) {
         throw new Error('shopSessionId must exists at this point')
       }
-      tracking.reportPurchase(shopSession.cart)
+
+      const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
+        query: CurrentMemberDocument,
+      })
+      const memberId = data.currentMember.id
+
+      tracking.reportPurchase(shopSession.cart, memberId)
       setupShopSessionServiceClientSide(apolloClient).reset()
       await router.push(
         getCheckoutStepLink(
@@ -72,7 +83,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   return (
     <>
-      <Space y={{ base: 2.5}}>
+      <Space y={{ base: 2.5 }}>
         <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
           <TextLink href={PageLink.cart()}>{t('BACK_BUTTON')}</TextLink>
         </CheckoutHeader>
