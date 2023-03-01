@@ -9,8 +9,19 @@ export default {
 } as ComponentMeta<typeof TierSelector>
 
 const Template: ComponentStory<typeof TierSelector> = (props) => {
-  const [selected, setSelected] = useState('')
-  return <TierSelector {...props} onValueChange={setSelected} selectedOfferId={selected} />
+  const [selected, setSelected] = useState(props.offers[0])
+  return (
+    <TierSelector
+      {...props}
+      onValueChange={(id) => {
+        const offer = props.offers.find((offer) => offer.id === id)
+        if (offer) {
+          setSelected(offer)
+        }
+      }}
+      selectedOffer={selected}
+    />
+  )
 }
 
 const MockedOffers: TierSelectorProps['offers'] = [
