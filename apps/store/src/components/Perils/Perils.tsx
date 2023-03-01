@@ -50,23 +50,23 @@ export const Perils = ({ items }: Props) => {
   )
 }
 
-const PerilsAccordionGrid = styled.div(() => ({
+const PerilsAccordionGrid = styled.div({
   display: 'grid',
   gap: theme.space.xxs,
   gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
   [mq.md]: {
     columnGap: theme.space.md,
   },
-}))
+})
 
-const PerilColumnFlex = styled.div(() => ({
+const PerilColumnFlex = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.xxs,
   [mq.md]: {
     gap: theme.space.xs,
   },
-}))
+})
 
 const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
   const { title, description, covered, colorCode } = peril

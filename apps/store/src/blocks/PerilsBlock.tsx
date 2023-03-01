@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { HeadingLabel, Space, theme, mq } from 'ui'
+import { HeadingLabel, Space } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Perils } from '@/components/Perils/Perils'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -27,21 +27,15 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
   }, [productData, selectedVariant])
 
   return (
-    <Wrapper {...storyblokEditable(blok)}>
-      <Space y={1}>
-        {blok.heading && <HeadingLabel>{blok.heading}</HeadingLabel>}
-        <Perils items={items} />
-      </Space>
-    </Wrapper>
+    <GridLayout.Root {...storyblokEditable(blok)}>
+      <GridLayout.Content width="1">
+        <Space y={1}>
+          {blok.heading && <HeadingLabel>{blok.heading}</HeadingLabel>}
+          <Perils items={items} />
+        </Space>
+      </GridLayout.Content>
+    </GridLayout.Root>
   )
 }
 
 PerilsBlock.blockName = 'perils'
-
-const Wrapper = styled.div({
-  paddingInline: theme.space.md,
-
-  [mq.lg]: {
-    paddingInline: theme.space.lg,
-  },
-})
