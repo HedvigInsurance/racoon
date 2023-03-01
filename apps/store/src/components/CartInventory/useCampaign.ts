@@ -8,6 +8,9 @@ type Params = {
 export const useRedeemCampaign = ({ cartId }: Params) => {
   const [redeemCampaign, result] = useRedeemCampaignMutation({
     onError: () => {}, // Handled via errorMessage
+    // TODO: this is a workaround for getting shop session to propagate
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
   })
   const errorMessage = useErrorMessage(result.error)
 
