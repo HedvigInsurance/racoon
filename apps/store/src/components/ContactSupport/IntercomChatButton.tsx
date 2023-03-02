@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useIntercom } from 'react-use-intercom'
 import { Flags } from '@/services/Flags/Flags'
-
 const IntercomProvider = dynamic(() =>
   import('react-use-intercom').then((mod) => mod.IntercomProvider),
 )
@@ -25,7 +24,7 @@ const WithIntercom = ({ children }: Props) => {
     }
   }, [hide, show])
 
-  return <div onClick={isOpen ? hide : show}>{children}</div>
+  return <IntercomButton onClick={isOpen ? hide : show}>{children}</IntercomButton>
 }
 
 export const IntercomChatButton = ({ children }: Props) => {
@@ -38,17 +37,15 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  if (!appId || !INTERCOM_ENABLED) return <>{children}</>
+  // if (!appId || !INTERCOM_ENABLED) return <>{children}</>
 
   if (!isLoaded)
     return <IntercomButton onClick={() => setIsLoaded(true)}>{children}</IntercomButton>
 
   return (
-    <IntercomButton>
-      <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
-        <WithIntercom>{children}</WithIntercom>
-      </IntercomProvider>
-    </IntercomButton>
+    <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
+      <WithIntercom>{children}</WithIntercom>
+    </IntercomProvider>
   )
 }
 
