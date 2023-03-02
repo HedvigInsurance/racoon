@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import dynamic from 'next/dynamic'
 import { Fragment, useEffect, useState } from 'react'
 import { useIntercom } from 'react-use-intercom'
-import { Flags } from '@/services/Flags/Flags'
+// import { Flags } from '@/services/Flags/Flags'
 
 const IntercomProvider = dynamic(() =>
   import('react-use-intercom').then((mod) => mod.IntercomProvider),
@@ -11,7 +11,7 @@ const IntercomProvider = dynamic(() =>
 
 // const ONE_SECOND = 2000
 
-const INTERCOM_ENABLED = Flags.getFeature('INTERCOM')
+// const INTERCOM_ENABLED = Flags.getFeature('INTERCOM')
 
 type Props = {
   children: React.ReactNode
