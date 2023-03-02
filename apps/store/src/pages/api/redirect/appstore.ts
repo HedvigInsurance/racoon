@@ -12,18 +12,22 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
+  console.debug('QR code | Initiating redirect to AppStore')
   const cookieLocale = getCookie(LOCALE_COOKIE_KEY, { req, res })
   const acceptLocale = parseAcceptLanguage(req.headers['accept-language'] ?? '')
   const fallbackLocale = toRoutingLocale(acceptLocale ?? FALLBACK_LOCALE)
   const locale = isRoutingLocale(cookieLocale) ? cookieLocale : fallbackLocale
+  console.info(`QR code | Redirect to AppStore in ${locale}`)
 
   const platform = getMobilePlatform(req.headers['user-agent'] ?? '')
 
   if (platform) {
+    console.info(`QR code | Redirect to ${platform} app store`)
     const destination = appStoreLinks[platform](locale)
     return res.redirect(destination.toString())
   }
 
+  console.info(`QR code | Redirect to home page: ${req.headers['user-agent']}`)
   const destination = new URL(ORIGIN_URL)
   destination.pathname = PageLink.home({ locale })
   return res.redirect(destination.toString())
