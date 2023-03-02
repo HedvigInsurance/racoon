@@ -1,14 +1,9 @@
 import { getCookie } from 'cookies-next'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { LOCALE_COOKIE_KEY, FALLBACK_LOCALE } from '@/utils/l10n/locales'
-import {
-  isIsoLocale,
-  isRoutingLocale,
-  toIsoLocale,
-  toRoutingLocale,
-} from '@/utils/l10n/localeUtils'
-import type { RoutingLocale } from '@/utils/l10n/types'
+import { isIsoLocale, isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
@@ -23,8 +18,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
 
   if (platform) {
     console.info(`QR code | Redirect to ${platform} app store`)
-    const destination = appStoreLinks[platform](locale)
-    return res.redirect(destination.toString())
+    return res.redirect(getAppStoreLink(platform, locale).toString())
   }
 
   console.info(`QR code | Redirect to home page: ${req.headers['user-agent']}`)
@@ -43,30 +37,4 @@ const parseAcceptLanguage = (acceptLanguage: string) => {
   const sortedLanguages = languages.sort((a, b) => b.weight - a.weight)
   const locales = sortedLanguages.map((language) => language.locale)
   return locales.find(isIsoLocale)
-}
-
-const appStoreLinks = {
-  apple: (locale: RoutingLocale) => {
-    const url = new URL('https://apps.apple.com/se/app/id1303668531')
-    url.searchParams.set('l', toAppleLocale(locale))
-    return url
-  },
-  google: (locale: RoutingLocale) => {
-    const url = new URL('https://play.google.com/store/apps/details?id=com.hedvig.app')
-    url.searchParams.set('hl', toIsoLocale(locale))
-    return url
-  },
-} as const
-
-const toAppleLocale = (locale: RoutingLocale) => {
-  switch (locale) {
-    case 'se':
-      return 'se'
-    case 'no':
-      return 'no'
-    case 'dk':
-      return 'dk'
-    default:
-      return 'en'
-  }
 }
