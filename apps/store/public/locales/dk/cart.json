@@ -5,7 +5,7 @@
   "CHECKOUT_PRICE_TOTAL": "Total",
   "DETAILS_SHEET_DISMISS_BUTTON": "Færdig",
   "DISCOUNT_DURATION_EXPLANATION_one": "I {{count}} måned, derefter {{monthlyPrice}}",
-  "DISCOUNT_DURATION_EXPLANATION_other": "I {{count}} måneder, derefter {{monthlyprice}}",
+  "DISCOUNT_DURATION_EXPLANATION_other": "i {{count}} måneder, derefter {{monthlyprice}}",
   "DISCOUNT_STATE_FREE_MONTHS_one": "Gratis i {{count}} måned",
   "DISCOUNT_STATE_FREE_MONTHS_other": "Gratis i {{count}} måneder",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabat",
