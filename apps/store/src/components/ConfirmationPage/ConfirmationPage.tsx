@@ -29,7 +29,13 @@ export const ConfirmationPage = (props: Props) => {
       <AppStoreBadge type={platform} locale={locale} />
     </Link>
   ) : (
-    <Image src={qrCodeImage} alt={t('APP_DOWNLOAD_QRCODE_ALT')} width={128} height={128} />
+    <Image
+      src={qrCodeImage}
+      alt={t('APP_DOWNLOAD_QRCODE_ALT')}
+      width={128}
+      height={128}
+      priority={true}
+    />
   )
 
   const checklistItems = story.content.checklist.split('\n')
