@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { motion, Transition } from 'framer-motion'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { HedvigLogo, mq, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
@@ -43,6 +44,7 @@ type HeaderProps = {
 export const Header = (props: HeaderProps) => {
   const { children, opaque = false, overlay = false, static: staticPosition = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
+  const { t } = useTranslation('common')
 
   const defaultPosition = overlay ? 'absolute' : 'relative'
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
@@ -62,7 +64,7 @@ export const Header = (props: HeaderProps) => {
         animate={animate}
         transition={TRANSITION}
       >
-        <LogoWrapper href={PageLink.home()}>
+        <LogoWrapper href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
           <HedvigLogo />
         </LogoWrapper>
         <ContentWrapper>
