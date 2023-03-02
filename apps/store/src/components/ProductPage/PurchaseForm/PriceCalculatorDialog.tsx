@@ -20,7 +20,7 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
       <DialogContent frostedOverlay>
         <Dialog.Close asChild>
           <IconButton>
-            <CrossIcon size="1.25rem" />
+            <CrossIcon size="1.625rem" />
           </IconButton>
         </Dialog.Close>
         <Space y={4}>
