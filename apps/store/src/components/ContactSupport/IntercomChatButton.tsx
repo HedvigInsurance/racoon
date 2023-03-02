@@ -1,10 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useEffect } from 'react'
-import { IntercomProvider, useIntercom } from 'react-use-intercom'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { useIntercom } from 'react-use-intercom'
 import { Flags } from '@/services/Flags/Flags'
-
-const ONE_SECOND = 1000
+const IntercomProvider = dynamic(() =>
+  import('react-use-intercom').then((mod) => mod.IntercomProvider),
+)
 
 const INTERCOM_ENABLED = Flags.getFeature('INTERCOM')
 
@@ -12,18 +14,19 @@ type Props = {
   children: React.ReactNode
 }
 
-const IntercomButton = styled.button({
-  cursor: 'pointer',
-})
-
 const WithIntercom = ({ children }: Props) => {
   const { show } = useIntercom()
+
+  useEffect(() => {
+    show()
+  }, [show])
 
   return <IntercomButton onClick={show}>{children}</IntercomButton>
 }
 
 export const IntercomChatButton = ({ children }: Props) => {
   const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     if (!appId) {
@@ -31,20 +34,18 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  const withoutIntercom = <>{children}</>
+  if (!appId || !INTERCOM_ENABLED) return <>{children}</>
 
-  if (!appId) return withoutIntercom
-
-  if (!INTERCOM_ENABLED) return withoutIntercom
+  if (!isLoaded)
+    return <IntercomButton onClick={() => setIsLoaded(true)}>{children}</IntercomButton>
 
   return (
-    <IntercomProvider
-      appId={appId}
-      autoBoot
-      autoBootProps={{ hideDefaultLauncher: true }}
-      initializeDelay={ONE_SECOND}
-    >
+    <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
       <WithIntercom>{children}</WithIntercom>
     </IntercomProvider>
   )
 }
+
+const IntercomButton = styled.button({
+  cursor: 'pointer',
+})
