@@ -4219,9 +4219,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-checkbox@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@radix-ui/react-checkbox@npm:1.0.1"
+"@radix-ui/react-checkbox@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@radix-ui/react-checkbox@npm:1.0.2"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@radix-ui/primitive": 1.0.0
@@ -4235,7 +4235,7 @@ __metadata:
   peerDependencies:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
-  checksum: f197909a3a2db85c6d8c7de96dcdafb99e97c0b9696aa47a224eae82ba993d6d0eb9238e6096c5447e7909e9c91cdd9626825433fe943e0bb09a05dd69f0e8d9
+  checksum: a3b7efa2579c54e217e1460bf07858ad4019788918767e1075007f32bf3fef259a2ef6c277904c574ebdf99481ddad8bd0296964342be9c5b93d0ccf5720cc1e
   languageName: node
   linkType: hard
 
@@ -22809,7 +22809,7 @@ __metadata:
     "@emotion/jest": 11.10.5
     "@emotion/react": 11.10.6
     "@emotion/styled": 11.10.6
-    "@radix-ui/react-checkbox": 1.0.1
+    "@radix-ui/react-checkbox": 1.0.2
     "@radix-ui/react-radio-group": 1.1.1
     "@storybook/addon-actions": 6.5.16
     "@storybook/addon-essentials": 6.5.16
