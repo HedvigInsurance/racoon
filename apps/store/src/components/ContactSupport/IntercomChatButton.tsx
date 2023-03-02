@@ -23,7 +23,7 @@ const WithIntercom = ({ children }: Props) => {
     return () => {
       hide()
     }
-  }, [])
+  }, [hide, show])
 
   return <div onClick={isOpen ? hide : show}>{children}</div>
 }
@@ -38,21 +38,16 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  const withoutIntercom = <>{children}</>
+  if (!appId || !INTERCOM_ENABLED) return children
 
-  if (!appId) return withoutIntercom
-
-  if (!INTERCOM_ENABLED) return withoutIntercom
+  if (!isLoaded)
+    return <IntercomButton onClick={() => setIsLoaded(true)}>{children}</IntercomButton>
 
   return (
-    <IntercomButton onClick={() => setIsLoaded(true)}>
-      {isLoaded ? (
-        <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
-          <WithIntercom>{children}</WithIntercom>
-        </IntercomProvider>
-      ) : (
-        children
-      )}
+    <IntercomButton>
+      <IntercomProvider appId={appId} autoBoot autoBootProps={{ hideDefaultLauncher: true }}>
+        <WithIntercom>{children}</WithIntercom>
+      </IntercomProvider>
     </IntercomButton>
   )
 }
