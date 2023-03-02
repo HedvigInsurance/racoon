@@ -1,5 +1,7 @@
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import {
   getCrossOut,
   useGetDiscountDurationExplanation,
@@ -32,6 +34,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+  const { t } = useTranslation('cart')
 
   if (!shopSession) return null
 
@@ -65,14 +68,19 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
   }
 
   return (
-    <CartPage
-      cartId={shopSession.cart.id}
-      entries={entries}
-      campaigns={campaigns}
-      campaignsEnabled={shopSession.cart.campaignsEnabled}
-      cost={cost}
-      {...props}
-    />
+    <>
+      <Head>
+        <title>{`${t('CART_PAGE_HEADING')} | Hedvig`}</title>
+      </Head>
+      <CartPage
+        cartId={shopSession.cart.id}
+        entries={entries}
+        campaigns={campaigns}
+        campaignsEnabled={shopSession.cart.campaignsEnabled}
+        cost={cost}
+        {...props}
+      />
+    </>
   )
 }
 
