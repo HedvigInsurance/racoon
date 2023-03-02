@@ -19,6 +19,7 @@
   "SIGN_BUTTON_one": "Sign insurance",
   "SIGN_BUTTON_other": "Sign insurances",
   "SIGN_DISCLAIMER": "By proceeding you confirm that you have read and understood the terms and conditions, and that you approve that Hedvig handles your personal information.",
+  "SUCCESS_ANIMATION_MESSAGE": "Welcome to ◰",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Approve cancellation ↗︎",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Approve cancellation latest {{date}}.",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING": "Awaiting approval",

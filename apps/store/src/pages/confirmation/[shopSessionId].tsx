@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
-import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation'
+import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import {
   fetchGlobalProductMetadata,
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
