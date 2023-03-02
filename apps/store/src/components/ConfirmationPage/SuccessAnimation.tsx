@@ -64,4 +64,13 @@ const VideoWrapper = styled(motion.div)({
   placeItems: 'center',
 })
 
-const StyledVideo = styled.video({ width: '100%' })
+const StyledVideo = styled.video({
+  width: '100%',
+  maxWidth: 540,
+  marginInline: 'auto',
+
+  // Remove gray border on iOS: https://stackoverflow.com/questions/52508598/html5-video-element-on-iphone-has-border
+  webkitMaskImage: '-webkit-radial-gradient(white, black)',
+  webkitBackfaceVisibility: 'hidden',
+  mozBackfaceVisibility: 'hidden',
+})
