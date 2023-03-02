@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useReducer, useRef } from 'react'
 import { theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
@@ -13,36 +13,11 @@ type Props = {
 
 export const SuccessAnimation = ({ children }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [showVideo, setShowVideo] = useState(true)
-  const handleEnded = () => setShowVideo(false)
+  const { state, animate, complete } = usePageState({ videoRef })
 
-  const playVideo = async () => {
-    try {
-      await videoRef.current?.play()
-    } catch (error) {
-      console.error("Couldn't play video", error)
-      datadogLogs.logger.info("Couldn't play video", { error })
-      setShowVideo(false)
-    }
-  }
-
-  return (
-    <AnimatePresence initial={false}>
-      {showVideo ? (
-        <VideoWrapper exit={{ opacity: 0 }}>
-          <StyledVideo
-            ref={videoRef}
-            muted={true}
-            autoPlay={true}
-            playsInline={true}
-            preload="auto"
-            onEnded={handleEnded}
-            onCanPlayThrough={playVideo}
-          >
-            <source src={SUCCESS_ANIMATION_URL} type="video/mp4" />
-          </StyledVideo>
-        </VideoWrapper>
-      ) : (
+  if (state === 'complete') {
+    return (
+      <AnimatePresence>
         <motion.div
           initial={{ opacity: 0, y: 42 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +25,25 @@ export const SuccessAnimation = ({ children }: Props) => {
         >
           {children}
         </motion.div>
-      )}
+      </AnimatePresence>
+    )
+  }
+
+  return (
+    <AnimatePresence initial={false}>
+      <VideoWrapper exit={{ opacity: 0 }}>
+        <StyledVideo
+          ref={videoRef}
+          muted={true}
+          autoPlay={true}
+          playsInline={true}
+          preload="auto"
+          onEnded={complete}
+          onCanPlayThrough={animate}
+        >
+          <source src={SUCCESS_ANIMATION_URL} type="video/mp4" />
+        </StyledVideo>
+      </VideoWrapper>
     </AnimatePresence>
   )
 }
@@ -74,3 +67,48 @@ const StyledVideo = styled.video({
   webkitBackfaceVisibility: 'hidden',
   mozBackfaceVisibility: 'hidden',
 })
+
+type State = 'idle' | 'animation' | 'complete'
+
+enum ActionType {
+  'ANIMATE',
+  'COMPLETE',
+}
+
+type Action = { type: ActionType }
+
+const reducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case ActionType.ANIMATE:
+      return 'animation'
+
+    case ActionType.COMPLETE:
+      return 'complete'
+
+    default:
+      return state
+  }
+}
+
+type UsePageStateParams = {
+  videoRef: React.RefObject<HTMLVideoElement>
+}
+
+const usePageState = ({ videoRef }: UsePageStateParams) => {
+  const [state, dispatch] = useReducer(reducer, 'idle')
+
+  const animate = async () => {
+    try {
+      await videoRef.current?.play()
+      dispatch({ type: ActionType.ANIMATE })
+    } catch (error) {
+      console.error("Couldn't play video", error)
+      datadogLogs.logger.info("Couldn't play video", { error })
+      dispatch({ type: ActionType.COMPLETE })
+    }
+  }
+
+  const complete = () => dispatch({ type: ActionType.COMPLETE })
+
+  return { state, animate, complete }
+}
