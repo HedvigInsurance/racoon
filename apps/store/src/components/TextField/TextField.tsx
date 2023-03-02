@@ -1,7 +1,14 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, useRef, useState } from 'react'
+import {
+  ChangeEventHandler,
+  InputHTMLAttributes,
+  MouseEventHandler,
+  useId,
+  useRef,
+  useState,
+} from 'react'
 import { CrossIconSmall, LockIcon, Space, Text, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -21,9 +28,11 @@ type Props = BaseInputProps & {
 
 export const TextField = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { label, variant = 'large', suffix, warning = false, message, ...inputProps } = props
+  const { label, variant = 'large', suffix, warning = false, message, id, ...inputProps } = props
   const [value, setValue] = useState(props.defaultValue || '')
   const { highlight, animationProps } = useHighlightAnimation()
+  const generatedId = useId()
+  const identifier = id || generatedId
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value
@@ -56,16 +65,18 @@ export const TextField = (props: Props) => {
         data-warning={warning}
         onClick={handleClickWrapper}
       >
-        <Label htmlFor={inputProps.id} data-disabled={inputProps.disabled} data-variant={variant}>
+        <Label htmlFor={identifier} data-disabled={inputProps.disabled} data-variant={variant}>
           {label}
         </Label>
         <InputWrapper>
           <Input
             {...inputProps}
+            id={identifier}
             ref={inputRef}
             onKeyDown={highlight}
             onChange={handleChange}
             value={inputValue}
+            aria-label={label}
           />
           {suffix && inputValue && (
             <Text as="span" size={variant === 'large' ? 'xl' : 'lg'} color="textSecondary">
