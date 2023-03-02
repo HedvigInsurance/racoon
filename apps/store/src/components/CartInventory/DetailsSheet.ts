@@ -4,7 +4,7 @@ import { mq, Space, theme } from 'ui'
 export const Root = styled(Space)({
   paddingTop: theme.space.md,
   // Clear dialog footer
-  paddingBottom: theme.space[9],
+  paddingBottom: theme.space[10],
 
   [mq.lg]: {
     paddingTop: theme.space.xxxl,
