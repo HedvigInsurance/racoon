@@ -73,7 +73,10 @@ const InnerWrapper = styled.div({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: `${theme.space.xl} 1.25rem ${theme.space.sm} ${theme.space.md}`,
+  paddingTop: theme.space.xl,
+  paddingRight: '1.25rem',
+  paddingBottom: theme.space.sm,
+  paddingLeft: theme.space.md,
 })
 
 const Label = styled.label({
