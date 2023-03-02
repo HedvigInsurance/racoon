@@ -37,7 +37,7 @@ export const IntercomChatButton = ({ children }: Props) => {
     }
   }, [appId])
 
-  // if (!appId || !INTERCOM_ENABLED) return <>{children}</>
+  if (!appId || !INTERCOM_ENABLED) return <>{children}</>
 
   if (!isLoaded)
     return <IntercomButton onClick={() => setIsLoaded(true)}>{children}</IntercomButton>
