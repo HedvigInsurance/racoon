@@ -15,16 +15,13 @@ type Props = {
 }
 
 const WithIntercom = ({ children }: Props) => {
-  const { show, hide, isOpen } = useIntercom()
+  const { show } = useIntercom()
 
   useEffect(() => {
     show()
-    return () => {
-      hide()
-    }
-  }, [hide, show])
+  }, [show])
 
-  return <IntercomButton onClick={isOpen ? hide : show}>{children}</IntercomButton>
+  return <IntercomButton onClick={show}>{children}</IntercomButton>
 }
 
 export const IntercomChatButton = ({ children }: Props) => {
