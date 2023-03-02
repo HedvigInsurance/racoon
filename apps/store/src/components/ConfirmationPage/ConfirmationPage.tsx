@@ -4,12 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
+import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
-import { appStoreLinks } from '@/utils/appStoreLinks'
+import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { AppStoreBadge } from '../AppStoreBadge/AppStoreBadge'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 import qrCodeImage from './download-app-qrcode.png'
@@ -21,11 +21,11 @@ type Props = ConfirmationPageProps & {
 
 export const ConfirmationPage = (props: Props) => {
   const { t } = useTranslation('checkout')
-  const { locale } = useCurrentLocale()
+  const { locale, routingLocale } = useCurrentLocale()
   const { platform, cart, story } = props
 
   const appDownloadAction = platform ? (
-    <Link href={appStoreLinks[platform]} passHref>
+    <Link href={getAppStoreLink(platform, routingLocale)} passHref>
       <AppStoreBadge type={platform} locale={locale} />
     </Link>
   ) : (
