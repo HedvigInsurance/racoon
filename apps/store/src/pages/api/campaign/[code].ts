@@ -38,9 +38,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   nextUrl.searchParams.delete(QueryParam.Next)
   nextUrl.pathname = nextQueryParam
 
-  const locale = getUrlLocale(nextUrl.toString())
-  fallbackRedirect[1] = PageLink.home({ locale })
+  const redirectStatus = 307
+  const redirectUrl = nextUrl.toString()
 
+  const locale = getUrlLocale(redirectUrl)
   const { countryCode } = getCountryByLocale(locale)
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
@@ -51,13 +52,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     shopSession = await shopSessionService.getOrCreate({ countryCode })
   } catch (error) {
     console.error('Error creating shop session', error)
-    return res.redirect(...fallbackRedirect)
+    return res.redirect(redirectStatus, redirectUrl)
   }
 
   const campaignCode = query[QueryParam.Code]
   if (typeof campaignCode !== 'string') {
     console.error('Missing campaign code query parameter: ', url)
-    return res.redirect(...fallbackRedirect)
+    return res.redirect(redirectStatus, redirectUrl)
   }
 
   try {
@@ -71,16 +72,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!response.data?.cartRedeemCampaign.cart) {
       const message = `Invalid campaign code: ${campaignCode}`
       console.warn(message, response.data?.cartRedeemCampaign.userError?.message)
-      return res.redirect(...fallbackRedirect)
     }
   } catch (error) {
-    console.error(`Unable to redeem campaign: ${campaignCode}`, error)
-    return res.redirect(...fallbackRedirect)
+    console.warn(`Unable to redeem campaign: ${campaignCode}`, error)
   }
 
-  const destination = nextUrl.toString()
-  console.log(`Re-directing to destination: ${destination}`)
-  return res.redirect(307, destination)
+  console.log(`Re-directing to destination: ${redirectUrl}`)
+  return res.redirect(redirectStatus, redirectUrl)
 }
 
 export default handler
