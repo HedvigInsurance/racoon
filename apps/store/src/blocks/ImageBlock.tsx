@@ -1,9 +1,9 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import NextImage from 'next/image'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -31,7 +31,6 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
         aspectRatioPortrait={blok.aspectRatioPortrait}
       >
         <Image
-          style={{ objectFit: 'cover' }}
           src={blok.image.filename}
           roundedCorners={!blok.fullBleed}
           alt={blok.image.alt}
@@ -69,8 +68,9 @@ const ImageWrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperPr
 
 type ImageProps = { roundedCorners: boolean }
 
-const Image = styled(NextImage, { shouldForwardProp: isPropValid })<ImageProps>(
+const Image = styled(ImageWithPlaceholder, { shouldForwardProp: isPropValid })<ImageProps>(
   ({ roundedCorners }) => ({
+    objectFit: 'cover',
     ...(roundedCorners && {
       borderRadius: theme.radius.md,
       [mq.lg]: {

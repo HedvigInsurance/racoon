@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import Image from 'next/image'
 import { theme } from 'ui'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -59,7 +59,7 @@ const HeroImageWrapper = styled.div({
   zIndex: '-1',
 })
 
-const HeroImage = styled(Image)({
+const HeroImage = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
   objectPosition: 'center',
 })

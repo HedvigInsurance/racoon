@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -29,7 +29,7 @@ export const ConfirmationPage = (props: Props) => {
       <AppStoreBadge type={platform} locale={locale} />
     </Link>
   ) : (
-    <Image
+    <ImageWithPlaceholder
       src={qrCodeImage}
       alt={t('APP_DOWNLOAD_QRCODE_ALT')}
       width={128}

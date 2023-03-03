@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { default as NextImage } from 'next/image'
 import { Space, theme } from 'ui'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 
 const PRODUCT_CARD_IMAGE_WIDTH_SMALL = '20.43rem'
 const PRODUCT_CARD_IMAGE_HEIGHT_SMALL = '25rem'
@@ -47,7 +47,7 @@ const ImageWrapper = styled.div(() => ({
   width: '100%',
 }))
 
-const Image = styled(NextImage)({
+const Image = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
 })
 
