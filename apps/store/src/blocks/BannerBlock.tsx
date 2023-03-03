@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { default as NextImage } from 'next/image'
 import { Heading, Text, mq, theme } from 'ui'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 type ImageSize = {
@@ -65,7 +65,7 @@ const Wrapper = styled('div')<ImageSize>(({ aspectRatioLandscape, aspectRatioPor
   },
 }))
 
-const Image = styled(NextImage)({
+const Image = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
 })
 

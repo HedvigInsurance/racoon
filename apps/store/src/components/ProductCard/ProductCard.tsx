@@ -1,11 +1,11 @@
 import { UrlObject } from 'url'
 import styled from '@emotion/styled'
-import { default as NextImage } from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { mq, Space, theme } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 
 type ImageProps = {
@@ -90,7 +90,7 @@ const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
   },
 }))
 
-const Image = styled(NextImage)({
+const Image = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
   borderRadius: theme.radius.md,
 
