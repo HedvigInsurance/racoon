@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -14,7 +15,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { ButtonNextLink } from '../ButtonNextLink'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
@@ -41,36 +41,35 @@ export const CartPage = (props: CartPageProps) => {
     <EmptyState>
       <Space y={1.5}>
         <HorizontalLine />
-        {campaignsEnabled && (
+        {cartId && campaignsEnabled === true && (
           <>
-            <CampaignsSection cartId={cartId} campaigns={campaigns} />
+            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
             <HorizontalLine />
           </>
         )}
-        <CostSummary {...cost} campaigns={campaigns} />
+        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
       </Space>
     </EmptyState>
   )
 
-  if (entries.length > 0) {
+  if (entries && entries.length > 0) {
     body = (
       <Space y={1.5}>
         <Heading mb="2.5rem" as={'h2'} align="center">
           {t('CART_PAGE_HEADING')}
         </Heading>
         <CartEntryList>
-          {entries.map((item) => (
-            <CartEntryItem key={item.offerId} cartId={cartId} {...item} />
-          ))}
+          {cartId &&
+            entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
-        {campaignsEnabled && (
+        {cartId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
             <HorizontalLine />
-            <CampaignsSection cartId={cartId} campaigns={campaigns} />
+            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
             <HorizontalLine />
           </Space>
         )}
-        <CostSummary {...cost} campaigns={campaigns} />
+        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
         {shopSession && (
           <ButtonNextLink
             href={PageLink.checkout()}

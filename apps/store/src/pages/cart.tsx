@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import type { GetStaticProps, NextPageWithLayout } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
@@ -14,32 +14,21 @@ import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
-import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
+import { initializeApollo } from '@/services/apollo/client'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
-import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { getShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import {
-  getGlobalStory,
-  StoryblokPreviewData,
-  StoryblokQueryParams,
-} from '@/services/storyblok/storyblok'
+import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { convertToDate } from '@/utils/date'
-import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = { [SHOP_SESSION_PROP_NAME]: string }
-
-const NextCartPage: NextPageWithLayout<Props> = (props) => {
+const NextCartPage: NextPageWithLayout = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
   const { t } = useTranslation('cart')
 
-  if (!shopSession) return null
-
-  const entries = shopSession.cart.entries.map((item) => ({
+  const entries = shopSession?.cart.entries.map((item) => ({
     offerId: item.id,
     title: item.variant.product.displayNameFull,
     cost: item.price,
@@ -58,7 +47,7 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     data: item.priceIntentData,
   }))
 
-  const campaigns = shopSession.cart.redeemedCampaigns.map((item) => ({
+  const campaigns = shopSession?.cart.redeemedCampaigns.map((item) => ({
     id: item.id,
     code: item.code,
     discountExplanation: getDiscountExplanation(item.discount),
@@ -68,10 +57,12 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
     ),
   }))
 
-  const cost = {
-    total: getTotal(shopSession),
-    crossOut: getCrossOut(shopSession),
-  }
+  const cost = shopSession
+    ? {
+        total: getTotal(shopSession),
+        crossOut: getCrossOut(shopSession),
+      }
+    : undefined
 
   return (
     <>
@@ -79,10 +70,10 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
         <title>{`${t('CART_PAGE_HEADING')} | Hedvig`}</title>
       </Head>
       <CartPage
-        cartId={shopSession.cart.id}
+        cartId={shopSession?.cart.id}
         entries={entries}
         campaigns={campaigns}
-        campaignsEnabled={shopSession.cart.campaignsEnabled}
+        campaignsEnabled={shopSession?.cart.campaignsEnabled}
         cost={cost}
         {...props}
       />
@@ -92,32 +83,25 @@ const NextCartPage: NextPageWithLayout<Props> = (props) => {
 
 NextCartPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
-export const getServerSideProps: GetServerSideProps<
-  Props,
-  StoryblokQueryParams,
-  StoryblokPreviewData
-> = async (context) => {
-  const { req, res, locale, previewData: { version } = {} } = context
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
-
-  const { countryCode } = getCountryByLocale(locale)
-
-  const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  const [shopSession, translations, globalStory, productMetadata] = await Promise.all([
-    getShopSessionServerSide({ apolloClient, countryCode, req, res }),
+  const apolloClient = initializeApollo({ locale })
+  const [globalStory, translations, productMetadata] = await Promise.all([
+    getGlobalStory({ locale }),
     serverSideTranslations(locale),
-    getGlobalStory({ version, locale }),
     fetchGlobalProductMetadata({ apolloClient }),
   ])
 
-  return addApolloState(apolloClient, {
+  const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
+  return {
     props: {
       ...translations,
-      [SHOP_SESSION_PROP_NAME]: shopSession.id,
       [GLOBAL_STORY_PROP_NAME]: globalStory,
       [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
     },
-  })
+    revalidate,
+  }
 }
 
 export default NextCartPage
