@@ -23,6 +23,7 @@ const scriptSrc = [
   // Google
   'https://*.googletagmanager.com',
   'https://*.google-analytics.com',
+  'https://translate.googleapis.com',
 
   // GTM injected scripts
   ...gtmInjectedOrigins,
@@ -95,6 +96,9 @@ const connectSrc = [
   'https://vercel.com',
   // Google
   'https://www.gstatic.com',
+  // Facebook
+  'https://connect.facebook.net',
+  // SnapChat
 
   ...gtmInjectedOrigins,
 
