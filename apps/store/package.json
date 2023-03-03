@@ -22,7 +22,7 @@
   "dependencies": {
     "@adyen/adyen-web": "5.34.0",
     "@apollo/client": "3.7.9",
-    "@datadog/browser-logs": "4.34.2",
+    "@datadog/browser-logs": "4.34.3",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
     "@lottiefiles/react-lottie-player": "3.5.2",
