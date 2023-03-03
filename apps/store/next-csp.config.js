@@ -98,7 +98,6 @@ const connectSrc = [
   'https://www.gstatic.com',
   // Facebook
   'https://connect.facebook.net',
-  // SnapChat
 
   ...gtmInjectedOrigins,
 
