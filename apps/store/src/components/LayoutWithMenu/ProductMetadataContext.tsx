@@ -1,14 +1,13 @@
-import { createContext, useContext } from 'react'
+import { atom, useAtomValue } from 'jotai'
+import { useHydrateAtoms } from 'jotai/utils'
 import { GlobalProductMetadata } from './fetchProductMetadata'
 
-const ProductMetadataContext = createContext<GlobalProductMetadata | null>(null)
+const productsAtom = atom<GlobalProductMetadata | null>(null)
 
 export const useProductMetadata = () => {
-  const context = useContext(ProductMetadataContext)
-  if (context === undefined) {
-    throw new Error('useGlobalProductMetadata must be used within a GlobalProductMetadataProvider')
-  }
-  return context
+  return useAtomValue(productsAtom)
 }
 
-export const ProductMetadataProvider = ProductMetadataContext.Provider
+export const useHydrateProductMetadata = (metadata: GlobalProductMetadata) => {
+  useHydrateAtoms([[productsAtom, metadata] as const])
+}

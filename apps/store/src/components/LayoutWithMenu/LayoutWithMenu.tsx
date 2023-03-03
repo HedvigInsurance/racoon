@@ -6,7 +6,7 @@ import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { GlobalProductMetadata, GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
-import { ProductMetadataProvider } from './ProductMetadataContext'
+import { useHydrateProductMetadata } from './ProductMetadataContext'
 
 const Wrapper = styled.div({
   minHeight: '100vh',
@@ -24,39 +24,34 @@ type LayoutWithMenuProps = {
 }
 
 export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenuProps) => {
-  const {
-    story,
-    globalStory,
-    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: globalProductMetadata,
-    className,
-  } = children.props
+  const { story, globalStory, className } = children.props
+
+  useHydrateProductMetadata(children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
+  const handleLocaleChange = useChangeLocale(story)
+
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
 
-  const handleLocaleChange = useChangeLocale(story)
-
   return (
-    <ProductMetadataProvider value={globalProductMetadata}>
-      <Wrapper className={className}>
-        {!(story && story.content.hideMenu) &&
-          headerBlock?.map((nestedBlock) => (
-            <HeaderBlock
-              key={nestedBlock._uid}
-              blok={nestedBlock}
-              overlay={story?.content.overlayMenu ?? overlayMenu}
-              static={story && isProductStory(story)}
-            />
-          ))}
-        {children}
-        {!(story && story.content.hideFooter) &&
-          footerBlock?.map((nestedBlock) => (
-            <FooterBlock
-              key={nestedBlock._uid}
-              blok={nestedBlock}
-              onLocaleChange={handleLocaleChange}
-            />
-          ))}
-      </Wrapper>
-    </ProductMetadataProvider>
+    <Wrapper className={className}>
+      {!(story && story.content.hideMenu) &&
+        headerBlock?.map((nestedBlock) => (
+          <HeaderBlock
+            key={nestedBlock._uid}
+            blok={nestedBlock}
+            overlay={story?.content.overlayMenu ?? overlayMenu}
+            static={story && isProductStory(story)}
+          />
+        ))}
+      {children}
+      {!(story && story.content.hideFooter) &&
+        footerBlock?.map((nestedBlock) => (
+          <FooterBlock
+            key={nestedBlock._uid}
+            blok={nestedBlock}
+            onLocaleChange={handleLocaleChange}
+          />
+        ))}
+    </Wrapper>
   )
 }
