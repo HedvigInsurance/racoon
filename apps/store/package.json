@@ -57,7 +57,7 @@
     "zen-observable-ts": "1.2.5"
   },
   "devDependencies": {
-    "@babel/core": "7.20.12",
+    "@babel/core": "7.21.0",
     "@graphql-codegen/cli": "3.2.1",
     "@graphql-codegen/typescript": "3.0.1",
     "@graphql-codegen/typescript-operations": "3.0.1",
