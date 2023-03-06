@@ -11,7 +11,13 @@ export const fetchJson = async <T extends object>(
   })
   const data = await resp.json()
   if (!resp.ok) {
-    throw new Error(`Error response, status=${resp.status}`, data)
+    throw new ServerError(`Error response, status=${resp.status}`, data)
   }
   return data
+}
+
+export class ServerError extends Error {
+  constructor(message: string, public data: any) {
+    super(message)
+  }
 }
