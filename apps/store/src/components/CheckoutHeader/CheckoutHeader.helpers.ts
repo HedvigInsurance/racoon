@@ -7,6 +7,7 @@ import {
   ExternalInsuranceCancellationOption as CancellationOption,
 } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { CheckoutStep } from './Breadcrumbs'
 
@@ -40,15 +41,22 @@ export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) 
   return steps
 }
 
-export const getCheckoutStepLink = (step: CheckoutStep, shopSession: ShopSession) => {
+type GetCheckoutStepLinkParams = {
+  step: CheckoutStep
+  shopSession: ShopSession
+  locale?: RoutingLocale
+}
+
+export const getCheckoutStepLink = ({ step, shopSession, locale }: GetCheckoutStepLinkParams) => {
   switch (step) {
     case CheckoutStep.Checkout:
-    case CheckoutStep.SwitchingAssistant:
       return PageLink.checkout()
+    case CheckoutStep.SwitchingAssistant:
+      return PageLink.checkoutSwitchingAssistant({ locale, shopSessionId: shopSession.id })
     case CheckoutStep.Payment:
-      return PageLink.checkoutPayment({ shopSessionId: shopSession.id })
+      return PageLink.checkoutPayment({ locale, shopSessionId: shopSession.id })
     case CheckoutStep.Confirmation:
     case CheckoutStep.Done:
-      return PageLink.confirmation({ shopSessionId: shopSession.id })
+      return PageLink.confirmation({ locale, shopSessionId: shopSession.id })
   }
 }
