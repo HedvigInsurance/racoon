@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { mq, Text, theme, useBreakpoint } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
