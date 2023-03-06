@@ -60,10 +60,10 @@ const languageLink = setContext((_, { headers = {}, ...context }) => {
   }
 })
 
+const TIMEOUT_50_SECONDS = 50 * 1000
+const timeoutLink = new ApolloLinkTimeout(TIMEOUT_50_SECONDS)
 const httpLink = createHttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT })
-
-const DEFAULT_TIMEOUT = 50 * 1000
-const timeoutLink = new ApolloLinkTimeout(DEFAULT_TIMEOUT) as unknown as ApolloLink
+const timeoutHttpLink = timeoutLink.concat(httpLink)
 
 const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   const headersLink = setContext(async (_, prevContext) => {
@@ -87,8 +87,7 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
       errorLink,
       headersLink,
       languageLink,
-      timeoutLink,
-      httpLink,
+      timeoutHttpLink,
     ]),
     cache: new InMemoryCache({
       typePolicies: {
