@@ -9,7 +9,9 @@ type PillowProps = {
 
 export const Pillow = ({ alt, src, ...props }: PillowProps) => {
   if (!src) return <FallbackPillow size={props.size} />
-  return <StyledImage {...props} src={src} alt={alt ?? ''} width={208} height={208} />
+  return (
+    <StyledImage {...props} src={src} alt={alt ?? ''} width={208} height={208} decoding="sync" />
+  )
 }
 
 const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => getSize(size))
