@@ -1,5 +1,6 @@
 import { ApolloProvider } from '@apollo/client'
 import { Global, ThemeProvider } from '@emotion/react'
+import { Provider as JotaiProvider } from 'jotai'
 import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
@@ -80,19 +81,21 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
         <ThemeProvider theme={theme}>
-          <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
-            <TrackingProvider value={tracking}>
-              <BankIdContextProvider>
-                <BalancerProvider>
-                  <AppErrorProvider>
-                    <AppErrorDialog />
-                    {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
-                  </AppErrorProvider>
-                </BalancerProvider>
-                <BankIdDialog />
-              </BankIdContextProvider>
-            </TrackingProvider>
-          </ShopSessionProvider>
+          <JotaiProvider>
+            <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
+              <TrackingProvider value={tracking}>
+                <BankIdContextProvider>
+                  <BalancerProvider>
+                    <AppErrorProvider>
+                      <AppErrorDialog />
+                      {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
+                    </AppErrorProvider>
+                  </BalancerProvider>
+                  <BankIdDialog />
+                </BankIdContextProvider>
+              </TrackingProvider>
+            </ShopSessionProvider>
+          </JotaiProvider>
         </ThemeProvider>
       </ApolloProvider>
     </>
