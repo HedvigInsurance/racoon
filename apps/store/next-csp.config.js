@@ -19,11 +19,11 @@ const scriptSrc = [
   'https://app.storyblok.com',
   // Intercom
   'https://widget.intercom.io',
-  'https://js.intercomcdn.com',
   // Google
   'https://*.googletagmanager.com',
   'https://*.google-analytics.com',
   'https://translate.googleapis.com',
+  'https://tpc.googlesyndication.com',
 
   // GTM injected scripts
   ...gtmInjectedOrigins,
@@ -78,6 +78,7 @@ const mediaSrc = [
   'https://dc.insurely.com',
   'https://vercel.live',
   'https://a.storyblok.com',
+  'https://js.intercomcdn.com',
   "'self'",
 ]
 const connectSrc = [
