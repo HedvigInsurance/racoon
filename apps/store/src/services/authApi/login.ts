@@ -1,6 +1,9 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { Observable } from 'zen-observable-ts'
 import { AuthEndpoint } from './authEndpoint'
-import { fetchJson } from './fetchJson'
+import { fetchJson, ServerError } from './fetchJson'
+
+const POLL_INTERVAL = 1000
 
 enum MemberLoginMethod {
   SE_BANKID = 'SE_BANKID',
@@ -14,16 +17,24 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
       try {
         const result = await memberLoginStatus(statusUrl)
         subscriber.next(result)
+
         if (result.status === 'COMPLETED') {
           subscriber.complete()
         } else if (result.status === 'FAILED') {
           subscriber.error(new Error('Login failed: ' + result.statusText))
-        } else {
-          pollTimeoutId = window.setTimeout(() => poll(statusUrl), 1000)
         }
       } catch (error) {
-        subscriber.error(error)
+        if (error instanceof ServerError) {
+          subscriber.error(error)
+        } else {
+          datadogLogs.logger.warn('LoginMemberSeBankId | Network error', {
+            error: (error as Error).message,
+          })
+        }
       }
+
+      if (subscriber.closed) return
+      pollTimeoutId = window.setTimeout(() => poll(statusUrl), POLL_INTERVAL)
     }
 
     memberLoginCreateSE(ssn)

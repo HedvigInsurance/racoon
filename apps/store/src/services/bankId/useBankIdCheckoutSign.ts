@@ -101,8 +101,12 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
               }
             },
             onError(error) {
-              bankIdLogger.warn('SigningQuery | Failed to sign', { error })
-              subscriber.error(error)
+              if (error.networkError) {
+                bankIdLogger.warn('SigningQuery | Network error', { error: error.message })
+              } else {
+                bankIdLogger.warn('SigningQuery | Failed to sign', { error: error.message })
+                subscriber.error(error)
+              }
             },
           })
         }
