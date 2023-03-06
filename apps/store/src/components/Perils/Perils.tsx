@@ -1,16 +1,12 @@
 import styled from '@emotion/styled'
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { mq, Text, theme, useBreakpoint } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
 import { CoverageList } from './CoverageList'
 
-type Props = {
-  items: Array<PerilFragment>
-}
-
-const getPerilColumns = (items: PerilFragment[], columns: number) => {
-  const accordions = items.reduce((acc, item, index) => {
+const getPerilColumns = (items: PerilFragment[], columns: number) =>
+  items.reduce((acc, item, index) => {
     const columnIndex = index % columns
     if (!acc[columnIndex]) {
       acc[columnIndex] = []
@@ -19,7 +15,8 @@ const getPerilColumns = (items: PerilFragment[], columns: number) => {
     return acc
   }, [] as Array<Array<PerilFragment>>)
 
-  return accordions
+type Props = {
+  items: Array<PerilFragment>
 }
 
 export const Perils = ({ items }: Props) => {
@@ -53,7 +50,7 @@ export const Perils = ({ items }: Props) => {
 const PerilsAccordionGrid = styled.div({
   display: 'grid',
   gap: theme.space.xxs,
-  gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
   [mq.md]: {
     columnGap: theme.space.md,
   },
