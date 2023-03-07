@@ -4,6 +4,7 @@ import { mq, theme } from 'ui'
 import { ContentAlignment, getGridLayout, ContentWidth } from './GridLayout.helper'
 
 export const TEXT_CONTENT_MAX_WIDTH = '37.5rem' // 600px
+export const MAX_WIDTH = '120rem' // 1920px
 
 const Root = styled.div({
   display: 'grid',
@@ -11,7 +12,7 @@ const Root = styled.div({
   columnGap: theme.space.md,
   paddingInline: theme.space.md,
 
-  maxWidth: 1920,
+  maxWidth: MAX_WIDTH,
   marginInline: 'auto',
 
   [mq.lg]: {

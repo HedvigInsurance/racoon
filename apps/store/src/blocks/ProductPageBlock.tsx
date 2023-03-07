@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { useState, useEffect, useRef } from 'react'
+import { motion, useScroll } from 'framer-motion'
+import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
@@ -10,6 +11,7 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
 
 const TABLIST_HEIGHT = '2.5rem'
+const SCROLL_PERCENTAGE_THRESHOLD = 10 // 10%
 
 export type PageSection = 'overview' | 'coverage'
 
@@ -70,11 +72,11 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </GridLayout.Content>
 
         <OverviewGridArea width="1/2" align="left">
-          <OverviewSection id="overview">
+          <section id="overview">
             {blok.overview?.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
-          </OverviewSection>
+          </section>
         </OverviewGridArea>
 
         <GridLayout.Content width="1" align="center">
@@ -102,11 +104,40 @@ const VariantSelector = () => {
   )
 }
 
-const StickyHeader = styled.div({
+const StickyHeader = ({ children }: { children: ReactNode }) => {
+  const { scrollY } = useScroll()
+  const [matchesScrollThreshold, setMatchesScrollThreshold] = useState(false)
+
+  useEffect(() => {
+    scrollY.on('change', (currentScrollY) => {
+      const scrollPercentage = Math.round(
+        (currentScrollY / document.documentElement.scrollHeight) * 100,
+      )
+      setMatchesScrollThreshold(scrollPercentage > SCROLL_PERCENTAGE_THRESHOLD)
+    })
+  }, [scrollY])
+
+  return (
+    <StyledStickyHeader
+      variants={{
+        hidden: { opacity: 0, transitionEnd: { display: 'none' } },
+        visible: { opacity: 1, display: 'revert' },
+      }}
+      initial="hidden"
+      animate={matchesScrollThreshold ? 'visible' : 'hidden'}
+    >
+      {children}
+    </StyledStickyHeader>
+  )
+}
+
+const StyledStickyHeader = styled(motion.header)({
   position: 'sticky',
   top: theme.space.sm,
   zIndex: zIndexes.tabs,
   paddingInline: theme.space.md,
+  maxWidth: MAX_WIDTH,
+  marginInline: 'auto',
 
   [mq.md]: {
     paddingInline: theme.space.lg,
@@ -195,12 +226,6 @@ const OverviewGridArea = styled(GridLayout.Content)({
   // it should be "displayed" before PurchaseForm for desktop layout.
   [mq.lg]: {
     gridRow: 1,
-  },
-})
-
-const OverviewSection = styled.section({
-  [mq.lg]: {
-    marginTop: `calc(-${TABLIST_HEIGHT} - ${theme.space.md})`,
   },
 })
 
