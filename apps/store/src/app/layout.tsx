@@ -1,13 +1,13 @@
 'use client'
 
-import { ThemeProvider } from 'ui'
 import { contentFontClassName } from '@/utils/fonts'
+import RootStyleRegistry from './emotion'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <html lang="en">
       <body className={contentFontClassName}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <RootStyleRegistry>{children}</RootStyleRegistry>
       </body>
     </html>
   )

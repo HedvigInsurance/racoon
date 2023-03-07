@@ -1,4 +1,4 @@
-import localFont from '@next/font/local'
+import localFont from 'next/font/local'
 
 // NOTE:
 // - Font loaders have to be const expressions at top level

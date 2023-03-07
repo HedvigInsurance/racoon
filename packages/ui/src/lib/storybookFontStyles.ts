@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { HedvigFont } from './theme/typography'
 
-// Replacement for @next/font/local for storybook
+// Replacement for next/font/local for storybook
 
 const getFonts = () => {
   return Object.values(HedvigFont).map((fontName) => ({
