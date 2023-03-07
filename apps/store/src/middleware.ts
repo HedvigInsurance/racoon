@@ -9,7 +9,7 @@ export const config = {
   matcher: [
     '/', // Failsafe, always match root
     // Anything that can be a subject to redirect
-    '/((?!api|_next|favicon.ico).*)',
+    '/((?!api|_next|favicon.ico|favicon-32x32|site.webmanifest).*)',
   ],
 }
 
