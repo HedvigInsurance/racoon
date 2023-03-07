@@ -26,6 +26,7 @@ module.exports = {
       net: false,
       module: false,
       path: require.resolve('path-browserify'),
+      crypto: false,
     }
     return config
   },

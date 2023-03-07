@@ -1,5 +1,7 @@
 'use client'
+
 import styled from '@emotion/styled'
+import Head from 'next/head'
 import { FormEventHandler, useEffect, useState } from 'react'
 import { Button, Space, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
@@ -32,20 +34,25 @@ const Page = () => {
   }
 
   return (
-    <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <Space y={0.25}>
-          <TextField
-            key={defaultSsn}
-            defaultValue={defaultSsn}
-            label="YYYYMMDDXXXX"
-            autoFocus
-            name="ssn"
-          />
-          <Button loading={loading}>Create session</Button>
-        </Space>
-      </form>
-    </Wrapper>
+    <>
+      <Head>
+        <meta name="robots" content="none" />
+      </Head>
+      <Wrapper>
+        <form onSubmit={handleSubmit}>
+          <Space y={0.25}>
+            <TextField
+              key={defaultSsn}
+              defaultValue={defaultSsn}
+              label="YYYYMMDDXXXX"
+              autoFocus
+              name="ssn"
+            />
+            <Button loading={loading}>Create session</Button>
+          </Space>
+        </form>
+      </Wrapper>
+    </>
   )
 }
 
