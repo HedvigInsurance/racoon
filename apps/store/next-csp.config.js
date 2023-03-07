@@ -51,6 +51,8 @@ const fontSrc = [
   'https://fonts.gstatic.com',
   // Vercel
   'https://*.vercel.com',
+
+  'https://at.alicdn.com',
   "'self'",
 ]
 const imgSrc = [
@@ -110,6 +112,7 @@ const frameSrc = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
+  'https://tpc.googlesyndication.com',
 
   // GTM-injected scripts
   'https://*.snapchat.com',
