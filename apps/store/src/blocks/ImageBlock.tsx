@@ -15,6 +15,7 @@ export type ImageBlockProps = SbBaseBlockProps<{
   aspectRatioPortrait?: ImageAspectRatio
   fullBleed?: boolean
   body?: ExpectedBlockType<HeadingBlockProps>
+  priority?: boolean
 }>
 
 export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
@@ -35,6 +36,7 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
           roundedCorners={!blok.fullBleed}
           alt={blok.image.alt}
           fill
+          priority={blok.priority}
         />
         <BodyWrapper>
           {headingBlocks.map((nestedBlock) => (
@@ -68,17 +70,17 @@ const ImageWrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperPr
 
 type ImageProps = { roundedCorners: boolean }
 
-const Image = styled(ImageWithPlaceholder, { shouldForwardProp: isPropValid })<ImageProps>(
-  ({ roundedCorners }) => ({
-    objectFit: 'cover',
-    ...(roundedCorners && {
-      borderRadius: theme.radius.md,
-      [mq.lg]: {
-        borderRadius: theme.radius.xl,
-      },
-    }),
+const Image = styled(ImageWithPlaceholder, {
+  shouldForwardProp: (prop) => (prop === 'priority' ? true : isPropValid(prop)),
+})<ImageProps>(({ roundedCorners }) => ({
+  objectFit: 'cover',
+  ...(roundedCorners && {
+    borderRadius: theme.radius.md,
+    [mq.lg]: {
+      borderRadius: theme.radius.xl,
+    },
   }),
-)
+}))
 
 const BodyWrapper = styled.div({
   position: 'absolute',
