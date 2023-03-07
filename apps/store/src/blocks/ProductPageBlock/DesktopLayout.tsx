@@ -89,9 +89,6 @@ const ContentNavigationTrigger = styled.a(triggerStyles)
 const PurchaseFormWrapper = styled.div({
   position: 'sticky',
   top: 0,
-  // Scroll independently if content is too long
-  maxHeight: '100vh',
-  overflow: 'auto',
   paddingBlock: theme.space.xl,
 
   paddingTop: '3vw',
