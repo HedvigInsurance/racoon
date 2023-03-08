@@ -154,15 +154,17 @@ export const Video = ({
         {...autoplayAttributes}
         {...delegated}
       >
-        {sources.map((source) => (
-          // TODO: its adviced to provide the media format type ('type' attribute)
-          // More info http://bitly.ws/y4Jf
-          <source
-            key={source.url}
-            src={delegated.autoPlay ? '' : source.url}
-            data-src={source.url}
-          />
-        ))}
+        {sources.map((source) => {
+          const sourceProps = {
+            src: delegated.autoPlay ? '' : source.url,
+            ...(delegated.autoPlay && { 'data-src': source.url }),
+          }
+          return (
+            // TODO: its adviced to provide the media format type ('type' attribute)
+            // More info http://bitly.ws/y4Jf
+            <source key={source.url} {...sourceProps} />
+          )
+        })}
       </StyledVideo>
       <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
         <Controls>
