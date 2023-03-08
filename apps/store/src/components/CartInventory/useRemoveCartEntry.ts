@@ -12,7 +12,6 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
   const tracking = useTracking()
   const [runMutation, mutationResult] = useCartEntryRemoveMutation({
     // Refetch recommendations
-    // refetchQueries: 'active',
     refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
   })
 
