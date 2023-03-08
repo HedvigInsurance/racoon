@@ -68,7 +68,7 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
               }}
             >
               <Button loading={loading} type="submit">
-                Add to cart
+                {t('ADD_TO_CART_BUTTON_LABEL')}
               </Button>
               <input type="hidden" name="productOfferId" value={offer.id} />
             </form>
