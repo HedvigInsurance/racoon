@@ -1,13 +1,11 @@
+import { setI18nNamespace, tKey } from '@/utils/i18n'
 import {
   carRegistrationNumberField,
-  emailField,
   LAYOUT,
   mileageField,
   ssnSeSection,
-  postalCodeField,
-  streetAddressField,
-} from '@/services/PriceCalculator/formFragments'
-import { setI18nNamespace, tKey } from '@/utils/i18n'
+  yourAddressSection,
+} from '../formFragments'
 import { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
@@ -31,15 +29,6 @@ export const SE_CAR: Template = {
         },
       ],
     },
-    {
-      id: 'your-address',
-      title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
-      submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
-      items: [
-        { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
-        { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
-        { field: emailField, layout: LAYOUT.FULL_WIDTH },
-      ],
-    },
+    yourAddressSection,
   ],
 }
