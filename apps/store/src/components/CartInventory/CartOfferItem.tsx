@@ -26,7 +26,7 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
     priceIntentId: offer.id,
     onSuccess(productOfferId) {
       const addedProductOffer = offer.id
-// TODO: Fix this
+      // TODO: Fix this
       if (addedProductOffer === undefined) {
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
@@ -38,30 +38,30 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
   const startDateFormatted = formatter.fromNow(new Date(offer.startDate) ?? new Date())
 
   return (
-    <Layout key={offer.id}>
-      <LayoutPillow>
+    <Layout.Main key={offer.id}>
+      <Layout.Pillow>
         <Pillow size="small" {...pillowImage} />
-      </LayoutPillow>
+      </Layout.Pillow>
 
-      <LayoutText>
+      <Layout.Title>
         <Text>{product.displayNameFull}</Text>
         <Text color="textSecondary">
           {t('CART_ENTRY_DATE_LABEL', {
             date: startDateFormatted,
           })}
         </Text>
-      </LayoutText>
+      </Layout.Title>
 
-      <LayoutContent>
+      <Layout.Content>
         <Text color="textSecondary">
           <Balancer>
             Utöka ditt skydd med en Olycksfallsförsäkring. Täcker olyckor, tandskador, ärr och
             mycket mer. Försäkringen gäller utan självrisk.
           </Balancer>
         </Text>
-      </LayoutContent>
+      </Layout.Content>
 
-      <LayoutActions>
+      <Layout.Actions>
         <Space y={1}>
           <SpaceFlex space={0.25}>
             <form onSubmit={handleSubmitAddToCart}>
@@ -72,18 +72,18 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
             </form>
           </SpaceFlex>
         </Space>
-      </LayoutActions>
+      </Layout.Actions>
 
-      <LayoutPrice>
+      <Layout.Price>
         <PriceFlex>
           <Text>{formatter.monthlyPrice(offer.price)}</Text>
         </PriceFlex>
-      </LayoutPrice>
-    </Layout>
+      </Layout.Price>
+    </Layout.Main>
   )
 }
 
-const Layout = styled.li({
+const Main = styled.li({
   backgroundColor: theme.colors.blue100,
   padding: theme.space.md,
   borderRadius: theme.radius.md,
@@ -100,18 +100,21 @@ const Layout = styled.li({
 })
 
 const GRID_AREAS = {
-  pillow: 'pillow',
-  title: 'title',
-  price: 'price',
-  content: 'content',
-  actions: 'actions',
+  Pillow: 'pillow',
+  Title: 'title',
+  Price: 'price',
+  Content: 'content',
+  Actions: 'actions',
 } as const
 
-const LayoutPillow = styled.div({ gridArea: GRID_AREAS.pillow })
-const LayoutText = styled.div({ gridArea: GRID_AREAS.title })
-const LayoutPrice = styled.div({ gridArea: GRID_AREAS.price })
-const LayoutContent = styled.div({ gridArea: GRID_AREAS.content })
-const LayoutActions = styled.div({ gridArea: GRID_AREAS.actions })
+const Layout = {
+  Main,
+  Pillow: styled.div({ gridArea: GRID_AREAS.Pillow }),
+  Title: styled.div({ gridArea: GRID_AREAS.Title }),
+  Price: styled.div({ gridArea: GRID_AREAS.Price }),
+  Content: styled.div({ gridArea: GRID_AREAS.Content }),
+  Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
+}
 
 const PriceFlex = styled.div({
   display: 'flex',
