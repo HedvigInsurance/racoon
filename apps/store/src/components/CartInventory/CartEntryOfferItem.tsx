@@ -58,7 +58,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
                 handleSubmitAddToCart(event)
               }}
             >
-              <Button loading={loading} type="submit">
+              <Button loading={loading} size="medium" type="submit">
                 {t('ADD_TO_CART_BUTTON_LABEL')}
               </Button>
               <input type="hidden" name="productOfferId" value={offer.id} />
@@ -114,4 +114,5 @@ const PriceFlex = styled.div({
   alignItems: 'center',
   justifyContent: 'flex-end',
   height: '100%',
+  paddingRight: theme.space.xs,
 })
