@@ -33,10 +33,6 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
     },
   })
 
-  // TODO: Fix date types
-  // For now the start date will always be the day the offer was created aka today
-  const startDateFormatted = formatter.fromNow(new Date(offer.startDate) ?? new Date())
-
   return (
     <Layout.Main key={offer.id}>
       <Layout.Pillow>
@@ -47,7 +43,7 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
         <Text>{product.displayNameFull}</Text>
         <Text color="textSecondary">
           {t('CART_ENTRY_DATE_LABEL', {
-            date: startDateFormatted,
+            date: offer.startDate,
           })}
         </Text>
       </Layout.Title>
