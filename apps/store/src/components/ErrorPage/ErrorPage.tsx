@@ -15,7 +15,9 @@ export const ErrorPage = ({ children }: ErrorPageProps) => {
       <Wrapper>{children}</Wrapper>
 
       {productRecommendations && productRecommendations.length > 0 && (
-        <ProductRecommendationList recommendations={productRecommendations} />
+        <ProductRecommendationList
+          recommendations={productRecommendations.map((item) => item.product)}
+        />
       )}
     </Layout>
   )
