@@ -4,13 +4,11 @@ import { motion, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
-import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
 
-const TABLIST_HEIGHT = '2.5rem'
+const NAVIGATION_LIST_HEIGHT = '2.5rem'
 const SCROLL_PERCENTAGE_THRESHOLD = 10 // 10%
 
 export type PageSection = 'overview' | 'coverage'
@@ -24,44 +22,37 @@ export type ProductPageBlockProps = SbBaseBlockProps<{
 }>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
-  const { productData } = useProductPageContext()
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
   useActiveSectionChangeListener(['overview', 'coverage'], (sectionId) =>
     setActiveSection(sectionId as PageSection),
   )
 
-  const shouldRenderVariantSelector =
-    activeSection === 'coverage' && productData.variants.length > 1
-
   return (
     <Main {...storyblokEditable(blok)}>
       <StickyHeader>
-        <>
-          <nav aria-label="page content">
-            <ContentNavigationList>
-              <li>
-                <ContentNavigationTrigger
-                  href="#overview"
-                  data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-                  aria-current={activeSection === 'overview' ? 'true' : undefined}
-                >
-                  {blok.overviewLabel}
-                </ContentNavigationTrigger>
-              </li>
-              <li>
-                <ContentNavigationTrigger
-                  href="#coverage"
-                  data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
-                  aria-current={activeSection === 'coverage' ? 'true' : undefined}
-                >
-                  {blok.coverageLabel}
-                </ContentNavigationTrigger>
-              </li>
-            </ContentNavigationList>
-          </nav>
-          {shouldRenderVariantSelector && <VariantSelector />}
-        </>
+        <nav aria-label="page content">
+          <ContentNavigationList>
+            <li>
+              <ContentNavigationTrigger
+                href="#overview"
+                data-state={activeSection === 'overview' ? 'active' : 'inactive'}
+                aria-current={activeSection === 'overview' ? 'true' : undefined}
+              >
+                {blok.overviewLabel}
+              </ContentNavigationTrigger>
+            </li>
+            <li>
+              <ContentNavigationTrigger
+                href="#coverage"
+                data-state={activeSection === 'coverage' ? 'active' : 'inactive'}
+                aria-current={activeSection === 'coverage' ? 'true' : undefined}
+              >
+                {blok.coverageLabel}
+              </ContentNavigationTrigger>
+            </li>
+          </ContentNavigationList>
+        </nav>
       </StickyHeader>
 
       <Grid>
@@ -95,14 +86,6 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   )
 }
 ProductPageBlock.blockName = 'product'
-
-const VariantSelector = () => {
-  return (
-    <VariantSelectorWrapper>
-      <StyledProductVariantSelector />
-    </VariantSelectorWrapper>
-  )
-}
 
 const StickyHeader = ({ children }: { children: ReactNode }) => {
   const { scrollY } = useScroll()
@@ -144,14 +127,13 @@ const StyledStickyHeader = styled(motion.header)({
   },
   [mq.lg]: {
     top: theme.space.md,
-    paddingInline: theme.space.xl,
   },
 })
 
 const ContentNavigationList = styled.ol({
   display: 'flex',
   gap: theme.space.xs,
-  height: TABLIST_HEIGHT,
+  height: NAVIGATION_LIST_HEIGHT,
 })
 
 const ContentNavigationTrigger = styled.a({
@@ -189,21 +171,6 @@ const ContentNavigationTrigger = styled.a({
 
   '&:focus-visible': {
     boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
-  },
-})
-
-const VariantSelectorWrapper = styled.div({
-  width: 'fit-content',
-  minWidth: '12.5rem',
-  marginTop: theme.space.xs,
-})
-
-const StyledProductVariantSelector = styled(ProductVariantSelector)({
-  backgroundColor: theme.colors.greenFill1,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
-
-  ':hover, :focus-within': {
-    backgroundColor: theme.colors.greenFill3,
   },
 })
 
