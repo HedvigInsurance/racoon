@@ -15,6 +15,8 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { CartOfferItem } from '../CartInventory/CartOfferItem'
+import { CartOfferList } from '../CartInventory/CartOfferList'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
@@ -22,6 +24,8 @@ export const CartPage = (props: CartPageProps) => {
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
   const productRecommendations = useProductRecommendations()
+
+  const filteredOffers = productRecommendations?.filter((item) => item.offer !== null)
 
   const tracking = useTracking()
   useEffect(
@@ -62,6 +66,18 @@ export const CartPage = (props: CartPageProps) => {
           {cartId &&
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
+
+        {cartId && filteredOffers && filteredOffers.length > 0 && (
+          <CartOfferList>
+            {filteredOffers.map(({ product, offer }) => {
+              if (!offer) return null
+              return (
+                <CartOfferItem key={offer.id} cartId={cartId} product={product} offer={offer} />
+              )
+            })}
+          </CartOfferList>
+        )}
+
         {cartId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
             <HorizontalLine />
@@ -93,7 +109,9 @@ export const CartPage = (props: CartPageProps) => {
           </GridLayout.Content>
         </GridLayout.Root>
         {productRecommendations && productRecommendations.length > 0 && (
-          <ProductRecommendationList recommendations={productRecommendations} />
+          <ProductRecommendationList
+            recommendations={productRecommendations.map(({ product }) => product)}
+          />
         )}
       </Space>
     </PageWrapper>
