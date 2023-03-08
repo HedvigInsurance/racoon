@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
-import { ShopSessionDocument } from '@/services/apollo/generated'
+import { ProductRecommendationsDocument, ShopSessionDocument } from '@/services/apollo/generated'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -12,7 +12,8 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
   const tracking = useTracking()
   const [runMutation, mutationResult] = useCartEntryRemoveMutation({
     // Refetch recommendations
-    refetchQueries: [ShopSessionDocument],
+    // refetchQueries: 'active',
+    refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
   })
 
   const { showApolloError } = useAppErrorHandleContext()
