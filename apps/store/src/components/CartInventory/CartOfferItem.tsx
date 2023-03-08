@@ -25,13 +25,7 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
   const [handleSubmitAddToCart] = useHandleSubmitAddToCart({
     cartId: cartId,
     priceIntentId: offer.id,
-    onSuccess(productOfferId) {
-      const addedProductOffer = offer.id
-      // TODO: Fix this
-      if (addedProductOffer === undefined) {
-        throw new Error(`Unknown offer added to cart: ${productOfferId}`)
-      }
-    },
+    onSuccess() {},
   })
 
   return (
@@ -44,17 +38,14 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
         <Text>{product.displayNameFull}</Text>
         <Text color="textSecondary">
           {t('CART_ENTRY_DATE_LABEL', {
-            date: offer.startDate,
+            date: formatter.fromNow(new Date(offer.startDate)),
           })}
         </Text>
       </Layout.Title>
 
       <Layout.Content>
         <Text color="textSecondary">
-          <Balancer>
-            Utöka ditt skydd med en Olycksfallsförsäkring. Täcker olyckor, tandskador, ärr och
-            mycket mer. Försäkringen gäller utan självrisk.
-          </Balancer>
+          <Balancer>{t('ACCIDENT_OFFER_CONTENT')}</Balancer>
         </Text>
       </Layout.Content>
 
