@@ -92,9 +92,9 @@ const Layout = styled.li({
   columnGap: theme.space.sm,
   rowGap: theme.space.md,
   gridTemplateAreas: `
-    "pillow title"
-    "content content"
-    "actions price"
+    "pillow title title"
+    "content content content"
+    "actions actions price"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
 })
