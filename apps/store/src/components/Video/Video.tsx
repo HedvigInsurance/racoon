@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
@@ -48,10 +49,24 @@ export const Video = ({
   ...delegated
 }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const isInView = useInView(videoRef)
   const playButtonId = useId()
   const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, setState] = useState<State>(State.Paused)
+
+  useEffect(() => {
+    // Lazy load videos that are autoplaying
+    if (isInView && videoRef.current) {
+      Array.from(videoRef.current.children).map((videoSource) => {
+        if (videoSource instanceof HTMLSourceElement && videoSource.dataset.src) {
+          videoSource.src = videoSource.dataset.src
+        }
+      })
+
+      videoRef.current.load()
+    }
+  }, [isInView])
 
   const videoUrl = sources[0].url
   useEffect(() => {
@@ -139,11 +154,17 @@ export const Video = ({
         {...autoplayAttributes}
         {...delegated}
       >
-        {sources.map((source) => (
-          // TODO: its adviced to provide the media format type ('type' attribute)
-          // More info http://bitly.ws/y4Jf
-          <source key={source.url} src={source.url} />
-        ))}
+        {sources.map((source) => {
+          const sourceProps = {
+            src: delegated.autoPlay ? '' : source.url,
+            ...(delegated.autoPlay && { 'data-src': source.url }),
+          }
+          return (
+            // TODO: its adviced to provide the media format type ('type' attribute)
+            // More info http://bitly.ws/y4Jf
+            <source key={source.url} {...sourceProps} />
+          )
+        })}
       </StyledVideo>
       <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
         <Controls>
