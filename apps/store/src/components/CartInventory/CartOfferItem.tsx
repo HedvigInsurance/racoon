@@ -76,13 +76,6 @@ export const CartOfferItem = (props: CartOfferItemProps) => {
   )
 }
 
-const PriceFlex = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  height: '100%',
-})
-
 const Layout = styled.li({
   backgroundColor: theme.colors.blue100,
   padding: theme.space.md,
@@ -107,8 +100,23 @@ const Layout = styled.li({
   },
 })
 
-const LayoutPillow = styled.div({ gridArea: 'pillow' })
-const LayoutText = styled.div({ gridArea: 'title' })
-const LayoutPrice = styled.div({ gridArea: 'price' })
-const LayoutContent = styled.div({ gridArea: 'content' })
-const LayoutActions = styled.div({ gridArea: 'actions' })
+const GRID_AREAS = {
+  pillow: 'pillow',
+  title: 'title',
+  price: 'price',
+  content: 'content',
+  actions: 'actions',
+} as const
+
+const LayoutPillow = styled.div({ gridArea: GRID_AREAS.pillow })
+const LayoutText = styled.div({ gridArea: GRID_AREAS.title })
+const LayoutPrice = styled.div({ gridArea: GRID_AREAS.price })
+const LayoutContent = styled.div({ gridArea: GRID_AREAS.content })
+const LayoutActions = styled.div({ gridArea: GRID_AREAS.actions })
+
+const PriceFlex = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  height: '100%',
+})
