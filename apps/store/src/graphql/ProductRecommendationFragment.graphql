@@ -3,6 +3,11 @@ fragment ProductRecommendation on Product {
   displayNameFull
   displayNameShort
   pageLink
+  pillowImage {
+    id
+    src
+    alt
+  }
   featuredImage {
     id
     src
