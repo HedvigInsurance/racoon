@@ -8,7 +8,7 @@ import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
 
-const NAVIGATION_LIST_HEIGHT = '2.5rem'
+export const NAVIGATION_LIST_HEIGHT = '2.5rem'
 const SCROLL_PERCENTAGE_THRESHOLD = 10 // 10%
 
 export type PageSection = 'overview' | 'coverage'
