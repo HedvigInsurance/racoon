@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
+import { useScroll } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
 import { ConditionalWrapper, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { zIndexes } from '@/utils/zIndex'
 
 type ProductVariantSelectorBlockProps = SbBaseBlockProps<{
   content?: string
@@ -21,18 +24,48 @@ export const ProductVariantSelectorBlock = ({ blok, nested }: ProductVariantSele
       )}
     >
       <Space y={1}>
-        <VariantSelectorWrapper>
-          <StyledProductVariantSelector />
-        </VariantSelectorWrapper>
+        <VariantSelector />
         {blok.content && <StyledText size={{ _: 'xl', lg: 'xxl' }}>{blok.content}</StyledText>}
       </Space>
     </ConditionalWrapper>
   )
 }
 
+const VariantSelector = () => {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const { scrollY } = useScroll()
+
+  const [reachedTopScreen, setReachedTopScreen] = useState(false)
+  useEffect(() => {
+    if (!ref.current) return
+
+    const initialElementOffsetTop = ref.current.offsetTop
+    // TODO: derivate this from ProductPageBlock's navigation links height
+    const offset = 64
+
+    scrollY.on('change', (currentScrollY) => {
+      if (ref.current) {
+        setReachedTopScreen(currentScrollY >= initialElementOffsetTop - offset)
+      }
+    })
+  }, [scrollY])
+
+  return (
+    <VariantSelectorWrapper ref={ref} data-fixed={reachedTopScreen ? 'true' : 'false'}>
+      <StyledProductVariantSelector />
+    </VariantSelectorWrapper>
+  )
+}
+
 const VariantSelectorWrapper = styled.div({
   width: 'fit-content',
   minWidth: '12.5rem',
+
+  ['&[data-fixed=true]']: {
+    position: 'fixed',
+    top: 64,
+    zIndex: zIndexes.tabs,
+  },
 })
 
 const StyledProductVariantSelector = styled(ProductVariantSelector)({
