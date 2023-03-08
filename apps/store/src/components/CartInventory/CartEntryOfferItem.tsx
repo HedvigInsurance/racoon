@@ -17,7 +17,7 @@ type CartOfferItemProps = {
   product: ProductRecommendationFragment
   offer: OfferRecommendationFragment
 }
-export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
+export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
   const [loading, setLoading] = useState(false)
 
   const { t } = useTranslation('cart')

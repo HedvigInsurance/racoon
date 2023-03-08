@@ -6,7 +6,6 @@ import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
-import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
@@ -15,8 +14,8 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CartOfferItem } from '../CartInventory/CartOfferItem'
-import { CartOfferList } from '../CartInventory/CartOfferList'
+import { CartEntryList } from '../CartInventory/CartEntryList'
+import { CartEntryOfferItem } from '../CartInventory/CartEntryOfferItem'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
@@ -68,14 +67,19 @@ export const CartPage = (props: CartPageProps) => {
         </CartEntryList>
 
         {cartId && filteredOffers && filteredOffers.length > 0 && (
-          <CartOfferList>
+          <CartEntryList>
             {filteredOffers.map(({ product, offer }) => {
               if (!offer) return null
               return (
-                <CartOfferItem key={offer.id} cartId={cartId} product={product} offer={offer} />
+                <CartEntryOfferItem
+                  key={offer.id}
+                  cartId={cartId}
+                  product={product}
+                  offer={offer}
+                />
               )
             })}
-          </CartOfferList>
+          </CartEntryList>
         )}
 
         {cartId && campaignsEnabled && (
