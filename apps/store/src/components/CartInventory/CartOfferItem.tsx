@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, theme, Text, Space } from 'ui'
@@ -17,11 +18,11 @@ type CartOfferItemProps = {
   offer: OfferRecommendationFragment
 }
 export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
-  const { pillowImage } = product
+  const [loading, setLoading] = useState(false)
+
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
-
-  const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
+  const [handleSubmitAddToCart] = useHandleSubmitAddToCart({
     cartId: cartId,
     priceIntentId: offer.id,
     onSuccess(productOfferId) {
@@ -36,7 +37,7 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
   return (
     <Layout.Main key={offer.id}>
       <Layout.Pillow>
-        <Pillow size="small" {...pillowImage} />
+        <Pillow size="small" {...product.pillowImage} />
       </Layout.Pillow>
 
       <Layout.Title>
@@ -60,8 +61,13 @@ export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) =>
       <Layout.Actions>
         <Space y={1}>
           <SpaceFlex space={0.25}>
-            <form onSubmit={handleSubmitAddToCart}>
-              <Button loading={loadingAddToCart} type="submit">
+            <form
+              onSubmit={(event) => {
+                setLoading(true)
+                handleSubmitAddToCart(event)
+              }}
+            >
+              <Button loading={loading} type="submit">
                 Add to cart
               </Button>
               <input type="hidden" name="productOfferId" value={offer.id} />
