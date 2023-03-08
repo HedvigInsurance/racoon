@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'react-i18next'
-import { Button, mq, theme, Text, Space } from 'ui'
+import Balancer from 'react-wrap-balancer'
+import { Button, theme, Text, Space } from 'ui'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
@@ -15,24 +16,26 @@ type CartOfferItemProps = {
   product: ProductRecommendationFragment
   offer: OfferRecommendationFragment
 }
-export const CartOfferItem = (props: CartOfferItemProps) => {
-  const { product } = props
-  const {
-    product: { pillowImage },
-    offer,
-    cartId,
-  } = props
-
-  const formatter = useFormatter()
+export const CartOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
+  const { pillowImage } = product
   const { t } = useTranslation('cart')
+  const formatter = useFormatter()
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: cartId,
     priceIntentId: offer.id,
     onSuccess(productOfferId) {
-      console.log('🚀 ~ file: 🍒🍒🍒🍒🍒🍒🍒🍒🍒:', productOfferId)
+      const addedProductOffer = offer.id
+// TODO: Fix this
+      if (addedProductOffer === undefined) {
+        throw new Error(`Unknown offer added to cart: ${productOfferId}`)
+      }
     },
   })
+
+  // TODO: Fix date types
+  // For now the start date will always be the day the offer was created aka today
+  const startDateFormatted = formatter.fromNow(new Date(offer.startDate) ?? new Date())
 
   return (
     <Layout key={offer.id}>
@@ -42,17 +45,19 @@ export const CartOfferItem = (props: CartOfferItemProps) => {
 
       <LayoutText>
         <Text>{product.displayNameFull}</Text>
-        <Text color="textSecondary">{offer.startDate}</Text>
-        {/* <Text color="textSecondary">
-          {offer.startDate
-            ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(offer.startDate) })
-            : t('CART_ENTRY_AUTO_SWITCH')}
-        </Text> */}
+        <Text color="textSecondary">
+          {t('CART_ENTRY_DATE_LABEL', {
+            date: startDateFormatted,
+          })}
+        </Text>
       </LayoutText>
 
       <LayoutContent>
         <Text color="textSecondary">
-          Consequat nulla eu ex. Velit minim excepteur nisi laboris. Et laborum qui nulla dolor
+          <Balancer>
+            Utöka ditt skydd med en Olycksfallsförsäkring. Täcker olyckor, tandskador, ärr och
+            mycket mer. Försäkringen gäller utan självrisk.
+          </Balancer>
         </Text>
       </LayoutContent>
 
@@ -60,7 +65,9 @@ export const CartOfferItem = (props: CartOfferItemProps) => {
         <Space y={1}>
           <SpaceFlex space={0.25}>
             <form onSubmit={handleSubmitAddToCart}>
-              <Button>Add to cart</Button>
+              <Button loading={loadingAddToCart} type="submit">
+                Add to cart
+              </Button>
               <input type="hidden" name="productOfferId" value={offer.id} />
             </form>
           </SpaceFlex>
@@ -90,14 +97,6 @@ const Layout = styled.li({
     "actions price"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
-
-  [mq.md]: {
-    gridTemplateAreas: `
-      "pillow title price"
-      "empty actions actions"
-    `,
-    gridTemplateColumns: '3rem minmax(0, 1fr) auto',
-  },
 })
 
 const GRID_AREAS = {
