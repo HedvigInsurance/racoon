@@ -9,7 +9,6 @@ import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpd
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { TierSelector } from '@/components/TierSelector/TierSelector'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
@@ -22,6 +21,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableContainer } from './ComparisonTableContainer'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
+import { ProductTierSelector } from './ProductTierSelector'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -149,11 +149,10 @@ export const OfferPresenter = (props: Props) => {
             </Space>
 
             <Space y={0.25}>
-              <TierSelector
+              <ProductTierSelector
                 offers={priceIntent.offers}
                 selectedOffer={selectedOffer}
                 onValueChange={handleTierSelectorValueChange}
-                currencyCode={shopSession.currencyCode}
               />
 
               <CancellationForm
