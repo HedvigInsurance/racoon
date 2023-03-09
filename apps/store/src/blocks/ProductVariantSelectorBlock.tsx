@@ -34,7 +34,7 @@ const VariantSelectorWrapper = styled.div({
   paddingInline: theme.space.md,
   zIndex: zIndexes.tabs,
 
-  [mq.lg]: {
+  [mq.md]: {
     paddingInline: theme.space.lg,
   },
 })
