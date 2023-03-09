@@ -1,0 +1,7 @@
+//robots.txt for hedvig.com
+
+User-agent: *
+Disallow: /cart
+Disallow: /checkout
+Disallow: /confirmation
+Disallow: /country-selector
