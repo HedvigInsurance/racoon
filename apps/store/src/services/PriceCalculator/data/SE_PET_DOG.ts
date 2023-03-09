@@ -1,11 +1,4 @@
-import {
-  LAYOUT,
-  livingSpaceField,
-  ssnSeSection,
-  postalCodeField,
-  streetAddressField,
-  petNameField,
-} from '@/services/PriceCalculator/formFragments'
+import { LAYOUT, ssnSeSection, yourAddressSection } from '@/services/PriceCalculator/formFragments'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
 
@@ -21,33 +14,75 @@ export const SE_PET_DOG: Template = {
       submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
       items: [
         {
-          field: petNameField,
+          field: {
+            type: 'text',
+            name: 'name',
+            label: { key: tKey('FIELD_PET_NAME_LABEL') },
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        // TODO: replace with custom breed field
+        {
+          field: {
+            type: 'text',
+            name: 'breed',
+            label: { key: tKey('FIELD_PET_BREED_LABEL') },
+            required: true,
+          },
           layout: LAYOUT.FULL_WIDTH,
         },
         {
-          field: postalCodeField,
-          layout: LAYOUT.HALF_WIDTH,
+          field: {
+            type: 'radio',
+            name: 'gender',
+            label: { key: tKey('FIELD_PET_SEX_LABEL') },
+            options: [
+              { label: { key: tKey('FIELD_PET_SEX_OPTION_MALE_DOG') }, value: 'male' },
+              { label: { key: tKey('FIELD_PET_SEX_OPTION_FEMALE_DOG') }, value: 'female' },
+            ],
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        // TODO: verify field type
+        {
+          field: {
+            type: 'date',
+            name: 'birthDate',
+            label: { key: tKey('FIELD_PET_DATE_OF_BIRTH_LABEL') },
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
         },
         {
-          field: livingSpaceField,
-          layout: LAYOUT.HALF_WIDTH,
+          field: {
+            type: 'radio',
+            name: 'neutered',
+            label: { key: tKey('FIELD_IS_NEUTERED_DOG_LABEL') },
+            options: [
+              { label: { key: tKey('LABEL_YES') }, value: 'true' },
+              { label: { key: tKey('LABEL_NO') }, value: 'false' },
+            ],
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        {
+          field: {
+            type: 'radio',
+            name: 'previousDogOwner',
+            label: { key: tKey('FIELD_PREVIOUS_DOG_OWNER_LABEL') },
+            options: [
+              { label: { key: tKey('LABEL_YES') }, value: 'true' },
+              { label: { key: tKey('LABEL_NO') }, value: 'false' },
+            ],
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
         },
       ],
     },
-    {
-      id: 'your-address',
-      title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
-      submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
-      items: [
-        {
-          field: streetAddressField,
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        {
-          field: postalCodeField,
-          layout: LAYOUT.FULL_WIDTH,
-        },
-      ],
-    },
+    yourAddressSection,
   ],
 }

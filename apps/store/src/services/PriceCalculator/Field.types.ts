@@ -40,7 +40,7 @@ export type FieldOption = {
   value: string
 }
 
-export type SelectField = BaseField<string> & {
+type SelectField = BaseField<string> & {
   type: 'select'
   options: Array<FieldOption>
 }

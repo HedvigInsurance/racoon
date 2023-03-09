@@ -84,25 +84,6 @@ export const SE_PET_CAT: Template = {
         {
           field: {
             type: 'radio',
-            name: 'isPetInsured',
-            label: { key: tKey('FIELD_PET_HAS_INSURANCE_LABEL') },
-            options: [
-              {
-                label: { key: tKey('LABEL_YES') },
-                value: 'true',
-              },
-              {
-                label: { key: tKey('LABEL_NO') },
-                value: 'false',
-              },
-            ],
-            required: true,
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        {
-          field: {
-            type: 'radio',
             name: 'outsideAccess',
             label: { key: tKey('FIELD_IS_OUTDOOR_CAT_LABEL') },
             options: [
