@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Fragment } from 'react'
 import { mq, Space, theme } from 'ui'
+import { MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 
 export type ProductGridProps<Item> = {
   title?: string
@@ -26,7 +27,9 @@ export const ProductGrid = <ItemType extends { key: string }>({
 }
 
 const Wrapper = styled(Space)({
+  maxWidth: MAX_WIDTH,
   height: '100%',
+  marginInline: 'auto',
 })
 
 const Title = styled.p({
