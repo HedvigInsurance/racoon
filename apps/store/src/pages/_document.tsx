@@ -22,7 +22,6 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color={theme.colors.gray1000} />
           <meta name="msapplication-TileColor" content={theme.colors.gray1000} />
-          <meta name="robots" content="noindex" />
         </Head>
         {/* Fallback for pages that don't pass className down to DOM */}
         <body className={contentFontClassName}>
