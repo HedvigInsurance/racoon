@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, mq, Space, Text, theme } from 'ui'
+import { Button, CrossIconSmall, Dialog, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
@@ -17,25 +17,41 @@ export const CartEntryItem = (props: Props) => {
   const formatter = useFormatter()
 
   return (
-    <Layout>
-      <LayoutPillow>
+    <Layout.Main>
+      <Layout.Pillow>
         <Pillow size="small" {...pillow} />
-      </LayoutPillow>
+      </Layout.Pillow>
 
-      <LayoutText>
+      <Layout.Title>
         <Text>{titleLabel}</Text>
         <Text color="textSecondary">
           {startDate
             ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
             : t('CART_ENTRY_AUTO_SWITCH')}
         </Text>
-      </LayoutText>
+      </Layout.Title>
 
-      <LayoutPrice>
-        <Text>{formatter.monthlyPrice(cost)}</Text>
-      </LayoutPrice>
+      <Layout.Close>
+        {!readOnly && (
+          <SpaceFlex align="end" direction="vertical">
+            <RemoveEntryDialog cartId={cartId} {...cartEntry}>
+              <Dialog.Trigger asChild>
+                <InvisibleButton aria-label="delete button">
+                  <CrossIconSmall color={theme.colors.textTertiary} />
+                </InvisibleButton>
+              </Dialog.Trigger>
+            </RemoveEntryDialog>
+          </SpaceFlex>
+        )}
+      </Layout.Close>
 
-      <LayoutActions>
+      <Layout.Price>
+        <PriceFlex>
+          <Text>{formatter.monthlyPrice(cost)}</Text>
+        </PriceFlex>
+      </Layout.Price>
+
+      <Layout.Actions>
         <Space y={1}>
           <SpaceFlex space={0.25}>
             <DetailsSheetDialog {...cartEntry}>
@@ -45,43 +61,56 @@ export const CartEntryItem = (props: Props) => {
                 </Button>
               </Dialog.Trigger>
             </DetailsSheetDialog>
-            {!readOnly && (
-              <RemoveEntryDialog cartId={cartId} {...cartEntry}>
-                <Dialog.Trigger asChild>
-                  <Button variant="ghost" size="small">
-                    {t('REMOVE_ENTRY_BUTTON')}
-                  </Button>
-                </Dialog.Trigger>
-              </RemoveEntryDialog>
-            )}
           </SpaceFlex>
         </Space>
-      </LayoutActions>
-    </Layout>
+      </Layout.Actions>
+    </Layout.Main>
   )
 }
 
-const Layout = styled.li({
+const GRID_AREAS = {
+  Pillow: 'pillow',
+  Title: 'title',
+  Price: 'price',
+  Content: 'content',
+  Actions: 'actions',
+  Close: 'close',
+} as const
+
+const Main = styled.li({
   display: 'grid',
   columnGap: theme.space.sm,
   rowGap: theme.space.md,
   gridTemplateAreas: `
-    "pillow title"
-    "empty price"
-    "empty actions"
+    "pillow title close"
+    "empty actions price"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
+})
 
-  [mq.md]: {
-    gridTemplateAreas: `
-      "pillow title price"
-      "empty actions actions"
-    `,
-    gridTemplateColumns: '3rem minmax(0, 1fr) auto',
+const Layout = {
+  Main,
+  Pillow: styled.div({ gridArea: GRID_AREAS.Pillow }),
+  Title: styled.div({ gridArea: GRID_AREAS.Title }),
+  Price: styled.div({ gridArea: GRID_AREAS.Price }),
+  Content: styled.div({ gridArea: GRID_AREAS.Content }),
+  Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
+  Close: styled.div({ gridArea: GRID_AREAS.Close }),
+} as const
+
+const InvisibleButton = styled.button({
+  cursor: 'pointer',
+  paddingLeft: theme.space.xs,
+  paddingBottom: theme.space.xs,
+  '&:focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+    borderRadius: '0.25rem',
+    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
   },
 })
 
-const LayoutPillow = styled.div({ gridArea: 'pillow' })
-const LayoutText = styled.div({ gridArea: 'title' })
-const LayoutPrice = styled.div({ gridArea: 'price' })
-const LayoutActions = styled.div({ gridArea: 'actions' })
+const PriceFlex = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%',
+})
