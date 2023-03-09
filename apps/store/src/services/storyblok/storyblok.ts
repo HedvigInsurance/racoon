@@ -38,6 +38,7 @@ import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
+import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
@@ -214,6 +215,7 @@ export const initStoryblok = () => {
     ProductDocumentsBlock,
     ProductGridBlock,
     ProductSlideshowBlock,
+    ProductVariantSelectorBlock,
     SpacerBlock,
     TabsBlock,
     TimelineBlock,
