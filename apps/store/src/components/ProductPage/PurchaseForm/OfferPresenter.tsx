@@ -19,7 +19,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
-import { ComparisonTableContainer } from './ComparisonTableContainer'
+import { ComparisonTableModal } from './ComparisonTableModal'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
 import { FormElement } from './PurchaseForm.constants'
@@ -167,7 +167,7 @@ export const OfferPresenter = (props: Props) => {
         </form>
 
         {priceIntent.offers.length > 1 && (
-          <ComparisonTableContainer offers={priceIntent.offers} selectedOfferId={selectedOfferId} />
+          <ComparisonTableModal offers={priceIntent.offers} selectedOfferId={selectedOfferId} />
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>

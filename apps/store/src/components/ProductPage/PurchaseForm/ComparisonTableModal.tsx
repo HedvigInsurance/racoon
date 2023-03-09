@@ -14,7 +14,7 @@ type Props = {
   selectedOfferId: string
 }
 
-export const ComparisonTableContainer = ({ offers, selectedOfferId }: Props) => {
+export const ComparisonTableModal = ({ offers, selectedOfferId }: Props) => {
   const getVeryShortVariantDisplayName = useGetVeryShortVariantDisplayName()
   const { t } = useTranslation('purchase-form')
   const getUniquePerilTitles = () => {
