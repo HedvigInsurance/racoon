@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Text, CheckIcon as PerilsCheckIcon, MinusIcon, theme } from 'ui'
+import { Text, CheckIcon as PerilsCheckIcon, MinusIcon, theme, mq } from 'ui'
 
 export const Root = styled.table({
   width: '100%',
@@ -53,7 +53,7 @@ type TitleDataCellProps = { children: React.ReactNode; className?: string }
 export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
   return (
     <TableDataCell {...props}>
-      <Text size="xs">{children}</Text>
+      <Text size={{ _: 'sm', lg: 'md' }}>{children}</Text>
     </TableDataCell>
   )
 }
@@ -73,6 +73,11 @@ const TableDataCell = styled.td({
   paddingBlock: theme.space.xs,
   verticalAlign: 'middle',
   minWidth: '2.5rem',
+
+  [mq.lg]: {
+    minWidth: '4rem',
+    paddingBlock: theme.space.sm,
+  },
 })
 
 const ActiveTableDataCell = styled(TableDataCell)({

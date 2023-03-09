@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, PlusIcon, Space, Text, theme } from 'ui'
+import { Button, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -41,7 +41,6 @@ export const OfferPresenter = (props: Props) => {
   const [selectedTypeOfContract, setSelectedTypeOfContract] = useState(
     priceIntent.offers[0].variant.typeOfContract,
   )
-  const [isComparisonTableOpen, setIsComparisonTableOpen] = useState(false)
 
   const selectedOffer = useMemo(() => {
     const newSelectedOffer = priceIntent.offers.find(
@@ -125,10 +124,6 @@ export const OfferPresenter = (props: Props) => {
 
   const startDate = convertToDate(selectedOffer.startDate)
 
-  const toggleComparisonTable = () => {
-    setIsComparisonTableOpen(!isComparisonTableOpen)
-  }
-
   return (
     <>
       <Space y={1}>
@@ -170,18 +165,8 @@ export const OfferPresenter = (props: Props) => {
             </Space>
           </Space>
         </form>
-        {priceIntent.offers.length > 1 && (
-          <SpaceFlex direction="vertical" align="center">
-            <Button variant="ghost" size="small" onClick={toggleComparisonTable}>
-              <SpaceFlex space={0.5} align="center">
-                <PlusIcon transform={isComparisonTableOpen ? 'rotate(-45)' : 'rotate(0)'} />
-                {t('COMPARE_COVERAGE_BUTTON')}
-              </SpaceFlex>
-            </Button>
-          </SpaceFlex>
-        )}
 
-        {isComparisonTableOpen && (
+        {priceIntent.offers.length > 1 && (
           <ComparisonTableContainer offers={priceIntent.offers} selectedOfferId={selectedOfferId} />
         )}
       </Space>
