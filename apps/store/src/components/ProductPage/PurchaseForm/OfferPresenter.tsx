@@ -22,6 +22,7 @@ import { CancellationForm, CancellationOption } from './CancellationForm/Cancell
 import { ComparisonTableContainer } from './ComparisonTableContainer'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
+import { FormElement } from './PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 
 type Props = {
@@ -149,11 +150,13 @@ export const OfferPresenter = (props: Props) => {
             </Space>
 
             <Space y={0.25}>
-              <ProductTierSelector
-                offers={priceIntent.offers}
-                selectedOffer={selectedOffer}
-                onValueChange={handleTierSelectorValueChange}
-              />
+              {priceIntent.offers.length > 1 && (
+                <ProductTierSelector
+                  offers={priceIntent.offers}
+                  selectedOffer={selectedOffer}
+                  onValueChange={handleTierSelectorValueChange}
+                />
+              )}
 
               <CancellationForm
                 option={cancellationOption}
@@ -162,6 +165,7 @@ export const OfferPresenter = (props: Props) => {
                 onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
               />
 
+              <input type="hidden" name={FormElement.ProductOfferId} value={selectedOfferId} />
               <SubmitButton loading={loading} />
             </Space>
           </Space>

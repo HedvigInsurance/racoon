@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
-import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { ProductOfferFragment } from '@/services/apollo/generated'
@@ -18,23 +17,15 @@ export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Pr
   const getVariantDescription = useGetVariantDescription()
   const formatter = useFormatter()
 
-  if (offers.length === 1) {
-    return <input hidden readOnly name={FormElement.ProductOfferId} value={selectedOffer.id} />
-  }
-
   return (
-    <TierSelector.Root>
+    <TierSelector.Root defaultOpen={true}>
       <TierSelector.Header>
         <Text>{t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}</Text>
         <ToggleText>{selectedOffer.variant.displayName}</ToggleText>
       </TierSelector.Header>
 
       <TierSelector.Content>
-        <TierLevelRadioGroup.Root
-          name={FormElement.ProductOfferId}
-          value={selectedOffer.id}
-          onValueChange={onValueChange}
-        >
+        <TierLevelRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
           {offers.map((offer) => (
             <TierLevelRadioGroup.Item
               key={offer.id}

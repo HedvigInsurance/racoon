@@ -3,8 +3,10 @@ import styled from '@emotion/styled'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { ChevronIcon, theme } from 'ui'
 
-export const Root = ({ children }: { children: React.ReactNode }) => {
-  return <CollapsibleRoot>{children}</CollapsibleRoot>
+type RootProps = { children: React.ReactNode; defaultOpen?: boolean }
+
+export const Root = ({ children, defaultOpen }: RootProps) => {
+  return <CollapsibleRoot defaultOpen={defaultOpen}>{children}</CollapsibleRoot>
 }
 
 const CollapsibleRoot = styled(Collapsible.Root)({
