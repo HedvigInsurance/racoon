@@ -24,17 +24,16 @@ export const ProductVariantSelectorBlock = ({ nested }: ProductVariantSelectorBl
   )
 }
 
-const OFFSET = '1.5rem'
-
 const VariantSelectorWrapper = styled.div({
   position: 'sticky',
-  top: `calc(${NAVIGATION_LIST_HEIGHT} + ${OFFSET})`,
+  top: `calc(${NAVIGATION_LIST_HEIGHT} + 1.2rem)`,
   width: 'fit-content',
   minWidth: '12.5rem',
   paddingInline: theme.space.md,
   zIndex: zIndexes.tabs,
 
   [mq.md]: {
+    top: `calc(${NAVIGATION_LIST_HEIGHT} + 1.5rem)`,
     paddingInline: theme.space.lg,
   },
 })
