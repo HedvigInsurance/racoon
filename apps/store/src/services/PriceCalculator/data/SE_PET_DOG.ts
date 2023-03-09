@@ -1,17 +1,16 @@
+import { LAYOUT, ssnSeSection, yourAddressSection } from '@/services/PriceCalculator/formFragments'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
-import { LAYOUT, ssnSeSection } from '../formFragments'
-import { yourAddressSection } from '../formFragments'
 import { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
 
-export const SE_PET_CAT: Template = {
-  name: 'SE_PET_CAT',
+export const SE_PET_DOG: Template = {
+  name: 'SE_PET_DOG',
   sections: [
     ssnSeSection,
     {
-      id: 'your-cat',
-      title: { key: tKey('SECTION_TITLE_YOUR_CAT') },
+      id: 'your-dog',
+      title: { key: tKey('SECTION_TITLE_YOUR_DOG') },
       submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
       items: [
         {
@@ -28,7 +27,7 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'text',
             name: 'breed',
-            label: { key: 'TEMP: Breed' },
+            label: { key: tKey('FIELD_PET_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -37,18 +36,12 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'radio',
             name: 'gender',
-            label: { key: tKey('FIELD_SEX_LABEL') },
-            required: true,
+            label: { key: tKey('FIELD_PET_SEX_LABEL') },
             options: [
-              {
-                label: { key: tKey('FIELD_SEX_OPTION_FEMALE_CAT') },
-                value: 'female',
-              },
-              {
-                label: { key: tKey('FIELD_SEX_OPTION_MALE_CAT') },
-                value: 'male',
-              },
+              { label: { key: tKey('FIELD_PET_SEX_OPTION_MALE_DOG') }, value: 'male' },
+              { label: { key: tKey('FIELD_PET_SEX_OPTION_FEMALE_DOG') }, value: 'female' },
             ],
+            required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
         },
@@ -66,16 +59,10 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'radio',
             name: 'neutered',
-            label: { key: tKey('FIELD_IS_NEUTERED_CAT_LABEL') },
+            label: { key: tKey('FIELD_IS_NEUTERED_DOG_LABEL') },
             options: [
-              {
-                label: { key: tKey('LABEL_YES') },
-                value: 'true',
-              },
-              {
-                label: { key: tKey('LABEL_NO') },
-                value: 'false',
-              },
+              { label: { key: tKey('LABEL_YES') }, value: 'true' },
+              { label: { key: tKey('LABEL_NO') }, value: 'false' },
             ],
             required: true,
           },
@@ -84,17 +71,11 @@ export const SE_PET_CAT: Template = {
         {
           field: {
             type: 'radio',
-            name: 'outsideAccess',
-            label: { key: tKey('FIELD_IS_OUTDOOR_CAT_LABEL') },
+            name: 'previousDogOwner',
+            label: { key: tKey('FIELD_PREVIOUS_DOG_OWNER_LABEL') },
             options: [
-              {
-                label: { key: tKey('LABEL_YES') },
-                value: 'true',
-              },
-              {
-                label: { key: tKey('LABEL_NO') },
-                value: 'false',
-              },
+              { label: { key: tKey('LABEL_YES') }, value: 'true' },
+              { label: { key: tKey('LABEL_NO') }, value: 'false' },
             ],
             required: true,
           },
