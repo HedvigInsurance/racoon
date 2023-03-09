@@ -39,6 +39,7 @@
     "ajv": "8.12.0",
     "apollo-link-timeout": "4.0.0",
     "cookies-next": "2.1.1",
+    "downshift": "7.3.2",
     "framer-motion": "10.1.0",
     "graphql": "16.6.0",
     "i18next": "22.4.11",
