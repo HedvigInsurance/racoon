@@ -21,6 +21,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
         href={getLinkFieldURL(blok.link, blok.text)}
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
+        target={blok.link.target}
       >
         {blok.text}
       </ButtonNextLink>
