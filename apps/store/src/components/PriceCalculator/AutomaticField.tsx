@@ -1,4 +1,4 @@
-import { InputField } from 'ui'
+import { InputDate } from '@/components/InputDate/InputDate'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
@@ -61,10 +61,9 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
 
     case 'date':
       return (
-        <InputField
-          type="date"
+        <InputDate
           name={field.name}
-          label={field.label ? translateLabel(field.label) : undefined}
+          label={translateLabel(field.label)}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           min={field.min}
