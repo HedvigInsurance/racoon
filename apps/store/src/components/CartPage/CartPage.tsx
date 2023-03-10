@@ -116,6 +116,7 @@ export const CartPage = (props: CartPageProps) => {
             {body}
           </GridLayout.Content>
         </GridLayout.Root>
+
         {productRecommendations && productRecommendations.length > 0 && (
           <ProductRecommendationList recommendations={productRecommendations} />
         )}

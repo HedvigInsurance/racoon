@@ -69,6 +69,8 @@
   "FIELD_PREVIOUS_DOG_OWNER_LABEL": "Har du ägt en hund tidigare?",
   "FIELD_SSN_SE_LABEL": "ååmmdd-xxxx",
   "FIELD_STREET_LABEL": "Adress",
+  "FIELD_SUB_BREEDS_ADD_BUTTON": "Lägg till ras",
+  "FIELD_SUB_BREEDS_LABEL": "Lägg till de raser som är mest framträdande",
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Äger eller hyr du din bostad?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Äger den",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Hyr den",

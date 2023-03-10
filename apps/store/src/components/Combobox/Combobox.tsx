@@ -131,7 +131,7 @@ export const Combobox = <Item,>({
         {isOpen &&
           filteredItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
-              <Separator />
+              {index !== 0 && <Separator />}
               <ComboboxOption
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}

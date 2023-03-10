@@ -69,6 +69,8 @@
   "FIELD_PREVIOUS_DOG_OWNER_LABEL": "Did you own a dog before?",
   "FIELD_SSN_SE_LABEL": "yymmdd-xxxx",
   "FIELD_STREET_LABEL": "Address",
+  "FIELD_SUB_BREEDS_ADD_BUTTON": "Add breed",
+  "FIELD_SUB_BREEDS_LABEL": "Add the most prominent breeds",
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Do you own or rent your home?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Own it",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Rent it",
