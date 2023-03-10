@@ -105,10 +105,10 @@ const TabTrigger = styled(RadixTabs.Trigger)({
   ':first-of-type': { marginLeft: 'auto' },
   ':last-of-type': { marginRight: 'auto' },
   '&[data-state="active"] ': {
-    backgroundColor: theme.colors.translucent1,
+    backgroundColor: theme.colors.opaque1,
   },
   ':focus-visible': {
-    backgroundColor: theme.colors.translucent1,
+    backgroundColor: theme.colors.opaque1,
     borderColor: theme.colors.purple500,
   },
 
@@ -118,7 +118,7 @@ const TabTrigger = styled(RadixTabs.Trigger)({
 
   '@media (hover: hover)': {
     ':hover': {
-      backgroundColor: theme.colors.translucent1,
+      backgroundColor: theme.colors.opaque1,
     },
   },
 })
