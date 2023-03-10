@@ -109,7 +109,7 @@ const Layout = {
   Price: styled.div({ gridArea: GRID_AREAS.Price }),
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
   Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
-}
+} as const
 
 const PriceFlex = styled.div({
   display: 'flex',
