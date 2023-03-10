@@ -17,7 +17,7 @@ export const SE_PET_DOG: Template = {
           field: {
             type: 'text',
             name: 'name',
-            label: { key: tKey('FIELD_PET_NAME_LABEL') },
+            label: { key: tKey('FIELD_NAME_PET_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -27,7 +27,7 @@ export const SE_PET_DOG: Template = {
           field: {
             type: 'text',
             name: 'breed',
-            label: { key: tKey('FIELD_PET_BREED_LABEL') },
+            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -36,10 +36,10 @@ export const SE_PET_DOG: Template = {
           field: {
             type: 'radio',
             name: 'gender',
-            label: { key: tKey('FIELD_PET_SEX_LABEL') },
+            label: { key: tKey('FIELD_GENDER_LABEL') },
             options: [
-              { label: { key: tKey('FIELD_PET_SEX_OPTION_MALE_DOG') }, value: 'male' },
-              { label: { key: tKey('FIELD_PET_SEX_OPTION_FEMALE_DOG') }, value: 'female' },
+              { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'male' },
+              { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'female' },
             ],
             required: true,
           },
@@ -50,7 +50,7 @@ export const SE_PET_DOG: Template = {
           field: {
             type: 'date',
             name: 'birthDate',
-            label: { key: tKey('FIELD_PET_DATE_OF_BIRTH_LABEL') },
+            label: { key: tKey('FIELD_BIRTH_DATE_PET_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -58,7 +58,7 @@ export const SE_PET_DOG: Template = {
         {
           field: {
             type: 'radio',
-            name: 'neutered',
+            name: 'isNeutered',
             label: { key: tKey('FIELD_IS_NEUTERED_DOG_LABEL') },
             options: [
               { label: { key: tKey('LABEL_YES') }, value: 'true' },

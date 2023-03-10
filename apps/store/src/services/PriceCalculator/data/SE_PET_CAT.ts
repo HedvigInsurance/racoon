@@ -18,7 +18,7 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'text',
             name: 'name',
-            label: { key: tKey('FIELD_PET_NAME_LABEL') },
+            label: { key: tKey('FIELD_NAME_PET_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -28,7 +28,7 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'text',
             name: 'breed',
-            label: { key: 'TEMP: Breed' },
+            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -37,15 +37,15 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'radio',
             name: 'gender',
-            label: { key: tKey('FIELD_SEX_LABEL') },
+            label: { key: tKey('FIELD_GENDER_LABEL') },
             required: true,
             options: [
               {
-                label: { key: tKey('FIELD_SEX_OPTION_FEMALE_CAT') },
+                label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_CAT') },
                 value: 'female',
               },
               {
-                label: { key: tKey('FIELD_SEX_OPTION_MALE_CAT') },
+                label: { key: tKey('FIELD_GENDER_OPTION_MALE_CAT') },
                 value: 'male',
               },
             ],
@@ -57,7 +57,7 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'date',
             name: 'birthDate',
-            label: { key: tKey('FIELD_PET_DATE_OF_BIRTH_LABEL') },
+            label: { key: tKey('FIELD_BIRTH_DATE_PET_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -65,7 +65,7 @@ export const SE_PET_CAT: Template = {
         {
           field: {
             type: 'radio',
-            name: 'neutered',
+            name: 'isNeutered',
             label: { key: tKey('FIELD_IS_NEUTERED_CAT_LABEL') },
             options: [
               {
@@ -85,15 +85,15 @@ export const SE_PET_CAT: Template = {
           field: {
             type: 'radio',
             name: 'outsideAccess',
-            label: { key: tKey('FIELD_IS_OUTDOOR_CAT_LABEL') },
+            label: { key: tKey('FIELD_OUTSIDE_ACCESS_LABEL') },
             options: [
               {
-                label: { key: tKey('LABEL_YES') },
-                value: 'true',
+                label: { key: tKey('FIELD_OUTSIDE_ACCESS_OPTION_NO') },
+                value: 'false',
               },
               {
-                label: { key: tKey('LABEL_NO') },
-                value: 'false',
+                label: { key: tKey('FIELD_OUTSIDE_ACCESS_OPTION_YES') },
+                value: 'true',
               },
             ],
             required: true,
