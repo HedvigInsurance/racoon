@@ -7,7 +7,7 @@ import { useProductRecommendations } from '@/components/ProductRecommendationLis
 type ErrorPageProps = { children: React.ReactNode }
 
 export const ErrorPage = ({ children }: ErrorPageProps) => {
-  const productRecommendations = useProductRecommendations()
+  const { productRecommendations } = useProductRecommendations()
 
   return (
     <Layout>
@@ -15,9 +15,7 @@ export const ErrorPage = ({ children }: ErrorPageProps) => {
       <Wrapper>{children}</Wrapper>
 
       {productRecommendations && productRecommendations.length > 0 && (
-        <ProductRecommendationList
-          recommendations={productRecommendations.map((item) => item.product)}
-        />
+        <ProductRecommendationList recommendations={productRecommendations} />
       )}
     </Layout>
   )

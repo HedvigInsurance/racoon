@@ -3,14 +3,14 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, theme, Text, Space } from 'ui'
+import { Pillow } from '@/components/Pillow/Pillow'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import { Pillow } from '../Pillow/Pillow'
 import { useHandleSubmitAddToCart } from '../ProductPage/PurchaseForm/useHandleSubmitAddToCart'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 
 type CartOfferItemProps = {
   cartId: string
@@ -18,8 +18,6 @@ type CartOfferItemProps = {
   offer: OfferRecommendationFragment
 }
 export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
-  const [loading, setLoading] = useState(false)
-
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
   const [handleSubmitAddToCart] = useHandleSubmitAddToCart({
@@ -27,6 +25,14 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
     priceIntentId: offer.id,
     onSuccess() {},
   })
+
+  const [loading, setLoading] = useState(false)
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setLoading(true)
+    handleSubmitAddToCart(event)
+  }
 
   return (
     <Layout.Main key={offer.id}>
@@ -45,6 +51,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
 
       <Layout.Content>
         <Text color="textSecondary">
+          {/* TODO: move this text to the api so it can be used with other offer types */}
           <Balancer>{t('ACCIDENT_OFFER_CONTENT')}</Balancer>
         </Text>
       </Layout.Content>
@@ -52,12 +59,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
       <Layout.Actions>
         <Space y={1}>
           <SpaceFlex space={0.25}>
-            <form
-              onSubmit={(event) => {
-                setLoading(true)
-                handleSubmitAddToCart(event)
-              }}
-            >
+            <form onSubmit={handleFormSubmit}>
               <Button loading={loading} size="medium" type="submit">
                 {t('ADD_TO_CART_BUTTON_LABEL')}
               </Button>
@@ -76,6 +78,14 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
   )
 }
 
+const GRID_AREAS = {
+  Pillow: 'pillow',
+  Title: 'title',
+  Price: 'price',
+  Content: 'content',
+  Actions: 'actions',
+} as const
+
 const Main = styled.li({
   backgroundColor: theme.colors.blue100,
   padding: theme.space.md,
@@ -85,20 +95,12 @@ const Main = styled.li({
   columnGap: theme.space.sm,
   rowGap: theme.space.md,
   gridTemplateAreas: `
-    "pillow title title"
-    "content content content"
-    "actions actions price"
+    "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
+    "${GRID_AREAS.Content} ${GRID_AREAS.Content} ${GRID_AREAS.Content}"
+    "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
 })
-
-const GRID_AREAS = {
-  Pillow: 'pillow',
-  Title: 'title',
-  Price: 'price',
-  Content: 'content',
-  Actions: 'actions',
-} as const
 
 const Layout = {
   Main,

@@ -6,6 +6,8 @@ import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
+import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
@@ -14,17 +16,13 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CartEntryList } from '../CartInventory/CartEntryList'
-import { CartEntryOfferItem } from '../CartInventory/CartEntryOfferItem'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
   const { cartId, entries, campaigns, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
-  const productRecommendations = useProductRecommendations()
-
-  const filteredOffers = productRecommendations?.filter((item) => item.offer !== null)
+  const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
 
   const tracking = useTracking()
   useEffect(
@@ -66,9 +64,9 @@ export const CartPage = (props: CartPageProps) => {
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
 
-        {cartId && filteredOffers && filteredOffers.length > 0 && (
+        {cartId && productRecommendationOffers && productRecommendationOffers.length > 0 && (
           <CartEntryList>
-            {filteredOffers.map(({ product, offer }) => {
+            {productRecommendationOffers.map(({ offer, product }) => {
               if (!offer) return null
               return (
                 <CartEntryOfferItem
@@ -113,9 +111,7 @@ export const CartPage = (props: CartPageProps) => {
           </GridLayout.Content>
         </GridLayout.Root>
         {productRecommendations && productRecommendations.length > 0 && (
-          <ProductRecommendationList
-            recommendations={productRecommendations.map(({ product }) => product)}
-          />
+          <ProductRecommendationList recommendations={productRecommendations} />
         )}
       </Space>
     </PageWrapper>

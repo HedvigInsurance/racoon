@@ -10,8 +10,11 @@ export const useProductRecommendations = () => {
     skip: !shopSessionId,
   })
 
-  return result.data?.shopSession.recommendations.map((item) => ({
-    product: item.product,
+  const productRecommendations = result.data?.shopSession.recommendations.map((item) => item.product)
+  const productRecommendationOffers = result.data?.shopSession.recommendations.map((item) => ({
     offer: item.offer,
+    product: item.product,
   }))
+
+  return { productRecommendations, productRecommendationOffers } as const
 }
