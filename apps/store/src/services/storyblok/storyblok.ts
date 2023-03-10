@@ -98,6 +98,7 @@ export type LinkField = {
   id: string
   url: string
   linktype: 'multilink' | 'story' | 'url'
+  target?: string
   story?: {
     id: number
     uuid: string
