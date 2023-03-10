@@ -75,6 +75,7 @@ const GRID_AREAS = {
   Content: 'content',
   Actions: 'actions',
   Close: 'close',
+  Empty: 'empty',
 } as const
 
 const Main = styled.li({
@@ -82,8 +83,8 @@ const Main = styled.li({
   columnGap: theme.space.sm,
   rowGap: theme.space.md,
   gridTemplateAreas: `
-    "pillow title close"
-    "empty actions price"
+    "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Close}"
+    "${GRID_AREAS.Empty} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
 })
