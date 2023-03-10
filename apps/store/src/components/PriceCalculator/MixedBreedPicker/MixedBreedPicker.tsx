@@ -79,7 +79,6 @@ const List = styled.ul({
   flexDirection: 'column',
   gap: theme.space.xs,
 })
-
 const ListItem = styled.li({
   display: 'flex',
   justifyContent: 'space-between',
