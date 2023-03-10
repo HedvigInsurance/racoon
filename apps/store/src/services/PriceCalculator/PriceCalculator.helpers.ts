@@ -7,6 +7,7 @@ import { SE_APARTMENT_RENT } from './data/SE_APARTMENT_RENT'
 import { SE_CAR } from './data/SE_CAR'
 import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_PET_CAT } from './data/SE_PET_CAT'
+import { SE_PET_DOG } from './data/SE_PET_DOG'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
 import { InputField } from './Field.types'
 import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
@@ -19,6 +20,7 @@ const TEMPLATES: Record<string, Template | undefined> = {
   SE_STUDENT_APARTMENT,
   SE_CAR,
   SE_PET_CAT,
+  SE_PET_DOG,
 }
 
 export const fetchPriceTemplate = (id: string) => {
