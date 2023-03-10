@@ -7,6 +7,7 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
@@ -21,7 +22,7 @@ export const CartPage = (props: CartPageProps) => {
   const { cartId, entries, campaigns, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
-  const productRecommendations = useProductRecommendations()
+  const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
 
   const tracking = useTracking()
   useEffect(
@@ -62,6 +63,23 @@ export const CartPage = (props: CartPageProps) => {
           {cartId &&
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
+
+        {cartId && productRecommendationOffers && productRecommendationOffers.length > 0 && (
+          <CartEntryList>
+            {productRecommendationOffers.map(({ offer, product }) => {
+              if (!offer) return null
+              return (
+                <CartEntryOfferItem
+                  key={offer.id}
+                  cartId={cartId}
+                  product={product}
+                  offer={offer}
+                />
+              )
+            })}
+          </CartEntryList>
+        )}
+
         {cartId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
             <HorizontalLine />

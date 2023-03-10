@@ -7,7 +7,7 @@ import { useProductRecommendations } from '@/components/ProductRecommendationLis
 type ErrorPageProps = { children: React.ReactNode }
 
 export const ErrorPage = ({ children }: ErrorPageProps) => {
-  const productRecommendations = useProductRecommendations()
+  const { productRecommendations } = useProductRecommendations()
 
   return (
     <Layout>

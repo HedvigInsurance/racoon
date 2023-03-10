@@ -4,6 +4,9 @@ query ProductRecommendations($shopSessionId: UUID!) {
       product {
         ...ProductRecommendation
       }
+      offer {
+        ...OfferRecommendation
+      }
     }
   }
 }

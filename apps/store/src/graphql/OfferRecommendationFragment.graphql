@@ -1,0 +1,9 @@
+fragment OfferRecommendation on ProductOffer {
+  id
+  startDate
+  priceIntentData
+  price {
+    amount
+    currencyCode
+  }
+}
