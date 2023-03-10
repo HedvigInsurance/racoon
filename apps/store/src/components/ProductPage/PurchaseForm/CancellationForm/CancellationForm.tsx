@@ -1,12 +1,12 @@
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
 import { Space, Text } from 'ui'
+import { InputDate } from '@/components/InputDate/InputDate'
 import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { FormElement } from '../PurchaseForm.constants'
-import { DateInput } from './DateInput'
 import { SelfSwitcherBubble } from './SelfSwitcherBubble'
 
 export type CancellationOption =
@@ -204,7 +204,7 @@ const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
   const inputValueToday = formatInputDateValue(dateToday)
 
   return (
-    <DateInput
+    <InputDate
       type="date"
       name={FormElement.StartDate}
       label={label ?? t('START_DATE_FIELD_LABEL')}

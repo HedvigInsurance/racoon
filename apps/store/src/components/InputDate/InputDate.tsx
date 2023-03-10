@@ -14,7 +14,7 @@ type Props = InputProps & {
   defaultValue?: string
 }
 
-export const DateInput = (props: Props) => {
+export const InputDate = (props: Props) => {
   const { t } = useTranslation()
   const { label, onChange, value, defaultValue, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(defaultValue)
