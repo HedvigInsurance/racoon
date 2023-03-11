@@ -4135,23 +4135,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-checkbox@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@radix-ui/react-checkbox@npm:1.0.2"
+"@radix-ui/react-checkbox@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@radix-ui/react-checkbox@npm:1.0.3"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@radix-ui/primitive": 1.0.0
     "@radix-ui/react-compose-refs": 1.0.0
     "@radix-ui/react-context": 1.0.0
     "@radix-ui/react-presence": 1.0.0
-    "@radix-ui/react-primitive": 1.0.1
+    "@radix-ui/react-primitive": 1.0.2
     "@radix-ui/react-use-controllable-state": 1.0.0
     "@radix-ui/react-use-previous": 1.0.0
     "@radix-ui/react-use-size": 1.0.0
   peerDependencies:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
-  checksum: a3b7efa2579c54e217e1460bf07858ad4019788918767e1075007f32bf3fef259a2ef6c277904c574ebdf99481ddad8bd0296964342be9c5b93d0ccf5720cc1e
+  checksum: aca9213eddb7f5c65b2d396421bc5a9d18fb87fad81e1964d0ac7a72fe6abb3b2c2c51ecc29b0643286843187680974ba1ff7197b2a936dd7d5edde25819800f
   languageName: node
   linkType: hard
 
@@ -22617,7 +22617,7 @@ __metadata:
     "@emotion/jest": 11.10.5
     "@emotion/react": 11.10.6
     "@emotion/styled": 11.10.6
-    "@radix-ui/react-checkbox": 1.0.2
+    "@radix-ui/react-checkbox": 1.0.3
     "@radix-ui/react-radio-group": 1.1.1
     "@storybook/addon-actions": 6.5.16
     "@storybook/addon-essentials": 6.5.16
