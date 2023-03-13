@@ -110,6 +110,9 @@ const frameSrc = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
+  'https://www.googletagmanager.com',
+  'https://tpc.googlesyndication.com',
+  'https://*.googleapis.com',
 
   // GTM-injected scripts
   'https://*.snapchat.com',
@@ -126,6 +129,7 @@ const frameSrc = [
 
 const ContentSecurityPolicy = `
   default-src 'self';
+  child-src blob: 'self';
   script-src ${scriptSrc.join(' ')};
   style-src ${styleSrc.join(' ')}; 
   font-src ${fontSrc.join(' ')};
