@@ -110,6 +110,9 @@ const frameSrc = [
   'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
+  'https://www.googletagmanager.com',
+  'https://tpc.googlesyndication.com',
+  'https://*.googleapis.com',
 
   // GTM-injected scripts
   'https://*.snapchat.com',
@@ -126,13 +129,14 @@ const frameSrc = [
 
 const ContentSecurityPolicy = `
   default-src 'self';
+  child-src blob: 'self';
   script-src ${scriptSrc.join(' ')};
   style-src ${styleSrc.join(' ')}; 
   font-src ${fontSrc.join(' ')};
   img-src ${imgSrc.join(' ')};
   media-src ${mediaSrc.join(' ')};
   connect-src ${connectSrc.join(' ')};
-  worker-src blob:;
+  worker-src blob: 'self';
   object-src data:;
   frame-src ${frameSrc.join(' ')};
   report-uri /api/csp-reports;
