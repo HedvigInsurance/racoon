@@ -36,6 +36,7 @@ import {
   filterByBlockType,
   getLinkFieldURL,
 } from '@/services/storyblok/Storyblok.helpers'
+import { isDisabledPetLink } from '@/utils/isDisabledPetLink'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonBlockProps } from './ButtonBlock'
@@ -120,18 +121,22 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
   const productNavItems: Array<ProductNavItem> = []
   filteredNavItems.forEach((item) => {
     const product = productMetadata?.find((product) => product.name === item.name)
+    let navItem
     if (product) {
-      productNavItems.push({
+      navItem = {
         name: product.displayNameShort,
         url: product.pageLink,
         image: product.pillowImage.src,
-      })
+      }
     } else {
-      productNavItems.push({
+      navItem = {
         name: item.name,
         url: getLinkFieldURL(item.link, item.name),
         image: item.pillowImage?.filename,
-      })
+      }
+    }
+    if (!isDisabledPetLink(navItem.url)) {
+      productNavItems.push(navItem)
     }
   })
 

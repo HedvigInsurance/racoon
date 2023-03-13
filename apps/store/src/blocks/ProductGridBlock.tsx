@@ -5,6 +5,7 @@ import { mq, theme } from 'ui'
 import { ProductCardBlock, ProductCardBlockProps } from '@/blocks/ProductCardBlock'
 import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { isDisabledPetLink } from '@/utils/isDisabledPetLink'
 
 type ProductGridBlockProps = SbBaseBlockProps<{
   title?: string
@@ -13,7 +14,10 @@ type ProductGridBlockProps = SbBaseBlockProps<{
 
 export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
   const items = useMemo(
-    () => blok.items.map((item) => ({ key: item._uid || item.title, ...item })),
+    () =>
+      blok.items
+        .filter((item) => !isDisabledPetLink(item.link.story?.full_slug ?? ''))
+        .map((item) => ({ key: item._uid || item.title, ...item })),
     [blok.items],
   )
   return (

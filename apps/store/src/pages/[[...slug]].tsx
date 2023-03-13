@@ -24,6 +24,7 @@ import {
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import { isDisabledPetLink } from '@/utils/isDisabledPetLink'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextContentPageProps = StoryblokPageProps & { type: 'content' }
@@ -68,6 +69,10 @@ export const getStaticProps: GetStaticProps<
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
+
+  if (isDisabledPetLink(`${locale}/${slug}`)) {
+    return { notFound: true }
+  }
 
   const apolloClient = initializeApollo({ locale })
   console.time('getStoryblokData')
@@ -134,7 +139,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  const pageLinks = await getFilteredPageLinks()
+  const pageLinks = (await getFilteredPageLinks()).filter(
+    (pageLink) => !isDisabledPetLink(pageLink.link.slug),
+  )
+
   return {
     paths: pageLinks.map(({ locale, slugParts }) => {
       return { params: { slug: slugParts }, locale }
