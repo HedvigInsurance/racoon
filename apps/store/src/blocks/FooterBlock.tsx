@@ -153,7 +153,7 @@ const Column = styled.div({
   [mq.md]: { gridColumn: 'span 3' },
   [mq.xxl]: {
     gridColumn: 'auto / span 2',
-    ':first-child': { gridColumnStart: 3 },
+    ':first-of-type': { gridColumnStart: 3 },
   },
 })
 
