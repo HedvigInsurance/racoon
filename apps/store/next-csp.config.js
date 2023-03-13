@@ -136,7 +136,7 @@ const ContentSecurityPolicy = `
   img-src ${imgSrc.join(' ')};
   media-src ${mediaSrc.join(' ')};
   connect-src ${connectSrc.join(' ')};
-  worker-src blob:;
+  worker-src blob: 'self';
   object-src data:;
   frame-src ${frameSrc.join(' ')};
   report-uri /api/csp-reports;
