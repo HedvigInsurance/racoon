@@ -103,6 +103,7 @@ const MessageIcon = styled(InfoIcon)({
   top: 2,
 })
 
+// Workaround: generics are not preserved for styled components: shorturl.at/hqyL2
 const StyledCombobox = styled(Combobox)({
   backgroundColor: theme.colors.opaque2,
 }) as typeof Combobox<Item>
