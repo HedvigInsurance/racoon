@@ -28,8 +28,18 @@ type Props = BaseInputProps & {
 
 export const TextField = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { label, variant = 'large', suffix, warning = false, message, id, ...inputProps } = props
-  const [value, setValue] = useState(props.defaultValue || '')
+  const {
+    defaultValue,
+    label,
+    variant = 'large',
+    suffix,
+    warning = false,
+    message,
+    id,
+    onValueChange,
+    ...inputProps
+  } = props
+  const [value, setValue] = useState(defaultValue || '')
   const { highlight, animationProps } = useHighlightAnimation()
   const generatedId = useId()
   const identifier = id || generatedId
@@ -37,13 +47,13 @@ export const TextField = (props: Props) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value
     setValue(newValue)
-    inputProps.onValueChange?.(newValue)
+    onValueChange?.(newValue)
   }
 
   const handleClickDelete: MouseEventHandler<HTMLButtonElement> = () => {
     const newValue = ''
     setValue(newValue)
-    inputProps.onValueChange?.(newValue)
+    onValueChange?.(newValue)
   }
 
   const handleClickWrapper: MouseEventHandler<HTMLDivElement> = () => {
