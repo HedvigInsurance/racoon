@@ -1,6 +1,47 @@
-import { css } from '@emotion/react'
+import { css, Global } from '@emotion/react'
 import { getHeadingVariantStyles } from 'ui/src/components/Heading/Heading.helpers'
 import { theme, mq } from 'ui'
+
+const hoverColors = [
+  theme.colors.blue600,
+  theme.colors.green600,
+  theme.colors.amber600,
+  theme.colors.red600,
+  theme.colors.pink600,
+  theme.colors.purple600,
+  theme.colors.teal600,
+]
+
+const getRandomHoverColor = () => {
+  // Random number between 0-6
+  const randomNumber = Math.floor(Math.random() * hoverColors.length)
+  return hoverColors[randomNumber]
+}
+
+export const GlobalLinkStyles = () => {
+  const color = getRandomHoverColor()
+
+  return <Global styles={{ ':root': { '--random-hover-color': color } }} />
+}
+
+export const linkStyles = css({
+  a: {
+    position: 'relative',
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: -2,
+      left: 0,
+      width: '100%',
+      height: 2,
+      backgroundColor: theme.colors.borderOpaque,
+    },
+
+    '&:hover::after': {
+      backgroundColor: 'var(--random-hover-color)',
+    },
+  },
+})
 
 export const listStyles = css({
   ul: {
@@ -80,25 +121,6 @@ export const listStyles = css({
 
     ol: {
       marginLeft: 0,
-    },
-  },
-})
-
-export const linkStyles = css({
-  a: {
-    position: 'relative',
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      bottom: -1,
-      left: 0,
-      width: '100%',
-      height: 2,
-      backgroundColor: theme.colors.borderOpaque,
-    },
-
-    '&:hover::after': {
-      backgroundColor: theme.colors.blue600,
     },
   },
 })
