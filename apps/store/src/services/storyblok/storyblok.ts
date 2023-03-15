@@ -40,6 +40,7 @@ import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
+import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
@@ -217,6 +218,7 @@ export const initStoryblok = () => {
     ProductGridBlock,
     ProductSlideshowBlock,
     ProductVariantSelectorBlock,
+    RichTextBlock,
     SpacerBlock,
     TabsBlock,
     TimelineBlock,
