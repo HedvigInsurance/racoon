@@ -14,6 +14,7 @@ type Props = { shopSessionId: string }
 type Params = { shopSessionId: string; status: string }
 
 const PaymentRedirectPage: NextPage<Props> = ({ shopSessionId }) => {
+  // TODO: Localise
   return (
     <div>
       Something went wrong. Please{' '}
@@ -24,12 +25,10 @@ const PaymentRedirectPage: NextPage<Props> = ({ shopSessionId }) => {
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { req, res, locale, params } = context
-  const status = params?.status
-  const shopSessionId = params?.shopSessionId
-
-  if (!status) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
-  if (!shopSessionId) return { notFound: true }
+
+  const { status, shopSessionId } = params ?? {}
+  if (!status || !shopSessionId) return { notFound: true }
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
