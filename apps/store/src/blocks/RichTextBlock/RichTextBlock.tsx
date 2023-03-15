@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { Layout } from '../TextContentBlock'
-import { richTextStyles, listStyling } from './RichTextBlock.styles'
+import { richTextStyles } from './RichTextBlock.styles'
 
 export type RichTextBlockProps = SbBaseBlockProps<{
   content: ISbRichtext
@@ -26,4 +26,4 @@ export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
 }
 RichTextBlock.blockName = 'richText'
 
-const Content = styled(GridLayout.Content)(richTextStyles, listStyling)
+const Content = styled(GridLayout.Content)(richTextStyles)
