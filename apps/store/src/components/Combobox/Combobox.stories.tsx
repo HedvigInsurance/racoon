@@ -40,5 +40,11 @@ export const Default: StoryFn = () => {
 }
 
 export const NoOptionFound: StoryFn = () => {
-  return <Combobox items={['Apple', 'Pear', 'Banana']} defaultValue="Plu" />
+  return (
+    <Combobox
+      items={['Apple', 'Pear', 'Banana']}
+      placeholder="Search fruit..."
+      defaultValue="Plu"
+    />
+  )
 }

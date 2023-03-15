@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
 import { useCombobox } from 'downshift'
 import { motion } from 'framer-motion'
-import { Fragment, useDeferredValue, useMemo } from 'react'
+import { Fragment, useState } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 const ITEMS_TO_SHOW = 5
 
 type Props<Item> = {
+  items: Array<Item>
   placeholder?: string
   defaultValue?: Item | null
-  items: Array<Item>
   onSelect?: (item: Item | null) => void
   displayValue?: (item: Item) => string
   className?: string
@@ -22,8 +22,21 @@ type Props<Item> = {
  * Combobox component
  * @see https://www.downshift-js.com/use-combobox
  */
-export const Combobox = <Item,>(props: Props<Item>) => {
-  const { defaultValue, onSelect, items, displayValue, ...inputProps } = props
+export const Combobox = <Item,>({
+  items,
+  defaultValue,
+  displayValue,
+  onSelect,
+  ...inputProps
+}: Props<Item>) => {
+  const [availableItems, setAvailableItems] = useState<Array<Item>>(() => {
+    if (!defaultValue) {
+      return items
+    }
+
+    const defaultValueString = displayValue?.(defaultValue) ?? String(defaultValue)
+    return filterItems(items, defaultValueString, displayValue)
+  })
   const { highlight, animationProps } = useHighlightAnimation()
 
   const {
@@ -37,8 +50,12 @@ export const Combobox = <Item,>(props: Props<Item>) => {
     reset,
     openMenu,
   } = useCombobox({
-    items,
+    items: availableItems,
     initialSelectedItem: defaultValue,
+    onInputValueChange({ inputValue }) {
+      const filteredItems = filterItems(items, inputValue ?? '', displayValue)
+      setAvailableItems(filteredItems)
+    },
     onSelectedItemChange({ selectedItem }) {
       if (selectedItem) {
         highlight()
@@ -51,18 +68,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
     },
   })
 
-  const deferredInputValue = useDeferredValue(inputValue)
-  const filteredItems = useMemo(() => {
-    const lowerCaseInputValue = deferredInputValue.toLowerCase() ?? ''
-    return items
-      .filter((item) => {
-        const stringValue = displayValue?.(item) ?? String(item)
-        return stringValue.toLowerCase().includes(lowerCaseInputValue)
-      })
-      .slice(0, ITEMS_TO_SHOW)
-  }, [deferredInputValue, items, displayValue])
-
-  const noOptions = filteredItems.length === 0
+  const noOptions = availableItems.length === 0
 
   const handleClickDelete = () => {
     reset()
@@ -76,7 +82,6 @@ export const Combobox = <Item,>(props: Props<Item>) => {
           {...getInputProps()}
           {...animationProps}
           {...inputProps}
-          defaultValue={defaultValue}
           data-expanded={isOpen}
           data-warning={noOptions}
         />
@@ -92,7 +97,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
 
       <List {...getMenuProps()}>
         {isOpen &&
-          filteredItems.map((item, index) => (
+          availableItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
               {index !== 0 && <Separator />}
               <ComboboxOption
@@ -223,3 +228,16 @@ const SingleLineText = styled(Text)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 })
+
+const filterItems = <Item,>(
+  items: Array<Item>,
+  value: string,
+  parseItemIntoString?: (item: Item) => string,
+) => {
+  return items
+    .filter((item) => {
+      const itemStringValue = parseItemIntoString?.(item) ?? String(item)
+      return itemStringValue.toLowerCase().includes(value.toLowerCase())
+    })
+    .slice(0, ITEMS_TO_SHOW)
+}
