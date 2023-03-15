@@ -14,6 +14,8 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
+const bankSigneringLogger = datadogLogs.createLogger('bankSignering')
+
 export type SwitchingAssistantPageProps = {
   checkoutSteps: Array<CheckoutStep>
   entries: Array<CancellableEntry>
@@ -31,11 +33,11 @@ export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
   const router = useRouter()
   const [createApproval, result] = useBankSigneringApprovalCreateMutation({
     onCompleted(data) {
-      datadogLogs.logger.info('Redirecting to BankSignering')
+      bankSigneringLogger.info('Redirecting to BankSignering')
       router.push(data.bankSigneringApprovalCreate.url)
     },
     onError(error) {
-      datadogLogs.logger.warn('Failed to create BankSignering approval', {
+      bankSigneringLogger.warn('Failed to create BankSignering approval', {
         error: error.message,
       })
       showApolloError(error)
@@ -43,8 +45,9 @@ export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
   })
 
   const handleClick = (productOfferId: string) => () => {
-    datadogLogs.logger.addContext('productOfferId', productOfferId)
     datadogRum.addAction('initiateBankSignering', { productOfferId })
+    // Logger context used in mutation result handlers
+    bankSigneringLogger.addContext('productOfferId', productOfferId)
     createApproval({ variables: { productOfferId } })
   }
 
