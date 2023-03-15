@@ -63,6 +63,31 @@ export const Combobox = <Item,>({
 
       onSelect?.(selectedItem ?? null)
     },
+    stateReducer(state, actionChanges) {
+      const { type, changes } = actionChanges
+
+      switch (type) {
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          if (availableItems.length > 1) {
+            // Keep options when pressing [Enter] and more than one item is available for selection
+            return {
+              ...changes,
+              isOpen: true,
+            }
+          } else if (availableItems.length === 1) {
+            // Select on [Enter] when only one item is available for selection
+            return {
+              ...changes,
+              inputValue: displayValue?.(availableItems[0]) ?? String(availableItems[0]) ?? '',
+              selectedItem: availableItems[0],
+            }
+          }
+
+          return changes
+        default:
+          return changes
+      }
+    },
     itemToString(item) {
       return item ? displayValue?.(item) ?? String(item) : ''
     },
