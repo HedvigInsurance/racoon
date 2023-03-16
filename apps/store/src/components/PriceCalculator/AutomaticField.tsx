@@ -10,6 +10,7 @@ import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import * as InputRadio from './InputRadio'
+import { PetBreedField } from './PetBreedField'
 import { StepperInput } from './StepperInput/StepperInput'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -164,6 +165,9 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           optionLabel={(count) => translateLabel(field.valueLabel, { count })}
         />
       )
+
+    case 'pet-breed':
+      return <PetBreedField field={field} />
 
     default: {
       const badField: never = field

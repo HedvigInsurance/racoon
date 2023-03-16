@@ -1,0 +1,6 @@
+query PriceIntentAvailableBreeds($animal: PriceIntentAnimal!) {
+  priceIntentAvailableBreeds(animal: $animal) {
+    id
+    displayName
+  }
+}

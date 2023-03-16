@@ -1,3 +1,4 @@
+import { PriceIntentAnimal } from '@/services/apollo/generated'
 import { Label } from './PriceCalculator.types'
 
 type BaseField<ValueType> = {
@@ -72,6 +73,11 @@ export type StepperField = BaseField<number> & {
   valueLabel: Label
 }
 
+export type PetBreedField = BaseField<string> & {
+  type: 'pet-breed'
+  animal: PriceIntentAnimal
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -83,3 +89,4 @@ export type InputField =
   | CarMileageField
   | CurrentInsuranceField
   | StepperField
+  | PetBreedField

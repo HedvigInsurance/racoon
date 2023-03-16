@@ -1,3 +1,4 @@
+import { PriceIntentAnimal } from '@/services/apollo/generated'
 import {
   LAYOUT,
   ssnSeSection,
@@ -22,16 +23,6 @@ export const SE_PET_DOG: Template = {
             type: 'text',
             name: 'name',
             label: { key: tKey('FIELD_NAME_PET_LABEL') },
-            required: true,
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        // TODO: replace with custom breed field
-        {
-          field: {
-            type: 'text',
-            name: 'breed',
-            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -82,6 +73,16 @@ export const SE_PET_DOG: Template = {
               { label: { key: tKey('LABEL_YES') }, value: 'true' },
               { label: { key: tKey('LABEL_NO') }, value: 'false' },
             ],
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        {
+          field: {
+            type: 'pet-breed',
+            name: 'breed',
+            animal: PriceIntentAnimal.Dog,
+            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
