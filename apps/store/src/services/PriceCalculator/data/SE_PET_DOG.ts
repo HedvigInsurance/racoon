@@ -38,8 +38,8 @@ export const SE_PET_DOG: Template = {
             name: 'gender',
             label: { key: tKey('FIELD_GENDER_LABEL') },
             options: [
-              { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'male' },
-              { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'female' },
+              { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'MALE' },
+              { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'FEMALE' },
             ],
             required: true,
           },

@@ -42,11 +42,11 @@ export const SE_PET_CAT: Template = {
             options: [
               {
                 label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_CAT') },
-                value: 'female',
+                value: 'FEMALE',
               },
               {
                 label: { key: tKey('FIELD_GENDER_OPTION_MALE_CAT') },
-                value: 'male',
+                value: 'MALE',
               },
             ],
           },
