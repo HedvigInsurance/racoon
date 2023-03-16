@@ -13,6 +13,9 @@ type Props<Item> = {
   items: Array<Item>
   onSelect?: (item: Item | null) => void
   displayValue?: (item: Item) => string
+  className?: string
+  disabled?: boolean
+  required?: boolean
 }
 
 /**
@@ -20,7 +23,7 @@ type Props<Item> = {
  * @see https://www.downshift-js.com/use-combobox
  */
 export const Combobox = <Item,>(props: Props<Item>) => {
-  const { placeholder, defaultValue, onSelect, items, displayValue } = props
+  const { defaultValue, onSelect, items, displayValue, ...inputProps } = props
   const { highlight, animationProps } = useHighlightAnimation()
 
   const {
@@ -42,6 +45,9 @@ export const Combobox = <Item,>(props: Props<Item>) => {
       }
 
       onSelect?.(selectedItem ?? null)
+    },
+    itemToString(item) {
+      return item ? displayValue?.(item) ?? String(item) : ''
     },
   })
 
@@ -69,7 +75,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
         <Input
           {...getInputProps()}
           {...animationProps}
-          placeholder={placeholder}
+          {...inputProps}
           defaultValue={defaultValue}
           data-expanded={isOpen}
           data-warning={noOptions}
@@ -88,7 +94,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
         {isOpen &&
           filteredItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
-              <Separator />
+              {index !== 0 && <Separator />}
               <ComboboxOption
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
