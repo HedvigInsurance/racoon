@@ -26,19 +26,15 @@ const FRUIT = [
 type Fruit = (typeof FRUIT)[number]
 
 export const Default: StoryFn = () => {
-  const [value, setValue] = useState<Fruit | null>(FRUIT[1])
+  const [selectedItem, setSelectedItem] = useState<Fruit | null>(FRUIT[1])
 
   return (
     <Combobox
       placeholder="Search fruit..."
       items={FRUIT}
-      defaultValue={value}
-      onSelect={setValue}
+      selectedItem={selectedItem}
+      onSelectedItemChange={setSelectedItem}
       displayValue={(fruit) => fruit.name}
     />
   )
-}
-
-export const NoOptionFound: StoryFn = () => {
-  return <Combobox items={['Apple', 'Pear', 'Banana']} defaultValue="Plu" />
 }

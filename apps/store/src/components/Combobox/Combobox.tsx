@@ -1,31 +1,45 @@
 import styled from '@emotion/styled'
 import { useCombobox } from 'downshift'
 import { motion } from 'framer-motion'
-import { Fragment, useDeferredValue, useMemo } from 'react'
+import { Fragment, useState, useMemo, useDeferredValue } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 const ITEMS_TO_SHOW = 5
 
 type Props<Item> = {
-  placeholder?: string
-  defaultValue?: Item | null
   items: Array<Item>
-  onSelect?: (item: Item | null) => void
+  selectedItem: Item | null
+  onSelectedItemChange: (item: Item | null) => void
+  placeholder?: string
   displayValue?: (item: Item) => string
+  disabled?: boolean
+  required?: boolean
 }
 
 /**
  * Combobox component
  * @see https://www.downshift-js.com/use-combobox
  */
-export const Combobox = <Item,>(props: Props<Item>) => {
-  const { placeholder, defaultValue, onSelect, items, displayValue } = props
+export const Combobox = <Item,>({
+  items,
+  selectedItem,
+  onSelectedItemChange,
+  displayValue,
+  ...externalInputProps
+}: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
+
+  const [inputValue, setInputValue] = useState('')
+  const deferredInputValue = useDeferredValue(inputValue)
+  const filteredItems = useMemo(() => {
+    return filterItems(items, deferredInputValue, displayValue)
+  }, [deferredInputValue, items, displayValue])
+
+  const noOptions = filteredItems.length === 0
 
   const {
     isOpen,
-    inputValue,
     highlightedIndex,
     getInputProps,
     getMenuProps,
@@ -34,32 +48,53 @@ export const Combobox = <Item,>(props: Props<Item>) => {
     reset,
     openMenu,
   } = useCombobox({
-    items,
-    initialSelectedItem: defaultValue,
+    items: filteredItems,
+    selectedItem,
     onSelectedItemChange({ selectedItem }) {
+      onSelectedItemChange(selectedItem ?? null)
+
       if (selectedItem) {
         highlight()
       }
+    },
+    inputValue,
+    onInputValueChange({ inputValue: internalInputValue, selectedItem }) {
+      setInputValue(internalInputValue ?? '')
 
-      onSelect?.(selectedItem ?? null)
+      // Set selectedItem to 'null' when clearing the input with delete/backspace
+      // shorturl.at/f0158
+      if (internalInputValue === '' && selectedItem) {
+        onSelectedItemChange(null)
+      }
+    },
+    stateReducer(state, actionChanges) {
+      const { type, changes } = actionChanges
+
+      switch (type) {
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          if (filteredItems.length === 1) {
+            // Select on [Enter] when only one item is available for selection
+            return {
+              ...changes,
+              inputValue: displayValue?.(filteredItems[0]) ?? String(filteredItems[0]) ?? '',
+              selectedItem: filteredItems[0],
+            }
+          }
+          return changes
+        default:
+          return changes
+      }
+    },
+    itemToString(item) {
+      return item ? displayValue?.(item) ?? String(item) : ''
     },
   })
 
-  const deferredInputValue = useDeferredValue(inputValue)
-  const filteredItems = useMemo(() => {
-    const lowerCaseInputValue = deferredInputValue.toLowerCase() ?? ''
-    return items
-      .filter((item) => {
-        const stringValue = displayValue?.(item) ?? String(item)
-        return stringValue.toLowerCase().includes(lowerCaseInputValue)
-      })
-      .slice(0, ITEMS_TO_SHOW)
-  }, [deferredInputValue, items, displayValue])
-
-  const noOptions = filteredItems.length === 0
-
   const handleClickDelete = () => {
     reset()
+    // We need to reset the pieces of state that we control ourselfs
+    setInputValue('')
+    onSelectedItemChange(null)
     openMenu()
   }
 
@@ -69,8 +104,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
         <Input
           {...getInputProps()}
           {...animationProps}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
+          {...externalInputProps}
           data-expanded={isOpen}
           data-warning={noOptions}
         />
@@ -98,6 +132,7 @@ export const Combobox = <Item,>(props: Props<Item>) => {
             </Fragment>
           ))}
       </List>
+
       {noOptions && (
         <WarningBox>
           <WarningTriangleIcon color={theme.colors.amberElement} size={theme.fontSizes.xs} />
@@ -217,3 +252,16 @@ const SingleLineText = styled(Text)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 })
+
+const filterItems = <Item,>(
+  items: Array<Item>,
+  value: string,
+  parseItemIntoString?: (item: Item) => string,
+) => {
+  return items
+    .filter((item) => {
+      const itemStringValue = parseItemIntoString?.(item) ?? String(item)
+      return itemStringValue.toLowerCase().includes(value.toLowerCase())
+    })
+    .slice(0, ITEMS_TO_SHOW)
+}
