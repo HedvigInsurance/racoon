@@ -58,6 +58,7 @@ export const Default = () => {
             cancellation: {
               option: ExternalInsuranceCancellationOption.None,
               requested: false,
+              bankSigneringApproveByDate: null,
             },
           },
         ],

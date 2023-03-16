@@ -1,26 +1,55 @@
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Button, Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
+import { useBankSigneringApprovalCreateMutation } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
+
+const bankSigneringLogger = datadogLogs.createLogger('bankSignering')
 
 export type SwitchingAssistantPageProps = {
   checkoutSteps: Array<CheckoutStep>
   entries: Array<CancellableEntry>
   shopSessionId: string
 }
-type CancellableEntry = { key: string; name: string; company: string; url: string; date: string }
+type CancellableEntry = { offerId: string; name: string; date: string; company: string }
 
 export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
   const { checkoutSteps, entries, shopSessionId } = props
   const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
+
+  const { showApolloError } = useAppErrorHandleContext()
+  const router = useRouter()
+  const [createApproval, result] = useBankSigneringApprovalCreateMutation({
+    onCompleted(data) {
+      bankSigneringLogger.info('Redirecting to BankSignering')
+      router.push(data.bankSigneringApprovalCreate.url)
+    },
+    onError(error) {
+      bankSigneringLogger.warn('Failed to create BankSignering approval', {
+        error: error.message,
+      })
+      showApolloError(error)
+    },
+  })
+
+  const handleClick = (productOfferId: string) => () => {
+    datadogRum.addAction('initiateBankSignering', { productOfferId })
+    // Logger context used in mutation result handlers
+    bankSigneringLogger.addContext('productOfferId', productOfferId)
+    createApproval({ variables: { productOfferId } })
+  }
 
   return (
     <Space y={{ base: 1, lg: 2.5 }}>
@@ -43,7 +72,7 @@ export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
           <Space y={1.5}>
             <Space y={0.25}>
               {entries.map((item) => (
-                <Card key={item.key}>
+                <Card key={item.offerId}>
                   <Space y={1}>
                     <Pill>
                       <PillStatus />
@@ -60,7 +89,7 @@ export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
                           })}
                         </Text>
                       </div>
-                      <Button href={item.url} target="_blank" rel="noopener noreferrer">
+                      <Button onClick={handleClick(item.offerId)} loading={result.loading}>
                         {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
                       </Button>
                     </Space>

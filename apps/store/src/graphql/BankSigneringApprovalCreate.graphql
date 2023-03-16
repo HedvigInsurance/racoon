@@ -1,0 +1,5 @@
+mutation BankSigneringApprovalCreate($productOfferId: UUID!) {
+  bankSigneringApprovalCreate(productOfferId: $productOfferId) {
+    url
+  }
+}

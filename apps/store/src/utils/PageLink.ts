@@ -36,6 +36,8 @@ export const PageLink = {
     const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''
     return `${localePrefix(locale)}/checkout/${shopSessionId}/payment${queryString}`
   },
+  checkoutSwitchingAssistant: ({ locale, shopSessionId }: CheckoutPaymentPage) =>
+    `${localePrefix(locale)}/checkout/${shopSessionId}/switching-assistant`,
   checkoutPaymentRedirectBase: ({ locale, shopSessionId }: CheckoutPaymentRedirectBasePage) =>
     `${ORIGIN_URL}/${locale}/checkout/${shopSessionId}/payment`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,

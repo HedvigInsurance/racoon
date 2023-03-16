@@ -67,12 +67,10 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
       tracking.reportPurchase(shopSession.cart, memberId)
       setupShopSessionServiceClientSide(apolloClient).reset()
-      await router.push(
-        getCheckoutStepLink(
-          checkoutSteps[checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout) + 1],
-          shopSession,
-        ),
-      )
+
+      const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
+      const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
+      await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSession }))
     },
     onError() {
       setShowSignError(true)
