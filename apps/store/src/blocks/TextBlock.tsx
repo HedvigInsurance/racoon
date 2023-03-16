@@ -1,7 +1,9 @@
+import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { UIColors, Text, FontSizes } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { linkStyles } from './RichTextBlock/RichTextBlock.styles'
 
 type TextColor = keyof Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textTertiary'>
 
@@ -20,7 +22,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     ...(blok.fontSizeDesktop && { md: blok.fontSizeDesktop }),
   }
   return (
-    <Text
+    <StyledText
       {...storyblokEditable(blok)}
       as="div"
       align={blok.textAlignment}
@@ -31,4 +33,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     />
   )
 }
+
+const StyledText = styled(Text)(linkStyles)
+
 TextBlock.blockName = 'text'
