@@ -1,6 +1,6 @@
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { LAYOUT, ssnSeSection } from '../formFragments'
-import { yourAddressSection } from '../formFragments'
+import { yourAddressSectionWithlivingSpace } from '../formFragments'
 import { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
@@ -102,6 +102,6 @@ export const SE_PET_CAT: Template = {
         },
       ],
     },
-    yourAddressSection,
+    yourAddressSectionWithlivingSpace,
   ],
 }

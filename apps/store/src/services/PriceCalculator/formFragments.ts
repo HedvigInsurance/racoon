@@ -154,3 +154,15 @@ export const yourAddressSection = {
     { field: emailField, layout: LAYOUT.FULL_WIDTH },
   ],
 }
+
+export const yourAddressSectionWithlivingSpace = {
+  id: 'your-address',
+  title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
+  submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
+  items: [
+    { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
+    { field: postalCodeField, layout: LAYOUT.HALF_WIDTH },
+    { field: livingSpaceField, layout: LAYOUT.HALF_WIDTH },
+    { field: emailField, layout: LAYOUT.FULL_WIDTH },
+  ],
+}

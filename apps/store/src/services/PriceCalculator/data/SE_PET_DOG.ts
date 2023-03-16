@@ -1,4 +1,8 @@
-import { LAYOUT, ssnSeSection, yourAddressSection } from '@/services/PriceCalculator/formFragments'
+import {
+  LAYOUT,
+  ssnSeSection,
+  yourAddressSectionWithlivingSpace,
+} from '@/services/PriceCalculator/formFragments'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
 
@@ -83,6 +87,6 @@ export const SE_PET_DOG: Template = {
         },
       ],
     },
-    yourAddressSection,
+    yourAddressSectionWithlivingSpace,
   ],
 }
