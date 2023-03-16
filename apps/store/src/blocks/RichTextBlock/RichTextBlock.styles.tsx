@@ -90,7 +90,7 @@ export const linkStyles = css({
     '&::after': {
       content: '""',
       position: 'absolute',
-      bottom: 1,
+      bottom: -1,
       left: 0,
       width: '100%',
       height: 2,
