@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { Space, theme } from 'ui'
+import { theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -26,11 +26,9 @@ export const TextContentBlock = ({ blok }: Props) => {
         width={blok.layout?.widths ?? '2/3'}
         align={blok.layout?.alignment ?? 'center'}
       >
-        <Space y={1}>
-          {blok.body?.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
-          ))}
-        </Space>
+        {blok.body?.map((nestedBlock) => (
+          <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
+        ))}
       </GridLayout.Content>
     </Wrapper>
   )
