@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'framer-motion'
+import { FormEventHandler } from 'react'
 import { Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -28,7 +29,7 @@ export const Root = ({ children, label, onValueChange, ...props }: RootProps) =>
       <Text size="xs" color="textSecondary">
         {label}
       </Text>
-      <RadioGroup.Root onValueChange={handleValueChange} {...props}>
+      <RadioGroup.Root onValueChange={handleValueChange} aria-label={label} {...props}>
         <SpaceFlex space={1} align="center">
           {children}
         </SpaceFlex>
@@ -48,14 +49,15 @@ type ItemProps = {
   value: string
   id?: string
   autoFocus?: boolean
+  onChange?: FormEventHandler<HTMLButtonElement>
 }
 
-export const Item = ({ value, label, id, autoFocus }: ItemProps) => {
+export const Item = ({ value, label, id, ...itemProps }: ItemProps) => {
   const identifier = id ?? `radio-${value}`
 
   return (
     <SpaceFlex space={0.5} align="center">
-      <StyledItem id={identifier} value={value} autoFocus={autoFocus}>
+      <StyledItem id={identifier} value={value} {...itemProps}>
         <StyledIndicator />
       </StyledItem>
       <label htmlFor={identifier}>
@@ -91,3 +93,32 @@ const StyledIndicator = styled(RadioGroup.Indicator)({
   width: '100%',
   height: '100%',
 })
+
+export const HorizontalRoot = ({ label, children, ...rootProps }: RootProps) => {
+  return (
+    <StyledHorizontalRoot aria-label={label} {...rootProps}>
+      {children}
+    </StyledHorizontalRoot>
+  )
+}
+
+const StyledHorizontalRoot = styled(RadioGroup.Root)({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: theme.space.xxs,
+})
+
+export const HorizontalItem = ({ onChange, ...props }: ItemProps) => {
+  const { highlight, animationProps } = useHighlightAnimation()
+
+  const handleChange: FormEventHandler<HTMLButtonElement> = (event) => {
+    highlight()
+    onChange?.(event)
+  }
+
+  return (
+    <Card {...animationProps}>
+      <Item {...props} onChange={handleChange} />
+    </Card>
+  )
+}
