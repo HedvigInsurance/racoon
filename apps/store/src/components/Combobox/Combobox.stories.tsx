@@ -38,17 +38,3 @@ export const Default: StoryFn = () => {
     />
   )
 }
-
-export const NoOptionFound: StoryFn = () => {
-  const [selectedItem, setSelectedItem] = useState<Fruit | null>({ id: '-1', name: 'no matches' })
-
-  return (
-    <Combobox
-      items={FRUIT}
-      selectedItem={selectedItem}
-      onSelectedItemChange={setSelectedItem}
-      placeholder="Search fruit..."
-      displayValue={(fruit) => fruit.name}
-    />
-  )
-}

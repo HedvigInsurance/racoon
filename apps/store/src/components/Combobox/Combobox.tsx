@@ -13,7 +13,6 @@ type Props<Item> = {
   onSelectedItemChange: (item: Item | null) => void
   placeholder?: string
   displayValue?: (item: Item) => string
-  className?: string
   disabled?: boolean
   required?: boolean
 }
@@ -27,7 +26,7 @@ export const Combobox = <Item,>({
   selectedItem,
   onSelectedItemChange,
   displayValue,
-  ...inputProps
+  ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
 
@@ -93,6 +92,7 @@ export const Combobox = <Item,>({
 
   const handleClickDelete = () => {
     reset()
+    // We need to reset the pieces of state that we control ourselfs
     setInputValue('')
     onSelectedItemChange(null)
     openMenu()
@@ -104,7 +104,7 @@ export const Combobox = <Item,>({
         <Input
           {...getInputProps()}
           {...animationProps}
-          {...inputProps}
+          {...externalInputProps}
           data-expanded={isOpen}
           data-warning={noOptions}
         />
@@ -122,7 +122,7 @@ export const Combobox = <Item,>({
         {isOpen &&
           filteredItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
-              {index !== 0 && <Separator />}
+              <Separator />
               <ComboboxOption
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
