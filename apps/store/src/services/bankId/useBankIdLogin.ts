@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import { useCallback, useRef } from 'react'
 import { Subscription } from 'zen-observable-ts'
 import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
@@ -22,6 +23,7 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
   const onLoginPromptCompletedRef = useRef<(() => void) | null>(null)
   const showLoginPrompt = useCallback(
     ({ onCompleted }: LoginPromptOptions) => {
+      datadogRum.addAction('bankIdLogin prompt')
       onLoginPromptCompletedRef.current = onCompleted
       dispatch({
         type: 'showLoginPrompt',
@@ -34,9 +36,11 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
 
   const startLoginWithCallbacks = useCallback(
     (options: BankIdLoginOptions) => {
+      datadogRum.addAction('bankIdLogin start')
       startLogin({
         ...options,
         onSuccess() {
+          datadogRum.addAction('bankIdLogin complete')
           onLoginPromptCompletedRef.current?.()
           options.onSuccess()
         },
@@ -48,6 +52,7 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
   const cancelLoginWithCallbacks = useCallback(() => {
     cancelLogin()
     onLoginPromptCompletedRef.current?.()
+    datadogRum.addAction('bankIdLogin cancel')
     dispatch({ type: 'cancel' })
   }, [cancelLogin, dispatch])
 
