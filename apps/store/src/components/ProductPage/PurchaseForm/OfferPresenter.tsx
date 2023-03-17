@@ -20,6 +20,7 @@ import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
+import { DeductibleSelector } from './DeductibleSelector'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
 import { FormElement } from './PurchaseForm.constants'
@@ -38,29 +39,9 @@ export const OfferPresenter = (props: Props) => {
   const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
-  const [selectedTypeOfContract, setSelectedTypeOfContract] = useState(
-    priceIntent.offers[0].variant.typeOfContract,
-  )
+  const [selectedOffer, setSelectedOffer] = useState(priceIntent.offers[0])
 
-  const selectedOffer = useMemo(() => {
-    const newSelectedOffer = priceIntent.offers.find(
-      (offer) => offer.variant.typeOfContract === selectedTypeOfContract,
-    )
-
-    if (newSelectedOffer) {
-      return newSelectedOffer
-    }
-
-    datadogLogs.logger.error('Failed to select offer with type of contract', {
-      typeOfContract: selectedTypeOfContract,
-      priceIntentId: priceIntent.id,
-    })
-    return priceIntent.offers[0]
-  }, [priceIntent.offers, priceIntent.id, selectedTypeOfContract])
-
-  const selectedOfferId = selectedOffer.id
-
-  const handleTierSelectorValueChange = (offerId: string) => {
+  const handleOfferChange = (offerId: string) => {
     const offer = priceIntent.offers.find((offer) => offer.id === offerId)
 
     if (offer === undefined) {
@@ -68,7 +49,7 @@ export const OfferPresenter = (props: Props) => {
       return
     }
 
-    setSelectedTypeOfContract(offer.variant.typeOfContract)
+    setSelectedOffer(offer)
   }
 
   const offerRef = useRef(null)
@@ -124,6 +105,41 @@ export const OfferPresenter = (props: Props) => {
 
   const startDate = convertToDate(selectedOffer.startDate)
 
+  const tiers = useMemo(() => {
+    const tierList: Array<ProductOfferFragment> = []
+    const usedTiers = new Set<string>()
+    for (const offer of priceIntent.offers) {
+      if (usedTiers.has(offer.variant.typeOfContract)) continue
+      usedTiers.add(offer.variant.typeOfContract)
+      tierList.push(offer)
+    }
+    return tierList
+  }, [priceIntent.offers])
+
+  const selectedTier = useMemo(() => {
+    const tier = tiers.find(
+      (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
+    )
+
+    if (tier === undefined) {
+      datadogLogs.logger.warn(`Unknown tier selected`, {
+        selectedOffer: selectedOffer.variant.typeOfContract,
+        tiers: tiers.map((item) => item.variant.typeOfContract),
+      })
+      return tiers[0]
+    }
+
+    return tier
+  }, [tiers, selectedOffer])
+
+  const deductibles = useMemo(
+    () =>
+      priceIntent.offers.filter(
+        (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
+      ),
+    [priceIntent.offers, selectedOffer],
+  )
+
   return (
     <>
       <Space y={1}>
@@ -145,11 +161,19 @@ export const OfferPresenter = (props: Props) => {
             </Space>
 
             <Space y={0.25}>
-              {priceIntent.offers.length > 1 && (
+              {tiers.length > 1 && (
                 <ProductTierSelector
-                  offers={priceIntent.offers}
+                  offers={tiers}
+                  selectedOffer={selectedTier}
+                  onValueChange={handleOfferChange}
+                />
+              )}
+
+              {deductibles.length > 1 && (
+                <DeductibleSelector
+                  offers={deductibles}
                   selectedOffer={selectedOffer}
-                  onValueChange={handleTierSelectorValueChange}
+                  onValueChange={handleOfferChange}
                 />
               )}
 
@@ -160,14 +184,14 @@ export const OfferPresenter = (props: Props) => {
                 onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
               />
 
-              <input type="hidden" name={FormElement.ProductOfferId} value={selectedOfferId} />
+              <input type="hidden" name={FormElement.ProductOfferId} value={selectedOffer.id} />
               <SubmitButton loading={loading} />
             </Space>
           </Space>
         </form>
 
         {priceIntent.offers.length > 1 && (
-          <ComparisonTableModal offers={priceIntent.offers} selectedOfferId={selectedOfferId} />
+          <ComparisonTableModal offers={priceIntent.offers} selectedOfferId={selectedOffer.id} />
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>

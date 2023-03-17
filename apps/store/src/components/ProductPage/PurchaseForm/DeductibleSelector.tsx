@@ -1,5 +1,7 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import { Text } from 'ui'
 import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
@@ -8,6 +10,13 @@ import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
+
+type Deductible = {
+  id: string
+  price: string
+  title: string
+  description: string
+}
 
 type Props = {
   offers: Array<ProductOfferFragment>
@@ -20,8 +29,27 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
   const formatter = useFormatter()
   const { routingLocale } = useCurrentLocale()
 
+  const deductibleLevels = useMemo(() => {
+    const levels: Array<Deductible> = []
+
+    offers.forEach((offer) => {
+      if (offer.deductible) {
+        levels.push({
+          id: offer.id,
+          price: formatter.monthlyPrice(offer.price),
+          title: offer.deductible.displayName,
+          description: offer.deductible.tagline,
+        })
+      } else {
+        datadogLogs.logger.warn(`Offer ${offer.id} has no deductible`)
+      }
+    })
+
+    return levels
+  }, [offers, formatter])
+
   return (
-    <TierSelector.Root>
+    <TierSelector.Root defaultOpen={true}>
       <TierSelector.Header>
         <Text>{t('DEDUCTIBLE_SELECTOR_TITLE')}</Text>
       </TierSelector.Header>
@@ -32,14 +60,13 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
           value={selectedOffer.id}
           onValueChange={onValueChange}
         >
-          {offers.map((offer) => (
+          {deductibleLevels.map((item) => (
             <TierLevelRadioGroup.Item
-              key={offer.id}
-              value={offer.id}
-              price={formatter.monthlyPrice(offer.price)}
-              // TODO: fetch deductible metadata from the API
-              title="DEDUCTIBLE_TITLE"
-              description="DEDUCTIBLE_DESCRIPTION"
+              key={item.id}
+              value={item.id}
+              price={item.price}
+              title={item.title}
+              description={item.description}
             />
           ))}
         </TierLevelRadioGroup.Root>
