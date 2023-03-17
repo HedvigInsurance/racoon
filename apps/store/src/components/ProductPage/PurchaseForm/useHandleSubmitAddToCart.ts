@@ -16,6 +16,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
   const [addEntry, { loading }] = useCartEntryAdd({
     // Refetch recommendations
     refetchQueries: 'active',
+    awaitRefetchQueries: true,
   })
 
   const { showApolloError } = useAppErrorHandleContext()
