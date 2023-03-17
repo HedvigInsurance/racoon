@@ -16,10 +16,21 @@ type PetBreedFieldProps = {
 
 export const PetBreedField = ({ field }: PetBreedFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
+  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null)
 
   const { data, loading: isLoadingAvailableBreeds } = usePriceIntentAvailableBreedsQuery({
     variables: {
       animal: field.animal,
+    },
+    onCompleted(data) {
+      const breedMatch = data.priceIntentAvailableBreeds.find((breed) => breed.id === field.value)
+      if (breedMatch) {
+        const initialSelectedBreed: Breed = {
+          id: breedMatch.id,
+          displayName: breedMatch.displayName,
+        }
+        setSelectedBreed(initialSelectedBreed)
+      }
     },
   })
 
@@ -30,10 +41,6 @@ export const PetBreedField = ({ field }: PetBreedFieldProps) => {
         displayName,
       })),
     [data?.priceIntentAvailableBreeds],
-  )
-
-  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(
-    () => availableBreeds.find((breed) => breed.id === field.value) ?? null,
   )
 
   return (
@@ -47,7 +54,7 @@ export const PetBreedField = ({ field }: PetBreedFieldProps) => {
         required={field.required}
         loading={isLoadingAvailableBreeds}
       />
-      <input type="hidden" name={field.name} value={selectedBreed?.id} />
+      {selectedBreed && <input type="hidden" name={field.name} value={selectedBreed.id} />}
     </>
   )
 }
