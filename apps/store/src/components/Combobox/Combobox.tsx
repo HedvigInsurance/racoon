@@ -27,14 +27,14 @@ export const Combobox = <Item,>({
   selectedItem,
   onSelectedItemChange,
   defaultSelectedItem,
-  displayValue,
+  displayValue = (item) => String(item),
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
 
   const [inputValue, setInputValue] = useState(() => {
     if (defaultSelectedItem) {
-      return displayValue?.(defaultSelectedItem) ?? String(defaultSelectedItem)
+      return displayValue(defaultSelectedItem)
     }
 
     return ''
@@ -85,7 +85,7 @@ export const Combobox = <Item,>({
             // Select on [Enter] when only one item is available for selection
             return {
               ...changes,
-              inputValue: displayValue?.(filteredItems[0]) ?? String(filteredItems[0]) ?? '',
+              inputValue: displayValue(filteredItems[0]),
               selectedItem: filteredItems[0],
             }
           }
@@ -95,7 +95,7 @@ export const Combobox = <Item,>({
       }
     },
     itemToString(item) {
-      return item ? displayValue?.(item) ?? String(item) : ''
+      return item ? displayValue(item) : ''
     },
   })
 
@@ -136,7 +136,7 @@ export const Combobox = <Item,>({
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
               >
-                {displayValue?.(item) ?? String(item)}
+                {displayValue(item)}
               </ComboboxOption>
             </Fragment>
           ))}

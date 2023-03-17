@@ -1,6 +1,5 @@
-import { useMemo } from 'react'
 import { Combobox } from '@/components/Combobox/Combobox'
-import { usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
+import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
 import { PetBreedField as InputFieldPetBreed, Breed } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -13,41 +12,28 @@ type PetBreedFieldProps = {
 
 export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
+  const { breeds, error } = usePetBreeds(field.animal)
 
-  const { data, error } = usePriceIntentAvailableBreedsQuery({
-    variables: {
-      animal: field.animal,
-    },
-  })
-
-  const availableBreeds: Array<Breed> = useMemo(
-    () =>
-      (data?.priceIntentAvailableBreeds ?? []).map(({ id, displayName }) => ({
-        id,
-        displayName,
-      })),
-    [data?.priceIntentAvailableBreeds],
-  )
-  let defaultSelectedItem: Breed | null = null
+  // The following will removed when we add support for mixed breeds
+  let defaultSelectedBreed: Breed | null = null
   if (field.value) {
-    defaultSelectedItem = availableBreeds.find((breed) => breed.id === field.value?.[0]) ?? null
+    defaultSelectedBreed = breeds.find((breed) => breed.id === field.value?.[0]) ?? null
   }
 
-  const handleSelectBreed = async (selectedBreed: Breed | null) => {
-    await onSubmit({
+  const handleSelectBreed = (selectedBreed: Breed | null) => {
+    onSubmit({
       [field.name]: selectedBreed ? [selectedBreed.id] : [],
     })
   }
 
   if (error) {
-    // TODO better handle error
-    return <span>Unable to fetch breeds.</span>
+    throw new Error(`Could not get available breeds for animal ${field.animal}`)
   }
 
   return (
     <Combobox
-      items={availableBreeds}
-      defaultSelectedItem={defaultSelectedItem}
+      items={breeds}
+      defaultSelectedItem={defaultSelectedBreed}
       onSelectedItemChange={handleSelectBreed}
       placeholder={translateLabel(field.label)}
       displayValue={breedToString}
@@ -55,6 +41,17 @@ export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) 
       disabled={loading}
     />
   )
+}
+
+const usePetBreeds = (animal: PriceIntentAnimal) => {
+  const { data, error, loading } = usePriceIntentAvailableBreedsQuery({
+    variables: {
+      animal,
+    },
+  })
+  const breeds = data?.priceIntentAvailableBreeds ?? []
+
+  return { breeds, error, loading }
 }
 
 const breedToString = (breed: Breed) => breed.displayName
