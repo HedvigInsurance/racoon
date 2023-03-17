@@ -1,16 +1,19 @@
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, theme, Text, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
+// TODO: extract to a separate utility
+import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
+import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import { useHandleSubmitAddToCart } from '../ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 
 type CartOfferItemProps = {
   cartId: string
@@ -20,17 +23,20 @@ type CartOfferItemProps = {
 export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
-  const [handleSubmitAddToCart] = useHandleSubmitAddToCart({
+
+  const [handleSubmitAddToCart, loading] = useHandleSubmitAddToCart({
     cartId: cartId,
     priceIntentId: offer.id,
-    onSuccess() {},
+    onSuccess() {
+      datadogLogs.logger.info('Added quick offer to cart', {
+        priceIntentId: offer.id,
+        product: product.id,
+      })
+    },
   })
 
-  const [loading, setLoading] = useState(false)
-
-  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setLoading(true)
+  const handleSubmitQuickAdd = (event: React.FormEvent<HTMLFormElement>) => {
+    datadogRum.addAction('Quick add to cart', { priceIntentId: offer.id, product: product.id })
     handleSubmitAddToCart(event)
   }
 
@@ -59,11 +65,11 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
       <Layout.Actions>
         <Space y={1}>
           <SpaceFlex space={0.25}>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleSubmitQuickAdd}>
               <Button loading={loading} size="medium" type="submit">
                 {t('ADD_TO_CART_BUTTON_LABEL')}
               </Button>
-              <input type="hidden" name="productOfferId" value={offer.id} />
+              <input type="hidden" name={FormElement.ProductOfferId} value={offer.id} />
             </form>
           </SpaceFlex>
         </Space>
