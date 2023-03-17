@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { useCombobox } from 'downshift'
 import { motion } from 'framer-motion'
 import { Fragment, useState, useMemo, useDeferredValue } from 'react'
-import { DotPulse } from 'ui/src/components/Button/DotPulse'
 import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
@@ -16,7 +15,6 @@ type Props<Item> = {
   displayValue?: (item: Item) => string
   disabled?: boolean
   required?: boolean
-  loading?: boolean
 }
 
 /**
@@ -28,7 +26,6 @@ export const Combobox = <Item,>({
   selectedItem,
   onSelectedItemChange,
   displayValue,
-  loading,
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -110,25 +107,14 @@ export const Combobox = <Item,>({
           {...externalInputProps}
           data-expanded={isOpen}
           data-warning={noOptions}
-          disabled={loading}
         />
         <Actions>
-          {loading ? (
-            <DotPulse />
-          ) : (
-            <>
-              <DeleteButton
-                type="button"
-                onClick={handleClickDelete}
-                hidden={inputValue.length === 0}
-              >
-                <CrossIconSmall />
-              </DeleteButton>
-              <ToggleButton type="button" {...getToggleButtonProps()} data-warning={noOptions}>
-                <ChevronIcon size="1rem" />
-              </ToggleButton>
-            </>
-          )}
+          <DeleteButton onClick={handleClickDelete} hidden={inputValue.length === 0}>
+            <CrossIconSmall />
+          </DeleteButton>
+          <ToggleButton {...getToggleButtonProps()} data-warning={noOptions}>
+            <ChevronIcon size="1rem" />
+          </ToggleButton>
         </Actions>
       </InputWrapper>
 
