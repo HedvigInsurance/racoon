@@ -39,6 +39,7 @@ export const SE_PET_DOG: Template = {
         {
           field: {
             type: 'radio',
+            stacking: 'horizontal',
             name: 'gender',
             label: { key: tKey('FIELD_GENDER_LABEL') },
             options: [

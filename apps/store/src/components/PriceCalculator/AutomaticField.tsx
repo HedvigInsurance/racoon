@@ -73,7 +73,23 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'radio':
-      return (
+      return field.stacking === 'horizontal' ? (
+        <InputRadio.HorizontalRoot
+          name={field.name}
+          label={translateLabel(field.label)}
+          required={field.required}
+          defaultValue={field.value ?? field.defaultValue}
+        >
+          {field.options.map((option, index) => (
+            <InputRadio.HorizontalItem
+              key={option.value}
+              label={translateLabel(option.label)}
+              value={option.value}
+              autoFocus={autoFocus && index === 0}
+            />
+          ))}
+        </InputRadio.HorizontalRoot>
+      ) : (
         <InputRadio.Root
           name={field.name}
           label={translateLabel(field.label)}
