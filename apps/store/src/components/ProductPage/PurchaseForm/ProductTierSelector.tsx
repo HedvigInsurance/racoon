@@ -53,6 +53,18 @@ const useGetVariantDescription = () => {
         return t('SE_CAR_HALF_DESCRIPTION')
       case 'SE_CAR_FULL':
         return t('SE_CAR_FULL_DESCRIPTION')
+      case 'SE_DOG_BASIC':
+        return t('SE_DOG_BASIC_DESCRIPTION')
+      case 'SE_DOG_STANDARD':
+        return t('SE_DOG_STANDARD_DESCRIPTION')
+      case 'SE_DOG_PREMIUM':
+        return t('SE_DOG_PREMIUM_DESCRIPTION')
+      case 'SE_CAT_BASIC':
+        return t('SE_CAT_BASIC_DESCRIPTION')
+      case 'SE_CAT_STANDARD':
+        return t('SE_CAT_STANDARD_DESCRIPTION')
+      case 'SE_CAT_PREMIUM':
+        return t('SE_CAT_PREMIUM_DESCRIPTION')
     }
   }
 }
