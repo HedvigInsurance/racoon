@@ -1,7 +1,19 @@
-mutation PriceIntentDataUpdate($priceIntentId: UUID!, $data: PricingFormData!) {
+mutation PriceIntentDataUpdate(
+  $priceIntentId: UUID!
+  $data: PricingFormData!
+  $customer: ShopSessionCustomerUpdateInput!
+) {
   priceIntentDataUpdate(priceIntentId: $priceIntentId, data: $data) {
     priceIntent {
       ...PriceIntentFragment
+    }
+    userError {
+      message
+    }
+  }
+  shopSessionCustomerUpdate(input: $customer) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

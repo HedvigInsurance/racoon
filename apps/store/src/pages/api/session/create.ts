@@ -113,6 +113,7 @@ const addProduct = async ({
       livingSpace: 50,
       numberCoInsured: 0,
     },
+    customer: { shopSessionId },
   })
 
   const updatedPriceIntent = await priceIntentService.confirm(priceIntent.id)
