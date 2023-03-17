@@ -9,8 +9,9 @@ const ITEMS_TO_SHOW = 5
 
 type Props<Item> = {
   items: Array<Item>
-  selectedItem: Item | null
-  onSelectedItemChange: (item: Item | null) => void
+  selectedItem?: Item | null
+  onSelectedItemChange?: (item: Item | null) => void
+  defaultSelectedItem?: Item | null
   placeholder?: string
   displayValue?: (item: Item) => string
   disabled?: boolean
@@ -25,12 +26,19 @@ export const Combobox = <Item,>({
   items,
   selectedItem,
   onSelectedItemChange,
+  defaultSelectedItem,
   displayValue,
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
 
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(() => {
+    if (defaultSelectedItem) {
+      return displayValue?.(defaultSelectedItem) ?? String(defaultSelectedItem)
+    }
+
+    return ''
+  })
   const deferredInputValue = useDeferredValue(inputValue)
   const filteredItems = useMemo(() => {
     return filterItems(items, deferredInputValue, displayValue)
@@ -50,8 +58,9 @@ export const Combobox = <Item,>({
   } = useCombobox({
     items: filteredItems,
     selectedItem,
+    defaultSelectedItem,
     onSelectedItemChange({ selectedItem }) {
-      onSelectedItemChange(selectedItem ?? null)
+      onSelectedItemChange?.(selectedItem ?? null)
 
       if (selectedItem) {
         highlight()
@@ -64,7 +73,7 @@ export const Combobox = <Item,>({
       // Set selectedItem to 'null' when clearing the input with delete/backspace
       // shorturl.at/f0158
       if (internalInputValue === '' && selectedItem) {
-        onSelectedItemChange(null)
+        onSelectedItemChange?.(null)
       }
     },
     stateReducer(state, actionChanges) {
@@ -94,7 +103,7 @@ export const Combobox = <Item,>({
     reset()
     // We need to reset the pieces of state that we control ourselfs
     setInputValue('')
-    onSelectedItemChange(null)
+    onSelectedItemChange?.(null)
     openMenu()
   }
 
@@ -109,10 +118,10 @@ export const Combobox = <Item,>({
           data-warning={noOptions}
         />
         <Actions>
-          <DeleteButton onClick={handleClickDelete} hidden={inputValue.length === 0}>
+          <DeleteButton type="button" onClick={handleClickDelete} hidden={inputValue.length === 0}>
             <CrossIconSmall />
           </DeleteButton>
-          <ToggleButton {...getToggleButtonProps()} data-warning={noOptions}>
+          <ToggleButton type="button" {...getToggleButtonProps()} data-warning={noOptions}>
             <ChevronIcon size="1rem" />
           </ToggleButton>
         </Actions>

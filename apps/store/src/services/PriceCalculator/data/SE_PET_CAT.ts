@@ -95,7 +95,7 @@ export const SE_PET_CAT: Template = {
         {
           field: {
             type: 'pet-breed',
-            name: 'breed',
+            name: 'breeds',
             animal: PriceIntentAnimal.Cat,
             label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,

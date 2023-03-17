@@ -1,36 +1,22 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Combobox } from '@/components/Combobox/Combobox'
-import {
-  usePriceIntentAvailableBreedsQuery,
-  PriceIntentAnimalBreed,
-} from '@/services/apollo/generated'
-import { PetBreedField as InputFieldPetBreed } from '@/services/PriceCalculator/Field.types'
+import { usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
+import { PetBreedField as InputFieldPetBreed, Breed } from '@/services/PriceCalculator/Field.types'
+import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
-
-type Breed = Pick<PriceIntentAnimalBreed, 'id' | 'displayName'>
 
 type PetBreedFieldProps = {
   field: InputFieldPetBreed
-  loading?: boolean
+  onSubmit: (data: JSONData) => Promise<unknown>
+  loading: boolean
 }
 
-export const PetBreedField = ({ field }: PetBreedFieldProps) => {
+export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
-  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null)
 
-  const { data } = usePriceIntentAvailableBreedsQuery({
+  const { data, error } = usePriceIntentAvailableBreedsQuery({
     variables: {
       animal: field.animal,
-    },
-    onCompleted(data) {
-      const breedMatch = data.priceIntentAvailableBreeds.find((breed) => breed.id === field.value)
-      if (breedMatch) {
-        const initialSelectedBreed: Breed = {
-          id: breedMatch.id,
-          displayName: breedMatch.displayName,
-        }
-        setSelectedBreed(initialSelectedBreed)
-      }
     },
   })
 
@@ -42,19 +28,32 @@ export const PetBreedField = ({ field }: PetBreedFieldProps) => {
       })),
     [data?.priceIntentAvailableBreeds],
   )
+  let defaultSelectedItem: Breed | null = null
+  if (field.value) {
+    defaultSelectedItem = availableBreeds.find((breed) => breed.id === field.value?.[0]) ?? null
+  }
+
+  const handleSelectBreed = async (selectedBreed: Breed | null) => {
+    await onSubmit({
+      [field.name]: selectedBreed ? [selectedBreed.id] : [],
+    })
+  }
+
+  if (error) {
+    // TODO better handle error
+    return <span>Unable to fetch breeds.</span>
+  }
 
   return (
-    <>
-      <Combobox
-        items={availableBreeds}
-        selectedItem={selectedBreed}
-        onSelectedItemChange={setSelectedBreed}
-        placeholder={translateLabel(field.label)}
-        displayValue={breedToString}
-        required={field.required}
-      />
-      {selectedBreed && <input type="hidden" name={field.name} value={selectedBreed.id} />}
-    </>
+    <Combobox
+      items={availableBreeds}
+      defaultSelectedItem={defaultSelectedItem}
+      onSelectedItemChange={handleSelectBreed}
+      placeholder={translateLabel(field.label)}
+      displayValue={breedToString}
+      required={field.required}
+      disabled={loading}
+    />
   )
 }
 

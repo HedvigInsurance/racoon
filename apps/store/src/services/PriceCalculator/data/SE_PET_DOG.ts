@@ -80,7 +80,7 @@ export const SE_PET_DOG: Template = {
         {
           field: {
             type: 'pet-breed',
-            name: 'breed',
+            name: 'breeds',
             animal: PriceIntentAnimal.Dog,
             label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
