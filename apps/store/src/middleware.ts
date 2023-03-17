@@ -66,7 +66,7 @@ type Redirect = {
 const redirectMiddleware = async (req: NextRequest): Promise<NextResponse | undefined> => {
   let redirects: Array<Redirect> | undefined
   try {
-    redirects = await getFromConfig<Array<Redirect> | undefined>('redirects')
+    redirects = await getFromConfig<Array<Redirect>>('redirects')
   } catch (err) {
     console.warn('Failed to load redirects config', err)
     return
