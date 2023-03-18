@@ -4684,24 +4684,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@storyblok/js@npm:2.1.0"
+"@storyblok/js@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@storyblok/js@npm:2.1.1"
   dependencies:
     storyblok-js-client: ^5.4.1
-  checksum: 92c66543e01f4449ff784668093a8854b18acf3e70330f3555164be8a09887018db7dd9e76f5d36dfcb851baf56e7ed4fe94d41b11b3823c9aba01ddc7daf0ee
+  checksum: 5845c8400f0f52eaae02c8a278974acbeea599b30228e99de26c3373c1ed2857441bdffa782b9237ce18a56c7b4a7f4293ee748c44dd36e6248d32631abc5b28
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:2.0.14":
-  version: 2.0.14
-  resolution: "@storyblok/react@npm:2.0.14"
+"@storyblok/react@npm:2.0.15":
+  version: 2.0.15
+  resolution: "@storyblok/react@npm:2.0.15"
   dependencies:
-    "@storyblok/js": ^2.1.0
+    "@storyblok/js": ^2.1.1
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 85028c8559d94282ed2d4891beafc2f01a81f145fe5e24ca0592870c51a9d8048eb5e9a0150ff23cbf65e9f330b39e7a20a2a1890537c905393bfae977b8bc2c
+  checksum: cc72ad2556ded5b21d58956bc5e10f1c28b1591b9190354c7ddee6396632b06977d4b9e18a4226aab6cd85f9ccf50a9fa016bcee892bd9b357722ec83f3f33ce
   languageName: node
   linkType: hard
 
@@ -21274,7 +21274,7 @@ __metadata:
     "@radix-ui/react-radio-group": 1.1.2
     "@radix-ui/react-switch": 1.0.2
     "@radix-ui/react-tabs": 1.0.3
-    "@storyblok/react": 2.0.14
+    "@storyblok/react": 2.0.15
     "@storybook/addon-actions": 6.5.16
     "@storybook/addon-essentials": 6.5.16
     "@storybook/addon-links": 6.5.16
