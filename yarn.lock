@@ -11046,9 +11046,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:7.3.2":
-  version: 7.3.2
-  resolution: "downshift@npm:7.3.2"
+"downshift@npm:7.4.1":
+  version: 7.4.1
+  resolution: "downshift@npm:7.4.1"
   dependencies:
     "@babel/runtime": ^7.14.8
     compute-scroll-into-view: ^2.0.4
@@ -11057,7 +11057,7 @@ __metadata:
     tslib: ^2.3.0
   peerDependencies:
     react: ">=16.12.0"
-  checksum: 4ed19fbf5a8d2afe35d2c55d35bd6de1e992d3553540ef0a4371ecdc4fc9e9643f999dcbc6fabb87dc6ab046dbff402231adaeb2ed47e66a70d10d59dd1552d8
+  checksum: 53b6c474e64a46b6c7a0492fa94d1e5c137ea213f1d5eac67d3769ae6a99f9200995c3dc435603ed2e79086a3dd8e5acf275d2d44c961e8df2843f909ea21ad0
   languageName: node
   linkType: hard
 
@@ -21294,7 +21294,7 @@ __metadata:
     apollo-link-timeout: 4.0.0
     babel-loader: 9.1.2
     cookies-next: 2.1.1
-    downshift: 7.3.2
+    downshift: 7.4.1
     eslint-config-custom: "workspace:"
     framer-motion: 10.1.0
     graphql: 16.6.0
