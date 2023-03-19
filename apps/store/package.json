@@ -42,7 +42,7 @@
     "downshift": "7.4.1",
     "framer-motion": "10.5.0",
     "graphql": "16.6.0",
-    "i18next": "22.4.11",
+    "i18next": "22.4.12",
     "jotai": "2.0.3",
     "jwt-decode": "3.1.2",
     "next": "13.2.4",
