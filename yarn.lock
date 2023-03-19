@@ -19671,13 +19671,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use-intercom@npm:4.1.0":
-  version: 4.1.0
-  resolution: "react-use-intercom@npm:4.1.0"
+"react-use-intercom@npm:5.0.0":
+  version: 5.0.0
+  resolution: "react-use-intercom@npm:5.0.0"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: dc2b21e9ba95bcafc25eaf478b11000f390a277078c8514f6a2d890ea7081d3c44ba5305e2dff24ee5fc9b66a7fd46eebccc077b248ccfa5a334d0c7a1a97e34
+  checksum: 888da6727f109598f40885faa8423acdb7332acea990ab8426ac4287e68b70426a94e57c059fc9813c87c8ca92ada628850085eb4618b174cab9075d820f486d
   languageName: node
   linkType: hard
 
@@ -21319,7 +21319,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 12.2.0
-    react-use-intercom: 4.1.0
+    react-use-intercom: 5.0.0
     react-wrap-balancer: 0.4.0
     storybook-addon-next: 1.7.3
     storybook-addon-next-router: 4.0.2
