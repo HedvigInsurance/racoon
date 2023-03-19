@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Image, { ImageProps } from 'next/legacy/image'
 import type { ChangeEventHandler, MouseEventHandler } from 'react'
 import { useRef, useState } from 'react'
-import { Space, Checkbox, CheckboxProps, useBreakpoint, mq } from 'ui'
+import { Space, Checkbox, CheckboxProps, CheckboxImperativeAPI, useBreakpoint, theme, mq } from 'ui'
 import { Button } from '@/components/Button/Button'
 import { CoverageDialog } from './CoverageDialog'
 
@@ -22,31 +22,23 @@ export const InsuranceCard = ({
   onChange,
   ...delegated
 }: Props) => {
-  const checkboxRef = useRef<HTMLInputElement | null>(null)
-  const moreDetailsButtonRef = useRef<HTMLButtonElement | null>(null)
-
-  const [isSelected, setIsSelected] = useState(delegated.checked ?? false)
+  const checkboxRef = useRef<CheckboxImperativeAPI>(null)
   const [openDialog, setOpenDialog] = useState(false)
-
   const matchesSmall = useBreakpoint('sm')
   const { t } = useTranslation()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event)
-    setIsSelected(event.target.checked)
   }
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    const hasClickedOnTheCard =
-      event.target !== checkboxRef.current && event.target !== moreDetailsButtonRef.current
-    if (hasClickedOnTheCard) {
-      checkboxRef.current?.click()
-    }
+  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
+    // Clicking on the card area should be interpreted as clicking on the Checkbox
+    checkboxRef.current?.click()
   }
 
   return (
     <>
-      <Card selected={isSelected} onClick={handleClick}>
+      <Card onClick={handleClick}>
         <ImageFrame>
           <Image
             {...img}
@@ -62,17 +54,34 @@ export const InsuranceCard = ({
             <CardHeader>
               <CardTitle>{title}</CardTitle>
               <CheckboxWrapper>
-                <Checkbox ref={checkboxRef} onChange={handleChange} {...delegated} />
+                <Checkbox
+                  ref={checkboxRef}
+                  onChange={handleChange}
+                  onClick={(event) => {
+                    // This prevents click events fired on Checkbox being also
+                    // handled by the Card. If that's allowed, clicking on the
+                    // Checkbox would toggle it and then its value would be reversed
+                    // as the Card get's clicked as well.
+                    event.stopPropagation()
+                  }}
+                  {...delegated}
+                />
               </CheckboxWrapper>
             </CardHeader>
             <CardDescription>{description}</CardDescription>
           </Space>
           <TextButton
-            ref={moreDetailsButtonRef}
             type="button"
             variant="text"
             p="0"
-            onClick={() => setOpenDialog(true)}
+            onClick={(event) => {
+              // This prevents click events fired on 'See More' text button being also
+              // handled by the Card. If that's allowed, clicking on the
+              // 'See More' text button would open 'Coverage Modal' and also select the
+              // Card.
+              event.stopPropagation()
+              setOpenDialog(true)
+            }}
           >
             {t('INSURANCE_CARD_SEE_COVERAGE')}
           </TextButton>
@@ -90,7 +99,7 @@ export const InsuranceCard = ({
   )
 }
 
-const Card = styled.div<{ selected: boolean }>(({ theme, selected }) => ({
+const Card = styled.div({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -98,17 +107,19 @@ const Card = styled.div<{ selected: boolean }>(({ theme, selected }) => ({
   borderRadius: '8px',
   overflow: 'hidden',
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-  outline: selected ? `2px solid ${theme.colors.black}` : 'none',
   transition: 'all 150ms',
   ':hover': {
     cursor: 'pointer',
     outline: `2px solid ${theme.colors.black}`,
     transform: 'scale(1.010)',
   },
+  ':has(input[type="checkbox"]:checked)': {
+    outline: `2px solid ${theme.colors.black}`,
+  },
   [mq.sm]: {
     minHeight: '20.43rem',
   },
-}))
+})
 
 const ImageFrame = styled.div({
   position: 'relative',

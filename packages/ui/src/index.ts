@@ -1,5 +1,5 @@
 export { Checkbox } from './components/Checkbox/Checkbox'
-export type { CheckboxProps } from './components/Checkbox/Checkbox'
+export type { CheckboxProps, CheckboxImperativeAPI } from './components/Checkbox/Checkbox'
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { Separate } from './components/Separate'
 export { Space } from './components/Space'
@@ -25,6 +25,5 @@ export { legacyTheme } from './lib/theme/legacy/legacyTheme'
 export type { UIColors, UIColorKeys } from './lib/theme/colors/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
-export { mergeRefs } from './lib/merge-refs'
 
 export * from './icons/index'

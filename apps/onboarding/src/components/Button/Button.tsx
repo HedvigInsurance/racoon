@@ -19,7 +19,7 @@ export type ButtonProps = Paddings &
     size?: ButtonSize
     children?: ReactNode
     icon?: ReactNode
-    onClick?: () => void
+    onClick?: React.MouseEventHandler<HTMLButtonElement>
     type?: 'button' | 'submit'
     disabled?: boolean
     form?: string
