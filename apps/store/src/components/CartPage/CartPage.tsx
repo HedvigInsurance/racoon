@@ -54,8 +54,8 @@ export const CartPage = (props: CartPageProps) => {
   )
 
   if (entries && entries.length > 0) {
-    const offerRecommendations = productRecommendationOffers?.filter((item) => item.offer) ?? []
-    const showProductRecommendations = cartId && offerRecommendations.length > 0
+    const showProductRecommendations =
+      cartId && productRecommendationOffers && productRecommendationOffers.length > 0
 
     body = (
       <Space y={{ base: 1, sm: 1.5 }}>
@@ -79,7 +79,7 @@ export const CartPage = (props: CartPageProps) => {
 
         {showProductRecommendations && (
           <CartEntryList>
-            {offerRecommendations.map(({ offer, product }) => {
+            {productRecommendationOffers.map(({ offer, product }) => {
               // TODO: improve typing to get rid of this check
               if (!offer) return null
               return (

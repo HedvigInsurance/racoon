@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { QueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
@@ -14,6 +15,7 @@ type CheckoutPaymentPage = BaseParams & { shopSessionId: string; authStatus?: Au
 type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
 type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
+type CheckoutPage = BaseParams & { expandCart?: boolean }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
@@ -30,7 +32,10 @@ export const PageLink = {
     return `${localePrefix(locale)}/${slug}`
   },
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
-  checkout: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout`,
+  checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {
+    const expandCartQueryParam = expandCart ? `?${QueryParam.ExpandCart}=1` : ''
+    return `${localePrefix(locale)}/checkout${expandCartQueryParam}`
+  },
   checkoutPayment: ({ locale, authStatus, shopSessionId }: CheckoutPaymentPage) => {
     const authStatusQueryParam = authStatus ? `authStatus=${authStatus}` : null
     const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''

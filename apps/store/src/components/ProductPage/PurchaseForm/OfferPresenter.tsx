@@ -213,7 +213,7 @@ export const OfferPresenter = (props: Props) => {
                 type="submit"
                 variant="primary-alt"
                 onClick={handleClickSubmit(AddToCartRedirect.Checkout)}
-                value={PageLink.checkout()}
+                value={PageLink.checkout({ expandCart: true })}
                 loading={loading && addToCartRedirect === AddToCartRedirect.Checkout}
                 disabled={loading}
               >

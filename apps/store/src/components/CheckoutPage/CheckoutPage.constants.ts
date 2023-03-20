@@ -3,3 +3,7 @@ export enum FormElement {
   FirstName = 'firstName',
   LastName = 'lastName',
 }
+
+export enum QueryParam {
+  ExpandCart = 'expand',
+}
