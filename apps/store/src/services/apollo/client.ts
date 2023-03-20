@@ -35,11 +35,12 @@ const errorLink = onError((error: ErrorResponse) => {
 
 const userErrorLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((fetchResult) => {
-    for (const result of Object.values(fetchResult?.data ?? {})) {
-      if (result.userError) {
+    for (const result of Object.values(fetchResult.data ?? {})) {
+      const { userError } = result ?? {}
+      if (userError) {
         throw new ApolloError({
-          errorMessage: result.userError.message,
-          extraInfo: { userError: result.userError },
+          errorMessage: userError.message,
+          extraInfo: { userError },
         })
       }
     }
