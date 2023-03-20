@@ -37,7 +37,7 @@ export const CartEntryItem = (props: Props) => {
             <RemoveEntryDialog cartId={cartId} {...cartEntry}>
               <Dialog.Trigger asChild>
                 <InvisibleButton aria-label="delete button">
-                  <CrossIconSmall color={theme.colors.textTertiary} />
+                  <CrossIconSmall />
                 </InvisibleButton>
               </Dialog.Trigger>
             </RemoveEntryDialog>
@@ -103,10 +103,16 @@ const InvisibleButton = styled.button({
   cursor: 'pointer',
   paddingLeft: theme.space.xs,
   paddingBottom: theme.space.xs,
+  color: theme.colors.textTertiary,
+
   '&:focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
     borderRadius: '0.25rem',
     boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+  },
+
+  '&:hover': {
+    color: theme.colors.textPrimary,
   },
 })
 
