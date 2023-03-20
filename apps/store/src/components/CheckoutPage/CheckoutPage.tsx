@@ -9,12 +9,14 @@ import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import {
@@ -28,7 +30,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { CartCollapsible } from './CartCollapsible/CartCollapsible'
-import { FormElement } from './CheckoutPage.constants'
+import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
@@ -77,6 +79,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     },
   })
 
+  const { productRecommendationOffers } = useProductRecommendations()
+
   const userErrorMessage = userError?.message
 
   return (
@@ -91,15 +95,16 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               {t('CHECKOUT_PAGE_HEADING')}
             </Heading>
 
-            <div>
+            <Space y={1}>
               <CartCollapsible
                 title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
                 cost={cart.cost}
+                defaultOpen={router.query[QueryParam.ExpandCart] === '1'}
               >
                 <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
                   <CartEntryList>
                     {cart.entries.map((item) => (
-                      <CartEntryItem readOnly key={item.offerId} cartId={cart.id} {...item} />
+                      <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
                     ))}
                   </CartEntryList>
                   <HorizontalLine />
@@ -110,8 +115,24 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </CartCollapsibleInner>
               </CartCollapsible>
 
-              <Space y={{ base: 1, lg: 1.5 }}>
-                <HorizontalLine />
+              <Space y={2}>
+                {productRecommendationOffers && productRecommendationOffers.length > 0 ? (
+                  <CartEntryList>
+                    {productRecommendationOffers?.map(({ product, offer }) => {
+                      if (!offer) return null
+                      return (
+                        <CartEntryOfferItem
+                          key={offer.id}
+                          cartId={cart.id}
+                          product={product}
+                          offer={offer}
+                        />
+                      )
+                    })}
+                  </CartEntryList>
+                ) : (
+                  <HorizontalLine />
+                )}
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>
                     <PersonalNumberField
@@ -162,7 +183,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   </Space>
                 </form>
               </Space>
-            </div>
+            </Space>
           </Content>
         </Layout>
       </Space>
