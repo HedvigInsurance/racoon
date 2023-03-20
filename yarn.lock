@@ -6322,6 +6322,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/clone-deep@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@types/clone-deep@npm:4.0.1"
+  checksum: 0a467f6772783cf131b57cac57feceb976148931275e4dbecb8471e86821c00d2519763e58d20943e8dfbcae0b96670b77138f064b67fdb6071aca6cdf3d3ecd
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.35
   resolution: "@types/connect@npm:3.4.35"
@@ -9240,7 +9247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clone-deep@npm:^4.0.1":
+"clone-deep@npm:4.0.1, clone-deep@npm:^4.0.1":
   version: 4.0.1
   resolution: "clone-deep@npm:4.0.1"
   dependencies:
@@ -18856,6 +18863,7 @@ __metadata:
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
+    "@types/clone-deep": 4.0.1
     "@types/node": 18.15.3
     "@types/react": 18.0.28
     "@types/uuid": 9.0.1
@@ -18863,6 +18871,7 @@ __metadata:
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
     babel-loader: 9.1.2
+    clone-deep: 4.0.1
     cookies-next: 2.1.1
     downshift: 7.4.1
     eslint-config-custom: "workspace:"
