@@ -54,9 +54,12 @@ export const CartPage = (props: CartPageProps) => {
   )
 
   if (entries && entries.length > 0) {
+    const offerRecommendations = productRecommendationOffers?.filter((item) => item.offer) ?? []
+    const showProductRecommendations = cartId && offerRecommendations.length > 0
+
     body = (
-      <Space y={1.5}>
-        <Heading mb="2.5rem" as={'h2'} align="center">
+      <Space y={{ base: 1, sm: 1.5 }}>
+        <Heading mb="2.5rem" as="h2" align="center">
           {t('CART_PAGE_HEADING')}
         </Heading>
         <CartEntryList>
@@ -64,9 +67,10 @@ export const CartPage = (props: CartPageProps) => {
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
 
-        {cartId && productRecommendationOffers && productRecommendationOffers.length > 0 && (
+        {showProductRecommendations && (
           <CartEntryList>
-            {productRecommendationOffers.map(({ offer, product }) => {
+            {offerRecommendations.map(({ offer, product }) => {
+              // TODO: improve typing to get rid of this check
               if (!offer) return null
               return (
                 <CartEntryOfferItem
@@ -80,9 +84,10 @@ export const CartPage = (props: CartPageProps) => {
           </CartEntryList>
         )}
 
+        {!showProductRecommendations && <HorizontalLine />}
+
         {cartId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
-            <HorizontalLine />
             <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
             <HorizontalLine />
           </Space>
