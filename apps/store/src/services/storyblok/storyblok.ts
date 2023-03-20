@@ -38,6 +38,8 @@ import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
+import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBlock'
+import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillowsBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
@@ -218,6 +220,8 @@ export const initStoryblok = () => {
     ProductCardBlock,
     ProductDocumentsBlock,
     ProductGridBlock,
+    ProductPillowBlock,
+    ProductPillowsBlock,
     ProductSlideshowBlock,
     ProductVariantSelectorBlock,
     RichTextBlock,
