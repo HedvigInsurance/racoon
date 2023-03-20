@@ -5,9 +5,8 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Space, mq, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
-import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/HeaderStyles'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -38,7 +37,6 @@ type Props = ProductItemProps & {
 }
 
 export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
-  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('purchase-form')
   const handleClose = () => onClose?.()
 
@@ -50,16 +48,12 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
           <DialogContentWrapper>
             <ProductItem {...productItemProps} />
             <Space y={0.5}>
-              <ButtonNextLink href={PageLink.cart()} variant="primary">
-                {t('CART_TOAST_CART_LINK')}
+              <ButtonNextLink href={PageLink.checkout()} variant="primary">
+                {t('CART_TOAST_PRIMARY_LINK')}
               </ButtonNextLink>
 
-              <ButtonNextLink
-                href={PageLink.store({ locale: routingLocale })}
-                onClick={onClose}
-                variant="ghost"
-              >
-                {t('CART_TOAST_STORE_LINK')}
+              <ButtonNextLink href={PageLink.cart()} onClick={onClose} variant="ghost">
+                {t('CART_TOAST_SECONDARY_LINK')}
               </ButtonNextLink>
             </Space>
           </DialogContentWrapper>
