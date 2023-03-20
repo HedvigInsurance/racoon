@@ -11,6 +11,7 @@ import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -119,15 +120,18 @@ const ResetSessionButton = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const { reset: resetShopSession } = useShopSession()
+
   const handleClick = async () => {
     setLoading(true)
     datadogLogs.logger.info('Cleared shopSession to change SSN in price calculator')
     await resetShopSession()
-    router.replace({
-      pathname: router.pathname,
-      query: { ...router.query, [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1 },
-    })
+    resetAuthTokens()
+
+    const url = new URL(window.location.href)
+    url.searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+    await router.replace(url)
   }
+
   return (
     <Button loading={loading} onClick={handleClick}>
       {t('CHANGE_SSN_BUTTON')}
