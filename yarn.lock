@@ -11948,9 +11948,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:10.5.0":
-  version: 10.5.0
-  resolution: "framer-motion@npm:10.5.0"
+"framer-motion@npm:10.6.0":
+  version: 10.6.0
+  resolution: "framer-motion@npm:10.6.0"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -11965,7 +11965,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 07009d50101f14988dec493b8cab1b6f56f8729f73686343c4a5509d0b3c097f4d3ee99a370cd7cd540ece04e6034eeb02fb69e9cecd715544ef23bdfc305c60
+  checksum: 83de861483cd5fe820284ee883fb5a78ae9463f083aca8e8588e9403d3fcc7d98a1f9bcf96aefcdd5058aeb2aca07a55cb6d1ce3a979e5fe9fd44d084e948c27
   languageName: node
   linkType: hard
 
@@ -16212,7 +16212,7 @@ __metadata:
     eslint-config-custom: "workspace:"
     eslint-plugin-cypress: 2.12.1
     formidable: 2.1.1
-    framer-motion: 10.5.0
+    framer-motion: 10.6.0
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.12
@@ -18866,7 +18866,7 @@ __metadata:
     cookies-next: 2.1.1
     downshift: 7.4.1
     eslint-config-custom: "workspace:"
-    framer-motion: 10.5.0
+    framer-motion: 10.6.0
     graphql: 16.6.0
     graphql-tag: 2.12.6
     i18next: 22.4.12
@@ -20010,11 +20010,11 @@ __metadata:
 
 "typescript@patch:typescript@5.0.2#~builtin<compat/typescript>":
   version: 5.0.2
-  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=1f5320"
+  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bdbf3d0aac0d6cf010fbe0536753dc19f278eb4aba88140dcd25487dfe1c56ca8b33abc0dcd42078790a939b08ebc4046f3e9bb961d77d3d2c3cfa9829da4d53
+  checksum: b63cb742fbb9aeb3085e002ad8f10d5fd963606aa4d6b3b65b4e76c396ff09739f03b5dbae08e1698c3bce9d5619d3f67aeb7ee470ed4016bd345b3cfe37b54a
   languageName: node
   linkType: hard
 
