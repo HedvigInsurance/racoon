@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { HeroVideoVimeo } from './HeroVideoVimeo'
 
 export default {
-  title: 'HeroVideo',
+  title: 'HeroVimeoVideo',
   component: HeroVideoVimeo,
   parameters: {
     viewport: {
