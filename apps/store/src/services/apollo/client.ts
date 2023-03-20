@@ -114,13 +114,14 @@ type InitializeApolloParams = {
 
 export const initializeApollo = (params: InitializeApolloParams = {}) => {
   const { initialState = null, req, res, locale, authHeaders } = params
-  const headers = {
-    ...(authHeaders ?? getAuthHeaders({ req, res })),
-    ...(locale && getHedvigLanguageHeader(locale)),
-    ...getShopSessionHeader({ req, res }),
-  }
 
-  const _apolloClient = apolloClient ?? createApolloClient(headers)
+  const _apolloClient =
+    apolloClient ??
+    createApolloClient({
+      ...(authHeaders ?? getAuthHeaders({ req, res })),
+      ...(locale && getHedvigLanguageHeader(locale)),
+      ...getShopSessionHeader({ req, res }),
+    })
 
   if (initialState) {
     const existingCache = _apolloClient.extract()
