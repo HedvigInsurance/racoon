@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import * as CheckList from './CheckList'
 
 export default {
   title: 'Check List',
   component: CheckList.Root,
   argTypes: {},
-} as ComponentMeta<typeof CheckList.Root>
+} as Meta<typeof CheckList.Root>
 
-const Template: ComponentStory<typeof CheckList.Root> = () => {
+const Template: StoryFn<typeof CheckList.Root> = () => {
   return (
     <CheckList.Root>
       <CheckList.Item>Something great about the insurance</CheckList.Item>

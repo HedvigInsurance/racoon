@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui'
 import { Button } from './Button'
 
 export default {
   title: 'Base / Button',
   component: Button,
-} as ComponentMeta<typeof Button>
+} as Meta<typeof Button>
 
-const Template: ComponentStory<typeof Button> = (props) => {
+const Template: StoryFn<typeof Button> = (props) => {
   return (
     <Space y={2}>
       <Space y={1}>

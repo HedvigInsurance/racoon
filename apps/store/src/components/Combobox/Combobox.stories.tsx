@@ -1,4 +1,4 @@
-import { ComponentMeta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Combobox } from './Combobox'
 
@@ -6,7 +6,7 @@ export default {
   title: 'Combobox',
   component: Combobox,
   argTypes: {},
-} as ComponentMeta<typeof Combobox>
+} as Meta<typeof Combobox>
 
 const FRUIT = [
   {

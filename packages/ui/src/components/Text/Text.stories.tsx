@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Text, TextProps } from './Text'
 
 export default {
@@ -12,9 +12,9 @@ export default {
   args: {
     children: 'This is a Text',
   },
-} as ComponentMeta<typeof Text>
+} as Meta<typeof Text>
 
-const Template: Story<TextProps> = ({ children, ...rest }) => <Text {...rest}>{children}</Text>
+const Template: StoryFn<TextProps> = ({ children, ...rest }) => <Text {...rest}>{children}</Text>
 
 export const SingleSize = Template.bind({})
 SingleSize.args = { color: 'textPrimary', size: 'lg' }

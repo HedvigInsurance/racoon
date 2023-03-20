@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { MailIcon } from 'ui'
 import { Button, ButtonProps } from './Button'
 
@@ -22,7 +22,7 @@ const storyMeta: Meta<StoryProps> = {
 
 export default storyMeta
 
-type Template = Story<StoryProps>
+type Template = StoryFn<StoryProps>
 
 const Template: Template = ({ children, ...args }) => <Button {...args}>{children}</Button>
 

@@ -1,12 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { InsurableLimits } from './InsurableLimits'
 
 export default {
   title: 'InsurableLimits',
   component: InsurableLimits,
-} as ComponentMeta<typeof InsurableLimits>
+} as Meta<typeof InsurableLimits>
 
-const Template: ComponentStory<typeof InsurableLimits> = () => {
+const Template: StoryFn<typeof InsurableLimits> = () => {
   const limits = [
     {
       label: 'Deductible',

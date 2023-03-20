@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Space } from 'ui'
 import { SelectableCardGroup } from '../Card/SelectableCardGroup'
@@ -8,9 +8,9 @@ export default {
   title: 'Card / Quote Price Card',
   component: QuotePriceCard,
   args: {},
-} as ComponentMeta<typeof QuotePriceCard>
+} as Meta<typeof QuotePriceCard>
 
-const Template: ComponentStory<typeof QuotePriceCard> = (args) => {
+const Template: StoryFn<typeof QuotePriceCard> = (args) => {
   return <QuotePriceCard {...args}></QuotePriceCard>
 }
 
@@ -25,7 +25,7 @@ Default.args = {
   ),
 }
 
-const SelectableTemplate: ComponentStory<typeof QuotePriceCard> = (args) => {
+const SelectableTemplate: StoryFn<typeof QuotePriceCard> = (args) => {
   const [firstIsSelected, setFirstIsSelected] = useState(false)
   const [secondIsSelected, setSecondIsSelected] = useState(false)
 
@@ -63,7 +63,7 @@ AsCheckbox.args = {
   size: 'md',
 }
 
-const RadioTemplate: ComponentStory<typeof QuotePriceCard> = (args) => {
+const RadioTemplate: StoryFn<typeof QuotePriceCard> = (args) => {
   return (
     <SelectableCardGroup name="some_name" onChange={() => {}}>
       <Space y={1}>

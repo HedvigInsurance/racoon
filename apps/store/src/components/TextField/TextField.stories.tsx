@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { TextField } from './TextField'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof TextField>
+} as Meta<typeof TextField>
 
-const Template: ComponentStory<typeof TextField> = ({ defaultValue, ...props }) => {
+const Template: StoryFn<typeof TextField> = ({ defaultValue, ...props }) => {
   return (
     <>
       <TextField {...props} />

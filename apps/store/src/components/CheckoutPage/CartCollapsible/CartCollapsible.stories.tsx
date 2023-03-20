@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { CartCollapsible } from './CartCollapsible'
 
@@ -12,7 +12,7 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof CartCollapsible>
+} as Meta<typeof CartCollapsible>
 
 export const Default = () => (
   <CartCollapsible

@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { ConfirmationPage } from './ConfirmationPage'
 
@@ -8,7 +8,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof ConfirmationPage>
+} as Meta<typeof ConfirmationPage>
 
 export const Default = () => {
   return (

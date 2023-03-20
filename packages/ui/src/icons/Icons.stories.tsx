@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Heading } from '../components/Heading/Heading'
 import { Space } from '../components/Space'
 import * as AllIcons from './index'
@@ -15,11 +15,11 @@ const Icon = ({ icon }: IconProps) => {
 export default {
   title: 'Icons',
   component: Icon,
-} as ComponentMeta<typeof Icon>
+} as Meta<typeof Icon>
 
 const AllIconNames = Object.keys(AllIcons)
 
-const Template: ComponentStory<typeof Icon> = () => {
+const Template: StoryFn<typeof Icon> = () => {
   return (
     <Page>
       <Space y={1}>

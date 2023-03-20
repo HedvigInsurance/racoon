@@ -1,4 +1,4 @@
-import { ComponentStory } from '@storybook/react'
+import { StoryFn } from '@storybook/react'
 import { Button, Dialog } from 'ui'
 import { CartNotificationContent } from './CartToast'
 
@@ -6,7 +6,7 @@ const config = {
   title: 'Cart Notification',
 }
 
-export const Open: ComponentStory<typeof CartNotificationContent> = (props) => (
+export const Open: StoryFn<typeof CartNotificationContent> = (props) => (
   <Dialog.Root open>
     <CartNotificationContent {...props} />
   </Dialog.Root>
@@ -17,7 +17,7 @@ Open.args = {
   price: '179 kr/mån',
 }
 
-export const WithDialog: ComponentStory<typeof CartNotificationContent> = (props) => {
+export const WithDialog: StoryFn<typeof CartNotificationContent> = (props) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>

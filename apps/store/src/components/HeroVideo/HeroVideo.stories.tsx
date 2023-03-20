@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { HeroVideo } from './HeroVideo'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof HeroVideo>
+} as Meta<typeof HeroVideo>
 
-const Template: ComponentStory<typeof HeroVideo> = () => {
+const Template: StoryFn<typeof HeroVideo> = () => {
   const sources = [
     {
       url: 'https://s3.eu-central-1.amazonaws.com/cdn.dev.hedvigit.com/pexels-kelly-lacy-9722139.mp4',

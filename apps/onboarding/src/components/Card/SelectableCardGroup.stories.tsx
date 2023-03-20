@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui'
 import { CardContent } from './Card'
 import { SelectableCard } from './SelectableCard'
@@ -9,9 +9,9 @@ export default {
   component: SelectableCardGroup,
   args: {},
   argsTypes: { onChange: { action: 'onChange' } },
-} as ComponentMeta<typeof SelectableCardGroup>
+} as Meta<typeof SelectableCardGroup>
 
-const RadioTemplate: ComponentStory<typeof SelectableCardGroup> = (args) => {
+const RadioTemplate: StoryFn<typeof SelectableCardGroup> = (args) => {
   return (
     <SelectableCardGroup {...args}>
       <Space y={1}>

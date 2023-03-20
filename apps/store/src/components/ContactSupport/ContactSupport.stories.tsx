@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { ContactSupport, ContactSupportProps } from './ContactSupport'
 
@@ -6,9 +6,9 @@ export default {
   title: 'Contact Support',
   component: ContactSupport,
   argTypes: {},
-} as ComponentMeta<typeof ContactSupport>
+} as Meta<typeof ContactSupport>
 
-const Template: Story<ContactSupportProps> = (props) => {
+const Template: StoryFn<ContactSupportProps> = (props) => {
   return <ContactSupport {...props} />
 }
 

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { ProductCard, ProductCardProps } from '@/components/ProductCard/ProductCard'
 import { ProductGrid, ProductGridProps } from './ProductGrid'
 
@@ -6,11 +6,11 @@ export default {
   title: 'Product Grid',
   component: ProductGrid,
   argTypes: {},
-} as ComponentMeta<typeof ProductGrid>
+} as Meta<typeof ProductGrid>
 
 type ProductItem = ProductCardProps & { key: string }
 
-const Template: Story<ProductGridProps<ProductItem>> = (props) => {
+const Template: StoryFn<ProductGridProps<ProductItem>> = (props) => {
   return <ProductGrid {...props}>{(itemProps) => <ProductCard {...itemProps} />}</ProductGrid>
 }
 

@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { ToggleCard } from './ToggleCard'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof ToggleCard>
+} as Meta<typeof ToggleCard>
 
-const Template: ComponentStory<typeof ToggleCard> = (props) => {
+const Template: StoryFn<typeof ToggleCard> = (props) => {
   return <ToggleCard {...props} />
 }
 

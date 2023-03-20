@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Heading } from 'ui'
 import * as Accordion from './Accordion'
 
 export default {
   title: 'Accordion',
   component: Accordion.Root,
-} as ComponentMeta<typeof Accordion.Root>
+} as Meta<typeof Accordion.Root>
 
-const Template: ComponentStory<typeof Accordion.Root> = () => (
+const Template: StoryFn<typeof Accordion.Root> = () => (
   <Accordion.Root type="single" collapsible>
     <Accordion.Item value="item-1">
       <Accordion.HeaderWithTrigger>Header 1</Accordion.HeaderWithTrigger>

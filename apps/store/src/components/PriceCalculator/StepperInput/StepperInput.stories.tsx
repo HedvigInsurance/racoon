@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { StepperInput } from './StepperInput'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof StepperInput>
+} as Meta<typeof StepperInput>
 
-const Template: ComponentStory<typeof StepperInput> = (props) => {
+const Template: StoryFn<typeof StepperInput> = (props) => {
   return <StepperInput {...props} />
 }
 export const Default = Template.bind({})

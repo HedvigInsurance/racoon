@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Video } from './Video'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphone12',
     },
   },
-} as ComponentMeta<typeof Video>
+} as Meta<typeof Video>
 
-const Template: ComponentStory<typeof Video> = (args) => <Video {...args} />
+const Template: StoryFn<typeof Video> = (args) => <Video {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

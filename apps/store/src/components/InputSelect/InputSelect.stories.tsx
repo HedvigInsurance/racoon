@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { InputSelect } from './InputSelect'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof InputSelect>
+} as Meta<typeof InputSelect>
 
-const Template: ComponentStory<typeof InputSelect> = (props) => {
+const Template: StoryFn<typeof InputSelect> = (props) => {
   return <InputSelect {...props} />
 }
 export const Default = Template.bind({})

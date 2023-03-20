@@ -1,12 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { TopPickCard } from './TopPickCard'
 
 export default {
   title: 'TopPickCard',
   component: TopPickCard,
-} as ComponentMeta<typeof TopPickCard>
+} as Meta<typeof TopPickCard>
 
-const Template: ComponentStory<typeof TopPickCard> = (props) => <TopPickCard {...props} />
+const Template: StoryFn<typeof TopPickCard> = (props) => <TopPickCard {...props} />
 
 export const Default = Template.bind({})
 Default.args = {
