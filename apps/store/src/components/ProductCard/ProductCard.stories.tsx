@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { ProductCard, ProductCardProps } from './ProductCard'
 
 export default {
@@ -12,9 +12,9 @@ export default {
       defaultViewport: 'iphone12',
     },
   },
-} as ComponentMeta<typeof ProductCard>
+} as Meta<typeof ProductCard>
 
-const Template: Story<ProductCardProps> = (props) => {
+const Template: StoryFn<ProductCardProps> = (props) => {
   return <ProductCard {...props} />
 }
 

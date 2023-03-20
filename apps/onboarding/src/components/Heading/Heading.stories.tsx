@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Heading, HeadingProps } from './Heading'
 
 const storyMeta: Meta<HeadingProps> = {
@@ -18,7 +18,7 @@ const storyMeta: Meta<HeadingProps> = {
 
 export default storyMeta
 
-const Template: Story<HeadingProps> = ({ variant, headingLevel, colorVariant, children }) => (
+const Template: StoryFn<HeadingProps> = ({ variant, headingLevel, colorVariant, children }) => (
   <Heading variant={variant} headingLevel={headingLevel} colorVariant={colorVariant}>
     {children}
   </Heading>

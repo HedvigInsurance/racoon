@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 import { LoadingDots, LoadingDotsProps } from './LoadingDots'
 
@@ -9,8 +9,8 @@ export default {
     layout: 'centered',
     paddings: [{ name: 'Large', value: '64px', default: true }],
   },
-} as ComponentMeta<typeof LoadingDots>
+} as Meta<typeof LoadingDots>
 
-export const Default: Story<LoadingDotsProps> = (props) => {
+export const Default: StoryFn<LoadingDotsProps> = (props) => {
   return <LoadingDots {...props} />
 }

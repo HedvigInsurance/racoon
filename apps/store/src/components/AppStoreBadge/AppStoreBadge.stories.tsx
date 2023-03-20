@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Locale } from '@/utils/l10n/types'
 import { AppStoreBadge } from './AppStoreBadge'
 
@@ -6,9 +6,9 @@ export default {
   title: 'AppStoreBadge',
   component: AppStoreBadge,
   args: {},
-} as ComponentMeta<typeof AppStoreBadge>
+} as Meta<typeof AppStoreBadge>
 
-const Template: ComponentStory<typeof AppStoreBadge> = (args) => {
+const Template: StoryFn<typeof AppStoreBadge> = (args) => {
   return <AppStoreBadge {...args} />
 }
 

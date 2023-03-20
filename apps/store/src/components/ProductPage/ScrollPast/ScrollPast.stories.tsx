@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useRef } from 'react'
 import { Button, theme } from 'ui'
 import { ScrollPast, ScrollPastProps } from './ScrollPast'
@@ -8,9 +8,9 @@ export default {
   title: 'Product Page / Scroll Past',
   component: ScrollPast,
   argTypes: {},
-} as ComponentMeta<typeof ScrollPast>
+} as Meta<typeof ScrollPast>
 
-const Template: Story<ScrollPastProps> = (props) => {
+const Template: StoryFn<ScrollPastProps> = (props) => {
   const ref = useRef(null)
 
   return (

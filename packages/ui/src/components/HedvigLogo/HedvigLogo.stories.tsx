@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { HedvigLogo } from './HedvigLogo'
 
 export default {
@@ -7,9 +7,9 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof HedvigLogo>
+} as Meta<typeof HedvigLogo>
 
-const Template: ComponentStory<typeof HedvigLogo> = (args) => <HedvigLogo {...args} />
+const Template: StoryFn<typeof HedvigLogo> = (args) => <HedvigLogo {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {

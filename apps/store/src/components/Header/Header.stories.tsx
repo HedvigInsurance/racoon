@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { ComponentMeta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import Link from 'next/link'
 import { theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
@@ -19,7 +19,7 @@ import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
 export default {
   title: 'Header',
   component: Header,
-} as ComponentMeta<typeof Header>
+} as Meta<typeof Header>
 
 const ShoppingCartMenuItemWrapper = styled.div({
   position: 'relative',
@@ -86,7 +86,7 @@ export type TopMenuProps = {
   count?: number
 }
 
-const Template: Story<TopMenuProps> = (props) => {
+const Template: StoryFn<TopMenuProps> = (props) => {
   return (
     <>
       <MockedHeaderWrapper>

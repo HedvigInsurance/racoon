@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Slideshow } from './Slideshow'
 
 const Item = () => (
@@ -15,9 +15,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof Slideshow>
+} as Meta<typeof Slideshow>
 
-const Template: ComponentStory<typeof Slideshow> = (props) => (
+const Template: StoryFn<typeof Slideshow> = (props) => (
   <Slideshow {...props}>
     <Item />
     <Item />

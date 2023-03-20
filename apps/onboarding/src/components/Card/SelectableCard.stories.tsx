@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Space } from 'ui/src/components/Space'
 import { Card, CardContent } from './Card'
@@ -9,9 +9,9 @@ export default {
   component: Card,
   args: {},
   argsTypes: { onChange: { action: 'onChange' } },
-} as ComponentMeta<typeof Card>
+} as Meta<typeof Card>
 
-const SelectableTemplate: ComponentStory<typeof Card> = (args) => {
+const SelectableTemplate: StoryFn<typeof Card> = (args) => {
   const [isFirstChecked, setIsFirstChecked] = useState(false)
   const [isSecondChecked, setIsSecondChecked] = useState(false)
 

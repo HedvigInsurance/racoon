@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui'
 import { Card, CardContent, CardMedia } from './Card'
 
@@ -6,9 +6,9 @@ export default {
   title: 'Card',
   component: Card,
   args: {},
-} as ComponentMeta<typeof Card>
+} as Meta<typeof Card>
 
-const Template: ComponentStory<typeof Card> = (args) => {
+const Template: StoryFn<typeof Card> = (args) => {
   return (
     <Space y={1}>
       <Card {...args} size="sm">

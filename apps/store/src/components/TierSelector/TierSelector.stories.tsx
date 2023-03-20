@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Text } from 'ui'
 import * as TierLevelRadioGroup from './TierLevelRadioGroup'
 import * as TierSelector from './TierSelector'
@@ -6,9 +6,9 @@ import * as TierSelector from './TierSelector'
 export default {
   title: 'Tier Selector',
   component: TierSelector.Root,
-} as ComponentMeta<typeof TierSelector.Root>
+} as Meta<typeof TierSelector.Root>
 
-const Template: ComponentStory<typeof TierSelector.Root> = () => {
+const Template: StoryFn<typeof TierSelector.Root> = () => {
   return (
     <TierSelector.Root>
       <TierSelector.Header>

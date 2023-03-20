@@ -1,10 +1,10 @@
-import { ComponentMeta } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import * as ComparisonTable from './ComparisonTable'
 
 export default {
   title: 'Product Page / Comparison Table',
   component: ComparisonTable.Root,
-} as ComponentMeta<typeof ComparisonTable.Root>
+} as Meta<typeof ComparisonTable.Root>
 
 export const Default = () => {
   return (

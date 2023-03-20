@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui'
 import * as Table from './Table'
 
@@ -12,9 +12,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof Table.Root>
+} as Meta<typeof Table.Root>
 
-const Template: ComponentStory<typeof Table.Root> = () => {
+const Template: StoryFn<typeof Table.Root> = () => {
   return (
     <Space y={1}>
       <Table.Root layout="fixed">

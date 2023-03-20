@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Button, theme } from 'ui'
 import { PerilFragment } from '@/services/apollo/generated'
@@ -41,14 +41,14 @@ const createNewPeril = (): PerilFragment => ({
 export default {
   title: 'Accordion/Perils',
   component: Perils,
-} as ComponentMeta<typeof Perils>
+} as Meta<typeof Perils>
 
-export const FivePerils: ComponentStory<typeof Perils> = () => {
+export const FivePerils: StoryFn<typeof Perils> = () => {
   const perils = Array.from({ length: 5 }, () => createNewPeril())
   return <Perils items={perils} />
 }
 
-export const Playground: ComponentStory<typeof Perils> = () => {
+export const Playground: StoryFn<typeof Perils> = () => {
   const [perils, setPerils] = useState<Array<PerilFragment>>(() => {
     return Array.from({ length: 3 }, () => createNewPeril())
   })

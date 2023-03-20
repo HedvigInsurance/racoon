@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Checkbox } from './Checkbox'
 
@@ -11,7 +11,7 @@ export default {
     disabled: false,
     checked: true,
   },
-} as ComponentMeta<typeof Checkbox>
+} as Meta<typeof Checkbox>
 
 const TemplateContainer = styled.div({
   display: 'flex',
@@ -21,7 +21,7 @@ const TemplateContainer = styled.div({
   },
 })
 
-const Template: ComponentStory<typeof Checkbox> = (args) => {
+const Template: StoryFn<typeof Checkbox> = (args) => {
   const [checked, setChecked] = useState(args.checked)
   const onChange = () => setChecked(!checked)
   return (

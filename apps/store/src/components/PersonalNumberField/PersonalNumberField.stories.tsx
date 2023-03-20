@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { PersonalNumberField } from './PersonalNumberField'
 
 export default {
@@ -12,9 +12,9 @@ export default {
     },
   },
   argTypes: { onCompanyChange: { action: 'changed' } },
-} as ComponentMeta<typeof PersonalNumberField>
+} as Meta<typeof PersonalNumberField>
 
-const Template: ComponentStory<typeof PersonalNumberField> = (props) => {
+const Template: StoryFn<typeof PersonalNumberField> = (props) => {
   return <PersonalNumberField {...props} />
 }
 export const Default = Template.bind({})

@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { CancellationForm } from './CancellationForm'
@@ -17,9 +17,9 @@ export default {
     onStartDateChange: { action: 'change start date' },
     onAutoSwitchChange: { action: 'change auto switch' },
   },
-} as ComponentMeta<typeof CancellationForm>
+} as Meta<typeof CancellationForm>
 
-const Template: ComponentStoryFn<typeof CancellationForm> = (props) => {
+const Template: StoryFn<typeof CancellationForm> = (props) => {
   return <CancellationForm {...props} />
 }
 
@@ -29,7 +29,7 @@ NoCancellation.args = {
   startDate: new Date(),
 }
 
-export const IEX: ComponentStoryFn<typeof CancellationForm> = (props) => {
+export const IEX: StoryFn<typeof CancellationForm> = (props) => {
   const [requested, setRequested] = useState(true)
 
   return (
@@ -49,7 +49,7 @@ export const IEX: ComponentStoryFn<typeof CancellationForm> = (props) => {
 }
 IEX.args = { startDate: new Date() }
 
-export const BankSignering: ComponentStoryFn<typeof CancellationForm> = (props) => {
+export const BankSignering: StoryFn<typeof CancellationForm> = (props) => {
   const [requested, setRequested] = useState(true)
 
   return (
@@ -69,7 +69,7 @@ export const BankSignering: ComponentStoryFn<typeof CancellationForm> = (props) 
 }
 BankSignering.args = { startDate: new Date() }
 
-export const BankSigneringInvalidStartDate: ComponentStoryFn<typeof CancellationForm> = (props) => {
+export const BankSigneringInvalidStartDate: StoryFn<typeof CancellationForm> = (props) => {
   return (
     <CancellationForm
       {...props}

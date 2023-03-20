@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { PriceMatchBubble } from './PriceMatchBubble'
 
 export default {
@@ -11,9 +11,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as ComponentMeta<typeof PriceMatchBubble>
+} as Meta<typeof PriceMatchBubble>
 
-export const Default: ComponentStoryFn<typeof PriceMatchBubble> = (props) => {
+export const Default: StoryFn<typeof PriceMatchBubble> = (props) => {
   return <PriceMatchBubble {...props} />
 }
 Default.args = {
