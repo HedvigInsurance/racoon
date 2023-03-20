@@ -2,7 +2,7 @@ import { Meta, Story } from '@storybook/react'
 import { MailIcon } from 'ui'
 import { Button, ButtonProps } from './Button'
 
-type StoryProps = ButtonProps & { disabled: boolean }
+type StoryProps = ButtonProps
 
 const storyMeta: Meta<StoryProps> = {
   title: 'Button',
