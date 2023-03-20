@@ -25,6 +25,5 @@ export { legacyTheme } from './lib/theme/legacy/legacyTheme'
 export type { UIColors, UIColorKeys } from './lib/theme/colors/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
 export { globalStyles } from './lib/globalStyles'
-export { mergeRefs } from './lib/merge-refs'
 
 export * from './icons/index'
