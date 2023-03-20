@@ -1,18 +1,17 @@
-module.exports = {
+import type { StorybookConfig } from '@storybook/nextjs'
+import babelConfig from './babelConfig'
+
+const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    'storybook-addon-next',
-    'storybook-addon-next-router',
-  ],
-  framework: '@storybook/react',
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  framework: {
+    name: '@storybook/nextjs',
+    options: {},
+  },
   features: {
     buildStoriesJson: true,
   },
-  core: {
-    builder: 'webpack5',
-  },
+  babel: () => babelConfig,
   webpackFinal: (config) => {
     /**
      * Fixes issue with `next-i18next` and is ready for webpack@5
@@ -31,3 +30,4 @@ module.exports = {
     return config
   },
 }
+export default config

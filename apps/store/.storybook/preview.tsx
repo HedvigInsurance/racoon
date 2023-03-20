@@ -1,6 +1,5 @@
 import { ThemeProvider } from 'ui'
 import { storybookFontStyles } from 'ui/src/lib/storybookFontStyles'
-import { WithNextRouter } from 'storybook-addon-next-router/dist/decorators'
 import { Global } from '@emotion/react'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import './i18next'
@@ -29,5 +28,4 @@ export const decorators = [
       </ThemeProvider>
     </>
   ),
-  WithNextRouter,
 ]
