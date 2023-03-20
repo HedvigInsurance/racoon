@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Image, { ImageProps } from 'next/legacy/image'
-import type { ChangeEventHandler, MouseEventHandler } from 'react'
 import { useRef, useState } from 'react'
-import { Space, Checkbox, CheckboxProps, CheckboxImperativeAPI, useBreakpoint, theme, mq } from 'ui'
+import { Space, Checkbox, CheckboxProps, useBreakpoint, theme, mq } from 'ui'
 import { Button } from '@/components/Button/Button'
 import { CoverageDialog } from './CoverageDialog'
 
@@ -22,23 +21,20 @@ export const InsuranceCard = ({
   onChange,
   ...delegated
 }: Props) => {
-  const checkboxRef = useRef<CheckboxImperativeAPI>(null)
+  const checkboxRef = useRef<HTMLInputElement | null>(null)
   const [openDialog, setOpenDialog] = useState(false)
+
   const matchesSmall = useBreakpoint('sm')
   const { t } = useTranslation()
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    onChange?.(event)
-  }
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
-    // Clicking on the card area should be interpreted as clicking on the Checkbox
-    checkboxRef.current?.click()
-  }
-
   return (
     <>
-      <Card onClick={handleClick}>
+      <Card
+        onClick={() => {
+          // Clicking on the card area should be interpreted as clicking on the Checkbox
+          checkboxRef.current?.click()
+        }}
+      >
         <ImageFrame>
           <Image
             {...img}
@@ -56,7 +52,7 @@ export const InsuranceCard = ({
               <CheckboxWrapper>
                 <Checkbox
                   ref={checkboxRef}
-                  onChange={handleChange}
+                  onChange={(event) => onChange?.(event)}
                   onClick={(event) => {
                     // This prevents click events fired on Checkbox being also
                     // handled by the Card. If that's allowed, clicking on the

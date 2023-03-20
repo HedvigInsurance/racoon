@@ -1,49 +1,17 @@
 import styled from '@emotion/styled'
-import {
-  useEffect,
-  useRef,
-  useId,
-  useImperativeHandle,
-  forwardRef,
-  ReactNode,
-  ComponentPropsWithRef,
-} from 'react'
+import { useId, forwardRef, ReactNode, ComponentPropsWithRef } from 'react'
 import { CheckIcon } from '../../icons/CheckIcon'
 import { theme } from '../../lib/theme/theme'
-
-export interface CheckboxImperativeAPI {
-  click: () => void
-}
 
 export type CheckboxProps = ComponentPropsWithRef<'input'> & {
   label?: ReactNode
   prependLabel?: boolean
   circle?: boolean
-  errorMessage?: string
 }
 
-export const Checkbox = forwardRef<CheckboxImperativeAPI, CheckboxProps>(
-  ({ circle, prependLabel, label, errorMessage, ...delegated }, ref) => {
-    const inputRef = useRef<HTMLInputElement>(null)
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ circle, prependLabel, label, ...delegated }, ref) => {
     const id = useId()
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        click: () => inputRef.current?.click(),
-      }),
-      [],
-    )
-
-    const handleInvalid = () => {
-      if (errorMessage) {
-        inputRef.current?.setCustomValidity(errorMessage)
-      }
-    }
-
-    useEffect(() => {
-      inputRef.current?.setCustomValidity('')
-    }, [delegated.required, delegated.checked])
 
     let LabelComponent: ReactNode = null
     if (label) {
@@ -58,13 +26,7 @@ export const Checkbox = forwardRef<CheckboxImperativeAPI, CheckboxProps>(
       <ControlContainer>
         {prependLabel && LabelComponent}
         <CheckboxWrapper>
-          <HiddenInput
-            ref={inputRef}
-            id={delegated.id ?? id}
-            type="checkbox"
-            onInvalid={handleInvalid}
-            {...delegated}
-          />
+          <HiddenInput ref={ref} id={delegated.id ?? id} type="checkbox" {...delegated} />
           <StyledCheckboxElement circle={circle}>
             <Icon />
             <DisabledTick />

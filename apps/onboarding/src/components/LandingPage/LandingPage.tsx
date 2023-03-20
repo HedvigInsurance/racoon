@@ -54,13 +54,26 @@ export const LandingPage = ({ insurances, preSelectedInsurances }: LandingPagePr
         <Heading>{t('LANDING_PAGE_HEADLINE')}</Heading>
         <form
           id={FORM_ID}
+          noValidate
           onSubmit={(event) => {
             event.preventDefault()
+            const form = event.currentTarget
 
-            setIsSubmiting(true)
-            Embark.setStore(locale.market, formState)
-            const slug = Embark.getSlug(locale.market)
-            router.push(PageLink.embark({ locale: locale.path, slug }))
+            const hasNoneSelected = !Object.values(formState).some(Boolean)
+            const firstCheckbox = form.elements.namedItem(
+              insurances[0].fieldName,
+            ) as HTMLInputElement
+            firstCheckbox.setCustomValidity(
+              hasNoneSelected ? t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR') : '',
+            )
+            const isFormValid = form.reportValidity()
+
+            if (isFormValid) {
+              setIsSubmiting(true)
+              Embark.setStore(locale.market, formState)
+              const slug = Embark.getSlug(locale.market)
+              router.push(PageLink.embark({ locale: locale.path, slug }))
+            }
           }}
         >
           <InsuranceCardGrid>
@@ -71,12 +84,11 @@ export const LandingPage = ({ insurances, preSelectedInsurances }: LandingPagePr
                     title={t(name)}
                     description={t(description)}
                     img={img}
-                    name={fieldName}
                     perils={perils}
+                    name={fieldName}
                     checked={formState[fieldName]}
                     onChange={handleCardSelect}
                     required={!hasSelectedAtLeastOneOption}
-                    errorMessage={t('LANDING_PAGE_MISSING_MAIN_COVERAGE_ERROR')}
                   />
                 </li>
               )
