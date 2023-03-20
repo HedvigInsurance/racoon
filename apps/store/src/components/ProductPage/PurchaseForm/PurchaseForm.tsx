@@ -2,6 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { ReactNode, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, Text, theme, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
@@ -43,6 +44,7 @@ export const PurchaseForm = () => {
   const [selectedOffer] = useSelectedOffer()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
+  const router = useRouter()
 
   useOpenPriceCalculatorQueryParam({
     onQueryParamDetected() {
@@ -113,7 +115,21 @@ export const PurchaseForm = () => {
         }
 
         if (selectedOffer) {
-          const handleAddedToCart = async (item: ProductOfferFragment) => {
+          const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
+            try {
+              await createNewPriceIntent(shopSession)
+            } catch (error) {
+              datadogLogs.logger.error('Failed to create new price intent', {
+                error,
+                priceTemplate: priceTemplate.name,
+                shopSessionId: shopSession.id,
+              })
+            }
+
+            if (nextUrl) {
+              return await router.push(nextUrl)
+            }
+
             notifyProductAdded({
               name: productData.displayNameFull,
               price: formatter.monthlyPrice(item.price),
@@ -128,15 +144,6 @@ export const PurchaseForm = () => {
                     })
                   : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
             })
-            try {
-              await createNewPriceIntent(shopSession)
-            } catch (error) {
-              datadogLogs.logger.error('Failed to create new price intent', {
-                error,
-                priceTemplate: priceTemplate.name,
-                shopSessionId: shopSession.id,
-              })
-            }
           }
 
           return (
@@ -385,7 +392,7 @@ const ProgressBar = styled(motion.div)({
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
   shopSession: ShopSession
-  onAddedToCart: (item: ProductOfferFragment) => void
+  onAddedToCart: (item: ProductOfferFragment, nextUrl?: string) => void
   onClickEdit: () => void
   selectedOffer: ProductOfferFragment
 }
