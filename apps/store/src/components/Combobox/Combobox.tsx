@@ -16,6 +16,7 @@ type Props<Item> = {
   displayValue?: (item: Item) => string
   disabled?: boolean
   required?: boolean
+  mutliSelect?: boolean
 }
 
 /**
@@ -28,6 +29,7 @@ export const Combobox = <Item,>({
   onSelectedItemChange,
   defaultSelectedItem,
   displayValue = (item) => String(item),
+  mutliSelect = false,
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -44,7 +46,7 @@ export const Combobox = <Item,>({
     return filterItems(items, deferredInputValue, displayValue)
   }, [deferredInputValue, items, displayValue])
 
-  const noOptions = filteredItems.length === 0
+  const noOptions = inputValue.trim().length > 0 && filteredItems.length === 0
 
   const {
     isOpen,
@@ -82,14 +84,25 @@ export const Combobox = <Item,>({
       switch (type) {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
           if (filteredItems.length === 1) {
-            // Select on [Enter] when only one item is available for selection
             return {
               ...changes,
-              inputValue: displayValue(filteredItems[0]),
+              // Kepp input clear in case 'multiSelect' mode is on
+              inputValue: mutliSelect ? '' : displayValue(filteredItems[0]),
+              // Select on [Enter] when only one item is available for selection
               selectedItem: filteredItems[0],
             }
           }
-          return changes
+          return {
+            ...changes,
+            // Kepp input clear in case 'multiSelect' mode is on
+            inputValue: mutliSelect ? '' : changes.inputValue,
+          }
+        case useCombobox.stateChangeTypes.ItemClick:
+          return {
+            ...changes,
+            // Kepp input clear in case 'multiSelect' mode is on
+            inputValue: mutliSelect ? '' : changes.inputValue,
+          }
         default:
           return changes
       }
