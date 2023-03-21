@@ -9,6 +9,9 @@ import { useScrollState } from '../../utils/useScrollState'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_PX } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
+const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
+export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`
+
 // Not possible to animate HSL to "transparent"
 const TRANSPARENT_HSL_COLOR = 'hsla(0, 0%, 98%, 0)'
 
@@ -82,8 +85,8 @@ const GhostWrapper = styled.div({
   right: 0,
   zIndex: zIndexes.header,
 
-  height: `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`,
-  [mq.lg]: { height: `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})` },
+  height: HEADER_HEIGHT_MOBILE,
+  [mq.lg]: { height: HEADER_HEIGHT_DESKTOP },
 })
 
 export const Wrapper = styled(motion.header)({

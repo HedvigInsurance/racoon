@@ -4,6 +4,7 @@ import { motion, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
+import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
@@ -29,7 +30,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   )
 
   return (
-    <Main {...storyblokEditable(blok)}>
+    <main {...storyblokEditable(blok)}>
       <StickyHeader>
         <nav aria-label="page content">
           <ContentNavigationList>
@@ -82,7 +83,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
       {blok.body.map((nestedBlock) => (
         <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
       ))}
-    </Main>
+    </main>
   )
 }
 ProductPageBlock.blockName = 'product'
@@ -174,10 +175,6 @@ const ContentNavigationTrigger = styled.a({
   },
 })
 
-const Main = styled.main({
-  paddingTop: theme.space.sm,
-})
-
 const Grid = styled(GridLayout.Root)({
   // TODO: Ideally padding that are currently spcing content from the edge of the page
   // should be added by the container.
@@ -201,7 +198,7 @@ const PurchaseFormWrapper = styled.div({
 
   [mq.lg]: {
     position: 'sticky',
-    top: 0,
+    top: HEADER_HEIGHT_DESKTOP,
     // Scroll independently if content is too long
     maxHeight: '100vh',
     overflow: 'auto',
