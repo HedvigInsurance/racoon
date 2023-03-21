@@ -76,7 +76,7 @@ export const SE_PET_CAT: Template = {
         {
           field: {
             type: 'radio',
-            name: 'outsideAccess',
+            name: 'hasOutsideAccess',
             label: { key: tKey('FIELD_OUTSIDE_ACCESS_LABEL') },
             options: [
               {
