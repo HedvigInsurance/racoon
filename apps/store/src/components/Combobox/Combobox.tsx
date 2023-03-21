@@ -86,7 +86,7 @@ export const Combobox = <Item,>({
           if (filteredItems.length === 1) {
             return {
               ...changes,
-              // Kepp input clear in case 'multiSelect' mode is on
+              // Keep input clear in case 'multiSelect' mode is on
               inputValue: mutliSelect ? '' : displayValue(filteredItems[0]),
               // Select on [Enter] when only one item is available for selection
               selectedItem: filteredItems[0],
@@ -94,13 +94,13 @@ export const Combobox = <Item,>({
           }
           return {
             ...changes,
-            // Kepp input clear in case 'multiSelect' mode is on
+            // Keep input clear in case 'multiSelect' mode is on
             inputValue: mutliSelect ? '' : changes.inputValue,
           }
         case useCombobox.stateChangeTypes.ItemClick:
           return {
             ...changes,
-            // Kepp input clear in case 'multiSelect' mode is on
+            // Keep input clear in case 'multiSelect' mode is on
             inputValue: mutliSelect ? '' : changes.inputValue,
           }
         default:
