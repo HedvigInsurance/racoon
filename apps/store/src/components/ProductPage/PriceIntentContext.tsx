@@ -17,6 +17,7 @@ import {
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
 type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
 type ContextValue =
@@ -37,10 +38,19 @@ const usePriceIntentContextValue = () => {
   const apolloClient = useApolloClient()
   const { onReady } = useShopSession()
 
+  const [, setSelectedOffer] = useSelectedOffer()
   const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
+    onCompleted(data) {
+      setSelectedOffer(
+        (prev) =>
+          data.priceIntent.offers.find(
+            (item) => item.variant.typeOfContract === prev?.variant.typeOfContract,
+          ) ?? data.priceIntent.offers[0],
+      )
+    },
   })
 
   const router = useRouter()

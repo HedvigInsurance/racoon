@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
+import { RefObject, useEffect, useMemo, useRef } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
@@ -25,10 +25,12 @@ import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
 import { FormElement } from './PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
+import { useSelectedOffer } from './useSelectedOffer'
 
 type Props = {
   priceIntent: PriceIntent
   shopSession: ShopSession
+  selectedOffer: ProductOfferFragment
   scrollPastRef: RefObject<HTMLElement>
   // TODO: Use better type
   onAddedToCart: (productOffer: ProductOfferFragment) => void
@@ -37,9 +39,10 @@ type Props = {
 
 export const OfferPresenter = (props: Props) => {
   const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
+  const { selectedOffer } = props
+  const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
-  const [selectedOffer, setSelectedOffer] = useState(priceIntent.offers[0])
 
   const handleOfferChange = (offerId: string) => {
     const offer = priceIntent.offers.find((offer) => offer.id === offerId)

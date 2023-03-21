@@ -29,6 +29,7 @@ import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
+import { useSelectedOffer } from './useSelectedOffer'
 
 type FormState = 'IDLE' | 'EDIT' | 'ERROR'
 
@@ -39,6 +40,7 @@ export const PurchaseForm = () => {
   const { shopSession } = useShopSession()
   const formatter = useFormatter()
   const [priceIntent, , createNewPriceIntent] = usePriceIntent()
+  const [selectedOffer] = useSelectedOffer()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
 
@@ -110,7 +112,7 @@ export const PurchaseForm = () => {
           )
         }
 
-        if (priceIntent.offers.length > 0) {
+        if (selectedOffer) {
           const handleAddedToCart = async (item: ProductOfferFragment) => {
             notifyProductAdded({
               name: productData.displayNameFull,
@@ -143,6 +145,7 @@ export const PurchaseForm = () => {
               priceIntent={priceIntent}
               onAddedToCart={handleAddedToCart}
               onClickEdit={editForm}
+              selectedOffer={selectedOffer}
             />
           )
         }
@@ -384,10 +387,11 @@ type ShowOfferStateProps = {
   shopSession: ShopSession
   onAddedToCart: (item: ProductOfferFragment) => void
   onClickEdit: () => void
+  selectedOffer: ProductOfferFragment
 }
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
-  const { shopSession, priceIntent, onAddedToCart, onClickEdit } = props
+  const { shopSession, priceIntent, selectedOffer, onAddedToCart, onClickEdit } = props
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
   return (
@@ -398,6 +402,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
         scrollPastRef={scrollPastRef}
         onAddedToCart={onAddedToCart}
         onClickEdit={onClickEdit}
+        selectedOffer={selectedOffer}
       />
     </SectionWrapper>
   )
