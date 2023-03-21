@@ -68,7 +68,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
           <SpaceFlex space={0.25}>
             <form onSubmit={handleSubmitQuickAdd}>
               <Button loading={loading} size="medium" type="submit">
-                {t('ADD_TO_CART_BUTTON_LABEL')}
+                {t('QUICK_ADD_BUTTON')}
               </Button>
               <input type="hidden" name={FormElement.ProductOfferId} value={offer.id} />
             </form>

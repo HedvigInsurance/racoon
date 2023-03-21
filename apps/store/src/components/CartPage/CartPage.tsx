@@ -67,6 +67,16 @@ export const CartPage = (props: CartPageProps) => {
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
 
+        <HorizontalLine />
+
+        {cartId && campaignsEnabled && (
+          <Space y={{ base: 1, sm: 1.5 }}>
+            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
+            <HorizontalLine />
+          </Space>
+        )}
+        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
+
         {showProductRecommendations && (
           <CartEntryList>
             {offerRecommendations.map(({ offer, product }) => {
@@ -84,15 +94,6 @@ export const CartPage = (props: CartPageProps) => {
           </CartEntryList>
         )}
 
-        {!showProductRecommendations && <HorizontalLine />}
-
-        {cartId && campaignsEnabled && (
-          <Space y={{ base: 1, sm: 1.5 }}>
-            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
-            <HorizontalLine />
-          </Space>
-        )}
-        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
         {shopSession && (
           <ButtonNextLink
             href={PageLink.checkout()}
