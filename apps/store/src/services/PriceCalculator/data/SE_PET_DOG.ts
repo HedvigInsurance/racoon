@@ -67,7 +67,7 @@ export const SE_PET_DOG: Template = {
         {
           field: {
             type: 'radio',
-            name: 'previousDogOwner',
+            name: 'isPreviousDogOwner',
             label: { key: tKey('FIELD_PREVIOUS_DOG_OWNER_LABEL') },
             options: [
               { label: { key: tKey('LABEL_YES') }, value: 'true' },
