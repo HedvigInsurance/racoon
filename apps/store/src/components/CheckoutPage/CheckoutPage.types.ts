@@ -10,7 +10,7 @@ export type CheckoutPageProps = {
     id: string
     entries: Array<CartEntry>
     cost: CartCost
-    campaigns: Array<CartCampaign>
+    campaigns: { enabled: boolean; list: Array<CartCampaign> }
   }
   ssn: string
   shouldCollectEmail: boolean

@@ -108,9 +108,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     ))}
                   </CartEntryList>
                   <HorizontalLine />
-                  <CampaignsSection cartId={cart.id} campaigns={cart.campaigns} />
-                  <HorizontalLine />
-                  <CostSummary {...cart.cost} campaigns={cart.campaigns} />
+                  {cart.campaigns.enabled && (
+                    <>
+                      <CampaignsSection cartId={cart.id} campaigns={cart.campaigns.list} />
+                      <HorizontalLine />
+                    </>
+                  )}
+                  <CostSummary {...cart.cost} campaigns={cart.campaigns.list} />
                   <div />
                 </CartCollapsibleInner>
               </CartCollapsible>
