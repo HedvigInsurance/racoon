@@ -272,6 +272,8 @@ export const initStoryblok = () => {
     bridge: shouldUseBridge,
     components,
     richText: {
+      // TODO: remove this when @storyblok/react gets an update with its storyblok/js
+      // depedency bumped. More info on GRW-2377
       schema: CustomRichTextSchema,
     },
   })

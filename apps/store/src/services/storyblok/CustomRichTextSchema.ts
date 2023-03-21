@@ -1,6 +1,6 @@
 // This whole file is a workaround for an issue where rich text field links custom properties
 // are not being properly added to links (anchor tags). It was created to simplify removal
-// since this can be scraped if 'storyblok/js' package's 'storyblok-js-client' dependency gets
+// since this can be scrapped if 'storyblok/js' package's 'storyblok-js-client' dependency gets
 // bumped by Storyblok team. Refer to https://hedvig.atlassian.net/browse/GRW-2377 for more
 // info.
 import { RichTextSchema, ISbNode } from '@storyblok/react'
