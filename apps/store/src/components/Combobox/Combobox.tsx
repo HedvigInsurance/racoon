@@ -17,6 +17,7 @@ type Props<Item> = {
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
+  noMatchesMessage?: string
 }
 
 /**
@@ -30,6 +31,7 @@ export const Combobox = <Item,>({
   defaultSelectedItem,
   displayValue = (item) => String(item),
   mutliSelect = false,
+  noMatchesMessage = 'No matches found',
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -159,7 +161,7 @@ export const Combobox = <Item,>({
         <WarningBox>
           <WarningTriangleIcon color={theme.colors.amberElement} size={theme.fontSizes.xs} />
           <SingleLineText as="p" size="xs">
-            Vi kan inte hitta den här rasen, försök igen
+            {noMatchesMessage}
           </SingleLineText>
         </WarningBox>
       )}

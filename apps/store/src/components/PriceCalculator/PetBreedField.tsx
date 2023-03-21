@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
 import { PetBreedField as InputFieldPetBreed, Breed } from '@/services/PriceCalculator/Field.types'
@@ -12,6 +13,7 @@ type PetBreedFieldProps = {
 
 export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
+  const { t } = useTranslation('purchase-form')
   const { breeds, error } = usePetBreeds(field.animal)
 
   // The following will removed when we add support for mixed breeds
@@ -39,6 +41,7 @@ export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) 
       displayValue={breedToString}
       required={field.required}
       disabled={loading}
+      noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
     />
   )
 }
