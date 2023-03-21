@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, theme, Text, Space } from 'ui'
@@ -35,7 +36,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
     },
   })
 
-  const handleSubmitQuickAdd = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitQuickAdd = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     datadogRum.addAction('Quick add to cart', { priceIntentId: offer.id, product: product.id })
     handleSubmitAddToCart(event)
   }

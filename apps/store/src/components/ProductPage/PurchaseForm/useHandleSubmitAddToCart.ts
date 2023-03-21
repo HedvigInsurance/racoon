@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { FormEventHandler, useCallback } from 'react'
+import { SyntheticEvent, useCallback } from 'react'
 import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -9,7 +9,7 @@ import { FormElement } from './PurchaseForm.constants'
 type Params = {
   cartId: string
   priceIntentId: string
-  onSuccess: (productOfferId: string) => void
+  onSuccess: (productOfferId: string, nextUrl?: string) => void
 }
 
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
@@ -20,16 +20,17 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
   })
 
   const { showApolloError } = useAppErrorHandleContext()
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
     const productOfferId = getOrThrowFormValue(formData, FormElement.ProductOfferId)
+    const nextUrl = event.nativeEvent.submitter?.getAttribute('value') ?? undefined
 
     addEntry({
       variables: { cartId, offerId: productOfferId },
       onCompleted() {
-        onSuccess(productOfferId)
+        onSuccess(productOfferId, nextUrl)
       },
       onError: showApolloError,
     })

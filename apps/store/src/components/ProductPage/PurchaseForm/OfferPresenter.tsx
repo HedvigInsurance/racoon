@@ -2,13 +2,12 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useEffect, useMemo, useRef } from 'react'
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
@@ -17,6 +16,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
+import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
@@ -27,13 +27,18 @@ import { FormElement } from './PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 import { useSelectedOffer } from './useSelectedOffer'
 
+enum AddToCartRedirect {
+  Cart,
+  Checkout,
+}
+
 type Props = {
   priceIntent: PriceIntent
   shopSession: ShopSession
   selectedOffer: ProductOfferFragment
   scrollPastRef: RefObject<HTMLElement>
   // TODO: Use better type
-  onAddedToCart: (productOffer: ProductOfferFragment) => void
+  onAddedToCart: (productOffer: ProductOfferFragment, nextUrl?: string) => void
   onClickEdit: () => void
 }
 
@@ -43,6 +48,7 @@ export const OfferPresenter = (props: Props) => {
   const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
+  const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
 
   const handleOfferChange = (offerId: string) => {
     const offer = priceIntent.offers.find((offer) => offer.id === offerId)
@@ -69,16 +75,20 @@ export const OfferPresenter = (props: Props) => {
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     cartId: shopSession.cart.id,
     priceIntentId: priceIntent.id,
-    onSuccess(productOfferId) {
+    onSuccess(productOfferId, nextUrl) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 
       if (addedProductOffer === undefined) {
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
-      onAddedToCart(addedProductOffer)
+      onAddedToCart(addedProductOffer, nextUrl)
     },
   })
+
+  const handleClickSubmit = (redirect: AddToCartRedirect) => () => {
+    setAddToCartRedirect(redirect)
+  }
 
   const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({ priceIntent })
 
@@ -188,7 +198,27 @@ export const OfferPresenter = (props: Props) => {
               />
 
               <input type="hidden" name={FormElement.ProductOfferId} value={selectedOffer.id} />
-              <SubmitButton loading={loading} />
+
+              <Button
+                type="submit"
+                variant="primary"
+                onClick={handleClickSubmit(AddToCartRedirect.Cart)}
+                loading={loading && addToCartRedirect === AddToCartRedirect.Cart}
+                disabled={loading}
+              >
+                {t('ADD_TO_CART_BUTTON_LABEL')}
+              </Button>
+
+              <Button
+                type="submit"
+                variant="primary-alt"
+                onClick={handleClickSubmit(AddToCartRedirect.Checkout)}
+                value={PageLink.checkout()}
+                loading={loading && addToCartRedirect === AddToCartRedirect.Checkout}
+                disabled={loading}
+              >
+                {t('QUICK_CHECKOUT_BUTTON_LABEL')}
+              </Button>
             </Space>
           </Space>
         </form>
@@ -236,18 +266,6 @@ const TextButton = styled.button({
     },
   },
 })
-
-const SubmitButton = ({ loading }: { loading: boolean }) => {
-  const { t } = useTranslation('purchase-form')
-
-  return (
-    <SpaceFlex space={0.5} direction="vertical" align="center">
-      <Button disabled={loading} loading={loading}>
-        {t('ADD_TO_CART_BUTTON_LABEL')}
-      </Button>
-    </SpaceFlex>
-  )
-}
 
 const Separator = styled.div({
   width: 1,
