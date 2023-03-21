@@ -9,12 +9,13 @@ type Props = {
   title: string
   cost: CartCost
   children: ReactNode
+  defaultOpen?: boolean
 }
 
-export const CartCollapsible = ({ children, title, cost }: Props) => {
+export const CartCollapsible = ({ children, title, cost, defaultOpen = false }: Props) => {
   const formatter = useFormatter()
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const closed = !open
 
   return (
