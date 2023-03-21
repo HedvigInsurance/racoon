@@ -1,4 +1,3 @@
-import { PriceIntentAnimal } from '@/services/apollo/generated'
 import {
   LAYOUT,
   ssnSeSection,
@@ -79,9 +78,8 @@ export const SE_PET_DOG: Template = {
         },
         {
           field: {
-            type: 'pet-breed',
+            type: 'pet-dog-breeds',
             name: 'breeds',
-            animal: PriceIntentAnimal.Dog,
             label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },

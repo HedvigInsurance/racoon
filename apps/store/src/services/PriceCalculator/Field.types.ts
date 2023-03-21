@@ -80,6 +80,10 @@ export type PetBreedField = BaseField<Array<Breed['id']>> & {
   animal: PriceIntentAnimal
 }
 
+export type PetDogBreedsField = BaseField<Array<Breed['id']>> & {
+  type: 'pet-dog-breeds'
+}
+
 export type InputField =
   | TextField
   | NumberField
@@ -92,3 +96,4 @@ export type InputField =
   | CurrentInsuranceField
   | StepperField
   | PetBreedField
+  | PetDogBreedsField

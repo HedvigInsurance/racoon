@@ -5,13 +5,13 @@ import { PetBreedField as InputFieldPetBreed, Breed } from '@/services/PriceCalc
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
-type PetBreedFieldProps = {
+type Props = {
   field: InputFieldPetBreed
   onSubmit: (data: JSONData) => Promise<unknown>
   loading: boolean
 }
 
-export const PetBreedField = ({ field, onSubmit, loading }: PetBreedFieldProps) => {
+export const PetBreedField = ({ field, onSubmit, loading }: Props) => {
   const translateLabel = useTranslateFieldLabel()
   const { t } = useTranslation('purchase-form')
   const { breeds, error } = usePetBreeds(field.animal)
