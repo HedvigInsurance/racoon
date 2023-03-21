@@ -13,11 +13,7 @@ export const useOpenPriceCalculatorQueryParam = ({ onQueryParamDetected }: Optio
     if (router.isReady && openPriceCalculator === '1') {
       const nextQuery = { ...router.query }
       delete nextQuery[OPEN_PRICE_CALCULATOR_QUERY_PARAM]
-      router.replace(
-        { pathname: router.pathname, query: nextQuery },
-        { pathname: router.pathname, query: nextQuery },
-        { shallow: true },
-      )
+      router.replace({ pathname: router.pathname, query: nextQuery }, undefined, { shallow: true })
       onQueryParamDetected()
     }
   }, [onQueryParamDetected, openPriceCalculator, router])
