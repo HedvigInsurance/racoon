@@ -53,16 +53,19 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
       productName: item.variant.product.name,
       data: item.priceIntentData,
     })),
-    campaigns: shopSession.cart.redeemedCampaigns.map((item) => ({
-      id: item.id,
-      code: item.code,
-      discountExplanation: getDiscountExplanation(item.discount),
-      discountDurationExplanation: getDiscountDurationExplanation(
-        shopSession.cart.redeemedCampaigns[0].discount,
-        shopSession.cart.cost.gross,
-      ),
-    })),
-  }
+    campaigns: {
+      enabled: shopSession.cart.campaignsEnabled,
+      list: shopSession.cart.redeemedCampaigns.map((item) => ({
+        id: item.id,
+        code: item.code,
+        discountExplanation: getDiscountExplanation(item.discount),
+        discountDurationExplanation: getDiscountDurationExplanation(
+          shopSession.cart.redeemedCampaigns[0].discount,
+          shopSession.cart.cost.gross,
+        ),
+      })),
+    },
+  } satisfies CheckoutPageProps['cart']
 
   return <CheckoutPage {...props} cart={cart} customerAuthenticationStatus={authenticationStatus} />
 }
