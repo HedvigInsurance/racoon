@@ -44,8 +44,9 @@ const Trigger = styled(Collapsible.Trigger)({
   alignItems: 'center',
   gap: theme.space.xxs,
   cursor: 'pointer',
-
+  borderBottom: `1px solid ${theme.colors.borderTranslucent}`,
   backgroundColor: theme.colors.light,
+
   ':focus-visible': {
     borderRadius: theme.radius.xs,
     boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
