@@ -12,6 +12,7 @@ const Root = styled.div({
   columnGap: theme.space.md,
   paddingInline: theme.space.md,
 
+  width: '100%',
   maxWidth: MAX_WIDTH,
   marginInline: 'auto',
 
