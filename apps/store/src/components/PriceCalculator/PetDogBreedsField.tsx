@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Space } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
@@ -24,35 +24,16 @@ type Props = {
 }
 
 export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
-  const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>([])
+  const [showMixedPicker, setShowMixedPicker] = useState(() => (field.value ?? []).length > 1)
   const { t } = useTranslation('purchase-form')
 
-  const { data, error } = usePriceIntentAvailableBreedsQuery({
-    variables: {
-      animal: PriceIntentAnimal.Dog,
-    },
-    onCompleted(data) {
-      if (field.value && field.value.length > 0) {
-        const avaialbleBreeds = data.priceIntentAvailableBreeds
-        const preSelectedBreeds = field.value.map((breedId) => {
-          const matchedBreed = avaialbleBreeds.find((breed) => breed.id === breedId)
-
-          if (!matchedBreed) {
-            datadogLogs.logger.warn(`PetDogBreedsField: couldn't found breed of id ${breedId}`)
-            return { id: breedId, displayName: breedId }
-          }
-
-          return matchedBreed
-        })
-
-        setSelectedBreeds(
-          preSelectedBreeds.length > 1
-            ? [MIXED_BREED_OPTION, ...preSelectedBreeds]
-            : preSelectedBreeds,
-        )
-      }
-    },
-  })
+  const {
+    breeds,
+    comboboxAvailableBreeds,
+    mixedBreedPickerAvailableBreeds,
+    selectedBreeds,
+    defaultSelectedBreed,
+  } = usePetDogBreedFieldState(field.value)
 
   const handleBreedsChange = (selectedBreeds: Array<Breed>) => {
     onSubmit({
@@ -60,55 +41,105 @@ export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
     })
   }
 
-  if (error) {
-    throw new Error('PetDogBreedsField: Could not get available breeds for dog')
+  const handleComboboxChange = (breed: Breed | null) => {
+    if (breed) {
+      if (breed.id === MIXED_BREED_OPTION.id) {
+        setShowMixedPicker(true)
+      } else {
+        handleBreedsChange([breed])
+      }
+    } else {
+      setShowMixedPicker(false)
+      handleBreedsChange([])
+    }
   }
 
-  const availableBreeds = data?.priceIntentAvailableBreeds ?? []
-  const availableBreedsPlusMixedBreed = [MIXED_BREED_OPTION, ...availableBreeds]
-  const realSelectedBreeds = selectedBreeds.filter((breed) => breed.id !== MIXED_BREED_OPTION.id)
-  const singleOptionSelectedItem =
-    selectedBreeds.length > 1 ? MIXED_BREED_OPTION : selectedBreeds[0] ?? null
-  const displayMixedBreedPicker = selectedBreeds.some((breed) => breed.id === MIXED_BREED_OPTION.id)
-
+  const handleMixedBreedPickerChange = (selectedBreeds: Breed[]) => {
+    if (selectedBreeds.length === 0) {
+      handleBreedsChange([])
+    } else {
+      handleBreedsChange(selectedBreeds)
+    }
+  }
   return (
     <Space y={0.25}>
       <Combobox
-        items={availableBreedsPlusMixedBreed}
+        // Remounts the component when 'breeds' list becames avaible (trhough API)
+        // so the correct 'defaultSelectedItem' gets taken into account
+        key={JSON.stringify(breeds)}
+        items={comboboxAvailableBreeds}
         displayValue={(item) => item.displayName}
         placeholder={t('FIELD_BREEDS_PLACEHOLDER')}
-        selectedItem={singleOptionSelectedItem}
-        onSelectedItemChange={(item) => {
-          if (item) {
-            setSelectedBreeds([item])
-
-            if (item.id !== MIXED_BREED_OPTION.id) {
-              handleBreedsChange([item])
-            }
-          } else {
-            setSelectedBreeds([])
-            handleBreedsChange([])
-          }
-        }}
+        defaultSelectedItem={defaultSelectedBreed}
+        onSelectedItemChange={handleComboboxChange}
         required={field.required}
       />
 
-      {displayMixedBreedPicker && (
+      {showMixedPicker && (
         <MixedBreedPicker
-          breeds={availableBreeds}
-          selectedBreeds={realSelectedBreeds}
-          onBreedsChange={(selectedBreeds) => {
-            if (selectedBreeds.length > 0) {
-              setSelectedBreeds([MIXED_BREED_OPTION, ...selectedBreeds])
-              handleBreedsChange(selectedBreeds)
-            } else {
-              setSelectedBreeds([])
-              handleBreedsChange([])
-            }
-          }}
+          breeds={mixedBreedPickerAvailableBreeds}
+          selectedBreeds={selectedBreeds}
+          onBreedsChange={handleMixedBreedPickerChange}
           loading={loading}
+          required={field.required}
         />
       )}
     </Space>
   )
+}
+
+const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
+  const { data, error } = usePriceIntentAvailableBreedsQuery({
+    variables: {
+      animal: PriceIntentAnimal.Dog,
+    },
+  })
+
+  if (error) {
+    throw new Error('PetDogBreedsField: Could not get available breeds for dog')
+  }
+
+  const breeds = useMemo(
+    () => data?.priceIntentAvailableBreeds ?? [],
+    [data?.priceIntentAvailableBreeds],
+  )
+
+  const derivedState = useMemo(() => {
+    let selectedBreeds: Array<Breed> = []
+    let comboboxAvailableBreeds: Array<Breed> = []
+    let mixedBreedPickerAvailableBreeds: Array<Breed> = []
+    if (breeds.length > 0) {
+      selectedBreeds = preSelectedBreedIds.map((breedId) => {
+        const matchedBreed = breeds.find((breed) => breed.id === breedId)
+        if (!matchedBreed) {
+          datadogLogs.logger.warn(`PetDogBreedsField: couldn't found breed of id ${breedId}`)
+          return { id: breedId, displayName: breedId }
+        }
+        return { id: matchedBreed.id, displayName: matchedBreed.displayName }
+      })
+
+      comboboxAvailableBreeds = [MIXED_BREED_OPTION, ...breeds]
+
+      mixedBreedPickerAvailableBreeds = breeds.filter(
+        (breed) => !selectedBreeds.some((selectedBreed) => selectedBreed.id === breed.id),
+      )
+    }
+
+    let defaultSelectedBreed: Breed | null = null
+    if (selectedBreeds.length > 1) {
+      defaultSelectedBreed = MIXED_BREED_OPTION
+    } else if (selectedBreeds.length === 1) {
+      defaultSelectedBreed = selectedBreeds[0]
+    }
+
+    return {
+      breeds,
+      comboboxAvailableBreeds,
+      mixedBreedPickerAvailableBreeds,
+      selectedBreeds,
+      defaultSelectedBreed,
+    }
+  }, [breeds, preSelectedBreedIds])
+
+  return derivedState
 }
