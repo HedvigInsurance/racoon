@@ -89,6 +89,7 @@ export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
 }
 
 const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
+  const { t } = useTranslation('purchase-form')
   const { data, error } = usePriceIntentAvailableBreedsQuery({
     variables: {
       animal: PriceIntentAnimal.Dog,
@@ -98,6 +99,14 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
   if (error) {
     throw new Error('PetDogBreedsField: Could not get available breeds for dog')
   }
+
+  const MIXED_BREED_OPTION = useMemo<Breed>(
+    () => ({
+      id: '-1',
+      displayName: t('LABEL_MIXED_BREED'),
+    }),
+    [t],
+  )
 
   const breeds = useMemo(
     () => data?.priceIntentAvailableBreeds ?? [],
@@ -139,7 +148,7 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
       selectedBreeds,
       defaultSelectedBreed,
     }
-  }, [breeds, preSelectedBreedIds])
+  }, [breeds, preSelectedBreedIds, MIXED_BREED_OPTION])
 
   return derivedState
 }
