@@ -3,15 +3,20 @@ import { useTranslation } from 'next-i18next'
 import { Button, CrossIconSmall, Dialog, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { CartFragmentFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from './CartInventory.types'
 import { DetailsSheetDialog } from './DetailsSheetDialog'
 import { RemoveEntryDialog } from './RemoveEntryDialog'
 
-type Props = CartEntry & { cartId: string; readOnly?: boolean }
+type Props = CartEntry & {
+  cartId: string
+  readOnly?: boolean
+  onRemove?: (cart: CartFragmentFragment) => void
+}
 
 export const CartEntryItem = (props: Props) => {
-  const { cartId, readOnly, ...cartEntry } = props
+  const { cartId, readOnly, onRemove, ...cartEntry } = props
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
@@ -34,7 +39,7 @@ export const CartEntryItem = (props: Props) => {
       <Layout.Close>
         {!readOnly && (
           <SpaceFlex align="end" direction="vertical">
-            <RemoveEntryDialog cartId={cartId} {...cartEntry}>
+            <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
               <Dialog.Trigger asChild>
                 <InvisibleButton aria-label="delete button">
                   <CrossIconSmall />

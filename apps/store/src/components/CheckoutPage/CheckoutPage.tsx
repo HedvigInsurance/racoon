@@ -20,6 +20,7 @@ import { useProductRecommendations } from '@/components/ProductRecommendationLis
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import {
+  CartFragmentFragment,
   CurrentMemberDocument,
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
@@ -79,6 +80,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     },
   })
 
+  const handleRemoveCartEntry = (cart: CartFragmentFragment) => {
+    if (cart.entries.length === 0) {
+      router.push(PageLink.cart())
+    }
+  }
+
   const { productRecommendationOffers } = useProductRecommendations()
 
   const userErrorMessage = userError?.message
@@ -104,7 +111,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
                   <CartEntryList>
                     {cart.entries.map((item) => (
-                      <CartEntryItem key={item.offerId} cartId={cart.id} {...item} />
+                      <CartEntryItem
+                        key={item.offerId}
+                        cartId={cart.id}
+                        onRemove={handleRemoveCartEntry}
+                        {...item}
+                      />
                     ))}
                   </CartEntryList>
                   <HorizontalLine />
