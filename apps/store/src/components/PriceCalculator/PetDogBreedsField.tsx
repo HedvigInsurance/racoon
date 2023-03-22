@@ -1,5 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useMemo } from 'react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Space } from 'ui'
+import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
 import {
   PetDogBreedsField as InputFieldPetDogBreeds,
@@ -8,6 +11,12 @@ import {
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
 
+const MIXED_BREED_OPTION: Breed = {
+  id: '-1',
+  // TODO: localise this
+  displayName: 'Mixed breed',
+}
+
 type Props = {
   field: InputFieldPetDogBreeds
   onSubmit: (data: JSONData) => Promise<unknown>
@@ -15,7 +24,35 @@ type Props = {
 }
 
 export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
-  const { breeds, error } = usePetBreeds(PriceIntentAnimal.Dog)
+  const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>([])
+  const { t } = useTranslation('purchase-form')
+
+  const { data, error } = usePriceIntentAvailableBreedsQuery({
+    variables: {
+      animal: PriceIntentAnimal.Dog,
+    },
+    onCompleted(data) {
+      if (field.value && field.value.length > 0) {
+        const avaialbleBreeds = data.priceIntentAvailableBreeds
+        const preSelectedBreeds = field.value.map((breedId) => {
+          const matchedBreed = avaialbleBreeds.find((breed) => breed.id === breedId)
+
+          if (!matchedBreed) {
+            datadogLogs.logger.warn(`PetDogBreedsField: couldn't found breed of id ${breedId}`)
+            return { id: breedId, displayName: breedId }
+          }
+
+          return matchedBreed
+        })
+
+        setSelectedBreeds(
+          preSelectedBreeds.length > 1
+            ? [MIXED_BREED_OPTION, ...preSelectedBreeds]
+            : preSelectedBreeds,
+        )
+      }
+    },
+  })
 
   const handleBreedsChange = (selectedBreeds: Array<Breed>) => {
     onSubmit({
@@ -27,35 +64,51 @@ export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
     throw new Error('PetDogBreedsField: Could not get available breeds for dog')
   }
 
-  const selectedBreeds = useMemo<Array<Breed>>(() => {
-    return (field.value ?? []).map((breedId) => {
-      const matchedBreed = breeds.find((breed) => breed.id === breedId)
-      if (!matchedBreed) {
-        datadogLogs.logger.warn(`PetDogBreedsField: couldn't found breed of id ${breedId}`)
-        return { id: breedId, displayName: breedId }
-      }
-
-      return matchedBreed
-    })
-  }, [breeds, field.value])
+  const availableBreeds = data?.priceIntentAvailableBreeds ?? []
+  const availableBreedsPlusMixedBreed = [MIXED_BREED_OPTION, ...availableBreeds]
+  const realSelectedBreeds = selectedBreeds.filter((breed) => breed.id !== MIXED_BREED_OPTION.id)
+  const singleOptionSelectedItem =
+    selectedBreeds.length > 1 ? MIXED_BREED_OPTION : selectedBreeds[0] ?? null
+  const displayMixedBreedPicker = selectedBreeds.some((breed) => breed.id === MIXED_BREED_OPTION.id)
 
   return (
-    <MixedBreedPicker
-      breeds={breeds}
-      selectedBreeds={selectedBreeds}
-      onBreedsChange={handleBreedsChange}
-      loading={loading}
-    />
+    <Space y={0.25}>
+      <Combobox
+        items={availableBreedsPlusMixedBreed}
+        displayValue={(item) => item.displayName}
+        placeholder={t('FIELD_BREEDS_PLACEHOLDER')}
+        selectedItem={singleOptionSelectedItem}
+        onSelectedItemChange={(item) => {
+          if (item) {
+            setSelectedBreeds([item])
+
+            if (item.id !== MIXED_BREED_OPTION.id) {
+              handleBreedsChange([item])
+            }
+          } else {
+            setSelectedBreeds([])
+            handleBreedsChange([])
+          }
+        }}
+        required={field.required}
+      />
+
+      {displayMixedBreedPicker && (
+        <MixedBreedPicker
+          breeds={availableBreeds}
+          selectedBreeds={realSelectedBreeds}
+          onBreedsChange={(selectedBreeds) => {
+            if (selectedBreeds.length > 0) {
+              setSelectedBreeds([MIXED_BREED_OPTION, ...selectedBreeds])
+              handleBreedsChange(selectedBreeds)
+            } else {
+              setSelectedBreeds([])
+              handleBreedsChange([])
+            }
+          }}
+          loading={loading}
+        />
+      )}
+    </Space>
   )
-}
-
-const usePetBreeds = (animal: PriceIntentAnimal) => {
-  const { data, error, loading } = usePriceIntentAvailableBreedsQuery({
-    variables: {
-      animal,
-    },
-  })
-  const breeds = data?.priceIntentAvailableBreeds ?? []
-
-  return { breeds, error, loading }
 }
