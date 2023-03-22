@@ -22,23 +22,67 @@ export const ProductPillowsBlock = ({ blok }: ProductPillowsBlockProps) => {
   )
   return (
     <ProductPillowsWrapper {...storyblokEditable(blok)}>
-      {items.map((nestedBlock) => (
-        <ProductPillowBlock key={nestedBlock._uid} blok={nestedBlock} />
-      ))}
+      <ScrollerContent>
+        <ScrollerPlatter role="list">
+          {items.map((nestedBlock) => (
+            <ScrollerItem key={nestedBlock._uid} role="listitem">
+              <ProductPillowBlock blok={nestedBlock} />
+            </ScrollerItem>
+          ))}
+        </ScrollerPlatter>
+      </ScrollerContent>
     </ProductPillowsWrapper>
   )
 }
 ProductPillowsBlock.blockName = 'productPillows'
 
-const ProductPillowsWrapper = styled.nav({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, max-content)',
-  columnGap: theme.space.md,
-  justifyContent: 'center',
+const PILLOW_HEIGHT = '10.75rem'
+
+const ProductPillowsWrapper = styled.div({
+  // Hide scrollbar
+  overflow: 'hidden',
+  height: PILLOW_HEIGHT,
+  marginBottom: `-${theme.space.xl}`,
+  paddingBottom: theme.space.xl,
 
   [mq.md]: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    columnGap: 0,
+    height: 'auto',
+    overflow: 'visible',
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+})
+
+const ScrollerContent = styled.div({
+  position: 'relative',
+  scrollSnapType: 'x mandatory',
+  overscrollBehaviorX: 'contain',
+  overflowX: 'auto',
+  whiteSpace: 'nowrap',
+})
+
+const ScrollerPlatter = styled.div({
+  display: 'flex',
+  width: '100%',
+  paddingTop: theme.space.sm,
+  paddingBottom: theme.space.xl,
+
+  [mq.md]: {
+    padding: 0,
+  },
+})
+
+const ScrollerItem = styled.div({
+  flexShrink: 0,
+  scrollSnapAlign: 'start',
+
+  '&:first-of-type': {
+    marginLeft: 'auto',
+    paddingLeft: theme.space.md,
+  },
+
+  '&:last-of-type': {
+    marginRight: 'auto',
+    paddingRight: theme.space.md,
   },
 })
