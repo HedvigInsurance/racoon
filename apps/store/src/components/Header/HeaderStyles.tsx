@@ -76,8 +76,6 @@ export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Con
   [mq.lg]: {
     position: 'absolute',
     paddingTop: `calc(${theme.space.sm} + ${theme.space.xs})`,
-    left: '50%',
-    transform: 'translate(-50%, 0)',
   },
 })
 
@@ -128,6 +126,7 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)({
   fontSize: theme.fontSizes.md,
 
   [mq.lg]: {
+    minWidth: '16rem',
     columnGap: 0,
     gridTemplateColumns: 'none',
     gridAutoColumns: '7.5rem',
