@@ -120,7 +120,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               </CartCollapsible>
 
               <Space y={2}>
-                {productRecommendationOffers && productRecommendationOffers.length > 0 ? (
+                {productRecommendationOffers && productRecommendationOffers.length > 0 && (
                   <CartEntryList>
                     {productRecommendationOffers?.map(({ product, offer }) => {
                       if (!offer) return null
@@ -134,8 +134,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       )
                     })}
                   </CartEntryList>
-                ) : (
-                  <HorizontalLine />
                 )}
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>
