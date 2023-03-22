@@ -7,6 +7,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
+import { GlobalLinkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { useApollo } from '@/services/apollo/client'
@@ -81,6 +82,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
+        <GlobalLinkStyles />
         <PageTransitionProgressBar />
         <ThemeProvider theme={theme}>
           <JotaiProvider>
