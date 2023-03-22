@@ -1,0 +1,12 @@
+fragment ContractExternalInsuranceCancellation on ContractExternalInsuranceCancellation {
+  id
+  status
+  externalInsurer {
+    id
+    displayName
+  }
+  bankSignering {
+    approveByDate
+    url
+  }
+}

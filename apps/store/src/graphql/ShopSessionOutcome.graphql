@@ -1,0 +1,16 @@
+query ShopSessionOutcome($id: UUID!) {
+  shopSession(id: $id) {
+    outcome {
+      id
+      createdContracts {
+        id
+        variant {
+          displayName
+        }
+        externalInsuranceCancellation {
+          ...ContractExternalInsuranceCancellation
+        }
+      }
+    }
+  }
+}

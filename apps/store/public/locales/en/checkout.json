@@ -22,8 +22,11 @@
   "SUCCESS_ANIMATION_MESSAGE": "Welcome to ◰",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Approve cancellation ↗︎",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Approve cancellation latest {{date}}.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE_COMPLETED": "Your car insurance has been cancelled. You will receive a confirmation via email.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED": "Cancellation approved",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING": "Awaiting approval",
   "SWITCHING_ASSISTANT_CARD_EXPAND": "Read more",
+  "SWITCHING_ASSISTANT_NEXT_LINK": "Continue",
   "SWITCHING_ASSISTANT_SKIP_LINK": "Remind me later",
   "SWITCHING_ASSISTANT_SUPPORT_LINK": "Help",
   "SWITCHING_ASSISTANT_TITLE": "Cancel your old car insurance"

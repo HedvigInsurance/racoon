@@ -6,7 +6,6 @@ import {
   SwitchingAssistantPageProps,
 } from '@/components/SwitchingAssistantPage/SwitchingAssistantPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -46,36 +45,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps, Params> = asy
     return fallbackRedirect
   }
 
-  const entries: SwitchingAssistantPageProps['entries'] = []
-  shopSession.cart.entries.forEach((item) => {
-    if (item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering) {
-      const company = item.cancellation.externalInsurer?.displayName
-      if (!company) {
-        console.warn('Missing company name for Banksignering cancellation', {
-          entryId: item.id,
-        })
-        return
-      }
-
-      if (!item.cancellation.bankSigneringApproveByDate) {
-        console.error('Missing Banksignering approve by date', { entryId: item.id })
-        return
-      }
-
-      entries.push({
-        offerId: item.id,
-        name: item.variant.product.displayNameFull,
-        company,
-        date: item.cancellation.bankSigneringApproveByDate,
-      })
-    }
-  })
-
-  if (entries.length === 0) {
-    console.error('No Banksignering entries found', { shopSessionId })
-    return fallbackRedirect
-  }
-
   const [checkoutSteps, translations] = await Promise.all([
     fetchCheckoutSteps({ apolloClient, shopSession }),
     serverSideTranslations(locale),
@@ -84,7 +53,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps, Params> = asy
   const pageProps = {
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
-    entries,
     checkoutSteps,
   } satisfies NextPageProps
 

@@ -22,8 +22,11 @@
   "SUCCESS_ANIMATION_MESSAGE": "Välkommen till ◰",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Godkänn uppsägning ↗︎",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Godkänn uppsägning senast {{date}}.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE_COMPLETED": "Din bilförsäkring har blivit uppsagd. Du får en bekräftelse via mejl.",
+  "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED": "Uppsägning godkänd",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING": "Väntar på godkännande",
   "SWITCHING_ASSISTANT_CARD_EXPAND": "Läs mer",
+  "SWITCHING_ASSISTANT_NEXT_LINK": "Gå vidare",
   "SWITCHING_ASSISTANT_SKIP_LINK": "Påminn mig senare",
   "SWITCHING_ASSISTANT_SUPPORT_LINK": "Hjälp",
   "SWITCHING_ASSISTANT_TITLE": "Säg upp din gamla bilförsäkring"
