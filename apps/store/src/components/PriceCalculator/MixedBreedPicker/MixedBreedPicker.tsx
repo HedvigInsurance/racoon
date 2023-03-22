@@ -11,9 +11,16 @@ type Props = {
   selectedBreeds: Array<Breed>
   onBreedsChange?: (selectedBreeds: Array<Breed>) => void
   loading?: boolean
+  required?: boolean
 }
 
-export const MixedBreedPicker = ({ breeds, selectedBreeds, onBreedsChange, loading }: Props) => {
+export const MixedBreedPicker = ({
+  breeds,
+  selectedBreeds,
+  onBreedsChange,
+  loading,
+  required,
+}: Props) => {
   const { t } = useTranslation('purchase-form')
 
   const handleDelete = (id: Breed['id']) => () => {
@@ -61,6 +68,7 @@ export const MixedBreedPicker = ({ breeds, selectedBreeds, onBreedsChange, loadi
           noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
           mutliSelect={true}
           disabled={loading}
+          required={required}
         />
       </Space>
     </Wrapper>
