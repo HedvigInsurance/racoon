@@ -122,10 +122,9 @@ export const NavigationSecondaryList = styled(NavigationMenuPrimitive.List)({
 })
 
 export const ProductNavigationList = styled(NavigationMenuPrimitive.List)({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  columnGap: theme.space.md,
-  rowGap: theme.space.lg,
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: theme.space.xs,
   fontSize: theme.fontSizes.md,
 
   [mq.lg]: {
