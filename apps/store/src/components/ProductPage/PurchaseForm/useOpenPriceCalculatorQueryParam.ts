@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export const OPEN_PRICE_CALCULATOR_QUERY_PARAM = 'openPriceCalculator'
 
@@ -8,15 +8,15 @@ type Options = {
 }
 export const useOpenPriceCalculatorQueryParam = ({ onQueryParamDetected }: Options) => {
   const router = useRouter()
-  const { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: openPriceCalculator } = router.query
+  const triggeredRef = useRef(false)
   useEffect(() => {
-    if (router.isReady && openPriceCalculator === '1') {
-      const nextQuery = { ...router.query }
-      delete nextQuery[OPEN_PRICE_CALCULATOR_QUERY_PARAM]
-      router.replace({ pathname: router.pathname, query: nextQuery }, undefined, { shallow: true })
+    const { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: openPriceCalculator } = router.query
+    if (router.isReady && openPriceCalculator === '1' && !triggeredRef.current) {
+      // Guards against repeated triggers in case any other query param changes
+      // GOTCHA: We've tried removing query param via shallow router.replace, but it triggers some weird
+      // window.location change, and this problem only ever happens in production
+      triggeredRef.current = true
       onQueryParamDetected()
     }
-  }, [onQueryParamDetected, openPriceCalculator, router])
-
-  return openPriceCalculator
+  }, [onQueryParamDetected, router])
 }
