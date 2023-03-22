@@ -2,16 +2,21 @@ import { useTranslation } from 'next-i18next'
 import { FormEventHandler, ReactNode, useId } from 'react'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { CartFragmentFragment } from '@/services/apollo/generated'
 import { CartEntry } from './CartInventory.types'
 import { useRemoveCartEntry } from './useRemoveCartEntry'
 
-type Props = CartEntry & { cartId: string; children: ReactNode }
+type Props = CartEntry & {
+  cartId: string
+  children: ReactNode
+  onCompleted?: (cart: CartFragmentFragment) => void
+}
 
-export const RemoveEntryDialog = ({ children, cartId, offerId, title }: Props) => {
+export const RemoveEntryDialog = ({ children, title, ...mutationParams }: Props) => {
   const { t } = useTranslation('cart')
   const formId = useId()
 
-  const [removeCartEntry, { loading }] = useRemoveCartEntry({ cartId, offerId })
+  const [removeCartEntry, { loading }] = useRemoveCartEntry(mutationParams)
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault()

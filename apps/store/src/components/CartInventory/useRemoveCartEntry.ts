@@ -1,26 +1,31 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useCallback } from 'react'
-import { ProductRecommendationsDocument, ShopSessionDocument } from '@/services/apollo/generated'
+import {
+  CartFragmentFragment,
+  ProductRecommendationsDocument,
+  ShopSessionDocument,
+} from '@/services/apollo/generated'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 
-export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerId: string }) => {
+type Params = {
+  cartId: string
+  offerId: string
+  onCompleted?: (cart: CartFragmentFragment) => void
+}
+
+export const useRemoveCartEntry = ({ cartId, offerId, onCompleted }: Params) => {
   const { shopSession } = useShopSession()
-
-  const tracking = useTracking()
-  const [runMutation, mutationResult] = useCartEntryRemoveMutation({
-    // Refetch recommendations
-    refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
-  })
-
   const { showApolloError } = useAppErrorHandleContext()
+  const tracking = useTracking()
 
-  const removeCartEntry = useCallback(() => {
-    runMutation({
-      variables: { cartId, offerId },
-      onCompleted() {
+  return useCartEntryRemoveMutation({
+    variables: { cartId, offerId },
+    refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
+    awaitRefetchQueries: true,
+    onCompleted(data) {
+      if (data.cartEntriesRemove.cart) {
         const offer = shopSession?.cart.entries.find((entry) => entry.id == offerId)
         if (offer) {
           tracking.reportDeleteFromCart(offer)
@@ -30,10 +35,10 @@ export const useRemoveCartEntry = ({ cartId, offerId }: { cartId: string; offerI
             offerId,
           })
         }
-      },
-      onError: showApolloError,
-    })
-  }, [cartId, offerId, runMutation, shopSession, showApolloError, tracking])
 
-  return [removeCartEntry, mutationResult] as const
+        onCompleted?.(data.cartEntriesRemove.cart)
+      }
+    },
+    onError: showApolloError,
+  })
 }
