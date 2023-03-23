@@ -1,38 +1,39 @@
 import styled from '@emotion/styled'
 import { WarningTriangleIcon } from '../icons'
+import { theme } from '../lib/theme/theme'
 import { Space } from './Space'
 
-const Label = styled.label(({ theme }) => ({
+const Label = styled.label({
   fontFamily: theme.fonts.body,
   color: theme.colors.textPrimary,
   fontSize: '0.875rem',
   lineHeight: '1.375rem',
-}))
+})
 
 const MessageWrapper = styled(Space)({
   display: 'flex',
   alignItems: 'center',
 })
 
-const StyledWarningTriangleIcon = styled(WarningTriangleIcon)(({ theme }) => ({
+const StyledWarningTriangleIcon = styled(WarningTriangleIcon)({
   color: theme.colors.red600,
   width: '1rem',
   height: '1rem',
-}))
+})
 
-const ErrorMessage = styled.span(({ theme }) => ({
+const ErrorMessage = styled.span({
   fontFamily: theme.fonts.body,
   color: theme.colors.red600,
   fontSize: '0.75rem',
   lineHeight: '1rem',
-}))
+})
 
-const InfoMessage = styled.span(({ theme }) => ({
+const InfoMessage = styled.span({
   fontFamily: theme.fonts.body,
   color: theme.colors.textSecondary,
   fontSize: '0.75rem',
   lineHeight: '1rem',
-}))
+})
 
 type ChildrenProps = {
   hasError: boolean

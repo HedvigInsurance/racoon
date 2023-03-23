@@ -4,7 +4,7 @@ import React from 'react'
 import Balancer from 'react-wrap-balancer'
 import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
-import { getColor } from '../../lib/theme/theme'
+import { getColor, theme } from '../../lib/theme/theme'
 import { getHeadingVariantStyles, HeadingVariant } from './Heading.helpers'
 
 export type { PossibleHeadingVariant } from './Heading.helpers'
@@ -29,7 +29,7 @@ type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant' | 'align'> & Marg
 const HeadingBase = styled(
   'h2',
   elementConfig,
-)<HeadingBaseProps>(({ theme, color, variant, align, ...props }) => {
+)<HeadingBaseProps>(({ color, variant, align, ...props }) => {
   // GOTCHA: We may get empty string from Storyblok, this should be handled safely
   variant = variant || 'standard.32'
   return {
