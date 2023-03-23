@@ -40,6 +40,7 @@ export const Default = () => {
               typeOfContract: 'SE_APARTMENT_BRF',
               displayName: 'Hedvig BRF',
               product: {
+                id: 'oidajwoijawd',
                 name: 'SE_APARTMENT_BRF',
                 displayNameFull: 'Home Insurance Homeowner',
                 pillowImage: {
