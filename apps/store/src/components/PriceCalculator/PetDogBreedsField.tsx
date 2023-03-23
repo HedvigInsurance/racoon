@@ -11,11 +11,7 @@ import {
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
 
-const MIXED_BREED_OPTION: Breed = {
-  id: '-1',
-  // TODO: localise this
-  displayName: 'Mixed breed',
-}
+const MIXED_BREED_ID = '-1'
 
 type Props = {
   field: InputFieldPetDogBreeds
@@ -43,7 +39,7 @@ export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
 
   const handleComboboxChange = (breed: Breed | null) => {
     if (breed) {
-      if (breed.id === MIXED_BREED_OPTION.id) {
+      if (breed.id === MIXED_BREED_ID) {
         setShowMixedPicker(true)
       } else {
         handleBreedsChange([breed])
@@ -102,7 +98,7 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
 
   const MIXED_BREED_OPTION = useMemo<Breed>(
     () => ({
-      id: '-1',
+      id: MIXED_BREED_ID,
       displayName: t('LABEL_MIXED_BREED'),
     }),
     [t],
