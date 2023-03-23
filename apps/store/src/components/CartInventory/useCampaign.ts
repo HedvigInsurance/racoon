@@ -3,14 +3,16 @@ import { useErrorMessage } from '@/utils/useErrorMessage'
 
 type Params = {
   cartId: string
+  onCompleted?: () => void
 }
 
-export const useRedeemCampaign = ({ cartId }: Params) => {
+export const useRedeemCampaign = ({ cartId, onCompleted }: Params) => {
   const [redeemCampaign, result] = useRedeemCampaignMutation({
     onError: () => {}, // Handled via errorMessage
     // TODO: this is a workaround for getting shop session to propagate
     refetchQueries: 'active',
     awaitRefetchQueries: true,
+    onCompleted,
   })
   const errorMessage = useErrorMessage(result.error)
 

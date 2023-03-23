@@ -16,6 +16,8 @@ type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: s
 type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
+type ForeverPage = BaseParams & { code?: string }
+type CampaignAddRoute = { code: string; next?: string }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
@@ -52,6 +54,11 @@ export const PageLink = {
   apiPaymentAdyenCallback: ({ locale, shopSessionId }: AdyenCallbackRoute) =>
     `/api/payment/adyen-callback/${shopSessionId}/${locale}`,
 
+  forever: ({ locale, code }: ForeverPage = {}) => {
+    const codeQueryParam = code ? `?code=${code}` : ''
+    return `${localePrefix(locale)}/forever${codeQueryParam}`
+  },
+
   customerService: ({ locale }: Required<BaseParams>) => {
     const url = CUSTOMER_SERVICE_URL[locale]
     if (!url) {
@@ -72,6 +79,10 @@ export const PageLink = {
 
   apiSessionReset: () => '/api/session/reset',
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
+  apiCampaignAdd: ({ code, next }: CampaignAddRoute) => {
+    const nextQueryParam = next ? `?next=${next}` : ''
+    return `/api/campaign/add/${code}${nextQueryParam}`
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
