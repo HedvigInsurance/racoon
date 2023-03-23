@@ -274,7 +274,8 @@ export const colors = {
   // Semantic colors
   backgroundStandard: gray[25],
   backgroundFrostedGlass: grayTranslucent[25],
-  borderOpaque: gray[400],
+  borderOpaque1: gray[200],
+  borderOpaque2: gray[400],
   borderTranslucent: grayTranslucent[400],
   opaque1: gray[100],
   translucent1: grayTranslucent[100],

@@ -3,7 +3,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { AndroidIcon, AppleIcon, Button, mq, Space, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import {
@@ -35,9 +35,10 @@ export const DialogClose = styled(DialogPrimitive.DialogClose)({
   ...triggerStyles,
 })
 
-const ButtonWrapper = styled(Space)({
+const ButtonWrapper = styled.div({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
+  columnGap: theme.space.xs,
   paddingTop: theme.space.lg,
 })
 
@@ -80,7 +81,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
           <Navigation defaultValue={defaultValue}>
             <NavigationPrimaryList>
               <div>{children}</div>
-              <ButtonWrapper x={0.25}>
+              <ButtonWrapper>
                 <Button
                   href={getAppStoreLink('apple', routingLocale).toString()}
                   target="_blank"

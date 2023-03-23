@@ -90,7 +90,7 @@ const CollapsibleContent = styled(Collapsible.Content)({
 
 const Separator = styled.hr({
   height: 1,
-  backgroundColor: theme.colors.borderOpaque,
+  backgroundColor: theme.colors.borderOpaque2,
   marginInline: theme.space.md,
 })
 

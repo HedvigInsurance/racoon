@@ -198,7 +198,7 @@ ProductNavContainerBlock.blockName = 'productNavContainer'
 const DesktopOnly = styled.div({ display: 'none', [mq.lg]: { display: 'block' } })
 const MobileWrapper = styled.div({
   paddingTop: theme.space.md,
-  borderBottom: `1px solid ${theme.colors.borderOpaque}`,
+  borderBottom: `1px solid ${theme.colors.borderOpaque1}`,
   [mq.lg]: { display: 'none' },
 })
 
