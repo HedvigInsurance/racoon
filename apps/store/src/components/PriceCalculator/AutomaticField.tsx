@@ -170,7 +170,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'pet-cat-breeds':
-      return <PetCatBreedsField field={field} onSubmit={onSubmit} loading={loading} />
+      return <PetCatBreedsField field={field} loading={loading} />
 
     case 'pet-dog-breeds':
       return <PetDogBreedsField field={field} onSubmit={onSubmit} loading={loading} />

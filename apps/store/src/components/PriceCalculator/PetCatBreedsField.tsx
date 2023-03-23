@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
@@ -5,16 +6,14 @@ import {
   PetCatBreedsField as InputFieldPetBreed,
   Breed,
 } from '@/services/PriceCalculator/Field.types'
-import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldPetBreed
-  onSubmit: (data: JSONData) => Promise<unknown>
   loading: boolean
 }
 
-export const PetCatBreedsField = ({ field, onSubmit, loading }: Props) => {
+export const PetCatBreedsField = ({ field, loading }: Props) => {
   const translateLabel = useTranslateFieldLabel()
   const { t } = useTranslation('purchase-form')
   const { breeds } = usePetBreeds(PriceIntentAnimal.Cat)
@@ -24,22 +23,20 @@ export const PetCatBreedsField = ({ field, onSubmit, loading }: Props) => {
     defaultSelectedBreed = breeds.find((breed) => breed.id === field.value?.[0]) ?? null
   }
 
-  const handleSelectBreed = (selectedBreed: Breed | null) => {
-    onSubmit({
-      [field.name]: selectedBreed ? [selectedBreed.id] : [],
-    })
-  }
+  // Used to re-mount Combobox when 'breeds' becomes available,
+  // otherwise it might happen the case where 'defaultSelectedItem'
+  // doesn't get taken into account due the absence of 'breeds'
+  const key = useMemo(() => JSON.stringify(breeds), [breeds])
 
   return (
     <Combobox
-      // Remounts the component when 'breeds' list becames avaible (trhough API)
-      // so the correct 'defaultSelectedItem' gets taken into account
-      key={JSON.stringify(breeds)}
+      key={key}
       items={breeds}
       defaultSelectedItem={defaultSelectedBreed}
-      onSelectedItemChange={handleSelectBreed}
       placeholder={translateLabel(field.label)}
       displayValue={breedToString}
+      getFormValue={breedToFormValue}
+      name={field.name}
       required={field.required}
       disabled={loading}
       noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
@@ -48,6 +45,8 @@ export const PetCatBreedsField = ({ field, onSubmit, loading }: Props) => {
 }
 
 const breedToString = (breed: Breed) => breed.displayName
+
+const breedToFormValue = (breed: Breed) => breed.id
 
 const usePetBreeds = (animal: PriceIntentAnimal) => {
   const { data, error, loading } = usePriceIntentAvailableBreedsQuery({
@@ -60,7 +59,10 @@ const usePetBreeds = (animal: PriceIntentAnimal) => {
     throw new Error('Could not get available breeds for cat')
   }
 
-  const breeds = data?.priceIntentAvailableBreeds ?? []
+  const breeds = useMemo(
+    () => data?.priceIntentAvailableBreeds ?? [],
+    [data?.priceIntentAvailableBreeds],
+  )
 
   return { breeds, error, loading }
 }
