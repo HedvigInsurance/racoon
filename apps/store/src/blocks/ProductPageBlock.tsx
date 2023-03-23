@@ -200,7 +200,7 @@ const PurchaseFormWrapper = styled.div({
     position: 'sticky',
     top: HEADER_HEIGHT_DESKTOP,
     // Scroll independently if content is too long
-    maxHeight: '100vh',
+    maxHeight: `calc(100vh - ${HEADER_HEIGHT_DESKTOP})`,
     overflow: 'auto',
     paddingBottom: theme.space.xl,
     paddingTop: '6vw',
