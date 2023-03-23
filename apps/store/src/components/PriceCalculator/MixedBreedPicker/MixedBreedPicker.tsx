@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Space, Text, CrossIconSmall, InfoIcon, theme } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
@@ -8,29 +8,34 @@ import { Breed } from '@/services/PriceCalculator/Field.types'
 
 type Props = {
   breeds: Array<Breed>
-  selectedBreeds: Array<Breed>
+  defaultSelectedBreeds?: Array<Breed>
   onBreedsChange?: (selectedBreeds: Array<Breed>) => void
   loading?: boolean
   required?: boolean
+  name?: string
 }
 
 export const MixedBreedPicker = ({
   breeds,
-  selectedBreeds,
+  defaultSelectedBreeds,
   onBreedsChange,
   loading,
+  name,
   required,
 }: Props) => {
+  const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>(defaultSelectedBreeds ?? [])
   const { t } = useTranslation('purchase-form')
 
   const handleDelete = (id: Breed['id']) => () => {
     const newSelectedBreeds = selectedBreeds.filter((breed) => breed.id !== id)
+    setSelectedBreeds(newSelectedBreeds)
     onBreedsChange?.(newSelectedBreeds)
   }
 
   const handleAdd = (breed: Breed | null) => {
     if (breed) {
       const newSelectedBreeds = [...selectedBreeds, breed]
+      setSelectedBreeds(newSelectedBreeds)
       onBreedsChange?.(newSelectedBreeds)
     }
   }
@@ -47,16 +52,21 @@ export const MixedBreedPicker = ({
         </Text>
 
         {selectedBreeds.length > 0 && (
-          <List>
+          <>
+            <List>
+              {selectedBreeds.map((breed) => (
+                <ListItem key={breed.id}>
+                  <Text size="xl">{breed.displayName}</Text>
+                  <DeleteButton type="button" onClick={handleDelete(breed.id)} disabled={loading}>
+                    <CrossIconSmall />
+                  </DeleteButton>
+                </ListItem>
+              ))}
+            </List>
             {selectedBreeds.map((breed) => (
-              <ListItem key={breed.id}>
-                <Text size="xl">{breed.displayName}</Text>
-                <DeleteButton type="button" onClick={handleDelete(breed.id)} disabled={loading}>
-                  <CrossIconSmall />
-                </DeleteButton>
-              </ListItem>
+              <input key={breed.id} type="hidden" name={name} value={breed.id} />
             ))}
-          </List>
+          </>
         )}
 
         <StyledCombobox
@@ -68,7 +78,7 @@ export const MixedBreedPicker = ({
           noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
           mutliSelect={true}
           disabled={loading}
-          required={required}
+          required={required && selectedBreeds.length === 0}
         />
       </Space>
     </Wrapper>
