@@ -14,6 +14,7 @@ import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 
 type CartOfferItemProps = {
@@ -36,8 +37,10 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
     },
   })
 
+  const tracking = useTracking()
   const handleSubmitQuickAdd = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     datadogRum.addAction('Quick add to cart', { priceIntentId: offer.id, product: product.id })
+    tracking.reportAddToCart(offer, 'recommendations')
     handleSubmitAddToCart(event)
   }
 

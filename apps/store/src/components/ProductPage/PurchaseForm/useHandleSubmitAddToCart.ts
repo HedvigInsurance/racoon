@@ -2,7 +2,6 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { SyntheticEvent, useCallback } from 'react'
 import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { useTracking } from '@/services/Tracking/useTracking'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './PurchaseForm.constants'
 
@@ -42,7 +41,6 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
 type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]
 
 const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
-  const tracking = useTracking()
   const [mutate, mutationResult] = useCartEntryAddMutation(mutationOptions)
   const addCartEntry = useCallback(
     (options: CartEntryAddOptions = {}) => {
@@ -53,9 +51,7 @@ const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
         const addedOffer = data.cartEntriesAdd.cart.entries.find(
           (entry) => entry.id === variables?.offerId,
         )
-        if (addedOffer) {
-          tracking.reportAddToCart(addedOffer)
-        } else {
+        if (!addedOffer) {
           datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
             ...variables,
           })
@@ -66,7 +62,7 @@ const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
 
       return mutate({ ...options, onCompleted: handleCompleted })
     },
-    [mutate, tracking],
+    [mutate],
   )
   return [addCartEntry, mutationResult] as const
 }
