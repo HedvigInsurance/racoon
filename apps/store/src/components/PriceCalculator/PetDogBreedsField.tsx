@@ -7,77 +7,54 @@ import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/service
 import {
   PetDogBreedsField as InputFieldPetDogBreeds,
   Breed,
+  MIXED_BREED_OPTION_ID,
 } from '@/services/PriceCalculator/Field.types'
-import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
-
-const MIXED_BREED_ID = '-1'
 
 type Props = {
   field: InputFieldPetDogBreeds
-  onSubmit: (data: JSONData) => Promise<unknown>
   loading: boolean
 }
 
-export const PetDogBreedsField = ({ field, onSubmit, loading }: Props) => {
+export const PetDogBreedsField = ({ field, loading }: Props) => {
   const [showMixedPicker, setShowMixedPicker] = useState(() => (field.value ?? []).length > 1)
   const { t } = useTranslation('purchase-form')
 
-  const {
-    breeds,
-    comboboxAvailableBreeds,
-    mixedBreedPickerAvailableBreeds,
-    selectedBreeds,
-    defaultSelectedBreed,
-  } = usePetDogBreedFieldState(field.value)
-
-  const handleBreedsChange = (selectedBreeds: Array<Breed>) => {
-    onSubmit({
-      [field.name]: selectedBreeds.map((breed) => breed.id),
-    })
-  }
+  const { breeds, defaultSelectedBreeds, comboboxAvailableBreeds, comboboxDefaultSelectedBreed } =
+    usePetDogBreedFieldState(field.value)
 
   const handleComboboxChange = (breed: Breed | null) => {
-    if (breed) {
-      if (breed.id === MIXED_BREED_ID) {
-        setShowMixedPicker(true)
-      } else {
-        handleBreedsChange([breed])
-      }
-    } else {
-      setShowMixedPicker(false)
-      handleBreedsChange([])
-    }
+    setShowMixedPicker(breed?.id === MIXED_BREED_OPTION_ID)
   }
 
-  const handleMixedBreedPickerChange = (selectedBreeds: Breed[]) => {
-    if (selectedBreeds.length === 0) {
-      handleBreedsChange([])
-    } else {
-      handleBreedsChange(selectedBreeds)
-    }
-  }
+  // Used to re-mount Combobox when 'breeds' becomes available,
+  // otherwise it might happen the case where 'defaultSelectedItem'
+  // doesn't get taken into account due the absence of 'breeds'
+  const key = useMemo(() => JSON.stringify(breeds), [breeds])
+
   return (
     <Space y={0.25}>
       <Combobox
-        // Remounts the component when 'breeds' list becames avaible (trhough API)
-        // so the correct 'defaultSelectedItem' gets taken into account
-        key={JSON.stringify(breeds)}
+        key={key}
         items={comboboxAvailableBreeds}
+        defaultSelectedItem={comboboxDefaultSelectedBreed}
         displayValue={(item) => item.displayName}
+        getFormValue={breedToFormValue}
         placeholder={t('FIELD_BREEDS_PLACEHOLDER')}
-        defaultSelectedItem={defaultSelectedBreed}
         onSelectedItemChange={handleComboboxChange}
+        name={field.name}
         required={field.required}
+        disabled={loading}
+        noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
       />
 
       {showMixedPicker && (
         <MixedBreedPicker
-          breeds={mixedBreedPickerAvailableBreeds}
-          selectedBreeds={selectedBreeds}
-          onBreedsChange={handleMixedBreedPickerChange}
-          loading={loading}
+          breeds={breeds}
+          defaultSelectedBreeds={defaultSelectedBreeds}
+          name={field.name}
           required={field.required}
+          loading={loading}
         />
       )}
     </Space>
@@ -98,7 +75,7 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
 
   const MIXED_BREED_OPTION = useMemo<Breed>(
     () => ({
-      id: MIXED_BREED_ID,
+      id: MIXED_BREED_OPTION_ID,
       displayName: t('LABEL_MIXED_BREED'),
     }),
     [t],
@@ -110,11 +87,11 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
   )
 
   const derivedState = useMemo(() => {
-    let selectedBreeds: Array<Breed> = []
     let comboboxAvailableBreeds: Array<Breed> = []
-    let mixedBreedPickerAvailableBreeds: Array<Breed> = []
+    let comboboxDefaultSelectedBreed: Breed | null = null
+    let defaultSelectedBreeds: Array<Breed> = []
     if (breeds.length > 0) {
-      selectedBreeds = preSelectedBreedIds.map((breedId) => {
+      defaultSelectedBreeds = preSelectedBreedIds.map((breedId) => {
         const matchedBreed = breeds.find((breed) => breed.id === breedId)
         if (!matchedBreed) {
           datadogLogs.logger.warn(`PetDogBreedsField: couldn't found breed of id ${breedId}`)
@@ -125,26 +102,22 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
 
       comboboxAvailableBreeds = [MIXED_BREED_OPTION, ...breeds]
 
-      mixedBreedPickerAvailableBreeds = breeds.filter(
-        (breed) => !selectedBreeds.some((selectedBreed) => selectedBreed.id === breed.id),
-      )
-    }
-
-    let defaultSelectedBreed: Breed | null = null
-    if (selectedBreeds.length > 1) {
-      defaultSelectedBreed = MIXED_BREED_OPTION
-    } else if (selectedBreeds.length === 1) {
-      defaultSelectedBreed = selectedBreeds[0]
+      if (defaultSelectedBreeds.length > 1) {
+        comboboxDefaultSelectedBreed = MIXED_BREED_OPTION
+      } else if (defaultSelectedBreeds.length === 1) {
+        comboboxDefaultSelectedBreed = defaultSelectedBreeds[0]
+      }
     }
 
     return {
       breeds,
       comboboxAvailableBreeds,
-      mixedBreedPickerAvailableBreeds,
-      selectedBreeds,
-      defaultSelectedBreed,
+      comboboxDefaultSelectedBreed,
+      defaultSelectedBreeds,
     }
   }, [breeds, preSelectedBreedIds, MIXED_BREED_OPTION])
 
   return derivedState
 }
+
+const breedToFormValue = (breed: Breed) => breed.id
