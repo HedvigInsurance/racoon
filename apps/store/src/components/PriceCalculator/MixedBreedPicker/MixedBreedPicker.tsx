@@ -37,7 +37,7 @@ export const MixedBreedPicker = ({ breeds, onSelectedBreedsChange }: Props) => {
     <Wrapper>
       <Space y={0.5}>
         <Text size="xs" color="textSecondary">
-          {t('FIELD_SUB_BREEDS_LABEL')}
+          {t('FIELD_MIXED_BREEDS_LABEL')}
         </Text>
 
         {selectedBreeds.length > 0 && (
@@ -58,7 +58,8 @@ export const MixedBreedPicker = ({ breeds, onSelectedBreedsChange }: Props) => {
           displayValue={(breed) => breed.displayName}
           selectedItem={null}
           onSelectedItemChange={handleAdd}
-          placeholder="Search breed"
+          placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
+          noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
           mutliSelect={true}
         />
       </Space>
