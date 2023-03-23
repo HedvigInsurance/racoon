@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Meta, StoryFn } from '@storybook/react'
 import { Heading } from '../components/Heading/Heading'
 import { Space } from '../components/Space'
+import { theme } from '../lib/theme/theme'
 import * as AllIcons from './index'
 
 type IconProps = {
@@ -43,7 +44,7 @@ const Page = styled.div({
   height: '100vh',
 })
 
-const IconWrapper = styled.div(({ theme }) => ({
+const IconWrapper = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -61,7 +62,7 @@ const IconWrapper = styled.div(({ theme }) => ({
   },
   ':active': { backgroundColor: theme.colors.green50 },
   ' svg': { border: 'dotted 1px green' },
-}))
+})
 
 const IconGrid = styled.div({
   display: 'flex',

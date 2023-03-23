@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { theme } from '../../lib/theme/theme'
 import { InputBase, InputBaseProps } from '../InputBase'
 
 type StyleProps = { $error: boolean; $suffix?: string }
@@ -17,7 +18,7 @@ const Wrapper = styled.div(({ $suffix }: StyleProps) => ({
   },
 }))
 
-const StyledInput = styled.input<StyleProps>(({ theme, $error }) => ({
+const StyledInput = styled.input<StyleProps>(({ $error }) => ({
   backgroundColor: theme.colors.white,
   color: theme.colors.textPrimary,
   fontSize: '1.125rem',

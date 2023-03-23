@@ -2,7 +2,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
-import { getColor } from '../../lib/theme/theme'
+import { getColor, theme } from '../../lib/theme/theme'
 
 type HeadingLabelColors = Pick<UIColors, 'blueFill1' | 'blueFill2'>
 
@@ -21,7 +21,7 @@ type HeadingLabelBaseProps = Pick<HeadingLabelProps, 'color'> & Margins
 export const LabelBase = styled(
   'div',
   elementConfig,
-)<HeadingLabelBaseProps>(({ color, theme, ...props }) => {
+)<HeadingLabelBaseProps>(({ color, ...props }) => {
   color = color || 'blueFill1'
   return {
     display: 'inline-block',
