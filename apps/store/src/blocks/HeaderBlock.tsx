@@ -45,6 +45,7 @@ type NavItemBlockProps = SbBaseBlockProps<{
   name: string
   link: LinkField
   pillowImage?: StoryblokAsset
+  label?: string
 }>
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
@@ -109,7 +110,7 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
   currentActiveItem?: string
 }>
 
-type ProductNavItem = { name: string; url: string; image?: string }
+type ProductNavItem = { name: string; url: string; image?: string; label?: string }
 
 export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
   const router = useRouter()
@@ -127,12 +128,14 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
         name: product.displayNameShort,
         url: product.pageLink,
         image: product.pillowImage.src,
+        label: item.label,
       }
     } else {
       navItem = {
         name: item.name,
         url: getLinkFieldURL(item.link, item.name),
         image: item.pillowImage?.filename,
+        label: item.label,
       }
     }
     if (!isDisabledPetLink(navItem.url)) {
@@ -147,7 +150,11 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
           <ProductNavigationList>
             {productNavItems.map((item) => (
               <NavigationMenuProductItem key={item.name} value={item.name}>
-                <ProductNavigationLink href={item.url} pillowImageSrc={item.image}>
+                <ProductNavigationLink
+                  href={item.url}
+                  pillowImageSrc={item.image}
+                  label={item.label}
+                >
                   {item.name}
                 </ProductNavigationLink>
               </NavigationMenuProductItem>

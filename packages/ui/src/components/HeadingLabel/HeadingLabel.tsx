@@ -4,10 +4,10 @@ import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor, theme } from '../../lib/theme/theme'
 
-type HeadingLabelColors = Pick<UIColors, 'blueFill1' | 'blueFill2'>
+type HeadingLabelColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'green50'>
 
 export type HeadingLabelProps = Margins & {
-  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
   color?: keyof HeadingLabelColors
   children: React.ReactNode
 }
