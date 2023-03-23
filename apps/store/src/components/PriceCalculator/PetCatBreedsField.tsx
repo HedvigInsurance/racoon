@@ -32,6 +32,9 @@ export const PetCatBreedsField = ({ field, onSubmit, loading }: Props) => {
 
   return (
     <Combobox
+      // Remounts the component when 'breeds' list becames avaible (trhough API)
+      // so the correct 'defaultSelectedItem' gets taken into account
+      key={JSON.stringify(breeds)}
       items={breeds}
       defaultSelectedItem={defaultSelectedBreed}
       onSelectedItemChange={handleSelectBreed}
