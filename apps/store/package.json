@@ -25,7 +25,7 @@
     "@datadog/browser-logs": "4.35.0",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
-    "@lottiefiles/react-lottie-player": "3.5.2",
+    "@lottiefiles/react-lottie-player": "3.5.3",
     "@radix-ui/react-accordion": "1.1.1",
     "@radix-ui/react-collapsible": "1.0.2",
     "@radix-ui/react-dialog": "1.0.3",
