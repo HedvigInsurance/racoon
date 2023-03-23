@@ -84,6 +84,9 @@ export const OfferPresenter = (props: Props) => {
       }
 
       tracking.reportAddToCart(addedProductOffer, 'store')
+      if (addToCartRedirect === AddToCartRedirect.Checkout) {
+        tracking.reportBeginCheckout(shopSession.cart)
+      }
       onAddedToCart(addedProductOffer, nextUrl)
     },
   })
