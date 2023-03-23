@@ -1,10 +1,12 @@
 import { Flags } from '@/services/Flags/Flags'
 
 const petPages = new Set([
-  'se/forsakringar/djurforsakring/hundforsakring',
-  'se/forsakringar/djurforsakring/kattforsakring',
-  'en-se/insurances/pet-insurance/dog-insurance',
-  'en-se/insurances/pet-insurance/cat-insurance',
+  'se/forsakringar/hundforsakring',
+  'se/forsakringar/kattforsakring',
+  'se/forsakringar/djurforsakring',
+  'en-se/insurances/dog-insurance',
+  'en-se/insurances/cat-insurance',
+  'en-se/insurances/pet-insurance',
 ])
 export const isDisabledPetLink = (slug: string) => {
   return petPages.has(trimSlashes(slug)) && !Flags.getFeature('PET_INSURANCE')
