@@ -15,12 +15,14 @@ const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
 const ProductNavigationLinkCard = styled(Space)({
   ...focusableStyles,
   display: 'flex',
+  columnGap: theme.space.sm,
   placeItems: 'center',
-  flexDirection: 'column',
   flexShrink: 0,
+  paddingBlock: theme.space.xs,
 
   [mq.lg]: {
-    padding: `${theme.space.md} ${theme.space.lg}`,
+    columnGap: theme.space.xs,
+    paddingInline: theme.space.xs,
     borderRadius: theme.radius.sm,
     '@media (hover: hover)': {
       '&:hover': {
@@ -31,11 +33,9 @@ const ProductNavigationLinkCard = styled(Space)({
 })
 
 const StyledPillow = styled(Pillow)({
-  height: '6rem',
-  width: '6rem',
   [mq.lg]: {
-    height: '4rem',
-    width: '4rem',
+    height: '1.75rem',
+    width: '1.75rem',
   },
 })
 
@@ -73,9 +73,9 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
 export const ProductNavigationLink = ({ href, children, pillowImageSrc }: NavigationLinkProps) => {
   return (
     <Link href={href}>
-      <ProductNavigationLinkCard y={0.75}>
-        <StyledPillow size="large" src={pillowImageSrc} />
-        <Text>{children}</Text>
+      <ProductNavigationLinkCard>
+        <StyledPillow size="small" src={pillowImageSrc} />
+        <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
       </ProductNavigationLinkCard>
     </Link>
   )
