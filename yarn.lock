@@ -4196,14 +4196,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lottiefiles/react-lottie-player@npm:3.5.2":
-  version: 3.5.2
-  resolution: "@lottiefiles/react-lottie-player@npm:3.5.2"
+"@lottiefiles/react-lottie-player@npm:3.5.3":
+  version: 3.5.3
+  resolution: "@lottiefiles/react-lottie-player@npm:3.5.3"
   dependencies:
-    lottie-web: ^5.10.0
+    lottie-web: ^5.10.2
   peerDependencies:
     react: 16 - 18
-  checksum: 60c6842f5ed88971ff1a943b1cc6ef0d3c56f6fee4da5a74c027543e5370b1803377aca68f7e3c683e975c449a85a2c348368e7412febc36623a9b3a4f3e317b
+  checksum: 083521730d8a75a70c82446df859d08d5e3614b937afa419249d047d9cbffb61fba24733e1a736593e734530d99aa715a38fcbbebbcca5a72ff4719145931da1
   languageName: node
   linkType: hard
 
@@ -15145,7 +15145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lottie-web@npm:^5.10.0":
+"lottie-web@npm:^5.10.2":
   version: 5.10.2
   resolution: "lottie-web@npm:5.10.2"
   checksum: 9ec80b479d8d03c079bd4f246d301f0c4aac2c4d6f8daaa79f6f3fc285aaba377c64879f6748d49c1db52b9854aea81c3203d858e9c686f7a47cd8b771d112d0
@@ -18857,7 +18857,7 @@ __metadata:
     "@graphql-codegen/typescript": 3.0.2
     "@graphql-codegen/typescript-operations": 3.0.2
     "@graphql-codegen/typescript-react-apollo": 3.3.7
-    "@lottiefiles/react-lottie-player": 3.5.2
+    "@lottiefiles/react-lottie-player": 3.5.3
     "@next/bundle-analyzer": 13.2.4
     "@radix-ui/react-accordion": 1.1.1
     "@radix-ui/react-collapsible": 1.0.2

@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -40,6 +41,10 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
   const { t } = useTranslation('purchase-form')
   const handleClose = () => onClose?.()
 
+  const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
+    datadogRum.addAction(`CartToast Link ${type}`)
+  }
+
   return (
     <DialogPrimitive.Portal>
       <StyledOverlay />
@@ -48,11 +53,19 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
           <DialogContentWrapper>
             <ProductItem {...productItemProps} />
             <Space y={0.5}>
-              <ButtonNextLink href={PageLink.checkout()} variant="primary">
+              <ButtonNextLink
+                href={PageLink.checkout()}
+                variant="primary"
+                onClick={handleClickLink('Primary')}
+              >
                 {t('CART_TOAST_PRIMARY_LINK')}
               </ButtonNextLink>
 
-              <ButtonNextLink href={PageLink.cart()} onClick={onClose} variant="ghost">
+              <ButtonNextLink
+                href={PageLink.cart()}
+                variant="ghost"
+                onClick={handleClickLink('Secondary')}
+              >
                 {t('CART_TOAST_SECONDARY_LINK')}
               </ButtonNextLink>
             </Space>

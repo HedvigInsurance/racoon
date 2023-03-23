@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
@@ -28,8 +29,8 @@ import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 import { useSelectedOffer } from './useSelectedOffer'
 
 enum AddToCartRedirect {
-  Cart,
-  Checkout,
+  Cart = 'Cart',
+  Checkout = 'Checkout',
 }
 
 type Props = {
@@ -87,6 +88,7 @@ export const OfferPresenter = (props: Props) => {
   })
 
   const handleClickSubmit = (redirect: AddToCartRedirect) => () => {
+    datadogRum.addAction(`PriceCalculator AddToCart ${redirect}`)
     setAddToCartRedirect(redirect)
   }
 

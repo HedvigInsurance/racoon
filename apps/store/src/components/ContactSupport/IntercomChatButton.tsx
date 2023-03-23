@@ -29,7 +29,7 @@ export const IntercomChatButton = ({ children }: Props) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    if (!appId) {
+    if (INTERCOM_ENABLED && !appId) {
       datadogLogs.logger.warn('Expected env variable INTERCOM_APP_ID to be defined')
     }
   }, [appId])
