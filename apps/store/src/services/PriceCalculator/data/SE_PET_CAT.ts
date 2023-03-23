@@ -1,4 +1,3 @@
-import { PriceIntentAnimal } from '@/services/apollo/generated'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { LAYOUT, ssnSeSection } from '../formFragments'
 import { yourAddressSectionWithlivingSpace } from '../formFragments'
@@ -94,9 +93,8 @@ export const SE_PET_CAT: Template = {
         },
         {
           field: {
-            type: 'pet-breed',
+            type: 'pet-cat-breeds',
             name: 'breeds',
-            animal: PriceIntentAnimal.Cat,
             label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },

@@ -10,7 +10,8 @@ import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
 import { ExtraBuildingsField } from './ExtraBuildingsField'
 import * as InputRadio from './InputRadio'
-import { PetBreedField } from './PetBreedField'
+import { PetCatBreedsField } from './PetCatBreedsField'
+import { PetDogBreedsField } from './PetDogBreedsField'
 import { StepperInput } from './StepperInput/StepperInput'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -166,8 +167,11 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
         />
       )
 
-    case 'pet-breed':
-      return <PetBreedField field={field} onSubmit={onSubmit} loading={loading} />
+    case 'pet-cat-breeds':
+      return <PetCatBreedsField field={field} onSubmit={onSubmit} loading={loading} />
+
+    case 'pet-dog-breeds':
+      return <PetDogBreedsField field={field} onSubmit={onSubmit} loading={loading} />
 
     default: {
       const badField: never = field

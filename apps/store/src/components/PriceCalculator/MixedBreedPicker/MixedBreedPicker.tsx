@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Space, Text, CrossIconSmall, InfoIcon, theme } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
@@ -8,24 +8,30 @@ import { Breed } from '@/services/PriceCalculator/Field.types'
 
 type Props = {
   breeds: Array<Breed>
-  onSelectedBreedsChange?: (selectedBreeds: Array<Breed>) => void
+  selectedBreeds: Array<Breed>
+  onBreedsChange?: (selectedBreeds: Array<Breed>) => void
+  loading?: boolean
+  required?: boolean
 }
 
-export const MixedBreedPicker = ({ breeds, onSelectedBreedsChange }: Props) => {
-  const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>([])
+export const MixedBreedPicker = ({
+  breeds,
+  selectedBreeds,
+  onBreedsChange,
+  loading,
+  required,
+}: Props) => {
   const { t } = useTranslation('purchase-form')
 
   const handleDelete = (id: Breed['id']) => () => {
     const newSelectedBreeds = selectedBreeds.filter((breed) => breed.id !== id)
-    setSelectedBreeds(newSelectedBreeds)
-    onSelectedBreedsChange?.(newSelectedBreeds)
+    onBreedsChange?.(newSelectedBreeds)
   }
 
   const handleAdd = (breed: Breed | null) => {
     if (breed) {
       const newSelectedBreeds = [...selectedBreeds, breed]
-      setSelectedBreeds(newSelectedBreeds)
-      onSelectedBreedsChange?.(newSelectedBreeds)
+      onBreedsChange?.(newSelectedBreeds)
     }
   }
 
@@ -45,7 +51,7 @@ export const MixedBreedPicker = ({ breeds, onSelectedBreedsChange }: Props) => {
             {selectedBreeds.map((breed) => (
               <ListItem key={breed.id}>
                 <Text size="xl">{breed.displayName}</Text>
-                <DeleteButton type="button" onClick={handleDelete(breed.id)}>
+                <DeleteButton type="button" onClick={handleDelete(breed.id)} disabled={loading}>
                   <CrossIconSmall />
                 </DeleteButton>
               </ListItem>
@@ -61,6 +67,8 @@ export const MixedBreedPicker = ({ breeds, onSelectedBreedsChange }: Props) => {
           placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
           noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
           mutliSelect={true}
+          disabled={loading}
+          required={required}
         />
       </Space>
     </Wrapper>
