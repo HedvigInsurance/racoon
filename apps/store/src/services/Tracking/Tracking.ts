@@ -216,9 +216,10 @@ export class Tracking {
     this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
   }
 
-  public reportPurchase(cart: CartFragmentFragment, memberId: string) {
+  public reportPurchase(cart: CartFragmentFragment, memberId: string, isNewMember: boolean) {
     const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
     event.ecommerce.transaction_id = cart.id
+    event.new_customer = isNewMember
     this.reportEcommerceEvent(event)
     // Also report in web-onboarding format
     this.reportSignedCustomer(cart, memberId)

@@ -60,6 +60,8 @@ export type EcommerceEvent = {
   event: TrackingEvent
   ecommerce: GTMEcommerceData
   shopSession: GTMShopSessionData
+  // https://support.google.com/google-ads/answer/9917012?hl=en
+  new_customer?: boolean
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8

@@ -68,7 +68,11 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       })
       const memberId = data.currentMember.id
 
-      tracking.reportPurchase(shopSession.cart, memberId)
+      tracking.reportPurchase(
+        shopSession.cart,
+        memberId,
+        customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
+      )
       setupShopSessionServiceClientSide(apolloClient).reset()
 
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
