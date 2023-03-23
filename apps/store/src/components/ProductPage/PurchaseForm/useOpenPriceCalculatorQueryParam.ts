@@ -3,10 +3,11 @@ import { useEffect, useRef } from 'react'
 
 export const OPEN_PRICE_CALCULATOR_QUERY_PARAM = 'openPriceCalculator'
 
-type Options = {
+type Params = {
   onQueryParamDetected: () => void
 }
-export const useOpenPriceCalculatorQueryParam = ({ onQueryParamDetected }: Options) => {
+
+export const useOpenPriceCalculatorQueryParam = ({ onQueryParamDetected }: Params) => {
   const router = useRouter()
   const triggeredRef = useRef(false)
   useEffect(() => {

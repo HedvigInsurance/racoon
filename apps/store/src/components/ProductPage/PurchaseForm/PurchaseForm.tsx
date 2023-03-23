@@ -48,7 +48,12 @@ export const PurchaseForm = () => {
 
   useOpenPriceCalculatorQueryParam({
     onQueryParamDetected() {
-      setFormState((formState) => (formState === 'IDLE' ? 'EDIT' : formState))
+      tracking.reportOpenPriceCalculator({
+        id: productData.id,
+        displayNameFull: productData.displayNameFull,
+      })
+
+      setFormState('EDIT')
     },
   })
 
