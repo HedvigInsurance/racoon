@@ -12,7 +12,7 @@ type RegistrationFieldProps = {
 
 export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
-  const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
+  const [value, setValue] = useState<string>(maskValue(field.value ?? field.defaultValue ?? ''))
 
   const handleValueChange = (value: string) => {
     const maskedValue = value
@@ -23,17 +23,33 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
     setValue(maskedValue)
   }
 
+  const baseProps = {
+    type: 'text',
+    required: field.required,
+    pattern: CAR_REGISTRATION_NUMBER_REGEX,
+    maxLength: CAR_REGISTRATION_NUMBER_LENGTH,
+  }
+
+  const noWhitespaceValue = value.replace(/\s/, '')
+
   return (
-    <TextField
-      type="text"
-      name={field.name}
-      label={translateLabel(field.label)}
-      pattern={CAR_REGISTRATION_NUMBER_REGEX}
-      maxLength={CAR_REGISTRATION_NUMBER_LENGTH}
-      required={field.required}
-      value={value}
-      defaultValue={field.defaultValue}
-      onValueChange={handleValueChange}
-    />
+    <>
+      <input {...baseProps} name={field.name} value={noWhitespaceValue} readOnly hidden />
+
+      <TextField
+        {...baseProps}
+        name={undefined}
+        label={translateLabel(field.label)}
+        value={value}
+        onValueChange={handleValueChange}
+      />
+    </>
   )
+}
+
+const maskValue = (value: string) => {
+  return value
+    .replace(/\s/, '')
+    .replace(/(\w{3})(\w{1,3})/, '$1 $2')
+    .toUpperCase()
 }
