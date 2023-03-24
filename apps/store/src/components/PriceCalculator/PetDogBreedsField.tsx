@@ -27,15 +27,14 @@ export const PetDogBreedsField = ({ field, loading }: Props) => {
     setShowMixedPicker(breed?.id === MIXED_BREED_OPTION_ID)
   }
 
-  // Used to re-mount Combobox when 'breeds' becomes available,
-  // otherwise it might happen the case where 'defaultSelectedItem'
-  // doesn't get taken into account due the absence of 'breeds'
-  const key = useMemo(() => JSON.stringify(breeds), [breeds])
-
   return (
     <Space y={0.25}>
       <Combobox
-        key={key}
+        // Re-mount Combobox when 'breeds' becomes available,
+        // otherwise it might happen the case where 'defaultSelectedItem'
+        // doesn't get taken into account due the absence of 'breeds'
+        // const key = useMemo(() => JSON.stringify(breeds), [breeds])
+        key={breeds.length}
         items={comboboxAvailableBreeds}
         defaultSelectedItem={comboboxDefaultSelectedBreed}
         displayValue={(item) => item.displayName}

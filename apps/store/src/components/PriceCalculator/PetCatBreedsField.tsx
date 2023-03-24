@@ -23,14 +23,12 @@ export const PetCatBreedsField = ({ field, loading }: Props) => {
     defaultSelectedBreed = breeds.find((breed) => breed.id === field.value?.[0]) ?? null
   }
 
-  // Used to re-mount Combobox when 'breeds' becomes available,
-  // otherwise it might happen the case where 'defaultSelectedItem'
-  // doesn't get taken into account due the absence of 'breeds'
-  const key = useMemo(() => JSON.stringify(breeds), [breeds])
-
   return (
     <Combobox
-      key={key}
+      // Re-mount Combobox when 'breeds' becomes available,
+      // otherwise it might happen the case where 'defaultSelectedItem'
+      // doesn't get taken into account due the absence of 'breeds'
+      key={breeds.length}
       items={breeds}
       defaultSelectedItem={defaultSelectedBreed}
       placeholder={translateLabel(field.label)}
