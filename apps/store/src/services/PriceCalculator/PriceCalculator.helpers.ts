@@ -108,8 +108,10 @@ export const deserializeField = (field: InputField, formData: FormData) => {
       return parseNumber(field, formData)
 
     case 'pet-dog-breeds':
+      return parseDogBreedsField(field, formData)
+
     case 'pet-cat-breeds':
-      return parsePetBreedsField(field, formData)
+      return parseCatBreedsField(field, formData)
 
     case 'text':
     case 'radio':
@@ -149,7 +151,17 @@ const parseNumber = (field: InputField, formData: FormData) => {
   return getFieldDefaultValue(field)
 }
 
-const parsePetBreedsField = (field: InputField, formData: FormData) => {
+const parseCatBreedsField = (field: InputField, formData: FormData) => {
+  const values = formData.getAll(field.name)
+
+  if (values.length > 0 && values.every(isFieldValueString)) {
+    return values
+  }
+
+  return getFieldDefaultValue(field)
+}
+
+const parseDogBreedsField = (field: InputField, formData: FormData) => {
   const values = formData.getAll(field.name)
 
   if (values.length > 0 && values.every(isFieldValueString)) {
