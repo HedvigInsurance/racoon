@@ -22,12 +22,9 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, children }:
     const data: JSONData = {}
 
     for (const item of section.items) {
-      const formValue = formData.get(item.field.name)
-
-      if (typeof formValue === 'string') {
-        data[item.field.name] = deserializeField(item.field, formValue)
-      } else if (item.field.value === undefined && item.field.defaultValue) {
-        data[item.field.name] = item.field.defaultValue
+      const deserializedFieldValue = deserializeField(item.field, formData)
+      if (deserializedFieldValue !== undefined) {
+        data[item.field.name] = deserializedFieldValue
       }
     }
 

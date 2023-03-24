@@ -1,6 +1,8 @@
 import { PriceIntentAnimalBreed } from '@/services/apollo/generated'
 import { Label } from './PriceCalculator.types'
 
+export const MIXED_BREED_OPTION_ID = '-1'
+
 type BaseField<ValueType> = {
   name: string
   label: Label

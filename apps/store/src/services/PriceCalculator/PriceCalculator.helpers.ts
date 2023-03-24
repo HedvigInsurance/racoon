@@ -9,7 +9,7 @@ import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_PET_CAT } from './data/SE_PET_CAT'
 import { SE_PET_DOG } from './data/SE_PET_DOG'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
-import { InputField } from './Field.types'
+import { InputField, MIXED_BREED_OPTION_ID } from './Field.types'
 import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
 const TEMPLATES: Record<string, Template | undefined> = {
@@ -102,18 +102,72 @@ const calculateSectionState = (section: FormSection): FormSection => {
   }
 }
 
-export const deserializeField = (field: InputField, value: string) => {
+export const deserializeField = (field: InputField, formData: FormData) => {
   switch (field.type) {
+    case 'number':
+      return parseNumber(field, formData)
+
+    case 'pet-dog-breeds':
+      return parseDogBreedsField(field, formData)
+
+    case 'pet-cat-breeds':
+      return parseCatBreedsField(field, formData)
+
     case 'text':
     case 'radio':
     case 'select':
     case 'date':
-      return value
-
-    case 'number':
-      return parseInt(value, 10)
-
     default:
-      return value
+      return parseString(field, formData)
   }
+}
+
+const isFieldValueString = (value: FormDataEntryValue | null): value is string =>
+  typeof value === 'string'
+
+const getFieldDefaultValue = (field: InputField) => {
+  if (field.value === undefined && field.defaultValue) {
+    return field.defaultValue
+  }
+}
+
+const parseString = (field: InputField, formData: FormData) => {
+  const value = formData.get(field.name)
+
+  if (isFieldValueString(value)) {
+    return value
+  }
+
+  return getFieldDefaultValue(field)
+}
+
+const parseNumber = (field: InputField, formData: FormData) => {
+  const value = formData.get(field.name)
+
+  if (isFieldValueString(value)) {
+    return parseInt(value, 10)
+  }
+
+  return getFieldDefaultValue(field)
+}
+
+const parseCatBreedsField = (field: InputField, formData: FormData) => {
+  const values = formData.getAll(field.name)
+
+  if (values.length > 0 && values.every(isFieldValueString)) {
+    return values
+  }
+
+  return getFieldDefaultValue(field)
+}
+
+const parseDogBreedsField = (field: InputField, formData: FormData) => {
+  const values = formData.getAll(field.name)
+
+  if (values.length > 0 && values.every(isFieldValueString)) {
+    // Removes 'Mixed Breed' option (in case it's present) before form submission
+    return values.filter((breedId) => breedId !== MIXED_BREED_OPTION_ID)
+  }
+
+  return getFieldDefaultValue(field)
 }

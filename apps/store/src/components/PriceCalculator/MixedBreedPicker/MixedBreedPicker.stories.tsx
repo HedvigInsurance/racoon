@@ -1,5 +1,4 @@
 import { ComponentMeta, StoryFn } from '@storybook/react'
-import { useState } from 'react'
 import { Breed } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker'
 
@@ -32,17 +31,5 @@ const BREEDS: Array<Breed> = [
 ]
 
 export const Default: StoryFn<typeof MixedBreedPicker> = () => {
-  const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>([])
-
-  const handleBreedsChange = (breeds: Array<Breed>) => {
-    setSelectedBreeds(breeds)
-  }
-
-  return (
-    <MixedBreedPicker
-      breeds={BREEDS}
-      selectedBreeds={selectedBreeds}
-      onBreedsChange={handleBreedsChange}
-    />
-  )
+  return <MixedBreedPicker breeds={BREEDS} />
 }

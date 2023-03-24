@@ -12,12 +12,14 @@ type Props<Item> = {
   selectedItem?: Item | null
   onSelectedItemChange?: (item: Item | null) => void
   defaultSelectedItem?: Item | null
-  placeholder?: string
   displayValue?: (item: Item) => string
+  getFormValue?: (item: Item) => string | undefined
+  noMatchesMessage?: string
+  placeholder?: string
+  name?: string
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
-  noMatchesMessage?: string
 }
 
 /**
@@ -30,8 +32,10 @@ export const Combobox = <Item,>({
   onSelectedItemChange,
   defaultSelectedItem,
   displayValue = (item) => String(item),
+  getFormValue = (item) => String(item) ?? undefined,
   mutliSelect = false,
   noMatchesMessage = 'No matches found',
+  name,
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -59,6 +63,8 @@ export const Combobox = <Item,>({
     getToggleButtonProps,
     reset,
     openMenu,
+    selectItem,
+    selectedItem: internalSelectedItem,
   } = useCombobox({
     items: filteredItems,
     selectedItem,
@@ -77,7 +83,7 @@ export const Combobox = <Item,>({
       // Set selectedItem to 'null' when clearing the input with delete/backspace
       // shorturl.at/f0158
       if (internalInputValue === '' && selectedItem) {
-        onSelectedItemChange?.(null)
+        selectItem(null)
       }
     },
     stateReducer(state, actionChanges) {
@@ -118,7 +124,7 @@ export const Combobox = <Item,>({
     reset()
     // We need to reset the pieces of state that we control ourselfs
     setInputValue('')
-    onSelectedItemChange?.(null)
+    selectItem(null)
     openMenu()
   }
 
@@ -132,6 +138,9 @@ export const Combobox = <Item,>({
           data-expanded={isOpen}
           data-warning={noOptions}
         />
+        {internalSelectedItem && (
+          <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
+        )}
         <Actions>
           <DeleteButton type="button" onClick={handleClickDelete} hidden={inputValue.length === 0}>
             <CrossIconSmall />
