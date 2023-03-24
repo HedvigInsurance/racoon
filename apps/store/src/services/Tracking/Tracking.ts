@@ -219,7 +219,7 @@ const offerToEcommerceEvent = (
       currency: offer.price.currencyCode,
       items: [
         {
-          item_id: offer.variant.product.name,
+          item_id: offer.variant.product.id,
           item_name: offer.variant.product.displayNameFull,
           price: offer.price.amount,
           variant: offer.variant.typeOfContract,
@@ -245,7 +245,7 @@ const cartToEcommerceEvent = (
       value: cart.cost.net.amount,
       currency: cart.cost.net.currencyCode,
       items: cart.entries.map((entry) => ({
-        item_id: entry.variant.product.name,
+        item_id: entry.variant.product.id,
         item_name: entry.variant.product.displayNameFull,
         price: entry.price.amount,
         variant: entry.variant.typeOfContract,
