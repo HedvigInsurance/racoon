@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler } from 'react'
@@ -16,7 +15,6 @@ type Props = {
 
 export const CampaignsSection = ({ cartId, campaigns }: Props) => {
   const { t } = useTranslation('cart')
-  const theme = useTheme()
 
   const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({ cartId })
   const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = async (event) => {
