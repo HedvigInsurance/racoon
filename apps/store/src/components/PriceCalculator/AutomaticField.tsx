@@ -85,6 +85,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           {field.options.map((option, index) => (
             <InputRadio.HorizontalItem
               key={option.value}
+              id={`${field.name}-${option.value}`}
               label={translateLabel(option.label)}
               value={option.value}
               autoFocus={autoFocus && index === 0}
@@ -101,6 +102,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           {field.options.map((option, index) => (
             <InputRadio.Item
               key={option.value}
+              id={`${field.name}-${option.value}`}
               label={translateLabel(option.label)}
               value={option.value}
               autoFocus={autoFocus && index === 0}
