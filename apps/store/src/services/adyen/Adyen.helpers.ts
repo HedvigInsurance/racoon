@@ -1,5 +1,5 @@
-import { useTheme } from '@emotion/react'
 import { useMemo } from 'react'
+import { theme } from 'ui'
 import { IsoLocale, Locale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -7,7 +7,6 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 export const usePaymentMethodConfiguration = () => {
   const { locale } = useCurrentLocale()
   const { countryCode } = useCurrentCountry()
-  const theme = useTheme()
 
   return useMemo(
     () => ({
@@ -45,7 +44,7 @@ export const usePaymentMethodConfiguration = () => {
         buttonType: 'subscribe',
       },
     }),
-    [theme, locale, countryCode],
+    [locale, countryCode],
   )
 }
 
