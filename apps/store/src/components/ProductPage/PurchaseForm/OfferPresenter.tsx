@@ -67,7 +67,7 @@ export const OfferPresenter = (props: Props) => {
   const isInView = useInView(offerRef, { once: true })
   useEffect(() => {
     if (isInView) {
-      tracking.reportViewItem(selectedOffer)
+      tracking.reportViewItem(selectedOffer, 'store')
     }
   }, [selectedOffer, tracking, isInView])
 
@@ -83,6 +83,7 @@ export const OfferPresenter = (props: Props) => {
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
+      tracking.reportAddToCart(addedProductOffer, 'store')
       onAddedToCart(addedProductOffer, nextUrl)
     },
   })

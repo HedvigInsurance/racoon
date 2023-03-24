@@ -2,6 +2,13 @@ fragment OfferRecommendation on ProductOffer {
   id
   startDate
   priceIntentData
+  variant {
+    typeOfContract
+    product {
+      id
+      displayNameFull
+    }
+  }
   price {
     amount
     currencyCode

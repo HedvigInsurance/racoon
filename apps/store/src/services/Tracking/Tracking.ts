@@ -18,6 +18,19 @@ type TrackingProductData = {
   displayNameFull: string
 }
 
+type TrackingOffer = {
+  price: ProductOfferFragment['price']
+  variant: {
+    typeOfContract: ProductOfferFragment['variant']['typeOfContract']
+    product: {
+      id: ProductOfferFragment['variant']['product']['id']
+      displayNameFull: ProductOfferFragment['variant']['product']['displayNameFull']
+    }
+  }
+}
+
+type ItemListSource = 'store' | 'recommendations'
+
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
   BeginCheckout = 'begin_checkout',
@@ -103,9 +116,7 @@ export class Tracking {
   public reportViewProductPage(productData: TrackingProductData) {
     const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
     Object.assign(event.ecommerce, {
-      // TODO: Support recommendations as separate list
       item_list_id: 'store',
-      item_list_name: 'Store',
     })
     this.reportEcommerceEvent(event)
   }
@@ -165,17 +176,35 @@ export class Tracking {
     pushToGTMDataLayer({ event, ...eventData })
   }
 
-  public reportViewItem(offer: ProductOfferFragment) {
-    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.ViewItem, offer, this.context))
-  }
-
-  public reportAddToCart(offer: ProductOfferFragment) {
-    this.reportEcommerceEvent(offerToEcommerceEvent(TrackingEvent.AddToCart, offer, this.context))
-  }
-
-  public reportDeleteFromCart(offer: ProductOfferFragment) {
+  public reportViewItem(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
-      offerToEcommerceEvent(TrackingEvent.DeleteFromCart, offer, this.context),
+      offerToEcommerceEvent({
+        event: TrackingEvent.ViewItem,
+        offer,
+        context: this.context,
+        source,
+      }),
+    )
+  }
+
+  public reportAddToCart(offer: TrackingOffer, source: ItemListSource) {
+    this.reportEcommerceEvent(
+      offerToEcommerceEvent({
+        event: TrackingEvent.AddToCart,
+        offer,
+        context: this.context,
+        source,
+      }),
+    )
+  }
+
+  public reportDeleteFromCart(offer: TrackingOffer) {
+    this.reportEcommerceEvent(
+      offerToEcommerceEvent({
+        event: TrackingEvent.DeleteFromCart,
+        offer,
+        context: this.context,
+      }),
     )
   }
 
@@ -207,11 +236,19 @@ export class Tracking {
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)
 
-const offerToEcommerceEvent = (
-  event: TrackingEvent,
-  offer: ProductOfferFragment,
-  context: TrackingContext,
-): EcommerceEvent => {
+type OfferToEcommerseEventParams = {
+  event: TrackingEvent
+  offer: TrackingOffer
+  context: TrackingContext
+  source?: ItemListSource
+}
+
+const offerToEcommerceEvent = ({
+  event,
+  offer,
+  context,
+  source,
+}: OfferToEcommerseEventParams): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -222,7 +259,8 @@ const offerToEcommerceEvent = (
           item_id: offer.variant.product.id,
           item_name: offer.variant.product.displayNameFull,
           price: offer.price.amount,
-          variant: offer.variant.typeOfContract,
+          item_variant: offer.variant.typeOfContract,
+          ...(source && { item_list_id: source }),
         },
       ],
     },
