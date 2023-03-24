@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { Text, CheckIcon as PerilsCheckIcon, MinusIcon, theme, mq } from 'ui'
 
@@ -92,6 +91,5 @@ const Centered = styled.div({
 export const CheckIcon = () => <PerilsCheckIcon size="1rem" />
 
 export const MissingIcon = () => {
-  const theme = useTheme()
   return <MinusIcon size="1.25rem" color={theme.colors.gray500} />
 }
