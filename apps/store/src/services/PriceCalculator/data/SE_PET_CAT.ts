@@ -43,7 +43,15 @@ export const SE_PET_CAT: Template = {
           },
           layout: LAYOUT.FULL_WIDTH,
         },
-        // TODO: verify field type
+        {
+          field: {
+            type: 'pet-cat-breeds',
+            name: 'breeds',
+            label: { key: tKey('FIELD_BREED_LABEL') },
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
         {
           field: {
             type: 'date',
@@ -87,15 +95,6 @@ export const SE_PET_CAT: Template = {
                 value: 'true',
               },
             ],
-            required: true,
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        {
-          field: {
-            type: 'pet-cat-breeds',
-            name: 'breeds',
-            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,

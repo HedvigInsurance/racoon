@@ -40,7 +40,15 @@ export const SE_PET_DOG: Template = {
           },
           layout: LAYOUT.FULL_WIDTH,
         },
-        // TODO: verify field type
+        {
+          field: {
+            type: 'pet-dog-breeds',
+            name: 'breeds',
+            label: { key: tKey('FIELD_BREED_LABEL') },
+            required: true,
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
         {
           field: {
             type: 'date',
@@ -72,15 +80,6 @@ export const SE_PET_DOG: Template = {
               { label: { key: tKey('LABEL_YES') }, value: 'true' },
               { label: { key: tKey('LABEL_NO') }, value: 'false' },
             ],
-            required: true,
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        {
-          field: {
-            type: 'pet-dog-breeds',
-            name: 'breeds',
-            label: { key: tKey('FIELD_BREED_LABEL') },
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
