@@ -8,9 +8,9 @@ const { i18n } = require('./next-i18next.config')
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   swcMinify: true,
-  compiler: {
-    emotion: true,
-  },
+  // compiler: {
+  //   emotion: true,
+  // },
   experimental: {
     appDir: true,
   },

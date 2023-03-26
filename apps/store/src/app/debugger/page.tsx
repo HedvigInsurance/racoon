@@ -1,69 +1,29 @@
-'use client'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
+import { COOKIE_KEY_SHOP_SESSION } from '@/services/shopSession/ShopSession.constants'
+import { Form } from './form'
 
-import styled from '@emotion/styled'
-import Head from 'next/head'
-import { FormEventHandler, useEffect, useState } from 'react'
-import { Button, Space, theme } from 'ui'
-import { TextField } from '@/components/TextField/TextField'
-import { PageLink } from '@/utils/PageLink'
-
-const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
+export const metadata = {
+  robots: 'none',
+}
 
 const Page = () => {
-  const [loading, setLoading] = useState(false)
-  const [defaultSsn, setDefaultSsn] = useState<string | undefined>(undefined)
-
-  useEffect(() => {
-    const ssn = window.localStorage.getItem(HEDVIG_DEBUGGER_SSN)
-    if (ssn) setDefaultSsn(ssn)
-  }, [])
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault()
-    const ssn = event.currentTarget.ssn.value
-    setLoading(true)
-    const response = await fetch(PageLink.apiSessionCreate(ssn))
-    // TODO: Handle error
-    if (!response.ok) {
-      setLoading(false)
-      throw new Error("Couldn't create session")
-    }
-
-    window.localStorage.setItem(HEDVIG_DEBUGGER_SSN, ssn)
-    window.location.href = PageLink.cart({ locale: 'en-se' })
-  }
+  const cookieStore = cookies()
+  const shopSessionId = cookieStore.get(COOKIE_KEY_SHOP_SESSION)?.value
 
   return (
-    <>
-      <Head>
-        <meta name="robots" content="none" />
-      </Head>
-      <Wrapper>
-        <form onSubmit={handleSubmit}>
-          <Space y={0.25}>
-            <TextField
-              key={defaultSsn}
-              defaultValue={defaultSsn}
-              label="YYYYMMDDXXXX"
-              autoFocus
-              name="ssn"
-            />
-            <Button loading={loading}>Create session</Button>
-          </Space>
-        </form>
-      </Wrapper>
-    </>
+    <div>
+      <h1>Debugger</h1>
+      <section>
+        <h2>Create new shop session</h2>
+        <Form />
+      </section>
+      <section>
+        <h2>Get shop session</h2>
+        <Link href={`/debugger/shop-sessions?id=${shopSessionId}`}>Current shop session</Link>
+      </section>
+    </div>
   )
 }
 
 export default Page
-
-const Wrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%',
-  maxWidth: '20rem',
-  marginInline: 'auto',
-  padding: theme.space.md,
-})
