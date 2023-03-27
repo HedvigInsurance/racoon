@@ -24,7 +24,7 @@ export const Navigation = styled(NavigationMenuPrimitive.Root)({
 
 export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)({
   ':not(:last-child)': {
-    borderBottom: `1px solid ${theme.colors.borderOpaque}`,
+    borderBottom: `1px solid ${theme.colors.borderOpaque1}`,
   },
 
   [mq.lg]: { '&&': { borderBottom: 'unset' } },

@@ -34,7 +34,7 @@ export const linkStyles = css({
       left: 0,
       width: '100%',
       height: 2,
-      backgroundColor: theme.colors.borderOpaque,
+      backgroundColor: theme.colors.borderOpaque2,
     },
 
     '&:hover::after': {
@@ -159,7 +159,7 @@ export const richTextStyles = css(
     hr: {
       marginBlock: theme.space.xxxl,
       height: 1,
-      backgroundColor: theme.colors.borderOpaque,
+      backgroundColor: theme.colors.borderOpaque2,
     },
 
     [mq.md]: {
