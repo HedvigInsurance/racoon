@@ -107,6 +107,19 @@ const useGetDataTableValue = () => {
           return t('DATA_TABLE_MILEAGE_VALUE', { value: data['mileage'] })
         } else return null
 
+      case 'CAT_GENDER':
+        if (data[row.key] === 'MALE') {
+          return t('DATA_TABLE_CAT_GENDER_VALUE_MALE')
+        } else return t('DATA_TABLE_CAT_GENDER_VALUE_FEMALE')
+
+      case 'DOG_GENDER':
+        if (data[row.key] === 'MALE') {
+          return t('DATA_TABLE_DOG_GENDER_VALUE_MALE')
+        } else return t('DATA_TABLE_DOG_GENDER_VALUE_FEMALE')
+
+      case 'LIST':
+        return formatList(data[row.key])
+
       default:
         return null
     }
@@ -120,4 +133,10 @@ const formatHouseholdSize = (
   const count = parseInt(String(data['numberCoInsured']), 10)
   if (isNaN(count)) return null
   return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })
+}
+
+const formatList = (value: unknown) => {
+  if (Array.isArray(value)) {
+    return value.join(', ')
+  } else return null
 }

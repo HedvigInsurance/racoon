@@ -25,6 +25,24 @@ const HOUSEHOLD_SIZE_ROW = {
   label: tKey('DATA_TABLE_HOUSEHOLD_SIZE_LABEL'),
 } as const
 
+const PET_NAME = {
+  type: 'STRING',
+  key: 'name',
+  label: tKey('DATA_TABLE_PET_NAME_LABEL'),
+} as const
+
+const PET_BIRTH_DATE = {
+  type: 'STRING',
+  key: 'birthDate',
+  label: tKey('DATA_TABLE_PET_BIRTH_DATE_LABEL'),
+} as const
+
+const BREEDS = {
+  type: 'LIST',
+  key: 'breeds',
+  label: tKey('DATA_TABLE_BREEDS_LABEL'),
+}
+
 const DATA_TABLE = {
   SE_APARTMENT_RENT: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
   SE_APARTMENT_BRF: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
@@ -51,6 +69,32 @@ const DATA_TABLE = {
     { type: 'MILEAGE', label: tKey('DATA_TABLE_MILEAGE_LABEL') },
     STREET_ROW,
     ZIP_CODE_ROW,
+  ],
+  SE_PET_CAT: [
+    PET_NAME,
+    {
+      type: 'CAT_GENDER',
+      key: 'gender',
+      label: tKey('DATA_TABLE_GENDER_LABEL'),
+    },
+    BREEDS,
+    PET_BIRTH_DATE,
+    STREET_ROW,
+    ZIP_CODE_ROW,
+    LIVING_SPACE_ROW,
+  ],
+  SE_PET_DOG: [
+    PET_NAME,
+    {
+      type: 'DOG_GENDER',
+      key: 'gender',
+      label: tKey('DATA_TABLE_GENDER_LABEL'),
+    },
+    BREEDS,
+    PET_BIRTH_DATE,
+    STREET_ROW,
+    ZIP_CODE_ROW,
+    LIVING_SPACE_ROW,
   ],
 } as const
 
