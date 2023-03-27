@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
-import { mq, Space, Text, theme } from 'ui'
+import { HeadingLabel, mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { focusableStyles } from './HeaderStyles'
 
@@ -39,9 +39,17 @@ const StyledPillow = styled(Pillow)({
   },
 })
 
+const PillowLabel = styled(HeadingLabel)({
+  [mq.lg]: {
+    paddingBlock: theme.space.xxs,
+    paddingInline: theme.space.xs,
+  },
+})
+
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'> & {
     pillowImageSrc?: string
+    label?: string
   }
 
 export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
@@ -70,12 +78,22 @@ const StyledNavigationLink = styled(NavigationMenuPrimitive.Link)({
   },
 })
 
-export const ProductNavigationLink = ({ href, children, pillowImageSrc }: NavigationLinkProps) => {
+export const ProductNavigationLink = ({
+  href,
+  children,
+  pillowImageSrc,
+  label,
+}: NavigationLinkProps) => {
   return (
     <Link href={href}>
       <ProductNavigationLinkCard>
         <StyledPillow size="small" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
+        {label && (
+          <PillowLabel as="span" color="green50">
+            {label}
+          </PillowLabel>
+        )}
       </ProductNavigationLinkCard>
     </Link>
   )
