@@ -8,9 +8,10 @@ const CAR_REGISTRATION_NUMBER_LENGTH = 7
 
 type RegistrationFieldProps = {
   field: CarRegistrationNumberFieldType
+  autoFocus?: boolean
 }
 
-export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) => {
+export const CarRegistrationNumberField = ({ field, autoFocus }: RegistrationFieldProps) => {
   const translateLabel = useTranslateFieldLabel()
   const [value, setValue] = useState<string>(field.value ?? field.defaultValue ?? '')
 
@@ -34,6 +35,7 @@ export const CarRegistrationNumberField = ({ field }: RegistrationFieldProps) =>
       value={value}
       defaultValue={field.defaultValue}
       onValueChange={handleValueChange}
+      autoFocus={autoFocus}
     />
   )
 }

@@ -140,7 +140,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'car-registration-number':
-      return <CarRegistrationNumberField field={field} />
+      return <CarRegistrationNumberField field={field} autoFocus={autoFocus} />
     case 'car-mileage':
       return <CarMileageField field={field} />
 
