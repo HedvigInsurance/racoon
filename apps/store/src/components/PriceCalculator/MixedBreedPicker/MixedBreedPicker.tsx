@@ -47,39 +47,49 @@ export const MixedBreedPicker = ({
   return (
     <Wrapper>
       <Space y={0.5}>
-        <Text size="xs" color="textSecondary">
-          {t('FIELD_MIXED_BREEDS_LABEL')}
-        </Text>
+        <Content>
+          <Space y={0.5}>
+            <Text size="xs" color="textSecondary">
+              {t('FIELD_MIXED_BREEDS_LABEL')}
+            </Text>
 
-        {selectedBreeds.length > 0 && (
-          <>
-            <List>
-              {selectedBreeds.map((breed) => (
-                <ListItem key={breed.id}>
-                  <Text size="xl">{breed.displayName}</Text>
-                  <DeleteButton type="button" onClick={handleDelete(breed.id)} disabled={loading}>
-                    <CrossIconSmall />
-                  </DeleteButton>
-                </ListItem>
-              ))}
-            </List>
-            {selectedBreeds.map((breed) => (
-              <input key={breed.id} type="hidden" name={name} value={breed.id} />
-            ))}
-          </>
-        )}
+            {selectedBreeds.length > 0 && (
+              <>
+                <List>
+                  {selectedBreeds.map((breed) => (
+                    <ListItem key={breed.id}>
+                      <Text size="xl">{breed.displayName}</Text>
+                      <DeleteButton
+                        type="button"
+                        onClick={handleDelete(breed.id)}
+                        disabled={loading}
+                      >
+                        <CrossIconSmall />
+                      </DeleteButton>
+                    </ListItem>
+                  ))}
+                </List>
+                {selectedBreeds.map((breed) => (
+                  <input key={breed.id} type="hidden" name={name} value={breed.id} />
+                ))}
+              </>
+            )}
+          </Space>
+        </Content>
 
-        <StyledCombobox
-          items={availableBreeds}
-          displayValue={(breed) => breed.displayName}
-          selectedItem={null}
-          onSelectedItemChange={handleAdd}
-          placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
-          noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
-          mutliSelect={true}
-          disabled={loading}
-          required={required && selectedBreeds.length === 0}
-        />
+        <ComboboxWrapper>
+          <StyledCombobox
+            items={availableBreeds}
+            displayValue={(breed) => breed.displayName}
+            selectedItem={null}
+            onSelectedItemChange={handleAdd}
+            placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
+            noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
+            mutliSelect={true}
+            disabled={loading}
+            required={required && selectedBreeds.length === 0}
+          />
+        </ComboboxWrapper>
       </Space>
     </Wrapper>
   )
@@ -88,8 +98,15 @@ export const MixedBreedPicker = ({
 const Wrapper = styled.div({
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.sm,
-  paddingInline: theme.space.md,
   paddingBlock: theme.space.sm,
+})
+
+const Content = styled.div({
+  paddingInline: theme.space.md,
+})
+
+const ComboboxWrapper = styled.div({
+  paddingInline: theme.space.sm,
 })
 
 const List = styled.ul({

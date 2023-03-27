@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Fragment, useState, useMemo, useDeferredValue } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import { zIndexes } from '@/utils/zIndex'
 
 const ITEMS_TO_SHOW = 5
 
@@ -86,7 +87,7 @@ export const Combobox = <Item,>({
         selectItem(null)
       }
     },
-    stateReducer(state, actionChanges) {
+    stateReducer(_, actionChanges) {
       const { type, changes } = actionChanges
 
       switch (type) {
@@ -128,14 +129,16 @@ export const Combobox = <Item,>({
     openMenu()
   }
 
+  const isExanded = isOpen && !noOptions
+
   return (
-    <Wrapper data-expanded={isOpen}>
+    <Wrapper data-expanded={isExanded}>
       <InputWrapper>
         <Input
           {...getInputProps()}
           {...animationProps}
           {...externalInputProps}
-          data-expanded={isOpen}
+          data-expanded={isExanded}
           data-warning={noOptions}
         />
         {internalSelectedItem && (
@@ -181,6 +184,13 @@ export const Combobox = <Item,>({
 const Wrapper = styled.div({
   position: 'relative',
   isolation: 'isolate',
+
+  '&[data-expanded=true]': {
+    zIndex: zIndexes.header,
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+    borderTopLeftRadius: theme.radius.sm,
+    borderTopRightRadius: theme.radius.sm,
+  },
 })
 
 const InputWrapper = styled.div({
@@ -195,7 +205,7 @@ const Input = styled(motion.input)({
   paddingLeft: theme.space.md,
   paddingRight: theme.space.xxl,
   backgroundColor: theme.colors.opaque1,
-  fontSize: theme.fontSizes.md,
+  fontSize: theme.fontSizes.xl,
 
   '&[data-expanded=true]': {
     borderBottomLeftRadius: 0,
@@ -249,11 +259,12 @@ const List = styled.ul({
 
   position: 'absolute',
   width: '100%',
+  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
 })
 
 export const ComboboxOption = styled.li({
   height: '3rem',
-  fontSize: theme.fontSizes.md,
+  fontSize: theme.fontSizes.xl,
   display: 'flex',
   alignItems: 'center',
   paddingInline: theme.space.md,
