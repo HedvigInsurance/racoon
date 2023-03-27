@@ -21,9 +21,14 @@ type LayoutWithMenuProps = {
     }
   >
   overlayMenu?: boolean
+  hideFooter?: boolean
 }
 
-export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenuProps) => {
+export const LayoutWithMenu = ({
+  children,
+  overlayMenu = false,
+  hideFooter = false,
+}: LayoutWithMenuProps) => {
   const { story, globalStory, className } = children.props
 
   useHydrateProductMetadata(children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
@@ -31,6 +36,8 @@ export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenu
 
   const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
+
+  const showFooter = !hideFooter && !(story && story.content.hideFooter)
 
   return (
     <Wrapper className={className}>
@@ -44,7 +51,7 @@ export const LayoutWithMenu = ({ children, overlayMenu = false }: LayoutWithMenu
           />
         ))}
       {children}
-      {!(story && story.content.hideFooter) &&
+      {showFooter &&
         footerBlock?.map((nestedBlock) => (
           <FooterBlock
             key={nestedBlock._uid}
