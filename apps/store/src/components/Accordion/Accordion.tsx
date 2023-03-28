@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
-import { PropsWithChildren, ReactElement } from 'react'
+import { forwardRef, PropsWithChildren, ReactElement } from 'react'
 import { MinusIcon, mq, PlusIcon, theme } from 'ui'
 
 export const Root = styled(AccordionPrimitives.Root)({
@@ -100,16 +100,29 @@ const slideUp = keyframes({
   },
 })
 
-export const Content = styled(AccordionPrimitives.Content)({
+export const StyledContent = styled(AccordionPrimitives.Content)({
   fontSize: theme.fontSizes.md,
   color: theme.colors.textSecondary,
   lineHeight: 1.32,
   overflow: 'hidden',
 
   '[data-state=open] &': {
-    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
+    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1) forwards`,
   },
   '[data-state=closed] &': {
-    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
+    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1) forwards`,
   },
 })
+
+type ContentProps = React.ForwardRefExoticComponent<
+  AccordionPrimitives.AccordionContentProps & React.RefAttributes<HTMLDivElement>
+>
+
+export const Content = forwardRef<ContentProps>(({ children, ...props }: any, forwardedRef) => {
+  return (
+    <StyledContent {...props} ref={forwardedRef} forceMount>
+      {children}
+    </StyledContent>
+  )
+})
+Content.displayName = 'AccordionContent'
