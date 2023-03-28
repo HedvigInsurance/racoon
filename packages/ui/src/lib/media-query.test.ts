@@ -2,6 +2,19 @@ import { renderHook } from '@testing-library/react'
 import { Level, useBreakpoint } from './media-query'
 
 describe('media-query', () => {
+  let spy: jest.SpyInstance
+
+  beforeEach(() => {
+    spy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+      callback(0)
+      return 0
+    })
+  })
+
+  afterEach(() => {
+    spy.mockRestore()
+  })
+
   describe('useBreakpoint', () => {
     it('should return true when window is larger than breakpoint', () => {
       // align
