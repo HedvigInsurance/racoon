@@ -158,7 +158,7 @@ export const Combobox = <Item,>({
         {isOpen &&
           filteredItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
-              {index !== 0 && <Separator />}
+              <Separator />
               <ComboboxOption
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
@@ -206,6 +206,9 @@ const Input = styled(motion.input)({
   paddingRight: theme.space.xxl,
   backgroundColor: theme.colors.opaque1,
   fontSize: theme.fontSizes.xl,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 
   '&[data-expanded=true]': {
     borderBottomLeftRadius: 0,
@@ -263,11 +266,12 @@ const List = styled.ul({
 })
 
 export const ComboboxOption = styled.li({
-  height: '3rem',
+  minHeight: '3rem',
   fontSize: theme.fontSizes.xl,
   display: 'flex',
   alignItems: 'center',
   paddingInline: theme.space.md,
+  paddingBlock: theme.space.xs,
 
   '&[data-highlighted=true]': {
     backgroundColor: theme.colors.gray200,
