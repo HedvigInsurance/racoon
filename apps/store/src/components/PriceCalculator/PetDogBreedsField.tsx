@@ -20,8 +20,13 @@ export const PetDogBreedsField = ({ field, loading }: Props) => {
   const [showMixedPicker, setShowMixedPicker] = useState(() => (field.value ?? []).length > 1)
   const { t } = useTranslation('purchase-form')
 
-  const { breeds, defaultSelectedBreeds, comboboxAvailableBreeds, comboboxDefaultSelectedBreed } =
-    usePetDogBreedFieldState(field.value)
+  const {
+    breeds,
+    pureBreeds,
+    defaultSelectedBreeds,
+    comboboxAvailableBreeds,
+    comboboxDefaultSelectedBreed,
+  } = usePetDogBreedFieldState(field.value)
 
   const handleComboboxChange = (breed: Breed | null) => {
     setShowMixedPicker(breed?.id === MIXED_BREED_OPTION_ID)
@@ -49,7 +54,7 @@ export const PetDogBreedsField = ({ field, loading }: Props) => {
 
       {showMixedPicker && (
         <MixedBreedPicker
-          breeds={breeds}
+          breeds={pureBreeds}
           defaultSelectedBreeds={defaultSelectedBreeds}
           name={field.name}
           required={field.required}
@@ -85,7 +90,12 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
     [data?.priceIntentAvailableBreeds],
   )
 
-  const derivedState = useMemo(() => {
+  const pureBreeds = useMemo(
+    () => data?.priceIntentAvailableBreeds.filter((item) => !item.isMixedBreed) ?? [],
+    [data?.priceIntentAvailableBreeds],
+  )
+
+  return useMemo(() => {
     let comboboxAvailableBreeds: Array<Breed> = []
     let comboboxDefaultSelectedBreed: Breed | null = null
     let defaultSelectedBreeds: Array<Breed> = []
@@ -110,13 +120,12 @@ const usePetDogBreedFieldState = (preSelectedBreedIds: Array<string> = []) => {
 
     return {
       breeds,
+      pureBreeds,
       comboboxAvailableBreeds,
       comboboxDefaultSelectedBreed,
       defaultSelectedBreeds,
     }
-  }, [breeds, preSelectedBreedIds, MIXED_BREED_OPTION])
-
-  return derivedState
+  }, [breeds, pureBreeds, preSelectedBreedIds, MIXED_BREED_OPTION])
 }
 
 const breedToFormValue = (breed: Breed) => breed.id
