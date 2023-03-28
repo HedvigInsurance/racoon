@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { Space, HeadingLabel, mq, theme } from 'ui'
+import { Space, Badge, mq, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Alignment = 'left' | 'center' | 'right' | 'justify'
@@ -17,7 +17,7 @@ export const ContentBlock = ({ blok }: Props) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)} y={1}>
-      {blok.heading && <HeadingLabel>{blok.heading}</HeadingLabel>}
+      {blok.heading && <Badge>{blok.heading}</Badge>}
       <TextWrapper alignment={blok.alignment ?? 'left'}>
         <Space y={1} dangerouslySetInnerHTML={{ __html: contentHtml }} />
       </TextWrapper>

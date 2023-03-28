@@ -12,7 +12,7 @@ export { Heading } from './components/Heading/Heading'
 export type { HeadingProps, PossibleHeadingVariant } from './components/Heading/Heading'
 export { Text } from './components/Text/Text'
 export * as Dialog from './components/Dialog/Dialog'
-export { HeadingLabel } from './components/HeadingLabel/HeadingLabel'
+export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 
 export type { Level } from './lib/media-query'

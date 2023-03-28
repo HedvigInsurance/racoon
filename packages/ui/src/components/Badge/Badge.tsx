@@ -4,11 +4,11 @@ import { getMargins, Margins } from '../../lib/margins'
 import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor, theme } from '../../lib/theme/theme'
 
-type HeadingLabelColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'green50'>
+type BadgeColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'green50'>
 
-export type HeadingLabelProps = Margins & {
+export type BadgeProps = Margins & {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
-  color?: keyof HeadingLabelColors
+  color?: keyof BadgeColors
   children: React.ReactNode
 }
 
@@ -16,12 +16,12 @@ const elementConfig = {
   shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
 }
 
-type HeadingLabelBaseProps = Pick<HeadingLabelProps, 'color'> & Margins
+type BadgeBaseProps = Pick<BadgeProps, 'color'> & Margins
 
-export const LabelBase = styled(
+export const BadgeBase = styled(
   'div',
   elementConfig,
-)<HeadingLabelBaseProps>(({ color, ...props }) => {
+)<BadgeBaseProps>(({ color, ...props }) => {
   color = color || 'blueFill1'
   return {
     display: 'inline-block',
@@ -35,8 +35,8 @@ export const LabelBase = styled(
   }
 })
 
-export const HeadingLabel = ({ as, children, color, ...rest }: HeadingLabelProps) => (
-  <LabelBase as={as} color={color} {...rest}>
+export const Badge = ({ as, children, color, ...rest }: BadgeProps) => (
+  <BadgeBase as={as} color={color} {...rest}>
     {children}
-  </LabelBase>
+  </BadgeBase>
 )

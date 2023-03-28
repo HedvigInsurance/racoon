@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import Balancer from 'react-wrap-balancer'
-import { HeadingLabel, Text, theme } from 'ui'
+import { Badge, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 
 type InsurableLimit = {
@@ -30,9 +30,9 @@ export const InsurableLimits = ({ items }: InsurableLimitsProps) => {
     <Grid>
       {items.map((item) => (
         <GridLayout.Content width={columns} align="left" key={item.label}>
-          <HeadingLabel as="h3" mb={theme.space.md}>
+          <Badge as="h3" mb={theme.space.md}>
             {item.label}
-          </HeadingLabel>
+          </Badge>
           <Text size="xl">{item.value}</Text>
           <Balancer ratio={0.65}>
             <Text size="xl" color="textSecondary">
