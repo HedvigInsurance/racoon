@@ -1,0 +1,8 @@
+mutation BankSigneringInit($contractId: UUID!) {
+  contractBankSigneringCancellationInitiate(contractId: $contractId) {
+    id
+    externalInsuranceCancellation {
+      ...ContractExternalInsuranceCancellation
+    }
+  }
+}
