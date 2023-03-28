@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { HeadingLabelProps } from 'ui/src/components/HeadingLabel/HeadingLabel'
-import { ConditionalWrapper, HeadingLabel, theme } from 'ui'
+import { ConditionalWrapper, Badge, BadgeProps, theme } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export const Wrapper = styled.div({
@@ -11,15 +10,15 @@ export const Wrapper = styled.div({
 
 export type HeadingLabelBlockProps = SbBaseBlockProps<{
   text: string
-  as: HeadingLabelProps['as']
+  as: BadgeProps['as']
 }>
 
 export const HeadingLabelBlock = ({ blok, nested }: HeadingLabelBlockProps) => {
   return (
     <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
-      <HeadingLabel as={blok.as} {...storyblokEditable(blok)}>
+      <Badge as={blok.as} {...storyblokEditable(blok)}>
         {blok.text}
-      </HeadingLabel>
+      </Badge>
     </ConditionalWrapper>
   )
 }

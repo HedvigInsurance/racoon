@@ -1,6 +1,6 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { HeadingLabel, Space } from 'ui'
+import { Badge, Space } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Perils } from '@/components/Perils/Perils'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
@@ -30,7 +30,7 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
     <GridLayout.Root {...storyblokEditable(blok)}>
       <GridLayout.Content width="1">
         <Space y={1}>
-          {blok.heading && <HeadingLabel>{blok.heading}</HeadingLabel>}
+          {blok.heading && <Badge>{blok.heading}</Badge>}
           <Perils items={items} />
         </Space>
       </GridLayout.Content>

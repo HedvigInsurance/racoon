@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { HeadingLabel, Text, Space, theme, mq } from 'ui'
+import { Badge, Text, Space, theme, mq } from 'ui'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
@@ -29,7 +29,7 @@ export const USPBlockItem = ({ blok }: USPItemBlockProps) => {
   return (
     <li>
       <Space y={{ base: 1, md: 1.5 }}>
-        <HeadingLabel>{blok.title}</HeadingLabel>
+        <Badge>{blok.title}</Badge>
         <Text size={{ _: 'xl' }}>{blok.content}</Text>
       </Space>
     </li>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
-import { HeadingLabel, mq, Space, Text, theme } from 'ui'
+import { Badge, mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { focusableStyles } from './HeaderStyles'
 
@@ -39,7 +39,7 @@ const StyledPillow = styled(Pillow)({
   },
 })
 
-const PillowLabel = styled(HeadingLabel)({
+const PillowLabel = styled(Badge)({
   [mq.lg]: {
     paddingBlock: theme.space.xxs,
     paddingInline: theme.space.xs,
