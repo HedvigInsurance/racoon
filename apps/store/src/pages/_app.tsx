@@ -10,6 +10,7 @@ import { globalStyles, theme } from 'ui'
 import { GlobalLinkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
+import { GlobalBanner } from '@/components/GlobalBanner/GlobalBanner'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -91,6 +92,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 <BalancerProvider>
                   <AppErrorProvider>
                     <AppErrorDialog />
+                    <GlobalBanner />
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>

@@ -4,12 +4,12 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { HedvigLogo, mq, theme } from 'ui'
 import { PageLink } from '@/utils/PageLink'
+import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
-import { useScrollState } from '../../utils/useScrollState'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_PX } from './HeaderStyles'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
-const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
+export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
 export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`
 
 // Not possible to animate HSL to "transparent"
