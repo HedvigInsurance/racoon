@@ -39,10 +39,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-NextPage.getLayout = (children) => (
-  <LayoutWithMenu overlayMenu={true} hideFooter={true}>
-    {children}
-  </LayoutWithMenu>
-)
+NextPage.getLayout = (children) => <LayoutWithMenu hideFooter={true}>{children}</LayoutWithMenu>
 
 export default NextPage
