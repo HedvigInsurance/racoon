@@ -80,7 +80,7 @@ export const NavigationMenuPrimitiveContent = styled(NavigationMenuPrimitive.Con
 })
 
 export const NavigationMenuListWrapper = styled.div({
-  paddingBottom: theme.space.lg,
+  paddingBottom: theme.space.xl,
 
   [mq.lg]: {
     backgroundColor: theme.colors.light,
