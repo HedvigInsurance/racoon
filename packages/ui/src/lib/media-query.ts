@@ -25,8 +25,6 @@ function getWindowDimensions() {
   }
 }
 
-let timeout: number | undefined = undefined
-
 /**
  * Utility function for finding out if window size is above or below a breakpoint.
  * @returns `true` if window size is at or above breakpoint, `false` otherwise
@@ -37,25 +35,15 @@ export const useBreakpoint = (level: Level) => {
 
   useIsomorphicLayoutEffect(() => {
     const handleResize = () => {
-      if (timeout) {
-        window.cancelAnimationFrame(timeout)
-      }
-
-      // We wrap it in requestAnimationFrame to avoid this error - ResizeObserver loop limit exceeded
-      timeout = window.requestAnimationFrame(() => {
-        const breakpointWidth = breakpoints[level]
-        if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
-        setIsLarger(getWindowDimensions().width >= breakpointWidth)
-      })
+      const breakpointWidth = breakpoints[level]
+      if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)
+      setIsLarger(getWindowDimensions().width >= breakpointWidth)
     }
 
     handleResize()
 
     window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      if (timeout) window.cancelAnimationFrame(timeout)
-    }
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   return isLarger
