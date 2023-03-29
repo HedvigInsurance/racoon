@@ -69,7 +69,7 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Space y={0.25}>
+        <Space y={errorMessage ? 1 : 0.25}>
           <PersonalNumberField
             label={t('FIELD_SSN_SE_LABEL')}
             name={SsnFieldName}

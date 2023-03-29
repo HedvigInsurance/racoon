@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { CrossIconSmall, LockIcon, Space, Text, theme } from 'ui'
+import { CrossIconSmall, LockIcon, Space, Text, WarningTriangleIcon, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 type BaseInputProps = Omit<
@@ -109,7 +109,15 @@ export const TextField = (props: Props) => {
             ))}
         </InputWrapper>
       </Wrapper>
-      {message && <MessageText size="sm">{message}</MessageText>}
+      {message &&
+        (warning ? (
+          <MessageWithIcon size="sm">
+            <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
+            {message}
+          </MessageWithIcon>
+        ) : (
+          <MessageText size="sm">{message}</MessageText>
+        ))}
     </Space>
   )
 }
@@ -222,7 +230,16 @@ const LargeInput = styled.input({
 
 const SmallInput = styled(LargeInput)({ fontSize: theme.fontSizes.lg })
 
-const MessageText = styled(Text)({ paddingLeft: theme.space.md })
+const MessageText = styled(Text)({
+  paddingLeft: theme.space.md,
+})
+
+const MessageWithIcon = styled(Text)({
+  paddingLeft: theme.space.xxs,
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xs,
+})
 
 const DeleteButton = styled.button({
   cursor: 'pointer',
