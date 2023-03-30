@@ -5,21 +5,20 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import * as ComparisonTable from './ComparisonTable/ComparisonTable'
 
 type Props = {
-  offers: PriceIntent['offers']
-  selectedOfferId: string
+  tiers: Array<ProductOfferFragment>
+  selectedTierId: string
 }
 
-export const ComparisonTableModal = ({ offers, selectedOfferId }: Props) => {
+export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
   const getVeryShortVariantDisplayName = useGetVeryShortVariantDisplayName()
   const { t } = useTranslation('purchase-form')
   const getUniquePerilTitles = () => {
-    const allPerils = offers.flatMap((offer) => offer.variant.perils)
-    const perilTitles = allPerils.map((peril) => peril.title)
+    const allPerils = tiers.flatMap((item) => item.variant.perils)
+    const perilTitles = allPerils.map((item) => item.title)
     return removeDuplicates(perilTitles)
   }
 
@@ -57,12 +56,12 @@ export const ComparisonTableModal = ({ offers, selectedOfferId }: Props) => {
             <ComparisonTable.Root>
               <ComparisonTable.Head>
                 <ComparisonTable.Header />
-                {offers.map((offer) => (
+                {tiers.map((item) => (
                   <ComparisonTable.Header
-                    key={offer.id}
-                    active={isSelectedOffer(offer, selectedOfferId)}
+                    key={item.id}
+                    active={isSelectedOffer(item, selectedTierId)}
                   >
-                    {getVeryShortVariantDisplayName(offer.variant.typeOfContract)}
+                    {getVeryShortVariantDisplayName(item.variant.typeOfContract)}
                   </ComparisonTable.Header>
                 ))}
               </ComparisonTable.Head>
@@ -70,12 +69,12 @@ export const ComparisonTableModal = ({ offers, selectedOfferId }: Props) => {
                 {getUniquePerilTitles().map((perilTitle) => (
                   <ComparisonTable.Row key={perilTitle}>
                     <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
-                    {offers.map((offer) => (
+                    {tiers.map((item) => (
                       <ComparisonTable.DataCell
-                        key={offer.id}
-                        active={isSelectedOffer(offer, selectedOfferId)}
+                        key={item.id}
+                        active={isSelectedOffer(item, selectedTierId)}
                       >
-                        {offerHasPeril(offer, perilTitle) ? (
+                        {offerHasPeril(item, perilTitle) ? (
                           <ComparisonTable.CheckIcon />
                         ) : (
                           <ComparisonTable.MissingIcon />
@@ -115,6 +114,15 @@ const useGetVeryShortVariantDisplayName = () => {
         return t('COMPARISON_TABLE_COLUMN_SE_CAR_HALF')
       case 'SE_CAR_TRAFFIC':
         return t('COMPARISON_TABLE_COLUMN_SE_CAR_TRAFFIC')
+      case 'SE_DOG_BASIC':
+      case 'SE_CAT_BASIC':
+        return t('COMPARISON_TABLE_COLUMN_SE_DOG_BASIC')
+      case 'SE_DOG_STANDARD':
+      case 'SE_CAT_STANDARD':
+        return t('COMPARISON_TABLE_COLUMN_SE_DOG_STANDARD')
+      case 'SE_DOG_PREMIUM':
+      case 'SE_CAT_PREMIUM':
+        return t('COMPARISON_TABLE_COLUMN_SE_DOG_PREMIUM')
     }
   }
 }

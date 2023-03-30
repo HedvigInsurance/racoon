@@ -229,8 +229,8 @@ export const OfferPresenter = (props: Props) => {
           </Space>
         </form>
 
-        {priceIntent.offers.length > 1 && (
-          <ComparisonTableModal offers={priceIntent.offers} selectedOfferId={selectedOffer.id} />
+        {tiers.length > 1 && (
+          <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id} />
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>
