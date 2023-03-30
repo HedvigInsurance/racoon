@@ -17,13 +17,6 @@ query ProductData($productName: String!) {
       perils {
         title
         description
-        icon {
-          variants {
-            light {
-              svgUrl
-            }
-          }
-        }
         covered
         exceptions
       }
