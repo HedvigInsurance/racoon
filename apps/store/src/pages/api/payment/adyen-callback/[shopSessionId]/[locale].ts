@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
@@ -18,13 +17,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // TODO: send API mutation
 
-  return res.redirect(
-    PageLink.checkoutPayment({
-      locale,
-      shopSessionId,
-      authStatus: AuthStatus.Success,
-    }),
-  )
+  return res.redirect(PageLink.checkoutPayment({ locale, shopSessionId }))
 }
 
 export default handler
