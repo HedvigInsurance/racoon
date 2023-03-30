@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'framer-motion'
-import { FormEventHandler } from 'react'
+import { useRef, forwardRef, FormEventHandler, ComponentPropsWithoutRef } from 'react'
 import { Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -47,27 +47,27 @@ const Card = styled(motion(Space))({
 type ItemProps = {
   label: string
   value: string
-  id?: string
-  autoFocus?: boolean
-  onChange?: FormEventHandler<HTMLButtonElement>
-}
+} & Omit<ComponentPropsWithoutRef<'button'>, 'value'>
 
-export const Item = ({ value, label, id, ...itemProps }: ItemProps) => {
-  const identifier = id ?? `radio-${value}`
+export const Item = forwardRef<HTMLButtonElement, ItemProps>(
+  ({ value, label, id, ...itemProps }, ref) => {
+    const identifier = id ?? `radio-${value}`
 
-  return (
-    <SpaceFlex space={0.5} align="center">
-      <StyledItem id={identifier} value={value} {...itemProps}>
-        <StyledIndicator />
-      </StyledItem>
-      <label htmlFor={identifier}>
-        <Text as="span" size="xl">
-          {label}
-        </Text>
-      </label>
-    </SpaceFlex>
-  )
-}
+    return (
+      <SpaceFlex space={0.5} align="center">
+        <StyledItem ref={ref} id={identifier} value={value} {...itemProps}>
+          <StyledIndicator />
+        </StyledItem>
+        <label htmlFor={identifier}>
+          <Text as="span" size="xl">
+            {label}
+          </Text>
+        </label>
+      </SpaceFlex>
+    )
+  },
+)
+Item.displayName = 'Item'
 
 const StyledItem = styled(RadioGroup.Item)({
   width: '1.375rem',
@@ -109,6 +109,7 @@ const StyledHorizontalRoot = styled(RadioGroup.Root)({
 })
 
 export const HorizontalItem = ({ onChange, ...props }: ItemProps) => {
+  const radioButtonRef = useRef<HTMLButtonElement | null>(null)
   const { highlight, animationProps } = useHighlightAnimation()
 
   const handleChange: FormEventHandler<HTMLButtonElement> = (event) => {
@@ -117,8 +118,17 @@ export const HorizontalItem = ({ onChange, ...props }: ItemProps) => {
   }
 
   return (
-    <Card {...animationProps}>
-      <Item {...props} onChange={handleChange} />
+    <Card onClick={() => radioButtonRef.current?.click()} {...animationProps}>
+      <Item
+        ref={radioButtonRef}
+        {...props}
+        onChange={handleChange}
+        onClick={(event) => {
+          // This prevents click events fired on Radio Button being also
+          // handled by the Card.
+          event.stopPropagation()
+        }}
+      />
     </Card>
   )
 }
