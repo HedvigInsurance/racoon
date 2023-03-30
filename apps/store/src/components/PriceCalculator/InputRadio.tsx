@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'framer-motion'
-import { useRef, forwardRef, FormEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FormEventHandler, ComponentPropsWithoutRef } from 'react'
 import { Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -49,25 +49,22 @@ type ItemProps = {
   value: string
 } & Omit<ComponentPropsWithoutRef<'button'>, 'value'>
 
-export const Item = forwardRef<HTMLButtonElement, ItemProps>(
-  ({ value, label, id, ...itemProps }, ref) => {
-    const identifier = id ?? `radio-${value}`
+export const Item = ({ value, label, id, className, ...itemProps }: ItemProps) => {
+  const identifier = id ?? `radio-${value}`
 
-    return (
+  return (
+    <label className={className} htmlFor={identifier}>
       <SpaceFlex space={0.5} align="center">
-        <StyledItem ref={ref} id={identifier} value={value} {...itemProps}>
+        <StyledItem id={identifier} value={value} {...itemProps}>
           <StyledIndicator />
         </StyledItem>
-        <label htmlFor={identifier}>
-          <Text as="span" size="xl">
-            {label}
-          </Text>
-        </label>
+        <Text as="span" size="xl">
+          {label}
+        </Text>
       </SpaceFlex>
-    )
-  },
-)
-Item.displayName = 'Item'
+    </label>
+  )
+}
 
 const StyledItem = styled(RadioGroup.Item)({
   width: '1.375rem',
@@ -109,26 +106,15 @@ const StyledHorizontalRoot = styled(RadioGroup.Root)({
 })
 
 export const HorizontalItem = ({ onChange, ...props }: ItemProps) => {
-  const radioButtonRef = useRef<HTMLButtonElement | null>(null)
-  const { highlight, animationProps } = useHighlightAnimation()
-
   const handleChange: FormEventHandler<HTMLButtonElement> = (event) => {
-    highlight()
     onChange?.(event)
   }
 
-  return (
-    <Card onClick={() => radioButtonRef.current?.click()} {...animationProps}>
-      <Item
-        ref={radioButtonRef}
-        {...props}
-        onChange={handleChange}
-        onClick={(event) => {
-          // This prevents click events fired on Radio Button being also
-          // handled by the Card.
-          event.stopPropagation()
-        }}
-      />
-    </Card>
-  )
+  return <StyledHorizontalItem {...props} onChange={handleChange} />
 }
+
+const StyledHorizontalItem = styled(Item)({
+  padding: `${theme.space.sm} ${theme.space.md}`,
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.gray100,
+})
