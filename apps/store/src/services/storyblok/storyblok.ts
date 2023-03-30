@@ -59,7 +59,6 @@ import { isBrowser } from '@/utils/env'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { Flags } from '../Flags/Flags'
-import { CustomRichTextSchema } from './CustomRichTextSchema'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
 export type SbBaseBlockProps<T> = {
@@ -271,11 +270,6 @@ export const initStoryblok = () => {
     use: [apiPlugin],
     bridge: shouldUseBridge,
     components,
-    richText: {
-      // TODO: remove this when @storyblok/react gets an update with its storyblok/js
-      // depedency bumped. More info on GRW-2377
-      schema: CustomRichTextSchema,
-    },
   })
 }
 
