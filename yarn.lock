@@ -6693,10 +6693,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.15.7":
-  version: 18.15.7
-  resolution: "@types/node@npm:18.15.7"
-  checksum: 08d1dd1898be10cd274955ed7f491bcab5b7e70ce66b6a1e996a582d5467f7517046b0d9c5f4e15871df94dd72d1ad9e7be236d2cff1a1450ec906d7fa3062d2
+"@types/node@npm:18.15.11":
+  version: 18.15.11
+  resolution: "@types/node@npm:18.15.11"
+  checksum: 977b4ad04708897ff0eb049ecf82246d210939c82461922d20f7d2dcfd81bbc661582ba3af28869210f7e8b1934529dcd46bff7d448551400f9d48b9d3bddec3
   languageName: node
   linkType: hard
 
@@ -16235,7 +16235,7 @@ __metadata:
     "@types/jsdom": 21.1.1
     "@types/lodash-es": 4.17.7
     "@types/marked": 4.0.8
-    "@types/node": 18.15.7
+    "@types/node": 18.15.11
     "@types/react": 18.0.29
     classnames: 2.3.2
     cookies-next: 2.1.1
@@ -18891,7 +18891,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
     "@types/clone-deep": 4.0.1
-    "@types/node": 18.15.7
+    "@types/node": 18.15.11
     "@types/nprogress": 0.2.0
     "@types/react": 18.0.29
     "@types/uuid": 9.0.1
