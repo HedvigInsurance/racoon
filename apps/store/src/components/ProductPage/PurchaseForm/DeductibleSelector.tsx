@@ -6,14 +6,14 @@ import { Text } from 'ui'
 import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { Money, ProductOfferFragment } from '@/services/apollo/generated'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Deductible = {
   id: string
-  price: string
+  price: Money
   title: string
   description: string
 }
@@ -36,7 +36,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       if (offer.deductible) {
         levels.push({
           id: offer.id,
-          price: formatter.monthlyPrice(offer.price),
+          price: offer.price,
           title: offer.deductible.displayName,
           description: offer.deductible.tagline,
         })
@@ -45,8 +45,15 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       }
     })
 
-    return levels
-  }, [offers, formatter])
+    // Sort deductibles based on monthly price
+    const sortedLevels = levels.sort((a, b) => {
+      if (a.price.amount < b.price.amount) return -1
+      if (a.price.amount > b.price.amount) return 1
+      return 0
+    })
+
+    return sortedLevels
+  }, [offers])
 
   return (
     <TierSelector.Root defaultOpen={true}>
@@ -64,7 +71,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
             <TierLevelRadioGroup.Item
               key={item.id}
               value={item.id}
-              price={item.price}
+              price={formatter.monthlyPrice(item.price)}
               title={item.title}
               description={item.description}
             />
