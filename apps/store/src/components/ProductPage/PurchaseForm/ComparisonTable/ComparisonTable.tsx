@@ -11,7 +11,7 @@ export const Body = styled.tbody({})
 
 export const Row = styled.tr({
   ':not(:last-child)': {
-    borderBottom: `1px solid ${theme.colors.gray300}`,
+    borderBottom: '1px solid hsla(0, 0%, 7%, 0.1)',
   },
 
   ':last-child': {
