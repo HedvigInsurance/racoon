@@ -38,13 +38,15 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
-  rewrites: [
-    {
-      source: '/forever',
-      has: [{ type: 'query', key: 'code', value: '(?<code>.*)' }],
-      destination: '/forever/:code',
-    },
-  ],
+  async rewrites() {
+    return [
+      {
+        source: '/forever',
+        has: [{ type: 'query', key: 'code', value: '(?<code>.*)' }],
+        destination: '/forever/:code',
+      },
+    ]
+  },
 })
 
 const securityHeaders = [
