@@ -27,7 +27,7 @@ export const Row = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderBottom: `1px solid ${theme.colors.borderOpaque2}`,
+  borderBottom: '1px solid hsla(0, 0%, 7%, 0.1)',
 })
 
 export const HorizontalList = styled.div({
