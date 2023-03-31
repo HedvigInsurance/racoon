@@ -17,6 +17,7 @@ import {
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { getOffersByPrice } from './PurchaseForm/getOffersByPrice'
 import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
 type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
@@ -44,12 +45,17 @@ const usePriceIntentContextValue = () => {
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
     onCompleted(data) {
-      setSelectedOffer(
-        (prev) =>
-          data.priceIntent.offers.find(
-            (item) => item.variant.typeOfContract === prev?.variant.typeOfContract,
-          ) ?? data.priceIntent.offers[0],
-      )
+      setSelectedOffer((prev) => {
+        const matchingOffer = data.priceIntent.offers.find(
+          (item) =>
+            item.variant.typeOfContract === prev?.variant.typeOfContract &&
+            item.deductible?.displayName === prev?.deductible?.displayName,
+        )
+
+        if (matchingOffer) return matchingOffer
+
+        return getOffersByPrice(data.priceIntent.offers)[0]
+      })
     },
   })
 
