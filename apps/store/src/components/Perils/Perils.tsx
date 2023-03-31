@@ -133,7 +133,7 @@ const Color = styled.div<{ color?: string }>(({ color }) => ({
 }))
 
 const titleToColor = (title: string) => {
-  switch (title) {
+  switch (title.trim()) {
     case 'Fire':
     case 'Eldsvåda':
       return theme.colors.red700
@@ -236,5 +236,60 @@ const titleToColor = (title: string) => {
     case 'Car body damage':
     case 'Vagnskada':
       return theme.colors.green500
+    case 'Veterinärvård':
+    case 'Veterinary care':
+      return theme.colors.teal600
+
+    case 'Dolda fel':
+    case 'Hidden defects':
+      return theme.colors.gray700
+
+    case 'Förlossning':
+    case 'Pregnancy OR Giving birth':
+      return theme.colors.teal700
+
+    case 'Kastrering/Sterilisering':
+    case 'Castration & Sterilization':
+      return theme.colors.pink700
+
+    case 'Specialkost':
+    case 'Food':
+      return theme.colors.yellow500
+
+    case 'Tandvård':
+    case 'Dental care':
+      return theme.colors.teal500
+
+    case 'Diagnostik':
+    case 'Advanced diagnostics':
+      return theme.colors.gray500
+
+    case 'Medicin':
+    case 'Medicine':
+      return theme.colors.teal500
+
+    case 'Avlivning':
+    case 'Euthanasia':
+      return theme.colors.purple700
+
+    case 'Plastikoperation':
+    case 'Plastic surgery':
+      return theme.colors.pink600
+
+    case 'Rehabilitering':
+    case 'Rehabilitation':
+      return theme.colors.yellow500
+
+    case 'Vård av djur':
+      return theme.colors.yellow700
+
+    case 'Sorgbearbetning':
+      return theme.colors.purple500
+
+    case 'Livförsäkring':
+      return theme.colors.purple600
+
+    case 'Strålning och kemoterapi':
+      return theme.colors.pink500
   }
 }
