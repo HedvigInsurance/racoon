@@ -60,10 +60,10 @@
     "zen-observable-ts": "1.2.5"
   },
   "devDependencies": {
-    "@babel/core": "7.21.3",
-    "@babel/preset-env": "7.20.2",
+    "@babel/core": "7.21.4",
+    "@babel/preset-env": "7.21.4",
     "@babel/preset-react": "7.18.6",
-    "@babel/preset-typescript": "7.21.0",
+    "@babel/preset-typescript": "7.21.4",
     "@graphql-codegen/cli": "3.2.2",
     "@graphql-codegen/typescript": "3.0.2",
     "@graphql-codegen/typescript-operations": "3.0.2",
