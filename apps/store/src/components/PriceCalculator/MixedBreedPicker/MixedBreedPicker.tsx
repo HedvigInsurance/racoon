@@ -88,6 +88,7 @@ export const MixedBreedPicker = ({
             mutliSelect={true}
             disabled={loading}
             required={required && selectedBreeds.length === 0}
+            size="small"
           />
         </ComboboxWrapper>
       </Space>
