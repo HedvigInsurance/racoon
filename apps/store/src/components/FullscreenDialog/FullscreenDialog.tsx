@@ -54,12 +54,12 @@ const Header = styled.header({
 const CloseButton = styled(Dialog.Close)({ cursor: 'pointer' })
 
 const Main = styled.main({
-  height: '100%',
   display: 'flex',
   flexDirection: 'column',
 })
 
 const CenteredMain = styled(Main)({
+  height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
