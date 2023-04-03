@@ -21,6 +21,7 @@ type Props<Item> = {
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
+  size?: 'large' | 'small'
 }
 
 /**
@@ -37,6 +38,7 @@ export const Combobox = <Item,>({
   mutliSelect = false,
   noMatchesMessage = 'No matches found',
   name,
+  size = 'large',
   ...externalInputProps
 }: Props<Item>) => {
   const { highlight, animationProps } = useHighlightAnimation()
@@ -140,6 +142,7 @@ export const Combobox = <Item,>({
           {...externalInputProps}
           data-expanded={isExanded}
           data-warning={noOptions}
+          data-size={size}
         />
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
@@ -162,6 +165,7 @@ export const Combobox = <Item,>({
               <ComboboxOption
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
+                data-size={size}
               >
                 {displayValue(item)}
               </ComboboxOption>
@@ -201,14 +205,19 @@ const Input = styled(motion.input)({
   color: theme.colors.textPrimary,
   borderRadius: theme.radius.sm,
   width: '100%',
-  height: '3rem',
+  height: '2.5rem',
   paddingLeft: theme.space.md,
   paddingRight: theme.space.xxl,
   backgroundColor: theme.colors.opaque1,
-  fontSize: theme.fontSizes.xl,
+  fontSize: theme.fontSizes.lg,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+
+  '&[data-size=large]': {
+    height: '3rem',
+    fontSize: theme.fontSizes.xl,
+  },
 
   '&[data-expanded=true]': {
     borderBottomLeftRadius: 0,
@@ -266,12 +275,17 @@ const List = styled.ul({
 })
 
 export const ComboboxOption = styled.li({
-  minHeight: '3rem',
-  fontSize: theme.fontSizes.xl,
+  minHeight: '2.5rem',
+  fontSize: theme.fontSizes.lg,
   display: 'flex',
   alignItems: 'center',
   paddingInline: theme.space.md,
   paddingBlock: theme.space.xs,
+
+  '&[data-size=large]': {
+    minHeight: '3rem',
+    fontSize: theme.fontSizes.xl,
+  },
 
   '&[data-highlighted=true]': {
     backgroundColor: theme.colors.gray200,
