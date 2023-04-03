@@ -40,7 +40,6 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
       </SpaceFlex>
 
       <FullscreenDialog.Modal
-        center
         Footer={
           <>
             <FullscreenDialog.Close asChild>
