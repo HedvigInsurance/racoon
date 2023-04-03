@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, useState } from 'react'
 import { Space } from 'ui'
@@ -24,11 +25,13 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
   const [hasInsurance, setHasInsurance] = useState(!!company)
 
   const handleRadioValueChange = (newValue: string) => {
+    datadogRum.addAction('Select HasInsurance', { value: newValue })
     if (newValue === RadioOption.NO) onCompanyChange(undefined)
     setHasInsurance(newValue === RadioOption.YES)
   }
 
   const handleChangeExternalInsurer: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    datadogRum.addAction('Select ExternalInsurer', { value: event.target.value })
     onCompanyChange(event.target.value || undefined)
   }
 
