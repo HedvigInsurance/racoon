@@ -22,6 +22,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
+import { getOffersByPrice } from './getOffersByPrice'
 import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
 import { FormElement } from './PurchaseForm.constants'
@@ -124,16 +125,19 @@ export const OfferPresenter = (props: Props) => {
 
   const startDate = convertToDate(selectedOffer.startDate)
 
+  // Sort deductibles based on monthly price
+  const sortedOffers = useMemo(() => getOffersByPrice(priceIntent.offers), [priceIntent.offers])
+
   const tiers = useMemo(() => {
     const tierList: Array<ProductOfferFragment> = []
     const usedTiers = new Set<string>()
-    for (const offer of priceIntent.offers) {
+    for (const offer of sortedOffers) {
       if (usedTiers.has(offer.variant.typeOfContract)) continue
       usedTiers.add(offer.variant.typeOfContract)
       tierList.push(offer)
     }
     return tierList
-  }, [priceIntent.offers])
+  }, [sortedOffers])
 
   const selectedTier = useMemo(() => {
     const tier = tiers.find(
@@ -151,13 +155,11 @@ export const OfferPresenter = (props: Props) => {
     return tier
   }, [tiers, selectedOffer])
 
-  const deductibles = useMemo(
-    () =>
-      priceIntent.offers.filter(
-        (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
-      ),
-    [priceIntent.offers, selectedOffer],
-  )
+  const deductibles = useMemo(() => {
+    return sortedOffers.filter(
+      (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
+    )
+  }, [sortedOffers, selectedOffer])
 
   return (
     <>

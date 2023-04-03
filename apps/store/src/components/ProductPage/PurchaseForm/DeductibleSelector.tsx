@@ -46,14 +46,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       }
     })
 
-    // Sort deductibles based on monthly price
-    const sortedLevels = levels.sort((a, b) => {
-      if (a.price.amount < b.price.amount) return -1
-      if (a.price.amount > b.price.amount) return 1
-      return 0
-    })
-
-    return sortedLevels
+    return levels
   }, [offers])
 
   return (
