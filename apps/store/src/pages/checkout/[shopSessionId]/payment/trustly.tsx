@@ -19,18 +19,16 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   params = {},
 }) => {
   if (!isRoutingLocale(locale)) return { notFound: true }
+  if (!params.shopSessionId) return { notFound: true }
 
-  const { shopSessionId } = params
-  if (!shopSessionId) return { notFound: true }
-
-  const nextUrl = PageLink.confirmation({ locale, shopSessionId })
+  const nextUrl = PageLink.confirmation({ locale, shopSessionId: params.shopSessionId })
 
   try {
     const apolloClient = await initializeApolloServerSide({ req, res, locale })
     const [translations, trustlyUrl, shopSession] = await Promise.all([
       serverSideTranslations(locale),
       createTrustlyUrl({ apolloClient, locale }),
-      setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId),
+      setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(params.shopSessionId),
     ])
 
     const checkoutSteps = await fetchCheckoutSteps({ apolloClient, req, res, shopSession })
@@ -41,7 +39,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
         locale,
         trustlyUrl,
         nextUrl,
-        shopSessionId,
+        shopSessionId: params.shopSessionId,
         checkoutSteps,
       },
     }
