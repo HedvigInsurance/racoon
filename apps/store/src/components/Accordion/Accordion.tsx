@@ -1,7 +1,7 @@
-import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
-import { PropsWithChildren, ReactElement } from 'react'
+import { motion } from 'framer-motion'
+import { forwardRef, PropsWithChildren, ReactElement } from 'react'
 import { MinusIcon, mq, PlusIcon, theme } from 'ui'
 
 export const Root = styled(AccordionPrimitives.Root)({
@@ -82,34 +82,39 @@ const CloseIcon = styled(MinusIcon)({
   '[data-state=open] &': { display: 'block' },
 })
 
-const slideDown = keyframes({
-  from: {
-    height: 0,
-  },
-  to: {
-    // custom property reference: https://www.radix-ui.com/docs/primitives/components/accordion
-    height: 'var(--radix-accordion-content-height)',
-  },
-})
-const slideUp = keyframes({
-  from: {
-    height: 'var(--radix-accordion-content-height)',
-  },
-  to: {
-    height: 0,
-  },
-})
+type ContentProps = AccordionPrimitives.AccordionContentProps & { open: boolean }
 
-export const Content = styled(AccordionPrimitives.Content)({
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  ({ children, open, ...props }, forwardedRef) => {
+    return (
+      <StyledContent {...props} ref={forwardedRef} forceMount>
+        <motion.div
+          initial={open ? 'opened' : 'closed'}
+          transition={{
+            ease: [0.65, 0.05, 0.36, 1],
+            duration: 0.4,
+          }}
+          variants={{
+            opened: {
+              height: 'var(--radix-accordion-content-height)',
+            },
+            closed: {
+              height: 0,
+            },
+          }}
+          animate={open ? 'opened' : 'closed'}
+        >
+          {children}
+        </motion.div>
+      </StyledContent>
+    )
+  },
+)
+Content.displayName = 'AccordionContent'
+
+const StyledContent = styled(AccordionPrimitives.Content)({
   fontSize: theme.fontSizes.md,
   color: theme.colors.textSecondary,
   lineHeight: 1.32,
   overflow: 'hidden',
-
-  '[data-state=open] &': {
-    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
-  },
-  '[data-state=closed] &': {
-    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
-  },
 })

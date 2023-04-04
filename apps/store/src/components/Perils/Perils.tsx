@@ -67,14 +67,14 @@ const PerilColumnFlex = styled.div({
 
 const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
   const { title, description, covered, colorCode } = peril
-  const [openedItems, setOpenedItems] = useState<Array<string>>()
+  const [openItems, setOpenItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
-    setOpenedItems(value)
+    setOpenItems(value)
   }, [])
 
   return (
-    <Accordion.Root type="multiple" value={openedItems} onValueChange={handleValueChange}>
+    <Accordion.Root type="multiple" value={openItems} onValueChange={handleValueChange}>
       <Accordion.Item key={title} value={title}>
         <Accordion.HeaderWithTrigger>
           <HeaderWrapper>
@@ -82,7 +82,7 @@ const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
             <TriggerText size="lg">{title}</TriggerText>
           </HeaderWrapper>
         </Accordion.HeaderWithTrigger>
-        <Accordion.Content>
+        <Accordion.Content open={(openItems ?? []).includes(title)}>
           <ContentWrapper>
             <Text as="p" size="xs" color="textPrimary">
               {description}

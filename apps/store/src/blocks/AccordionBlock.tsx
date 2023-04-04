@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText } from '@storyblok/react'
 import Head from 'next/head'
+import { useState, useCallback } from 'react'
 import { Heading, Text, theme, mq } from 'ui'
 import { AccordionItemBlock, AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
 import { Wrapper as TabsBlockWrapper } from '@/blocks/TabsBlock'
@@ -18,19 +19,30 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const AccordionBlock = ({ blok, nested }: Props) => {
+  const [openItem, setOpenItem] = useState<string>()
+
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   const enableFAQStructuredData = blok.isFAQ ?? false
   const displayTitleDescriptionSection = blok.title || blok.description
   const isCentered = blok.centerLayout || !displayTitleDescriptionSection
+
+  const handleValueChange = useCallback((value: string) => {
+    setOpenItem(value)
+  }, [])
 
   let content: React.ReactNode = null
   if (nested) {
     content = (
       <>
         {displayTitleDescriptionSection && <AccodrionTitleDescription blok={blok} />}
-        <StyledAccordionRoot type="single" collapsible>
+        <StyledAccordionRoot
+          type="single"
+          collapsible
+          value={openItem}
+          onValueChange={handleValueChange}
+        >
           {accordionItems.map((nestedBlock) => (
-            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} openItem={openItem} />
           ))}
         </StyledAccordionRoot>
       </>
@@ -44,9 +56,14 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
           </GridLayout.Content>
         )}
         <GridLayout.Content width="1/2" align={isCentered ? 'center' : 'right'}>
-          <Accordion.Root type="single" collapsible>
+          <Accordion.Root
+            type="single"
+            collapsible
+            value={openItem}
+            onValueChange={handleValueChange}
+          >
             {accordionItems.map((nestedBlock) => (
-              <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} />
+              <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} openItem={openItem} />
             ))}
           </Accordion.Root>
         </GridLayout.Content>
