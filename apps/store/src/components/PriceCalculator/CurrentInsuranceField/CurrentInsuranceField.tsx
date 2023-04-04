@@ -17,8 +17,8 @@ import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
-import { PERSONAL_NUMBER_FIELD_NAME } from '@/services/priceIntent/priceIntent.constants'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 const INSURELY_IS_ENABLED = Flags.getFeature('INSURELY')
@@ -40,6 +40,7 @@ type State =
 export const CurrentInsuranceField = (props: Props) => {
   const { label, productName, priceIntentId, insurelyClientId, externalInsurer } = props
   const { t } = useTranslation('purchase-form')
+  const { shopSession } = useShopSession()
   const [state, setState] = useState<State>({ type: 'IDLE' })
 
   const compare = useCallback(
@@ -62,8 +63,8 @@ export const CurrentInsuranceField = (props: Props) => {
     priceIntentId,
     onCompleted(updatedPriceIntent) {
       const externalInsurer = updatedPriceIntent.externalInsurer
-      const personalNumber = updatedPriceIntent.data[PERSONAL_NUMBER_FIELD_NAME]
-      if (externalInsurer && typeof personalNumber === 'string') {
+      const personalNumber = shopSession?.customer?.ssn
+      if (externalInsurer && personalNumber) {
         compare(externalInsurer)
         insurelyPrefillInput({ company: externalInsurer.insurelyId ?? undefined, personalNumber })
       } else {
@@ -146,7 +147,7 @@ export const CurrentInsuranceField = (props: Props) => {
         onCompanyChange={handleCompanyChange}
       />
       {isDialogOpen && (
-        <Dialog.Root open onOpenChange={close}>
+        <Dialog.Root open={true} onOpenChange={close}>
           <StyledDialogContent>
             {state.type === 'COMPARE' ? (
               <DialogIframeWindow>
