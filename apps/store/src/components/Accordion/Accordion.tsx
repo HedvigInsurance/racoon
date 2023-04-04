@@ -82,14 +82,14 @@ const CloseIcon = styled(MinusIcon)({
   '[data-state=open] &': { display: 'block' },
 })
 
-type ContentProps = AccordionPrimitives.AccordionContentProps & { opened: boolean }
+type ContentProps = AccordionPrimitives.AccordionContentProps & { open: boolean }
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  ({ children, opened, ...props }, forwardedRef) => {
+  ({ children, open, ...props }, forwardedRef) => {
     return (
       <StyledContent {...props} ref={forwardedRef} forceMount>
         <motion.div
-          initial={opened ? 'opened' : 'closed'}
+          initial={open ? 'opened' : 'closed'}
           transition={{
             ease: [0.65, 0.05, 0.36, 1],
             duration: 0.4,
@@ -102,7 +102,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               height: 0,
             },
           }}
-          animate={opened ? 'opened' : 'closed'}
+          animate={open ? 'opened' : 'closed'}
         >
           {children}
         </motion.div>

@@ -19,7 +19,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const AccordionBlock = ({ blok, nested }: Props) => {
-  const [openedItem, setOpenedItem] = useState<string>()
+  const [openItem, setOpenItem] = useState<string>()
 
   const accordionItems = filterByBlockType(blok.items, AccordionItemBlock.blockName)
   const enableFAQStructuredData = blok.isFAQ ?? false
@@ -27,7 +27,7 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
   const isCentered = blok.centerLayout || !displayTitleDescriptionSection
 
   const handleValueChange = useCallback((value: string) => {
-    setOpenedItem(value)
+    setOpenItem(value)
   }, [])
 
   let content: React.ReactNode = null
@@ -38,11 +38,11 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
         <StyledAccordionRoot
           type="single"
           collapsible
-          value={openedItem}
+          value={openItem}
           onValueChange={handleValueChange}
         >
           {accordionItems.map((nestedBlock) => (
-            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} openedItem={openedItem} />
+            <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} openItem={openItem} />
           ))}
         </StyledAccordionRoot>
       </>
@@ -59,15 +59,11 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
           <Accordion.Root
             type="single"
             collapsible
-            value={openedItem}
+            value={openItem}
             onValueChange={handleValueChange}
           >
             {accordionItems.map((nestedBlock) => (
-              <AccordionItemBlock
-                key={nestedBlock._uid}
-                blok={nestedBlock}
-                openedItem={openedItem}
-              />
+              <AccordionItemBlock key={nestedBlock._uid} blok={nestedBlock} openItem={openItem} />
             ))}
           </Accordion.Root>
         </GridLayout.Content>

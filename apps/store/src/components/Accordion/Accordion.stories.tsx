@@ -66,7 +66,7 @@ const Template: StoryFn<typeof Accordion.Root> = () => {
       {ACCORDION_ITEMS.map((item) => (
         <Accordion.Item key={item.value} value={item.value}>
           <Accordion.HeaderWithTrigger>{item.title}</Accordion.HeaderWithTrigger>
-          <Accordion.Content opened={openedItem === item.value}>{item.content}</Accordion.Content>
+          <Accordion.Content open={openedItem === item.value}>{item.content}</Accordion.Content>
         </Accordion.Item>
       ))}
     </Accordion.Root>

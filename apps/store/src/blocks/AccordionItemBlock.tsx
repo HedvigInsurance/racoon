@@ -9,9 +9,9 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 export type AccordionItemBlockProps = SbBaseBlockProps<{
   title: string
   body: ISbRichtext
-}> & { openedItem?: string }
+}> & { openItem?: string }
 
-export const AccordionItemBlock = ({ blok, openedItem }: AccordionItemBlockProps) => {
+export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) => {
   const defaultId = useId()
   const contentHtml = renderRichText(blok.body)
   const value = blok._uid || defaultId
@@ -21,7 +21,7 @@ export const AccordionItemBlock = ({ blok, openedItem }: AccordionItemBlockProps
       <Accordion.HeaderWithTrigger>
         <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
-      <Accordion.Content opened={openedItem === value}>
+      <Accordion.Content open={openItem === value}>
         <ContentWrapper>
           <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
         </ContentWrapper>
