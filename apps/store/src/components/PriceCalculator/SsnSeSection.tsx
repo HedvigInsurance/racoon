@@ -93,7 +93,7 @@ const ChangeSsnWarning = ({ onCompleted }: Props) => {
   return (
     <FullscreenDialog.Root open={true} onOpenChange={onCompleted}>
       <FullscreenDialog.Modal
-        center
+        center={true}
         Footer={
           <>
             <ResetSessionButton />

@@ -148,31 +148,22 @@ export const BankIdDialog = () => {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal Footer={footer}>
-        <ContentWrapper>
-          <AnimatePresence>
-            <motion.div
-              key={animationState}
-              initial={ANIMATE_INITIAL}
-              animate={ANIMATE_ANIMATE}
-              exit={ANIMATE_EXIT}
-              transition={ANIMATE_TRANSITION}
-            >
-              {content}
-            </motion.div>
-          </AnimatePresence>
-        </ContentWrapper>
+      <FullscreenDialog.Modal Footer={footer} center={true}>
+        <AnimatePresence>
+          <motion.div
+            key={animationState}
+            initial={ANIMATE_INITIAL}
+            animate={ANIMATE_ANIMATE}
+            exit={ANIMATE_EXIT}
+            transition={ANIMATE_TRANSITION}
+          >
+            {content}
+          </motion.div>
+        </AnimatePresence>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
 }
-
-const ContentWrapper = styled.div({
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-})
 
 const IconWithText = styled(Text)({
   gap: theme.space.xs,
