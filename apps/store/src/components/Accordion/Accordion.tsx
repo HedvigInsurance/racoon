@@ -1,6 +1,6 @@
-import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
+import { motion } from 'framer-motion'
 import { forwardRef, PropsWithChildren, ReactElement } from 'react'
 import { MinusIcon, mq, PlusIcon, theme } from 'ui'
 
@@ -82,47 +82,39 @@ const CloseIcon = styled(MinusIcon)({
   '[data-state=open] &': { display: 'block' },
 })
 
-const slideDown = keyframes({
-  from: {
-    height: 0,
-  },
-  to: {
-    // custom property reference: https://www.radix-ui.com/docs/primitives/components/accordion
-    height: 'var(--radix-accordion-content-height)',
-  },
-})
-const slideUp = keyframes({
-  from: {
-    height: 'var(--radix-accordion-content-height)',
-  },
-  to: {
-    height: 0,
-  },
-})
+type ContentProps = AccordionPrimitives.AccordionContentProps & { opened: boolean }
 
-export const StyledContent = styled(AccordionPrimitives.Content)({
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  ({ children, opened, ...props }, forwardedRef) => {
+    return (
+      <StyledContent {...props} ref={forwardedRef} forceMount>
+        <motion.div
+          initial={opened ? 'opened' : 'closed'}
+          transition={{
+            ease: [0.65, 0.05, 0.36, 1],
+            duration: 0.4,
+          }}
+          variants={{
+            opened: {
+              height: 'var(--radix-accordion-content-height)',
+            },
+            closed: {
+              height: 0,
+            },
+          }}
+          animate={opened ? 'opened' : 'closed'}
+        >
+          {children}
+        </motion.div>
+      </StyledContent>
+    )
+  },
+)
+Content.displayName = 'AccordionContent'
+
+const StyledContent = styled(AccordionPrimitives.Content)({
   fontSize: theme.fontSizes.md,
   color: theme.colors.textSecondary,
   lineHeight: 1.32,
   overflow: 'hidden',
-
-  '[data-state=open] &': {
-    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1) forwards`,
-  },
-  '[data-state=closed] &': {
-    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1) forwards`,
-  },
 })
-
-type ContentProps = React.ForwardRefExoticComponent<
-  AccordionPrimitives.AccordionContentProps & React.RefAttributes<HTMLDivElement>
->
-
-export const Content = forwardRef<ContentProps>(({ children, ...props }: any, forwardedRef) => {
-  return (
-    <StyledContent {...props} ref={forwardedRef} forceMount>
-      {children}
-    </StyledContent>
-  )
-})
-Content.displayName = 'AccordionContent'

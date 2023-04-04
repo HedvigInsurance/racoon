@@ -82,7 +82,7 @@ const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
             <TriggerText size="lg">{title}</TriggerText>
           </HeaderWrapper>
         </Accordion.HeaderWithTrigger>
-        <Accordion.Content>
+        <Accordion.Content opened={(openedItems ?? []).includes(title)}>
           <ContentWrapper>
             <Text as="p" size="xs" color="textPrimary">
               {description}

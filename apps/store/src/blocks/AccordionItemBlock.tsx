@@ -9,17 +9,19 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 export type AccordionItemBlockProps = SbBaseBlockProps<{
   title: string
   body: ISbRichtext
-}>
+}> & { openedItem?: string }
 
-export const AccordionItemBlock = ({ blok }: AccordionItemBlockProps) => {
+export const AccordionItemBlock = ({ blok, openedItem }: AccordionItemBlockProps) => {
   const defaultId = useId()
   const contentHtml = renderRichText(blok.body)
+  const value = blok._uid || defaultId
+
   return (
-    <Accordion.Item value={blok._uid || defaultId} {...storyblokEditable(blok)}>
+    <Accordion.Item value={value} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>
         <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
-      <Accordion.Content>
+      <Accordion.Content opened={openedItem === value}>
         <ContentWrapper>
           <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
         </ContentWrapper>
