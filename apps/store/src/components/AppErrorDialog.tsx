@@ -18,7 +18,7 @@ export const AppErrorDialog = () => {
   return (
     <FullscreenDialog.Root open={!!lastError} onOpenChange={handleOpenChange}>
       <FullscreenDialog.Modal
-        center
+        center={true}
         Footer={
           <>
             <FullscreenDialog.Close asChild>

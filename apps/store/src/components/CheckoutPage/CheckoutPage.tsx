@@ -208,7 +208,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
       <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
         <FullscreenDialog.Modal
-          center
+          center={true}
           Footer={
             <FullscreenDialog.Close asChild>
               <Button type="button" variant="primary">

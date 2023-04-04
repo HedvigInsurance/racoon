@@ -28,13 +28,13 @@ export const RemoveEntryDialog = ({ children, title, ...mutationParams }: Props)
       {children}
 
       <FullscreenDialog.Modal
-        center
+        center={true}
         Footer={
           <>
             <Button form={formId} type="submit" loading={loading} disabled={loading}>
               {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}
             </Button>
-            <FullscreenDialog.Close asChild>
+            <FullscreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost">
                 {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
               </Button>

@@ -96,7 +96,7 @@ export const PurchaseForm = () => {
                 onOpenChange={() => setFormState('IDLE')}
               >
                 <FullscreenDialog.Modal
-                  center
+                  center={true}
                   Footer={
                     <>
                       <Button type="button" onClick={editForm}>
