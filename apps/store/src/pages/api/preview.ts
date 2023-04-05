@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
 import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   // Check the secret and next parameters
@@ -19,18 +20,22 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   res.setPreviewData({ version })
+
   // Set SameSite=None, so cookie can be read in the Storyblok iframe
-  const cookies = res.getHeader('Set-Cookie') ?? []
-  if (typeof cookies === 'object') {
-    res.setHeader(
-      'Set-Cookie',
-      cookies.map((cookie) => cookie.replace('SameSite=Lax', 'SameSite=None;Secure')),
-    )
+  const previous = res.getHeader('Set-Cookie')
+  if (Array.isArray(previous)) {
+    previous.forEach((cookie, index) => {
+      previous[index] = cookie.replace('SameSite=Lax', 'SameSite=None;Secure')
+    })
+    res.setHeader('Set-Cookie', previous)
   }
+
+  const url = new URL(req.url ?? '', ORIGIN_URL)
+  url.searchParams.delete('secret')
 
   const targetUrl = `/${story.full_slug}`
   console.debug(`Previewing ${targetUrl}`)
-  res.redirect(targetUrl)
+  res.redirect(`${targetUrl}?${url.searchParams.toString()}`)
 }
 
 const getPreviewParams = (
