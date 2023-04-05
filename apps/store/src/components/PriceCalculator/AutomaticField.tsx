@@ -150,7 +150,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           label={translateLabel(field.label)}
           productName={productData.name}
           priceIntentId={priceIntent.id}
-          insurelyClientId={productData.insurelyClientId ?? undefined}
+          insurelyConfigName={priceIntent.insurelyConfigName ?? undefined}
           externalInsurer={priceIntent.externalInsurer?.id}
         />
       )

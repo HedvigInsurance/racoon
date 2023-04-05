@@ -34,17 +34,6 @@ type MerchantCallbackFunction = (data: MerchantCallbackData) => void
 type MerchantCallbackData = { accountId: string }
 type TrustlyOptions = { locale: string }
 
-type InsurelyPrefilledInput = {
-  company: string
-  SWEDISH_PERSONAL_NUMBER: string
-}
-type InsurelyClientParams = {
-  fontType?: 'main' | 'secondary'
-  hideResultsView?: boolean
-  language?: 'en' | 'no' | 'sv' | 'da'
-  prefilledInput?: Partial<InsurelyPrefilledInput>
-}
-
 declare global {
   interface Window {
     TrustlyWidget: {
@@ -52,13 +41,35 @@ declare global {
     }
     dataLayer: DataLayerObject[]
 
-    // Insurely
-    setClientParams?: (params: InsurelyClientParams) => void
-
     // Customer First (C1)
     customerFirstAPI?: {
       openWidget(): void
       closeWidget(): void
     }
+
+    // Insurely
+    insurely?: {
+      config?: InsurelyConfig
+      prefill?: InsurelyPrefill
+    }
+  }
+}
+
+type InsurelyConfig = {
+  customerId?: string
+  configName?: string
+  showCloseButton?: boolean
+  language?: 'en' | 'no' | 'sv' | 'da'
+  dataAggregation?: {
+    hideResultsView?: boolean
+  }
+}
+
+type InsurelyPrefill = {
+  user?: {
+    swedishPersonalNumber?: string
+  }
+  dataAggregation?: {
+    company?: string
   }
 }
