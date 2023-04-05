@@ -64,19 +64,19 @@ type NestedNavContainerBlockProps = SbBaseBlockProps<{
 }>
 
 export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) => {
-  const router = useRouter()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
 
-  const handleClickTrigger = () => {
-    const firstNavItem = filteredNavItems[0]
-    if (firstNavItem) {
-      router.push(getLinkFieldURL(firstNavItem.link, firstNavItem.name))
-    }
+  if (filteredNavItems.length === 0) {
+    return null
   }
+
+  const firstNavItem = filteredNavItems[0]
 
   return (
     <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
-      <NavigationTrigger onClick={handleClickTrigger}>{blok.name}</NavigationTrigger>
+      <NavigationTrigger href={getLinkFieldURL(firstNavItem.link, firstNavItem.name)}>
+        {blok.name}
+      </NavigationTrigger>
       <NavigationMenuPrimitiveContent>
         <NavigationMenuListWrapper>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
@@ -113,7 +113,6 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
 type ProductNavItem = { name: string; url: string; image?: string; label?: string }
 
 export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
-  const router = useRouter()
   const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation()
   const productMetadata = useProductMetadata()
@@ -180,9 +179,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
         <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
           <Space y={{ base: 1.5, lg: 0 }}>
             <DesktopOnly>
-              <NavigationTrigger
-                onClick={() => router.push(PageLink.store({ locale: routingLocale }))}
-              >
+              <NavigationTrigger href={PageLink.store({ locale: routingLocale })}>
                 {blok.name}
               </NavigationTrigger>
             </DesktopOnly>

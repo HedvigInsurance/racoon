@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
+import Link, { LinkProps } from 'next/link'
 import { mq, theme } from 'ui'
 
 export const MENU_BAR_HEIGHT_MOBILE = '3rem'
@@ -30,7 +31,15 @@ export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)(
   [mq.lg]: { '&&': { borderBottom: 'unset' } },
 })
 
-export const NavigationTrigger = styled(NavigationMenuPrimitive.Trigger)({
+export const NavigationTrigger = (props: LinkProps & { children: string }) => {
+  return (
+    <NavigationMenuPrimitive.Trigger asChild>
+      <NavigationTriggerLink {...props} />
+    </NavigationMenuPrimitive.Trigger>
+  )
+}
+
+const NavigationTriggerLink = styled(Link)({
   paddingBlock: theme.space.lg,
   display: 'flex',
   alignItems: 'center',
