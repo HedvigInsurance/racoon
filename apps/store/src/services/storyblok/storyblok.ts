@@ -251,7 +251,7 @@ export const initStoryblok = () => {
   // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
   let shouldUseBridge = false
   if (isBrowser()) {
-    shouldUseBridge = window.location.toString() !== window.parent.location.toString()
+    shouldUseBridge = new URLSearchParams(window.location.search).has('_storyblok')
     if (shouldUseBridge) {
       console.log('Using Storyblok editor bridge')
     }
