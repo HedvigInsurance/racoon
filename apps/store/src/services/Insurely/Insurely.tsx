@@ -2,10 +2,10 @@
 
 import styled from '@emotion/styled'
 import Script from 'next/script'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-const IFRAME_URL = 'https://dc.insurely.com/v2/'
+const IFRAME_URL = 'https://dc.insurely.com/v2/select-authentication'
 const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.com/v2/assets/js/dc-bootstrap.js'
 const PREFILL_STORE: Array<Record<string, string>> = []
 
@@ -65,11 +65,16 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     })
   }
 
+  const iFrameSrc = useMemo(() => {
+    const queryParams = new URLSearchParams({ clientId })
+    return `${IFRAME_URL}?${queryParams.toString()}`
+  }, [clientId])
+
   return (
     <>
       <StyledIframe
         title="Insurely"
-        src={`${IFRAME_URL}?clientId=${clientId}`}
+        src={iFrameSrc}
         sandbox="allow-scripts
     allow-same-origin
     allow-popups
