@@ -65,15 +65,6 @@ export const PageLink = {
     return url
   },
 
-  deductibleHelp: ({ locale }: Required<BaseParams>) => {
-    const url = DEDUCTIBLE_HELP_URL[locale]
-    if (!url) {
-      datadogLogs.logger.error('Missing deductible info link for locale', { locale })
-      return PageLink.home({ locale })
-    }
-    return url
-  },
-
   apiSessionReset: () => '/api/session/reset',
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
   apiCampaignAdd: ({ code, next }: CampaignAddRoute) => {
@@ -85,9 +76,4 @@ export const PageLink = {
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
   se: '/se/hjalp/kundservice',
   'en-se': '/se-en/help/customer-service',
-}
-
-const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
-  se: '/se/hjalp/sjalvrisk',
-  'en-se': '/se-en/help/deductible',
 }
