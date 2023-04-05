@@ -49,7 +49,7 @@ const MockedNavItems = () => {
   return (
     <>
       <NavigationMenuPrimitiveItem value="Insurances">
-        <NavigationTrigger name="Insurances">Insurances</NavigationTrigger>
+        <NavigationTrigger href="#">Insurances</NavigationTrigger>
         <NavigationMenuPrimitiveContent>
           <NavigationMenuPrimitive.Sub defaultValue="Insurances">
             <ProductNavigationList>
