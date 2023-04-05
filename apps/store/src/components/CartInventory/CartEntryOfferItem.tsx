@@ -62,7 +62,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
       <Layout.Content>
         <Text color="textSecondary">
           {/* TODO: move this text to the api so it can be used with other offer types */}
-          <Balancer>{t('ACCIDENT_OFFER_CONTENT')}</Balancer>
+          <Balancer>{t('ACCIDENT_OFFER_DESCRIPTION')}</Balancer>
         </Text>
       </Layout.Content>
 
