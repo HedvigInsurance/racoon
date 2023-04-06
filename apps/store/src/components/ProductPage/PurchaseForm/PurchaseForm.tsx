@@ -85,12 +85,33 @@ export const PurchaseForm = () => {
         if (formState !== 'IDLE') {
           return (
             <>
-              <EditingState
-                shopSession={shopSession}
-                priceIntent={priceIntent}
-                onToggleDialog={() => setFormState('IDLE')}
-                onComplete={handleComplete}
-              />
+              {formState !== 'ERROR' && !isLarge ? (
+                <PriceCalculatorDialog
+                  isOpen
+                  toggleDialog={() => setFormState('IDLE')}
+                  header={
+                    <SpaceFlex direction="vertical" align="center" space={0.5}>
+                      <Pillow size="large" {...productData.pillowImage} />
+                      <Heading as="h2" variant="standard.18">
+                        {productData.displayNameShort}
+                      </Heading>
+                    </SpaceFlex>
+                  }
+                >
+                  <EditingState
+                    shopSession={shopSession}
+                    priceIntent={priceIntent}
+                    onComplete={handleComplete}
+                  />
+                </PriceCalculatorDialog>
+              ) : (
+                <EditingState
+                  shopSession={shopSession}
+                  priceIntent={priceIntent}
+                  onComplete={handleComplete}
+                />
+              )}
+
               <FullscreenDialog.Root
                 open={formState === 'ERROR'}
                 onOpenChange={() => setFormState('IDLE')}
@@ -260,14 +281,11 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 type EditingStateProps = {
   shopSession: ShopSession
   priceIntent: PriceIntent
-  onToggleDialog: (open: boolean) => void
   onComplete: (success: boolean) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { onToggleDialog, shopSession, priceIntent, onComplete } = props
-  const { productData } = useProductPageContext()
-  const isLarge = useBreakpoint('lg')
+  const { shopSession, priceIntent, onComplete } = props
   const tracking = useTracking()
 
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -302,7 +320,7 @@ const EditingState = (props: EditingStateProps) => {
     }
   }
 
-  const content = isLoadingPrice ? (
+  return isLoadingPrice ? (
     <PriceLoaderWrapper>
       <PriceLoader />
     </PriceLoaderWrapper>
@@ -315,25 +333,6 @@ const EditingState = (props: EditingStateProps) => {
         onConfirm={handleConfirm}
       />
     </PriceCalculatorWrapper>
-  )
-
-  if (isLarge) return content
-
-  return (
-    <PriceCalculatorDialog
-      isOpen
-      toggleDialog={onToggleDialog}
-      header={
-        <SpaceFlex direction="vertical" align="center" space={0.5}>
-          <Pillow size="large" {...productData.pillowImage} />
-          <Heading as="h2" variant="standard.18">
-            {productData.displayNameShort}
-          </Heading>
-        </SpaceFlex>
-      }
-    >
-      {content}
-    </PriceCalculatorDialog>
   )
 }
 
