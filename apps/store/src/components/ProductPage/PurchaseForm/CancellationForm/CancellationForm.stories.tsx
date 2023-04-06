@@ -63,6 +63,7 @@ export const BankSignering: StoryFn<typeof CancellationForm> = (props) => {
         type: ExternalInsuranceCancellationOption.Banksignering,
         companyName: 'Folksam',
         requested,
+        invalidRenewalDate: null,
       }}
     />
   )
@@ -74,8 +75,10 @@ export const BankSigneringInvalidStartDate: StoryFn<typeof CancellationForm> = (
     <CancellationForm
       {...props}
       option={{
-        type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate,
+        type: ExternalInsuranceCancellationOption.Banksignering,
         companyName: 'Trygg Hansa',
+        requested: false,
+        invalidRenewalDate: new Date(),
       }}
     />
   )

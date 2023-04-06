@@ -289,9 +289,14 @@ type GetCancellationOptionParams = {
 
 const getCancellationOption = (params: GetCancellationOptionParams): CancellationOption => {
   const {
-    productOffer: { cancellation },
+    productOffer: { cancellation, startDate },
     priceIntent: { externalInsurer },
   } = params
+
+  const offerStartDate = convertToDate(startDate)
+  const hasInvalidRenewalDate =
+    cancellation.option === ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+  const invalidRenewalDate = offerStartDate && hasInvalidRenewalDate ? offerStartDate : null
 
   switch (cancellation.option) {
     case ExternalInsuranceCancellationOption.Iex:
@@ -302,16 +307,12 @@ const getCancellationOption = (params: GetCancellationOptionParams): Cancellatio
       }
 
     case ExternalInsuranceCancellationOption.Banksignering:
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
       return {
         type: ExternalInsuranceCancellationOption.Banksignering,
         companyName: externalInsurer?.displayName ?? 'Unknown',
         requested: cancellation.requested,
-      }
-
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
-      return {
-        type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate,
-        companyName: externalInsurer?.displayName ?? 'Unknown',
+        invalidRenewalDate,
       }
 
     default:
