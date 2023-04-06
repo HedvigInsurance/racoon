@@ -113,6 +113,8 @@ const frameSrc = [
   'https://www.googletagmanager.com',
   'https://tpc.googlesyndication.com',
   'https://*.googleapis.com',
+  'https://checkout.test.trustly.com',
+  'https://checkout.trustly.com',
 
   // GTM-injected scripts
   'https://*.snapchat.com',

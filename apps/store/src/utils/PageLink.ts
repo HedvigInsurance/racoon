@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
-import { AuthStatus } from '@/components/CheckoutPaymentPage/CheckoutPaymentPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
 export const ORIGIN_URL =
@@ -11,13 +10,14 @@ export const ORIGIN_URL =
 
 type BaseParams = { locale?: RoutingLocale }
 
-type CheckoutPaymentPage = BaseParams & { shopSessionId: string; authStatus?: AuthStatus }
+type CheckoutPaymentPage = BaseParams & { shopSessionId: string }
 type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
 type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
 type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
+type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
@@ -38,15 +38,15 @@ export const PageLink = {
     const expandCartQueryParam = expandCart ? `?${QueryParam.ExpandCart}=1` : ''
     return `${localePrefix(locale)}/checkout${expandCartQueryParam}`
   },
-  checkoutPayment: ({ locale, authStatus, shopSessionId }: CheckoutPaymentPage) => {
-    const authStatusQueryParam = authStatus ? `authStatus=${authStatus}` : null
-    const queryString = authStatusQueryParam ? `?${authStatusQueryParam}` : ''
-    return `${localePrefix(locale)}/checkout/${shopSessionId}/payment${queryString}`
+  checkoutPayment: ({ locale, shopSessionId }: CheckoutPaymentPage) => {
+    return `${localePrefix(locale)}/checkout/${shopSessionId}/payment`
   },
   checkoutSwitchingAssistant: ({ locale, shopSessionId }: CheckoutPaymentPage) =>
     `${localePrefix(locale)}/checkout/${shopSessionId}/switching-assistant`,
   checkoutPaymentRedirectBase: ({ locale, shopSessionId }: CheckoutPaymentRedirectBasePage) =>
     `${ORIGIN_URL}/${locale}/checkout/${shopSessionId}/payment`,
+  checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) =>
+    `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
