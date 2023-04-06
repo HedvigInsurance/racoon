@@ -1,12 +1,15 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import { useMemo } from 'react'
 import { Text } from 'ui'
 import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { Money, ProductOfferFragment } from '@/services/apollo/generated'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Deductible = {
@@ -24,6 +27,7 @@ type Props = {
 
 export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const { routingLocale } = useCurrentLocale()
   const formatter = useFormatter()
 
   const deductibleLevels = useMemo(() => {
@@ -70,6 +74,17 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
             />
           ))}
         </TierLevelRadioGroup.Root>
+        <TierSelector.Footer>
+          <Link
+            href={PageLink.deductibleHelp({ locale: routingLocale })}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Text as="span" size="xs">
+              {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
+            </Text>
+          </Link>
+        </TierSelector.Footer>
       </TierSelector.Content>
     </TierSelector.Root>
   )
