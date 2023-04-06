@@ -62,7 +62,7 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
               </ButtonNextLink>
 
               <ButtonNextLink
-                href={PageLink.checkout()}
+                href={PageLink.checkout({ expandCart: true })}
                 variant="ghost"
                 onClick={handleClickLink('Secondary')}
               >

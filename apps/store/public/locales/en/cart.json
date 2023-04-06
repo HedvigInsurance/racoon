@@ -1,6 +1,6 @@
 {
-  "ACCIDENT_OFFER_CONTENT": "Extend your protection with an accident insurance. Covers accidents, dental injuries, scars and much more. The insurance applies without a deductible.",
-  "QUICK_ADD_BUTTON": "Add coverage",
+  "ACCIDENT_OFFER_DESCRIPTION": "Extend your protection with an accident insurance. Covers accidents, dental injuries, scars and much more. The insurance applies without a deductible.",
+  "ADD_TO_CART_BUTTON_LABEL": "Add to cart",
   "BACK_BUTTON": "Back",
   "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
   "CART_EMPTY_SUMMARY": "Your cart is empty",
@@ -41,6 +41,7 @@
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_one": "{{percentage}}% discount for {{count}} month",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_other": "{{percentage}}% discount for {{count}} months",
   "GO_TO_STORE_BUTTON": "Browse our insurances",
+  "QUICK_ADD_BUTTON": "Add coverage",
   "RECOMMENDATIONS_HEADING": "Others also bought",
   "REMOVE_ENTRY_BUTTON": "Remove",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
