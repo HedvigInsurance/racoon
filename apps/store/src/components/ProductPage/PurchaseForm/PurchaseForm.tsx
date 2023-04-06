@@ -37,6 +37,7 @@ type FormState = 'IDLE' | 'EDIT' | 'ERROR'
 export const PurchaseForm = () => {
   const { t } = useTranslation('purchase-form')
   const [formState, setFormState] = useState<FormState>('IDLE')
+  const [error, setError] = useState('')
   const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const formatter = useFormatter()
@@ -63,6 +64,7 @@ export const PurchaseForm = () => {
       sendDialogEvent('open')
     }
   }
+
   const handleOpen = () => {
     tracking.reportOpenPriceCalculator({
       id: productData.id,
@@ -77,12 +79,25 @@ export const PurchaseForm = () => {
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
+  const handleError = (error: string) => {
+    setError(error)
+  }
+
   return (
     <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
       {(notifyProductAdded) => {
         if (!shopSession || !priceIntent) return <PendingState />
 
         if (formState !== 'IDLE') {
+          const editingStateForm = (
+            <EditingState
+              shopSession={shopSession}
+              priceIntent={priceIntent}
+              onComplete={handleComplete}
+              onError={handleError}
+            />
+          )
+
           return (
             <>
               {formState !== 'ERROR' && !isLarge ? (
@@ -98,23 +113,18 @@ export const PurchaseForm = () => {
                     </SpaceFlex>
                   }
                 >
-                  <EditingState
-                    shopSession={shopSession}
-                    priceIntent={priceIntent}
-                    onComplete={handleComplete}
-                  />
+                  {editingStateForm}
                 </PriceCalculatorDialog>
               ) : (
-                <EditingState
-                  shopSession={shopSession}
-                  priceIntent={priceIntent}
-                  onComplete={handleComplete}
-                />
+                editingStateForm
               )}
 
               <FullscreenDialog.Root
                 open={formState === 'ERROR'}
-                onOpenChange={() => setFormState('IDLE')}
+                onOpenChange={() => {
+                  setFormState('IDLE')
+                  setError('')
+                }}
               >
                 <FullscreenDialog.Modal
                   center={true}
@@ -132,7 +142,7 @@ export const PurchaseForm = () => {
                   }
                 >
                   <Text size={{ _: 'lg', lg: 'xl' }} align="center">
-                    {t('GENERAL_ERROR_DIALOG_PROMPT')}
+                    {error ? error : t('GENERAL_ERROR_DIALOG_PROMPT')}
                   </Text>
                 </FullscreenDialog.Modal>
               </FullscreenDialog.Root>
@@ -282,10 +292,11 @@ type EditingStateProps = {
   shopSession: ShopSession
   priceIntent: PriceIntent
   onComplete: (success: boolean) => void
+  onError: (error: string) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { shopSession, priceIntent, onComplete } = props
+  const { shopSession, priceIntent, onComplete, onError } = props
   const tracking = useTracking()
 
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -295,6 +306,7 @@ const EditingState = (props: EditingStateProps) => {
         error,
         priceIntentId: priceIntent.id,
       })
+      onError(error.message)
       onComplete(false)
     },
   })
