@@ -30,14 +30,12 @@ import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
+import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
-
-type FormState = 'IDLE' | 'EDIT' | 'ERROR'
 
 export const PurchaseForm = () => {
   const { t } = useTranslation('purchase-form')
-  const [formState, setFormState] = useState<FormState>('IDLE')
-  const [error, setError] = useState('')
+  const [formState, setFormState] = usePurchaseFormState()
   const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const formatter = useFormatter()
@@ -73,34 +71,29 @@ export const PurchaseForm = () => {
     editForm()
   }
 
-  const handleComplete = (success: boolean) => {
-    setFormState(success ? 'IDLE' : 'ERROR')
+  const handleComplete = (error?: string) => {
+    setFormState(error != null ? { state: 'ERROR', errorMsg: error } : 'IDLE')
     // @ts-expect-error - "instant" behavior is not documented/typed but we still want to use it to avoid scroll animations behind the form
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
-  const handleError = (error: string) => {
-    setError(error)
-  }
-
   return (
-    <Layout pillowSize={formState === 'EDIT' ? 'small' : 'large'}>
+    <Layout pillowSize={formState.state === 'EDIT' ? 'small' : 'large'}>
       {(notifyProductAdded) => {
         if (!shopSession || !priceIntent) return <PendingState />
 
-        if (formState !== 'IDLE') {
+        if (formState.state !== 'IDLE') {
           const editingStateForm = (
             <EditingState
               shopSession={shopSession}
               priceIntent={priceIntent}
               onComplete={handleComplete}
-              onError={handleError}
             />
           )
 
           return (
             <>
-              {formState !== 'ERROR' && !isLarge ? (
+              {formState.state !== 'ERROR' && !isLarge ? (
                 <PriceCalculatorDialog
                   isOpen
                   toggleDialog={() => setFormState('IDLE')}
@@ -120,10 +113,9 @@ export const PurchaseForm = () => {
               )}
 
               <FullscreenDialog.Root
-                open={formState === 'ERROR'}
+                open={formState.state === 'ERROR'}
                 onOpenChange={() => {
                   setFormState('IDLE')
-                  setError('')
                 }}
               >
                 <FullscreenDialog.Modal
@@ -142,7 +134,9 @@ export const PurchaseForm = () => {
                   }
                 >
                   <Text size={{ _: 'lg', lg: 'xl' }} align="center">
-                    {error ? error : t('GENERAL_ERROR_DIALOG_PROMPT')}
+                    {formState.state === 'ERROR' && formState.errorMsg
+                      ? formState.errorMsg
+                      : t('GENERAL_ERROR_DIALOG_PROMPT')}
                   </Text>
                 </FullscreenDialog.Modal>
               </FullscreenDialog.Root>
@@ -291,12 +285,11 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 type EditingStateProps = {
   shopSession: ShopSession
   priceIntent: PriceIntent
-  onComplete: (success: boolean) => void
-  onError: (error: string) => void
+  onComplete: (error?: string) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { shopSession, priceIntent, onComplete, onError } = props
+  const { shopSession, priceIntent, onComplete } = props
   const tracking = useTracking()
 
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -306,8 +299,7 @@ const EditingState = (props: EditingStateProps) => {
         error,
         priceIntentId: priceIntent.id,
       })
-      onError(error.message)
-      onComplete(false)
+      onComplete(error.message)
     },
   })
   const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
@@ -322,7 +314,7 @@ const EditingState = (props: EditingStateProps) => {
         tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
-        onComplete(true)
+        onComplete()
       } else {
         setIsLoadingPrice(false)
       }
