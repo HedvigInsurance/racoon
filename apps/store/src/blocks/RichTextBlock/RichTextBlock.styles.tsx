@@ -26,19 +26,13 @@ export const GlobalLinkStyles = () => {
 
 export const linkStyles = css({
   a: {
-    position: 'relative',
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      bottom: -2,
-      left: 0,
-      width: '100%',
-      height: 2,
-      backgroundColor: theme.colors.borderOpaque2,
-    },
+    textDecorationLine: 'underline',
+    textDecorationColor: theme.colors.borderOpaque2,
+    textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
+    textUnderlineOffset: 5,
 
-    '&:hover::after': {
-      backgroundColor: 'var(--random-hover-color)',
+    '&:hover': {
+      textDecorationColor: 'var(--random-hover-color)',
     },
   },
 })
