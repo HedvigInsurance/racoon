@@ -40,7 +40,7 @@
     "apollo-link-timeout": "4.0.0",
     "clone-deep": "4.0.1",
     "cookies-next": "2.1.1",
-    "downshift": "7.4.1",
+    "downshift": "7.6.0",
     "framer-motion": "10.6.0",
     "graphql": "16.6.0",
     "i18next": "22.4.14",
