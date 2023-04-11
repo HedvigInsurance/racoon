@@ -16,10 +16,7 @@ export type CancellationOption =
       type: ExternalInsuranceCancellationOption.Banksignering
       companyName: string
       requested: boolean
-    }
-  | {
-      type: ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-      companyName: string
+      invalidRenewalDate: Date | null
     }
 
 type Props = {
@@ -42,12 +39,8 @@ export const CancellationForm = ({ option, ...props }: Props) => {
           {...props}
           companyName={option.companyName}
           requested={option.requested}
+          invalidRenewalDate={option.invalidRenewalDate}
         />
-      )
-
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
-      return (
-        <BankSigneringInvalidStartDateCancellation {...props} companyName={option.companyName} />
       )
 
     case ExternalInsuranceCancellationOption.None:
@@ -97,61 +90,43 @@ type BankSigneringCancellationProps = Pick<
 > & {
   companyName: string
   requested: boolean
+  invalidRenewalDate: Date | null
 }
 
 const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
-  const { onAutoSwitchChange, companyName, requested, onStartDateChange, startDate } = props
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
 
-  const formattedCompanyName = formatter.titleCase(companyName)
-  const date = startDate ?? undefined
+  const formattedCompanyName = formatter.titleCase(props.companyName)
+  const date = props.startDate ?? undefined
 
   const handleCheckedChange = (newValue: boolean) => {
-    onAutoSwitchChange?.(newValue)
+    props.onAutoSwitchChange?.(newValue)
   }
 
   const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
 
+  if (props.invalidRenewalDate) {
+    return (
+      <Space y={0.25}>
+        <SmartDateInput label={startDateLabel} date={date} onChange={props.onStartDateChange} />
+        <SelfSwitcherBubble date={props.invalidRenewalDate} />
+      </Space>
+    )
+  }
+
   return (
     <Space y={0.25}>
-      {requested ? (
-        <SmartDateInput label={startDateLabel} date={date} onChange={onStartDateChange} />
+      <AutoSwitchInput
+        value={props.requested}
+        onCheckedChange={handleCheckedChange}
+        companyName={props.companyName}
+      />
+      {props.requested ? (
+        <SmartDateInput label={startDateLabel} date={date} onChange={props.onStartDateChange} />
       ) : (
         <SmartDateInput date={date} onChange={props.onStartDateChange} />
       )}
-      <AutoSwitchInput
-        value={requested}
-        onCheckedChange={handleCheckedChange}
-        companyName={companyName}
-      />
-    </Space>
-  )
-}
-
-type BankSigneringInvalidStartDateProps = Pick<Props, 'onStartDateChange' | 'startDate'> & {
-  companyName: string
-}
-
-const BankSigneringInvalidStartDateCancellation = (props: BankSigneringInvalidStartDateProps) => {
-  const { onStartDateChange, startDate, companyName } = props
-  const { t } = useTranslation('purchase-form')
-  const formatter = useFormatter()
-
-  const date = startDate ?? undefined
-
-  const formattedCompanyName = formatter.titleCase(companyName)
-
-  const handleChange = (date: Date) => {
-    onStartDateChange?.(date)
-  }
-
-  const startDateLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
-
-  return (
-    <Space y={0.25}>
-      <SmartDateInput label={startDateLabel} date={date} onChange={handleChange} />
-      {startDate && <SelfSwitcherBubble date={startDate} />}
     </Space>
   )
 }
