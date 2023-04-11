@@ -1,4 +1,4 @@
-//robots.txt for hedvig.com
+# robots.txt for hedvig.com
 
 User-agent: *
 Disallow: /cart
