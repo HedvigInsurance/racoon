@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { Space, Text, theme, mq } from 'ui'
+import { CustomerFirstScript, useCustomerFirst } from '@/services/CustomerFirst'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { ContactCard, IconOptions } from './ContactCard'
-import { IntercomChatButton } from './IntercomChatButton'
 
 export type ContactSupportProps = {
   chatTitle: string
@@ -20,33 +20,39 @@ export const ContactSupport = ({
   phoneOpeningHours,
   phoneLink,
 }: ContactSupportProps) => {
+  const { show } = useCustomerFirst()
+
   return (
-    <Main>
-      <Space y={1.5}>
-        <CardWrapper>
-          <IntercomChatButton>
-            <ContactCard icon={IconOptions.Message}>
-              <Text size={{ _: 'sm', md: 'md' }}>{chatTitle}</Text>
-              {chatOpeningHours && (
-                <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
-                  {chatOpeningHours}
-                </Text>
-              )}
-            </ContactCard>
-          </IntercomChatButton>
-          <PhoneLink href={getLinkFieldURL(phoneLink)}>
-            <ContactCard icon={IconOptions.NumberPad}>
-              <Text size={{ _: 'sm', md: 'md' }}>{phoneTitle}</Text>
-              {phoneOpeningHours && (
-                <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
-                  {phoneOpeningHours}
-                </Text>
-              )}
-            </ContactCard>
-          </PhoneLink>
-        </CardWrapper>
-      </Space>
-    </Main>
+    <>
+      <Main>
+        <Space y={1.5}>
+          <CardWrapper>
+            <ChatButton onClick={show}>
+              <ContactCard icon={IconOptions.Message}>
+                <Text size={{ _: 'sm', md: 'md' }}>{chatTitle}</Text>
+                {chatOpeningHours && (
+                  <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
+                    {chatOpeningHours}
+                  </Text>
+                )}
+              </ContactCard>
+            </ChatButton>
+            <PhoneLink href={getLinkFieldURL(phoneLink)}>
+              <ContactCard icon={IconOptions.NumberPad}>
+                <Text size={{ _: 'sm', md: 'md' }}>{phoneTitle}</Text>
+                {phoneOpeningHours && (
+                  <Text size={{ _: 'sm', md: 'md' }} color="textSecondary">
+                    {phoneOpeningHours}
+                  </Text>
+                )}
+              </ContactCard>
+            </PhoneLink>
+          </CardWrapper>
+        </Space>
+      </Main>
+
+      <CustomerFirstScript />
+    </>
   )
 }
 
@@ -69,3 +75,5 @@ const CardWrapper = styled.div({
 })
 
 const PhoneLink = styled.a({})
+
+const ChatButton = styled.button({ cursor: 'pointer' })

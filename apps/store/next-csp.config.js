@@ -18,14 +18,13 @@ const gtmInjectedOrigins = [
 const scriptSrc = [
   // Storyblok
   'https://app.storyblok.com',
-  // Intercom
-  'https://widget.intercom.io',
-  'https://js.intercomcdn.com',
   // Google
   'https://*.googletagmanager.com',
   'https://*.google-analytics.com',
   'https://translate.googleapis.com',
   'https://tpc.googlesyndication.com',
+  // C1 - Customer First
+  'https://c1.hedvig.com',
 
   // GTM injected scripts
   ...gtmInjectedOrigins,
@@ -47,7 +46,6 @@ const styleSrc = [
   "'self'",
 ]
 const fontSrc = [
-  'https://fonts.intercomcdn.com',
   // GTM preview mode
   'https://fonts.gstatic.com',
   // Vercel
@@ -57,9 +55,6 @@ const fontSrc = [
 const imgSrc = [
   'https://promise.hedvig.com',
   'https://*.storyblok.com',
-  // Intercom
-  'https://downloads.intercomcdn.com',
-  'https://static.intercomassets.com',
   // Google
   'https://*.gstatic.com', // www + fonts
   'https://www.googletagmanager.com',
@@ -80,7 +75,6 @@ const mediaSrc = [
   'https://dc.insurely.com',
   'https://vercel.live',
   'https://a.storyblok.com',
-  'https://js.intercomcdn.com',
   "'self'",
 ]
 const connectSrc = [
@@ -88,9 +82,6 @@ const connectSrc = [
   'https://sgtm.hedvig.com',
   // Our logging
   'https://*.browser-intake-datadoghq.eu',
-  // Intercom
-  'https://api-iam.intercom.io',
-  'wss://*.intercom.io',
   // Vercel preview comments
   'https://*.pusher.com/',
   'wss://*.pusher.com',
@@ -116,6 +107,9 @@ const frameSrc = [
   'https://*.googleapis.com',
   'https://checkout.test.trustly.com',
   'https://checkout.trustly.com',
+
+  // C1 - Customer First
+  'https://c1.hedvig.com',
 
   // GTM-injected scripts
   'https://*.snapchat.com',
