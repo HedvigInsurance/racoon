@@ -2,6 +2,9 @@ schema: ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
 documents: './src/graphql/*.graphql'
 generates:
   ./src/services/apollo/generated.ts:
+    config:
+      scalars:
+        UUID: string
     plugins:
       - typescript
       - typescript-operations
