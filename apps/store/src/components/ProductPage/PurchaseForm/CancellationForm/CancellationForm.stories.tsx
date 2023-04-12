@@ -68,19 +68,29 @@ export const BankSignering: StoryFn<typeof CancellationForm> = (props) => {
     />
   )
 }
-BankSignering.args = { startDate: new Date() }
 
-export const BankSigneringInvalidStartDate: StoryFn<typeof CancellationForm> = (props) => {
+const today = new Date()
+// One month from today
+const startDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())
+BankSignering.args = { startDate }
+
+export const BankSigneringInvalidDate: StoryFn<typeof CancellationForm> = (props) => {
+  const [requested, setRequested] = useState(true)
+
   return (
     <CancellationForm
       {...props}
+      onAutoSwitchChange={(newValue) => {
+        setRequested(newValue)
+        props.onAutoSwitchChange?.(newValue)
+      }}
       option={{
         type: ExternalInsuranceCancellationOption.Banksignering,
         companyName: 'Trygg Hansa',
-        requested: false,
+        requested,
         invalidRenewalDate: new Date(),
       }}
     />
   )
 }
-BankSigneringInvalidStartDate.args = { startDate: new Date() }
+BankSigneringInvalidDate.args = { startDate: new Date() }
