@@ -1,6 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { SyntheticEvent, useCallback } from 'react'
-import { CartEntryAddMutation, useCartEntryAddMutation } from '@/services/apollo/generated'
+import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
+import {
+  CartEntryAddMutation,
+  useCartEntryAddMutation,
+  ProductRecommendationsDocument,
+} from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { FormElement } from './PurchaseForm.constants'
@@ -12,9 +17,13 @@ type Params = {
 }
 
 export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
+  // ProductRecommendationsQuery needs to be an active query
+  // before we can "re"fetch it after adding a new product into
+  // the cart
+  useProductRecommendations()
+
   const [addEntry, { loading }] = useCartEntryAdd({
-    // Refetch recommendations
-    refetchQueries: 'active',
+    refetchQueries: [ProductRecommendationsDocument],
     awaitRefetchQueries: true,
   })
 
