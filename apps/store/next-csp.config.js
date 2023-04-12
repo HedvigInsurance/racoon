@@ -12,6 +12,7 @@ const gtmInjectedOrigins = [
   'https://*.google.se',
   'https://*.googleadservices.com',
   'https://*.google-analytics.com',
+  'https://ion.hedvig.com',
 ]
 
 const scriptSrc = [

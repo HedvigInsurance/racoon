@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
+import md5 from 'md5'
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
   AppTrackingContext,
@@ -10,6 +11,7 @@ import {
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { newSiteAbTest } from '../../newSiteAbTest'
+import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
 
@@ -33,6 +35,7 @@ type ItemListSource = 'store' | 'recommendations'
 
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
+  Adtraction = 'adtraction',
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
   ExperimentImpression = 'experiment_impression',
@@ -176,6 +179,26 @@ export class Tracking {
     pushToGTMDataLayer({ event, ...eventData })
   }
 
+  public reportAdtractionEvent(cart: CartFragmentFragment, context: TrackingContext) {
+    const event = TrackingEvent.Adtraction
+    const customer = context.customer as ShopSession['customer']
+    // We currently only support 1 campaign code
+    const campaignCode = cart.redeemedCampaigns[0]?.code
+    const email = customer?.email
+    const productCategories = getAdtractionProductCategories(cart)
+    const eventData = {
+      adtraction: {
+        transactionId: cart.id,
+        transactionTotal: cart.cost.net.amount,
+        transactionProductCategories: productCategories,
+        ...(campaignCode && { transactionPromoCode: campaignCode }),
+        ...(email && { md5: md5(email) }),
+      },
+    }
+    this.logger.log(event, eventData)
+    pushToGTMDataLayer({ event, ...eventData })
+  }
+
   public reportViewItem(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
       offerToEcommerceEvent({
@@ -223,6 +246,7 @@ export class Tracking {
     this.reportEcommerceEvent(event)
     // Also report in web-onboarding format
     this.reportSignedCustomer(cart, memberId)
+    this.reportAdtractionEvent(cart, this.context)
   }
 
   // Google Analytics ecommerce events
