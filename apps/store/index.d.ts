@@ -54,5 +54,11 @@ declare global {
 
     // Insurely
     setClientParams?: (params: InsurelyClientParams) => void
+
+    // Customer First (C1)
+    customerFirstAPI?: {
+      openWidget(): void
+      closeWidget(): void
+    }
   }
 }

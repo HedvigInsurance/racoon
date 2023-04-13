@@ -17565,16 +17565,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use-intercom@npm:4.1.0":
-  version: 4.1.0
-  resolution: "react-use-intercom@npm:4.1.0"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: dc2b21e9ba95bcafc25eaf478b11000f390a277078c8514f6a2d890ea7081d3c44ba5305e2dff24ee5fc9b66a7fd46eebccc077b248ccfa5a334d0c7a1a97e34
-  languageName: node
-  linkType: hard
-
 "react-wrap-balancer@npm:0.4.0":
   version: 0.4.0
   resolution: "react-wrap-balancer@npm:0.4.0"
@@ -18925,7 +18915,6 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 12.2.0
-    react-use-intercom: 4.1.0
     react-wrap-balancer: 0.4.0
     storybook: 7.0.2
     subscriptions-transport-ws: 0.11.0
