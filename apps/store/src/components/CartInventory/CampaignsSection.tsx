@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import * as Collapsible from '@radix-ui/react-collapsible'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
-import { Button, CrossIconSmall, Text, theme } from 'ui'
+import { FormEventHandler, useState } from 'react'
+import { Button, CrossIconSmall, Heading, Space, Text, theme } from 'ui'
+import { Switch } from '@/components/Switch'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
 import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
@@ -34,27 +36,37 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
     }
   }
 
-  if (campaigns.length === 0) {
-    return (
-      <form onSubmit={handleSubmitCampaign}>
-        <DiscountFormWrapper>
-          <UppercaseTextField
-            name={FORM_CAMPAIGN_CODE}
-            label={t('CAMPAIGN_CODE_INPUT_LABEL')}
-            variant="small"
-            warning={!!errorMessage}
-            message={errorMessage}
-            required={true}
-          />
-          <Button variant="primary-alt" loading={loadingRedeem}>
-            {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
-          </Button>
-        </DiscountFormWrapper>
-      </form>
-    )
+  const [open, setOpen] = useState(campaigns.length > 0)
+
+  const handleOpenChange = async (open: boolean) => {
+    setOpen(open)
+    if (!open) {
+      const activeCampaign = campaigns[0] as CartCampaign | undefined
+      if (activeCampaign) {
+        unredeemCampaign(activeCampaign.id)
+      }
+    }
   }
 
-  return (
+  const form = (
+    <form onSubmit={handleSubmitCampaign}>
+      <DiscountFormWrapper>
+        <UppercaseTextField
+          name={FORM_CAMPAIGN_CODE}
+          label={t('CAMPAIGN_CODE_INPUT_LABEL')}
+          variant="small"
+          warning={!!errorMessage}
+          message={errorMessage}
+          required={true}
+        />
+        <Button variant="primary-alt" loading={loadingRedeem}>
+          {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
+        </Button>
+      </DiscountFormWrapper>
+    </form>
+  )
+
+  const campaignList = (
     <ul>
       {campaigns.map((item) => (
         <li key={item.id}>
@@ -73,6 +85,26 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
         </li>
       ))}
     </ul>
+  )
+
+  const content = campaigns.length === 0 ? form : campaignList
+
+  return (
+    <Collapsible.Root open={open} onOpenChange={handleOpenChange}>
+      <Space y={1}>
+        <SpaceBetween>
+          <Heading as="h3" variant="standard.18">
+            {t('CAMPAIGN_CODE_HEADING')}
+          </Heading>
+
+          <Collapsible.Trigger asChild>
+            <Switch checked={open} />
+          </Collapsible.Trigger>
+        </SpaceBetween>
+
+        <Collapsible.Content>{content}</Collapsible.Content>
+      </Space>
+    </Collapsible.Root>
   )
 }
 
