@@ -5,7 +5,7 @@ import { ChangeEventHandler } from 'react'
 import { ChevronIcon, InputBase, InputBaseProps, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-type InputSelectProps = InputBaseProps & {
+export type InputSelectProps = InputBaseProps & {
   name: string
   options: ReadonlyArray<{ name: string; value: string }>
   value?: string
