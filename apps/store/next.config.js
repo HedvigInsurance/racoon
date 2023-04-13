@@ -45,6 +45,26 @@ module.exports = withBundleAnalyzer({
         has: [{ type: 'query', key: 'code', value: '(?<code>.*)' }],
         destination: '/forever/:code',
       },
+      {
+        source: '/se/blogg',
+        destination: 'https://www.hedvig.com/se/blogg',
+        locale: false,
+      },
+      {
+        source: '/se/blogg/:slug',
+        destination: 'https://www.hedvig.com/se/blogg/:slug',
+        locale: false,
+      },
+      {
+        source: '/en-se/blog',
+        destination: 'https://www.hedvig.com/se-en/blog',
+        locale: false,
+      },
+      {
+        source: '/dk',
+        destination: 'https://www.hedvig.com/dk',
+        locale: false,
+      },
     ]
   },
 })
