@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import { useRouter } from 'next/router'
 import {
   createContext,
   PropsWithChildren,
@@ -12,6 +13,10 @@ import {
 import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import {
+  getAttributedToQueryParam,
+  removeAttributedToQueryParam,
+} from '@/services/Tracking/attributedTo'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'
@@ -51,9 +56,11 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     [apolloClient],
   )
 
-  const [shopSessionId, setShopSessionId] = useState(
-    shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId,
-  )
+  const [shopSessionId, setShopSessionId] = useState(() => {
+    // Ignore any old session and force creation of new one with attributedTo from URL
+    if (getAttributedToQueryParam()) return undefined
+    return shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId
+  })
 
   const queryResult = useShopSessionQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
@@ -82,15 +89,23 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     })
   }, [countryCode, shopSessionServiceClientSide])
 
+  const router = useRouter()
+
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
     if (isBrowser()) {
-      shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
-        setShopSessionId(shopSession.id)
-        callbacksRef.current?.forEach((callback) => callback(shopSession))
-      })
+      const attributedTo = getAttributedToQueryParam()
+      shopSessionServiceClientSide
+        .getOrCreate({ countryCode, attributedTo })
+        .then((shopSession) => {
+          setShopSessionId(shopSession.id)
+          if (attributedTo) {
+            removeAttributedToQueryParam(router)
+          }
+          callbacksRef.current?.forEach((callback) => callback(shopSession))
+        })
     }
-  }, [shopSessionServiceClientSide, countryCode])
+  }, [shopSessionServiceClientSide, countryCode, router])
 
   // TODO: Move country check elsewhere, make sure we do full reload (GRW-1985)
   // Ignore session from different country.
