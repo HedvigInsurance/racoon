@@ -4,7 +4,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 export const useProductRecommendations = () => {
   const { shopSession } = useShopSession()
 
-  const shopSessionId = typeof shopSession?.id === 'string' ? shopSession.id : undefined
+  const shopSessionId = shopSession?.id
   const result = useProductRecommendationsQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
