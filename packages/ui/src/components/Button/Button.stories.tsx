@@ -21,6 +21,9 @@ const Template: StoryFn<typeof Button> = (props) => {
           <Button {...props} variant="secondary" />
         </div>
         <div>
+          <Button {...props} variant="secondary-alt" />
+        </div>
+        <div>
           <Button {...props} variant="ghost" />
         </div>
       </Space>
@@ -36,6 +39,9 @@ const Template: StoryFn<typeof Button> = (props) => {
           <Button {...props} variant="secondary" disabled />
         </div>
         <div>
+          <Button {...props} variant="secondary-alt" disabled />
+        </div>
+        <div>
           <Button {...props} variant="ghost" disabled />
         </div>
       </Space>
@@ -49,6 +55,9 @@ const Template: StoryFn<typeof Button> = (props) => {
         </div>
         <div>
           <Button {...props} variant="secondary" loading />
+        </div>
+        <div>
+          <Button {...props} variant="secondary-alt" loading />
         </div>
         <div>
           <Button {...props} variant="ghost" loading />
