@@ -12,7 +12,7 @@ type LinkProps = {
 }
 
 export type CustomButtonProps = {
-  variant?: 'primary' | 'primary-alt' | 'secondary' | 'ghost'
+  variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
   size?: ButtonSize
   loading?: boolean
 } & LinkProps
@@ -46,6 +46,8 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
       return <PrimaryAltButton {...buttonProps} />
     case 'secondary':
       return <SecondaryButton {...buttonProps} />
+    case 'secondary-alt':
+      return <SecondaryAltButton {...buttonProps} />
     case 'ghost':
       return <GhostButton {...buttonProps} />
   }
@@ -166,6 +168,20 @@ const SecondaryButton = styled(StyledButton)(
   },
   shadow,
 )
+
+const SecondaryAltButton = styled(SecondaryButton)({
+  backgroundColor: theme.colors.backgroundStandard,
+
+  '@media (hover: hover)': {
+    ':hover': {
+      backgroundColor: theme.colors.translucent1,
+    },
+  },
+
+  ':active': {
+    backgroundColor: theme.colors.translucent1,
+  },
+})
 
 const GhostButton = styled(StyledButton)({
   backgroundColor: 'transparent',
