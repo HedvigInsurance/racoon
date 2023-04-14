@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useCallback, type FormEventHandler, useMemo } from 'react'
+import { useMemo, type FormEventHandler } from 'react'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
@@ -28,7 +28,7 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
 export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
-  const { shopSession } = useShopSession()
+  const { shopSession, reset: resetShopSession } = useShopSession()
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
   const { data, loading: loadingProductMetadata } = useProductMetadataQuery()
 
@@ -50,65 +50,65 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
     return result
   }, [blok.products, availableProducts])
 
-  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-    async (event) => {
-      event.preventDefault()
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault()
 
-      try {
-        setIsSubmitting(true)
+    try {
+      setIsSubmitting(true)
 
-        const shopSessionId = shopSession?.id
-        if (shopSessionId == null) {
-          throw new Error('[QuickPurchaseBlock]: could not found shop session id')
-        }
+      const formData = new FormData(event.currentTarget)
+      const formState = Object.fromEntries(formData.entries())
+      const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
 
-        const formData = new FormData(event.currentTarget)
-        const formState = Object.fromEntries(formData.entries())
-        const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
-
-        if (typeof ssn !== 'string' || typeof productName !== 'string') {
-          throw new Error('[QuickPurchaseBlock]: ssn and product are required')
-        }
-
-        const { errors } = await updateCustomer({
-          variables: {
-            input: {
-              shopSessionId,
-              ssn,
-            },
-          },
-        })
-
-        if (errors) {
-          throw new Error(`[QuickPurchaseBlock]: Failed while updating customer - ${errors}`)
-        }
-
-        const link = productOptions.find((product) => product.value === productName)?.pageLink
-        if (link == null) {
-          throw new Error(
-            `[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`,
-          )
-        }
-
-        const searchParams = new URLSearchParams(window.location.search)
-        searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-        router.push({
-          pathname: link,
-          search: searchParams.toString(),
-        })
-      } catch (error) {
-        setIsSubmitting(false)
-        datadogLogs.logger.error((error as Error).message)
+      if (typeof ssn !== 'string' || typeof productName !== 'string') {
+        throw new Error('[QuickPurchaseBlock]: ssn and product are required')
       }
-    },
-    [shopSession?.id, updateCustomer, productOptions, router],
-  )
+
+      if (shopSession?.customer?.ssn && shopSession.customer.ssn !== ssn) {
+        await resetShopSession()
+      }
+
+      const shopSessionId = shopSession?.id
+      if (shopSessionId == null) {
+        throw new Error('[QuickPurchaseBlock]: could not found shop session id')
+      }
+
+      const { errors } = await updateCustomer({
+        variables: {
+          input: {
+            shopSessionId,
+            ssn,
+          },
+        },
+      })
+
+      if (errors) {
+        throw new Error(`[QuickPurchaseBlock]: Failed while updating customer - ${errors}`)
+      }
+
+      const link = productOptions.find((product) => product.value === productName)?.pageLink
+      if (link == null) {
+        throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
+      }
+
+      const searchParams = new URLSearchParams(window.location.search)
+      searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+      router.push({
+        pathname: link,
+        search: searchParams.toString(),
+      })
+    } catch (error) {
+      setIsSubmitting(false)
+      datadogLogs.logger.error((error as Error).message)
+    }
+  }
 
   return (
     <QuickPurchaseForm
       productOptions={productOptions}
       onSubmit={handleSubmit}
       loading={loadingProductMetadata || isSubmitting}
+      ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
     />
   )
 }
