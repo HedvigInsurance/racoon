@@ -12,9 +12,15 @@ type Props = {
   productOptions: InputSelectProps['options']
   onSubmit?: FormEventHandler<HTMLFormElement>
   loading?: boolean
+  ssnDefaultValue?: string
 }
 
-export const QuickPurchaseForm = ({ productOptions, onSubmit, loading }: Props) => {
+export const QuickPurchaseForm = ({
+  productOptions,
+  onSubmit,
+  loading,
+  ssnDefaultValue = '',
+}: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
@@ -27,6 +33,7 @@ export const QuickPurchaseForm = ({ productOptions, onSubmit, loading }: Props) 
               name={SSN_FIELDNAME}
               required={true}
               disabled={loading}
+              defaultValue={ssnDefaultValue}
             />
             <InputSelect
               name={PRODUCT_FIELDNAME}
@@ -46,8 +53,7 @@ export const QuickPurchaseForm = ({ productOptions, onSubmit, loading }: Props) 
 }
 
 const Wrapper = styled.article({
-  width: 'min(25rem, 100%)',
   padding: theme.space.sm,
   borderRadius: theme.radius.xs,
-  boxShadow: '2px 4px 8px hsl(0deg 0% 0% / 0.25)',
+  border: `1px solid ${theme.colors.gray300}`,
 })
