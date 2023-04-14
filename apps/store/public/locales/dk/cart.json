@@ -11,6 +11,7 @@
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabat",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_one": "{{percentage}}% rabat i {{count}} måned",
   "DISCOUNT_STATE_MONTHLY_PERCENTAGE_other": "{{percentage}}% rabat i {{count}} måneder",
+  "DOCUMENTS": "Dokumenter",
   "REMOVE_ENTRY_BUTTON": "Fjern",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Annuller",
   "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Ja",
