@@ -3,5 +3,8 @@
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer",
   "CONTACT_DETAILS_FORM_TITLE": "Din kontaktinformasjon",
-  "FORM_EMAIL_LABEL": "E-post"
+  "FORM_EMAIL_LABEL": "E-post",
+  "PAYMENT_TRUSTLY_FOOTNOTE": "",
+  "PAYMENT_TRUSTLY_MESSAGE": "",
+  "PAYMENT_TRUSTLY_SUCCESS_MESSAGE": ""
 }
