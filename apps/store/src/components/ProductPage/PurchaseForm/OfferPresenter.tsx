@@ -132,12 +132,14 @@ export const OfferPresenter = (props: Props) => {
     const tierList: Array<ProductOfferFragment> = []
     const usedTiers = new Set<string>()
     for (const offer of sortedOffers) {
-      if (usedTiers.has(offer.variant.typeOfContract)) continue
-      usedTiers.add(offer.variant.typeOfContract)
-      tierList.push(offer)
+      const typeOfContract = offer.variant.typeOfContract
+      if (usedTiers.has(typeOfContract)) continue
+
+      usedTiers.add(typeOfContract)
+      tierList.push(typeOfContract === selectedOffer.variant.typeOfContract ? selectedOffer : offer)
     }
     return tierList
-  }, [sortedOffers])
+  }, [sortedOffers, selectedOffer])
 
   const selectedTier = useMemo(() => {
     const tier = tiers.find(
