@@ -29,9 +29,13 @@ const SwitchWrapper = styled(RadixSwitch.Root)({
     borderColor: theme.colors.gray1000,
   },
 
-  '&[data-state=checked]': {
+  '&[data-state=checked], &[data-state=open]': {
     backgroundColor: theme.colors.greenElement,
-    justifyContent: 'flex-end',
+  },
+
+  '&[disabled]': {
+    backgroundColor: theme.colors.opaque3,
+    cursor: 'not-allowed',
   },
 })
 
@@ -40,4 +44,12 @@ const SwitchHandle = styled(RadixSwitch.Thumb)({
   height: '1rem',
   borderRadius: '100%',
   backgroundColor: theme.colors.textNegative,
+
+  transition: 'transform 100ms',
+  transform: 'translateX(0)',
+  willChange: 'transform',
+
+  '&[data-state=checked]': {
+    transform: 'translateX(0.6rem)',
+  },
 })

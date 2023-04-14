@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useId } from 'react'
 import { Space, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { Switch, SwitchProps } from './Switch'
+import { Switch, SwitchProps } from '../Switch'
 
 type Props = SwitchProps & {
   label: string
