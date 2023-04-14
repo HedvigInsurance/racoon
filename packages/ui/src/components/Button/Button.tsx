@@ -22,12 +22,13 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { variant = 'primary', loading, children, ...baseProps } = props
 
-  const buttonChildren = loading ? (
-    <Centered>
-      <DotPulse />
-    </Centered>
-  ) : (
-    children
+  const buttonChildren = (
+    <>
+      <div style={{ opacity: loading ? 0 : 1 }}>{children}</div>
+      <Centered style={{ display: loading ? 'block' : 'none' }}>
+        <DotPulse />
+      </Centered>
+    </>
   )
 
   const buttonProps = {
@@ -55,7 +56,11 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
 Button.displayName = 'Button'
 
-const Centered = styled.div({ display: 'flex', justifyContent: 'center' })
+const Centered = styled.div({
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+})
 
 const StyledButton = styled.button<CustomButtonProps>(
   {
@@ -189,7 +194,7 @@ const GhostButton = styled(StyledButton)({
 
   '@media (hover: hover)': {
     '&:hover': {
-      backgroundColor: theme.colors.grayTranslucent100,
+      backgroundColor: theme.colors.translucent1,
     },
   },
 
