@@ -14,7 +14,7 @@ export const Root = styled(AccordionPrimitives.Root)({
   },
 })
 
-const Trigger = styled(AccordionPrimitives.Trigger)({
+export const Trigger = styled(AccordionPrimitives.Trigger)({
   width: '100%',
   cursor: 'pointer',
   display: 'flex',

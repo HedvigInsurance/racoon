@@ -28,7 +28,7 @@ export const ReadOnly: Story = {
     cartId: 'cart',
     offerId: '123',
     title: 'Accident insurance',
-    productName: 'Accident insurance',
+    productName: 'SE_ACCIDENT',
     cost: {
       amount: 129,
       currencyCode: CurrencyCode.Sek,
@@ -58,5 +58,11 @@ export const ReadOnly: Story = {
         url: 'https://promise.hedvig.com/se_arrtabell_olycksfall_66dbff4975.pdf',
       },
     ],
+    data: {
+      street: 'Kyrkängesvägen 3 D 1tr',
+      zipCode: '83798',
+      livingSpace: 70,
+      numberCoInsured: '2',
+    },
   },
 }
