@@ -42,6 +42,7 @@ import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBl
 import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillowsBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
+import { QuickPurchaseBlock } from '@/blocks/QuickPurchaseBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
 import { SelectInsuranceGridBlock } from '@/blocks/SelectInsuranceGridBlock'
@@ -241,6 +242,7 @@ export const initStoryblok = () => {
     CardLinkBlock,
     CardLinkListBlock,
     SelectInsuranceGridBlock,
+    QuickPurchaseBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
