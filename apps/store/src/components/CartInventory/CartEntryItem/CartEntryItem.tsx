@@ -5,9 +5,9 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CartFragmentFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import { CartEntry } from './CartInventory.types'
-import { DetailsSheetDialog } from './DetailsSheetDialog'
-import { RemoveEntryDialog } from './RemoveEntryDialog'
+import { CartEntry } from '../CartInventory.types'
+import { DetailsSheetDialog } from '../DetailsSheetDialog'
+import { RemoveEntryDialog } from '../RemoveEntryDialog'
 
 type Props = CartEntry & {
   cartId: string

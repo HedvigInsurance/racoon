@@ -3,7 +3,7 @@ import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { CampaignsSection } from './CampaignsSection'
-import { CartEntryItem } from './CartEntryItem'
+import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
 import {
   useGetDiscountDurationExplanation,
