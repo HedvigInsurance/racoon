@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { useMemo, type FormEventHandler } from 'react'
+import { useState, useMemo, type FormEventHandler } from 'react'
+import { theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
@@ -104,12 +105,20 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   }
 
   return (
-    <QuickPurchaseForm
-      productOptions={productOptions}
-      onSubmit={handleSubmit}
-      loading={loadingProductMetadata || isSubmitting}
-      ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
-    />
+    <Wrapper>
+      <QuickPurchaseForm
+        productOptions={productOptions}
+        onSubmit={handleSubmit}
+        loading={loadingProductMetadata || isSubmitting}
+        ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
+      />
+    </Wrapper>
   )
 }
 QuickPurchaseBlock.blockName = 'quickPurchase'
+
+const Wrapper = styled.div({
+  width: 'min(25rem, 100%)',
+  margin: '0 auto',
+  paddingInline: theme.space.md,
+})
