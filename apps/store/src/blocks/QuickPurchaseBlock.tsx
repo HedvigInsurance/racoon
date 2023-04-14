@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { useCallback, type FormEventHandler, useMemo } from 'react'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
@@ -25,10 +26,11 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
 }>
 
 export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
   const { shopSession } = useShopSession()
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
-  const { data } = useProductMetadataQuery()
+  const { data, loading: loadingProductMetadata } = useProductMetadataQuery()
 
   const availableProducts = useMemo(() => data?.availableProducts ?? [], [data?.availableProducts])
 
@@ -52,51 +54,62 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
     async (event) => {
       event.preventDefault()
 
-      const shopSessionId = shopSession?.id
-      if (shopSessionId == null) {
-        throw new Error('[QuickPurchaseBlock]: could not found shop session id')
-      }
+      try {
+        setIsSubmitting(true)
 
-      const formData = new FormData(event.currentTarget)
-      const formState = Object.fromEntries(formData.entries())
-      const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
+        const shopSessionId = shopSession?.id
+        if (shopSessionId == null) {
+          throw new Error('[QuickPurchaseBlock]: could not found shop session id')
+        }
 
-      if (typeof ssn !== 'string' || typeof productName !== 'string') {
-        return datadogLogs.logger.error('[QuickPurchaseBlock]: ssn and product are required')
-      }
+        const formData = new FormData(event.currentTarget)
+        const formState = Object.fromEntries(formData.entries())
+        const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
 
-      const { errors } = await updateCustomer({
-        variables: {
-          input: {
-            shopSessionId,
-            ssn,
+        if (typeof ssn !== 'string' || typeof productName !== 'string') {
+          throw new Error('[QuickPurchaseBlock]: ssn and product are required')
+        }
+
+        const { errors } = await updateCustomer({
+          variables: {
+            input: {
+              shopSessionId,
+              ssn,
+            },
           },
-        },
-      })
-
-      if (errors) {
-        return datadogLogs.logger.error('[QuickPurchaseBlock]: Failed while updating customer', {
-          errors,
         })
-      }
 
-      const link = productOptions.find((product) => product.value === productName)?.pageLink
-      if (link == null) {
-        return datadogLogs.logger.error(
-          `[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`,
-        )
-      }
+        if (errors) {
+          throw new Error(`[QuickPurchaseBlock]: Failed while updating customer - ${errors}`)
+        }
 
-      const searchParams = new URLSearchParams(window.location.search)
-      searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-      router.push({
-        pathname: link,
-        search: searchParams.toString(),
-      })
+        const link = productOptions.find((product) => product.value === productName)?.pageLink
+        if (link == null) {
+          throw new Error(
+            `[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`,
+          )
+        }
+
+        const searchParams = new URLSearchParams(window.location.search)
+        searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+        router.push({
+          pathname: link,
+          search: searchParams.toString(),
+        })
+      } catch (error) {
+        setIsSubmitting(false)
+        datadogLogs.logger.error((error as Error).message)
+      }
     },
     [shopSession?.id, updateCustomer, productOptions, router],
   )
 
-  return <QuickPurchaseForm productOptions={productOptions} onSubmit={handleSubmit} />
+  return (
+    <QuickPurchaseForm
+      productOptions={productOptions}
+      onSubmit={handleSubmit}
+      loading={loadingProductMetadata || isSubmitting}
+    />
+  )
 }
 QuickPurchaseBlock.blockName = 'quickPurchase'
