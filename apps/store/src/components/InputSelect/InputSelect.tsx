@@ -12,6 +12,7 @@ export type InputSelectProps = InputBaseProps & {
   defaultValue?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
   required?: boolean
+  disabled?: boolean
   placeholder?: string
   autoFocus?: boolean
   className?: string
@@ -106,7 +107,11 @@ const StyledSelect = styled(
     fontSize: theme.fontSizes.xl,
   }),
 
-  '&:invalid, [disabled]': {
+  '&:invalid, &:disabled': {
     color: theme.colors.textSecondary,
+  },
+
+  '&:disabled': {
+    cursor: 'not-allowed',
   },
 }))
