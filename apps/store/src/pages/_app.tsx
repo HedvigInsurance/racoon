@@ -17,6 +17,7 @@ import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
+import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -84,6 +85,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
         <GlobalLinkStyles />
+        <OneTrustStyles />
         <PageTransitionProgressBar />
         <JotaiProvider>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
