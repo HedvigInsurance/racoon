@@ -189,7 +189,8 @@ export class Tracking {
     const eventData = {
       adtraction: {
         transactionId: cart.id,
-        transactionTotal: cart.cost.net.amount,
+        // Our Adtraction program isn't based on order amount, total should be set to 0
+        transactionTotal: 0,
         transactionProductCategories: productCategories,
         ...(campaignCode && { transactionPromoCode: campaignCode }),
         ...(email && { md5: md5(email) }),
