@@ -1,8 +1,9 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, CrossIconSmall, Heading, Space, Text, theme } from 'ui'
+import { Button, CrossIconSmall, Heading, Text, theme } from 'ui'
 import { Switch } from '@/components/Switch'
 import { TextField } from '@/components/TextField/TextField'
 import { CartCampaign } from './CartInventory.types'
@@ -91,19 +92,20 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
 
   return (
     <Collapsible.Root open={open} onOpenChange={handleOpenChange}>
-      <Space y={1}>
-        <SpaceBetween>
-          <Heading as="h3" variant="standard.18">
-            {t('CAMPAIGN_CODE_HEADING')}
-          </Heading>
+      <SpaceBetween>
+        <Heading as="h3" variant="standard.18">
+          {t('CAMPAIGN_CODE_HEADING')}
+        </Heading>
 
-          <Collapsible.Trigger asChild>
-            <Switch checked={open} />
-          </Collapsible.Trigger>
-        </SpaceBetween>
+        <Collapsible.Trigger asChild>
+          <Switch checked={open} />
+        </Collapsible.Trigger>
+      </SpaceBetween>
 
-        <Collapsible.Content>{content}</Collapsible.Content>
-      </Space>
+      <CollapsibleContent>
+        <div style={{ height: theme.space.sm }} />
+        {content}
+      </CollapsibleContent>
     </Collapsible.Root>
   )
 }
@@ -142,5 +144,44 @@ const ChipButton = styled.button({
 
   ':disabled': {
     opacity: 0.6,
+  },
+})
+
+const slideDown = keyframes({
+  '0%': {
+    height: 0,
+    opacity: 0,
+  },
+  '50%': {
+    // custom property reference: https://www.radix-ui.com/docs/primitives/components/collapsible
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 1,
+  },
+})
+
+const slideUp = keyframes({
+  '0%': {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 1,
+  },
+  '50%': {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 0,
+  },
+  '100%': {
+    height: 0,
+    opacity: 0,
+  },
+})
+
+const CollapsibleContent = styled(Collapsible.Content)({
+  '[data-state=open] &': {
+    animation: `${slideDown} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
+  },
+  '[data-state=closed] &': {
+    animation: `${slideUp} 400ms cubic-bezier(0.65,0.05,0.36,1)`,
   },
 })
