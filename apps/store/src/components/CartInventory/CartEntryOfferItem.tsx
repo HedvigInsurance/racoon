@@ -1,10 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { SyntheticEvent } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Balancer from 'react-wrap-balancer'
-import { Button, theme, Text, Space } from 'ui'
+import { Button, theme, Text, Space, mq } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 // TODO: extract to a separate utility
 import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
@@ -23,6 +22,7 @@ type CartOfferItemProps = {
   offer: OfferRecommendationFragment
 }
 export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
+  const [show, setShow] = useState(true)
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
@@ -44,25 +44,35 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
     handleSubmitAddToCart(event)
   }
 
+  const handleClickHide = () => {
+    datadogRum.addAction('Hide offer', { priceIntentId: offer.id, product: product.id })
+    setShow(false)
+  }
+
+  if (!show) return null
+
   return (
-    <Layout.Main key={offer.id}>
+    <Layout.Main>
       <Layout.Pillow>
         <Pillow size="small" {...product.pillowImage} />
       </Layout.Pillow>
 
       <Layout.Title>
         <Text>{product.displayNameFull}</Text>
+        {/* TODO: move this logic outside the frontend */}
         <Text color="textSecondary">
-          {t('CART_ENTRY_DATE_LABEL', {
-            date: formatter.fromNow(new Date(offer.startDate)),
+          {t('QUICK_ADD_HOUSEHOLD_SIZE', {
+            count: (parseInt(offer.priceIntentData['numberCoInsured']) ?? 0) + 1,
           })}
         </Text>
       </Layout.Title>
 
+      <Layout.Separator />
+
       <Layout.Content>
         <Text color="textSecondary">
           {/* TODO: move this text to the api so it can be used with other offer types */}
-          <Balancer>{t('ACCIDENT_OFFER_DESCRIPTION')}</Balancer>
+          {t('ACCIDENT_OFFER_DESCRIPTION')}
         </Text>
       </Layout.Content>
 
@@ -75,15 +85,15 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
               </Button>
               <input type="hidden" name={FormElement.ProductOfferId} value={offer.id} />
             </form>
+
+            <GhostButton size="medium" variant="ghost" onClick={handleClickHide}>
+              {t('QUICK_ADD_DISMISS')}
+            </GhostButton>
           </SpaceFlex>
         </Space>
       </Layout.Actions>
 
-      <Layout.Price>
-        <PriceFlex>
-          <Text>{formatter.monthlyPrice(offer.price)}</Text>
-        </PriceFlex>
-      </Layout.Price>
+      <Layout.Price>{formatter.monthlyPrice(offer.price)}</Layout.Price>
     </Layout.Main>
   )
 }
@@ -91,40 +101,54 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
 const GRID_AREAS = {
   Pillow: 'pillow',
   Title: 'title',
+  Separator: 'separator',
   Price: 'price',
   Content: 'content',
   Actions: 'actions',
 } as const
 
 const Main = styled.li({
-  backgroundColor: theme.colors.blue100,
+  backgroundColor: theme.colors.blueFill1,
   padding: theme.space.md,
   borderRadius: theme.radius.md,
+  border: `1px solid ${theme.colors.blue200}`,
+
+  [mq.lg]: {
+    padding: theme.space.lg,
+  },
 
   display: 'grid',
-  columnGap: theme.space.sm,
-  rowGap: theme.space.md,
+  gap: theme.space.md,
   gridTemplateAreas: `
     "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
+    "${GRID_AREAS.Separator} ${GRID_AREAS.Separator} ${GRID_AREAS.Separator}"
     "${GRID_AREAS.Content} ${GRID_AREAS.Content} ${GRID_AREAS.Content}"
     "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
   `,
-  gridTemplateColumns: '3rem minmax(0, 1fr)',
+  gridTemplateColumns: 'auto minmax(0, 1fr)',
 })
 
 const Layout = {
   Main,
   Pillow: styled.div({ gridArea: GRID_AREAS.Pillow }),
   Title: styled.div({ gridArea: GRID_AREAS.Title }),
-  Price: styled.div({ gridArea: GRID_AREAS.Price }),
+  Separator: styled.div({
+    gridArea: GRID_AREAS.Separator,
+    borderBottom: `1px solid ${theme.colors.blue200}`,
+  }),
+  Price: styled(Text)({
+    gridArea: GRID_AREAS.Price,
+    display: 'flex',
+    alignItems: 'center',
+  }),
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
   Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
 } as const
 
-const PriceFlex = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  height: '100%',
-  paddingRight: theme.space.xs,
+const GhostButton = styled(Button)({
+  '@media (hover: hover)': {
+    '&:hover': {
+      backgroundColor: theme.colors.blue50,
+    },
+  },
 })
