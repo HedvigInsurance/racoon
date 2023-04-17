@@ -5,6 +5,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'next/core-web-vitals',
     // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
     'prettier',
@@ -51,6 +52,10 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+
+    // Breaks with emotion styles referring to other components
+    '@typescript-eslint/restrict-template-expressions': 'off',
+
     '@next/next/no-html-link-for-pages': 'off',
     // For Storybook stories
     'import/no-anonymous-default-export': 'off',

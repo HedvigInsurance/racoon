@@ -16380,6 +16380,7 @@ __metadata:
     cookies-next: 2.1.1
     cypress: 12.9.0
     dompurify: 3.0.2
+    eslint: 8.38.0
     eslint-config-custom: "workspace:"
     eslint-plugin-cypress: 2.13.2
     formidable: 2.1.1
@@ -19039,6 +19040,7 @@ __metadata:
     clone-deep: 4.0.1
     cookies-next: 2.1.1
     downshift: 7.6.0
+    eslint: 8.38.0
     eslint-config-custom: "workspace:"
     framer-motion: 10.12.2
     graphql: 16.6.0
@@ -20278,6 +20280,7 @@ __metadata:
     "@types/react-dom": 18.0.11
     babel-jest: 29.5.0
     babel-loader: 9.1.2
+    eslint: 8.38.0
     eslint-config-custom: "workspace:"
     jest: 29.5.0
     react: 18.2.0
