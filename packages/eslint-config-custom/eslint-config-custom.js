@@ -5,7 +5,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'next/core-web-vitals',
     // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
     'prettier',
@@ -48,14 +47,10 @@ module.exports = {
     ],
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
     '@typescript-eslint/no-unused-vars': 'error', // Also covers unused import
-    '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-
-    // Breaks with emotion styles referring to other components
-    '@typescript-eslint/restrict-template-expressions': 'off',
 
     '@next/next/no-html-link-for-pages': 'off',
     // For Storybook stories
@@ -79,6 +74,16 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+    {
+      files: ['**/*.{ts,tsx}'],
+      extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
+      rules: {
+        '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
+
+        // Breaks with emotion styles referring to other components
+        '@typescript-eslint/restrict-template-expressions': 'off',
       },
     },
   ],
