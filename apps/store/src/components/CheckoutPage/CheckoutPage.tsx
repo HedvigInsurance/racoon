@@ -138,7 +138,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Space y={2}>
                 {productRecommendationOffers && productRecommendationOffers.length > 0 && (
                   <CartEntryList>
-                    {productRecommendationOffers?.map(({ product, offer }) => {
+                    {productRecommendationOffers.map(({ product, offer }) => {
                       if (!offer) return null
                       return (
                         <CartEntryOfferItem

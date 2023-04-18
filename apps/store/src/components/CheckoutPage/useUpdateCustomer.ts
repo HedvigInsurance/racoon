@@ -22,7 +22,7 @@ export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
     },
   })
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = (formData: FormData) => {
     datadogLogs.logger.debug('Checkout | Submit contact details')
     const email = getOrThrowFormValue(formData, FormElement.Email)
     const firstName = formData.get(FormElement.FirstName) as string | null

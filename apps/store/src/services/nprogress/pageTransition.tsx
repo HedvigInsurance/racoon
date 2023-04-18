@@ -18,6 +18,7 @@ export const PageTransitionProgressBar = () => {
       setColor(getRandomColor())
       NProgress.start()
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const handleRouteChangeComplete = NProgress.done
 
     router.events.on('routeChangeStart', handleRouteStart)

@@ -8,7 +8,7 @@ type Params = {
 }
 
 // TODO: refactor
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/require-await
 export const createTrustlyUrl = async ({ apolloClient }: Params) => {
   return PLACEHOLDER_URL
 }

@@ -49,7 +49,7 @@ const usePriceIntentContextValue = () => {
         const matchingOffer = data.priceIntent.offers.find(
           (item) =>
             item.variant.typeOfContract === prev?.variant.typeOfContract &&
-            item.deductible?.displayName === prev?.deductible?.displayName,
+            item.deductible?.displayName === prev.deductible?.displayName,
         )
 
         if (matchingOffer) return matchingOffer

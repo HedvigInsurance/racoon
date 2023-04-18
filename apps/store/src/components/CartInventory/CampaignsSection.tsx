@@ -20,7 +20,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
   const { t } = useTranslation('cart')
 
   const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({ cartId })
-  const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const code = formData.get(FORM_CAMPAIGN_CODE)
@@ -39,7 +39,7 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
 
   const [open, setOpen] = useState(campaigns.length > 0)
 
-  const handleOpenChange = async (open: boolean) => {
+  const handleOpenChange = (open: boolean) => {
     setOpen(open)
     if (!open) {
       const activeCampaign = campaigns[0] as CartCampaign | undefined

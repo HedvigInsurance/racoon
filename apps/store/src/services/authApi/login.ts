@@ -33,7 +33,6 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
         }
       }
 
-      if (subscriber.closed) return
       pollTimeoutId = window.setTimeout(() => poll(statusUrl), POLL_INTERVAL)
     }
 

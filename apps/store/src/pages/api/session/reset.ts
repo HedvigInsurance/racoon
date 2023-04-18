@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
   const shopSessionId = shopSessionService.shopSessionId()
 
-  if (getAuthHeaders({ req, res })) {
+  if (getAuthHeaders({ req, res }).authorization) {
     console.debug('Resetting auth session')
     resetAuthTokens({ req, res })
   }

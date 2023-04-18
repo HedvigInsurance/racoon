@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { MD: md, PaRes: pares } = req.body
   const { locale, shopSessionId } = req.query

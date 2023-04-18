@@ -28,7 +28,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
   })
 
   const { showApolloError } = useAppErrorHandleContext()
-  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)

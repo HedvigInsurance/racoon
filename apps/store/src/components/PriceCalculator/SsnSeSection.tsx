@@ -46,7 +46,7 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
       const { shopSession } = data.shopSessionCustomerUpdate
       if (!shopSession) return
 
-      const { authenticationStatus } = shopSession?.customer ?? {}
+      const { authenticationStatus } = shopSession.customer ?? {}
       if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         showLoginPrompt({ onCompleted })
       } else {

@@ -19,8 +19,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   }
 }
 
-const NextCountrySelectorPage = (props: { className?: string }) => {
-  return <CountrySelectorPage className={props?.className} />
+const NextCountrySelectorPage = ({ className }: { className?: string }) => {
+  return <CountrySelectorPage className={className} />
 }
 
 export default NextCountrySelectorPage

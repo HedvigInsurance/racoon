@@ -115,7 +115,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       return (
         <InputSelect
           name={field.name}
-          label={field.label ? translateLabel(field.label) : undefined}
+          label={translateLabel(field.label)}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           options={field.options.map((option) => ({
