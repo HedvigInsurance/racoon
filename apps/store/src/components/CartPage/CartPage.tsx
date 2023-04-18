@@ -59,15 +59,13 @@ export const CartPage = (props: CartPageProps) => {
 
     body = (
       <Space y={{ base: 1, sm: 1.5 }}>
-        <Heading mb="2.5rem" as="h2" align="center">
-          {t('CART_PAGE_HEADING')}
+        <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
+          {t('CART_PAGE_HEADING')} ({entries.length})
         </Heading>
         <CartEntryList>
           {cartId &&
             entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
         </CartEntryList>
-
-        <HorizontalLine />
 
         {cartId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>

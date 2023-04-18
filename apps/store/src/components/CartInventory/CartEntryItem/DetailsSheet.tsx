@@ -11,7 +11,6 @@ export const DetailsSheet = (props: CartEntry) => {
   const { t } = useTranslation('cart')
   const dataTableRows = getDataTable(productName)
   const getDataTableValue = useGetDataTableValue()
-  console.log(props)
 
   return (
     <Root y={1}>
@@ -111,6 +110,7 @@ const Row = styled.div({
 })
 
 const DocumentLink = styled.a({
+  lineHeight: '1.6',
   '&:hover': {
     color: theme.colors.gray900,
   },
