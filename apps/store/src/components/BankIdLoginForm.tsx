@@ -15,17 +15,17 @@ export const BankIdLoginForm = ({ state, title, onLoginStart }: Props) => {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <BankIdButton
-        type="submit"
-        loading={state !== BankIdState.Idle && state !== BankIdState.Error}
-      >
-        <BankIdIcon color="white" />
-        {title}
-      </BankIdButton>
+      <Button type="submit" loading={state !== BankIdState.Idle && state !== BankIdState.Error}>
+        <ButtonContent>
+          <BankIdIcon color="white" />
+          {title}
+        </ButtonContent>
+      </Button>
     </form>
   )
 }
 
-const BankIdButton = styled(Button)({
+const ButtonContent = styled.span({
+  display: 'inline-flex',
   gap: theme.space.xs,
 })
