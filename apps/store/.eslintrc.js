@@ -2,9 +2,6 @@
 module.exports = {
   root: true,
   extends: ['custom'],
-  parserOptions: {
-    project: ['./tsconfig.json', '../../packages/*/tsconfig.json'],
-  },
   ignorePatterns: ['src/services/graphql/*'],
   rules: {
     // This allows us to use to autofocus attribute on input elements (or all elements, really)
@@ -13,7 +10,18 @@ module.exports = {
     // with auto-focus. Probably.
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-autofocus.md
     'jsx-a11y/no-autofocus': 'off',
-    // Causes eslint timeout on our code (src/blocks/HeaderBlock.tsx)
-    '@typescript-eslint/no-misused-promises': 'off',
   },
+  overrides: [
+    {
+      files: ['**/*.{ts,tsx}'],
+      parserOptions: {
+        project: ['./tsconfig.json', '../../packages/*/tsconfig.json'],
+        tsconfigRootDir: __dirname,
+      },
+      rules: {
+        // Causes eslint timeout on our code (src/blocks/HeaderBlock.tsx)
+        '@typescript-eslint/no-misused-promises': 'off',
+      },
+    },
+  ],
 }
