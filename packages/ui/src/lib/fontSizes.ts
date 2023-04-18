@@ -22,7 +22,7 @@ export const getFontSize = (sizes: FontSizeProps): CSSObject => {
       // Default
       styles.fontSize = fontSizes[sizeAtBreakpoint]
     } else {
-      styles[mq[breakpoint as Level]] = {
+      styles[mq[breakpoint]] = {
         fontSize: fontSizes[sizeAtBreakpoint],
       }
     }
