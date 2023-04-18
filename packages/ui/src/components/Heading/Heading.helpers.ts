@@ -116,7 +116,7 @@ export const getHeadingVariantStyles = (variant: HeadingVariant) => {
     } else {
       styles = {
         ...styles,
-        [mq[breakpoint as Level]]: {
+        [mq[breakpoint]]: {
           ...headings[variantAtBreakpoint],
         },
       }

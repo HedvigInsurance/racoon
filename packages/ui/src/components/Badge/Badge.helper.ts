@@ -26,7 +26,7 @@ export const getBadgeSize = (sizes: BadgeSizeProps): CSSObject => {
       const baseStyles = STYLES[sizeAtBreakpoint]
       styles = { ...baseStyles, ...styles }
     } else {
-      styles[mq[breakpoint as Level]] = {
+      styles[mq[breakpoint]] = {
         ...STYLES[sizeAtBreakpoint],
       }
     }
