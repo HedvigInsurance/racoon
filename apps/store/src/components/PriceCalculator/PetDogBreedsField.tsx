@@ -38,7 +38,6 @@ export const PetDogBreedsField = ({ field, loading }: Props) => {
         // Re-mount Combobox when 'breeds' becomes available,
         // otherwise it might happen the case where 'defaultSelectedItem'
         // doesn't get taken into account due the absence of 'breeds'
-        // const key = useMemo(() => JSON.stringify(breeds), [breeds])
         key={breeds.length}
         items={comboboxAvailableBreeds}
         defaultSelectedItem={comboboxDefaultSelectedBreed}
