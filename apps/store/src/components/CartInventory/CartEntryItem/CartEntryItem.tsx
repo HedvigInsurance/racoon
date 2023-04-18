@@ -11,11 +11,12 @@ import { DetailsSheet } from './DetailsSheet'
 
 type Props = CartEntry & {
   cartId: string
+  defaultOpen?: boolean
   readOnly?: boolean
   onRemove?: (cart: CartFragmentFragment) => void
 }
 
-export const CartEntryItem = (props: Props) => {
+export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { cartId, readOnly, onRemove, ...cartEntry } = props
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
@@ -37,7 +38,7 @@ export const CartEntryItem = (props: Props) => {
       </Layout.Title>
 
       <Layout.Details>
-        <CartEntryCollapsible price={formatter.monthlyPrice(cost)}>
+        <CartEntryCollapsible defaultOpen={defaultOpen} price={formatter.monthlyPrice(cost)}>
           <DetailsSheet {...cartEntry} />
         </CartEntryCollapsible>
       </Layout.Details>

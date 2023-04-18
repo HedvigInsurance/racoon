@@ -5,10 +5,10 @@ import { useTranslation } from 'next-i18next'
 import React, { ReactNode, useState } from 'react'
 import { ChevronIcon, Text, theme } from 'ui'
 
-type Props = { price: string; children: ReactNode }
+type Props = { defaultOpen: boolean; price: string; children: ReactNode }
 
-export const CartEntryCollapsible = ({ price, children }: Props) => {
-  const [open, setOpen] = useState<boolean>(false)
+export const CartEntryCollapsible = ({ defaultOpen, price, children }: Props) => {
+  const [open, setOpen] = useState(defaultOpen)
   const { t } = useTranslation('cart')
 
   return (

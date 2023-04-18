@@ -30,7 +30,6 @@ import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSe
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
-import { CartCollapsible } from './CartCollapsible/CartCollapsible'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
@@ -107,33 +106,27 @@ const CheckoutPage = (props: CheckoutPageProps) => {
             </Heading>
 
             <Space y={1}>
-              <CartCollapsible
-                title={t('CART_INVENTORY_COLLAPSIBLE_TITLE', { count: cart.entries.length })}
-                cost={cart.cost}
-                defaultOpen={router.query[QueryParam.ExpandCart] === '1'}
-              >
-                <CartCollapsibleInner y={{ base: 1, lg: 1.5 }}>
-                  <CartEntryList>
-                    {cart.entries.map((item) => (
-                      <CartEntryItem
-                        key={item.offerId}
-                        cartId={cart.id}
-                        onRemove={handleRemoveCartEntry}
-                        {...item}
-                      />
-                    ))}
-                  </CartEntryList>
-                  <HorizontalLine />
-                  {cart.campaigns.enabled && (
-                    <>
-                      <CampaignsSection cartId={cart.id} campaigns={cart.campaigns.list} />
-                      <HorizontalLine />
-                    </>
-                  )}
-                  <CostSummary {...cart.cost} campaigns={cart.campaigns.list} />
-                  <div />
-                </CartCollapsibleInner>
-              </CartCollapsible>
+              <Space y={{ base: 1, lg: 1.5 }}>
+                <CartEntryList>
+                  {cart.entries.map((item) => (
+                    <CartEntryItem
+                      key={item.offerId}
+                      cartId={cart.id}
+                      onRemove={handleRemoveCartEntry}
+                      defaultOpen={router.query[QueryParam.ExpandCart] === '1'}
+                      {...item}
+                    />
+                  ))}
+                </CartEntryList>
+                {cart.campaigns.enabled && (
+                  <>
+                    <CampaignsSection cartId={cart.id} campaigns={cart.campaigns.list} />
+                    <HorizontalLine />
+                  </>
+                )}
+                <CostSummary {...cart.cost} campaigns={cart.campaigns.list} />
+                <div />
+              </Space>
 
               <Space y={2}>
                 {productRecommendationOffers && productRecommendationOffers.length > 0 && (
@@ -270,10 +263,6 @@ const TextLink = styled(Link)({
 const HorizontalLine = styled.hr({
   backgroundColor: theme.colors.gray300,
   height: 1,
-})
-
-const CartCollapsibleInner = styled(Space)({
-  paddingTop: theme.space.md,
 })
 
 type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
