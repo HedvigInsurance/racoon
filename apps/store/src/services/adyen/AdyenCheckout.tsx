@@ -23,8 +23,10 @@ export const AdyenCheckout = ({ shopSessionId, onSuccess, paymentMethodsResponse
         ...configuration,
         paymentMethodsResponse,
         onSubmit: (_state: any, dropinComponent: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           dropinComponent.setStatus('loading')
           setTimeout(() => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             dropinComponent.setStatus('success', { message: 'Connected!' })
             onSuccess({ success: true })
           }, 1000)

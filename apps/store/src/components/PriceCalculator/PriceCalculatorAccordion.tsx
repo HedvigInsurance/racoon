@@ -12,10 +12,10 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   activeSectionId?: string
-  children(section: FormSection, index: number): ReactNode
+  children: (section: FormSection, index: number) => ReactNode
   form: Form
   shopSession: ShopSession
-  onActiveSectionChange(sectionId: string): void
+  onActiveSectionChange: (sectionId: string) => void
 }
 
 export const PriceCalculatorAccordion = (props: Props) => {

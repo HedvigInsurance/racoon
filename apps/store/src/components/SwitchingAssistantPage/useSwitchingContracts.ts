@@ -32,7 +32,7 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
   }, [refetch])
 
   return useMemo(() => {
-    const contracts = data?.shopSession?.outcome?.createdContracts ?? []
+    const contracts = data?.shopSession.outcome?.createdContracts ?? []
     const switchingContracts: Array<BankSigneringContract> = []
 
     contracts.forEach((contract) => {

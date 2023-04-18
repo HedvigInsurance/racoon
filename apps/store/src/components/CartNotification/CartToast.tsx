@@ -39,7 +39,7 @@ type Props = ProductItemProps & {
 
 export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const handleClose = () => onClose?.()
+  const handleClose = () => onClose()
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
     datadogRum.addAction(`CartToast Link ${type}`)

@@ -29,7 +29,8 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
       shopSessionId,
       ssn,
       onSuccess,
-    }: CheckoutSignOptions) => {
+    }: // eslint-disable-next-line @typescript-eslint/require-await
+    CheckoutSignOptions) => {
       const handleSuccess = async () => {
         // Delay marking operation as success until handler resolves
         try {

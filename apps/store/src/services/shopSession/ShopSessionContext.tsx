@@ -69,7 +69,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
         callback(queryResult.shopSession)
       }
       callbacksRef.current.add(callback)
-      return () => callbacksRef.current?.delete(callback)
+      return () => callbacksRef.current.delete(callback)
     },
     [queryResult.shopSession],
   )
@@ -87,7 +87,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
-        callbacksRef.current?.forEach((callback) => callback(shopSession))
+        callbacksRef.current.forEach((callback) => callback(shopSession))
       })
     }
   }, [shopSessionServiceClientSide, countryCode])

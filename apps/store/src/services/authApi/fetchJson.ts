@@ -9,7 +9,7 @@ export const fetchJson = async <T extends object>(
       ...options?.headers,
     },
   })
-  const data = await resp.json()
+  const data = (await resp.json()) as T
   if (!resp.ok) {
     throw new ServerError(`Error response, status=${resp.status}`, data)
   }

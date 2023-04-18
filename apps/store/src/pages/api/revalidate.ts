@@ -39,6 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //   }
     // }
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug
     const pathToRevalidate = path.join('/', route).replace(/\/$/, '')
     console.log(`Revalidating ${pathToRevalidate}`)

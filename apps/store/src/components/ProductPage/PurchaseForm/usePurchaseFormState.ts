@@ -24,7 +24,7 @@ const reducer = (state: FormState, action: FormStateReducerAction): FormState =>
     case 'EDIT':
       return { state: 'EDIT' }
     case 'ERROR':
-      return { state: 'ERROR', errorMsg: (action as ActionErrorWithPayload)?.errorMsg }
+      return { state: 'ERROR', errorMsg: (action as ActionErrorWithPayload).errorMsg }
     default:
       return state
   }

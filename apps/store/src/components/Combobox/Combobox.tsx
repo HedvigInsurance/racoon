@@ -34,6 +34,7 @@ export const Combobox = <Item,>({
   onSelectedItemChange,
   defaultSelectedItem,
   displayValue = (item) => String(item),
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   getFormValue = (item) => String(item) ?? undefined,
   mutliSelect = false,
   noMatchesMessage = 'No matches found',

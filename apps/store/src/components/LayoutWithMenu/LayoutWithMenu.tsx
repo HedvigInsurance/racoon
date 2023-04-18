@@ -34,25 +34,25 @@ export const LayoutWithMenu = ({
   useHydrateProductMetadata(children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
   const handleLocaleChange = useChangeLocale(story)
 
-  const headerBlock = filterByBlockType(globalStory?.content.header, HeaderBlock.blockName)
-  const footerBlock = filterByBlockType(globalStory?.content.footer, FooterBlock.blockName)
+  const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
+  const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
 
-  const showFooter = !hideFooter && !(story && story.content.hideFooter)
+  const showFooter = !hideFooter && !story.content.hideFooter
 
   return (
     <Wrapper className={className}>
-      {!(story && story.content.hideMenu) &&
-        headerBlock?.map((nestedBlock) => (
+      {!story.content.hideMenu &&
+        headerBlock.map((nestedBlock) => (
           <HeaderBlock
             key={nestedBlock._uid}
             blok={nestedBlock}
-            overlay={story?.content.overlayMenu ?? overlayMenu}
-            static={story && isProductStory(story)}
+            overlay={story.content.overlayMenu ?? overlayMenu}
+            static={isProductStory(story)}
           />
         ))}
       {children}
       {showFooter &&
-        footerBlock?.map((nestedBlock) => (
+        footerBlock.map((nestedBlock) => (
           <FooterBlock
             key={nestedBlock._uid}
             blok={nestedBlock}

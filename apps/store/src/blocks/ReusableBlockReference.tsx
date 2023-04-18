@@ -8,7 +8,7 @@ type ReusableBlockReferenceProps = SbBaseBlockProps<{
 export const ReusableBlockReference = ({ blok }: ReusableBlockReferenceProps) => {
   return (
     <>
-      {blok.reference.content?.body.map((nestedBlock) => (
+      {blok.reference.content.body.map((nestedBlock) => (
         <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
       ))}
     </>

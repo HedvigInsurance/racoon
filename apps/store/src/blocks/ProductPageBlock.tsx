@@ -65,7 +65,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 
         <OverviewGridArea width="1/2" align="left">
           <section id="overview">
-            {blok.overview?.map((nestedBlock) => (
+            {blok.overview.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
           </section>
@@ -73,7 +73,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 
         <GridLayout.Content width="1" align="center">
           <section id="coverage">
-            {blok.coverage?.map((nestedBlock) => (
+            {blok.coverage.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
           </section>

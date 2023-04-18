@@ -29,6 +29,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
     .map((text) => {
       const [linkText, secondParam] = text.split(']]')
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (secondParam === undefined) return text
 
       return (

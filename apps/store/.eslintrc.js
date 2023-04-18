@@ -21,6 +21,11 @@ module.exports = {
       rules: {
         // Causes eslint timeout on our code (src/blocks/HeaderBlock.tsx)
         '@typescript-eslint/no-misused-promises': 'off',
+        // TODO: Consider fixing errors and enabling these rules
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
       },
     },
   ],

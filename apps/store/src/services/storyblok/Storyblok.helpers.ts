@@ -55,7 +55,7 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   const {
     data: { story },
   } = response
-  return story
+  return story as StoryData
 }
 
 const missingLinks = new Set()

@@ -11,6 +11,7 @@ const localeCountries = Object.fromEntries(
 
 export const getCountryByLocale = (locale: RoutingLocale): CountryData => {
   const countryData = countries[localeCountries[toIsoLocale(locale)]]
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!countryData) {
     throw new Error(`Failed to find country by locale=${locale}`)
   }
@@ -18,7 +19,8 @@ export const getCountryByLocale = (locale: RoutingLocale): CountryData => {
 }
 
 export const getCountryLocale = (country: CountryLabel, language: Language): IsoLocale => {
-  const countryData = countries[country as CountryLabel]
+  const countryData = countries[country]
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!countryData) {
     throw new Error(`Failed to find country id=${country}`)
   }

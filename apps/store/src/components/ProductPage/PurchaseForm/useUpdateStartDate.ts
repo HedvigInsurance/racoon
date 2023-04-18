@@ -17,13 +17,7 @@ export const useUpdateStartDate = ({ priceIntent }: Params) => {
   })
 
   const productOfferIds = priceIntent.offers.map((item) => item.id)
-  const saveStartDate = async ({
-    dateValue,
-    onSuccess,
-  }: {
-    dateValue: Date
-    onSuccess?: () => void
-  }) => {
+  const saveStartDate = ({ dateValue, onSuccess }: { dateValue: Date; onSuccess?: () => void }) => {
     datadogLogs.logger.info('Update start date')
     updateStartDate({
       variables: { productOfferIds, startDate: formatAPIDate(dateValue) },

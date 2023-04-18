@@ -36,10 +36,10 @@ export const bankIdReducer = (
         },
       }
     case 'operationStateChange': {
-      if (!state.currentOperation || !action.nextOperationState) {
+      if (!state.currentOperation) {
         break
       }
-      if (action.nextOperationState === state.currentOperation?.state) {
+      if (action.nextOperationState === state.currentOperation.state) {
         break
       }
       return {
