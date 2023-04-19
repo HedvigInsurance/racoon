@@ -1,13 +1,15 @@
 import styled from '@emotion/styled'
+import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
-import { Button, CrossIconSmall, Dialog, Space, Text, theme } from 'ui'
+import { useState } from 'react'
+import { Button, ChevronIcon, Dialog, Text, mq, theme } from 'ui'
+import * as Accordion from '@/components/Accordion/Accordion'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CartFragmentFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from '../CartInventory.types'
-import { DetailsSheetDialog } from '../DetailsSheetDialog'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
+import { DetailsSheet } from './DetailsSheet'
 
 type Props = CartEntry & {
   cartId: string
@@ -20,6 +22,8 @@ export const CartEntryItem = (props: Props) => {
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
+
+  const [openedItem, setOpenedItem] = useState<string>()
 
   return (
     <Layout.Main>
@@ -36,38 +40,42 @@ export const CartEntryItem = (props: Props) => {
         </Text>
       </Layout.Title>
 
-      <Layout.Close>
-        {!readOnly && (
-          <SpaceFlex align="end" direction="vertical">
-            <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
-              <Dialog.Trigger asChild>
-                <InvisibleButton aria-label="delete button">
-                  <CrossIconSmall />
-                </InvisibleButton>
-              </Dialog.Trigger>
-            </RemoveEntryDialog>
-          </SpaceFlex>
-        )}
-      </Layout.Close>
-
-      <Layout.Price>
-        <PriceFlex>
-          <Text>{formatter.monthlyPrice(cost)}</Text>
-        </PriceFlex>
-      </Layout.Price>
+      <Layout.Details>
+        <Accordion.Root
+          type="single"
+          collapsible
+          value={openedItem}
+          onValueChange={(value) => setOpenedItem(value)}
+        >
+          <AccordionPrimitives.Item value="details">
+            <DetailsHeader>
+              <Trigger>
+                {t('VIEW_ENTRY_DETAILS_BUTTON')}
+                <ChevronIcon color={theme.colors.textTertiary} size="1rem" />
+              </Trigger>
+              <PriceFlex>
+                <Text>{formatter.monthlyPrice(cost)}</Text>
+              </PriceFlex>
+            </DetailsHeader>
+            <Accordion.Content open={openedItem === 'details'}>
+              <DetailsSheet {...cartEntry} />
+            </Accordion.Content>
+          </AccordionPrimitives.Item>
+        </Accordion.Root>
+      </Layout.Details>
 
       <Layout.Actions>
-        <Space y={1}>
-          <SpaceFlex space={0.25}>
-            <DetailsSheetDialog {...cartEntry}>
+        <ActionsRow>
+          {!readOnly && (
+            <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
               <Dialog.Trigger asChild>
-                <Button variant="secondary" size="small">
-                  {t('VIEW_ENTRY_DETAILS_BUTTON')}
+                <Button variant="secondary-alt" size="small">
+                  {t('REMOVE_ENTRY_BUTTON')}
                 </Button>
               </Dialog.Trigger>
-            </DetailsSheetDialog>
-          </SpaceFlex>
-        </Space>
+            </RemoveEntryDialog>
+          )}
+        </ActionsRow>
       </Layout.Actions>
     </Layout.Main>
   )
@@ -76,10 +84,10 @@ export const CartEntryItem = (props: Props) => {
 const GRID_AREAS = {
   Pillow: 'pillow',
   Title: 'title',
+  Details: 'details',
   Price: 'price',
   Content: 'content',
   Actions: 'actions',
-  Close: 'close',
   Empty: 'empty',
 } as const
 
@@ -88,41 +96,66 @@ const Main = styled.li({
   columnGap: theme.space.sm,
   rowGap: theme.space.md,
   gridTemplateAreas: `
-    "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Close}"
-    "${GRID_AREAS.Empty} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
+    "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
+    "${GRID_AREAS.Details} ${GRID_AREAS.Details} ${GRID_AREAS.Details}"
+    "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Actions}"
   `,
   gridTemplateColumns: '3rem minmax(0, 1fr)',
+  padding: theme.space.md,
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.opaque1,
+
+  [mq.md]: {
+    padding: theme.space.lg,
+  },
 })
 
 const Layout = {
   Main,
   Pillow: styled.div({ gridArea: GRID_AREAS.Pillow }),
   Title: styled.div({ gridArea: GRID_AREAS.Title }),
+  Details: styled.div({
+    gridArea: GRID_AREAS.Details,
+    paddingTop: theme.space.md,
+    borderTop: `1px solid ${theme.colors.borderTranslucent}`,
+  }),
   Price: styled.div({ gridArea: GRID_AREAS.Price }),
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
   Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
-  Close: styled.div({ gridArea: GRID_AREAS.Close }),
 } as const
-
-const InvisibleButton = styled.button({
-  cursor: 'pointer',
-  paddingLeft: theme.space.xs,
-  paddingBottom: theme.space.xs,
-  color: theme.colors.textTertiary,
-
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-    borderRadius: '0.25rem',
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
-  },
-
-  '&:hover': {
-    color: theme.colors.textPrimary,
-  },
-})
 
 const PriceFlex = styled.div({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
+})
+
+const Trigger = styled(AccordionPrimitives.Trigger)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.space.xs,
+  cursor: 'pointer',
+  fontSize: theme.fontSizes.md,
+
+  svg: {
+    transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
+
+    ['[data-state=open] &']: {
+      transform: 'rotate(180deg)',
+    },
+  },
+})
+
+const DetailsHeader = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+const ActionsRow = styled.div({
+  display: 'flex',
+  gap: theme.space.sm,
+  '> *': {
+    width: '50%',
+  },
 })
