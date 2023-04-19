@@ -12,7 +12,6 @@ import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
-import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
@@ -30,6 +29,7 @@ import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSe
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
+import { CheckoutHeader } from '../CheckoutHeader/CheckoutHeader'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
@@ -100,10 +100,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           <TextLink href={PageLink.cart()}>{t('BACK_BUTTON')}</TextLink>
         </CheckoutHeader>
         <Layout>
-          <Content y={{ base: 2.5 }}>
-            <Heading balance as="h1" variant="standard.24" align="center">
-              {t('CHECKOUT_PAGE_HEADING')}
-            </Heading>
+          <Content y={{ base: 2.5, md: 3.5 }}>
+            <Headings>
+              <Heading as="h1" variant="standard.24" align="center">
+                {t('CHECKOUT_PAGE_HEADING')}
+              </Heading>
+              <Heading as="h2" balance color="textSecondary" variant="standard.24" align="center">
+                {t('CHECKOUT_PAGE_SUBHEADING')}
+              </Heading>
+            </Headings>
 
             <Space y={1}>
               <Space y={{ base: 1, lg: 1.5 }}>
@@ -249,6 +254,8 @@ const Content = styled(Space)(gridCenterStyles, {
   paddingBottom: theme.space.xl,
   columnGap: theme.space.md,
 })
+
+const Headings = styled.div({ maxWidth: '35ch', marginInline: 'auto' })
 
 const TextLink = styled(Link)({
   backgroundColor: theme.colors.light,
