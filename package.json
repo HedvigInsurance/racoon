@@ -40,5 +40,8 @@
     "lint-staged": "13.2.1",
     "prettier": "2.8.7",
     "turbo": "1.9.1"
+  },
+  "dependencies": {
+    "sharp": "0.32.0"
   }
 }
