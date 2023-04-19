@@ -12,11 +12,13 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import {
   PriceIntentFragmentFragment,
   PriceIntentQueryResult,
+  ProductOffer,
   usePriceIntentQuery,
 } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useCartEntryToReplace } from './ProductPage'
 import { getOffersByPrice } from './PurchaseForm/getOffersByPrice'
 import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
@@ -40,19 +42,24 @@ const usePriceIntentContextValue = () => {
   const { onReady } = useShopSession()
 
   const [, setSelectedOffer] = useSelectedOffer()
+  const entryToReplace = useCartEntryToReplace()
   const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
     onCompleted(data) {
       setSelectedOffer((prev) => {
-        const matchingOffer = data.priceIntent.offers.find(
-          (item) =>
-            item.variant.typeOfContract === prev?.variant.typeOfContract &&
-            item.deductible?.displayName === prev?.deductible?.displayName,
-        )
+        if (prev) {
+          const matchingOffer = data.priceIntent.offers.find((item) => compareOffer(item, prev))
+          if (matchingOffer) return matchingOffer
+        }
 
-        if (matchingOffer) return matchingOffer
+        if (entryToReplace) {
+          const matchingReplaceOffer = data.priceIntent.offers.find((item) =>
+            compareOffer(item, entryToReplace),
+          )
+          if (matchingReplaceOffer) return matchingReplaceOffer
+        }
 
         return getOffersByPrice(data.priceIntent.offers)[0]
       })
@@ -92,4 +99,14 @@ export const usePriceIntent = () => {
     throw new Error('usePriceIntent called outside PriceIntentContext, no value to provide')
   }
   return contextValue
+}
+
+type ComparableProductOffer = Pick<ProductOffer, 'deductible'> & {
+  variant: Pick<ProductOffer['variant'], 'typeOfContract'>
+}
+
+const compareOffer = (a: ComparableProductOffer, b: ComparableProductOffer) => {
+  if (a.variant.typeOfContract !== b.variant.typeOfContract) return false
+  if (JSON.stringify(a.deductible) !== JSON.stringify(b.deductible)) return false
+  return true
 }

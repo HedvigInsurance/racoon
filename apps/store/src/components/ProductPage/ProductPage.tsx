@@ -1,6 +1,8 @@
 import { StoryblokComponent } from '@storyblok/react'
-import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo } from 'react'
 import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
@@ -20,5 +22,16 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
         <StoryblokComponent blok={story.content} />
       </PriceIntentContextProvider>
     </ProductPageContextProvider>
+  )
+}
+
+export const useCartEntryToReplace = () => {
+  const router = useRouter()
+  const { shopSession } = useShopSession()
+
+  const cartEntryId = router.query.replace as string | undefined
+  return useMemo(
+    () => shopSession?.cart.entries.find((item) => item.id === cartEntryId),
+    [shopSession?.cart.entries, cartEntryId],
   )
 }
