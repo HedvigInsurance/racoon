@@ -53,7 +53,7 @@ export const Item = ({ value, label, id, className, ...itemProps }: ItemProps) =
   const identifier = id ?? `radio-${value}`
 
   return (
-    <label className={className} htmlFor={identifier}>
+    <ClickableLabel className={className} htmlFor={identifier}>
       <SpaceFlex space={0.5} align="center">
         <StyledItem id={identifier} value={value} {...itemProps}>
           <StyledIndicator />
@@ -62,9 +62,11 @@ export const Item = ({ value, label, id, className, ...itemProps }: ItemProps) =
           {label}
         </Text>
       </SpaceFlex>
-    </label>
+    </ClickableLabel>
   )
 }
+
+const ClickableLabel = styled.label({ cursor: 'pointer' })
 
 const StyledItem = styled(RadioGroup.Item)({
   width: '1.375rem',
