@@ -58,7 +58,6 @@ export const CartInventory = ({ cart, readOnly = false }: Props) => {
           />
         ))}
       </CartEntryList>
-      <HorizontalLine />
       {!readOnly && (
         <>
           <CampaignsSection cartId={cart.id} campaigns={campaigns} />
