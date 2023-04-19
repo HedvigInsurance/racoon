@@ -1,14 +1,12 @@
 import styled from '@emotion/styled'
-import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
-import { Button, ChevronIcon, Dialog, Text, mq, theme } from 'ui'
-import * as Accordion from '@/components/Accordion/Accordion'
+import { Button, Dialog, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { CartFragmentFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
+import { CartEntryCollapsible } from './CartEntryCollapsible'
 import { DetailsSheet } from './DetailsSheet'
 
 type Props = CartEntry & {
@@ -22,8 +20,6 @@ export const CartEntryItem = (props: Props) => {
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
-
-  const [openedItem, setOpenedItem] = useState<string>()
 
   return (
     <Layout.Main>
@@ -41,27 +37,9 @@ export const CartEntryItem = (props: Props) => {
       </Layout.Title>
 
       <Layout.Details>
-        <Accordion.Root
-          type="single"
-          collapsible
-          value={openedItem}
-          onValueChange={(value) => setOpenedItem(value)}
-        >
-          <AccordionPrimitives.Item value="details">
-            <DetailsHeader>
-              <Trigger>
-                {t('VIEW_ENTRY_DETAILS_BUTTON')}
-                <ChevronIcon color={theme.colors.textTertiary} size="1rem" />
-              </Trigger>
-              <PriceFlex>
-                <Text>{formatter.monthlyPrice(cost)}</Text>
-              </PriceFlex>
-            </DetailsHeader>
-            <Accordion.Content open={openedItem === 'details'}>
-              <DetailsSheet {...cartEntry} />
-            </Accordion.Content>
-          </AccordionPrimitives.Item>
-        </Accordion.Root>
+        <CartEntryCollapsible price={formatter.monthlyPrice(cost)}>
+          <DetailsSheet {...cartEntry} />
+        </CartEntryCollapsible>
       </Layout.Details>
 
       <Layout.Actions>
@@ -128,34 +106,6 @@ const Layout = {
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
   Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
 } as const
-
-const PriceFlex = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  height: '100%',
-})
-
-const Trigger = styled(AccordionPrimitives.Trigger)({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: theme.space.xs,
-  cursor: 'pointer',
-  fontSize: theme.fontSizes.md,
-
-  svg: {
-    transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
-
-    ['[data-state=open] &']: {
-      transform: 'rotate(180deg)',
-    },
-  },
-})
-
-const DetailsHeader = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-})
 
 const ActionsRow = styled.div({
   display: 'flex',
