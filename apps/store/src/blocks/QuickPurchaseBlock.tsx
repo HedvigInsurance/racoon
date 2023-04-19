@@ -6,6 +6,7 @@ import { theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
+  ProductOption,
   SSN_FIELDNAME,
   PRODUCT_FIELDNAME,
 } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
@@ -17,12 +18,6 @@ import {
 } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-
-type ProductOption = {
-  name: string
-  value: string
-  pageLink: string
-}
 
 type QuickPurchaseBlockProps = SbBaseBlockProps<{
   products: Array<string>
@@ -102,13 +97,17 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
 
   const availableProducts = useMemo(() => data?.availableProducts ?? [], [data?.availableProducts])
   const productOptions = useMemo(() => {
-    const result: Array<ProductOption> = []
+    const result: Array<ProductOption & { pageLink: string }> = []
     blok.products.forEach((productName) => {
       const matchedProduct = availableProducts.find((product) => product.name === productName)
       if (matchedProduct) {
         result.push({
           name: matchedProduct.displayNameShort,
           value: matchedProduct.name,
+          img: {
+            src: matchedProduct.pillowImage.src,
+            alt: matchedProduct.pillowImage.alt ?? '',
+          },
           pageLink: matchedProduct.pageLink,
         })
       }
