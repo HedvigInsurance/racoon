@@ -1,0 +1,19 @@
+mutation CartEntryReplace($cartId: UUID!, $removeOfferId: UUID!, $addOfferId: UUID!) {
+  cartEntriesRemove(input: { cartId: $cartId, offerIds: [$removeOfferId] }) {
+    cart {
+      id
+    }
+    userError {
+      message
+    }
+  }
+
+  cartEntriesAdd(input: { cartId: $cartId, offerIds: [$addOfferId] }) {
+    cart {
+      ...CartFragment
+    }
+    userError {
+      message
+    }
+  }
+}

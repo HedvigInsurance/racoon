@@ -1,8 +1,11 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, Dialog, Text, mq, theme } from 'ui'
+import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { CartFragmentFragment } from '@/services/apollo/generated'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
@@ -21,6 +24,22 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
+  const { shopSession } = useShopSession()
+  const [editProductOffer, editState] = useEditProductOffer()
+
+  const handleClickEdit = () => {
+    if (!shopSession) {
+      datadogLogs.logger.warn('No shopSession when clicking edit cart entry')
+      return
+    }
+
+    editProductOffer({
+      shopSessionId: shopSession.id,
+      offerId: cartEntry.offerId,
+      productName: cartEntry.productName,
+      data: cartEntry.data,
+    })
+  }
 
   return (
     <Layout.Main>
@@ -43,9 +62,18 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
         </CartEntryCollapsible>
       </Layout.Details>
 
-      <Layout.Actions>
-        <ActionsRow>
-          {!readOnly && (
+      {!readOnly && (
+        <Layout.Actions>
+          <ActionsRow>
+            <Button
+              variant="secondary-alt"
+              size="small"
+              onClick={handleClickEdit}
+              loading={editState === 'loading'}
+            >
+              {t('CART_ENTRY_EDIT_BUTTON')}
+            </Button>
+
             <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
               <Dialog.Trigger asChild>
                 <Button variant="secondary-alt" size="small">
@@ -53,9 +81,9 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
                 </Button>
               </Dialog.Trigger>
             </RemoveEntryDialog>
-          )}
-        </ActionsRow>
-      </Layout.Actions>
+          </ActionsRow>
+        </Layout.Actions>
+      )}
     </Layout.Main>
   )
 }

@@ -7,6 +7,7 @@
   "CART_EMPTY_SUMMARY": "Your cart is empty",
   "CART_ENTRY_AUTO_SWITCH": "Automatically switches",
   "CART_ENTRY_DATE_LABEL": "Activates {{date}}",
+  "CART_ENTRY_EDIT_BUTTON": "Edit",
   "CART_PAGE_HEADING": "Your cart",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
   "CHECKOUT_BUTTON": "Go to checkout",

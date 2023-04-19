@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 
@@ -21,6 +22,7 @@ export const useEditProductOffer = () => {
   const apolloClient = useApolloClient()
   const products = useProductMetadata()
   const router = useRouter()
+  const { showError } = useAppErrorHandleContext()
 
   const editProductOffer = async (params: Params) => {
     setState('loading')
@@ -63,6 +65,7 @@ export const useEditProductOffer = () => {
         error,
         offerId: params.offerId,
       })
+      showError(error as Error)
     }
   }
 
