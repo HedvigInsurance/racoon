@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 
 type PillowProps = {
-  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
   src?: string
   alt?: string | null
 }
@@ -29,6 +29,8 @@ const FallbackPillow = ({ size }: Pick<PillowProps, 'size'>) => {
 
 const getSize = (size: PillowProps['size']) => {
   switch (size) {
+    case 'xxsmall':
+      return { width: '1.75rem', height: '1.75rem' }
     case 'xsmall':
       return { width: '2.25rem', height: '2.25rem' }
     case 'small':

@@ -32,13 +32,6 @@ const ProductNavigationLinkCard = styled(Space)({
   },
 })
 
-const StyledPillow = styled(Pillow)({
-  [mq.lg]: {
-    height: '1.75rem',
-    width: '1.75rem',
-  },
-})
-
 type NavigationLinkProps = Pick<LinkProps, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'> & {
     pillowImageSrc?: string
@@ -80,7 +73,7 @@ export const ProductNavigationLink = ({
   return (
     <Link href={href}>
       <ProductNavigationLinkCard>
-        <StyledPillow size="small" src={pillowImageSrc} />
+        <Pillow size="xxsmall" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
         {label && (
           <Badge size={{ _: 'lg', lg: 'sm' }} as="span" color="green50">
