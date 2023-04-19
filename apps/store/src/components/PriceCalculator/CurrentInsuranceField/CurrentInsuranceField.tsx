@@ -27,13 +27,13 @@ type Props = {
   label: string
   productName: string
   priceIntentId: string
-  insurelyClientId: string
+  insurelyClientId?: string
   externalInsurer?: string
 }
 
 type State =
   | { type: 'IDLE' }
-  | { type: 'COMPARE'; externalInsurer: ExternalInsurer }
+  | { type: 'COMPARE'; externalInsurer: ExternalInsurer; insurelyClientId: string }
   | { type: 'SUCCESS'; externalInsurer: ExternalInsurer }
   | { type: 'CONFIRMED'; externalInsurer: ExternalInsurer }
 
@@ -44,7 +44,8 @@ export const CurrentInsuranceField = (props: Props) => {
   const [state, setState] = useState<State>({ type: 'IDLE' })
 
   const compare = useCallback(
-    (externalInsurer: ExternalInsurer) => setState({ type: 'COMPARE', externalInsurer }),
+    (externalInsurer: ExternalInsurer, insurelyClientId: string) =>
+      setState({ type: 'COMPARE', externalInsurer, insurelyClientId }),
     [],
   )
   const close = useCallback(() => setState({ type: 'IDLE' }), [])
@@ -64,15 +65,17 @@ export const CurrentInsuranceField = (props: Props) => {
     onCompleted(updatedPriceIntent) {
       const externalInsurer = updatedPriceIntent.externalInsurer
       const personalNumber = shopSession?.customer?.ssn
-      if (externalInsurer && personalNumber) {
-        compare(externalInsurer)
+
+      if (!externalInsurer) {
+        datadogLogs.logger.warn('Failed to update external insurer', { priceIntentId })
+        return
+      }
+
+      if (insurelyClientId && personalNumber) {
+        compare(externalInsurer, insurelyClientId)
         insurelyPrefillInput({ company: externalInsurer.insurelyId ?? undefined, personalNumber })
       } else {
-        datadogLogs.logger.error('Failed to prefill Insurely', {
-          priceIntentId,
-          insurelyId: externalInsurer?.insurelyId,
-          personalNumber,
-        })
+        confirm(externalInsurer)
       }
     },
   })
@@ -152,7 +155,7 @@ export const CurrentInsuranceField = (props: Props) => {
             {state.type === 'COMPARE' ? (
               <DialogIframeWindow>
                 <InsurelyIframe
-                  clientId={insurelyClientId}
+                  clientId={state.insurelyClientId}
                   onCollection={handleInsurelyCollection}
                   onClose={close}
                   onCompleted={handleInsurelyCompleted}

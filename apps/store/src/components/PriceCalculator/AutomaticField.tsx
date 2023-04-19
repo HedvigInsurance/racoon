@@ -145,16 +145,15 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       return <CarMileageField field={field} />
 
     case 'current-insurance':
-      return productData.insurelyClientId ? (
+      return (
         <CurrentInsuranceField
           label={translateLabel(field.label)}
           productName={productData.name}
           priceIntentId={priceIntent.id}
-          insurelyClientId={productData.insurelyClientId}
+          insurelyClientId={productData.insurelyClientId ?? undefined}
           externalInsurer={priceIntent.externalInsurer?.id}
         />
-      ) : // TODO: Add a fallback for when we don't have an insurelyClientId
-      null
+      )
 
     case 'stepper':
       return (
