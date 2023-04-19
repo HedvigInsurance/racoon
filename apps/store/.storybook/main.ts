@@ -3,7 +3,11 @@ import babelConfig from './babelConfig'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    'storybook-addon-apollo-client',
+  ],
   framework: {
     name: '@storybook/nextjs',
     options: {},

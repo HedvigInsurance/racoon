@@ -112,7 +112,12 @@ const Main = styled.li({
 
 const Layout = {
   Main,
-  Pillow: styled.div({ gridArea: GRID_AREAS.Pillow }),
+  Pillow: styled.div({
+    gridArea: GRID_AREAS.Pillow,
+    [mq.md]: {
+      marginBottom: theme.space.xs,
+    },
+  }),
   Title: styled.div({ gridArea: GRID_AREAS.Title }),
   Details: styled.div({
     gridArea: GRID_AREAS.Details,

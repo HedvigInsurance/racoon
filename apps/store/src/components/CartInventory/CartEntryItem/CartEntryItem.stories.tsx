@@ -1,6 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryObj } from '@storybook/react'
 import { CurrencyCode, InsuranceDocumentType } from '@/services/apollo/generated'
+import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { CartEntryItem } from './CartEntryItem'
 
 const meta: Meta<typeof CartEntryItem> = {
@@ -17,12 +19,20 @@ const meta: Meta<typeof CartEntryItem> = {
 export default meta
 type Story = StoryObj<typeof CartEntryItem>
 
-export const ReadOnly: Story = {
+const Template: Story = {
   render: (args) => (
-    <div style={{ maxWidth: '29rem', width: '100%' }}>
-      <CartEntryItem {...args} />
-    </div>
+    <ShopSessionProvider shopSessionId="1e517b18-fd77-4384-aee1-17481da3781a">
+      <AppErrorProvider>
+        <div style={{ maxWidth: '29rem', width: '100%' }}>
+          <CartEntryItem {...args} />
+        </div>
+      </AppErrorProvider>
+    </ShopSessionProvider>
   ),
+}
+
+export const ReadOnly = {
+  ...Template,
   args: {
     readOnly: true,
     cartId: 'cart',
@@ -40,19 +50,16 @@ export const ReadOnly: Story = {
     startDate: new Date(),
     documents: [
       {
-        __typename: 'InsuranceDocument',
         type: InsuranceDocumentType.GeneralTerms,
         displayName: 'Olycksfall Försäkringsvillkor',
         url: 'https://promise.hedvig.com/swe_terms_conditions_accident_47228b7079.pdf',
       },
       {
-        __typename: 'InsuranceDocument',
         type: InsuranceDocumentType.PreSaleInfo,
         displayName: 'Produktfaktablad Olycksfallsförsäkring',
         url: 'https://promise.hedvig.com/Hedvig_OLYCKSFALL_SE_IPID_1_7e7640efa2.pdf',
       },
       {
-        __typename: 'InsuranceDocument',
         type: InsuranceDocumentType.TermsAndConditions,
         displayName: 'Olycksfallsförsäkring Ärrtabell',
         url: 'https://promise.hedvig.com/se_arrtabell_olycksfall_66dbff4975.pdf',
@@ -64,5 +71,13 @@ export const ReadOnly: Story = {
       livingSpace: 70,
       numberCoInsured: '2',
     },
+  },
+}
+
+export const Editable = {
+  ...Template,
+  args: {
+    ...ReadOnly.args,
+    readOnly: false,
   },
 }
