@@ -1,4 +1,3 @@
-import { ApolloError } from '@apollo/client'
 import {
   createContext,
   Dispatch,
@@ -10,25 +9,25 @@ import {
 } from 'react'
 
 type AppErrorContextValue = {
-  lastError: ApolloError | null
-  setLastError: Dispatch<SetStateAction<ApolloError | null>>
+  lastError: Error | null
+  setLastError: Dispatch<SetStateAction<Error | null>>
 }
 
 const AppErrorContext = createContext<AppErrorContextValue | null>(null)
 
 type AppErrorHandleContextValue = {
-  showApolloError: (error: ApolloError) => void
+  showError: (error: Error) => void
 }
 
 const AppErrorHandleContext = createContext<AppErrorHandleContextValue | null>(null)
 
 export const AppErrorProvider = ({ children }: PropsWithChildren) => {
-  const [lastError, setLastError] = useState<ApolloError | null>(null)
+  const [lastError, setLastError] = useState<Error | null>(null)
   const errorContextValue = useMemo(() => ({ lastError, setLastError }), [lastError])
 
-  const handleErrorContextValue = useMemo(
+  const handleErrorContextValue = useMemo<AppErrorHandleContextValue>(
     () => ({
-      showApolloError(error: ApolloError) {
+      showError(error: Error) {
         setLastError(error)
       },
     }),

@@ -1,14 +1,16 @@
-import { ApolloError } from '@apollo/client'
+import { isApolloError } from '@apollo/client'
 import { useTranslation } from 'next-i18next'
 
-export const useErrorMessage = (error?: ApolloError | null) => {
+export const useErrorMessage = (error?: Error | null) => {
   const { t } = useTranslation('common')
 
   if (!error) return
 
   let message: string | undefined
   try {
-    message = error.extraInfo?.userError?.message
+    if (isApolloError(error)) {
+      message = error.extraInfo?.userError?.message
+    }
   } catch (error: unknown) {
     console.warn('Failed to extract error message', error)
   }
