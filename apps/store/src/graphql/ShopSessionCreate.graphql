@@ -1,5 +1,11 @@
-mutation ShopSessionCreate($countryCode: CountryCode!, $attributedTo: String) {
-  shopSessionCreate(input: { countryCode: $countryCode, attributedTo: $attributedTo }) {
+mutation ShopSessionCreate(
+  $countryCode: CountryCode!
+  $attributedTo: String
+  $initiatedFrom: String
+) {
+  shopSessionCreate(
+    input: { countryCode: $countryCode, attributedTo: $attributedTo, initiatedFrom: $initiatedFrom }
+  ) {
     ...ShopSession
   }
 }
