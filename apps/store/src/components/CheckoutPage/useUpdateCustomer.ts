@@ -27,7 +27,7 @@ export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
     const email = getOrThrowFormValue(formData, FormElement.Email)
     const firstName = formData.get(FormElement.FirstName) as string | null
     const lastName = formData.get(FormElement.LastName) as string | null
-    updateCustomer({
+    return updateCustomer({
       variables: { input: { shopSessionId, email, firstName, lastName } },
     })
   }
