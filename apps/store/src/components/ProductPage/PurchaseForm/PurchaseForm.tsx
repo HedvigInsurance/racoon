@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, Text, theme, useBreakpoint } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
@@ -12,7 +12,10 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { useOpenPriceCalculatorQueryParam } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import {
+  useIsPriceCalculatorExpanded,
+  useOpenPriceCalculatorQueryParam,
+} from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
@@ -35,7 +38,6 @@ import { useSelectedOffer } from './useSelectedOffer'
 
 export const PurchaseForm = () => {
   const { t } = useTranslation('purchase-form')
-  const [formState, setFormState] = usePurchaseFormState()
   const { priceTemplate, productData } = useProductPageContext()
   const { shopSession } = useShopSession()
   const formatter = useFormatter()
@@ -45,23 +47,30 @@ export const PurchaseForm = () => {
   const isLarge = useBreakpoint('lg')
   const router = useRouter()
 
-  useOpenPriceCalculatorQueryParam({
-    onQueryParamDetected() {
-      tracking.reportOpenPriceCalculator({
-        id: productData.id,
-        displayNameFull: productData.displayNameFull,
-      })
+  const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
+  const [formState, setFormState] = usePurchaseFormState(
+    isPriceCalculatorExpanded ? { state: 'EDIT' } : undefined,
+  )
 
-      setFormState('EDIT')
-    },
-  })
-
-  const editForm = () => {
+  const editForm = useCallback(() => {
     setFormState('EDIT')
     if (!isLarge) {
       sendDialogEvent('open')
     }
-  }
+  }, [isLarge, setFormState])
+
+  const handleQueryParamDetected = useCallback(() => {
+    tracking.reportOpenPriceCalculator({
+      id: productData.id,
+      displayNameFull: productData.displayNameFull,
+    })
+
+    editForm()
+  }, [productData.id, productData.displayNameFull, tracking, editForm])
+
+  useOpenPriceCalculatorQueryParam({
+    onQueryParamDetected: handleQueryParamDetected,
+  })
 
   const handleOpen = () => {
     tracking.reportOpenPriceCalculator({

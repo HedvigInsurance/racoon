@@ -20,6 +20,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useCartEntryToReplace } from './ProductPage'
 import { getOffersByPrice } from './PurchaseForm/getOffersByPrice'
+import { usePreloadedPriceIntentId } from './PurchaseForm/usePreloadedPriceIntentId'
 import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
 type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
@@ -43,7 +44,8 @@ const usePriceIntentContextValue = () => {
 
   const [, setSelectedOffer] = useSelectedOffer()
   const entryToReplace = useCartEntryToReplace()
-  const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
+  const preloadedPriceIntentId = usePreloadedPriceIntentId()
+  const [priceIntentId, setPriceIntentId] = useState<string | null>(preloadedPriceIntentId ?? null)
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
@@ -79,6 +81,8 @@ const usePriceIntentContextValue = () => {
   useEffect(
     () =>
       onReady(async (shopSession) => {
+        if (priceIntentId) return
+
         const service = priceIntentServiceInitClientSide(apolloClient)
         const priceIntent = await service.getOrCreate({
           priceTemplate,
@@ -87,7 +91,7 @@ const usePriceIntentContextValue = () => {
         })
         setPriceIntentId(priceIntent.id)
       }),
-    [onReady, apolloClient, priceTemplate, productData.name],
+    [onReady, apolloClient, priceTemplate, productData.name, priceIntentId],
   )
 
   return [result.data?.priceIntent, result, createNewPriceIntent] as const
