@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useState, useMemo, useEffect, useRef, type FormEventHandler } from 'react'
+import { useState, useMemo, type FormEventHandler } from 'react'
 import { theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
@@ -14,7 +14,6 @@ import {
   useProductMetadataQuery,
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
-  useUnredeemCampaignMutation,
 } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -25,7 +24,6 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
 }>
 
 export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
-  const previousRedeemedCampaignCodeId = useRef<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
 
@@ -34,66 +32,6 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
 
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
   const [redeemCampaign] = useRedeemCampaignMutation()
-  const [unredeemCampaign] = useUnredeemCampaignMutation()
-
-  useEffect(() => {
-    if (!shopSession?.cart.id) return
-
-    if (blok.campaignCode) {
-      redeemCampaign({
-        variables: {
-          cartId: shopSession.cart.id,
-          code: blok.campaignCode,
-        },
-        onCompleted(data) {
-          previousRedeemedCampaignCodeId.current =
-            data.cartRedeemCampaign.cart?.redeemedCampaigns[0].id ?? null
-        },
-        onError(error) {
-          const errorMessage = `Unable to redeem campaing code ${blok.campaignCode}: ${error.message}`
-          console.error(errorMessage)
-
-          // Notify editors
-          if (process.env.NODE_ENV === 'development') {
-            alert(errorMessage)
-          }
-        },
-      })
-    } else {
-      const hasRedeemedCampaign =
-        previousRedeemedCampaignCodeId.current &&
-        shopSession.cart.redeemedCampaigns.some(
-          ({ id }) => id === previousRedeemedCampaignCodeId.current,
-        )
-
-      if (hasRedeemedCampaign) {
-        unredeemCampaign({
-          variables: {
-            cartId: shopSession.cart.id,
-            campaignId: previousRedeemedCampaignCodeId.current!,
-          },
-          onCompleted() {
-            previousRedeemedCampaignCodeId.current = null
-          },
-          onError(error) {
-            const errorMessage = `Unable to unredeem campaing code of id ${previousRedeemedCampaignCodeId.current}: ${error.message}`
-            console.error(errorMessage)
-
-            // Notify editors
-            if (process.env.NODE_ENV === 'development') {
-              alert(errorMessage)
-            }
-          },
-        })
-      }
-    }
-  }, [
-    redeemCampaign,
-    unredeemCampaign,
-    shopSession?.cart.id,
-    shopSession?.cart.redeemedCampaigns,
-    blok.campaignCode,
-  ])
 
   const availableProducts = useMemo(() => data?.availableProducts ?? [], [data?.availableProducts])
   const productOptions = useMemo(() => {
@@ -115,8 +53,6 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
 
     return result
   }, [blok.products, availableProducts])
-  // By design, only one campaign code can be configured by the CMS
-  const redeemedCampaignCode = shopSession?.cart.redeemedCampaigns[0]
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -124,39 +60,54 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
     try {
       setIsSubmitting(true)
 
+      if (!shopSession) {
+        throw new Error('[QuickPurchaseBlock]: could not found shop session')
+      }
+
       const formData = new FormData(event.currentTarget)
       const formState = Object.fromEntries(formData.entries())
       const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
 
+      // This should never happen since QuickPurchaseForm conrols are required
       if (typeof ssn !== 'string' || typeof productName !== 'string') {
         throw new Error('[QuickPurchaseBlock]: ssn and product are required')
       }
 
-      if (shopSession?.customer?.ssn && shopSession.customer.ssn !== ssn) {
+      const pageLink = productOptions.find((product) => product.value === productName)?.pageLink
+      if (pageLink === undefined) {
+        throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
+      }
+
+      // TODO: Maybe notify users that their cart will be cleared if they use this block with a
+      // different ssn of the one already attached to the shop session
+      if (shopSession.customer && shopSession.customer.ssn !== ssn) {
         await resetShopSession()
       }
 
-      const shopSessionId = shopSession?.id
-      if (shopSessionId == null) {
-        throw new Error('[QuickPurchaseBlock]: could not found shop session id')
-      }
-
-      const { errors } = await updateCustomer({
+      await updateCustomer({
         variables: {
           input: {
-            shopSessionId,
+            shopSessionId: shopSession.id,
             ssn,
           },
         },
+        onError(error) {
+          throw new Error(`[QuickPurchaseBlock]: Failed while updating customer: ${error.message}`)
+        },
       })
 
-      if (errors) {
-        throw new Error(`[QuickPurchaseBlock]: Failed while updating customer - ${errors}`)
-      }
-
-      const pageLink = productOptions.find((product) => product.value === productName)?.pageLink
-      if (pageLink == null) {
-        throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
+      if (blok.campaignCode) {
+        await redeemCampaign({
+          variables: {
+            cartId: shopSession.cart.id,
+            code: blok.campaignCode,
+          },
+          onError(error) {
+            datadogLogs.logger.error(
+              `[QuickPurchaseBlock]: Failed while redeeming campaign code ${blok.campaignCode}: ${error.message}`,
+            )
+          },
+        })
       }
 
       const url = new URL(pageLink, window.location.origin)
@@ -175,7 +126,6 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
         onSubmit={handleSubmit}
         loading={loadingProductMetadata || isSubmitting}
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
-        redeemedCampaign={redeemedCampaignCode}
       />
     </Wrapper>
   )
