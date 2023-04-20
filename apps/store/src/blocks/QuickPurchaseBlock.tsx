@@ -2,11 +2,13 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, useMemo, type FormEventHandler } from 'react'
+import { useTranslation } from 'react-i18next'
 import { theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
   ProductOption,
+  FormError,
   SSN_FIELDNAME,
   PRODUCT_FIELDNAME,
 } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
@@ -15,6 +17,7 @@ import {
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -25,7 +28,10 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
 
 export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<FormError>()
+
   const router = useRouter()
+  const { t } = useTranslation()
 
   const { shopSession, reset: resetShopSession } = useShopSession()
   const { data, loading: loadingProductMetadata } = useProductMetadataQuery()
@@ -58,9 +64,11 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
     event.preventDefault()
 
     try {
+      setError({})
       setIsSubmitting(true)
 
       if (!shopSession) {
+        setError((prevState) => ({ ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }))
         throw new Error('[QuickPurchaseBlock]: could not found shop session')
       }
 
@@ -75,6 +83,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
 
       const pageLink = productOptions.find((product) => product.value === productName)?.pageLink
       if (pageLink === undefined) {
+        setError((prevState) => ({ ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }))
         throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
       }
 
@@ -82,6 +91,8 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
       // different ssn of the one already attached to the shop session
       if (shopSession.customer && shopSession.customer.ssn !== ssn) {
         await resetShopSession()
+        resetAuthTokens()
+        datadogLogs.logger.info('[QuickPurchaseBlock]: Cleared shopSession to change SSN')
       }
 
       await updateCustomer({
@@ -92,6 +103,13 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
           },
         },
         onError(error) {
+          const message = error.extraInfo?.userError?.message
+          setError((prevState) => {
+            if (message) {
+              return { ...prevState, ssn: message }
+            }
+            return { ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }
+          })
           throw new Error(`[QuickPurchaseBlock]: Failed while updating customer: ${error.message}`)
         },
       })
@@ -126,6 +144,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
         onSubmit={handleSubmit}
         loading={loadingProductMetadata || isSubmitting}
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
+        error={error}
       />
     </Wrapper>
   )

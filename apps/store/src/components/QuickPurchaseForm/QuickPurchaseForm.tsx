@@ -18,11 +18,14 @@ export type ProductOption = {
   }
 }
 
+export type FormError = Partial<Record<typeof SSN_FIELDNAME | 'general', string>>
+
 type Props = {
   productOptions: Array<ProductOption>
   onSubmit?: FormEventHandler<HTMLFormElement>
   loading?: boolean
   ssnDefaultValue?: string
+  error?: FormError
 }
 
 export const QuickPurchaseForm = ({
@@ -30,6 +33,7 @@ export const QuickPurchaseForm = ({
   onSubmit,
   loading,
   ssnDefaultValue = '',
+  error,
 }: Props) => {
   const { t } = useTranslation('purchase-form')
 
@@ -43,13 +47,17 @@ export const QuickPurchaseForm = ({
             required={true}
             disabled={loading}
             defaultValue={ssnDefaultValue}
+            warning={!!error?.ssn}
+            message={error?.ssn}
           />
 
           <SelectPrimitive.Root name={PRODUCT_FIELDNAME} disabled={loading} required={true}>
             <SelectTrigger>
               <SelectPrimitive.Value placeholder={t('FIELD_INSURANCE_SELECTOR_PLACEHOLDER')} />
               <SelectPrimitive.Icon asChild>
-                <StyledChevronIcon size="1rem" />
+                <span>
+                  <StyledChevronIcon size="1rem" />
+                </span>
               </SelectPrimitive.Icon>
             </SelectTrigger>
 
@@ -68,7 +76,9 @@ export const QuickPurchaseForm = ({
                         </SelectPrimitive.ItemText>
 
                         <SelectPrimitive.ItemIndicator asChild>
-                          <SelectedItemIcon size="1rem" />
+                          <span>
+                            <StyledCheckIcon size="1rem" />
+                          </span>
                         </SelectPrimitive.ItemIndicator>
                       </SelectItem>
                     </Fragment>
@@ -82,6 +92,8 @@ export const QuickPurchaseForm = ({
         <Button type="submit" loading={loading}>
           {t('BUTTON_LABEL_GET_PRICE')}
         </Button>
+
+        {error?.general && <GeneralErrorMessage>{error.general}</GeneralErrorMessage>}
       </Space>
     </form>
   )
@@ -172,11 +184,15 @@ const ItemDisplay = styled.div({
   gap: theme.space.xs,
 })
 
-const SelectedItemIcon = styled(CheckIcon)({
+const StyledCheckIcon = styled(CheckIcon)({
   position: 'absolute',
   right: theme.space.md,
   // Centers icon vertically
   top: '50%',
   transform: 'translateY(-50%)',
   zIndex: 1,
+})
+
+const GeneralErrorMessage = styled.p({
+  textAlign: 'center',
 })
