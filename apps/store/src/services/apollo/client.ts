@@ -55,7 +55,7 @@ const languageLink = setContext((_, { headers = {}, ...context }) => {
   return {
     headers: {
       ...headers,
-      ...(locale && getHedvigLanguageHeader(locale)),
+      ...getHedvigLanguageHeader(locale),
     },
     ...context,
   }
@@ -95,6 +95,7 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
         Cart: {
           fields: {
             redeemedCampaigns: {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
               merge: (_, incoming) => incoming,
             },
           },
@@ -117,6 +118,7 @@ export const initializeApollo = (params: InitializeApolloParams = {}) => {
   const { initialState = null, req, res, locale, authHeaders } = params
 
   const _apolloClient =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     apolloClient ??
     createApolloClient({
       ...(authHeaders ?? getAuthHeaders({ req, res })),
@@ -134,6 +136,7 @@ export const initializeApollo = (params: InitializeApolloParams = {}) => {
   if (!isBrowser()) return _apolloClient
 
   // reuse client on the client-side
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

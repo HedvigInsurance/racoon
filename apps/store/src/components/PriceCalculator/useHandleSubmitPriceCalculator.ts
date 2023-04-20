@@ -54,7 +54,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
   // We should either refactor this
   // - when we support Denmark / Norway
   // - when current solution becomes a problem
-  const handleSubmitSection = async (data: JSONData) => {
+  const handleSubmitSection = (data: JSONData) => {
     if (!shopSession || !priceIntent) throw new Error('Not enough data to submit price calculator')
     const [customerData, priceIntentData] = separateCustomerData(data)
 

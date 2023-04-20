@@ -27,6 +27,7 @@ const Template: StoryFn<typeof Icon> = () => {
         <Heading as="h1">Icons</Heading>
         <IconGrid>
           {AllIconNames.map((icon) => (
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             <IconWrapper key={icon} onClick={() => updateClipboard(icon)}>
               <Icon icon={icon} />
               <IconName>{icon}</IconName>

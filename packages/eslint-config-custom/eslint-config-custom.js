@@ -51,6 +51,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+
     '@next/next/no-html-link-for-pages': 'off',
     // For Storybook stories
     'import/no-anonymous-default-export': 'off',
@@ -73,6 +74,16 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+    {
+      files: ['**/*.{ts,tsx}'],
+      extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
+      rules: {
+        '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
+
+        // Breaks with emotion styles referring to other components
+        '@typescript-eslint/restrict-template-expressions': 'off',
       },
     },
   ],

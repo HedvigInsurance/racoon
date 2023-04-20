@@ -11,7 +11,7 @@ import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
-export const useChangeLocale = (currentPageStory: ISbStoryData) => {
+export const useChangeLocale = (currentPageStory: ISbStoryData | undefined) => {
   const router = useRouter()
   const currentCountry = useCurrentCountry()
   const apolloClient = useApolloClient()
@@ -32,7 +32,7 @@ export const useChangeLocale = (currentPageStory: ISbStoryData) => {
           window.location.href = `/${routingLocale}`
           return
         }
-        const targetAlternate = currentPageStory.alternates.find((alternate) =>
+        const targetAlternate = currentPageStory?.alternates.find((alternate) =>
           alternate.full_slug.startsWith(routingLocale),
         )
         if (targetAlternate) {

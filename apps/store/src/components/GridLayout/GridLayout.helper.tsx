@@ -9,9 +9,9 @@ export type ContentWidth = ColumnWidth | PartialRecord<Level | 'base', ColumnWid
 
 const breakpointsOrder = ['base', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const
 
-export const getGridLayout = (width: ContentWidth, align: ContentAlignment): CSSObject => {
+export const getGridLayout = (width: ContentWidth, align: ContentAlignment = 'left'): CSSObject => {
   if (typeof width !== 'object') {
-    return STYLES[width][align ?? 'left']
+    return STYLES[width][align]
   }
 
   let styles: CSSObject = {}
@@ -28,11 +28,11 @@ export const getGridLayout = (width: ContentWidth, align: ContentAlignment): CSS
     }
     if (breakpoint === 'base') {
       // Default
-      const baseStyles = RESPONSIVE_STYLES[sizeAtBreakpoint][align ?? 'left']
+      const baseStyles = RESPONSIVE_STYLES[sizeAtBreakpoint][align]
       styles = { ...baseStyles, ...styles }
     } else {
-      styles[mq[breakpoint as Level]] = {
-        ...RESPONSIVE_STYLES[sizeAtBreakpoint][align ?? 'left'],
+      styles[mq[breakpoint]] = {
+        ...RESPONSIVE_STYLES[sizeAtBreakpoint][align],
       }
     }
   })

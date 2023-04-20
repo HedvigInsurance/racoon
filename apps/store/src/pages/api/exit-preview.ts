@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const exit = async (req: NextApiRequest, res: NextApiResponse) => {
   const { slug = '' } = req.query
   // Exit the current user from "Preview Mode". This function accepts no args.

@@ -62,7 +62,7 @@ export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProp
         {/* TODO: move this logic outside the frontend */}
         <Text color="textSecondary">
           {t('QUICK_ADD_HOUSEHOLD_SIZE', {
-            count: (parseInt(offer.priceIntentData['numberCoInsured']) ?? 0) + 1,
+            count: (parseInt(offer.priceIntentData['numberCoInsured']) || 0) + 1,
           })}
         </Text>
       </Layout.Title>

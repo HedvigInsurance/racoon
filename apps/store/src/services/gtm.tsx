@@ -66,6 +66,7 @@ export type EcommerceEvent = {
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
 export const pushToGTMDataLayer = (obj: DataLayerObject) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!window.dataLayer) window.dataLayer = []
   // Clear the previous ecommerce object
   if (typeof obj.ecommerce !== 'undefined') {

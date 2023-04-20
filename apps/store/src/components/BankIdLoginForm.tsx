@@ -9,7 +9,7 @@ type Props = {
   onLoginStart: () => void
 }
 export const BankIdLoginForm = ({ state, title, onLoginStart }: Props) => {
-  const handleSubmit: FormEventHandler = async (event) => {
+  const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault()
     onLoginStart()
   }

@@ -9,7 +9,7 @@ type HeroVideoProps = PropsWithChildren & {
 
 const HeroVideoWrapper = styled.div(({ height }: Pick<HeroVideoProps, 'height'>) => ({
   position: 'relative',
-  height: height,
+  height,
 }))
 
 const ChildrenWrapper = styled.div(
@@ -25,7 +25,7 @@ const getWidth = (height: string) => Number(height.replace('vh', '')) * 1.8
 
 const StyledIframe = styled.iframe(({ height }: Pick<HeroVideoProps, 'height'>) => ({
   width: `${getWidth(height)}vw`,
-  height: height ?? '80vh',
+  height,
   position: 'absolute',
   top: '50%',
   left: '50%',

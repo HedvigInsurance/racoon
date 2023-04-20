@@ -61,7 +61,7 @@ export class PriceIntentService {
         query: PriceIntentDocument,
         variables: { priceIntentId },
       })
-      return result.data?.priceIntent ?? null
+      return result.data.priceIntent
     } catch (error) {
       // TODO: should probably be logged by DD-logger, but we don't want to include it in
       // the client bundle. This function is only called from the server but the class is

@@ -286,7 +286,7 @@ export const getStoryBySlug = async <StoryData extends ISbStoryData | undefined>
     version: version ?? 'published',
     resolve_relations: 'reusableBlockReference.reference',
   }
-  return await fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
+  return await fetchStory<StoryData | undefined>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {

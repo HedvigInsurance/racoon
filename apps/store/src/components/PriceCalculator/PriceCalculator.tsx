@@ -62,6 +62,7 @@ export const PriceCalculator = (props: Props) => {
             return form.sections[currentSectionIndex].id
           }
           const nextSection = form.sections[currentSectionIndex + 1]
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (nextSection) {
             return nextSection.id
           } else {
