@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, useMemo, type FormEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
-import { theme } from 'ui'
+import { ConditionalWrapper, theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
@@ -27,7 +27,7 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
   campaignCode?: string
 }>
 
-export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
+export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<FormError>()
 
@@ -139,7 +139,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   }
 
   return (
-    <Wrapper>
+    <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
       <QuickPurchaseForm
         productOptions={productOptions}
         onSubmit={handleSubmit}
@@ -148,7 +148,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
         error={error}
       />
-    </Wrapper>
+    </ConditionalWrapper>
   )
 }
 QuickPurchaseBlock.blockName = 'quickPurchase'
