@@ -34,6 +34,7 @@ const createNewPeril = (): PerilFragment => ({
   description: getIpsumSlice(RANDOM_NUMBER_SIZE.XLARGE),
   covered: getPerilCoveredArray(),
   exceptions: [getIpsumSlice(RANDOM_NUMBER_SIZE.LARGE)],
+  colorCode: theme.colors.gray700, // Can be any 500..700 color from theme, but let's keep it simple until needed
 })
 
 // Story

@@ -1,8 +1,10 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useState, useCallback } from 'react'
 import { mq, Text, theme, useBreakpoint } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
+import { isBrowser } from '@/utils/env'
 import { CoverageList } from './CoverageList'
 
 const getPerilColumns = (items: PerilFragment[], columns: number) =>
@@ -132,7 +134,16 @@ const Color = styled.div<{ color?: string }>(({ color }) => ({
   backgroundColor: color,
 }))
 
+const perilsWithoutColorCode = new Set()
 const titleToColor = (title: string) => {
+  if (!perilsWithoutColorCode.has(title)) {
+    perilsWithoutColorCode.add(title)
+    if (isBrowser()) {
+      datadogLogs.logger.warn(`Peril has no colorCode`, { perilTitle: title })
+    } else {
+      console.warn(`Peril has no colorCode`, { perilTitle: title })
+    }
+  }
   switch (title.trim()) {
     case 'Fire':
     case 'Eldsvåda':

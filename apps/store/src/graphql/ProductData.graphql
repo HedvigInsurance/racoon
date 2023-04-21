@@ -15,10 +15,7 @@ query ProductData($productName: String!) {
       typeOfContract
       displayName
       perils {
-        title
-        description
-        covered
-        exceptions
+        ...Peril
       }
       insurableLimits {
         type
