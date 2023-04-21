@@ -22,9 +22,9 @@ export const Item = ({ title, price, description, value }: ItemProps) => {
           <PriceText>{price}</PriceText>
         </Header>
         {description && (
-          <TaglineText color="textSecondary" size="xs">
+          <Text color="textSecondary" size="xs">
             {description}
-          </TaglineText>
+          </Text>
         )}
       </Space>
     </RadioGroupItem>
@@ -38,7 +38,7 @@ const RadioGroupItem = styled(RadioGroup.Item)({
   cursor: 'pointer',
 
   '&[data-state=checked]': {
-    backgroundColor: theme.colors.green50,
+    backgroundColor: theme.colors.backgroundStandard,
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
   },
 })
@@ -48,14 +48,6 @@ const PriceText = styled(Text)({
 
   '[data-state=checked] &': {
     color: theme.colors.textPrimary,
-  },
-})
-
-const TaglineText = styled(Text)({
-  color: theme.colors.textSecondary,
-
-  '[data-state=checked] &': {
-    color: theme.colors.greenText,
   },
 })
 

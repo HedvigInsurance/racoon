@@ -275,7 +275,7 @@ export const colors = {
   backgroundStandard: gray[25],
   backgroundFrostedGlass: grayTranslucent[25],
   borderOpaque1: gray[200],
-  borderOpaque2: gray[400],
+  borderOpaque2: gray[300],
   borderTranslucent: grayTranslucent[400],
   opaque1: gray[100],
   translucent1: grayTranslucent[100],
