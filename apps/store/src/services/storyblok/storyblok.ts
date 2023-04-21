@@ -44,6 +44,7 @@ import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
+import { SelectInsuranceGridBlock } from '@/blocks/SelectInsuranceGridBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
@@ -239,6 +240,7 @@ export const initStoryblok = () => {
     USPBlockItem,
     CardLinkBlock,
     CardLinkListBlock,
+    SelectInsuranceGridBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
