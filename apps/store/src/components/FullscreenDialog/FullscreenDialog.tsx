@@ -98,3 +98,4 @@ const FooterWrapper = styled.footer({
 
 export const Root = Dialog.Root
 export const Close = Dialog.Close
+export const Trigger = Dialog.Trigger

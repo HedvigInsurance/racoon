@@ -11,6 +11,7 @@ import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
 import { CartEntryCollapsible } from './CartEntryCollapsible'
 import { DetailsSheet } from './DetailsSheet'
+import { EditEntryButton } from './EditEntryButton'
 
 type Props = CartEntry & {
   cartId: string
@@ -24,10 +25,10 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
+
   const { shopSession } = useShopSession()
   const [editProductOffer, editState] = useEditProductOffer()
-
-  const handleClickEdit = () => {
+  const handleConfirmEdit = () => {
     if (!shopSession) {
       datadogLogs.logger.warn('No shopSession when clicking edit cart entry')
       return
@@ -65,14 +66,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
       {!readOnly && (
         <Layout.Actions>
           <ActionsRow>
-            <Button
-              variant="secondary-alt"
-              size="small"
-              onClick={handleClickEdit}
-              loading={editState === 'loading'}
-            >
-              {t('CART_ENTRY_EDIT_BUTTON')}
-            </Button>
+            <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
             <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
               <Dialog.Trigger asChild>
