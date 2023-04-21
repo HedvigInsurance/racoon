@@ -7,6 +7,7 @@ import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/Purc
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
+import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '../ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 
 type State = 'idle' | 'loading' | 'error'
 
@@ -56,6 +57,7 @@ export const useEditProductOffer = () => {
         query: {
           [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1,
           replace: params.offerId,
+          [PRELOADED_PRICE_INTENT_QUERY_PARAM]: priceIntent.id,
         },
       })
       setState('idle')
