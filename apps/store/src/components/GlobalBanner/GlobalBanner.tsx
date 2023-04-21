@@ -22,7 +22,7 @@ export const GlobalBanner = () => {
 }
 
 const Wrapper = styled.div({
-  backgroundColor: theme.colors.green50,
+  backgroundColor: theme.colors.greenFill1,
   paddingBlock: theme.space.sm,
   display: 'flex',
   justifyContent: 'center',
