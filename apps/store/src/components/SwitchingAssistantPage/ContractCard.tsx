@@ -33,7 +33,7 @@ const PendingContractCard = ({
   const formatter = useFormatter()
   const windowRef = useRef<Window | null>(null)
 
-  const { showApolloError } = useAppErrorHandleContext()
+  const { showError } = useAppErrorHandleContext()
   const [initiateBankSignering, result] = useBankSigneringInitMutation({
     onCompleted(data) {
       BANK_SIGNERING_LOGGER.info('Redirecting to BankSignering')
@@ -50,7 +50,7 @@ const PendingContractCard = ({
         error: error.message,
       })
       windowRef.current?.close()
-      showApolloError(error)
+      showError(error)
     },
   })
 

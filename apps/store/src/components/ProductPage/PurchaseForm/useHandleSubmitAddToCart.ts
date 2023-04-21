@@ -32,7 +32,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
   const [removeEntry, { loading: loadingRemove }] = useCartEntryRemoveMutation()
 
   const entryToReplace = useCartEntryToReplace()
-  const { showApolloError } = useAppErrorHandleContext()
+  const { showError } = useAppErrorHandleContext()
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault()
 
@@ -49,7 +49,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
       onCompleted() {
         onSuccess(productOfferId, nextUrl)
       },
-      onError: showApolloError,
+      onError: showError,
     })
   }
 

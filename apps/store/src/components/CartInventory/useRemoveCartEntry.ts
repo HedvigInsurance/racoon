@@ -17,7 +17,7 @@ type Params = {
 
 export const useRemoveCartEntry = ({ cartId, offerId, onCompleted }: Params) => {
   const { shopSession } = useShopSession()
-  const { showApolloError } = useAppErrorHandleContext()
+  const { showError } = useAppErrorHandleContext()
   const tracking = useTracking()
 
   return useCartEntryRemoveMutation({
@@ -39,6 +39,6 @@ export const useRemoveCartEntry = ({ cartId, offerId, onCompleted }: Params) => 
         onCompleted?.(data.cartEntriesRemove.cart)
       }
     },
-    onError: showApolloError,
+    onError: showError,
   })
 }
