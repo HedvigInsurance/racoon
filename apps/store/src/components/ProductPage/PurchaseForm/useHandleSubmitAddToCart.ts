@@ -5,7 +5,7 @@ import {
   CartEntryAddMutation,
   useCartEntryAddMutation,
   ProductRecommendationsDocument,
-  useCartEntryRemoveMutation,
+  useCartEntryReplaceMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
@@ -29,7 +29,10 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     awaitRefetchQueries: true,
   })
 
-  const [removeEntry, { loading: loadingRemove }] = useCartEntryRemoveMutation()
+  const [replaceEntry, { loading: loadingReplace }] = useCartEntryReplaceMutation({
+    refetchQueries: [ProductRecommendationsDocument],
+    awaitRefetchQueries: true,
+  })
 
   const entryToReplace = useCartEntryToReplace()
   const { showError } = useAppErrorHandleContext()
@@ -40,20 +43,31 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     const productOfferId = getOrThrowFormValue(formData, FormElement.ProductOfferId)
     const nextUrl = event.nativeEvent.submitter?.getAttribute('value') ?? undefined
 
-    if (entryToReplace) {
-      await removeEntry({ variables: { cartId, offerId: entryToReplace.id } })
-    }
-
-    await addEntry({
-      variables: { cartId, offerId: productOfferId },
+    const options = {
       onCompleted() {
         onSuccess(productOfferId, nextUrl)
       },
       onError: showError,
-    })
+    } as const
+
+    if (entryToReplace) {
+      await replaceEntry({
+        variables: {
+          cartId,
+          removeOfferId: entryToReplace.id,
+          addOfferId: productOfferId,
+        },
+        ...options,
+      })
+    } else {
+      await addEntry({
+        variables: { cartId, offerId: productOfferId },
+        ...options,
+      })
+    }
   }
 
-  return [handleSubmit, loadingRemove || loading] as const
+  return [handleSubmit, loadingReplace || loading] as const
 }
 
 type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]
