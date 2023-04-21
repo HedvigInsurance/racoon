@@ -24,6 +24,7 @@ type Props = {
   productOptions: Array<ProductOption>
   onSubmit?: FormEventHandler<HTMLFormElement>
   loading?: boolean
+  showSsnField?: boolean
   ssnDefaultValue?: string
   error?: FormError
 }
@@ -33,6 +34,7 @@ export const QuickPurchaseForm = ({
   onSubmit,
   loading,
   ssnDefaultValue = '',
+  showSsnField = false,
   error,
 }: Props) => {
   const { t } = useTranslation('purchase-form')
@@ -41,15 +43,17 @@ export const QuickPurchaseForm = ({
     <form onSubmit={onSubmit}>
       <Space y={0.75}>
         <Space y={0.5}>
-          <PersonalNumberField
-            label={t('FIELD_SSN_SE_LABEL')}
-            name={SSN_FIELDNAME}
-            required={true}
-            disabled={loading}
-            defaultValue={ssnDefaultValue}
-            warning={!!error?.ssn}
-            message={error?.ssn}
-          />
+          {showSsnField && (
+            <PersonalNumberField
+              label={t('FIELD_SSN_SE_LABEL')}
+              name={SSN_FIELDNAME}
+              required={true}
+              disabled={loading}
+              defaultValue={ssnDefaultValue}
+              warning={!!error?.ssn}
+              message={error?.ssn}
+            />
+          )}
 
           <SelectPrimitive.Root name={PRODUCT_FIELDNAME} disabled={loading} required={true}>
             <SelectTrigger>

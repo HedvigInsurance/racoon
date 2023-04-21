@@ -23,6 +23,7 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type QuickPurchaseBlockProps = SbBaseBlockProps<{
   products: Array<string>
+  showSsnField: boolean
   campaignCode?: string
 }>
 
@@ -143,6 +144,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
         productOptions={productOptions}
         onSubmit={handleSubmit}
         loading={loadingProductMetadata || isSubmitting}
+        showSsnField={blok.showSsnField}
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
         error={error}
       />
