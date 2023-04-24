@@ -92,6 +92,13 @@ export const apartmentSubTypeField: InputField = {
   required: true,
 }
 
+const ssnSeField: InputField = {
+  type: 'text',
+  name: 'ssn',
+  label: { key: tKey('FIELD_SSN_SE_LABEL') },
+  required: true,
+}
+
 export const ssnSeSection: TemplateSection = {
   id: 'ssn-se',
   title: { key: tKey('SECTION_TITLE_PERSONAL_NUMBER') },
@@ -99,18 +106,16 @@ export const ssnSeSection: TemplateSection = {
   submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
   items: [
     {
-      field: {
-        type: 'text',
-        name: 'ssn',
-        label: { key: tKey('FIELD_SSN_SE_LABEL') },
-        required: true,
-      },
+      field: ssnSeField,
       layout: LAYOUT.FULL_WIDTH,
     },
   ],
+  preview: {
+    fieldName: ssnSeField.name,
+  },
 }
 
-export const yourApartmentSection = {
+export const yourApartmentSection: TemplateSection = {
   id: 'your-home',
   title: { key: tKey('SECTION_TITLE_YOUR_HOME') },
   submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
@@ -132,9 +137,12 @@ export const yourApartmentSection = {
       layout: LAYOUT.FULL_WIDTH,
     },
   ],
+  preview: {
+    fieldName: streetAddressField.name,
+  },
 }
 
-export const yourFamilySection = {
+export const yourFamilySection: TemplateSection = {
   id: 'your-family',
   title: { key: tKey('SECTION_TITLE_YOUR_FAMILY') },
   submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
@@ -142,9 +150,13 @@ export const yourFamilySection = {
     { field: householdSizeField, layout: LAYOUT.FULL_WIDTH },
     { field: emailField, layout: LAYOUT.FULL_WIDTH },
   ],
+  preview: {
+    fieldName: householdSizeField.name,
+    label: { key: tKey('HOUSEHOLD_SIZE_VALUE') },
+  },
 }
 
-export const yourAddressSection = {
+export const yourAddressSection: TemplateSection = {
   id: 'your-address',
   title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
   submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
@@ -153,9 +165,12 @@ export const yourAddressSection = {
     { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
     { field: emailField, layout: LAYOUT.FULL_WIDTH },
   ],
+  preview: {
+    fieldName: streetAddressField.name,
+  },
 }
 
-export const yourAddressSectionWithlivingSpace = {
+export const yourAddressSectionWithlivingSpace: TemplateSection = {
   id: 'your-address',
   title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
   submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
@@ -165,4 +180,7 @@ export const yourAddressSectionWithlivingSpace = {
     { field: livingSpaceField, layout: LAYOUT.HALF_WIDTH },
     { field: emailField, layout: LAYOUT.FULL_WIDTH },
   ],
+  preview: {
+    fieldName: streetAddressField.name,
+  },
 }

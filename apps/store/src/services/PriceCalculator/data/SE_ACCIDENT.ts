@@ -33,6 +33,9 @@ export const SE_ACCIDENT: Template = {
           layout: LAYOUT.HALF_WIDTH,
         },
       ],
+      preview: {
+        fieldName: streetAddressField.name,
+      },
     },
     yourFamilySection,
   ],

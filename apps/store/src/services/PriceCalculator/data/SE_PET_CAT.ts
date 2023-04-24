@@ -100,6 +100,9 @@ export const SE_PET_CAT: Template = {
           layout: LAYOUT.FULL_WIDTH,
         },
       ],
+      preview: {
+        fieldName: 'name',
+      },
     },
     yourAddressSectionWithlivingSpace,
   ],
