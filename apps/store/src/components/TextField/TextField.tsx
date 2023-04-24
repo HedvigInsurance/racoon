@@ -17,13 +17,14 @@ type BaseInputProps = Omit<
   'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'onChange'
 >
 
-type Props = BaseInputProps & {
+export type Props = BaseInputProps & {
   label: string
   variant?: 'small' | 'large'
   suffix?: string
   warning?: boolean
   message?: string
   onValueChange?: (value: string) => void
+  onClear?: () => void
 }
 
 export const TextField = (props: Props) => {
@@ -37,6 +38,7 @@ export const TextField = (props: Props) => {
     message,
     id,
     onValueChange,
+    onClear,
     ...inputProps
   } = props
   const [value, setValue] = useState(defaultValue || '')
@@ -51,6 +53,7 @@ export const TextField = (props: Props) => {
   }
 
   const handleClickDelete: MouseEventHandler<HTMLButtonElement> = () => {
+    onClear?.()
     const newValue = ''
     setValue(newValue)
     onValueChange?.(newValue)
@@ -73,6 +76,7 @@ export const TextField = (props: Props) => {
         {...animationProps}
         data-active={!!inputValue}
         data-warning={warning}
+        data-readonly={inputProps.readOnly ? '' : undefined}
         onClick={handleClickWrapper}
       >
         <Label htmlFor={identifier} data-disabled={inputProps.disabled} data-variant={variant}>
@@ -102,7 +106,7 @@ export const TextField = (props: Props) => {
                 type="button"
                 onClick={handleClickDelete}
                 aria-hidden={true}
-                tabIndex={-1}
+                aria-label="Clear field"
               >
                 <CrossIconSmall />
               </DeleteButton>
@@ -218,13 +222,15 @@ const LargeInput = styled.input({
   fontSize: theme.fontSizes.xl,
   paddingLeft: theme.space.md,
 
-  ':disabled': {
+  ':disabled, :read-only': {
     color: theme.colors.textSecondary,
-    cursor: 'not-allowed',
 
     // Webkit overrides
     WebkitTextFillColor: theme.colors.textSecondary,
     opacity: 1,
+  },
+  ':disabled': {
+    cursor: 'not-allowed',
   },
 })
 
@@ -245,7 +251,12 @@ const DeleteButton = styled.button({
   cursor: 'pointer',
   opacity: 0,
 
-  [`${LargeWrapper}:focus-within &, ${SmallWrapper}:focus-within &`]: {
-    opacity: 1,
+  ':focus-visible': {
+    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
   },
+
+  [`${LargeWrapper}:focus-within &, ${SmallWrapper}:focus-within &, ${LargeWrapper}[data-readonly] &, ${SmallWrapper}[data-readonly] &`]:
+    {
+      opacity: 1,
+    },
 })

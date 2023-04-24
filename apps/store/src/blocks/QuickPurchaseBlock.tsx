@@ -17,7 +17,6 @@ import {
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
-import { resetAuthTokens } from '@/services/authApi/persist'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -34,7 +33,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
   const router = useRouter()
   const { t } = useTranslation()
 
-  const { shopSession, reset: resetShopSession } = useShopSession()
+  const { shopSession, loading: loadingShopSession } = useShopSession()
   const { data, loading: loadingProductMetadata } = useProductMetadataQuery()
 
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
@@ -88,13 +87,8 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
         throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
       }
 
-      // TODO: Maybe notify users that their cart will be cleared if they use this block with a
-      // different ssn of the one already attached to the shop session
-      if (shopSession.customer && shopSession.customer.ssn !== ssn) {
-        await resetShopSession()
-        resetAuthTokens()
-        datadogLogs.logger.info('[QuickPurchaseBlock]: Cleared shopSession to change SSN')
-      }
+      // Pre-fetches PDP page - instant transitions
+      router.prefetch(pageLink)
 
       await updateCustomer({
         variables: {
@@ -116,7 +110,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       })
 
       if (blok.campaignCode) {
-        await redeemCampaign({
+        redeemCampaign({
           variables: {
             cartId: shopSession.cart.id,
             code: blok.campaignCode,
@@ -143,7 +137,8 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       <QuickPurchaseForm
         productOptions={productOptions}
         onSubmit={handleSubmit}
-        loading={loadingProductMetadata || isSubmitting}
+        loading={loadingShopSession || loadingProductMetadata}
+        submitting={isSubmitting}
         showSsnField={blok.showSsnField}
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
         error={error}
