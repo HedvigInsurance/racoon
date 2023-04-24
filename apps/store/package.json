@@ -83,7 +83,7 @@
     "@types/md5": "2.3.2",
     "@types/node": "18.15.13",
     "@types/nprogress": "0.2.0",
-    "@types/react": "18.0.37",
+    "@types/react": "18.0.38",
     "babel-loader": "9.1.2",
     "eslint": "8.38.0",
     "eslint-config-custom": "workspace:",
