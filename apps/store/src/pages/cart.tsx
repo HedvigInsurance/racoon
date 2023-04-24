@@ -55,7 +55,7 @@ const NextCartPage: NextPageWithLayout = (props) => {
         <title>{`${t('CART_PAGE_HEADING')} | Hedvig`}</title>
       </Head>
       <CartPage
-        cartId={shopSession?.cart.id}
+        shopSessionId={shopSession?.id}
         entries={entries}
         campaigns={campaigns}
         campaignsEnabled={shopSession?.cart.campaignsEnabled}

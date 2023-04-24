@@ -163,6 +163,7 @@ export const PurchaseForm = () => {
                 priceTemplate: priceTemplate.name,
                 shopSessionId: shopSession.id,
               })
+              console.error('Failed to create new price intent', error)
             }
 
             if (nextUrl) {

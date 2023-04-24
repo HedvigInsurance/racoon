@@ -67,11 +67,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       RedeemCampaignMutationVariables
     >({
       mutation: RedeemCampaignDocument,
-      variables: { cartId: shopSession.cart.id, code: campaignCode },
+      variables: { shopSessionId: shopSession.id, code: campaignCode },
     })
-    if (!response.data?.cartRedeemCampaign.cart) {
+    const result = response.data?.shopSessionCartCampaignRedeem
+    if (!result?.shopSession) {
       const message = `Invalid campaign code: ${campaignCode}`
-      console.warn(message, response.data?.cartRedeemCampaign.userError?.message)
+      console.warn(message, result?.userError?.message)
     }
   } catch (error) {
     console.warn(`Unable to redeem campaign: ${campaignCode}`, error)

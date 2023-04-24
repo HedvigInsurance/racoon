@@ -6,37 +6,36 @@ import {
 } from '@/services/apollo/generated'
 import { useCartEntryRemoveMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 
 type Params = {
-  cartId: string
+  shopSessionId: string
   offerId: string
   onCompleted?: (cart: CartFragmentFragment) => void
 }
 
-export const useRemoveCartEntry = ({ cartId, offerId, onCompleted }: Params) => {
-  const { shopSession } = useShopSession()
+export const useRemoveCartEntry = ({ shopSessionId, offerId, onCompleted }: Params) => {
   const { showError } = useAppErrorHandleContext()
   const tracking = useTracking()
 
   return useCartEntryRemoveMutation({
-    variables: { cartId, offerId },
+    variables: { shopSessionId, offerId },
     refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
     awaitRefetchQueries: true,
     onCompleted(data) {
-      if (data.cartEntriesRemove.cart) {
-        const offer = shopSession?.cart.entries.find((entry) => entry.id == offerId)
+      const updatedShopSession = data.shopSessionCartEntriesRemove.shopSession
+      if (updatedShopSession) {
+        const offer = updatedShopSession.cart.entries.find((entry) => entry.id == offerId)
         if (offer) {
           tracking.reportDeleteFromCart(offer)
         } else {
           datadogLogs.logger.error('Failed to find offer being removed in session cart', {
-            cartId,
+            shopSessionId,
             offerId,
           })
         }
 
-        onCompleted?.(data.cartEntriesRemove.cart)
+        onCompleted?.(updatedShopSession.cart)
       }
     },
     onError: showError,

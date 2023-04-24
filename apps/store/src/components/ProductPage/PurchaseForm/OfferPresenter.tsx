@@ -76,7 +76,7 @@ export const OfferPresenter = (props: Props) => {
   const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
-    cartId: shopSession.cart.id,
+    shopSessionId: shopSession.id,
     priceIntentId: priceIntent.id,
     onSuccess(productOfferId, nextUrl) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)

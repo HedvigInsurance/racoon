@@ -18,17 +18,18 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useFormatter } from '@/utils/useFormatter'
 
 type CartOfferItemProps = {
-  cartId: string
+  shopSessionId: string
   product: ProductRecommendationFragment
   offer: OfferRecommendationFragment
 }
-export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
+
+export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferItemProps) => {
   const [show, setShow] = useShowCartEntryOffer()
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
   const [handleSubmitAddToCart, loading] = useHandleSubmitAddToCart({
-    cartId: cartId,
+    shopSessionId,
     priceIntentId: offer.id,
     onSuccess() {
       datadogLogs.logger.info('Added quick offer to cart', {

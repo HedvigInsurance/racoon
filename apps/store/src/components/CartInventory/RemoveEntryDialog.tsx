@@ -7,7 +7,7 @@ import { CartEntry } from './CartInventory.types'
 import { useRemoveCartEntry } from './useRemoveCartEntry'
 
 type Props = CartEntry & {
-  cartId: string
+  shopSessionId: string
   children: ReactNode
   onCompleted?: (cart: CartFragmentFragment) => void
 }

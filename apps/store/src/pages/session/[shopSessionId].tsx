@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     try {
       await apolloClient.mutate<RedeemCampaignMutation, RedeemCampaignMutationVariables>({
         mutation: RedeemCampaignDocument,
-        variables: { cartId: shopSession.cart.id, code: campaignCode },
+        variables: { shopSessionId: shopSession.id, code: campaignCode },
       })
     } catch (error) {
       console.warn(`Unable to redeem campaign: ${campaignCode}`, error)

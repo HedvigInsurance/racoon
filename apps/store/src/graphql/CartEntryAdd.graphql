@@ -1,7 +1,7 @@
-mutation CartEntryAdd($cartId: UUID!, $offerId: UUID!) {
-  cartEntriesAdd(input: { cartId: $cartId, offerIds: [$offerId] }) {
-    cart {
-      ...CartFragment
+mutation CartEntryAdd($shopSessionId: UUID!, $offerId: UUID!) {
+  shopSessionCartEntriesAdd(input: { shopSessionId: $shopSessionId, offerIds: [$offerId] }) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

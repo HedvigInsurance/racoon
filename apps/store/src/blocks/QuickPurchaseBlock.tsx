@@ -119,7 +119,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
       if (blok.campaignCode) {
         redeemCampaign({
           variables: {
-            cartId: shopSession.cart.id,
+            shopSessionId: shopSession.id,
             code: blok.campaignCode,
           },
           onError(error) {
