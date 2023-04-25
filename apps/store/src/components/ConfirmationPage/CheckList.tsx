@@ -14,25 +14,27 @@ const CheckedListItem = ({ title, children }: ListItemProps) => (
       <PresentationCheckboxChecked>
         <CheckIcon size="1rem" />
       </PresentationCheckboxChecked>
-      <Text>{title}</Text>
+      <StrikeThroughText color="textTertiary">{title}</StrikeThroughText>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
   </StyledCheckedListItem>
 )
 
-const UncheckedListItem = ({ title, children }: ListItemProps) => (
-  <StyledUncheckedListItem>
+const DisabledListItem = ({ title, children }: ListItemProps) => (
+  <StyledCheckedListItem>
     <SpaceFlex align="center" space={0.5}>
-      <PresentationCheckboxUnchecked />
-      <Text>{title}</Text>
+      <PresentationCheckboxDisabled>
+        <CheckIcon size="1rem" />
+      </PresentationCheckboxDisabled>
+      <Text size={{ _: 'md', lg: 'lg' }}>{title}</Text>
     </SpaceFlex>
     {children && <CheckListItemContent>{children}</CheckListItemContent>}
-  </StyledUncheckedListItem>
+  </StyledCheckedListItem>
 )
 
 export const CheckListItem = {
   Checked: CheckedListItem,
-  Unchecked: UncheckedListItem,
+  Disabled: DisabledListItem,
 }
 
 export const CheckList = styled.ul({
@@ -45,46 +47,32 @@ const CheckListItemBase = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.sm,
   padding: theme.space.md,
   gap: theme.space.md,
 })
 
-const StyledCheckedListItem = styled.li(
-  {
-    color: theme.colors.textDisabled,
-    textDecoration: 'line-through',
-  },
-  CheckListItemBase,
-)
+const StrikeThroughText = styled(Text)({
+  textDecoration: 'line-through',
+})
 
-const StyledUncheckedListItem = styled.li({}, CheckListItemBase)
+const StyledCheckedListItem = styled.li({}, CheckListItemBase)
 
 const CheckListItemContent = styled.div({
   paddingLeft: `calc(${theme.space.lg} + ${theme.space.xs})`,
 })
 
-const PresentationCheckboxBase = css({
+const PresentationCheckboxChecked = styled.div({
   height: theme.space.lg,
   width: theme.space.lg,
   color: theme.colors.white,
   borderRadius: theme.radius.xs,
+  display: 'grid  ',
+  placeItems: 'center',
+  backgroundColor: theme.colors.green600,
 })
 
-const PresentationCheckboxChecked = styled.div(
-  {
-    display: 'grid  ',
-    placeItems: 'center',
-    backgroundColor: theme.colors.green600,
-  },
-  PresentationCheckboxBase,
-)
-
-const PresentationCheckboxUnchecked = styled.div(
-  {
-    backgroundColor: 'transparent',
-    border: `2px solid ${theme.colors.gray300}`,
-  },
-  PresentationCheckboxBase,
-)
+const PresentationCheckboxDisabled = styled(PresentationCheckboxChecked)({
+  backgroundColor: theme.colors.textDisabled,
+})

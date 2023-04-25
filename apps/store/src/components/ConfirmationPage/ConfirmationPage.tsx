@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
@@ -10,10 +11,11 @@ import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWit
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 import qrCodeImage from './download-app-qrcode.png'
-import { FooterSection } from './FooterSection'
+import { ImageSection } from './ImageSection'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
@@ -24,20 +26,6 @@ export const ConfirmationPage = (props: Props) => {
   const { locale, routingLocale } = useCurrentLocale()
   const { platform, cart, story } = props
 
-  const appDownloadAction = platform ? (
-    <Link href={getAppStoreLink(platform, routingLocale)} passHref>
-      <AppStoreBadge type={platform} locale={locale} />
-    </Link>
-  ) : (
-    <ImageWithPlaceholder
-      src={qrCodeImage}
-      alt={t('APP_DOWNLOAD_QRCODE_ALT')}
-      width={128}
-      height={128}
-      priority={true}
-    />
-  )
-
   const checklistItems = story.content.checklist.split('\n')
 
   return (
@@ -46,15 +34,10 @@ export const ConfirmationPage = (props: Props) => {
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
             <Space y={4}>
-              <Space y={{ base: 1.5, lg: 3 }}>
-                <div>
-                  <Heading as="h1" variant="standard.24">
-                    {story.content.title}
-                  </Heading>
-                  <Text as="p" color="textSecondary" size="xl">
-                    {story.content.subtitle}
-                  </Text>
-                </div>
+              <Space y={{ base: 3, lg: 4.5 }}>
+                <Heading as="h1" variant="standard.24" align="center">
+                  {story.content.title}
+                </Heading>
                 <CartInventory cart={cart} readOnly />
               </Space>
 
@@ -71,9 +54,26 @@ export const ConfirmationPage = (props: Props) => {
                   {checklistItems.map((item, index) => {
                     const isLast = index === checklistItems.length - 1
                     return isLast ? (
-                      <CheckListItem.Unchecked key={item} title={item}>
-                        {appDownloadAction}
-                      </CheckListItem.Unchecked>
+                      <Fragment key={item}>
+                        <CheckListItem.Disabled title={item} />
+                        <SpaceFlex direction="vertical" align="center">
+                          <DownloadAppWrapper>
+                            {platform ? (
+                              <Link href={getAppStoreLink(platform, routingLocale)} passHref>
+                                <AppStoreBadge type={platform} locale={locale} />
+                              </Link>
+                            ) : (
+                              <ImageWithPlaceholder
+                                src={qrCodeImage}
+                                alt={t('APP_DOWNLOAD_QRCODE_ALT')}
+                                width={128}
+                                height={128}
+                                priority={true}
+                              />
+                            )}
+                          </DownloadAppWrapper>
+                        </SpaceFlex>
+                      </Fragment>
                     ) : (
                       <CheckListItem.Checked key={item} title={item} />
                     )
@@ -84,23 +84,13 @@ export const ConfirmationPage = (props: Props) => {
           </GridLayout.Content>
         </GridLayout.Root>
 
-        <ConfirmationPageBlock blok={story.content} />
+        <div>
+          <ImageSection
+            image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
+          />
 
-        <FooterSection
-          image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
-        >
-          <Space y={1.5}>
-            <div>
-              <Heading as="h2" variant="standard.24">
-                {story.content.footerTitle}
-              </Heading>
-              <Text as="p" color="textSecondary" size="xl">
-                {story.content.footerSubtitle}
-              </Text>
-            </div>
-            <div>{appDownloadAction}</div>
-          </Space>
-        </FooterSection>
+          <ConfirmationPageBlock blok={story.content} />
+        </div>
       </Space>
     </Wrapper>
   )
@@ -108,8 +98,16 @@ export const ConfirmationPage = (props: Props) => {
 
 const Wrapper = styled.div({
   paddingTop: theme.space.md,
+  paddingBottom: theme.space.xxxl,
 
   [mq.lg]: {
-    paddingTop: theme.space.xxxl,
+    paddingBlock: theme.space.xxxl,
   },
+})
+
+const DownloadAppWrapper = styled.div({
+  paddingTop: theme.space.xxxl,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 })
