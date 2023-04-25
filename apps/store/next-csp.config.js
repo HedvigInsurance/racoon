@@ -29,6 +29,11 @@ const scriptSrc = [
   // GTM injected scripts
   ...gtmInjectedOrigins,
 
+  // OLD market web
+  'https://cdn.adt387.com',
+  'http://widget.trustpilot.com',
+  'https://widget.trustpilot.com',
+
   'https://dc.insurely.com',
   'https://vercel.live',
   "'unsafe-inline'",
@@ -50,6 +55,8 @@ const fontSrc = [
   'https://fonts.gstatic.com',
   // Vercel
   'https://*.vercel.com',
+  // OLD market web
+  'https://cdn.hedvig.com',
   "'self'",
 ]
 const imgSrc = [
@@ -66,6 +73,10 @@ const imgSrc = [
   'https://sgtm.hedvig.com',
 
   ...gtmInjectedOrigins,
+
+  // OLD market web
+  'http://a.storyblok.com',
+  'https://a.storyblok.com',
 
   'blob:',
   'data:',
@@ -94,6 +105,9 @@ const connectSrc = [
   'https://connect.facebook.net',
 
   ...gtmInjectedOrigins,
+
+  // OLD market web
+  'https://api.storyblok.com',
 
   'https://*.hedvigit.com',
   "'self'",
