@@ -1,9 +1,10 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, Text, mq, theme } from 'ui'
+import { Button, Dialog, Space, Text, mq, theme } from 'ui'
 import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { Pillow } from '@/components/Pillow/Pillow'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CartFragmentFragment } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useFormatter } from '@/utils/useFormatter'
@@ -44,27 +45,29 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
   return (
     <Layout.Main>
-      <Layout.Pillow>
-        <Pillow size="small" {...pillow} />
-      </Layout.Pillow>
+      <SpaceFlex space={0.75}>
+        <Layout.Pillow>
+          <Pillow size="small" {...pillow} />
+        </Layout.Pillow>
 
-      <Layout.Title>
-        <Text>{titleLabel}</Text>
-        <Text color="textSecondary">
-          {startDate
-            ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
-            : t('CART_ENTRY_AUTO_SWITCH')}
-        </Text>
-      </Layout.Title>
+        <div>
+          <Text>{titleLabel}</Text>
+          <Text color="textSecondary">
+            {startDate
+              ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
+              : t('CART_ENTRY_AUTO_SWITCH')}
+          </Text>
+        </div>
+      </SpaceFlex>
 
-      <Layout.Details>
-        <CartEntryCollapsible defaultOpen={defaultOpen} price={formatter.monthlyPrice(cost)}>
-          <DetailsSheet {...cartEntry} />
-        </CartEntryCollapsible>
-      </Layout.Details>
+      <Space y={1}>
+        <Layout.Details>
+          <CartEntryCollapsible defaultOpen={defaultOpen} price={formatter.monthlyPrice(cost)}>
+            <DetailsSheet {...cartEntry} />
+          </CartEntryCollapsible>
+        </Layout.Details>
 
-      {!readOnly && (
-        <Layout.Actions>
+        {!readOnly && (
           <ActionsRow>
             <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
@@ -76,58 +79,34 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
               </Dialog.Trigger>
             </RemoveEntryDialog>
           </ActionsRow>
-        </Layout.Actions>
-      )}
+        )}
+      </Space>
     </Layout.Main>
   )
 }
 
-const GRID_AREAS = {
-  Pillow: 'pillow',
-  Title: 'title',
-  Details: 'details',
-  Price: 'price',
-  Content: 'content',
-  Actions: 'actions',
-  Empty: 'empty',
-} as const
-
 const Main = styled.li({
-  display: 'grid',
-  columnGap: theme.space.sm,
-  rowGap: theme.space.md,
-  gridTemplateAreas: `
-    "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
-    "${GRID_AREAS.Details} ${GRID_AREAS.Details} ${GRID_AREAS.Details}"
-    "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Actions}"
-  `,
-  gridTemplateColumns: '3rem minmax(0, 1fr)',
   padding: theme.space.md,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.opaque1,
 
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space.md,
+
   [mq.md]: {
     padding: theme.space.lg,
+    gap: theme.space.lg,
   },
 })
 
 const Layout = {
   Main,
-  Pillow: styled.div({
-    gridArea: GRID_AREAS.Pillow,
-    [mq.md]: {
-      marginBottom: theme.space.xs,
-    },
-  }),
-  Title: styled.div({ gridArea: GRID_AREAS.Title }),
+  Pillow: styled.div({ flexShrink: 0 }),
   Details: styled.div({
-    gridArea: GRID_AREAS.Details,
     paddingTop: theme.space.md,
     borderTop: `1px solid ${theme.colors.borderTranslucent}`,
   }),
-  Price: styled.div({ gridArea: GRID_AREAS.Price }),
-  Content: styled.div({ gridArea: GRID_AREAS.Content }),
-  Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
 } as const
 
 const ActionsRow = styled.div({
