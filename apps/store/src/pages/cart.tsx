@@ -2,11 +2,13 @@ import type { GetStaticProps, NextPageWithLayout } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { useMemo } from 'react'
 import {
   getCrossOut,
   useGetDiscountDurationExplanation,
   useGetDiscountExplanation,
   getTotal,
+  getCartEntry,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import {
@@ -15,11 +17,9 @@ import {
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { initializeApollo } from '@/services/apollo/client'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 const NextCartPage: NextPageWithLayout = (props) => {
@@ -28,25 +28,10 @@ const NextCartPage: NextPageWithLayout = (props) => {
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
   const { t } = useTranslation('cart')
 
-  const entries = shopSession?.cart.entries.map((item) => ({
-    offerId: item.id,
-    title: item.variant.product.displayNameFull,
-    cost: item.price,
-    startDate:
-      !item.cancellation.requested ||
-      item.cancellation.option ===
-        ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-        ? convertToDate(item.startDate)
-        : undefined,
-    pillow: {
-      src: item.variant.product.pillowImage.src,
-      alt: item.variant.product.pillowImage.alt ?? undefined,
-    },
-    documents: item.variant.documents,
-    productName: item.variant.product.name,
-    data: item.priceIntentData,
-  }))
-
+  const entries = useMemo(
+    () => shopSession?.cart.entries.map(getCartEntry),
+    [shopSession?.cart.entries],
+  )
   const campaigns = shopSession?.cart.redeemedCampaigns.map((item) => ({
     id: item.id,
     code: item.code,

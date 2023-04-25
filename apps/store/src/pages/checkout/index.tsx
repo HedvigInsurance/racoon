@@ -1,7 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { SSRConfig } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useMemo } from 'react'
 import {
+  getCartEntry,
   getCrossOut,
   getTotal,
   useGetDiscountDurationExplanation,
@@ -19,7 +21,6 @@ import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSess
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
-import { convertToDate } from '@/utils/date'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
@@ -29,6 +30,11 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
   const getDiscountExplanation = useGetDiscountExplanation()
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+
+  const entries = useMemo(
+    () => shopSession?.cart.entries.map(getCartEntry) ?? [],
+    [shopSession?.cart.entries],
+  )
 
   if (!shopSession || !shopSession.customer) return null
 
@@ -40,19 +46,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
       total: getTotal(shopSession),
       crossOut: getCrossOut(shopSession),
     },
-    entries: shopSession.cart.entries.map((item) => ({
-      offerId: item.id,
-      title: item.variant.product.displayNameFull,
-      cost: item.price,
-      startDate: !item.cancellation.requested ? convertToDate(item.startDate) : undefined,
-      pillow: {
-        src: item.variant.product.pillowImage.src,
-        alt: item.variant.product.pillowImage.alt ?? undefined,
-      },
-      documents: item.variant.documents,
-      productName: item.variant.product.name,
-      data: item.priceIntentData,
-    })),
+    entries,
     campaigns: {
       enabled: shopSession.cart.campaignsEnabled,
       list: shopSession.cart.redeemedCampaigns.map((item) => ({

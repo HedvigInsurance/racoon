@@ -23,6 +23,18 @@ export const DetailsSheet = (props: CartEntry) => {
             <Text>{getDataTableValue(item, data)}</Text>
           </Row>
         ))}
+        {props.tierLevelDisplayName && (
+          <Row>
+            <Text color="textSecondary">{t('DATA_TABLE_TIER_LABEL')}</Text>
+            <Text>{props.tierLevelDisplayName}</Text>
+          </Row>
+        )}
+        {props.deductibleDisplayName && (
+          <Row>
+            <Text color="textSecondary">{t('DATA_TABLE_DEDUCTIBLE_LABEL')}</Text>
+            <Text>{props.deductibleDisplayName}</Text>
+          </Row>
+        )}
       </Table>
 
       <div>

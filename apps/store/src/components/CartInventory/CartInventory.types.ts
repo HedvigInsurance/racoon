@@ -10,6 +10,8 @@ export type CartEntry = {
   documents: CartFragmentFragment['entries'][number]['variant']['documents']
   productName: string
   data: Record<string, unknown>
+  tierLevelDisplayName?: string
+  deductibleDisplayName?: string
 }
 
 export type CartCampaign = {
