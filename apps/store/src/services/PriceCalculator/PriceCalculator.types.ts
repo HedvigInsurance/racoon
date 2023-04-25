@@ -34,6 +34,10 @@ export type TemplateSection = {
   title: Label
   submitLabel: Label
   items: Array<SectionItem>
+  preview?: {
+    fieldName: string
+    label?: Label
+  }
 }
 
 export type JSONData = Record<string, JSONValue>

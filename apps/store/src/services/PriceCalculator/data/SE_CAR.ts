@@ -28,6 +28,9 @@ export const SE_CAR: Template = {
           layout: LAYOUT.FULL_WIDTH,
         },
       ],
+      preview: {
+        fieldName: carRegistrationNumberField.name,
+      },
     },
     yourAddressSection,
   ],

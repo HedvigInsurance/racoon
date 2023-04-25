@@ -85,6 +85,9 @@ export const SE_PET_DOG: Template = {
           layout: LAYOUT.FULL_WIDTH,
         },
       ],
+      preview: {
+        fieldName: 'name',
+      },
     },
     yourAddressSectionWithlivingSpace,
   ],

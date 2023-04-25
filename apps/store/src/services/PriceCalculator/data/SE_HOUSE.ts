@@ -49,6 +49,9 @@ export const SE_HOUSE: Template = {
           layout: LAYOUT.FULL_WIDTH,
         },
       ],
+      preview: {
+        fieldName: streetAddressField.name,
+      },
     },
 
     {
@@ -126,6 +129,10 @@ export const SE_HOUSE: Template = {
           layout: LAYOUT.FULL_WIDTH,
         },
       ],
+      preview: {
+        fieldName: 'numberOfBathrooms',
+        label: { key: tKey('FIELD_NUMBER_OF_BATHROOMS_VALUE') },
+      },
     },
     yourFamilySection,
   ],

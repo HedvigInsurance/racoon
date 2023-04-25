@@ -3,11 +3,7 @@ import * as Accordion from '@radix-ui/react-accordion'
 import { ReactNode } from 'react'
 import { theme } from 'ui'
 
-export const Header = styled(Accordion.Header)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-}))
+export const Header = Accordion.Header
 
 export const Content = styled(Accordion.Content)({
   paddingTop: theme.space.sm,
