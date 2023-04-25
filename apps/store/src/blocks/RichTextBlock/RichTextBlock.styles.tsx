@@ -123,6 +123,7 @@ export const richTextStyles = css(
     fontSize: theme.fontSizes.md,
     '.preamble': {
       fontSize: theme.fontSizes.xl,
+      color: theme.colors.textPrimary,
     },
 
     p: {
@@ -151,22 +152,24 @@ export const richTextStyles = css(
     },
 
     [mq.md]: {
-      fontSize: theme.fontSizes.xl,
-      '.preamble': {
-        fontSize: theme.fontSizes.xxl,
-      },
-
-      h2: {
-        marginTop: theme.space.xxl,
+      '&[data-small-text=false]': {
         fontSize: theme.fontSizes.xl,
-      },
+        '.preamble': {
+          fontSize: theme.fontSizes.xxl,
+        },
 
-      h3: {
-        marginTop: theme.space.xl,
-      },
+        h2: {
+          marginTop: theme.space.xxl,
+          fontSize: theme.fontSizes.xl,
+        },
 
-      h4: {
-        marginTop: theme.space.xl,
+        h3: {
+          marginTop: theme.space.xxl,
+        },
+
+        h4: {
+          marginTop: theme.space.xxl,
+        },
       },
     },
   },
