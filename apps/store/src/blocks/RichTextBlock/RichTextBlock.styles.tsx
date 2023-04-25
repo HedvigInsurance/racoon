@@ -1,5 +1,4 @@
 import { css, Global } from '@emotion/react'
-import { getHeadingVariantStyles } from 'ui/src/components/Heading/Heading.helpers'
 import { theme, mq } from 'ui'
 
 const hoverColors = [
@@ -135,25 +134,20 @@ export const richTextStyles = css(
       marginTop: 0,
     },
 
-    h2: {
+    'h2, h3, h4': {
       marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.24', md: 'standard.32', xl: 'standard.48' }),
-    },
-
-    h3: {
-      marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.18', md: 'standard.24', xl: 'standard.32' }),
-    },
-
-    h4: {
-      marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.18', md: 'standard.24', xl: 'standard.32' }),
+      fontSize: theme.fontSizes.md,
     },
 
     hr: {
       marginBlock: theme.space.xxxl,
       height: 1,
       backgroundColor: theme.colors.borderOpaque2,
+    },
+
+    img: {
+      marginBlock: theme.space.xl,
+      borderRadius: theme.radius.lg,
     },
 
     [mq.md]: {
@@ -164,33 +158,15 @@ export const richTextStyles = css(
 
       h2: {
         marginTop: theme.space.xxl,
+        fontSize: theme.fontSizes.xl,
       },
 
       h3: {
-        marginTop: theme.space.xxl,
+        marginTop: theme.space.xl,
       },
 
       h4: {
-        marginTop: theme.space.xxl,
-      },
-    },
-
-    [mq.xl]: {
-      fontSize: theme.fontSizes.xxl,
-      '.preamble': {
-        fontSize: theme.fontSizes.xxxl,
-      },
-
-      h2: {
-        marginTop: theme.space.xxxl,
-      },
-
-      h3: {
-        marginTop: theme.space.xxxl,
-      },
-
-      h4: {
-        marginTop: theme.space.xxxl,
+        marginTop: theme.space.xl,
       },
     },
   },
