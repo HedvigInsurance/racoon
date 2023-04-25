@@ -8,6 +8,7 @@ export const gray = {
   500: 'hsl(0, 0%, 71%)',
   600: 'hsl(0, 0%, 59%)',
   700: 'hsl(0, 0%, 44%)',
+  750: 'hsl(0, 0%, 38%)',
   800: 'hsl(0, 0%, 31%)',
   900: 'hsl(0, 0%, 19%)',
   1000: 'hsl(0, 0%, 7%)',
@@ -263,6 +264,7 @@ export const colors = {
 
   // Text colors
   textPrimary: gray[1000],
+  textSecondaryOnGray: gray[750],
   textSecondary: gray[700],
   textTertiary: gray[500],
   textDisabled: gray[400],

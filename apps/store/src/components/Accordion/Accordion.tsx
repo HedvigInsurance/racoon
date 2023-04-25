@@ -114,7 +114,7 @@ Content.displayName = 'AccordionContent'
 
 const StyledContent = styled(AccordionPrimitives.Content)({
   fontSize: theme.fontSizes.md,
-  color: theme.colors.textSecondary,
+  color: theme.colors.textSecondaryOnGray,
   lineHeight: 1.32,
   overflow: 'hidden',
 })
