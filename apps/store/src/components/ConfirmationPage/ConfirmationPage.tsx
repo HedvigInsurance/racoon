@@ -44,7 +44,7 @@ export const ConfirmationPage = (props: Props) => {
     <Wrapper>
       <Space y={4}>
         <GridLayout.Root>
-          <GridLayout.Content width="1/2" align="center">
+          <GridLayout.Content width="1/3" align="center">
             <Space y={4}>
               <Space y={{ base: 1.5, lg: 3 }}>
                 <div>
