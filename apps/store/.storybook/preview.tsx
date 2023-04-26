@@ -4,6 +4,8 @@ import { Global } from '@emotion/react'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { MockedProvider } from '@apollo/client/testing'
 import './i18next'
+import React from 'react'
+import { type Decorator } from '@storybook/react'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -18,12 +20,12 @@ export const parameters = {
   },
   nextRouter: {
     Provider: RouterContext.Provider,
-    locale: 'en-se',
-    path: '/en-se',
+    locale: 'se-en',
+    path: '/se-en',
   },
 }
 
-export const decorators = [
+export const decorators: Array<Decorator> = [
   (Story) => (
     <>
       <Global styles={storybookFontStyles} />

@@ -30,7 +30,7 @@ const Page = () => {
     }
 
     window.localStorage.setItem(HEDVIG_DEBUGGER_SSN, ssn)
-    window.location.href = PageLink.cart({ locale: 'en-se' })
+    window.location.href = PageLink.cart({ locale: 'se-en' })
   }
 
   return (

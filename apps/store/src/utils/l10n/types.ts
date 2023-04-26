@@ -10,8 +10,8 @@ export const Locale = {
   EnDk: 'en-DK',
 } as const
 
-export type IsoLocale = typeof Locale[keyof typeof Locale]
-export type RoutingLocale = Lowercase<CountryLabel> | Lowercase<IsoLocale>
+export type IsoLocale = (typeof Locale)[keyof typeof Locale]
+export type RoutingLocale = Lowercase<CountryLabel> | 'se-en' | 'no-en' | 'dk-en'
 export type UiLocale = IsoLocale | RoutingLocale
 
 export enum Language {

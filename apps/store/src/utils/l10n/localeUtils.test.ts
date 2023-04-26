@@ -15,7 +15,7 @@ describe('isIsoLocale', () => {
 describe('isRoutingLocale', () => {
   it.each([
     ['se', true],
-    ['en-se', true],
+    ['se-en', true],
     ['en-SE', false],
     ['sv-dk', false],
     ['default', false],

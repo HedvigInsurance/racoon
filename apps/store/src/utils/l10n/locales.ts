@@ -19,7 +19,7 @@ export const locales: Record<IsoLocale, LocaleData> = {
   [Locale.EnSe]: {
     locale: Locale.EnSe,
     language: Language.En,
-    routingLocale: 'en-se',
+    routingLocale: 'se-en',
   },
   [Locale.NbNo]: {
     locale: Locale.NbNo,
@@ -29,7 +29,7 @@ export const locales: Record<IsoLocale, LocaleData> = {
   [Locale.EnNo]: {
     locale: Locale.EnNo,
     language: Language.En,
-    routingLocale: 'en-no',
+    routingLocale: 'no-en',
   },
   [Locale.DaDk]: {
     locale: Locale.DaDk,
@@ -39,7 +39,7 @@ export const locales: Record<IsoLocale, LocaleData> = {
   [Locale.EnDk]: {
     locale: Locale.EnDk,
     language: Language.En,
-    routingLocale: 'en-dk',
+    routingLocale: 'dk-en',
   },
 }
 
