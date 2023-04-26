@@ -28,7 +28,7 @@ export const ProductPillowBlock = ({ blok }: ProductPillowBlockProps) => {
 }
 ProductPillowBlock.blockName = 'productPillow'
 
-// Make sure /en-se/products/home == en-se/products/home
+// Make sure /se-en/products/home == se-en/products/home
 const isSameLink = (a: string, b: string) => {
   const normalize = (url: string) => url.replace(/^\//, '')
   return normalize(a) === normalize(b)

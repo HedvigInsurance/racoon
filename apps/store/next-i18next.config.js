@@ -21,7 +21,7 @@ module.exports = {
       'default',
 
       // Generic English with optional country-specific variants (generally should be empty)
-      ...(englishLanguageEnabled ? ['en', 'en-dk', 'en-no', 'en-se'] : []),
+      ...(englishLanguageEnabled ? ['en', 'dk-en', 'no-en', 'se-en'] : []),
 
       // Swedish, see note in fallbackLng
       'se',
@@ -37,9 +37,9 @@ module.exports = {
     // Only used in country selector page
     default: englishFallback,
     // Need explicit fallbacks, locale loading fails with nonExplicitSupportedLngs: true,
-    'en-se': englishFallback,
-    'en-dk': englishFallback,
-    'en-no': englishFallback,
+    'se-en': englishFallback,
+    'dk-en': englishFallback,
+    'no-en': englishFallback,
     // We're using 'se' for Swedish, but in ISO registry it stands for Northern Sami
     // This alias is a workaround that allows us to have correct plural forms
     //

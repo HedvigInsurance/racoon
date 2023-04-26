@@ -84,10 +84,10 @@ export const PageLink = {
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
   se: '/se/hjalp/kundservice',
-  'en-se': '/se-en/help/customer-service',
+  'se-en': '/se-en/help/customer-service',
 }
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
   se: '/se/forsakringar/djurforsakring/sjalvrisk',
-  'en-se': '/se-en/insurances/petinsurance/deductible',
+  'se-en': '/se-en/insurances/petinsurance/deductible',
 }

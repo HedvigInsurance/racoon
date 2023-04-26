@@ -17,12 +17,13 @@ import {
   priceIntentServiceInitServerSide,
 } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 const TEST_SSN = '199808302393'
 const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
 // TODO: iternationalize
-const DEFAULT_LOCALE = 'en-se'
+const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

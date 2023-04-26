@@ -42,7 +42,7 @@ const NextPage: NextPageWithLayout = () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const rawLocale = context.locale ?? context.defaultLocale
   // TODO: Remove this when we have a global 404 page
-  const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'en-se'
+  const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'se-en'
 
   const apolloClient = initializeApollo({ locale })
   const [globalStory, translations, productMetadata] = await Promise.all([
