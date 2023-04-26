@@ -30,15 +30,26 @@ export const linkStyles = css({
     textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
     textUnderlineOffset: 5,
 
-    '&:hover': {
-      textDecorationColor: 'var(--random-hover-color)',
+    '@media (hover: hover)': {
+      '&:hover': {
+        textDecorationColor: 'var(--random-hover-color)',
+      },
     },
   },
 })
 
 export const listStyles = css({
-  ul: {
+  'ul, ol': {
+    marginBlock: theme.space.md,
     marginLeft: theme.space.xs,
+
+    [mq.md]: {
+      marginLeft: '1.25rem',
+    },
+
+    [mq.lg]: {
+      marginLeft: theme.space.xl,
+    },
   },
 
   'ul li': {
@@ -57,24 +68,6 @@ export const listStyles = css({
       backgroundColor: theme.colors.textSecondary,
     },
 
-    [mq.md]: {
-      paddingLeft: '1.75rem',
-      '&::before': {
-        top: 7,
-        width: 19,
-        height: 19,
-      },
-    },
-
-    [mq.xl]: {
-      paddingLeft: theme.space.xl,
-      '&::before': {
-        top: 9,
-        width: 24,
-        height: 24,
-      },
-    },
-
     ul: {
       marginLeft: 0,
 
@@ -85,20 +78,22 @@ export const listStyles = css({
     },
   },
 
+  '&[data-small-text=false] ul li': {
+    [mq.md]: {
+      paddingLeft: '1.75rem',
+      '&::before': {
+        top: 7,
+        width: 19,
+        height: 19,
+      },
+    },
+  },
+
   ol: {
-    marginLeft: theme.space.sm,
     listStyle: 'decimal',
 
     ol: {
       listStyle: 'lower-alpha',
-    },
-
-    [mq.md]: {
-      marginLeft: '1.25rem',
-    },
-
-    [mq.lg]: {
-      marginLeft: theme.space.xl,
     },
   },
 
