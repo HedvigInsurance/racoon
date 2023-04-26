@@ -41,27 +41,25 @@ export const QuickPurchaseForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Space y={0.75}>
-        <Space y={0.5}>
-          <SsnField
-            name={SSN_FIELDNAME}
-            defaultValue={ssnDefaultValue}
-            required={true}
-            disabled={submitting}
-            warning={!!error?.ssn}
-            message={error?.ssn}
-            hidden={!showSsnField}
-          />
+      <Space y={0.25}>
+        <SsnField
+          name={SSN_FIELDNAME}
+          defaultValue={ssnDefaultValue}
+          required={true}
+          disabled={submitting}
+          warning={!!error?.ssn}
+          message={error?.ssn}
+          hidden={!showSsnField}
+        />
 
-          {productOptions.length > 1 && (
-            <ProductSelector
-              productOptions={productOptions}
-              name={PRODUCT_FIELDNAME}
-              disabled={submitting}
-              required={true}
-            />
-          )}
-        </Space>
+        {productOptions.length > 1 && (
+          <ProductSelector
+            productOptions={productOptions}
+            name={PRODUCT_FIELDNAME}
+            disabled={submitting}
+            required={true}
+          />
+        )}
 
         <Button type="submit" loading={submitting}>
           {t('BUTTON_LABEL_GET_PRICE')}

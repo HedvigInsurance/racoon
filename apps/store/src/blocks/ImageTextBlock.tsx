@@ -8,17 +8,21 @@ import { ImageBlock, ImageBlockProps } from './ImageBlock'
 
 type Orientation = 'vertical' | 'fluid'
 type TextAlignment = 'top' | 'center' | 'bottom'
+type TextHorizontalAlignment = 'left' | 'center' | 'right'
 type ImagePlacement = 'left' | 'right'
 
 const DEFAULT_ORIENTATION: Orientation = 'vertical'
 const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
+const DEFAULT_TEXT_HORIZONTAL_ALIGNMENT: TextHorizontalAlignment = 'left'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
 type ImageTextBlockProps = SbBaseBlockProps<{
   image: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
+  // TODO: rename this to 'textVerticalAlignment'
   textAlignment?: TextAlignment
+  textHorizontalAlignment?: TextHorizontalAlignment
   imagePlacement?: ImagePlacement
 }>
 
@@ -36,6 +40,7 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
           imageBlock={imageBlock}
           body={blok.body}
           textAlignment={blok.textAlignment}
+          textHorizontalAlignment={blok.textHorizontalAlignment}
           imagePlacement={blok.imagePlacement}
         />
       )
@@ -83,13 +88,14 @@ const VerticalBodyWrapper = styled.div({
 
 type FluidImageTextBlockProps = Pick<
   ImageTextBlockProps['blok'],
-  'body' | 'textAlignment' | 'imagePlacement'
+  'body' | 'textAlignment' | 'textHorizontalAlignment' | 'imagePlacement'
 > & { imageBlock?: ImageBlockProps['blok'] }
 
 const FluidImageTextBlock = ({
   imageBlock,
   body,
   textAlignment = DEFAULT_TEXT_ALIGNMENT,
+  textHorizontalAlignment = DEFAULT_TEXT_HORIZONTAL_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
 }: FluidImageTextBlockProps) => {
   return (
@@ -99,12 +105,16 @@ const FluidImageTextBlock = ({
           <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />
         </GridLayout.Content>
       )}
-      <FluidBodyWrapper textAlignment={textAlignment} imagePlacement={imagePlacement}>
-        <div>
+      <FluidBodyWrapper
+        imagePlacement={imagePlacement}
+        textAlignment={textAlignment}
+        textHorizontalAlignment={textHorizontalAlignment}
+      >
+        <FluidBodyInnerWrapper>
           {body?.map((nestedBlock) => (
             <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
           ))}
-        </div>
+        </FluidBodyInnerWrapper>
       </FluidBodyWrapper>
     </FluidImageTextBlockWrapper>
   )
@@ -112,41 +122,52 @@ const FluidImageTextBlock = ({
 
 const FluidImageTextBlockWrapper = styled(GridLayout.Root)({
   paddingInline: theme.space.xs,
+  rowGap: theme.space.md,
 
   [mq.md]: {
     paddingInline: theme.space.md,
+  },
+  [mq.lg]: {
+    columnGap: theme.space.xxxl,
   },
 })
 
 export const FluidBodyWrapper = styled.div<{
   textAlignment: TextAlignment
+  textHorizontalAlignment: TextHorizontalAlignment
   imagePlacement: ImagePlacement
-}>(({ textAlignment, imagePlacement }) => ({
-  paddingBlock: theme.space.md,
-  paddingInline: theme.space.xs,
+}>(({ textAlignment, textHorizontalAlignment, imagePlacement }) => ({
   gridColumn: '1 / -1',
 
   [mq.lg]: {
+    gridColumn: 'span 6',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: getTextAlignmentStyles(textAlignment),
-    gridColumn: 'span 6',
+    alignItems: getTextAlignmentStyles(textHorizontalAlignment),
     order: imagePlacement === 'right' ? -1 : 'initial',
-    maxWidth: '37.5rem',
-    paddingInline:
-      imagePlacement === 'right'
-        ? `${theme.space.xs} ${theme.space.xxl}`
-        : `${theme.space.xxl} ${theme.space.xs}`,
   },
 }))
 
-const getTextAlignmentStyles = (textAlignment: TextAlignment) => {
-  switch (textAlignment) {
+const FluidBodyInnerWrapper = styled.div({
+  paddingInline: theme.space.xs,
+  maxWidth: '37.5rem',
+
+  [mq.md]: {
+    paddingInline: 0,
+    maxWidth: 'initial',
+  },
+})
+
+const getTextAlignmentStyles = (alignment: TextAlignment | TextHorizontalAlignment) => {
+  switch (alignment) {
     case 'top':
+    case 'left':
       return 'flex-start'
     case 'center':
       return 'center'
     case 'bottom':
+    case 'right':
       return 'flex-end'
     default:
       return 'initial'

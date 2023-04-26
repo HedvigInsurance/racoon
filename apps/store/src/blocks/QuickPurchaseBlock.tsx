@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, useMemo, type FormEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ConditionalWrapper, theme } from 'ui'
+import { theme } from 'ui'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
@@ -26,7 +26,7 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
   campaignCode?: string
 }>
 
-export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) => {
+export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<FormError>()
 
@@ -140,7 +140,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
   }
 
   return (
-    <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
+    <Wrapper>
       <QuickPurchaseForm
         productOptions={productOptions}
         onSubmit={handleSubmit}
@@ -150,13 +150,13 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
         error={error}
       />
-    </ConditionalWrapper>
+    </Wrapper>
   )
 }
 QuickPurchaseBlock.blockName = 'quickPurchase'
 
 const Wrapper = styled.div({
-  width: 'min(25rem, 100%)',
-  margin: '0 auto',
+  width: 'min(24rem, 100%)',
+  marginInline: 'auto',
   paddingInline: theme.space.md,
 })
