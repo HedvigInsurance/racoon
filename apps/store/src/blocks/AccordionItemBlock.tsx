@@ -3,8 +3,8 @@ import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react
 import { useId } from 'react'
 import { Text, mq, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { RichTextContent } from '@/components/RichTextContent/RichTextContent'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { richTextStyles } from './RichTextBlock/RichTextBlock.styles'
 
 export type AccordionItemBlockProps = SbBaseBlockProps<{
   title: string
@@ -23,7 +23,7 @@ export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) 
       </Accordion.HeaderWithTrigger>
       <Accordion.Content open={openItem === value}>
         <ContentWrapper>
-          <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
+          <Content dangerouslySetInnerHTML={{ __html: contentHtml }} />
         </ContentWrapper>
       </Accordion.Content>
     </Accordion.Item>
@@ -37,5 +37,12 @@ const ContentWrapper = styled.div({
 
   [mq.lg]: {
     paddingBottom: theme.space.xs,
+  },
+})
+
+const Content = styled.div(richTextStyles, {
+  p: { marginBlock: 0 },
+  '& > *:not(:last-of-type)': {
+    marginBottom: theme.space.md,
   },
 })

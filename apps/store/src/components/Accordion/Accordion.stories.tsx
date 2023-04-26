@@ -16,7 +16,7 @@ const ACCORDION_ITEMS = [
     content: (
       <>
         Lorem ipsum dolor sit amet, florrum plorrum klufs grufs glufs. Nufs ep trop. Nufs ep trop.
-        Lorem ipsum dolor sit amet, florrum plorrum.
+        Lorem ipsum dolor sit amet, florrum plorrum <a href="#">Some link</a>.
         <Heading variant="serif.20" as="h4">
           Covered
         </Heading>
