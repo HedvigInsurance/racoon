@@ -20,6 +20,7 @@ type ImageTextBlockProps = SbBaseBlockProps<{
   image: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
+  // TODO: rename this to 'textVerticalAlignment'
   textAlignment?: TextAlignment
   textHorizontalAlignment?: TextHorizontalAlignment
   imagePlacement?: ImagePlacement

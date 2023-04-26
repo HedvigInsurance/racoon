@@ -33,9 +33,9 @@ export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
       <SelectPrimitive.Portal>
         <SelectContent position="popper" sideOffset={4}>
           <SelectPrimitive.Viewport>
-            {productOptions.map((option) => (
+            {productOptions.map((option, index) => (
               <Fragment key={option.value}>
-                <Separator />
+                {index !== 0 && <Separator />}
                 <SelectItem value={option.value}>
                   <SelectPrimitive.ItemText asChild={true}>
                     <ItemDisplay>
@@ -72,10 +72,6 @@ const SelectTrigger = styled(SelectPrimitive.Trigger)({
 
   '&[data-placeholder]': {
     color: theme.colors.textSecondary,
-  },
-
-  '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
   },
 
   '&:invalid, &:disabled': {
