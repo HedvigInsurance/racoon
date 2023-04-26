@@ -41,10 +41,6 @@ export const listStyles = css({
     marginLeft: theme.space.xs,
   },
 
-  li: {
-    marginBlock: theme.space.md,
-  },
-
   'ul li': {
     position: 'relative',
     paddingLeft: theme.space.lg,
@@ -91,7 +87,7 @@ export const listStyles = css({
 
   ol: {
     marginLeft: theme.space.sm,
-    listStyle: 'decimal-leading-zero',
+    listStyle: 'decimal',
 
     ol: {
       listStyle: 'lower-alpha',
@@ -133,6 +129,10 @@ export const richTextStyles = css(
 
     'h4 + p': {
       marginTop: 0,
+    },
+
+    'li > p': {
+      marginBlock: 0,
     },
 
     'h2, h3, h4': {
