@@ -3,6 +3,7 @@
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Legg til",
   "DATA_TABLE_MILEAGE_VALUE": "{{value}} km/år",
   "DATA_TABLE_START_DATE_LABEL": "Startdato",
+  "DATA_TABLE_TIER_LABEL": "Dekningsnivå",
   "DISCOUNT_STATE_FREE_MONTHS_one": "Gratis i {{count}} måned",
   "DISCOUNT_STATE_FREE_MONTHS_other": "Gratis i {{count}} måneder",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",

@@ -1,8 +1,14 @@
 import { useTranslation } from 'next-i18next'
-import { CampaignDiscount, CampaignDiscountType } from '@/services/apollo/generated'
+import {
+  CampaignDiscount,
+  CampaignDiscountType,
+  ExternalInsuranceCancellationOption,
+} from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { convertToDate } from '@/utils/date'
 import { Money } from '@/utils/formatter'
 import { useFormatter } from '@/utils/useFormatter'
+import { CartEntry } from './CartInventory.types'
 
 export const useGetDiscountExplanation = () => {
   const { t } = useTranslation('cart')
@@ -70,4 +76,33 @@ export const getCrossOut = (shopSession: ShopSession) => {
 
   if (!hasDiscount) return undefined
   return shopSession.cart.cost.gross
+}
+
+export const getCartEntry = (item: ShopSession['cart']['entries'][number]): CartEntry => {
+  const invalidRenewalDate =
+    item.cancellation.option === ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+  const hasCancellation = item.cancellation.requested && !invalidRenewalDate
+
+  return {
+    offerId: item.id,
+    title: item.variant.product.displayNameFull,
+    cost: item.price,
+    startDate: hasCancellation ? convertToDate(item.startDate) : undefined,
+    pillow: {
+      src: item.variant.product.pillowImage.src,
+      alt: item.variant.product.pillowImage.alt ?? undefined,
+    },
+    documents: item.variant.documents,
+    productName: item.variant.product.name,
+    data: item.priceIntentData,
+    tierLevelDisplayName: getTierLevelDisplayName(item),
+    deductibleDisplayName: item.deductible?.displayName,
+  }
+}
+
+const getTierLevelDisplayName = (item: ShopSession['cart']['entries'][number]) => {
+  // TODO: small hack, move logic to API
+  return item.variant.displayName !== item.variant.product.displayNameFull
+    ? item.variant.displayName
+    : undefined
 }
