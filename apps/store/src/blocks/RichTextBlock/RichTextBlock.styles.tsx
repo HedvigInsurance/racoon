@@ -118,6 +118,8 @@ export const richTextStyles = css(
   {
     fontSize: theme.fontSizes.md,
     '.preamble': {
+      display: 'block',
+      marginBottom: theme.space.xl,
       fontSize: theme.fontSizes.xl,
       color: theme.colors.textPrimary,
     },
@@ -155,6 +157,7 @@ export const richTextStyles = css(
       '&[data-small-text=false]': {
         fontSize: theme.fontSizes.xl,
         '.preamble': {
+          marginBottom: theme.space.xxl,
           fontSize: theme.fontSizes.xxl,
         },
 
