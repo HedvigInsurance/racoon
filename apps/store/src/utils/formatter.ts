@@ -9,7 +9,7 @@ export type Money = {
   currencyCode: CurrencyCode
 }
 
-export const formatMoney = (money: Money, options: MoneyFormatOptions): string => {
+const formatMoney = (money: Money, options: MoneyFormatOptions): string => {
   return new Intl.NumberFormat(options.locale, {
     style: 'currency',
     currency: money.currencyCode,
@@ -18,7 +18,7 @@ export const formatMoney = (money: Money, options: MoneyFormatOptions): string =
   }).format(money.amount)
 }
 
-export const formatMonthlyPrice = (
+const formatMonthlyPrice = (
   price: Money,
   options: MoneyFormatOptions & { t: TFunction },
 ): string => {
@@ -30,21 +30,30 @@ export const formatMonthlyPrice = (
   })
 }
 
-type DateFormatOptions = { locale: IsoLocale }
+type DateFormatOptions = { locale: IsoLocale } & { t: TFunction }
 
-export const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
+const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
   const today = new Date()
   const isSameDay =
     date.getDate() === today.getDate() &&
     date.getMonth() === today.getMonth() &&
     date.getFullYear() === today.getFullYear()
+
   if (isSameDay) {
-    return new Intl.RelativeTimeFormat(options.locale, { numeric: 'auto' }).format(0, 'day')
+    return options.t('DATE_SAME_DAY')
   }
-  return date.toLocaleDateString(options.locale)
+
+  // FYI: dates are formatted the same across locales
+  const result = date.toLocaleDateString('sv-SE', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  return result.replace(/-/g, '.')
 }
 
-export const formatTitleCase = (str: string): string => {
+const formatTitleCase = (str: string): string => {
   return str
     .toLowerCase()
     .split(' ')
