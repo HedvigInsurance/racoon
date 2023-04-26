@@ -26,7 +26,7 @@ export const GlobalLinkStyles = () => {
 export const linkStyles = css({
   a: {
     textDecorationLine: 'underline',
-    textDecorationColor: theme.colors.borderOpaque2,
+    textDecorationColor: theme.colors.gray400,
     textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
     textUnderlineOffset: 5,
 
