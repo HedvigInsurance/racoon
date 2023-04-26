@@ -25,10 +25,8 @@ export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
     <SelectPrimitive.Root {...delegated}>
       <SelectTrigger>
         <SelectPrimitive.Value placeholder={t('FIELD_INSURANCE_SELECTOR_PLACEHOLDER')} />
-        <SelectPrimitive.Icon asChild>
-          <span>
-            <StyledChevronIcon size="1rem" />
-          </span>
+        <SelectPrimitive.Icon>
+          <StyledChevronIcon size="1rem" />
         </SelectPrimitive.Icon>
       </SelectTrigger>
 
@@ -39,17 +37,15 @@ export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
               <Fragment key={option.value}>
                 <Separator />
                 <SelectItem value={option.value}>
-                  <SelectPrimitive.ItemText asChild>
+                  <SelectPrimitive.ItemText asChild={true}>
                     <ItemDisplay>
                       <Pillow size="xxsmall" {...option.img} />
                       <span>{option.name}</span>
                     </ItemDisplay>
                   </SelectPrimitive.ItemText>
 
-                  <SelectPrimitive.ItemIndicator asChild>
-                    <span>
-                      <StyledCheckIcon size="1rem" />
-                    </span>
+                  <SelectPrimitive.ItemIndicator>
+                    <StyledCheckIcon size="1rem" />
                   </SelectPrimitive.ItemIndicator>
                 </SelectItem>
               </Fragment>

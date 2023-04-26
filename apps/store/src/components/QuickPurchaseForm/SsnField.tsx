@@ -28,6 +28,7 @@ export const SsnField = (props: Props) => {
       <>
         <SsnFieldWrapper>
           <PersonalNumberField
+            {...props}
             label={label}
             name={props.name}
             value={props.defaultValue}

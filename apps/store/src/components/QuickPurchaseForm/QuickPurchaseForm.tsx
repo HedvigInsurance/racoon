@@ -43,16 +43,15 @@ export const QuickPurchaseForm = ({
     <form onSubmit={onSubmit}>
       <Space y={0.75}>
         <Space y={0.5}>
-          {showSsnField && (
-            <SsnField
-              name={SSN_FIELDNAME}
-              defaultValue={ssnDefaultValue}
-              required={true}
-              disabled={submitting}
-              warning={!!error?.ssn}
-              message={error?.ssn}
-            />
-          )}
+          <SsnField
+            name={SSN_FIELDNAME}
+            defaultValue={ssnDefaultValue}
+            required={true}
+            disabled={submitting}
+            warning={!!error?.ssn}
+            message={error?.ssn}
+            hidden={!showSsnField}
+          />
 
           {productOptions.length > 1 && (
             <ProductSelector

@@ -90,24 +90,31 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       // Pre-fetches PDP page - instant transitions
       router.prefetch(pageLink)
 
-      await updateCustomer({
-        variables: {
-          input: {
-            shopSessionId: shopSession.id,
-            ssn,
+      if (ssn && ssn !== shopSession.customer?.ssn) {
+        await updateCustomer({
+          variables: {
+            input: {
+              shopSessionId: shopSession.id,
+              ssn,
+            },
           },
-        },
-        onError(error) {
-          const message = error.extraInfo?.userError?.message
-          setError((prevState) => {
-            if (message) {
-              return { ...prevState, ssn: message }
-            }
-            return { ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }
-          })
-          throw new Error(`[QuickPurchaseBlock]: Failed while updating customer: ${error.message}`)
-        },
-      })
+          onError(error) {
+            const message = error.extraInfo?.userError?.message
+            // TODO: use useAppErrorHandleContext or not even throw an error here.
+            // It would be probably fine to redirect users even if we failed on updating
+            // their ssn.
+            setError((prevState) => {
+              if (message) {
+                return { ...prevState, ssn: message }
+              }
+              return { ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }
+            })
+            throw new Error(
+              `[QuickPurchaseBlock]: Failed while updating customer: ${error.message}`,
+            )
+          },
+        })
+      }
 
       if (blok.campaignCode) {
         redeemCampaign({

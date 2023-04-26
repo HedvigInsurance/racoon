@@ -35,22 +35,24 @@ export const PersonalNumberField = (props: Props) => {
     <>
       <input {...baseProps} type="text" value={value} readOnly hidden />
 
-      <TextField
-        {...baseProps}
-        value={propValue}
-        defaultValue={propValue ?? defaultValue}
-        label={label}
-        type="text"
-        name={undefined}
-        inputMode="numeric"
-        minLength={10}
-        maxLength={13}
-        // https://github.com/personnummer/js
-        pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
-        onValueChange={handleValueChange}
-        onClear={onClear}
-        warning={warning}
-      />
+      {!props.hidden && (
+        <TextField
+          {...baseProps}
+          value={propValue}
+          defaultValue={propValue ?? defaultValue}
+          label={label}
+          type="text"
+          name={undefined}
+          inputMode="numeric"
+          minLength={10}
+          maxLength={13}
+          // https://github.com/personnummer/js
+          pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+          onValueChange={handleValueChange}
+          onClear={onClear}
+          warning={warning}
+        />
+      )}
     </>
   )
 }
