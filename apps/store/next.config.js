@@ -39,13 +39,43 @@ module.exports = withBundleAnalyzer({
     ]
   },
   async rewrites() {
-    return [
-      {
-        source: '/forever',
-        has: [{ type: 'query', key: 'code', value: '(?<code>.*)' }],
-        destination: '/forever/:code',
-      },
-    ]
+    const foreverRedirect = {
+      source: '/forever',
+      has: [{ type: 'query', key: 'code', value: '(?<code>.*)' }],
+      destination: '/forever/:code',
+    }
+
+    const FALLBACK_ORIGIN_URL = process.env.FALLBACK_ORIGIN_URL
+
+    if (!FALLBACK_ORIGIN_URL) {
+      return [foreverRedirect]
+    }
+
+    return {
+      beforeFiles: [
+        // Static files needed for OLD market web
+        {
+          source: '/static/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/static/:path*`,
+        },
+        {
+          source: '/assets-next/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/assets-next/:path*`,
+        },
+        {
+          source: '/new-member-assets/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/new-member-assets/:path*`,
+        },
+      ],
+      afterFiles: [foreverRedirect],
+      fallback: [
+        {
+          source: '/:locale/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/:locale/:path*`,
+          locale: false,
+        },
+      ],
+    }
   },
 })
 
