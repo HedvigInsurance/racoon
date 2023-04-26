@@ -5,13 +5,14 @@ import { ChangeEventHandler } from 'react'
 import { ChevronIcon, InputBase, InputBaseProps, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-type InputSelectProps = InputBaseProps & {
+export type InputSelectProps = InputBaseProps & {
   name: string
   options: ReadonlyArray<{ name: string; value: string }>
   value?: string
   defaultValue?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
   required?: boolean
+  disabled?: boolean
   placeholder?: string
   autoFocus?: boolean
   className?: string
@@ -106,7 +107,11 @@ const StyledSelect = styled(
     fontSize: theme.fontSizes.xl,
   }),
 
-  '&:invalid, [disabled]': {
+  '&:invalid, &:disabled': {
     color: theme.colors.textSecondary,
+  },
+
+  '&:disabled': {
+    cursor: 'not-allowed',
   },
 }))
