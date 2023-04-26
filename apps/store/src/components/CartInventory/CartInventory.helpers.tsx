@@ -87,7 +87,7 @@ export const getCartEntry = (item: ShopSession['cart']['entries'][number]): Cart
     offerId: item.id,
     title: item.variant.product.displayNameFull,
     cost: item.price,
-    startDate: hasCancellation ? convertToDate(item.startDate) : undefined,
+    startDate: hasCancellation ? undefined : convertToDate(item.startDate),
     pillow: {
       src: item.variant.product.pillowImage.src,
       alt: item.variant.product.pillowImage.alt ?? undefined,
