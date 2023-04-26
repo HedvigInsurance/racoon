@@ -1,20 +1,17 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { FormEventHandler, useState } from 'react'
-import { Button, Space, Text, theme, WarningTriangleIcon } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { FormEventHandler, useCallback } from 'react'
+import { Button, Space } from 'ui'
+import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
-import { resetAuthTokens } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'
@@ -28,8 +25,18 @@ type Props = {
 // - Empty or auth required => Sign in offered
 // - Member authenticated => Warning to reset session in order to edit
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
+  const router = useRouter()
+
+  const handleChangeSsn = useCallback(async () => {
+    datadogLogs.logger.info('Cleared shopSession to change SSN in price calculator')
+
+    const url = new URL(window.location.href)
+    url.searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+    await router.replace(url)
+  }, [router])
+
   if (shopSession.customer?.ssn) {
-    return <ChangeSsnWarning shopSession={shopSession} onCompleted={onCompleted} />
+    return <ChangeSsnWarningDialog open={true} onAccept={handleChangeSsn} onDecline={onCompleted} />
   } else {
     return <SsnInputSection shopSession={shopSession} onCompleted={onCompleted} />
   }
@@ -87,61 +94,3 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
   )
 }
 SsnSeSection.sectionId = 'ssn-se'
-
-const ChangeSsnWarning = ({ onCompleted }: Props) => {
-  const { t } = useTranslation('purchase-form')
-  return (
-    <FullscreenDialog.Root open={true} onOpenChange={onCompleted}>
-      <FullscreenDialog.Modal
-        center={true}
-        Footer={
-          <>
-            <ResetSessionButton />
-            <Button variant="ghost" onClick={onCompleted}>
-              {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
-            </Button>
-          </>
-        }
-      >
-        <IconWithText>
-          <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-          <Text align="center">{t('CHANGE_SSN_TITLE')}</Text>
-        </IconWithText>
-        <Text color="textSecondary" align="center">
-          {t('CHANGE_SSN_DESCRIPTION')}
-        </Text>
-      </FullscreenDialog.Modal>
-    </FullscreenDialog.Root>
-  )
-}
-
-const ResetSessionButton = () => {
-  const { t } = useTranslation('purchase-form')
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const { reset: resetShopSession } = useShopSession()
-
-  const handleClick = async () => {
-    setLoading(true)
-    datadogLogs.logger.info('Cleared shopSession to change SSN in price calculator')
-    await resetShopSession()
-    resetAuthTokens()
-
-    const url = new URL(window.location.href)
-    url.searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-    await router.replace(url)
-  }
-
-  return (
-    <Button loading={loading} onClick={handleClick}>
-      {t('CHANGE_SSN_BUTTON')}
-    </Button>
-  )
-}
-
-const IconWithText = styled(Text)({
-  gap: theme.space.xs,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
