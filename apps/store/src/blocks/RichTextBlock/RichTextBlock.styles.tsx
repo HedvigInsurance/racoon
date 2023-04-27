@@ -78,7 +78,7 @@ export const listStyles = css({
     },
   },
 
-  '&[data-small-text=false] ul li': {
+  '&[data-large-text=true] ul li': {
     [mq.md]: {
       paddingLeft: '1.75rem',
       '&::before': {
@@ -148,8 +148,8 @@ export const richTextStyles = css(
       borderRadius: theme.radius.lg,
     },
 
-    [mq.md]: {
-      '&[data-small-text=false]': {
+    '&[data-large-text=true]': {
+      [mq.md]: {
         fontSize: theme.fontSizes.xl,
         '.preamble': {
           marginBottom: theme.space.xxl,
