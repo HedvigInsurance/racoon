@@ -1,5 +1,4 @@
 import { css, Global } from '@emotion/react'
-import { getHeadingVariantStyles } from 'ui/src/components/Heading/Heading.helpers'
 import { theme, mq } from 'ui'
 
 const hoverColors = [
@@ -27,23 +26,30 @@ export const GlobalLinkStyles = () => {
 export const linkStyles = css({
   a: {
     textDecorationLine: 'underline',
-    textDecorationColor: theme.colors.borderOpaque2,
+    textDecorationColor: theme.colors.gray400,
     textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
     textUnderlineOffset: 5,
 
-    '&:hover': {
-      textDecorationColor: 'var(--random-hover-color)',
+    '@media (hover: hover)': {
+      '&:hover': {
+        textDecorationColor: 'var(--random-hover-color)',
+      },
     },
   },
 })
 
 export const listStyles = css({
-  ul: {
-    marginLeft: theme.space.xs,
-  },
-
-  li: {
+  'ul, ol': {
     marginBlock: theme.space.md,
+    marginLeft: theme.space.xs,
+
+    [mq.md]: {
+      marginLeft: '1.25rem',
+    },
+
+    [mq.lg]: {
+      marginLeft: theme.space.xl,
+    },
   },
 
   'ul li': {
@@ -62,24 +68,6 @@ export const listStyles = css({
       backgroundColor: theme.colors.textSecondary,
     },
 
-    [mq.md]: {
-      paddingLeft: '1.75rem',
-      '&::before': {
-        top: 7,
-        width: 19,
-        height: 19,
-      },
-    },
-
-    [mq.xl]: {
-      paddingLeft: theme.space.xl,
-      '&::before': {
-        top: 9,
-        width: 24,
-        height: 24,
-      },
-    },
-
     ul: {
       marginLeft: 0,
 
@@ -90,20 +78,22 @@ export const listStyles = css({
     },
   },
 
+  '&[data-large-text=true] ul li': {
+    [mq.md]: {
+      paddingLeft: '1.75rem',
+      '&::before': {
+        top: 7,
+        width: 19,
+        height: 19,
+      },
+    },
+  },
+
   ol: {
-    marginLeft: theme.space.sm,
-    listStyle: 'decimal-leading-zero',
+    listStyle: 'decimal',
 
     ol: {
       listStyle: 'lower-alpha',
-    },
-
-    [mq.md]: {
-      marginLeft: '1.25rem',
-    },
-
-    [mq.lg]: {
-      marginLeft: theme.space.xl,
     },
   },
 
@@ -123,7 +113,10 @@ export const richTextStyles = css(
   {
     fontSize: theme.fontSizes.md,
     '.preamble': {
+      display: 'block',
+      marginBottom: theme.space.xl,
       fontSize: theme.fontSizes.xl,
+      color: theme.colors.textPrimary,
     },
 
     p: {
@@ -135,19 +128,13 @@ export const richTextStyles = css(
       marginTop: 0,
     },
 
-    h2: {
-      marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.24', md: 'standard.32', xl: 'standard.48' }),
+    'li > p': {
+      marginBlock: 0,
     },
 
-    h3: {
+    'h2, h3, h4': {
       marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.18', md: 'standard.24', xl: 'standard.32' }),
-    },
-
-    h4: {
-      marginTop: theme.space.xl,
-      ...getHeadingVariantStyles({ _: 'standard.18', md: 'standard.24', xl: 'standard.32' }),
+      fontSize: theme.fontSizes.md,
     },
 
     hr: {
@@ -156,41 +143,31 @@ export const richTextStyles = css(
       backgroundColor: theme.colors.borderOpaque2,
     },
 
-    [mq.md]: {
-      fontSize: theme.fontSizes.xl,
-      '.preamble': {
-        fontSize: theme.fontSizes.xxl,
-      },
-
-      h2: {
-        marginTop: theme.space.xxl,
-      },
-
-      h3: {
-        marginTop: theme.space.xxl,
-      },
-
-      h4: {
-        marginTop: theme.space.xxl,
-      },
+    img: {
+      marginBlock: theme.space.xl,
+      borderRadius: theme.radius.lg,
     },
 
-    [mq.xl]: {
-      fontSize: theme.fontSizes.xxl,
-      '.preamble': {
-        fontSize: theme.fontSizes.xxxl,
-      },
+    '&[data-large-text=true]': {
+      [mq.md]: {
+        fontSize: theme.fontSizes.xl,
+        '.preamble': {
+          marginBottom: theme.space.xxl,
+          fontSize: theme.fontSizes.xxl,
+        },
 
-      h2: {
-        marginTop: theme.space.xxxl,
-      },
+        h2: {
+          marginTop: theme.space.xxl,
+          fontSize: theme.fontSizes.xl,
+        },
 
-      h3: {
-        marginTop: theme.space.xxxl,
-      },
+        h3: {
+          marginTop: theme.space.xxl,
+        },
 
-      h4: {
-        marginTop: theme.space.xxxl,
+        h4: {
+          marginTop: theme.space.xxl,
+        },
       },
     },
   },
