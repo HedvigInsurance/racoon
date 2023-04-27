@@ -151,11 +151,10 @@ export const FluidBodyWrapper = styled.div<{
 
 const FluidBodyInnerWrapper = styled.div({
   paddingInline: theme.space.xs,
-  maxWidth: '37.5rem',
 
-  [mq.md]: {
+  [mq.lg]: {
     paddingInline: 0,
-    maxWidth: 'initial',
+    maxWidth: '37.5rem',
   },
 })
 
