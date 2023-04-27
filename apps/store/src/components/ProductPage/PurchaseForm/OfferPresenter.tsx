@@ -9,6 +9,7 @@ import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/use
 import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
@@ -22,8 +23,8 @@ import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
+import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
 import { getOffersByPrice } from './getOffersByPrice'
-import { PriceMatchBubble } from './PriceMatchBubble/PriceMatchBubble'
 import { ProductTierSelector } from './ProductTierSelector'
 import { FormElement } from './PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
@@ -109,7 +110,7 @@ export const OfferPresenter = (props: Props) => {
   const dateLoading = updateStartDateInfo.loading
   const loading = loadingAddToCart || updateCancellationInfo.loading || dateLoading
 
-  const priceMatch = useMemo(() => {
+  const discountTooltiProps = useMemo(() => {
     if (!selectedOffer.priceMatch) return null
 
     const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
@@ -117,10 +118,10 @@ export const OfferPresenter = (props: Props) => {
     const externalPrice = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
 
     return {
-      title: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
+      children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
       // TODO: Include external expiry date
-      children: `${company} · ${externalPrice}`,
-    }
+      subtitle: `${company} · ${externalPrice}`,
+    } as const
   }, [selectedOffer.priceMatch, formatter, t])
 
   const startDate = convertToDate(selectedOffer.startDate)
@@ -168,20 +169,21 @@ export const OfferPresenter = (props: Props) => {
       <Space y={1}>
         <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
           <Space y={2}>
-            <Space y={0.5}>
-              <Text as="p" align="center" size="xl">
-                {displayPrice}
-              </Text>
-              <Centered>
-                <TextButton onClick={onClickEdit}>
-                  <Text align="center" size="xs" color="textSecondary" as="span">
-                    {t('PRESENT_OFFER_EDIT_BUTTON')}
-                  </Text>
-                </TextButton>
-              </Centered>
-
-              {priceMatch && <PriceMatchBubble {...priceMatch} />}
-            </Space>
+            <SpaceFlex direction="vertical" align="center" space={1}>
+              {discountTooltiProps && <DiscountTooltip {...discountTooltiProps} />}
+              <Space y={0.5}>
+                <Text as="p" align="center" size="xl">
+                  {displayPrice}
+                </Text>
+                <Centered>
+                  <TextButton onClick={onClickEdit}>
+                    <Text align="center" size="xs" color="textSecondary" as="span">
+                      {t('PRESENT_OFFER_EDIT_BUTTON')}
+                    </Text>
+                  </TextButton>
+                </Centered>
+              </Space>
+            </SpaceFlex>
 
             <Space y={0.25}>
               {tiers.length > 1 && (

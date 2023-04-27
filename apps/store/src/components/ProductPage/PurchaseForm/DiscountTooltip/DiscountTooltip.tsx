@@ -31,6 +31,7 @@ const Root = styled.div({
   paddingBottom: TIP_HEIGHT,
   position: 'relative',
   isolation: 'isolate',
+  display: 'inline-block',
 })
 
 const Bubble = styled.div({
