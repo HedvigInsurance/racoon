@@ -105,7 +105,7 @@ const SelectItem = styled(SelectPrimitive.Item)({
   minHeight: '3rem',
   paddingInline: theme.space.md,
   paddingBlock: theme.space.xs,
-  fontSize: theme.fontSizes.lg,
+  fontSize: theme.fontSizes.xl,
   isolation: 'isolate',
 
   '&[data-highlighted]': {
