@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { SyntheticEvent, useState } from 'react'
+import { atom, useAtom } from 'jotai'
+import { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, theme, Text, Space, mq } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -22,7 +23,7 @@ type CartOfferItemProps = {
   offer: OfferRecommendationFragment
 }
 export const CartEntryOfferItem = ({ cartId, product, offer }: CartOfferItemProps) => {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useShowCartEntryOffer()
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
@@ -152,3 +153,9 @@ const GhostButton = styled(Button)({
     },
   },
 })
+
+const SHOW_CART_OFFER_ATOM = atom(true)
+
+const useShowCartEntryOffer = () => {
+  return useAtom(SHOW_CART_OFFER_ATOM)
+}
