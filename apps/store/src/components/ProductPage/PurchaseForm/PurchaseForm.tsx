@@ -436,7 +436,7 @@ const PurchaseFormTop = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: '4.5rem',
+  gap: theme.space.xl,
   minHeight: '80vh',
   paddingInline: theme.space.md,
   paddingBottom: theme.space.xl,
