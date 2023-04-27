@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import {
@@ -40,14 +41,6 @@ const ButtonWrapper = styled.div({
   gridTemplateColumns: '1fr 1fr',
   columnGap: theme.space.xs,
   paddingTop: theme.space.lg,
-})
-
-const StyledAppleIcon = styled(AppleIcon)({
-  marginRight: theme.space.xs,
-})
-
-const StyledAndroidIcon = styled(AndroidIcon)({
-  marginRight: theme.space.xs,
 })
 
 export type TopMenuMobileProps = {
@@ -89,8 +82,10 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                   variant="secondary"
                   size="medium"
                 >
-                  <StyledAppleIcon />
-                  App Store
+                  <SpaceFlex space={0.5} align="center">
+                    <AppleIcon />
+                    App Store
+                  </SpaceFlex>
                 </Button>
                 <Button
                   href={getAppStoreLink('google', routingLocale).toString()}
@@ -99,8 +94,10 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                   variant="secondary"
                   size="medium"
                 >
-                  <StyledAndroidIcon />
-                  Google Play
+                  <SpaceFlex space={0.5} align="center">
+                    <AndroidIcon />
+                    Google Play
+                  </SpaceFlex>
                 </Button>
               </ButtonWrapper>
             </NavigationPrimaryList>
