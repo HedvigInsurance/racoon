@@ -1,0 +1,9 @@
+query ShopSessionPetMigration($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    priceIntents {
+      offers {
+        ...ProductOffer
+      }
+    }
+  }
+}

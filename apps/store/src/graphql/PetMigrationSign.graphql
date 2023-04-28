@@ -1,0 +1,15 @@
+mutation PetMigrationSign($shopSessionId: UUID!, $offerIds: [UUID!]!) {
+  shopSessionCartEntriesAdd(input: { shopSessionId: $shopSessionId, offerIds: $offerIds }) {
+    userError {
+      message
+    }
+  }
+  shopSessionStartSign(shopSessionId: $shopSessionId) {
+    signing {
+      ...ShopSessionSigning
+    }
+    userError {
+      message
+    }
+  }
+}

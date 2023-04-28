@@ -1,42 +1,19 @@
-import type { NextPageWithLayout } from 'next'
+import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
-import Head from 'next/head'
+import { PetMigrationPage } from '@/components/PetMigrationPage/PetMigrationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { Flags } from '@/services/Flags/Flags'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = Record<string, unknown>
+type Props = { [SHOP_SESSION_PROP_NAME]: string }
 type Params = { shopSessionId: string }
 
-const NextPetMigratePage: NextPageWithLayout = () => {
-  const { shopSession } = useShopSession()
-
-  return (
-    <>
-      <Head>
-        <title>TODO: Page title</title>
-        <meta name="robots" content="none" />
-      </Head>
-      <>
-        <hr />
-        <h1>TODO: Migration page</h1>
-        <div>Session data:</div>
-        <pre>${JSON.stringify(shopSession, null, 2)}</pre>
-      </>
-    </>
-  )
+const NextPetMigrationPage: NextPage<Props> = (props: Props) => {
+  return <PetMigrationPage {...props} />
 }
-
-NextPetMigratePage.getLayout = (children) => (
-  <div>
-    <h2>TODO: Implement layout</h2>
-    {children}
-  </div>
-)
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res } = context
@@ -68,4 +45,4 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
 }
 
-export default NextPetMigratePage
+export default NextPetMigrationPage
