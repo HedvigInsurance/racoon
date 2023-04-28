@@ -73,7 +73,7 @@ export const ProductNavigationLink = ({
   return (
     <Link href={href}>
       <ProductNavigationLinkCard>
-        <Pillow size="xxsmall" src={pillowImageSrc} />
+        <Pillow size="xsmall" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
         {label && (
           <Badge size={{ _: 'lg', lg: 'sm' }} as="span" color="green50">
