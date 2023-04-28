@@ -77,6 +77,7 @@ const imgSrc = [
   // OLD market web
   'http://a.storyblok.com',
   'https://a.storyblok.com',
+  'https://www.dev.hedvigit.com',
 
   'blob:',
   'data:',
@@ -128,6 +129,9 @@ const frameSrc = [
   // GTM-injected scripts
   'https://*.snapchat.com',
   'https://*.hotjar.com',
+
+  // OLD market web
+  'https://www.youtube.com/',
 
   "'self'",
 ]
