@@ -9,6 +9,7 @@ type Alignment = 'left' | 'center' | 'right' | 'justify'
 export type Props = SbBaseBlockProps<{
   body: ISbRichtext
   heading?: string
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   alignment?: Alignment
 }>
 
@@ -17,7 +18,7 @@ export const ContentBlock = ({ blok }: Props) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)} y={1}>
-      {blok.heading && <Badge>{blok.heading}</Badge>}
+      {blok.heading && <Badge as={blok.headingLevel ?? 'h2'}>{blok.heading}</Badge>}
       <TextWrapper alignment={blok.alignment ?? 'left'}>
         <Space y={1} dangerouslySetInnerHTML={{ __html: contentHtml }} />
       </TextWrapper>
