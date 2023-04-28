@@ -6,4 +6,7 @@ export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
   platform: 'apple' | 'google' | null
   cart: CartFragmentFragment
   shopSessionId: string
+  switching?: {
+    companyDisplayName: string
+  }
 }

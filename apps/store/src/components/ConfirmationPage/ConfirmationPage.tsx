@@ -16,6 +16,7 @@ import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 import qrCodeImage from './download-app-qrcode.png'
 import { ImageSection } from './ImageSection'
+import { SwitchingAssistantSection } from './SwitchingAssistantSection'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory
@@ -41,7 +42,14 @@ export const ConfirmationPage = (props: Props) => {
                 <CartInventory shopSessionId={props.shopSessionId} cart={cart} readOnly />
               </Space>
 
-              <Space y={1}>
+              {props.switching && (
+                <SwitchingAssistantSection
+                  shopSessionId={props.shopSessionId}
+                  {...props.switching}
+                />
+              )}
+
+              <Space y={{ base: 1.5, lg: 2 }}>
                 <div>
                   <Heading as="h2" variant="standard.24">
                     {story.content.checklistTitle}

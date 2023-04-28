@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, Space, Text, theme } from 'ui'
+import { Button, Space, Text, mq, theme } from 'ui'
 import { useBankSigneringInitMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useFormatter } from '@/utils/useFormatter'
@@ -22,13 +22,7 @@ export const ContractCard = (props: BankSigneringContract) => {
   )
 }
 
-const PendingContractCard = ({
-  id,
-  status,
-  displayName,
-  company,
-  approveByDate,
-}: ContractCardProps) => {
+const PendingContractCard = ({ id, status, displayName, approveByDate }: ContractCardProps) => {
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
   const windowRef = useRef<Window | null>(null)
@@ -64,12 +58,12 @@ const PendingContractCard = ({
   }
 
   return (
-    <Card>
+    <PendingCard>
       <Space y={1}>
         <PendingStatusPill>{status.message}</PendingStatusPill>
         <Space y={1}>
           <div>
-            <Text>{[displayName, company].join(' · ')}</Text>
+            <Text>{displayName}</Text>
             <Text color="textSecondary">
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
                 date: formatter.fromNow(approveByDate),
@@ -81,11 +75,11 @@ const PendingContractCard = ({
           </Button>
         </Space>
       </Space>
-    </Card>
+    </PendingCard>
   )
 }
 
-const CompletedContractCard = ({ status, displayName, company }: ContractCardProps) => {
+const CompletedContractCard = ({ status, displayName }: ContractCardProps) => {
   const { t } = useTranslation('checkout')
 
   return (
@@ -93,7 +87,7 @@ const CompletedContractCard = ({ status, displayName, company }: ContractCardPro
       <Space y={1}>
         <CompletedStatusPill>{status.message}</CompletedStatusPill>
         <div>
-          <Text>{[displayName, company].join(' · ')}</Text>
+          <Text>{displayName}</Text>
           <Text color="textSecondary">
             {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE_COMPLETED')}
           </Text>
@@ -103,11 +97,19 @@ const CompletedContractCard = ({ status, displayName, company }: ContractCardPro
   )
 }
 
+const CARD_HEIGHT = '9.75rem'
+
 const Card = styled.div({
   padding: theme.space.md,
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
+
+  [mq.lg]: {
+    padding: theme.space.lg,
+  },
 })
+
+const PendingCard = styled(Card)({ backgroundColor: theme.colors.amberFill1 })
 
 const pulsingAnimation = keyframes({
   '0%': {
@@ -122,8 +124,12 @@ const pulsingAnimation = keyframes({
 })
 
 export const CardSkeleton = styled(Card)({
-  height: '11.75rem',
+  height: `calc(${CARD_HEIGHT} + ${theme.space.md} * 2)`,
   animation: `${pulsingAnimation} 1.5s ease-in-out infinite`,
+
+  [mq.lg]: {
+    height: `calc(${CARD_HEIGHT} + ${theme.space.lg} * 2)`,
+  },
 })
 
 const Pill = styled.div({
@@ -136,21 +142,25 @@ const Pill = styled.div({
   alignItems: 'center',
 })
 
+const PendingPill = styled(Pill)({
+  backgroundColor: theme.colors.amber200,
+})
+
 const PillStatus = styled.div({
-  height: theme.space.xs,
-  width: theme.space.xs,
+  height: theme.space.sm,
+  width: theme.space.sm,
   borderRadius: '50%',
-  backgroundColor: theme.colors.amber600,
+  backgroundColor: theme.colors.amberElement,
 })
 
 type StatusPillProps = { children: string }
 
 const PendingStatusPill = ({ children }: StatusPillProps) => {
   return (
-    <Pill>
+    <PendingPill>
       <PillStatus color={theme.colors.amber600} />
       <Text size="xs">{children}</Text>
-    </Pill>
+    </PendingPill>
   )
 }
 

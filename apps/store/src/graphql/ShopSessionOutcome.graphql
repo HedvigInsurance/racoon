@@ -1,5 +1,5 @@
-query ShopSessionOutcome($id: UUID!) {
-  shopSession(id: $id) {
+query ShopSessionOutcome($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
     outcome {
       id
       createdContracts {

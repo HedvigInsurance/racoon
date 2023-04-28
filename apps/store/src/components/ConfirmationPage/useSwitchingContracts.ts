@@ -12,7 +12,6 @@ export type BankSigneringContract = {
     type: 'PENDING' | 'COMPLETED'
     message: string
   }
-  company: string
   approveByDate: Date
 }
 
@@ -20,7 +19,7 @@ type Params = { shopSessionId: string }
 
 export const useSwitchingContracts = ({ shopSessionId }: Params) => {
   const { data, refetch } = useShopSessionOutcomeQuery({
-    variables: { id: shopSessionId },
+    variables: { shopSessionId },
     pollInterval: 10000,
   })
   const getStatus = useGetStatus()
@@ -31,7 +30,7 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
     return () => window.removeEventListener('focus', handler)
   }, [refetch])
 
-  return useMemo(() => {
+  return useMemo<Array<BankSigneringContract>>(() => {
     const contracts = data?.shopSession.outcome?.createdContracts ?? []
     const switchingContracts: Array<BankSigneringContract> = []
 
@@ -52,9 +51,10 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
 
       switchingContracts.push({
         id: contract.id,
-        displayName: contract.variant.displayName,
+        displayName: [contract.variant.displayName, cancellation.externalInsurer.displayName].join(
+          ' · ',
+        ),
         status: getStatus(cancellation.status),
-        company: cancellation.externalInsurer.displayName,
         approveByDate,
       })
     })

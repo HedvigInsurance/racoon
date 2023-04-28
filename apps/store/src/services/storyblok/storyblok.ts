@@ -168,13 +168,10 @@ export type ConfirmationStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     body: Array<SbBlokData>
     title: string
-    subtitle: string
-    footerTitle: string
-    footerSubtitle: string
-    footerImage: StoryblokAsset
     checklistTitle: string
     checklistSubtitle: string
     checklist: string
+    footerImage: StoryblokAsset
     seoTitle: string
   }
 }

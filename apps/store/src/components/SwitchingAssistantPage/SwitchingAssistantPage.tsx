@@ -1,3 +1,5 @@
+// TODO: No longer used; remove.
+
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
@@ -5,10 +7,10 @@ import { Heading, mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
+import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
+import { useSwitchingContracts } from '@/components/ConfirmationPage/useSwitchingContracts'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CardSkeleton, ContractCard } from './ContractCard'
-import { useSwitchingContracts } from './useSwitchingContracts'
 
 export type SwitchingAssistantPageProps = {
   checkoutSteps: Array<CheckoutStep>
