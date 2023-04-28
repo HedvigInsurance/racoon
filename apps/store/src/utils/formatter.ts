@@ -1,4 +1,5 @@
 import { TFunction } from 'next-i18next'
+import Personnummer from 'personnummer'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { IsoLocale } from '@/utils/l10n/types'
 
@@ -63,6 +64,21 @@ const formatTitleCase = (str: string): string => {
     .join(' ')
 }
 
+const formatSsn = (ssn: string): string => {
+  const longFormat = Personnummer.parse(ssn).format(true)
+  // replace the last 4 digits with asterisks
+  return longFormat.replace(/(\d{4})$/, '****')
+}
+
+const formatCarRegistrationNumber = (regNumber: string): string => {
+  // add space after 3rd character
+  return regNumber.toUpperCase().replace(/(.{3})/, '$1 ')
+}
+
+const formatZipCode = (value: string): string => {
+  return value.replace(/(\d{3})(\d{2})/, '$1 $2')
+}
+
 type FormatterOptions = MoneyFormatOptions & { t: TFunction }
 
 export class Formatter {
@@ -75,4 +91,7 @@ export class Formatter {
   public monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
   public fromNow = (date: Date) => formatDateFromNow(date, this.options)
   public titleCase = (str: string) => formatTitleCase(str)
+  public ssn = formatSsn
+  public carRegistrationNumber = formatCarRegistrationNumber
+  public zipCode = formatZipCode
 }

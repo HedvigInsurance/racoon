@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { ReactNode, useMemo } from 'react'
 import { Heading, Text, theme } from 'ui'
 import { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
+import { useAutoFormat } from '@/utils/useFormatter'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -31,6 +32,7 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
     return 'muted'
   }, [props.active, props.valid])
 
+  const autoFormat = useAutoFormat()
   const previewText = useMemo(() => {
     if (!props.previewFieldName) return
 
@@ -38,12 +40,12 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
     const value = item?.field.value
     if (value === undefined) return
 
-    if (!props.previewLabel) {
-      return value.toString()
+    if (props.previewLabel) {
+      return translateLabel(props.previewLabel, parseTranslateOptions(value))
     }
 
-    return translateLabel(props.previewLabel, parseTranslateOptions(value))
-  }, [props.previewFieldName, props.items, props.previewLabel, translateLabel])
+    return autoFormat(props.previewFieldName, value)
+  }, [props.previewFieldName, props.items, props.previewLabel, translateLabel, autoFormat])
 
   return (
     <Accordion.Item value={props.value}>
