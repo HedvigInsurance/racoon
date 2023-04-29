@@ -54,7 +54,7 @@
     "personnummer": "3.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-i18next": "12.2.0",
+    "react-i18next": "12.2.2",
     "react-wrap-balancer": "0.4.0",
     "ui": "workspace:",
     "uuid": "9.0.0",
