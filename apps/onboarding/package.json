@@ -57,7 +57,7 @@
     "@types/jsdom": "21.1.1",
     "@types/lodash-es": "4.17.7",
     "@types/marked": "4.0.8",
-    "@types/node": "18.15.13",
+    "@types/node": "18.16.1",
     "@types/react": "18.0.38",
     "cypress": "12.10.0",
     "eslint-config-custom": "workspace:",

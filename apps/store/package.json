@@ -82,7 +82,7 @@
     "@testing-library/user-event": "14.4.3",
     "@types/clone-deep": "4.0.1",
     "@types/md5": "2.3.2",
-    "@types/node": "18.15.13",
+    "@types/node": "18.16.1",
     "@types/nprogress": "0.2.0",
     "@types/react": "18.0.38",
     "babel-loader": "9.1.2",
