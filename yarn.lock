@@ -2606,9 +2606,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/babel-plugin@npm:11.10.6, @emotion/babel-plugin@npm:^11.10.6":
-  version: 11.10.6
-  resolution: "@emotion/babel-plugin@npm:11.10.6"
+"@emotion/babel-plugin@npm:11.10.8, @emotion/babel-plugin@npm:^11.10.8":
+  version: 11.10.8
+  resolution: "@emotion/babel-plugin@npm:11.10.8"
   dependencies:
     "@babel/helper-module-imports": ^7.16.7
     "@babel/runtime": ^7.18.3
@@ -2620,31 +2620,31 @@ __metadata:
     escape-string-regexp: ^4.0.0
     find-root: ^1.1.0
     source-map: ^0.5.7
-    stylis: 4.1.3
-  checksum: 3eed138932e8edf2598352e69ad949b9db3051a4d6fcff190dacbac9aa838d7ef708b9f3e6c48660625d9311dae82d73477ae4e7a31139feef5eb001a5528421
+    stylis: 4.1.4
+  checksum: b8e2ed0c68a2ea423c5c2efdcf37e0b482dcb74caba042d2987a058f151819f0574fb2298fba4f76fa23265e1975dcf337f1f59ad6f35a33db2f9bf1afe03ee0
   languageName: node
   linkType: hard
 
-"@emotion/cache@npm:^11.10.5":
-  version: 11.10.5
-  resolution: "@emotion/cache@npm:11.10.5"
+"@emotion/cache@npm:^11.10.8":
+  version: 11.10.8
+  resolution: "@emotion/cache@npm:11.10.8"
   dependencies:
     "@emotion/memoize": ^0.8.0
     "@emotion/sheet": ^1.2.1
     "@emotion/utils": ^1.2.0
     "@emotion/weak-memoize": ^0.3.0
-    stylis: 4.1.3
-  checksum: 1dd2d9af2d3ecbd3d4469ecdf91a335eef6034c851b57a474471b2d2280613eb35bbed98c0368cc4625f188619fbdaf04cf07e8107aaffce94b2178444c0fe7b
+    stylis: 4.1.4
+  checksum: a67751db54077813ee3a011f255ee5c79eb375284cec8404866d44da904d69b037566047ca52549772b8038f8cd00ebd092c628ddc764fe89d6932c16afd71e3
   languageName: node
   linkType: hard
 
-"@emotion/css-prettifier@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@emotion/css-prettifier@npm:1.1.1"
+"@emotion/css-prettifier@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@emotion/css-prettifier@npm:1.1.2"
   dependencies:
     "@emotion/memoize": ^0.8.0
-    stylis: 4.1.3
-  checksum: b58fd5d97a6b36fa2eedf169e598db7d9c8b8734006bb60ec7f1f67f2faf01896a9e28d940c0224bcaa7c324437165a70cf66887b245e9a246da29675bec312b
+    stylis: 4.1.4
+  checksum: 393fbd9a1234dea8d4336ca90c78fedb9f345529b21103373c66003ec8f99068ce6b5f0805631ae5e5eec3f8cf3b81bb5858e55ed98b1680d6f499b673822ee7
   languageName: node
   linkType: hard
 
@@ -2673,15 +2673,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/jest@npm:11.10.5":
-  version: 11.10.5
-  resolution: "@emotion/jest@npm:11.10.5"
+"@emotion/jest@npm:11.10.8":
+  version: 11.10.8
+  resolution: "@emotion/jest@npm:11.10.8"
   dependencies:
     "@babel/runtime": ^7.18.3
-    "@emotion/css-prettifier": ^1.1.1
+    "@emotion/css-prettifier": ^1.1.2
     chalk: ^4.1.0
     specificity: ^0.4.1
-    stylis: 4.1.3
+    stylis: 4.1.4
   peerDependencies:
     "@types/jest": ^26.0.14 || ^27.0.0 || ^28.0.0 || ^29.0.0
     enzyme-to-json: ^3.2.1
@@ -2690,7 +2690,7 @@ __metadata:
       optional: true
     enzyme-to-json:
       optional: true
-  checksum: 7d5ed1b700abd657f0365e3dbc9c905217df5ec28f7d2f0783305d30e153e6b080b2eb246190d9553952890c4ac0c582900c77f283f571d26f95fb6d10772f0a
+  checksum: 99251eee87f3fb49e45fea26060e87d381c59818a386b9555742f9fd71af7782897d6d1504fba3aebddca3e80550594774d03213ebd83d9efd3daa2ac1a5e8eb
   languageName: node
   linkType: hard
 
@@ -2708,13 +2708,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.10.6":
-  version: 11.10.6
-  resolution: "@emotion/react@npm:11.10.6"
+"@emotion/react@npm:11.10.8":
+  version: 11.10.8
+  resolution: "@emotion/react@npm:11.10.8"
   dependencies:
     "@babel/runtime": ^7.18.3
-    "@emotion/babel-plugin": ^11.10.6
-    "@emotion/cache": ^11.10.5
+    "@emotion/babel-plugin": ^11.10.8
+    "@emotion/cache": ^11.10.8
     "@emotion/serialize": ^1.1.1
     "@emotion/use-insertion-effect-with-fallbacks": ^1.0.0
     "@emotion/utils": ^1.2.0
@@ -2725,7 +2725,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 4762042e39126ffaffe76052dc65c9bb0ba6b8893013687ba3cc13ed4dd834c31597f1230684c3c078e90aecc13ab6cd0e3cde0dec8b7761affd2571f4d80019
+  checksum: ac56ef6375fa3bc7acd5a62eb5b2cf9eb4b1586a6a06cb05caab11a516700cf2f7857e0ad65bac57abd74e1141388e01fe65238f2de0075a912e129271c658b8
   languageName: node
   linkType: hard
 
@@ -2749,12 +2749,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:11.10.6":
-  version: 11.10.6
-  resolution: "@emotion/styled@npm:11.10.6"
+"@emotion/styled@npm:11.10.8":
+  version: 11.10.8
+  resolution: "@emotion/styled@npm:11.10.8"
   dependencies:
     "@babel/runtime": ^7.18.3
-    "@emotion/babel-plugin": ^11.10.6
+    "@emotion/babel-plugin": ^11.10.8
     "@emotion/is-prop-valid": ^1.2.0
     "@emotion/serialize": ^1.1.1
     "@emotion/use-insertion-effect-with-fallbacks": ^1.0.0
@@ -2765,7 +2765,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: ed0ee4bec3b63ee9c5eb8216b22646313ff1ada06c5183f128d25b73252126e9fde625e81c868be7ccd666b686a73076f923ce188dac25e93d5062ddffdad46f
+  checksum: ceff0ac12f92289ea8febb1c3b4b70c1f3e110354452b9f6ee6461a7c01a24a0e2f071eb4303a7a289aad5cc8b62096561a150b0b6ed096bb1fd3e8503633226
   languageName: node
   linkType: hard
 
@@ -16546,8 +16546,8 @@ __metadata:
   dependencies:
     "@apollo/client": 3.7.13
     "@datadog/browser-rum": 4.39.0
-    "@emotion/react": 11.10.6
-    "@emotion/styled": 11.10.6
+    "@emotion/react": 11.10.8
+    "@emotion/styled": 11.10.8
     "@graphql-codegen/cli": 3.3.1
     "@graphql-codegen/typescript": 3.0.4
     "@graphql-codegen/typescript-generic-sdk": 3.1.0
@@ -19189,8 +19189,8 @@ __metadata:
     "@babel/preset-react": 7.18.6
     "@babel/preset-typescript": 7.21.4
     "@datadog/browser-logs": 4.39.0
-    "@emotion/react": 11.10.6
-    "@emotion/styled": 11.10.6
+    "@emotion/react": 11.10.8
+    "@emotion/styled": 11.10.8
     "@graphql-codegen/cli": 3.3.1
     "@graphql-codegen/typescript": 3.0.4
     "@graphql-codegen/typescript-operations": 3.0.4
@@ -19536,10 +19536,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:4.1.3":
-  version: 4.1.3
-  resolution: "stylis@npm:4.1.3"
-  checksum: d04dbffcb9bf2c5ca8d8dc09534203c75df3bf711d33973ea22038a99cc475412a350b661ebd99cbc01daa50d7eedcf0d130d121800eb7318759a197023442a6
+"stylis@npm:4.1.4":
+  version: 4.1.4
+  resolution: "stylis@npm:4.1.4"
+  checksum: cd929bd89709def13b47e6c16b11317bf996a09b4e987fc45a235549c3adf49d41531e017d7df511daa095bc9468c923ae9094a934fe9c62440b7351874dafb7
   languageName: node
   linkType: hard
 
@@ -20449,10 +20449,10 @@ __metadata:
     "@babel/preset-env": 7.21.4
     "@babel/preset-react": 7.18.6
     "@babel/preset-typescript": 7.21.4
-    "@emotion/babel-plugin": 11.10.6
-    "@emotion/jest": 11.10.5
-    "@emotion/react": 11.10.6
-    "@emotion/styled": 11.10.6
+    "@emotion/babel-plugin": 11.10.8
+    "@emotion/jest": 11.10.8
+    "@emotion/react": 11.10.8
+    "@emotion/styled": 11.10.8
     "@radix-ui/react-checkbox": 1.0.3
     "@radix-ui/react-radio-group": 1.1.2
     "@storybook/addon-actions": 7.0.7
