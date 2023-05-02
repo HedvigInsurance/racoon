@@ -70,6 +70,11 @@ module.exports = withBundleAnalyzer({
           source: '/onboarding/_next/:path*',
           destination: `${process.env.FALLBACK_ORIGIN_URL}/_next/:path*`,
         },
+        // Storyblok assets proxy
+        {
+          source: '/f/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/f/:path*`,
+        },
       ],
       afterFiles: [foreverRedirect],
       fallback: [
