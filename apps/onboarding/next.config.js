@@ -8,6 +8,8 @@ const nextConfig = {
   i18n,
   images: {
     domains: ['promise.hedvig.com'],
+    // Required to work with "assetPrefix": https://github.com/vercel/next.js/issues/20968#issuecomment-1015328088
+    path: isProd ? `${process.env.ASSET_PREFIX}/_next/image` : undefined,
   },
   compiler: {
     emotion: true,
