@@ -16,6 +16,7 @@ const linkField: LinkField = {
   id: '1234',
   url: 'https://hedvigapp.typeform.com/to/p0m0QakI',
   linktype: 'url',
+  cached_url: 'https://hedvigapp.typeform.com/to/p0m0QakI',
 }
 
 export const Default = Template.bind({})
