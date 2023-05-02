@@ -22,6 +22,7 @@ const LIVING_SPACE_ROW = {
 
 const HOUSEHOLD_SIZE_ROW = {
   type: 'HOUSEHOLD_SIZE',
+  key: 'numberOfCoInsured',
   label: tKey('DATA_TABLE_HOUSEHOLD_SIZE_LABEL'),
 } as const
 
@@ -62,11 +63,11 @@ const DATA_TABLE = {
   SE_ACCIDENT: [STREET_ROW, ZIP_CODE_ROW, LIVING_SPACE_ROW, HOUSEHOLD_SIZE_ROW],
   SE_CAR: [
     {
-      type: 'STRING',
+      type: 'CAR_REGISTRATION_NUMBER',
       key: 'registrationNumber',
       label: tKey('DATA_TABLE_REGISTRATION_NUMBER_LABEL'),
     },
-    { type: 'MILEAGE', label: tKey('DATA_TABLE_MILEAGE_LABEL') },
+    { type: 'MILEAGE', key: 'mileage', label: tKey('DATA_TABLE_MILEAGE_LABEL') },
     STREET_ROW,
     ZIP_CODE_ROW,
   ],

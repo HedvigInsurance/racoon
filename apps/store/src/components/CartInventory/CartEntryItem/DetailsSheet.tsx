@@ -3,6 +3,7 @@ import type { TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Heading, Text } from 'ui'
 import { Space, theme } from 'ui'
+import { useAutoFormat } from '@/utils/useFormatter'
 import { CartEntry } from '../CartInventory.types'
 import { DataTableRow, getDataTable } from '../DataTable/DataTable'
 
@@ -56,40 +57,40 @@ export const DetailsSheet = (props: CartEntry) => {
 
 const useGetDataTableValue = () => {
   const { t } = useTranslation('cart')
+  const autoFormat = useAutoFormat()
 
   return (row: DataTableRow, data: CartEntry['data']) => {
-    switch (row.type) {
-      case 'STRING':
-        return (data[row.key] as string | number | undefined) ?? null
+    const value = data[row.key]
 
+    switch (row.type) {
       case 'AREA':
-        if (typeof data[row.key] === 'number') {
-          return t('DATA_TABLE_LIVING_SPACE_VALUE', { area: data[row.key] })
+        if (typeof value === 'number') {
+          return t('DATA_TABLE_LIVING_SPACE_VALUE', { area: value })
         } else return null
 
       case 'HOUSEHOLD_SIZE':
         return formatHouseholdSize(t, data)
 
       case 'MILEAGE':
-        if (data['mileage']) {
-          return t('DATA_TABLE_MILEAGE_VALUE', { value: data['mileage'] })
+        if (value) {
+          return t('DATA_TABLE_MILEAGE_VALUE', { value: value })
         } else return null
 
       case 'CAT_GENDER':
-        if (data[row.key] === 'MALE') {
+        if (value === 'MALE') {
           return t('DATA_TABLE_CAT_GENDER_VALUE_MALE')
         } else return t('DATA_TABLE_CAT_GENDER_VALUE_FEMALE')
 
       case 'DOG_GENDER':
-        if (data[row.key] === 'MALE') {
+        if (value === 'MALE') {
           return t('DATA_TABLE_DOG_GENDER_VALUE_MALE')
         } else return t('DATA_TABLE_DOG_GENDER_VALUE_FEMALE')
 
       case 'LIST':
-        return formatList(data[row.key])
+        return formatList(value)
 
       default:
-        return null
+        return autoFormat(row.key, value)
     }
   }
 }
