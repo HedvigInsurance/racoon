@@ -78,9 +78,15 @@ module.exports = withBundleAnalyzer({
       ],
       afterFiles: [foreverRedirect],
       fallback: [
+        // Avoid redirect to /default/:path* when URL locale is missing
         {
-          source: '/:locale/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/:locale/:path*`,
+          source: '/default/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
+          locale: false,
+        },
+        {
+          source: '/:path*',
+          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
           locale: false,
         },
       ],
