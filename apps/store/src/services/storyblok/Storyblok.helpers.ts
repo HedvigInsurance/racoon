@@ -58,18 +58,19 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   return story as StoryData
 }
 
-const missingLinks = new Set()
+const MISSING_LINKS = new Set()
 export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
   if (link.story) return makeAbsolute(link.story.url)
 
   if (link.linktype === 'url') return makeAbsolute(link.url)
 
   // Warn about CMS links without target. This could be either reference to something not yet created or misconfiguration
-  if (!missingLinks.has(link.id)) {
-    missingLinks.add(link.id)
+  if (!MISSING_LINKS.has(link.id)) {
+    MISSING_LINKS.add(link.id)
     console.log('Did not see story field in link, returning empty URL.', linkText, link)
   }
-  return '/'
+
+  return makeAbsolute(link.cached_url)
 }
 
 const makeAbsolute = (url: string) => {
