@@ -13,12 +13,12 @@ import { useCartEntryToReplace } from '../ProductPage'
 import { FormElement } from './PurchaseForm.constants'
 
 type Params = {
-  cartId: string
+  shopSessionId: string
   priceIntentId: string
   onSuccess: (productOfferId: string, nextUrl?: string) => void
 }
 
-export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
+export const useHandleSubmitAddToCart = ({ shopSessionId, onSuccess }: Params) => {
   // ProductRecommendationsQuery needs to be an active query
   // before we can "re"fetch it after adding a new product into
   // the cart
@@ -53,7 +53,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
     if (entryToReplace) {
       await replaceEntry({
         variables: {
-          cartId,
+          shopSessionId,
           removeOfferId: entryToReplace.id,
           addOfferId: productOfferId,
         },
@@ -61,7 +61,7 @@ export const useHandleSubmitAddToCart = ({ cartId, onSuccess }: Params) => {
       })
     } else {
       await addEntry({
-        variables: { cartId, offerId: productOfferId },
+        variables: { shopSessionId, offerId: productOfferId },
         ...options,
       })
     }
@@ -77,12 +77,14 @@ const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
   const addCartEntry = useCallback(
     (options: CartEntryAddOptions = {}) => {
       const handleCompleted = (data: CartEntryAddMutation) => {
-        if (!data.cartEntriesAdd.cart) return
+        const updatedShopSession = data.shopSessionCartEntriesAdd.shopSession
+        if (!updatedShopSession) return
 
         const { variables } = options
-        const addedOffer = data.cartEntriesAdd.cart.entries.find(
+        const addedOffer = updatedShopSession.cart.entries.find(
           (entry) => entry.id === variables?.offerId,
         )
+
         if (!addedOffer) {
           datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
             ...variables,

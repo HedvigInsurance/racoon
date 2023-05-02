@@ -1,6 +1,8 @@
-mutation CartEntryReplace($cartId: UUID!, $removeOfferId: UUID!, $addOfferId: UUID!) {
-  cartEntriesRemove(input: { cartId: $cartId, offerIds: [$removeOfferId] }) {
-    cart {
+mutation CartEntryReplace($shopSessionId: UUID!, $removeOfferId: UUID!, $addOfferId: UUID!) {
+  shopSessionCartEntriesRemove(
+    input: { shopSessionId: $shopSessionId, offerIds: [$removeOfferId] }
+  ) {
+    shopSession {
       id
     }
     userError {
@@ -8,9 +10,9 @@ mutation CartEntryReplace($cartId: UUID!, $removeOfferId: UUID!, $addOfferId: UU
     }
   }
 
-  cartEntriesAdd(input: { cartId: $cartId, offerIds: [$addOfferId] }) {
-    cart {
-      ...CartFragment
+  shopSessionCartEntriesAdd(input: { shopSessionId: $shopSessionId, offerIds: [$addOfferId] }) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

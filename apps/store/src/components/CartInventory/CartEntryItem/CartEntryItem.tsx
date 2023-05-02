@@ -15,14 +15,14 @@ import { DetailsSheet } from './DetailsSheet'
 import { EditEntryButton } from './EditEntryButton'
 
 type Props = CartEntry & {
-  cartId: string
+  shopSessionId: string
   defaultOpen?: boolean
   readOnly?: boolean
   onRemove?: (cart: CartFragmentFragment) => void
 }
 
 export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
-  const { cartId, readOnly, onRemove, ...cartEntry } = props
+  const { shopSessionId, readOnly, onRemove, ...cartEntry } = props
   const { title: titleLabel, startDate, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
@@ -71,7 +71,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
           <ActionsRow>
             <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
-            <RemoveEntryDialog cartId={cartId} onCompleted={onRemove} {...cartEntry}>
+            <RemoveEntryDialog shopSessionId={shopSessionId} onCompleted={onRemove} {...cartEntry}>
               <Dialog.Trigger asChild>
                 <Button variant="secondary-alt" size="small">
                   {t('REMOVE_ENTRY_BUTTON')}

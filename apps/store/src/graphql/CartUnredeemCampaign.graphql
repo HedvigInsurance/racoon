@@ -1,5 +1,12 @@
-mutation UnredeemCampaign($cartId: UUID!, $campaignId: String!) {
-  cartUnredeemCampaign(input: { cartId: $cartId, campaignId: $campaignId }) {
-    ...CartFragment
+mutation UnredeemCampaign($shopSessionId: UUID!, $campaignId: String!) {
+  shopSessionCartCampaignUnredeem(
+    input: { shopSessionId: $shopSessionId, campaignId: $campaignId }
+  ) {
+    shopSession {
+      ...ShopSession
+    }
+    userError {
+      message
+    }
   }
 }

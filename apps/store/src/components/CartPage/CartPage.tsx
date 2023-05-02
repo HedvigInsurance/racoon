@@ -19,7 +19,7 @@ import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
 
 export const CartPage = (props: CartPageProps) => {
-  const { cartId, entries, campaigns, campaignsEnabled, cost } = props
+  const { shopSessionId, entries, campaigns, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
   const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
@@ -43,9 +43,9 @@ export const CartPage = (props: CartPageProps) => {
     <EmptyState>
       <Space y={1.5}>
         <HorizontalLine />
-        {cartId && campaignsEnabled === true && (
+        {shopSessionId && campaignsEnabled === true && (
           <>
-            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
+            <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns ?? []} />
             <HorizontalLine />
           </>
         )}
@@ -56,7 +56,7 @@ export const CartPage = (props: CartPageProps) => {
 
   if (entries && entries.length > 0) {
     const showProductRecommendations =
-      cartId && productRecommendationOffers && productRecommendationOffers.length > 0
+      shopSessionId && productRecommendationOffers && productRecommendationOffers.length > 0
 
     body = (
       <Space y={{ base: 1, sm: 1.5 }}>
@@ -64,13 +64,15 @@ export const CartPage = (props: CartPageProps) => {
           {t('CART_PAGE_HEADING')} ({entries.length})
         </Heading>
         <CartEntryList>
-          {cartId &&
-            entries.map((item) => <CartEntryItem key={item.offerId} cartId={cartId} {...item} />)}
+          {shopSessionId &&
+            entries.map((item) => (
+              <CartEntryItem key={item.offerId} shopSessionId={shopSessionId} {...item} />
+            ))}
         </CartEntryList>
 
-        {cartId && campaignsEnabled && (
+        {shopSessionId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
-            <CampaignsSection cartId={cartId} campaigns={campaigns ?? []} />
+            <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns ?? []} />
             <HorizontalLine />
           </Space>
         )}
@@ -84,7 +86,7 @@ export const CartPage = (props: CartPageProps) => {
               return (
                 <CartEntryOfferItem
                   key={offer.id}
-                  cartId={cartId}
+                  shopSessionId={shopSessionId}
                   product={product}
                   offer={offer}
                 />

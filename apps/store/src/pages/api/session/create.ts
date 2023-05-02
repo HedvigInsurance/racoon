@@ -56,7 +56,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           priceIntentService,
           productName,
           shopSessionId: shopSession.id,
-          cartId: shopSession.cart.id,
         }),
       ),
     )
@@ -85,7 +84,6 @@ type AddProductParams = {
   priceIntentService: PriceIntentService
   shopSessionId: string
   apolloClient: ApolloClient<unknown>
-  cartId: string
 }
 
 const addProduct = async ({
@@ -93,7 +91,6 @@ const addProduct = async ({
   priceIntentService,
   shopSessionId,
   apolloClient,
-  cartId,
 }: AddProductParams) => {
   console.log(`Adding product to cart: ${productName}`)
   const priceTemplate = fetchPriceTemplate(productName)
@@ -121,13 +118,13 @@ const addProduct = async ({
 
   const results = await apolloClient.mutate<CartEntryAddMutation, CartEntryAddMutationVariables>({
     mutation: CartEntryAddDocument,
-    variables: { cartId, offerId: updatedPriceIntent.offers[0].id },
+    variables: { shopSessionId, offerId: updatedPriceIntent.offers[0].id },
   })
-  if (!results.data?.cartEntriesAdd.cart) {
+  if (!results.data?.shopSessionCartEntriesAdd.shopSession) {
     throw new Error(
       `Unable to add cart entry, ${JSON.stringify({
         priceIntentId: priceIntent.id,
-        cartId,
+        shopSessionId,
         productName,
       })}`,
     )

@@ -1,7 +1,7 @@
-mutation CartEntryRemove($cartId: UUID!, $offerId: UUID!) {
-  cartEntriesRemove(input: { cartId: $cartId, offerIds: [$offerId] }) {
-    cart {
-      ...CartFragment
+mutation CartEntryRemove($shopSessionId: UUID!, $offerId: UUID!) {
+  shopSessionCartEntriesRemove(input: { shopSessionId: $shopSessionId, offerIds: [$offerId] }) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

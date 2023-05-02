@@ -1,7 +1,7 @@
-mutation RedeemCampaign($cartId: UUID!, $code: String!) {
-  cartRedeemCampaign(input: { cartId: $cartId, code: $code }) {
-    cart {
-      ...CartFragment
+mutation RedeemCampaign($shopSessionId: UUID!, $code: String!) {
+  shopSessionCartCampaignRedeem(input: { shopSessionId: $shopSessionId, code: $code }) {
+    shopSession {
+      ...ShopSession
     }
     userError {
       message

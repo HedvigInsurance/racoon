@@ -116,7 +116,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   {cart.entries.map((item) => (
                     <CartEntryItem
                       key={item.offerId}
-                      cartId={cart.id}
+                      shopSessionId={shopSessionId}
                       onRemove={handleRemoveCartEntry}
                       defaultOpen={router.query[QueryParam.ExpandCart] === '1'}
                       {...item}
@@ -125,7 +125,10 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </CartEntryList>
                 {cart.campaigns.enabled && (
                   <>
-                    <CampaignsSection cartId={cart.id} campaigns={cart.campaigns.list} />
+                    <CampaignsSection
+                      shopSessionId={shopSessionId}
+                      campaigns={cart.campaigns.list}
+                    />
                     <HorizontalLine />
                   </>
                 )}
@@ -141,7 +144,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       return (
                         <CartEntryOfferItem
                           key={offer.id}
-                          cartId={cart.id}
+                          shopSessionId={shopSessionId}
                           product={product}
                           offer={offer}
                         />

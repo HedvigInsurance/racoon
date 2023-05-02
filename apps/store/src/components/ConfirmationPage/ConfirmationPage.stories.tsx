@@ -20,6 +20,7 @@ export const Default = () => {
           footer: [],
         },
       }}
+      shopSessionId="aiwdoiaiojoiwa"
       currency="SEK"
       platform="apple"
       cart={{

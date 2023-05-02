@@ -44,7 +44,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
   const setGlobalBanner = useSetGlobalBanner()
   const redirectUrl = PageLink.store({ locale: routingLocale })
   const [addCampaign, { errorMessage, loading, called }] = useRedeemCampaign({
-    cartId: shopSession?.cart.id ?? '',
+    shopSessionId: shopSession?.id ?? '',
     async onCompleted() {
       await router.push(redirectUrl)
       setGlobalBanner(t('GLOBAL_BANNER_CAMPAIGN'))

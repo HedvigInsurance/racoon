@@ -38,7 +38,7 @@ export const ConfirmationPage = (props: Props) => {
                 <Heading as="h1" variant="standard.24" align="center">
                   {story.content.title}
                 </Heading>
-                <CartInventory cart={cart} readOnly />
+                <CartInventory shopSessionId={props.shopSessionId} cart={cart} readOnly />
               </Space>
 
               <Space y={1}>

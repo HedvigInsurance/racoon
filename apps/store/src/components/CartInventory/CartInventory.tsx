@@ -13,11 +13,12 @@ import { CostSummary } from './CostSummary'
 import { ReadOnlyCampaignCodeList } from './ReadOnlyCampaignCodeList'
 
 type Props = {
+  shopSessionId: string
   cart: CartFragmentFragment
   readOnly?: boolean
 }
 
-export const CartInventory = ({ cart, readOnly = false }: Props) => {
+export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) => {
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
   const getDiscountExplanation = useGetDiscountExplanation()
 
@@ -52,7 +53,7 @@ export const CartInventory = ({ cart, readOnly = false }: Props) => {
             documents={item.variant.documents}
             productName={item.variant.product.name}
             data={item.priceIntentData}
-            cartId={cart.id}
+            shopSessionId={shopSessionId}
             startDate={convertToDate(item.startDate)}
             readOnly={readOnly}
           />
@@ -60,7 +61,7 @@ export const CartInventory = ({ cart, readOnly = false }: Props) => {
       </CartEntryList>
       {!readOnly && (
         <>
-          <CampaignsSection cartId={cart.id} campaigns={campaigns} />
+          <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns} />
           <HorizontalLine />
         </>
       )}

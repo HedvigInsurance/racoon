@@ -12,14 +12,16 @@ import { useRedeemCampaign, useUnredeemCampaign } from './useCampaign'
 const FORM_CAMPAIGN_CODE = 'campaignCode'
 
 type Props = {
-  cartId: string
+  shopSessionId: string
   campaigns: Array<CartCampaign>
 }
 
-export const CampaignsSection = ({ cartId, campaigns }: Props) => {
+export const CampaignsSection = ({ shopSessionId, campaigns }: Props) => {
   const { t } = useTranslation('cart')
 
-  const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({ cartId })
+  const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({
+    shopSessionId,
+  })
   const handleSubmitCampaign: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -29,7 +31,9 @@ export const CampaignsSection = ({ cartId, campaigns }: Props) => {
     }
   }
 
-  const [unredeemCampaign, { loading: loadingUnredeenCampaign }] = useUnredeemCampaign({ cartId })
+  const [unredeemCampaign, { loading: loadingUnredeenCampaign }] = useUnredeemCampaign({
+    shopSessionId,
+  })
   const handleSubmitUnredeemCampaign = (campaignId: string): FormEventHandler => {
     return (event) => {
       event.preventDefault()
