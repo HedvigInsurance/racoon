@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
-import { PetMigrationPage } from '@/components/PetMigrationPage/PetMigrationPage'
+import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { Flags } from '@/services/Flags/Flags'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -11,14 +11,14 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 type Props = { [SHOP_SESSION_PROP_NAME]: string }
 type Params = { shopSessionId: string }
 
-const NextPetMigrationPage: NextPage<Props> = (props: Props) => {
-  return <PetMigrationPage {...props} />
+const NextManyPetsMigrationPage: NextPage<Props> = (props: Props) => {
+  return <ManyPetsMigrationPage {...props} />
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res } = context
 
-  if (!Flags.getFeature('PET_MIGRATION')) return { notFound: true }
+  if (!Flags.getFeature('MANYPETS_MIGRATION')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const shopSessionId = params?.shopSessionId
@@ -45,4 +45,4 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
 }
 
-export default NextPetMigrationPage
+export default NextManyPetsMigrationPage
