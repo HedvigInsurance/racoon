@@ -36,7 +36,6 @@ import {
   filterByBlockType,
   getLinkFieldURL,
 } from '@/services/storyblok/Storyblok.helpers'
-import { isDisabledPetLink } from '@/utils/isDisabledPetLink'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonBlockProps } from './ButtonBlock'
@@ -137,9 +136,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
         label: item.label,
       }
     }
-    if (!isDisabledPetLink(navItem.url)) {
-      productNavItems.push(navItem)
-    }
+    productNavItems.push(navItem)
   })
 
   const content = (
