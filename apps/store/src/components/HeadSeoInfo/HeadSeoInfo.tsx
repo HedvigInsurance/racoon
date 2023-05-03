@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import { StructuredDataOrganization } from './StructuredDataOrganization'
 
 export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
   // AB testing
@@ -28,6 +29,7 @@ export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
             <title>{seoTitle}</title>
           </>
         )}
+        <StructuredDataOrganization />
       </Head>
       {/* Must include link to self along with other variants */}
 
