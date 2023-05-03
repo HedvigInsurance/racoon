@@ -1,5 +1,6 @@
-import { ISbStoryData } from '@storyblok/react'
+import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
+import { Flags } from '@/services/Flags/Flags'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
@@ -8,8 +9,6 @@ import { StructuredDataOrganization } from './StructuredDataOrganization'
 export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
   // AB testing
   const { canonicalUrl, robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
-  // Translations and other alternates
-  const { alternates } = story
 
   return (
     <>
@@ -33,6 +32,16 @@ export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
       </Head>
       {/* Must include link to self along with other variants */}
 
+      <AlternateLinks story={story} />
+    </>
+  )
+}
+
+const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
+  const alternates = story.alternates.filter(isVisibleAlternate)
+
+  return (
+    <>
       <AlternateLink fullSlug={story.full_slug} />
       {alternates.map((alternate) => (
         <AlternateLink key={alternate.id} fullSlug={alternate.full_slug} />
@@ -40,6 +49,9 @@ export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
     </>
   )
 }
+
+const isVisibleAlternate = (alternate: ISbAlternateObject) =>
+  Flags.getFeature('ENGLISH_LANGUAGE') || !getHrefLang(alternate.full_slug).startsWith('en-')
 
 const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
   return (
