@@ -11,7 +11,6 @@ import {
   ExternalInsurer,
   useInsurelyDataCollectionCreateMutation,
 } from '@/services/apollo/generated'
-import { Features } from '@/services/Features'
 import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
@@ -19,9 +18,10 @@ import {
 } from '@/services/Insurely/Insurely.constants'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { Features } from '@/utils/Features'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 
-const INSURELY_IS_ENABLED = Features.isEnabled('INSURELY')
+const INSURELY_IS_ENABLED = Features.enabled('INSURELY')
 
 type Props = {
   label: string

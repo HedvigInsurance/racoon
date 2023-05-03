@@ -10,11 +10,11 @@ import {
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { Features } from '@/services/Features'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { Features } from '@/utils/Features'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   })
 }
 
-const SUCCESS_ANIMATION_ENABLED = Features.isEnabled('SUCCESS_ANIMATION')
+const SUCCESS_ANIMATION_ENABLED = Features.enabled('SUCCESS_ANIMATION')
 
 const CheckoutConfirmationPage: NextPageWithLayout<
   ConfirmationPageProps & { story: ConfirmationStory }

@@ -1,4 +1,4 @@
-import { Features } from '@/services/Features'
+import { Features } from '@/utils/Features'
 
 const petPages = new Set([
   'se/forsakringar/hundforsakring',
@@ -9,7 +9,7 @@ const petPages = new Set([
   'se-en/insurances/pet-insurance',
 ])
 export const isDisabledPetLink = (slug: string) => {
-  return petPages.has(trimSlashes(slug)) && !Features.isEnabled('PET_INSURANCE')
+  return petPages.has(trimSlashes(slug)) && !Features.enabled('PET_INSURANCE')
 }
 
 const trimSlashes = (url: string) => url.replaceAll(/(^\/|\/$)/g, '')

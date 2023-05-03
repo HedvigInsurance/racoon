@@ -1,7 +1,7 @@
 import * as process from 'process'
 
 export const Features = {
-  isEnabled(feature: FeatureFlag) {
+  enabled(feature: FeatureFlag) {
     return config[feature]
   },
 }
