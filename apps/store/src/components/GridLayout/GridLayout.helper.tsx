@@ -40,7 +40,11 @@ export const getGridLayout = (width: ContentWidth, align: ContentAlignment = 'le
 }
 
 const RESPONSIVE_STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>> = {
-  '1': { left: {}, center: {}, right: {} },
+  '1': {
+    left: { gridColumn: '1 / span 12' },
+    center: { gridColumn: '1 / span 12' },
+    right: { gridColumn: '1 / span 12' },
+  },
   '2/3': {
     left: { gridColumn: 'auto / span 8' },
     center: { gridColumn: '3 / span 8' },
