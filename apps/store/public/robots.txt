@@ -5,3 +5,5 @@ Disallow: /cart
 Disallow: /checkout
 Disallow: /confirmation
 Disallow: /country-selector
+
+Sitemap: https://www.hedvig.com/sitemap.xml
