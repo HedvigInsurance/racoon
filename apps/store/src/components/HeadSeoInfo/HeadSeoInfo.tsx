@@ -1,6 +1,6 @@
 import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
-import { Flags } from '@/services/Flags/Flags'
+import { Features } from '@/services/Features'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
@@ -51,7 +51,7 @@ const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
 }
 
 const isVisibleAlternate = (alternate: ISbAlternateObject) =>
-  Flags.getFeature('ENGLISH_LANGUAGE') || !getHrefLang(alternate.full_slug).startsWith('en-')
+  Features.isEnabled('ENGLISH_LANGUAGE') || !getHrefLang(alternate.full_slug).startsWith('en-')
 
 const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
   return (

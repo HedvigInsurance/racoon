@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { Flags } from '@/services/Flags/Flags'
+import { Features } from '@/services/Features'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -18,7 +18,7 @@ const NextManyPetsMigrationPage: NextPage<Props> = (props: Props) => {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res } = context
 
-  if (!Flags.getFeature('MANYPETS_MIGRATION')) return { notFound: true }
+  if (!Features.isEnabled('MANYPETS_MIGRATION')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const shopSessionId = params?.shopSessionId
