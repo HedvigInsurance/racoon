@@ -75,7 +75,7 @@
     "@storybook/addon-links": "7.0.7",
     "@storybook/nextjs": "7.0.7",
     "@storybook/react": "7.0.7",
-    "@swc-jotai/react-refresh": "0.0.7",
+    "@swc-jotai/react-refresh": "0.0.8",
     "@testing-library/dom": "9.2.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
