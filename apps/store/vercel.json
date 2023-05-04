@@ -5,6 +5,6 @@
   "installCommand": "cd ../.. && yarn install --immutable",
   "regions": ["arn1"],
   "github": {
-    "autoJobCancelation": false
+    "autoJobCancelation": true
   }
 }
