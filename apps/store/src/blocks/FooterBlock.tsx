@@ -6,9 +6,9 @@ import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { Flags } from '@/services/Flags/Flags'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { Features } from '@/utils/Features'
 import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField } from '@/utils/l10n/locales'
@@ -21,8 +21,8 @@ import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-const COUNTRY_SELECTOR_ENABLED = Flags.getFeature('COUNTRY_SELECTOR')
-const ENGLISH_LANGUAGE_ENABLED = Flags.getFeature('ENGLISH_LANGUAGE')
+const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
+const ENGLISH_LANGUAGE_ENABLED = Features.enabled('ENGLISH_LANGUAGE')
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
