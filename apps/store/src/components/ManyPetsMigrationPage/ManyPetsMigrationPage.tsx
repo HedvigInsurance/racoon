@@ -14,7 +14,7 @@ type Props = {
   [SHOP_SESSION_PROP_NAME]: string
 }
 
-export const PetMigrationPage = (props: Props) => {
+export const ManyPetsMigrationPage = (props: Props) => {
   const { shopSessionId } = props
 
   const queryResult = useShopSessionPetMigrationQuery({
