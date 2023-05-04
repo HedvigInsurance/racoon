@@ -1,5 +1,4 @@
 import { useApolloClient } from '@apollo/client'
-import { useRouter } from 'next/router'
 import {
   createContext,
   PropsWithChildren,
@@ -68,14 +67,18 @@ const usePriceIntentContextValue = () => {
     },
   })
 
-  const router = useRouter()
   const createNewPriceIntent = useCallback(
     async (shopSession: ShopSession) => {
       const service = priceIntentServiceInitClientSide(apolloClient)
       service.clear(priceTemplate.name, shopSession.id)
-      await router.replace(router.asPath)
+      const priceIntent = await service.getOrCreate({
+        priceTemplate,
+        productName: productData.name,
+        shopSessionId: shopSession.id,
+      })
+      setPriceIntentId(priceIntent.id)
     },
-    [apolloClient, priceTemplate, router],
+    [apolloClient, priceTemplate, productData.name],
   )
 
   useEffect(
