@@ -1,0 +1,5 @@
+query ManyPetsMigrationOffers($shopSessionId: UUID!) {
+  petMigrationOffers(shopSessionId: $shopSessionId) {
+    ...ProductOffer
+  }
+}

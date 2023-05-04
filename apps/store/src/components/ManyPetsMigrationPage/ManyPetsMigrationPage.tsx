@@ -4,8 +4,8 @@ import { FormEventHandler, useCallback, useState } from 'react'
 import { Button, Heading, Space } from 'ui'
 import {
   ShopSessionSigningStatus,
+  useManyPetsMigrationOffersQuery,
   usePetMigrationSignMutation,
-  useShopSessionPetMigrationQuery,
   useShopSessionSigningQuery,
 } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -17,11 +17,11 @@ type Props = {
 export const ManyPetsMigrationPage = (props: Props) => {
   const { shopSessionId } = props
 
-  const queryResult = useShopSessionPetMigrationQuery({
+  const queryResult = useManyPetsMigrationOffersQuery({
     variables: { shopSessionId },
   })
 
-  const offers = queryResult.data?.shopSession.priceIntents.flatMap((x) => x.offers)
+  const offers = queryResult.data?.petMigrationOffers
   const offerIds = offers?.map((offer) => offer.id) ?? []
 
   const { handleSubmitSign, loading } = useSignMigration(shopSessionId, offerIds)
