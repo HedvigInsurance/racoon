@@ -16,7 +16,7 @@ const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
 const DEFAULT_TEXT_HORIZONTAL_ALIGNMENT: TextHorizontalAlignment = 'left'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
-type ImageTextBlockProps = SbBaseBlockProps<{
+export type ImageTextBlockProps = SbBaseBlockProps<{
   image: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
