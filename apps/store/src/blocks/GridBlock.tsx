@@ -8,7 +8,7 @@ import { Layout } from './TextContentBlock'
 
 type ColumnBloks = ExpectedBlockType<ImageTextBlockProps>
 
-type ColumnProps = { columns: 2 | 3 | 4 }
+type ColumnProps = { columns: number }
 
 type GridBlockProps = SbBaseBlockProps<{
   title?: string
@@ -16,34 +16,10 @@ type GridBlockProps = SbBaseBlockProps<{
   layout?: Layout
 }>
 
-const COLUMN_STYLES: Record<number, CSSObject> = {
-  2: {
-    [mq.md]: { gridColumn: 'auto / span 6' },
-  },
-  3: {
-    [mq.md]: { gridColumn: 'auto / span 4' },
-  },
-  4: {
-    [mq.md]: { gridColumn: 'auto / span 6' },
-    [mq.lg]: { gridColumn: 'auto / span 3' },
-  },
-}
-
-const getColumns = (items: ColumnBloks) => {
-  const noOfItems = items.length
-  switch (noOfItems) {
-    case 1:
-    case 2:
-      return 2
-    case 3:
-      return 3
-    default:
-      return 4
-  }
-}
-
 export const GridBlock = ({ blok }: GridBlockProps) => {
-  const columns = getColumns(blok.columns)
+  // Define a grid with 2-4 columns based on no. of items
+  const columns = Math.min(4, Math.max(2, blok.columns.length))
+
   return (
     <GridLayout.Root {...storyblokEditable(blok)}>
       <GridLayout.Content width={blok.layout?.widths ?? { base: '1' }} align="center">
@@ -71,6 +47,19 @@ const Wrapper = styled.div({
     gridTemplateColumns: 'repeat(12, 1fr)',
   },
 })
+
+const COLUMN_STYLES: Record<number, CSSObject> = {
+  2: {
+    [mq.md]: { gridColumn: 'auto / span 6' },
+  },
+  3: {
+    [mq.md]: { gridColumn: 'auto / span 4' },
+  },
+  4: {
+    [mq.md]: { gridColumn: 'auto / span 6' },
+    [mq.lg]: { gridColumn: 'auto / span 3' },
+  },
+}
 
 const Column = styled.div<ColumnProps>(({ columns }) => ({
   ...COLUMN_STYLES[columns],
