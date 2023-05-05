@@ -63,12 +63,15 @@ GridBlock.blockName = 'grid'
 
 const Wrapper = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(12, 1fr)',
   columnGap: theme.space.md,
   rowGap: theme.space.xxl,
+  marginInline: 'auto',
+
+  [mq.md]: {
+    gridTemplateColumns: 'repeat(12, 1fr)',
+  },
 })
 
 const Column = styled.div<ColumnProps>(({ columns }) => ({
-  gridColumn: '1 / span 12',
   ...COLUMN_STYLES[columns],
 }))
