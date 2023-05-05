@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
-import { mq, theme } from 'ui'
+import { ConditionalWrapper, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -16,7 +16,7 @@ const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
 const DEFAULT_TEXT_HORIZONTAL_ALIGNMENT: TextHorizontalAlignment = 'left'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
-type ImageTextBlockProps = SbBaseBlockProps<{
+export type ImageTextBlockProps = SbBaseBlockProps<{
   image: ExpectedBlockType<ImageBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
@@ -26,7 +26,7 @@ type ImageTextBlockProps = SbBaseBlockProps<{
   imagePlacement?: ImagePlacement
 }>
 
-export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
+export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
   const { orientation = DEFAULT_ORIENTATION } = blok
   // We expect only one image from Storyblok
   const imageBlock = Array.isArray(blok.image)
@@ -42,10 +42,11 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
           textAlignment={blok.textAlignment}
           textHorizontalAlignment={blok.textHorizontalAlignment}
           imagePlacement={blok.imagePlacement}
+          nested={nested}
         />
       )
     case 'vertical':
-      return <VerticalImageTextBlock imageBlock={imageBlock} body={blok.body} />
+      return <VerticalImageTextBlock imageBlock={imageBlock} body={blok.body} nested={nested} />
     default:
       console.warn(`orientation type '${orientation}' is not valid`)
       return null
@@ -53,30 +54,25 @@ export const ImageTextBlock = ({ blok }: ImageTextBlockProps) => {
 }
 ImageTextBlock.blockName = 'imageText'
 
-type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'body'> & {
+type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'body' | 'nested'> & {
   imageBlock?: ImageBlockProps['blok']
 }
 
-const VerticalImageTextBlock = ({ imageBlock, body }: VerticalImageTextBlockProps) => {
+const VerticalImageTextBlock = ({ imageBlock, body, nested }: VerticalImageTextBlockProps) => {
   return (
-    <VerticalImageTextBlockWrapper>
+    <ConditionalWrapper
+      condition={!nested}
+      wrapWith={(children) => <ImageTextBlockWrapper>{children}</ImageTextBlockWrapper>}
+    >
       {imageBlock && <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />}
       <VerticalBodyWrapper>
         {body?.map((nestedBlock) => (
           <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
         ))}
       </VerticalBodyWrapper>
-    </VerticalImageTextBlockWrapper>
+    </ConditionalWrapper>
   )
 }
-
-const VerticalImageTextBlockWrapper = styled.div({
-  paddingInline: theme.space.xs,
-
-  [mq.md]: {
-    paddingInline: theme.space.md,
-  },
-})
 
 const VerticalBodyWrapper = styled.div({
   padding: theme.space.xs,
@@ -88,7 +84,7 @@ const VerticalBodyWrapper = styled.div({
 
 type FluidImageTextBlockProps = Pick<
   ImageTextBlockProps['blok'],
-  'body' | 'textAlignment' | 'textHorizontalAlignment' | 'imagePlacement'
+  'body' | 'textAlignment' | 'textHorizontalAlignment' | 'imagePlacement' | 'nested'
 > & { imageBlock?: ImageBlockProps['blok'] }
 
 const FluidImageTextBlock = ({
@@ -97,38 +93,48 @@ const FluidImageTextBlock = ({
   textAlignment = DEFAULT_TEXT_ALIGNMENT,
   textHorizontalAlignment = DEFAULT_TEXT_HORIZONTAL_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
+  nested,
 }: FluidImageTextBlockProps) => {
   return (
-    <FluidImageTextBlockWrapper>
-      {imageBlock && (
-        <GridLayout.Content width="1/2">
-          <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />
-        </GridLayout.Content>
-      )}
-      <FluidBodyWrapper
-        imagePlacement={imagePlacement}
-        textAlignment={textAlignment}
-        textHorizontalAlignment={textHorizontalAlignment}
-      >
-        <FluidBodyInnerWrapper>
-          {body?.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
-          ))}
-        </FluidBodyInnerWrapper>
-      </FluidBodyWrapper>
-    </FluidImageTextBlockWrapper>
+    <ConditionalWrapper
+      condition={!nested}
+      wrapWith={(children) => <ImageTextBlockWrapper>{children}</ImageTextBlockWrapper>}
+    >
+      <FluidImageTextBlockGrid>
+        {imageBlock && (
+          <GridLayout.Content width="1/2">
+            <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />
+          </GridLayout.Content>
+        )}
+        <FluidBodyWrapper
+          imagePlacement={imagePlacement}
+          textAlignment={textAlignment}
+          textHorizontalAlignment={textHorizontalAlignment}
+        >
+          <FluidBodyInnerWrapper>
+            {body?.map((nestedBlock) => (
+              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
+            ))}
+          </FluidBodyInnerWrapper>
+        </FluidBodyWrapper>
+      </FluidImageTextBlockGrid>
+    </ConditionalWrapper>
   )
 }
 
-const FluidImageTextBlockWrapper = styled(GridLayout.Root)({
-  paddingInline: theme.space.xs,
+const FluidImageTextBlockGrid = styled(GridLayout.Root)({
   rowGap: theme.space.md,
+
+  [mq.lg]: {
+    columnGap: theme.space.xxxl,
+  },
+})
+
+const ImageTextBlockWrapper = styled.div({
+  paddingInline: theme.space.xs,
 
   [mq.md]: {
     paddingInline: theme.space.md,
-  },
-  [mq.lg]: {
-    columnGap: theme.space.xxxl,
   },
 })
 

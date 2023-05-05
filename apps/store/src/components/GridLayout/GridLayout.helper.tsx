@@ -3,7 +3,7 @@ import { mq, Level } from 'ui'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
 
-export type ColumnWidth = '1' | '2/3' | '1/2' | '1/3'
+export type ColumnWidth = '1' | '5/6' | '2/3' | '1/2' | '1/3'
 export type ContentAlignment = 'left' | 'center' | 'right'
 export type ContentWidth = ColumnWidth | PartialRecord<Level | 'base', ColumnWidth>
 
@@ -44,6 +44,11 @@ const RESPONSIVE_STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>
     left: { gridColumn: '1 / span 12' },
     center: { gridColumn: '1 / span 12' },
     right: { gridColumn: '1 / span 12' },
+  },
+  '5/6': {
+    left: { gridColumn: '1 / span 10' },
+    center: { gridColumn: '2 / span 10' },
+    right: { gridColumn: '3 / span 10' },
   },
   '2/3': {
     left: { gridColumn: 'auto / span 8' },
@@ -91,8 +96,13 @@ const thirdLeftStyles: CSSObject = {
   [mq.xl]: { gridColumn: 'auto / span 4' },
 }
 
+const fiveSixthsCenterStyles: CSSObject = {
+  [mq.lg]: { gridColumn: '2 / span 10' },
+}
+
 const STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>> = {
   '1': { left: {}, center: {}, right: {} },
+  '5/6': { left: {}, center: fiveSixthsCenterStyles, right: {} },
   '2/3': {
     left: {},
     center: twoThirdsCenterStyles,

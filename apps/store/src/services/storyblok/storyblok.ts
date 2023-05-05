@@ -16,6 +16,7 @@ import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
+import { GridBlock } from '@/blocks/GridBlock'
 import {
   HeaderBlock,
   HeaderBlockProps,
@@ -205,6 +206,7 @@ export const initStoryblok = () => {
     FooterSection,
     ReusableBlockReference,
     // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
+    GridBlock,
     HeaderBlock,
     HeadingBlock,
     HeadingLabelBlock,
