@@ -10,6 +10,8 @@
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} försäkringar",
   "CHECKOUT_PAGE_HEADING": "Signera",
   "CHECKOUT_PAGE_SUBHEADING": "Kontrollera dina uppgifter och teckna försäkring",
+  "CONFIRMATION_SWITCHING_SUBTITLE": "Följ instruktionerna nedan för att säga upp din gamla bilförsäkring med {{company}}.",
+  "CONFIRMATION_SWITCHING_TITLE": "Avsluta din gamla bilförsäkring",
   "CONTACT_DETAILS_FORM_TITLE": "Dina kontaktuppgifter",
   "ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN": "Försök igen",
   "ERROR_GENERAL_DIALOG_PROMPT": "Något gick fel. Testa gärna igen, och kontakta oss på hedvig@hedvig.com om det inte löser sig.",
