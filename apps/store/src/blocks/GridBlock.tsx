@@ -65,6 +65,7 @@ const Wrapper = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(12, 1fr)',
   columnGap: theme.space.md,
+  rowGap: theme.space.xxl,
 })
 
 const Column = styled.div<ColumnProps>(({ columns }) => ({
