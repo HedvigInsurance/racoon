@@ -1,38 +1,37 @@
-import styled from '@emotion/styled'
 import Head from 'next/head'
-import { FormEventHandler, useCallback, useState } from 'react'
+import { FormEventHandler, useCallback } from 'react'
 import { Button, Heading, Space } from 'ui'
 import {
-  ShopSessionSigningStatus,
+  useManyPetsFillCartMutation,
   useManyPetsMigrationOffersQuery,
-  usePetMigrationSignMutation,
-  useShopSessionSigningQuery,
 } from '@/services/apollo/generated'
-import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
+import { BankIdState } from '@/services/bankId/bankId.types'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
-type Props = {
-  [SHOP_SESSION_PROP_NAME]: string
-}
-
-export const ManyPetsMigrationPage = (props: Props) => {
-  const { shopSessionId } = props
+export const ManyPetsMigrationPage = () => {
+  const { shopSession } = useShopSession()
+  if (!shopSession) {
+    throw new Error('Must have shopSession at this point')
+  }
 
   const queryResult = useManyPetsMigrationOffersQuery({
-    variables: { shopSessionId },
+    variables: { shopSessionId: shopSession.id },
   })
 
   const offers = queryResult.data?.petMigrationOffers
   const offerIds = offers?.map((offer) => offer.id) ?? []
 
-  const { handleSubmitSign, loading } = useSignMigration(shopSessionId, offerIds)
+  const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
   return (
     <>
       <Head>
-        <title>TODO: Page title</title>
+        <title>TODO: Pet migration page</title>
         <meta name="robots" content="none" />
       </Head>
-      <Layout>
+      <div>
         <Heading variant="serif.40" as="h1">
           Pet Migration page 🐈‍ 🐩
         </Heading>
@@ -61,51 +60,69 @@ export const ManyPetsMigrationPage = (props: Props) => {
           <form onSubmit={handleSubmitSign}>
             <Space>
               <Button type="submit" loading={loading}>
-                {loading ? 'LOADING...' : 'SIGN IT!'}
+                SIGN IT!
               </Button>
             </Space>
           </form>
         )}
-      </Layout>
+      </div>
     </>
   )
 }
 
-const Layout = styled.div({})
-
 // TODO:
-// - Use BankIdContext for visualization
-// - Handle returning members
-// - Prevent signing of complete session
 // - Extract and handle errors
-const useSignMigration = (shopSessionId: string, offerIds: Array<string>) => {
-  const [signingId, setSigningId] = useState<string | null>(null)
+const useSignMigration = (
+  shopSession: Pick<ShopSession, 'id' | 'customer' | 'cart'>,
+  offerIds: Array<string>,
+) => {
+  const { currentOperation, startCheckoutSign } = useBankIdContext()
 
-  const [startSign, startSignResult] = usePetMigrationSignMutation({
-    variables: { shopSessionId, offerIds },
-  })
-
-  useShopSessionSigningQuery({
-    skip: !signingId,
-    variables: signingId ? { shopSessionSigningId: signingId } : undefined,
-    pollInterval: 1000,
-    onCompleted(data) {
-      if (data.shopSessionSigning.status === ShopSessionSigningStatus.Signed) {
-        setSigningId(null)
-        window.alert('Congratulations, signed successfully')
-      }
-    },
-  })
+  const [fillCart, fillCartResult] = useManyPetsFillCartMutation()
 
   const handleSubmitSign: FormEventHandler<HTMLFormElement> = useCallback(
     async (event) => {
       event.preventDefault()
-      const startSignResult = await startSign()
-      setSigningId(() => startSignResult.data?.shopSessionStartSign.signing?.id ?? null)
-      window.alert('Open your BankID app and sign')
+
+      if (!shopSession.customer || !shopSession.customer.ssn)
+        throw new Error('Must have customer data and ssn in it')
+
+      const shopSessionId = shopSession.id
+
+      if (shopSession.cart.entries.length === 0) {
+        console.debug('Filling cart')
+        await fillCart({ variables: { shopSessionId, offerIds } })
+      } else {
+        if (offerIds.length === shopSession.cart.entries.length) {
+          const cartOfferIds = new Set(shopSession.cart.entries.map((entry) => entry.id))
+          if (offerIds.every((id) => cartOfferIds.has(id))) {
+            console.debug('Cart already filled with expected offers')
+          } else {
+            throw new Error(
+              `Cart has unexpected items in it. cartOfferIds=${Array.from(
+                cartOfferIds.values(),
+              )}, migration offerIds=${offerIds}`,
+            )
+          }
+        }
+      }
+
+      const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
+      startCheckoutSign({
+        customerAuthenticationStatus,
+        shopSessionId,
+        ssn,
+        onSuccess() {
+          window.alert('Sign success, time to implement next steps!')
+        },
+      })
     },
-    [startSign],
+    [shopSession, startCheckoutSign, fillCart, offerIds],
   )
 
-  return { handleSubmitSign, loading: startSignResult.loading || !!signingId }
+  const signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
+    currentOperation?.state as BankIdState,
+  )
+
+  return { handleSubmitSign, loading: fillCartResult.loading || signLoading }
 }

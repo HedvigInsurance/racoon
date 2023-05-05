@@ -1,0 +1,7 @@
+mutation ManyPetsFillCart($shopSessionId: UUID!, $offerIds: [UUID!]!) {
+  shopSessionCartEntriesAdd(input: { shopSessionId: $shopSessionId, offerIds: $offerIds }) {
+    userError {
+      message
+    }
+  }
+}
