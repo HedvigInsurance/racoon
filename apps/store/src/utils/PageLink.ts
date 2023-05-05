@@ -89,5 +89,5 @@ const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
   se: '/se/forsakringar/djurforsakring/sjalvrisk',
-  'se-en': '/se-en/insurances/petinsurance/deductible',
+  'se-en': '/se-en/insurances/pet-insurance/deductible',
 }
