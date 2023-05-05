@@ -27,7 +27,7 @@ export const PageLink = {
   // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
   // and manually maintaining consistency between CMS and code
   store: ({ locale }: Required<BaseParams>) => {
-    let slug = 'store'
+    let slug = 'insurances'
     if (locale === 'se') {
       slug = 'forsakringar'
     }
