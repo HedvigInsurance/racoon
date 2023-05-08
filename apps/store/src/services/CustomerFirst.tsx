@@ -3,33 +3,34 @@ import { atom, useAtomValue, useSetAtom } from 'jotai'
 import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
 import { useBreakpoint } from 'ui'
-
-const SCRIPT_SRC = process.env.NEXT_PUBLIC_CUSTOMER_FIRST_SCRIPT
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 const OPEN_ATOM = atom(false)
 
 export const CustomerFirstScript = () => {
   const isDesktop = useBreakpoint('lg')
   const open = useAtomValue(OPEN_ATOM)
+  const { chatWidgetSrc } = useCurrentLocale()
 
-  if (!SCRIPT_SRC) return null
+  if (!chatWidgetSrc) return null
 
   const showLauncher = isDesktop || open
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
-      <Script strategy="afterInteractive" src={SCRIPT_SRC} />
+      <Script strategy="afterInteractive" src={chatWidgetSrc} />
     </>
   )
 }
 
 export const useCustomerFirst = () => {
   const setOpen = useSetAtom(OPEN_ATOM)
+  const { chatWidgetSrc } = useCurrentLocale()
 
   useEffect(() => {
-    if (!SCRIPT_SRC) return
+    if (!chatWidgetSrc) return
 
-    const iframeOrigin = new URL(SCRIPT_SRC).origin
+    const iframeOrigin = new URL(chatWidgetSrc).origin
     const handleMessage = ({ data, origin }: MessageEvent<MessageData | unknown>) => {
       if (origin === iframeOrigin) {
         if (data === 'showWidget') setOpen(true)
@@ -38,7 +39,7 @@ export const useCustomerFirst = () => {
     }
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [setOpen])
+  }, [setOpen, chatWidgetSrc])
 
   const show = useCallback(() => {
     setOpen(true)
