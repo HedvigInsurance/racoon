@@ -132,6 +132,7 @@ const frameSrc = [
 
   // OLD market web
   'https://www.youtube.com/',
+  'https://widget.trustpilot.com/',
 
   "'self'",
 ]
