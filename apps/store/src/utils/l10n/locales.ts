@@ -1,6 +1,6 @@
 import { IsoLocale, Language, Locale, RoutingLocale } from './types'
 
-export const FALLBACK_LOCALE = Locale.EnSe
+export const FALLBACK_LOCALE = Locale.SvSe
 export const LOCALE_COOKIE_KEY = 'NEXT_LOCALE'
 export const LOCALE_COOKIE_MAX_AGE = 365 * 24 * 60 * 60 // one year in seconds
 
