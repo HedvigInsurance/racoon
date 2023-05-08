@@ -19,7 +19,7 @@ const fadeAnimation = keyframes({
 
 const LoadingWrapper = styled.div({ display: 'flex', gap: 7 })
 
-const Circle = styled.div({
+const Circle = styled.span({
   width: 6,
   height: 6,
   backgroundColor: 'currentcolor',

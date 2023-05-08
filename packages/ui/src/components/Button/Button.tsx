@@ -24,10 +24,12 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const buttonChildren = (
     <>
-      <div style={{ opacity: loading ? 0 : 1 }}>{children}</div>
-      <Centered style={{ display: loading ? 'block' : 'none' }}>
-        <DotPulse />
-      </Centered>
+      <span style={{ opacity: loading ? 0 : 1 }}>{children}</span>
+      {loading && (
+        <Centered>
+          <DotPulse />
+        </Centered>
+      )}
     </>
   )
 
@@ -56,7 +58,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
 Button.displayName = 'Button'
 
-const Centered = styled.div({
+const Centered = styled.span({
   position: 'absolute',
   display: 'flex',
   justifyContent: 'center',
