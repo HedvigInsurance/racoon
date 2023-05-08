@@ -5,5 +5,8 @@ Disallow: /cart
 Disallow: /checkout
 Disallow: /confirmation
 Disallow: /country-selector
+Disallow: /reusable-blocks
+Disallow: /referrals
+Disallow: /new-member/
 
 Sitemap: https://www.hedvig.com/sitemap.xml
