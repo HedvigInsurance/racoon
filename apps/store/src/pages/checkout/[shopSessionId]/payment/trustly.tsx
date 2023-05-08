@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
     setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId),
   ])
 
-  const checkoutSteps = await fetchCheckoutSteps({ apolloClient, shopSession })
+  const checkoutSteps = await fetchCheckoutSteps({ apolloClient, req, res, shopSession })
 
   return {
     props: {

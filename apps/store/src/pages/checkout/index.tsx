@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   let checkoutSteps: Array<CheckoutStep>, shopSessionSigning: ShopSessionSigning | null
   try {
     ;[checkoutSteps, shopSessionSigning] = await Promise.all([
-      fetchCheckoutSteps({ apolloClient, shopSession }),
+      fetchCheckoutSteps({ apolloClient, req, res, shopSession }),
       fetchCurrentShopSessionSigning({ apolloClient, req }),
     ])
   } catch (error) {

@@ -3,32 +3,34 @@ import {
   CurrentMemberDocument,
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
-  ShopSessionAuthenticationStatus,
   ExternalInsuranceCancellationOption as CancellationOption,
 } from '@/services/apollo/generated'
+import { getAccessToken } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { CookieParams } from '@/utils/types'
 import { CheckoutStep } from './Breadcrumbs'
 
 type Params = {
   apolloClient: ApolloClient<unknown>
   shopSession: ShopSession
-}
+} & CookieParams
 
-export const fetchCheckoutSteps = async ({ apolloClient, shopSession }: Params) => {
+export const fetchCheckoutSteps = async ({ apolloClient, req, res, shopSession }: Params) => {
   const switchingEntry = shopSession.cart.entries.find(
     ({ cancellation }) => cancellation.option === CancellationOption.Banksignering,
   )
   const showSwitchingAssistant = !!switchingEntry
 
   let showPayment = true
-  if (
-    shopSession.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
-  ) {
+  // NOTE: Cannot rely on shopSession.customer.authenticationStatus if session is complete (we'd NONE for new members)
+  const isAuthenticated = !!getAccessToken({ req, res })
+  if (isAuthenticated) {
     const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
       query: CurrentMemberDocument,
     })
+
     showPayment = !data.currentMember.hasActivePaymentConnection
   }
 

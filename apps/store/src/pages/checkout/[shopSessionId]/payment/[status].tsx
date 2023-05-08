@@ -39,9 +39,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   if (status === 'success') {
     try {
-      const checkoutSteps = await fetchCheckoutSteps({ apolloClient, shopSession })
+      const checkoutSteps = await fetchCheckoutSteps({ apolloClient, req, res, shopSession })
       const currentStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextStep = checkoutSteps[currentStepIndex + 1]
+
       const link = getCheckoutStepLink({ step: nextStep, shopSession, locale })
       return { redirect: { destination: link, permanent: false } }
     } catch (error) {
