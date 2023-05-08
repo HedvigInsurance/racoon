@@ -7380,12 +7380,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.1":
-  version: 18.2.1
-  resolution: "@types/react-dom@npm:18.2.1"
+"@types/react-dom@npm:18.2.4":
+  version: 18.2.4
+  resolution: "@types/react-dom@npm:18.2.4"
   dependencies:
     "@types/react": "*"
-  checksum: 4e607a9d08f707ae2bd6b377f1da32989dcbe4e38ac39110423a1f6bc95dd53a5484f7f952b34e9d12b5f29a265d52a8c74c1a7d1d1e25be0fa69ccf9d64209f
+  checksum: 8301f35cf1cbfec8c723e9477aecf87774e3c168bd457d353b23c45064737213d3e8008b067c6767b7b08e4f2b3823ee239242a6c225fc91e7f8725ef8734124
   languageName: node
   linkType: hard
 
@@ -7409,14 +7409,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.0":
-  version: 18.2.0
-  resolution: "@types/react@npm:18.2.0"
+"@types/react@npm:18.2.5":
+  version: 18.2.5
+  resolution: "@types/react@npm:18.2.5"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: db3d92b423150222a666329f7aa3023e3e942044700557b8a7d161530847e621aec9f56c9e7f71761b06dd164c8a7b17ad52355863efe80963dffa5537e8e5fd
+  checksum: 97c4534e849edf991be0820b0911d036e794b8e2599a1544f500c769acbcb4f443ccde1a3f22298f22ce368ee7757f746e4a529e889567fc142a627698e2de39
   languageName: node
   linkType: hard
 
@@ -16833,7 +16833,7 @@ __metadata:
     "@types/lodash-es": 4.17.7
     "@types/marked": 4.3.0
     "@types/node": 18.16.5
-    "@types/react": 18.2.0
+    "@types/react": 18.2.5
     classnames: 2.3.2
     cookies-next: 2.1.1
     cypress: 12.11.0
@@ -19489,7 +19489,7 @@ __metadata:
     "@types/md5": 2.3.2
     "@types/node": 18.16.5
     "@types/nprogress": 0.2.0
-    "@types/react": 18.2.0
+    "@types/react": 18.2.5
     "@types/uuid": 9.0.1
     "@vercel/edge-config": 0.1.9
     ajv: 8.12.0
@@ -20734,8 +20734,8 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
     "@types/jest": 29.5.1
-    "@types/react": 18.2.0
-    "@types/react-dom": 18.2.1
+    "@types/react": 18.2.5
+    "@types/react-dom": 18.2.4
     babel-jest: 29.5.0
     babel-loader: 9.1.2
     eslint: 8.39.0
