@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps, Params> = asy
   }
 
   const [checkoutSteps, translations] = await Promise.all([
-    fetchCheckoutSteps({ apolloClient, shopSession }),
+    fetchCheckoutSteps({ apolloClient, req, res, shopSession }),
     serverSideTranslations(locale),
   ])
 
