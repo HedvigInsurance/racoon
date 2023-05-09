@@ -20,7 +20,7 @@ export type CustomButtonProps = {
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  const { variant = 'primary', loading, children, ...baseProps } = props
+  const { variant = 'primary', loading, children, target, ...baseProps } = props
 
   const buttonChildren = (
     <>
@@ -40,6 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ref,
     disabled: props.disabled || loading,
     ...(loading && { 'data-loading': true }),
+    ...(target === '_blank' && { target: '_blank', rel: 'noreferrer' }),
   } as const
 
   switch (variant) {
