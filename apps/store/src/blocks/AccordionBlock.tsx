@@ -75,9 +75,13 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
     <>
       {enableFAQStructuredData && (
         <Head>
-          <script key="accordion-faq-sctructured-data" type="application/ld+json">
-            {getFAQStructuredData(accordionItems)}
-          </script>
+          <script
+            key="accordion-faq-sctructured-data"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(getFAQStructuredData(accordionItems)),
+            }}
+          />
         </Head>
       )}
       {content}
@@ -127,7 +131,7 @@ const StyledAccordionRoot = styled(Accordion.Root)({
 const getFAQStructuredData = (
   accordions: ReadonlyArray<Pick<AccordionItemBlockProps['blok'], 'title' | 'body'>>,
 ) => {
-  return JSON.stringify({
+  return {
     '@context': 'http://schema.org',
     '@type': 'FAQPage',
     mainEntity: accordions.map((item) => ({
@@ -138,5 +142,5 @@ const getFAQStructuredData = (
         text: renderRichText(item.body),
       },
     })),
-  })
+  }
 }
