@@ -48,9 +48,8 @@ const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
       nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
       break
     default:
-      console.log(`Routing visitor from ${country} to /se`)
       nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
-      return NextResponse.rewrite(nextURL)
+      break
   }
 
   console.log(`Routing visitor from ${country} to ${nextURL}`)
