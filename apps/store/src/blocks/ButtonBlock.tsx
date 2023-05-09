@@ -14,9 +14,11 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 }>
 
 export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
+  // Can't use ButtonNextLink for links to old web
+  const Component = blok.linktype === 'url' ? Button : ButtonNextLink
   return (
     <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
-      <ButtonNextLink
+      <Component
         {...storyblokEditable(blok)}
         href={getLinkFieldURL(blok.link, blok.text)}
         variant={blok.variant ?? 'primary'}
@@ -24,7 +26,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
         target={blok.link.target}
       >
         {blok.text}
-      </ButtonNextLink>
+      </Component>
     </ConditionalWrapper>
   )
 }
