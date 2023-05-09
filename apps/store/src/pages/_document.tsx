@@ -6,7 +6,7 @@ import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 
 export default class MyDocument extends Document {
   lang() {
-    return getLocaleOrFallback(this.props.locale).language
+    return getLocaleOrFallback(this.props.locale).htmlLang
   }
 
   render() {
