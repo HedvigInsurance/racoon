@@ -49,11 +49,12 @@ const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
       break
     default:
       nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
-      break
+      console.log(`Routing undefined country to fallback ${nextURL}`)
+      return NextResponse.redirect(nextURL, 308)
   }
 
   console.log(`Routing visitor from ${country} to ${nextURL}`)
-  return NextResponse.redirect(nextURL, 308)
+  return NextResponse.redirect(nextURL)
 }
 
 type Redirect = {
