@@ -12,21 +12,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.36.0":
-  version: 5.36.0
-  resolution: "@adyen/adyen-web@npm:5.36.0"
-  dependencies:
-    "@babel/runtime": ^7.15.4
-    "@babel/runtime-corejs3": ^7.20.1
-    "@types/applepayjs": ^3.0.4
-    "@types/googlepay": ^0.6.2
-    classnames: ^2.3.1
-    core-js-pure: ^3.25.3
-    preact: 10.11.3
-  checksum: d7f112324760a5ad0e9ba9f333fdc80c37f65d4d81ceffcf625585528878a0c4a31864e5989d8fc2e4054144aa58721883736f9ce393c12a7c34bae23b1bc66c
-  languageName: node
-  linkType: hard
-
 "@ampproject/remapping@npm:^2.1.0, @ampproject/remapping@npm:^2.2.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -2528,16 +2513,6 @@ __metadata:
     core-js-pure: ^3.20.2
     regenerator-runtime: ^0.13.4
   checksum: 55a5315b2e2541aa0dcb6193b72f8f339045d1121ff08ca87b48cbcb89447bc4550a4658e8f149c05305edd75704176ba388d780f7f0461b1b8d956a00fcf123
-  languageName: node
-  linkType: hard
-
-"@babel/runtime-corejs3@npm:^7.20.1":
-  version: 7.20.6
-  resolution: "@babel/runtime-corejs3@npm:7.20.6"
-  dependencies:
-    core-js-pure: ^3.25.1
-    regenerator-runtime: ^0.13.11
-  checksum: d533d432216509426c4f9dad56db2fe453112b7d738433111944372fba4abd0b07bee3261f19a218530b435de46592121b2a6a57b98c0c7c3452d552ba009c3e
   languageName: node
   linkType: hard
 
@@ -6826,13 +6801,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/applepayjs@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@types/applepayjs@npm:3.0.4"
-  checksum: cce6b3d70f445c485f648e367e069ec38e019d6c2ac215975978d76ed5c123ff8d53b98758e076fe9cc35decd7b9a3e1d3178aa3cf9d80e1a79fe55ecf78529a
-  languageName: node
-  linkType: hard
-
 "@types/aria-query@npm:^5.0.1":
   version: 5.0.1
   resolution: "@types/aria-query@npm:5.0.1"
@@ -7046,13 +7014,6 @@ __metadata:
     "@types/minimatch": ^5.1.2
     "@types/node": "*"
   checksum: 9101f3a9061e40137190f70626aa0e202369b5ec4012c3fabe6f5d229cce04772db9a94fa5a0eb39655e2e4ad105c38afbb4af56a56c0996a8c7d4fc72350e3d
-  languageName: node
-  linkType: hard
-
-"@types/googlepay@npm:^0.6.2":
-  version: 0.6.4
-  resolution: "@types/googlepay@npm:0.6.4"
-  checksum: 50dfafa4316febebecfbed80a2722803c590d6859e5a3fd997af5061d865a51464c00b3e21a3335f3605461de802fcfd3a430486c23fe4bec3146412764cc1c6
   languageName: node
   linkType: hard
 
@@ -9724,13 +9685,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "classnames@npm:2.3.1"
-  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
-  languageName: node
-  linkType: hard
-
 "clean-css@npm:^5.2.2":
   version: 5.3.0
   resolution: "clean-css@npm:5.3.0"
@@ -10194,13 +10148,6 @@ __metadata:
   version: 3.29.1
   resolution: "core-js-pure@npm:3.29.1"
   checksum: 2ed91f79c13f23c1b70c31edf4224aca99a9ac3db38c79127798c294a36faac0ea0b21070218621741057cf84b3dadff595475580c1fac3a43e02cae575dc27b
-  languageName: node
-  linkType: hard
-
-"core-js-pure@npm:^3.25.1, core-js-pure@npm:^3.25.3":
-  version: 3.25.5
-  resolution: "core-js-pure@npm:3.25.5"
-  checksum: e48799a8ab28f00ef3db18377142ff2c578574ab2b18ebddde6cbf12823e0181a57c80e3caa6046ce2a2e439d603a252be767583ddc54248e3d1060bc5012127
   languageName: node
   linkType: hard
 
@@ -17530,13 +17477,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:10.11.3":
-  version: 10.11.3
-  resolution: "preact@npm:10.11.3"
-  checksum: 9387115aa0581e8226309e6456e9856f17dfc0e3d3e63f774de80f3d462a882ba7c60914c05942cb51d51e23e120dcfe904b8d392d46f29ad15802941fe7a367
-  languageName: node
-  linkType: hard
-
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -19431,7 +19371,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.36.0
     "@apollo/client": 3.7.14
     "@babel/core": 7.21.8
     "@babel/preset-env": 7.21.5
