@@ -53,7 +53,7 @@ const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
   }
 
   console.log(`Routing visitor from ${country} to ${nextURL}`)
-  return NextResponse.redirect(nextURL)
+  return NextResponse.redirect(nextURL, 308)
 }
 
 type Redirect = {
