@@ -325,11 +325,15 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
   return pageLinks
 }
 
-const PRODUCTS_SLUG = 'products'
+export const MANYPETS_FOLDER_SLUG = 'manypets'
+
 const REUSABLE_BLOCK = 'reusable-blocks'
+// TODO: Consider filtering by content-type on CMS side to exclude things like reusable-blocks
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => slugParts[0] !== REUSABLE_BLOCK)
+  return allLinks.filter(
+    ({ slugParts }) => slugParts[0] !== REUSABLE_BLOCK && slugParts[0] !== MANYPETS_FOLDER_SLUG,
+  )
 }
 
 export const getGlobalStory = async (options: StoryOptions) => {
@@ -337,6 +341,7 @@ export const getGlobalStory = async (options: StoryOptions) => {
   return story as GlobalStory
 }
 
+const PRODUCTS_SLUG = 'products'
 export const getFilteredProductLinks = async () => {
   const allLinks = await getPageLinks()
   return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
