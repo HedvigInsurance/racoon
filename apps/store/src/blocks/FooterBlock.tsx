@@ -30,10 +30,11 @@ type FooterLinkProps = SbBaseBlockProps<{
 }>
 
 export const FooterLink = ({ blok }: FooterLinkProps) => {
+  const Component = blok.link.linktype === 'url' ? StyledAnchor : StyledLink
   return (
-    <StyledLink href={getLinkFieldURL(blok.link, blok.linkText)} {...storyblokEditable(blok)}>
+    <Component href={getLinkFieldURL(blok.link, blok.linkText)} {...storyblokEditable(blok)}>
       {blok.linkText}
-    </StyledLink>
+    </Component>
   )
 }
 FooterLink.blockName = 'footerLink' as const
@@ -184,7 +185,9 @@ const Disclaimer = styled.div({
   [mq.xxl]: { gridColumn: '3 / span 2' },
 })
 
-const StyledLink = styled(Link)({ textDecoration: 'none', display: 'block' })
+const StyledAnchor = styled.a({ textDecoration: 'none', display: 'block' })
+
+const StyledLink = StyledAnchor.withComponent(Link)
 
 const StyledInputSelect = styled(InputSelect)({
   backgroundColor: theme.colors.gray300,
