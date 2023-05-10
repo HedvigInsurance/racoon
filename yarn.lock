@@ -7847,10 +7847,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/edge-config@npm:0.1.9":
-  version: 0.1.9
-  resolution: "@vercel/edge-config@npm:0.1.9"
-  checksum: 1c5f748e35db6d870d61d5531199fdadf8fffd0594961dd1f5d15cea1050a57e97f10331baf1e957b2226a23b03c6a317cec54b3a72f77f5b0757c1d41faf826
+"@vercel/edge-config@npm:0.1.10":
+  version: 0.1.10
+  resolution: "@vercel/edge-config@npm:0.1.10"
+  checksum: fc0f6942a82bd18b164757e673ddafc2c4d90e515c241f4762267e0192f377813f077f662938b0d02030f97f3078759bae18bf18f4d6513b9a3875921295d2f4
   languageName: node
   linkType: hard
 
@@ -19471,7 +19471,7 @@ __metadata:
     "@types/nprogress": 0.2.0
     "@types/react-dom": 18.2.4
     "@types/uuid": 9.0.1
-    "@vercel/edge-config": 0.1.9
+    "@vercel/edge-config": 0.1.10
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
     babel-loader: 9.1.2
