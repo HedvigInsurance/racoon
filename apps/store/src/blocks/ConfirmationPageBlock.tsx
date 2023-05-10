@@ -9,6 +9,7 @@ export const ConfirmationPageBlock = ({ blok }: ConfirmationPageBlockProps) => {
   return (
     <div {...storyblokEditable(blok)}>
       {blok.body.map((nestedBlock) => (
+        // TODO: try inlining this, we're not using confirmationPage block type
         <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
       ))}
     </div>

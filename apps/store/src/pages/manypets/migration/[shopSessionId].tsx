@@ -5,14 +5,17 @@ import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPe
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getStoryBySlug, MANYPETS_FOLDER_SLUG, PageStory } from '@/services/storyblok/storyblok'
+import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = { [SHOP_SESSION_PROP_NAME]: string }
+// TODO: Type story data
+type Props = { [SHOP_SESSION_PROP_NAME]: string; [STORY_PROP_NAME]: any }
 type Params = { shopSessionId: string }
 
-const NextManyPetsMigrationPage: NextPage<Props> = () => {
-  return <ManyPetsMigrationPage />
+const NextManyPetsMigrationPage: NextPage<Props> = (props) => {
+  return <ManyPetsMigrationPage {...props} />
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
@@ -30,9 +33,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
-  const [shopSession, translations] = await Promise.all([
+  const [shopSession, pageStory, translations] = await Promise.all([
     shopSessionService.fetchById(shopSessionId).catch((err) => {
       console.error('Failed to find shopSession', err)
+    }),
+    getStoryBySlug<PageStory>(`${MANYPETS_FOLDER_SLUG}/migration`, {
+      locale,
+      // Uncomment for local debug
+      // version: 'draft',
     }),
     serverSideTranslations(locale),
   ])
@@ -46,6 +54,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   return addApolloState(apolloClient, {
     props: {
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
+      [STORY_PROP_NAME]: pageStory,
       ...translations,
     },
   })
