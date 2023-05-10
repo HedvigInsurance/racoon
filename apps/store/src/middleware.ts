@@ -44,12 +44,10 @@ const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
     case countries.DK.id:
       nextURL.pathname = toRoutingLocale(countries.DK.defaultLocale)
       break
-    case countries.SE.id:
-      nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
-      break
     default:
+      // Default routing to /se with a permanent status of 308
       nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
-      console.log(`Routing undefined country to fallback ${nextURL}`)
+      console.log(`Default routing to ${nextURL}`)
       return NextResponse.redirect(nextURL, 308)
   }
 
