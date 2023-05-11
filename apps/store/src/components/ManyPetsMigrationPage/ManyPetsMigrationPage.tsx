@@ -1,3 +1,10 @@
+import { SbBlokData } from '@storyblok/js/dist/types/types'
+import {
+  ISbStoryData,
+  StoryblokComponent,
+  storyblokEditable,
+  useStoryblokState,
+} from '@storyblok/react'
 import Head from 'next/head'
 import { FormEventHandler, useCallback } from 'react'
 import { Button, Heading, Space } from 'ui'
@@ -9,8 +16,19 @@ import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
-export const ManyPetsMigrationPage = () => {
+// TODO: Figure out correct way to reuse types between this module and pages/manypets/migration/
+type MigrationPageStory = ISbStoryData<{
+  preOfferContent?: Array<SbBlokData>
+  postOfferContent: Array<SbBlokData>
+}>
+export type ManyPetsMigrationPageProps = {
+  className?: string
+  [STORY_PROP_NAME]: MigrationPageStory
+}
+
+export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
   const { shopSession } = useShopSession()
   if (!shopSession) {
     throw new Error('Must have shopSession at this point')
@@ -20,27 +38,31 @@ export const ManyPetsMigrationPage = () => {
     variables: { shopSessionId: shopSession.id },
   })
 
-  const offers = queryResult.data?.petMigrationOffers
-  const offerIds = offers?.map((offer) => offer.id) ?? []
-
+  const offers = queryResult.data?.petMigrationOffers ?? []
+  const offerIds = offers.map((offer) => offer.id)
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
+
+  const story: MigrationPageStory = useStoryblokState(props.story)
 
   return (
     <>
       <Head>
-        <title>TODO: Pet migration page</title>
+        <title>TODO: Take from CMS</title>
         <meta name="robots" content="none" />
       </Head>
-      <div>
+      <div className={props.className}>
         <Heading variant="serif.40" as="h1">
           Pet Migration page 🐈‍ 🐩
         </Heading>
         <Space>
-          <Heading as="h2">Your pets</Heading>
+          {story.content.preOfferContent?.map((blok) => (
+            <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
+          ))}
+
           <div style={{ maxHeight: '80vh', overflow: 'auto' }}>
             {queryResult.loading && 'Loading...'}
 
-            {offers?.map((offer) => (
+            {offers.map((offer) => (
               <pre
                 key={offer.id}
                 style={{
@@ -65,6 +87,10 @@ export const ManyPetsMigrationPage = () => {
             </Space>
           </form>
         )}
+
+        {story.content.postOfferContent.map((blok) => (
+          <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
+        ))}
       </div>
     </>
   )
