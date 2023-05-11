@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import { motion } from 'framer-motion'
 import { ComponentProps, useState } from 'react'
 import { Button, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -25,9 +26,15 @@ export const ModalBlock = ({ blok }: ModalBlockProps) => {
         </FullscreenDialog.Trigger>
 
         <FullscreenDialog.Modal center={true}>
-          {blok.modalContent.map((nestedBlock) => (
-            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
-          ))}
+          <AnimationWrapper
+            initial={{ opacity: 0, y: '2vh' }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ...theme.transitions.framer.easeInOutCubic }}
+          >
+            {blok.modalContent.map((nestedBlock) => (
+              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+            ))}
+          </AnimationWrapper>
         </FullscreenDialog.Modal>
       </FullscreenDialog.Root>
     </Wrapper>
@@ -41,4 +48,8 @@ const Wrapper = styled.div({
   justifyContent: 'center',
   paddingLeft: theme.space.md,
   paddingRight: theme.space.md,
+})
+
+const AnimationWrapper = styled(motion.div)({
+  width: '100%',
 })
