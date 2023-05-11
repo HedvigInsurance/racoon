@@ -3,7 +3,7 @@ import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
   children: React.ReactNode
-  Footer: React.ReactNode
+  Footer?: React.ReactNode
   center?: boolean
 }
 
@@ -24,7 +24,7 @@ export const Modal = ({ children, Footer, center = false }: Props) => {
           <ClearFooter />
         </Main>
       )}
-      <FooterWrapper>{Footer}</FooterWrapper>
+      {Footer && <FooterWrapper>{Footer}</FooterWrapper>}
     </Content>
   )
 }

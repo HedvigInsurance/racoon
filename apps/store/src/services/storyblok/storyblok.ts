@@ -33,6 +33,7 @@ import { ImageBlock } from '@/blocks/ImageBlock'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
+import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
@@ -217,6 +218,7 @@ export const initStoryblok = () => {
     ImageTextBlock,
     InlineSpaceBlock,
     InsurableLimitsBlock,
+    ModalBlock,
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
