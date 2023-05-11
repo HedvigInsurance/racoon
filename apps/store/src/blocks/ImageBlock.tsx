@@ -3,9 +3,11 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { Layout } from './TextContentBlock'
 
 export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
 
@@ -16,6 +18,7 @@ export type ImageBlockProps = SbBaseBlockProps<{
   fullBleed?: boolean
   body?: ExpectedBlockType<HeadingBlockProps>
   priority?: boolean
+  layout?: Layout
 }>
 
 export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
@@ -24,7 +27,16 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
   return (
     <ConditionalWrapper
       condition={!blok.fullBleed && !nested}
-      wrapWith={(children) => <Layout>{children}</Layout>}
+      wrapWith={(children) => (
+        <GridLayout.Root>
+          <GridLayout.Content
+            width={blok.layout?.widths ?? { base: '1' }}
+            align={blok.layout?.alignment ?? 'center'}
+          >
+            {children}
+          </GridLayout.Content>
+        </GridLayout.Root>
+      )}
     >
       <ImageWrapper
         {...storyblokEditable(blok)}
@@ -48,8 +60,6 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
   )
 }
 ImageBlock.blockName = 'image'
-
-const Layout = styled.div({ paddingInline: theme.space.md })
 
 type WrapperProps = {
   aspectRatioLandscape?: ImageAspectRatio
