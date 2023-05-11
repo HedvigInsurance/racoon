@@ -26,7 +26,7 @@
   "DATA_TABLE_LIVING_SPACE_LABEL": "Living space",
   "DATA_TABLE_LIVING_SPACE_VALUE": "{{area}} m²",
   "DATA_TABLE_MILEAGE_LABEL": "Annual mileage",
-  "DATA_TABLE_MILEAGE_VALUE": "{{value}} km/year",
+  "DATA_TABLE_MILEAGE_VALUE": "{{value}}0 km/year",
   "DATA_TABLE_PET_BIRTH_DATE_LABEL": "Birthdate",
   "DATA_TABLE_PET_NAME_LABEL": "Name",
   "DATA_TABLE_REGISTRATION_NUMBER_LABEL": "Registration number",

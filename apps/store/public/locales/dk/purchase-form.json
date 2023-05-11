@@ -33,6 +33,7 @@
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Lejer det",
   "FIELD_YEAR_OF_CONSTRUCTION_LABEL": "Byggeår",
   "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Ja, prøv igen",
+  "GENERAL_ERROR_DIALOG_PROMPT": "Noget gik galt. Vi kan ikke beregne din pris i øjeblikket.",
   "INSURELY_SUCCESS_CONTINUE_BUTTON": "Fortsæt",
   "INSURELY_SUCCESS_PROMPT": "Vi fandt din forsikring hos {{company}}",
   "LOADING_PRICE_ANIMATION_LABEL": "Beregner din pris...",

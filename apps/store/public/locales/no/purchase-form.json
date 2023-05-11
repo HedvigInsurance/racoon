@@ -31,6 +31,8 @@
   "FIELD_STREET_LABEL": "Adresse",
   "FIELD_YEAR_OF_CONSTRUCTION_LABEL": "Byggeår",
   "FIELD_ZIP_CODE_LABEL": "Postnummer",
+  "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Prøv igjen",
+  "GENERAL_ERROR_DIALOG_PROMPT": "Noe gikk galt. Vi kan ikke beregne prisen din for øyeblikket.",
   "LABEL_NO": "Nei",
   "LABEL_YES": "Ja",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Endre",
