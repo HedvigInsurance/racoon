@@ -9,6 +9,7 @@ import * as Accordion from '@/components/Accordion/Accordion'
 import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { isBrowser } from '@/utils/env'
 
 type Props = SbBaseBlockProps<{
   items: ExpectedBlockType<AccordionItemBlockProps>
@@ -25,6 +26,7 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
   const enableFAQStructuredData = blok.isFAQ ?? false
   const displayTitleDescriptionSection = blok.title || blok.description
   const isCentered = blok.centerLayout || !displayTitleDescriptionSection
+  const FAQStructuredData = getFAQStructuredData(accordionItems)
 
   const handleValueChange = useCallback((value: string) => {
     setOpenItem(value)
@@ -73,13 +75,14 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
 
   return (
     <>
-      {enableFAQStructuredData && (
+      {isBrowser() && enableFAQStructuredData && (
+        // isBrowser check is needed due to bug in Next where script tag is inserted twice despite having a key
         <Head>
           <script
             key="accordion-faq-sctructured-data"
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(getFAQStructuredData(accordionItems)),
+              __html: JSON.stringify(FAQStructuredData),
             }}
           />
         </Head>
