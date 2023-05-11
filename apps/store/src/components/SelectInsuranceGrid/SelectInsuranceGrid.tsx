@@ -3,7 +3,6 @@ import { Children } from 'react'
 import { mq, theme } from 'ui'
 
 const ITEM_THRESHOLD = 4
-const COLUMN_WIDTH = '21rem'
 const LAYOUT = { GRID: 'grid', COLUMN: 'column' }
 
 type Props = {
@@ -19,17 +18,26 @@ export const SelectInsuranceGrid = ({ children }: Props) => {
 }
 
 const Grid = styled.div({
+  '--column-width': '21rem',
+  '--max-no-columns': 3,
+  '--grid-gap': '1rem',
+
+  '--gap-count': 'calc(var(--max-no-columns) - 1)',
+  '--gap-width': 'calc(var(--gap-count) * var(--grid-gap))',
+
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.md,
 
   [mq.lg]: {
     display: 'grid',
-    gridTemplateColumns: `repeat(auto-fit, ${COLUMN_WIDTH})`,
+    gridTemplateColumns: 'repeat(auto-fit, var(--column-width))',
     justifyContent: 'center',
+    maxWidth: 'calc((var(--max-no-columns) * var(--column-width)) + var(--gap-width))',
+    marginInline: 'auto',
 
     [`&[data-layout=${LAYOUT.COLUMN}]`]: {
-      gridTemplateColumns: COLUMN_WIDTH,
+      gridTemplateColumns: 'var(--column-width)',
     },
   },
 })
