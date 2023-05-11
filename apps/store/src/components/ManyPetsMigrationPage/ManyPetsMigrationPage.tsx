@@ -6,9 +6,14 @@ import {
   useStoryblokState,
 } from '@storyblok/react'
 import Head from 'next/head'
-import { FormEventHandler, useCallback } from 'react'
-import { Button, Heading, Space } from 'ui'
+import { FormEventHandler, useCallback, useMemo } from 'react'
+import { Button } from 'ui'
+import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
+import { CartEntryList } from '@/components/CartInventory/CartEntryList'
+import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import {
+  ProductOffer,
   useManyPetsFillCartMutation,
   useManyPetsMigrationOffersQuery,
 } from '@/services/apollo/generated'
@@ -28,6 +33,8 @@ export type ManyPetsMigrationPageProps = {
   [STORY_PROP_NAME]: MigrationPageStory
 }
 
+const EMPTY_OFFERS: ProductOffer[] = []
+
 export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
   const { shopSession } = useShopSession()
   if (!shopSession) {
@@ -38,11 +45,43 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
     variables: { shopSessionId: shopSession.id },
   })
 
-  const offers = queryResult.data?.petMigrationOffers ?? []
+  const offers = queryResult.data?.petMigrationOffers ?? EMPTY_OFFERS
   const offerIds = offers.map((offer) => offer.id)
+  const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
+
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
   const story: MigrationPageStory = useStoryblokState(props.story)
+
+  let offersSection = <>Loading...</>
+  if (!queryResult.loading) {
+    if (offers.length > 0) {
+      offersSection = (
+        <>
+          {' '}
+          <CartEntryList>
+            {cartEntries.map((item) => (
+              <CartEntryItem
+                key={item.offerId}
+                shopSessionId={shopSession.id}
+                defaultOpen={false}
+                readOnly={true}
+                {...item}
+              />
+            ))}
+          </CartEntryList>
+          <form onSubmit={handleSubmitSign} style={{ marginBlock: '1rem' }}>
+            <Button type="submit" loading={loading}>
+              SIGN IT!
+            </Button>
+          </form>
+        </>
+      )
+    } else {
+      // TODO: Show something relevant or crash
+      offersSection = <div>No offers</div>
+    }
+  }
 
   return (
     <>
@@ -50,48 +89,19 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
         <title>TODO: Take from CMS</title>
         <meta name="robots" content="none" />
       </Head>
-      <div className={props.className}>
-        <Heading variant="serif.40" as="h1">
-          Pet Migration page 🐈‍ 🐩
-        </Heading>
-        <Space>
+      <GridLayout.Root className={props.className}>
+        <GridLayout.Content width="1/2" align="center">
           {story.content.preOfferContent?.map((blok) => (
             <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
           ))}
 
-          <div style={{ maxHeight: '80vh', overflow: 'auto' }}>
-            {queryResult.loading && 'Loading...'}
+          {offersSection}
 
-            {offers.map((offer) => (
-              <pre
-                key={offer.id}
-                style={{
-                  whiteSpace: 'pre',
-                  fontFamily: 'monospace',
-                  margin: '1rem 0',
-                  borderTop: 'solid 1px gray',
-                }}
-              >
-                {JSON.stringify(offer, null, 2)}
-              </pre>
-            ))}
-          </div>
-        </Space>
-
-        {offerIds.length > 0 && (
-          <form onSubmit={handleSubmitSign}>
-            <Space>
-              <Button type="submit" loading={loading}>
-                SIGN IT!
-              </Button>
-            </Space>
-          </form>
-        )}
-
-        {story.content.postOfferContent.map((blok) => (
-          <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
-        ))}
-      </div>
+          {story.content.postOfferContent.map((blok) => (
+            <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
+          ))}
+        </GridLayout.Content>
+      </GridLayout.Root>
     </>
   )
 }
