@@ -12,7 +12,6 @@ type BaseParams = { locale?: RoutingLocale }
 
 type CheckoutPaymentPage = BaseParams & { shopSessionId: string }
 type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
-type AdyenCallbackRoute = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
 type ForeverPage = BaseParams & { code: string }
@@ -50,9 +49,6 @@ export const PageLink = {
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
-
-  apiPaymentAdyenCallback: ({ locale, shopSessionId }: AdyenCallbackRoute) =>
-    `/api/payment/adyen-callback/${shopSessionId}/${locale}`,
 
   forever: ({ locale, code }: ForeverPage) => `${localePrefix(locale)}/forever/${code}`,
 
