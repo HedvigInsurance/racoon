@@ -25,14 +25,14 @@ export const ModalBlock = ({ blok }: ModalBlockProps) => {
           </Button>
         </FullscreenDialog.Trigger>
 
-        <FullscreenDialog.Modal center={true}>
+        <FullscreenDialog.Modal>
           <AnimationWrapper
             initial={{ opacity: 0, y: '2vh' }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ...theme.transitions.framer.easeInOutCubic }}
           >
             {blok.modalContent.map((nestedBlock) => (
-              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
             ))}
           </AnimationWrapper>
         </FullscreenDialog.Modal>
