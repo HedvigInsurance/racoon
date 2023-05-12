@@ -26,7 +26,7 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
   campaignCode?: string
 }>
 
-export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
+export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<FormError>()
 
@@ -140,7 +140,7 @@ export const QuickPurchaseBlock = ({ blok }: QuickPurchaseBlockProps) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper data-nested={nested}>
       <QuickPurchaseForm
         productOptions={productOptions}
         onSubmit={handleSubmit}
@@ -158,5 +158,7 @@ QuickPurchaseBlock.blockName = 'quickPurchase'
 const Wrapper = styled.div({
   width: 'min(24rem, 100%)',
   marginInline: 'auto',
-  paddingInline: theme.space.md,
+  '&[data-nested=false]': {
+    paddingInline: theme.space.md,
+  },
 })

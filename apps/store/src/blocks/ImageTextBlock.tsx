@@ -124,6 +124,9 @@ const FluidImageTextBlock = ({
 
 const FluidImageTextBlockGrid = styled(GridLayout.Root)({
   rowGap: theme.space.md,
+  '&&': {
+    padding: 0,
+  },
 
   [mq.lg]: {
     columnGap: theme.space.xxxl,
