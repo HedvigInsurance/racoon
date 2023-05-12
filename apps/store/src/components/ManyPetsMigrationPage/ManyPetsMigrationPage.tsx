@@ -1,3 +1,5 @@
+import { isApolloError } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import { SbBlokData } from '@storyblok/js/dist/types/types'
 import {
   ISbStoryData,
@@ -17,11 +19,14 @@ import {
   useManyPetsFillCartMutation,
   useManyPetsMigrationOffersQuery,
 } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+
+const manypetsLogger = datadogLogs.createLogger('manypets')
 
 // TODO: Figure out correct way to reuse types between this module and pages/manypets/migration/
 type MigrationPageStory = ISbStoryData<{
@@ -58,7 +63,6 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
     if (offers.length > 0) {
       offersSection = (
         <>
-          {' '}
           <CartEntryList>
             {cartEntries.map((item) => (
               <CartEntryItem
@@ -106,13 +110,12 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
   )
 }
 
-// TODO:
-// - Extract and handle errors
 const useSignMigration = (
   shopSession: Pick<ShopSession, 'id' | 'customer' | 'cart'>,
   offerIds: Array<string>,
 ) => {
   const { currentOperation, startCheckoutSign } = useBankIdContext()
+  const { showError } = useAppErrorHandleContext()
 
   const [fillCart, fillCartResult] = useManyPetsFillCartMutation()
 
@@ -120,19 +123,22 @@ const useSignMigration = (
     async (event) => {
       event.preventDefault()
 
-      if (!shopSession.customer || !shopSession.customer.ssn)
+      if (!shopSession.customer || !shopSession.customer.ssn) {
         throw new Error('Must have customer data and ssn in it')
+      }
 
       const shopSessionId = shopSession.id
-
-      if (shopSession.cart.entries.length === 0) {
-        console.debug('Filling cart')
-        await fillCart({ variables: { shopSessionId, offerIds } })
-      } else {
-        if (offerIds.length === shopSession.cart.entries.length) {
+      try {
+        if (shopSession.cart.entries.length === 0) {
+          manypetsLogger.debug('Cart is empty, filling it with migration offers')
+          await fillCart({ variables: { shopSessionId, offerIds } })
+        } else {
           const cartOfferIds = new Set(shopSession.cart.entries.map((entry) => entry.id))
-          if (offerIds.every((id) => cartOfferIds.has(id))) {
-            console.debug('Cart already filled with expected offers')
+          if (
+            offerIds.length === shopSession.cart.entries.length &&
+            offerIds.every((id) => cartOfferIds.has(id))
+          ) {
+            manypetsLogger.debug('Cart already filled with expected offers')
           } else {
             throw new Error(
               `Cart has unexpected items in it. cartOfferIds=${Array.from(
@@ -141,19 +147,25 @@ const useSignMigration = (
             )
           }
         }
-      }
 
-      const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
-      startCheckoutSign({
-        customerAuthenticationStatus,
-        shopSessionId,
-        ssn,
-        onSuccess() {
-          window.alert('Sign success, time to implement next steps!')
-        },
-      })
+        const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
+        startCheckoutSign({
+          customerAuthenticationStatus,
+          shopSessionId,
+          ssn,
+          onSuccess() {
+            window.alert('Sign success, time to implement next steps!')
+          },
+        })
+      } catch (err) {
+        if (err instanceof Error && !isApolloError(err)) {
+          manypetsLogger.error('Error filling migration cart', { shopSessionId }, err)
+        }
+        showError(err as Error)
+        return
+      }
     },
-    [shopSession, startCheckoutSign, fillCart, offerIds],
+    [shopSession, startCheckoutSign, fillCart, offerIds, showError],
   )
 
   const signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(

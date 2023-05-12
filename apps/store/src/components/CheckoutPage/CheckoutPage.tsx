@@ -78,6 +78,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
       await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSession }))
     },
+    // TODO: Never used inside, remove and refactor
     onError() {
       setShowSignError(true)
     },
