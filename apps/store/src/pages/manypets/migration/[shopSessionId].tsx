@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getStoryBySlug, MANYPETS_FOLDER_SLUG, PageStory } from '@/services/storyblok/storyblok'
@@ -29,6 +30,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     console.error('No shop session in URL')
     return { notFound: true }
   }
+
+  // Make sure we don't identify different member based on accessToken - this breaks signing
+  resetAuthTokens({ req, res })
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
