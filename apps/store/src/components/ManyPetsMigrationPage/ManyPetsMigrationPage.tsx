@@ -1,4 +1,4 @@
-import { isApolloError } from '@apollo/client'
+import { isApolloError, useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { SbBlokData } from '@storyblok/js/dist/types/types'
 import {
@@ -8,11 +8,17 @@ import {
   useStoryblokState,
 } from '@storyblok/react'
 import Head from 'next/head'
-import { FormEventHandler, useCallback, useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { FormEventHandler, useCallback, useEffect, useMemo } from 'react'
 import { Button } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
+import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
+import {
+  fetchCheckoutSteps,
+  getCheckoutStepLink,
+} from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import {
   ProductOffer,
@@ -22,6 +28,7 @@ import {
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
@@ -116,6 +123,8 @@ const useSignMigration = (
 ) => {
   const { currentOperation, startCheckoutSign } = useBankIdContext()
   const { showError } = useAppErrorHandleContext()
+  const router = useRouter()
+  const apolloClient = useApolloClient()
 
   const [fillCart, fillCartResult] = useManyPetsFillCartMutation()
 
@@ -153,8 +162,16 @@ const useSignMigration = (
           customerAuthenticationStatus,
           shopSessionId,
           ssn,
-          onSuccess() {
-            window.alert('Sign success, time to implement next steps!')
+          async onSuccess() {
+            const checkoutSteps = await fetchCheckoutSteps({ apolloClient, shopSession })
+            const checkoutStepIndex = checkoutSteps.findIndex(
+              (item) => item === CheckoutStep.Checkout,
+            )
+            const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
+
+            setupShopSessionServiceClientSide(apolloClient).reset()
+
+            await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId }))
           },
         })
       } catch (err) {
@@ -165,8 +182,15 @@ const useSignMigration = (
         return
       }
     },
-    [shopSession, startCheckoutSign, fillCart, offerIds, showError],
+    [shopSession, startCheckoutSign, fillCart, offerIds, apolloClient, router, showError],
   )
+
+  useEffect(() => {
+    if (currentOperation?.error) {
+      // Workaround for getting userError: {message: "Konflict."}} when trying to sign
+      showError(new Error('Signing failed'))
+    }
+  }, [currentOperation?.error, showError])
 
   const signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
     currentOperation?.state as BankIdState,

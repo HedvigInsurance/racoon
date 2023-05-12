@@ -14,7 +14,7 @@ import { CheckoutStep } from './Breadcrumbs'
 
 type Params = {
   apolloClient: ApolloClient<unknown>
-  shopSession: ShopSession
+  shopSession: Pick<ShopSession, 'cart'>
 } & CookieParams
 
 export const fetchCheckoutSteps = async ({ apolloClient, req, res, shopSession }: Params) => {
@@ -45,20 +45,20 @@ export const fetchCheckoutSteps = async ({ apolloClient, req, res, shopSession }
 
 type GetCheckoutStepLinkParams = {
   step: CheckoutStep
-  shopSession: ShopSession
+  shopSessionId: string
   locale?: RoutingLocale
 }
 
-export const getCheckoutStepLink = ({ step, shopSession, locale }: GetCheckoutStepLinkParams) => {
+export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckoutStepLinkParams) => {
   switch (step) {
     case CheckoutStep.Checkout:
       return PageLink.checkout()
     case CheckoutStep.SwitchingAssistant:
-      return PageLink.checkoutSwitchingAssistant({ locale, shopSessionId: shopSession.id })
+      return PageLink.checkoutSwitchingAssistant({ locale, shopSessionId })
     case CheckoutStep.Payment:
-      return PageLink.checkoutPayment({ locale, shopSessionId: shopSession.id })
+      return PageLink.checkoutPayment({ locale, shopSessionId })
     case CheckoutStep.Confirmation:
     case CheckoutStep.Done:
-      return PageLink.confirmation({ locale, shopSessionId: shopSession.id })
+      return PageLink.confirmation({ locale, shopSessionId })
   }
 }

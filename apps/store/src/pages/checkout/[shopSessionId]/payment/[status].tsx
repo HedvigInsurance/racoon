@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       const currentStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextStep = checkoutSteps[currentStepIndex + 1]
 
-      const link = getCheckoutStepLink({ step: nextStep, shopSession, locale })
+      const link = getCheckoutStepLink({ step: nextStep, shopSessionId, locale })
       return { redirect: { destination: link, permanent: false } }
     } catch (error) {
       console.error(`Unable to fetch checkout steps for ShopSession: ${shopSessionId}`, error)

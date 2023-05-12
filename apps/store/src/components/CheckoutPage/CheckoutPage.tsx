@@ -76,7 +76,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
-      await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSession }))
+      await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId }))
     },
     // TODO: Never used inside, remove and refactor
     onError() {
