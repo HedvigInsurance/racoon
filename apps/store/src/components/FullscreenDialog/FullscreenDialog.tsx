@@ -32,6 +32,7 @@ export const Modal = ({ children, Footer, center = false }: Props) => {
 const Content = styled(Dialog.Content)({
   height: '100%',
   overflowY: 'auto',
+  isolation: 'isolate',
 })
 
 const HEADER_HEIGHT = '3.5rem'
@@ -45,6 +46,7 @@ const Header = styled.header({
   top: 0,
   left: 0,
   right: 0,
+  zIndex: 1,
 
   [mq.lg]: {
     paddingInline: theme.space.xl,
