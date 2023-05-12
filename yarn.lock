@@ -6998,12 +6998,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/formidable@npm:2.0.5":
-  version: 2.0.5
-  resolution: "@types/formidable@npm:2.0.5"
+"@types/formidable@npm:2.0.6":
+  version: 2.0.6
+  resolution: "@types/formidable@npm:2.0.6"
   dependencies:
     "@types/node": "*"
-  checksum: 2de9a08a539309229f0d15074dc9587b7e1316f29da1092ef2eb1e7c9f10ce4b02f1a0b7da5fe21391a5946c9fe5d2be7bfabd5bc6b93005acda22bcc424a456
+  checksum: d6be0ac12bf8dd2e4f8a022271ee6e501c7f6d7dd58d71c68497ca7da84bee1538d1a2a64a90b56dad557ddb291d48c5731206269e9ab53ed91264e68a4d1476
   languageName: node
   linkType: hard
 
@@ -16755,7 +16755,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
     "@types/dompurify": 3.0.2
-    "@types/formidable": 2.0.5
+    "@types/formidable": 2.0.6
     "@types/jsdom": 21.1.1
     "@types/lodash-es": 4.17.7
     "@types/marked": 4.3.0
