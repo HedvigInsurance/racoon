@@ -22,8 +22,8 @@
   "dependencies": {
     "@apollo/client": "3.7.14",
     "@datadog/browser-logs": "4.42.1",
-    "@emotion/react": "11.10.8",
-    "@emotion/styled": "11.10.8",
+    "@emotion/react": "11.11.0",
+    "@emotion/styled": "11.11.0",
     "@lottiefiles/react-lottie-player": "3.5.3",
     "@radix-ui/react-accordion": "1.1.1",
     "@radix-ui/react-collapsible": "1.0.2",
