@@ -18097,12 +18097,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-wrap-balancer@npm:0.4.1":
-  version: 0.4.1
-  resolution: "react-wrap-balancer@npm:0.4.1"
+"react-wrap-balancer@npm:0.5.0":
+  version: 0.5.0
+  resolution: "react-wrap-balancer@npm:0.5.0"
   peerDependencies:
-    react: ^18.0.0
-  checksum: a5f104448eede8c939c929c6d7b4a090b6bc0510e7e77fd3fb2cf069db9a9114d72d97f5a98edc4ec4ca5abf91ca333c7718cd4237908c0e2419e3cfc5f969df
+    react: ">=16.8.0 || ^17.0.0 || ^18"
+  checksum: 01ad22202d34a98171c968dcbec26302f975fd8e824ef2982b6c9bf8c2ba3aa6753f0b896e5b13a957137a935b29e5313bc39ccec2fac35c0e3ade763a81be9f
   languageName: node
   linkType: hard
 
@@ -19448,7 +19448,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 12.2.2
-    react-wrap-balancer: 0.4.1
+    react-wrap-balancer: 0.5.0
     storybook: 7.0.11
     storybook-addon-apollo-client: 4.1.4
     subscriptions-transport-ws: 0.11.0
