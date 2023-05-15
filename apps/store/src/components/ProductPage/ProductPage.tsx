@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react'
 import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useDiscountBanner } from '@/utils/useDiscountBanner'
 import { ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
 
@@ -15,6 +16,8 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
   useEffect(() => {
     tracking.reportViewProductPage({ id, displayNameFull })
   }, [tracking, id, displayNameFull])
+
+  useDiscountBanner()
 
   return (
     <ProductPageContextProvider {...props} story={story}>
