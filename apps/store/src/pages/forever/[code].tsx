@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { ForeverPage, type Props } from '@/components/ForeverPage/ForeverPage'
 import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
@@ -13,7 +14,14 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Params = { code: string }
 
-const NextPage: NextPageWithLayout<Props> = (props) => <ForeverPage {...props} />
+const NextPage: NextPageWithLayout<Props> = (props) => (
+  <>
+    <Head>
+      <meta name="robots" content="noindex, follow" />
+    </Head>
+    <ForeverPage {...props} />
+  </>
+)
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res } = context
