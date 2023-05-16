@@ -1,11 +1,18 @@
 import styled from '@emotion/styled'
+import { RESET } from 'jotai/utils'
 import { CampaignIcon, CrossIconSmall, Text, mq, theme } from 'ui'
-import { useGlobalBanner } from './useGlobalBanner'
+import { useGlobalBanner, useGlobalBannerClosed } from './useGlobalBanner'
 
 export const GlobalBanner = () => {
   const [value, setValue] = useGlobalBanner()
+  const [closed, setIsClosed] = useGlobalBannerClosed()
 
-  if (value === null) return null
+  const handleClose = () => {
+    setValue(RESET)
+    setIsClosed(true)
+  }
+
+  if (value === null || closed) return null
 
   return (
     <Wrapper>
@@ -14,7 +21,7 @@ export const GlobalBanner = () => {
         {value}
       </GlobalBannerText>
 
-      <Button onClick={() => setValue(null)}>
+      <Button onClick={handleClose}>
         <CrossIconSmall size="1rem" />
       </Button>
     </Wrapper>
