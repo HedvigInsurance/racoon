@@ -1,3 +1,4 @@
+import { StoryblokComponent } from '@storyblok/react'
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -6,17 +7,31 @@ import { addApolloState, initializeApolloServerSide } from '@/services/apollo/cl
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { getStoryBySlug, MANYPETS_FOLDER_SLUG, PageStory } from '@/services/storyblok/storyblok'
+import {
+  getStoryBySlug,
+  MANYPETS_FOLDER_SLUG,
+  ManyPetsMigrationStory,
+} from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-// TODO: Type story data
-type Props = { [SHOP_SESSION_PROP_NAME]: string; [STORY_PROP_NAME]: any }
+type Props = { [SHOP_SESSION_PROP_NAME]: string; [STORY_PROP_NAME]: ManyPetsMigrationStory }
 type Params = { shopSessionId: string }
 
 const NextManyPetsMigrationPage: NextPage<Props> = (props) => {
-  return <ManyPetsMigrationPage {...props} />
+  const { preOfferContent, postOfferContent } = props[STORY_PROP_NAME].content
+
+  return (
+    <ManyPetsMigrationPage
+      preOfferContent={preOfferContent?.map((blok) => (
+        <StoryblokComponent key={blok._uid} blok={blok} />
+      ))}
+      postOfferContent={postOfferContent.map((blok) => (
+        <StoryblokComponent key={blok._uid} blok={blok} />
+      ))}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
@@ -41,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     shopSessionService.fetchById(shopSessionId).catch((err) => {
       console.error('Failed to find shopSession', err)
     }),
-    getStoryBySlug<PageStory>(`${MANYPETS_FOLDER_SLUG}/migration`, {
+    getStoryBySlug<ManyPetsMigrationStory>(`${MANYPETS_FOLDER_SLUG}/migration`, {
       locale,
       // Uncomment for local debug
       // version: 'draft',
@@ -52,6 +67,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (shopSession) {
     shopSessionService.saveId(shopSessionId)
   } else {
+    return { notFound: true }
+  }
+
+  if (!pageStory) {
     return { notFound: true }
   }
 

@@ -1,15 +1,8 @@
 import { isApolloError, useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { SbBlokData } from '@storyblok/js/dist/types/types'
-import {
-  ISbStoryData,
-  StoryblokComponent,
-  storyblokEditable,
-  useStoryblokState,
-} from '@storyblok/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { FormEventHandler, useCallback, useEffect, useMemo } from 'react'
+import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { Button } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
@@ -19,7 +12,6 @@ import {
   fetchCheckoutSteps,
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
 import {
   ProductOffer,
   useManyPetsFillCartMutation,
@@ -31,30 +23,25 @@ import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 
 const manypetsLogger = datadogLogs.createLogger('manypets')
 
-// TODO: Figure out correct way to reuse types between this module and pages/manypets/migration/
-type MigrationPageStory = ISbStoryData<{
-  preOfferContent?: Array<SbBlokData>
-  postOfferContent: Array<SbBlokData>
-}>
-export type ManyPetsMigrationPageProps = {
-  className?: string
-  [STORY_PROP_NAME]: MigrationPageStory
+type ManyPetsMigrationPageProps = {
+  preOfferContent?: ReactNode
+  postOfferContent: ReactNode
 }
 
 const EMPTY_OFFERS: ProductOffer[] = []
 
-export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
+export const ManyPetsMigrationPage = ({
+  preOfferContent,
+  postOfferContent,
+}: ManyPetsMigrationPageProps) => {
   const { shopSession } = useShopSession()
-  if (!shopSession) {
-    throw new Error('Must have shopSession at this point')
-  }
 
   const queryResult = useManyPetsMigrationOffersQuery({
-    variables: { shopSessionId: shopSession.id },
+    variables: { shopSessionId: shopSession?.id ?? '' },
+    skip: !shopSession?.id,
   })
 
   const offers = queryResult.data?.petMigrationOffers ?? EMPTY_OFFERS
@@ -63,11 +50,9 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
 
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
-  const story: MigrationPageStory = useStoryblokState(props.story)
-
   let offersSection = <>Loading...</>
   if (!queryResult.loading) {
-    if (offers.length > 0) {
+    if (shopSession && offers.length > 0) {
       offersSection = (
         <>
           <CartEntryList>
@@ -100,25 +85,17 @@ export const ManyPetsMigrationPage = (props: ManyPetsMigrationPageProps) => {
         <title>TODO: Take from CMS</title>
         <meta name="robots" content="none" />
       </Head>
-      <GridLayout.Root className={props.className}>
-        <GridLayout.Content width="1/2" align="center">
-          {story.content.preOfferContent?.map((blok) => (
-            <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
-          ))}
-
-          {offersSection}
-
-          {story.content.postOfferContent.map((blok) => (
-            <StoryblokComponent key={blok._uid} blok={blok} {...storyblokEditable(blok)} />
-          ))}
-        </GridLayout.Content>
-      </GridLayout.Root>
+      <main>
+        {preOfferContent}
+        {offersSection}
+        {postOfferContent}
+      </main>
     </>
   )
 }
 
 const useSignMigration = (
-  shopSession: Pick<ShopSession, 'id' | 'customer' | 'cart'>,
+  shopSession: Pick<ShopSession, 'id' | 'customer' | 'cart'> | undefined,
   offerIds: Array<string>,
 ) => {
   const { currentOperation, startCheckoutSign } = useBankIdContext()
@@ -130,6 +107,8 @@ const useSignMigration = (
 
   const handleSubmitSign: FormEventHandler<HTMLFormElement> = useCallback(
     async (event) => {
+      if (!shopSession) return
+
       event.preventDefault()
 
       if (!shopSession.customer || !shopSession.customer.ssn) {
