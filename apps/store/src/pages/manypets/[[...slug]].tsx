@@ -1,5 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import {
   getStoryBySlug,
@@ -37,12 +38,17 @@ export const getStaticProps: GetStaticProps<
 
   const slug = `${MANYPETS_FOLDER_SLUG}/${(params?.slug ?? []).join('/')}`
 
-  const pageStory = await getStoryBySlug<PageStory>(slug, { version, locale })
-  if (!pageStory) return { notFound: true }
+  const [story, translations] = await Promise.all([
+    getStoryBySlug<PageStory>(slug, { version, locale }),
+    serverSideTranslations(locale),
+  ])
+
+  if (!story) return { notFound: true }
 
   return {
     props: {
-      [STORY_PROP_NAME]: pageStory,
+      [STORY_PROP_NAME]: story,
+      ...translations,
     },
     revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
   }

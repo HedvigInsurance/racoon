@@ -33,6 +33,7 @@ import { ImageBlock } from '@/blocks/ImageBlock'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
+import { ManyPetsMigrationPageBlock } from '@/blocks/ManyPetsMigrationPageBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
@@ -178,6 +179,13 @@ export type ConfirmationStory = ISbStoryData & {
   }
 }
 
+export type ManyPetsMigrationStory = ISbStoryData<
+  {
+    preOfferContent?: Array<SbBlokData>
+    postOfferContent: Array<SbBlokData>
+  } & SEOData
+>
+
 type LinkData = Pick<
   ISbStoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -220,6 +228,7 @@ export const initStoryblok = () => {
     InlineSpaceBlock,
     InsurableLimitsBlock,
     ModalBlock,
+    ManyPetsMigrationPageBlock,
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
