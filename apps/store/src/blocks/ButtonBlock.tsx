@@ -24,6 +24,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
         target={blok.link.target}
+        title={blok.link.title}
       >
         {blok.text}
       </Component>
