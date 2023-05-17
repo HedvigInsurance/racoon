@@ -1,6 +1,5 @@
 import { isApolloError, useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { Button } from 'ui'
@@ -80,17 +79,11 @@ export const ManyPetsMigrationPage = ({
   }
 
   return (
-    <>
-      <Head>
-        <title>TODO: Take from CMS</title>
-        <meta name="robots" content="none" />
-      </Head>
-      <main>
-        {preOfferContent}
-        {offersSection}
-        {postOfferContent}
-      </main>
-    </>
+    <main>
+      {preOfferContent}
+      {offersSection}
+      {postOfferContent}
+    </main>
   )
 }
 

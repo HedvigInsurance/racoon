@@ -2,6 +2,7 @@ import { StoryblokComponent } from '@storyblok/react'
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { resetAuthTokens } from '@/services/authApi/persist'
@@ -20,17 +21,21 @@ type Props = { [SHOP_SESSION_PROP_NAME]: string; [STORY_PROP_NAME]: ManyPetsMigr
 type Params = { shopSessionId: string }
 
 const NextManyPetsMigrationPage: NextPage<Props> = (props) => {
-  const { preOfferContent, postOfferContent } = props[STORY_PROP_NAME].content
+  const story = props[STORY_PROP_NAME]
+  const { preOfferContent, postOfferContent } = story.content
 
   return (
-    <ManyPetsMigrationPage
-      preOfferContent={preOfferContent?.map((blok) => (
-        <StoryblokComponent key={blok._uid} blok={blok} />
-      ))}
-      postOfferContent={postOfferContent.map((blok) => (
-        <StoryblokComponent key={blok._uid} blok={blok} />
-      ))}
-    />
+    <>
+      <HeadSeoInfo story={story} />
+      <ManyPetsMigrationPage
+        preOfferContent={preOfferContent?.map((blok) => (
+          <StoryblokComponent key={blok._uid} blok={blok} />
+        ))}
+        postOfferContent={postOfferContent.map((blok) => (
+          <StoryblokComponent key={blok._uid} blok={blok} />
+        ))}
+      />
+    </>
   )
 }
 
