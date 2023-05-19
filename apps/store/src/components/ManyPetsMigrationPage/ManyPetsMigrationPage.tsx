@@ -1,87 +1,137 @@
 import { isApolloError, useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { Button } from 'ui'
+import { Button, Space, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
+import { CartCost } from '@/components/CartInventory/CartInventory.types'
+import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
   fetchCheckoutSteps,
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
-import {
-  ProductOffer,
-  useManyPetsFillCartMutation,
-  useManyPetsMigrationOffersQuery,
-} from '@/services/apollo/generated'
+import * as ComparisonTable from '@/components/ProductPage/PurchaseForm/ComparisonTable/ComparisonTable'
+import { ProductOffer, useManyPetsFillCartMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { type ComparisonTableData } from '@/services/manypets/manypets.types'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { ManypetsLogo } from './ManypetsLogo'
 
 const manypetsLogger = datadogLogs.createLogger('manypets')
 
-type ManyPetsMigrationPageProps = {
+export type ManyPetsMigrationPageProps = {
   preOfferContent?: ReactNode
   postOfferContent: ReactNode
+  offers: Array<ProductOffer>
+  comparisonTableData: ComparisonTableData
 }
-
-const EMPTY_OFFERS: ProductOffer[] = []
 
 export const ManyPetsMigrationPage = ({
   preOfferContent,
   postOfferContent,
+  offers,
+  comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
+  const { t } = useTranslation('checkout')
   const { shopSession } = useShopSession()
+  if (!shopSession) {
+    throw new Error('Must have shopSession at this point')
+  }
 
-  const queryResult = useManyPetsMigrationOffersQuery({
-    variables: { shopSessionId: shopSession?.id ?? '' },
-    skip: !shopSession?.id,
-  })
-
-  const offers = queryResult.data?.petMigrationOffers ?? EMPTY_OFFERS
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
+  const totalCost: CartCost = useMemo(
+    () => ({
+      total: {
+        amount: cartEntries.reduce((sum, cartEntry) => sum + cartEntry.cost.amount, 0),
+        currencyCode: cartEntries[0].cost.currencyCode,
+      },
+    }),
+    [cartEntries],
+  )
 
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
-  let offersSection = <>Loading...</>
-  if (!queryResult.loading) {
-    if (shopSession && offers.length > 0) {
-      offersSection = (
-        <>
-          <CartEntryList>
-            {cartEntries.map((item) => (
-              <CartEntryItem
-                key={item.offerId}
-                shopSessionId={shopSession.id}
-                defaultOpen={false}
-                readOnly={true}
-                {...item}
-              />
-            ))}
-          </CartEntryList>
-          <form onSubmit={handleSubmitSign} style={{ marginBlock: '1rem' }}>
-            <Button type="submit" loading={loading}>
-              SIGN IT!
-            </Button>
-          </form>
-        </>
-      )
-    } else {
-      // TODO: Show something relevant or crash
-      offersSection = <div>No offers</div>
-    }
-  }
+  const shouldRenderDynamicSection = cartEntries.length || comparisonTableData.length
 
   return (
     <main>
       {preOfferContent}
-      {offersSection}
+      {shouldRenderDynamicSection && (
+        <OfferSection y={10}>
+          <form onSubmit={handleSubmitSign}>
+            <Space y={1}>
+              <CartEntryList>
+                {cartEntries.map((item) => (
+                  <CartEntryItem
+                    key={item.offerId}
+                    shopSessionId={shopSession.id}
+                    defaultOpen={false}
+                    readOnly={true}
+                    {...item}
+                  />
+                ))}
+              </CartEntryList>
+
+              <CostSummary {...totalCost} campaigns={[]} />
+
+              <Button type="submit" loading={loading}>
+                <SignButtonContent>
+                  <BankIdIcon color="white" />
+                  {t('SIGN_BUTTON', { count: cartEntries.length })}
+                </SignButtonContent>
+              </Button>
+            </Space>
+          </form>
+
+          <Space y={{ base: 2, md: 3 }}>
+            {/* TODO: Lokalise this? */}
+            <Heading as="h2" variant="standard.32" align="center" balance={true}>
+              Byt till Hedvig och behåll ditt skydd.
+            </Heading>
+
+            <ComparisonTable.Root>
+              <ComparisonTable.Head>
+                <ComparisonTable.Row>
+                  <ComparisonTable.Header />
+                  <ComparisonTable.Header>
+                    <Centered>
+                      <ManypetsLogo />
+                    </Centered>
+                  </ComparisonTable.Header>
+                  <ComparisonTable.Header active>
+                    <Centered>
+                      <HedvigLogo />
+                    </Centered>
+                  </ComparisonTable.Header>
+                </ComparisonTable.Row>
+              </ComparisonTable.Head>
+              <ComparisonTable.Body>
+                {comparisonTableData.map(([attribute, value]) => {
+                  const parsedValue = parseTableValue(value)
+
+                  return (
+                    <ComparisonTable.Row key={attribute}>
+                      <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
+                      <ComparisonTable.DataCell>{parsedValue}</ComparisonTable.DataCell>
+                      <ComparisonTable.DataCell active>{parsedValue}</ComparisonTable.DataCell>
+                    </ComparisonTable.Row>
+                  )
+                })}
+              </ComparisonTable.Body>
+            </ComparisonTable.Root>
+          </Space>
+        </OfferSection>
+      )}
       {postOfferContent}
     </main>
   )
@@ -170,3 +220,35 @@ const useSignMigration = (
 
   return { handleSubmitSign, loading: fillCartResult.loading || signLoading }
 }
+
+const parseTableValue = (value: string | boolean): ReactNode => {
+  if (typeof value === 'boolean') {
+    return value === true ? <ComparisonTable.CheckIcon /> : <ComparisonTable.MissingIcon />
+  }
+
+  return value
+}
+
+const OfferSection = styled(Space)({
+  paddingInline: theme.space.md,
+  maxWidth: '28.5rem',
+  marginInline: 'auto',
+
+  [mq.lg]: {
+    paddingInline: 0,
+  },
+})
+
+const Centered = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
+const SignButtonContent = styled.span({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.sm,
+  width: '100%',
+})

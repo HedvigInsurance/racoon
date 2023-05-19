@@ -14,6 +14,11 @@ export const ManyPetsMigrationPageBlock = ({ blok }: Props) => {
       postOfferContent={blok.postOfferContent.map((blok) => (
         <StoryblokComponent key={blok._uid} blok={blok} />
       ))}
+      // We can't preview this on storyblok since there will be no migration shopping session
+      // available. Therefore we just pass empty values for the dinymaics section of the page:
+      // Offer and ComparisonTable
+      offers={[]}
+      comparisonTableData={[]}
     />
   )
 }
