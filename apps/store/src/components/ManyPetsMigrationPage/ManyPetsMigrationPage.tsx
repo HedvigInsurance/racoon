@@ -8,7 +8,6 @@ import { Button, Space, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
-import { CartCost } from '@/components/CartInventory/CartInventory.types'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
@@ -16,7 +15,7 @@ import {
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ProductPage/PurchaseForm/ComparisonTable/ComparisonTable'
-import { ProductOffer, useManyPetsFillCartMutation } from '@/services/apollo/generated'
+import { Money, ProductOffer, useManyPetsFillCartMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
@@ -32,6 +31,7 @@ export type ManyPetsMigrationPageProps = {
   preOfferContent?: ReactNode
   postOfferContent: ReactNode
   offers: Array<ProductOffer>
+  totalCost: Money
   comparisonTableData: ComparisonTableData
 }
 
@@ -39,6 +39,7 @@ export const ManyPetsMigrationPage = ({
   preOfferContent,
   postOfferContent,
   offers,
+  totalCost,
   comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
   const { t } = useTranslation('checkout')
@@ -49,15 +50,6 @@ export const ManyPetsMigrationPage = ({
 
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
-  const totalCost: CartCost = useMemo(
-    () => ({
-      total: {
-        amount: cartEntries.reduce((sum, cartEntry) => sum + cartEntry.cost.amount, 0),
-        currencyCode: cartEntries[0].cost.currencyCode,
-      },
-    }),
-    [cartEntries],
-  )
 
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
@@ -82,7 +74,7 @@ export const ManyPetsMigrationPage = ({
                 ))}
               </CartEntryList>
 
-              <CostSummary {...totalCost} campaigns={[]} />
+              <CostSummary total={totalCost} campaigns={[]} />
 
               <Button type="submit" loading={loading}>
                 <SignButtonContent>
