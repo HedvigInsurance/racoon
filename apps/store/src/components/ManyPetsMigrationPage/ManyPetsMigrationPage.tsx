@@ -44,16 +44,14 @@ export const ManyPetsMigrationPage = ({
 }: ManyPetsMigrationPageProps) => {
   const { t } = useTranslation('checkout')
   const { shopSession } = useShopSession()
-  if (!shopSession) {
-    throw new Error('Must have shopSession at this point')
-  }
 
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
 
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
-  const shouldRenderDynamicSection = cartEntries.length || comparisonTableData.length
+  const shouldRenderDynamicSection =
+    shopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
 
   return (
     <main>
