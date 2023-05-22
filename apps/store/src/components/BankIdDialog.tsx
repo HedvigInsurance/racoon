@@ -30,9 +30,8 @@ export const BankIdDialog = () => {
   }
 
   const handleLogin = useCallback(
-    ({ shopSessionId, ssn }: Omit<BankIdLoginOptions, 'onSuccess'>) =>
+    ({ ssn }: Omit<BankIdLoginOptions, 'onSuccess'>) =>
       startLogin({
-        shopSessionId,
         ssn,
         onSuccess() {
           dispatch({ type: 'success' })
@@ -51,9 +50,8 @@ export const BankIdDialog = () => {
   let footer: ReactElement | null = null
   let animationState = currentOperation?.state
 
-  const shopSessionId = shopSession?.id
   const ssn = shopSession?.customer?.ssn ?? ''
-  if (currentOperation !== null && shopSessionId && ssn) {
+  if (currentOperation !== null && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Idle: {
         // Sign operations don't need dialog in idle state
@@ -73,7 +71,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
+              onLoginStart={() => handleLogin({ ssn })}
             />
             <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
@@ -134,7 +132,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BANKID_TRY_AGAIN')}
-              onLoginStart={() => handleLogin({ shopSessionId, ssn })}
+              onLoginStart={() => handleLogin({ ssn })}
             />
             <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
