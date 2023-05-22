@@ -23,23 +23,30 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   const { shopSessionId } = params
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = await initializeApolloServerSide({ req, res })
-  const [translations, trustlyUrl, shopSession] = await Promise.all([
-    serverSideTranslations(locale),
-    createTrustlyUrl({ apolloClient }),
-    setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId),
-  ])
+  const nextUrl = PageLink.confirmation({ locale, shopSessionId })
 
-  const checkoutSteps = await fetchCheckoutSteps({ apolloClient, req, res, shopSession })
+  try {
+    const apolloClient = await initializeApolloServerSide({ req, res, locale })
+    const [translations, trustlyUrl, shopSession] = await Promise.all([
+      serverSideTranslations(locale),
+      createTrustlyUrl({ apolloClient, locale }),
+      setupShopSessionServiceServerSide({ apolloClient, req, res }).fetchById(shopSessionId),
+    ])
 
-  return {
-    props: {
-      ...translations,
-      locale,
-      trustlyUrl,
-      nextUrl: PageLink.confirmation({ locale, shopSessionId }),
-      shopSessionId,
-      checkoutSteps,
-    },
+    const checkoutSteps = await fetchCheckoutSteps({ apolloClient, req, res, shopSession })
+
+    return {
+      props: {
+        ...translations,
+        locale,
+        trustlyUrl,
+        nextUrl,
+        shopSessionId,
+        checkoutSteps,
+      },
+    }
+  } catch (error) {
+    console.error('CheckoutPaymentTrustlyPage | Unable to render', error)
+    return { redirect: { destination: nextUrl, permanent: false } }
   }
 }
