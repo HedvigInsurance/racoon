@@ -18,9 +18,6 @@ const HomePage = () => {
   return (
     <Wrapper>
       <Heading>Racoon</Heading>
-
-      <Link href={PageLink.forever({ code: '8batky' })}>Forever page</Link>
-
       <Link href={PageLink.landing()}>Landing page</Link>
     </Wrapper>
   )
