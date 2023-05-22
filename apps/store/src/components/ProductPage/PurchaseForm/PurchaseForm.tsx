@@ -4,10 +4,12 @@ import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { ReactNode, useCallback, useRef, useState } from 'react'
-import { Button, Heading, mq, Space, Text, theme, useBreakpoint } from 'ui'
+import { Balancer } from 'react-wrap-balancer'
+import { Button, Heading, mq, Space, Text, theme, useBreakpoint, WarningTriangleIcon } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
@@ -134,7 +136,7 @@ export const PurchaseForm = () => {
                       <Button type="button" onClick={editForm}>
                         {t('GENERAL_ERROR_DIALOG_PRIMARY_BUTTON')}
                       </Button>
-                      <FullscreenDialog.Close asChild>
+                      <FullscreenDialog.Close asChild={true}>
                         <Button type="button" variant="ghost">
                           {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
                         </Button>
@@ -142,11 +144,25 @@ export const PurchaseForm = () => {
                     </>
                   }
                 >
-                  <Text size={{ _: 'lg', lg: 'xl' }} align="center">
-                    {formState.state === 'ERROR' && formState.errorMsg
-                      ? formState.errorMsg
-                      : t('GENERAL_ERROR_DIALOG_PROMPT')}
-                  </Text>
+                  <GridLayout.Root>
+                    <GridLayout.Content width="1/3" align="center">
+                      <SpaceFlex direction="vertical" align="center" space={0}>
+                        <Text size={{ _: 'lg', lg: 'xl' }}>
+                          <SpaceFlex space={0.25} align="center">
+                            <WarningTriangleIcon size="1em" color={theme.colors.amberElement} />
+                            {t('GENERAL_ERROR_DIALOG_TITLE')}
+                          </SpaceFlex>
+                        </Text>
+                        <Balancer ratio={0.5}>
+                          <Text size={{ _: 'lg', lg: 'xl' }} align="center" color="textSecondary">
+                            {formState.state === 'ERROR' && formState.errorMsg
+                              ? formState.errorMsg
+                              : t('GENERAL_ERROR_DIALOG_PROMPT')}
+                          </Text>
+                        </Balancer>
+                      </SpaceFlex>
+                    </GridLayout.Content>
+                  </GridLayout.Root>
                 </FullscreenDialog.Modal>
               </FullscreenDialog.Root>
             </>

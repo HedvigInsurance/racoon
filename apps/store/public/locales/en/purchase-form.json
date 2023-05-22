@@ -86,6 +86,7 @@
   "FIELD_ZIP_CODE_LABEL": "Postal code",
   "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Try again",
   "GENERAL_ERROR_DIALOG_PROMPT": "Something went wrong. We can't calculate your price at the moment.",
+  "GENERAL_ERROR_DIALOG_TITLE": "Sorry...",
   "HOUSEHOLD_SIZE_VALUE_one": "You + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_other": "You + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Just you",
