@@ -38,7 +38,11 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
 }
 
 const TableHeader = styled.th({
-  paddingBlock: theme.space.xxs,
+  paddingBlock: theme.space.sm,
+
+  [mq.lg]: {
+    paddingBlock: theme.space.md,
+  },
 })
 
 const ActiveTableHeader = styled(TableHeader)({
@@ -69,13 +73,13 @@ export const DataCell = ({ children, active, ...props }: DataCellProps) => {
 }
 
 const TableDataCell = styled.td({
-  paddingBlock: theme.space.xs,
+  paddingBlock: theme.space.sm,
   verticalAlign: 'middle',
   minWidth: '2.5rem',
 
   [mq.lg]: {
     minWidth: '4rem',
-    paddingBlock: theme.space.sm,
+    paddingBlock: theme.space.md,
   },
 })
 
