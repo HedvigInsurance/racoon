@@ -15,7 +15,7 @@
   "FOREVER_PAGE_FOOTER_TEXT": "Denna sida är avsedd för inbjudna personer. Om du inte har en kod kan du fortsätta till vår vanliga [[webbplats.]]",
   "FOREVER_PAGE_INPUT_TEXT": "Fyll i koden",
   "GET_PRICE_LINK": "Se ditt pris",
-  "GLOBAL_BANNER_CAMPAIGN": "Din rabatt läggs till i kassan",
+  "GLOBAL_BANNER_CAMPAIGN": "Din rabatt är tillagd i kassan",
   "HOME_PAGE_LINK_LABEL": "Hemsidan",
   "LANGUAGE_LABEL_en": "English",
   "LANGUAGE_LABEL_sv": "Svenska",
@@ -24,6 +24,10 @@
   "NAVIGATION_STORE_LINK": "Se alla försäkringar",
   "NAV_MENU_DIALOG_CLOSE": "Stäng",
   "NAV_MENU_DIALOG_OPEN": "Meny",
+  "PAYMENT_CONNECT_FAILURE": "Autogirokopplingen misslyckades tyvärr",
+  "PAYMENT_CONNECT_RETRY": "Försök igen",
+  "PAYMENT_CONNECT_SUCCESS": "Autogiro kopplat! Du kan stänga sidan nu :)",
+  "PAYMENT_CONNECT_TITLE": "Koppla autogiro",
   "READ_MORE": "Läs mer",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
 }
