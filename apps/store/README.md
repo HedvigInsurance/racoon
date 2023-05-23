@@ -72,6 +72,16 @@ You can attach a campaign code to the current (or new) shop session by using the
 
 The `next` query parameter is required. When creating a new shop session, we base the country code on the locale from the `next` URL.
 
+## Create an authenticated session
+
+You can create an authenticated session by visiting the following URL:
+
+```html
+/api/auth/exchange/{AUTHORIZATION_CODE}?next={REDIRECT_URL}
+```
+
+The `next` query parameter is required.
+
 ## Feature Flags
 
 Feature flags are used to enable/disable features in the app. They are stored in `/src/services/Flags`. Currenyly, we define all flags in code. In the future, we might want to move them to a 3rd party service.
