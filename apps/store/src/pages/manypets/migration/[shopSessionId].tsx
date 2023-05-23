@@ -31,7 +31,10 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 type Props = {
   [SHOP_SESSION_PROP_NAME]: string
   [STORY_PROP_NAME]: ManyPetsMigrationStory
-} & Pick<ManyPetsMigrationPageProps, 'offers' | 'totalCost' | 'comparisonTableData'>
+} & Pick<
+  ManyPetsMigrationPageProps,
+  'offers' | 'totalCost' | 'latestAdoptionDate' | 'comparisonTableData'
+>
 
 type Params = { shopSessionId: string }
 
@@ -39,6 +42,7 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
   [STORY_PROP_NAME]: story,
   offers,
   totalCost,
+  latestAdoptionDate,
   comparisonTableData,
 }) => {
   const { preOfferContent, postOfferContent } = story.content
@@ -52,6 +56,7 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
         ))}
         offers={offers}
         totalCost={totalCost}
+        latestAdoptionDate={latestAdoptionDate}
         comparisonTableData={comparisonTableData}
         postOfferContent={postOfferContent.map((blok) => (
           <StoryblokComponent key={blok._uid} blok={blok} />
@@ -63,6 +68,9 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
 
 const isPetRelatedOffer = (offer: ProductOffer) =>
   offer.variant.typeOfContract.includes('SE_DOG') || offer.variant.typeOfContract.includes('SE_CAT')
+
+const sortByStartDate = (offerA: ProductOffer, offerB: ProductOffer) =>
+  Date.parse(offerA.startDate) - Date.parse(offerB.startDate)
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res } = context
@@ -118,23 +126,27 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { notFound: true }
   }
 
-  const offers = data.petMigrationOffers as Array<ProductOffer>
-  const petRelatedOffers = offers.filter(isPetRelatedOffer)
-  // Since it shouldn't be possbile to have pet related offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
-  // any pet related offer can be used to determine the tier level and, therefore, get the appropriate comparison table data.
-  const baseOffer = petRelatedOffers[0]
+  // It should be possible to get any other offers that are not pet related offers here, but we're
+  // filtering them just to be safe.
+  const offers = (data.petMigrationOffers as Array<ProductOffer>).filter(isPetRelatedOffer)
+  // Since it shouldn' be possbile to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
+  // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
+  const baseOffer = offers[0]
   const totalCost: Money = {
-    amount: petRelatedOffers.reduce((sum, offer) => sum + offer.price.amount, 0),
+    amount: offers.reduce((sum, offer) => sum + offer.price.amount, 0),
     currencyCode: baseOffer.price.currencyCode,
   }
+  const offersWithStartDate = offers.filter((offer) => offer.startDate !== undefined)
+  const latestAdoptionDate = offersWithStartDate.sort(sortByStartDate)[0].startDate
   const comparisonTableData = getComparisonTableData(baseOffer)
 
   return addApolloState(apolloClient, {
     props: {
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       [STORY_PROP_NAME]: pageStory,
-      offers: petRelatedOffers,
+      offers,
       totalCost,
+      latestAdoptionDate,
       comparisonTableData,
       ...translations,
     },

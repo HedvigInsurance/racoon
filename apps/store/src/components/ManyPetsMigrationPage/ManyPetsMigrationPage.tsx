@@ -23,6 +23,7 @@ import { type ComparisonTableData } from '@/services/manypets/manypets.types'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
 
 const manypetsLogger = datadogLogs.createLogger('manypets')
@@ -32,6 +33,7 @@ export type ManyPetsMigrationPageProps = {
   postOfferContent: ReactNode
   offers: Array<ProductOffer>
   totalCost: Money
+  latestAdoptionDate?: string
   comparisonTableData: ComparisonTableData
 }
 
@@ -40,6 +42,7 @@ export const ManyPetsMigrationPage = ({
   postOfferContent,
   offers,
   totalCost,
+  latestAdoptionDate,
   comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
   const { t } = useTranslation('checkout')
@@ -73,6 +76,7 @@ export const ManyPetsMigrationPage = ({
               </CartEntryList>
 
               <CostSummary total={totalCost} campaigns={[]} />
+              {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
               <Button type="submit" loading={loading}>
                 <SignButtonContent>
