@@ -10,6 +10,7 @@ import {
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
+import { ShopSessionOutcomeQuery } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -34,13 +35,15 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  const [shopSession, translations, globalStory, story, productMetadata] = await Promise.all([
-    shopSessionService.fetchById(shopSessionId),
-    serverSideTranslations(locale),
-    getGlobalStory({ locale }),
-    getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
-    fetchGlobalProductMetadata({ apolloClient }),
-  ])
+  const [shopSession, outcome, translations, globalStory, story, productMetadata] =
+    await Promise.all([
+      shopSessionService.fetchById(shopSessionId),
+      shopSessionService.fetchOutcome(shopSessionId),
+      serverSideTranslations(locale),
+      getGlobalStory({ locale }),
+      getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
+      fetchGlobalProductMetadata({ apolloClient }),
+    ])
 
   // @TODO: uncomment after implementing signing
   // if (shopSession.checkout.completedAt === null) {
@@ -62,6 +65,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       currency: shopSession.currencyCode,
       platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
       story,
+      ...getSwitching(outcome),
     },
   })
 }
@@ -90,3 +94,19 @@ const CheckoutConfirmationPage: NextPageWithLayout<
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default CheckoutConfirmationPage
+
+const getSwitching = (
+  outcome: ShopSessionOutcomeQuery['shopSession']['outcome'],
+): Pick<ConfirmationPageProps, 'switching'> | undefined => {
+  const switchingContract = outcome?.createdContracts.find(
+    (item) => !!item.externalInsuranceCancellation?.bankSignering,
+  )
+
+  if (!switchingContract) return undefined
+
+  const externalInsurer = switchingContract.externalInsuranceCancellation?.externalInsurer
+
+  if (!externalInsurer) return undefined
+
+  return { switching: { companyDisplayName: externalInsurer.displayName } }
+}

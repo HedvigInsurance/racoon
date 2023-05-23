@@ -3,7 +3,6 @@ import {
   CurrentMemberDocument,
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
-  ExternalInsuranceCancellationOption as CancellationOption,
 } from '@/services/apollo/generated'
 import { getAccessToken } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -17,12 +16,7 @@ type Params = {
   shopSession: Pick<ShopSession, 'cart'>
 } & CookieParams
 
-export const fetchCheckoutSteps = async ({ apolloClient, req, res, shopSession }: Params) => {
-  const switchingEntry = shopSession.cart.entries.find(
-    ({ cancellation }) => cancellation.option === CancellationOption.Banksignering,
-  )
-  const showSwitchingAssistant = !!switchingEntry
-
+export const fetchCheckoutSteps = async ({ apolloClient, req, res }: Params) => {
   let showPayment = true
   // NOTE: Cannot rely on shopSession.customer.authenticationStatus if session is complete (we'd NONE for new members)
   const isAuthenticated = !!getAccessToken({ req, res })
@@ -37,7 +31,6 @@ export const fetchCheckoutSteps = async ({ apolloClient, req, res, shopSession }
   const steps: Array<CheckoutStep> = [CheckoutStep.Checkout]
 
   if (showPayment) steps.push(CheckoutStep.Payment)
-  if (showSwitchingAssistant) steps.push(CheckoutStep.SwitchingAssistant)
   if (steps.length < 3) steps.push(CheckoutStep.Confirmation)
   if (steps.length < 3) steps.push(CheckoutStep.Done)
   return steps
