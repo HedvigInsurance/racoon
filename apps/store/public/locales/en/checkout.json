@@ -1,5 +1,6 @@
 {
   "APP_DOWNLOAD_QRCODE_ALT": "Scan to download the app (QR code)",
+  "APP_DOWNLOAD_QRCODE_TEXT": "Scan the QR code or use the links below",
   "BACK_BUTTON": "Back to cart",
   "BREADCRUMB_CHECKOUT": "Checkout",
   "BREADCRUMB_CONFIRMATION": "Confirmation",

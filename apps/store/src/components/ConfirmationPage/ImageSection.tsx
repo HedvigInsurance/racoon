@@ -15,6 +15,8 @@ export const ImageSection = ({ image }: Props) => {
 }
 
 const Wrapper = styled.section({
+  pointerEvents: 'none',
+
   position: 'relative',
   top: '-20vw',
   height: '100vw',

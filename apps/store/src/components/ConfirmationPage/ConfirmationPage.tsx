@@ -1,10 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
 import { Fragment } from 'react'
-import { Heading, mq, Space, Text, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
-import { AppStoreBadge } from '@/components/AppStoreBadge/AppStoreBadge'
 import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
@@ -24,8 +22,7 @@ type Props = ConfirmationPageProps & {
 
 export const ConfirmationPage = (props: Props) => {
   const { t } = useTranslation('checkout')
-  const { locale, routingLocale } = useCurrentLocale()
-  const { platform, cart, story } = props
+  const { cart, story } = props
 
   const checklistItems = story.content.checklist.split('\n')
 
@@ -64,23 +61,21 @@ export const ConfirmationPage = (props: Props) => {
                     return isLast ? (
                       <Fragment key={item}>
                         <CheckListItem.Disabled title={item} />
-                        <SpaceFlex direction="vertical" align="center">
-                          <DownloadAppWrapper>
-                            {platform ? (
-                              <Link href={getAppStoreLink(platform, routingLocale)} passHref>
-                                <AppStoreBadge type={platform} locale={locale} />
-                              </Link>
-                            ) : (
-                              <ImageWithPlaceholder
-                                src={qrCodeImage}
-                                alt={t('APP_DOWNLOAD_QRCODE_ALT')}
-                                width={128}
-                                height={128}
-                                priority={true}
-                              />
-                            )}
-                          </DownloadAppWrapper>
-                        </SpaceFlex>
+                        <DownloadAppWrapper>
+                          <SpaceFlex direction="vertical" align="center">
+                            <ImageWithPlaceholder
+                              src={qrCodeImage}
+                              alt={t('APP_DOWNLOAD_QRCODE_ALT')}
+                              width={168}
+                              height={168}
+                              priority={true}
+                            />
+                          </SpaceFlex>
+
+                          <Text align="center">{t('APP_DOWNLOAD_QRCODE_TEXT')}</Text>
+
+                          <AppStoreButtons />
+                        </DownloadAppWrapper>
                       </Fragment>
                     ) : (
                       <CheckListItem.Checked key={item} title={item} />
@@ -117,5 +112,44 @@ const DownloadAppWrapper = styled.div({
   paddingTop: theme.space.xxxl,
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  gap: theme.space.xl,
+})
+
+const AppStoreButtons = () => {
+  const { routingLocale } = useCurrentLocale()
+
+  return (
+    <ButtonWrapper>
+      <Button
+        href={getAppStoreLink('apple', routingLocale).toString()}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="secondary"
+        size="medium"
+      >
+        <SpaceFlex space={0.5} align="center">
+          <AppleIcon />
+          App Store
+        </SpaceFlex>
+      </Button>
+      <Button
+        href={getAppStoreLink('google', routingLocale).toString()}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="secondary"
+        size="medium"
+      >
+        <SpaceFlex space={0.5} align="center">
+          <AndroidIcon />
+          Google Play
+        </SpaceFlex>
+      </Button>
+    </ButtonWrapper>
+  )
+}
+
+const ButtonWrapper = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gridGap: theme.space.xs,
 })
