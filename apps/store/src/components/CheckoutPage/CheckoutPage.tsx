@@ -255,7 +255,7 @@ const gridCenterStyles = css({
 
 const Content = styled(Space)(gridCenterStyles, {
   gridColumn: '1 / -1',
-  paddingBottom: theme.space.xl,
+  paddingBottom: theme.space[10],
   columnGap: theme.space.md,
 })
 
