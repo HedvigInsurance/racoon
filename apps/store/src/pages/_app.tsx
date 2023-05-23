@@ -14,6 +14,7 @@ import { GlobalBanner } from '@/components/GlobalBanner/GlobalBanner'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
+import { CustomerFirstScript } from '@/services/CustomerFirst'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
@@ -84,6 +85,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
 
       <GTMAppScript />
+      <CustomerFirstScript />
 
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
