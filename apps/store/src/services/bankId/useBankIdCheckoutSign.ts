@@ -3,7 +3,6 @@ import { Observable, Subscription } from 'zen-observable-ts'
 import {
   ShopSessionAuthenticationStatus,
   ShopSessionSigningStatus,
-  useShopSessionAuthenticateMutation,
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
 } from '@/services/apollo/generated'
@@ -45,7 +44,6 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
       if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         bankIdLogger.debug('Authentication required for returning member')
         startLogin({
-          shopSessionId,
           ssn,
           onSuccess() {
             startSign({ shopSessionId, onSuccess: handleSuccess })
@@ -79,7 +77,6 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
   const [fetchSigning, signingResult] = useShopSessionSigningLazyQuery({})
 
   const [starSignMutate] = useShopSessionStartSignMutation()
-  const [authenticateShopSession] = useShopSessionAuthenticateMutation()
 
   const subscriptionRef = useRef<Subscription | null>(null)
   const startSign = useCallback(
@@ -100,8 +97,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
                   completion.authorizationCode,
                 )
                 saveAuthTokens({ accessToken, refreshToken })
-                bankIdLogger.debug('Got access token, authenticating shopSession')
-                await authenticateShopSession({ variables: { shopSessionId } })
+                bankIdLogger.debug('Got access token')
                 subscriber.complete()
               }
             },
@@ -147,7 +143,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
         },
       })
     },
-    [authenticateShopSession, dispatch, fetchSigning, signingResult, starSignMutate],
+    [dispatch, fetchSigning, signingResult, starSignMutate],
   )
   const cancelSign = () => {
     signingResult.stopPolling()

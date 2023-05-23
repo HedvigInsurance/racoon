@@ -1,7 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useCallback, useRef } from 'react'
 import { Subscription } from 'zen-observable-ts'
-import { useShopSessionAuthenticateMutation } from '@/services/apollo/generated'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
@@ -14,7 +13,6 @@ type HookOptions = {
 }
 
 export type BankIdLoginOptions = {
-  shopSessionId: string
   ssn: string
   onSuccess: () => void
 }
@@ -65,9 +63,8 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
 
 export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
   const subscriptionRef = useRef<Subscription | null>(null)
-  const [authenticateShopSession] = useShopSessionAuthenticateMutation()
   const startLogin = useCallback(
-    ({ shopSessionId, ssn, onSuccess }: BankIdLoginOptions) => {
+    ({ ssn, onSuccess }: BankIdLoginOptions) => {
       bankIdLogger.debug('Starting BankId login')
       // Future ideas
       // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
@@ -82,9 +79,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
               statusResponse.authorizationCode,
             )
             saveAuthTokens({ accessToken, refreshToken })
-            bankIdLogger.debug('Got access token, authenticating shopSession')
-            await authenticateShopSession({ variables: { shopSessionId } })
-            bankIdLogger.debug('shopSession authenticated')
+            bankIdLogger.debug('Got access token')
             onSuccess()
           }
         },
@@ -97,7 +92,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
         },
       })
     },
-    [authenticateShopSession, dispatch],
+    [dispatch],
   )
   const cancelLogin = useCallback(() => {
     subscriptionRef.current?.unsubscribe()
