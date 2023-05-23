@@ -80,7 +80,7 @@ const redirectMiddleware = async (req: NextRequest): Promise<NextResponse | unde
     }
     // Cannot use req.nextUrl, it removes locale prefix
     const reqUrl = new URL(req.url)
-    if (reqUrl.pathname.startsWith(redirect.from)) {
+    if (reqUrl.pathname === redirect.from) {
       console.log(
         `Applying ${redirect.temporary ? 'temporary' : 'permanent'} redirect ${redirect.from} -> ${
           redirect.to
