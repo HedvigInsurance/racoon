@@ -6,8 +6,8 @@ const getDeductibleData: DataGetter = (offerData) => {
 
 const getLifeInsuranceData: DataGetter = (offerData) => {
   const { deathOption } = offerData.priceIntentData
-  if (deathOption != null) {
-    return Boolean(deathOption)
+  if (deathOption) {
+    return true
   }
 
   return null
@@ -15,8 +15,8 @@ const getLifeInsuranceData: DataGetter = (offerData) => {
 
 const getPreviousComplaintsData: DataGetter = (offerData) => {
   const { preExistingOption } = offerData.priceIntentData
-  if (preExistingOption != null) {
-    return Boolean(preExistingOption)
+  if (preExistingOption) {
+    return true
   }
 
   return null
