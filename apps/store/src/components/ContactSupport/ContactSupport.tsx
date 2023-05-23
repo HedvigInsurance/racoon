@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Space, Text, theme, mq } from 'ui'
-import { CustomerFirstScript, useCustomerFirst } from '@/services/CustomerFirst'
+import { useCustomerFirst } from '@/services/CustomerFirst'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { ContactCard, IconOptions } from './ContactCard'
@@ -50,8 +50,6 @@ export const ContactSupport = ({
           </CardWrapper>
         </Space>
       </Main>
-
-      <CustomerFirstScript />
     </>
   )
 }
