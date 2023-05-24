@@ -286,6 +286,8 @@ export const colors = {
   translucent2: grayTranslucent[300],
   opaque3: gray[400],
   translucent3: grayTranslucent[400],
+  offWhite: gray[25],
+  offWhiteTranslucent: grayTranslucent[25],
 
   // Highlight colors
   // Used as fill on light backgrounds

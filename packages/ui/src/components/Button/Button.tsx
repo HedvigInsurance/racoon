@@ -179,16 +179,16 @@ const SecondaryButton = styled(StyledButton)(
 )
 
 const SecondaryAltButton = styled(SecondaryButton)({
-  backgroundColor: theme.colors.backgroundStandard,
+  backgroundColor: theme.colors.offWhite,
 
   '@media (hover: hover)': {
     ':hover': {
-      backgroundColor: theme.colors.translucent1,
+      backgroundColor: theme.colors.offWhiteTranslucent,
     },
   },
 
   ':active': {
-    backgroundColor: theme.colors.translucent1,
+    backgroundColor: theme.colors.offWhite,
   },
 })
 
