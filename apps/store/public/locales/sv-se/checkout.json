@@ -1,5 +1,6 @@
 {
   "APP_DOWNLOAD_QRCODE_ALT": "Skanna för att ladda ner appen (QR-kod)",
+  "APP_DOWNLOAD_QRCODE_TEXT": "Skanna koden eller använd länkarna nedan",
   "BACK_BUTTON": "Visa varukorg",
   "BREADCRUMB_CHECKOUT": "Signera",
   "BREADCRUMB_CONFIRMATION": "Bekräftelse",

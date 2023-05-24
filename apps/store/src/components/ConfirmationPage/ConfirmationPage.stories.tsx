@@ -22,7 +22,6 @@ export const Default = () => {
       }}
       shopSessionId="aiwdoiaiojoiwa"
       currency="SEK"
-      platform="apple"
       cart={{
         id: '123',
         cost: {

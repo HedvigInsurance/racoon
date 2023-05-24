@@ -16,7 +16,6 @@ import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSe
 import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
-import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 const CONFIRMATION_PAGE_SLUG = 'confirmation'
@@ -63,7 +62,6 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
-      platform: getMobilePlatform(req.headers['user-agent'] ?? ''),
       story,
       ...getSwitching(outcome),
     },
