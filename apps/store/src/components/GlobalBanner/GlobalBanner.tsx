@@ -1,11 +1,14 @@
 import styled from '@emotion/styled'
 import { RESET } from 'jotai/utils'
 import { CampaignIcon, CrossIconSmall, Text, mq, theme } from 'ui'
+import { useDebugShopSession } from '@/utils/useDebugShopSession'
 import { useGlobalBanner, useGlobalBannerClosed } from './useGlobalBanner'
 
 export const GlobalBanner = () => {
   const [value, setValue] = useGlobalBanner()
   const [closed, setIsClosed] = useGlobalBannerClosed()
+
+  useDebugShopSession()
 
   const handleClose = () => {
     setValue(RESET)
@@ -18,7 +21,7 @@ export const GlobalBanner = () => {
     <Wrapper>
       <GlobalBannerText color="textGreen" size="xs">
         <CampaignIcon color={theme.colors.greenElement} />
-        {value}
+        <Ellipsis>{value}</Ellipsis>
       </GlobalBannerText>
 
       <Button onClick={handleClose}>
@@ -31,25 +34,32 @@ export const GlobalBanner = () => {
 const Wrapper = styled.div({
   backgroundColor: theme.colors.greenFill1,
   paddingBlock: theme.space.sm,
-  display: 'flex',
-  justifyContent: 'center',
+  display: 'grid',
+  gridTemplateColumns: '1fr auto',
   alignItems: 'center',
-  position: 'relative',
-  isolation: 'isolate',
+  justifyContent: 'center',
+  gap: theme.space.xs,
+
+  paddingInline: theme.space.md,
+  [mq.lg]: {
+    paddingInline: theme.space.xl,
+  },
 })
 
 const GlobalBannerText = styled(Text)({
-  display: 'flex',
+  display: 'grid',
   alignItems: 'center',
+  gridTemplateColumns: 'auto 1fr',
   gap: theme.space.xs,
+  marginInline: 'auto',
+})
+
+const Ellipsis = styled.span({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 })
 
 const Button = styled.button({
   cursor: 'pointer',
-  position: 'absolute',
-  right: theme.space.md,
-
-  [mq.lg]: {
-    right: theme.space.xl,
-  },
 })
