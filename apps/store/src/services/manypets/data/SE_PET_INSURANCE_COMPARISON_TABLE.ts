@@ -14,8 +14,8 @@ const getLifeInsuranceData: DataGetter = (offerData) => {
 }
 
 const getPreviousComplaintsData: DataGetter = (offerData) => {
-  const { preExistingOption } = offerData.priceIntentData
-  if (preExistingOption) {
+  const { preExistingConditionOption } = offerData.priceIntentData
+  if (preExistingConditionOption) {
     return true
   }
 
@@ -24,35 +24,44 @@ const getPreviousComplaintsData: DataGetter = (offerData) => {
 
 export const TableDataTemplate: ComparisonTableTemplateByTierLevelMap = {
   BASIC: {
-    Veterinärvårdsbelopp: '30 000',
+    Veterinärvård: '30 000',
     Självrisk: getDeductibleData,
-    'Ingen bindningstid': true,
     'Dolda fel': true,
-    Kastrering: true,
     Livförsäkring: getLifeInsuranceData,
     'Tidigare besvär': getPreviousComplaintsData,
+    'Fria vårdsamtal': true,
+    'Ingen bindningstid': true,
   },
   STANDARD: {
-    Veterinärvårdsbelopp: '60 000',
+    Veterinärvård: '60 000',
     Självrisk: getDeductibleData,
-    'Ingen bindningstid': true,
     'Dolda fel': true,
-    Kastrering: true,
-    Specialkost: true,
+    Medicin: true,
     Tandvård: true,
+    'Avancerad diagnostik': true,
+    'Strålning och kemoterapi': true,
+    Rehabilitering: true,
+    Specialkost: true,
+    'Förlossning/Kejsarsnitt': true,
     Livförsäkring: getLifeInsuranceData,
     'Tidigare besvär': getPreviousComplaintsData,
+    'Fria vårdsamtal': true,
+    'Ingen bindningstid': true,
   },
   PREMIUM: {
-    Veterinärvårdsbelopp: '140 000',
+    Veterinärvård: '140 000',
     Självrisk: getDeductibleData,
-    'Ingen bindningstid': true,
     'Dolda fel': true,
-    Kastrering: true,
-    Specialkost: true,
+    Medicin: true,
     Tandvård: true,
-    'Vård av djur': true,
+    'Avancerad diagnostik': true,
+    'Strålning och kemoterapi': true,
+    Rehabilitering: true,
+    Specialkost: true,
+    'Förlossning/Kejsarsnitt': true,
     Livförsäkring: getLifeInsuranceData,
     'Tidigare besvär': getPreviousComplaintsData,
+    'Fria vårdsamtal': true,
+    'Ingen bindningstid': true,
   },
 }
