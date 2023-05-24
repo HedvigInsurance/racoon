@@ -20,6 +20,8 @@ Requirements:
 To know which text key is used where you can suffix the url anywhere with `?debug=textkeys` to show text keys instead of translations, and to disable
 the debug mode you can suffix the url with `?debug=none`.
 
+It's also possible to display the current Shop Session ID by suffixing the url with `?debug=session`.
+
 ## VS Code extension: [Apollo GraphQL](https://marketplace.visualstudio.com/items?itemName=apollographql.vscode-apollo)
 
 Requirements:
