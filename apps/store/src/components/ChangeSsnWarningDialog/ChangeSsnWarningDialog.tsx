@@ -20,8 +20,8 @@ export const ChangeSsnWarningDialog = ({ open, onAccept, onDecline }: Props) => 
   const handleAccept = useCallback(async () => {
     setLoading(true)
 
-    await resetShopSession()
     resetAuthTokens()
+    await resetShopSession()
 
     if (onAccept) {
       if (onAccept instanceof Promise) {

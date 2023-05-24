@@ -25,7 +25,6 @@ import {
   CurrentMemberQueryVariables,
   ShopSessionAuthenticationStatus,
 } from '@/services/apollo/generated'
-import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
@@ -48,7 +47,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const { t } = useTranslation('checkout')
 
   const [showSignError, setShowSignError] = useState(false)
-  const { shopSession } = useShopSession()
+  const { shopSession, reset: resetShopSession } = useShopSession()
   const router = useRouter()
   const apolloClient = useApolloClient()
   const tracking = useTracking()
@@ -72,7 +71,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         memberId,
         customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
       )
-      setupShopSessionServiceClientSide(apolloClient).reset()
+      resetShopSession()
 
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
