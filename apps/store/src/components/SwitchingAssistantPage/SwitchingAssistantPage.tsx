@@ -39,7 +39,7 @@ export const SwitchingAssistantPage = (props: SwitchingAssistantPageProps) => {
   return (
     <Space y={{ base: 1, lg: 2.5 }}>
       <Header>
-        <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.SwitchingAssistant}>
+        <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
           <TextLink
             href={PageLink.customerService({ locale: routingLocale })}
             target="_blank"

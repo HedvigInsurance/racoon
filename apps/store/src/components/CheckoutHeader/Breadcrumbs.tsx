@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { theme } from 'ui'
+import { CheckIcon, theme } from 'ui'
 
 export enum CheckoutStep {
   Checkout = 'checkout',
   Payment = 'payment',
-  SwitchingAssistant = 'switchingAssistant',
   Confirmation = 'confirmation',
   Done = 'done',
 }
@@ -14,11 +13,13 @@ export type BreadcrumbsProps = { steps: Array<CheckoutStep>; activeStep: Checkou
 
 export const Breadcrumbs = ({ steps, activeStep }: BreadcrumbsProps) => {
   const getCheckoutStepLabel = useGetCheckoutStepLabel()
+  const activeStepIndex = steps.indexOf(activeStep)
 
   return (
     <Root>
       {steps.map((item) => (
         <Step key={item} active={item === activeStep}>
+          {activeStepIndex > steps.indexOf(item) && <CheckIcon size="1rem" />}
           {getCheckoutStepLabel(item)}
         </Step>
       ))}
@@ -27,22 +28,29 @@ export const Breadcrumbs = ({ steps, activeStep }: BreadcrumbsProps) => {
 }
 
 const Root = styled.ul({
-  display: 'flex',
-  justifyContent: 'space-between',
+  display: 'grid',
+  gridAutoFlow: 'column',
+  gridAutoColumns: '1fr',
+  gap: theme.space.xs,
 })
 
-const Step = styled.li<{ active?: boolean }>(({ active }) => ({
+const Step = styled.li<{ active: boolean }>(({ active }) => ({
   fontSize: theme.fontSizes.xs,
   height: theme.space.xl,
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.xs,
 
   color: theme.colors.textTertiary,
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.xs,
+  border: `1px solid ${theme.colors.opaque1}`,
+
   ...(active && {
-    backgroundColor: theme.colors.gray300,
-    color: theme.colors.textPrimary,
-    paddingInline: theme.space.sm,
-    borderRadius: theme.radius.xs,
+    backgroundColor: theme.colors.green100,
+    color: theme.colors.greenText,
+    borderColor: theme.colors.green200,
   }),
 }))
 
@@ -55,8 +63,6 @@ const useGetCheckoutStepLabel = () => {
         return t('BREADCRUMB_CHECKOUT')
       case CheckoutStep.Payment:
         return t('BREADCRUMB_PAYMENT')
-      case CheckoutStep.SwitchingAssistant:
-        return t('BREADCRUMB_SWITCHING_ASSISTANT')
       case CheckoutStep.Confirmation:
         return t('BREADCRUMB_CONFIRMATION')
       case CheckoutStep.Done:

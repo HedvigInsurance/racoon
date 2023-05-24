@@ -46,8 +46,6 @@ export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckout
   switch (step) {
     case CheckoutStep.Checkout:
       return PageLink.checkout()
-    case CheckoutStep.SwitchingAssistant:
-      return PageLink.checkoutSwitchingAssistant({ locale, shopSessionId })
     case CheckoutStep.Payment:
       return PageLink.checkoutPayment({ locale, shopSessionId })
     case CheckoutStep.Confirmation:
