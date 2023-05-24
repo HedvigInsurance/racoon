@@ -150,7 +150,7 @@ export const PurchaseForm = () => {
                         <Text size={{ _: 'lg', lg: 'xl' }}>
                           <SpaceFlex space={0.25} align="center">
                             <WarningTriangleIcon size="1em" color={theme.colors.amberElement} />
-                            {t('GENERAL_ERROR_DIALOG_TITLE')}
+                            {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
                           </SpaceFlex>
                         </Text>
                         <Balancer ratio={0.5}>
