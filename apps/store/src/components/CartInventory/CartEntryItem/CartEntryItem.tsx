@@ -13,6 +13,7 @@ import { RemoveEntryDialog } from '../RemoveEntryDialog'
 import { CartEntryCollapsible } from './CartEntryCollapsible'
 import { DetailsSheet } from './DetailsSheet'
 import { EditEntryButton } from './EditEntryButton'
+import { ShortSummary } from './ShortSummary'
 
 type Props = CartEntry & {
   shopSessionId: string
@@ -23,7 +24,7 @@ type Props = CartEntry & {
 
 export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { shopSessionId, readOnly, onRemove, ...cartEntry } = props
-  const { title: titleLabel, startDate, cost, pillow } = cartEntry
+  const { title: titleLabel, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
@@ -52,11 +53,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
         <div>
           <Text>{titleLabel}</Text>
-          <Text color="textSecondary">
-            {startDate
-              ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(startDate) })
-              : t('CART_ENTRY_AUTO_SWITCH')}
-          </Text>
+          <ShortSummary cartEntry={cartEntry} />
         </div>
       </SpaceFlex>
 
