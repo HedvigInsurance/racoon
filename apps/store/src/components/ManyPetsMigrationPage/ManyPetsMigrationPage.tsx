@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { Button, Space, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
+import { Text, Button, Space, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
@@ -84,6 +84,10 @@ export const ManyPetsMigrationPage = ({
                   {t('SIGN_BUTTON', { count: cartEntries.length })}
                 </SignButtonContent>
               </Button>
+
+              <Text as="p" size={{ _: 'xs', md: 'sm' }} align="center" color="textSecondary">
+                {t('SIGN_DISCLAIMER')}
+              </Text>
             </Space>
           </form>
 
