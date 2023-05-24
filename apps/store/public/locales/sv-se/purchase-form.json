@@ -86,7 +86,6 @@
   "FIELD_ZIP_CODE_LABEL": "Postnr.",
   "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Försök igen",
   "GENERAL_ERROR_DIALOG_PROMPT": "Något gick fel. Vi kan inte beräkna ditt pris för tillfället.",
-  "GENERAL_ERROR_DIALOG_TITLE": "Tyvärr...",
   "HOUSEHOLD_SIZE_VALUE_one": "Du + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_other": "Du + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Bara du",
