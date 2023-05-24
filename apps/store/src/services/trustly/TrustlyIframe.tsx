@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import { useEffect, type ReactEventHandler } from 'react'
 import { theme } from 'ui'
-
-const SUCCESS_SUFFIX = '/success'
-const FAIL_SUFFIX = '/fail'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 
 type Props = {
   url: string
@@ -12,6 +11,8 @@ type Props = {
 }
 
 export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
+  const { routingLocale } = useCurrentLocale()
+
   useEffect(() => {
     const handler = (event: MessageEvent) => {
       const trustlyOrigin = new URL(url).origin
@@ -28,11 +29,17 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
   }, [url])
 
   const handleLoad: ReactEventHandler<HTMLIFrameElement> = (event) => {
-    const pathname = event.currentTarget.contentWindow?.location.pathname
-    if (pathname?.endsWith(SUCCESS_SUFFIX)) {
-      onSuccess()
-    } else if (pathname?.endsWith(FAIL_SUFFIX)) {
-      onFail()
+    try {
+      const url = event.currentTarget.contentWindow?.location.href
+      console.log('Iframe location', url)
+      if (url === PageLink.paymentSuccess({ locale: routingLocale })) {
+        onSuccess()
+      } else if (url === PageLink.paymentFailure({ locale: routingLocale })) {
+        onFail()
+      }
+    } catch (error) {
+      // This is a cross-origin error, which is expected
+      console.debug('Unable to read iframe location', error)
     }
   }
 

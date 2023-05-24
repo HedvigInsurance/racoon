@@ -50,6 +50,9 @@ export const PageLink = {
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
 
+  paymentSuccess: ({ locale }: Required<BaseParams>) => `${ORIGIN_URL}/${locale}/payment-success`,
+  paymentFailure: ({ locale }: Required<BaseParams>) => `${ORIGIN_URL}/${locale}/payment-failure`,
+
   forever: ({ locale, code }: ForeverPage) => `${localePrefix(locale)}/forever/${code}`,
 
   customerService: ({ locale }: Required<BaseParams>) => {

@@ -1,14 +1,29 @@
 import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
-
-const PLACEHOLDER_URL =
-  'https://checkout.test.trustly.com/checkout?OrderID=14303159000&SessionID=57b5b689-249d-4744-88cb-732f6f8b11ae'
+import {
+  TrustlyInitDocument,
+  TrustlyInitMutation,
+  TrustlyInitMutationVariables,
+} from '@/services/apollo/generated'
+import { RoutingLocale } from '@/utils/l10n/types'
+import { PageLink } from '@/utils/PageLink'
 
 type Params = {
   apolloClient: ApolloClient<NormalizedCacheObject>
+  locale: RoutingLocale
 }
 
-// TODO: refactor
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/require-await
-export const createTrustlyUrl = async ({ apolloClient }: Params) => {
-  return PLACEHOLDER_URL
+export const createTrustlyUrl = async ({ apolloClient, locale }: Params): Promise<string> => {
+  const response = await apolloClient.mutate<TrustlyInitMutation, TrustlyInitMutationVariables>({
+    mutation: TrustlyInitDocument,
+    variables: {
+      successUrl: PageLink.paymentSuccess({ locale }),
+      failureUrl: PageLink.paymentFailure({ locale }),
+    },
+  })
+
+  if (!response.data) {
+    throw new Error('No response from Trustly')
+  }
+
+  return response.data.registerDirectDebit2.url
 }

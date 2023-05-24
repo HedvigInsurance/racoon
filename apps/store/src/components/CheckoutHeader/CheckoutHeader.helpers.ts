@@ -6,6 +6,7 @@ import {
 } from '@/services/apollo/generated'
 import { getAccessToken } from '@/services/authApi/persist'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { Features } from '@/utils/Features'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { CookieParams } from '@/utils/types'
@@ -47,7 +48,9 @@ export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckout
     case CheckoutStep.Checkout:
       return PageLink.checkout()
     case CheckoutStep.Payment:
-      return PageLink.checkoutPayment({ locale, shopSessionId })
+      return Features.enabled('STOREFRONT_CONNECT_PAYMENT')
+        ? PageLink.checkoutPaymentTrustly({ locale, shopSessionId })
+        : PageLink.checkoutPayment({ locale, shopSessionId })
     case CheckoutStep.Confirmation:
     case CheckoutStep.Done:
       return PageLink.confirmation({ locale, shopSessionId })
