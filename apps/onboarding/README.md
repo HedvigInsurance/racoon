@@ -52,16 +52,6 @@ You can use [Jest](https://jestjs.io/) + [testing-library/react](https://testing
 
 To run unit tests, execute the command `yarn test`.
 
-### Cypress
-
-[Cypress](https://www.cypress.io/) is a great tool to implement integration and E2E tests. All of its features and ways of working is beyond the scope of this README file so please refer to the [official documentation](https://docs.cypress.io/guides/overview/why-cypress) for more information about it.
-In this project E2E test files should be placed inside `cypress/integration` folder. Please note that they need to incude `.spec` on their names.
-
-You can run E2E tests using one of both commands:
-
-- `yarn e2e`: run the NextJS application (`yarn dev`) followed by _Cypress_ in the interactive mode. In this mode you can visualize the execution of your tests in a real browser.
-- `yarn e2e:headless`: run the NextJS application (`yarn dev`) followed by _Cypress_ in the headless mode. This mode is more suitable for CI/CD environments as it doesn't display the execution of your tests in a browser window.
-
 ## Internationalization (i18n)
 
 The app uses the built-in [Internationalized Routing](https://nextjs.org/docs/advanced-features/i18n-routing) feature of Next.js.
