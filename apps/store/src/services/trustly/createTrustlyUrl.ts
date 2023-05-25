@@ -1,4 +1,4 @@
-import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
+import { type ApolloClient } from '@apollo/client'
 import {
   TrustlyInitDocument,
   TrustlyInitMutation,
@@ -8,7 +8,7 @@ import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
 type Params = {
-  apolloClient: ApolloClient<NormalizedCacheObject>
+  apolloClient: ApolloClient<unknown>
   locale: RoutingLocale
 }
 
