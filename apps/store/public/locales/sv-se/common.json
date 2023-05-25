@@ -26,6 +26,7 @@
   "NAV_MENU_DIALOG_CLOSE": "Stäng",
   "NAV_MENU_DIALOG_OPEN": "Meny",
   "PAYMENT_CONNECT_FAILURE": "Autogirokopplingen misslyckades tyvärr",
+  "PAYMENT_CONNECT_IFRAME_LOAD_BUTTON": "Tryck här för att börja",
   "PAYMENT_CONNECT_RETRY": "Försök igen",
   "PAYMENT_CONNECT_SUCCESS": "Autogiro kopplat! Du kan stänga sidan nu :)",
   "PAYMENT_CONNECT_TITLE": "Koppla autogiro",

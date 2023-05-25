@@ -92,9 +92,8 @@ export const ManyPetsMigrationPage = ({
           </form>
 
           <Space y={{ base: 2, md: 3 }}>
-            {/* TODO: Lokalise this? */}
             <Heading as="h2" variant="standard.32" align="center" balance={true}>
-              Byt till Hedvig och behåll ditt skydd.
+              {t('MANYPETS_COMPARISON_HEADER')}
             </Heading>
 
             <ComparisonTable.Root>
