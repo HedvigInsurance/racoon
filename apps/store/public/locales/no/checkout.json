@@ -1,5 +1,6 @@
 {
   "APP_DOWNLOAD_QRCODE_ALT": "",
+  "APP_DOWNLOAD_QRCODE_TEXT": "",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_one": "1 forsikring",
   "CART_INVENTORY_COLLAPSIBLE_TITLE_other": "{{count}} forsikringer",
   "CONTACT_DETAILS_FORM_TITLE": "Din kontaktinformasjon",

@@ -29,6 +29,7 @@
   "NAV_MENU_DIALOG_CLOSE": "Close",
   "NAV_MENU_DIALOG_OPEN": "Menu",
   "PAYMENT_CONNECT_FAILURE": "Could not connect direct debit",
+  "PAYMENT_CONNECT_IFRAME_LOAD_BUTTON": "Press here to begin",
   "PAYMENT_CONNECT_RETRY": "Try again",
   "PAYMENT_CONNECT_SUCCESS": "Success! You can close this page now :)",
   "PAYMENT_CONNECT_TITLE": "Connect direct debit",

@@ -20,6 +20,7 @@
   "FORM_EMAIL_LABEL": "Email",
   "FORM_FIRST_NAME_LABEL": "First name",
   "FORM_LAST_NAME_LABEL": "Last name",
+  "MANYPETS_COMPARISON_HEADER": "Switch to Hedvig and keep your cover.",
   "PAYMENT_HEADER_HELP_LINK": "Help",
   "PAYMENT_TRUSTLY_FOOTNOTE": "Safe payments with Trustly.",
   "PAYMENT_TRUSTLY_MESSAGE": "Connect direct debit. Payments happen monthly on the 27th.",
