@@ -85,7 +85,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
 
       <GTMAppScript />
-      <CustomerFirstScript />
 
       <ApolloProvider client={apolloClient}>
         <Global styles={globalStyles} />
@@ -107,6 +106,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
+          <CustomerFirstScript />
         </JotaiProvider>
       </ApolloProvider>
     </>
