@@ -26,11 +26,15 @@ const Wrapper = styled.div({
   display: 'flex',
   gap: theme.space.xs,
   alignItems: 'baseline',
-  backgroundColor: theme.colors.blue200,
+  backgroundColor: theme.colors.blueFill1,
+  border: `1px solid ${theme.colors.blue200}`,
   borderRadius: theme.radius.sm,
   padding: theme.space.md,
 })
 
 const StyledInfoIcon = styled(InfoIcon)({
   flex: '0 0 auto',
+  // Optical alignment with text
+  position: 'relative',
+  top: 3,
 })
