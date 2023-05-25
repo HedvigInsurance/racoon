@@ -10,11 +10,13 @@ type Orientation = 'vertical' | 'fluid'
 type TextAlignment = 'top' | 'center' | 'bottom'
 type TextHorizontalAlignment = 'left' | 'center' | 'right'
 type ImagePlacement = 'left' | 'right'
+type MediaPlacementMobile = 'top' | 'bottom'
 
 const DEFAULT_ORIENTATION: Orientation = 'vertical'
 const DEFAULT_TEXT_ALIGNMENT: TextAlignment = 'top'
 const DEFAULT_TEXT_HORIZONTAL_ALIGNMENT: TextHorizontalAlignment = 'left'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
+const DEFAULT_MEDIA_PLACEMENT_MOBILE: MediaPlacementMobile = 'top'
 
 export type ImageTextBlockProps = SbBaseBlockProps<{
   // TODO: Remove image field after content migration
@@ -26,6 +28,7 @@ export type ImageTextBlockProps = SbBaseBlockProps<{
   textAlignment?: TextAlignment
   textHorizontalAlignment?: TextHorizontalAlignment
   imagePlacement?: ImagePlacement
+  mediaPlacementMobile?: MediaPlacementMobile
 }>
 
 export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
@@ -44,6 +47,7 @@ export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
           textAlignment={blok.textAlignment}
           textHorizontalAlignment={blok.textHorizontalAlignment}
           imagePlacement={blok.imagePlacement}
+          mediaPlacementMobile={blok.mediaPlacementMobile}
           nested={nested}
         />
       )
@@ -100,7 +104,12 @@ const VerticalBodyWrapper = styled.div({
 
 type FluidImageTextBlockProps = Pick<
   ImageTextBlockProps['blok'],
-  'body' | 'textAlignment' | 'textHorizontalAlignment' | 'imagePlacement' | 'nested'
+  | 'body'
+  | 'textAlignment'
+  | 'textHorizontalAlignment'
+  | 'imagePlacement'
+  | 'mediaPlacementMobile'
+  | 'nested'
 > & {
   imageBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
   mediaBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
@@ -113,6 +122,7 @@ const FluidImageTextBlock = ({
   textAlignment = DEFAULT_TEXT_ALIGNMENT,
   textHorizontalAlignment = DEFAULT_TEXT_HORIZONTAL_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
+  mediaPlacementMobile = DEFAULT_MEDIA_PLACEMENT_MOBILE,
   nested,
 }: FluidImageTextBlockProps) => {
   return (
@@ -133,6 +143,7 @@ const FluidImageTextBlock = ({
         )}
         <FluidBodyWrapper
           imagePlacement={imagePlacement}
+          mediaPlacementMobile={mediaPlacementMobile}
           textAlignment={textAlignment}
           textHorizontalAlignment={textHorizontalAlignment}
         >
@@ -170,8 +181,10 @@ export const FluidBodyWrapper = styled.div<{
   textAlignment: TextAlignment
   textHorizontalAlignment: TextHorizontalAlignment
   imagePlacement: ImagePlacement
-}>(({ textAlignment, textHorizontalAlignment, imagePlacement }) => ({
+  mediaPlacementMobile: MediaPlacementMobile
+}>(({ textAlignment, textHorizontalAlignment, imagePlacement, mediaPlacementMobile }) => ({
   gridColumn: '1 / -1',
+  order: mediaPlacementMobile === 'bottom' ? -1 : 'initial',
 
   [mq.lg]: {
     gridColumn: 'span 6',
