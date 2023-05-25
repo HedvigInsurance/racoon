@@ -3,8 +3,8 @@ import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
-import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { ImageBlock, ImageBlockProps } from './ImageBlock'
+import { ImageBlockProps } from './ImageBlock'
+import { VideoBlockProps } from './VideoBlock'
 
 type Orientation = 'vertical' | 'fluid'
 type TextAlignment = 'top' | 'center' | 'bottom'
@@ -17,7 +17,9 @@ const DEFAULT_TEXT_HORIZONTAL_ALIGNMENT: TextHorizontalAlignment = 'left'
 const DEFAULT_IMAGE_PLACEMENT: ImagePlacement = 'right'
 
 export type ImageTextBlockProps = SbBaseBlockProps<{
-  image: ExpectedBlockType<ImageBlockProps>
+  // TODO: Remove image field after content migration
+  image: ExpectedBlockType<ImageBlockProps | VideoBlockProps>
+  media: ExpectedBlockType<ImageBlockProps | VideoBlockProps>
   body?: SbBlokData[]
   orientation?: Orientation
   // TODO: rename this to 'textVerticalAlignment'
@@ -28,15 +30,15 @@ export type ImageTextBlockProps = SbBaseBlockProps<{
 
 export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
   const { orientation = DEFAULT_ORIENTATION } = blok
-  // We expect only one image from Storyblok
-  const imageBlock = Array.isArray(blok.image)
-    ? filterByBlockType(blok.image, ImageBlock.blockName)[0]
-    : undefined
+  // We expect only one media object from Storyblok
+  const imageBlock = Array.isArray(blok.image) ? blok.image[0] : undefined
+  const mediaBlock = Array.isArray(blok.media) ? blok.media[0] : undefined
 
   switch (orientation) {
     case 'fluid':
       return (
         <FluidImageTextBlock
+          mediaBlock={mediaBlock}
           imageBlock={imageBlock}
           body={blok.body}
           textAlignment={blok.textAlignment}
@@ -46,7 +48,14 @@ export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
         />
       )
     case 'vertical':
-      return <VerticalImageTextBlock imageBlock={imageBlock} body={blok.body} nested={nested} />
+      return (
+        <VerticalImageTextBlock
+          mediaBlock={mediaBlock}
+          imageBlock={imageBlock}
+          body={blok.body}
+          nested={nested}
+        />
+      )
     default:
       console.warn(`orientation type '${orientation}' is not valid`)
       return null
@@ -55,16 +64,23 @@ export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
 ImageTextBlock.blockName = 'imageText'
 
 type VerticalImageTextBlockProps = Pick<ImageTextBlockProps['blok'], 'body' | 'nested'> & {
-  imageBlock?: ImageBlockProps['blok']
+  imageBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
+  mediaBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
 }
 
-const VerticalImageTextBlock = ({ imageBlock, body, nested }: VerticalImageTextBlockProps) => {
+const VerticalImageTextBlock = ({
+  mediaBlock,
+  imageBlock,
+  body,
+  nested,
+}: VerticalImageTextBlockProps) => {
   return (
     <ConditionalWrapper
       condition={!nested}
       wrapWith={(children) => <ImageTextBlockWrapper>{children}</ImageTextBlockWrapper>}
     >
-      {imageBlock && <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />}
+      {mediaBlock && <StoryblokComponent key={mediaBlock._uid} blok={mediaBlock} nested={true} />}
+      {imageBlock && <StoryblokComponent key={imageBlock._uid} blok={imageBlock} nested={true} />}
       <VerticalBodyWrapper>
         {body?.map((nestedBlock) => (
           <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
@@ -85,9 +101,13 @@ const VerticalBodyWrapper = styled.div({
 type FluidImageTextBlockProps = Pick<
   ImageTextBlockProps['blok'],
   'body' | 'textAlignment' | 'textHorizontalAlignment' | 'imagePlacement' | 'nested'
-> & { imageBlock?: ImageBlockProps['blok'] }
+> & {
+  imageBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
+  mediaBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
+}
 
 const FluidImageTextBlock = ({
+  mediaBlock,
   imageBlock,
   body,
   textAlignment = DEFAULT_TEXT_ALIGNMENT,
@@ -101,9 +121,14 @@ const FluidImageTextBlock = ({
       wrapWith={(children) => <ImageTextBlockWrapper>{children}</ImageTextBlockWrapper>}
     >
       <FluidImageTextBlockGrid>
+        {mediaBlock && (
+          <GridLayout.Content width="1/2">
+            <StoryblokComponent key={mediaBlock._uid} blok={mediaBlock} nested={true} />
+          </GridLayout.Content>
+        )}
         {imageBlock && (
           <GridLayout.Content width="1/2">
-            <ImageBlock key={imageBlock._uid} blok={imageBlock} nested={true} />
+            <StoryblokComponent key={imageBlock._uid} blok={imageBlock} nested={true} />
           </GridLayout.Content>
         )}
         <FluidBodyWrapper
