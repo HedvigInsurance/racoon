@@ -17,6 +17,7 @@ type PageProps = { story: PageStory }
 
 const ManyPetsCmsPage = ({ story: initialStory }: PageProps) => {
   const story = useStoryblokState(initialStory)
+  if (!story) return null
 
   return (
     <>

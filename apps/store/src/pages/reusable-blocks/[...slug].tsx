@@ -15,6 +15,8 @@ type ReusableBlockPageProps = {
 
 const NextReusableBlockPage: NextPage<ReusableBlockPageProps> = (props) => {
   const story = useStoryblokState(props.story)
+  if (!story) return null
+
   return (
     <>
       <Head>

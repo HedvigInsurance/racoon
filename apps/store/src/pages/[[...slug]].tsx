@@ -38,6 +38,7 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
 
 const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
   const story = useStoryblokState(initialStory)
+  if (!story) return null
 
   return (
     <>
@@ -50,6 +51,7 @@ const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
 const NextProductPage = (props: ProductPageProps) => {
   const { story: initialStory, ...pageProps } = props
   const story = useStoryblokState(initialStory)
+  if (!story) return null
 
   return (
     <>
