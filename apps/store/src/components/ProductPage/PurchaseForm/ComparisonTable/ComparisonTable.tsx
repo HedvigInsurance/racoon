@@ -39,9 +39,11 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
 
 const TableHeader = styled.th({
   paddingBlock: theme.space.sm,
+  paddingInline: theme.space.xs,
 
   [mq.lg]: {
     paddingBlock: theme.space.md,
+    paddingInline: theme.space.sm,
   },
 })
 
@@ -55,9 +57,9 @@ type TitleDataCellProps = { children: React.ReactNode; className?: string }
 
 export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
   return (
-    <TableDataCell {...props}>
+    <StyledTitleDataCell {...props}>
       <Text size={{ _: 'sm', lg: 'md' }}>{children}</Text>
-    </TableDataCell>
+    </StyledTitleDataCell>
   )
 }
 
@@ -74,13 +76,19 @@ export const DataCell = ({ children, active, ...props }: DataCellProps) => {
 
 const TableDataCell = styled.td({
   paddingBlock: theme.space.sm,
+  paddingInline: theme.space.xs,
   verticalAlign: 'middle',
   minWidth: '2.5rem',
 
   [mq.lg]: {
     minWidth: '4rem',
     paddingBlock: theme.space.md,
+    paddingInline: theme.space.sm,
   },
+})
+
+const StyledTitleDataCell = styled(TableDataCell)({
+  minWidth: 'revert',
 })
 
 const ActiveTableDataCell = styled(TableDataCell)({
@@ -90,6 +98,8 @@ const ActiveTableDataCell = styled(TableDataCell)({
 const Centered = styled.div({
   display: 'flex',
   justifyContent: 'center',
+  // Make sure text gets centered when wrapped into multiple lines
+  textAlign: 'center',
 })
 
 export const CheckIcon = () => <PerilsCheckIcon size="1rem" />

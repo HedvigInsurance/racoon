@@ -1,15 +1,16 @@
 export type Props = {
+  color?: string
   width?: number
   height?: number
 }
 
-export const ManypetsLogo = ({ width = 78, height = 24 }: Props) => {
+export const ManypetsLogo = ({ color = 'currentColor', width = 78, height = 24 }: Props) => {
   return (
     <svg
       width={width}
       height={height}
       viewBox="0 0 58 13"
-      fill="none"
+      fill={color}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Manypets logo"
     >
