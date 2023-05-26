@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, mq, theme } from 'ui'
+import { Space, mq, theme, Button } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { PageLink } from '@/utils/PageLink'
@@ -61,13 +61,9 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
                 {t('CART_TOAST_PRIMARY_LINK')}
               </ButtonNextLink>
 
-              <ButtonNextLink
-                href={PageLink.checkout({ expandCart: true })}
-                variant="ghost"
-                onClick={handleClickLink('Secondary')}
-              >
-                {t('CART_TOAST_SECONDARY_LINK')}
-              </ButtonNextLink>
+              <Button onClick={handleClose} variant="ghost">
+                {t('DIALOG_CLOSE', { ns: 'common' })}
+              </Button>
             </Space>
           </DialogContentWrapper>
         </DialogContent>
