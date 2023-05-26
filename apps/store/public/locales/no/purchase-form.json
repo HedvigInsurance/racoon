@@ -45,6 +45,5 @@
   "SUBMIT_LABEL_FINISH": "Beregn pris",
   "SUBMIT_LABEL_PROCEED": "Neste steg",
   "TIER_SELECTOR_DEFAULT_LABEL": "Velg dekning",
-  "TIER_SELECTOR_SELECTED_LABEL": "Dekningsnivå",
-  "YEARLY_MILEAGE_VALUE": "{{value}} km/år"
+  "TIER_SELECTOR_SELECTED_LABEL": "Dekningsnivå"
 }

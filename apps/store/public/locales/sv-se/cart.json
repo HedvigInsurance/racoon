@@ -26,7 +26,7 @@
   "DATA_TABLE_LIVING_SPACE_LABEL": "Boyta",
   "DATA_TABLE_LIVING_SPACE_VALUE": "{{area}} m²",
   "DATA_TABLE_MILEAGE_LABEL": "Årlig körsträcka",
-  "DATA_TABLE_MILEAGE_VALUE": "{{value}}0 km/år",
+  "DATA_TABLE_MILEAGE_VALUE": "{{value}} mil/år",
   "DATA_TABLE_PET_BIRTH_DATE_LABEL": "Födelsedag",
   "DATA_TABLE_PET_NAME_LABEL": "Namn",
   "DATA_TABLE_REGISTRATION_NUMBER_LABEL": "Registreringsnummer",

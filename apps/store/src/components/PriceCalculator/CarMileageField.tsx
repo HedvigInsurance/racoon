@@ -9,11 +9,11 @@ type Props = {
 
 // NOTE: API values are in Scandinavian miles (1=10km)
 const options = [
-  { displayValue: '10 000', value: '1000' },
-  { displayValue: '15 000', value: '1500' },
-  { displayValue: '20 000', value: '2000' },
-  { displayValue: '25 000', value: '2500' },
-  { displayValue: '25 000+', value: '2501' },
+  { displayValue: '1 000', value: '1000' },
+  { displayValue: '1 500', value: '1500' },
+  { displayValue: '2 000', value: '2000' },
+  { displayValue: '2 500', value: '2500' },
+  { displayValue: '2 500+', value: '2501' },
 ]
 
 export const CarMileageField = ({ field, autoFocus }: Props) => {
