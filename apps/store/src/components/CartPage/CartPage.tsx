@@ -97,7 +97,7 @@ export const CartPage = (props: CartPageProps) => {
 
         {shopSession && (
           <ButtonNextLink
-            href={PageLink.checkout()}
+            href={PageLink.checkout({ expandCart: true })}
             onClick={() => {
               tracking.reportBeginCheckout(shopSession.cart)
             }}
