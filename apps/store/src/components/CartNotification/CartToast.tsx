@@ -49,7 +49,7 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
     <DialogPrimitive.Portal>
       <StyledOverlay />
       <StyledContentWrapper>
-        <DialogContent onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
+        <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
           <DialogContentWrapper>
             <ProductItem {...productItemProps} />
             <Space y={0.5}>
@@ -66,18 +66,11 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
               </Button>
             </Space>
           </DialogContentWrapper>
-        </DialogContent>
+        </DialogPrimitive.Content>
       </StyledContentWrapper>
     </DialogPrimitive.Portal>
   )
 }
-
-const DialogContent = styled(DialogPrimitive.Content)({
-  [mq.lg]: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-})
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -99,7 +92,7 @@ const StyledContentWrapper = styled.div({
 })
 
 const DialogContentWrapper = styled.div({
-  position: 'relative',
+  position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.lg,
