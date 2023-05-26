@@ -107,7 +107,8 @@ export const ManyPetsMigrationPage = ({
                   </ComparisonTable.Header>
                   <ComparisonTable.Header active>
                     <Centered>
-                      <HedvigLogo />
+                      {/* Both icons are composed differently. For optical sizing, they should diff 2px in width/height */}
+                      <HedvigLogo width={76} height={22} />
                     </Centered>
                   </ComparisonTable.Header>
                 </ComparisonTable.Row>
@@ -228,7 +229,7 @@ const parseTableValue = (value: string | boolean): ReactNode => {
 
 const OfferSection = styled(Space)({
   paddingInline: theme.space.md,
-  maxWidth: '28.5rem',
+  maxWidth: '31.5rem',
   marginInline: 'auto',
 
   [mq.lg]: {
