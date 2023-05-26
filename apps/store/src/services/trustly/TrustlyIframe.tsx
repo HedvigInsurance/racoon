@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useEffect, type ReactEventHandler } from 'react'
 import { theme } from 'ui'
@@ -31,7 +32,6 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
   const handleLoad: ReactEventHandler<HTMLIFrameElement> = (event) => {
     try {
       const url = event.currentTarget.contentWindow?.location.href
-      console.log('Iframe location', url)
       if (url === PageLink.paymentSuccess({ locale: routingLocale })) {
         onSuccess()
       } else if (url === PageLink.paymentFailure({ locale: routingLocale })) {
@@ -46,9 +46,7 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
   return <Iframe src={url} onLoad={handleLoad} />
 }
 
-const Iframe = styled.iframe({
-  display: 'block',
-
+export const trustlyIframeStyles = css({
   width: '100%',
   maxWidth: 600,
 
@@ -56,8 +54,12 @@ const Iframe = styled.iframe({
   height: '60vh',
   maxHeight: 800,
 
-  border: 'none',
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
   marginInline: 'auto',
   backgroundColor: theme.colors.white,
+})
+
+const Iframe = styled.iframe(trustlyIframeStyles, {
+  display: 'block',
+  border: 'none',
 })
