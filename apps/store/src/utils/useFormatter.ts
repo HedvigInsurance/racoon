@@ -15,6 +15,7 @@ const FORMAT_CONFIG: Record<string, AutoFormatOption> = {
   ssn: 'ssn',
   registrationNumber: 'carRegistrationNumber',
   zipCode: 'zipCode',
+  birthDate: 'date',
 }
 
 export const useAutoFormat = () => {
@@ -36,6 +37,9 @@ export const useAutoFormat = () => {
 
           case 'zipCode':
             return typeof value === 'string' ? formatter.zipCode(value) : String(value)
+
+          case 'date':
+            return typeof value === 'string' ? formatter.fromNow(new Date(value)) : String(value)
 
           default:
             return String(value)
