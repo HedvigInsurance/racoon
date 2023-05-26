@@ -129,6 +129,7 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
           <Text color="textSecondary" size="sm">
             © 2023 Hedvig AB
             <br />
+            <br />
             Malmskillnadsgatan 32
             <br />
             SE-111 51, Stockholm
