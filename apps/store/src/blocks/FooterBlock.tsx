@@ -127,7 +127,13 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
 
         <Disclaimer>
           <Text color="textSecondary" size="sm">
-            © Hedvig 2023
+            © 2023 Hedvig AB
+            <br />
+            Malmskillnadsgatan 32
+            <br />
+            SE-111 51, Stockholm
+            <br />
+            Org.nr. 559093-0334
           </Text>
         </Disclaimer>
       </RootLayout>
