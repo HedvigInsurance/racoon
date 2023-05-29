@@ -93,6 +93,8 @@ const StyledContentWrapper = styled.div({
 
 const DialogContentWrapper = styled.div({
   position: 'absolute',
+  width: '100%',
+
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.lg,
