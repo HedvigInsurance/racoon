@@ -76,7 +76,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       const formState = Object.fromEntries(formData.entries())
       const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
 
-      // This should never happen since QuickPurchaseForm conrols are required
+      // This should never happen since QuickPurchaseForm controls are required
       if (typeof ssn !== 'string' || typeof productName !== 'string') {
         throw new Error('[QuickPurchaseBlock]: ssn and product are required')
       }
