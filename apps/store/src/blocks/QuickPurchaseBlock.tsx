@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useState, useMemo, type FormEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'ui'
+import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
   QuickPurchaseForm,
@@ -13,7 +14,6 @@ import {
   PRODUCT_FIELDNAME,
 } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
 import {
-  useProductMetadataQuery,
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
@@ -33,17 +33,16 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
   const router = useRouter()
   const { t } = useTranslation()
 
-  const { shopSession, loading: loadingShopSession } = useShopSession()
-  const { data, loading: loadingProductMetadata } = useProductMetadataQuery()
+  const { shopSession } = useShopSession()
+  const productMetadata = useProductMetadata()
 
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
   const [redeemCampaign] = useRedeemCampaignMutation()
 
-  const availableProducts = useMemo(() => data?.availableProducts ?? [], [data?.availableProducts])
   const productOptions = useMemo(() => {
     const result: Array<ProductOption & { pageLink: string }> = []
     blok.products.forEach((productName) => {
-      const matchedProduct = availableProducts.find((product) => product.name === productName)
+      const matchedProduct = productMetadata?.find((product) => product.name === productName)
       if (matchedProduct) {
         result.push({
           name: matchedProduct.displayNameShort,
@@ -58,7 +57,11 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
     })
 
     return result
-  }, [blok.products, availableProducts])
+  }, [blok.products, productMetadata])
+
+  if (productOptions.length === 0) {
+    throw new Error('[QuickPurchaseBlock]: no product options were found')
+  }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -144,7 +147,6 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       <QuickPurchaseForm
         productOptions={productOptions}
         onSubmit={handleSubmit}
-        loading={loadingShopSession || loadingProductMetadata}
         submitting={isSubmitting}
         showSsnField={blok.showSsnField}
         ssnDefaultValue={shopSession?.customer?.ssn ?? ''}

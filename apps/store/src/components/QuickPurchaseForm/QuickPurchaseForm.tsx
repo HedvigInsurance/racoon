@@ -22,7 +22,6 @@ export type FormError = Partial<Record<typeof SSN_FIELDNAME | 'general', string>
 type Props = {
   productOptions: Array<ProductOption>
   onSubmit?: FormEventHandler<HTMLFormElement>
-  loading?: boolean
   submitting?: boolean
   showSsnField?: boolean
   ssnDefaultValue?: string
@@ -32,7 +31,7 @@ type Props = {
 export const QuickPurchaseForm = ({
   productOptions,
   onSubmit,
-  submitting,
+  submitting = false,
   ssnDefaultValue = '',
   showSsnField = false,
   error,
@@ -42,13 +41,17 @@ export const QuickPurchaseForm = ({
   return (
     <form onSubmit={onSubmit}>
       <Space y={0.25}>
-        <ProductSelector
-          productOptions={productOptions}
-          name={PRODUCT_FIELDNAME}
-          disabled={submitting}
-          required={true}
-        />
-
+        {productOptions.length === 1 && (
+          <input type="hidden" name={PRODUCT_FIELDNAME} value={productOptions[0].value} />
+        )}
+        {productOptions.length > 1 && (
+          <ProductSelector
+            productOptions={productOptions}
+            name={PRODUCT_FIELDNAME}
+            disabled={submitting}
+            required={true}
+          />
+        )}
         <SsnField
           name={SSN_FIELDNAME}
           defaultValue={ssnDefaultValue}
@@ -58,11 +61,9 @@ export const QuickPurchaseForm = ({
           message={error?.ssn}
           hidden={!showSsnField}
         />
-
         <Button type="submit" loading={submitting}>
           {t('BUTTON_LABEL_GET_PRICE')}
         </Button>
-
         {error?.general && <GeneralErrorMessage>{error.general}</GeneralErrorMessage>}
       </Space>
     </form>
