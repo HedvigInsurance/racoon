@@ -41,7 +41,15 @@ const ContentWrapper = styled.div({
 })
 
 const Content = styled.div(richTextStyles, {
-  p: { marginBlock: 0 },
+  p: {
+    marginBlock: 0,
+    color: theme.colors.textSecondaryOnGray,
+  },
+
+  a: {
+    textDecorationColor: theme.colors.gray500,
+  },
+
   '& > *:not(:last-of-type)': {
     marginBottom: theme.space.md,
   },
