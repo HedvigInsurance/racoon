@@ -61,7 +61,7 @@ const SsnInputSection = ({ shopSession, onCompleted }: Props) => {
       }
     },
     onError(error) {
-      datadogLogs.logger.error("Couldn't update customer ssn", { error })
+      datadogLogs.logger.debug('Failed to update customer ssn', { error })
     },
   })
 
