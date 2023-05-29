@@ -21,10 +21,6 @@ type Props = {
 export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
   const { t } = useTranslation('purchase-form')
 
-  if (productOptions.length === 1) {
-    return <input type="hidden" name={delegated.name} value={productOptions[0].value} />
-  }
-
   return (
     <SelectPrimitive.Root {...delegated}>
       <SelectTrigger>
