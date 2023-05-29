@@ -7,6 +7,7 @@ import {
 } from '@/services/apollo/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getUrlLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
@@ -36,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.redirect(...fallbackRedirect)
   }
   nextUrl.searchParams.delete(QueryParam.Next)
-  nextUrl.pathname = nextQueryParam
+  nextUrl.pathname = getPathnameFromUrl(nextQueryParam)
 
   const redirectStatus = 307
   const redirectUrl = nextUrl.toString()

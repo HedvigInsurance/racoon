@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getUrlLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
@@ -38,7 +39,7 @@ const recommendHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     shopSessionService.saveId(shopSession.id)
 
     const targetUrl = new URL(req.url ?? '', ORIGIN_URL)
-    targetUrl.pathname = next || PageLink.home({ locale: routingLocale })
+    targetUrl.pathname = next ? getPathnameFromUrl(next) : PageLink.home({ locale: routingLocale })
     targetUrl.searchParams.delete('next')
     targetUrl.searchParams.delete('attributed_to')
     targetUrl.searchParams.delete('initiated_from')
