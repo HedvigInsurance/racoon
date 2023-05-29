@@ -13,15 +13,20 @@ export const DetailsSheet = (props: CartEntry) => {
   const dataTableRows = getDataTable(productName)
   const getDataTableValue = useGetDataTableValue()
 
+  const allRows =
+    dataTableRows?.map((item) => ({
+      title: t(item.label, { defaultValue: `${item.label} MISSING` }),
+      value: getDataTableValue(item, data),
+    })) ?? []
+  const rowsWithValues = allRows.filter((item) => item.value !== null)
+
   return (
     <Root y={1}>
       <Table>
-        {dataTableRows?.map((item) => (
-          <Row key={item.label}>
-            <Text color="textSecondary">
-              {t(item.label, { defaultValue: `${item.label} MISSING` })}
-            </Text>
-            <Text>{getDataTableValue(item, data)}</Text>
+        {rowsWithValues.map(({ title, value }) => (
+          <Row key={title}>
+            <Text color="textSecondary">{title}</Text>
+            <Text>{value}</Text>
           </Row>
         ))}
         {props.tierLevelDisplayName && (
