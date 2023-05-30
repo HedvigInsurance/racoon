@@ -1,9 +1,13 @@
 import { useAtom, useSetAtom } from 'jotai'
-import { atomWithReset, atomWithStorage } from 'jotai/utils'
+import { atomWithReset, atomWithStorage, createJSONStorage } from 'jotai/utils'
 
 const GLOBAL_BANNER_ATOM = atomWithReset<string | null>(null)
 
-const GLOBAL_BANNER_CLOSED_ATOM = atomWithStorage<boolean>('closedBanner', false)
+const GLOBAL_BANNER_CLOSED_ATOM = atomWithStorage<boolean>(
+  'closedBanner',
+  false,
+  createJSONStorage(() => sessionStorage),
+)
 
 export const useGlobalBanner = () => {
   return useAtom(GLOBAL_BANNER_ATOM)
