@@ -1,9 +1,10 @@
 import { get as getFromConfig } from '@vercel/edge-config'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { experimentMiddleware } from '@/services/Tracking/experimentMiddleware'
 import { countries } from '@/utils/l10n/countries'
+import { LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
 import { isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
-import { LOCALE_COOKIE_KEY } from './utils/l10n/locales'
 
 export const config = {
   matcher: [
@@ -21,7 +22,10 @@ export async function middleware(req: NextRequest) {
     }
     return countrySelectorMiddleware(req)
   } else {
-    return redirectMiddleware(req)
+    const redirectResponse = await redirectMiddleware(req)
+    if (redirectResponse) return redirectResponse
+
+    return experimentMiddleware(req)
   }
 }
 
