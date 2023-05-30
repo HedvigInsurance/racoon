@@ -89,6 +89,11 @@ const TableDataCell = styled.td({
 
 const StyledTitleDataCell = styled(TableDataCell)({
   minWidth: 'revert',
+  paddingInline: 0,
+
+  [mq.lg]: {
+    paddingInline: 0,
+  },
 })
 
 const ActiveTableDataCell = styled(TableDataCell)({
