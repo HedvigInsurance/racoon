@@ -11,13 +11,13 @@ type LinkProps = {
   rel?: string
 }
 
-export type CustomButtonProps = {
+type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
   size?: ButtonSize
   loading?: boolean
 } & LinkProps
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
+export type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { variant = 'primary', loading, children, target, title, ...baseProps } = props
