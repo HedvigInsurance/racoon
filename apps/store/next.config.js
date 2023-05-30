@@ -15,7 +15,7 @@ module.exports = withBundleAnalyzer({
     appDir: true,
   },
   images: {
-    domains: ['a.storyblok.com', 'promise.hedvig.com'],
+    domains: ['a.storyblok.com'],
   },
   productionBrowserSourceMaps: true,
   i18n,
