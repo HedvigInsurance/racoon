@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react'
 import {
   useSetGlobalBanner,
   useGlobalBannerClosed,
@@ -12,7 +13,9 @@ export const useDiscountBanner = () => {
   const [closed] = useGlobalBannerClosed()
   const hasDiscount = !!shopSession?.cart.redeemedCampaigns.length
 
-  if (hasDiscount && !closed) {
-    setGlobalBanner(t('GLOBAL_BANNER_CAMPAIGN'))
-  }
+  useEffect(() => {
+    if (hasDiscount && !closed) {
+      setGlobalBanner(t('GLOBAL_BANNER_CAMPAIGN'), 'campaign')
+    }
+  }, [t, setGlobalBanner, hasDiscount, closed])
 }
