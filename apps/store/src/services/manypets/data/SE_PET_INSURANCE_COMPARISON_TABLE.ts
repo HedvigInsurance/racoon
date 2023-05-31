@@ -29,7 +29,7 @@ const nbsp = '\u00A0'
 
 export const TableDataTemplate: ComparisonTableTemplateByTierLevelMap = {
   BASIC: {
-    Veterinärvård: `30${nbsp}000`,
+    Veterinärvård: `30${nbsp}000${nbsp}kr`,
     Självrisk: getDeductibleData,
     'Dolda fel': true,
     Livförsäkring: getLifeInsuranceData,
@@ -38,7 +38,7 @@ export const TableDataTemplate: ComparisonTableTemplateByTierLevelMap = {
     'Ingen bindningstid': true,
   },
   STANDARD: {
-    Veterinärvård: `60${nbsp}000`,
+    Veterinärvård: `60${nbsp}000${nbsp}kr`,
     Självrisk: getDeductibleData,
     'Dolda fel': true,
     Medicin: true,
@@ -54,7 +54,7 @@ export const TableDataTemplate: ComparisonTableTemplateByTierLevelMap = {
     'Ingen bindningstid': true,
   },
   PREMIUM: {
-    Veterinärvård: `140${nbsp}000`,
+    Veterinärvård: `140${nbsp}000${nbsp}kr`,
     Självrisk: getDeductibleData,
     'Dolda fel': true,
     Medicin: true,
