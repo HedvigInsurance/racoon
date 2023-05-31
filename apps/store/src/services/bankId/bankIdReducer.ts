@@ -1,9 +1,22 @@
 import { Dispatch } from 'react'
+import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdOperation, BankIdState } from './bankId.types'
 
-export type BankIdAction = StartAction | FinalAction | OperationStateChangeAction | ErrorAction
-type StartAction = {
-  type: 'showLoginPrompt' | 'startCheckoutSign'
+export type BankIdAction =
+  | StartLoginAction
+  | StartSignAction
+  | FinalAction
+  | OperationStateChangeAction
+  | ErrorAction
+
+type StartLoginAction = {
+  type: 'showLoginPrompt'
+  ssn: string
+}
+type StartSignAction = {
+  type: 'startCheckoutSign'
+  ssn: string
+  customerAuthenticationStatus: ShopSessionAuthenticationStatus
 }
 type FinalAction = {
   type: 'cancel' | 'success'
@@ -33,6 +46,7 @@ export const bankIdReducer = (
         currentOperation: {
           type: 'login',
           state: BankIdState.Idle,
+          ssn: action.ssn,
         },
       }
     case 'operationStateChange': {
@@ -54,6 +68,8 @@ export const bankIdReducer = (
         currentOperation: {
           type: 'sign',
           state: BankIdState.Starting,
+          ssn: action.ssn,
+          customerAuthenticationStatus: action.customerAuthenticationStatus,
         },
       }
     case 'cancel':

@@ -55,6 +55,7 @@ export enum TrackingContextKey {
   Customer = 'customer',
   NumberOfPeople = 'numberOfPeople',
   ShopSessionId = 'shopSessionId',
+  MigrationSessionId = 'migrationSessionId',
   ZipCode = 'zipCode',
 }
 

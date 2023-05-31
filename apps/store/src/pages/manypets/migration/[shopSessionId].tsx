@@ -1,3 +1,4 @@
+import { ApolloClient } from '@apollo/client'
 import { StoryblokComponent } from '@storyblok/react'
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
@@ -14,11 +15,12 @@ import {
   ManyPetsMigrationOffersQueryVariables,
   Money,
   ProductOffer,
+  ShopSessionDocument,
+  ShopSessionQuery,
+  ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { getComparisonTableData } from '@/services/manypets/manypetsService'
-import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import {
   getStoryBySlug,
   MANYPETS_FOLDER_SLUG,
@@ -29,16 +31,16 @@ import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Props = {
-  [SHOP_SESSION_PROP_NAME]: string
   [STORY_PROP_NAME]: ManyPetsMigrationStory
 } & Pick<
   ManyPetsMigrationPageProps,
-  'offers' | 'totalCost' | 'latestAdoptionDate' | 'comparisonTableData'
+  'migrationSessionId' | 'offers' | 'totalCost' | 'latestAdoptionDate' | 'comparisonTableData'
 >
 
 type Params = { shopSessionId: string }
 
 const NextManyPetsMigrationPage: NextPage<Props> = ({
+  migrationSessionId,
   [STORY_PROP_NAME]: story,
   offers,
   totalCost,
@@ -51,6 +53,7 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
     <>
       <HeadSeoInfo story={story} />
       <ManyPetsMigrationPage
+        migrationSessionId={migrationSessionId}
         preOfferContent={preOfferContent?.map((blok) => (
           <StoryblokComponent key={blok._uid} blok={blok} />
         ))}
@@ -88,10 +91,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   resetAuthTokens({ req, res })
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
   const [shopSession, pageStory, translations] = await Promise.all([
-    shopSessionService.fetchById(shopSessionId).catch((err) => {
+    fetchMigrationSession(apolloClient, shopSessionId).catch((err) => {
       console.error('Failed to find shopSession', err)
     }),
     getStoryBySlug<ManyPetsMigrationStory>(`${MANYPETS_FOLDER_SLUG}/migration`, {
@@ -102,9 +104,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     serverSideTranslations(locale),
   ])
 
-  if (shopSession) {
-    shopSessionService.saveId(shopSessionId)
-  } else {
+  if (!shopSession) {
     return { notFound: true }
   }
 
@@ -117,9 +117,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     ManyPetsMigrationOffersQueryVariables
   >({
     query: ManyPetsMigrationOffersDocument,
-    variables: {
-      shopSessionId: shopSession.id,
-    },
+    variables: { shopSessionId },
   })
 
   if (errors) {
@@ -129,7 +127,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   // It should be possible to get any other offers that are not pet related offers here, but we're
   // filtering them just to be safe.
   const offers = (data.petMigrationOffers as Array<ProductOffer>).filter(isPetRelatedOffer)
-  // Since it shouldn' be possbile to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
+  // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
   // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
   const baseOffer = offers[0]
   const totalCost: Money = {
@@ -142,7 +140,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   return addApolloState(apolloClient, {
     props: {
-      [SHOP_SESSION_PROP_NAME]: shopSession.id,
+      migrationSessionId: shopSession.id,
       [STORY_PROP_NAME]: pageStory,
       offers,
       totalCost,
@@ -151,6 +149,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...translations,
     },
   })
+}
+
+const fetchMigrationSession = async (apolloClient: ApolloClient<any>, shopSessionId: string) => {
+  const { data } = await apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
+    query: ShopSessionDocument,
+    variables: { shopSessionId },
+  })
+  return data.shopSession
 }
 
 export default NextManyPetsMigrationPage
