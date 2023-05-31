@@ -1,8 +1,8 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useReducer } from 'react'
-import { CheckoutSignOptions, LoginPromptOptions } from './bankId.types'
+import { BankIdLoginOptions, CheckoutSignOptions, LoginPromptOptions } from './bankId.types'
 import { BankIdDispatch, bankIdReducer, BankIdReducerState } from './bankIdReducer'
 import { useBankIdCheckoutSign } from './useBankIdCheckoutSign'
-import { BankIdLoginOptions, useBankIdLogin } from './useBankIdLogin'
+import { useBankIdLogin } from './useBankIdLogin'
 
 type BankIdContextValue = BankIdReducerState & {
   dispatch: BankIdDispatch

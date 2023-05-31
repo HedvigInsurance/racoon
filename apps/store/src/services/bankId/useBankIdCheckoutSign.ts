@@ -39,7 +39,7 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
         }
       }
 
-      dispatch({ type: 'startCheckoutSign' })
+      dispatch({ type: 'startCheckoutSign', ssn, customerAuthenticationStatus })
 
       if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         bankIdLogger.debug('Authentication required for returning member')

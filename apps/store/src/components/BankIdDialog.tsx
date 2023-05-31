@@ -7,23 +7,21 @@ import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdLoginOptions, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { BankIdLoginOptions } from '@/services/bankId/useBankIdLogin'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 export const BankIdDialog = () => {
   const { t } = useTranslation('bankid')
-  const { shopSession } = useShopSession()
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation, dispatch } =
     useBankIdContext()
 
   let isOpen = !!currentOperation
   if (currentOperation?.type === 'sign') {
-    const isSigningAuthenticatedMember =
-      shopSession?.customer?.authenticationStatus === ShopSessionAuthenticationStatus.Authenticated
-    const hasError = currentOperation.state === BankIdState.Error
     // In some cases we show error and progress on signing page, not in dialog
+    const isSigningAuthenticatedMember =
+      currentOperation.customerAuthenticationStatus ===
+      ShopSessionAuthenticationStatus.Authenticated
+    const hasError = currentOperation.state === BankIdState.Error
     if (isSigningAuthenticatedMember || hasError) {
       isOpen = false
     }
@@ -50,7 +48,7 @@ export const BankIdDialog = () => {
   let footer: ReactElement | null = null
   let animationState = currentOperation?.state
 
-  const ssn = shopSession?.customer?.ssn ?? ''
+  const { ssn } = currentOperation ?? {}
   if (currentOperation !== null && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Idle: {
