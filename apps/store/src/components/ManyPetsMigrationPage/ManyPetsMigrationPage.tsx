@@ -3,8 +3,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { useRef } from 'react'
 import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { Text, Button, Space, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
+import { Text, Space, Button, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
@@ -15,6 +16,7 @@ import {
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ProductPage/PurchaseForm/ComparisonTable/ComparisonTable'
+import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { Money, ProductOffer, useManyPetsFillCartMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
@@ -27,6 +29,8 @@ import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
 
 const manypetsLogger = datadogLogs.createLogger('manypets')
+
+const SIGN_FORM_ID = 'sign-form'
 
 export type ManyPetsMigrationPageProps = {
   preOfferContent?: ReactNode
@@ -47,6 +51,7 @@ export const ManyPetsMigrationPage = ({
 }: ManyPetsMigrationPageProps) => {
   const { t } = useTranslation('checkout')
   const { shopSession } = useShopSession()
+  const signButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
@@ -56,12 +61,19 @@ export const ManyPetsMigrationPage = ({
   const shouldRenderDynamicSection =
     shopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
 
+  const signButtonContent = (
+    <SignButtonContent>
+      <BankIdIcon color="white" />
+      {t('SIGN_BUTTON', { count: cartEntries.length })}
+    </SignButtonContent>
+  )
+
   return (
     <main>
       {preOfferContent}
       {shouldRenderDynamicSection && (
         <OfferSection y={10}>
-          <form onSubmit={handleSubmitSign}>
+          <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
             <Space y={1}>
               <CartEntryList>
                 {cartEntries.map((item) => (
@@ -78,12 +90,9 @@ export const ManyPetsMigrationPage = ({
               <CostSummary total={totalCost} campaigns={[]} />
               {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
-              <Button type="submit" loading={loading}>
-                <SignButtonContent>
-                  <BankIdIcon color="white" />
-                  {t('SIGN_BUTTON', { count: cartEntries.length })}
-                </SignButtonContent>
-              </Button>
+              <SignButton ref={signButtonRef} type="submit" loading={loading}>
+                {signButtonContent}
+              </SignButton>
 
               <Text as="p" size={{ _: 'xs', md: 'sm' }} align="center" color="textSecondary">
                 {t('SIGN_DISCLAIMER')}
@@ -131,9 +140,57 @@ export const ManyPetsMigrationPage = ({
         </OfferSection>
       )}
       {postOfferContent}
+      <FloatSignButtonWrapper targetRef={signButtonRef}>
+        <SignButton form={SIGN_FORM_ID} loading={loading}>
+          {signButtonContent}
+        </SignButton>
+      </FloatSignButtonWrapper>
     </main>
   )
 }
+
+const OfferSection = styled(Space)({
+  paddingInline: theme.space.md,
+  maxWidth: '31.5rem',
+  marginInline: 'auto',
+
+  [mq.lg]: {
+    paddingInline: 0,
+  },
+})
+
+const Centered = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
+const SignButtonContent = styled.span({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.sm,
+  width: '100%',
+})
+
+const FloatSignButtonWrapper = styled(ScrollPast)({
+  maxWidth: '31.5rem',
+  marginInline: 'auto',
+  paddingInline: theme.space.md,
+  zIndex: 0,
+})
+
+const SignButton = styled(Button)({
+  '@media (hover: hover)': {
+    ':hover': {
+      backgroundColor: theme.colors.gray900,
+    },
+  },
+
+  ':active': {
+    backgroundColor: theme.colors.gray900,
+  },
+})
 
 const useSignMigration = (
   shopSession: Pick<ShopSession, 'id' | 'customer' | 'cart'> | undefined,
@@ -226,27 +283,3 @@ const parseTableValue = (value: string | boolean): ReactNode => {
 
   return value
 }
-
-const OfferSection = styled(Space)({
-  paddingInline: theme.space.md,
-  maxWidth: '31.5rem',
-  marginInline: 'auto',
-
-  [mq.lg]: {
-    paddingInline: 0,
-  },
-})
-
-const Centered = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
-
-const SignButtonContent = styled.span({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: theme.space.sm,
-  width: '100%',
-})

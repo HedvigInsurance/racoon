@@ -7,9 +7,10 @@ import { zIndexes } from '@/utils/zIndex'
 export type ScrollPastProps = {
   targetRef: React.RefObject<HTMLElement>
   children: React.ReactNode
+  className?: string
 }
 
-export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
+export const ScrollPast = ({ targetRef, children, className }: ScrollPastProps) => {
   const { scrollY } = useScroll()
 
   const [hasScrolledPassed, setHasScrolledPassed] = useState(false)
@@ -24,6 +25,7 @@ export const ScrollPast = ({ targetRef, children }: ScrollPastProps) => {
 
   return (
     <StyledWrapper
+      className={className}
       variants={{
         hidden: { opacity: 0, transitionEnd: { display: 'none' } },
         visible: { opacity: 1, display: 'block' },
