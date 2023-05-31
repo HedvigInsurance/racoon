@@ -68,17 +68,17 @@ export const ManyPetsMigrationPage = ({
       tracking.setContext(TrackingContextKey.MigrationSessionId, migrationSessionId)
     },
   })
-  const { shopSession } = migrationSessionQueryResult.data ?? {}
+  const { shopSession: migrationShopSession } = migrationSessionQueryResult.data ?? {}
 
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
 
-  const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
+  const { handleSubmitSign, loading } = useSignMigration(migrationShopSession, offerIds)
 
   const signButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const showOfferSection =
-    shopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
+    migrationShopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
 
   const signButtonContent = (
     <SignButtonContent>
@@ -98,7 +98,7 @@ export const ManyPetsMigrationPage = ({
                 {cartEntries.map((item) => (
                   <CartEntryItem
                     key={item.offerId}
-                    shopSessionId={shopSession.id}
+                    shopSessionId={migrationSessionId}
                     defaultOpen={false}
                     readOnly={true}
                     {...item}
