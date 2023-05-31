@@ -17,14 +17,20 @@ import {
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ProductPage/PurchaseForm/ComparisonTable/ComparisonTable'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
-import { Money, ProductOffer, useManyPetsFillCartMutation } from '@/services/apollo/generated'
+import {
+  Money,
+  ProductOffer,
+  useManyPetsFillCartMutation,
+  useShopSessionQuery,
+} from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { type ComparisonTableData } from '@/services/manypets/manypets.types'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { TrackingContextKey } from '@/services/Tracking/Tracking'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
 
@@ -33,6 +39,8 @@ const manypetsLogger = datadogLogs.createLogger('manypets')
 const SIGN_FORM_ID = 'sign-form'
 
 export type ManyPetsMigrationPageProps = {
+  // NOTE: Not using [SHOP_SESSION_PROP_NAME] to avoid clash with site-wide session
+  migrationSessionId: string
   preOfferContent?: ReactNode
   postOfferContent: ReactNode
   offers: Array<ProductOffer>
@@ -42,6 +50,7 @@ export type ManyPetsMigrationPageProps = {
 }
 
 export const ManyPetsMigrationPage = ({
+  migrationSessionId,
   preOfferContent,
   postOfferContent,
   offers,
@@ -50,15 +59,25 @@ export const ManyPetsMigrationPage = ({
   comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
   const { t } = useTranslation('checkout')
-  const { shopSession } = useShopSession()
-  const signButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  const tracking = useTracking()
+  const migrationSessionQueryResult = useShopSessionQuery({
+    variables: { shopSessionId: migrationSessionId },
+    onCompleted() {
+      // Not currently used, but may be nice to have if we send some new events from migration session
+      tracking.setContext(TrackingContextKey.MigrationSessionId, migrationSessionId)
+    },
+  })
+  const { shopSession } = migrationSessionQueryResult.data ?? {}
 
   const offerIds = offers.map((offer) => offer.id)
   const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
 
   const { handleSubmitSign, loading } = useSignMigration(shopSession, offerIds)
 
-  const shouldRenderDynamicSection =
+  const signButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  const showOfferSection =
     shopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
 
   const signButtonContent = (
@@ -71,7 +90,7 @@ export const ManyPetsMigrationPage = ({
   return (
     <main>
       {preOfferContent}
-      {shouldRenderDynamicSection && (
+      {showOfferSection && (
         <OfferSection y={10}>
           <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
             <Space y={1}>
