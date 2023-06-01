@@ -67,6 +67,8 @@ import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 import { fetchStory, StoryblokFetchParams } from './Storyblok.helpers'
 
+const USE_DRAFT_CONTENT = process.env.NEXT_PUBLIC_STORYBLOK_DRAFT_CONTENT === 'true'
+
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
   nested?: boolean
@@ -301,7 +303,7 @@ export const getStoryBySlug = async <StoryData extends ISbStoryData | undefined>
   { version, locale }: StoryOptions,
 ) => {
   const params: StoryblokFetchParams = {
-    version: version ?? 'published',
+    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
     resolve_relations: 'reusableBlockReference.reference',
   }
   return await fetchStory<StoryData | undefined>(getStoryblokApi(), `${locale}/${slug}`, params)
@@ -312,8 +314,7 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
   const {
     data: { links },
   } = await storyblokApi.get('cdn/links/', {
-    // Uncomment for local debug
-    // version: 'draft',
+    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
   })
   const pageLinks: PageLink[] = []
   Object.values(links as Record<string, LinkData>).forEach((link) => {
@@ -363,6 +364,7 @@ export const getBlogArticleStories = async (): Promise<Array<BlogArticleStory>> 
   const response = await getStoryblokApi().getStories({
     content_type: BLOG_ARTICLE_CONTENT_TYPE,
     resolve_relations: 'reusableBlockReference.reference',
+    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
   })
 
   return response.data.stories as Array<BlogArticleStory>
