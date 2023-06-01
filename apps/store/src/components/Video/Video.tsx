@@ -27,6 +27,7 @@ export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
    */
   sources: VideoSource[]
   poster?: string
+  showControls?: boolean
 } & VideoSize
 
 const autoplaySettings = {
@@ -46,6 +47,7 @@ export const Video = ({
   roundedCorners,
   onPlaying,
   onPause,
+  showControls = true,
   ...delegated
 }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -166,22 +168,24 @@ export const Video = ({
           )
         })}
       </StyledVideo>
-      <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
-        <Controls>
-          <PlayPauseButton
-            ref={playPauseButtonRef}
-            onClick={togglePlay}
-            variant="secondary"
-            size="small"
-            aria-labelledby={playButtonId}
-          >
-            {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-            <span id={playButtonId} hidden>
-              {state === State.Paused ? 'Play' : 'Pause'}
-            </span>
-          </PlayPauseButton>
-        </Controls>
-      </VideoControls>
+      {showControls && (
+        <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
+          <Controls>
+            <PlayPauseButton
+              ref={playPauseButtonRef}
+              onClick={togglePlay}
+              variant="secondary"
+              size="small"
+              aria-labelledby={playButtonId}
+            >
+              {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
+              <span id={playButtonId} hidden>
+                {state === State.Paused ? 'Play' : 'Pause'}
+              </span>
+            </PlayPauseButton>
+          </Controls>
+        </VideoControls>
+      )}
     </VideoWrapper>
   )
 }

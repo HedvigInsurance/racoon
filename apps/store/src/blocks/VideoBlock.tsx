@@ -10,6 +10,7 @@ export type VideoBlockProps = SbBaseBlockProps<
     video: StoryblokAsset
     poster?: StoryblokAsset
     fullBleed?: boolean
+    controls?: boolean
   } & Pick<
     VideoProps,
     | 'autoPlay'
@@ -20,7 +21,7 @@ export type VideoBlockProps = SbBaseBlockProps<
   >
 > & { className?: string }
 
-export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
+export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps) => {
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
         maxWidth: breakpoints.xxl,
@@ -28,7 +29,7 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
     : undefined
   return (
     <ConditionalWrapper
-      condition={!blok.fullBleed}
+      condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
       <Video
@@ -40,6 +41,7 @@ export const VideoBlock = ({ className, blok }: VideoBlockProps) => {
         maxHeightLandscape={blok.maxHeightLandscape}
         maxHeightPortrait={blok.maxHeightPortrait}
         roundedCorners={!blok.fullBleed}
+        showControls={blok.controls}
       />
     </ConditionalWrapper>
   )
