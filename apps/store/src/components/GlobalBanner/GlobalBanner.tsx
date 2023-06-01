@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { Banner } from '@/components/Banner/Banner'
 import { useDebugShopSession } from '@/utils/useDebugShopSession'
 import { useGlobalBanner } from './useGlobalBanner'
@@ -15,7 +16,13 @@ export const GlobalBanner = () => {
 
   return (
     <Banner variant={banner.variant} handleClose={handleClose}>
-      {banner.content}
+      <Ellipsis>{banner.content}</Ellipsis>
     </Banner>
   )
 }
+
+const Ellipsis = styled.span({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+})

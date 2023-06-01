@@ -19,7 +19,7 @@ export const Banner = ({ children, handleClose, variant = 'info' }: Props) => {
     <Wrapper variant={variant}>
       <Content>
         <Icon variant={variant} />
-        <Ellipsis>{children}</Ellipsis>
+        {children}
       </Content>
       <CloseButton onClick={handleClose}>
         <CrossIconSmall size="1rem" />
@@ -82,12 +82,6 @@ const CloseButton = styled.button({
   color: theme.colors.textPrimary,
   paddingLeft: theme.space.xs,
   cursor: 'pointer',
-})
-
-const Ellipsis = styled.span({
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
 })
 
 const getVariantStyles = (variant: BannerVariant) => {
