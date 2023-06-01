@@ -35,6 +35,7 @@
       "**/coverage": true,
       "**/storybook-static": true,
       "**/*.tsbuildinfo": true
-    }
+    },
+    "githubPullRequests.ignoredPullRequestBranches": ["main"]
   }
 }

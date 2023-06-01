@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
+import NextImage, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
-import { Badge, Heading, Space, Text } from 'ui'
+import { Badge, Heading, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 const Root = (props: { children: ReactNode }) => {
@@ -12,38 +13,39 @@ const RelativeSpace = styled(Space)({
   position: 'relative',
 })
 
-const Header = (props: { children: ReactNode }) => {
-  return <Space y={0.25}>{props.children}</Space>
-}
-
-const Date = (props: { children: ReactNode }) => {
-  return (
-    <Text size="sm" color="textSecondary">
-      {props.children}
-    </Text>
-  )
-}
+const RoundedImage = styled(NextImage)({ borderRadius: theme.radius.xl })
+const Image = (props: ImageProps) => <RoundedImage {...props} />
 
 type ContentProps = {
   children: ReactNode
   title: string
   href: string
+  date: string
 }
 
 const Content = (props: ContentProps) => {
   return (
-    <div>
-      <ExtendedLink href={props.href}>
-        <Heading as="h3" variant="standard.20">
-          {props.title}
-        </Heading>
-      </ExtendedLink>
-      <ClampedText size="lg" color="textSecondary">
-        {props.children}
-      </ClampedText>
-    </div>
+    <ContentWrapper>
+      <Space y={0.25}>
+        <Text size="sm" color="textSecondary">
+          {props.date}
+        </Text>
+        <div>
+          <ExtendedLink href={props.href}>
+            <Heading as="h3" variant="standard.20">
+              {props.title}
+            </Heading>
+          </ExtendedLink>
+          <ClampedText size="lg" color="textSecondary">
+            {props.children}
+          </ClampedText>
+        </div>
+      </Space>
+    </ContentWrapper>
   )
 }
+
+const ContentWrapper = styled.div({ paddingInline: theme.space.xs })
 
 const ExtendedLink = styled(Link)({
   // Make the whole teaser clickable
@@ -62,13 +64,16 @@ const ClampedText = styled(Text)({
 })
 
 const BadgeList = (props: { children: ReactNode }) => {
-  return <SpaceFlex space={0.25}>{props.children}</SpaceFlex>
+  return (
+    <ContentWrapper>
+      <SpaceFlex space={0.25}>{props.children}</SpaceFlex>
+    </ContentWrapper>
+  )
 }
 
 export const ArticleTeaser = {
   Root,
-  Header,
-  Date,
+  Image,
   Content,
   BadgeList,
   Badge,
