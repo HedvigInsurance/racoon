@@ -3,7 +3,7 @@ export const EXPERIMENT_COOKIE_NAME = 'hedvig-experiment'
 export type Experiment = {
   id: string
   name: string
-  variants: ExperimentVariant[]
+  variants: Array<ExperimentVariant>
   slug: string
 }
 
