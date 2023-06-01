@@ -31,3 +31,10 @@ export const getExperimentVariant = (cookieValue: string): ExperimentVariant | u
 
   return variant
 }
+
+export const experimentImpressionVariantId = (
+  experiment: Experiment,
+  variant: ExperimentVariant,
+) => {
+  return `${experiment.id}.${variant.id}`
+}
