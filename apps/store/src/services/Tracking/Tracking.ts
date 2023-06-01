@@ -10,7 +10,6 @@ import {
 } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { newSiteAbTest } from '../../newSiteAbTest'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
@@ -105,11 +104,11 @@ export class Tracking {
     pushToGTMDataLayer(event)
   }
 
-  public reportExperimentImpression(variantId: string) {
+  public reportExperimentImpression(experimentId: string, variantId: string) {
     const event = {
       event: TrackingEvent.ExperimentImpression,
       eventData: {
-        experiment_id: newSiteAbTest.optimizeExperimentId,
+        experiment_id: experimentId,
         variant_id: variantId,
       },
     }

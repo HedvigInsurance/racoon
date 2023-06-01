@@ -8,7 +8,7 @@ import { newSiteAbTest } from '../../newSiteAbTest'
 export const trackNewSiteExperimentImpression = (tracking: Tracking) => {
   const variantId = getCookie(newSiteAbTest.cookies.variant.name)
   if (typeof variantId !== 'string') return
-  tracking.reportExperimentImpression(variantId)
+  tracking.reportExperimentImpression(newSiteAbTest.optimizeExperimentId, variantId)
 }
 
 export const handleNewSiteExperimentQueryParam = () => {

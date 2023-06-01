@@ -47,6 +47,9 @@ const styleSrc = [
 
   'https://*.gstatic.com',
 
+  // Google Optimize
+  'https://optimize.google.com',
+
   "'unsafe-inline'",
   "'self'",
 ]
@@ -133,6 +136,9 @@ const frameSrc = [
   // OLD market web
   'https://www.youtube.com/',
   'https://widget.trustpilot.com/',
+
+  // Google Optimize
+  'https://optimize.google.com',
 
   "'self'",
 ]

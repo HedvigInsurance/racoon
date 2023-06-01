@@ -27,6 +27,7 @@ import {
   trackNewSiteExperimentImpression,
   useRemoveExperimentQueryParam,
 } from '@/services/Tracking/newSiteExperimentTracking'
+import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackPageViews } from '@/services/Tracking/trackPageViews'
@@ -63,6 +64,7 @@ if (typeof window !== 'undefined') {
 
     handleNewSiteExperimentQueryParam()
     trackNewSiteExperimentImpression(tracking)
+    trackExperimentImpression(tracking)
     trackPageViews(tracking)
   })
 }

@@ -98,6 +98,26 @@ To analyze bundle size run the following command and this will open a report in 
 yarn workspace store analyze-bundle
 ```
 
+## Experiments / A/B testing
+
+> **Note**
+> The current implementation is based on the official [A/B Testing with Google Optimize](https://vercel.com/templates/next.js/ab-testing-google-optimize) example.
+
+We use Google Optimize for A/B testing. Experiments are defined in the Google Optimize UI. An experiment compares different variants of a single page/slug. For example, `/se` vs `/se/variant-1` vs `/se/variant-2`. The corresponding pages need to be published in the CMS (Storyblok).
+
+Restrictions:
+
+- One experiement can be run at a time
+- One or more variants can be defined per experiment
+
+To enable an experiment, do the following:
+
+- Add the experiment ID to the `NEXT_PUBLIC_EXPERIMENT_ID` environment variable.
+- Update relevant information in the `src/services/Tracking/experiment.constants.ts` file.
+
+> **Note**
+> Google Optimize will no longer be available after September 30, 2023.
+
 ## HTTP Headers
 
 We use a few custom headers when communicating with the API. These are:
