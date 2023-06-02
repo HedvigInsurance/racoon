@@ -11,8 +11,13 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { initializeApollo } from '@/services/apollo/client'
+import { getBlogArticleCategoryList } from '@/services/blog/articleCategory'
 import { BlogArticleTeaser, getBlogArticleTeasers } from '@/services/blog/articleTeaser'
 import { isBlogStory } from '@/services/blog/blog.helpers'
+import {
+  BlogArticleCategoryList,
+  useHydrateBlogArticleCategoryList,
+} from '@/services/blog/blogArticleCategoryList'
 import { useHydrateBlogArticleTeaserList } from '@/services/blog/blogArticleTeaserList'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
@@ -32,6 +37,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 type NextContentPageProps = StoryblokPageProps & {
   type: 'content'
   blogArticleTeasers?: Array<BlogArticleTeaser>
+  blogArticleCategoryList?: BlogArticleCategoryList
 }
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
@@ -44,6 +50,7 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
 
 const NextStoryblokPage = (props: NextContentPageProps) => {
   useHydrateBlogArticleTeaserList(props.blogArticleTeasers ?? [])
+  useHydrateBlogArticleCategoryList(props.blogArticleCategoryList ?? [])
 
   const story = useStoryblokState(props.story)
   if (!story) return null
@@ -103,8 +110,10 @@ export const getStaticProps: GetStaticProps<
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
   let blogArticleTeasers: Array<BlogArticleTeaser> | undefined
+  let blogArticleCategoryList: BlogArticleCategoryList | undefined
   if (isBlogStory(story)) {
     blogArticleTeasers = await getBlogArticleTeasers()
+    blogArticleCategoryList = await getBlogArticleCategoryList()
   }
 
   if (isProductStory(story)) {
@@ -136,7 +145,15 @@ export const getStaticProps: GetStaticProps<
     }
   }
 
-  return { props: { type: 'content', ...props, blogArticleTeasers }, revalidate }
+  return {
+    props: {
+      type: 'content',
+      ...props,
+      ...(blogArticleTeasers && { blogArticleTeasers }),
+      ...(blogArticleCategoryList && { blogArticleCategoryList }),
+    },
+    revalidate,
+  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

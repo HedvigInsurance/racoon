@@ -11,48 +11,38 @@ const Wrapper = styled.div({
   display: 'flex',
   flexWrap: 'wrap',
   gap: theme.space.xxs,
+  justifyContent: 'center',
 })
 
-type ItemProps = {
-  active?: boolean
-}
+const Item = styled(Link)({
+  borderRadius: theme.radius.sm,
+  padding: theme.space.md,
+  fontSize: theme.fontSizes.md,
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
 
-const Item = styled(Link)<ItemProps>(
-  {
-    borderRadius: theme.radius.sm,
-    padding: theme.space.md,
-    fontSize: theme.fontSizes.md,
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
+  ':focus-visible': {
+    backgroundColor: theme.colors.opaque1,
+  },
 
-    ':focus-visible': {
+  '@media (hover: hover)': {
+    ':hover': {
       backgroundColor: theme.colors.opaque1,
     },
-
-    '@media (hover: hover)': {
-      ':hover': {
-        backgroundColor: theme.colors.opaque1,
-      },
-    },
   },
-  ({ active }) => ({
-    ...(active && {
-      backgroundColor: theme.colors.blueFill1,
+})
 
-      ':focus-visible': {
-        backgroundColor: theme.colors.blueFill2,
-      },
-
-      '@media (hover: hover)': {
-        ':hover': {
-          backgroundColor: theme.colors.blueFill2,
-        },
-      },
-    }),
-  }),
-)
+const ActiveItem = styled.div({
+  borderRadius: theme.radius.sm,
+  padding: theme.space.md,
+  fontSize: theme.fontSizes.md,
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  backgroundColor: theme.colors.blueFill1,
+})
 
 export const ArticleCategoryList = {
   Root,
   Item,
+  ActiveItem,
 } as const
