@@ -13,7 +13,7 @@ import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { initializeApollo } from '@/services/apollo/client'
 import { getBlogArticleCategoryList } from '@/services/blog/articleCategory'
 import { BlogArticleTeaser, getBlogArticleTeasers } from '@/services/blog/articleTeaser'
-import { isBlogStory } from '@/services/blog/blog.helpers'
+import { hasBlogArticleList } from '@/services/blog/blog.helpers'
 import {
   BlogArticleCategoryList,
   useHydrateBlogArticleCategoryList,
@@ -111,7 +111,7 @@ export const getStaticProps: GetStaticProps<
 
   let blogArticleTeasers: Array<BlogArticleTeaser> | undefined
   let blogArticleCategoryList: BlogArticleCategoryList | undefined
-  if (isBlogStory(story)) {
+  if (hasBlogArticleList(story)) {
     blogArticleTeasers = await getBlogArticleTeasers()
     blogArticleCategoryList = await getBlogArticleCategoryList()
   }

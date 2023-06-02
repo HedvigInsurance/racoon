@@ -5,7 +5,10 @@ export type BlogArticleTeaser = {
   id: string
   heading: string
   date: string
-  categories: Array<string>
+  categories: Array<{
+    id: string
+    name: string
+  }>
   text: string
   image: {
     src: string
@@ -32,7 +35,10 @@ export const getBlogArticleTeasers = async (): Promise<Array<BlogArticleTeaser>>
       id: item.uuid,
       heading: item.content.page_heading,
       date: item.content.date,
-      categories: item.content.categories.map((category) => category.name),
+      categories: item.content.categories.map((category) => ({
+        id: category.uuid,
+        name: category.name,
+      })),
       text: item.content.teaser_text,
       image: {
         src: item.content.teaser_image.filename,
