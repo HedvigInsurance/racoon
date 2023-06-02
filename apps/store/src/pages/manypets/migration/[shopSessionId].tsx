@@ -47,13 +47,16 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
   latestAdoptionDate,
   comparisonTableData,
 }) => {
-  const { preOfferContent, postOfferContent } = story.content
+  const { announcement, preOfferContent, postOfferContent } = story.content
 
   return (
     <>
       <HeadSeoInfo story={story} />
       <ManyPetsMigrationPage
         migrationSessionId={migrationSessionId}
+        announcement={announcement.map((blok) => (
+          <StoryblokComponent key={blok._uid} blok={blok} />
+        ))}
         preOfferContent={preOfferContent?.map((blok) => (
           <StoryblokComponent key={blok._uid} blok={blok} />
         ))}

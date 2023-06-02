@@ -193,6 +193,7 @@ export type ConfirmationStory = ISbStoryData & {
 
 export type ManyPetsMigrationStory = ISbStoryData<
   {
+    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
     preOfferContent?: Array<SbBlokData>
     postOfferContent: Array<SbBlokData>
   } & SEOData
