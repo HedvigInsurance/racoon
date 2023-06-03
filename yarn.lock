@@ -8951,12 +8951,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/edge-config@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@vercel/edge-config@npm:0.2.0"
+"@vercel/edge-config@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@vercel/edge-config@npm:0.2.1"
   dependencies:
     "@vercel/edge-config-fs": 0.1.0
-  checksum: 1df921f61c1219071798bab2b0845de1f0d12502d4a4c9822f818e7d75536b2cfdd01f969ac15bab883be6ad45ae69ec3c19236aed9feb1a743c22b041c8e8d5
+  checksum: 010e9ed02160798ce16ff698aa4b4daf43e296204f7d678f29cfca9e6857948cdb743a99627ed05f1295f8be395d8f8fc1ce7778a4384098b980f34cf60fb99c
   languageName: node
   linkType: hard
 
@@ -21035,7 +21035,7 @@ __metadata:
     "@types/nprogress": 0.2.0
     "@types/react-dom": 18.2.4
     "@types/uuid": 9.0.1
-    "@vercel/edge-config": 0.2.0
+    "@vercel/edge-config": 0.2.1
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
     babel-loader: 9.1.2
