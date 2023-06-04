@@ -4394,9 +4394,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.13.0":
-  version: 2.13.0
-  resolution: "@datadog/datadog-ci@npm:2.13.0"
+"@datadog/datadog-ci@npm:2.14.0":
+  version: 2.14.0
+  resolution: "@datadog/datadog-ci@npm:2.14.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.315.0
     "@aws-sdk/client-iam": ^3.315.0
@@ -4434,7 +4434,7 @@ __metadata:
     yamux-js: 0.1.2
   bin:
     datadog-ci: dist/cli.js
-  checksum: ffdf6f88a3c86abbd9d818fde1e9199f0ccaf899ff177e0f9265dfa014cf70503c187ec38e25f5239f76621d0ab5ccdf0b3fdc69d66e5d21047048c1fc362fa2
+  checksum: 7787bd8834c8e639c6f21b0f0a2c073bbd78e3f7bfd91bfb8cba22fb09d10f215f17b6108bf6b84ec19fcab00f79b9e75c95e03f921135c4b9cf3a72571bcf10
   languageName: node
   linkType: hard
 
@@ -21512,7 +21512,7 @@ __metadata:
     "@babel/preset-react": 7.22.3
     "@babel/preset-typescript": 7.21.5
     "@datadog/browser-logs": 4.42.2
-    "@datadog/datadog-ci": 2.13.0
+    "@datadog/datadog-ci": 2.14.0
     "@emotion/react": 11.11.0
     "@emotion/styled": 11.11.0
     "@graphql-codegen/cli": 4.0.1
