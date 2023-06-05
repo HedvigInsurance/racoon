@@ -173,6 +173,6 @@ export const richTextStyles = css(
       },
     },
   },
-  linkStyles,
+  nestedLinkStyles,
   listStyles,
 )
