@@ -10,6 +10,8 @@
   "COUNTRY_NOT_DETECTED": "We’re not quite sure where you’re visiting us from. Select your country below.",
   "DATE_INPUT_EMPTY_LABEL": "Select date",
   "DATE_SAME_DAY": "today",
+  "DATE_TOO_EARLY": "Date can't be earlier than {{minValue}}",
+  "DATE_TOO_LATE": "Date can't be later than {{maxValue}}",
   "DIALOG_BUTTON_CANCEL": "Cancel",
   "DIALOG_CLOSE": "Close",
   "ERROR_DIALOG_CLOSE": "Close",

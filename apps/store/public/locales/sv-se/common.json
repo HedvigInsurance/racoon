@@ -9,6 +9,8 @@
   "COUNTRY_LABEL_SE": "Sverige",
   "DATE_INPUT_EMPTY_LABEL": "Välj...",
   "DATE_SAME_DAY": "idag",
+  "DATE_TOO_EARLY": "Datum kan inte vara tidigare än {{minValue}}",
+  "DATE_TOO_LATE": "Datum kan inte vara senare än {{maxValue}}",
   "DIALOG_BUTTON_CANCEL": "Avbryt",
   "DIALOG_CLOSE": "Stäng",
   "ERROR_DIALOG_CLOSE": "Stäng",
