@@ -20,6 +20,7 @@ import {
 import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { linkStyles } from './RichTextBlock/RichTextBlock.styles'
 
 const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
 const ENGLISH_LANGUAGE_ENABLED = Features.enabled('ENGLISH_LANGUAGE')
@@ -192,7 +193,7 @@ const Disclaimer = styled.div({
   [mq.xxl]: { gridColumn: '3 / span 2' },
 })
 
-const StyledAnchor = styled.a({ textDecoration: 'none', display: 'block' })
+const StyledAnchor = styled.a(linkStyles, { textDecorationColor: 'transparent', display: 'block' })
 
 const StyledLink = StyledAnchor.withComponent(Link)
 
