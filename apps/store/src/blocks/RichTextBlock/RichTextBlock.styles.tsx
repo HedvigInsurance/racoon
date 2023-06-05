@@ -24,18 +24,20 @@ export const GlobalLinkStyles = () => {
 }
 
 export const linkStyles = css({
-  a: {
-    textDecorationLine: 'underline',
-    textDecorationColor: theme.colors.gray400,
-    textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
-    textUnderlineOffset: 5,
+  textDecorationLine: 'underline',
+  textDecorationColor: theme.colors.gray400,
+  textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
+  textUnderlineOffset: 5,
 
-    '@media (hover: hover)': {
-      '&:hover': {
-        textDecorationColor: 'var(--random-hover-color)',
-      },
+  '@media (hover: hover)': {
+    '&:hover': {
+      textDecorationColor: 'var(--random-hover-color)',
     },
   },
+})
+
+export const nestedLinkStyles = css({
+  a: linkStyles,
 })
 
 export const listStyles = css({

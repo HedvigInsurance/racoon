@@ -11,6 +11,7 @@ type TextColor = Pick<
   UIColors,
   | 'textPrimary'
   | 'textSecondary'
+  | 'textSecondaryOnGray'
   | 'textTertiary'
   | 'textDisabled'
   | 'textNegative'
