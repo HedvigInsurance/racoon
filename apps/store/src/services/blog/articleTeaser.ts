@@ -3,6 +3,7 @@ import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 
 export type BlogArticleTeaser = {
   id: string
+  href: string
   heading: string
   date: string
   categories: Array<{
@@ -33,6 +34,7 @@ export const getBlogArticleTeasers = async (): Promise<Array<BlogArticleTeaser>>
 
     teasers.push({
       id: item.uuid,
+      href: item.full_slug,
       heading: item.content.page_heading,
       date: item.content.date,
       categories: item.content.categories.map((category) => ({
