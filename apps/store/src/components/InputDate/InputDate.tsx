@@ -28,7 +28,26 @@ export const InputDate = (props: Props) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     highlight()
     setInternalValue(event.target.value)
-    onChange?.(event)
+
+    // NOTE: Mobile Safari does not support min/max values for Date input, let's validate ourselves
+    const { valueAsDate } = event.target
+    if (valueAsDate != null) {
+      const minValue = convertToDate(props.min)
+      const maxValue = convertToDate(props.max)
+      if (minValue && valueAsDate < minValue) {
+        event.target.setCustomValidity(
+          t('DATE_TOO_EARLY', { ns: 'common', minValue: formatter.fromNow(minValue) }),
+        )
+      } else if (maxValue && valueAsDate > maxValue) {
+        event.target.setCustomValidity(
+          t('DATE_TOO_LATE', { ns: 'common', maxValue: formatter.fromNow(maxValue) }),
+        )
+      } else {
+        event.target.setCustomValidity('')
+        onChange?.(event)
+      }
+      event.target.reportValidity()
+    }
   }
 
   const displayValue = dateValue ? (

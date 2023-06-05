@@ -18,8 +18,15 @@ export const Default: StoryFn<typeof InputDate> = (props) => {
   return <InputDate {...props} />
 }
 
-export const MinValue = Default
-MinValue.args = {
+export const MinMaxLimits: StoryFn<typeof InputDate> = (props) => {
+  return <InputDate {...props} />
+}
+MinMaxLimits.args = {
   ...meta.args,
   min: todayAsIsoString(),
+  max: (() => {
+    const defaultMax = new Date()
+    defaultMax.setDate(90)
+    return defaultMax.toISOString().split('T')[0]
+  })(),
 }
