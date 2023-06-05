@@ -84,7 +84,6 @@ export const PurchaseForm = () => {
 
   const handleComplete = (error?: string) => {
     setFormState(error != null ? { state: 'ERROR', errorMsg: error } : 'IDLE')
-    // @ts-expect-error - "instant" behavior is not documented/typed but we still want to use it to avoid scroll animations behind the form
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
