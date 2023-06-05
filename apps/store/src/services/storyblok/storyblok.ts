@@ -8,6 +8,7 @@ import {
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
+import { BlogArticleCategoryContentType } from '@/blocks/BlogArticleCategoryContentType'
 import { BlogArticleCategoryListBlock } from '@/blocks/BlogArticleCategoryListBlock'
 import { BlogArticleListBlock } from '@/blocks/BlogArticleListBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
@@ -261,6 +262,7 @@ export const initStoryblok = () => {
     QuickPurchaseBlock,
     BlogArticleListBlock,
     BlogArticleCategoryListBlock,
+    BlogArticleCategoryContentType,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {

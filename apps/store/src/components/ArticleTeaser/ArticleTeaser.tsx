@@ -13,7 +13,10 @@ const RelativeSpace = styled(Space)({
   position: 'relative',
 })
 
-const RoundedImage = styled(NextImage)({ borderRadius: theme.radius.xl })
+const RoundedImage = styled(NextImage)({
+  borderRadius: theme.radius.xl,
+  aspectRatio: '16 / 9',
+})
 const Image = (props: ImageProps) => <RoundedImage {...props} />
 
 type ContentProps = {

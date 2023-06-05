@@ -1,6 +1,6 @@
 import { ISbStoryData, SbBlokData } from '@storyblok/react'
 
-export const isBlogStory = (story: ISbStoryData): boolean => {
+export const hasBlogArticleList = (story: ISbStoryData): boolean => {
   const body = story.content.body as Array<SbBlokData> | undefined
-  return body?.find((item) => item.component === 'blogArticleList') !== undefined
+  return body?.some((item) => item.component === 'blogArticleList') ?? false
 }
