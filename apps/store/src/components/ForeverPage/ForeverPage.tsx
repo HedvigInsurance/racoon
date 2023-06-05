@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
 import { Button, Space, Text, mq, theme } from 'ui'
-import { linkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
+import { nestedLinkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
 import { useRedeemCampaign } from '@/components/CartInventory/useCampaign'
 import { useSetGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -109,4 +109,4 @@ const UppercaseTextField = styled(TextField)({
   textTransform: 'uppercase',
 })
 
-const TextWithLink = styled(Text)(linkStyles)
+const TextWithLink = styled(Text)(nestedLinkStyles)

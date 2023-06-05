@@ -2,6 +2,7 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import {
   fetchGlobalProductMetadata,
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
@@ -87,12 +88,14 @@ export const getStaticProps: GetStaticProps<
   const slug = (params?.slug ?? []).join('/')
 
   const apolloClient = initializeApollo({ locale })
+
   console.time('getStoryblokData')
-  const [story, globalStory, translations, productMetadata] = await Promise.all([
+  const [story, globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
     getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
     fetchGlobalProductMetadata({ apolloClient }),
+    fetchBreadcrumbs(slug, { version, locale }),
   ])
   console.timeEnd('getStoryblokData')
 
@@ -106,6 +109,7 @@ export const getStaticProps: GetStaticProps<
     [STORY_PROP_NAME]: story,
     [GLOBAL_STORY_PROP_NAME]: globalStory,
     [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
+    breadcrumbs,
   }
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 

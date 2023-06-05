@@ -3,7 +3,7 @@ import { ISbRichtext, renderRichText, storyblokEditable } from '@storyblok/react
 import { useMemo } from 'react'
 import { UIColors, Text, FontSizes, Space } from 'ui'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { linkStyles } from './RichTextBlock/RichTextBlock.styles'
+import { nestedLinkStyles } from './RichTextBlock/RichTextBlock.styles'
 
 type TextColor = keyof Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textTertiary'>
 
@@ -36,6 +36,6 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
   )
 }
 
-const StyledText = styled(Text)(linkStyles)
+const StyledText = styled(Text)(nestedLinkStyles)
 
 TextBlock.blockName = 'text'

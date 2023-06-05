@@ -142,6 +142,7 @@ export type PageStory = ISbStoryData<
     hideMenu?: boolean
     overlayMenu?: boolean
     hideFooter?: boolean
+    hideBreadcrumbs?: boolean
   } & SEOData
 >
 
@@ -300,12 +301,12 @@ export const initStoryblok = () => {
   })
 }
 
-type StoryOptions = {
+export type StoryOptions = {
   locale: string
   version?: StoryblokVersion
 }
 
-export const getStoryBySlug = async <StoryData extends ISbStoryData | undefined>(
+export const getStoryBySlug = <StoryData extends ISbStoryData | undefined>(
   slug: string,
   { version, locale }: StoryOptions,
 ) => {
@@ -313,7 +314,8 @@ export const getStoryBySlug = async <StoryData extends ISbStoryData | undefined>
     version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
     resolve_relations: 'reusableBlockReference.reference',
   }
-  return await fetchStory<StoryData | undefined>(getStoryblokApi(), `${locale}/${slug}`, params)
+
+  return fetchStory<StoryData | undefined>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {
@@ -421,3 +423,16 @@ export const getBlogArticleCategoryStories = async (): Promise<Array<BlogArticle
 }
 
 type BlogArticleCategoryStory = ISbStoryData
+
+export const getStoriesBySlug = async (
+  slugs: Array<string>,
+  options: Pick<StoryOptions, 'version'>,
+) => {
+  const response = await getStoryblokApi().getStories({
+    by_slugs: slugs.join(','),
+    ...options,
+    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
+  })
+
+  return response.data.stories
+}

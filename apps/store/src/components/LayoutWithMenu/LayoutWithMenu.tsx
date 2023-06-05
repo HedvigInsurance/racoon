@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
-import { ReactElement } from 'react'
+import { type ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { PageStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
+import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
 import { GlobalProductMetadata, GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './ProductMetadataContext'
 
@@ -19,46 +20,52 @@ type LayoutWithMenuProps = {
       className: string
       [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
       story: PageStory | undefined
+      breadcrumbs?: Array<BreadcrumbListItem>
     }
   >
   overlayMenu?: boolean
   hideFooter?: boolean
 }
 
-export const LayoutWithMenu = ({
-  children,
-  overlayMenu = false,
-  hideFooter = false,
-}: LayoutWithMenuProps) => {
-  const { story, globalStory, className } = children.props
+export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
+  const { story, globalStory, className, breadcrumbs } = props.children.props
 
-  useHydrateProductMetadata(children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
+  useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
   const handleLocaleChange = useChangeLocale(story)
 
   const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
 
-  const showFooter = !hideFooter && !story?.content.hideFooter
+  const showHeader = !story?.content.hideMenu
+  const showMenuOverlay = story?.content.overlayMenu ?? props.overlayMenu
+  const showFooter = !props.hideFooter && !story?.content.hideFooter
+
+  const showBreadcrumbList = !story?.content.hideBreadcrumbs && breadcrumbs?.length !== 0 && story
+  const breadcrumbItems = [...(breadcrumbs ?? []), ...(story ? [{ label: story.name }] : [])]
 
   return (
     <Wrapper className={className}>
-      {!story?.content.hideMenu &&
+      {showHeader &&
         headerBlock.map((nestedBlock) => (
           <HeaderBlock
             key={nestedBlock._uid}
             blok={nestedBlock}
-            overlay={story?.content.overlayMenu ?? overlayMenu}
+            overlay={showMenuOverlay}
             static={story && isProductStory(story)}
           />
         ))}
-      {children}
+      {props.children}
       {showFooter &&
         footerBlock.map((nestedBlock) => (
-          <FooterBlock
-            key={nestedBlock._uid}
-            blok={nestedBlock}
-            onLocaleChange={handleLocaleChange}
-          />
+          <>
+            {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}
+
+            <FooterBlock
+              key={nestedBlock._uid}
+              blok={nestedBlock}
+              onLocaleChange={handleLocaleChange}
+            />
+          </>
         ))}
     </Wrapper>
   )
