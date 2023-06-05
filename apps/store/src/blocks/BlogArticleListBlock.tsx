@@ -32,7 +32,7 @@ export const BlogArticleListBlock = (props: Props) => {
             <ArticleTeaser.Root key={item.id}>
               <ArticleTeaser.Image {...item.image} alt={item.image.alt} />
               <ArticleTeaser.Content
-                href="/se"
+                href={item.href}
                 title={item.heading}
                 date={formatter.fromNow(new Date(item.date))}
               >

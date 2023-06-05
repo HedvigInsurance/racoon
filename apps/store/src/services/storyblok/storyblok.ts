@@ -4,12 +4,14 @@ import {
   SbBlokData,
   storyblokInit,
   ISbStoryData,
+  ISbRichtext,
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { BlogArticleCategoryContentType } from '@/blocks/BlogArticleCategoryContentType'
 import { BlogArticleCategoryListBlock } from '@/blocks/BlogArticleCategoryListBlock'
+import { BlogArticleContentType } from '@/blocks/BlogArticleContentType'
 import { BlogArticleListBlock } from '@/blocks/BlogArticleListBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
@@ -263,6 +265,7 @@ export const initStoryblok = () => {
     BlogArticleListBlock,
     BlogArticleCategoryListBlock,
     BlogArticleCategoryContentType,
+    BlogArticleContentType,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
@@ -388,11 +391,12 @@ export const getBlogArticleStories = async (): Promise<Array<BlogArticleStory>> 
   }))
 }
 
-type RawBlogArticleStory = ISbStoryData<
+export type RawBlogArticleStory = ISbStoryData<
   {
     date: string
     footer: Array<SbBlokData>
-    content: Array<SbBlokData>
+    body: Array<SbBlokData>
+    content: ISbRichtext
     categories: Array<string>
     teaser_text: string
     page_heading: string
@@ -400,7 +404,7 @@ type RawBlogArticleStory = ISbStoryData<
   } & SEOData
 >
 
-type BlogArticleStory = ISbStoryData<
+export type BlogArticleStory = ISbStoryData<
   Omit<RawBlogArticleStory['content'], 'categories'> & {
     categories: Array<ISbStoryData>
   }
