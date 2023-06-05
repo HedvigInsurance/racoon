@@ -73,7 +73,7 @@ export const OfferPresenter = (props: Props) => {
     }
   }, [selectedOffer, tracking, isInView])
 
-  const [updateStartDate, updateStartDateInfo] = useUpdateStartDate({ priceIntent })
+  const [updateStartDate, updateStartDateResult] = useUpdateStartDate({ priceIntent })
 
   const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     shopSessionId: shopSession.id,
@@ -107,8 +107,8 @@ export const OfferPresenter = (props: Props) => {
     productOffer: selectedOffer,
   })
 
-  const dateLoading = updateStartDateInfo.loading
-  const loading = loadingAddToCart || updateCancellationInfo.loading || dateLoading
+  const loading =
+    loadingAddToCart || updateCancellationInfo.loading || updateStartDateResult.loading
 
   const discountTooltiProps = useMemo(() => {
     if (!selectedOffer.priceMatch) return null
