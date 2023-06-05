@@ -26,7 +26,6 @@ export const InputDate = (props: Props) => {
   const { highlight, animationProps } = useHighlightAnimation()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    highlight()
     setInternalValue(event.target.value)
 
     // NOTE: Mobile Safari does not support min/max values for Date input, let's validate ourselves
@@ -44,6 +43,7 @@ export const InputDate = (props: Props) => {
         )
       } else {
         event.target.setCustomValidity('')
+        highlight()
         onChange?.(event)
       }
       event.target.reportValidity()
