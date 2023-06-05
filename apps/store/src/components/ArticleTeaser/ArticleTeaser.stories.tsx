@@ -1,5 +1,4 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import Image from 'next/image'
 import { ArticleTeaser } from './ArticleTeaser'
 
 const meta: Meta = {
@@ -12,18 +11,16 @@ type Story = StoryObj
 export const Primary: Story = {
   render: () => (
     <ArticleTeaser.Root>
-      <ArticleTeaser.Header>
-        <Image
-          src="https://www.hedvig.com/f/62762/800x450/42924b7dde/mimmi-thumbnail.jpg"
-          width={800}
-          height={450}
-          alt="Mimmi"
-        />
-        <ArticleTeaser.Date>2021.05.12</ArticleTeaser.Date>
-      </ArticleTeaser.Header>
+      <ArticleTeaser.Image
+        src="https://www.hedvig.com/f/62762/800x450/42924b7dde/mimmi-thumbnail.jpg"
+        width={800}
+        height={450}
+        alt="Mimmi"
+      />
       <ArticleTeaser.Content
         href="/se"
         title="Hedvig och Mimmi Blomqvist lanserar hundskålar i limiterad upplaga"
+        date="2021.05.12"
       >
         I ett nytt samarbete har Hedvig tillsammans med designern Mimmi Blomqvist ställt sig frågan
         vad som händer när en hundskål inte bara fyller en funktion, utan också blir ett

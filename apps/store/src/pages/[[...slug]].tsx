@@ -11,6 +11,9 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { initializeApollo } from '@/services/apollo/client'
+import { BlogArticleTeaser, getBlogArticleTeasers } from '@/services/blog/articleTeaser'
+import { isBlogStory } from '@/services/blog/blog.helpers'
+import { useHydrateBlogArticleTeaserList } from '@/services/blog/blogArticleTeaserList'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   getGlobalStory,
@@ -26,7 +29,10 @@ import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/St
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextContentPageProps = StoryblokPageProps & { type: 'content' }
+type NextContentPageProps = StoryblokPageProps & {
+  type: 'content'
+  blogArticleTeasers?: Array<BlogArticleTeaser>
+}
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
 type PageProps = NextContentPageProps | NextProductPageProps
@@ -36,8 +42,10 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
   return <NextStoryblokPage {...props} />
 }
 
-const NextStoryblokPage = ({ story: initialStory }: StoryblokPageProps) => {
-  const story = useStoryblokState(initialStory)
+const NextStoryblokPage = (props: NextContentPageProps) => {
+  useHydrateBlogArticleTeaserList(props.blogArticleTeasers ?? [])
+
+  const story = useStoryblokState(props.story)
   if (!story) return null
 
   return (
@@ -94,6 +102,11 @@ export const getStaticProps: GetStaticProps<
   }
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
+  let blogArticleTeasers: Array<BlogArticleTeaser> | undefined
+  if (isBlogStory(story)) {
+    blogArticleTeasers = await getBlogArticleTeasers()
+  }
+
   if (isProductStory(story)) {
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
     if (priceTemplate === undefined) {
@@ -123,7 +136,7 @@ export const getStaticProps: GetStaticProps<
     }
   }
 
-  return { props: { type: 'content', ...props }, revalidate }
+  return { props: { type: 'content', ...props, blogArticleTeasers }, revalidate }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

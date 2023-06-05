@@ -8,6 +8,7 @@ import {
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
+import { BlogArticleListBlock } from '@/blocks/BlogArticleListBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
 import { CardLinkListBlock } from '@/blocks/CardLinkListBlock'
@@ -59,12 +60,12 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
-import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
+import { fetchStory, StoryblokFetchParams } from './Storyblok.helpers'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -255,6 +256,7 @@ export const initStoryblok = () => {
     CardLinkListBlock,
     SelectInsuranceGridBlock,
     QuickPurchaseBlock,
+    BlogArticleListBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
@@ -355,3 +357,25 @@ export const getFilteredProductLinks = async () => {
   const allLinks = await getPageLinks()
   return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
 }
+
+const BLOG_ARTICLE_CONTENT_TYPE = 'blog-article'
+export const getBlogArticleStories = async (): Promise<Array<BlogArticleStory>> => {
+  const response = await getStoryblokApi().getStories({
+    content_type: BLOG_ARTICLE_CONTENT_TYPE,
+    resolve_relations: 'reusableBlockReference.reference',
+  })
+
+  return response.data.stories as Array<BlogArticleStory>
+}
+
+type BlogArticleStory = ISbStoryData<
+  {
+    date: string
+    footer: Array<SbBlokData>
+    content: Array<SbBlokData>
+    categories: Array<string>
+    teaser_text: string
+    page_heading: string
+    teaser_image: StoryblokAsset
+  } & SEOData
+>
