@@ -13,9 +13,7 @@ export const Primary: Story = {
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <ArticleCategoryList.Root>
         <ArticleCategoryList.Item href="/se">Alla artiklar</ArticleCategoryList.Item>
-        <ArticleCategoryList.Item href="/" active={true}>
-          Försäkringar
-        </ArticleCategoryList.Item>
+        <ArticleCategoryList.ActiveItem>Försäkringar</ArticleCategoryList.ActiveItem>
         <ArticleCategoryList.Item href="/">Insikter</ArticleCategoryList.Item>
         <ArticleCategoryList.Item href="/">På Hedvig</ArticleCategoryList.Item>
         <ArticleCategoryList.Item href="/">Lifestyle</ArticleCategoryList.Item>

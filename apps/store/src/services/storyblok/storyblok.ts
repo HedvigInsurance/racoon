@@ -8,6 +8,7 @@ import {
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
+import { BlogArticleCategoryListBlock } from '@/blocks/BlogArticleCategoryListBlock'
 import { BlogArticleListBlock } from '@/blocks/BlogArticleListBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
@@ -259,6 +260,7 @@ export const initStoryblok = () => {
     SelectInsuranceGridBlock,
     QuickPurchaseBlock,
     BlogArticleListBlock,
+    BlogArticleCategoryListBlock,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
@@ -363,14 +365,28 @@ const BLOG_ARTICLE_CONTENT_TYPE = 'blog-article'
 export const getBlogArticleStories = async (): Promise<Array<BlogArticleStory>> => {
   const response = await getStoryblokApi().getStories({
     content_type: BLOG_ARTICLE_CONTENT_TYPE,
-    resolve_relations: 'reusableBlockReference.reference',
+    resolve_relations: 'categories',
     ...(USE_DRAFT_CONTENT && { version: 'draft' }),
   })
 
-  return response.data.stories as Array<BlogArticleStory>
+  const items = response.data.stories as Array<RawBlogArticleStory>
+
+  return items.map<BlogArticleStory>((item) => ({
+    ...item,
+    content: {
+      ...item.content,
+      categories: item.content.categories.reduce((acc, storyId) => {
+        const category = response.data.rels.find((rel) => rel.uuid === storyId)
+        if (category) {
+          acc.push(category)
+        }
+        return acc
+      }, [] as Array<ISbStoryData>),
+    },
+  }))
 }
 
-type BlogArticleStory = ISbStoryData<
+type RawBlogArticleStory = ISbStoryData<
   {
     date: string
     footer: Array<SbBlokData>
@@ -381,3 +397,21 @@ type BlogArticleStory = ISbStoryData<
     teaser_image: StoryblokAsset
   } & SEOData
 >
+
+type BlogArticleStory = ISbStoryData<
+  Omit<RawBlogArticleStory['content'], 'categories'> & {
+    categories: Array<ISbStoryData>
+  }
+>
+
+const BLOG_ARTICLE_CATEGORY_CONTENT_TYPE = 'blog-article-category'
+export const getBlogArticleCategoryStories = async (): Promise<Array<BlogArticleCategoryStory>> => {
+  const response = await getStoryblokApi().getStories({
+    content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
+    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
+  })
+
+  return response.data.stories as Array<BlogArticleCategoryStory>
+}
+
+type BlogArticleCategoryStory = ISbStoryData
