@@ -61,10 +61,12 @@ const PRODUCTS_FIXTURE = [
 export const WithFewerProducts = () => (
   <SelectInsuranceGrid>
     {PRODUCTS_FIXTURE.slice(0, 4).map((item) => (
-      <ProductItem.Root key={item.id} href={item.pageLink}>
+      <ProductItem.Root key={item.id}>
         <ProductItem.Pillow />
         <ProductItem.Content>
-          <ProductItem.Title>{item.displayNameShort}</ProductItem.Title>
+          <ProductItem.TitleLink href={item.pageLink}>
+            {item.displayNameShort}
+          </ProductItem.TitleLink>
           <ProductItem.Tagline>{item.tagline}</ProductItem.Tagline>
         </ProductItem.Content>
       </ProductItem.Root>
@@ -75,10 +77,12 @@ export const WithFewerProducts = () => (
 export const WithAllProducts = () => (
   <SelectInsuranceGrid>
     {PRODUCTS_FIXTURE.map((item) => (
-      <ProductItem.Root key={item.id} href={item.pageLink}>
+      <ProductItem.Root key={item.id}>
         <ProductItem.Pillow />
         <ProductItem.Content>
-          <ProductItem.Title>{item.displayNameShort}</ProductItem.Title>
+          <ProductItem.TitleLink href={item.pageLink}>
+            {item.displayNameShort}
+          </ProductItem.TitleLink>
           <ProductItem.Tagline>{item.tagline}</ProductItem.Tagline>
         </ProductItem.Content>
       </ProductItem.Root>
