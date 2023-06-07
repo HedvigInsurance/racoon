@@ -8,6 +8,7 @@ import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type HeroBlockProps = SbBaseBlockProps<{
   background: StoryblokAsset
+  backgroundLandscape: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
   content: SbBlokData[]
   heightPortrait?: string
@@ -24,7 +25,21 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
       heightLandscape={blok.heightLandscape}
     >
       <HeroImageWrapper>
-        <HeroImage priority src={blok.background.filename} alt={blok.background.alt} fill />
+        <HeroImage
+          priority
+          src={blok.background.filename}
+          alt={blok.background.alt}
+          data-portrait-image={!!blok.backgroundLandscape.filename}
+          fill
+        />
+        {blok.backgroundLandscape.filename && (
+          <HeroImageLandscape
+            priority
+            src={blok.backgroundLandscape.filename}
+            alt={blok.backgroundLandscape.alt}
+            fill
+          />
+        )}
       </HeroImageWrapper>
       <HeroContent>
         <div>
@@ -71,6 +86,16 @@ const HeroImageWrapper = styled.div({
 const HeroImage = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
   objectPosition: 'center',
+
+  '&[data-portrait-image="true"]': {
+    ['@media (orientation: portrait)']: { display: 'block' },
+    ['@media (orientation: landscape)']: { display: 'none' },
+  },
+})
+
+const HeroImageLandscape = styled(HeroImage)({
+  ['@media (orientation: portrait)']: { display: 'none' },
+  ['@media (orientation: landscape)']: { display: 'block' },
 })
 
 const HeroContent = styled.div({
@@ -80,5 +105,4 @@ const HeroContent = styled.div({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexGrow: 1,
-  textAlign: 'center',
 })
