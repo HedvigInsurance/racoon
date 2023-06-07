@@ -116,8 +116,8 @@ export const getStaticProps: GetStaticProps<
   let blogArticleTeasers: Array<BlogArticleTeaser> | undefined
   let blogArticleCategoryList: BlogArticleCategoryList | undefined
   if (hasBlogArticleList(story)) {
-    blogArticleTeasers = await getBlogArticleTeasers()
-    blogArticleCategoryList = await getBlogArticleCategoryList()
+    blogArticleTeasers = await getBlogArticleTeasers(version)
+    blogArticleCategoryList = await getBlogArticleCategoryList(version)
   }
 
   if (isProductStory(story)) {
