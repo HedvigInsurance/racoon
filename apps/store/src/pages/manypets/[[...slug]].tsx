@@ -44,8 +44,6 @@ export const getStaticProps: GetStaticProps<
     serverSideTranslations(locale),
   ])
 
-  if (!story) return { notFound: true }
-
   return {
     props: {
       [STORY_PROP_NAME]: story,

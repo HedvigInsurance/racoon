@@ -37,18 +37,13 @@ export const getServerSideProps: GetServerSideProps<
 
   const slug = (params?.slug ?? []).join('/')
 
-  const story = await getStoryBySlug(`/reusable-blocks/${slug}`, {
+  const story = await getStoryBySlug<ReusableStory>(`/reusable-blocks/${slug}`, {
     locale,
     version,
   })
-  if (!story) {
-    return { notFound: true }
-  }
 
   return {
-    props: {
-      story: story as ReusableStory,
-    },
+    props: { story },
   }
 }
 
