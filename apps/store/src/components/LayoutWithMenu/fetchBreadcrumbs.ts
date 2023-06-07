@@ -21,8 +21,11 @@ export const fetchBreadcrumbs = async (
 
   return stories
     .sort((a, b) => a.full_slug.length - b.full_slug.length)
-    .map((item) => ({
-      label: item.name,
-      href: `${ORIGIN_URL}/${item.full_slug}`,
-    }))
+    .map((item) => {
+      const slugWithoutTrailingSlash = item.full_slug.replace(/\/$/, '')
+      return {
+        label: item.name,
+        href: `${ORIGIN_URL}/${slugWithoutTrailingSlash}`,
+      }
+    })
 }
