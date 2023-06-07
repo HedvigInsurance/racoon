@@ -6,7 +6,7 @@ import { FormEventHandler, useState } from 'react'
 import { Button, Space, Text, mq, theme } from 'ui'
 import { nestedLinkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
 import { useRedeemCampaign } from '@/components/CartInventory/useCampaign'
-import { useSetGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
+import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
 import { TextField } from '@/components/TextField/TextField'
@@ -41,13 +41,13 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
 
   const { shopSession } = useShopSession()
   const { routingLocale } = useCurrentLocale()
-  const setGlobalBanner = useSetGlobalBanner()
+  const { addBanner } = useGlobalBanner()
   const redirectUrl = PageLink.store({ locale: routingLocale })
   const [addCampaign, { errorMessage, loading, called }] = useRedeemCampaign({
     shopSessionId: shopSession?.id ?? '',
     async onCompleted() {
       await router.push(redirectUrl)
-      setGlobalBanner(t('GLOBAL_BANNER_CAMPAIGN'))
+      addBanner(t('GLOBAL_BANNER_CAMPAIGN'))
     },
   })
   const showLoading = loading || (called && !errorMessage)
