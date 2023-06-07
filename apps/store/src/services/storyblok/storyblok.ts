@@ -8,6 +8,7 @@ import {
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
+import { AnnouncementBlock } from '@/blocks/AnnouncementBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { BlogArticleCategoryContentType } from '@/blocks/BlogArticleCategoryContentType'
 import { BlogArticleCategoryListBlock } from '@/blocks/BlogArticleCategoryListBlock'
@@ -51,7 +52,10 @@ import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillows
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { QuickPurchaseBlock } from '@/blocks/QuickPurchaseBlock'
-import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
+import {
+  ReusableBlockReference,
+  ReusableBlockReferenceProps,
+} from '@/blocks/ReusableBlockReference'
 import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
 import { SelectInsuranceGridBlock } from '@/blocks/SelectInsuranceGridBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
@@ -139,6 +143,8 @@ export type SEOData = {
 
 export type PageStory = ISbStoryData<
   {
+    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
+    body: Array<SbBlokData>
     hideMenu?: boolean
     overlayMenu?: boolean
     hideFooter?: boolean
@@ -154,6 +160,7 @@ export type ProductStory = ISbStoryData<
     defaultProductVariant?: string
     productId: string
     priceFormTemplateId: string
+    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
     global: Array<SbBlokData>
   } & SEOData
@@ -210,6 +217,7 @@ export const initStoryblok = () => {
   const blockComponents: Array<NamedBlock> = [
     AccordionBlock,
     AccordionItemBlock,
+    AnnouncementBlock,
     BannerBlock,
     ButtonBlock,
     CheckListBlock,

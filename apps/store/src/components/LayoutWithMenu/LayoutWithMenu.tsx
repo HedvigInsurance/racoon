@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import { StoryblokComponent } from '@storyblok/react'
 import { type ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
+import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { PageStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
@@ -33,6 +35,11 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
   const handleLocaleChange = useChangeLocale(story)
 
+  // Announcements are added as reusable blocks for Page and ProductPage content types
+  const reusableBlock = filterByBlockType(
+    story?.content.announcement,
+    ReusableBlockReference.blockName,
+  )
   const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
 
@@ -45,6 +52,9 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
 
   return (
     <Wrapper className={className}>
+      {reusableBlock.map((referencedBlok) => (
+        <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
+      ))}
       {showHeader &&
         headerBlock.map((nestedBlock) => (
           <HeaderBlock

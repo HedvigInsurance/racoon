@@ -1,7 +1,7 @@
 import { StoryblokComponent } from '@storyblok/react'
 import { ReusableStory, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-type ReusableBlockReferenceProps = SbBaseBlockProps<{
+export type ReusableBlockReferenceProps = SbBaseBlockProps<{
   reference: Omit<ReusableStory, 'content'> & Partial<Pick<ReusableStory, 'content'>>
 }>
 
