@@ -1,20 +1,17 @@
-import { RESET } from 'jotai/utils'
 import { Banner } from '@/components/Banner/Banner'
 import { useDebugShopSession } from '@/utils/useDebugShopSession'
-import { useGlobalBanner, useGlobalBannerClosed } from './useGlobalBanner'
+import { useGlobalBanner } from './useGlobalBanner'
 
 export const GlobalBanner = () => {
-  const [banner, setBanner] = useGlobalBanner()
-  const [closed, setIsClosed] = useGlobalBannerClosed()
+  const { banner, dismissBanner } = useGlobalBanner()
 
   useDebugShopSession()
 
   const handleClose = () => {
-    setBanner(RESET)
-    setIsClosed(true)
+    dismissBanner()
   }
 
-  if (banner === null || closed) return null
+  if (banner === null) return null
 
   return (
     <Banner variant={banner.variant} handleClose={handleClose}>

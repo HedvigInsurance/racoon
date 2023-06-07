@@ -1,42 +1,67 @@
-import { useAtom } from 'jotai'
-import { atomWithReset, atomWithStorage, createJSONStorage, RESET } from 'jotai/utils'
+import { atom, useAtom, useSetAtom } from 'jotai'
+import { createJSONStorage, atomWithStorage } from 'jotai/utils'
 import { useCallback } from 'react'
 import { Banner, BannerVariant } from '@/components/Banner/Banner.types'
 
-const GLOBAL_BANNER_ATOM = atomWithReset<Banner | null>(null)
+type SetBannerOptions = {
+  // When 'true' it persisted 'dismissed' info will be ignored.
+  force: boolean
+}
 
-const GLOBAL_BANNER_CLOSED_ATOM = atomWithStorage<boolean>(
+const BANNER_ATOM = atom<Banner | null>(null)
+
+const PERSISTED_DISMISSED_ATOM = atomWithStorage<boolean>(
   'closedBanner',
   false,
   createJSONStorage(() => sessionStorage),
 )
 
+const GLOBAL_BANNER_ATOM = atom(
+  (get) => {
+    const isBannerDismissed = get(PERSISTED_DISMISSED_ATOM)
+    return isBannerDismissed ? null : get(BANNER_ATOM)
+  },
+  (get, set, newBanner: Banner, options?: SetBannerOptions) => {
+    const isBannerDismissed = get(PERSISTED_DISMISSED_ATOM)
+
+    if (isBannerDismissed) {
+      if (options?.force) {
+        set(PERSISTED_DISMISSED_ATOM, false)
+        set(BANNER_ATOM, newBanner)
+      }
+    } else {
+      const currentBanner = get(BANNER_ATOM)
+      if (currentBanner === null || options?.force) {
+        set(BANNER_ATOM, newBanner)
+      }
+    }
+  },
+)
+
 export const useGlobalBanner = () => {
   const [banner, setBanner] = useAtom(GLOBAL_BANNER_ATOM)
+  const persistedDismissBanner = useSetAtom(PERSISTED_DISMISSED_ATOM)
 
-  const _setBanner = useCallback(
-    (content: string | typeof RESET, variant?: BannerVariant) => {
-      if (content === RESET) {
-        setBanner(RESET)
-      } else {
-        setBanner({
+  const addBanner = useCallback(
+    (content: string, variant?: BannerVariant, options?: SetBannerOptions) => {
+      setBanner(
+        {
           content,
           variant: variant ?? 'info',
-        })
-      }
+        },
+        options,
+      )
     },
     [setBanner],
   )
 
-  return [banner, _setBanner] as const
-}
+  const dismissBanner = useCallback(() => {
+    persistedDismissBanner(true)
+  }, [persistedDismissBanner])
 
-export const useSetGlobalBanner = () => {
-  const [, setBanner] = useGlobalBanner()
-
-  return setBanner
-}
-
-export const useGlobalBannerClosed = () => {
-  return useAtom(GLOBAL_BANNER_CLOSED_ATOM)
+  return {
+    banner,
+    addBanner,
+    dismissBanner,
+  }
 }
