@@ -3,6 +3,7 @@ query ProductMetadata {
     id
     name
     displayNameShort
+    displayNameFull
     tagline
     pageLink
     pillowImage {

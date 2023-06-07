@@ -26,10 +26,12 @@ export const SelectInsuranceGridBlock = ({ blok, nested }: Props) => {
 
           <SelectInsuranceGrid {...storyblokEditable(blok)}>
             {products?.map((item) => (
-              <ProductItem.Root key={item.id} href={item.pageLink}>
+              <ProductItem.Root key={item.id}>
                 <ProductItem.Pillow {...item.pillowImage} />
                 <ProductItem.Content>
-                  <ProductItem.Title>{item.displayNameShort}</ProductItem.Title>
+                  <ProductItem.TitleLink href={item.pageLink} title={item.displayNameFull}>
+                    {item.displayNameShort}
+                  </ProductItem.TitleLink>
                   <ProductItem.Tagline>{item.tagline}</ProductItem.Tagline>
                 </ProductItem.Content>
               </ProductItem.Root>

@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
-import Link from 'next/link'
+import Link, { LinkProps } from 'next/link'
 import { ComponentProps } from 'react'
 import { Text, mq, theme } from 'ui'
 import { Pillow as BasePillow } from '@/components/Pillow/Pillow'
 
-const Item = styled(Link)({
+const Item = styled.div({
+  position: 'relative',
+
   display: 'flex',
   gap: theme.space.md,
   alignItems: 'center',
@@ -49,10 +51,29 @@ const Tagline = (props: ComponentProps<typeof Text>) => {
   return <SingleLineText size="xs" color="textSecondary" {...props} />
 }
 
+type TitleProps = LinkProps & { children: string; title?: string }
+
+const TitleLink = ({ children, ...props }: TitleProps) => {
+  return (
+    <ExtendedLink {...props}>
+      <Text as="span">{children}</Text>
+    </ExtendedLink>
+  )
+}
+
+const ExtendedLink = styled(Link)({
+  // Make the whole product item clickable
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+  },
+})
+
 export const ProductItem = {
   Root: Item,
   Pillow,
   Content,
-  Title: Text,
+  TitleLink,
   Tagline,
 } as const
