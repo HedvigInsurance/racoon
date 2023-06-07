@@ -369,11 +369,13 @@ export const getFilteredProductLinks = async () => {
 }
 
 const BLOG_ARTICLE_CONTENT_TYPE = 'blog-article'
-export const getBlogArticleStories = async (): Promise<Array<BlogArticleStory>> => {
+export const getBlogArticleStories = async (
+  version?: StoryblokVersion,
+): Promise<Array<BlogArticleStory>> => {
   const response = await getStoryblokApi().getStories({
     content_type: BLOG_ARTICLE_CONTENT_TYPE,
     resolve_relations: 'categories',
-    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
+    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
   })
 
   const items = response.data.stories as Array<RawBlogArticleStory>
@@ -413,10 +415,12 @@ export type BlogArticleStory = ISbStoryData<
 >
 
 const BLOG_ARTICLE_CATEGORY_CONTENT_TYPE = 'blog-article-category'
-export const getBlogArticleCategoryStories = async (): Promise<Array<BlogArticleCategoryStory>> => {
+export const getBlogArticleCategoryStories = async (
+  version?: StoryblokVersion,
+): Promise<Array<BlogArticleCategoryStory>> => {
   const response = await getStoryblokApi().getStories({
     content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
-    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
+    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
   })
 
   return response.data.stories as Array<BlogArticleCategoryStory>

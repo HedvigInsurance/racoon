@@ -1,4 +1,4 @@
-import { getBlogArticleStories } from '@/services/storyblok/storyblok'
+import { getBlogArticleStories, StoryblokVersion } from '@/services/storyblok/storyblok'
 import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 
 export type BlogArticleTeaser = {
@@ -19,8 +19,10 @@ export type BlogArticleTeaser = {
   }
 }
 
-export const getBlogArticleTeasers = async (): Promise<Array<BlogArticleTeaser>> => {
-  const blogArticles = await getBlogArticleStories()
+export const getBlogArticleTeasers = async (
+  version?: StoryblokVersion,
+): Promise<Array<BlogArticleTeaser>> => {
+  const blogArticles = await getBlogArticleStories(version)
 
   const teasers: Array<BlogArticleTeaser> = []
 
