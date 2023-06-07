@@ -1,37 +1,35 @@
 import styled from '@emotion/styled'
-import { storyblokEditable } from '@storyblok/react'
+import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { theme } from 'ui'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
-import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type HeroBlockProps = SbBaseBlockProps<{
-  content: ExpectedBlockType<HeadingBlockProps>
   background: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
+  content: SbBlokData[]
+  heightPortrait?: string
+  heightLandscape?: string
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
-  const headingBlocks = filterByBlockType(blok.content, HeadingBlock.blockName)
   const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
 
   return (
-    <HeroSection {...storyblokEditable(blok)}>
+    <HeroSection
+      {...storyblokEditable(blok)}
+      heightPortrait={blok.heightPortrait}
+      heightLandscape={blok.heightLandscape}
+    >
       <HeroImageWrapper>
-        <HeroImage
-          priority
-          src={blok.background.filename}
-          alt={blok.background.alt}
-          fill
-          sizes="100vw"
-        />
+        <HeroImage priority src={blok.background.filename} alt={blok.background.alt} fill />
       </HeroImageWrapper>
       <HeroContent>
         <div>
-          {headingBlocks.map((nestedBlock) => (
-            <HeadingBlock blok={nestedBlock} key={nestedBlock._uid} />
+          {blok.content.map((nestedBlock) => (
+            <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
           ))}
         </div>
         <div>
@@ -45,15 +43,26 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
 }
 HeroBlock.blockName = 'hero'
 
-const HeroSection = styled.section({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  minHeight: '80vh',
-  paddingTop: theme.space[9],
-  paddingBottom: theme.space[9],
-})
+const HeroSection = styled.section(
+  ({
+    heightPortrait,
+    heightLandscape,
+  }: Pick<HeroBlockProps['blok'], 'heightPortrait' | 'heightLandscape'>) => ({
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingTop: theme.space[9],
+    paddingBottom: theme.space[9],
+
+    ['@media (orientation: portrait)']: {
+      ...(heightPortrait && { minHeight: `${heightPortrait}vh` }),
+    },
+    ['@media (orientation: landscape)']: {
+      ...(heightLandscape && { minHeight: `${heightLandscape}vh` }),
+    },
+  }),
+)
 
 const HeroImageWrapper = styled.div({
   zIndex: '-1',
