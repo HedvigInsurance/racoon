@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { theme } from 'ui'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+
+type VerticalAlignment = 'top' | 'center' | 'bottom'
 
 type HeroBlockProps = SbBaseBlockProps<{
   background: StoryblokAsset
@@ -13,6 +14,7 @@ type HeroBlockProps = SbBaseBlockProps<{
   content: SbBlokData[]
   heightPortrait?: string
   heightLandscape?: string
+  verticalAlignment?: VerticalAlignment
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
@@ -41,7 +43,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
           />
         )}
       </HeroImageWrapper>
-      <HeroContent>
+      <HeroContent verticalAlignment={blok.verticalAlignment}>
         <div>
           {blok.content.map((nestedBlock) => (
             <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
@@ -67,8 +69,6 @@ const HeroSection = styled.section(
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingTop: theme.space[9],
-    paddingBottom: theme.space[9],
 
     ['@media (orientation: portrait)']: {
       ...(heightPortrait && { minHeight: `${heightPortrait}vh` }),
@@ -98,11 +98,26 @@ const HeroImageLandscape = styled(HeroImage)({
   ['@media (orientation: landscape)']: { display: 'block' },
 })
 
-const HeroContent = styled.div({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  flexGrow: 1,
-})
+const HeroContent = styled.div(
+  ({ verticalAlignment }: Pick<HeroBlockProps['blok'], 'verticalAlignment'>) => ({
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: getAlignmentStyles(verticalAlignment),
+    flexGrow: 1,
+  }),
+)
+
+const getAlignmentStyles = (alignment: VerticalAlignment | undefined) => {
+  switch (alignment) {
+    case 'top':
+      return 'flex-start'
+    case 'center':
+      return 'center'
+    case 'bottom':
+      return 'flex-end'
+    default:
+      return 'initial'
+  }
+}
