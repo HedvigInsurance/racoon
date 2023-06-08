@@ -41,6 +41,7 @@ const SIGN_FORM_ID = 'sign-form'
 export type ManyPetsMigrationPageProps = {
   // NOTE: Not using [SHOP_SESSION_PROP_NAME] to avoid clash with site-wide session
   migrationSessionId: string
+  announcement?: ReactNode
   preOfferContent?: ReactNode
   postOfferContent: ReactNode
   offers: Array<ProductOffer>
@@ -51,6 +52,7 @@ export type ManyPetsMigrationPageProps = {
 
 export const ManyPetsMigrationPage = ({
   migrationSessionId,
+  announcement,
   preOfferContent,
   postOfferContent,
   offers,
@@ -88,83 +90,86 @@ export const ManyPetsMigrationPage = ({
   )
 
   return (
-    <main>
-      {preOfferContent}
-      {showOfferSection && (
-        <OfferSection y={10}>
-          <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
-            <Space y={1}>
-              <CartEntryList>
-                {cartEntries.map((item) => (
-                  <CartEntryItem
-                    key={item.offerId}
-                    shopSessionId={migrationSessionId}
-                    defaultOpen={false}
-                    readOnly={true}
-                    {...item}
-                  />
-                ))}
-              </CartEntryList>
+    <>
+      {announcement}
+      <main>
+        {preOfferContent}
+        {showOfferSection && (
+          <OfferSection y={10}>
+            <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
+              <Space y={1}>
+                <CartEntryList>
+                  {cartEntries.map((item) => (
+                    <CartEntryItem
+                      key={item.offerId}
+                      shopSessionId={migrationSessionId}
+                      defaultOpen={false}
+                      readOnly={true}
+                      {...item}
+                    />
+                  ))}
+                </CartEntryList>
 
-              <CostSummary total={totalCost} campaigns={[]} />
-              {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
+                <CostSummary total={totalCost} campaigns={[]} />
+                {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
-              <SignButton ref={signButtonRef} type="submit" loading={loading}>
-                {signButtonContent}
-              </SignButton>
+                <SignButton ref={signButtonRef} type="submit" loading={loading}>
+                  {signButtonContent}
+                </SignButton>
 
-              <Text as="p" size={{ _: 'xs', md: 'sm' }} align="center" color="textSecondary">
-                {t('SIGN_DISCLAIMER')}
-              </Text>
+                <Text as="p" size={{ _: 'xs', md: 'sm' }} align="center" color="textSecondary">
+                  {t('SIGN_DISCLAIMER')}
+                </Text>
+              </Space>
+            </form>
+
+            <Space y={{ base: 2, md: 3 }}>
+              <Heading as="h2" variant="standard.32" align="center" balance={true}>
+                {t('MANYPETS_COMPARISON_HEADER')}
+              </Heading>
+
+              <ComparisonTable.Root>
+                <ComparisonTable.Head>
+                  <ComparisonTable.Row>
+                    <ComparisonTable.Header />
+                    <ComparisonTable.Header>
+                      <Centered>
+                        <ManypetsLogo />
+                      </Centered>
+                    </ComparisonTable.Header>
+                    <ComparisonTable.Header active>
+                      <Centered>
+                        {/* Both icons are composed differently. For optical sizing, they should diff 2px in width/height */}
+                        <HedvigLogo width={76} height={22} />
+                      </Centered>
+                    </ComparisonTable.Header>
+                  </ComparisonTable.Row>
+                </ComparisonTable.Head>
+                <ComparisonTable.Body>
+                  {comparisonTableData.map(([attribute, value]) => {
+                    const parsedValue = parseTableValue(value)
+
+                    return (
+                      <ComparisonTable.Row key={attribute}>
+                        <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
+                        <ComparisonTable.DataCell>{parsedValue}</ComparisonTable.DataCell>
+                        <ComparisonTable.DataCell active>{parsedValue}</ComparisonTable.DataCell>
+                      </ComparisonTable.Row>
+                    )
+                  })}
+                </ComparisonTable.Body>
+              </ComparisonTable.Root>
             </Space>
-          </form>
-
-          <Space y={{ base: 2, md: 3 }}>
-            <Heading as="h2" variant="standard.32" align="center" balance={true}>
-              {t('MANYPETS_COMPARISON_HEADER')}
-            </Heading>
-
-            <ComparisonTable.Root>
-              <ComparisonTable.Head>
-                <ComparisonTable.Row>
-                  <ComparisonTable.Header />
-                  <ComparisonTable.Header>
-                    <Centered>
-                      <ManypetsLogo />
-                    </Centered>
-                  </ComparisonTable.Header>
-                  <ComparisonTable.Header active>
-                    <Centered>
-                      {/* Both icons are composed differently. For optical sizing, they should diff 2px in width/height */}
-                      <HedvigLogo width={76} height={22} />
-                    </Centered>
-                  </ComparisonTable.Header>
-                </ComparisonTable.Row>
-              </ComparisonTable.Head>
-              <ComparisonTable.Body>
-                {comparisonTableData.map(([attribute, value]) => {
-                  const parsedValue = parseTableValue(value)
-
-                  return (
-                    <ComparisonTable.Row key={attribute}>
-                      <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
-                      <ComparisonTable.DataCell>{parsedValue}</ComparisonTable.DataCell>
-                      <ComparisonTable.DataCell active>{parsedValue}</ComparisonTable.DataCell>
-                    </ComparisonTable.Row>
-                  )
-                })}
-              </ComparisonTable.Body>
-            </ComparisonTable.Root>
-          </Space>
-        </OfferSection>
-      )}
-      {postOfferContent}
-      <FloatSignButtonWrapper targetRef={signButtonRef}>
-        <SignButton form={SIGN_FORM_ID} loading={loading}>
-          {signButtonContent}
-        </SignButton>
-      </FloatSignButtonWrapper>
-    </main>
+          </OfferSection>
+        )}
+        {postOfferContent}
+        <FloatSignButtonWrapper targetRef={signButtonRef}>
+          <SignButton form={SIGN_FORM_ID} loading={loading}>
+            {signButtonContent}
+          </SignButton>
+        </FloatSignButtonWrapper>
+      </main>
+    </>
   )
 }
 
