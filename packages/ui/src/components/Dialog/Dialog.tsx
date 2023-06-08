@@ -47,32 +47,41 @@ type ContentProps = {
   onClose?: () => void
   className?: string
   frostedOverlay?: boolean
+  centerContent?: boolean
 }
 
-export const Content = ({ children, onClose, className, frostedOverlay }: ContentProps) => {
-  const handleClose = () => onClose?.()
+export const Content = (props: ContentProps) => {
+  const handleClose = () => props.onClose?.()
 
   return (
     <DialogPrimitive.Portal>
-      <StyledOverlay frosted={frostedOverlay} />
+      <StyledOverlay frosted={props.frostedOverlay} />
 
-      <StyledContentWrapper>
+      <StyledContentWrapper center={props.centerContent ?? false}>
         <DialogPrimitive.Content
-          className={className}
+          className={props.className}
           onEscapeKeyDown={handleClose}
           onInteractOutside={handleClose}
         >
-          {children}
+          {props.children}
         </DialogPrimitive.Content>
       </StyledContentWrapper>
     </DialogPrimitive.Portal>
   )
 }
 
-const StyledContentWrapper = styled.div({
-  position: 'fixed',
-  inset: 0,
-})
+const StyledContentWrapper = styled.div<{ center: boolean }>(
+  {
+    position: 'fixed',
+    inset: 0,
+  },
+  ({ center }) =>
+    center && {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+)
 
 export const Root = DialogPrimitive.Root
 export const Trigger = DialogPrimitive.Trigger
