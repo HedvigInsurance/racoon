@@ -143,7 +143,7 @@ export type SEOData = {
 
 export type PageStory = ISbStoryData<
   {
-    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
+    announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
     hideMenu?: boolean
     overlayMenu?: boolean
@@ -160,7 +160,7 @@ export type ProductStory = ISbStoryData<
     defaultProductVariant?: string
     productId: string
     priceFormTemplateId: string
-    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
+    announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
     global: Array<SbBlokData>
   } & SEOData
@@ -193,7 +193,7 @@ export type ConfirmationStory = ISbStoryData & {
 
 export type ManyPetsMigrationStory = ISbStoryData<
   {
-    announcement: ExpectedBlockType<ReusableBlockReferenceProps>
+    announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     preOfferContent?: Array<SbBlokData>
     postOfferContent: Array<SbBlokData>
   } & SEOData

@@ -10,7 +10,7 @@ export const ManyPetsMigrationPageBlock = ({ blok }: Props) => {
   return (
     <ManyPetsMigrationPage
       migrationSessionId={'empty-placeholder'}
-      announcement={blok.announcement.map((blok) => (
+      announcement={blok.announcement?.map((blok) => (
         <StoryblokComponent key={blok._uid} blok={blok} />
       ))}
       // We can't preview this on storyblok since there will be no migration shopping session
