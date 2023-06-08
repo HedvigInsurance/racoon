@@ -1,3 +1,5 @@
+import { ApolloClient, isApolloError } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
@@ -10,7 +12,12 @@ import {
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { ShopSessionOutcomeQuery } from '@/services/apollo/generated'
+import {
+  CurrentMemberDocument,
+  CurrentMemberQuery,
+  CurrentMemberQueryVariables,
+  ShopSessionOutcomeQuery,
+} from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -34,10 +41,12 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  const [shopSession, outcome, translations, globalStory, story, productMetadata] =
+
+  const [shopSession, outcome, currentMember, translations, globalStory, story, productMetadata] =
     await Promise.all([
       shopSessionService.fetchById(shopSessionId),
       shopSessionService.fetchOutcome(shopSessionId),
+      fetchCurrentMember(apolloClient),
       serverSideTranslations(locale),
       getGlobalStory({ locale }),
       getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
@@ -58,6 +67,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
       story,
+      currentMember,
       ...getSwitching(outcome),
     },
   })
@@ -87,6 +97,25 @@ const CheckoutConfirmationPage: NextPageWithLayout<
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default CheckoutConfirmationPage
+
+const fetchCurrentMember = async (apolloClient: ApolloClient<unknown>) => {
+  if (!Features.enabled('SAS_PARTNERSHIP')) {
+    return null
+  }
+  try {
+    const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
+      query: CurrentMemberDocument,
+    })
+    return data.currentMember
+  } catch (err) {
+    if (err instanceof Error && isApolloError(err)) {
+      datadogLogs.logger.info('Failed to fetch currentMember', err)
+      return null
+    } else {
+      throw err
+    }
+  }
+}
 
 const getSwitching = (
   outcome: ShopSessionOutcomeQuery['shopSession']['outcome'],
