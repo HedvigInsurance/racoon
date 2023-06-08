@@ -1,14 +1,15 @@
 import { ArticleCategoryList } from '@/components/ArticleCategoryList/ArticleCategoryList'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { useBlogArticleCategoryList } from '@/services/blog/blogArticleCategoryList'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { BLOG_ARTICLE_CATEGORY_LIST_BLOCK } from './blog.constants'
+import { useBlogArticleCategories } from './useBlog'
 
 type Props = SbBaseBlockProps<{
   active?: string
 }>
 
 export const BlogArticleCategoryListBlock = (props: Props) => {
-  const categoryList = useBlogArticleCategoryList()
+  const categoryList = useBlogArticleCategories()
   const activeCategoryId = props.blok.active ?? 'all'
 
   return (
@@ -31,4 +32,4 @@ export const BlogArticleCategoryListBlock = (props: Props) => {
     </GridLayout.Root>
   )
 }
-BlogArticleCategoryListBlock.blockName = 'blogArticleCategoryList'
+BlogArticleCategoryListBlock.blockName = BLOG_ARTICLE_CATEGORY_LIST_BLOCK

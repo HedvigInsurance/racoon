@@ -4,16 +4,12 @@ import {
   SbBlokData,
   storyblokInit,
   ISbStoryData,
-  ISbRichtext,
+  ISbStoriesParams,
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { AnnouncementBlock } from '@/blocks/AnnouncementBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
-import { BlogArticleCategoryContentType } from '@/blocks/BlogArticleCategoryContentType'
-import { BlogArticleCategoryListBlock } from '@/blocks/BlogArticleCategoryListBlock'
-import { BlogArticleContentType } from '@/blocks/BlogArticleContentType'
-import { BlogArticleListBlock } from '@/blocks/BlogArticleListBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
 import { CardLinkListBlock } from '@/blocks/CardLinkListBlock'
@@ -68,6 +64,8 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
+import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
+import { blogBlocks } from '@/features/blog/blogBlocks'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -272,10 +270,7 @@ export const initStoryblok = () => {
     CardLinkListBlock,
     SelectInsuranceGridBlock,
     QuickPurchaseBlock,
-    BlogArticleListBlock,
-    BlogArticleCategoryListBlock,
-    BlogArticleCategoryContentType,
-    BlogArticleContentType,
+    ...blogBlocks,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
@@ -376,46 +371,6 @@ export const getFilteredProductLinks = async () => {
   return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
 }
 
-const BLOG_ARTICLE_CONTENT_TYPE = 'blog-article'
-export const getBlogArticleStories = async (
-  version?: StoryblokVersion,
-): Promise<Array<BlogArticleStory>> => {
-  const response = await getStoryblokApi().getStories({
-    content_type: BLOG_ARTICLE_CONTENT_TYPE,
-    resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
-    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
-  })
-
-  return response.data.stories as Array<BlogArticleStory>
-}
-
-export type BlogArticleStory = ISbStoryData<
-  {
-    date: string
-    footer: Array<SbBlokData>
-    body: Array<SbBlokData>
-    content: ISbRichtext
-    categories: Array<ISbStoryData>
-    teaser_text: string
-    page_heading: string
-    teaser_image: StoryblokAsset
-  } & SEOData
->
-
-const BLOG_ARTICLE_CATEGORY_CONTENT_TYPE = 'blog-article-category'
-export const getBlogArticleCategoryStories = async (
-  version?: StoryblokVersion,
-): Promise<Array<BlogArticleCategoryStory>> => {
-  const response = await getStoryblokApi().getStories({
-    content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
-    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
-  })
-
-  return response.data.stories as Array<BlogArticleCategoryStory>
-}
-
-type BlogArticleCategoryStory = ISbStoryData
-
 export const getStoriesBySlug = async (
   slugs: Array<string>,
   options: Pick<StoryOptions, 'version'>,
@@ -427,4 +382,11 @@ export const getStoriesBySlug = async (
   })
 
   return response.data.stories
+}
+
+export const fetchStories = async (params: ISbStoriesParams) => {
+  return getStoryblokApi().getStories({
+    ...params,
+    version: params.version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
+  })
 }
