@@ -34,7 +34,10 @@ const scriptSrc = [
   'http://widget.trustpilot.com',
   'https://widget.trustpilot.com',
 
+  // Insurely
+  'https://blocks.insurely.com',
   'https://dc.insurely.com',
+
   'https://vercel.live',
   "'unsafe-inline'",
   "'unsafe-eval'",
@@ -117,7 +120,6 @@ const connectSrc = [
   "'self'",
 ]
 const frameSrc = [
-  'https://dc.insurely.com',
   'https://player.vimeo.com',
   'https://vercel.live', // Vercel Live
   'https://www.googletagmanager.com',
@@ -139,6 +141,9 @@ const frameSrc = [
 
   // Google Optimize
   'https://optimize.google.com',
+
+  // Insurely
+  'https://blocks.insurely.com',
 
   "'self'",
 ]

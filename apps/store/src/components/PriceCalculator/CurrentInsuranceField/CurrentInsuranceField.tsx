@@ -11,7 +11,7 @@ import {
   ExternalInsurer,
   useInsurelyDataCollectionCreateMutation,
 } from '@/services/apollo/generated'
-import { InsurelyIframe, insurelyPrefillInput } from '@/services/Insurely/Insurely'
+import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
@@ -27,25 +27,25 @@ type Props = {
   label: string
   productName: string
   priceIntentId: string
-  insurelyClientId?: string
+  insurelyConfigName?: string
   externalInsurer?: string
 }
 
 type State =
   | { type: 'IDLE' }
-  | { type: 'COMPARE'; externalInsurer: ExternalInsurer; insurelyClientId: string }
+  | { type: 'COMPARE'; externalInsurer: ExternalInsurer; insurelyConfigName: string }
   | { type: 'SUCCESS'; externalInsurer: ExternalInsurer }
   | { type: 'CONFIRMED'; externalInsurer: ExternalInsurer }
 
 export const CurrentInsuranceField = (props: Props) => {
-  const { label, productName, priceIntentId, insurelyClientId, externalInsurer } = props
+  const priceIntentId = props.priceIntentId
   const { t } = useTranslation('purchase-form')
   const { shopSession } = useShopSession()
   const [state, setState] = useState<State>({ type: 'IDLE' })
 
   const compare = useCallback(
-    (externalInsurer: ExternalInsurer, insurelyClientId: string) =>
-      setState({ type: 'COMPARE', externalInsurer, insurelyClientId }),
+    (externalInsurer: ExternalInsurer, insurelyConfigName: string) =>
+      setState({ type: 'COMPARE', externalInsurer, insurelyConfigName }),
     [],
   )
   const close = useCallback(() => setState({ type: 'IDLE' }), [])
@@ -59,21 +59,26 @@ export const CurrentInsuranceField = (props: Props) => {
   )
   const isDialogOpen = INSURELY_IS_ENABLED && (state.type === 'COMPARE' || state.type === 'SUCCESS')
 
-  const companyOptions = useCompanyOptions(productName)
+  const companyOptions = useCompanyOptions(props.productName)
   const updateExternalInsurer = useUpdateExternalInsurer({
     priceIntentId,
     onCompleted(updatedPriceIntent) {
       const externalInsurer = updatedPriceIntent.externalInsurer
-      const personalNumber = shopSession?.customer?.ssn
+      const ssn = shopSession?.customer?.ssn
 
       if (!externalInsurer) {
-        datadogLogs.logger.warn('Failed to update external insurer', { priceIntentId })
+        datadogLogs.logger.warn('Failed to update external insurer', {
+          priceIntentId,
+        })
         return
       }
 
-      if (insurelyClientId && personalNumber) {
-        compare(externalInsurer, insurelyClientId)
-        insurelyPrefillInput({ company: externalInsurer.insurelyId ?? undefined, personalNumber })
+      if (props.insurelyConfigName && ssn) {
+        compare(externalInsurer, props.insurelyConfigName)
+        setInsurelyConfig({
+          company: externalInsurer.insurelyId ?? undefined,
+          ssn,
+        })
       } else {
         confirm(externalInsurer)
       }
@@ -133,7 +138,9 @@ export const CurrentInsuranceField = (props: Props) => {
 
   const handleInsurelyCompleted = useCallback(() => {
     if (dataCollectionId) {
-      updateDataCollectionId({ variables: { priceIntentId, dataCollectionId } })
+      updateDataCollectionId({
+        variables: { priceIntentId, dataCollectionId },
+      })
     } else {
       datadogLogs.logger.error('Completed Insurely without creating data collection ID', {
         priceIntentId,
@@ -144,8 +151,8 @@ export const CurrentInsuranceField = (props: Props) => {
   return (
     <>
       <InputCurrentInsurance
-        label={label}
-        company={externalInsurer}
+        label={props.label}
+        company={props.externalInsurer}
         companyOptions={companyOptions}
         onCompanyChange={handleCompanyChange}
       />
@@ -155,7 +162,7 @@ export const CurrentInsuranceField = (props: Props) => {
             {state.type === 'COMPARE' ? (
               <DialogIframeWindow>
                 <InsurelyIframe
-                  clientId={state.insurelyClientId}
+                  configName={state.insurelyConfigName}
                   onCollection={handleInsurelyCollection}
                   onClose={close}
                   onCompleted={handleInsurelyCompleted}

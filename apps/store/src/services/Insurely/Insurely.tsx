@@ -2,12 +2,13 @@
 
 import styled from '@emotion/styled'
 import Script from 'next/script'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
+import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-const IFRAME_URL = 'https://dc.insurely.com/v2/select-authentication'
-const BOOTSTRAP_SCRIPT_URL = 'https://dc.insurely.com/v2/assets/js/dc-bootstrap.js'
-const PREFILL_STORE: Array<Record<string, string>> = []
+const CUSTOMER_ID = process.env.NEXT_PUBLIC_INSURELY_CUSTOMER_ID as string
+const IFRAME_URL = 'https://blocks.insurely.com/'
+const BOOTSTRAP_SCRIPT_URL = 'https://blocks.insurely.com/assets/bootstrap.js'
 
 enum EventName {
   APP_LOADED = 'APP_LOADED',
@@ -24,7 +25,7 @@ type InsurelyMessage =
   | { name: EventName.RESULTS }
 
 type InsurelyIframeProps = {
-  clientId: string
+  configName: string
   onLoaded?: () => void
   onClose?: () => void
   onCollection?: (collectionId: string) => void
@@ -32,9 +33,7 @@ type InsurelyIframeProps = {
 }
 
 export const InsurelyIframe = (props: InsurelyIframeProps) => {
-  const { clientId, onLoaded, onClose, onCollection, onCompleted } = props
-  const { language } = useCurrentLocale()
-
+  const { onLoaded, onClose, onCollection, onCompleted } = props
   useEffect(() => {
     const handleMessage = ({ data }: MessageEvent<InsurelyMessage>) => {
       switch (data.name) {
@@ -55,26 +54,17 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     return () => window.removeEventListener('message', handleMessage)
   }, [onLoaded, onClose, onCollection, onCompleted])
 
-  const handleLoad = () => {
-    const prefilledInput = PREFILL_STORE.shift()
-    window.setClientParams?.({
-      fontType: 'secondary',
-      hideResultsView: true,
-      language,
-      ...(prefilledInput && { prefilledInput }),
-    })
-  }
-
-  const iFrameSrc = useMemo(() => {
-    const queryParams = new URLSearchParams({ clientId })
-    return `${IFRAME_URL}?${queryParams.toString()}`
-  }, [clientId])
+  const { language } = useCurrentLocale()
+  useEffect(() => {
+    setInsurelyConfig({ customerId: CUSTOMER_ID, configName: props.configName, language })
+  }, [language, props.configName])
 
   return (
     <>
       <StyledIframe
-        title="Insurely"
-        src={iFrameSrc}
+        id="insurely-data-aggregation"
+        title="insurely-data-aggregation"
+        src={IFRAME_URL}
         sandbox="allow-scripts
     allow-same-origin
     allow-popups
@@ -83,26 +73,43 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
     allow-top-navigation"
       />
 
-      <Script strategy="afterInteractive" src={BOOTSTRAP_SCRIPT_URL} onLoad={handleLoad} />
+      <Script strategy="afterInteractive" src={BOOTSTRAP_SCRIPT_URL} />
     </>
   )
 }
 
-type InsurelyClientParams = Partial<{ company: string; personalNumber: string }>
+type InsurelyConfig = {
+  customerId?: string
+  configName?: string
+  company?: string
+  ssn?: string
+  language?: Language
+}
 
-export const insurelyPrefillInput = ({ personalNumber, company }: InsurelyClientParams) => {
-  const prefilledInput = {
-    ...(personalNumber && { SWEDISH_PERSONAL_NUMBER: personalNumber }),
-    ...(company && { company }),
+export const setInsurelyConfig = (config: InsurelyConfig) => {
+  window.insurely = {
+    config: {
+      ...window.insurely?.config,
+      ...(config.customerId && { customerId: config.customerId }),
+      ...(config.configName && { configName: config.configName }),
+      ...(config.language && { language: config.language }),
+
+      // showCloseButton: true,
+      dataAggregation: {
+        hideResultsView: true,
+      },
+    },
+    prefill: {
+      dataAggregation: {
+        ...window.insurely?.prefill?.dataAggregation,
+        ...(config.company && { company: config.company }),
+      },
+      user: {
+        ...window.insurely?.prefill?.user,
+        ...(config.ssn && { swedishPersonalNumber: config.ssn }),
+      },
+    },
   }
-
-  // If the iframe is already loaded, we can set the prefilled input directly
-  if (window.setClientParams) {
-    return window.setClientParams({ prefilledInput })
-  }
-
-  // Otherwise we store the prefilled input and set it when the iframe is loaded
-  PREFILL_STORE.push(prefilledInput)
 }
 
 const StyledIframe = styled.iframe({ border: 0 })
