@@ -29,6 +29,7 @@ export type ImageTextBlockProps = SbBaseBlockProps<{
   textHorizontalAlignment?: TextHorizontalAlignment
   imagePlacement?: ImagePlacement
   mediaPlacementMobile?: MediaPlacementMobile
+  fillViewportMobile?: boolean
 }>
 
 export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
@@ -48,6 +49,7 @@ export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
           textHorizontalAlignment={blok.textHorizontalAlignment}
           imagePlacement={blok.imagePlacement}
           mediaPlacementMobile={blok.mediaPlacementMobile}
+          fillViewportMobile={blok.fillViewportMobile}
           nested={nested}
         />
       )
@@ -109,6 +111,7 @@ type FluidImageTextBlockProps = Pick<
   | 'textHorizontalAlignment'
   | 'imagePlacement'
   | 'mediaPlacementMobile'
+  | 'fillViewportMobile'
   | 'nested'
 > & {
   imageBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
@@ -123,6 +126,7 @@ const FluidImageTextBlock = ({
   textHorizontalAlignment = DEFAULT_TEXT_HORIZONTAL_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
   mediaPlacementMobile = DEFAULT_MEDIA_PLACEMENT_MOBILE,
+  fillViewportMobile,
   nested,
 }: FluidImageTextBlockProps) => {
   return (
@@ -146,6 +150,7 @@ const FluidImageTextBlock = ({
           mediaPlacementMobile={mediaPlacementMobile}
           textAlignment={textAlignment}
           textHorizontalAlignment={textHorizontalAlignment}
+          fillViewportMobile={fillViewportMobile}
         >
           <FluidBodyInnerWrapper>
             {body?.map((nestedBlock) => (
@@ -182,19 +187,37 @@ export const FluidBodyWrapper = styled.div<{
   textHorizontalAlignment: TextHorizontalAlignment
   imagePlacement: ImagePlacement
   mediaPlacementMobile: MediaPlacementMobile
-}>(({ textAlignment, textHorizontalAlignment, imagePlacement, mediaPlacementMobile }) => ({
-  gridColumn: '1 / -1',
-  order: mediaPlacementMobile === 'bottom' ? -1 : 'initial',
+  fillViewportMobile?: boolean
+}>(
+  ({
+    textAlignment,
+    textHorizontalAlignment,
+    imagePlacement,
+    mediaPlacementMobile,
+    fillViewportMobile,
+  }) => ({
+    gridColumn: '1 / -1',
+    order: mediaPlacementMobile === 'bottom' ? -1 : 'initial',
 
-  [mq.lg]: {
-    gridColumn: 'span 6',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: getTextAlignmentStyles(textAlignment),
-    alignItems: getTextAlignmentStyles(textHorizontalAlignment),
-    order: imagePlacement === 'right' ? -1 : 'initial',
-  },
-}))
+    ...(fillViewportMobile && {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    }),
+
+    [mq.lg]: {
+      gridColumn: 'span 6',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: getTextAlignmentStyles(textHorizontalAlignment),
+      justifyContent: getTextAlignmentStyles(textAlignment),
+      order: imagePlacement === 'right' ? -1 : 'initial',
+      minHeight: 'initial',
+    },
+  }),
+)
 
 const FluidBodyInnerWrapper = styled.div({
   paddingInline: theme.space.xs,
