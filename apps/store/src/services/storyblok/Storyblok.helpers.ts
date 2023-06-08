@@ -1,8 +1,8 @@
 import { StoryblokClient } from '@storyblok/js'
-import { SbBlokData, ISbStoryData } from '@storyblok/react'
+import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
 import { get as getFromConfig } from '@vercel/edge-config'
 import { fetchJson } from '@/services/authApi/fetchJson'
-import { Language } from '@/utils/l10n/types'
+import { type Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -37,7 +37,7 @@ export type StoryblokFetchParams = {
   resolve_relations?: string
 }
 
-export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
+export const fetchStory = async <StoryData extends ISbStoryData>(
   storyblokClient: StoryblokClient,
   slug: string,
   params: StoryblokFetchParams,
@@ -46,16 +46,13 @@ export const fetchStory = async <StoryData extends ISbStoryData | undefined>(
   // if (params.version === 'published') {
   //   cv = await getStoryblokCacheVersion()
   // }
-  const response = await storyblokClient.get(`cdn/stories/${slug}`, {
+  const response = await storyblokClient.getStory(slug, {
     ...params,
     // cv,
     resolve_links: 'url',
   })
 
-  const {
-    data: { story },
-  } = response
-  return story as StoryData
+  return response.data.story as StoryData
 }
 
 const MISSING_LINKS = new Set()

@@ -315,16 +315,16 @@ export type StoryOptions = {
   version?: StoryblokVersion
 }
 
-export const getStoryBySlug = <StoryData extends ISbStoryData | undefined>(
+export const getStoryBySlug = <StoryData extends ISbStoryData>(
   slug: string,
   { version, locale }: StoryOptions,
-) => {
+): Promise<StoryData> => {
   const params: StoryblokFetchParams = {
     version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
-    resolve_relations: 'reusableBlockReference.reference',
+    resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
   }
 
-  return fetchStory<StoryData | undefined>(getStoryblokApi(), `${locale}/${slug}`, params)
+  return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
 export const getPageLinks = async (): Promise<PageLink[]> => {
@@ -366,9 +366,8 @@ export const getFilteredPageLinks = async () => {
   )
 }
 
-export const getGlobalStory = async (options: StoryOptions) => {
-  const story = await getStoryBySlug('global', options)
-  return story as GlobalStory
+export const getGlobalStory = (options: StoryOptions): Promise<GlobalStory> => {
+  return getStoryBySlug<GlobalStory>('global', options)
 }
 
 const PRODUCTS_SLUG = 'products'
@@ -383,44 +382,24 @@ export const getBlogArticleStories = async (
 ): Promise<Array<BlogArticleStory>> => {
   const response = await getStoryblokApi().getStories({
     content_type: BLOG_ARTICLE_CONTENT_TYPE,
-    resolve_relations: 'categories',
+    resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
     version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
   })
 
-  const items = response.data.stories as Array<RawBlogArticleStory>
-
-  return items.map<BlogArticleStory>((item) => ({
-    ...item,
-    content: {
-      ...item.content,
-      categories: item.content.categories.reduce((acc, storyId) => {
-        const category = response.data.rels.find((rel) => rel.uuid === storyId)
-        if (category) {
-          acc.push(category)
-        }
-        return acc
-      }, [] as Array<ISbStoryData>),
-    },
-  }))
+  return response.data.stories as Array<BlogArticleStory>
 }
 
-export type RawBlogArticleStory = ISbStoryData<
+export type BlogArticleStory = ISbStoryData<
   {
     date: string
     footer: Array<SbBlokData>
     body: Array<SbBlokData>
     content: ISbRichtext
-    categories: Array<string>
+    categories: Array<ISbStoryData>
     teaser_text: string
     page_heading: string
     teaser_image: StoryblokAsset
   } & SEOData
->
-
-export type BlogArticleStory = ISbStoryData<
-  Omit<RawBlogArticleStory['content'], 'categories'> & {
-    categories: Array<ISbStoryData>
-  }
 >
 
 const BLOG_ARTICLE_CATEGORY_CONTENT_TYPE = 'blog-article-category'

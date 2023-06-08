@@ -111,10 +111,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { notFound: true }
   }
 
-  if (!pageStory) {
-    return { notFound: true }
-  }
-
   const { data, errors } = await apolloClient.query<
     ManyPetsMigrationOffersQuery,
     ManyPetsMigrationOffersQueryVariables

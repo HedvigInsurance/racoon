@@ -15,9 +15,6 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   const { version, pageId } = getPreviewParams(req)
   const story = await fetchStory(storyblokClient, pageId, { version })
-  if (!story) {
-    throw new Error(`Couldn't find story slug=${pageId}, version=${version}`)
-  }
 
   res.setPreviewData({ version })
 

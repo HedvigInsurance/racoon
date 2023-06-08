@@ -1,5 +1,5 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
-import type { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next'
+import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
@@ -10,13 +10,13 @@ import {
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
-import { ProductPageProps } from '@/components/ProductPage/ProductPage.types'
+import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { initializeApollo } from '@/services/apollo/client'
 import { getBlogArticleCategoryList } from '@/services/blog/articleCategory'
 import { BlogArticleTeaser, getBlogArticleTeasers } from '@/services/blog/articleTeaser'
 import { hasBlogArticleList } from '@/services/blog/blog.helpers'
 import {
-  BlogArticleCategoryList,
+  type BlogArticleCategoryList,
   useHydrateBlogArticleCategoryList,
 } from '@/services/blog/blogArticleCategoryList'
 import { useHydrateBlogArticleTeaserList } from '@/services/blog/blogArticleTeaserList'
@@ -28,8 +28,8 @@ import {
   StoryblokQueryParams,
   getFilteredPageLinks,
   StoryblokPreviewData,
-  PageStory,
-  ProductStory,
+  type PageStory,
+  type ProductStory,
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -98,11 +98,6 @@ export const getStaticProps: GetStaticProps<
     fetchBreadcrumbs(slug, { version, locale }),
   ])
   console.timeEnd('getStoryblokData')
-
-  if (story === undefined) {
-    console.warn(`Page not found: ${slug}, locale: ${locale}`)
-    return { notFound: true }
-  }
 
   const props = {
     ...translations,
