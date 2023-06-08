@@ -9,7 +9,7 @@ type VerticalAlignment = 'top' | 'center' | 'bottom'
 
 type HeroBlockProps = SbBaseBlockProps<{
   background: StoryblokAsset
-  backgroundLandscape: StoryblokAsset
+  backgroundLandscape?: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
   content: SbBlokData[]
   heightPortrait?: string
@@ -31,10 +31,10 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
           priority
           src={blok.background.filename}
           alt={blok.background.alt}
-          data-portrait-image={!!blok.backgroundLandscape.filename}
+          data-portrait-image={!!blok.backgroundLandscape?.filename}
           fill
         />
-        {blok.backgroundLandscape.filename && (
+        {blok.backgroundLandscape?.filename && (
           <HeroImageLandscape
             priority
             src={blok.backgroundLandscape.filename}
