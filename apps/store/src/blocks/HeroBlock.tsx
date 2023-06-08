@@ -8,7 +8,7 @@ import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 type VerticalAlignment = 'top' | 'center' | 'bottom'
 
 type HeroBlockProps = SbBaseBlockProps<{
-  background: StoryblokAsset
+  background?: StoryblokAsset
   backgroundLandscape?: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
   content: SbBlokData[]
@@ -19,6 +19,10 @@ type HeroBlockProps = SbBaseBlockProps<{
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
   const buttonBlocks = filterByBlockType(blok.buttons, ButtonBlock.blockName)
+  const background = blok.background?.filename ? blok.background : undefined
+  const backgroundLandscape = blok.backgroundLandscape?.filename
+    ? blok.backgroundLandscape
+    : undefined
 
   return (
     <HeroSection
@@ -27,18 +31,20 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
       heightLandscape={blok.heightLandscape}
     >
       <HeroImageWrapper>
-        <HeroImage
-          priority
-          src={blok.background.filename}
-          alt={blok.background.alt}
-          data-portrait-image={!!blok.backgroundLandscape?.filename}
-          fill
-        />
-        {blok.backgroundLandscape?.filename && (
+        {background && (
+          <HeroImage
+            priority
+            src={background.filename}
+            alt={background.alt}
+            data-portrait-image={!!backgroundLandscape}
+            fill
+          />
+        )}
+        {backgroundLandscape && (
           <HeroImageLandscape
             priority
-            src={blok.backgroundLandscape.filename}
-            alt={blok.backgroundLandscape.alt}
+            src={backgroundLandscape.filename}
+            alt={backgroundLandscape.alt}
             fill
           />
         )}
