@@ -3,16 +3,17 @@ import { useMemo } from 'react'
 import { theme } from 'ui'
 import { ArticleTeaser } from '@/components/ArticleTeaser/ArticleTeaser'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { useBlogArticleTeaserList } from '@/services/blog/blogArticleTeaserList'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useFormatter } from '@/utils/useFormatter'
+import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
+import { useBlogArticleTeasers } from './useBlog'
 
 type Props = SbBaseBlockProps<{
   categories?: Array<string>
 }>
 
 export const BlogArticleListBlock = (props: Props) => {
-  const teaserList = useBlogArticleTeaserList()
+  const teaserList = useBlogArticleTeasers()
   const formatter = useFormatter()
 
   const filteredTeaserList = useMemo(() => {
@@ -50,7 +51,7 @@ export const BlogArticleListBlock = (props: Props) => {
     </GridLayout.Root>
   )
 }
-BlogArticleListBlock.blockName = 'blogArticleList'
+BlogArticleListBlock.blockName = BLOG_ARTICLE_LIST_BLOCK
 
 const List = styled.div({
   display: 'grid',

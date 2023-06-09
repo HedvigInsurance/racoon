@@ -14,7 +14,8 @@
       "@/services/*": ["services/*"],
       "@/hooks/*": ["hooks/*"],
       "@/test/*": ["test/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/features/*": ["features/*"]
     },
     "incremental": true,
     "plugins": [

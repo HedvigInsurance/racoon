@@ -11,15 +11,9 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
+import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
+import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { initializeApollo } from '@/services/apollo/client'
-import { getBlogArticleCategoryList } from '@/services/blog/articleCategory'
-import { BlogArticleTeaser, getBlogArticleTeasers } from '@/services/blog/articleTeaser'
-import { hasBlogArticleList } from '@/services/blog/blog.helpers'
-import {
-  type BlogArticleCategoryList,
-  useHydrateBlogArticleCategoryList,
-} from '@/services/blog/blogArticleCategoryList'
-import { useHydrateBlogArticleTeaserList } from '@/services/blog/blogArticleTeaserList'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   getGlobalStory,
@@ -35,11 +29,7 @@ import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/St
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextContentPageProps = StoryblokPageProps & {
-  type: 'content'
-  blogArticleTeasers?: Array<BlogArticleTeaser>
-  blogArticleCategoryList?: BlogArticleCategoryList
-}
+type NextContentPageProps = StoryblokPageProps & { type: 'content' }
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
 type PageProps = NextContentPageProps | NextProductPageProps
@@ -50,17 +40,14 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
 }
 
 const NextStoryblokPage = (props: NextContentPageProps) => {
-  useHydrateBlogArticleTeaserList(props.blogArticleTeasers ?? [])
-  useHydrateBlogArticleCategoryList(props.blogArticleCategoryList ?? [])
-
   const story = useStoryblokState(props.story)
   if (!story) return null
 
   return (
-    <>
+    <BlogContext.Provider value={parseBlogContext(props)}>
       <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
-    </>
+    </BlogContext.Provider>
   )
 }
 
@@ -108,13 +95,6 @@ export const getStaticProps: GetStaticProps<
   }
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
-  let blogArticleTeasers: Array<BlogArticleTeaser> | undefined
-  let blogArticleCategoryList: BlogArticleCategoryList | undefined
-  if (hasBlogArticleList(story)) {
-    blogArticleTeasers = await getBlogArticleTeasers(version)
-    blogArticleCategoryList = await getBlogArticleCategoryList(version)
-  }
-
   if (isProductStory(story)) {
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
     if (priceTemplate === undefined) {
@@ -147,9 +127,8 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       type: 'content',
+      ...(await fetchBlogPageProps(story)),
       ...props,
-      ...(blogArticleTeasers && { blogArticleTeasers }),
-      ...(blogArticleCategoryList && { blogArticleCategoryList }),
     },
     revalidate,
   }
