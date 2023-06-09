@@ -1,0 +1,7 @@
+mutation SasEurobonusNumberUpdate($value: String!) {
+  memberUpdateEurobonusNumber(input: { eurobonusNumber: $value }) {
+    member {
+      ...Member
+    }
+  }
+}

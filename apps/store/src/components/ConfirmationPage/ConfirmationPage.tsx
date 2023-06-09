@@ -8,7 +8,9 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
+import { Features } from '@/utils/Features'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { SasEurobonusSectionContainer } from '../../features/sas/SasEurobonusSection'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
@@ -43,6 +45,12 @@ export const ConfirmationPage = (props: Props) => {
                 <SwitchingAssistantSection
                   shopSessionId={props.shopSessionId}
                   {...props.switching}
+                />
+              )}
+
+              {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
+                <SasEurobonusSectionContainer
+                  initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
                 />
               )}
 

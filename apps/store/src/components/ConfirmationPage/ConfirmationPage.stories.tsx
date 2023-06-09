@@ -21,6 +21,7 @@ export const Default = () => {
         },
       }}
       shopSessionId="aiwdoiaiojoiwa"
+      memberPartnerData={null}
       currency="SEK"
       cart={{
         id: '123',

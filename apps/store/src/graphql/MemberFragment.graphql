@@ -1,0 +1,10 @@
+fragment Member on Member {
+  id
+  hasActivePaymentConnection
+  partnerData {
+    sas {
+      eligible
+      eurobonusNumber
+    }
+  }
+}
