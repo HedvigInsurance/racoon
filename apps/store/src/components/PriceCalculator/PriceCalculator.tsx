@@ -10,9 +10,11 @@ import { Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
+import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
+import { useShowFetchInsurance } from './useFetchInsurance'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
 
 type Props = {
@@ -44,6 +46,7 @@ export const PriceCalculator = (props: Props) => {
     return form.sections[form.sections.length - 1].id
   })
 
+  const showFetchInsurance = useShowFetchInsurance({ priceIntentId: priceIntent.id })
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
@@ -54,6 +57,8 @@ export const PriceCalculator = (props: Props) => {
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
       } else {
+        if (priceIntent.externalInsurer) showFetchInsurance()
+
         setActiveSectionId((prevSectionId) => {
           const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
           // If section has both customer and priceIntent fields, we'll get two onSuccess callbacks
@@ -110,6 +115,8 @@ export const PriceCalculator = (props: Props) => {
           </PriceCalculatorSection>
         )}
       </PriceCalculatorAccordion>
+
+      <FetchInsuranceContainer priceIntent={priceIntent} />
     </>
   )
 }
