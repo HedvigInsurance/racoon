@@ -42,16 +42,23 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
-  const [shopSession, outcome, currentMember, translations, globalStory, story, productMetadata] =
-    await Promise.all([
-      shopSessionService.fetchById(shopSessionId),
-      shopSessionService.fetchOutcome(shopSessionId),
-      fetchCurrentMember(apolloClient),
-      serverSideTranslations(locale),
-      getGlobalStory({ locale }),
-      getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
-      fetchGlobalProductMetadata({ apolloClient }),
-    ])
+  const [
+    shopSession,
+    outcome,
+    memberPartnerData,
+    translations,
+    globalStory,
+    story,
+    productMetadata,
+  ] = await Promise.all([
+    shopSessionService.fetchById(shopSessionId),
+    shopSessionService.fetchOutcome(shopSessionId),
+    fetchMemberPartnerData(apolloClient),
+    serverSideTranslations(locale),
+    getGlobalStory({ locale }),
+    getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
+    fetchGlobalProductMetadata({ apolloClient }),
+  ])
 
   // @TODO: uncomment after implementing signing
   // if (shopSession.checkout.completedAt === null) {
@@ -67,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
       story,
-      currentMember,
+      memberPartnerData,
       ...getSwitching(outcome),
     },
   })
@@ -98,7 +105,7 @@ CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</L
 
 export default CheckoutConfirmationPage
 
-const fetchCurrentMember = async (apolloClient: ApolloClient<unknown>) => {
+const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
   if (!Features.enabled('SAS_PARTNERSHIP')) {
     return null
   }
@@ -106,7 +113,7 @@ const fetchCurrentMember = async (apolloClient: ApolloClient<unknown>) => {
     const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
       query: CurrentMemberDocument,
     })
-    return data.currentMember
+    return data.currentMember.partnerData ?? null
   } catch (err) {
     if (err instanceof Error && isApolloError(err)) {
       datadogLogs.logger.info('Failed to fetch currentMember', err)

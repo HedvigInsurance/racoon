@@ -48,12 +48,11 @@ export const ConfirmationPage = (props: Props) => {
                 />
               )}
 
-              {Features.enabled('SAS_PARTNERSHIP') &&
-                props.currentMember?.partnerData?.sas?.eligible && (
-                  <SasEurobonusSectionContainer
-                    initialValue={props.currentMember.partnerData.sas.eurobonusNumber ?? ''}
-                  />
-                )}
+              {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
+                <SasEurobonusSectionContainer
+                  initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
+                />
+              )}
 
               <Space y={{ base: 1.5, lg: 2 }}>
                 <div>
