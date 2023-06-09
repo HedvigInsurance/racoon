@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
-import { Button, Dialog, Heading, Space, theme } from 'ui'
+import { Button, CrossIcon, Dialog, Heading, Space, theme } from 'ui'
 import { PURCHASE_FORM_MAX_WIDTH } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import {
   useExternalInsurersQuery,
@@ -158,9 +158,12 @@ export const CurrentInsuranceField = (props: Props) => {
       />
       {isDialogOpen && (
         <Dialog.Root open={true} onOpenChange={close}>
-          <StyledDialogContent>
+          <DialogContent onClose={close} centerContent={true}>
             {state.type === 'COMPARE' ? (
               <DialogIframeWindow>
+                <DialogCloseButton>
+                  <CrossIcon />
+                </DialogCloseButton>
                 <InsurelyIframe
                   configName={state.insurelyConfigName}
                   onCollection={handleInsurelyCollection}
@@ -180,7 +183,7 @@ export const CurrentInsuranceField = (props: Props) => {
                 </Space>
               </DialogSuccessWindow>
             )}
-          </StyledDialogContent>
+          </DialogContent>
         </Dialog.Root>
       )}
     </>
@@ -232,19 +235,15 @@ const useUpdateExternalInsurer = (params: UseUpdateExternalInsurerParams) => {
   }
 }
 
-const StyledDialogContent = styled(Dialog.Content)({
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: theme.space.xs,
+const DialogContent = styled(Dialog.Content)({
+  width: '100%',
+  maxWidth: INSURELY_IFRAME_MAX_WIDTH,
 })
 
 const DialogIframeWindow = styled(Dialog.Window)({
   width: '100%',
-  maxWidth: INSURELY_IFRAME_MAX_WIDTH,
-  height: '100%',
-  maxHeight: INSURELY_IFRAME_MAX_HEIGHT,
+  maxHeight: '100%',
+  height: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
   borderRadius: theme.radius.xs,
 })
@@ -254,4 +253,11 @@ const DialogSuccessWindow = styled(Dialog.Window)({
   borderRadius: theme.radius.xs,
   width: '100%',
   maxWidth: `calc(${PURCHASE_FORM_MAX_WIDTH} + 1rem)`,
+})
+
+const DialogCloseButton = styled(Dialog.Close)({
+  position: 'absolute',
+  top: theme.space.xs,
+  right: theme.space.xs,
+  cursor: 'pointer',
 })
