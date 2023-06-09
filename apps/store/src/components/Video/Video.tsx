@@ -13,9 +13,12 @@ type VideoSource = {
   url: string
 }
 
+type AspectRatioLandscape = '1 / 1' | '16 / 9' | '100'
+type AspectRatioPortrait = '4 / 5' | '4 / 6' | '9 / 16' | '100'
+
 type VideoSize = {
-  aspectRatioLandscape?: '1 / 1' | '16 / 9'
-  aspectRatioPortrait?: '4 / 5' | '4 / 6' | '9 / 16'
+  aspectRatioLandscape?: AspectRatioLandscape
+  aspectRatioPortrait?: AspectRatioPortrait
   maxHeightLandscape?: number
   maxHeightPortrait?: number
   roundedCorners?: boolean
@@ -211,10 +214,10 @@ const StyledVideo = styled.video(
     }),
     ['@media (orientation: portrait)']: {
       ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),
-      ...(aspectRatioPortrait && { aspectRatio: aspectRatioPortrait }),
+      ...(aspectRatioPortrait && getAspectRatio(aspectRatioPortrait)),
     },
     ['@media (orientation: landscape)']: {
-      ...(aspectRatioLandscape && { aspectRatio: aspectRatioLandscape }),
+      ...(aspectRatioLandscape && getAspectRatio(aspectRatioLandscape)),
       ...(maxHeightLandscape && { maxHeight: `${maxHeightLandscape}vh` }),
     },
 
@@ -258,3 +261,12 @@ const PlayPauseButton = styled(Button)({
   height: '2rem',
   paddingInline: theme.space.xs,
 })
+
+const getAspectRatio = (aspectRatio: AspectRatioLandscape | AspectRatioPortrait) => {
+  switch (aspectRatio) {
+    case '100':
+      return { height: '100vh' }
+    default:
+      return { aspectRatio: aspectRatio }
+  }
+}
