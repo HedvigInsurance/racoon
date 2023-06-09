@@ -1,6 +1,10 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useCallback } from 'react'
-import { Button, InputField, Space } from 'ui'
+import { Button, CheckIcon, Text, theme } from 'ui'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { TextField } from '@/components/TextField/TextField'
 import { useSasEurobonusNumberUpdateMutation } from '@/services/apollo/generated'
 
 type EurobonusSectionState = 'idle' | 'loading' | 'error' | 'complete'
@@ -11,15 +15,13 @@ type SasEurobonusSectionProps = {
   onEurobonusNumberSave: (value: string) => void
 }
 
-// TODO:
-// - wrapper with GraphlQL implementation
-// - design
-// - i18n
 export const SasEurobonusSection = ({
   eurobonusNumber = '',
   state,
   onEurobonusNumberSave,
 }: SasEurobonusSectionProps) => {
+  const { t } = useTranslation('checkout')
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     (event) => {
       event.preventDefault()
@@ -30,30 +32,43 @@ export const SasEurobonusSection = ({
     [onEurobonusNumberSave],
   )
 
-  if (state === 'complete') {
-    return <SuccessState />
-  }
-
   return (
-    <div>
-      Enter your SAS Eurobonus number below and get bonus points*
-      <form onSubmit={handleSubmit}>
-        <Space y={1}>
-          <InputField
-            name="eurobonusNumber"
-            type="text"
-            defaultValue={eurobonusNumber}
-            required={true}
-            errorMessage={state === 'error' ? 'Something went wrong' : undefined}
-          />
-          <Button type="submit" loading={state === 'loading'}>
-            Save
-          </Button>
-        </Space>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <Text color="textPrimary" size="xl">
+        {t('SAS_SECTION_TITLE')}
+      </Text>
+      <Text color="textSecondary" size="xl">
+        {t('SAS_SECTION_TEXT')}
+      </Text>
+      <FieldWrapper>
+        <TextField
+          label={t('SAS_BONUS_NUMBER_INPUT_LABEL')}
+          name="eurobonusNumber"
+          defaultValue={eurobonusNumber}
+          required={true}
+          disabled={state === 'complete'}
+          warning={state === 'error'}
+          message={state === 'error' ? t('UNKNOWN_ERROR_MESSAGE', { ns: 'common' }) : undefined}
+        />
+      </FieldWrapper>
+      {state === 'complete' ? (
+        <SpaceFlex direction="horizontal" align="center">
+          <CheckIcon color={theme.colors.greenElement} />
+          <Text>{t('SAS_BONUS_NUMBER_SAVED')}</Text>
+        </SpaceFlex>
+      ) : (
+        <Button type="submit" loading={state === 'loading'}>
+          {t('SAS_BONUS_NUMBER_SAVE_BUTTON')}
+        </Button>
+      )}
+    </form>
   )
 }
+
+const FieldWrapper = styled.div({
+  marginTop: theme.space.lg,
+  marginBottom: theme.space.xxs,
+})
 
 type SasEurobonusSectionContainerProps = {
   initialValue: string
@@ -88,5 +103,3 @@ export const SasEurobonusSectionContainer = ({
     />
   )
 }
-
-const SuccessState = () => <div>Success!</div>
