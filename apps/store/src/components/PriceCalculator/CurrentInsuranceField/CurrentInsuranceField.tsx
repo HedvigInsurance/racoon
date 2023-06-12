@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
 import { Button, CrossIcon, Dialog, Heading, Space, theme } from 'ui'
-import { PURCHASE_FORM_MAX_WIDTH } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
+import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
@@ -33,6 +33,7 @@ type Props = {
 
 type State =
   | { type: 'IDLE' }
+  | { type: 'PROMPT'; externalInsurer: ExternalInsurer; insurelyConfigName: string }
   | { type: 'COMPARE'; externalInsurer: ExternalInsurer; insurelyConfigName: string }
   | { type: 'SUCCESS'; externalInsurer: ExternalInsurer }
   | { type: 'CONFIRMED'; externalInsurer: ExternalInsurer }
@@ -43,6 +44,11 @@ export const CurrentInsuranceField = (props: Props) => {
   const { shopSession } = useShopSession()
   const [state, setState] = useState<State>({ type: 'IDLE' })
 
+  const showPrompt = useCallback(
+    (externalInsurer: ExternalInsurer, insurelyConfigName: string) =>
+      setState({ type: 'PROMPT', externalInsurer, insurelyConfigName }),
+    [],
+  )
   const compare = useCallback(
     (externalInsurer: ExternalInsurer, insurelyConfigName: string) =>
       setState({ type: 'COMPARE', externalInsurer, insurelyConfigName }),
@@ -57,7 +63,8 @@ export const CurrentInsuranceField = (props: Props) => {
     (externalInsurer: ExternalInsurer) => setState({ type: 'CONFIRMED', externalInsurer }),
     [],
   )
-  const isDialogOpen = INSURELY_IS_ENABLED && (state.type === 'COMPARE' || state.type === 'SUCCESS')
+  const isDialogOpen =
+    state.type === 'PROMPT' || state.type === 'COMPARE' || state.type === 'SUCCESS'
 
   const companyOptions = useCompanyOptions(props.productName)
   const updateExternalInsurer = useUpdateExternalInsurer({
@@ -73,8 +80,8 @@ export const CurrentInsuranceField = (props: Props) => {
         return
       }
 
-      if (props.insurelyConfigName && ssn) {
-        compare(externalInsurer, props.insurelyConfigName)
+      if (INSURELY_IS_ENABLED && props.insurelyConfigName && ssn) {
+        showPrompt(externalInsurer, props.insurelyConfigName)
         setInsurelyConfig({
           company: externalInsurer.insurelyId ?? undefined,
           ssn,
@@ -158,8 +165,20 @@ export const CurrentInsuranceField = (props: Props) => {
       />
       {isDialogOpen && (
         <Dialog.Root open={true} onOpenChange={close}>
-          <DialogContent onClose={close} centerContent={true}>
-            {state.type === 'COMPARE' ? (
+          {state.type === 'PROMPT' && (
+            <Dialog.Content onClose={close} centerContent={true}>
+              <DialogWindow>
+                <FetchInsurancePrompt
+                  company={state.externalInsurer.displayName}
+                  onClickConfirm={() => compare(state.externalInsurer, state.insurelyConfigName)}
+                  onClickSkip={close}
+                />
+              </DialogWindow>
+            </Dialog.Content>
+          )}
+
+          {state.type === 'COMPARE' && (
+            <DialogIframeContent onClose={close} centerContent={true}>
               <DialogIframeWindow>
                 <DialogCloseButton>
                   <CrossIcon />
@@ -171,8 +190,12 @@ export const CurrentInsuranceField = (props: Props) => {
                   onCompleted={handleInsurelyCompleted}
                 />
               </DialogIframeWindow>
-            ) : (
-              <DialogSuccessWindow>
+            </DialogIframeContent>
+          )}
+
+          {state.type === 'SUCCESS' && (
+            <Dialog.Content onClose={close} centerContent={true}>
+              <DialogWindow>
                 <Space y={1.5}>
                   <Heading as="h3" variant="standard.20">
                     {t('INSURELY_SUCCESS_PROMPT', { company: state.externalInsurer.displayName })}
@@ -181,9 +204,9 @@ export const CurrentInsuranceField = (props: Props) => {
                     {t('INSURELY_SUCCESS_CONTINUE_BUTTON')}
                   </Button>
                 </Space>
-              </DialogSuccessWindow>
-            )}
-          </DialogContent>
+              </DialogWindow>
+            </Dialog.Content>
+          )}
         </Dialog.Root>
       )}
     </>
@@ -235,7 +258,16 @@ const useUpdateExternalInsurer = (params: UseUpdateExternalInsurerParams) => {
   }
 }
 
-const DialogContent = styled(Dialog.Content)({
+const DialogWindow = styled(Dialog.Window)({
+  padding: theme.space.md,
+  paddingTop: theme.space.lg,
+  borderRadius: theme.radius.xs,
+  width: `calc(100% - ${theme.space.xs} * 2)`,
+  maxWidth: INSURELY_IFRAME_MAX_WIDTH,
+  marginInline: 'auto',
+})
+
+const DialogIframeContent = styled(Dialog.Content)({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
 })
@@ -246,13 +278,6 @@ const DialogIframeWindow = styled(Dialog.Window)({
   height: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
   borderRadius: theme.radius.xs,
-})
-
-const DialogSuccessWindow = styled(Dialog.Window)({
-  padding: theme.space.md,
-  borderRadius: theme.radius.xs,
-  width: '100%',
-  maxWidth: `calc(${PURCHASE_FORM_MAX_WIDTH} + 1rem)`,
 })
 
 const DialogCloseButton = styled(Dialog.Close)({
