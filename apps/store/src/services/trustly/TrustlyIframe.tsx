@@ -1,6 +1,6 @@
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useEffect, type ReactEventHandler } from 'react'
+import { useEffect, type ReactEventHandler, useState } from 'react'
 import { theme } from 'ui'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -29,6 +29,7 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
     return () => window.removeEventListener('message', handler)
   }, [url])
 
+  const [loading, setLoading] = useState(true)
   const handleLoad: ReactEventHandler<HTMLIFrameElement> = (event) => {
     try {
       const url = event.currentTarget.contentWindow?.location.href
@@ -41,9 +42,11 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
       // This is a cross-origin error, which is expected
       console.debug('Unable to read iframe location', error)
     }
+
+    setLoading(false)
   }
 
-  return <Iframe src={url} onLoad={handleLoad} />
+  return <Iframe src={url} onLoad={handleLoad} data-loading={loading} />
 }
 
 export const trustlyIframeStyles = css({
@@ -59,7 +62,18 @@ export const trustlyIframeStyles = css({
   backgroundColor: theme.colors.white,
 })
 
+const pulseAnimation = keyframes({
+  '0%': { opacity: 1 },
+  '50%': { opacity: 0.5 },
+  '100%': { opacity: 1 },
+})
+
 const Iframe = styled.iframe(trustlyIframeStyles, {
   display: 'block',
   border: 'none',
+
+  '&[data-loading=true]': {
+    backgroundColor: theme.colors.gray200,
+    animation: `${pulseAnimation} 2s infinite`,
+  },
 })
