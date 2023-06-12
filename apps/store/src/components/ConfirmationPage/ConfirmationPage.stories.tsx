@@ -4,9 +4,19 @@ import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { ConfirmationPage } from './ConfirmationPage'
 
-const meta: Meta<typeof ConfirmationPage> = {
-  title: 'ConfirmationPage',
-  component: ConfirmationPage,
+type StoryArgs = { sas: boolean }
+
+const meta: Meta<StoryArgs> = {
+  title: 'Checkout / ConfirmationPage',
+  args: {
+    sas: false,
+  },
+  argTypes: {
+    sas: {
+      name: 'SAS Eurobonus eligible?',
+      type: 'boolean',
+    },
+  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -14,7 +24,8 @@ const meta: Meta<typeof ConfirmationPage> = {
 
 export default meta
 
-export const Default: StoryFn<typeof ConfirmationPage> = () => {
+export const Default: StoryFn<StoryArgs> = (args) => {
+  const memberPartnerData = args.sas ? { sas: { eligible: true } } : null
   return (
     <AppErrorProvider>
       <ConfirmationPage
@@ -26,7 +37,7 @@ export const Default: StoryFn<typeof ConfirmationPage> = () => {
           },
         }}
         shopSessionId="aiwdoiaiojoiwa"
-        memberPartnerData={null}
+        memberPartnerData={memberPartnerData}
         currency="SEK"
         cart={cart}
         story={story}
