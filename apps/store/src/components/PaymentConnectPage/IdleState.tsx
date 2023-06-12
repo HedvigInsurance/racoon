@@ -6,7 +6,7 @@ import { type FormEventHandler, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Space, Text, theme } from 'ui'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { saveAuthTokens } from '@/services/authApi/persist'
+import { getAccessToken, saveAuthTokens } from '@/services/authApi/persist'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const IdleState = (props: Props) => {
-  const [state, setState] = useState<'idle' | 'loading'>('idle')
+  const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle')
   const { t } = useTranslation(['common', 'checkout'])
   const router = useRouter()
   const apolloClient = useApolloClient()
@@ -31,6 +31,13 @@ export const IdleState = (props: Props) => {
 
     try {
       await consumeAuthorizationCode(router)
+    } catch (error) {
+      setState('error')
+      datadogRum.addError('Payment Connect link expired', { error })
+      return
+    }
+
+    try {
       const trustlyUrl = await createTrustlyUrl({ apolloClient, locale: routingLocale })
       props.onCompleted(trustlyUrl)
     } catch (error) {
@@ -44,7 +51,14 @@ export const IdleState = (props: Props) => {
       <Space y={0.75}>
         <form onSubmit={handleSubmit}>
           <IframePlaceholder data-state={state}>
-            <Button loading={state === 'loading'}>{t('PAYMENT_CONNECT_IFRAME_LOAD_BUTTON')}</Button>
+            <WideSpace y={0.5}>
+              <Button loading={state === 'loading'} disabled={state === 'error'}>
+                {t('PAYMENT_CONNECT_IFRAME_LOAD_BUTTON')}
+              </Button>
+              {state === 'error' && (
+                <Text align="center">{t('PAYMENT_CONNECT_ERROR_LINK_EXPIRED')}</Text>
+              )}
+            </WideSpace>
           </IframePlaceholder>
         </form>
         <Text size="xs" align="center">
@@ -58,10 +72,12 @@ export const IdleState = (props: Props) => {
 const IframePlaceholder = styled.div(trustlyIframeStyles, {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'stretch',
   backgroundColor: theme.colors.white,
   paddingInline: theme.space.xl,
 })
+
+const WideSpace = styled(Space)({ width: '100%' })
 
 const AUTHORIZATION_CODE_QUERY_PARAM = 'authorization_code'
 
@@ -75,5 +91,7 @@ const consumeAuthorizationCode = async (router: NextRouter) => {
     const target = { pathname: router.pathname, query: { ...router.query } }
     delete target.query[AUTHORIZATION_CODE_QUERY_PARAM]
     await router.replace(target, undefined, { shallow: true })
+  } else if (!getAccessToken()) {
+    throw new Error('Missing authorization code')
   }
 }

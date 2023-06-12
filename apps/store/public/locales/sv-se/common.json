@@ -28,6 +28,7 @@
   "NAVIGATION_STORE_LINK": "Se alla försäkringar",
   "NAV_MENU_DIALOG_CLOSE": "Stäng",
   "NAV_MENU_DIALOG_OPEN": "Meny",
+  "PAYMENT_CONNECT_ERROR_LINK_EXPIRED": "Tyvärr är länken redan förbrukad",
   "PAYMENT_CONNECT_FAILURE": "Autogirokopplingen misslyckades tyvärr",
   "PAYMENT_CONNECT_IFRAME_LOAD_BUTTON": "Tryck här för att börja",
   "PAYMENT_CONNECT_RETRY": "Försök igen",
