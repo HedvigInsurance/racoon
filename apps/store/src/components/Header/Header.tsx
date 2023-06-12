@@ -49,10 +49,9 @@ export const Header = (props: HeaderProps) => {
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
   const { t } = useTranslation('common')
 
-  const defaultPosition = overlay ? 'absolute' : 'relative'
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
 
-  const initialStyles = { position: defaultPosition, backgroundColor } as const
+  const initialStyles = { backgroundColor } as const
 
   let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
   animate = scrollState === 'BELOW' ? 'HIDE' : animate
@@ -60,7 +59,7 @@ export const Header = (props: HeaderProps) => {
   animate = staticPosition ? undefined : animate
 
   return (
-    <GhostWrapper style={initialStyles}>
+    <GhostWrapper style={initialStyles} overlay={overlay}>
       <Wrapper
         initial={initialStyles}
         variants={ANIMATION_VARIANTS}
@@ -81,15 +80,20 @@ export const Header = (props: HeaderProps) => {
   )
 }
 
-const GhostWrapper = styled.div({
-  top: 0,
-  left: 0,
-  right: 0,
+const GhostWrapper = styled.div<{ overlay: boolean }>(({ overlay }) => ({
+  '--height': HEADER_HEIGHT_MOBILE,
+
+  position: 'relative',
+  height: 'var(--height)',
+  // Using negative margin to pull page's content bellow the menu causing the desired
+  // 'menu overlay' behaviour. Before that was being implemented by removing the header
+  // from doc's flow with absolute positioning. However that solution doesn't play well
+  // if we have banners/announcements on the screen.
+  marginBottom: overlay ? 'calc(-1 * var(--height))' : 'initial',
   zIndex: zIndexes.header,
 
-  height: HEADER_HEIGHT_MOBILE,
-  [mq.lg]: { height: HEADER_HEIGHT_DESKTOP },
-})
+  [mq.lg]: { '--height': HEADER_HEIGHT_DESKTOP },
+}))
 
 export const Wrapper = styled(motion.header)({
   width: '100%',
