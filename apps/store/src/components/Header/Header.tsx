@@ -66,11 +66,11 @@ export const Header = (props: HeaderProps) => {
         animate={animate}
         transition={TRANSITION}
       >
-        <div style={{ flex: 1 }}>
-          <LogoWrapper href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
+        <LogoWrapper>
+          <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
             <HedvigLogo />
-          </LogoWrapper>
-        </div>
+          </LogoLink>
+        </LogoWrapper>
         <ContentWrapper>
           {children}
           <ShoppingCartMenuItem />
@@ -112,11 +112,15 @@ export const Wrapper = styled(motion.header)({
   },
 })
 
-const LogoWrapper = styled(Link)({
+export const LogoWrapper = styled.div({
+  // Fix to make sure line-height doesn't affect wrapper height
+  fontSize: 0,
+  flex: 1,
+})
+
+export const LogoLink = styled(Link)({
+  display: 'inline-block',
   ':active': { opacity: 0.75 },
-  '> svg': {
-    display: 'inline-block',
-  },
 })
 
 const ContentWrapper = styled.div({

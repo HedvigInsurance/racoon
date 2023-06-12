@@ -3,16 +3,19 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, HedvigLogo, mq, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
+import { LogoLink, LogoWrapper } from '../Header'
 import {
   focusableStyles,
   MENU_BAR_HEIGHT_MOBILE,
   Navigation,
   NavigationPrimaryList,
 } from '../HeaderStyles'
+import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {
   ...focusableStyles,
@@ -65,43 +68,50 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
   return (
     <>
       <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
-        {isOpen ? (
-          <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
-        ) : (
-          <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
-        )}
+        <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
         <DialogContent>
-          <Navigation defaultValue={defaultValue}>
-            <NavigationPrimaryList>
-              <div>{children}</div>
-              <ButtonWrapper>
-                <Button
-                  href={getAppStoreLink('apple', routingLocale).toString()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="secondary"
-                  size="medium"
-                >
-                  <SpaceFlex space={0.5} align="center">
-                    <AppleIcon />
-                    App Store
-                  </SpaceFlex>
-                </Button>
-                <Button
-                  href={getAppStoreLink('google', routingLocale).toString()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="secondary"
-                  size="medium"
-                >
-                  <SpaceFlex space={0.5} align="center">
-                    <AndroidIcon />
-                    Google Play
-                  </SpaceFlex>
-                </Button>
-              </ButtonWrapper>
-            </NavigationPrimaryList>
-          </Navigation>
+          <Wrapper>
+            <TopMenuHeader>
+              <LogoWrapper>
+                <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
+                  <HedvigLogo />
+                </LogoLink>
+              </LogoWrapper>
+              <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
+              <ShoppingCartMenuItem />
+            </TopMenuHeader>
+            <Navigation defaultValue={defaultValue}>
+              <NavigationPrimaryList>
+                <div>{children}</div>
+                <ButtonWrapper>
+                  <Button
+                    href={getAppStoreLink('apple', routingLocale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="medium"
+                  >
+                    <SpaceFlex space={0.5} align="center">
+                      <AppleIcon />
+                      App Store
+                    </SpaceFlex>
+                  </Button>
+                  <Button
+                    href={getAppStoreLink('google', routingLocale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="medium"
+                  >
+                    <SpaceFlex space={0.5} align="center">
+                      <AndroidIcon />
+                      Google Play
+                    </SpaceFlex>
+                  </Button>
+                </ButtonWrapper>
+              </NavigationPrimaryList>
+            </Navigation>
+          </Wrapper>
         </DialogContent>
       </DialogPrimitive.Root>
     </>
@@ -117,9 +127,23 @@ export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
   )
 }
 
+const Wrapper = styled.div({
+  position: 'fixed',
+  top: 0,
+  width: '100%',
+})
+
+const TopMenuHeader = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: MENU_BAR_HEIGHT_MOBILE,
+  paddingInline: theme.space.md,
+})
+
 const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
   position: 'fixed',
   inset: 0,
-  top: MENU_BAR_HEIGHT_MOBILE,
+  top: 0,
   backgroundColor: theme.colors.light,
 })
