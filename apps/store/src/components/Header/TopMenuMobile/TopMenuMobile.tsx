@@ -8,7 +8,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { LogoWrapper } from '../Header'
+import { LogoLink, LogoWrapper } from '../Header'
 import {
   focusableStyles,
   MENU_BAR_HEIGHT_MOBILE,
@@ -72,11 +72,11 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
         <DialogContent>
           <Wrapper>
             <TopMenuHeader>
-              <div style={{ flex: 1 }}>
-                <LogoWrapper href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
+              <LogoWrapper>
+                <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
                   <HedvigLogo />
-                </LogoWrapper>
-              </div>
+                </LogoLink>
+              </LogoWrapper>
               <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
               <ShoppingCartMenuItem />
             </TopMenuHeader>
