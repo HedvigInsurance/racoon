@@ -1,9 +1,11 @@
 import { Global } from '@emotion/react'
 import { atom, useAtomValue, useSetAtom } from 'jotai'
+import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
 import { useBreakpoint } from 'ui'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 
 const OPEN_ATOM = atom(false)
 
@@ -11,6 +13,10 @@ export const CustomerFirstScript = () => {
   const isDesktop = useBreakpoint('lg')
   const open = useAtomValue(OPEN_ATOM)
   const { chatWidgetSrc } = useCurrentLocale()
+  const { pathname } = useRouter()
+
+  // HACK: prevent CustomerFirst from applying styles hiding iframes
+  if (pathname === PageLink.paymentConnect()) return null
 
   if (!chatWidgetSrc) return null
 
