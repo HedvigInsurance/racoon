@@ -66,11 +66,9 @@ export const Header = (props: HeaderProps) => {
         animate={animate}
         transition={TRANSITION}
       >
-        <div style={{ flex: 1 }}>
-          <LogoWrapper href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
-            <HedvigLogo />
-          </LogoWrapper>
-        </div>
+        <LogoWrapper href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
+          <HedvigLogo />
+        </LogoWrapper>
         <ContentWrapper>
           {children}
           <ShoppingCartMenuItem />
@@ -112,7 +110,7 @@ export const Wrapper = styled(motion.header)({
   },
 })
 
-const LogoWrapper = styled(Link)({
+export const LogoWrapper = styled(Link)({
   ':active': { opacity: 0.75 },
   '> svg': {
     display: 'inline-block',
