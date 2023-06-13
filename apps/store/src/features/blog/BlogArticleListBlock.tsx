@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useMemo } from 'react'
 import { theme } from 'ui'
-import { ArticleTeaser } from '@/components/ArticleTeaser/ArticleTeaser'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useFormatter } from '@/utils/useFormatter'
+import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
 import { useBlogArticleTeasers } from './useBlog'
 
