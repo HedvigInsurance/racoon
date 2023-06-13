@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent } from '@storyblok/react'
-import { type ReactElement } from 'react'
+import { Fragment, type ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
@@ -67,7 +67,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
       {props.children}
       {showFooter &&
         footerBlock.map((nestedBlock) => (
-          <>
+          <Fragment key={nestedBlock._uid}>
             {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}
 
             <FooterBlock
@@ -75,7 +75,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
               blok={nestedBlock}
               onLocaleChange={handleLocaleChange}
             />
-          </>
+          </Fragment>
         ))}
     </Wrapper>
   )

@@ -1,7 +1,7 @@
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 
-type State = 'INITIAL' | 'PROMPT' | 'COMPARE' | 'SUCCESS' | 'SKIPPED'
+type State = 'INITIAL' | 'PROMPT' | 'COMPARE' | 'SUCCESS' | 'DISMISSED'
 
 const STATE_ATOM = atom<State>('INITIAL')
 
