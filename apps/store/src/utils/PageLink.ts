@@ -11,7 +11,6 @@ export const ORIGIN_URL =
 type BaseParams = { locale?: RoutingLocale }
 
 type CheckoutPaymentPage = BaseParams & { shopSessionId: string }
-type CheckoutPaymentRedirectBasePage = Required<BaseParams> & { shopSessionId: string }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
 type ForeverPage = BaseParams & { code: string }
@@ -37,13 +36,8 @@ export const PageLink = {
     const expandCartQueryParam = expandCart ? `?${QueryParam.ExpandCart}=1` : ''
     return `${localePrefix(locale)}/checkout${expandCartQueryParam}`
   },
-  checkoutPayment: ({ locale, shopSessionId }: CheckoutPaymentPage) => {
-    return `${localePrefix(locale)}/checkout/${shopSessionId}/payment`
-  },
   checkoutSwitchingAssistant: ({ locale, shopSessionId }: CheckoutPaymentPage) =>
     `${localePrefix(locale)}/checkout/${shopSessionId}/switching-assistant`,
-  checkoutPaymentRedirectBase: ({ locale, shopSessionId }: CheckoutPaymentRedirectBasePage) =>
-    `${ORIGIN_URL}/${locale}/checkout/${shopSessionId}/payment`,
   checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) =>
     `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`,
   checkoutSign: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/checkout/sign`,
