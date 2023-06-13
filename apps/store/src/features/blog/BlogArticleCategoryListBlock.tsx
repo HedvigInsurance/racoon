@@ -1,6 +1,6 @@
-import { ArticleCategoryList } from '@/components/ArticleCategoryList/ArticleCategoryList'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ArticleCategoryList } from './ArticleCategoryList/ArticleCategoryList'
 import { BLOG_ARTICLE_CATEGORY_LIST_BLOCK } from './blog.constants'
 import { useBlogArticleCategories } from './useBlog'
 

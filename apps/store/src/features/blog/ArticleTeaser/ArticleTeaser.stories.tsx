@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { ArticleTeaser } from './ArticleTeaser'
 
 const meta: Meta = {
-  title: 'Article Teaser',
+  title: 'Blog / Article Teaser',
 }
 
 export default meta

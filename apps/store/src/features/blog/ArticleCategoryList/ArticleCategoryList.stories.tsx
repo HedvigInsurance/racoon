@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { ArticleCategoryList } from './ArticleCategoryList'
 
 const meta: Meta = {
-  title: 'Article Category List',
+  title: 'Blog / Article Category List',
 }
 
 export default meta
