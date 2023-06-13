@@ -115,12 +115,10 @@ export const OfferPresenter = (props: Props) => {
 
     const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
     const company = selectedOffer.priceMatch.externalInsurer.displayName
-    const externalPrice = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
 
     return {
       children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
-      // TODO: Include external expiry date
-      subtitle: `${company} · ${externalPrice}`,
+      subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
     } as const
   }, [selectedOffer.priceMatch, formatter, t])
 
