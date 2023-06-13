@@ -36,6 +36,7 @@ import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { ManyPetsMigrationPageBlock } from '@/blocks/ManyPetsMigrationPageBlock'
+import { MediaListBlock } from '@/blocks/MediaListBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
@@ -239,6 +240,7 @@ export const initStoryblok = () => {
     ImageTextBlock,
     InlineSpaceBlock,
     InsurableLimitsBlock,
+    MediaListBlock,
     ModalBlock,
     ManyPetsMigrationPageBlock,
     NavItemBlock,
