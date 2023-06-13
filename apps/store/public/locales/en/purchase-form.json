@@ -104,6 +104,7 @@
   "OPEN_PRICE_CALCULATOR_BUTTON": "See your price",
   "PRESENT_OFFER_EDIT_BUTTON": "Edit your info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Edit",
+  "PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE": "compared to {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "You save {{amount}}",
   "QUICK_CHECKOUT_BUTTON_LABEL": "Go to checkout",
   "SECTION_TITLE_BUILDING_DETAILS": "Building details",

@@ -104,6 +104,7 @@
   "OPEN_PRICE_CALCULATOR_BUTTON": "Se ditt pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
+  "PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE": "jämfört med {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
   "QUICK_CHECKOUT_BUTTON_LABEL": "Gå till kassan",
   "SECTION_TITLE_BUILDING_DETAILS": "Byggnadsdetaljer",
