@@ -8,6 +8,10 @@ const { i18n } = require('./next-i18next.config')
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   swcMinify: true,
+  compiler: {
+    // Required for nested selectors like `${LargeWrapper}:focus-within > &`
+    emotion: true,
+  },
   images: {
     domains: ['a.storyblok.com'],
   },

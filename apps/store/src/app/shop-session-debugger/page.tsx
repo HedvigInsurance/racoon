@@ -1,13 +1,16 @@
+'use client'
+
+import Head from 'next/head'
 import { CreateSessionForm } from './CreateSessionForm'
 import { Wrapper } from './styles'
-
-export const metadata = {
-  robots: 'none',
-}
 
 const Page = () => {
   return (
     <Wrapper>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
+
       <CreateSessionForm />
     </Wrapper>
   )

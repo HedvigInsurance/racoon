@@ -1,3 +1,5 @@
+'use client'
+
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import { contentFontClassName } from '@/utils/fonts'
 
