@@ -14,6 +14,7 @@ import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
 import { CardLinkListBlock } from '@/blocks/CardLinkListBlock'
 import { CheckListBlock } from '@/blocks/CheckListBlock'
+import { ComparisonTableBlock } from '@/blocks/ComparisonTableBlock'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
@@ -130,6 +131,21 @@ export type LinkField = {
     url: string
     full_slug: string
   }
+}
+
+export type StoryblokTableField = {
+  thead: Array<StoryblokTableCell>
+  tbody: Array<StoryblokTableRow>
+}
+
+type StoryblokTableCell = {
+  _uid: string
+  value: string
+}
+
+type StoryblokTableRow = {
+  _uid: string
+  body: Array<StoryblokTableCell>
 }
 
 export type SEOData = {
@@ -272,6 +288,7 @@ export const initStoryblok = () => {
     CardLinkListBlock,
     SelectInsuranceGridBlock,
     QuickPurchaseBlock,
+    ComparisonTableBlock,
     ...blogBlocks,
   ]
   const blockAliases = { reusableBlock: PageBlock }

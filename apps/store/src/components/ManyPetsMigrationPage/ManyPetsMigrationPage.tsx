@@ -15,7 +15,7 @@ import {
   fetchCheckoutSteps,
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
-import * as ComparisonTable from '@/components/ProductPage/PurchaseForm/ComparisonTable/ComparisonTable'
+import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import {
   Money,
@@ -137,7 +137,7 @@ export const ManyPetsMigrationPage = ({
                         <ManypetsLogo />
                       </Centered>
                     </ComparisonTable.Header>
-                    <ComparisonTable.Header active>
+                    <ComparisonTable.Header active={true}>
                       <Centered>
                         {/* Both icons are composed differently. For optical sizing, they should diff 2px in width/height */}
                         <HedvigLogo width={76} height={22} />
@@ -153,7 +153,9 @@ export const ManyPetsMigrationPage = ({
                       <ComparisonTable.Row key={attribute}>
                         <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
                         <ComparisonTable.DataCell>{parsedValue}</ComparisonTable.DataCell>
-                        <ComparisonTable.DataCell active>{parsedValue}</ComparisonTable.DataCell>
+                        <ComparisonTable.DataCell active={true}>
+                          {parsedValue}
+                        </ComparisonTable.DataCell>
                       </ComparisonTable.Row>
                     )
                   })}
