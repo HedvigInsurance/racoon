@@ -16,6 +16,7 @@ export const FetchInsuranceContainer = ({ priceIntent }: Props) => {
       priceIntentId={priceIntent.id}
       externalInsurer={priceIntent.externalInsurer}
       insurelyConfigName={priceIntent.insurelyConfigName}
+      productName={priceIntent.product.displayNameShort}
     />
   )
 }

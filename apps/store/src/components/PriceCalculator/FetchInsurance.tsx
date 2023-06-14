@@ -1,8 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
-import { useCallback, useState } from 'react'
-import { Button, CrossIcon, Dialog, Heading, Space, theme } from 'ui'
+import { type ComponentProps, useCallback, useState } from 'react'
+import { CrossIcon, Dialog, Text, theme } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import {
   ExternalInsurer,
@@ -15,18 +14,26 @@ import {
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { FetchInsuranceSuccess } from '../FetchInsuranceSuccess/FetchInsuranceSuccess'
 import { useFetchInsuranceState } from './useFetchInsurance'
 
 const logger = datadogLogs.createLogger('FetchInsurance')
+
+type OnCompleted = NonNullable<ComponentProps<typeof InsurelyIframe>['onCompleted']>
 
 type Props = {
   priceIntentId: string
   externalInsurer: ExternalInsurer
   insurelyConfigName: string
+  productName: string
 }
 
-export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceIntentId }: Props) => {
-  const { t } = useTranslation('purchase-form')
+export const FetchInsurance = ({
+  externalInsurer,
+  insurelyConfigName,
+  priceIntentId,
+  productName,
+}: Props) => {
   const { shopSession } = useShopSession()
 
   const [state, setState] = useFetchInsuranceState()
@@ -39,7 +46,7 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
       ssn: shopSession?.customer?.ssn ?? undefined,
     })
   }
-  const skip = () => setState('SKIPPED')
+  const dismiss = () => setState('DISMISSED')
   const confirm = () => setState('SUCCESS')
 
   const [dataCollectionId, setDataCollectionId] = useState<string | null>(null)
@@ -52,8 +59,8 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
         confirm()
       } else {
         logger.warn('Failed to update Insurely data collection ID', { priceIntentId })
+        dismiss()
       }
-      skip()
     },
     onError(error) {
       logger.warn('Error updating Insurely data collection ID', {
@@ -80,7 +87,7 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
     createDataCollection({ variables: { collectionId } })
   }
 
-  const handleInsurelyCompleted = useCallback(() => {
+  const handleInsurelyCompleted: OnCompleted = useCallback(() => {
     if (dataCollectionId) {
       updateDataCollectionId({
         variables: { priceIntentId, dataCollectionId },
@@ -91,21 +98,21 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
   }, [updateDataCollectionId, priceIntentId, dataCollectionId])
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={skip}>
+    <Dialog.Root open={isOpen} onOpenChange={dismiss}>
       {state === 'PROMPT' && (
-        <Dialog.Content onClose={skip} centerContent={true}>
+        <DialogContent onClose={dismiss} centerContent={true}>
           <DialogWindow>
             <FetchInsurancePrompt
               company={externalInsurer.displayName}
               onClickConfirm={compare}
-              onClickSkip={skip}
+              onClickSkip={dismiss}
             />
           </DialogWindow>
-        </Dialog.Content>
+        </DialogContent>
       )}
 
       {state === 'COMPARE' && (
-        <DialogIframeContent onClose={skip} centerContent={true}>
+        <DialogIframeContent onClose={dismiss} centerContent={true}>
           <DialogIframeWindow>
             <DialogCloseButton>
               <CrossIcon />
@@ -113,7 +120,7 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
             <InsurelyIframe
               configName={insurelyConfigName}
               onCollection={handleInsurelyCollection}
-              onClose={skip}
+              onClose={dismiss}
               onCompleted={handleInsurelyCompleted}
             />
           </DialogIframeWindow>
@@ -121,16 +128,15 @@ export const FetchInsurance = ({ externalInsurer, insurelyConfigName, priceInten
       )}
 
       {state === 'SUCCESS' && (
-        <Dialog.Content onClose={skip} centerContent={true}>
+        <DialogContent onClose={dismiss} centerContent={true}>
           <DialogWindow>
-            <Space y={1.5}>
-              <Heading as="h3" variant="standard.20">
-                {t('INSURELY_SUCCESS_PROMPT', { company: externalInsurer.displayName })}
-              </Heading>
-              <Button onClick={confirm}>{t('INSURELY_SUCCESS_CONTINUE_BUTTON')}</Button>
-            </Space>
+            <FetchInsuranceSuccess company={externalInsurer.displayName} onClick={dismiss}>
+              <Text>
+                {externalInsurer.displayName} {productName}
+              </Text>
+            </FetchInsuranceSuccess>
           </DialogWindow>
-        </Dialog.Content>
+        </DialogContent>
       )}
     </Dialog.Root>
   )
@@ -141,11 +147,13 @@ const DialogWindow = styled(Dialog.Window)({
   paddingTop: theme.space.lg,
   borderRadius: theme.radius.xs,
   width: `calc(100% - ${theme.space.xs} * 2)`,
-  maxWidth: INSURELY_IFRAME_MAX_WIDTH,
+  maxWidth: '28rem',
   marginInline: 'auto',
 })
 
-const DialogIframeContent = styled(Dialog.Content)({
+const DialogContent = styled(Dialog.Content)({ width: '100%' })
+
+const DialogIframeContent = styled(DialogContent)({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
 })

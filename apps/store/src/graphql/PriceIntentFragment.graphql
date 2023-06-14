@@ -11,4 +11,7 @@ fragment PriceIntentFragment on PriceIntent {
     insurelyId
   }
   insurelyConfigName
+  product {
+    displayNameShort
+  }
 }
