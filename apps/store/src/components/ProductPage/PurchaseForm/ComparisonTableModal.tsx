@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, Dialog, PlusIcon } from 'ui'
+import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'
-import * as ComparisonTable from './ComparisonTable/ComparisonTable'
 
 type Props = {
   tiers: Array<ProductOfferFragment>

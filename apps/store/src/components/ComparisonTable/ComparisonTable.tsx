@@ -79,6 +79,7 @@ const TableDataCell = styled.td({
   paddingInline: theme.space.xs,
   verticalAlign: 'middle',
   minWidth: '2.5rem',
+  color: theme.colors.textSecondary,
 
   [mq.lg]: {
     minWidth: '4rem',

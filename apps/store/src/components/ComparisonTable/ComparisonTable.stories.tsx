@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react'
 import * as ComparisonTable from './ComparisonTable'
 
 export default {
-  title: 'Product Page / Comparison Table',
+  title: 'Comparison Table',
   component: ComparisonTable.Root,
 } as Meta<typeof ComparisonTable.Root>
 
@@ -12,7 +12,7 @@ export const Default = () => {
       <ComparisonTable.Head>
         <ComparisonTable.Header />
         <ComparisonTable.Header>Hel</ComparisonTable.Header>
-        <ComparisonTable.Header active>Halv</ComparisonTable.Header>
+        <ComparisonTable.Header active={true}>Halv</ComparisonTable.Header>
         <ComparisonTable.Header>Trafik</ComparisonTable.Header>
       </ComparisonTable.Head>
       <ComparisonTable.Body>
@@ -21,7 +21,7 @@ export const Default = () => {
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
-          <ComparisonTable.DataCell active>
+          <ComparisonTable.DataCell active={true}>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
           <ComparisonTable.DataCell>
@@ -33,7 +33,7 @@ export const Default = () => {
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
-          <ComparisonTable.DataCell active>
+          <ComparisonTable.DataCell active={true}>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
           <ComparisonTable.DataCell>
@@ -45,7 +45,7 @@ export const Default = () => {
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
-          <ComparisonTable.DataCell active>
+          <ComparisonTable.DataCell active={true}>
             <ComparisonTable.MissingIcon />
           </ComparisonTable.DataCell>
           <ComparisonTable.DataCell>
