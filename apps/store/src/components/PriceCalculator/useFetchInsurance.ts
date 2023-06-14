@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 
@@ -24,6 +25,7 @@ export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
       setState((currentState) => {
         if (force || (!hasShown && currentState === 'INITIAL')) {
           window.sessionStorage.setItem(sessionStorageKey, 'true')
+          datadogLogs.logger.info('Display FetchInsurancePrompt', { priceIntentId })
           return 'PROMPT'
         }
 
