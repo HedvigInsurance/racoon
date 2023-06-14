@@ -78,8 +78,8 @@ const StyledContentWrapper = styled.div<{ center: boolean }>(
   ({ center }) =>
     center && {
       display: 'flex',
-      alignItems: 'center',
       justifyContent: 'center',
+      overflowY: 'auto',
     },
 )
 
