@@ -36,16 +36,12 @@ export const CurrentInsuranceField = (props: Props) => {
     },
   })
 
-  const handleCompanyChange = (company?: string) => {
-    updateExternalInsurer(company)
-  }
-
   return (
     <InputCurrentInsurance
       label={props.label}
       company={props.externalInsurer}
       companyOptions={companyOptions}
-      onCompanyChange={handleCompanyChange}
+      onCompanyChange={updateExternalInsurer}
     />
   )
 }
