@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type ComponentProps, useCallback, useState, useMemo } from 'react'
-import { CrossIcon, Dialog, Text, theme } from 'ui'
+import { CrossIcon, Dialog, Text, mq, theme } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import {
   ExternalInsurer,
@@ -170,11 +170,16 @@ const DialogWindow = styled(Dialog.Window)({
   marginInline: 'auto',
 })
 
-const DialogContent = styled(Dialog.Content)({ width: '100%' })
+const DialogContent = styled(Dialog.Content)({
+  width: '100%',
+  alignSelf: 'center',
+})
 
-const DialogIframeContent = styled(DialogContent)({
+const DialogIframeContent = styled(Dialog.Content)({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
+
+  [mq.lg]: { alignSelf: 'center' },
 })
 
 const DialogIframeWindow = styled(Dialog.Window)({
