@@ -3,8 +3,8 @@ import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react
 import { useId } from 'react'
 import { Text, mq, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
+import { richTextStyles } from '@/components/RichText/RichText.styles'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { richTextStyles } from './RichTextBlock/RichTextBlock.styles'
 
 export type AccordionItemBlockProps = SbBaseBlockProps<{
   title: string
