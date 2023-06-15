@@ -56,6 +56,8 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 │  ├─ useBoop.ts                <-- app-level hook
 ├─ services/
 │  ├─ i18n.ts                   <-- namespaced utilities related to "i18n"
+├─ features/
+│  ├─ blog/                     <-- app-level features
 ├─ constants.ts                 <-- app-level constants
 ├─ types.ts                     <-- app-level types
 ├─ graphql                      <-- app-level types
@@ -63,6 +65,30 @@ This project follows Josh Comeau's [Delightful File/Directory Structure](https:/
 ├─ pages/
 │  ├─ about.ts                  <-- Next.js page component
 ```
+
+### Feature-folders
+
+We've made one addition to the directory structure suggested by Josh Comeau. We've added a `features` folder. Josh makes some good points why grouping modules into features can be a bad idea. However, we've found that in some limited cases it's a very powerful concept.
+
+When starting a new project, consider if it could fit as a separate feature. Optimize for **clean feature** versus cramming everthing into feature-folders.
+
+You can tell that a set of modules work as a feature if they:
+
+- Share common business logic
+
+- Often change together (a change in one file often requires a change in another file)
+
+- Represent a standalone concept (can be easily deleteled and feature-flagged)
+
+  - Never import modules from one feature into another
+
+A feature is not:
+
+- A page or route (they are already grouped together in the `/pages` folder)
+
+- A component (use the `/components` folder if all your need is to group React components)
+
+- An API wrapper around e.g. Storyblok or Insurely (use the `/services` folder)
 
 #### Next.js-layer
 
