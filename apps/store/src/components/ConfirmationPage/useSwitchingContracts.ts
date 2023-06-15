@@ -1,9 +1,7 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useEffect, useMemo } from 'react'
 import { ContractExternalInsuranceCancellationStatus } from '@/services/apollo/generated'
 import { useShopSessionOutcomeQuery } from '@/services/apollo/generated'
-import { convertToDate } from '@/utils/date'
 
 export type BankSigneringContract = {
   id: string
@@ -12,7 +10,7 @@ export type BankSigneringContract = {
     type: 'PENDING' | 'COMPLETED'
     message: string
   }
-  approveByDate: Date
+  approveByDate: string
 }
 
 type Params = { shopSessionId: string }
@@ -40,22 +38,13 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
 
       if (!cancellation.bankSignering) return
 
-      const approveByDate = convertToDate(cancellation.bankSignering.approveByDate)
-      if (!approveByDate) {
-        datadogLogs.logger.error('Could not parse approveByDate', {
-          contractId: contract.id,
-          approveByDate: cancellation.bankSignering.approveByDate,
-        })
-        return
-      }
-
       switchingContracts.push({
         id: contract.id,
         displayName: [contract.variant.displayName, cancellation.externalInsurer.displayName].join(
           ' · ',
         ),
         status: getStatus(cancellation.status),
-        approveByDate,
+        approveByDate: cancellation.bankSignering.approveByDate,
       })
     })
 
