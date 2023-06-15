@@ -49,7 +49,6 @@ const ACCORDION_ITEMS = [
 ]
 
 export default {
-  title: 'Accordion',
   component: Accordion.Root,
 } as Meta<typeof Accordion.Root>
 

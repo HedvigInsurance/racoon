@@ -2,7 +2,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import { TopPickCard } from './TopPickCard'
 
 export default {
-  title: 'TopPickCard',
   component: TopPickCard,
 } as Meta<typeof TopPickCard>
 

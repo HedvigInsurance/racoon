@@ -3,7 +3,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import { ProductCard, ProductCardProps } from './ProductCard'
 
 export default {
-  title: 'Product Card',
   component: ProductCard,
   argTypes: {},
   parameters: {

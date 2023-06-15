@@ -3,7 +3,7 @@ import { Button, Dialog } from 'ui'
 import { CartNotificationContent } from './CartToast'
 
 const config = {
-  title: 'Cart Notification',
+  title: 'Cart / Cart Notification',
 }
 
 export const Open: StoryFn<typeof CartNotificationContent> = (props) => (

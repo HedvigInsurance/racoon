@@ -2,7 +2,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import { InsurableLimits } from './InsurableLimits'
 
 export default {
-  title: 'InsurableLimits',
   component: InsurableLimits,
 } as Meta<typeof InsurableLimits>
 

@@ -4,7 +4,6 @@ import { Banner } from './Banner'
 type Story = StoryObj<typeof Banner>
 
 const meta: Meta<typeof Banner> = {
-  title: 'Banner',
   component: Banner,
   parameters: {
     layout: 'fullscreen',

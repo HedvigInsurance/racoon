@@ -7,7 +7,6 @@ const Item = () => (
 )
 
 export default {
-  title: 'Slideshow',
   component: Slideshow,
   parameters: {
     viewport: {

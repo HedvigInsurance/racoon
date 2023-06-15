@@ -3,7 +3,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import { QuickPurchaseForm, type ProductOption } from './QuickPurchaseForm'
 
 export default {
-  title: 'QuickPurchaseForm',
   component: QuickPurchaseForm,
   parameters: {
     viewport: {

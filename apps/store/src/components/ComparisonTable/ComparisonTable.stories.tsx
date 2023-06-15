@@ -2,7 +2,6 @@ import { Meta } from '@storybook/react'
 import * as ComparisonTable from './ComparisonTable'
 
 export default {
-  title: 'Comparison Table',
   component: ComparisonTable.Root,
 } as Meta<typeof ComparisonTable.Root>
 
