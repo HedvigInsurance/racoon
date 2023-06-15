@@ -3,7 +3,6 @@ import { ProductItem } from './ProductItem'
 import { SelectInsuranceGrid } from './SelectInsuranceGrid'
 
 export default {
-  title: 'Select Insurance Grid',
   component: SelectInsuranceGrid,
 } as Meta<typeof SelectInsuranceGrid>
 

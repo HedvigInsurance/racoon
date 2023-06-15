@@ -40,7 +40,6 @@ const createNewPeril = (): PerilFragment => ({
 // Story
 
 export default {
-  title: 'Accordion/Perils',
   component: Perils,
 } as Meta<typeof Perils>
 

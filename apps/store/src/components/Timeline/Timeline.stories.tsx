@@ -4,7 +4,6 @@ import { Heading } from 'ui'
 import * as Timeline from './Timeline'
 
 export default {
-  title: 'Timeline',
   component: Timeline.Root,
   parameters: {
     viewport: {

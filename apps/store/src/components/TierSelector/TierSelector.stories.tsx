@@ -4,7 +4,7 @@ import * as TierLevelRadioGroup from './TierLevelRadioGroup'
 import * as TierSelector from './TierSelector'
 
 export default {
-  title: 'Tier Selector',
+  title: 'Purchase Form / Tier Selector',
   component: TierSelector.Root,
 } as Meta<typeof TierSelector.Root>
 

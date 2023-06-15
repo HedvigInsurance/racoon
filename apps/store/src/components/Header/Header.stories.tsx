@@ -19,7 +19,6 @@ import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
 
 export default {
-  title: 'Header',
   component: Header,
 } as Meta<typeof Header>
 

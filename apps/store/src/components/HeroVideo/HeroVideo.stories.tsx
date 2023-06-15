@@ -3,7 +3,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import { HeroVideo } from './HeroVideo'
 
 export default {
-  title: 'HeroVideo',
   component: HeroVideo,
   parameters: {
     viewport: {

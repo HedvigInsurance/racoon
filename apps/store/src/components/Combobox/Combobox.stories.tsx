@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Combobox } from './Combobox'
 
 export default {
-  title: 'Combobox',
+  title: 'Inputs / Combobox',
   component: Combobox,
   argTypes: {},
 } as Meta<typeof Combobox>

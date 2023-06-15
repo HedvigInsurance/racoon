@@ -2,7 +2,6 @@ import { Meta, StoryFn } from '@storybook/react'
 import * as CheckList from './CheckList'
 
 export default {
-  title: 'Check List',
   component: CheckList.Root,
   argTypes: {},
 } as Meta<typeof CheckList.Root>

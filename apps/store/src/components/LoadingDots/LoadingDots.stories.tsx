@@ -3,7 +3,6 @@ import React from 'react'
 import { LoadingDots, LoadingDotsProps } from './LoadingDots'
 
 export default {
-  title: 'Loading Dots',
   component: LoadingDots,
   parameters: {
     layout: 'centered',

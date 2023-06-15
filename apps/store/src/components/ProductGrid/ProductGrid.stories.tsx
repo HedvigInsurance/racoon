@@ -3,7 +3,6 @@ import { ProductCard, ProductCardProps } from '@/components/ProductCard/ProductC
 import { ProductGrid, ProductGridProps } from './ProductGrid'
 
 export default {
-  title: 'Product Grid',
   component: ProductGrid,
   argTypes: {},
 } as Meta<typeof ProductGrid>

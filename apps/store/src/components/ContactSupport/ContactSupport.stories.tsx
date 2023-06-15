@@ -3,7 +3,6 @@ import { LinkField } from '@/services/storyblok/storyblok'
 import { ContactSupport, ContactSupportProps } from './ContactSupport'
 
 export default {
-  title: 'Contact Support',
   component: ContactSupport,
   argTypes: {},
 } as Meta<typeof ContactSupport>
