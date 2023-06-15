@@ -14,5 +14,6 @@ fragment PriceIntentFragment on PriceIntent {
   product {
     name
     displayNameShort
+    pageLink
   }
 }
