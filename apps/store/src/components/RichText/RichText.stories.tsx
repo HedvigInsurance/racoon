@@ -4,6 +4,9 @@ import { RichText } from './RichText'
 
 const meta: Meta<typeof RichText> = {
   component: RichText,
+  parameters: {
+    layout: 'fullscreen',
+  },
 }
 
 export default meta
@@ -11,7 +14,7 @@ type Story = StoryObj<typeof RichText>
 
 const Template: Story = {
   render: (args) => (
-    <GridLayout.Root>
+    <GridLayout.Root style={{ paddingBlock: '2rem' }}>
       <GridLayout.Content width={{ base: '1', md: '2/3', xl: '1/2' }} align={'center'}>
         <RichText {...args} />
       </GridLayout.Content>
@@ -26,13 +29,13 @@ export const Default: Story = {
   ...Template,
   args: {
     contentHTML,
+    largeText: true,
   },
 }
 
-export const Large: Story = {
+export const Small: Story = {
   ...Template,
   args: {
     contentHTML,
-    largeText: true,
   },
 }
