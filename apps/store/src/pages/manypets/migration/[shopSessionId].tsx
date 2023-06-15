@@ -4,10 +4,13 @@ import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
+import { ManyPetsMigrationStory } from '@/features/manyPets/manyPets.types'
 import {
   ManyPetsMigrationPage,
   type ManyPetsMigrationPageProps,
-} from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
+} from '@/features/manyPets/ManyPetsMigrationPage/ManyPetsMigrationPage'
+import { getComparisonTableData } from '@/features/manyPets/manyPetsService'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import {
   ManyPetsMigrationOffersDocument,
@@ -20,12 +23,7 @@ import {
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
 import { resetAuthTokens } from '@/services/authApi/persist'
-import { getComparisonTableData } from '@/services/manypets/manypetsService'
-import {
-  getStoryBySlug,
-  MANYPETS_FOLDER_SLUG,
-  ManyPetsMigrationStory,
-} from '@/services/storyblok/storyblok'
+import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -99,7 +97,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     fetchMigrationSession(apolloClient, shopSessionId).catch((err) => {
       console.error('Failed to find shopSession', err)
     }),
-    getStoryBySlug<ManyPetsMigrationStory>(`${MANYPETS_FOLDER_SLUG}/migration`, {
+    getStoryBySlug<ManyPetsMigrationStory>(`${STORYBLOK_MANYPETS_FOLDER_SLUG}/migration`, {
       locale,
       // Uncomment for local debug
       // version: 'draft',

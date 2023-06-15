@@ -19,18 +19,18 @@ import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import {
   Money,
-  ProductOffer,
+  ProductOfferFragment,
   useManyPetsFillCartMutation,
   useShopSessionQuery,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { type ComparisonTableData } from '@/services/manypets/manypets.types'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { type ComparisonTableData } from '../manyPets.types'
 import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
 
@@ -44,7 +44,7 @@ export type ManyPetsMigrationPageProps = {
   announcement?: ReactNode
   preOfferContent?: ReactNode
   postOfferContent: ReactNode
-  offers: Array<ProductOffer>
+  offers: Array<ProductOfferFragment>
   totalCost: Money
   latestAdoptionDate?: string
   comparisonTableData: ComparisonTableData

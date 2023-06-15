@@ -1,11 +1,11 @@
-import { ProductOffer } from '../apollo/generated'
+import { ProductOffer } from '@/services/apollo/generated'
 import { TableDataTemplate } from './data/SE_PET_INSURANCE_COMPARISON_TABLE'
 import {
   ComparisonTableTemplate,
   ParsedComparisonTableTemplate,
   ComparisonTableData,
   TierLevel,
-} from './manypets.types'
+} from './manyPets.types'
 
 const parseComparisonTableTemplate: (
   tableTemplate: ComparisonTableTemplate,

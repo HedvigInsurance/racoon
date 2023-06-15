@@ -36,7 +36,6 @@ import { ImageBlock } from '@/blocks/ImageBlock'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
-import { ManyPetsMigrationPageBlock } from '@/blocks/ManyPetsMigrationPageBlock'
 import { MediaListBlock } from '@/blocks/MediaListBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -68,6 +67,9 @@ import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { blogBlocks } from '@/features/blog/blogBlocks'
+// TODO: get rid of this import, services should avoid feature-imports
+import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
+import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -206,14 +208,6 @@ export type ConfirmationStory = ISbStoryData & {
   }
 }
 
-export type ManyPetsMigrationStory = ISbStoryData<
-  {
-    announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
-    preOfferContent?: Array<SbBlokData>
-    postOfferContent: Array<SbBlokData>
-  } & SEOData
->
-
 type LinkData = Pick<
   ISbStoryData,
   'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
@@ -258,7 +252,6 @@ export const initStoryblok = () => {
     InsurableLimitsBlock,
     MediaListBlock,
     ModalBlock,
-    ManyPetsMigrationPageBlock,
     NavItemBlock,
     NestedNavContainerBlock,
     PageBlock,
@@ -290,6 +283,7 @@ export const initStoryblok = () => {
     QuickPurchaseBlock,
     ComparisonTableBlock,
     ...blogBlocks,
+    ...manyPetsBlocks,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
@@ -369,14 +363,13 @@ export const getPageLinks = async (): Promise<PageLink[]> => {
   return pageLinks
 }
 
-export const MANYPETS_FOLDER_SLUG = 'manypets'
-
 const REUSABLE_BLOCK = 'reusable-blocks'
 // TODO: Consider filtering by content-type on CMS side to exclude things like reusable-blocks
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
   return allLinks.filter(
-    ({ slugParts }) => slugParts[0] !== REUSABLE_BLOCK && slugParts[0] !== MANYPETS_FOLDER_SLUG,
+    ({ slugParts }) =>
+      slugParts[0] !== REUSABLE_BLOCK && slugParts[0] !== STORYBLOK_MANYPETS_FOLDER_SLUG,
   )
 }
 

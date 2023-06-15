@@ -1,7 +1,8 @@
 import { StoryblokComponent } from '@storyblok/react'
-import { ManyPetsMigrationPage } from '@/components/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { CurrencyCode } from '@/services/apollo/generated'
-import { SbBaseBlockProps, ManyPetsMigrationStory } from '@/services/storyblok/storyblok'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { ManyPetsMigrationStory } from './manyPets.types'
+import { ManyPetsMigrationPage } from './ManyPetsMigrationPage/ManyPetsMigrationPage'
 
 type Props = SbBaseBlockProps<ManyPetsMigrationStory['content']>
 
