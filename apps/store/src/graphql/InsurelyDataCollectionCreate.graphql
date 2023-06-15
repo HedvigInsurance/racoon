@@ -1,5 +1,5 @@
-mutation InsurelyDataCollectionCreate($collectionId: String!) {
-  insurelyInitiateIframeDataCollection(input: { collectionId: $collectionId }) {
+mutation InsurelyDataCollectionCreate($collectionId: String!, $partner: String!) {
+  insurelyInitiateIframeDataCollection(input: { collectionId: $collectionId, partner: $partner }) {
     dataCollectionId
   }
 }
