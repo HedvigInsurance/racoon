@@ -13,6 +13,7 @@ import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
+  INSURELY_PARTNER,
 } from '@/services/Insurely/Insurely.constants'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { FetchInsuranceSuccess } from '../FetchInsuranceSuccess/FetchInsuranceSuccess'
@@ -100,7 +101,7 @@ export const FetchInsurance = ({
   })
 
   const handleInsurelyCollection = (collectionId: string) => {
-    createDataCollection({ variables: { collectionId } })
+    createDataCollection({ variables: { collectionId, partner: INSURELY_PARTNER } })
   }
 
   const handleInsurelyCompleted: OnCompleted = useCallback(() => {
