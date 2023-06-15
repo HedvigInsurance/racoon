@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Children, type ReactNode } from 'react'
 import { Text, theme } from 'ui'
-import { linkStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
+import { linkStyles } from '@/components/RichText/RichText.styles'
 
 const BreadcrumbList = ({ children }: { children: ReactNode }) => {
   const count = Children.count(children)

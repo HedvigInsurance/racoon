@@ -1,10 +1,9 @@
-import styled from '@emotion/styled'
 import { StoryblokComponent, renderRichText, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { Heading, Space, Text } from 'ui'
-import { richTextStyles } from '@/blocks/RichTextBlock/RichTextBlock.styles'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { RichText } from '@/components/RichText/RichText'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useFormatter } from '@/utils/useFormatter'
@@ -39,7 +38,7 @@ export const BlogArticleBlock = (props: Props) => {
               {formatter.fromNow(new Date(props.blok.date))}
             </Text>
           </Space>
-          <RichTextContent dangerouslySetInnerHTML={{ __html: contentHtml }} />
+          <RichText contentHTML={contentHtml} />
         </GridLayout.Content>
       </GridLayout.Root>
       {props.blok.body.map((item) => (
@@ -49,5 +48,3 @@ export const BlogArticleBlock = (props: Props) => {
   )
 }
 BlogArticleBlock.blockName = BLOG_ARTICLE_CONTENT_TYPE
-
-const RichTextContent = styled.div(richTextStyles)

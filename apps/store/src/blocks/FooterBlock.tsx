@@ -6,6 +6,7 @@ import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { linkStyles } from '@/components/RichText/RichText.styles'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
@@ -20,7 +21,6 @@ import {
 import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { linkStyles } from './RichTextBlock/RichTextBlock.styles'
 
 const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
 const ENGLISH_LANGUAGE_ENABLED = Features.enabled('ENGLISH_LANGUAGE')
