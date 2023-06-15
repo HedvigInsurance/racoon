@@ -55,7 +55,7 @@ export class PriceIntentService {
     return priceIntent
   }
 
-  private async get(priceIntentId: string) {
+  public async get(priceIntentId: string) {
     try {
       const result = await this.apolloClient.query<PriceIntentQuery, PriceIntentQueryVariables>({
         query: PriceIntentDocument,

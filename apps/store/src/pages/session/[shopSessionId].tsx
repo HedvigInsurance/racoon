@@ -5,6 +5,8 @@ import {
   RedeemCampaignMutation,
   RedeemCampaignMutationVariables,
 } from '@/services/apollo/generated'
+import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -40,6 +42,27 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return fallbackRedirect
   }
 
+  const nextURL = new URL(ORIGIN_URL)
+  nextURL.pathname = PageLink.home({ locale })
+
+  const priceIntentId = query['price_intent_id']
+  if (typeof priceIntentId === 'string') {
+    try {
+      const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
+      const priceIntent = await priceIntentService.get(priceIntentId)
+      if (priceIntent) {
+        const templateName = fetchPriceTemplate(priceIntent.product.name)?.name
+
+        if (templateName) {
+          priceIntentService.save({ shopSessionId, priceIntentId, templateName })
+          nextURL.pathname = priceIntent.product.pageLink
+        }
+      }
+    } catch (error) {
+      console.warn(`Unable to redeem price intent: ${priceIntentId}`, error)
+    }
+  }
+
   const campaignCode = query['code']
   if (typeof campaignCode === 'string') {
     try {
@@ -51,9 +74,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       console.warn(`Unable to redeem campaign: ${campaignCode}`, error)
     }
   }
-
-  const nextURL = new URL(ORIGIN_URL)
-  nextURL.pathname = PageLink.home({ locale })
 
   const nextQueryParam = query['next']
   if (typeof nextQueryParam === 'string') {

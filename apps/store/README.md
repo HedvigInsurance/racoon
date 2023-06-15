@@ -38,6 +38,7 @@ Optional query parameters:
 
 - `?next={REDIRECT_URL}`: Relative URL to redirect to (default: home page)
 - `?code={CAMPAIGN_CODE}`: Set a campaign code for the session
+- `?price_intent_id={UUID}`: Resume the price intent and navigate to the related product page
 
 ## Reset current Shop Session
 
