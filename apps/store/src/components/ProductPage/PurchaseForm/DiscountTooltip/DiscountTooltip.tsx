@@ -14,12 +14,11 @@ export const DiscountTooltip = ({ children, subtitle }: Props) => {
           {children}
         </Text>
         {subtitle && (
-          <SecondaryText size="xs" align="center">
+          <Text size="xs" color="textGreen" align="center">
             {subtitle}
-          </SecondaryText>
+          </Text>
         )}
       </Bubble>
-      {/* <Tip /> */}
     </Root>
   )
 }
@@ -61,5 +60,3 @@ const Bubble = styled.div({
     borderTop: `${HALF_TIP_WIDTH} solid ${theme.colors.greenFill1}`,
   },
 })
-
-const SecondaryText = styled(Text)({ color: theme.colors.green700 })
