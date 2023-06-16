@@ -1,4 +1,4 @@
-import { ComparisonTableTemplateByTierLevelMap, DataGetter } from '../manypets.types'
+import { ComparisonTableTemplateByTierLevelMap, DataGetter } from '../manyPets.types'
 
 const getDeductibleData: DataGetter = (offerData) => {
   return offerData.deductible?.displayName ?? null

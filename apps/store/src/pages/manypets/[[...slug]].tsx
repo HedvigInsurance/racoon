@@ -2,9 +2,9 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import {
   getStoryBySlug,
-  MANYPETS_FOLDER_SLUG,
   PageStory,
   StoryblokPreviewData,
   StoryblokQueryParams,
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<
   if (!Features.enabled('MANYPETS_MIGRATION')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const slug = `${MANYPETS_FOLDER_SLUG}/${(params?.slug ?? []).join('/')}`
+  const slug = `${STORYBLOK_MANYPETS_FOLDER_SLUG}/${(params?.slug ?? []).join('/')}`
 
   const [story, translations] = await Promise.all([
     getStoryBySlug<PageStory>(slug, { version, locale }),
