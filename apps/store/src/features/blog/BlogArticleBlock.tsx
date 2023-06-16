@@ -1,7 +1,8 @@
-import { StoryblokComponent, renderRichText, storyblokEditable } from '@storyblok/react'
+import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { render } from 'storyblok-rich-text-react-renderer'
 import { Heading, Space, Text } from 'ui'
+import { richTextRenderOptions } from '@/blocks/RichTextBlock/RichTextBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -16,7 +17,6 @@ type Props = SbBaseBlockProps<BlogArticleContentType['content']>
 
 export const BlogArticleBlock = (props: Props) => {
   const formatter = useFormatter()
-  const contentHtml = useMemo(() => renderRichText(props.blok.content), [props.blok.content])
   const categories = props.blok.categories.map(convertToBlogArticleCategory)
 
   return (
@@ -38,7 +38,7 @@ export const BlogArticleBlock = (props: Props) => {
               {formatter.fromNow(new Date(props.blok.date))}
             </Text>
           </Space>
-          <RichText contentHTML={contentHtml} />
+          <RichText>{render(props.blok.content, richTextRenderOptions)}</RichText>
         </GridLayout.Content>
       </GridLayout.Root>
       {props.blok.body.map((item) => (
