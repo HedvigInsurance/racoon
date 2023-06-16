@@ -110,15 +110,27 @@ export const OfferPresenter = (props: Props) => {
   const loading =
     loadingAddToCart || updateCancellationInfo.loading || updateStartDateResult.loading
 
-  const discountTooltiProps = useMemo(() => {
+  const discountTooltipProps = useMemo(() => {
     if (!selectedOffer.priceMatch) return null
 
-    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
     const company = selectedOffer.priceMatch.externalInsurer.displayName
+
+    if (selectedOffer.priceMatch.priceReduction.amount < 1) {
+      // No price reduction due to incomparable offers
+      const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+      return {
+        children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
+        subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
+        color: 'gray',
+      } as const
+    }
+
+    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
 
     return {
       children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
       subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
+      color: 'green',
     } as const
   }, [selectedOffer.priceMatch, formatter, t])
 
@@ -168,7 +180,7 @@ export const OfferPresenter = (props: Props) => {
         <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
           <Space y={2}>
             <SpaceFlex direction="vertical" align="center" space={1}>
-              {discountTooltiProps && <DiscountTooltip {...discountTooltiProps} />}
+              {discountTooltipProps && <DiscountTooltip {...discountTooltipProps} />}
               <Space y={0.5}>
                 <Text as="p" align="center" size="xl">
                   {displayPrice}

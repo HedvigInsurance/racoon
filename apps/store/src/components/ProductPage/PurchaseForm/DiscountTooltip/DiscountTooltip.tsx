@@ -4,22 +4,28 @@ import { Text, theme } from 'ui'
 type Props = {
   children: string
   subtitle?: string
+  color?: 'green' | 'gray'
 }
 
-export const DiscountTooltip = ({ children, subtitle }: Props) => {
+export const DiscountTooltip = ({ children, subtitle, color = 'green' }: Props) => {
+  const Bubble = color === 'green' ? GreenBubble : GrayBubble
+
   return (
     <Root>
       <Bubble>
-        <Text size="xs" color="textGreen" align="center">
+        <Text size="xs" color={color === 'green' ? 'textGreen' : 'textPrimary'} align="center">
           {children}
         </Text>
         {subtitle && (
-          <SecondaryText size="xs" align="center">
+          <Text
+            size="xs"
+            color={color === 'green' ? 'textGreen' : 'textSecondaryOnGray'}
+            align="center"
+          >
             {subtitle}
-          </SecondaryText>
+          </Text>
         )}
       </Bubble>
-      {/* <Tip /> */}
     </Root>
   )
 }
@@ -34,18 +40,14 @@ const Root = styled.div({
   display: 'inline-block',
 })
 
-const Bubble = styled.div({
-  backgroundColor: theme.colors.greenFill1,
-  border: `1px solid ${theme.colors.green200}`,
+const GrayBubble = styled.div({
+  backgroundColor: theme.colors.opaque1,
   paddingBlock: theme.space.xs,
   paddingInline: theme.space.sm,
   borderRadius: theme.radius.sm,
   position: 'relative',
 
-  filter: `
-    drop-shadow(0px 1px 1px rgba(51, 67, 43, 0.15))
-    drop-shadow(0px 2px 3px rgba(51, 67, 43, 0.1))
-  `,
+  filter: 'drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.15))',
 
   '::after': {
     content: '""',
@@ -58,8 +60,20 @@ const Bubble = styled.div({
     height: 0,
     borderLeft: `${HALF_TIP_WIDTH} solid transparent`,
     borderRight: `${HALF_TIP_WIDTH} solid transparent`,
-    borderTop: `${HALF_TIP_WIDTH} solid ${theme.colors.greenFill1}`,
+    borderTop: `${HALF_TIP_WIDTH} solid ${theme.colors.opaque1}`,
   },
 })
 
-const SecondaryText = styled(Text)({ color: theme.colors.green700 })
+const GreenBubble = styled(GrayBubble)({
+  backgroundColor: theme.colors.greenFill1,
+  border: `1px solid ${theme.colors.grayTranslucent200}`,
+
+  filter: `
+    drop-shadow(0px 1px 1px rgba(51, 67, 43, 0.15))
+    drop-shadow(0px 2px 3px rgba(51, 67, 43, 0.1))
+  `,
+
+  '::after': {
+    borderTopColor: theme.colors.greenFill1,
+  },
+})
