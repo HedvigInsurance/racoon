@@ -66,7 +66,7 @@ const PendingContractCard = ({ id, status, displayName, approveByDate }: Contrac
             <Text>{displayName}</Text>
             <Text color="textSecondary">
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
-                date: formatter.fromNow(approveByDate),
+                date: formatter.fromNow(new Date(approveByDate)),
               })}
             </Text>
           </div>
