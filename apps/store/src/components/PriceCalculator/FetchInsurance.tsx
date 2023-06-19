@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type ComponentProps, useCallback, useState, useMemo } from 'react'
-import { CrossIcon, Dialog, Text, mq, theme } from 'ui'
+import { Dialog, Text, theme } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import {
   ExternalInsurer,
@@ -131,9 +131,6 @@ export const FetchInsurance = ({
       {state === 'COMPARE' && (
         <DialogIframeContent onClose={dismiss} centerContent={true}>
           <DialogIframeWindow>
-            <DialogCloseButton>
-              <CrossIcon />
-            </DialogCloseButton>
             <InsurelyIframe
               configName={insurelyConfigName}
               onCollection={handleInsurelyCollection}
@@ -180,7 +177,9 @@ const DialogIframeContent = styled(Dialog.Content)({
   width: '100%',
   maxWidth: INSURELY_IFRAME_MAX_WIDTH,
 
-  [mq.lg]: { alignSelf: 'center' },
+  [`@media (min-height: ${INSURELY_IFRAME_MAX_HEIGHT}px)`]: {
+    alignSelf: 'center',
+  },
 })
 
 const DialogIframeWindow = styled(Dialog.Window)({
@@ -189,11 +188,4 @@ const DialogIframeWindow = styled(Dialog.Window)({
   height: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
   borderRadius: theme.radius.xs,
-})
-
-const DialogCloseButton = styled(Dialog.Close)({
-  position: 'absolute',
-  top: theme.space.xs,
-  right: theme.space.xs,
-  cursor: 'pointer',
 })
