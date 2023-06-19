@@ -1,13 +1,15 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { mq, Text, theme, useBreakpoint } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
 import { isBrowser } from '@/utils/env'
 import { CoverageList } from './CoverageList'
 
-const getPerilColumns = (items: PerilFragment[], columns: number) =>
+type Peril = PerilFragment & { disabled?: boolean }
+
+const getPerilColumns = (items: Array<Peril>, columns: number) =>
   items.reduce((acc, item, index) => {
     const columnIndex = index % columns
     if (!acc[columnIndex]) {
@@ -15,13 +17,14 @@ const getPerilColumns = (items: PerilFragment[], columns: number) =>
     }
     acc[columnIndex].push(item)
     return acc
-  }, [] as Array<Array<PerilFragment>>)
+  }, [] as Array<Array<Peril>>)
 
 type Props = {
   items: Array<PerilFragment>
+  missingItems?: Array<PerilFragment>
 }
 
-export const Perils = ({ items }: Props) => {
+export const Perils = ({ items, missingItems = [] }: Props) => {
   const BREAKPOINTS = {
     xl: useBreakpoint('xl'),
     lg: useBreakpoint('lg'),
@@ -36,9 +39,14 @@ export const Perils = ({ items }: Props) => {
     return 1
   }
 
+  const perilItems = useMemo<Array<Peril>>(
+    () => [...items, ...missingItems.map((item) => ({ ...item, disabled: true }))],
+    [items, missingItems],
+  )
+
   return (
     <PerilsAccordionGrid>
-      {getPerilColumns(items, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
+      {getPerilColumns(perilItems, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
         <PerilColumnFlex key={index}>
           {perils.map((peril) => (
             <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
@@ -67,13 +75,26 @@ const PerilColumnFlex = styled.div({
   },
 })
 
-const PerilsAccordion = ({ peril }: { peril: PerilFragment }) => {
+const PerilsAccordion = ({ peril }: { peril: Peril }) => {
   const { title, description, covered, colorCode } = peril
   const [openItems, setOpenItems] = useState<Array<string>>()
 
   const handleValueChange = useCallback((value: Array<string>) => {
     setOpenItems(value)
   }, [])
+
+  if (peril.disabled) {
+    return (
+      <FakeAccordionItem>
+        <HeaderWrapper>
+          <Color color={theme.colors.textDisabled} />
+          <TriggerText size="lg" color="textSecondary">
+            {title}
+          </TriggerText>
+        </HeaderWrapper>
+      </FakeAccordionItem>
+    )
+  }
 
   return (
     <Accordion.Root type="multiple" value={openItems} onValueChange={handleValueChange}>
@@ -108,6 +129,19 @@ const ContentWrapper = styled.div({
   [mq.lg]: {
     paddingTop: theme.space.lg,
     paddingBottom: theme.space.xs,
+  },
+})
+
+const FakeAccordionItem = styled.div({
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.sm,
+  paddingInline: theme.space.md,
+  paddingBlock: theme.space.sm,
+  cursor: 'not-allowed',
+
+  [mq.lg]: {
+    paddingInline: theme.space.lg,
+    paddingBlock: theme.space.md,
   },
 })
 
