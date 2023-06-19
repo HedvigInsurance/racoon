@@ -14757,15 +14757,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:2.1.2":
-  version: 2.1.2
-  resolution: "formidable@npm:2.1.2"
+"formidable@npm:3.3.2":
+  version: 3.3.2
+  resolution: "formidable@npm:3.3.2"
   dependencies:
     dezalgo: ^1.0.4
     hexoid: ^1.0.0
     once: ^1.4.0
-    qs: ^6.11.0
-  checksum: 81c8e5d89f5eb873e992893468f0de22c01678ca3d315db62be0560f9de1c77d4faefc9b1f4575098eb2263b3c81ba1024833a9fc3206297ddbac88a4f69b7a8
+  checksum: bb9d34235826b80e68c5d49d5e22e8df0cb750121294367d55b4642a4e964cd2b0c3088432d8502dce1edb760647365f26f1efc32ba71cd87e01140ff2af5feb
   languageName: node
   linkType: hard
 
@@ -19259,7 +19258,7 @@ __metadata:
     cookies-next: 2.1.2
     dompurify: 3.0.3
     eslint-config-custom: "workspace:"
-    formidable: 2.1.2
+    formidable: 3.3.2
     framer-motion: 10.12.16
     graphql: 16.6.0
     graphql-tag: 2.12.6
@@ -20350,7 +20349,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0, qs@npm:^6.11.0":
+"qs@npm:6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
