@@ -42,7 +42,8 @@ export const nestedLinkStyles = css({
 
 export const listStyles = css({
   'ul, ol': {
-    marginBlock: theme.space.md,
+    marginTop: theme.space.xs,
+    marginBottom: theme.space.md,
     marginLeft: theme.space.xs,
 
     [mq.md]: {
@@ -52,6 +53,10 @@ export const listStyles = css({
     [mq.lg]: {
       marginLeft: theme.space.xl,
     },
+  },
+
+  li: {
+    marginBlock: theme.space.xs,
   },
 
   'ul li': {
@@ -114,6 +119,8 @@ export const listStyles = css({
 export const richTextStyles = css(
   {
     fontSize: theme.fontSizes.md,
+    lineHeight: 1.26,
+
     '.preamble': {
       display: 'block',
       marginBottom: theme.space.xl,
@@ -122,7 +129,8 @@ export const richTextStyles = css(
     },
 
     p: {
-      marginBlock: theme.space.md,
+      marginTop: theme.space.xs,
+      marginBottom: theme.space.lg,
       color: theme.colors.textSecondary,
     },
 
@@ -135,8 +143,15 @@ export const richTextStyles = css(
     },
 
     'h2, h3, h4': {
-      marginTop: theme.space.xl,
       fontSize: theme.fontSizes.md,
+    },
+
+    h2: {
+      marginTop: theme.space.xxl,
+    },
+
+    h3: {
+      marginTop: theme.space.xl,
     },
 
     hr: {
@@ -146,8 +161,19 @@ export const richTextStyles = css(
     },
 
     img: {
-      marginBlock: theme.space.xl,
-      borderRadius: theme.radius.lg,
+      maxWidth: `calc(100% + ${theme.space.md})`,
+      marginBlock: '4.5rem',
+      marginInline: `-${theme.space.xs}`,
+      borderRadius: theme.radius.xs,
+    },
+
+    [mq.md]: {
+      img: {
+        maxWidth: '100%',
+        marginBlock: theme.space[9],
+        marginInline: 0,
+        borderRadius: theme.radius.md,
+      },
     },
 
     '&[data-large-text=true]': {
@@ -159,16 +185,12 @@ export const richTextStyles = css(
         },
 
         h2: {
-          marginTop: theme.space.xxl,
+          marginTop: theme.space.xxxl,
           fontSize: theme.fontSizes.xl,
         },
 
-        h3: {
-          marginTop: theme.space.xxl,
-        },
-
-        h4: {
-          marginTop: theme.space.xxl,
+        'h3, h4': {
+          marginTop: theme.space.xl,
         },
       },
     },
