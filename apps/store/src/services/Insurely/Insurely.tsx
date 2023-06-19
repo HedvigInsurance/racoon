@@ -94,7 +94,7 @@ export const setInsurelyConfig = (config: InsurelyConfig) => {
       ...(config.configName && { configName: config.configName }),
       ...(config.language && { language: config.language }),
 
-      // showCloseButton: true,
+      showCloseButton: true,
       dataAggregation: {
         hideResultsView: true,
       },
