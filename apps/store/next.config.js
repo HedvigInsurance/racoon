@@ -17,7 +17,7 @@ module.exports = withBundleAnalyzer({
   },
   productionBrowserSourceMaps: true,
   i18n,
-  transpilePackages: ['ui'],
+  transpilePackages: ['ui', 'i18next'],
   // Docs: https://nextjs.org/docs/advanced-features/security-headers
   async headers() {
     return [
