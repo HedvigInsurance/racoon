@@ -18,9 +18,11 @@ const options = [
 
 export const CarMileageField = ({ field, autoFocus }: Props) => {
   const { t } = useTranslation('purchase-form')
+
   return (
     <InputSelect
       name={field.name}
+      // @ts-expect-error translation key already checked in "formFragments"
       placeholder={t(field.label.key, { defaultValue: t('FIELD_MILEAGE_LABEL') })}
       required={field.required}
       defaultValue={field.value ?? field.defaultValue}

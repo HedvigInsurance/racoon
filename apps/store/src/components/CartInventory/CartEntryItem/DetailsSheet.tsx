@@ -15,6 +15,7 @@ export const DetailsSheet = (props: CartEntry) => {
 
   const allRows =
     dataTableRows?.map((item) => ({
+      // @ts-expect-error translation key already checked in `getDataTable`
       title: t(item.label, { defaultValue: `${item.label} MISSING` }),
       value: getDataTableValue(item, data),
     })) ?? []
@@ -100,10 +101,7 @@ const useGetDataTableValue = () => {
   }
 }
 
-const formatHouseholdSize = (
-  t: TFunction<'cart', undefined, 'cart'>,
-  data: Record<string, unknown>,
-) => {
+const formatHouseholdSize = (t: TFunction<'cart', undefined>, data: Record<string, unknown>) => {
   const count = parseInt(String(data['numberCoInsured']), 10)
   if (isNaN(count)) return null
   return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })
