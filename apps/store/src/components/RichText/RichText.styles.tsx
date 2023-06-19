@@ -160,7 +160,8 @@ export const richTextStyles = css(
       backgroundColor: theme.colors.borderOpaque2,
     },
 
-    img: {
+    // Differentiate between inlined images and ImageBlock
+    'p > img': {
       maxWidth: `calc(100% + ${theme.space.md})`,
       marginBlock: '4.5rem',
       marginInline: `-${theme.space.xs}`,
@@ -168,7 +169,7 @@ export const richTextStyles = css(
     },
 
     [mq.md]: {
-      img: {
+      'p > img': {
         maxWidth: '100%',
         marginBlock: theme.space[9],
         marginInline: 0,
