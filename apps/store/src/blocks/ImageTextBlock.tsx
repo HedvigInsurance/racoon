@@ -29,7 +29,7 @@ export type ImageTextBlockProps = SbBaseBlockProps<{
   textHorizontalAlignment?: TextHorizontalAlignment
   imagePlacement?: ImagePlacement
   mediaPlacementMobile?: MediaPlacementMobile
-  fillViewportMobile?: boolean
+  minHeightMobile?: string
 }>
 
 export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
@@ -49,7 +49,7 @@ export const ImageTextBlock = ({ blok, nested }: ImageTextBlockProps) => {
           textHorizontalAlignment={blok.textHorizontalAlignment}
           imagePlacement={blok.imagePlacement}
           mediaPlacementMobile={blok.mediaPlacementMobile}
-          fillViewportMobile={blok.fillViewportMobile}
+          minHeightMobile={blok.minHeightMobile}
           nested={nested}
         />
       )
@@ -111,7 +111,7 @@ type FluidImageTextBlockProps = Pick<
   | 'textHorizontalAlignment'
   | 'imagePlacement'
   | 'mediaPlacementMobile'
-  | 'fillViewportMobile'
+  | 'minHeightMobile'
   | 'nested'
 > & {
   imageBlock?: ImageBlockProps['blok'] | VideoBlockProps['blok']
@@ -126,7 +126,7 @@ const FluidImageTextBlock = ({
   textHorizontalAlignment = DEFAULT_TEXT_HORIZONTAL_ALIGNMENT,
   imagePlacement = DEFAULT_IMAGE_PLACEMENT,
   mediaPlacementMobile = DEFAULT_MEDIA_PLACEMENT_MOBILE,
-  fillViewportMobile,
+  minHeightMobile,
   nested,
 }: FluidImageTextBlockProps) => {
   return (
@@ -150,7 +150,7 @@ const FluidImageTextBlock = ({
           mediaPlacementMobile={mediaPlacementMobile}
           textAlignment={textAlignment}
           textHorizontalAlignment={textHorizontalAlignment}
-          fillViewportMobile={fillViewportMobile}
+          minHeightMobile={minHeightMobile}
         >
           <FluidBodyInnerWrapper>
             {body?.map((nestedBlock) => (
@@ -187,24 +187,24 @@ export const FluidBodyWrapper = styled.div<{
   textHorizontalAlignment: TextHorizontalAlignment
   imagePlacement: ImagePlacement
   mediaPlacementMobile: MediaPlacementMobile
-  fillViewportMobile?: boolean
+  minHeightMobile?: string
 }>(
   ({
     textAlignment,
     textHorizontalAlignment,
     imagePlacement,
     mediaPlacementMobile,
-    fillViewportMobile,
+    minHeightMobile,
   }) => ({
     gridColumn: '1 / -1',
     order: mediaPlacementMobile === 'bottom' ? -1 : 'initial',
 
-    ...(fillViewportMobile && {
+    ...(minHeightMobile && {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '100vh',
+      minHeight: `${minHeightMobile}vh`,
     }),
 
     [mq.lg]: {
