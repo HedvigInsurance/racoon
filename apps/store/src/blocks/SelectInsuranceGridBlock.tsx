@@ -1,10 +1,8 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { Heading, Space, mq } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { mq } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import { ProductItem } from '@/components/SelectInsuranceGrid/ProductItem'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
@@ -18,39 +16,22 @@ export const SelectInsuranceGridBlock = ({ blok, nested }: Props) => {
   const products = useProductMetadata()
   const openPriceCalculator = blok.openPriceCalculator ?? true
 
-  return (
-    <Root data-nested={nested}>
-      <GridLayout.Content width="1" align="center">
-        <Space y={{ base: 2, md: 4 }}>
-          {blok.title && (
-            <Heading as="h2" variant={{ _: 'serif.32', lg: 'serif.48' }} align="center">
-              {blok.title}
-            </Heading>
-          )}
+  const parsedProducts = (products ?? []).map((product) => ({
+    ...product,
+    pageLink: getProductLink(product.pageLink, openPriceCalculator),
+  }))
 
-          <SelectInsuranceGrid {...storyblokEditable(blok)}>
-            {products?.map((item) => (
-              <ProductItem.Root key={item.id}>
-                <ProductItem.Pillow {...item.pillowImage} />
-                <ProductItem.Content>
-                  <ProductItem.TitleLink
-                    href={getProductLink(item.pageLink, openPriceCalculator)}
-                    title={item.displayNameFull}
-                  >
-                    {item.displayNameShort}
-                  </ProductItem.TitleLink>
-                  <ProductItem.Tagline>{item.tagline}</ProductItem.Tagline>
-                </ProductItem.Content>
-              </ProductItem.Root>
-            ))}
-          </SelectInsuranceGrid>
-        </Space>
-      </GridLayout.Content>
-    </Root>
+  return (
+    <StyledSelectInsuranceGrid
+      data-nested={nested}
+      heading={blok.title}
+      products={parsedProducts}
+      {...storyblokEditable(blok)}
+    />
   )
 }
 
-const Root = styled(GridLayout.Root)({
+const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({
   // When using the component in a Modal we need to center align it in larger viewports
 
   '&[data-nested=true]': {

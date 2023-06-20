@@ -1,19 +1,50 @@
 import styled from '@emotion/styled'
-import { Children } from 'react'
-import { mq, theme } from 'ui'
+import { Heading, Space, mq, theme } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ProductItem } from '@/components/SelectInsuranceGrid/ProductItem'
+import { Product as APIProduct } from '@/services/apollo/generated'
 
 const ITEM_THRESHOLD = 4
 const LAYOUT = { GRID: 'grid', COLUMN: 'column' }
 
+export type Product = Pick<
+  APIProduct,
+  'id' | 'displayNameFull' | 'displayNameShort' | 'tagline' | 'pageLink' | 'pillowImage'
+>
+
 type Props = {
-  children: React.ReactNode
+  products: Product[]
+  heading?: string
+  className?: string
 }
 
-export const SelectInsuranceGrid = ({ children }: Props) => {
+export const SelectInsuranceGrid = ({ className, heading, products, ...others }: Props) => {
   return (
-    <Grid data-layout={Children.count(children) > ITEM_THRESHOLD ? LAYOUT.GRID : LAYOUT.COLUMN}>
-      {children}
-    </Grid>
+    <GridLayout.Root className={className} {...others}>
+      <GridLayout.Content width="1" align="center">
+        <Space y={{ base: 2, md: 4 }}>
+          {heading && (
+            <Heading as="h2" variant={{ _: 'serif.32', lg: 'serif.48' }} align="center">
+              {heading}
+            </Heading>
+          )}
+
+          <Grid data-layout={products.length > ITEM_THRESHOLD ? LAYOUT.GRID : LAYOUT.COLUMN}>
+            {products.map((product) => (
+              <ProductItem.Root key={product.id}>
+                <ProductItem.Pillow {...product.pillowImage} />
+                <ProductItem.Content>
+                  <ProductItem.TitleLink href={product.pageLink} title={product.displayNameFull}>
+                    {product.displayNameShort}
+                  </ProductItem.TitleLink>
+                  <ProductItem.Tagline>{product.tagline}</ProductItem.Tagline>
+                </ProductItem.Content>
+              </ProductItem.Root>
+            ))}
+          </Grid>
+        </Space>
+      </GridLayout.Content>
+    </GridLayout.Root>
   )
 }
 
