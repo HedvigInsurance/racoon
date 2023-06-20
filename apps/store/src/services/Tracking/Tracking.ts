@@ -28,6 +28,7 @@ type TrackingOffer = {
       displayNameFull: ProductOfferFragment['variant']['product']['displayNameFull']
     }
   }
+  priceMatch?: ProductOfferFragment['priceMatch']
 }
 
 type ItemListSource = 'store' | 'recommendations'
@@ -46,6 +47,9 @@ export enum TrackingEvent {
   SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
+  InsurelyPrompted = 'insurely_prompted',
+  InsurelyAccepted = 'insurely_accepted',
+  InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
 }
 
 export enum TrackingContextKey {
@@ -250,6 +254,28 @@ export class Tracking {
     this.reportAdtractionEvent(cart, this.context)
   }
 
+  public reportInsurelyPrompted(productData: TrackingProductData) {
+    this.reportEcommerceEvent(
+      productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, productData, this.context),
+    )
+  }
+
+  public reportInsurelyAccepted(productData: TrackingProductData) {
+    this.reportEcommerceEvent(
+      productDataToEcommerceEvent(TrackingEvent.InsurelyAccepted, productData, this.context),
+    )
+  }
+
+  public reportInsurelyCorrectlyFetched(productData: TrackingProductData) {
+    this.reportEcommerceEvent(
+      productDataToEcommerceEvent(
+        TrackingEvent.InsurelyCorrectlyFetched,
+        productData,
+        this.context,
+      ),
+    )
+  }
+
   // Google Analytics ecommerce events
   // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm
   private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
@@ -292,6 +318,9 @@ const offerToEcommerceEvent = ({
     },
     shopSession: {
       id: context[TrackingContextKey.ShopSessionId] as string,
+    },
+    price_match: {
+      price_matched: !!offer.priceMatch,
     },
   } as const
 }

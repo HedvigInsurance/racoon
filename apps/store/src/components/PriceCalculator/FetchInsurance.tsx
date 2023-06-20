@@ -17,7 +17,11 @@ import {
 } from '@/services/Insurely/Insurely.constants'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { FetchInsuranceSuccess } from '../FetchInsuranceSuccess/FetchInsuranceSuccess'
-import { useFetchInsuranceState } from './useFetchInsurance'
+import {
+  useFetchInsuranceCompare,
+  useFetchInsuranceState,
+  useFetchInsuranceSuccess,
+} from './useFetchInsurance'
 
 const logger = datadogLogs.createLogger('FetchInsurance')
 
@@ -43,14 +47,15 @@ export const FetchInsurance = ({
   )
 
   const [state, setState] = useFetchInsuranceState()
+  const fetchInsuranceCompare = useFetchInsuranceCompare()
+  const fetchInsuraceSuccess = useFetchInsuranceSuccess()
   const isOpen = ['PROMPT', 'COMPARE', 'SUCCESS'].includes(state)
 
   const dismiss = () => setState('DISMISSED')
-  const confirm = () => setState('SUCCESS')
 
   const handleClickConfirm = () => {
     datadogRum.addAction('Fetch Insurance Compare', loggingContext)
-    setState('COMPARE')
+    fetchInsuranceCompare()
     setInsurelyConfig({
       company: externalInsurer.insurelyId ?? undefined,
       ssn: shopSession?.customer?.ssn ?? undefined,
@@ -61,8 +66,8 @@ export const FetchInsurance = ({
     dismiss()
   }
 
-  const handleSuccessClick = () => {
-    datadogRum.addAction('Fetch Insurance Success', loggingContext)
+  const handleDismissClick = () => {
+    datadogRum.addAction('Fetch Insurance Dismiss', loggingContext)
     dismiss()
   }
 
@@ -73,7 +78,7 @@ export const FetchInsurance = ({
 
       const updatedPriceIntent = priceIntentInsurelyUpdate.priceIntent
       if (updatedPriceIntent && updatedPriceIntent.externalInsurer) {
-        confirm()
+        fetchInsuraceSuccess()
       } else {
         logger.warn('Failed to update Insurely data collection ID', loggingContext)
         dismiss()
@@ -146,7 +151,7 @@ export const FetchInsurance = ({
           <DialogWindow>
             <FetchInsuranceSuccess
               company={externalInsurer.displayName}
-              onClick={handleSuccessClick}
+              onClick={handleDismissClick}
             >
               <Text>
                 {externalInsurer.displayName} {productName}
