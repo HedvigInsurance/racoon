@@ -91,32 +91,34 @@ module.exports = withBundleAnalyzer({
     }
   },
   async redirects() {
-    return [
-      {
-        source: '/no/new-member/:slug*',
-        destination: `/no/info`,
-        permanent: true,
-        locale: false,
-      },
-      {
-        source: '/no-en/new-member/:slug*',
-        destination: `/no-en/info`,
-        permanent: true,
-        locale: false,
-      },
-      {
-        source: '/dk/new-member/:slug*',
-        destination: `/dk/info`,
-        permanent: true,
-        locale: false,
-      },
-      {
-        source: '/dk-en/new-member/:slug*',
-        destination: `/dk-en/info`,
-        permanent: true,
-        locale: false,
-      },
-    ]
+    return process.env.NEXT_PUBLIC_FEATURE_HOMECOMING === 'true'
+      ? [
+          {
+            source: '/no/new-member/:slug*',
+            destination: `/no/info`,
+            permanent: true,
+            locale: false,
+          },
+          {
+            source: '/no-en/new-member/:slug*',
+            destination: `/no-en/info`,
+            permanent: true,
+            locale: false,
+          },
+          {
+            source: '/dk/new-member/:slug*',
+            destination: `/dk/info`,
+            permanent: true,
+            locale: false,
+          },
+          {
+            source: '/dk-en/new-member/:slug*',
+            destination: `/dk-en/info`,
+            permanent: true,
+            locale: false,
+          },
+        ]
+      : []
   },
 })
 
