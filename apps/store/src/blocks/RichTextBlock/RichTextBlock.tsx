@@ -1,5 +1,6 @@
 import { ISbRichtext, storyblokEditable } from '@storyblok/react'
-import { render, RenderOptions } from 'storyblok-rich-text-react-renderer'
+import Link from 'next/link'
+import { render, RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -15,6 +16,30 @@ export type RichTextBlockProps = SbBaseBlockProps<{
 export const richTextRenderOptions: RenderOptions = {
   blokResolvers: {
     image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
+  },
+  markResolvers: {
+    [MARK_LINK]: (children, props) => {
+      const { linktype, href, target } = props
+      if (linktype === 'email') {
+        return <a href={`mailto:${href}`}>{children}</a>
+      }
+
+      // External links
+      if (href?.match(/^(https?:)?\/\//)) {
+        return (
+          <a href={href} target={target}>
+            {children}
+          </a>
+        )
+      }
+
+      // Internal links
+      if (href) {
+        return <Link href={href}>{children}</Link>
+      }
+
+      return null
+    },
   },
 }
 
