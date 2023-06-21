@@ -1,11 +1,8 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
-import { render } from 'storyblok-rich-text-react-renderer'
 import { Heading, Space, Text, mq, theme } from 'ui'
-import { richTextRenderOptions } from '@/blocks/RichTextBlock/RichTextBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { RichText } from '@/components/RichText/RichText'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
@@ -21,7 +18,7 @@ export const BlogArticleBlock = (props: Props) => {
   return (
     <>
       <GridLayout.Root {...storyblokEditable(props.blok)}>
-        <GridLayout.Content width={{ md: '2/3', xl: '1/2', xxl: '1/3' }} align="center">
+        <GridLayout.Content width={{ base: '1', md: '5/6', lg: '2/3', xl: '1/2' }} align="center">
           <TopPadding />
           <Space y={0.5}>
             <SpaceFlex space={0.25}>
@@ -40,7 +37,6 @@ export const BlogArticleBlock = (props: Props) => {
               </UppercaseText>
             </Space>
           </Space>
-          <RichText>{render(props.blok.content, richTextRenderOptions)}</RichText>
         </GridLayout.Content>
       </GridLayout.Root>
       {props.blok.body.map((item) => (
