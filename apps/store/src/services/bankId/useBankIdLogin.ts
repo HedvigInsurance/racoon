@@ -4,7 +4,7 @@ import { Subscription } from 'zen-observable-ts'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
-import { BankIdLoginOptions, LoginPromptOptions } from './bankId.types'
+import { BankIdLoginOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import { BankIdDispatch } from './bankIdReducer'
 
@@ -29,18 +29,20 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
   const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
 
   const startLoginWithCallbacks = useCallback(
-    (options: BankIdLoginOptions) => {
+    (options: StartLoginOptions) => {
       datadogRum.addAction('bankIdLogin start')
+      dispatch({ type: 'startLogin', ssn: options.ssn })
+
       startLogin({
         ...options,
         onSuccess() {
           datadogRum.addAction('bankIdLogin complete')
           onLoginPromptCompletedRef.current?.()
-          options.onSuccess()
+          dispatch({ type: 'success' })
         },
       })
     },
-    [startLogin],
+    [startLogin, dispatch],
   )
 
   const cancelLoginWithCallbacks = useCallback(() => {
