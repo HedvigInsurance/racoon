@@ -12,18 +12,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!context.params) throw new Error('Failed to render car cancellation page')
   if (!isRoutingLocale(context.locale)) throw new Error('Invalid locale')
 
-  // TODO: Implement this function after the API is ready
-  const pageProps = {
-    id: context.params.contractId,
-    displayName: 'Bilförsäkring · If',
-    status: { type: 'PENDING', message: 'Pending' },
-    approveByDate: '2021-01-01',
-  } satisfies Props
+  const ssn = context.query.ssn as string | undefined
 
   return {
     props: {
       ...(await serverSideTranslations(context.locale)),
-      ...pageProps,
+      contractId: context.params.contractId,
+      ssn,
     },
   }
 }
