@@ -90,7 +90,13 @@ const redirectMiddleware = async (req: NextRequest): Promise<NextResponse | unde
           redirect.to
         }`,
       )
+
       const redirectUrl = new URL(redirect.to, req.nextUrl)
+      const serachParams = new URLSearchParams([
+        ...Array.from(reqUrl.searchParams.entries()),
+        ...Array.from(redirectUrl.searchParams.entries()),
+      ])
+      redirectUrl.search = serachParams.toString()
       return NextResponse.redirect(redirectUrl, redirect.temporary ? 307 : 308)
     }
   }
