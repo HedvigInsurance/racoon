@@ -32,7 +32,7 @@
   "SAS_SECTION_TITLE": "Koppla ditt SAS EuroBonus",
   "SIGN_BUTTON_one": "Teckna försäkring",
   "SIGN_BUTTON_other": "Teckna försäkringar",
-  "SIGN_DISCLAIMER": "Genom att fortsätta bekräftar du att du läst och förstått villkoren, samt att du godkänner att Hedvig hanterar dina personuppgifter.",
+  "SIGN_DISCLAIMER": "Genom att fortsätta bekräftar du att du läst och förstått villkoren, samt att du godkänner att Hedvig hanterar dina [[personuppgifter]].",
   "SUCCESS_ANIMATION_MESSAGE": "Välkommen till ◰",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_LINK": "Godkänn uppsägning ↗︎",
   "SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE": "Godkänn uppsägning senast {{date}}.",

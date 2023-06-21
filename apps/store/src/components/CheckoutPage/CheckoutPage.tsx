@@ -18,6 +18,7 @@ import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNu
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
+import { TextWithLink } from '@/components/TextWithLink'
 import {
   CartFragmentFragment,
   CurrentMemberDocument,
@@ -27,6 +28,7 @@ import {
 } from '@/services/apollo/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CheckoutHeader } from '../CheckoutHeader/CheckoutHeader'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
@@ -46,6 +48,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   } = props
   const { t } = useTranslation('checkout')
 
+  const { routingLocale } = useCurrentLocale()
   const [showSignError, setShowSignError] = useState(false)
   const { shopSession, reset: resetShopSession } = useShopSession()
   const router = useRouter()
@@ -195,9 +198,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       >
                         {t('SIGN_BUTTON', { count: cart.entries.length })}
                       </SignButton>
-                      <Text size="xs" color="textSecondary" align="center">
-                        {userErrorMessage ?? t('SIGN_DISCLAIMER')}
-                      </Text>
+                      {userErrorMessage ? (
+                        <Text size="xs" color="textSecondary" align="center">
+                          {userErrorMessage}
+                        </Text>
+                      ) : (
+                        <TextWithLink href={PageLink.privacyPolicy({ locale: routingLocale })}>
+                          {t('SIGN_DISCLAIMER')}
+                        </TextWithLink>
+                      )}
                     </Space>
                   </Space>
                 </form>
