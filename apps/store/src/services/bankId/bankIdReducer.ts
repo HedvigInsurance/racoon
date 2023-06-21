@@ -3,14 +3,19 @@ import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdOperation, BankIdState } from './bankId.types'
 
 export type BankIdAction =
+  | ShowLoginPromptAction
   | StartLoginAction
   | StartSignAction
   | FinalAction
   | OperationStateChangeAction
   | ErrorAction
 
-type StartLoginAction = {
+type ShowLoginPromptAction = {
   type: 'showLoginPrompt'
+  ssn: string
+}
+type StartLoginAction = {
+  type: 'startLogin'
   ssn: string
 }
 type StartSignAction = {
@@ -46,6 +51,14 @@ export const bankIdReducer = (
         currentOperation: {
           type: 'login',
           state: BankIdState.Idle,
+          ssn: action.ssn,
+        },
+      }
+    case 'startLogin':
+      return {
+        currentOperation: {
+          type: 'login',
+          state: BankIdState.Starting,
           ssn: action.ssn,
         },
       }

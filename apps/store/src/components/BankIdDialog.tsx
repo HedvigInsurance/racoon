@@ -2,18 +2,17 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { AnimatePresence, motion, Target, TargetAndTransition, Transition } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { ReactElement, useCallback } from 'react'
+import { ReactElement } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { BankIdLoginOptions, BankIdState } from '@/services/bankId/bankId.types'
+import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 
 export const BankIdDialog = () => {
   const { t } = useTranslation('bankid')
-  const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation, dispatch } =
-    useBankIdContext()
+  const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   let isOpen = !!currentOperation
   if (currentOperation?.type === 'sign') {
@@ -26,17 +25,6 @@ export const BankIdDialog = () => {
       isOpen = false
     }
   }
-
-  const handleLogin = useCallback(
-    ({ ssn }: Omit<BankIdLoginOptions, 'onSuccess'>) =>
-      startLogin({
-        ssn,
-        onSuccess() {
-          dispatch({ type: 'success' })
-        },
-      }),
-    [dispatch, startLogin],
-  )
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -69,7 +57,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={() => handleLogin({ ssn })}
+              onLoginStart={() => startLogin({ ssn })}
             />
             <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
@@ -130,7 +118,7 @@ export const BankIdDialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BANKID_TRY_AGAIN')}
-              onLoginStart={() => handleLogin({ ssn })}
+              onLoginStart={() => startLogin({ ssn })}
             />
             <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
