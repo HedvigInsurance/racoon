@@ -6,9 +6,9 @@ import {
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Form } from '@/services/PriceCalculator/PriceCalculator.types'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
+import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid'
@@ -96,6 +96,7 @@ export const PriceCalculator = (props: Props) => {
             section={section}
             onSubmit={handleSubmitSection}
             loading={isLoading}
+            last={sectionIndex === form.sections.length - 1}
           >
             <FormGrid items={section.items}>
               {(field, index) => (
