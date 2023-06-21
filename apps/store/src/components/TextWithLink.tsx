@@ -3,14 +3,19 @@ import Link from 'next/link'
 import { Text } from 'ui'
 import { nestedLinkStyles } from './RichText/RichText.styles'
 
-export const TextWithLink = (props: { children: string; href: string }) => {
-  const [beforeLink, rest] = props.children.split('[[', 2)
+type Props = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+  href: string
+  children: string
+}
+
+export const TextWithLink = ({ children, ...linkProps }: Props) => {
+  const [beforeLink, rest] = children.split('[[', 2)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (rest === undefined) {
     return (
       <Text size="xs" align="center" balance={true}>
-        {props.children}
+        {children}
       </Text>
     )
   }
@@ -20,7 +25,7 @@ export const TextWithLink = (props: { children: string; href: string }) => {
   return (
     <StyledTextWithLink size="xs" align="center" balance={true}>
       {beforeLink}
-      <Link href={props.href}>{linkText}</Link>
+      <Link {...linkProps}>{linkText}</Link>
       {afterLink}
     </StyledTextWithLink>
   )
