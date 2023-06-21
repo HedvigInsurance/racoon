@@ -109,7 +109,7 @@ const Card = styled.div({
   },
 })
 
-const PendingCard = styled(Card)({ backgroundColor: theme.colors.amberFill1 })
+const PendingCard = styled(Card)({ backgroundColor: theme.colors.signalAmberFill })
 
 const pulsingAnimation = keyframes({
   '0%': {
@@ -150,7 +150,7 @@ const PillStatus = styled.div({
   height: theme.space.sm,
   width: theme.space.sm,
   borderRadius: '50%',
-  backgroundColor: theme.colors.amberElement,
+  backgroundColor: theme.colors.signalAmberElement,
 })
 
 type StatusPillProps = { children: string }
@@ -167,7 +167,7 @@ const PendingStatusPill = ({ children }: StatusPillProps) => {
 const CompletedStatusPill = ({ children }: StatusPillProps) => {
   return (
     <Pill>
-      <PillStatus color={theme.colors.greenElement} />
+      <PillStatus color={theme.colors.signalGreenElement} />
       <Text size="xs">{children}</Text>
     </Pill>
   )

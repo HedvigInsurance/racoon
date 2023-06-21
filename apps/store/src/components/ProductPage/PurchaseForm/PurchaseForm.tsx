@@ -148,7 +148,10 @@ export const PurchaseForm = () => {
                       <SpaceFlex direction="vertical" align="center" space={0}>
                         <Text size={{ _: 'lg', lg: 'xl' }}>
                           <SpaceFlex space={0.25} align="center">
-                            <WarningTriangleIcon size="1em" color={theme.colors.amberElement} />
+                            <WarningTriangleIcon
+                              size="1em"
+                              color={theme.colors.signalAmberElement}
+                            />
                             {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
                           </SpaceFlex>
                         </Text>

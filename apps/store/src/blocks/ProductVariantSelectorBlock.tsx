@@ -39,11 +39,11 @@ const VariantSelectorWrapper = styled.div({
 })
 
 const StyledProductVariantSelector = styled(ProductVariantSelector)({
-  backgroundColor: theme.colors.greenFill1,
+  backgroundColor: theme.colors.signalGreenFill,
   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
 
   ':hover, :focus-within': {
-    backgroundColor: theme.colors.greenFill3,
+    backgroundColor: theme.colors.signalGreenHighlight,
   },
 })
 

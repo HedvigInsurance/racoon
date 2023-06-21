@@ -30,7 +30,7 @@ const SwitchWrapper = styled(RadixSwitch.Root)({
   },
 
   '&[data-state=checked], &[data-state=open]': {
-    backgroundColor: theme.colors.greenElement,
+    backgroundColor: theme.colors.signalGreenElement,
   },
 
   '&[disabled]': {

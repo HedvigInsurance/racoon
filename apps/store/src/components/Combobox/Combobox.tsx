@@ -176,7 +176,7 @@ export const Combobox = <Item,>({
 
       {noOptions && (
         <WarningBox>
-          <WarningTriangleIcon color={theme.colors.amberElement} size={theme.fontSizes.xs} />
+          <WarningTriangleIcon color={theme.colors.signalAmberElement} size={theme.fontSizes.xs} />
           <SingleLineText as="p" size="xs">
             {noMatchesMessage}
           </SingleLineText>

@@ -4,7 +4,7 @@ import { WarningTriangleIcon, theme } from 'ui'
 export const PaymentFailurePage = () => {
   return (
     <Centered>
-      <WarningTriangleIcon color={theme.colors.amberElement} />
+      <WarningTriangleIcon color={theme.colors.signalAmberElement} />
     </Centered>
   )
 }

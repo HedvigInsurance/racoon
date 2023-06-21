@@ -49,7 +49,7 @@ const Wrapper = styled.div({
   alignItems: 'center',
 
   height: '80vh',
-  background: `linear-gradient(180deg, ${theme.colors.amberFill1} var(--gradient-position), ${theme.colors.backgroundStandard})`,
+  background: `linear-gradient(180deg, ${theme.colors.signalAmberFill} var(--gradient-position), ${theme.colors.backgroundStandard})`,
   animation: `${gradientAnimation} 2s cubic-bezier(0.65, 0.05, 0.36, 1)`,
   animationIterationCount: 1,
 })
