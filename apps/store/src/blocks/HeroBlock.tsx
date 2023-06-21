@@ -15,6 +15,7 @@ type HeroBlockProps = SbBaseBlockProps<{
   heightPortrait?: string
   heightLandscape?: string
   verticalAlignment?: VerticalAlignment
+  priority?: boolean
 }>
 
 export const HeroBlock = ({ blok }: HeroBlockProps) => {
@@ -33,7 +34,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
       <HeroImageWrapper>
         {background && (
           <HeroImage
-            priority
+            priority={blok.priority}
             src={background.filename}
             alt={background.alt}
             data-portrait-image={!!backgroundLandscape}
@@ -42,7 +43,7 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
         )}
         {backgroundLandscape && (
           <HeroImageLandscape
-            priority
+            priority={blok.priority}
             src={backgroundLandscape.filename}
             alt={backgroundLandscape.alt}
             fill
