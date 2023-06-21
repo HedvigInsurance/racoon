@@ -11,7 +11,6 @@ type Props = {
   label: string
   productName: string
   priceIntentId: string
-  insurelyConfigName?: string
   externalInsurer?: string
 }
 

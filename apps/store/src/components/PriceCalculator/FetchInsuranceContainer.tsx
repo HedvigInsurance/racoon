@@ -10,13 +10,13 @@ export const FetchInsuranceContainer = ({ priceIntent }: Props) => {
   if (!Features.enabled('INSURELY')) return null
   if (priceIntent.product.name === 'SE_CAR' && !Features.enabled('INSURELY_CAR')) return null
   if (!priceIntent.externalInsurer) return null
-  if (!priceIntent.insurelyConfigName) return null
+  if (!priceIntent.insurely) return null
 
   return (
     <FetchInsurance
       priceIntentId={priceIntent.id}
       externalInsurer={priceIntent.externalInsurer}
-      insurelyConfigName={priceIntent.insurelyConfigName}
+      insurely={priceIntent.insurely}
       productName={priceIntent.product.displayNameShort}
     />
   )

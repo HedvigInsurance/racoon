@@ -10,10 +10,13 @@ fragment PriceIntentFragment on PriceIntent {
     displayName
     insurelyId
   }
-  insurelyConfigName
   product {
     name
     displayNameShort
     pageLink
+  }
+  insurely {
+    configName
+    partner
   }
 }
