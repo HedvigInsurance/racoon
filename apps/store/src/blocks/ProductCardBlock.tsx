@@ -1,4 +1,3 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { ProductCard, type LinkType } from '@/components/ProductCard/ProductCard'
@@ -24,7 +23,7 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   const linkType = getLinkType(productMetadata, link)
 
   if (linkType === 'content') {
-    datadogLogs.logger.warn(
+    console.warn(
       '[ProductCardBlock]: provided "link" does not refer to a product neither a category. Skipping ProductCard render!',
     )
     return null
