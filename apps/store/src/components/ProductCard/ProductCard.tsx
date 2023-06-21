@@ -1,5 +1,4 @@
 import { UrlObject } from 'url'
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -89,7 +88,7 @@ const ProductCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
 
   const priceLink = getPriceLink(link.url)
   if (!priceLink) {
-    datadogLogs.logger.warn('[ProductCard]: Unable to generate a price link. Skipping cta render!')
+    console.warn('[ProductCard]: Unable to generate a price link. Skipping cta render!')
     return null
   }
 
@@ -113,7 +112,7 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
     }))
 
   if (productsByCategory.length < 1) {
-    datadogLogs.logger.warn(
+    console.warn(
       `[ProductCard]: No products category link ${link} were found. Skipping cta render!`,
     )
     return null
