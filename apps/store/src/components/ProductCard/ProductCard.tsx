@@ -54,6 +54,7 @@ export const ProductCard = ({
         <Subtitle>{subtitle}</Subtitle>
         <CallToAction>
           <Button
+            id="read-more-btn"
             onClick={() => router.push(link.url)}
             tabIndex={-1}
             aria-hidden={true}
@@ -203,7 +204,7 @@ const MainLink = styled(Link)({
     left: 0,
   },
 
-  [`&:focus-visible ~ ${CallToAction} button`]: {
+  [`&:focus-visible ~ ${CallToAction} #read-more-btn`]: {
     boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
   },
 })
