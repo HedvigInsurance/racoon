@@ -13,7 +13,6 @@ import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
-  INSURELY_PARTNER,
 } from '@/services/Insurely/Insurely.constants'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { FetchInsuranceSuccess } from '../FetchInsuranceSuccess/FetchInsuranceSuccess'
@@ -30,14 +29,14 @@ type OnCompleted = NonNullable<ComponentProps<typeof InsurelyIframe>['onComplete
 type Props = {
   priceIntentId: string
   externalInsurer: ExternalInsurer
-  insurelyConfigName: string
+  insurely: { configName: string; partner: string }
   productName: string
 }
 
 export const FetchInsurance = ({
-  externalInsurer,
-  insurelyConfigName,
   priceIntentId,
+  externalInsurer,
+  insurely,
   productName,
 }: Props) => {
   const { shopSession } = useShopSession()
@@ -106,7 +105,7 @@ export const FetchInsurance = ({
   })
 
   const handleInsurelyCollection = (collectionId: string) => {
-    createDataCollection({ variables: { collectionId, partner: INSURELY_PARTNER } })
+    createDataCollection({ variables: { collectionId, partner: insurely.partner } })
   }
 
   const handleInsurelyCompleted: OnCompleted = useCallback(() => {
@@ -137,7 +136,7 @@ export const FetchInsurance = ({
         <DialogIframeContent onClose={dismiss} centerContent={true}>
           <DialogIframeWindow>
             <InsurelyIframe
-              configName={insurelyConfigName}
+              configName={insurely.configName}
               onCollection={handleInsurelyCollection}
               onClose={dismiss}
               onCompleted={handleInsurelyCompleted}
