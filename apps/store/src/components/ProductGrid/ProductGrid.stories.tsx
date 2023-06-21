@@ -22,7 +22,7 @@ Default.args = {
       title: 'Hedvig Home',
       subtitle: 'Flexible and simple, for both renters and owners.',
       image: { src: 'https://via.placeholder.com/336x400' },
-      link: { url: '/', type: 'content' },
+      link: { url: '/', type: 'product' },
     },
     {
       key: '2',

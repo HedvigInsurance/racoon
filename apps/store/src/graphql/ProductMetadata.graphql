@@ -6,6 +6,7 @@ query ProductMetadata {
     displayNameFull
     tagline
     pageLink
+    categoryPageLink
     pillowImage {
       id
       alt

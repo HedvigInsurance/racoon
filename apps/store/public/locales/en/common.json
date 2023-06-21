@@ -38,5 +38,6 @@
   "PAYMENT_CONNECT_SUCCESS": "Success! You can close this page now :)",
   "PAYMENT_CONNECT_TITLE": "Connect direct debit",
   "READ_MORE": "Read more",
+  "SELECT_INSURANCE": "Select insurance",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }

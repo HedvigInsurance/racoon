@@ -5,7 +5,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataC
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { getParameterizedLink } from '@/utils/getParameterizedLink'
 
 type Props = SbBaseBlockProps<{
   title?: string
@@ -18,7 +18,9 @@ export const SelectInsuranceGridBlock = ({ blok, nested }: Props) => {
 
   const parsedProducts = (products ?? []).map((product) => ({
     ...product,
-    pageLink: getProductLink(product.pageLink, openPriceCalculator),
+    pageLink: openPriceCalculator
+      ? getParameterizedLink(product.pageLink, [[OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1']])
+      : product.pageLink,
   }))
 
   return (
@@ -44,17 +46,5 @@ const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({
     },
   },
 })
-
-const getProductLink = (pageLink: string, openPriceCalculator: boolean) => {
-  return openPriceCalculator
-    ? addSearchParam(pageLink, OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-    : pageLink
-}
-
-const addSearchParam = (url: string, param: string, value: string) => {
-  const urlObj = new URL(url, ORIGIN_URL)
-  urlObj.searchParams.set(param, value)
-  return urlObj.toString()
-}
 
 SelectInsuranceGridBlock.blockName = 'selectInsuranceGrid'
