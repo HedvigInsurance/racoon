@@ -1,17 +1,26 @@
-import { FormEventHandler, ReactNode } from 'react'
-import { Button, Space } from 'ui'
+import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
+import NextLink from 'next/link'
+import { type FormEventHandler, type ReactNode } from 'react'
+import { Button, Space, Text } from 'ui'
+import { linkStyles } from '@/components/RichText/RichText.styles'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { FormSection, JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import { type FormSection, type JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   section: FormSection
   loading: boolean
   onSubmit: (data: JSONData) => void
+  last: boolean
   children: ReactNode
 }
 
-export const PriceCalculatorSection = ({ section, loading, onSubmit, children }: Props) => {
+export const PriceCalculatorSection = ({ section, loading, onSubmit, last, children }: Props) => {
+  const { routingLocale } = useCurrentLocale()
+  const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -40,8 +49,21 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, children }:
           <Button type="submit" disabled={loading} loading={loading}>
             {translateLabel(section.submitLabel)}
           </Button>
+
+          {last && (
+            <Link href={PageLink.privacyPolicy({ locale: routingLocale })} target="_blank">
+              <Text as="span" size="xs">
+                {t('GDPR_LINK_BEFORE_OFFER')}
+              </Text>
+            </Link>
+          )}
         </Space>
       </Space>
     </form>
   )
 }
+
+const Link = styled(NextLink)(linkStyles, {
+  display: 'block',
+  textAlign: 'center',
+})

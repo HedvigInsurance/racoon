@@ -64,6 +64,15 @@ export const PageLink = {
     return url
   },
 
+  privacyPolicy: ({ locale }: Required<BaseParams>) => {
+    const url = PRIVACY_POLICY_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing privacy policy link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+
   apiSessionReset: () => '/api/session/reset',
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
   apiCampaign: ({ code, next }: CampaignAddRoute) => {
@@ -80,4 +89,9 @@ const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
   se: '/se/forsakringar/djurforsakring/sjalvrisk',
   'se-en': '/se-en/insurances/pet-insurance/deductible',
+}
+
+const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, string>> = {
+  se: '/se/hedvig/personuppgifter',
+  'se-en': '/se-en/hedvig/privacy-policy',
 }
