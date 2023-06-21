@@ -35,5 +35,6 @@
   "PAYMENT_CONNECT_SUCCESS": "Autogiro kopplat! Du kan stänga sidan nu :)",
   "PAYMENT_CONNECT_TITLE": "Koppla autogiro",
   "READ_MORE": "Läs mer",
+  "SELECT_INSURANCE": "Välj försäkring",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
 }

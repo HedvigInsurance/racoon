@@ -1,13 +1,20 @@
 import { UrlObject } from 'url'
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, mq, Space, theme } from 'ui'
+import { Button, Space, theme, mq } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
+import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
+import { getParameterizedLink } from '@/utils/getParameterizedLink'
 
 type ImageProps = {
   src: string
@@ -18,11 +25,13 @@ type ImageProps = {
 
 type LinkHref = string | UrlObject
 
+export type LinkType = 'product' | 'category'
+
 export type ProductCardProps = {
   title: string
   subtitle: string
   image: ImageProps
-  link: { url: string; type: 'product' | 'content' }
+  link: { url: string; type: LinkType }
 } & ImageSize
 
 export const ProductCard = ({
@@ -34,7 +43,6 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t } = useTranslation('common')
   const router = useRouter()
-  const priceLink = link.type === 'product' ? getPriceLink(link.url) : undefined
 
   return (
     <Container y={1}>
@@ -54,11 +62,8 @@ export const ProductCard = ({
           >
             {t('READ_MORE')}
           </Button>
-          {priceLink && (
-            <ButtonNextLink href={priceLink} size="medium" variant="primary-alt">
-              {t('GET_PRICE_LINK')}
-            </ButtonNextLink>
-          )}
+          {link.type === 'product' && <ProductCTA link={link} />}
+          {link.type === 'category' && <CategoryCTA link={link} />}
         </CallToAction>
       </ContentWrapper>
     </Container>
@@ -76,6 +81,65 @@ const getPriceLink = (productLink: string): LinkHref | undefined => {
     pathname: productLink,
     query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1 },
   } as const
+}
+
+const ProductCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
+  const { t } = useTranslation('common')
+
+  const priceLink = getPriceLink(link.url)
+  if (!priceLink) {
+    datadogLogs.logger.warn('[ProductCard]: Unable to generate a price link. Skipping cta render!')
+    return null
+  }
+
+  return (
+    <ButtonNextLink href={priceLink} size="medium" variant="primary-alt">
+      {t('GET_PRICE_LINK')}
+    </ButtonNextLink>
+  )
+}
+
+const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const products = useProductMetadata()
+  const { t } = useTranslation('common')
+
+  const productsByCategory = (products ?? [])
+    .filter((product) => product.categoryPageLink === link.url)
+    .map((product) => ({
+      ...product,
+      pageLink: getParameterizedLink(product.pageLink, [[OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1']]),
+    }))
+
+  if (productsByCategory.length < 1) {
+    datadogLogs.logger.warn(
+      `[ProductCard]: No products category link ${link} were found. Skipping cta render!`,
+    )
+    return null
+  }
+
+  return (
+    <FullscreenDialog.Root open={isOpen} onOpenChange={setIsOpen}>
+      <FullscreenDialog.Trigger asChild>
+        <Button variant="primary-alt" size="medium">
+          {t('GET_PRICE_LINK')}
+        </Button>
+      </FullscreenDialog.Trigger>
+
+      <FullscreenDialog.Modal>
+        <AnimationWrapper
+          initial={{ opacity: 0, y: '2vh' }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ...theme.transitions.framer.easeInOutCubic }}
+        >
+          <StyledSelectInsuranceGrid
+            products={productsByCategory}
+            heading={t('SELECT_INSURANCE')}
+          />
+        </AnimationWrapper>
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
+  )
 }
 
 const CALL_TO_ACTION_HEIGHT = '2.5rem'
@@ -141,5 +205,19 @@ const MainLink = styled(Link)({
 
   [`&:focus-visible ~ ${CallToAction} button`]: {
     boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+  },
+})
+
+const AnimationWrapper = styled(motion.div)({
+  width: '100%',
+})
+
+const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({
+  [mq.lg]: {
+    paddingTop: '16vh',
+  },
+
+  [mq.xxl]: {
+    paddingTop: '20vh',
   },
 })

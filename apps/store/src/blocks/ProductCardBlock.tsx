@@ -1,6 +1,7 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
-import { ProductCard } from '@/components/ProductCard/ProductCard'
+import { ProductCard, type LinkType } from '@/components/ProductCard/ProductCard'
 import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -20,9 +21,14 @@ export type ProductCardBlockProps = SbBaseBlockProps<
 export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
   const link = getLinkFieldURL(blok.link, blok.title)
   const productMetadata = useProductMetadata()
-  const linkType = productMetadata?.some((product) => isSameLink(link, product.pageLink))
-    ? 'product'
-    : 'content'
+  const linkType = getLinkType(productMetadata, link)
+
+  if (linkType === 'content') {
+    datadogLogs.logger.warn(
+      '[ProductCardBlock]: provided "link" does not refer to a product neither a category. Skipping ProductCard render!',
+    )
+    return null
+  }
 
   return (
     <ProductCard
@@ -41,4 +47,23 @@ ProductCardBlock.blockName = 'productCard'
 const isSameLink = (a: string, b: string) => {
   const normalize = (url: string) => url.replace(/^\//, '')
   return normalize(a) === normalize(b)
+}
+
+const getLinkType = (
+  productMetadata: ReturnType<typeof useProductMetadata> = [],
+  link: string,
+): LinkType | 'content' => {
+  const isProductLink = productMetadata?.some((product) => isSameLink(link, product.pageLink))
+  if (isProductLink) {
+    return 'product'
+  }
+
+  const isCategoryLink = productMetadata?.some(
+    (product) => product.categoryPageLink && isSameLink(link, product.categoryPageLink),
+  )
+  if (isCategoryLink) {
+    return 'category'
+  }
+
+  return 'content'
 }
