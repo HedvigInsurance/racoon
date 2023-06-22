@@ -203,7 +203,10 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                           {userErrorMessage}
                         </Text>
                       ) : (
-                        <TextWithLink href={PageLink.privacyPolicy({ locale: routingLocale })}>
+                        <TextWithLink
+                          href={PageLink.privacyPolicy({ locale: routingLocale })}
+                          target="_blank"
+                        >
                           {t('SIGN_DISCLAIMER')}
                         </TextWithLink>
                       )}
