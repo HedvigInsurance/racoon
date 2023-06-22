@@ -94,7 +94,7 @@ export const BankIdDialog = () => {
       case BankIdState.Success: {
         content = (
           <IconWithText>
-            <CheckIcon size="1rem" color={theme.colors.greenElement} />
+            <CheckIcon size="1rem" color={theme.colors.signalGreenElement} />
             {currentOperation.type === 'login'
               ? t('LOGIN_BANKID_SUCCESS')
               : t('BANKID_MODAL_SUCCESS_PROMPT')}

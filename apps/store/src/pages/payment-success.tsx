@@ -10,7 +10,7 @@ export const PaymentSuccessPage = () => {
 
   return (
     <Centered>
-      <CheckIcon color={theme.colors.greenElement} />
+      <CheckIcon color={theme.colors.signalGreenElement} />
       <Text>{t('PAYMENT_TRUSTLY_SUCCESS_MESSAGE')}</Text>
     </Centered>
   )

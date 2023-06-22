@@ -15,57 +15,46 @@ export const gray = {
 } as const
 
 export const grayTranslucent = {
-  25: 'hsla(0, 0%, 98%, 0.6)',
-  50: 'hsla(0, 0%, 96%, 0.6)',
-  100: 'hsla(0, 0%, 94%, 0.6)',
-  200: 'hsla(0, 0%, 92%, 0.6)',
-  300: 'hsla(0, 0%, 88%, 0.7)',
-  400: 'hsla(0, 0%, 81%, 0.7)',
-  500: 'hsla(0, 0%, 71%, 0.7)',
-  600: 'hsla(0, 0%, 59%, 0.74)',
-  700: 'hsla(0, 0%, 45%, 0.8)',
-  800: 'hsla(0, 0%, 31%, 0.84)',
-  900: 'hsla(0, 0%, 19%, 0.87)',
-  1000: 'hsla(0, 0%, 7%, 0.92)',
+  25: 'hsla(0, 0%, 7%, 0.002)',
+  50: 'hsla(0, 0%, 7%, 0.02)',
+  100: 'hsla(0, 0%, 7%, 0.05)',
+  200: 'hsla(0, 0%, 7%, 0.07)',
+  300: 'hsla(0, 0%, 7%, 0.11)',
+  400: 'hsla(0, 0%, 7%, 0.19)',
+  500: 'hsla(0, 0%, 7%, 0.3)',
+  600: 'hsla(0, 0%, 7%, 0.43)',
+  700: 'hsla(0, 0%, 7%, 0.6)',
+  800: 'hsla(0, 0%, 7%, 0.73)',
+  900: 'hsla(0, 0%, 7%, 0.87)',
+  1000: 'hsla(0, 0%, 0%, 0.93)',
+} as const
+
+export const grayTranslucentDark = {
+  25: 'hsla(0, 0%, 100%, 0.98)',
+  50: 'hsla(0, 0%, 98%, 0.98)',
+  100: 'hsla(0, 0%, 98%, 0.96)',
+  200: 'hsla(0, 0%, 98%, 0.93)',
+  300: 'hsla(0, 0%, 98%, 0.89)',
+  400: 'hsla(0, 0%, 98%, 0.81)',
+  500: 'hsla(0, 0%, 98%, 0.7)',
+  600: 'hsla(0, 0%, 98%, 0.57)',
+  700: 'hsla(0, 0%, 98%, 0.41)',
+  800: 'hsla(0, 0%, 98%, 0.27)',
+  900: 'hsla(0, 0%, 98%, 0.13)',
+  1000: 'hsla(0, 0%, 98%, 0)',
 } as const
 
 export const green = {
   50: 'hsl(85, 100%, 90%)',
   100: 'hsl(85, 73%, 87%)',
-  200: 'hsl(85, 66%, 84%)',
-  300: 'hsl(85, 58%, 80%)',
-  400: 'hsl(85, 54%, 76%)',
-  500: 'hsl(85, 50%, 70%)',
+  200: 'hsl(85, 60%, 84%)',
+  300: 'hsl(85, 46%, 80%)',
+  400: 'hsl(85, 44%, 76%)',
+  500: 'hsl(85, 40%, 70%)',
   600: 'hsl(140, 70%, 47%)',
-  700: 'hsl(100, 25%, 45%)',
-  800: 'hsl(100, 28%, 32%)',
-  900: 'hsl(100, 40%, 18%)',
-} as const
-
-export const red = {
-  50: 'hsl(7, 100%, 97%)',
-  100: 'hsl(7, 86%, 95%)',
-  200: 'hsl(7, 76%, 92%)',
-  300: 'hsl(7, 82%, 89%)',
-  400: 'hsl(7, 91%, 83%)',
-  500: 'hsl(7, 91%, 78%)',
-  600: 'hsl(7, 100%, 61%)',
-  700: 'hsl(7, 61%, 57%)',
-  800: 'hsl(7, 76%, 40%)',
-  900: 'hsl(7, 100%, 22%)',
-} as const
-
-export const pink = {
-  50: 'hsl(325, 100%, 98%)',
-  100: 'hsl(324, 64%, 95%)',
-  200: 'hsl(324, 50%, 90%)',
-  300: 'hsl(324, 46%, 86%)',
-  400: 'hsl(324, 51%, 81%)',
-  500: 'hsl(324, 45%, 75%)',
-  600: 'hsl(324, 77%, 66%)',
-  700: 'hsl(324, 30%, 45%)',
-  800: 'hsl(324, 40%, 33%)',
-  900: 'hsl(324, 34%, 28%)',
+  700: 'hsl(100, 20%, 45%)',
+  800: 'hsl(100, 22%, 32%)',
+  900: 'hsl(100, 22%, 22%)',
 } as const
 
 export const yellow = {
@@ -94,6 +83,45 @@ export const amber = {
   900: 'hsl(30, 90%, 22%)',
 } as const
 
+export const red = {
+  50: 'hsl(7, 100%, 97%)',
+  100: 'hsl(7, 86%, 95%)',
+  200: 'hsl(7, 76%, 92%)',
+  300: 'hsl(7, 82%, 89%)',
+  400: 'hsl(7, 91%, 83%)',
+  500: 'hsl(7, 91%, 78%)',
+  600: 'hsl(7, 100%, 61%)',
+  700: 'hsl(7, 61%, 57%)',
+  800: 'hsl(7, 76%, 40%)',
+  900: 'hsl(7, 100%, 22%)',
+} as const
+
+export const pink = {
+  50: 'hsl(325, 100%, 98%)',
+  100: 'hsl(324, 64%, 95%)',
+  200: 'hsl(324, 50%, 90%)',
+  300: 'hsl(324, 46%, 86%)',
+  400: 'hsl(324, 51%, 81%)',
+  500: 'hsl(324, 45%, 75%)',
+  600: 'hsl(324, 77%, 66%)',
+  700: 'hsl(324, 30%, 45%)',
+  800: 'hsl(324, 40%, 33%)',
+  900: 'hsl(324, 34%, 28%)',
+} as const
+
+export const purple = {
+  50: 'hsl(265, 100%, 97%)',
+  100: 'hsl(265, 51%, 93%)',
+  200: 'hsl(265, 31%, 87%)',
+  300: 'hsl(265, 23%, 80%)',
+  400: 'hsl(266, 20%, 72%)',
+  500: 'hsl(265, 18%, 65%)',
+  600: 'hsl(265, 100%, 62%)',
+  700: 'hsl(269, 20%, 44%)',
+  800: 'hsl(270, 22%, 34%)',
+  900: 'hsl(270, 30%, 25%)',
+} as const
+
 export const blue = {
   50: 'hsl(202, 100%, 96%)',
   100: 'hsl(202, 68%, 93%)',
@@ -120,29 +148,19 @@ export const teal = {
   900: 'hsl(175, 35%, 25%)',
 } as const
 
-export const purple = {
-  50: 'hsl(265, 100%, 97%)',
-  100: 'hsl(265, 51%, 93%)',
-  200: 'hsl(265, 31%, 87%)',
-  300: 'hsl(265, 23%, 80%)',
-  400: 'hsl(266, 20%, 72%)',
-  500: 'hsl(265, 18%, 65%)',
-  600: 'hsl(265, 100%, 62%)',
-  700: 'hsl(269, 20%, 44%)',
-  800: 'hsl(270, 22%, 34%)',
-  900: 'hsl(270, 30%, 25%)',
-} as const
-
 export const highlight = {
-  blue: { fill1: blue[100], fill2: blue[200] },
-  purple: { fill1: purple[100], fill2: purple[200] },
-  yellow: { fill1: yellow[100], fill2: yellow[200] },
+  blue: { fill1: blue[100], fill2: blue[200], fill3: blue[300] },
+  purple: { fill1: purple[100], fill2: purple[200], fill3: purple[300] },
+  yellow: { fill1: yellow[100], fill2: yellow[200], fill3: yellow[300] },
+  teal: { fill1: teal[100], fill2: teal[200], fill3: teal[300] },
+  pink: { fill1: pink[100], fill2: pink[200], fill3: pink[300] },
 } as const
 
 export const signal = {
-  green: { fill1: green[100], fill3: green[300], element: green[600], text: green[800] },
-  amber: { fill1: amber[100], fill3: amber[300], element: amber[600], text: amber[800] },
-  red: { fill1: red[100], fill3: red[300], element: red[600], text: red[800] },
+  green: { fill: green[100], highlight: green[300], element: green[600], text: green[800] },
+  amber: { fill: amber[100], highlight: amber[300], element: amber[600], text: amber[800] },
+  red: { fill: red[100], highlight: red[300], element: red[600], text: red[800] },
+  blue: { fill: blue[100], highlight: blue[300], element: blue[600], text: blue[800] },
 } as const
 
 const oldPurple = {
@@ -275,11 +293,21 @@ export const colors = {
   textRed: signal.red.text,
 
   // Semantic colors
+  // Background
   backgroundStandard: gray[25],
   backgroundFrostedGlass: grayTranslucent[25],
+
+  // Border
   borderOpaque1: gray[200],
+  borderTranslucent1: grayTranslucent[200],
   borderOpaque2: gray[300],
-  borderTranslucent: grayTranslucent[400],
+  borderTranslucent2: grayTranslucent[300],
+  borderOpaque3: gray[700],
+  borderTranslucent3: grayTranslucent[700],
+  borderOpaque4: gray[800],
+  borderTranslucent4: grayTranslucent[800],
+
+  // Fills
   opaque1: gray[100],
   translucent1: grayTranslucent[100],
   opaque2: gray[300],
@@ -294,23 +322,38 @@ export const colors = {
   blueFill1: highlight.blue.fill1,
   purpleFill1: highlight.purple.fill1,
   yellowFill1: highlight.yellow.fill1,
+  tealFill1: highlight.teal.fill1,
+  pinkFill1: highlight.pink.fill1,
   // Used as fill on gray backgrounds
   blueFill2: highlight.blue.fill2,
   purpleFill2: highlight.purple.fill2,
   yellowFill2: highlight.yellow.fill2,
+  tealFill2: highlight.teal.fill2,
+  pinkFill2: highlight.pink.fill2,
+  // Used as fill on highlight background in lighter color
+  blueFill3: highlight.blue.fill3,
+  purpleFill3: highlight.purple.fill3,
+  yellowFill3: highlight.yellow.fill3,
+  tealFill3: highlight.teal.fill3,
+  pinkFill3: highlight.pink.fill3,
+
   // Signal colors
-  greenFill1: signal.green.fill1,
-  greenFill3: signal.green.fill3,
-  greenElement: signal.green.element,
-  greenText: signal.green.text,
-  amberFill1: signal.amber.fill1,
-  amberFill3: signal.amber.fill3,
-  amberElement: signal.amber.element,
-  amberText: signal.amber.text,
-  redFill1: signal.red.fill1,
-  redFill3: signal.red.fill3,
-  redElement: signal.red.element,
-  redText: signal.red.text,
+  signalGreenFill: signal.green.fill,
+  signalGreenHighlight: signal.green.highlight,
+  signalGreenElement: signal.green.element,
+  signalGreenText: signal.green.text,
+  signalAmberFill: signal.amber.fill,
+  signalAmberHighlight: signal.amber.highlight,
+  signalAmberElement: signal.amber.element,
+  signalAmberText: signal.amber.text,
+  signalRedFill: signal.red.fill,
+  signalRedHighlight: signal.red.highlight,
+  signalRedElement: signal.red.element,
+  signalRedText: signal.red.text,
+  signalBlueFill: signal.blue.fill,
+  signalBlueHighlight: signal.blue.highlight,
+  signalBlueElement: signal.blue.element,
+  signalBlueText: signal.blue.text,
 } as const
 
 export type UIColors = typeof colors

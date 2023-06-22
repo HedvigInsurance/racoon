@@ -25,6 +25,6 @@ export const StepIcon = styled(
   }),
 
   ...(state === 'valid' && {
-    backgroundColor: theme.colors.greenElement,
+    backgroundColor: theme.colors.signalGreenElement,
   }),
 }))

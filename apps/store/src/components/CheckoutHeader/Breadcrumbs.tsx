@@ -49,7 +49,7 @@ const Step = styled.li<{ active: boolean }>(({ active }) => ({
 
   ...(active && {
     backgroundColor: theme.colors.green100,
-    color: theme.colors.greenText,
+    color: theme.colors.signalGreenText,
     borderColor: theme.colors.green200,
   }),
 }))

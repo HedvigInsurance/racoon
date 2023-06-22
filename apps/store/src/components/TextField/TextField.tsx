@@ -130,7 +130,7 @@ export const TextField = (props: Props) => {
 const warningAnimation = keyframes({
   '0%': {
     backgroundColor: theme.colors.amber100,
-    color: theme.colors.amberText,
+    color: theme.colors.signalAmberText,
   },
   '100%': {
     backgroundColor: theme.colors.gray100,
@@ -140,7 +140,7 @@ const warningAnimation = keyframes({
 
 const warningColorAnimation = keyframes({
   '0%': {
-    color: theme.colors.amberText,
+    color: theme.colors.signalAmberText,
   },
   '100%': {
     color: theme.colors.textSecondary,
@@ -193,7 +193,7 @@ const Label = styled.label({
   },
 
   [`${LargeWrapper}[data-highlight=true] > &, ${SmallWrapper}[data-highlight=true] > &`]: {
-    color: theme.colors.greenText,
+    color: theme.colors.signalGreenText,
   },
 
   [`${LargeWrapper}[data-warning=true] > &, ${SmallWrapper}[data-warning=true] > &`]: {

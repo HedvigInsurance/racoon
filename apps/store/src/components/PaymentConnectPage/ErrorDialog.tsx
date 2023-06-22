@@ -22,7 +22,7 @@ export const ErrorDialog = (props: Props) => {
         }
       >
         <SpaceFlex direction="vertical" align="center">
-          <WarningTriangleIcon color={theme.colors.amberElement} />
+          <WarningTriangleIcon color={theme.colors.signalAmberElement} />
           <Text size={{ _: 'md', lg: 'lg' }}>{t('PAYMENT_CONNECT_FAILURE')}</Text>
         </SpaceFlex>
       </FullscreenDialog.Modal>

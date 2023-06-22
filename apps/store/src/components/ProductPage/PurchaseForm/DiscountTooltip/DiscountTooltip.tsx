@@ -65,7 +65,7 @@ const GrayBubble = styled.div({
 })
 
 const GreenBubble = styled(GrayBubble)({
-  backgroundColor: theme.colors.greenFill1,
+  backgroundColor: theme.colors.signalGreenFill,
   border: `1px solid ${theme.colors.grayTranslucent200}`,
 
   filter: `
@@ -74,6 +74,6 @@ const GreenBubble = styled(GrayBubble)({
   `,
 
   '::after': {
-    borderTopColor: theme.colors.greenFill1,
+    borderTopColor: theme.colors.signalGreenFill,
   },
 })

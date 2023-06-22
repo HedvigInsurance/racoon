@@ -53,7 +53,7 @@ export const SasEurobonusSection = ({
       </FieldWrapper>
       {state === 'complete' ? (
         <SpaceFlex direction="horizontal" align="center">
-          <CheckIcon color={theme.colors.greenElement} />
+          <CheckIcon color={theme.colors.signalGreenElement} />
           <Text>{t('SAS_BONUS_NUMBER_SAVED')}</Text>
         </SpaceFlex>
       ) : (

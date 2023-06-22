@@ -37,13 +37,13 @@ const Icon = ({ variant }: { variant: BannerVariant }) => {
       icon = <InfoIcon color={theme.colors.blue600} size={size} />
       break
     case 'campaign':
-      icon = <CampaignIcon color={theme.colors.greenElement} size={size} />
+      icon = <CampaignIcon color={theme.colors.signalGreenElement} size={size} />
       break
     case 'warning':
-      icon = <WarningTriangleIcon color={theme.colors.amberElement} size={size} />
+      icon = <WarningTriangleIcon color={theme.colors.signalAmberElement} size={size} />
       break
     case 'error':
-      icon = <WarningTriangleIcon color={theme.colors.redElement} size={size} />
+      icon = <WarningTriangleIcon color={theme.colors.signalRedElement} size={size} />
       break
   }
 
@@ -94,17 +94,17 @@ const getVariantStyles = (variant: BannerVariant) => {
     case 'campaign':
       return {
         color: theme.colors.textGreen,
-        backgroundColor: theme.colors.greenFill1,
+        backgroundColor: theme.colors.signalGreenFill,
       }
     case 'warning':
       return {
         color: theme.colors.textAmber,
-        backgroundColor: theme.colors.amberFill1,
+        backgroundColor: theme.colors.signalAmberFill,
       }
     case 'error':
       return {
         color: theme.colors.textRed,
-        backgroundColor: theme.colors.redFill1,
+        backgroundColor: theme.colors.signalRedFill,
       }
     default:
       return {}

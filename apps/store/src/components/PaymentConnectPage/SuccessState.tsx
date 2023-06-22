@@ -10,7 +10,7 @@ export const SuccessState = () => {
   return (
     <Layout>
       <IframePlaceholder>
-        <CheckIcon color={theme.colors.greenElement} />
+        <CheckIcon color={theme.colors.signalGreenElement} />
         <Text size={{ _: 'md', lg: 'lg' }}>{t('PAYMENT_CONNECT_SUCCESS')}</Text>
       </IframePlaceholder>
     </Layout>

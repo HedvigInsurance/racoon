@@ -5,6 +5,7 @@ import {
   blue,
   gray,
   grayTranslucent,
+  grayTranslucentDark,
   green,
   highlight,
   pink,
@@ -22,16 +23,18 @@ export default {
 type Props = {
   colors: Record<string, string>
   name: string
+  prefix?: string
+  suffix?: string
 }
 
-const Palette = ({ colors, name }: Props) => (
+const Palette = ({ colors, name, prefix, suffix }: Props) => (
   <>
     <ColorName>{name}</ColorName>
     <ColorGrid>
       {Object.entries(colors).map((color) => (
         <div key={color[0]}>
           <ColorSwatch hue={color[1]} />
-          <HueName>{`${name}-${color[0]}`}</HueName>
+          <HueName>{`${prefix ?? name}-${color[0]} ${suffix ?? ''}`}</HueName>
           <HueValue>{color[1]}</HueValue>
         </div>
       ))}
@@ -41,9 +44,15 @@ const Palette = ({ colors, name }: Props) => (
 
 export const Colors = () => (
   <>
-    <Palette name="Gray" colors={gray} />
+    <Palette name="Gray" prefix="G" colors={gray} />
+    <Palette name="Gray Translucent Light Mode" prefix="G" suffix="T L" colors={grayTranslucent} />
     <TranslucentWrapper>
-      <Palette name="Gray Translucent" colors={grayTranslucent} />
+      <Palette
+        name="Gray Translucent Dark Mode"
+        prefix="G"
+        suffix="T D"
+        colors={grayTranslucentDark}
+      />
     </TranslucentWrapper>
     <Palette name="Green" colors={green} />
     <Palette name="Yellow" colors={yellow} />
@@ -97,7 +106,9 @@ const HueValue = styled.p({
 })
 
 const TranslucentWrapper = styled.div({
+  color: gray[25],
+  marginBottom: '3rem',
+  marginInline: '-1rem',
   padding: '1rem',
-  backgroundColor: green[50],
-  borderRadius: 16,
+  backgroundColor: gray[1000],
 })
