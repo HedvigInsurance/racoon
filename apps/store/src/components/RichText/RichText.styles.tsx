@@ -119,7 +119,7 @@ export const listStyles = css({
 export const richTextStyles = css(
   {
     fontSize: theme.fontSizes.md,
-    lineHeight: 1.26,
+    lineHeight: 1.32,
 
     '.preamble': {
       display: 'block',
