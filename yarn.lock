@@ -9378,12 +9378,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.5":
-  version: 18.2.5
-  resolution: "@types/react-dom@npm:18.2.5"
+"@types/react-dom@npm:18.2.6":
+  version: 18.2.6
+  resolution: "@types/react-dom@npm:18.2.6"
   dependencies:
     "@types/react": "*"
-  checksum: c48209f8c60cb9054f3deee5365bc9fd6dadd8f901b67f1612a334057b2671518fc5145f14aca63ff276a926ccb5358308a6cf58ec700178f382bb3ebde96d91
+  checksum: b56e42efab121a3a8013d2eb8c1688e6028a25ea6d33c4362d2846f0af3760b164b4d7c34846614024cfb8956cca70dd1743487f152e32ff89a00fe6fbd2be54
   languageName: node
   linkType: hard
 
@@ -19255,7 +19255,7 @@ __metadata:
     "@types/lodash-es": 4.17.7
     "@types/marked": 5.0.0
     "@types/node": 18.16.18
-    "@types/react-dom": 18.2.5
+    "@types/react-dom": 18.2.6
     classnames: 2.3.2
     cookies-next: 2.1.2
     dompurify: 3.0.3
@@ -22148,7 +22148,7 @@ __metadata:
     "@types/md5": 2.3.2
     "@types/node": 18.16.18
     "@types/nprogress": 0.2.0
-    "@types/react-dom": 18.2.5
+    "@types/react-dom": 18.2.6
     "@types/uuid": 9.0.2
     "@vercel/edge-config": 0.2.1
     ajv: 8.12.0
@@ -23470,7 +23470,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.4.3
     "@types/jest": 29.5.2
-    "@types/react-dom": 18.2.5
+    "@types/react-dom": 18.2.6
     babel-jest: 29.5.0
     babel-loader: 9.1.2
     eslint: 8.43.0

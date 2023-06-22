@@ -86,7 +86,7 @@
     "@types/md5": "2.3.2",
     "@types/node": "18.16.18",
     "@types/nprogress": "0.2.0",
-    "@types/react-dom": "18.2.5",
+    "@types/react-dom": "18.2.6",
     "babel-loader": "9.1.2",
     "eslint": "8.43.0",
     "eslint-config-custom": "workspace:",
