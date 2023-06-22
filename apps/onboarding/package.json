@@ -54,7 +54,7 @@
     "@types/lodash-es": "4.17.7",
     "@types/marked": "5.0.0",
     "@types/node": "18.16.18",
-    "@types/react-dom": "18.2.5",
+    "@types/react-dom": "18.2.6",
     "eslint-config-custom": "workspace:",
     "jest": "29.5.0",
     "msw": "1.2.2",
