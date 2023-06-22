@@ -5,9 +5,13 @@ import { ConditionalWrapper, mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import {
+  type ExpectedBlockType,
+  type GridColumnsField,
+  type SbBaseBlockProps,
+  type StoryblokAsset,
+} from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { Layout } from './TextContentBlock'
 
 export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
 
@@ -18,7 +22,7 @@ export type ImageBlockProps = SbBaseBlockProps<{
   fullBleed?: boolean
   body?: ExpectedBlockType<HeadingBlockProps>
   priority?: boolean
-  layout?: Layout
+  layout?: GridColumnsField
 }>
 
 export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {

@@ -2,9 +2,12 @@ import styled, { CSSObject } from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import {
+  type ExpectedBlockType,
+  type GridColumnsField,
+  type SbBaseBlockProps,
+} from '@/services/storyblok/storyblok'
 import { ImageTextBlockProps } from './ImageTextBlock'
-import { Layout } from './TextContentBlock'
 
 type ColumnBloks = ExpectedBlockType<ImageTextBlockProps>
 
@@ -13,7 +16,7 @@ type ColumnProps = { columns: number }
 type GridBlockProps = SbBaseBlockProps<{
   title?: string
   columns: ColumnBloks
-  layout?: Layout
+  layout?: GridColumnsField
 }>
 
 export const GridBlock = ({ blok }: GridBlockProps) => {

@@ -3,13 +3,12 @@ import Link from 'next/link'
 import { render, RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ImageBlock, ImageBlockProps } from '../ImageBlock'
-import { Layout } from '../TextContentBlock'
 
 export type RichTextBlockProps = SbBaseBlockProps<{
   content: ISbRichtext
-  layout?: Layout
+  layout?: GridColumnsField
   largeText?: boolean
 }>
 
