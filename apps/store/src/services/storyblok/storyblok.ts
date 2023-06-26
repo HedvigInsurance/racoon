@@ -65,6 +65,7 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
+import { type ContentWidth, type ContentAlignment } from '@/components/GridLayout/GridLayout.helper'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
@@ -102,6 +103,11 @@ export type StoryblokVersion = 'draft' | 'published'
 
 export type StoryblokPreviewData = {
   version?: StoryblokVersion
+}
+
+export type GridColumnsField = {
+  widths: ContentWidth
+  alignment: ContentAlignment
 }
 
 export type StoryblokAsset = {

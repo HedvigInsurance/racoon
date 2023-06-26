@@ -2,21 +2,19 @@ import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
-import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import {
+  type ExpectedBlockType,
+  type GridColumnsField,
+  type SbBaseBlockProps,
+} from '@/services/storyblok/storyblok'
 import { HeadingBlockProps } from './HeadingBlock'
 import { HeadingLabelBlockProps } from './HeadingLabelBlock'
 import { TextBlockProps } from './TextBlock'
 
-export type Layout = {
-  widths: ContentWidth
-  alignment: ContentAlignment
-}
-
 export type Props = SbBaseBlockProps<{
   heading?: ExpectedBlockType<HeadingBlockProps | HeadingLabelBlockProps>
   body: ExpectedBlockType<TextBlockProps>
-  layout?: Layout
+  layout?: GridColumnsField
 }>
 
 export const TextContentBlock = ({ blok }: Props) => {
