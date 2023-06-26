@@ -12,35 +12,45 @@ export type RichTextBlockProps = SbBaseBlockProps<{
   largeText?: boolean
 }>
 
-export const richTextRenderOptions: RenderOptions = {
+const richTextRenderOptions: RenderOptions = {
   blokResolvers: {
     image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
   },
   markResolvers: {
     [MARK_LINK]: (children, props) => {
-      const { linktype, href, target } = props
+      const { linktype, target, anchor } = props
+
+      let href = ''
+      if (props.href) {
+        href = props.href
+      } else {
+        console.warn(
+          "[RichTextBlock]: No 'href' provided to link. This is probably a configuration issue. Using '' as placholder",
+        )
+      }
+
       if (linktype === 'email') {
         return <a href={`mailto:${href}`}>{children}</a>
       }
 
       // External links
-      if (href?.match(/^(https?:)?\/\//)) {
+      if (isExternalLink(href)) {
         return (
-          <a href={href} target={target}>
+          <a href={appendAnchor(href, anchor)} target={target}>
             {children}
           </a>
         )
       }
 
       // Internal links
-      if (href) {
-        return <Link href={href}>{children}</Link>
-      }
-
-      return null
+      return <Link href={appendAnchor(href, anchor)}>{children}</Link>
     },
   },
 }
+
+const isExternalLink = (href?: string) => href?.match(/^(https?:)?\/\//)
+
+const appendAnchor = (href: string, anchor?: string) => (anchor ? `${href}#${anchor}` : href)
 
 export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
   return (
