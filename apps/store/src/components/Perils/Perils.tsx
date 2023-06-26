@@ -123,12 +123,12 @@ const ContentWrapper = styled.div({
   flexDirection: 'column',
   gap: theme.space.md,
   paddingLeft: '1.75rem',
-  paddingBlock: `${theme.space.md} ${theme.space.xxs}`,
+  paddingBottom: theme.space.md,
   fontSize: theme.fontSizes.xs,
 
   [mq.lg]: {
-    paddingTop: theme.space.lg,
-    paddingBottom: theme.space.xs,
+    paddingTop: theme.space.xs,
+    paddingBottom: theme.space.lg,
   },
 })
 

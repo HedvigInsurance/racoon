@@ -21,10 +21,14 @@ export const Trigger = styled(AccordionPrimitives.Trigger)({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.space.xs,
+  paddingBlock: theme.space.sm,
+  paddingInline: theme.space.md,
   fontSize: theme.fontSizes.md,
 
   [mq.lg]: {
     fontSize: theme.fontSizes.lg,
+    paddingBlock: theme.space.md,
+    paddingInline: theme.space.lg,
   },
 
   '@media (hover: hover)': {
@@ -37,13 +41,6 @@ export const Trigger = styled(AccordionPrimitives.Trigger)({
 export const Item = styled(AccordionPrimitives.Item)({
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.sm,
-  paddingInline: theme.space.md,
-  paddingBlock: theme.space.sm,
-
-  [mq.lg]: {
-    paddingInline: theme.space.lg,
-    paddingBlock: theme.space.md,
-  },
 
   '@media (hover: hover)': {
     [`:has(${Trigger}:hover)`]: {
@@ -117,4 +114,9 @@ const StyledContent = styled(AccordionPrimitives.Content)({
   color: theme.colors.textSecondaryOnGray,
   lineHeight: 1.32,
   overflow: 'hidden',
+  paddingInline: theme.space.md,
+
+  [mq.lg]: {
+    paddingInline: theme.space.lg,
+  },
 })
