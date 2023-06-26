@@ -91,32 +91,22 @@ module.exports = withBundleAnalyzer({
     }
   },
   async redirects() {
+    const locales = ['no', 'no-en', 'dk', 'dk-en']
+
     return process.env.NEXT_PUBLIC_FEATURE_HOMECOMING === 'true'
       ? [
-          {
-            source: '/no/new-member/:slug*',
-            destination: `/no/info`,
+          ...locales.map((locale) => ({
+            source: `/${locale}/new-member`,
+            destination: `/${locale}/info`,
             permanent: true,
             locale: false,
-          },
-          {
-            source: '/no-en/new-member/:slug*',
-            destination: `/no-en/info`,
+          })),
+          ...locales.map((locale) => ({
+            source: `/${locale}/new-member/offer/:slug*`,
+            destination: `/${locale}/info`,
             permanent: true,
             locale: false,
-          },
-          {
-            source: '/dk/new-member/:slug*',
-            destination: `/dk/info`,
-            permanent: true,
-            locale: false,
-          },
-          {
-            source: '/dk-en/new-member/:slug*',
-            destination: `/dk-en/info`,
-            permanent: true,
-            locale: false,
-          },
+          })),
         ]
       : []
   },
