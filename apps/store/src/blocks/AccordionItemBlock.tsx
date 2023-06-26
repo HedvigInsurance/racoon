@@ -32,11 +32,12 @@ export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) 
 AccordionItemBlock.blockName = 'accordionItem'
 
 const ContentWrapper = styled.div({
-  paddingTop: theme.space.md,
-  paddingBottom: theme.space.xxs,
+  paddingTop: theme.space.xxs,
+  paddingBottom: theme.space.md,
 
   [mq.lg]: {
-    paddingBottom: theme.space.xs,
+    paddingTop: 0,
+    paddingBottom: theme.space.lg,
   },
 })
 
