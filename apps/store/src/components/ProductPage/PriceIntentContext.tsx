@@ -62,6 +62,9 @@ const usePriceIntentContextValue = () => {
           if (matchingReplaceOffer) return matchingReplaceOffer
         }
 
+        const priceMatchedOffer = data.priceIntent.offers.find((item) => item.priceMatch)
+        if (priceMatchedOffer) return priceMatchedOffer
+
         return getOffersByPrice(data.priceIntent.offers)[0]
       })
     },

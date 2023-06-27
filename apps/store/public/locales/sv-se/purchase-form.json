@@ -108,7 +108,7 @@
   "OPEN_PRICE_CALCULATOR_BUTTON": "Se ditt pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
-  "PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE": "Vi kunde inte matcha ditt pris eftersom du har angett en större omfattning",
+  "PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE": "Vi kunde tyvärr inte matcha ditt nuvarande pris",
   "PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE": "Du betalar {{amount}} hos {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE": "jämfört med {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
