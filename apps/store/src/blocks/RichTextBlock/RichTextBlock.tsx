@@ -6,12 +6,6 @@ import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ImageBlock, ImageBlockProps } from '../ImageBlock'
 
-type LinkCustomAttributes = {
-  rel?: string
-  title?: string
-  [key: string]: any
-}
-
 export type RichTextBlockProps = SbBaseBlockProps<{
   content: ISbRichtext
   layout?: GridColumnsField
@@ -23,11 +17,7 @@ const richTextRenderOptions: RenderOptions = {
     image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
   },
   markResolvers: {
-    [MARK_LINK]: (children, _props) => {
-      // This is a workaround while we don't get 'storyblok-rich-text-react-renderer' library types
-      // updated. Refer to https://github.com/claus/storyblok-rich-text-react-renderer/issues/41
-      // for more info.
-      const props: typeof _props & { custom?: LinkCustomAttributes } = { ..._props }
+    [MARK_LINK]: (children, props) => {
       const { linktype, target, anchor, custom } = props
 
       let href = ''
