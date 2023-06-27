@@ -22188,7 +22188,7 @@ __metadata:
     react-dom: 18.2.0
     react-i18next: 12.3.1
     react-wrap-balancer: 1.0.0
-    storyblok-rich-text-react-renderer: 2.8.0
+    storyblok-rich-text-react-renderer: 2.9.0
     storybook: 7.0.23
     storybook-addon-apollo-client: 4.1.4
     subscriptions-transport-ws: 0.11.0
@@ -22210,12 +22210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storyblok-rich-text-react-renderer@npm:2.8.0":
-  version: 2.8.0
-  resolution: "storyblok-rich-text-react-renderer@npm:2.8.0"
+"storyblok-rich-text-react-renderer@npm:2.9.0":
+  version: 2.9.0
+  resolution: "storyblok-rich-text-react-renderer@npm:2.9.0"
   peerDependencies:
     react: ">=16.0.0"
-  checksum: d671d76791302f72c75613dce3d2fb81b229702f99e542876f409cede2cca8e65383e5b9234413ed13bcb0676def71ea5584a369210e1e2f1e5cad012182185a
+  checksum: 4af7d6275450cc011a475b0e33cafceede06b0b670d1a6e8709c09d39444e75f378d754931874e306e239953d4e1cb16795091e46ba05d0c84452647e53770b7
   languageName: node
   linkType: hard
 

@@ -18,7 +18,7 @@ const richTextRenderOptions: RenderOptions = {
   },
   markResolvers: {
     [MARK_LINK]: (children, props) => {
-      const { linktype, target, anchor } = props
+      const { linktype, target, anchor, custom } = props
 
       let href = ''
       if (props.href) {
@@ -33,17 +33,20 @@ const richTextRenderOptions: RenderOptions = {
         return <a href={`mailto:${href}`}>{children}</a>
       }
 
+      const linkProps = {
+        href: appendAnchor(href, anchor),
+        children,
+        target,
+        ...custom,
+      }
+
       // External links
       if (isExternalLink(href)) {
-        return (
-          <a href={appendAnchor(href, anchor)} target={target}>
-            {children}
-          </a>
-        )
+        return <a {...linkProps} />
       }
 
       // Internal links
-      return <Link href={appendAnchor(href, anchor)}>{children}</Link>
+      return <Link {...linkProps} />
     },
   },
 }
