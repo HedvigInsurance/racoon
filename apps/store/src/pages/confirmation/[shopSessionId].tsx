@@ -80,8 +80,6 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   })
 }
 
-const SUCCESS_ANIMATION_ENABLED = Features.enabled('SUCCESS_ANIMATION')
-
 const CheckoutConfirmationPage: NextPageWithLayout<
   ConfirmationPageProps & { story: ConfirmationStory }
 > = (props) => {
@@ -90,13 +88,9 @@ const CheckoutConfirmationPage: NextPageWithLayout<
       <Head>
         <title>{props.story.content.seoTitle}</title>
       </Head>
-      {SUCCESS_ANIMATION_ENABLED ? (
-        <SuccessAnimation>
-          <ConfirmationPage {...props} />
-        </SuccessAnimation>
-      ) : (
+      <SuccessAnimation>
         <ConfirmationPage {...props} />
-      )}
+      </SuccessAnimation>
     </>
   )
 }
