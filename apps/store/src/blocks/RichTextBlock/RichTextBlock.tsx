@@ -6,6 +6,12 @@ import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ImageBlock, ImageBlockProps } from '../ImageBlock'
 
+type LinkCustomAttributes = {
+  rel?: string
+  title?: string
+  [key: string]: any
+}
+
 export type RichTextBlockProps = SbBaseBlockProps<{
   content: ISbRichtext
   layout?: GridColumnsField
@@ -17,8 +23,12 @@ const richTextRenderOptions: RenderOptions = {
     image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
   },
   markResolvers: {
-    [MARK_LINK]: (children, props) => {
-      const { linktype, target, anchor } = props
+    [MARK_LINK]: (children, _props) => {
+      // This is a workaround while we don't get 'storyblok-rich-text-react-renderer' library types
+      // updated. Refer to https://github.com/claus/storyblok-rich-text-react-renderer/issues/41
+      // for more info.
+      const props: typeof _props & { custom?: LinkCustomAttributes } = { ..._props }
+      const { linktype, target, anchor, custom } = props
 
       let href = ''
       if (props.href) {
@@ -33,17 +43,20 @@ const richTextRenderOptions: RenderOptions = {
         return <a href={`mailto:${href}`}>{children}</a>
       }
 
+      const linkProps = {
+        href: appendAnchor(href, anchor),
+        children,
+        target,
+        ...custom,
+      }
+
       // External links
       if (isExternalLink(href)) {
-        return (
-          <a href={appendAnchor(href, anchor)} target={target}>
-            {children}
-          </a>
-        )
+        return <a {...linkProps} />
       }
 
       // Internal links
-      return <Link href={appendAnchor(href, anchor)}>{children}</Link>
+      return <Link {...linkProps} />
     },
   },
 }
