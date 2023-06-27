@@ -42,7 +42,7 @@ lokalise2 \
   --filter-langs 'en,sv_SE' \
   --language-mapping '[
     {"original_language_iso": "en","custom_language_iso": "en"},
-    {"original_language_iso": "sv_SE","custom_language_iso": "sv-se"},
+    {"original_language_iso": "sv_SE","custom_language_iso": "sv-se"}
   ]'
 
 # Convert plural forms to i18next v4 format (https://www.i18next.com/misc/json-format)
