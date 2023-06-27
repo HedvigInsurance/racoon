@@ -4,13 +4,7 @@ query ShopSessionOutcome($shopSessionId: UUID!) {
     outcome {
       id
       createdContracts {
-        id
-        variant {
-          displayName
-        }
-        externalInsuranceCancellation {
-          ...ContractExternalInsuranceCancellation
-        }
+        ...SwitchingContract
       }
     }
   }

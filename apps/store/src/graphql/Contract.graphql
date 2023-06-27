@@ -1,0 +1,5 @@
+query Contract($id: UUID!) {
+  contract(id: $id) {
+    ...SwitchingContract
+  }
+}
