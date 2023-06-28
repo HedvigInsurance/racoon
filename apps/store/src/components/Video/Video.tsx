@@ -260,6 +260,17 @@ const PlayPauseButton = styled(Button)({
   gap: theme.space.xs,
   height: '2rem',
   paddingInline: theme.space.xs,
+  backgroundColor: theme.colors.grayTranslucentDark700,
+
+  '@media (hover: hover)': {
+    ':hover': {
+      backgroundColor: theme.colors.grayTranslucentDark600,
+    },
+  },
+
+  ':active': {
+    backgroundColor: theme.colors.grayTranslucentDark600,
+  },
 })
 
 const getAspectRatio = (aspectRatio: AspectRatioLandscape | AspectRatioPortrait) => {
