@@ -34,6 +34,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
+import { ProductHero } from './ProductHero/ProductHero'
 import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
@@ -88,9 +89,14 @@ export const PurchaseForm = () => {
   }
 
   return (
-    <Layout pillowSize={formState.state === 'EDIT' ? 'small' : 'large'}>
+    <Layout>
       {(notifyProductAdded) => {
-        if (!shopSession || !priceIntent) return <PendingState />
+        if (!shopSession || !priceIntent)
+          return (
+            <ProductHeroContainer size="large">
+              <Button loading={true} />
+            </ProductHeroContainer>
+          )
 
         if (formState.state !== 'IDLE') {
           const editingStateForm = (
@@ -119,7 +125,9 @@ export const PurchaseForm = () => {
                   {editingStateForm}
                 </PriceCalculatorDialog>
               ) : (
-                editingStateForm
+                <ProductHeroContainer size="small" compact={true}>
+                  {editingStateForm}
+                </ProductHeroContainer>
               )}
 
               <FullscreenDialog.Root
@@ -205,13 +213,15 @@ export const PurchaseForm = () => {
           }
 
           return (
-            <ShowOfferState
-              shopSession={shopSession}
-              priceIntent={priceIntent}
-              onAddedToCart={handleAddedToCart}
-              onClickEdit={editForm}
-              selectedOffer={selectedOffer}
-            />
+            <ProductHeroContainer size="large" compact={true}>
+              <ShowOfferState
+                shopSession={shopSession}
+                priceIntent={priceIntent}
+                onAddedToCart={handleAddedToCart}
+                onClickEdit={editForm}
+                selectedOffer={selectedOffer}
+              />
+            </ProductHeroContainer>
           )
         }
 
@@ -223,67 +233,44 @@ export const PurchaseForm = () => {
 
 type LayoutProps = {
   children: (notifyProductAdded: (item: ProductItemProps) => void) => ReactNode
-  pillowSize: 'small' | 'large'
 }
 
-const Layout = ({ children, pillowSize }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const { productData, content } = useProductPageContext()
-
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
   }
+
   return (
     <>
-      <PurchaseFormTop>
-        <SectionWrapper>
-          <SpaceFlex space={1} align="center" direction="vertical">
-            <Pillow
-              size={pillowSize === 'large' ? 'xxlarge' : 'large'}
-              {...productData.pillowImage}
-            />
-            <Space y={0.5}>
-              <Heading as="h1" variant="standard.24" align="center">
-                {content.product.name}
-              </Heading>
-              <Text size="xs" color="textSecondary" align="center">
-                {content.product.description}
-              </Text>
-            </Space>
-          </SpaceFlex>
-        </SectionWrapper>
-
-        {children(notifyProductAdded)}
-      </PurchaseFormTop>
+      <PurchaseFormTop>{children(notifyProductAdded)}</PurchaseFormTop>
       <CartToast ref={toastRef} />
     </>
   )
 }
 
-const Tagline = () => {
-  const { content } = useProductPageContext()
-
-  if (!content.product.tagline) return null
-
-  return (
-    <Text color="textSecondary" size="xs" align="center">
-      {content.product.tagline}
-    </Text>
-  )
+type ProductHeroContainerProps = {
+  children: ReactNode
+  size: 'small' | 'large'
+  compact?: boolean
 }
 
-const PendingState = () => {
-  const { t } = useTranslation('purchase-form')
+const ProductHeroContainer = (props: ProductHeroContainerProps) => {
+  const { content, productData } = useProductPageContext()
 
   return (
-    <SectionWrapper>
-      <Space y={1}>
-        <Button loading disabled>
-          {t('OPEN_PRICE_CALCULATOR_BUTTON')}
-        </Button>
-        <Tagline />
-      </Space>
-    </SectionWrapper>
+    <ProductHeroWrapper compact={props.compact ?? false}>
+      <ProductHero
+        name={content.product.name}
+        description={content.product.description}
+        pillow={{
+          src: productData.pillowImage.src,
+          alt: productData.pillowImage.alt ?? undefined,
+        }}
+        size={props.size}
+      />
+      {props.children}
+    </ProductHeroWrapper>
   )
 }
 
@@ -293,18 +280,17 @@ const IdleState = ({ onClick }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
-  const button = <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-
   return (
     <>
-      <SectionWrapper ref={ref}>
-        <Space y={1}>
-          {button}
-          <Tagline />
-        </Space>
-      </SectionWrapper>
+      <div ref={ref}>
+        <ProductHeroContainer size="large">
+          <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+        </ProductHeroContainer>
+      </div>
       <ScrollPast targetRef={ref}>
-        <StickyButtonWrapper>{button}</StickyButtonWrapper>
+        <StickyButtonWrapper>
+          <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+        </StickyButtonWrapper>
       </ScrollPast>
     </>
   )
@@ -478,6 +464,18 @@ const SectionWrapper = styled.div({
     margin: '0 auto',
   },
 })
+
+const ProductHeroWrapper = styled(SectionWrapper)<{ compact: boolean }>(
+  {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  ({ compact }) => ({
+    rowGap: compact ? theme.space.xl : theme.space[9],
+  }),
+)
 
 const PriceCalculatorWrapper = styled.div({
   width: '100%',
