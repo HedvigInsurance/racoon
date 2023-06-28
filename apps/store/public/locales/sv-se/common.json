@@ -13,6 +13,7 @@
   "DATE_TOO_LATE": "Datum kan inte vara senare än {{maxValue}}",
   "DIALOG_BUTTON_CANCEL": "Avbryt",
   "DIALOG_CLOSE": "Stäng",
+  "DOWNLOAD_ASSET": "Ladda ner",
   "ERROR_DIALOG_CLOSE": "Stäng",
   "FOREVER_PAGE_BTN_LABEL": "Nästa",
   "FOREVER_PAGE_FOOTER_TEXT": "Denna sida är avsedd för inbjudna personer. Om du inte har en kod kan du fortsätta till vår vanliga [[webbplats.]]",

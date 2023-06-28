@@ -18,6 +18,7 @@ import { ComparisonTableBlock } from '@/blocks/ComparisonTableBlock'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
+import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { GridBlock } from '@/blocks/GridBlock'
 import {
@@ -240,6 +241,7 @@ export const initStoryblok = () => {
     ContactSupportBlock,
     ContentBlock,
     ConfirmationPageBlock,
+    DownloadableContentItemBlock,
     FooterBlock,
     FooterLink,
     FooterSection,
