@@ -60,7 +60,7 @@ const PendingContractCard = ({ id, status, displayName, approveByDate }: Contrac
   return (
     <PendingCard>
       <Space y={1}>
-        <PendingStatusPill>{status.message}</PendingStatusPill>
+        <PendingStatusPill>{t(status.messageKey)}</PendingStatusPill>
         <Space y={1}>
           <div>
             <Text>{displayName}</Text>
@@ -85,7 +85,7 @@ const CompletedContractCard = ({ status, displayName }: ContractCardProps) => {
   return (
     <Card>
       <Space y={1}>
-        <CompletedStatusPill>{status.message}</CompletedStatusPill>
+        <CompletedStatusPill>{t(status.messageKey)}</CompletedStatusPill>
         <div>
           <Text>{displayName}</Text>
           <Text color="textSecondary">

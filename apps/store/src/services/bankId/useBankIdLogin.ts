@@ -38,6 +38,7 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
         onSuccess() {
           datadogRum.addAction('bankIdLogin complete')
           onLoginPromptCompletedRef.current?.()
+          options.onSuccess?.()
           dispatch({ type: 'success' })
         },
       })

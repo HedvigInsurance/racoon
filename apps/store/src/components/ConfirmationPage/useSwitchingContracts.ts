@@ -1,14 +1,19 @@
-import { useTranslation } from 'next-i18next'
-import { useCallback, useEffect, useMemo } from 'react'
-import { ContractExternalInsuranceCancellationStatus } from '@/services/apollo/generated'
+import { ParseKeys } from 'i18next'
+import { useEffect, useMemo } from 'react'
+import {
+  ContractExternalInsuranceCancellationStatus,
+  SwitchingContractFragment,
+} from '@/services/apollo/generated'
 import { useShopSessionOutcomeQuery } from '@/services/apollo/generated'
+import { tKey } from '@/utils/i18n'
 
 export type BankSigneringContract = {
   id: string
   displayName: string
+  company: string
   status: {
     type: 'PENDING' | 'COMPLETED'
-    message: string
+    messageKey: ParseKeys<'checkout'>
   }
   approveByDate: string
 }
@@ -20,7 +25,6 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
     variables: { shopSessionId },
     pollInterval: 10000,
   })
-  const getStatus = useGetStatus()
 
   useEffect(() => {
     const handler = () => refetch()
@@ -33,45 +37,47 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
     const switchingContracts: Array<BankSigneringContract> = []
 
     contracts.forEach((contract) => {
-      const cancellation = contract.externalInsuranceCancellation
-      if (!cancellation) return
-
-      if (!cancellation.bankSignering) return
-
-      switchingContracts.push({
-        id: contract.id,
-        displayName: [contract.variant.displayName, cancellation.externalInsurer.displayName].join(
-          ' · ',
-        ),
-        status: getStatus(cancellation.status),
-        approveByDate: cancellation.bankSignering.approveByDate,
-      })
+      const bankSigneringContract = convertToBankSigneringContract(contract)
+      if (bankSigneringContract) switchingContracts.push(bankSigneringContract)
     })
 
     return switchingContracts
-  }, [data?.shopSession.outcome?.createdContracts, getStatus])
+  }, [data?.shopSession.outcome?.createdContracts])
 }
 
-const useGetStatus = () => {
-  const { t } = useTranslation('checkout')
+export const convertToBankSigneringContract = (
+  contract: SwitchingContractFragment,
+): BankSigneringContract | undefined => {
+  if (!contract.externalInsuranceCancellation) return
+  if (!contract.externalInsuranceCancellation.bankSignering) return
 
-  return useCallback(
-    (status: ContractExternalInsuranceCancellationStatus): BankSigneringContract['status'] => {
-      switch (status) {
-        case ContractExternalInsuranceCancellationStatus.NotInitiated:
-        case ContractExternalInsuranceCancellationStatus.Initiated:
-          return {
-            type: 'PENDING',
-            message: t(`SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING`),
-          }
+  const product = contract.variant.displayName
+  const insurer = contract.externalInsuranceCancellation.externalInsurer.displayName
 
-        case ContractExternalInsuranceCancellationStatus.Completed:
-          return {
-            type: 'COMPLETED',
-            message: t(`SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED`),
-          }
+  return {
+    id: contract.id,
+    displayName: `${product} · ${insurer}`,
+    company: insurer,
+    status: getStatus(contract.externalInsuranceCancellation.status),
+    approveByDate: contract.externalInsuranceCancellation.bankSignering.approveByDate,
+  }
+}
+
+const getStatus = (
+  status: ContractExternalInsuranceCancellationStatus,
+): BankSigneringContract['status'] => {
+  switch (status) {
+    case ContractExternalInsuranceCancellationStatus.NotInitiated:
+    case ContractExternalInsuranceCancellationStatus.Initiated:
+      return {
+        type: 'PENDING',
+        messageKey: tKey('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING'),
       }
-    },
-    [t],
-  )
+
+    case ContractExternalInsuranceCancellationStatus.Completed:
+      return {
+        type: 'COMPLETED',
+        messageKey: tKey('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED'),
+      }
+  }
 }

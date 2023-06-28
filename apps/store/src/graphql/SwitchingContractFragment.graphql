@@ -1,0 +1,9 @@
+fragment SwitchingContract on Contract {
+  id
+  variant {
+    displayName
+  }
+  externalInsuranceCancellation {
+    ...ContractExternalInsuranceCancellation
+  }
+}
