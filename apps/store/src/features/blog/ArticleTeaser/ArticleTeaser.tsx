@@ -2,8 +2,7 @@ import styled from '@emotion/styled'
 import NextImage, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
-import { Badge, Heading, Space, Text, theme } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Heading, Space, Text, theme } from 'ui'
 
 const Root = (props: { children: ReactNode }) => {
   return <RelativeSpace y={1}>{props.children}</RelativeSpace>
@@ -66,18 +65,8 @@ const ClampedText = styled(Text)({
   overflow: 'hidden',
 })
 
-const BadgeList = (props: { children: ReactNode }) => {
-  return (
-    <ContentWrapper>
-      <SpaceFlex space={0.25}>{props.children}</SpaceFlex>
-    </ContentWrapper>
-  )
-}
-
 export const ArticleTeaser = {
   Root,
   Image,
   Content,
-  BadgeList,
-  Badge,
 } as const

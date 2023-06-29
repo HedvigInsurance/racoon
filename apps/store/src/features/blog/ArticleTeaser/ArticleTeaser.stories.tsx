@@ -27,10 +27,6 @@ export const Primary: Story = {
         designobjekt. Resultatet är en limiterad upplaga handgjorda hundskålar i porslin med Mimmi
         Blomqvists karaktäristiska formspråk.
       </ArticleTeaser.Content>
-      <ArticleTeaser.BadgeList>
-        <ArticleTeaser.Badge>Lifestyle</ArticleTeaser.Badge>
-        <ArticleTeaser.Badge>Nyhet</ArticleTeaser.Badge>
-      </ArticleTeaser.BadgeList>
     </ArticleTeaser.Root>
   ),
 }
