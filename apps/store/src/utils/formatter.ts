@@ -90,6 +90,12 @@ export class Formatter {
   public money = (money: Money) => formatMoney(money, this.options)
   public monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
   public fromNow = (date: Date) => formatDateFromNow(date, this.options)
+  public dateFull = (date: Date) =>
+    date.toLocaleDateString(this.options.locale, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
   public titleCase = (str: string) => formatTitleCase(str)
   public ssn = formatSsn
   public carRegistrationNumber = formatCarRegistrationNumber

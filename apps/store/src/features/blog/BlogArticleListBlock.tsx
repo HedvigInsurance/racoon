@@ -35,7 +35,7 @@ export const BlogArticleListBlock = (props: Props) => {
               <ArticleTeaser.Content
                 href={item.href}
                 title={item.heading}
-                date={formatter.fromNow(new Date(item.date))}
+                date={formatter.dateFull(new Date(item.date))}
               >
                 {item.text}
               </ArticleTeaser.Content>

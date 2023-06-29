@@ -30,7 +30,7 @@ const Content = (props: ContentProps) => {
   return (
     <ContentWrapper>
       <Space y={0.25}>
-        <Text size="sm" color="textSecondary">
+        <Text size="sm" color="textSecondary" uppercase={true}>
           {props.date}
         </Text>
         <div>

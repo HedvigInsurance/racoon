@@ -28,6 +28,7 @@ export type TextProps = {
   size?: FontSizeProps
   children?: ReactNode
   className?: string
+  uppercase?: boolean
 }
 
 const elementConfig = {
@@ -37,10 +38,11 @@ const elementConfig = {
 export const TextBase = styled(
   Space,
   elementConfig,
-)<TextProps>(({ align, color, size = 'md' }) => ({
+)<TextProps>(({ align, color, size = 'md', uppercase = false }) => ({
   color: color ? theme.colors[color] : 'inherit',
   ...getFontSize(size),
   ...(align && { textAlign: align }),
+  ...(uppercase && { textTransform: 'uppercase' }),
 }))
 
 export const Text = ({ as, balance, children, className, ...rest }: TextProps) => (
