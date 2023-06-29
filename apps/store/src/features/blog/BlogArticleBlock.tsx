@@ -8,13 +8,16 @@ import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useFormatter } from '@/utils/useFormatter'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
-import { type BlogArticleContentType } from './blog.types'
+import { BlogArticleCategory, type BlogArticleContentType } from './blog.types'
 
 type Props = SbBaseBlockProps<BlogArticleContentType['content']>
 
 export const BlogArticleBlock = (props: Props) => {
-  const categories = props.blok.categories.map(convertToBlogArticleCategory)
   const formatter = useFormatter()
+
+  const categories = props.blok.categories
+    .map((item) => (typeof item === 'string' ? null : convertToBlogArticleCategory(item)))
+    .filter(isBlogArticleCategory)
 
   return (
     <>
@@ -28,6 +31,7 @@ export const BlogArticleBlock = (props: Props) => {
                   <Badge as="span">{item.name}</Badge>
                 </Link>
               ))}
+              {categories.length === 0 && <Badge as="span">PLACEHOLDER</Badge>}
             </SpaceFlex>
             <Space y={1.5}>
               <Heading as="h1" variant={{ _: 'serif.32', lg: 'serif.56' }}>
@@ -56,3 +60,7 @@ const TopPadding = styled.div({
 const UppercaseText = styled(Text)({
   textTransform: 'uppercase',
 })
+
+const isBlogArticleCategory = (item: BlogArticleCategory | null): item is BlogArticleCategory => {
+  return item !== null
+}
