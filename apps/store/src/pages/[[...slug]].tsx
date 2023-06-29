@@ -127,7 +127,7 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       type: 'content',
-      ...(await fetchBlogPageProps(story)),
+      ...(await fetchBlogPageProps({ story, locale, draft: version === 'draft' })),
       ...props,
     },
     revalidate,
