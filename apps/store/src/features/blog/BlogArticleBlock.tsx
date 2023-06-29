@@ -5,6 +5,7 @@ import { Heading, Space, Text, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
@@ -14,6 +15,7 @@ type Props = SbBaseBlockProps<BlogArticleContentType['content']>
 
 export const BlogArticleBlock = (props: Props) => {
   const categories = props.blok.categories.map(convertToBlogArticleCategory)
+  const { locale } = useCurrentLocale()
 
   return (
     <>
@@ -24,16 +26,16 @@ export const BlogArticleBlock = (props: Props) => {
             <SpaceFlex space={0.25}>
               {categories.map((item) => (
                 <Link key={item.id} href={item.href}>
-                  <ArticleTeaser.Badge>{item.name}</ArticleTeaser.Badge>
+                  <ArticleTeaser.Badge as="span">{item.name}</ArticleTeaser.Badge>
                 </Link>
               ))}
             </SpaceFlex>
             <Space y={1.5}>
-              <Heading as="h1" variant={{ _: 'serif.32', lg: 'serif.48' }}>
+              <Heading as="h1" variant={{ _: 'serif.32', lg: 'serif.56' }}>
                 {props.blok.page_heading}
               </Heading>
               <UppercaseText size="sm" color="textSecondary">
-                {formatDate(props.blok.date)}
+                {formatDate(props.blok.date, locale)}
               </UppercaseText>
             </Space>
           </Space>
@@ -56,8 +58,8 @@ const UppercaseText = styled(Text)({
   textTransform: 'uppercase',
 })
 
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('sv-SE', {
+const formatDate = (date: string, locale = 'sv-SE') => {
+  return new Date(date).toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
