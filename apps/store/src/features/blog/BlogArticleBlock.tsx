@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
-import { Heading, Space, Text, mq, theme } from 'ui'
+import { Badge, Heading, Space, Text, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useFormatter } from '@/utils/useFormatter'
-import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
 import { type BlogArticleContentType } from './blog.types'
@@ -26,7 +25,7 @@ export const BlogArticleBlock = (props: Props) => {
             <SpaceFlex space={0.25}>
               {categories.map((item) => (
                 <Link key={item.id} href={item.href}>
-                  <ArticleTeaser.Badge as="span">{item.name}</ArticleTeaser.Badge>
+                  <Badge as="span">{item.name}</Badge>
                 </Link>
               ))}
             </SpaceFlex>

@@ -39,11 +39,6 @@ export const BlogArticleListBlock = (props: Props) => {
               >
                 {item.text}
               </ArticleTeaser.Content>
-              <ArticleTeaser.BadgeList>
-                {item.categories.map((category) => (
-                  <ArticleTeaser.Badge key={category.id}>{category.name}</ArticleTeaser.Badge>
-                ))}
-              </ArticleTeaser.BadgeList>
             </ArticleTeaser.Root>
           ))}
         </List>
