@@ -5,7 +5,7 @@ import { Heading, Space, Text, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useFormatter } from '@/utils/useFormatter'
 import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
@@ -15,7 +15,7 @@ type Props = SbBaseBlockProps<BlogArticleContentType['content']>
 
 export const BlogArticleBlock = (props: Props) => {
   const categories = props.blok.categories.map(convertToBlogArticleCategory)
-  const { locale } = useCurrentLocale()
+  const formatter = useFormatter()
 
   return (
     <>
@@ -35,7 +35,7 @@ export const BlogArticleBlock = (props: Props) => {
                 {props.blok.page_heading}
               </Heading>
               <UppercaseText size="sm" color="textSecondary">
-                {formatDate(props.blok.date, locale)}
+                {formatter.dateFull(new Date(props.blok.date))}
               </UppercaseText>
             </Space>
           </Space>
@@ -57,11 +57,3 @@ const TopPadding = styled.div({
 const UppercaseText = styled(Text)({
   textTransform: 'uppercase',
 })
-
-const formatDate = (date: string, locale = 'sv-SE') => {
-  return new Date(date).toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
