@@ -30,15 +30,14 @@ export const BlogArticleListBlock = (props: Props) => {
       <GridLayout.Content width="1" align="center">
         <List>
           {filteredTeaserList.map((item) => (
-            <ArticleTeaser.Root key={item.id}>
+            <ArticleTeaser.Root
+              key={item.id}
+              href={item.href}
+              title={item.heading}
+              ingress={item.text}
+              date={formatter.dateFull(new Date(item.date))}
+            >
               <ArticleTeaser.Image {...item.image} alt={item.image.alt} />
-              <ArticleTeaser.Content
-                href={item.href}
-                title={item.heading}
-                date={formatter.dateFull(new Date(item.date))}
-              >
-                {item.text}
-              </ArticleTeaser.Content>
             </ArticleTeaser.Root>
           ))}
         </List>

@@ -4,17 +4,52 @@ import Link from 'next/link'
 import { type ReactNode } from 'react'
 import { Heading, Space, Text, theme } from 'ui'
 
-const Root = (props: { children: ReactNode }) => {
-  return <RelativeSpace y={1}>{props.children}</RelativeSpace>
+type Props = {
+  children: ReactNode
+  title: string
+  ingress: string
+  href: string
+  date: string
 }
 
-const RelativeSpace = styled(Space)({
+const Root = (props: Props) => {
+  return (
+    <Wrapper y={1}>
+      <Space y={1}>
+        {props.children}
+        <ContentWrapper>
+          <Space y={0.75}>
+            <Text size="sm" color="textSecondary" uppercase={true}>
+              {props.date}
+            </Text>
+            <ExtendedLink href={props.href} style={{ display: 'block' }}>
+              <Heading as="h3" variant="standard.20">
+                {props.title}
+              </Heading>
+            </ExtendedLink>
+          </Space>
+        </ContentWrapper>
+      </Space>
+      <ContentWrapper>
+        <ClampedText size="lg" color="textSecondary">
+          {props.ingress}
+        </ClampedText>
+      </ContentWrapper>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled(Space)({
   position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 })
 
 const RoundedImage = styled(NextImage)({
   borderRadius: theme.radius.xl,
-  aspectRatio: '16 / 9',
+  aspectRatio: '3 / 2',
+  objectFit: 'cover',
 })
 const Image = (props: ImageProps) => <RoundedImage {...props} />
 
@@ -28,10 +63,7 @@ type ContentProps = {
 const Content = (props: ContentProps) => {
   return (
     <ContentWrapper>
-      <Space y={0.25}>
-        <Text size="sm" color="textSecondary" uppercase={true}>
-          {props.date}
-        </Text>
+      <Space y={0.75}>
         <div>
           <ExtendedLink href={props.href}>
             <Heading as="h3" variant="standard.20">
