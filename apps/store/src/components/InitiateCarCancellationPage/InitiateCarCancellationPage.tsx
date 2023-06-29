@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
@@ -111,6 +112,7 @@ const LoginForm = (props: { ssn?: string; onSuccess: () => void }) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
+    datadogRum.addAction('InitiateCarCancellation Click Login')
 
     const formData = new FormData(event.currentTarget)
     const ssn = formData.get(SSN_FIELD_NAME)
@@ -121,13 +123,15 @@ const LoginForm = (props: { ssn?: string; onSuccess: () => void }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <PersonalNumberField
-        name={SSN_FIELD_NAME}
-        label={t('FIELD_SSN_SE_LABEL', { ns: 'purchase-form' })}
-        required={true}
-        defaultValue={props.ssn}
-      />
-      <Button type="submit">{t('LOGIN_BUTTON_TEXT')}</Button>
+      <Space y={0.25}>
+        <PersonalNumberField
+          name={SSN_FIELD_NAME}
+          label={t('FIELD_SSN_SE_LABEL', { ns: 'purchase-form' })}
+          required={true}
+          defaultValue={props.ssn}
+        />
+        <Button type="submit">{t('LOGIN_BUTTON_TEXT')}</Button>
+      </Space>
     </form>
   )
 }
