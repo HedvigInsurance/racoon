@@ -6,7 +6,7 @@ import {
   BLOG_ARTICLE_LIST_BLOCK,
   BLOG_ARTICLE_TEASERS_PAGE_PROP,
 } from './blog.constants'
-import { fetchArticleCategories } from './fetchAricleCategories'
+import { fetchArticleCategories } from './fetchArticleCategories'
 import { fetchArticleTeasers } from './fetchArticleTeasers'
 
 type Params = {
