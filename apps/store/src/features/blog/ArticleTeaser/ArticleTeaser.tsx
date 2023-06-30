@@ -18,21 +18,23 @@ const Root = (props: Props) => {
       <Space y={1}>
         {props.children}
         <ContentWrapper>
-          <Space y={0.75}>
-            <Text size="sm" color="textSecondary" uppercase={true}>
-              {props.date}
-            </Text>
+          <Text size="sm" color="textSecondary" uppercase={true}>
+            {props.date}
+          </Text>
+        </ContentWrapper>
+      </Space>
+      <ContentWrapper>
+        <ClampedText>
+          <Space y={0.25}>
             <ExtendedLink href={props.href} style={{ display: 'block' }}>
               <Heading as="h3" variant="standard.20">
                 {props.title}
               </Heading>
             </ExtendedLink>
+            <Text size="lg" color="textSecondary">
+              {props.ingress}
+            </Text>
           </Space>
-        </ContentWrapper>
-      </Space>
-      <ContentWrapper>
-        <ClampedText size="lg" color="textSecondary">
-          {props.ingress}
         </ClampedText>
       </ContentWrapper>
     </Wrapper>
@@ -41,9 +43,6 @@ const Root = (props: Props) => {
 
 const Wrapper = styled(Space)({
   position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
 })
 
 const RoundedImage = styled(NextImage)({
@@ -52,32 +51,6 @@ const RoundedImage = styled(NextImage)({
   objectFit: 'cover',
 })
 const Image = (props: ImageProps) => <RoundedImage {...props} />
-
-type ContentProps = {
-  children: ReactNode
-  title: string
-  href: string
-  date: string
-}
-
-const Content = (props: ContentProps) => {
-  return (
-    <ContentWrapper>
-      <Space y={0.75}>
-        <div>
-          <ExtendedLink href={props.href}>
-            <Heading as="h3" variant="standard.20">
-              {props.title}
-            </Heading>
-          </ExtendedLink>
-          <ClampedText size="lg" color="textSecondary">
-            {props.children}
-          </ClampedText>
-        </div>
-      </Space>
-    </ContentWrapper>
-  )
-}
 
 const ContentWrapper = styled.div({ paddingInline: theme.space.xs })
 
@@ -90,9 +63,9 @@ const ExtendedLink = styled(Link)({
   },
 })
 
-const ClampedText = styled(Text)({
+const ClampedText = styled.div({
   display: '-webkit-box',
-  WebkitLineClamp: 3,
+  WebkitLineClamp: 5,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
 })
@@ -100,5 +73,4 @@ const ClampedText = styled(Text)({
 export const ArticleTeaser = {
   Root,
   Image,
-  Content,
 } as const
