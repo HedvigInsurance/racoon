@@ -61,8 +61,14 @@ const fetchArticles = async (
     content_type: BLOG_ARTICLE_CONTENT_TYPE,
     starts_with: `${params.locale}/`,
     resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
+    per_page: 100,
     ...(params.draft && { version: 'draft' }),
   })
+
+  if (response.total > response.perPage) {
+    // TODO: Implement pagination once we have more than 100 articles
+    throw new Error('Too many blog articles to fetch in one request')
+  }
 
   return response.data.stories as Array<BlogArticleContentType>
 }
