@@ -31,7 +31,7 @@ const Root = (props: Props) => {
                 {props.title}
               </Heading>
             </ExtendedLink>
-            <Text size="lg" color="textSecondary">
+            <Text as="p" size="lg" color="textSecondary">
               {props.ingress}
             </Text>
           </Space>
