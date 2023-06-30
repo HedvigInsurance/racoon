@@ -14,10 +14,7 @@ type Props = SbBaseBlockProps<BlogArticleContentType['content']>
 
 export const BlogArticleBlock = (props: Props) => {
   const formatter = useFormatter()
-
-  const categories = props.blok.categories
-    .map((item) => (typeof item === 'string' ? null : convertToBlogArticleCategory(item)))
-    .filter(isBlogArticleCategory)
+  const categories = getCategories(props.blok.categories)
 
   return (
     <>
@@ -25,14 +22,15 @@ export const BlogArticleBlock = (props: Props) => {
         <GridLayout.Content width={{ base: '1', md: '5/6', lg: '2/3', xl: '1/2' }} align="center">
           <TopPadding />
           <Space y={0.5}>
-            <SpaceFlex space={0.25}>
-              {categories.map((item) => (
-                <Link key={item.id} href={item.href}>
-                  <Badge as="span">{item.name}</Badge>
-                </Link>
-              ))}
-              {categories.length === 0 && <Badge as="span">PLACEHOLDER</Badge>}
-            </SpaceFlex>
+            {categories.length > 0 && (
+              <SpaceFlex space={0.25}>
+                {categories.map((item) => (
+                  <Link key={item.id} href={item.href}>
+                    <Badge as="span">{item.name}</Badge>
+                  </Link>
+                ))}
+              </SpaceFlex>
+            )}
             <Space y={1.5}>
               <Heading as="h1" variant={{ _: 'serif.32', lg: 'serif.56' }}>
                 {props.blok.page_heading}
@@ -60,6 +58,12 @@ const TopPadding = styled.div({
 const UppercaseText = styled(Text)({
   textTransform: 'uppercase',
 })
+
+const getCategories = (categories: BlogArticleContentType['content']['categories']) => {
+  return categories
+    .map((item) => (typeof item === 'string' ? null : convertToBlogArticleCategory(item)))
+    .filter(isBlogArticleCategory)
+}
 
 const isBlogArticleCategory = (item: BlogArticleCategory | null): item is BlogArticleCategory => {
   return item !== null
