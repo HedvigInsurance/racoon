@@ -43,7 +43,7 @@ export const BlogArticleListBlock = (props: Props) => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width={{ xxl: '5/6' }} align="center">
-        <Space y={4}>
+        <Space y={8}>
           <List>
             {visibleTeaserList.map((item, index) => (
               <ArticleTeaser.Root
