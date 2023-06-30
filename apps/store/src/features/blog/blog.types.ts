@@ -7,7 +7,8 @@ export type BlogArticleContentType = ISbStoryData<
     footer: Array<SbBlokData>
     body: Array<SbBlokData>
     content: ISbRichtext
-    categories: Array<ISbStoryData>
+    // While editing, categories are just UUIDs
+    categories: Array<ISbStoryData> | Array<string>
     teaser_text: string
     page_heading: string
     teaser_image: StoryblokAsset
