@@ -38,7 +38,7 @@ export const fetchArticleTeasers = async (
     })
   }
 
-  return teasers
+  return teasers.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 type BlogArticleContentType = ISbStoryData<
