@@ -1,22 +1,29 @@
+// Next.js Draft Mode
+// nextjs.org/docs/pages/building-your-application/configuring/draft-mode#step-1-create-and-access-the-api-route
+
+import { ISbStoryData } from '@storyblok/react'
 import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
-import { fetchStory, StoryblokFetchParams } from '@/services/storyblok/Storyblok.helpers'
+import { StoryblokFetchParams, fetchStory } from '@/services/storyblok/Storyblok.helpers'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
-const preview = async (req: NextApiRequest, res: NextApiResponse) => {
-  // Check the secret and next parameters
-  // This secret should only be known to this API route and the CMS
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.query.secret !== process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_SECRET) {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  const storyblokClient = new StoryblokClient({
-    accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
-  })
   const { version, pageId } = getPreviewParams(req)
-  const story = await fetchStory(storyblokClient, pageId, { version })
+  let story: ISbStoryData
+  try {
+    const client = new StoryblokClient({
+      accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+    })
+    story = await fetchStory(client, pageId, { version })
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid page ID' })
+  }
 
-  res.setPreviewData({ version })
+  res.setDraftMode({ enable: true })
 
   // Set SameSite=None, so cookie can be read in the Storyblok iframe
   const previous = res.getHeader('Set-Cookie')
@@ -35,18 +42,23 @@ const preview = async (req: NextApiRequest, res: NextApiResponse) => {
   res.redirect(`${targetUrl}?${url.searchParams.toString()}`)
 }
 
-const getPreviewParams = (
-  req: NextApiRequest,
-): { version: StoryblokFetchParams['version']; pageId: string } => {
+type PreviewParams = {
+  version: StoryblokFetchParams['version']
+  pageId: string
+}
+
+const getPreviewParams = (req: NextApiRequest): PreviewParams => {
   const publishedPageId = req.query._storyblok_published as string
   if (publishedPageId) {
     return { pageId: publishedPageId, version: 'published' }
   }
+
   const draftPageId = req.query._storyblok as string
   if (draftPageId) {
     return { pageId: draftPageId, version: 'draft' }
   }
+
   throw new Error('No page ID provided')
 }
 
-export default preview
+export default handler

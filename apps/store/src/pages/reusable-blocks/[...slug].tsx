@@ -1,12 +1,7 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import {
-  getStoryBySlug,
-  ReusableStory,
-  StoryblokPreviewData,
-  StoryblokQueryParams,
-} from '@/services/storyblok/storyblok'
+import { getStoryBySlug, ReusableStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type ReusableBlockPageProps = {
@@ -29,17 +24,16 @@ const NextReusableBlockPage: NextPage<ReusableBlockPageProps> = (props) => {
 
 export const getServerSideProps: GetServerSideProps<
   ReusableBlockPageProps,
-  StoryblokQueryParams,
-  StoryblokPreviewData
+  StoryblokQueryParams
 > = async (context) => {
-  const { locale, params, previewData: { version } = {} } = context
+  const { locale, params, draftMode } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
 
   const story = await getStoryBySlug<ReusableStory>(`/reusable-blocks/${slug}`, {
     locale,
-    version,
+    version: draftMode ? 'draft' : 'published',
   })
 
   return {
