@@ -21,7 +21,7 @@ export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) 
       <Accordion.HeaderWithTrigger>
         <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
-      <Accordion.Content open={openItem === value}>
+      <Accordion.Content open={openItem === value} asChild={true}>
         <ContentWrapper>
           <Content dangerouslySetInnerHTML={{ __html: contentHtml }} />
         </ContentWrapper>
