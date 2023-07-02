@@ -728,6 +728,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/property-provider@npm:^3.357.0":
+  version: 3.357.0
+  resolution: "@aws-sdk/property-provider@npm:3.357.0"
+  dependencies:
+    "@aws-sdk/types": 3.357.0
+    tslib: ^2.5.0
+  checksum: 311c00ef9c20810ea18b6772d3f37853469453fd31b1b41d841ecfd6a7f34f2ba2189df954bc094c5ff764bd75bc39ce003f208260334b40b8394f8f2665cd93
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/token-providers@npm:3.363.0":
   version: 3.363.0
   resolution: "@aws-sdk/token-providers@npm:3.363.0"
@@ -4380,15 +4390,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.16.0":
-  version: 2.16.0
-  resolution: "@datadog/datadog-ci@npm:2.16.0"
+"@datadog/datadog-ci@npm:2.16.1":
+  version: 2.16.1
+  resolution: "@datadog/datadog-ci@npm:2.16.1"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.358.0
     "@aws-sdk/client-iam": ^3.358.0
     "@aws-sdk/client-lambda": ^3.358.0
     "@aws-sdk/client-sfn": ^3.358.0
     "@aws-sdk/credential-providers": ^3.358.0
+    "@aws-sdk/property-provider": ^3.357.0
     "@types/datadog-metrics": 0.6.1
     ajv: ^8.12.0
     ajv-formats: ^2.1.1
@@ -4411,7 +4422,7 @@ __metadata:
     rimraf: ^3.0.2
     semver: ^7.5.3
     simple-git: 3.16.0
-    ssh2: 1.9.0
+    ssh2: 1.14.0
     ssh2-streams: 0.4.10
     sshpk: 1.16.1
     tiny-async-pool: 1.2.0
@@ -4420,7 +4431,7 @@ __metadata:
     yamux-js: 0.1.2
   bin:
     datadog-ci: dist/cli.js
-  checksum: 5f2efc25b93b824c621e4cee115c5b4a74b5432f91fbc4cdcf9c1580be03352b78695c9b74e8e80e512d390745027bf9d4c1b42472e51ecd4249cf0f1f1f03e3
+  checksum: c591994e6a423df4e523b46e8a5a3c2dbb61c7eda14a30ef7c8542dd534ca44e79e2994e75f37866a0aa9b77a90e5f60c2b8a0b3a3d8dc70d08d5af0f903bbcc
   languageName: node
   linkType: hard
 
@@ -10526,7 +10537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"asn1@npm:^0.2.4, asn1@npm:~0.2.0, asn1@npm:~0.2.3":
+"asn1@npm:^0.2.6, asn1@npm:~0.2.0, asn1@npm:~0.2.3":
   version: 0.2.6
   resolution: "asn1@npm:0.2.6"
   dependencies:
@@ -12312,7 +12323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cpu-features@npm:~0.0.4":
+"cpu-features@npm:~0.0.8":
   version: 0.0.8
   resolution: "cpu-features@npm:0.0.8"
   dependencies:
@@ -18541,7 +18552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.15.0, nan@npm:^2.17.0":
+"nan@npm:^2.17.0":
   version: 2.17.0
   resolution: "nan@npm:2.17.0"
   dependencies:
@@ -21861,20 +21872,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ssh2@npm:1.9.0":
-  version: 1.9.0
-  resolution: "ssh2@npm:1.9.0"
+"ssh2@npm:1.14.0":
+  version: 1.14.0
+  resolution: "ssh2@npm:1.14.0"
   dependencies:
-    asn1: ^0.2.4
+    asn1: ^0.2.6
     bcrypt-pbkdf: ^1.0.2
-    cpu-features: ~0.0.4
-    nan: ^2.15.0
+    cpu-features: ~0.0.8
+    nan: ^2.17.0
   dependenciesMeta:
     cpu-features:
       optional: true
     nan:
       optional: true
-  checksum: 3cd64a87b754018b11ee96b072804b65678a1b042c22e209a05963434b79c800e6e8a5d030d912f9890d28917c4cebf4b45ec39d0cf95f2fb436bc9fa2c0364b
+  checksum: c583527950312716f1b620d5120e3c3e241f8cc221f19fc88fd3d561c6020c1009532438f2177a2e706223d91842deff137d93e00832b7b9016593da9a00fb89
   languageName: node
   linkType: hard
 
@@ -21977,7 +21988,7 @@ __metadata:
     "@babel/preset-react": 7.22.5
     "@babel/preset-typescript": 7.22.5
     "@datadog/browser-logs": 4.43.0
-    "@datadog/datadog-ci": 2.16.0
+    "@datadog/datadog-ci": 2.16.1
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
     "@graphql-codegen/cli": 4.0.1
