@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && yarn turbo run build --filter=store && ./apps/store/scripts/upload-sourcemaps-vercel.sh",
+  "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && node ./apps/store/scripts/publish-storyblok-cache-version.js && yarn turbo run build --filter=store && ./apps/store/scripts/upload-sourcemaps-vercel.sh",
   "ignoreCommand": "../../bin/vercel-ignore-step.sh",
   "installCommand": "cd ../.. && yarn install --immutable",
   "regions": ["arn1"],
