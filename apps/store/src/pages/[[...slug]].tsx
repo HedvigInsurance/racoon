@@ -21,7 +21,6 @@ import {
   StoryblokPageProps,
   StoryblokQueryParams,
   getFilteredPageLinks,
-  StoryblokPreviewData,
   type PageStory,
   type ProductStory,
 } from '@/services/storyblok/storyblok'
@@ -64,12 +63,8 @@ const NextProductPage = (props: ProductPageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<
-  PageProps,
-  StoryblokQueryParams,
-  StoryblokPreviewData
-> = async (context) => {
-  const { params, locale, previewData: { version } = {} } = context
+export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = async (context) => {
+  const { params, locale, draftMode } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
@@ -77,6 +72,7 @@ export const getStaticProps: GetStaticProps<
   const apolloClient = initializeApollo({ locale })
 
   console.time('getStoryblokData')
+  const version = draftMode ? 'draft' : 'published'
   const [story, globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
     getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
     getGlobalStory({ version, locale }),

@@ -3,12 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
-import {
-  getStoryBySlug,
-  PageStory,
-  StoryblokPreviewData,
-  StoryblokQueryParams,
-} from '@/services/storyblok/storyblok'
+import { getStoryBySlug, PageStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -27,18 +22,15 @@ const ManyPetsCmsPage = ({ story: initialStory }: PageProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<
-  PageProps,
-  StoryblokQueryParams,
-  StoryblokPreviewData
-> = async (context) => {
-  const { locale, params, previewData: { version } = {} } = context
+export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = async (context) => {
+  const { locale, params, draftMode } = context
 
   if (!Features.enabled('MANYPETS_MIGRATION')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = `${STORYBLOK_MANYPETS_FOLDER_SLUG}/${(params?.slug ?? []).join('/')}`
 
+  const version = draftMode ? 'draft' : 'published'
   const [story, translations] = await Promise.all([
     getStoryBySlug<PageStory>(slug, { version, locale }),
     serverSideTranslations(locale),

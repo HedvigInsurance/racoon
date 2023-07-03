@@ -101,10 +101,6 @@ export type StoryblokPageProps = {
 
 export type StoryblokVersion = 'draft' | 'published'
 
-export type StoryblokPreviewData = {
-  version?: StoryblokVersion
-}
-
 export type GridColumnsField = {
   widths: ContentWidth
   alignment: ContentAlignment

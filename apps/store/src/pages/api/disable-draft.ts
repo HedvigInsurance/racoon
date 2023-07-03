@@ -1,12 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-// eslint-disable-next-line @typescript-eslint/require-await
-const exit = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const { slug = '' } = req.query
-  // Exit the current user from "Preview Mode". This function accepts no args.
-  res.clearPreviewData()
+  res.setDraftMode({ enable: false })
 
-  // set the cookies to None
+  // Set SameSite=None, so cookie can be read in the Storyblok iframe
   const cookies = res.getHeader('Set-Cookie') ?? []
   if (typeof cookies === 'object') {
     res.setHeader(
@@ -19,4 +17,4 @@ const exit = async (req: NextApiRequest, res: NextApiResponse) => {
   res.redirect(`/${slug}`)
 }
 
-export default exit
+export default handler
