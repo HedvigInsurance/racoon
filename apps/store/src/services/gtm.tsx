@@ -63,6 +63,7 @@ export type EcommerceEvent = {
   // https://support.google.com/google-ads/answer/9917012?hl=en
   new_customer?: boolean
   price_match?: {
+    exposure_matched: boolean
     price_matched: boolean
   }
 }
