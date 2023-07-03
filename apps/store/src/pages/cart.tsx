@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 import {
   getCrossOut,
   useGetDiscountDurationExplanation,
-  useGetDiscountExplanation,
   getTotal,
   getCartEntry,
 } from '@/components/CartInventory/CartInventory.helpers'
@@ -21,6 +20,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 
 const NextCartPage: NextPageWithLayout = (props) => {
   const { shopSession } = useShopSession()

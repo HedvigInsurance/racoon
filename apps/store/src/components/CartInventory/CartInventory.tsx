@@ -2,13 +2,11 @@ import styled from '@emotion/styled'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
+import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { CampaignsSection } from './CampaignsSection'
 import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
-import {
-  useGetDiscountDurationExplanation,
-  useGetDiscountExplanation,
-} from './CartInventory.helpers'
+import { useGetDiscountDurationExplanation } from './CartInventory.helpers'
 import { CostSummary } from './CostSummary'
 import { ReadOnlyCampaignCodeList } from './ReadOnlyCampaignCodeList'
 

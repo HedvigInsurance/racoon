@@ -13,12 +13,14 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
+  RedeemedCampaign,
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
+import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
@@ -51,6 +53,7 @@ export const OfferPresenter = (props: Props) => {
   const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
+  const getDiscountExplanation = useGetDiscountExplanation()
   const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
 
   const handleOfferChange = (offerId: string) => {
@@ -100,7 +103,9 @@ export const OfferPresenter = (props: Props) => {
 
   const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({ priceIntent })
 
-  const displayPrice = formatter.monthlyPrice(selectedOffer.price)
+  const crossedOutPrice =
+    selectedOffer.cost.discount.amount > 0 ? formatter.monthlyPrice(selectedOffer.cost.gross) : null
+  const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
 
   const cancellationOption = getCancellationOption({
     priceIntent,
@@ -111,28 +116,39 @@ export const OfferPresenter = (props: Props) => {
     loadingAddToCart || updateCancellationInfo.loading || updateStartDateResult.loading
 
   const discountTooltipProps = useMemo(() => {
-    if (!selectedOffer.priceMatch) return null
+    if (selectedOffer.priceMatch) {
+      const company = selectedOffer.priceMatch.externalInsurer.displayName
 
-    const company = selectedOffer.priceMatch.externalInsurer.displayName
+      if (selectedOffer.priceMatch.priceReduction.amount < 1) {
+        // No price reduction due to incomparable offers
+        const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+        return {
+          children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
+          subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
+          color: 'gray',
+        } as const
+      }
 
-    if (selectedOffer.priceMatch.priceReduction.amount < 1) {
-      // No price reduction due to incomparable offers
-      const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+      const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
+
       return {
-        children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
-        subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
-        color: 'gray',
+        children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
+        subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
+        color: 'green',
       } as const
     }
 
-    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
-
-    return {
-      children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
-      subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
-      color: 'green',
-    } as const
-  }, [selectedOffer.priceMatch, formatter, t])
+    const redeemedCampaign = shopSession.cart.redeemedCampaigns[0] as RedeemedCampaign | undefined
+    if (redeemedCampaign && selectedOffer.cost.discount.amount > 0) {
+      return {
+        children: getDiscountExplanation({
+          ...redeemedCampaign.discount,
+          amount: selectedOffer.cost.discount,
+        }),
+        color: 'green',
+      } as const
+    }
+  }, [selectedOffer, formatter, getDiscountExplanation, shopSession, t])
 
   const startDate = convertToDate(selectedOffer.startDate)
 
@@ -182,9 +198,16 @@ export const OfferPresenter = (props: Props) => {
             <SpaceFlex direction="vertical" align="center" space={1}>
               {discountTooltipProps && <DiscountTooltip {...discountTooltipProps} />}
               <Space y={0.5}>
-                <Text as="p" align="center" size="xl">
-                  {displayPrice}
-                </Text>
+                <SpaceFlex space={0.5}>
+                  {crossedOutPrice && (
+                    <Text as="p" color="textSecondary" size="xl" strikethrough>
+                      {crossedOutPrice}
+                    </Text>
+                  )}
+                  <Text as="p" align="center" size="xl">
+                    {displayPrice}
+                  </Text>
+                </SpaceFlex>
                 <Centered>
                   <TextButton onClick={onClickEdit}>
                     <Text align="center" size="xs" color="textSecondary" as="span">

@@ -7,7 +7,6 @@ import {
   getCrossOut,
   getTotal,
   useGetDiscountDurationExplanation,
-  useGetDiscountExplanation,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
@@ -23,6 +22,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
+import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 
 type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'>
 
