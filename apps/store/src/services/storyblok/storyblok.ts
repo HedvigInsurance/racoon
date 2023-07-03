@@ -158,7 +158,7 @@ export type SEOData = {
   seoTitle?: string
   seoMetaDescription?: string
   seoMetaOgImage?: StoryblokAsset
-  canonicalUrl?: string
+  abTestOrigin?: PageStory
 }
 
 export type PageStory = ISbStoryData<
@@ -333,7 +333,7 @@ export const getStoryBySlug = <StoryData extends ISbStoryData>(
 ): Promise<StoryData> => {
   const params: StoryblokFetchParams = {
     version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
-    resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
+    resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
   }
 
   return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)

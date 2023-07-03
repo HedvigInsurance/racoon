@@ -6,14 +6,19 @@ import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { StructuredDataOrganization } from './StructuredDataOrganization'
 
-export const HeadSeoInfo = ({ story }: { story: ISbStoryData<SEOData> }) => {
+type Props = {
+  story: ISbStoryData<SEOData>
+  canonicalUrl?: string
+}
+
+export const HeadSeoInfo = ({ story, canonicalUrl = '' }: Props) => {
   // AB testing
-  const { canonicalUrl, robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
+  const { robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
 
   return (
     <>
       <Head>
-        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        {canonicalUrl && <link rel="canonical" href={`${ORIGIN_URL}/${canonicalUrl}`} />}
         <meta name="robots" content={robots} />
         {seoMetaDescription && (
           <>
