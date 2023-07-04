@@ -39,6 +39,7 @@
   "DETAILS_SHEET_DISMISS_BUTTON": "Done",
   "DISCOUNT_DURATION_EXPLANATION_one": "For {{count}} month, then {{monthlyPrice}}",
   "DISCOUNT_DURATION_EXPLANATION_other": "for {{count}} months, then {{monthlyPrice}}",
+  "DISCOUNT_PRICE_AFTER_EXPIRATION": "Then you pay {{amount}}",
   "DISCOUNT_STATE_FREE_MONTHS_one": "Free for {{count}} month",
   "DISCOUNT_STATE_FREE_MONTHS_other": "Free for {{count}} months",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% discount",
