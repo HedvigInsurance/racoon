@@ -41,10 +41,11 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
 const NextStoryblokPage = (props: NextContentPageProps) => {
   const story = useStoryblokState(props.story)
   if (!story) return null
+  const abTestOriginStory = story.content.abTestOrigin
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo story={story} />
+      <HeadSeoInfo story={abTestOriginStory || story} canonicalUrl={abTestOriginStory?.full_slug} />
       <StoryblokComponent blok={story.content} />
     </BlogContext.Provider>
   )
