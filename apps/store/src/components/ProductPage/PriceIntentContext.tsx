@@ -1,4 +1,6 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
+import { useRouter } from 'next/router'
 import {
   createContext,
   PropsWithChildren,
@@ -39,16 +41,43 @@ export const PriceIntentContextProvider = ({ children }: Props) => {
 const usePriceIntentContextValue = () => {
   const { priceTemplate, productData } = useProductPageContext()
   const apolloClient = useApolloClient()
-  const { onReady } = useShopSession()
+  const { onReady, shopSession } = useShopSession()
 
   const [, setSelectedOffer] = useSelectedOffer()
   const entryToReplace = useCartEntryToReplace()
   const preloadedPriceIntentId = usePreloadedPriceIntentId()
   const [priceIntentId, setPriceIntentId] = useState<string | null>(preloadedPriceIntentId ?? null)
+
+  const updatePriceIntent = useCallback(
+    async (shopSession: ShopSession) => {
+      const service = priceIntentServiceInitClientSide(apolloClient)
+      const priceIntent = await service.getOrCreate({
+        priceTemplate,
+        productName: productData.name,
+        shopSessionId: shopSession.id,
+      })
+      setPriceIntentId(priceIntent.id)
+    },
+    [apolloClient, priceTemplate, productData.name],
+  )
+
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
     onCompleted(data) {
+      if (!shopSession) {
+        datadogLogs.logger.warn('ShopSession not ready when price intent query completed', {
+          priceIntentId,
+        })
+        return
+      }
+
+      if (data.priceIntent.product.name !== productData.name) {
+        setPriceIntentId(null)
+        updatePriceIntent(shopSession)
+        return
+      }
+
       setSelectedOffer((prev) => {
         if (prev) {
           const matchingOffer = data.priceIntent.offers.find((item) => compareOffer(item, prev))
@@ -72,32 +101,32 @@ const usePriceIntentContextValue = () => {
 
   const createNewPriceIntent = useCallback(
     async (shopSession: ShopSession) => {
-      const service = priceIntentServiceInitClientSide(apolloClient)
-      service.clear(priceTemplate.name, shopSession.id)
-      const priceIntent = await service.getOrCreate({
-        priceTemplate,
-        productName: productData.name,
-        shopSessionId: shopSession.id,
-      })
-      setPriceIntentId(priceIntent.id)
+      priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSession.id)
+      return updatePriceIntent(shopSession)
     },
-    [apolloClient, priceTemplate, productData.name],
+    [apolloClient, priceTemplate.name, updatePriceIntent],
   )
+
+  const router = useRouter()
+  useEffect(() => {
+    const handleRouteChangeComplete = () => {
+      if (!shopSession) return
+      updatePriceIntent(shopSession)
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChangeComplete)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChangeComplete)
+    }
+  }, [router, shopSession, updatePriceIntent, priceIntentId])
 
   useEffect(
     () =>
-      onReady(async (shopSession) => {
+      onReady((shopSession) => {
         if (priceIntentId) return
-
-        const service = priceIntentServiceInitClientSide(apolloClient)
-        const priceIntent = await service.getOrCreate({
-          priceTemplate,
-          productName: productData.name,
-          shopSessionId: shopSession.id,
-        })
-        setPriceIntentId(priceIntent.id)
+        updatePriceIntent(shopSession)
       }),
-    [onReady, apolloClient, priceTemplate, productData.name, priceIntentId],
+    [onReady, priceIntentId, updatePriceIntent],
   )
 
   return [result.data?.priceIntent, result, createNewPriceIntent] as const
