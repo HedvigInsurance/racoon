@@ -320,7 +320,8 @@ const offerToEcommerceEvent = ({
       id: context[TrackingContextKey.ShopSessionId] as string,
     },
     price_match: {
-      price_matched: !!offer.priceMatch,
+      exposure_matched: !!offer.priceMatch,
+      price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
     },
   } as const
 }
