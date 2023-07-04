@@ -65,14 +65,15 @@ const NextProductPage = (props: ProductPageProps) => {
 }
 
 export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = async (context) => {
-  const { params, locale, draftMode } = context
+  const { params, locale, draftMode = false } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const slug = (params?.slug ?? []).join('/')
 
   const apolloClient = initializeApollo({ locale })
 
-  console.time(`getStoryblokData | ${slug}`)
+  const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
+  console.time(timerName)
   const version = draftMode ? 'draft' : 'published'
   const [story, globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
     getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
@@ -83,7 +84,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
-  console.timeEnd(`getStoryblokData | ${slug}`)
+  console.timeEnd(timerName)
 
   const props = {
     ...translations,
