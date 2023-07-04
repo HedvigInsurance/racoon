@@ -43,7 +43,7 @@ export const InitiateCarCancellationPage = (props: Props) => {
             contractId: props.contractId,
           },
         )
-        showError(new Error(t('UNKNOWN_ERROR_MESSAGE')))
+        showError(new Error(t('UNKNOWN_ERROR_MESSAGE', { ns: 'common' })))
       }
     },
   })
