@@ -8,7 +8,6 @@ export const useTranslateFieldLabel = () => {
   return useCallback(
     (label: Label, options: Record<string, string | number> = {}) => {
       const { key } = label
-      // @ts-expect-error translation key already checked in "form template"
       return t(key, { defaultValue: `MISSING ${key}`, ...options })
     },
     [t],

@@ -15,7 +15,6 @@ export const DetailsSheet = (props: CartEntry) => {
 
   const allRows =
     dataTableRows?.map((item) => ({
-      // @ts-expect-error translation key already checked in `getDataTable`
       title: t(item.label, { defaultValue: `${item.label} MISSING` }),
       value: getDataTableValue(item, data),
     })) ?? []
