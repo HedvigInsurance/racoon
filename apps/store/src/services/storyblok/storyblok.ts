@@ -332,7 +332,7 @@ export const getStoryBySlug = <StoryData extends ISbStoryData>(
   { version, locale }: StoryOptions,
 ): Promise<StoryData> => {
   const params: StoryblokFetchParams = {
-    version: version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
+    version: version ?? (USE_DRAFT_CONTENT ? 'draft' : 'published'),
     resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
   }
 
