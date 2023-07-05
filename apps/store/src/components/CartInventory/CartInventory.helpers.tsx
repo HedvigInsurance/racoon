@@ -60,7 +60,7 @@ export const getCartEntry = (item: ShopSession['cart']['entries'][number]): Cart
   return {
     offerId: item.id,
     title: item.variant.product.displayNameFull,
-    cost: item.cost,
+    cost: item.price,
     startDate: hasCancellation ? undefined : convertToDate(item.startDate),
     pillow: {
       src: item.variant.product.pillowImage.src,

@@ -37,7 +37,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       if (offer.deductible) {
         levels.push({
           id: offer.id,
-          price: offer.cost.net,
+          price: offer.price,
           title: offer.deductible.displayName,
           description: offer.deductible.tagline,
         })

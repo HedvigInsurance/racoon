@@ -127,8 +127,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const baseOffer = offers[0]
   // TODO: take total cost from shopsession.cart.cost
   const totalCost: Money = {
-    amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
-    currencyCode: baseOffer.cost.net.currencyCode,
+    amount: offers.reduce((sum, offer) => sum + offer.price.amount, 0),
+    currencyCode: baseOffer.price.currencyCode,
   }
   const offersWithStartDate = offers.filter((offer) => offer.startDate !== undefined)
   const latestAdoptionDate = offersWithStartDate.sort(sortByStartDate)[0].startDate

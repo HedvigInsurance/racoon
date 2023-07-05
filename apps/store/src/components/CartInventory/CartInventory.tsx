@@ -43,7 +43,7 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
             key={item.id}
             offerId={item.id}
             title={item.variant.product.displayNameFull}
-            cost={item.cost}
+            cost={item.price}
             pillow={{
               src: item.variant.product.pillowImage.src,
               alt: item.variant.product.pillowImage.alt ?? '',

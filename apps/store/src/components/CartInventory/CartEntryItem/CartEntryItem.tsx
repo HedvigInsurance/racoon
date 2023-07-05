@@ -6,6 +6,7 @@ import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { CartFragmentFragment } from '@/services/apollo/generated'
+import { useFormatter } from '@/utils/useFormatter'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
 import { CartEntryCollapsible } from './CartEntryCollapsible'
@@ -24,6 +25,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { shopSessionId, readOnly, onRemove, ...cartEntry } = props
   const { title: titleLabel, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
+  const formatter = useFormatter()
   const [expanded, setExpanded] = useState(defaultOpen)
 
   const [editProductOffer, editState] = useEditProductOffer()
@@ -53,7 +55,11 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
       <Layout.Bottom>
         <Layout.Details>
-          <CartEntryCollapsible open={expanded} onOpenChange={setExpanded} cost={cost}>
+          <CartEntryCollapsible
+            open={expanded}
+            onOpenChange={setExpanded}
+            price={formatter.monthlyPrice(cost)}
+          >
             <DetailsSheet {...cartEntry} />
           </CartEntryCollapsible>
         </Layout.Details>

@@ -13,14 +13,12 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
-  RedeemedCampaign,
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
@@ -102,12 +100,31 @@ export const OfferPresenter = (props: Props) => {
 
   const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({ priceIntent })
 
-  const discountTooltipProps = useDiscountTooltipProps(
-    selectedOffer,
-    shopSession.cart.redeemedCampaigns,
-  )
+  const discountTooltipProps = useMemo(() => {
+    if (!selectedOffer.priceMatch) return null
 
-  const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
+    const company = selectedOffer.priceMatch.externalInsurer.displayName
+
+    if (selectedOffer.priceMatch.priceReduction.amount < 1) {
+      // No price reduction due to incomparable offers
+      const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
+      return {
+        children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
+        subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
+        color: 'gray',
+      } as const
+    }
+
+    const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
+
+    return {
+      children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
+      subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
+      color: 'green',
+    } as const
+  }, [selectedOffer.priceMatch, formatter, t])
+
+  const displayPrice = formatter.monthlyPrice(selectedOffer.price)
 
   const cancellationOption = getCancellationOption({
     priceIntent,
@@ -282,56 +299,6 @@ const Separator = styled.div({
 type GetCancellationOptionParams = {
   priceIntent: PriceIntent
   productOffer: ProductOfferFragment
-}
-
-const useDiscountTooltipProps = (
-  selectedOffer: ProductOfferFragment,
-  redeemedCampaigns?: Array<RedeemedCampaign>,
-) => {
-  const { t } = useTranslation(['purchase-form', 'cart'])
-  const formatter = useFormatter()
-  const getDiscountExplanation = useGetDiscountExplanation()
-
-  const tooltipProps = useMemo(() => {
-    if (selectedOffer.priceMatch) {
-      const company = selectedOffer.priceMatch.externalInsurer.displayName
-
-      if (selectedOffer.priceMatch.priceReduction.amount < 1) {
-        // No price reduction due to incomparable offers
-        const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
-        return {
-          children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
-          subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
-          color: 'gray',
-        } as const
-      }
-
-      const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
-
-      return {
-        children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
-        subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
-        color: 'green',
-      } as const
-    }
-
-    const redeemedCampaign = redeemedCampaigns?.[0]
-    if (redeemedCampaign && selectedOffer.cost.discount.amount > 0) {
-      return {
-        children: getDiscountExplanation({
-          ...redeemedCampaign.discount,
-          amount: selectedOffer.cost.discount,
-        }),
-        subtitle: t('DISCOUNT_PRICE_AFTER_EXPIRATION', {
-          amount: formatter.monthlyPrice(selectedOffer.cost.gross),
-          ns: 'cart',
-        }),
-        color: 'green',
-      } as const
-    }
-  }, [t, formatter, getDiscountExplanation, selectedOffer, redeemedCampaigns])
-
-  return tooltipProps
 }
 
 const getCancellationOption = (params: GetCancellationOptionParams): CancellationOption => {

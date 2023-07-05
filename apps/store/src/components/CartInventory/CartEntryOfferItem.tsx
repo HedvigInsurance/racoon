@@ -53,8 +53,6 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
 
   if (!show) return null
 
-  const hasDiscountApplied = offer.cost.discount.amount > 0
-
   return (
     <Layout.Main>
       <Layout.Pillow>
@@ -97,14 +95,7 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
         </Space>
       </Layout.Actions>
 
-      <Layout.Price>
-        {hasDiscountApplied && (
-          <Text color="textSecondary" strikethrough={true}>
-            {formatter.monthlyPrice(offer.cost.gross)}
-          </Text>
-        )}
-        {formatter.monthlyPrice(offer.cost.net)}
-      </Layout.Price>
+      <Layout.Price>{formatter.monthlyPrice(offer.price)}</Layout.Price>
     </Layout.Main>
   )
 }
@@ -151,7 +142,6 @@ const Layout = {
     gridArea: GRID_AREAS.Price,
     display: 'flex',
     alignItems: 'center',
-    gap: theme.space.xs,
   }),
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
   Actions: styled.div({ gridArea: GRID_AREAS.Actions }),

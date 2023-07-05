@@ -31,7 +31,7 @@ export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Pr
               key={offer.id}
               value={offer.id}
               title={offer.variant.displayName}
-              price={formatter.monthlyPrice(offer.cost.net)}
+              price={formatter.monthlyPrice(offer.price)}
               description={getVariantDescription(offer.variant.typeOfContract)}
             />
           ))}

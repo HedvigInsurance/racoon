@@ -22,19 +22,9 @@ fragment ProductOffer on ProductOffer {
       url
     }
   }
-  cost {
-    gross {
-      amount
-      currencyCode
-    }
-    net {
-      amount
-      currencyCode
-    }
-    discount {
-      amount
-      currencyCode
-    }
+  price {
+    amount
+    currencyCode
   }
   startDate
   cancellation {

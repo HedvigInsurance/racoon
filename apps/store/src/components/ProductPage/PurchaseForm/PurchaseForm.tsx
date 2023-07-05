@@ -199,7 +199,7 @@ export const PurchaseForm = () => {
 
             notifyProductAdded({
               name: productData.displayNameFull,
-              price: formatter.monthlyPrice(item.cost.net),
+              price: formatter.monthlyPrice(item.price),
               pillowSrc: productData.pillowImage.src,
               description:
                 !item.cancellation.requested ||
