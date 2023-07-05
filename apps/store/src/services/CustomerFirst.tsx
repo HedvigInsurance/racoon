@@ -2,8 +2,8 @@ import { Global } from '@emotion/react'
 import { atom, useAtomValue, useSetAtom } from 'jotai'
 import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
-import { useBreakpoint } from 'ui'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 const OPEN_ATOM = atom(false)
 

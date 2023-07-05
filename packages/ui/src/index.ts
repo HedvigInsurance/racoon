@@ -11,7 +11,7 @@ export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 
 export type { Level } from './lib/media-query'
-export { mq, useBreakpoint } from './lib/media-query'
+export { mq, getMediaQueryBreakpoint } from './lib/media-query'
 
 export { fonts } from './lib/theme/typography'
 export type { FontSizes } from './lib/theme/typography'

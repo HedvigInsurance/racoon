@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Image, { ImageProps } from 'next/legacy/image'
 import { useRef, useState } from 'react'
-import { Space, useBreakpoint, theme, mq } from 'ui'
+import { Space, theme, mq } from 'ui'
 import { Button } from '@/components/Button/Button'
 import { type CheckboxProps, Checkbox } from '@/components/Checkbox/Checkbox'
 import { CoverageDialog } from './CoverageDialog'
@@ -25,7 +25,6 @@ export const InsuranceCard = ({
   const checkboxRef = useRef<HTMLInputElement | null>(null)
   const [openDialog, setOpenDialog] = useState(false)
 
-  const matchesSmall = useBreakpoint('sm')
   const { t } = useTranslation()
 
   return (
@@ -84,14 +83,12 @@ export const InsuranceCard = ({
           </TextButton>
         </CardSection>
       </Card>
-      {matchesSmall && (
-        <CoverageDialog
-          open={openDialog}
-          onOpenChange={setOpenDialog}
-          title={t('PERILS_DIALOG_TITLE', { insurance: title })}
-          perils={perils}
-        />
-      )}
+      <CoverageDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        title={t('PERILS_DIALOG_TITLE', { insurance: title })}
+        perils={perils}
+      />
     </>
   )
 }

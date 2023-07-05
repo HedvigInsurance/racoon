@@ -1,10 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useState, useCallback, useMemo } from 'react'
-import { mq, Text, theme, useBreakpoint } from 'ui'
+import { mq, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/apollo/generated'
 import { isBrowser } from '@/utils/env'
+import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { CoverageList } from './CoverageList'
 
 type Peril = PerilFragment & { disabled?: boolean }
