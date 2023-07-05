@@ -1,5 +1,4 @@
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
-export { Separate } from './components/Separate'
 export { Space } from './components/Space'
 export { Button, type Props as ButtonProps } from './components/Button/Button'
 export { InputBase } from './components/InputBase'
