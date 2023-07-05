@@ -1,5 +1,3 @@
-export { Checkbox } from './components/Checkbox/Checkbox'
-export type { CheckboxProps } from './components/Checkbox/Checkbox'
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { Separate } from './components/Separate'
 export { Space } from './components/Space'

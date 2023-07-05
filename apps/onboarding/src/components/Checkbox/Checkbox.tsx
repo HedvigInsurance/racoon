@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { useId, forwardRef, ReactNode, ComponentPropsWithRef } from 'react'
-import { CheckIcon } from '../../icons/CheckIcon'
-import { theme } from '../../lib/theme/theme'
+import { theme, CheckIcon } from 'ui'
 
 export type CheckboxProps = ComponentPropsWithRef<'input'> & {
   label?: ReactNode

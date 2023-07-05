@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { Checkbox } from 'ui'
-import { Card, CardContent } from '../Card/Card'
-import { SelectableCard, SelectableCardProps } from '../Card/SelectableCard'
+import { Card, CardContent } from '@/components/Card/Card'
+import { SelectableCard, SelectableCardProps } from '@/components/Card/SelectableCard'
+import { Checkbox } from '@/components/Checkbox/Checkbox'
 
 const HeaderElement = styled.div({
   display: 'grid',
@@ -37,7 +37,7 @@ export const QuotePriceCard = ({
   return selectable ? (
     <SelectableCard checked={checked} {...props}>
       <CardContent>
-        <Checkbox circle checked={checked} />
+        <Checkbox circle={true} checked={checked} />
         <HeaderElement>
           {title && <TitleElement>{title}</TitleElement>}
           {price && <ExtraElement>{price}</ExtraElement>}
