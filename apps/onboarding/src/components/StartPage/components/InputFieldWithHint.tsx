@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { InputField } from 'ui'
-import type { InputFieldProps } from 'ui'
+import { InputField, type InputFieldProps } from '@/components/InputField/InputField'
 
 const OverlayPlaceholder = styled.p(({ theme }) => ({
   margin: 0,
