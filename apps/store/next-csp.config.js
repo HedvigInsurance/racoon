@@ -93,6 +93,7 @@ const mediaSrc = [
   'https://dc.insurely.com',
   'https://vercel.live',
   'https://a.storyblok.com',
+  'https://s3.eu-central-1.amazonaws.com',
   "'self'",
 ]
 const connectSrc = [

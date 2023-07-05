@@ -7,7 +7,9 @@ import { getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
+    // TODO: Remove video field once migrated to videoUrl
     video: StoryblokAsset
+    videoUrl?: string
     poster?: StoryblokAsset
     fullBleed?: boolean
     controls?: boolean
@@ -33,7 +35,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
       <Video
-        sources={[{ url: blok.video.filename }]}
+        sources={[{ url: blok.videoUrl || blok.video.filename }]}
         poster={posterUrl}
         autoPlay={blok.autoPlay}
         aspectRatioLandscape={blok.aspectRatioLandscape}
