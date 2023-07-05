@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
-source .env.local
+ENV_FILE=.env.local && test -f $ENV_FILE && source $ENV_FILE
 
 echo "Attempting to download latest translations from Lokalise..."
 
