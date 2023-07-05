@@ -199,11 +199,15 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                         {t('SIGN_BUTTON', { count: cart.entries.length })}
                       </SignButton>
                       {userErrorMessage ? (
-                        <Text size="xs" color="textSecondary" align="center">
+                        <Text as="p" size="xs" color="textSecondary" align="center">
                           {userErrorMessage}
                         </Text>
                       ) : (
                         <TextWithLink
+                          as="p"
+                          size="xs"
+                          align="center"
+                          balance={true}
                           href={PageLink.privacyPolicy({ locale: routingLocale })}
                           target="_blank"
                         >

@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { Text, Space, Button, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
+import { Space, Button, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
@@ -17,6 +17,7 @@ import {
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
+import { TextWithLink } from '@/components/TextWithLink'
 import {
   Money,
   ProductOfferFragment,
@@ -30,6 +31,8 @@ import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSe
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 import { type ComparisonTableData } from '../manyPets.types'
 import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
@@ -60,6 +63,7 @@ export const ManyPetsMigrationPage = ({
   latestAdoptionDate,
   comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
 
   const tracking = useTracking()
@@ -117,9 +121,16 @@ export const ManyPetsMigrationPage = ({
                   {signButtonContent}
                 </SignButton>
 
-                <Text as="p" size={{ _: 'xs', md: 'sm' }} align="center" color="textSecondary">
+                <TextWithLink
+                  as="p"
+                  size={{ _: 'xs', md: 'sm' }}
+                  align="center"
+                  color="textSecondary"
+                  href={PageLink.privacyPolicy({ locale: routingLocale })}
+                  target="_blank"
+                >
                   {t('SIGN_DISCLAIMER')}
-                </Text>
+                </TextWithLink>
               </Space>
             </form>
 
