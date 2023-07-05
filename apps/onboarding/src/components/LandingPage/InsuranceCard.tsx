@@ -2,8 +2,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Image, { ImageProps } from 'next/legacy/image'
 import { useRef, useState } from 'react'
-import { Space, Checkbox, CheckboxProps, useBreakpoint, theme, mq } from 'ui'
+import { Space, useBreakpoint, theme, mq } from 'ui'
 import { Button } from '@/components/Button/Button'
+import { type CheckboxProps, Checkbox } from '@/components/Checkbox/Checkbox'
 import { CoverageDialog } from './CoverageDialog'
 
 type Props = {
