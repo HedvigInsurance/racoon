@@ -1,4 +1,4 @@
-import { breakpoints } from 'ui/src/lib/media-query'
+import { getMediaQueryBreakpoint } from 'ui'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
@@ -17,7 +17,7 @@ export const HeroVideoBlock = ({ blok }: HeroVideoBlockProps) => {
   const headingBlocks = filterByBlockType(blok.headings, HeadingBlock.blockName)
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
-        maxWidth: breakpoints.xxl,
+        maxWidth: getMediaQueryBreakpoint('xxl'),
       })
     : undefined
 

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { breakpoints } from 'ui/src/lib/media-query'
-import { ConditionalWrapper, mq, theme } from 'ui'
+import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
@@ -26,7 +25,7 @@ export type VideoBlockProps = SbBaseBlockProps<
 export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps) => {
   const posterUrl = blok.poster?.filename
     ? getOptimizedImageUrl(blok.poster.filename, {
-        maxWidth: breakpoints.xxl,
+        maxWidth: getMediaQueryBreakpoint('lg'),
       })
     : undefined
   return (
