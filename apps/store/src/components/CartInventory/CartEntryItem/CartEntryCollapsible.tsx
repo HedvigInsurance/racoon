@@ -4,12 +4,17 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import React, { ReactNode, useState } from 'react'
 import { ChevronIcon, Text, theme } from 'ui'
+import { ProductOfferFragment } from '@/services/apollo/generated'
+import { useFormatter } from '@/utils/useFormatter'
 
-type Props = { defaultOpen: boolean; price: string; children: ReactNode }
+type Props = { defaultOpen: boolean; cost: ProductOfferFragment['cost']; children: ReactNode }
 
-export const CartEntryCollapsible = ({ defaultOpen, price, children }: Props) => {
+export const CartEntryCollapsible = ({ defaultOpen, cost, children }: Props) => {
   const [open, setOpen] = useState(defaultOpen)
   const { t } = useTranslation('cart')
+  const formatter = useFormatter()
+
+  const hasDiscountApplied = cost.discount.amount > 0
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
@@ -19,7 +24,12 @@ export const CartEntryCollapsible = ({ defaultOpen, price, children }: Props) =>
           <ChevronIcon color={theme.colors.textTertiary} size="1rem" />
         </Trigger>
         <PriceFlex>
-          <Text>{price}</Text>
+          {hasDiscountApplied && (
+            <Text color="textSecondary" strikethrough={true}>
+              {formatter.monthlyPrice(cost.gross)}
+            </Text>
+          )}
+          <Text>{formatter.monthlyPrice(cost.net)}</Text>
         </PriceFlex>
       </DetailsHeader>
       <CollapsibleContent forceMount>
@@ -56,6 +66,7 @@ const PriceFlex = styled.div({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
+  gap: theme.space.xs,
 })
 
 const Trigger = styled(Collapsible.Trigger)({
