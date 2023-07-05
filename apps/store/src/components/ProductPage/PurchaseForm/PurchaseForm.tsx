@@ -30,6 +30,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
+import { Features } from '@/utils/Features'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
@@ -197,9 +198,10 @@ export const PurchaseForm = () => {
               return await router.push(nextUrl)
             }
 
+            const price = Features.enabled('DISCOUNTS') ? item.cost.net : item.price
             notifyProductAdded({
               name: productData.displayNameFull,
-              price: formatter.monthlyPrice(item.cost.net),
+              price: formatter.monthlyPrice(price),
               pillowSrc: productData.pillowImage.src,
               description:
                 !item.cancellation.requested ||

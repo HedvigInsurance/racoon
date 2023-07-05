@@ -9,6 +9,10 @@ fragment OfferRecommendation on ProductOffer {
       displayNameFull
     }
   }
+  price {
+    amount
+    currencyCode
+  }
   cost {
     gross {
       amount

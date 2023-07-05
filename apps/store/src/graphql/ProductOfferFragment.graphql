@@ -22,6 +22,10 @@ fragment ProductOffer on ProductOffer {
       url
     }
   }
+  price {
+    amount
+    currencyCode
+  }
   cost {
     gross {
       amount

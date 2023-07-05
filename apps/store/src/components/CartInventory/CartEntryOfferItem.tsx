@@ -15,6 +15,7 @@ import {
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 
 type CartOfferItemProps = {
@@ -52,8 +53,6 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
   }
 
   if (!show) return null
-
-  const hasDiscountApplied = offer.cost.discount.amount > 0
 
   return (
     <Layout.Main>
@@ -98,12 +97,14 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
       </Layout.Actions>
 
       <Layout.Price>
-        {hasDiscountApplied && (
+        {Features.enabled('DISCOUNTS') && offer.cost.discount.amount > 0 && (
           <Text color="textSecondary" strikethrough={true}>
             {formatter.monthlyPrice(offer.cost.gross)}
           </Text>
         )}
-        {formatter.monthlyPrice(offer.cost.net)}
+        {Features.enabled('DISCOUNTS')
+          ? formatter.monthlyPrice(offer.cost.net)
+          : formatter.monthlyPrice(offer.price)}
       </Layout.Price>
     </Layout.Main>
   )

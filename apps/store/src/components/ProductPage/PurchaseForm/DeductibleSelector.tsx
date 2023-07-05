@@ -8,6 +8,7 @@ import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { Money, ProductOfferFragment } from '@/services/apollo/generated'
+import { Features } from '@/utils/Features'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
@@ -35,9 +36,10 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
 
     offers.forEach((offer) => {
       if (offer.deductible) {
+        const price = Features.enabled('DISCOUNTS') ? offer.cost.net : offer.price
         levels.push({
           id: offer.id,
-          price: offer.cost.net,
+          price,
           title: offer.deductible.displayName,
           description: offer.deductible.tagline,
         })

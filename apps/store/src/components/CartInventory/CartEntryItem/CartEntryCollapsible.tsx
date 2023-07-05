@@ -4,17 +4,21 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import React, { ReactNode, useState } from 'react'
 import { ChevronIcon, Text, theme } from 'ui'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import type { Money, ProductOfferFragment } from '@/services/apollo/generated'
+import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 
-type Props = { defaultOpen: boolean; cost: ProductOfferFragment['cost']; children: ReactNode }
+type Props = {
+  defaultOpen: boolean
+  price: Money
+  cost: ProductOfferFragment['cost']
+  children: ReactNode
+}
 
-export const CartEntryCollapsible = ({ defaultOpen, cost, children }: Props) => {
+export const CartEntryCollapsible = ({ defaultOpen, price, cost, children }: Props) => {
   const [open, setOpen] = useState(defaultOpen)
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
-
-  const hasDiscountApplied = cost.discount.amount > 0
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
@@ -24,12 +28,16 @@ export const CartEntryCollapsible = ({ defaultOpen, cost, children }: Props) => 
           <ChevronIcon color={theme.colors.textTertiary} size="1rem" />
         </Trigger>
         <PriceFlex>
-          {hasDiscountApplied && (
+          {Features.enabled('DISCOUNTS') && cost.discount.amount > 0 && (
             <Text color="textSecondary" strikethrough={true}>
               {formatter.monthlyPrice(cost.gross)}
             </Text>
           )}
-          <Text>{formatter.monthlyPrice(cost.net)}</Text>
+          <Text>
+            {Features.enabled('DISCOUNTS')
+              ? formatter.monthlyPrice(cost.net)
+              : formatter.monthlyPrice(price)}
+          </Text>
         </PriceFlex>
       </DetailsHeader>
       <CollapsibleContent forceMount>
