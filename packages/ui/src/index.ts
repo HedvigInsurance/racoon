@@ -13,7 +13,6 @@ export { ConditionalWrapper } from './components/ConditionalWrapper'
 export type { Level } from './lib/media-query'
 export { mq, getMediaQueryBreakpoint } from './lib/media-query'
 
-export { fonts } from './lib/theme/typography'
 export type { FontSizes } from './lib/theme/typography'
 export { theme, getColor } from './lib/theme/theme'
 export { legacyTheme } from './lib/theme/legacy/legacyTheme'
