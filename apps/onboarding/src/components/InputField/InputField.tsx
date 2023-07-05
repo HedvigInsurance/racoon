@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from '../../lib/theme/theme'
-import { InputBase, InputBaseProps } from '../InputBase'
+import { theme, InputBase, InputBaseProps } from 'ui'
 
 type StyleProps = { $error: boolean; $suffix?: string }
 

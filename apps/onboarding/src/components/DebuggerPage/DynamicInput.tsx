@@ -1,4 +1,4 @@
-import { InputField } from 'ui'
+import { InputField } from '@/components/InputField/InputField'
 import { Input } from './DebuggerPage.types'
 import { InputSelect } from './InputSelect'
 
