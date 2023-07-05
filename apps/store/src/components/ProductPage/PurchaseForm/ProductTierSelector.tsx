@@ -4,7 +4,6 @@ import { Text } from 'ui'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { ProductOfferFragment } from '@/services/apollo/generated'
-import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
@@ -27,18 +26,15 @@ export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Pr
 
       <TierSelector.Content>
         <TierLevelRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-          {offers.map((offer) => {
-            const price = Features.enabled('DISCOUNTS') ? offer.cost.net : offer.price
-            return (
-              <TierLevelRadioGroup.Item
-                key={offer.id}
-                value={offer.id}
-                title={offer.variant.displayName}
-                price={formatter.monthlyPrice(price)}
-                description={getVariantDescription(offer.variant.typeOfContract)}
-              />
-            )
-          })}
+          {offers.map((offer) => (
+            <TierLevelRadioGroup.Item
+              key={offer.id}
+              value={offer.id}
+              title={offer.variant.displayName}
+              price={formatter.monthlyPrice(offer.cost.net)}
+              description={getVariantDescription(offer.variant.typeOfContract)}
+            />
+          ))}
         </TierLevelRadioGroup.Root>
       </TierSelector.Content>
     </TierSelector.Root>

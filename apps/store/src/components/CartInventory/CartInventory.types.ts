@@ -4,7 +4,6 @@ import { Money } from '@/utils/formatter'
 export type CartEntry = {
   offerId: string
   title: string
-  price: Money
   cost: ProductOfferFragment['cost']
   startDate?: Date | null
   pillow: { src: string; alt?: string }

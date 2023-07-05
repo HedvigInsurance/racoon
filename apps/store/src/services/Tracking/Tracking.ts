@@ -10,7 +10,6 @@ import {
 } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { Features } from '@/utils/Features'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
@@ -21,7 +20,6 @@ type TrackingProductData = {
 }
 
 type TrackingOffer = {
-  price: ProductOfferFragment['price']
   cost: ProductOfferFragment['cost']
   variant: {
     typeOfContract: ProductOfferFragment['variant']['typeOfContract']
@@ -140,11 +138,10 @@ export class Tracking {
   public async reportOfferCreated(offer: ProductOfferFragment) {
     const event = TrackingEvent.OfferCreated
     const userData = await getLegacyUserData(this.context)
-    const price = Features.enabled('DISCOUNTS') ? offer.cost.gross : offer.price
     const eventData = {
       offerData: {
-        insurance_price: price.amount,
-        currency: price.currencyCode as string,
+        insurance_price: offer.cost.gross.amount,
+        currency: offer.cost.gross.currencyCode as string,
 
         insurance_type: offer.variant.typeOfContract,
         flow_type: offer.variant.product.name,
@@ -304,17 +301,16 @@ const offerToEcommerceEvent = ({
   context,
   source,
 }: OfferToEcommerseEventParams): EcommerceEvent => {
-  const price = Features.enabled('DISCOUNTS') ? offer.cost.gross : offer.price
   return {
     event,
     ecommerce: {
-      value: price.amount,
-      currency: price.currencyCode,
+      value: offer.cost.gross.amount,
+      currency: offer.cost.gross.currencyCode,
       items: [
         {
           item_id: offer.variant.product.id,
           item_name: offer.variant.product.displayNameFull,
-          price: price.amount,
+          price: offer.cost.gross.amount,
           item_variant: offer.variant.typeOfContract,
           ...(source && { item_list_id: source }),
         },
@@ -342,16 +338,12 @@ const cartToEcommerceEvent = (
     ecommerce: {
       value: cart.cost.net.amount,
       currency: cart.cost.net.currencyCode,
-      items: cart.entries.map((entry) => {
-        const price = Features.enabled('DISCOUNTS') ? entry.cost.gross : entry.price
-
-        return {
-          item_id: entry.variant.product.id,
-          item_name: entry.variant.product.displayNameFull,
-          price: price.amount,
-          variant: entry.variant.typeOfContract,
-        }
-      }),
+      items: cart.entries.map((entry) => ({
+        item_id: entry.variant.product.id,
+        item_name: entry.variant.product.displayNameFull,
+        price: entry.cost.gross.amount,
+        variant: entry.variant.typeOfContract,
+      })),
     },
     shopSession: {
       id: context[TrackingContextKey.ShopSessionId] as string,

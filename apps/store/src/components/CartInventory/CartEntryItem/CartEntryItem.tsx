@@ -21,7 +21,7 @@ type Props = CartEntry & {
 
 export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { shopSessionId, readOnly, onRemove, ...cartEntry } = props
-  const { title: titleLabel, price, cost, pillow } = cartEntry
+  const { title: titleLabel, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
 
   const [editProductOffer, editState] = useEditProductOffer()
@@ -49,7 +49,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
       <Space y={1}>
         <Layout.Details>
-          <CartEntryCollapsible defaultOpen={defaultOpen} price={price} cost={cost}>
+          <CartEntryCollapsible defaultOpen={defaultOpen} cost={cost}>
             <DetailsSheet {...cartEntry} />
           </CartEntryCollapsible>
         </Layout.Details>
