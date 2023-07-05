@@ -14,6 +14,7 @@ const config = {
   SAS_PARTNERSHIP: process.env.NEXT_PUBLIC_FEATURE_SAS_PARTNERSHIP === 'true',
   INSURELY_CAR: process.env.NEXT_PUBLIC_FEATURE_INSURELY_CAR === 'true',
   HOMECOMING: process.env.NEXT_PUBLIC_FEATURE_HOMECOMING === 'true',
+  DISCOUNTS: process.env.NEXT_PUBLIC_FEATURE_DISCOUNTS === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

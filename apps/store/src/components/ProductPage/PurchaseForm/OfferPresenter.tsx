@@ -19,6 +19,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
+import { Features } from '@/utils/Features'
 import { PageLink } from '@/utils/PageLink'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
@@ -296,7 +297,7 @@ const useDiscountTooltipProps = (
     if (selectedOffer.priceMatch) {
       const company = selectedOffer.priceMatch.externalInsurer.displayName
 
-      if (selectedOffer.priceMatch.priceReduction.amount < 1) {
+      if (selectedOffer.priceMatch.priceReduction.amount <= 0) {
         // No price reduction due to incomparable offers
         const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
         return {
@@ -315,19 +316,21 @@ const useDiscountTooltipProps = (
       } as const
     }
 
-    const redeemedCampaign = redeemedCampaigns?.[0]
-    if (redeemedCampaign && selectedOffer.cost.discount.amount > 0) {
-      return {
-        children: getDiscountExplanation({
-          ...redeemedCampaign.discount,
-          amount: selectedOffer.cost.discount,
-        }),
-        subtitle: t('DISCOUNT_PRICE_AFTER_EXPIRATION', {
-          amount: formatter.monthlyPrice(selectedOffer.cost.gross),
-          ns: 'cart',
-        }),
-        color: 'green',
-      } as const
+    if (Features.enabled('DISCOUNTS')) {
+      const redeemedCampaign = redeemedCampaigns?.[0]
+      if (redeemedCampaign && selectedOffer.cost.discount.amount > 0) {
+        return {
+          children: getDiscountExplanation({
+            ...redeemedCampaign.discount,
+            amount: selectedOffer.cost.discount,
+          }),
+          subtitle: t('DISCOUNT_PRICE_AFTER_EXPIRATION', {
+            amount: formatter.monthlyPrice(selectedOffer.cost.gross),
+            ns: 'cart',
+          }),
+          color: 'green',
+        } as const
+      }
     }
   }, [t, formatter, getDiscountExplanation, selectedOffer, redeemedCampaigns])
 
