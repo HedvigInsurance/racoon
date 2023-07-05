@@ -164,11 +164,8 @@ export const Video = ({
             src: delegated.autoPlay ? '' : source.url,
             ...(delegated.autoPlay && { 'data-src': source.url }),
           }
-          return (
-            // TODO: its adviced to provide the media format type ('type' attribute)
-            // More info http://bitly.ws/y4Jf
-            <source key={source.url} {...sourceProps} />
-          )
+          const videoType = source.url.split('.').pop()
+          return <source key={source.url} type={`video/${videoType}`} {...sourceProps} />
         })}
       </StyledVideo>
       {showControls && (
