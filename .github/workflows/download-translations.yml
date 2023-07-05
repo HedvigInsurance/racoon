@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -47,5 +47,4 @@ jobs:
             This PR was created automatically by the "Download translations from Lokalise" action.
           branch: copy/update-translations/${{ github.run_id }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HUSKY: 0
