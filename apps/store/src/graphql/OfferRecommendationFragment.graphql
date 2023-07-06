@@ -9,8 +9,18 @@ fragment OfferRecommendation on ProductOffer {
       displayNameFull
     }
   }
-  price {
-    amount
-    currencyCode
+  cost {
+    gross {
+      amount
+      currencyCode
+    }
+    net {
+      amount
+      currencyCode
+    }
+    discount {
+      amount
+      currencyCode
+    }
   }
 }

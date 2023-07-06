@@ -20,7 +20,7 @@ type TrackingProductData = {
 }
 
 type TrackingOffer = {
-  price: ProductOfferFragment['price']
+  cost: ProductOfferFragment['cost']
   variant: {
     typeOfContract: ProductOfferFragment['variant']['typeOfContract']
     product: {
@@ -140,8 +140,8 @@ export class Tracking {
     const userData = await getLegacyUserData(this.context)
     const eventData = {
       offerData: {
-        insurance_price: offer.price.amount,
-        currency: offer.price.currencyCode as string,
+        insurance_price: offer.cost.gross.amount,
+        currency: offer.cost.gross.currencyCode as string,
 
         insurance_type: offer.variant.typeOfContract,
         flow_type: offer.variant.product.name,
@@ -304,13 +304,13 @@ const offerToEcommerceEvent = ({
   return {
     event,
     ecommerce: {
-      value: offer.price.amount,
-      currency: offer.price.currencyCode,
+      value: offer.cost.gross.amount,
+      currency: offer.cost.gross.currencyCode,
       items: [
         {
           item_id: offer.variant.product.id,
           item_name: offer.variant.product.displayNameFull,
-          price: offer.price.amount,
+          price: offer.cost.gross.amount,
           item_variant: offer.variant.typeOfContract,
           ...(source && { item_list_id: source }),
         },
@@ -341,7 +341,7 @@ const cartToEcommerceEvent = (
       items: cart.entries.map((entry) => ({
         item_id: entry.variant.product.id,
         item_name: entry.variant.product.displayNameFull,
-        price: entry.price.amount,
+        price: entry.cost.gross.amount,
         variant: entry.variant.typeOfContract,
       })),
     },
