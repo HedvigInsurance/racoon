@@ -26,6 +26,20 @@ fragment ProductOffer on ProductOffer {
     amount
     currencyCode
   }
+  cost {
+    gross {
+      amount
+      currencyCode
+    }
+    net {
+      amount
+      currencyCode
+    }
+    discount {
+      amount
+      currencyCode
+    }
+  }
   startDate
   cancellation {
     option

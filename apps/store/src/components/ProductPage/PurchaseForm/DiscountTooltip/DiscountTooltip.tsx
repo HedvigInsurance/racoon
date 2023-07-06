@@ -13,15 +13,11 @@ export const DiscountTooltip = ({ children, subtitle, color = 'green' }: Props) 
   return (
     <Root>
       <Bubble>
-        <Text size="xs" color={color === 'green' ? 'textGreen' : 'textPrimary'} align="center">
+        <Text size="xs" color="textPrimary" align="center">
           {children}
         </Text>
         {subtitle && (
-          <Text
-            size="xs"
-            color={color === 'green' ? 'textGreen' : 'textSecondaryOnGray'}
-            align="center"
-          >
+          <Text size="xs" color="textSecondaryOnGray" align="center">
             {subtitle}
           </Text>
         )}

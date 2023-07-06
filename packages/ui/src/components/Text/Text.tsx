@@ -29,6 +29,7 @@ export type TextProps = {
   children?: ReactNode
   className?: string
   uppercase?: boolean
+  strikethrough?: boolean
 }
 
 const elementConfig = {
@@ -38,11 +39,12 @@ const elementConfig = {
 export const TextBase = styled(
   Space,
   elementConfig,
-)<TextProps>(({ align, color, size = 'md', uppercase = false }) => ({
+)<TextProps>(({ align, color, size = 'md', uppercase = false, strikethrough = false }) => ({
   color: color ? theme.colors[color] : 'inherit',
   ...getFontSize(size),
   ...(align && { textAlign: align }),
   ...(uppercase && { textTransform: 'uppercase' }),
+  ...(strikethrough && { textDecorationLine: 'line-through' }),
 }))
 
 export const Text = ({ as, balance, children, className, ...rest }: TextProps) => (

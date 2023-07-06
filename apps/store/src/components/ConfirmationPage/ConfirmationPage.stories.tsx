@@ -100,6 +100,20 @@ const cart = {
         amount: 125,
         currencyCode: CurrencyCode.Sek,
       },
+      cost: {
+        gross: {
+          amount: 125,
+          currencyCode: CurrencyCode.Sek,
+        },
+        net: {
+          amount: 125,
+          currencyCode: CurrencyCode.Sek,
+        },
+        discount: {
+          amount: 0,
+          currencyCode: CurrencyCode.Sek,
+        },
+      },
       cancellation: {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,

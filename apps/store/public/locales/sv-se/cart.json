@@ -39,6 +39,7 @@
   "DETAILS_SHEET_DISMISS_BUTTON": "Klar",
   "DISCOUNT_DURATION_EXPLANATION_one": "I {{count}} månad, sedan {{monthlyPrice}}",
   "DISCOUNT_DURATION_EXPLANATION_other": "i {{count}} månader, sedan {{monthlyPrice}}",
+  "DISCOUNT_PRICE_AFTER_EXPIRATION": "Sedan betalar du {{amount}}",
   "DISCOUNT_STATE_FREE_MONTHS_one": "Gratis i {{count}} månad",
   "DISCOUNT_STATE_FREE_MONTHS_other": "Gratis i {{count}} månader",
   "DISCOUNT_STATE_INDEFINITE_PERCENTAGE": "{{percentage}}% rabatt",
