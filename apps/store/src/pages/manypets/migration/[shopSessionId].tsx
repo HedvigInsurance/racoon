@@ -17,7 +17,7 @@ import {
   ManyPetsMigrationOffersQuery,
   ManyPetsMigrationOffersQueryVariables,
   Money,
-  ProductOffer,
+  ProductOfferFragment,
   ShopSessionDocument,
   ShopSessionQuery,
   ShopSessionQueryVariables,
@@ -70,10 +70,10 @@ const NextManyPetsMigrationPage: NextPage<Props> = ({
   )
 }
 
-const isPetRelatedOffer = (offer: ProductOffer) =>
+const isPetRelatedOffer = (offer: ProductOfferFragment) =>
   offer.variant.typeOfContract.includes('SE_DOG') || offer.variant.typeOfContract.includes('SE_CAT')
 
-const sortByStartDate = (offerA: ProductOffer, offerB: ProductOffer) =>
+const sortByStartDate = (offerA: ProductOfferFragment, offerB: ProductOfferFragment) =>
   Date.parse(offerA.startDate) - Date.parse(offerB.startDate)
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
@@ -121,15 +121,15 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return { notFound: true }
   }
 
-  // It should be possible to get any other offers that are not pet related offers here, but we're
+  // It should not be possible to get any other offers that are not pet related offers here, but we're
   // filtering them just to be safe.
-  const offers = (data.petMigrationOffers as Array<ProductOffer>).filter(isPetRelatedOffer)
+  const offers = data.petMigrationOffers.filter(isPetRelatedOffer)
   // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
   // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
   const baseOffer = offers[0]
   const totalCost: Money = {
-    amount: offers.reduce((sum, offer) => sum + offer.price.amount, 0),
-    currencyCode: baseOffer.price.currencyCode,
+    amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
+    currencyCode: baseOffer.cost.net.currencyCode,
   }
   const offersWithStartDate = offers.filter((offer) => offer.startDate !== undefined)
   const latestAdoptionDate = offersWithStartDate.sort(sortByStartDate)[0].startDate
