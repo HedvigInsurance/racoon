@@ -16,7 +16,7 @@ import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
 import qrCodeImage from './download-app-qrcode.png'
 import { ImageSection } from './ImageSection'
-import { SwitchingAssistantSection } from './SwitchingAssistantSection'
+import { SwitchingAssistantSection } from './SwitchingAssistantSection/SwitchingAssistantSection'
 
 type Props = ConfirmationPageProps & {
   story: ConfirmationStory

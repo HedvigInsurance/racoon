@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { Heading, Space, Text } from 'ui'
-import { CardSkeleton, ContractCard } from './ContractCard'
-import { useSwitchingContracts } from './useSwitchingContracts'
+import { CardSkeleton, ContractCard } from '../ContractCard'
+import { useSwitchingContracts } from '../useSwitchingContracts'
 
 type Props = {
   shopSessionId: string
