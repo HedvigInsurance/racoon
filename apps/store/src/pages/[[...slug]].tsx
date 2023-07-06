@@ -75,8 +75,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
   const version = draftMode ? 'draft' : 'published'
-  const [story, globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
-    getStoryBySlug<PageStory | ProductStory>(slug, { version, locale }),
+  const [globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
     fetchGlobalProductMetadata({ apolloClient }),
@@ -84,7 +83,17 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
-  console.timeEnd(timerName)
+
+  let story: PageStory | ProductStory
+  try {
+    story = await getStoryBySlug<PageStory | ProductStory>(slug, { version, locale })
+  } catch (error) {
+    console.info(`Story with slug ${locale}/${slug} not found`)
+    console.debug(error)
+    return { notFound: true }
+  } finally {
+    console.timeEnd(timerName)
+  }
 
   const props = {
     ...translations,
@@ -106,10 +115,9 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       productName: story.content.productId,
     })
 
+    const defaultProductVariant = story.content.defaultProductVariant
     const initialSelectedVariant =
-      productData.variants.find(
-        (variant) => variant.typeOfContract === story.content.defaultProductVariant,
-      ) ?? null
+      productData.variants.find((item) => item.typeOfContract === defaultProductVariant) ?? null
 
     return {
       props: {
