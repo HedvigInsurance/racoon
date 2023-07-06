@@ -1,4 +1,4 @@
-import { ProductOffer } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { TableDataTemplate } from './data/SE_PET_INSURANCE_COMPARISON_TABLE'
 import {
   ComparisonTableTemplate,
@@ -9,7 +9,7 @@ import {
 
 const parseComparisonTableTemplate: (
   tableTemplate: ComparisonTableTemplate,
-  offer: ProductOffer,
+  offer: ProductOfferFragment,
 ) => ParsedComparisonTableTemplate = (tableTemplate, offer) => {
   return Object.entries(tableTemplate).reduce<ParsedComparisonTableTemplate>(
     (result, [attribute, valueOrValueGetter]) => {
@@ -25,7 +25,9 @@ const parseComparisonTableTemplate: (
   )
 }
 
-export const getComparisonTableData: (offer: ProductOffer) => ComparisonTableData = (offer) => {
+export const getComparisonTableData: (offer: ProductOfferFragment) => ComparisonTableData = (
+  offer,
+) => {
   const tierLevel: TierLevel = offer.priceIntentData.subType
   const comparisonTableTemplate = TableDataTemplate[tierLevel]
   const parsedComparisonTableTemplate = parseComparisonTableTemplate(comparisonTableTemplate, offer)
