@@ -1,49 +1,26 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
+import { ShopSessionOutcomeDocument } from '@/services/apollo/generated'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { ConfirmationPage } from './ConfirmationPage'
 
-type StoryArgs = { sas: boolean }
-
-const meta: Meta<StoryArgs> = {
+const meta: Meta<typeof ConfirmationPage> = {
   title: 'Checkout / ConfirmationPage',
-  args: {
-    sas: false,
-  },
-  argTypes: {
-    sas: {
-      name: 'SAS Eurobonus eligible?',
-      type: 'boolean',
-    },
-  },
   parameters: {
     layout: 'fullscreen',
   },
 }
 
 export default meta
+type Story = StoryObj<typeof ConfirmationPage>
 
-export const Default: StoryFn<StoryArgs> = (args) => {
-  const memberPartnerData = args.sas ? { sas: { eligible: true } } : null
-  return (
+const Template: Story = {
+  render: (args) => (
     <AppErrorProvider>
-      <ConfirmationPage
-        globalStory={{
-          ...storyblokStory,
-          content: {
-            header: [],
-            footer: [],
-          },
-        }}
-        shopSessionId="aiwdoiaiojoiwa"
-        memberPartnerData={memberPartnerData}
-        currency="SEK"
-        cart={cart}
-        story={story}
-      />
+      <ConfirmationPage {...args} />
     </AppErrorProvider>
-  )
+  ),
 }
 
 const storyblokStory = {
@@ -151,5 +128,84 @@ const story: ConfirmationStory = {
     faqTitle: 'Frequently asked questions',
     faqSubtitle: 'Here are some answers to the most common questions.',
     seoTitle: 'Your purchase is complete | Hedvig',
+  },
+}
+
+export const Default = {
+  ...Template,
+  args: {
+    globalStory: {
+      ...storyblokStory,
+      content: {
+        header: [],
+        footer: [],
+      },
+    },
+    shopSessionId: 'ecf94a27-9daa-460e-a272-48b60f2d74ec',
+    memberPartnerData: { sas: { eligible: true } },
+    currency: 'SEK',
+    cart: cart,
+    story: story,
+  },
+}
+
+export const WithSwitchingAssistant = {
+  ...Template,
+  args: {
+    ...Default.args,
+    switching: {
+      companyDisplayName: 'ICA FÖRSÄKRING',
+    },
+  },
+  parameters: {
+    apolloClient: {
+      mocks: [
+        {
+          request: {
+            query: ShopSessionOutcomeDocument,
+            variables: {
+              shopSessionId: 'ecf94a27-9daa-460e-a272-48b60f2d74ec',
+            },
+          },
+          result: {
+            data: {
+              shopSession: {
+                id: 'ecf94a27-9daa-460e-a272-48b60f2d74ec',
+                outcome: {
+                  id: 'd17845cb-16f3-4318-909e-e73888e1ef09',
+                  createdContracts: [
+                    {
+                      id: '11f48e7e-62de-4fdc-ac3b-6863a908c58f',
+                      variant: {
+                        displayName: 'Full coverage',
+                        __typename: 'ProductVariant',
+                      },
+                      externalInsuranceCancellation: {
+                        id: '9f015c25-b8bf-4da2-afab-077f2b2f28a1',
+                        status: 'NOT_INITIATED',
+                        externalInsurer: {
+                          id: 'ICA FÖRSÄKRING',
+                          displayName: 'ICA FÖRSÄKRING',
+                          __typename: 'ExternalInsurer',
+                        },
+                        bankSignering: {
+                          approveByDate: '2023-07-24',
+                          url: null,
+                          __typename: 'ContractBankSigneringCancellation',
+                        },
+                        __typename: 'ContractExternalInsuranceCancellation',
+                      },
+                      __typename: 'Contract',
+                    },
+                  ],
+                  __typename: 'ShopSessionOutcome',
+                },
+                __typename: 'ShopSession',
+              },
+            },
+          },
+        },
+      ],
+    },
   },
 }
