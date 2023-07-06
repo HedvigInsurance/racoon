@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, Space, Text, mq, theme } from 'ui'
+import { useState } from 'react'
+import { Button, Dialog, Text, mq, theme } from 'ui'
 import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -23,6 +24,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
   const { shopSessionId, readOnly, onRemove, ...cartEntry } = props
   const { title: titleLabel, cost, pillow } = cartEntry
   const { t } = useTranslation('cart')
+  const [expanded, setExpanded] = useState(defaultOpen)
 
   const [editProductOffer, editState] = useEditProductOffer()
   const handleConfirmEdit = () => {
@@ -36,20 +38,22 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
   return (
     <Layout.Main>
-      <SpaceFlex space={0.75}>
-        <Layout.Pillow>
-          <Pillow size="small" {...pillow} />
-        </Layout.Pillow>
+      <Clickable onClick={() => setExpanded((prev) => !prev)}>
+        <SpaceFlex space={0.75}>
+          <Layout.Pillow>
+            <Pillow size="small" {...pillow} />
+          </Layout.Pillow>
 
-        <div>
-          <Text>{titleLabel}</Text>
-          <ShortSummary cartEntry={cartEntry} />
-        </div>
-      </SpaceFlex>
+          <div>
+            <Text>{titleLabel}</Text>
+            <ShortSummary cartEntry={cartEntry} />
+          </div>
+        </SpaceFlex>
+      </Clickable>
 
-      <Space y={1}>
+      <Layout.Bottom>
         <Layout.Details>
-          <CartEntryCollapsible defaultOpen={defaultOpen} cost={cost}>
+          <CartEntryCollapsible open={expanded} onOpenChange={setExpanded} cost={cost}>
             <DetailsSheet {...cartEntry} />
           </CartEntryCollapsible>
         </Layout.Details>
@@ -59,36 +63,54 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
             <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
             <RemoveEntryDialog shopSessionId={shopSessionId} onCompleted={onRemove} {...cartEntry}>
-              <Dialog.Trigger asChild>
-                <Button variant="secondary-alt" size="small">
+              <Dialog.Trigger asChild={true}>
+                <Button variant="secondary-alt" size="medium">
                   {t('REMOVE_ENTRY_BUTTON')}
                 </Button>
               </Dialog.Trigger>
             </RemoveEntryDialog>
           </ActionsRow>
         )}
-      </Space>
+      </Layout.Bottom>
     </Layout.Main>
   )
 }
 
 const Main = styled.li({
-  padding: theme.space.md,
   borderRadius: theme.radius.sm,
   backgroundColor: theme.colors.opaque1,
+})
+
+const Clickable = styled.div({
+  cursor: 'pointer',
+
+  '@media (hover: hover)': {
+    [`${Main}:has(> &:hover)`]: {
+      backgroundColor: theme.colors.grayTranslucent200,
+    },
+  },
+
+  padding: theme.space.md,
+  [mq.md]: { padding: theme.space.lg },
+})
+
+const Bottom = styled.div({
+  paddingInline: theme.space.md,
+  paddingBottom: theme.space.md,
 
   display: 'flex',
   flexDirection: 'column',
   gap: theme.space.md,
 
   [mq.md]: {
-    padding: theme.space.lg,
-    gap: theme.space.lg,
+    paddingInline: theme.space.lg,
+    paddingBottom: theme.space.lg,
   },
 })
 
 const Layout = {
   Main,
+  Bottom,
   Pillow: styled.div({ flexShrink: 0 }),
   Details: styled.div({
     paddingTop: theme.space.md,
@@ -97,9 +119,7 @@ const Layout = {
 } as const
 
 const ActionsRow = styled.div({
-  display: 'flex',
+  display: 'grid',
   gap: theme.space.sm,
-  '> *': {
-    width: '50%',
-  },
+  gridTemplateColumns: '1fr 1fr',
 })

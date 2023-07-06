@@ -15,7 +15,7 @@ export const EditEntryButton = ({ onConfirm, loading }: Props) => {
   return (
     <FullscreenDialog.Root>
       <FullscreenDialog.Trigger asChild={true}>
-        <Button variant="secondary-alt" size="small">
+        <Button variant="secondary-alt" size="medium">
           {t('CART_ENTRY_EDIT_BUTTON')}
         </Button>
       </FullscreenDialog.Trigger>
