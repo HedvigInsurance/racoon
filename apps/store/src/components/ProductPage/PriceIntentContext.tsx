@@ -13,7 +13,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import {
   PriceIntentFragmentFragment,
   PriceIntentQueryResult,
-  ProductOffer,
+  ProductOfferFragment,
   usePriceIntentQuery,
 } from '@/services/apollo/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
@@ -140,8 +140,8 @@ export const usePriceIntent = () => {
   return contextValue
 }
 
-type ComparableProductOffer = Pick<ProductOffer, 'deductible'> & {
-  variant: Pick<ProductOffer['variant'], 'typeOfContract'>
+type ComparableProductOffer = Pick<ProductOfferFragment, 'deductible'> & {
+  variant: Pick<ProductOfferFragment['variant'], 'typeOfContract'>
 }
 
 const compareOffer = (a: ComparableProductOffer, b: ComparableProductOffer) => {
