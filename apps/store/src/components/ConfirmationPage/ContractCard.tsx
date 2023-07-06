@@ -64,7 +64,7 @@ const PendingContractCard = ({ id, status, displayName, approveByDate }: Contrac
         <Space y={1}>
           <div>
             <Text>{displayName}</Text>
-            <Text color="textSecondary">
+            <Text color="textSecondaryTranslucent">
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
                 date: formatter.fromNow(new Date(approveByDate)),
               })}
@@ -83,17 +83,17 @@ const CompletedContractCard = ({ status, displayName }: ContractCardProps) => {
   const { t } = useTranslation('checkout')
 
   return (
-    <Card>
+    <CompletedCard>
       <Space y={1}>
         <CompletedStatusPill>{t(status.messageKey)}</CompletedStatusPill>
         <div>
           <Text>{displayName}</Text>
-          <Text color="textSecondary">
+          <Text color="textSecondaryTranslucent">
             {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE_COMPLETED')}
           </Text>
         </div>
       </Space>
-    </Card>
+    </CompletedCard>
   )
 }
 
@@ -103,6 +103,7 @@ const Card = styled.div({
   padding: theme.space.md,
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
+  border: `0.5px solid ${theme.colors.borderTranslucent1}`,
 
   [mq.lg]: {
     padding: theme.space.lg,
@@ -110,6 +111,8 @@ const Card = styled.div({
 })
 
 const PendingCard = styled(Card)({ backgroundColor: theme.colors.signalAmberFill })
+
+const CompletedCard = styled(Card)({ backgroundColor: theme.colors.signalGreenFill })
 
 const pulsingAnimation = keyframes({
   '0%': {
@@ -143,15 +146,19 @@ const Pill = styled.div({
 })
 
 const PendingPill = styled(Pill)({
-  backgroundColor: theme.colors.amber200,
+  backgroundColor: theme.colors.signalAmberHighlight,
 })
 
-const PillStatus = styled.div({
+const CompletedPill = styled(Pill)({
+  backgroundColor: theme.colors.signalGreenHighlight,
+})
+
+const PillStatus = styled.div<{ color: string }>(({ color }) => ({
   height: theme.space.sm,
   width: theme.space.sm,
   borderRadius: '50%',
-  backgroundColor: theme.colors.signalAmberElement,
-})
+  backgroundColor: color,
+}))
 
 type StatusPillProps = { children: string }
 
@@ -159,16 +166,20 @@ const PendingStatusPill = ({ children }: StatusPillProps) => {
   return (
     <PendingPill>
       <PillStatus color={theme.colors.amber600} />
-      <Text size="xs">{children}</Text>
+      <Text color="textPrimaryTranslucent" size="xs">
+        {children}
+      </Text>
     </PendingPill>
   )
 }
 
 const CompletedStatusPill = ({ children }: StatusPillProps) => {
   return (
-    <Pill>
+    <CompletedPill>
       <PillStatus color={theme.colors.signalGreenElement} />
-      <Text size="xs">{children}</Text>
-    </Pill>
+      <Text color="textPrimaryTranslucent" size="xs">
+        {children}
+      </Text>
+    </CompletedPill>
   )
 }
