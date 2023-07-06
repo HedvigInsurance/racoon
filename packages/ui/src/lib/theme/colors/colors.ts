@@ -303,6 +303,9 @@ export const colors = {
   textGreen: signal.green.text,
   textAmber: signal.amber.text,
   textRed: signal.red.text,
+  textPrimaryTranslucent: grayTranslucent[1000],
+  textSecondaryTranslucent: grayTranslucent[700],
+  textTertiaryTranslucent: gray[500],
 
   // Semantic colors
   // Background
