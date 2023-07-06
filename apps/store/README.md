@@ -2,6 +2,18 @@
 
 Hedvig Coverage Store.
 
+## Storyblok
+
+Storyblok is the CMS we use for editors to edit the content (text, images, videos, etc) on hedvig.com. Storyblok is a headless, modular CMS where you build pages with blocks.
+
+The schema for blocks are defined in the Storyblok UI and corresponds to a component implementation in `src/blocks`.
+
+For a more detailed guide check the page in [Notion](https://www.notion.so/hedviginsurance/Working-with-Storyblok-9e2e681802384729ad3d5b0a184756b2)
+
+### Media
+
+Images are uploaded and managed in Storyblok. Videos are uploaded to our S3 bucket `cdn.hedvig.com/hedvig-dot-com`. This is to save traffic usage and cost from Storyblok.
+
 ## Translations
 
 Translations are store under `public/locales`. They can be downloaded by running:
