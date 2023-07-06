@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { Heading, Space, Text } from 'ui'
-import { CardSkeleton, ContractCard } from './ContractCard'
-import { useSwitchingContracts } from './useSwitchingContracts'
+import { CardSkeleton, ContractCard } from '../ContractCard'
+import { useSwitchingContracts } from '../useSwitchingContracts'
 
 type Props = {
   shopSessionId: string
@@ -22,7 +22,13 @@ export const SwitchingAssistantSection = (props: Props) => {
           {t('CONFIRMATION_SWITCHING_SUBTITLE', { company: props.companyDisplayName })}
         </Text>
       </div>
-      {switchingContracts.length === 0 ? <CardSkeleton /> : switchingContracts.map(ContractCard)}
+      {switchingContracts.length === 0 ? (
+        <CardSkeleton />
+      ) : (
+        switchingContracts.map((switchingContract) => (
+          <ContractCard key={switchingContract.id} {...switchingContract} />
+        ))
+      )}
     </Space>
   )
 }
