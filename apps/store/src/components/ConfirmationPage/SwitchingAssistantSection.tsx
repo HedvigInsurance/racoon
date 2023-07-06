@@ -22,7 +22,13 @@ export const SwitchingAssistantSection = (props: Props) => {
           {t('CONFIRMATION_SWITCHING_SUBTITLE', { company: props.companyDisplayName })}
         </Text>
       </div>
-      {switchingContracts.length === 0 ? <CardSkeleton /> : switchingContracts.map(ContractCard)}
+      {switchingContracts.length === 0 ? (
+        <CardSkeleton />
+      ) : (
+        switchingContracts.map((switchingContract) => (
+          <ContractCard key={switchingContract.id} {...switchingContract} />
+        ))
+      )}
     </Space>
   )
 }
