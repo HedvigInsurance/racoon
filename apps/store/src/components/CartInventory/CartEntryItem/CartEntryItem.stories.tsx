@@ -40,8 +40,18 @@ export const ReadOnly = {
     title: 'Accident insurance',
     productName: 'SE_ACCIDENT',
     cost: {
-      amount: 129,
-      currencyCode: CurrencyCode.Sek,
+      net: {
+        amount: 129,
+        currencyCode: CurrencyCode.Sek,
+      },
+      gross: {
+        amount: 139,
+        currencyCode: CurrencyCode.Sek,
+      },
+      discount: {
+        amount: 10,
+        currencyCode: CurrencyCode.Sek,
+      },
     },
     pillow: {
       src: 'https://a.storyblok.com/f/165473/832x832/d6bf60c98b/hedvig-pillow-accident.png',
