@@ -64,7 +64,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
   const subscriptionRef = useRef<Subscription | null>(null)
   const startLogin = useCallback(
     ({ ssn, onSuccess }: BankIdLoginOptions) => {
-      bankIdLogger.debug('Starting BankId login')
+      bankIdLogger.info('Starting BankId login')
       // Future ideas
       // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
       subscriptionRef.current = loginMemberSeBankId(ssn).subscribe({
@@ -78,7 +78,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
               statusResponse.authorizationCode,
             )
             saveAuthTokens({ accessToken, refreshToken })
-            bankIdLogger.debug('Got access token')
+            bankIdLogger.info('Got access token')
             onSuccess()
           }
         },

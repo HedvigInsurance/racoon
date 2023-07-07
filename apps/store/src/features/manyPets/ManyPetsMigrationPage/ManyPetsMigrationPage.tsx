@@ -1,5 +1,6 @@
 import { isApolloError, useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -242,18 +243,27 @@ const useSignMigration = (
 
   const handleSubmitSign: FormEventHandler<HTMLFormElement> = useCallback(
     async (event) => {
-      if (!shopSession) return
-
       event.preventDefault()
+
+      if (!shopSession) return
 
       if (!shopSession.customer || !shopSession.customer.ssn) {
         throw new Error('Must have customer data and ssn in it')
       }
 
       const shopSessionId = shopSession.id
+      const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
+      manypetsLogger.addContext('shopSessionId', shopSessionId)
+
+      datadogRum.addAction('ManyPets StartingSigning', {
+        shopSessionId,
+        entriesCount: shopSession.cart.entries.length,
+        customerAuthenticationStatus,
+      })
+
       try {
         if (shopSession.cart.entries.length === 0) {
-          manypetsLogger.debug('Cart is empty, filling it with migration offers')
+          manypetsLogger.info('Cart is empty. Filling it with migration offers')
           await fillCart({ variables: { shopSessionId, offerIds } })
         } else {
           const cartOfferIds = new Set(shopSession.cart.entries.map((entry) => entry.id))
@@ -261,7 +271,7 @@ const useSignMigration = (
             offerIds.length === shopSession.cart.entries.length &&
             offerIds.every((id) => cartOfferIds.has(id))
           ) {
-            manypetsLogger.debug('Cart already filled with expected offers')
+            manypetsLogger.info('Cart already filled with expected offers')
           } else {
             throw new Error(
               `Cart has unexpected items in it. cartOfferIds=${Array.from(
@@ -271,12 +281,13 @@ const useSignMigration = (
           }
         }
 
-        const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
+        manypetsLogger.info('ManyPets StartingCheckoutSign')
         startCheckoutSign({
           customerAuthenticationStatus,
           shopSessionId,
           ssn,
           async onSuccess() {
+            manypetsLogger.info('ManyPets Successfully sign shopsession. Moving on to checkout')
             const checkoutSteps = await fetchCheckoutSteps({ apolloClient, shopSession })
             const checkoutStepIndex = checkoutSteps.findIndex(
               (item) => item === CheckoutStep.Checkout,

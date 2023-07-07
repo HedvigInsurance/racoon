@@ -42,7 +42,7 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
       dispatch({ type: 'startCheckoutSign', ssn, customerAuthenticationStatus })
 
       if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-        bankIdLogger.debug('Authentication required for returning member')
+        bankIdLogger.info('Authentication required for returning member')
         startLogin({
           ssn,
           onSuccess() {
@@ -92,12 +92,12 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
               subscriber.next(apiStatusToBankIdState(status))
               if (status === ShopSessionSigningStatus.Signed && completion) {
                 signingResult.stopPolling()
-                bankIdLogger.debug('Signing complete')
+                bankIdLogger.info('Signing complete')
                 const { accessToken, refreshToken } = await exchangeAuthorizationCode(
                   completion.authorizationCode,
                 )
                 saveAuthTokens({ accessToken, refreshToken })
-                bankIdLogger.debug('Got access token')
+                bankIdLogger.info('Got access token')
                 subscriber.complete()
               }
             },
@@ -120,7 +120,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
             if (userError) {
               subscriber.error(userError)
             } else if (signing) {
-              bankIdLogger.debug('Signing started')
+              bankIdLogger.info('Signing started')
               startPolling(signing.id)
             }
           },
