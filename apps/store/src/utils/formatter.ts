@@ -79,6 +79,9 @@ const formatZipCode = (value: string): string => {
   return value.replace(/(\d{3})(\d{2})/, '$1 $2')
 }
 
+const formatNumberGrouping = (value: number, locale: string) =>
+  new Intl.NumberFormat(locale, { useGrouping: true }).format(value)
+
 type FormatterOptions = MoneyFormatOptions & { t: TFunction }
 
 export class Formatter {
@@ -100,4 +103,5 @@ export class Formatter {
   public ssn = formatSsn
   public carRegistrationNumber = formatCarRegistrationNumber
   public zipCode = formatZipCode
+  public numberGrouping = (value: number) => formatNumberGrouping(value, this.options.locale)
 }
