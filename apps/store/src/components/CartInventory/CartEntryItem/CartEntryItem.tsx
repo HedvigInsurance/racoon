@@ -114,6 +114,7 @@ const Layout = {
   Pillow: styled.div({ flexShrink: 0 }),
   Details: styled.div({
     paddingTop: theme.space.md,
+    paddingInline: theme.space.xxxs,
     borderTop: `1px solid ${theme.colors.borderTranslucent2}`,
   }),
 } as const

@@ -1,5 +1,5 @@
 const spaceScale = {
-  0: 0,
+  0: '0.125rem',
   1: '0.25rem',
   2: '0.5rem',
   3: '0.75rem',
@@ -14,7 +14,8 @@ const spaceScale = {
 
 export const space = {
   ...spaceScale,
-  none: spaceScale[0],
+  none: 0,
+  xxxs: spaceScale[0],
   xxs: spaceScale[1],
   xs: spaceScale[2],
   sm: spaceScale[3],
