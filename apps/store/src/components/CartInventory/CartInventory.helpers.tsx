@@ -46,7 +46,7 @@ export const getTotal = (shopSession: ShopSession) => {
 }
 
 export const getCrossOut = (shopSession: ShopSession) => {
-  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
+  const hasDiscount = shopSession.cart.cost.discount.amount > 0
 
   if (!hasDiscount) return undefined
   return shopSession.cart.cost.gross

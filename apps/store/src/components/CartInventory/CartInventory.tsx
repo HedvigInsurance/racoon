@@ -89,7 +89,7 @@ const getCartTotal = (cart: CartFragmentFragment) => {
 }
 
 const getCartCrossOut = (cart: CartFragmentFragment) => {
-  const hasDiscount = cart.redeemedCampaigns.length !== 0
+  const hasDiscount = cart.cost.discount.amount > 0
 
   if (!hasDiscount) return undefined
   switch (cart.redeemedCampaigns[0].discount.type) {
