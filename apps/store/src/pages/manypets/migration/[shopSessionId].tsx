@@ -91,23 +91,20 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   // Make sure we don't identify different member based on accessToken - this breaks signing
   resetAuthTokens({ req, res })
 
+  const slug = `${STORYBLOK_MANYPETS_FOLDER_SLUG}/migration`
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
 
   const [shopSession, pageStory, translations] = await Promise.all([
-    fetchMigrationSession(apolloClient, shopSessionId).catch((err) => {
-      console.error('Failed to find shopSession', err)
-    }),
-    getStoryBySlug<ManyPetsMigrationStory>(`${STORYBLOK_MANYPETS_FOLDER_SLUG}/migration`, {
+    fetchMigrationSession(apolloClient, shopSessionId),
+    getStoryBySlug<ManyPetsMigrationStory>(slug, {
       locale,
       // Uncomment for local debug
       // version: 'draft',
     }),
     serverSideTranslations(locale),
-  ])
-
-  if (!shopSession) {
-    return { notFound: true }
-  }
+  ]).catch((error) => {
+    throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
+  })
 
   const { data, errors } = await apolloClient.query<
     ManyPetsMigrationOffersQuery,
@@ -118,15 +115,17 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
 
   if (errors) {
+    console.error(`Failed to fetch shopsession ${shopSessionId}`, { cause: errors })
     return { notFound: true }
   }
 
-  // It should not be possible to get any other offers that are not pet related offers here, but we're
+  // It should not be possible to get any other offers that are not pet related here, but we're
   // filtering them just to be safe.
   const offers = data.petMigrationOffers.filter(isPetRelatedOffer)
   // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
   // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
   const baseOffer = offers[0]
+  // TODO: take total cost from shopsession.cart.cost
   const totalCost: Money = {
     amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
     currencyCode: baseOffer.cost.net.currencyCode,
