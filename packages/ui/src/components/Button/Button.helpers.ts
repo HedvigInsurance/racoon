@@ -3,9 +3,9 @@ import { Level, mq } from '../../lib/media-query'
 import { theme } from '../../lib/theme/theme'
 
 const HEIGHT = {
-  large: '3.25rem',
+  large: '3.5rem',
   medium: '2.5rem',
-  small: '2.125rem',
+  small: '2rem',
 }
 
 type ButtonSizeVariant = 'small' | 'medium' | 'large'
@@ -36,18 +36,20 @@ const SIZE_STYLES = {
     height: HEIGHT.small,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.xs,
+    borderRadius: theme.radius.xs,
   },
   medium: {
     height: HEIGHT.medium,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.md,
+    borderRadius: theme.radius[1],
   },
   large: {
     height: HEIGHT.large,
     width: '100%',
     paddingInline: theme.space.xl,
-
-    textAlign: 'center',
     fontSize: theme.fontSizes.md,
+    textAlign: 'center',
+    borderRadius: theme.radius.sm,
   },
 } as const
