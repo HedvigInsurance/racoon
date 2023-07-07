@@ -89,9 +89,7 @@ const StyledSelect = styled(
   elementConfig,
 )<SelectProps>(({ variantSize }) => ({
   color: theme.colors.textPrimary,
-  borderRadius: theme.radius.sm,
   width: '100%',
-  height: '3rem',
   display: 'flex',
   alignItems: 'center',
   paddingLeft: theme.space.md,
@@ -100,11 +98,15 @@ const StyledSelect = styled(
   backgroundColor: theme.colors.opaque1,
 
   ...(variantSize === 'small' && {
+    height: '2.5rem',
     fontSize: theme.fontSizes.md,
+    borderRadius: theme.radius.xs,
   }),
 
   ...(variantSize === 'large' && {
+    height: '3.5rem',
     fontSize: theme.fontSizes.xl,
+    borderRadius: theme.radius.sm,
   }),
 
   '&:invalid, &:disabled': {

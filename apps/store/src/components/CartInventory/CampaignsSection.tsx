@@ -133,7 +133,7 @@ const ChipButton = styled.button({
   display: 'flex',
   alignItems: 'center',
   gap: theme.space.xs,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   backgroundColor: theme.colors.gray200,
   textTransform: 'uppercase',
   paddingTop: theme.space.xxs,

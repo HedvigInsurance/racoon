@@ -44,7 +44,7 @@ const Step = styled.li<{ active: boolean }>(({ active }) => ({
 
   color: theme.colors.textTertiary,
   backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   border: `1px solid ${theme.colors.opaque1}`,
 
   ...(active && {

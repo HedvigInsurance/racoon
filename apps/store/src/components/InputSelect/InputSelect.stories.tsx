@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import { InputSelect } from './InputSelect'
 
-export default {
+const meta: Meta<typeof InputSelect> = {
   title: 'Inputs / Select',
   component: InputSelect,
   parameters: {
@@ -11,19 +11,28 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as Meta<typeof InputSelect>
-
-const Template: StoryFn<typeof InputSelect> = (props) => {
-  return <InputSelect {...props} />
 }
-export const Default = Template.bind({})
-Default.args = {
-  placeholder: 'Byggnadstyp',
-  options: [
-    { name: 'Garage', value: 'garage' },
-    { name: 'Attefallshus', value: 'attefallshus' },
-    { name: 'Växthus', value: 'växthus' },
-    { name: 'Annan', value: 'annan' },
-  ],
-  name: 'Byggnadstyp',
+
+export default meta
+type Story = StoryObj<typeof InputSelect>
+
+export const Small: Story = {
+  args: {
+    size: 'small',
+    placeholder: 'Byggnadstyp',
+    options: [
+      { name: 'Garage', value: 'garage' },
+      { name: 'Attefallshus', value: 'attefallshus' },
+      { name: 'Växthus', value: 'växthus' },
+      { name: 'Annan', value: 'annan' },
+    ],
+    name: 'Byggnadstyp',
+  },
+}
+
+export const Large: Story = {
+  args: {
+    ...Small.args,
+    size: 'large',
+  },
 }

@@ -36,12 +36,11 @@ const SpaceBetween = styled.div({
   gap: theme.space.xs,
 })
 
-
 const Chip = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: theme.space.xxs,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   backgroundColor: theme.colors.gray200,
   textTransform: 'uppercase',
   paddingTop: theme.space.xxs,

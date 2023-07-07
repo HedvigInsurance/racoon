@@ -166,7 +166,7 @@ export const FetchInsurance = ({
 const DialogWindow = styled(Dialog.Window)({
   padding: theme.space.md,
   paddingTop: theme.space.lg,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   width: `calc(100% - ${theme.space.xs} * 2)`,
   maxWidth: '28rem',
   marginInline: 'auto',
@@ -191,5 +191,5 @@ const DialogIframeWindow = styled(Dialog.Window)({
   maxHeight: '100%',
   height: INSURELY_IFRAME_MAX_HEIGHT,
   overflowY: 'auto',
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
 })

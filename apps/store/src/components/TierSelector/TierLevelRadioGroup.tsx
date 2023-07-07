@@ -34,7 +34,7 @@ export const Item = ({ title, price, description, value }: ItemProps) => {
 const RadioGroupItem = styled(RadioGroup.Item)({
   width: '100%',
   padding: theme.space.xs,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   cursor: 'pointer',
 
   '&[data-state=checked]': {

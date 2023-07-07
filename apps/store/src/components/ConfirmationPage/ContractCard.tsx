@@ -137,7 +137,7 @@ export const CardSkeleton = styled(Card)({
 
 const Pill = styled.div({
   backgroundColor: theme.colors.light,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   paddingInline: theme.space.xs,
   paddingBlock: theme.space.xxs,
   display: 'inline-flex',

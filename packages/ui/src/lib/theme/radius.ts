@@ -11,6 +11,7 @@ export const radius = {
   ...base,
 
   // Aliases
+  xxs: base[0],
   xs: base[0],
   sm: base[2],
   md: base[3],

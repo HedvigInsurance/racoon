@@ -30,7 +30,7 @@ export const BadgeBase = styled(
     display: 'inline-block',
     color: theme.colors.dark,
     backgroundColor: getColor(color),
-    borderRadius: theme.radius.xs,
+    borderRadius: theme.radius.xxs,
     ...getBadgeSize(size),
     ...getMargins(props),
   }
