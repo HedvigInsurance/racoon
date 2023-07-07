@@ -51,6 +51,7 @@ const Icon = ({ variant }: { variant: BannerVariant }) => {
 }
 
 const Wrapper = styled.div<{ variant: BannerVariant }>(({ variant }) => ({
+  minHeight: '3rem',
   display: 'grid',
   // Using grid here to perfect center align banner's content, excluding close button
   gridTemplateAreas: `
@@ -61,6 +62,8 @@ const Wrapper = styled.div<{ variant: BannerVariant }>(({ variant }) => ({
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.md,
   fontSize: theme.fontSizes.xs,
+
+  borderBottom: `0.5px solid ${theme.colors.borderTranslucent1}`,
   ...getVariantStyles(variant),
 
   [mq.lg]: {
