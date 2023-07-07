@@ -72,6 +72,7 @@ import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
+import { TrustpilotData } from '@/services/trustpilot/trustpilot.types'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -98,6 +99,7 @@ export type StoryblokQueryParams = {
 export type StoryblokPageProps = {
   [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
+  trustpilot: TrustpilotData | null
 }
 
 export type StoryblokVersion = 'draft' | 'published'

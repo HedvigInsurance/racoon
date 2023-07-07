@@ -33,6 +33,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   const { story, globalStory, className, breadcrumbs } = props.children.props
 
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
+
   const handleLocaleChange = useChangeLocale(story)
 
   // Announcements are added as reusable blocks for Page and ProductPage content types
