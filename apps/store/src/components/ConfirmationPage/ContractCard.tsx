@@ -64,7 +64,7 @@ const PendingContractCard = ({ id, status, displayName, approveByDate }: Contrac
         <Space y={1}>
           <div>
             <Text>{displayName}</Text>
-            <Text color="textSecondaryTranslucent">
+            <Text color="textTranslucentSecondary">
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
                 date: formatter.fromNow(new Date(approveByDate)),
               })}
@@ -88,7 +88,7 @@ const CompletedContractCard = ({ status, displayName }: ContractCardProps) => {
         <CompletedStatusPill>{t(status.messageKey)}</CompletedStatusPill>
         <div>
           <Text>{displayName}</Text>
-          <Text color="textSecondaryTranslucent">
+          <Text color="textTranslucentSecondary">
             {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE_COMPLETED')}
           </Text>
         </div>
@@ -166,7 +166,7 @@ const PendingStatusPill = ({ children }: StatusPillProps) => {
   return (
     <PendingPill>
       <PillStatus color={theme.colors.amber600} />
-      <Text color="textPrimaryTranslucent" size="xs">
+      <Text color="textTranslucentPrimary" size="xs">
         {children}
       </Text>
     </PendingPill>
@@ -177,7 +177,7 @@ const CompletedStatusPill = ({ children }: StatusPillProps) => {
   return (
     <CompletedPill>
       <PillStatus color={theme.colors.signalGreenElement} />
-      <Text color="textPrimaryTranslucent" size="xs">
+      <Text color="textTranslucentPrimary" size="xs">
         {children}
       </Text>
     </CompletedPill>
