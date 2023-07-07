@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { useCombobox } from 'downshift'
-import { motion } from 'framer-motion'
 import { Fragment, useState, useMemo, useDeferredValue } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -42,7 +41,7 @@ export const Combobox = <Item,>({
   size = 'large',
   ...externalInputProps
 }: Props<Item>) => {
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const [inputValue, setInputValue] = useState(() => {
     if (defaultSelectedItem) {
@@ -137,14 +136,9 @@ export const Combobox = <Item,>({
   return (
     <Wrapper data-expanded={isExanded}>
       <InputWrapper>
-        <Input
-          {...getInputProps()}
-          {...animationProps}
-          {...externalInputProps}
-          data-expanded={isExanded}
-          data-warning={noOptions}
-          data-size={size}
-        />
+        <InputBackground {...animationProps} data-expanded={isExanded} data-warning={noOptions}>
+          <Input {...getInputProps()} {...externalInputProps} data-size={size} />
+        </InputBackground>
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
         )}
@@ -202,23 +196,9 @@ const InputWrapper = styled.div({
   position: 'relative',
 })
 
-const Input = styled(motion.input)({
-  color: theme.colors.textPrimary,
+const InputBackground = styled.div({
   borderRadius: theme.radius.sm,
-  width: '100%',
-  height: '2.5rem',
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.xxl,
-  backgroundColor: theme.colors.opaque1,
-  fontSize: theme.fontSizes.lg,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-
-  '&[data-size=large]': {
-    height: '3rem',
-    fontSize: theme.fontSizes.xl,
-  },
+  backgroundColor: theme.colors.translucent1,
 
   '&[data-expanded=true]': {
     borderBottomLeftRadius: 0,
@@ -228,6 +208,23 @@ const Input = styled(motion.input)({
   '&[data-warning=true]': {
     borderBottomLeftRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
+  },
+})
+
+const Input = styled.input({
+  color: theme.colors.textPrimary,
+  width: '100%',
+  height: '2.5rem',
+  paddingLeft: theme.space.md,
+  paddingRight: theme.space.xxl,
+  fontSize: theme.fontSizes.lg,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+
+  '&[data-size=large]': {
+    height: '3rem',
+    fontSize: theme.fontSizes.xl,
   },
 })
 

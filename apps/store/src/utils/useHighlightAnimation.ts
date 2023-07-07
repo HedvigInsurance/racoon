@@ -1,39 +1,45 @@
-import { Variants } from 'framer-motion'
-import { KeyboardEvent, useCallback, useState } from 'react'
+import { type KeyboardEvent, useCallback, useRef } from 'react'
 import { theme } from 'ui'
 
-enum AnimationState {
-  Idle = 'IDLE',
-  Active = 'ACTIVE',
+const SIGNAL_GREEN_FILL_HSLA = theme.colors.signalGreenFill
+  .replace('hsl', 'hsla')
+  .replace(')', ', 0.99)')
+
+type Params = {
+  defaultColor?: string
 }
 
-export const useHighlightAnimation = () => {
-  const [isInteractive, setIsInteractive] = useState(false)
+export const useHighlightAnimation = <Element extends HTMLElement>({
+  defaultColor = theme.colors.translucent1,
+}: Params = {}) => {
+  const ref = useRef<Element | null>(null)
 
-  const highlight = useCallback((event?: KeyboardEvent<HTMLElement>) => {
-    if (!event) return setIsInteractive(true)
-    if (!EXCLUDE_SET.has(event.key)) setIsInteractive(true)
-  }, [])
+  const highlight = useCallback(
+    (event?: KeyboardEvent<Element>) => {
+      if (event && EXCLUDE_SET.has(event.key)) return
 
-  return {
-    highlight,
-    animationProps: {
-      variants: ANIMATION_VARIANTS,
-      initial: AnimationState.Idle,
-      animate: isInteractive ? AnimationState.Active : AnimationState.Idle,
-      transition: { ...theme.transitions.framer.easeInOutCubic, duration: 0.2, delay: 0.2 },
-      onAnimationComplete: () => setIsInteractive(false),
-      'data-highlight': isInteractive,
+      ref.current?.animate(
+        [
+          {
+            backgroundColor: SIGNAL_GREEN_FILL_HSLA,
+            easing: 'cubic-bezier(0.65, 0.05, 0.36, 1)',
+            offset: 0.2,
+          },
+          {
+            backgroundColor: SIGNAL_GREEN_FILL_HSLA,
+          },
+          { backgroundColor: defaultColor, easing: 'ease-out' },
+        ],
+        {
+          duration: 1200,
+        },
+      )
     },
-  } as const
-}
+    [ref, defaultColor],
+  )
 
-const ANIMATION_VARIANTS: Variants = {
-  [AnimationState.Active]: {
-    backgroundColor: theme.colors.green100,
-    transition: { ...theme.transitions.framer.easeInOutCubic, duration: 0.4 },
-  },
-} as const
+  return { highlight, animationProps: { ref } } as const
+}
 
 const EXCLUDE_SET = new Set([
   'Tab',

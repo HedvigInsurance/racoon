@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { motion } from 'framer-motion'
-import { FormEventHandler, ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef, type MouseEventHandler } from 'react'
 import { Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -17,7 +16,7 @@ type RootProps = {
 }
 
 export const Root = ({ children, label, onValueChange, ...props }: RootProps) => {
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const handleValueChange = (value: string) => {
     highlight()
@@ -25,23 +24,25 @@ export const Root = ({ children, label, onValueChange, ...props }: RootProps) =>
   }
 
   return (
-    <Card y={0.5} {...animationProps}>
-      <Text size="xs" color="textSecondary">
-        {label}
-      </Text>
-      <RadioGroup.Root onValueChange={handleValueChange} aria-label={label} {...props}>
-        <SpaceFlex space={1} align="center">
-          {children}
-        </SpaceFlex>
-      </RadioGroup.Root>
+    <Card {...animationProps}>
+      <Space y={0.5}>
+        <Text size="xs" color="textSecondary">
+          {label}
+        </Text>
+        <RadioGroup.Root onValueChange={handleValueChange} aria-label={label} {...props}>
+          <SpaceFlex space={1} align="center">
+            {children}
+          </SpaceFlex>
+        </RadioGroup.Root>
+      </Space>
     </Card>
   )
 }
 
-const Card = styled(motion(Space))({
+const Card = styled.div({
   padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.translucent1,
 })
 
 type ItemProps = {
@@ -73,7 +74,7 @@ const StyledItem = styled(RadioGroup.Item)({
   height: '1.375rem',
 
   cursor: 'pointer',
-  border: `1px solid ${theme.colors.gray500}`,
+  border: `1px solid ${theme.colors.borderTranslucent3}`,
   borderRadius: '50%',
 
   '&[data-state=checked]': {
@@ -107,17 +108,24 @@ const StyledHorizontalRoot = styled(RadioGroup.Root)({
   gap: theme.space.xxs,
 })
 
-export const HorizontalItem = ({ onChange, ...props }: ItemProps) => {
-  const handleChange: FormEventHandler<HTMLButtonElement> = (event) => {
-    onChange?.(event)
+export const HorizontalItem = ({ onClick, ...props }: ItemProps) => {
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    highlight()
+    onClick?.(event)
   }
 
-  return <StyledHorizontalItem {...props} onChange={handleChange} />
+  return (
+    <StyledHorizontalItem {...animationProps}>
+      <Item {...props} onClick={handleClick} />
+    </StyledHorizontalItem>
+  )
 }
 
-const StyledHorizontalItem = styled(Item)({
+const StyledHorizontalItem = styled.div({
   cursor: 'pointer',
   padding: `${theme.space.sm} ${theme.space.md}`,
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.translucent1,
 })

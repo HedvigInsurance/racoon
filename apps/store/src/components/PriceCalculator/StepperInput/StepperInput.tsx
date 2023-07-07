@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
 import { MinusIcon, PlusIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -24,7 +23,7 @@ type Props = {
 export const StepperInput = (props: Props) => {
   const { max, min = 0, value, defaultValue, label, optionLabel, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(value || defaultValue || min)
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const increment: MouseEventHandler = (event) => {
     event.preventDefault()
@@ -98,7 +97,7 @@ export const StepperInput = (props: Props) => {
   )
 }
 
-const Wrapper = styled(motion.div)({
+const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -108,7 +107,7 @@ const Wrapper = styled(motion.div)({
 
   paddingInline: theme.space.md,
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.translucent1,
 })
 
 const StyledSelect = styled.select({

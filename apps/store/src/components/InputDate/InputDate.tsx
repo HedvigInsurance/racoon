@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, InputHTMLAttributes, useId, useState } from 'react'
 import { ChevronIcon, theme, Text } from 'ui'
@@ -23,7 +22,7 @@ export const InputDate = (props: Props) => {
   const formatter = useFormatter()
 
   const identifier = useId()
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setInternalValue(event.target.value)
@@ -77,10 +76,10 @@ export const InputDate = (props: Props) => {
   )
 }
 
-const Wrapper = styled(motion.div)({
+const Wrapper = styled.div({
   position: 'relative',
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.translucent1,
   height: '4.5rem',
   width: '100%',
   cursor: 'pointer',
