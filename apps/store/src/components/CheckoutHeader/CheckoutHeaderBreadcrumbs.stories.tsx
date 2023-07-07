@@ -1,7 +1,8 @@
-import { Meta, StoryFn } from '@storybook/react'
-import { Breadcrumbs, BreadcrumbsProps, CheckoutStep } from './Breadcrumbs'
+import { Meta, StoryObj } from '@storybook/react'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { Breadcrumbs, CheckoutStep } from './Breadcrumbs'
 
-export default {
+const meta: Meta<typeof Breadcrumbs> = {
   title: 'Checkout / Header Breadcumbs',
   component: Breadcrumbs,
   argTypes: {
@@ -9,14 +10,25 @@ export default {
       table: { disable: true },
     },
   },
-} as Meta<typeof Breadcrumbs>
-
-const Template: StoryFn<BreadcrumbsProps> = (props) => {
-  return <Breadcrumbs {...props} />
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  steps: [CheckoutStep.Checkout, CheckoutStep.Payment, CheckoutStep.Done],
-  activeStep: CheckoutStep.Payment,
+export default meta
+type Story = StoryObj<typeof Breadcrumbs>
+
+const Template: Story = {
+  render: (args) => (
+    <GridLayout.Root>
+      <GridLayout.Content width="1/3" align="center">
+        <Breadcrumbs {...args} />
+      </GridLayout.Content>
+    </GridLayout.Root>
+  ),
+}
+
+export const Default = {
+  ...Template,
+  args: {
+    steps: [CheckoutStep.Checkout, CheckoutStep.Payment, CheckoutStep.Done],
+    activeStep: CheckoutStep.Payment,
+  },
 }
