@@ -36,7 +36,7 @@ const Root = styled.ul({
 
 const Step = styled.li<{ active: boolean }>(({ active }) => ({
   fontSize: theme.fontSizes.xs,
-  height: theme.space.xl,
+  height: '2.25rem',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -45,12 +45,11 @@ const Step = styled.li<{ active: boolean }>(({ active }) => ({
   color: theme.colors.textTertiary,
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.xxs,
-  border: `1px solid ${theme.colors.opaque1}`,
+  border: `0.5px solid ${theme.colors.borderTranslucent1}`,
 
   ...(active && {
-    backgroundColor: theme.colors.green100,
+    backgroundColor: theme.colors.signalGreenFill,
     color: theme.colors.signalGreenText,
-    borderColor: theme.colors.green200,
   }),
 }))
 
