@@ -31,7 +31,7 @@ const Trigger = styled(Collapsible.Trigger)({
   alignItems: 'center',
   textAlign: 'center',
   justifyContent: 'space-between',
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   paddingInline: theme.space.md,
 })
 

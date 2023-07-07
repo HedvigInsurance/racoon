@@ -165,7 +165,7 @@ export const richTextStyles = css(
       maxWidth: `calc(100% + ${theme.space.md})`,
       marginBlock: '4.5rem',
       marginInline: `-${theme.space.xs}`,
-      borderRadius: theme.radius.xs,
+      borderRadius: theme.radius.xxs,
     },
 
     [mq.md]: {

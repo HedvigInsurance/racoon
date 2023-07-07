@@ -36,13 +36,13 @@ const SIZE_STYLES = {
     height: HEIGHT.small,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.xs,
-    borderRadius: theme.radius.xs,
+    borderRadius: theme.radius.xxs,
   },
   medium: {
     height: HEIGHT.medium,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.md,
-    borderRadius: theme.radius[1],
+    borderRadius: theme.radius.xs,
   },
   large: {
     height: HEIGHT.large,

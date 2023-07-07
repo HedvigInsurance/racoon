@@ -27,6 +27,6 @@ export const FetchInsuranceSuccess = ({ company, onClick, children }: Props) => 
 
 const GrayCard = styled.div({
   backgroundColor: theme.colors.gray100,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   padding: theme.space.md,
 })

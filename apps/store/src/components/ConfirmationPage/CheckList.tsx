@@ -67,7 +67,7 @@ const PresentationCheckboxChecked = styled.div({
   height: theme.space.lg,
   width: theme.space.lg,
   color: theme.colors.white,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
   display: 'grid  ',
   placeItems: 'center',
   backgroundColor: theme.colors.green600,

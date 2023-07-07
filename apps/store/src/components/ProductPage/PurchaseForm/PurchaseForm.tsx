@@ -403,13 +403,13 @@ const Bar = styled.div({
   maxWidth: '16rem',
   marginInline: 'auto',
   backgroundColor: theme.colors.gray500,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
 })
 
 const ProgressBar = styled(motion.div)({
   height: '100%',
   backgroundColor: theme.colors.gray1000,
-  borderRadius: theme.radius.xs,
+  borderRadius: theme.radius.xxs,
 })
 
 type ShowOfferStateProps = {

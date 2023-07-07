@@ -16,8 +16,8 @@ export const Row = styled.tr({
 
   ':last-child': {
     td: {
-      borderBottomLeftRadius: theme.radius.xs,
-      borderBottomRightRadius: theme.radius.xs,
+      borderBottomLeftRadius: theme.radius.xxs,
+      borderBottomRightRadius: theme.radius.xxs,
     },
   },
 })
@@ -49,8 +49,8 @@ const TableHeader = styled.th({
 
 const ActiveTableHeader = styled(TableHeader)({
   backgroundColor: theme.colors.green100,
-  borderTopLeftRadius: theme.radius.xs,
-  borderTopRightRadius: theme.radius.xs,
+  borderTopLeftRadius: theme.radius.xxs,
+  borderTopRightRadius: theme.radius.xxs,
 })
 
 type TitleDataCellProps = { children: React.ReactNode; className?: string }
