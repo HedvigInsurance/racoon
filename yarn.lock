@@ -8118,24 +8118,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@storyblok/js@npm:2.2.1"
+"@storyblok/js@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@storyblok/js@npm:2.2.2"
   dependencies:
-    storyblok-js-client: ^5.11.0
-  checksum: 041e934d72d5e31496d8e20c04fbd1dda12b763ae7662365c6478bfbec1b6a1f0528bd3d03a36926cf83482033363cbc777746b70fc8eb08fa3521f0a5fbfeaa
+    storyblok-js-client: ^5.11.1
+  checksum: b86057b7bff47de194acc49a54c3f9659818f0c417a124c831b50beb3e9e5c47a944ca730dfbd2b34460bee305b5a968f9272285350aee8143fec05a98c1f08d
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:2.1.8":
-  version: 2.1.8
-  resolution: "@storyblok/react@npm:2.1.8"
+"@storyblok/react@npm:2.1.9":
+  version: 2.1.9
+  resolution: "@storyblok/react@npm:2.1.9"
   dependencies:
-    "@storyblok/js": ^2.2.1
+    "@storyblok/js": ^2.2.2
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 81c1612be49b7321841e269ce53cd577f7cb15c50949fdd870c7095c0e67a73f1de78260a3c04772e5fbee94d0d25dd27eae3d55a1fcc8d540b61913278d8616
+  checksum: f2c5040a3396cd27436fc4cc9396af45ff20f6f5021ee761eb98b96a1825c80543428e923702c19be23569df31e0f25eba78dbed2f9e5ca3cfe6b419039e1720
   languageName: node
   linkType: hard
 
@@ -22913,7 +22913,7 @@ __metadata:
     "@radix-ui/react-select": 1.2.2
     "@radix-ui/react-switch": 1.0.3
     "@radix-ui/react-tabs": 1.0.4
-    "@storyblok/react": 2.1.8
+    "@storyblok/react": 2.1.9
     "@storybook/addon-actions": 7.0.26
     "@storybook/addon-essentials": 7.0.26
     "@storybook/addon-links": 7.0.26
@@ -22976,10 +22976,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^5.11.0":
-  version: 5.11.0
-  resolution: "storyblok-js-client@npm:5.11.0"
-  checksum: b59c0dc77b42aaf80b37216ead076466e510ba933de5d99577d9a50ccda1549aa016db69c7cd89aa90c0a8c8f69bce4e5cfb359fe1d899ce771a77123ca8395c
+"storyblok-js-client@npm:^5.11.1":
+  version: 5.11.1
+  resolution: "storyblok-js-client@npm:5.11.1"
+  checksum: c0d9a4172ed16a4f04afa450b4da5fafba1eb14525700bbf96716c54c556d6f2405449e9911a316c34e57b5a60cddf3fdb459066046ae310126b040aa472db2b
   languageName: node
   linkType: hard
 
