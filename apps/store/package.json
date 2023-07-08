@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.7.17",
-    "@datadog/browser-logs": "4.43.0",
+    "@datadog/browser-logs": "4.44.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@lottiefiles/react-lottie-player": "3.5.3",
