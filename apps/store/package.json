@@ -20,7 +20,7 @@
     "scan-translations": "yarn i18next && yarn dlx i18next-v4-format-converter public/locales"
   },
   "dependencies": {
-    "@apollo/client": "3.7.16",
+    "@apollo/client": "3.7.17",
     "@datadog/browser-logs": "4.43.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
