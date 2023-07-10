@@ -46,6 +46,7 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
 
           <div>
             <Text>{titleLabel}</Text>
+
             <ShortSummary cartEntry={cartEntry} />
           </div>
         </SpaceFlex>
