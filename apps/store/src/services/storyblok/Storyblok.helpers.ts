@@ -122,6 +122,7 @@ export const publishStoryblokCacheVersion = async (cacheVersion: number) => {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${manageApiToken}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       items: [
