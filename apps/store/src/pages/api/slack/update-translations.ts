@@ -1,11 +1,8 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
+import { Slack } from '@/services/slack/slack'
+import { SlashCommand } from '@/services/slack/slack.constants'
+import { SlashCommandRequest } from '@/services/slack/slack.types'
 import { ORIGIN_URL } from '@/utils/PageLink'
-
-type SlashCommand = {
-  command: string
-  response_url: string
-  user_id: string
-}
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -16,25 +13,21 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  const { command, response_url, user_id } = req.body as SlashCommand
+  const { command, response_url: responseUrl, user_id: userId } = req.body as SlashCommandRequest
 
-  if (command !== '/update-translations') {
+  if (command !== SlashCommand.UpdateTranslations) {
     return res.status(400).json({ message: `Unknown slash command: ${command}` })
   }
 
   const url = `${ORIGIN_URL}/api/slack/update-translations-work`
-  const data = { response_url }
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ responseUrl }),
   })
 
   setTimeout(() => {
-    res.json({
-      response_type: 'ephemeral',
-      text: `Ok, you got it <@${user_id}>!`,
-    })
+    res.json(Slack.composeMessage(`🤝🏻 Ok, you got it <@${userId}>!`))
   }, 100)
 }
 
