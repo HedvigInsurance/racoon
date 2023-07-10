@@ -8,6 +8,8 @@
   "CART_ENTRY_AUTO_SWITCH": "Automatically switches",
   "CART_ENTRY_DATE_LABEL": "Activates {{date}}",
   "CART_ENTRY_EDIT_BUTTON": "Edit",
+  "CART_ITEM_TOOLTIP_AUTO_SWITCH": "We help you switch. The insurance activates when your current one expires.",
+  "CART_ITEM_TOOLTIP_SELF_SWITCH": "You can change your start date in our app until the activation day.",
   "CART_PAGE_HEADING": "Your cart",
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
   "CHECKOUT_BUTTON": "Go to checkout",
