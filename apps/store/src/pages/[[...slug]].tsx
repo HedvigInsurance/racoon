@@ -26,6 +26,8 @@ import {
 } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import { useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
+import { fetchTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextContentPageProps = StoryblokPageProps & { type: 'content' }
@@ -34,6 +36,8 @@ type NextProductPageProps = ProductPageProps & { type: 'product' }
 type PageProps = NextContentPageProps | NextProductPageProps
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
+  useHydrateTrustpilotData(props.trustpilot)
+
   if (props.type === 'product') return <NextProductPage {...props} />
   return <NextStoryblokPage {...props} />
 }
@@ -75,11 +79,12 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
   const version = draftMode ? 'draft' : 'published'
-  const [globalStory, translations, productMetadata, breadcrumbs] = await Promise.all([
+  const [globalStory, translations, productMetadata, breadcrumbs, trustpilot] = await Promise.all([
     getGlobalStory({ version, locale }),
     serverSideTranslations(locale),
     fetchGlobalProductMetadata({ apolloClient }),
     fetchBreadcrumbs(slug, { version, locale }),
+    fetchTrustpilotData(),
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
@@ -101,6 +106,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
     [GLOBAL_STORY_PROP_NAME]: globalStory,
     [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
     breadcrumbs,
+    trustpilot,
   }
   const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
