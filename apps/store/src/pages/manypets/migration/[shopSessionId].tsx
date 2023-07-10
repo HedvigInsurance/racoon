@@ -125,7 +125,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
   // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
   const baseOffer = offers[0]
-  // TODO: take total cost from shopsession.cart.cost
+  // We can't use shopSession.cart.cost here because at this point the offers aren't added to the cart yet, so
+  // we need to calculate the total price on the FE.
   const totalCost: Money = {
     amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
     currencyCode: baseOffer.cost.net.currencyCode,
