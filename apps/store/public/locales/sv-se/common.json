@@ -38,5 +38,7 @@
   "PAYMENT_CONNECT_TITLE": "Koppla autogiro",
   "READ_MORE": "Läs mer",
   "SELECT_INSURANCE": "Välj försäkring",
+  "TRUSTPILOT_REVIEWS_COUNT": "Baserat på {{numberOfReviews}} recensioner på",
+  "TRUSTPILOT_SCORE": "{{score}} av 5",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
 }

@@ -41,5 +41,7 @@
   "PAYMENT_CONNECT_TITLE": "Connect direct debit",
   "READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
+  "TRUSTPILOT_REVIEWS_COUNT": "Based on {{numberOfReviews}} reviews on",
+  "TRUSTPILOT_SCORE": "{{score}} of 5",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }
