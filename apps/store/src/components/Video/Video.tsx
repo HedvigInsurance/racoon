@@ -134,6 +134,15 @@ export const Video = ({
   }, [wasPlaying, playVideo])
   useDialogEvent('close', handleDialogClose)
 
+  const handleVideoEnded: React.ReactEventHandler<HTMLVideoElement> = () => {
+    // Show the first frame of the video when it has ended
+    if (videoRef.current) {
+      videoRef.current.pause()
+      setState(State.Paused)
+      videoRef.current.currentTime = 0
+    }
+  }
+
   return (
     <VideoWrapper>
       {/*
@@ -156,6 +165,7 @@ export const Video = ({
         roundedCorners={roundedCorners}
         onPlaying={handlePlaying}
         onPause={handlePause}
+        onEnded={handleVideoEnded}
         {...autoplayAttributes}
         {...delegated}
       >
