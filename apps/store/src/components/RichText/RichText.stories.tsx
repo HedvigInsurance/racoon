@@ -16,7 +16,9 @@ const Template: Story = {
   render: (args) => (
     <GridLayout.Root style={{ paddingBlock: '2rem' }}>
       <GridLayout.Content width={{ base: '1', md: '2/3', xl: '1/2' }} align={'center'}>
-        <RichText {...args} />
+        <RichText {...args}>
+          <div dangerouslySetInnerHTML={{__html: contentHTML}} />
+        </RichText>
       </GridLayout.Content>
     </GridLayout.Root>
   ),
@@ -28,7 +30,6 @@ const contentHTML =
 export const Default: Story = {
   ...Template,
   args: {
-    contentHTML,
     largeText: true,
   },
 }
@@ -36,6 +37,5 @@ export const Default: Story = {
 export const Small: Story = {
   ...Template,
   args: {
-    contentHTML,
   },
 }
