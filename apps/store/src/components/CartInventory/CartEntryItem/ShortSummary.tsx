@@ -2,23 +2,25 @@ import { useTranslation } from 'react-i18next'
 import { InfoIcon, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
-import { CartEntry } from '../CartInventory.types'
+import { type CartEntry } from '../CartInventory.types'
 import { Tooltip } from './Tooltip'
 
-export const ShortSummary = ({ cartEntry }: { cartEntry: CartEntry }) => {
+type Props = Pick<CartEntry, 'startDate' | 'productName' | 'data'>
+
+export const ShortSummary = (props: Props) => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
   const content: Array<string> = []
 
-  const productBasedSummary = getProductBasedSummary(cartEntry)
+  const productBasedSummary = getProductBasedSummary(props.productName, props.data)
   if (productBasedSummary) {
     content.push(productBasedSummary)
   }
 
-  const labels = cartEntry.startDate
+  const labels = props.startDate
     ? {
-        text: t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(cartEntry.startDate) }),
+        text: t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(props.startDate) }),
         tooltip: t('CART_ITEM_TOOLTIP_SELF_SWITCH'),
       }
     : {
@@ -41,11 +43,11 @@ export const ShortSummary = ({ cartEntry }: { cartEntry: CartEntry }) => {
 }
 
 // TODO: retrieve this from API or some sort of central config.
-const getProductBasedSummary = (cartEntry: CartEntry) => {
-  switch (cartEntry.productName) {
+const getProductBasedSummary = (productName: string, data: Record<string, unknown>) => {
+  switch (productName) {
     case 'SE_PET_DOG':
     case 'SE_PET_CAT':
-      return cartEntry.data.name != null ? (cartEntry.data.name as string) : null
+      return data.name != null ? (data.name as string) : null
     default:
       return null
   }
