@@ -1,8 +1,6 @@
 import path from 'path'
-import { get as getFromConfig } from '@vercel/edge-config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
-import { publishStoryblokCacheVersion } from '@/services/storyblok/Storyblok.helpers'
 
 type Payload = {
   action: 'published' | 'unpublished' | 'deleted'
@@ -28,16 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const { data } = await storyblokClient.getStory(`${story_id}`, {})
-    const { cv } = data
-    const storyblokCacheVersion = await getFromConfig('storyblokCacheVersion')
-    if (storyblokCacheVersion !== cv) {
-      console.log(`Publishing new Storyblok cache version: ${cv}`)
-      try {
-        await publishStoryblokCacheVersion(cv)
-      } catch (error: unknown) {
-        console.error('Failed to publish Storyblok cache version', error)
-      }
-    }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug
