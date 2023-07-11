@@ -8,13 +8,10 @@ import {
   useCartEntryReplaceMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { useCartEntryToReplace } from '../ProductPage'
-import { FormElement } from './PurchaseForm.constants'
 
 type Params = {
   shopSessionId: string
-  priceIntentId: string
   onSuccess: (productOfferId: string, nextUrl?: string) => void
 }
 
@@ -36,38 +33,39 @@ export const useHandleSubmitAddToCart = ({ shopSessionId, onSuccess }: Params) =
 
   const entryToReplace = useCartEntryToReplace()
   const { showError } = useAppErrorHandleContext()
-  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-    event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-    const productOfferId = getOrThrowFormValue(formData, FormElement.ProductOfferId)
-    const nextUrl = event.nativeEvent.submitter?.getAttribute('value') ?? undefined
+  const getHandleSubmit = (productOfferId: string) => {
+    return async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+      event.preventDefault()
 
-    const options = {
-      onCompleted() {
-        onSuccess(productOfferId, nextUrl)
-      },
-      onError: showError,
-    } as const
+      const nextUrl = event.nativeEvent.submitter?.getAttribute('value') ?? undefined
 
-    if (entryToReplace) {
-      await replaceEntry({
-        variables: {
-          shopSessionId,
-          removeOfferId: entryToReplace.id,
-          addOfferId: productOfferId,
+      const options = {
+        onCompleted() {
+          onSuccess(productOfferId, nextUrl)
         },
-        ...options,
-      })
-    } else {
-      await addEntry({
-        variables: { shopSessionId, offerId: productOfferId },
-        ...options,
-      })
+        onError: showError,
+      } as const
+
+      if (entryToReplace) {
+        await replaceEntry({
+          variables: {
+            shopSessionId,
+            removeOfferId: entryToReplace.id,
+            addOfferId: productOfferId,
+          },
+          ...options,
+        })
+      } else {
+        await addEntry({
+          variables: { shopSessionId, offerId: productOfferId },
+          ...options,
+        })
+      }
     }
   }
 
-  return [handleSubmit, loadingReplace || loading] as const
+  return [getHandleSubmit, loadingReplace || loading] as const
 }
 
 type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]

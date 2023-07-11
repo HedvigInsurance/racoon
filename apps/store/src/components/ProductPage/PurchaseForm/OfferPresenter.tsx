@@ -28,7 +28,6 @@ import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
 import { getOffersByPrice } from './getOffersByPrice'
 import { ProductTierSelector } from './ProductTierSelector'
-import { FormElement } from './PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 import { useSelectedOffer } from './useSelectedOffer'
 
@@ -77,9 +76,8 @@ export const OfferPresenter = (props: Props) => {
 
   const [updateStartDate, updateStartDateResult] = useUpdateStartDate({ priceIntent })
 
-  const [handleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
+  const [getHandleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
     shopSessionId: shopSession.id,
-    priceIntentId: priceIntent.id,
     onSuccess(productOfferId, nextUrl) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 
@@ -160,7 +158,7 @@ export const OfferPresenter = (props: Props) => {
   return (
     <>
       <Space y={1}>
-        <form ref={offerRef} onSubmit={handleSubmitAddToCart}>
+        <form ref={offerRef} onSubmit={getHandleSubmitAddToCart(selectedOffer.id)}>
           <Space y={2}>
             <SpaceFlex direction="vertical" align="center" space={1}>
               {discountTooltipProps && <DiscountTooltip {...discountTooltipProps} />}
@@ -201,8 +199,6 @@ export const OfferPresenter = (props: Props) => {
                 onAutoSwitchChange={handleUpdateCancellation}
                 onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
               />
-
-              <input type="hidden" name={FormElement.ProductOfferId} value={selectedOffer.id} />
 
               <Button
                 type="submit"

@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { Text } from 'ui'
-import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { Money, ProductOfferFragment } from '@/services/apollo/generated'
@@ -59,11 +58,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       </TierSelector.Header>
 
       <TierSelector.Content>
-        <TierLevelRadioGroup.Root
-          name={FormElement.DeductibleOfferId}
-          value={selectedOffer.id}
-          onValueChange={onValueChange}
-        >
+        <TierLevelRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
           {deductibleLevels.map((item) => (
             <TierLevelRadioGroup.Item
               key={item.id}

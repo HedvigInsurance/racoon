@@ -6,7 +6,6 @@ import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
 import { formatInputDateValue } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
-import { FormElement } from '../PurchaseForm.constants'
 import { SelfSwitcherBubble } from './SelfSwitcherBubble'
 
 export type CancellationOption =
@@ -145,7 +144,6 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
 
   return (
     <ToggleCard
-      name={FormElement.AutoSwitch}
       label={t('AUTO_SWITCH_FIELD_LABEL')}
       defaultChecked={value}
       onCheckedChange={onCheckedChange}
@@ -181,7 +179,6 @@ const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
   return (
     <InputDate
       type="date"
-      name={FormElement.StartDate}
       label={label ?? t('START_DATE_FIELD_LABEL')}
       required
       value={inputValue}

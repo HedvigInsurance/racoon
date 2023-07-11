@@ -2,12 +2,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { atom, useAtom } from 'jotai'
-import { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, theme, Text, Space, mq } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-// TODO: extract to a separate utility
-import { FormElement } from '@/components/ProductPage/PurchaseForm/PurchaseForm.constants'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
@@ -28,9 +25,8 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
-  const [handleSubmitAddToCart, loading] = useHandleSubmitAddToCart({
+  const [getHandleSubmitAddToCart, loading] = useHandleSubmitAddToCart({
     shopSessionId,
-    priceIntentId: offer.id,
     onSuccess() {
       datadogLogs.logger.info('Added quick offer to cart', {
         priceIntentId: offer.id,
@@ -40,10 +36,11 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
   })
 
   const tracking = useTracking()
-  const handleSubmitQuickAdd = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+  const handleSubmitAddToCart = getHandleSubmitAddToCart(offer.id)
+  const handleSubmitQuickAdd: typeof handleSubmitAddToCart = (event) => {
     datadogRum.addAction('Quick add to cart', { priceIntentId: offer.id, product: product.id })
     tracking.reportAddToCart(offer, 'recommendations')
-    handleSubmitAddToCart(event)
+    return handleSubmitAddToCart(event)
   }
 
   const handleClickHide = () => {
@@ -87,7 +84,6 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
               <Button loading={loading} size="medium" type="submit">
                 {t('QUICK_ADD_BUTTON')}
               </Button>
-              <input type="hidden" name={FormElement.ProductOfferId} value={offer.id} />
             </form>
 
             <GhostButton size="medium" variant="ghost" onClick={handleClickHide}>
