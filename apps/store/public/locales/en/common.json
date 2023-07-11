@@ -9,6 +9,7 @@
   "COUNTRY_LABEL_NO": "Norway",
   "COUNTRY_LABEL_SE": "Sweden",
   "COUNTRY_NOT_DETECTED": "We’re not quite sure where you’re visiting us from. Select your country below.",
+  "CRM_RETARGETING_CHOOSE_TIER": "Choose coverage level",
   "DATE_INPUT_EMPTY_LABEL": "Select date",
   "DATE_SAME_DAY": "today",
   "DATE_TOO_EARLY": "Date can't be earlier than {{minValue}}",

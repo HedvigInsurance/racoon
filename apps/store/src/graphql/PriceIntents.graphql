@@ -1,0 +1,16 @@
+query PriceIntents($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    id
+    cart {
+      entries {
+        id
+      }
+    }
+    priceIntents {
+      id
+      offers {
+        ...ProductOffer
+      }
+    }
+  }
+}
