@@ -4,13 +4,17 @@ import { useTranslation } from 'next-i18next'
 import { Heading, Text } from 'ui'
 import { Space, theme } from 'ui'
 import { useAutoFormat } from '@/utils/useFormatter'
-import { type CartEntry } from '../CartInventory.types'
-import { type DataTableRow, getDataTable } from '../DataTable/DataTable'
+import { type DataTableRow, getDataTable } from './DataTable/DataTable'
 
-type Props = Pick<
-  CartEntry,
-  'documents' | 'productName' | 'data' | 'tierLevelDisplayName' | 'deductibleDisplayName'
->
+type UserData = Record<string, unknown>
+
+type Props = {
+  documents: Array<{ displayName: string; url: string }>
+  productName: string
+  data: UserData
+  tierLevelDisplayName?: string
+  deductibleDisplayName?: string
+}
 
 export const DetailsSheet = (props: Props) => {
   const { documents, productName, data } = props
@@ -69,7 +73,7 @@ const useGetDataTableValue = () => {
   const { t } = useTranslation('cart')
   const autoFormat = useAutoFormat()
 
-  return (row: DataTableRow, data: CartEntry['data']) => {
+  return (row: DataTableRow, data: UserData) => {
     const value = data[row.key]
 
     switch (row.type) {
@@ -105,7 +109,7 @@ const useGetDataTableValue = () => {
   }
 }
 
-const formatHouseholdSize = (t: TFunction<'cart', undefined>, data: Record<string, unknown>) => {
+const formatHouseholdSize = (t: TFunction<'cart', undefined>, data: UserData) => {
   const count = parseInt(String(data['numberCoInsured']), 10)
   if (isNaN(count)) return null
   return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })

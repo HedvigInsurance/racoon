@@ -2,10 +2,13 @@ import { useTranslation } from 'react-i18next'
 import { InfoIcon, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
-import { type CartEntry } from '../CartInventory.types'
 import { Tooltip } from './Tooltip'
 
-type Props = Pick<CartEntry, 'startDate' | 'productName' | 'data'>
+type Props = {
+  productName: string
+  data: Record<string, unknown>
+  startDate?: Date
+}
 
 export const ShortSummary = (props: Props) => {
   const { t } = useTranslation('cart')
