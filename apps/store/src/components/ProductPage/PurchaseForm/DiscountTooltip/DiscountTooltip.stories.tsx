@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { DiscountTooltip } from './DiscountTooltip'
 
 export default {
-  title: 'Product Page / Purchase Form / Discount Tooltip',
+  title: 'Purchase Form / Discount Tooltip',
   component: DiscountTooltip,
 } as Meta<typeof DiscountTooltip>
 

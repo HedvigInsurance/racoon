@@ -185,7 +185,7 @@ export type ProductStory = ISbStoryData<
     priceFormTemplateId: string
     announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
-    global: Array<SbBlokData>
+    globalStory: GlobalStory
   } & SEOData
 >
 

@@ -4,7 +4,7 @@ import { theme } from 'ui'
 import { FetchInsurancePrompt } from './FetchInsurancePrompt'
 
 const meta: Meta<typeof FetchInsurancePrompt> = {
-  title: 'Product Page / Fetch Insurance Prompt',
+  title: 'Purchase Form / Fetch Insurance Prompt',
   args: {
     company: 'Trygg Hansa',
   },

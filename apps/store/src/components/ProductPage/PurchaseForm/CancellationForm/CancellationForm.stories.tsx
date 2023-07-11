@@ -5,7 +5,7 @@ import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated
 import { CancellationForm } from './CancellationForm'
 
 export default {
-  title: 'Product Page / Cancellation Form',
+  title: 'Purchase Form / Cancellation Form',
   component: CancellationForm,
   parameters: {
     viewport: {

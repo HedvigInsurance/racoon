@@ -4,7 +4,7 @@ import { Space, Text, theme } from 'ui'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 
 const meta: Meta<typeof FetchInsuranceSuccess> = {
-  title: 'Product Page / Fetch Insurance Success',
+  title: 'Purchase Form / Fetch Insurance Success',
   args: {
     company: 'Trygg Hansa',
   },

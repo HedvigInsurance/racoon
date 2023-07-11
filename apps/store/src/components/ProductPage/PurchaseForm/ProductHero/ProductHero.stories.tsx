@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { ProductHero } from './ProductHero'
 
 const meta: Meta<typeof ProductHero> = {
-  title: 'Product Page / Purchase Form / Product Hero',
+  title: 'Purchase Form / Product Hero',
   component: ProductHero,
   parameters: {
     viewport: {
