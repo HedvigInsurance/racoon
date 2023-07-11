@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import { motion, AnimatePresence } from 'framer-motion'
 import { type ComponentProps, useMemo } from 'react'
-import { Heading, Space, theme } from 'ui'
+import { Heading, Space, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { usePriceIntentsQuery } from '@/services/apollo/generated'
 import { MultiTierOffer } from './MultiTierOffer'
 import { SingleTierOffer } from './SingleTierOffer'
@@ -33,6 +35,7 @@ export const RetargetingPage = (props: Props) => {
           type: 'single',
           product: item.offers[0].variant.product,
           offer: item.offers[0],
+          shopSessionId: props.shopSessionId,
         })
       } else if (item.offers.length > 1) {
         total.push({
@@ -46,7 +49,7 @@ export const RetargetingPage = (props: Props) => {
 
       return total
     }, [])
-  }, [result.data])
+  }, [result.data, props.shopSessionId])
 
   return (
     <GridLayout.Root>
@@ -57,12 +60,19 @@ export const RetargetingPage = (props: Props) => {
           </Heading>
 
           <List>
-            {offers.map((item) => (
-              <li key={item.key}>
-                {item.type === 'single' && <SingleTierOffer {...item} />}
-                {item.type === 'multiple' && <MultiTierOffer {...item} />}
-              </li>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {offers.map((item) => (
+                <motion.li
+                  key={item.key}
+                  layout={true}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                >
+                  {item.type === 'single' && <SingleTierOffer {...item} />}
+                  {item.type === 'multiple' && <MultiTierOffer {...item} />}
+                </motion.li>
+              ))}
+            </AnimatePresence>
           </List>
         </Space>
       </GridLayoutContent>
@@ -72,7 +82,11 @@ export const RetargetingPage = (props: Props) => {
 
 const GridLayoutContent = styled(GridLayout.Content)({
   paddingBlock: theme.space.lg,
-  minHeight: '60vh',
+  minHeight: `calc(100vh - ${MENU_BAR_HEIGHT_MOBILE})`,
+
+  [mq.lg]: {
+    minHeight: `calc(100vh - ${MENU_BAR_HEIGHT_DESKTOP})`,
+  },
 })
 
 const List = styled.ul({
