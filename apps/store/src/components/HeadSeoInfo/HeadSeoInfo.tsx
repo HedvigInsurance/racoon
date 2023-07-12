@@ -8,17 +8,16 @@ import { StructuredDataOrganization } from './StructuredDataOrganization'
 
 type Props = {
   story: ISbStoryData<SEOData>
-  canonicalUrl?: string
 }
 
-export const HeadSeoInfo = ({ story, canonicalUrl = '' }: Props) => {
+export const HeadSeoInfo = ({ story }: Props) => {
   // AB testing
-  const { robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
+  const { canonicalUrl, robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
 
   return (
     <>
       <Head>
-        {canonicalUrl && <link rel="canonical" href={`${ORIGIN_URL}/${canonicalUrl}`} />}
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta name="robots" content={robots} />
         {seoMetaDescription && (
           <>
