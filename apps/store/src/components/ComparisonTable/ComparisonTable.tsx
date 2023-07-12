@@ -1,5 +1,13 @@
 import styled from '@emotion/styled'
-import { Text, CheckIcon as PerilsCheckIcon, MinusIcon, theme, mq } from 'ui'
+import {
+  Text,
+  CheckIcon as PerilsCheckIcon,
+  type CheckIconProps as PerilsCheckIconProps,
+  MinusIcon,
+  type MinusIconProps,
+  theme,
+  mq,
+} from 'ui'
 
 export const Root = styled.table({
   width: '100%',
@@ -63,13 +71,18 @@ export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
   )
 }
 
-type DataCellProps = { children: React.ReactNode; className?: string; active?: boolean }
+type DataCellProps = {
+  children: React.ReactNode
+  alignment?: 'left' | 'center' | 'right'
+  className?: string
+  active?: boolean
+}
 
-export const DataCell = ({ children, active, ...props }: DataCellProps) => {
+export const DataCell = ({ children, active, alignment = 'center', ...props }: DataCellProps) => {
   const Component = active ? ActiveTableDataCell : TableDataCell
   return (
     <Component {...props}>
-      <Centered>{children}</Centered>
+      <Aligned data-alignment={alignment}>{children}</Aligned>
     </Component>
   )
 }
@@ -101,15 +114,26 @@ const ActiveTableDataCell = styled(TableDataCell)({
   backgroundColor: theme.colors.green100,
 })
 
-const Centered = styled.div({
+const Aligned = styled.div({
   display: 'flex',
-  justifyContent: 'center',
-  // Make sure text gets centered when wrapped into multiple lines
-  textAlign: 'center',
+
+  '&[data-alignment="left"]': {
+    justifyContent: 'flex-start',
+  },
+
+  '&[data-alignment="center"]': {
+    justifyContent: 'center',
+    // Make sure text gets centered when wrapped into multiple lines
+    textAlign: 'center',
+  },
+
+  '&[data-alignment="right"]': {
+    justifyContent: 'flex-end',
+  },
 })
 
-export const CheckIcon = () => <PerilsCheckIcon size="1rem" />
+export const CheckIcon = (props: PerilsCheckIconProps) => <PerilsCheckIcon size="1rem" {...props} />
 
-export const MissingIcon = () => {
-  return <MinusIcon size="1.25rem" color={theme.colors.gray500} />
+export const MissingIcon = (props: MinusIconProps) => {
+  return <MinusIcon size="1.25rem" color={theme.colors.gray500} {...props} />
 }

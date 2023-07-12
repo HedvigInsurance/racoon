@@ -1,5 +1,7 @@
 import { IconRoot, IconRootProps } from './Root'
 
+export type MinusIconProps = IconRootProps
+
 export const MinusIcon = ({ size = '1.5rem', color = 'currentColor', ...props }: IconRootProps) => {
   return (
     <IconRoot
