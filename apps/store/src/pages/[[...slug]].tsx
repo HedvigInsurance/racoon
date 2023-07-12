@@ -41,10 +41,12 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
   const story = useStoryblokState(props.story)
   if (!story) return null
   const abTestOriginStory = story.content.abTestOrigin
+  // Always use robots value from the source page in A/B test cases
+  const robots = story.content.robots
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo story={abTestOriginStory || story} />
+      <HeadSeoInfo story={abTestOriginStory || story} robots={robots} />
       <StoryblokComponent blok={story.content} />
     </BlogContext.Provider>
   )
@@ -54,7 +56,6 @@ const NextProductPage = (props: ProductPageProps) => {
   const { story: initialStory, ...pageProps } = props
   const story = useStoryblokState(initialStory)
   if (!story) return null
-
   return (
     <>
       <HeadSeoInfo story={story} />
