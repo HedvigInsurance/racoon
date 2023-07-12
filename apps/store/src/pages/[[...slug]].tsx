@@ -1,12 +1,8 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
-import {
-  fetchGlobalProductMetadata,
-  GLOBAL_PRODUCT_METADATA_PROP_NAME,
-} from '@/components/LayoutWithMenu/fetchProductMetadata'
+import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
@@ -16,7 +12,6 @@ import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { initializeApollo } from '@/services/apollo/client'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
-  getGlobalStory,
   getStoryBySlug,
   StoryblokPageProps,
   StoryblokQueryParams,
@@ -24,7 +19,7 @@ import {
   type PageStory,
   type ProductStory,
 } from '@/services/storyblok/storyblok'
-import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { fetchTrustpilotData } from '@/services/trustpilot/trustpilot'
@@ -79,15 +74,15 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
   const version = draftMode ? 'draft' : 'published'
-  const [globalStory, translations, productMetadata, breadcrumbs, trustpilot] = await Promise.all([
-    getGlobalStory({ version, locale }),
-    serverSideTranslations(locale),
-    fetchGlobalProductMetadata({ apolloClient }),
+  const [layoutWithMenuProps, breadcrumbs, trustpilot] = await Promise.all([
+    getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
     fetchTrustpilotData(),
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
+
+  if (layoutWithMenuProps === null) return { notFound: true }
 
   let story: PageStory | ProductStory
   try {
@@ -101,10 +96,8 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   }
 
   const props = {
-    ...translations,
+    ...layoutWithMenuProps,
     [STORY_PROP_NAME]: story,
-    [GLOBAL_STORY_PROP_NAME]: globalStory,
-    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
     breadcrumbs,
     trustpilot,
   }
@@ -151,7 +144,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
 export const getStaticPaths: GetStaticPaths = async () => {
   // When this is true (preview env) don't prerender any static pages
   if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
-    console.log('Skipping static generation...')
+    console.info('Skipping static generation...')
     return {
       paths: [],
       fallback: 'blocking',

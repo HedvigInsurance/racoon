@@ -1,15 +1,11 @@
 import { ApolloClient, isApolloError } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
-import {
-  fetchGlobalProductMetadata,
-  GLOBAL_PRODUCT_METADATA_PROP_NAME,
-} from '@/components/LayoutWithMenu/fetchProductMetadata'
+import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import {
@@ -20,8 +16,7 @@ import {
 } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ConfirmationStory, getGlobalStory, getStoryBySlug } from '@/services/storyblok/storyblok'
-import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -42,23 +37,15 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
 
-  const [
-    shopSession,
-    outcome,
-    memberPartnerData,
-    translations,
-    globalStory,
-    story,
-    productMetadata,
-  ] = await Promise.all([
+  const [layoutWithMenuProps, shopSession, outcome, memberPartnerData, story] = await Promise.all([
+    getLayoutWithMenuProps(context, apolloClient),
     shopSessionService.fetchById(shopSessionId),
     shopSessionService.fetchOutcome(shopSessionId),
     fetchMemberPartnerData(apolloClient),
-    serverSideTranslations(locale),
-    getGlobalStory({ locale }),
     getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
-    fetchGlobalProductMetadata({ apolloClient }),
   ])
+
+  if (layoutWithMenuProps === null) return { notFound: true }
 
   // @TODO: uncomment after implementing signing
   // if (shopSession.checkout.completedAt === null) {
@@ -67,10 +54,8 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   return addApolloState(apolloClient, {
     props: {
-      ...translations,
+      ...layoutWithMenuProps,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      [GLOBAL_STORY_PROP_NAME]: globalStory,
-      [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
       cart: shopSession.cart,
       currency: shopSession.currencyCode,
       story,
