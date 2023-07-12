@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
-import * as Collapsible from '@radix-ui/react-collapsible'
+import * as RadixCollapsible from '@radix-ui/react-collapsible'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import React, { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { ChevronIcon, Text, theme } from 'ui'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
@@ -14,14 +14,14 @@ type Props = {
   children: ReactNode
 }
 
-export const CartEntryCollapsible = ({ open, onOpenChange, cost, children }: Props) => {
+export const Collapsible = ({ open, onOpenChange, cost, children }: Props) => {
   const { t } = useTranslation('cart')
   const formatter = useFormatter()
 
   const hasDiscountApplied = cost.discount.amount > 0
 
   return (
-    <Collapsible.Root open={open} onOpenChange={onOpenChange}>
+    <RadixCollapsible.Root open={open} onOpenChange={onOpenChange}>
       <DetailsHeader>
         <Trigger>
           {t('VIEW_ENTRY_DETAILS_BUTTON')}
@@ -56,11 +56,11 @@ export const CartEntryCollapsible = ({ open, onOpenChange, cost, children }: Pro
           {children}
         </motion.div>
       </CollapsibleContent>
-    </Collapsible.Root>
+    </RadixCollapsible.Root>
   )
 }
 
-const CollapsibleContent = styled(Collapsible.Content)({
+const CollapsibleContent = styled(RadixCollapsible.Content)({
   color: theme.colors.textSecondary,
   fontSize: theme.fontSizes.md,
   overflow: 'hidden',
@@ -89,7 +89,7 @@ const Trigger = styled.div({
   },
 })
 
-const DetailsHeader = styled(Collapsible.Trigger)({
+const DetailsHeader = styled(RadixCollapsible.Trigger)({
   display: 'flex',
   justifyContent: 'space-between',
   cursor: 'pointer',
