@@ -5,7 +5,7 @@ import { Button, Dialog, Text, mq, theme } from 'ui'
 import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { CartFragmentFragment } from '@/services/apollo/generated'
+import { type CartFragmentFragment } from '@/services/apollo/generated'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
 import { CartEntryCollapsible } from './CartEntryCollapsible'
@@ -47,7 +47,11 @@ export const CartEntryItem = ({ defaultOpen = false, ...props }: Props) => {
           <div>
             <Text>{titleLabel}</Text>
 
-            <ShortSummary cartEntry={cartEntry} />
+            <ShortSummary
+              startDate={cartEntry.startDate}
+              productName={cartEntry.productName}
+              data={cartEntry.data}
+            />
           </div>
         </SpaceFlex>
       </Clickable>

@@ -1,13 +1,18 @@
 import styled from '@emotion/styled'
-import type { TFunction } from 'i18next'
+import { type TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Heading, Text } from 'ui'
 import { Space, theme } from 'ui'
 import { useAutoFormat } from '@/utils/useFormatter'
-import { CartEntry } from '../CartInventory.types'
-import { DataTableRow, getDataTable } from '../DataTable/DataTable'
+import { type CartEntry } from '../CartInventory.types'
+import { type DataTableRow, getDataTable } from '../DataTable/DataTable'
 
-export const DetailsSheet = (props: CartEntry) => {
+type Props = Pick<
+  CartEntry,
+  'documents' | 'productName' | 'data' | 'tierLevelDisplayName' | 'deductibleDisplayName'
+>
+
+export const DetailsSheet = (props: Props) => {
   const { documents, productName, data } = props
   const { t } = useTranslation('cart')
   const dataTableRows = getDataTable(productName)
