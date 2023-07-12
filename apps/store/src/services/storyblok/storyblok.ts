@@ -162,6 +162,7 @@ export type SEOData = {
   seoMetaDescription?: string
   seoMetaOgImage?: StoryblokAsset
   abTestOrigin?: PageStory
+  canonicalUrl?: string
 }
 
 export type PageStory = ISbStoryData<

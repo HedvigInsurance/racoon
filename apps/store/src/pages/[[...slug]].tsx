@@ -49,7 +49,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo story={abTestOriginStory || story} canonicalUrl={abTestOriginStory?.full_slug} />
+      <HeadSeoInfo story={abTestOriginStory || story} />
       <StoryblokComponent blok={story.content} />
     </BlogContext.Provider>
   )
