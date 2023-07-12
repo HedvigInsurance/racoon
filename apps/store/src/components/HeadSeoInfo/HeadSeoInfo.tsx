@@ -8,17 +8,19 @@ import { StructuredDataOrganization } from './StructuredDataOrganization'
 
 type Props = {
   story: ISbStoryData<SEOData>
+  robots?: 'index' | 'noindex'
 }
 
-export const HeadSeoInfo = ({ story }: Props) => {
-  // AB testing
-  const { canonicalUrl, robots, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
+export const HeadSeoInfo = ({ story, robots }: Props) => {
+  const { canonicalUrl, seoTitle, seoMetaDescription, seoMetaOgImage } = story.content
+  // Make it possible to override robots value for A/B test cases
+  const robotsContent = robots ?? story.content.robots
 
   return (
     <>
       <Head>
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-        <meta name="robots" content={robots} />
+        <meta name="robots" content={robotsContent} />
         {seoMetaDescription && (
           <>
             <meta name="description" content={seoMetaDescription} />
