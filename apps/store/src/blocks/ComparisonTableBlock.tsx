@@ -1,8 +1,12 @@
 import { storyblokEditable } from '@storyblok/react'
-import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
+import { useMemo } from 'react'
+import { type Table } from '@/components/ComparisonTable/ComparisonTable.types'
+import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
+import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { type StoryblokTableField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 type Props = SbBaseBlockProps<{
   table: StoryblokTableField
@@ -13,49 +17,30 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const ComparisonTableBlock = ({ blok }: Props) => {
+  const matchesMdAndUp = useBreakpoint('md')
+
+  const table = useMemo<Table>(
+    () => ({
+      head: blok.table.thead.map((item) => item.value),
+      body: blok.table.tbody.map((row) => row.body.map(({ value }) => value)),
+    }),
+    [blok],
+  )
+
   return (
     <GridLayout.Root>
       <GridLayout.Content
         width={blok.layout?.widths ?? { base: '1' }}
         align={blok.layout?.alignment ?? 'center'}
       >
-        <ComparisonTable.Root {...storyblokEditable(blok)}>
-          <ComparisonTable.Head>
-            <tr>
-              {blok.table.thead.map((item) => (
-                <ComparisonTable.Header key={item._uid} {...storyblokEditable(item)}>
-                  {item.value}
-                </ComparisonTable.Header>
-              ))}
-            </tr>
-          </ComparisonTable.Head>
-          <ComparisonTable.Body>
-            {blok.table.tbody.map((row) => (
-              <ComparisonTable.Row key={row._uid} {...storyblokEditable(row)}>
-                {row.body.map((cell) =>
-                  cell.value.startsWith('*') ? (
-                    <ComparisonTable.TitleDataCell key={cell._uid} {...storyblokEditable(cell)}>
-                      {cell.value.replace(/^\*/, '')}
-                    </ComparisonTable.TitleDataCell>
-                  ) : (
-                    <ComparisonTable.DataCell key={cell._uid} {...storyblokEditable(cell)}>
-                      {getCellValue(cell.value)}
-                    </ComparisonTable.DataCell>
-                  ),
-                )}
-              </ComparisonTable.Row>
-            ))}
-          </ComparisonTable.Body>
-        </ComparisonTable.Root>
+        {matchesMdAndUp ? (
+          <DesktopComparisonTable {...table} {...storyblokEditable(blok)} />
+        ) : (
+          <MobileComparisonTable {...table} {...storyblokEditable(blok)} />
+        )}
       </GridLayout.Content>
     </GridLayout.Root>
   )
-}
-
-const getCellValue = (value: string) => {
-  if (value === '[*]') return <ComparisonTable.CheckIcon />
-  if (value === '[]') return <ComparisonTable.MissingIcon />
-  return value
 }
 
 ComparisonTableBlock.blockName = 'comparisonTable'
