@@ -11,7 +11,6 @@ type Props = {
   pillow: { src: string; alt?: string | null }
   displayName: string
   children: ReactNode
-
   startDate?: Date
   productName: string
   cost: ProductOfferFragment['cost']
@@ -19,7 +18,6 @@ type Props = {
   data: ProductOfferFragment['priceIntentData']
   tierLevelDisplayName?: string
   deductibleDisplayName?: string
-
   defaultExpanded?: boolean
 }
 
@@ -28,20 +26,21 @@ export const CartItem = (props: Props) => {
 
   return (
     <Card>
-      <Header onClick={() => setExpanded((prev) => !prev)}>
-        <Pillow size="small" {...props.pillow} />
-        <div>
-          <Text as="p" size="md">
-            {props.displayName}
-          </Text>
-          <ShortSummary
-            startDate={props.startDate}
-            productName={props.productName}
-            data={props.data}
-          />
-        </div>
-      </Header>
-      <Main>
+      <Hoverable>
+        <Header onClick={() => setExpanded((prev) => !prev)}>
+          <Pillow size="small" {...props.pillow} />
+          <div>
+            <Text as="p" size="md">
+              {props.displayName}
+            </Text>
+            <ShortSummary
+              startDate={props.startDate}
+              productName={props.productName}
+              data={props.data}
+            />
+          </div>
+        </Header>
+
         <Divider />
 
         <Collapsible open={expanded} onOpenChange={setExpanded} cost={props.cost}>
@@ -53,16 +52,25 @@ export const CartItem = (props: Props) => {
             deductibleDisplayName={props.deductibleDisplayName}
           />
         </Collapsible>
-
-        {props.children}
-      </Main>
+      </Hoverable>
+      <BottomRow>{props.children}</BottomRow>
     </Card>
   )
 }
 
 const Card = styled.div({
   backgroundColor: theme.colors.grayTranslucent100,
-  borderRadius: theme.radius.sm,
+  borderRadius: theme.radius[1],
+})
+
+const Hoverable = styled.div({
+  '@media (hover: hover)': {
+    cursor: 'pointer',
+
+    [`${Card}:has(> &:hover)`]: {
+      backgroundColor: theme.colors.grayTranslucent200,
+    },
+  },
 })
 
 const Header = styled.div({
@@ -72,25 +80,16 @@ const Header = styled.div({
   gridTemplateColumns: 'auto 1fr',
   columnGap: theme.space.md,
   alignItems: 'center',
-
-  cursor: 'pointer',
-
-  '@media (hover: hover)': {
-    [`${Card}:has(> &:hover)`]: {
-      backgroundColor: theme.colors.grayTranslucent200,
-    },
-  },
 })
 
-const Main = styled.div({
-  padding: theme.space.lg,
-  paddingTop: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.md,
+const BottomRow = styled.div({
+  paddingInline: theme.space.lg,
+  paddingTop: theme.space.md,
+  paddingBottom: theme.space.lg,
 })
 
 const Divider = styled.hr({
   height: 1,
   backgroundColor: theme.colors.borderTranslucent2,
+  marginInline: theme.space.lg,
 })
