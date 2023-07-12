@@ -38,19 +38,28 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
 }
 
 const TableHeader = styled.th({
+  display: 'none',
+  '&:first-of-type': {
+    display: 'table-cell',
+  },
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.xs,
 
   [mq.lg]: {
+    display: 'table-cell',
     paddingBlock: theme.space.md,
     paddingInline: theme.space.sm,
   },
 })
 
 const ActiveTableHeader = styled(TableHeader)({
-  backgroundColor: theme.colors.green100,
-  borderTopLeftRadius: theme.radius.xxs,
-  borderTopRightRadius: theme.radius.xxs,
+  display: 'table-cell',
+
+  [mq.lg]: {
+    backgroundColor: theme.colors.green100,
+    borderTopLeftRadius: theme.radius.xxs,
+    borderTopRightRadius: theme.radius.xxs,
+  },
 })
 
 type TitleDataCellProps = { children: React.ReactNode; className?: string }
@@ -75,6 +84,7 @@ export const DataCell = ({ children, active, ...props }: DataCellProps) => {
 }
 
 const TableDataCell = styled.td({
+  display: 'none',
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.xs,
   verticalAlign: 'middle',
@@ -82,6 +92,7 @@ const TableDataCell = styled.td({
   color: theme.colors.textSecondary,
 
   [mq.lg]: {
+    display: 'table-cell',
     minWidth: '4rem',
     paddingBlock: theme.space.md,
     paddingInline: theme.space.sm,
@@ -91,6 +102,7 @@ const TableDataCell = styled.td({
 const StyledTitleDataCell = styled(TableDataCell)({
   minWidth: 'revert',
   paddingInline: 0,
+  display: 'table-cell',
 
   [mq.lg]: {
     paddingInline: 0,
@@ -98,7 +110,10 @@ const StyledTitleDataCell = styled(TableDataCell)({
 })
 
 const ActiveTableDataCell = styled(TableDataCell)({
-  backgroundColor: theme.colors.green100,
+  display: 'table-cell',
+  [mq.lg]: {
+    backgroundColor: theme.colors.green100,
+  },
 })
 
 const Centered = styled.div({
