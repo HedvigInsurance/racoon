@@ -1,12 +1,15 @@
-import { Meta } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import * as ComparisonTable from './ComparisonTable'
 
+type Story = StoryObj<typeof ComparisonTable.Root>
+
 export default {
+  title: 'Components/Comparison Table',
   component: ComparisonTable.Root,
 } as Meta<typeof ComparisonTable.Root>
 
-export const Default = () => {
-  return (
+export const Default: Story = {
+  render: () => (
     <ComparisonTable.Root>
       <ComparisonTable.Head>
         <ComparisonTable.Header />
@@ -53,6 +56,5 @@ export const Default = () => {
         </ComparisonTable.Row>
       </ComparisonTable.Body>
     </ComparisonTable.Root>
-  )
+  ),
 }
-Default.args = {}
