@@ -4,7 +4,6 @@ import { SEOData } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { StructuredDataOrganization } from './StructuredDataOrganization'
 
 type Props = {
   story: ISbStoryData<SEOData>
@@ -34,7 +33,25 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
             <title>{seoTitle}</title>
           </>
         )}
-        <StructuredDataOrganization />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Hedvig',
+              url: 'https://www.hedvig.com',
+              logo: 'https://www.hedvig.com/apple-touch-icon.png',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Malmskillnadsgatan 32',
+                addressLocality: 'Stockholm',
+                postalCode: '111 51',
+                addressCountry: 'SE',
+              },
+            }),
+          }}
+        />
       </Head>
       {/* Must include link to self along with other variants */}
 
