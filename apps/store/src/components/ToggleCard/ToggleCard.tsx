@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import { useId } from 'react'
 import { Space, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -10,7 +9,7 @@ type Props = SwitchProps & {
 }
 
 export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxProps }: Props) => {
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
   const backupId = useId()
   const identifier = id || backupId
 
@@ -32,7 +31,7 @@ export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxPr
   )
 }
 
-const InputWrapper = styled(motion.div)({
+const InputWrapper = styled.div({
   backgroundColor: theme.colors.opaque1,
   padding: theme.space.md,
   borderRadius: theme.radius.sm,

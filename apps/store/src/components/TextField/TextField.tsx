@@ -1,6 +1,5 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import {
   ChangeEventHandler,
   InputHTMLAttributes,
@@ -42,7 +41,7 @@ export const TextField = (props: Props) => {
     ...inputProps
   } = props
   const [value, setValue] = useState(defaultValue || '')
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
   const generatedId = useId()
   const identifier = id || generatedId
 
@@ -133,7 +132,7 @@ const warningAnimation = keyframes({
     color: theme.colors.signalAmberText,
   },
   '100%': {
-    backgroundColor: theme.colors.gray100,
+    backgroundColor: theme.colors.translucent1,
     color: theme.colors.textPrimary,
   },
 })
@@ -147,13 +146,13 @@ const warningColorAnimation = keyframes({
   },
 })
 
-const BaseWrapper = styled(motion.div)({
+const BaseWrapper = styled.div({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: theme.colors.translucent1,
   width: '100%',
   cursor: 'text',
 
@@ -190,10 +189,6 @@ const Label = styled.label({
 
   [`${SmallWrapper}:focus-within > &, ${SmallWrapper}[data-active=true] > &`]: {
     transform: `translate(calc(${theme.space.md} * 0.2), -0.6rem) scale(0.8)`,
-  },
-
-  [`${LargeWrapper}[data-highlight=true] > &, ${SmallWrapper}[data-highlight=true] > &`]: {
-    color: theme.colors.signalGreenText,
   },
 
   [`${LargeWrapper}[data-warning=true] > &, ${SmallWrapper}[data-warning=true] > &`]: {

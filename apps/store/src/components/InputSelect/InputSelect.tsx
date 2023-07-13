@@ -1,6 +1,5 @@
 import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import { ChangeEventHandler } from 'react'
 import { ChevronIcon, InputBase, InputBaseProps, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -30,7 +29,7 @@ export const InputSelect = ({
   size = 'large',
   ...rest
 }: InputSelectProps) => {
-  const { highlight, animationProps } = useHighlightAnimation()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLSelectElement>()
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     onChange?.(event)
@@ -85,7 +84,7 @@ type SelectProps = { variantSize: Required<InputSelectProps['size']> }
 
 const elementConfig = { shouldForwardProp: isValidProp }
 const StyledSelect = styled(
-  motion.select,
+  'select',
   elementConfig,
 )<SelectProps>(({ variantSize }) => ({
   color: theme.colors.textPrimary,
@@ -95,7 +94,7 @@ const StyledSelect = styled(
   paddingLeft: theme.space.md,
   paddingRight: theme.space.xxl,
   cursor: 'pointer',
-  backgroundColor: theme.colors.opaque1,
+  backgroundColor: theme.colors.translucent1,
 
   ...(variantSize === 'small' && {
     height: '2.5rem',
