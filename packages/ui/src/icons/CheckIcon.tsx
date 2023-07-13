@@ -1,5 +1,7 @@
 import { IconRoot, IconRootProps } from 'ui/src/icons/Root'
 
+export type CheckIconProps = IconRootProps
+
 export const CheckIcon = ({ size = '1.5rem', ...props }: IconRootProps) => {
   return (
     <IconRoot
