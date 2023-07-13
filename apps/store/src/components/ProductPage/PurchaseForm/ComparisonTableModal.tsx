@@ -1,12 +1,17 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { useMemo } from 'react'
 import { Button, Dialog, PlusIcon } from 'ui'
-import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
+import type { Table } from '@/components/ComparisonTable/ComparisonTable.types'
+import { TableMarkers } from '@/components/ComparisonTable/ComparisonTable.types'
+import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
+import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'
+import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 type Props = {
   tiers: Array<ProductOfferFragment>
@@ -14,13 +19,9 @@ type Props = {
 }
 
 export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
-  const getVeryShortVariantDisplayName = useGetVeryShortVariantDisplayName()
   const { t } = useTranslation('purchase-form')
-  const getUniquePerilTitles = () => {
-    const allPerils = tiers.flatMap((item) => item.variant.perils)
-    const perilTitles = allPerils.map((item) => item.title)
-    return removeDuplicates(perilTitles)
-  }
+  const matchesMdAndUp = useBreakpoint('md')
+  const { table, selectedTierDisplayName } = useTableData(tiers, selectedTierId)
 
   const handleOpenChange = (open: boolean) => {
     sendDialogEvent(open ? 'open' : 'close')
@@ -52,38 +53,12 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
       >
         <Grid>
           <GridLayout.Content align="center" width={{ md: '2/3', xl: '1/2', xxl: '1/3' }}>
-            <ComparisonTable.Root>
-              <ComparisonTable.Head>
-                <ComparisonTable.Header />
-                {tiers.map((item) => (
-                  <ComparisonTable.Header
-                    key={item.id}
-                    active={isSelectedOffer(item, selectedTierId)}
-                  >
-                    {getVeryShortVariantDisplayName(item.variant.typeOfContract)}
-                  </ComparisonTable.Header>
-                ))}
-              </ComparisonTable.Head>
-              <ComparisonTable.Body>
-                {getUniquePerilTitles().map((perilTitle) => (
-                  <ComparisonTable.Row key={perilTitle}>
-                    <ComparisonTable.TitleDataCell>{perilTitle}</ComparisonTable.TitleDataCell>
-                    {tiers.map((item) => (
-                      <ComparisonTable.DataCell
-                        key={item.id}
-                        active={isSelectedOffer(item, selectedTierId)}
-                      >
-                        {offerHasPeril(item, perilTitle) ? (
-                          <ComparisonTable.CheckIcon />
-                        ) : (
-                          <ComparisonTable.MissingIcon />
-                        )}
-                      </ComparisonTable.DataCell>
-                    ))}
-                  </ComparisonTable.Row>
-                ))}
-              </ComparisonTable.Body>
-            </ComparisonTable.Root>
+            {!matchesMdAndUp && (
+              <MobileComparisonTable {...table} defaultSelectedColumn={selectedTierDisplayName} />
+            )}
+            {matchesMdAndUp && (
+              <DesktopComparisonTable {...table} selectedColumn={selectedTierDisplayName} />
+            )}
           </GridLayout.Content>
         </Grid>
       </FullscreenDialog.Modal>
@@ -93,13 +68,14 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
 
 const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
 
+const getUniquePerilTitles = (tiers: Array<ProductOfferFragment>) => {
+  const allPerils = tiers.flatMap((item) => item.variant.perils)
+  const perilTitles = allPerils.map((item) => item.title)
+  return removeDuplicates(perilTitles)
+}
+
 const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
   offer.variant.perils.some((peril) => peril.title === perilTitle)
-
-const isSelectedOffer = (offer: ProductOfferFragment, selectedOfferId: string) => {
-  if (offer.id === selectedOfferId) return true
-  return false
-}
 
 // TODO: fetch from API
 const useGetVeryShortVariantDisplayName = () => {
@@ -124,6 +100,48 @@ const useGetVeryShortVariantDisplayName = () => {
         return t('COMPARISON_TABLE_COLUMN_SE_DOG_PREMIUM')
     }
   }
+}
+
+const useTableData = (tiers: Array<ProductOfferFragment>, selectedTierId: string) => {
+  const getVeryShortVariantDisplayName = useGetVeryShortVariantDisplayName()
+
+  const table = useMemo<Table>(() => {
+    const head = [
+      TableMarkers.EmptyHeader,
+      ...tiers.map((tier) => {
+        const headerValue = getVeryShortVariantDisplayName(tier.variant.typeOfContract) ?? ''
+
+        if (!headerValue) {
+          console.warn(
+            `[ComparisonTableModal]: could not found tier display name to be used as table header for ${tier.variant.typeOfContract}. Using "" instead.`,
+          )
+        }
+
+        return headerValue
+      }),
+    ]
+    const body = getUniquePerilTitles(tiers).map((title) => [
+      title,
+      ...tiers.map((tier) =>
+        offerHasPeril(tier, title) ? TableMarkers.Covered : TableMarkers.NotCovered,
+      ),
+    ])
+
+    return { head, body }
+  }, [tiers, getVeryShortVariantDisplayName])
+
+  const selectedTier = tiers.find((tier) => tier.id === selectedTierId)
+  const selectedTierDisplayName = selectedTier
+    ? getVeryShortVariantDisplayName(selectedTier.variant.typeOfContract)
+    : ''
+
+  if (!selectedTierDisplayName) {
+    console.warn(
+      `[ComparisonTableModal]: could not found tier display name to be used as active table header ${selectedTier?.variant.typeOfContract}. Using "" instead.`,
+    )
+  }
+
+  return { table, selectedTierDisplayName: selectedTierDisplayName || '' }
 }
 
 const Grid = styled(GridLayout.Root)({
