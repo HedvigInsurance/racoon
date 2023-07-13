@@ -36,7 +36,6 @@ import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { ProductHero } from './ProductHero/ProductHero'
-import { PURCHASE_FORM_MAX_WIDTH } from './PurchaseForm.constants'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
 
@@ -437,6 +436,8 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
     </SectionWrapper>
   )
 }
+
+const PURCHASE_FORM_MAX_WIDTH = '21rem'
 
 const PurchaseFormTop = styled.div({
   display: 'flex',
