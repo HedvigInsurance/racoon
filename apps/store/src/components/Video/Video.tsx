@@ -35,7 +35,6 @@ export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
 
 const autoplaySettings = {
   autoPlay: true,
-  muted: true,
   loop: true,
 }
 
@@ -56,9 +55,11 @@ export const Video = ({
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const isInView = useInView(videoRef)
   const playButtonId = useId()
+  const muteButtonId = useId()
   const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, setState] = useState<State>(State.Paused)
+  const [muted, setMuted] = useState(true)
 
   useEffect(() => {
     // Lazy load videos that are autoplaying
@@ -100,6 +101,22 @@ export const Video = ({
       pauseVideo()
     }
   }, [state, playVideo, pauseVideo])
+
+  const toggleSound: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation()
+
+    if (!videoRef.current) {
+      return
+    }
+
+    if (muted) {
+      videoRef.current.muted = false
+    } else {
+      videoRef.current.muted = true
+    }
+
+    setMuted((current) => !current)
+  }
 
   const handlePlaying: React.ReactEventHandler<HTMLVideoElement> = useCallback(
     (event) => {
@@ -166,6 +183,7 @@ export const Video = ({
         onPlaying={handlePlaying}
         onPause={handlePause}
         onEnded={handleVideoEnded}
+        muted={muted}
         {...autoplayAttributes}
         {...delegated}
       >
@@ -181,7 +199,7 @@ export const Video = ({
       {showControls && (
         <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
           <Controls>
-            <PlayPauseButton
+            <ControlButton
               ref={playPauseButtonRef}
               onClick={togglePlay}
               variant="secondary"
@@ -192,7 +210,18 @@ export const Video = ({
               <span id={playButtonId} hidden>
                 {state === State.Paused ? 'Play' : 'Pause'}
               </span>
-            </PlayPauseButton>
+            </ControlButton>
+            <ControlButton
+              onClick={toggleSound}
+              variant="secondary"
+              size="small"
+              aria-labelledby={muteButtonId}
+            >
+              {muted ? '🔇' : '🔊'}
+              <span id={muteButtonId} hidden>
+                {muted ? 'Mute' : 'Unmute'}
+              </span>
+            </ControlButton>
           </Controls>
         </VideoControls>
       )}
@@ -249,6 +278,9 @@ const VideoControls = styled.div({
 })
 
 const Controls = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
   '@media (hover: hover)': {
     opacity: 0,
     visibility: 'hidden',
@@ -261,7 +293,7 @@ const Controls = styled.div({
   },
 })
 
-const PlayPauseButton = styled(Button)({
+const ControlButton = styled(Button)({
   display: 'inline-flex',
   alignItems: 'center',
   gap: theme.space.xs,
