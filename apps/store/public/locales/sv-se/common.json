@@ -8,6 +8,7 @@
   "COUNTRY_LABEL_DK": "Danmark",
   "COUNTRY_LABEL_NO": "Norge",
   "COUNTRY_LABEL_SE": "Sverige",
+  "CRM_RETARGETING_CHOOSE_TIER": "Välj skyddsnivå",
   "DATE_INPUT_EMPTY_LABEL": "Välj...",
   "DATE_SAME_DAY": "idag",
   "DATE_TOO_EARLY": "Datum kan inte vara tidigare än {{minValue}}",
