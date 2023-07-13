@@ -17,7 +17,7 @@ export const Tooltip = ({ children, message }: Props) => {
         <TooltipPrimitive.Trigger asChild={true}>{children}</TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal>
           <Content sideOffset={5} onClick={(event) => event.stopPropagation()}>
-            <Text size="xs" color="textNegative" align="center" balance={true}>
+            <Text size="xs" color="textNegative" align="center">
               {message}
             </Text>
             <TooltipPrimitive.Arrow />
@@ -42,7 +42,7 @@ const Content = styled(TooltipPrimitive.Content)({
   paddingInline: theme.space.sm,
   paddingBlock: theme.space.xs,
   paddingBottom: `calc(${theme.space.xs} + 2px)`,
-  backgroundColor: theme.colors.gray900,
+  backgroundColor: theme.colors.gray1000,
   borderRadius: theme.radius[1],
 
   maxWidth: '20rem',

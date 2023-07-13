@@ -37,7 +37,7 @@ export const ShortSummary = (props: Props) => {
     <SpaceFlex space={0.25} align="center">
       <Text color="textSecondary">{content.join(' • ')}</Text>
       <Tooltip message={labels.tooltip}>
-        <button onClick={(event) => event.stopPropagation()}>
+        <button onClick={(event) => event.stopPropagation()} style={{ marginBottom: -2 }}>
           <InfoIcon color={theme.colors.textSecondary} />
         </button>
       </Tooltip>

@@ -36,7 +36,7 @@ export const Collapsible = ({ open, onOpenChange, cost, children }: Props) => {
           <Text>{formatter.monthlyPrice(cost.net)}</Text>
         </PriceFlex>
       </DetailsHeader>
-      <CollapsibleContent forceMount>
+      <CollapsibleContent forceMount={true}>
         <motion.div
           initial={open ? 'open' : 'closed'}
           transition={{
@@ -64,6 +64,9 @@ const CollapsibleContent = styled(RadixCollapsible.Content)({
   color: theme.colors.textSecondary,
   fontSize: theme.fontSizes.md,
   overflow: 'hidden',
+
+  paddingInline: theme.space.lg,
+  cursor: 'initial',
 })
 
 const PriceFlex = styled.div({
@@ -94,4 +97,7 @@ const DetailsHeader = styled(RadixCollapsible.Trigger)({
   justifyContent: 'space-between',
   cursor: 'pointer',
   width: '100%',
+
+  paddingInline: theme.space.lg,
+  paddingTop: theme.space.md,
 })
