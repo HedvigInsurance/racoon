@@ -21,7 +21,7 @@ export const StepIcon = styled(
   }),
 
   ...(state === 'filled' && {
-    backgroundColor: theme.colors.gray900,
+    backgroundColor: theme.colors.textPrimary,
   }),
 
   ...(state === 'valid' && {
