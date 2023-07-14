@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
@@ -197,7 +198,11 @@ export const Video = ({
         })}
       </StyledVideo>
       {showControls && (
-        <VideoControls data-state={state} onClick={() => playPauseButtonRef.current?.click()}>
+        <VideoControls
+          data-state={state}
+          data-muted={muted}
+          onClick={() => playPauseButtonRef.current?.click()}
+        >
           <Controls>
             <ControlButton
               ref={playPauseButtonRef}
@@ -217,7 +222,11 @@ export const Video = ({
               size="small"
               aria-labelledby={muteButtonId}
             >
-              {muted ? '🔇' : '🔊'}
+              <SoundBars>
+                <span />
+                <span />
+                <span />
+              </SoundBars>
               <span id={muteButtonId} hidden>
                 {muted ? 'Mute' : 'Unmute'}
               </span>
@@ -309,6 +318,39 @@ const ControlButton = styled(Button)({
 
   ':active': {
     backgroundColor: theme.colors.grayTranslucentDark600,
+  },
+})
+
+const soundBarsAnimation = keyframes({
+  '50%': { opacity: 0.2, transform: 'scaleY(.2)' },
+  '100%': { opacity: 1, transform: 'scaleY(0.9)' },
+})
+
+const SoundBars = styled.div({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '16px',
+  width: '16px',
+  paddingBottom: '2px',
+
+  span: {
+    margin: 'auto 1px 0',
+    height: '14px',
+    width: '2px',
+    borderRadius: '2px',
+    transform: 'scaleY(.2)',
+    transformOrigin: 'bottom',
+    backgroundColor: theme.colors.gray1000,
+    transition: 'all .4s ease-in-out',
+
+    [`${VideoControls}[data-muted=false] &`]: {
+      animation: `${soundBarsAnimation} 1s 2 alternate`,
+      '&:nth-child(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
+      '&:nth-child(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
+      '&:nth-child(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
+    },
   },
 })
 
