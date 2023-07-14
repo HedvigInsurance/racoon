@@ -78,7 +78,7 @@ export const MixedBreedPicker = ({
         </Content>
 
         <ComboboxWrapper>
-          <StyledCombobox
+          <Combobox
             items={availableBreeds}
             displayValue={(breed) => breed.displayName}
             selectedItem={null}
@@ -125,11 +125,6 @@ const ListItem = styled.li({
 const DeleteButton = styled.button({
   cursor: 'pointer',
 })
-
-// Workaround: generics are not preserved for styled components: shorturl.at/hqyL2
-const StyledCombobox = styled(Combobox)({
-  backgroundColor: theme.colors.opaque2,
-}) as typeof Combobox<Breed>
 
 type MessageProps = { children: string }
 
