@@ -108,6 +108,16 @@ module.exports = withBundleAnalyzer({
         permanent: true,
         locale: false,
       })),
+      ...(process.env.NODE_ENV === 'production'
+        ? [
+            {
+              source: `/se/start`,
+              destination: `/se`,
+              permanent: false,
+              locale: false,
+            },
+          ]
+        : []),
     ]
     const oldSiteCampaigns =
       process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
