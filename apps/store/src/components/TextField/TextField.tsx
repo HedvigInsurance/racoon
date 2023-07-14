@@ -105,8 +105,7 @@ export const TextField = (props: Props) => {
                 type="button"
                 onClick={handleClickDelete}
                 aria-hidden={true}
-                // TODO: Get this lokalised
-                aria-label="Clear field"
+                tabIndex={-1}
               >
                 <CrossIconSmall />
               </DeleteButton>
