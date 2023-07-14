@@ -5,7 +5,8 @@ import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntent
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useDiscountBanner } from '@/utils/useDiscountBanner'
-import { ProductPageProps } from './ProductPage.types'
+import { PageDebugDialog } from './PageDebugDialog'
+import { type ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
 
 export const ProductPage = ({ story, ...props }: ProductPageProps) => {
@@ -23,6 +24,7 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
     <ProductPageContextProvider {...props} story={story}>
       <PriceIntentContextProvider>
         <StoryblokComponent blok={story.content} />
+        <PageDebugDialog />
       </PriceIntentContextProvider>
     </ProductPageContextProvider>
   )
