@@ -96,22 +96,20 @@ module.exports = withBundleAnalyzer({
   async redirects() {
     const locales = ['no', 'no-en', 'dk', 'dk-en']
 
-    return process.env.NEXT_PUBLIC_FEATURE_HOMECOMING === 'true'
-      ? [
-          ...locales.map((locale) => ({
-            source: `/${locale}/new-member`,
-            destination: `/${locale}/info`,
-            permanent: true,
-            locale: false,
-          })),
-          ...locales.map((locale) => ({
-            source: `/${locale}/new-member/offer/:slug*`,
-            destination: `/${locale}/info`,
-            permanent: true,
-            locale: false,
-          })),
-        ]
-      : []
+    return [
+      ...locales.map((locale) => ({
+        source: `/${locale}/new-member`,
+        destination: `/${locale}/info`,
+        permanent: true,
+        locale: false,
+      })),
+      ...locales.map((locale) => ({
+        source: `/${locale}/new-member/offer/:slug*`,
+        destination: `/${locale}/info`,
+        permanent: true,
+        locale: false,
+      })),
+    ]
   },
 })
 
