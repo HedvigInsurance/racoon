@@ -32,15 +32,12 @@ export const useChangeLocale = (currentPageStory: ISbStoryData | undefined) => {
           window.location.href = `/${routingLocale}`
           return
         }
+
         const targetAlternate = currentPageStory?.alternates.find((alternate) =>
           alternate.full_slug.startsWith(routingLocale),
         )
-        if (targetAlternate) {
-          router.push(targetAlternate.full_slug, undefined, { locale: routingLocale })
-        } else {
-          // Base case, failed to find alternate in new language
-          router.push('/', undefined, { locale: routingLocale })
-        }
+        const url = targetAlternate ? targetAlternate.full_slug : `/${routingLocale}`
+        window.location.pathname = url
       } catch (error) {
         datadogLogs.logger.error('Failed to change locale', { error, newLocale })
         router.reload()
