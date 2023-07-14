@@ -138,3 +138,7 @@ We use a few custom headers when communicating with the API. These are:
 - `Hedvig-ShopSessionID`: The ID of the current shop session, used for debugging purposes.
 - `Hedvig-Language`: Java Locale code (e.g. `ca-ES`), used for API localisation including error messages.
 - `Authorization`: Bearer token for the currently authenticated user.
+
+## Page Debug Menu
+
+To show the page debug menu, press `Ctrl + d`. The menu will show the current shop session ID and other helpful information based on the page your are viewing.

@@ -9,6 +9,7 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
+import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { GlobalBanner } from '@/components/GlobalBanner/GlobalBanner'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { useApollo } from '@/services/apollo/client'
@@ -100,6 +101,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 <BalancerProvider>
                   <AppErrorProvider>
                     <AppErrorDialog />
+                    <DebugDialog />
                     <GlobalBanner />
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
