@@ -16,6 +16,16 @@ type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 
+type SessionLink = Required<BaseParams> & {
+  shopSessionId: string
+  // Relative URL to redirect to (default: home page)
+  next?: string
+  // Set a campaign code for the session
+  code?: string
+  // Resume the price intent and navigate to the related product page
+  priceIntentId?: string
+}
+
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
@@ -78,6 +88,22 @@ export const PageLink = {
   apiCampaign: ({ code, next }: CampaignAddRoute) => {
     const nextQueryParam = next ? `?next=${next}` : ''
     return `/api/campaign/${code}${nextQueryParam}`
+  },
+
+  session: (params: SessionLink) => {
+    const url = new URL(`/${params.locale}/session/${params.shopSessionId}`, ORIGIN_URL)
+
+    if (params.code) {
+      url.searchParams.set('code', params.code)
+    }
+
+    if (params.priceIntentId) {
+      url.searchParams.set('price_intent_id', params.priceIntentId)
+    } else if (params.next) {
+      url.searchParams.set('next', params.next)
+    }
+
+    return url.toString()
   },
 } as const
 
