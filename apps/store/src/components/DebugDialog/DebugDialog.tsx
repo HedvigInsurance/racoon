@@ -1,16 +1,18 @@
-import styled from '@emotion/styled'
-import { useEffect, useState } from 'react'
-import { CheckIcon, Dialog, Space, Text, theme } from 'ui'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+'use client'
 
-export const DebugDialog = () => {
+import { datadogRum } from '@datadog/browser-rum'
+import styled from '@emotion/styled'
+import { type ReactNode, useEffect, useState } from 'react'
+import { Dialog, mq, theme } from 'ui'
+
+export const DebugDialog = (props: { children: ReactNode }) => {
   const [isOpen, setOpen] = useState(false)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const ctrl = event.getModifierState('Control')
       if (ctrl && event.key === 'd') {
+        datadogRum.addAction('open debug-dialog')
         setOpen(true)
       }
     }
@@ -22,9 +24,7 @@ export const DebugDialog = () => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={setOpen}>
       <DialogContent onClose={() => setOpen(false)}>
-        <DialogWindow>
-          <ShopSessionSection />
-        </DialogWindow>
+        <DialogWindow>{props.children}</DialogWindow>
       </DialogContent>
     </Dialog.Root>
   )
@@ -43,75 +43,8 @@ const DialogWindow = styled(Dialog.Window)({
   borderBottomLeftRadius: theme.radius.sm,
   maxWidth: `calc(100% - ${theme.space.xs} * 2)`,
   marginInline: 'auto',
-})
 
-const ShopSessionSection = () => {
-  const { shopSession } = useShopSession()
-
-  if (!shopSession) return null
-
-  return (
-    <Space y={0.25}>
-      <Text as="p" size="sm">
-        Shop Session
-      </Text>
-      <CopyToClipboard>{shopSession.id}</CopyToClipboard>
-    </Space>
-  )
-}
-
-const CopyToClipboard = (props: { children: string }) => {
-  const [copied, setCopied] = useState(false)
-
-  const copy = () => {
-    navigator.clipboard.writeText(props.children)
-    setCopied(true)
-  }
-
-  return (
-    <CopyToClipboardWrapper>
-      <Elipsis as="p" size="sm">
-        {props.children}
-      </Elipsis>
-      <CopyToClipboardButton onClick={copy}>
-        {copied ? (
-          <SpaceFlex align="center" space={0.5}>
-            <CheckIcon size="1em" />
-            Copied
-          </SpaceFlex>
-        ) : (
-          'Copy'
-        )}
-      </CopyToClipboardButton>
-    </CopyToClipboardWrapper>
-  )
-}
-
-const CopyToClipboardWrapper = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: theme.space.lg,
-
-  backgroundColor: theme.colors.gray100,
-  padding: theme.space.xs,
-  borderRadius: theme.radius.xs,
-  border: `1px solid ${theme.colors.gray300}`,
-
-  '@media (hover: hover)': {
-    '&:hover': {
-      backgroundColor: theme.colors.gray200,
-    },
+  [mq.md]: {
+    maxWidth: '40rem',
   },
-})
-
-const Elipsis = styled(Text)({
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-})
-
-const CopyToClipboardButton = styled.button({
-  cursor: 'pointer',
-  flexShrink: 0,
 })

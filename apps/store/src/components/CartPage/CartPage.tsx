@@ -17,6 +17,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
+import { PageDebugDialog } from './PageDebugDialog'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, entries, campaigns, campaignsEnabled, cost } = props
@@ -122,6 +123,8 @@ export const CartPage = (props: CartPageProps) => {
           <ProductRecommendationList recommendations={productRecommendations} />
         )}
       </Space>
+
+      <PageDebugDialog />
     </PageWrapper>
   )
 }
