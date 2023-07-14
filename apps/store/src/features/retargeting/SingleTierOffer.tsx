@@ -3,8 +3,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, theme } from 'ui'
 import { CartItem } from '@/components/CartItem/CartItem'
+import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
-import { useHandleSubmitAddToCart } from '../ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { ProductPageLink } from './ProductPageLink'
 
 type Props = {

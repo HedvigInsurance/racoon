@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
 
   const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
-  const version = draftMode ? 'draft' : 'published'
+  const version = draftMode ? 'draft' : undefined
   const [layoutWithMenuProps, breadcrumbs, trustpilot] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
