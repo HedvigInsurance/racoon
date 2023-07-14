@@ -216,7 +216,7 @@ const Input = styled.input({
   width: '100%',
   height: '2.5rem',
   paddingLeft: theme.space.md,
-  paddingRight: theme.space.xxl,
+  paddingRight: theme.space.xxxl,
   fontSize: theme.fontSizes.lg,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
