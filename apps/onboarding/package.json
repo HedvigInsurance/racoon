@@ -52,7 +52,7 @@
     "@types/dompurify": "3.0.2",
     "@types/formidable": "3.4.0",
     "@types/jsdom": "21.1.1",
-    "@types/lodash-es": "4.17.7",
+    "@types/lodash-es": "4.17.8",
     "@types/marked": "5.0.0",
     "@types/node": "18.16.19",
     "@types/react-dom": "18.2.7",
