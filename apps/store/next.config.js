@@ -124,6 +124,24 @@ module.exports = withBundleAnalyzer({
               destination: '/api/campaign/:code?code=&next=/se/forsakringar',
               locale: false,
             },
+            {
+              source: '/(se/)?new-member/car',
+              has: [
+                {
+                  type: 'query',
+                  key: 'code',
+                },
+              ],
+              destination: '/api/campaign/:code?code=&next=/se/forsakringar/bilforsakring',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/(se/)?new-member/car',
+              destination: '/se/forsakringar/bilforsakring',
+              permanent: false,
+              locale: false,
+            },
           ]
         : []
     return [...shutDownMarketsInfo, ...oldSiteCampaigns]
