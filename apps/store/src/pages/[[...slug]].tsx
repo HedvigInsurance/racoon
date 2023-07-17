@@ -1,5 +1,6 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
+import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
@@ -48,6 +49,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
     <BlogContext.Provider value={parseBlogContext(props)}>
       <HeadSeoInfo story={abTestOriginStory || story} robots={robots} />
       <StoryblokComponent blok={story.content} />
+      <DefaultDebugDialog />
     </BlogContext.Provider>
   )
 }
