@@ -10,8 +10,7 @@ export const DebugDialog = (props: { children: ReactNode }) => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      const ctrl = event.getModifierState('Control')
-      if (ctrl && event.key === 'd') {
+      if (event.ctrlKey && event.key === 'd') {
         datadogRum.addAction('open debug-dialog')
         setOpen(true)
       }
