@@ -13,8 +13,8 @@ export const PageDebugDialog = () => {
   return (
     <DebugDialog>
       <Space y={1}>
-        <DebugShopSessionSection />
         <LinkToCartSection />
+        <DebugShopSessionSection />
       </Space>
     </DebugDialog>
   )

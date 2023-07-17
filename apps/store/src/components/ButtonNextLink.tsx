@@ -1,5 +1,5 @@
-import Link, { LinkProps } from 'next/link'
-import { ComponentProps } from 'react'
+import Link, { type LinkProps } from 'next/link'
+import { type ComponentProps } from 'react'
 import { Button } from 'ui'
 
 type ButtonProps = ComponentProps<typeof Button>
@@ -12,15 +12,15 @@ export const ButtonNextLink = (props: Props) => {
   const { onClick, variant, size, loading, children, className, title, target, ...linkProps } =
     props
   return (
-    <Link {...linkProps} passHref legacyBehavior>
+    <Link {...linkProps} passHref={true} legacyBehavior={true}>
       <Button
         onClick={onClick}
         variant={variant}
         size={size}
         loading={loading}
-        {...(target === '_blank' ? { target: '_blank', rel: 'noreferrer' } : {})}
-        {...(title ? { title: title } : {})}
+        title={title}
         className={className}
+        {...(target === '_blank' ? { target: '_blank', rel: 'noreferrer' } : {})}
       >
         {children}
       </Button>
