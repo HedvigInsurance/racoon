@@ -36,8 +36,7 @@ const DialogContent = styled(Dialog.Content)({
 })
 
 const DialogWindow = styled(Dialog.Window)({
-  padding: theme.space.lg,
-  paddingTop: theme.space.md,
+  padding: theme.space.md,
   borderBottomRightRadius: theme.radius.sm,
   borderBottomLeftRadius: theme.radius.sm,
   maxWidth: `calc(100% - ${theme.space.xs} * 2)`,

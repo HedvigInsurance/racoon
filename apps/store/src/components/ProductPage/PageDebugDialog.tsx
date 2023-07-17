@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { Space, Text } from 'ui'
+import { Space } from 'ui'
 import { CopyToClipboard } from '@/components/DebugDialog/CopyToClipboard'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
@@ -13,7 +13,7 @@ import { usePriceIntent } from './PriceIntentContext'
 export const PageDebugDialog = () => {
   return (
     <DebugDialog>
-      <Space y={1}>
+      <Space y={0.25}>
         <DebugShopSessionSection />
         <LinkToOfferSection />
       </Space>
@@ -36,12 +36,5 @@ const LinkToOfferSection = () => {
     })
   }, [routingLocale, shopSession, priceIntent])
 
-  return (
-    <Space y={0.25}>
-      <Text as="p" size="sm">
-        Share link to offer
-      </Text>
-      <CopyToClipboard>{link ?? ''}</CopyToClipboard>
-    </Space>
-  )
+  return <CopyToClipboard label="Share link to offer">{link ?? ''}</CopyToClipboard>
 }
