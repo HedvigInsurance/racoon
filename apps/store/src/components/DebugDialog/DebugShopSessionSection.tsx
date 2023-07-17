@@ -4,6 +4,7 @@ import { Button, Space, Text, theme } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { CopyToClipboard } from './CopyToClipboard'
+import { DebugResumeSessionSection } from './DebugResumeSessionSection'
 
 export const DebugShopSessionSection = () => {
   const { shopSession } = useShopSession()
@@ -14,18 +15,26 @@ export const DebugShopSessionSection = () => {
   const nextUrl = `/${router.locale}${router.pathname}`
 
   return (
-    <Layout>
-      <Space y={0.25} style={{ flex: 1 }}>
-        <Text as="p" size="sm">
-          Shop Session
-        </Text>
-        <CopyToClipboard>{shopSession.id}</CopyToClipboard>
-      </Space>
+    <Space y={1}>
+      <Layout>
+        <Space y={0.25} style={{ flex: 1 }}>
+          <Text as="p" size="sm">
+            Shop Session
+          </Text>
+          <CopyToClipboard>{shopSession.id}</CopyToClipboard>
+        </Space>
 
-      <Button variant="secondary" size="medium" href={PageLink.apiSessionReset({ next: nextUrl })}>
-        Reset
-      </Button>
-    </Layout>
+        <Button
+          variant="secondary"
+          size="medium"
+          href={PageLink.apiSessionReset({ next: nextUrl })}
+        >
+          Reset
+        </Button>
+      </Layout>
+
+      <DebugResumeSessionSection />
+    </Space>
   )
 }
 
