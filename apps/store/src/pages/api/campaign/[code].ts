@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.redirect(...fallbackRedirect)
   }
   nextUrl.searchParams.delete(QueryParam.Next)
+  nextUrl.searchParams.delete(QueryParam.Code) // May end up in URL when handling legacy site redirects
   nextUrl.pathname = getPathnameFromUrl(nextQueryParam)
 
   const redirectStatus = 307
