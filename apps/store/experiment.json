@@ -1,0 +1,17 @@
+{
+  "name": "Start page",
+  "slug": "/se",
+  "variants": [
+    {
+      "name": "Original",
+      "id": 0,
+      "weight": 50
+    },
+    {
+      "name": "Variant",
+      "id": 1,
+      "weight": 50,
+      "slug": "/start"
+    }
+  ]
+}

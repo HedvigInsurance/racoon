@@ -1,6 +1,7 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const experimentJson = require('./experiment.json')
 const { SiteCsp, StoryblokCsp } = require('./next-csp.config')
 const { i18n } = require('./next-i18next.config')
 
@@ -93,7 +94,7 @@ module.exports = withBundleAnalyzer({
       ],
     }
   },
-  async redirects() {
+  redirects() {
     const locales = ['no', 'no-en', 'dk', 'dk-en']
     const shutDownMarketsInfo = [
       ...locales.map((locale) => ({
@@ -108,16 +109,6 @@ module.exports = withBundleAnalyzer({
         permanent: true,
         locale: false,
       })),
-      ...(process.env.NODE_ENV === 'production'
-        ? [
-            {
-              source: `/se/start`,
-              destination: `/se`,
-              permanent: false,
-              locale: false,
-            },
-          ]
-        : []),
     ]
     const oldSiteCampaigns =
       process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
@@ -143,7 +134,7 @@ module.exports = withBundleAnalyzer({
             },
           ]
         : []
-    return [...shutDownMarketsInfo, ...oldSiteCampaigns]
+    return [...shutDownMarketsInfo, ...oldSiteCampaigns, ...getExperimentVariantRedirects()]
   },
 })
 
@@ -165,6 +156,25 @@ const securityHeaders = [
     value: 'origin-when-cross-origin',
   },
 ]
+
+/**
+ * @returns {import('next').Redirect[]}
+ * */
+const getExperimentVariantRedirects = () => {
+  if (typeof process.env.NEXT_PUBLIC_EXPERIMENT_ID !== 'string') return []
+
+  const variantSlug = experimentJson.variants.find((item) => item.slug).slug
+  if (!variantSlug) return []
+
+  return [
+    {
+      source: [experimentJson.slug, variantSlug].join(''),
+      destination: experimentJson.slug,
+      permanent: false,
+      locale: false,
+    },
+  ]
+}
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
 console.log('next.config.js %O', module.exports)
