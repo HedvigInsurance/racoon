@@ -178,6 +178,12 @@ module.exports = withBundleAnalyzer({
               permanent: false,
               locale: false,
             },
+            {
+              source: '/se/new-member/car/registration-number',
+              destination: '/se/forsakringar/bilforsakring',
+              permanent: false,
+              locale: false,
+            },
           ]
         : []
     return [...shutDownMarketsInfo, ...oldSiteRedirects]
