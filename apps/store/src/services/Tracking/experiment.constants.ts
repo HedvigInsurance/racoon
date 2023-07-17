@@ -1,4 +1,5 @@
 export const EXPERIMENT_COOKIE_NAME = 'hedvig-experiment'
+import experimentJson from '../../../experiment.json'
 
 export type Experiment = {
   id: string
@@ -18,21 +19,7 @@ const EXPERIMENT_ID = process.env.NEXT_PUBLIC_EXPERIMENT_ID
 
 export const CURRENT_EXPERIMENT: Experiment | undefined = EXPERIMENT_ID
   ? {
-      name: 'Start page',
+      ...experimentJson,
       id: EXPERIMENT_ID,
-      slug: '/se',
-      variants: [
-        {
-          name: 'Original',
-          id: 0,
-          weight: 50,
-        },
-        {
-          name: 'Variant',
-          id: 1,
-          weight: 50,
-          slug: '/start',
-        },
-      ],
     }
   : undefined
