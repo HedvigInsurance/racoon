@@ -110,19 +110,20 @@ module.exports = withBundleAnalyzer({
         locale: false,
       })),
     ]
-    const oldSiteCampaigns =
+    const oldSiteRedirects =
       process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
         ? [
             {
               source: '/(se/)?new-member(/hedvig)?',
-              has: [
-                {
-                  type: 'query',
-                  key: 'code',
-                },
-              ],
-              permanent: false,
+              has: [{ type: 'query', key: 'code' }],
               destination: '/api/campaign/:code?code=&next=/se/forsakringar',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/(se/)?new-member(/hedvig)?',
+              destination: '/se/forsakringar',
+              permanent: false,
               locale: false,
             },
             {
@@ -134,7 +135,7 @@ module.exports = withBundleAnalyzer({
             },
           ]
         : []
-    return [...shutDownMarketsInfo, ...oldSiteCampaigns, ...getExperimentVariantRedirects()]
+    return [...shutDownMarketsInfo, ...oldSiteRedirects, ...getExperimentVariantRedirects()]
   },
 })
 
