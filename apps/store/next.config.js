@@ -133,6 +133,60 @@ module.exports = withBundleAnalyzer({
               permanent: true,
               locale: false,
             },
+            {
+              source: '/(se/)?new-member/car',
+              has: [
+                {
+                  type: 'query',
+                  key: 'code',
+                },
+              ],
+              destination: '/api/campaign/:code?code=&next=/se/forsakringar/bilforsakring',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/(se/)?new-member/car',
+              destination: '/se/forsakringar/bilforsakring',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/se/new-member/home-insurance',
+              has: [
+                {
+                  type: 'query',
+                  key: 'code',
+                },
+              ],
+              destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/se/new-member/home-insurance',
+              destination: '/se/forsakringar/hemforsakring',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/se-en/new-member/home-insurance',
+              has: [
+                {
+                  type: 'query',
+                  key: 'code',
+                },
+              ],
+              destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
+              permanent: false,
+              locale: false,
+            },
+            {
+              source: '/se-en/new-member/home-insurance',
+              destination: '/se-en/insurances/home-insurance',
+              permanent: false,
+              locale: false,
+            },
           ]
         : []
     return [...shutDownMarketsInfo, ...oldSiteRedirects, ...getExperimentVariantRedirects()]
