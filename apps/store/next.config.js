@@ -124,6 +124,13 @@ module.exports = withBundleAnalyzer({
               destination: '/api/campaign/:code?code=&next=/se/forsakringar',
               locale: false,
             },
+            {
+              source: '/se/new-member/initiate-car-cancellation',
+              has: [{ type: 'query', key: 'contractId' }],
+              destination: '/se/cancellation/car/initiate/:contractId',
+              permanent: true,
+              locale: false,
+            },
           ]
         : []
     return [...shutDownMarketsInfo, ...oldSiteCampaigns]
