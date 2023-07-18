@@ -110,6 +110,7 @@ module.exports = withBundleAnalyzer({
         locale: false,
       })),
     ]
+
     const oldSiteRedirects =
       process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
         ? [
@@ -121,72 +122,26 @@ module.exports = withBundleAnalyzer({
               locale: false,
             },
             {
+              source: '/se-en/new-member(/hedvig)?',
+              has: [{ type: 'query', key: 'code' }],
+              destination: '/api/campaign/:code?code=&next=/se-en/insurances',
+              permanent: false,
+              locale: false,
+            },
+            {
               source: '/(se/)?new-member(/hedvig)?',
               destination: '/se/forsakringar',
               permanent: false,
               locale: false,
             },
             {
-              source: '/se/new-member/initiate-car-cancellation',
-              has: [{ type: 'query', key: 'contractId' }],
-              destination: '/se/cancellation/car/initiate/:contractId',
-              permanent: true,
-              locale: false,
-            },
-            {
-              source: '/(se/)?new-member/car',
-              has: [
-                {
-                  type: 'query',
-                  key: 'code',
-                },
-              ],
-              destination: '/api/campaign/:code?code=&next=/se/forsakringar/bilforsakring',
+              source: '/se-en/new-member(/hedvig)?',
+              destination: '/se-en/insurances',
               permanent: false,
               locale: false,
             },
-            {
-              source: '/(se/)?new-member/car',
-              destination: '/se/forsakringar/bilforsakring',
-              permanent: false,
-              locale: false,
-            },
-            {
-              source: '/se/new-member/home-insurance',
-              has: [
-                {
-                  type: 'query',
-                  key: 'code',
-                },
-              ],
-              destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
-              permanent: false,
-              locale: false,
-            },
-            {
-              source: '/se/new-member/home-insurance',
-              destination: '/se/forsakringar/hemforsakring',
-              permanent: false,
-              locale: false,
-            },
-            {
-              source: '/se-en/new-member/home-insurance',
-              has: [
-                {
-                  type: 'query',
-                  key: 'code',
-                },
-              ],
-              destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
-              permanent: false,
-              locale: false,
-            },
-            {
-              source: '/se-en/new-member/home-insurance',
-              destination: '/se-en/insurances/home-insurance',
-              permanent: false,
-              locale: false,
-            },
+            ...CAR_INSURANCE_REDIRECTS,
+            ...HOME_INSURANCE_REDIRECTS,
           ]
         : []
     return [...shutDownMarketsInfo, ...oldSiteRedirects, ...getExperimentVariantRedirects()]
@@ -230,6 +185,70 @@ const getExperimentVariantRedirects = () => {
     },
   ]
 }
+
+const HOME_INSURANCE_REDIRECTS = [
+  {
+    source: '/se/new-member/home-insurance',
+    has: [{ type: 'query', key: 'code' }],
+    destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/se-en/new-member/home-insurance',
+    has: [{ type: 'query', key: 'code' }],
+    destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/se/new-member/home-insurance',
+    destination: '/se/forsakringar/hemforsakring',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/se-en/new-member/home-insurance',
+    destination: '/se-en/insurances/home-insurance',
+    permanent: false,
+    locale: false,
+  },
+]
+
+const CAR_INSURANCE_REDIRECTS = [
+  {
+    source: '/(se/)?new-member/car',
+    has: [{ type: 'query', key: 'code' }],
+    destination: '/api/campaign/:code?code=&next=/se/forsakringar/bilforsakring',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/se-en/new-member/car',
+    has: [{ type: 'query', key: 'code' }],
+    destination: '/api/campaign/:code?code=&next=/se-en/insurances/car-insurance',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/(se/)?new-member/car',
+    destination: '/se/forsakringar/bilforsakring',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/se-en/new-member/car',
+    destination: '/se-en/insurances/car-insurance',
+    permanent: false,
+    locale: false,
+  },
+  {
+    source: '/new-member/initiate-car-cancellation',
+    has: [{ type: 'query', key: 'contractId' }],
+    destination: '/cancellation/car/initiate/:contractId',
+    permanent: true,
+  },
+]
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
 console.log('next.config.js %O', module.exports)
