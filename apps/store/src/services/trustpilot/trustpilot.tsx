@@ -25,12 +25,16 @@ export const fetchTrustpilotData = async () => {
   try {
     const hedvigBusinessUnitId = process.env.TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID
     if (!hedvigBusinessUnitId) {
-      throw new Error('TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured')
+      logMissingSetting(
+        'TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured, skipping Trustpilot data',
+      )
+      return null
     }
 
     const trustpilotApiKey = process.env.TRUSTPILOT_API_KEY
     if (!trustpilotApiKey) {
-      throw new Error('`TRUSTPILOT_API_KEY` is not configured')
+      logMissingSetting('TRUSTPILOT_API_KEY is not configured, skipping Trustpilot data')
+      return null
     }
 
     const response = await fetch(
@@ -55,5 +59,13 @@ export const fetchTrustpilotData = async () => {
   } catch (error) {
     console.error(error)
     return null
+  }
+}
+
+const logMissingSetting = (message: string) => {
+  if (process.env.NODE_ENV === 'production') {
+    console.warn(message)
+  } else {
+    console.log(message)
   }
 }
