@@ -131,7 +131,7 @@ const warningAnimation = keyframes({
     color: theme.colors.signalAmberText,
   },
   '100%': {
-    backgroundColor: theme.colors.translucent1,
+    backgroundColor: theme.colors.gray100,
     color: theme.colors.textPrimary,
   },
 })
