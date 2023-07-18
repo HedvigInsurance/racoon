@@ -24,11 +24,7 @@ export const ChangeSsnWarningDialog = ({ open, onAccept, onDecline }: Props) => 
     await resetShopSession()
 
     if (onAccept) {
-      if (onAccept instanceof Promise) {
-        await onAccept()
-      } else {
-        onAccept()
-      }
+      await onAccept()
     }
 
     setLoading(false)
