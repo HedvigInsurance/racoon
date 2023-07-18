@@ -49,9 +49,9 @@ const CopyToClipboardWrapper = styled.div({
   gap: theme.space.lg,
 
   backgroundColor: theme.colors.gray100,
-  padding: theme.space.xs,
+  paddingInline: theme.space.xs,
   borderRadius: theme.radius.xs,
-  border: `1px solid ${theme.colors.gray300}`,
+  height: '2.5rem',
 
   '@media (hover: hover)': {
     '&:hover': {

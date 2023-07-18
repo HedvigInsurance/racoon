@@ -83,7 +83,10 @@ export const PageLink = {
     return url
   },
 
-  apiSessionReset: () => '/api/session/reset',
+  apiSessionReset: ({ next }: { next?: string } = {}) => {
+    const nextQueryParam = next ? `?next=${next}` : ''
+    return `/api/session/reset${nextQueryParam}`
+  },
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
   apiCampaign: ({ code, next }: CampaignAddRoute) => {
     const nextQueryParam = next ? `?next=${next}` : ''

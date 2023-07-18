@@ -98,7 +98,7 @@ export const TextField = (props: Props) => {
           )}
 
           {inputValue &&
-            (inputProps.disabled ? (
+            (inputProps.disabled || inputProps.readOnly ? (
               <LockIcon size="1rem" color={theme.colors.textSecondary} />
             ) : (
               <DeleteButton

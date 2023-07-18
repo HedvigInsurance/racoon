@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { type NextApiRequest, type NextApiResponse } from 'next'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
 
@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const destination = nextURL.toString()
   console.log(`Re-directing to destination: ${destination}`)
-  return res.redirect(destination)
+  res.redirect(destination)
 }
 
 export default handler
