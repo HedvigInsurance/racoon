@@ -22,11 +22,6 @@ import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
-import {
-  handleNewSiteExperimentQueryParam,
-  trackNewSiteExperimentImpression,
-  useRemoveExperimentQueryParam,
-} from '@/services/Tracking/newSiteExperimentTracking'
 import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -62,15 +57,12 @@ if (typeof window !== 'undefined') {
     const { countryCode } = getCountryByLocale(routingLocale)
     tracking.reportAppInit({ countryCode })
 
-    handleNewSiteExperimentQueryParam()
-    trackNewSiteExperimentImpression(tracking)
     trackExperimentImpression(tracking)
     trackPageViews(tracking)
   })
 }
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  useRemoveExperimentQueryParam()
   useDebugTranslationKeys()
   useReloadOnCountryChange()
   useAllowActiveStylesInSafari()

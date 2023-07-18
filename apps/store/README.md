@@ -126,7 +126,7 @@ Restrictions:
 To enable an experiment, do the following:
 
 - Add the experiment ID to the `NEXT_PUBLIC_EXPERIMENT_ID` environment variable.
-- Update relevant information in the `src/services/Tracking/experiment.constants.ts` file.
+- Update relevant information in `./experiment.json` file.
 
 > **Note**
 > Google Optimize will no longer be available after September 30, 2023.
