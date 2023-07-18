@@ -1,6 +1,7 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { getStoryBySlug, PageStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
@@ -18,6 +19,7 @@ const ManyPetsCmsPage = ({ story: initialStory }: PageProps) => {
     <>
       <HeadSeoInfo story={story} />
       <StoryblokComponent blok={story.content} />
+      <DefaultDebugDialog />
     </>
   )
 }
