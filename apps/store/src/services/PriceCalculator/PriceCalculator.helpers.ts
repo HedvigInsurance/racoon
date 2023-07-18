@@ -105,6 +105,7 @@ const calculateSectionState = (section: FormSection): FormSection => {
 export const deserializeField = (field: InputField, formData: FormData) => {
   switch (field.type) {
     case 'number':
+    case 'stepper':
       return parseNumber(field, formData)
 
     case 'pet-dog-breeds':
