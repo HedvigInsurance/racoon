@@ -2,15 +2,17 @@
 
 import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
-import { CheckIcon, Text, theme } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Text, theme } from 'ui'
+import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
-export const CopyToClipboard = (props: { children: string }) => {
+export const CopyToClipboard = (props: { label: string; children: string }) => {
+  const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>()
   const [copied, setCopied] = useState(false)
 
   const copy = () => {
     navigator.clipboard.writeText(props.children)
     setCopied(true)
+    highlight()
   }
 
   useEffect(() => {
@@ -24,38 +26,34 @@ export const CopyToClipboard = (props: { children: string }) => {
   }, [copied])
 
   return (
-    <CopyToClipboardWrapper>
-      <Elipsis as="p" size="sm">
+    <CopyToClipboardWrapper type="button" onClick={copy} {...animationProps}>
+      <SlimText as="p" size="sm" color="textSecondaryOnGray">
+        {props.label}
+      </SlimText>
+
+      <Elipsis as="p" size="lg">
         {props.children}
       </Elipsis>
-      <CopyToClipboardButton onClick={copy}>
-        {copied ? (
-          <SpaceFlex align="center" space={0.5}>
-            <CheckIcon size="1em" />
-            Copied
-          </SpaceFlex>
-        ) : (
-          'Copy'
-        )}
-      </CopyToClipboardButton>
     </CopyToClipboardWrapper>
   )
 }
 
-const CopyToClipboardWrapper = styled.div({
+const CopyToClipboardWrapper = styled.button({
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: theme.space.lg,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  height: '3.25rem',
+  width: '100%',
 
-  backgroundColor: theme.colors.gray100,
-  paddingInline: theme.space.xs,
-  borderRadius: theme.radius.xs,
-  height: '2.5rem',
+  borderRadius: theme.radius.sm,
+  backgroundColor: theme.colors.translucent1,
+  paddingInline: theme.space.md,
 
   '@media (hover: hover)': {
+    cursor: 'pointer',
+
     '&:hover': {
-      backgroundColor: theme.colors.gray200,
+      backgroundColor: theme.colors.translucent2,
     },
   },
 })
@@ -66,7 +64,4 @@ const Elipsis = styled(Text)({
   whiteSpace: 'nowrap',
 })
 
-const CopyToClipboardButton = styled.button({
-  cursor: 'pointer',
-  flexShrink: 0,
-})
+const SlimText = styled(Text)({ lineHeight: 1 })

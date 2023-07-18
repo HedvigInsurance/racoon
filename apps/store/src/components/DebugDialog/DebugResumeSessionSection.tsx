@@ -38,7 +38,7 @@ export const DebugResumeSessionSection = () => {
         <TextField name={INPUT_NAME} label="Resume shop session" variant="small" />
       </div>
 
-      <Button size="medium" type="submit">
+      <Button variant="secondary" size="medium" type="submit">
         Go
       </Button>
     </Layout>
@@ -47,7 +47,7 @@ export const DebugResumeSessionSection = () => {
 
 const Layout = styled.form({
   display: 'grid',
-  gridTemplateColumns: '4fr 1fr',
+  gridTemplateColumns: '4fr minmax(8rem, 1fr)',
   alignItems: 'center',
-  gap: theme.space.xs,
+  gap: theme.space.xxs,
 })

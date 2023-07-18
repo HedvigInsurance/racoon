@@ -1,6 +1,5 @@
-import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { Button, Space, Text, theme } from 'ui'
+import { Button, Space } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { CopyToClipboard } from './CopyToClipboard'
@@ -15,32 +14,14 @@ export const DebugShopSessionSection = () => {
   const nextUrl = `/${router.locale}${router.pathname}`
 
   return (
-    <Space y={1}>
-      <Layout>
-        <Space y={0.25} style={{ flex: 1 }}>
-          <Text as="p" size="sm">
-            Shop Session
-          </Text>
-          <CopyToClipboard>{shopSession.id}</CopyToClipboard>
-        </Space>
+    <Space y={0.25}>
+      <CopyToClipboard label="Shop Session">{shopSession.id}</CopyToClipboard>
 
-        <Button
-          variant="secondary"
-          size="medium"
-          href={PageLink.apiSessionReset({ next: nextUrl })}
-        >
-          Reset
-        </Button>
-      </Layout>
+      <Button variant="secondary" href={PageLink.apiSessionReset({ next: nextUrl })}>
+        Reset Shop Session
+      </Button>
 
       <DebugResumeSessionSection />
     </Space>
   )
 }
-
-const Layout = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '4fr 1fr',
-  alignItems: 'flex-end',
-  gap: theme.space.xs,
-})
