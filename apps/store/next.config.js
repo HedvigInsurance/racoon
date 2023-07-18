@@ -68,10 +68,6 @@ module.exports = withBundleAnalyzer({
           source: '/new-member-assets/:path*',
           destination: `${process.env.FALLBACK_ORIGIN_URL}/new-member-assets/:path*`,
         },
-        {
-          source: '/onboarding/_next/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/_next/:path*`,
-        },
         // Storyblok assets proxy
         {
           source: '/f/:path*',

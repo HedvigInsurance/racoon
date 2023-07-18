@@ -1,5 +1,0 @@
-mutation CreateQuoteCart($market: Market!, $locale: String!) {
-  onboardingQuoteCart_create(input: { market: $market, locale: $locale }) {
-    id
-  }
-}

@@ -36,9 +36,6 @@ Ask someone from the Purchase Journey team to help you out :)
 If you're already part of the Vercel-team you can run:
 
 ```sh
-vercel --scope hedvig link --project onboarding --yes
-vercel env pull apps/onboarding/.env.local
-
 vercel --scope hedvig link --project hedvig-dot-com --yes
 vercel env pull apps/store/.env.local
 ```
@@ -67,7 +64,6 @@ This Turborepo includes the following packages and apps:
 
 ### Apps & Packages
 
-- `onboarding`: web-based onboarding using Next.js
 - `store`: Hedvig Coverage Store
 - `ui`: Hedvig React UI library
 - `scripts`: ESLint configurations
