@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { AnimatePresence, motion, Target, TargetAndTransition, Transition } from 'framer-motion'
+import { motion, Transition } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactElement } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
@@ -132,18 +132,26 @@ export const BankIdDialog = () => {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal Footer={footer} center={true}>
-        <AnimatePresence>
+      <FullscreenDialog.Modal
+        Footer={
           <motion.div
-            key={animationState}
-            initial={ANIMATE_INITIAL}
-            animate={ANIMATE_ANIMATE}
-            exit={ANIMATE_EXIT}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={ANIMATE_TRANSITION}
           >
-            {content}
+            {footer}
           </motion.div>
-        </AnimatePresence>
+        }
+        center={true}
+      >
+        <motion.div
+          key={animationState}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={ANIMATE_TRANSITION}
+        >
+          {content}
+        </motion.div>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
@@ -163,11 +171,8 @@ const pulseAnimation = keyframes({
 })
 const Pulsating = styled.div({ animation: `${pulseAnimation} 2s ease-in-out infinite` })
 
-const ANIMATE_TRANSITION: Transition = { duration: 0.6, ...theme.transitions.framer.easeInOutCubic }
-const ANIMATE_INITIAL: Target = { opacity: 0, y: 40 }
-const ANIMATE_ANIMATE: TargetAndTransition = {
-  opacity: 1,
-  y: 0,
-  transition: { delay: 0.3, ...ANIMATE_TRANSITION },
+const ANIMATE_TRANSITION: Transition = {
+  duration: 0.6,
+  delay: 0.3,
+  ...theme.transitions.framer.easeInOutCubic,
 }
-const ANIMATE_EXIT: TargetAndTransition = { opacity: 0, y: -40 }
