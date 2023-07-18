@@ -1,5 +1,4 @@
 import { ApolloClient, isApolloError } from '@apollo/client'
-import { datadogLogs } from '@datadog/browser-logs'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
@@ -95,7 +94,7 @@ const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
     return data.currentMember.partnerData ?? null
   } catch (err) {
     if (err instanceof Error && isApolloError(err)) {
-      datadogLogs.logger.info('Failed to fetch currentMember', err)
+      console.info('Failed to fetch currentMember', err)
       return null
     } else {
       throw err
