@@ -16,7 +16,7 @@ type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 
-type SessionLink = Required<BaseParams> & {
+type SessionLink = BaseParams & {
   shopSessionId: string
   // Relative URL to redirect to (default: home page)
   next?: string
@@ -94,7 +94,8 @@ export const PageLink = {
   },
 
   session: (params: SessionLink) => {
-    const url = new URL(`/${params.locale}/session/${params.shopSessionId}`, ORIGIN_URL)
+    const pathname = `${localePrefix(params.locale)}/session/${params.shopSessionId}`
+    const url = new URL(pathname, ORIGIN_URL)
 
     if (params.code) {
       url.searchParams.set('code', params.code)
