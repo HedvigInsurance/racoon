@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
-import { CampaignsSection } from './CampaignsSection'
+import { CampaignSection } from './CampaignSection'
 import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
 import { useGetCartCampaign } from './CartInventory.helpers'
@@ -17,10 +17,9 @@ type Props = {
 
 export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) => {
   const getCartCampaign = useGetCartCampaign()
-
-  const campaigns = cart.redeemedCampaign
-    ? [getCartCampaign(cart.cost.gross, cart.redeemedCampaign)]
-    : []
+  const campaign = cart.redeemedCampaign
+    ? getCartCampaign(cart.cost.gross, cart.redeemedCampaign)
+    : undefined
 
   const cost = {
     total: getCartTotal(cart),
@@ -51,18 +50,18 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
       </CartEntryList>
       {!readOnly && (
         <>
-          <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns} />
+          <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
           <HorizontalLine />
         </>
       )}
-      {readOnly && campaigns.length > 0 && (
+      {readOnly && !!campaign && (
         <>
-          <ReadOnlyCampaignCodeList campaigns={campaigns} />
+          <ReadOnlyCampaignCodeList campaigns={[campaign]} />
           <HorizontalLine />
         </>
       )}
 
-      <CostSummary {...cost} campaigns={campaigns} />
+      <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />
     </Space>
   )
 }

@@ -13,10 +13,10 @@ const FORM_CAMPAIGN_CODE = 'campaignCode'
 
 type Props = {
   shopSessionId: string
-  campaigns: Array<CartCampaign>
+  campaign?: CartCampaign
 }
 
-export const CampaignsSection = ({ shopSessionId, campaigns }: Props) => {
+export const CampaignSection = ({ shopSessionId, campaign }: Props) => {
   const { t } = useTranslation('cart')
 
   const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({
@@ -41,58 +41,14 @@ export const CampaignsSection = ({ shopSessionId, campaigns }: Props) => {
     }
   }
 
-  const [open, setOpen] = useState(campaigns.length > 0)
+  const [open, setOpen] = useState(!!campaign)
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
-    if (!open) {
-      const activeCampaign = campaigns[0] as CartCampaign | undefined
-      if (activeCampaign) {
-        unredeemCampaign(activeCampaign.id)
-      }
+    if (!open && campaign) {
+      unredeemCampaign(campaign.id)
     }
   }
-
-  const form = (
-    <form onSubmit={handleSubmitCampaign}>
-      <DiscountFormWrapper>
-        <UppercaseTextField
-          name={FORM_CAMPAIGN_CODE}
-          label={t('CAMPAIGN_CODE_INPUT_LABEL')}
-          variant="small"
-          warning={!!errorMessage}
-          message={errorMessage}
-          required={true}
-        />
-        <Button variant="primary-alt" loading={loadingRedeem}>
-          {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
-        </Button>
-      </DiscountFormWrapper>
-    </form>
-  )
-
-  const campaignList = (
-    <ul>
-      {campaigns.map((item) => (
-        <li key={item.id}>
-          <SpaceBetween>
-            <form onSubmit={handleSubmitUnredeemCampaign(item.id)}>
-              <ChipButton disabled={loadingUnredeenCampaign}>
-                <Text as="span" size="xs">
-                  {item.code}
-                </Text>
-                <CrossIconSmall color={theme.colors.textTertiary} />
-              </ChipButton>
-            </form>
-
-            <Text>{item.discountExplanation}</Text>
-          </SpaceBetween>
-        </li>
-      ))}
-    </ul>
-  )
-
-  const content = campaigns.length === 0 ? form : campaignList
 
   return (
     <Collapsible.Root open={open} onOpenChange={handleOpenChange}>
@@ -108,7 +64,36 @@ export const CampaignsSection = ({ shopSessionId, campaigns }: Props) => {
 
       <CollapsibleContent>
         <div style={{ height: theme.space.sm }} />
-        {content}
+        {campaign ? (
+          <SpaceBetween>
+            <form onSubmit={handleSubmitUnredeemCampaign(campaign.id)}>
+              <ChipButton disabled={loadingUnredeenCampaign}>
+                <Text as="span" size="xs">
+                  {campaign.code}
+                </Text>
+                <CrossIconSmall color={theme.colors.textTertiary} />
+              </ChipButton>
+            </form>
+
+            <Text>{campaign.discountExplanation}</Text>
+          </SpaceBetween>
+        ) : (
+          <form onSubmit={handleSubmitCampaign}>
+            <DiscountFormWrapper>
+              <UppercaseTextField
+                name={FORM_CAMPAIGN_CODE}
+                label={t('CAMPAIGN_CODE_INPUT_LABEL')}
+                variant="small"
+                warning={!!errorMessage}
+                message={errorMessage}
+                required={true}
+              />
+              <Button variant="primary-alt" loading={loadingRedeem}>
+                {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
+              </Button>
+            </DiscountFormWrapper>
+          </form>
+        )}
       </CollapsibleContent>
     </Collapsible.Root>
   )

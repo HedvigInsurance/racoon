@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
+import { CampaignSection } from '@/components/CartInventory/CampaignSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
@@ -46,7 +46,7 @@ export const CartPage = (props: CartPageProps) => {
         <HorizontalLine />
         {shopSessionId && campaignsEnabled === true && (
           <>
-            <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns ?? []} />
+            <CampaignSection shopSessionId={shopSessionId} campaign={campaigns?.[0]} />
             <HorizontalLine />
           </>
         )}
@@ -73,7 +73,7 @@ export const CartPage = (props: CartPageProps) => {
 
         {shopSessionId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
-            <CampaignsSection shopSessionId={shopSessionId} campaigns={campaigns ?? []} />
+            <CampaignSection shopSessionId={shopSessionId} campaign={campaigns?.[0]} />
             <HorizontalLine />
           </Space>
         )}

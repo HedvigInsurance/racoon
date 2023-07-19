@@ -161,7 +161,7 @@ const BaseWrapper = styled.div({
 })
 
 const LargeWrapper = styled(BaseWrapper)({ height: '4.5rem' })
-const SmallWrapper = styled(BaseWrapper)({ height: '3.25rem' })
+const SmallWrapper = styled(BaseWrapper)({ height: '3.5rem' })
 
 const Label = styled.label({
   position: 'absolute',
