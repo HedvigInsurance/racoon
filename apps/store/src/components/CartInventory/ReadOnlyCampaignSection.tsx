@@ -3,29 +3,19 @@ import { Text, theme } from 'ui'
 import { CartCampaign } from './CartInventory.types'
 
 type Props = {
-  campaigns: Array<CartCampaign>
+  campaign: CartCampaign
 }
 
-export const ReadOnlyCampaignCodeList = ({ campaigns }: Props) => {
-  if (campaigns.length === 0) {
-    return null
-  }
-
+export const ReadOnlyCampaignSection = ({ campaign }: Props) => {
   return (
-    <ul>
-      {campaigns.map((item) => (
-        <li key={item.id}>
-          <SpaceBetween>
-            <Chip>
-              <Text as="span" size="xs">
-                {item.code}
-              </Text>
-            </Chip>
-            <Text>{item.discountExplanation}</Text>
-          </SpaceBetween>
-        </li>
-      ))}
-    </ul>
+    <SpaceBetween>
+      <Chip>
+        <Text as="span" size="xs">
+          {campaign.code}
+        </Text>
+      </Chip>
+      <Text>{campaign.discountExplanation}</Text>
+    </SpaceBetween>
   )
 }
 
