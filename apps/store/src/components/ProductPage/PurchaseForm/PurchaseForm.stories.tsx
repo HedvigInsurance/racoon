@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { productData } from '@/mocks/productData'
+import { globalStory, productStoryBRF } from '@/mocks/storyblok'
 import { PriceIntentCreateDocument, ShopSessionCreateDocument } from '@/services/apollo/generated'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { SE_APARTMENT_BRF } from '@/services/PriceCalculator/data/SE_APARTMENT_BRF'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
-import { productData } from 'mocks/productData'
-import { globalStory, productStoryBRF } from 'mocks/storyblok'
 import { PriceIntentContextProvider } from '../PriceIntentContext'
 import { ProductPageContextProvider } from '../ProductPageContext'
 import { PurchaseForm } from './PurchaseForm'
@@ -77,7 +77,6 @@ export const Default: Story = {
                     },
                     __typename: 'CartCost',
                   },
-                  redeemedCampaigns: [],
                   entries: [],
                   __typename: 'Cart',
                 },

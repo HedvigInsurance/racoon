@@ -50,7 +50,7 @@ export const CartPage = (props: CartPageProps) => {
             <HorizontalLine />
           </>
         )}
-        {cost && <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />}
+        {cost && <CostSummary {...cost} campaign={campaign} />}
       </Space>
     </EmptyState>
   )
@@ -77,7 +77,7 @@ export const CartPage = (props: CartPageProps) => {
             <HorizontalLine />
           </Space>
         )}
-        {cost && <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />}
+        {cost && <CostSummary {...cost} campaign={campaign} />}
 
         {showProductRecommendations && (
           <CartEntryList>

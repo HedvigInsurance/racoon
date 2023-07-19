@@ -50,7 +50,6 @@ const cart = {
     net: { amount: 215, currencyCode: CurrencyCode.Sek },
     discount: { amount: 10, currencyCode: CurrencyCode.Sek },
   },
-  redeemedCampaigns: [],
   campaignsEnabled: true,
   entries: [
     {
