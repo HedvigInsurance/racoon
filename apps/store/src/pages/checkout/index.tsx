@@ -6,7 +6,7 @@ import {
   getCartEntry,
   getCrossOut,
   getTotal,
-  useGetDiscountDurationExplanation,
+  useGetCartCampaign,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
@@ -22,14 +22,12 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 
 type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'>
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplanation()
-  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+  const getCartCampaign = useGetCartCampaign()
 
   const entries = useMemo(
     () => shopSession?.cart.entries.map(getCartEntry) ?? [],
@@ -40,7 +38,6 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   const { authenticationStatus } = shopSession.customer
 
-  const campaign = shopSession.cart.redeemedCampaign
   const cart = {
     id: shopSession.cart.id,
     cost: {
@@ -50,18 +47,8 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     entries,
     campaigns: {
       enabled: shopSession.cart.campaignsEnabled,
-      list: campaign
-        ? [
-            {
-              id: campaign.id,
-              code: campaign.code,
-              discountExplanation: getDiscountExplanation(campaign.discount),
-              discountDurationExplanation: getDiscountDurationExplanation(
-                campaign.discount,
-                shopSession.cart.cost.gross,
-              ),
-            },
-          ]
+      list: shopSession.cart.redeemedCampaign
+        ? [getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)]
         : [],
     },
   } satisfies CheckoutPageProps['cart']

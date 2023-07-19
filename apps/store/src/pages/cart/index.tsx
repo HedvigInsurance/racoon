@@ -4,20 +4,18 @@ import Head from 'next/head'
 import { useMemo } from 'react'
 import {
   getCrossOut,
-  useGetDiscountDurationExplanation,
   getTotal,
   getCartEntry,
+  useGetCartCampaign,
 } from '@/components/CartInventory/CartInventory.helpers'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 
 const NextCartPage: NextPageWithLayout = (props) => {
   const { shopSession } = useShopSession()
-  const getDiscountExplanation = useGetDiscountExplanation()
-  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
+  const getCartCampaign = useGetCartCampaign()
   const { t } = useTranslation('cart')
 
   const entries = useMemo(
@@ -25,19 +23,8 @@ const NextCartPage: NextPageWithLayout = (props) => {
     [shopSession?.cart.entries],
   )
 
-  const campaign = shopSession?.cart.redeemedCampaign
-  const campaigns = campaign
-    ? [
-        {
-          id: campaign.id,
-          code: campaign.code,
-          discountExplanation: getDiscountExplanation(campaign.discount),
-          discountDurationExplanation: getDiscountDurationExplanation(
-            campaign.discount,
-            shopSession.cart.cost.gross,
-          ),
-        },
-      ]
+  const campaigns = shopSession?.cart.redeemedCampaign
+    ? [getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)]
     : []
 
   const cost = shopSession
