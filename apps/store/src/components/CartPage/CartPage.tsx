@@ -20,7 +20,7 @@ import { CartPageProps } from './CartPageProps.types'
 import { PageDebugDialog } from './PageDebugDialog'
 
 export const CartPage = (props: CartPageProps) => {
-  const { shopSessionId, entries, campaigns, campaignsEnabled, cost } = props
+  const { shopSessionId, entries, campaign, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { onReady, shopSession } = useShopSession()
   const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
@@ -46,11 +46,11 @@ export const CartPage = (props: CartPageProps) => {
         <HorizontalLine />
         {shopSessionId && campaignsEnabled === true && (
           <>
-            <CampaignSection shopSessionId={shopSessionId} campaign={campaigns?.[0]} />
+            <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
             <HorizontalLine />
           </>
         )}
-        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
+        {cost && <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />}
       </Space>
     </EmptyState>
   )
@@ -73,11 +73,11 @@ export const CartPage = (props: CartPageProps) => {
 
         {shopSessionId && campaignsEnabled && (
           <Space y={{ base: 1, sm: 1.5 }}>
-            <CampaignSection shopSessionId={shopSessionId} campaign={campaigns?.[0]} />
+            <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
             <HorizontalLine />
           </Space>
         )}
-        {cost && <CostSummary {...cost} campaigns={campaigns ?? []} />}
+        {cost && <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />}
 
         {showProductRecommendations && (
           <CartEntryList>

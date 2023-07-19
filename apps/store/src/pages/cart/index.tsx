@@ -15,7 +15,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 const NextCartPage: NextPageWithLayout = (props) => {
   const { shopSession } = useShopSession()
-  const getCartCampaign = useGetCartCampaign()
   const { t } = useTranslation('cart')
 
   const entries = useMemo(
@@ -23,9 +22,10 @@ const NextCartPage: NextPageWithLayout = (props) => {
     [shopSession?.cart.entries],
   )
 
-  const campaigns = shopSession?.cart.redeemedCampaign
-    ? [getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)]
-    : []
+  const getCartCampaign = useGetCartCampaign()
+  const campaign = shopSession?.cart.redeemedCampaign
+    ? getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)
+    : undefined
 
   const cost = shopSession
     ? {
@@ -42,7 +42,7 @@ const NextCartPage: NextPageWithLayout = (props) => {
       <CartPage
         shopSessionId={shopSession?.id}
         entries={entries}
-        campaigns={campaigns}
+        campaign={campaign}
         campaignsEnabled={shopSession?.cart.campaignsEnabled}
         cost={cost}
         {...props}
