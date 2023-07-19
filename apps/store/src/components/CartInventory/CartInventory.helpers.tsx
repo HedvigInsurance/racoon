@@ -53,9 +53,11 @@ export const getCrossOut = (shopSession: ShopSession) => {
 }
 
 export const getCartEntry = (item: ShopSession['cart']['entries'][number]): CartEntry => {
-  const invalidRenewalDate =
-    item.cancellation.option === ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-  const hasCancellation = item.cancellation.requested && !invalidRenewalDate
+  const isInvalidOption = [
+    ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate,
+    ExternalInsuranceCancellationOption.None,
+  ].includes(item.cancellation.option)
+  const hasCancellation = !isInvalidOption && item.cancellation.requested
 
   return {
     offerId: item.id,
