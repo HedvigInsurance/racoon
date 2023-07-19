@@ -40,6 +40,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   const { authenticationStatus } = shopSession.customer
 
+  const campaign = shopSession.cart.redeemedCampaign
   const cart = {
     id: shopSession.cart.id,
     cost: {
@@ -49,15 +50,19 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     entries,
     campaigns: {
       enabled: shopSession.cart.campaignsEnabled,
-      list: shopSession.cart.redeemedCampaigns.map((item) => ({
-        id: item.id,
-        code: item.code,
-        discountExplanation: getDiscountExplanation(item.discount),
-        discountDurationExplanation: getDiscountDurationExplanation(
-          shopSession.cart.redeemedCampaigns[0].discount,
-          shopSession.cart.cost.gross,
-        ),
-      })),
+      list: campaign
+        ? [
+            {
+              id: campaign.id,
+              code: campaign.code,
+              discountExplanation: getDiscountExplanation(campaign.discount),
+              discountDurationExplanation: getDiscountDurationExplanation(
+                campaign.discount,
+                shopSession.cart.cost.gross,
+              ),
+            },
+          ]
+        : [],
     },
   } satisfies CheckoutPageProps['cart']
 

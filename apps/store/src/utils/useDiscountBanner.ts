@@ -8,11 +8,10 @@ export const useDiscountBanner = () => {
   const { shopSession } = useShopSession()
   const { banner, addBanner } = useGlobalBanner()
 
-  const hasDiscount = !!shopSession?.cart.redeemedCampaigns.length
-
+  const campaign = shopSession?.cart.redeemedCampaign
   useEffect(() => {
-    if (hasDiscount && banner === null) {
+    if (campaign && banner === null) {
       addBanner(t('GLOBAL_BANNER_CAMPAIGN'), 'campaign')
     }
-  }, [hasDiscount, banner, addBanner, t])
+  }, [campaign, banner, addBanner, t])
 }

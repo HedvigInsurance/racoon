@@ -24,15 +24,21 @@ const NextCartPage: NextPageWithLayout = (props) => {
     () => shopSession?.cart.entries.map(getCartEntry),
     [shopSession?.cart.entries],
   )
-  const campaigns = shopSession?.cart.redeemedCampaigns.map((item) => ({
-    id: item.id,
-    code: item.code,
-    discountExplanation: getDiscountExplanation(item.discount),
-    discountDurationExplanation: getDiscountDurationExplanation(
-      shopSession.cart.redeemedCampaigns[0].discount,
-      shopSession.cart.cost.gross,
-    ),
-  }))
+
+  const campaign = shopSession?.cart.redeemedCampaign
+  const campaigns = campaign
+    ? [
+        {
+          id: campaign.id,
+          code: campaign.code,
+          discountExplanation: getDiscountExplanation(campaign.discount),
+          discountDurationExplanation: getDiscountDurationExplanation(
+            campaign.discount,
+            shopSession.cart.cost.gross,
+          ),
+        },
+      ]
+    : []
 
   const cost = shopSession
     ? {

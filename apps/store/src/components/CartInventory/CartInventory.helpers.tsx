@@ -33,11 +33,8 @@ export const useGetDiscountDurationExplanation = () => {
 }
 
 export const getTotal = (shopSession: ShopSession) => {
-  const hasDiscount = shopSession.cart.redeemedCampaigns.length !== 0
-
-  if (!hasDiscount) return shopSession.cart.cost.net
-  // Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
-  switch (shopSession.cart.redeemedCampaigns[0].discount.type) {
+  if (!shopSession.cart.redeemedCampaign) return shopSession.cart.cost.net
+  switch (shopSession.cart.redeemedCampaign.discount.type) {
     case CampaignDiscountType.FreeMonths:
       return shopSession.cart.cost.discount
     default:
