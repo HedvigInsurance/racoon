@@ -47,9 +47,9 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     entries,
     campaigns: {
       enabled: shopSession.cart.campaignsEnabled,
-      list: shopSession.cart.redeemedCampaign
-        ? [getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)]
-        : [],
+      redeemed: shopSession.cart.redeemedCampaign
+        ? getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)
+        : undefined,
     },
   } satisfies CheckoutPageProps['cart']
 

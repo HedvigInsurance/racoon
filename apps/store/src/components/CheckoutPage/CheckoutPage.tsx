@@ -130,12 +130,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                   <>
                     <CampaignSection
                       shopSessionId={shopSessionId}
-                      campaign={cart.campaigns.list[0]}
+                      campaign={cart.campaigns.redeemed}
                     />
                     <HorizontalLine />
                   </>
                 )}
-                <CostSummary {...cart.cost} campaign={cart.campaigns.list[0]} />
+                <CostSummary {...cart.cost} campaign={cart.campaigns.redeemed} />
                 <div />
               </Space>
 
