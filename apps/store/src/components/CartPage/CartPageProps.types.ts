@@ -3,7 +3,7 @@ import { CartCost, CartCampaign, CartEntry } from '@/components/CartInventory/Ca
 export type CartPageProps = {
   shopSessionId?: string
   campaignsEnabled?: boolean
-  campaigns?: Array<CartCampaign>
+  campaign?: CartCampaign
   cost?: CartCost
   entries?: Array<CartEntry>
 }
