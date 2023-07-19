@@ -2,11 +2,10 @@ import styled from '@emotion/styled'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { CampaignsSection } from './CampaignsSection'
 import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
-import { useGetDiscountDurationExplanation } from './CartInventory.helpers'
+import { useGetCartCampaign } from './CartInventory.helpers'
 import { CostSummary } from './CostSummary'
 import { ReadOnlyCampaignCodeList } from './ReadOnlyCampaignCodeList'
 
@@ -17,21 +16,10 @@ type Props = {
 }
 
 export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) => {
-  const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
-  const getDiscountExplanation = useGetDiscountExplanation()
+  const getCartCampaign = useGetCartCampaign()
 
   const campaigns = cart.redeemedCampaign
-    ? [
-        {
-          id: cart.redeemedCampaign.id,
-          code: cart.redeemedCampaign.code,
-          discountExplanation: getDiscountExplanation(cart.redeemedCampaign.discount),
-          discountDurationExplanation: getDiscountDurationExplanation(
-            cart.redeemedCampaign.discount,
-            cart.cost.gross,
-          ),
-        },
-      ]
+    ? [getCartCampaign(cart.cost.gross, cart.redeemedCampaign)]
     : []
 
   const cost = {
