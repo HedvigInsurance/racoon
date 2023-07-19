@@ -247,7 +247,7 @@ const DeleteButton = styled.button({
   opacity: 0,
 
   ':focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+    boxShadow: theme.shadow.focus,
   },
 
   [`${LargeWrapper}:focus-within &, ${SmallWrapper}:focus-within &, ${LargeWrapper}[data-readonly] &, ${SmallWrapper}[data-readonly] &`]:

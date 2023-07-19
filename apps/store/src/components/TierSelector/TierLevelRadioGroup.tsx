@@ -39,7 +39,7 @@ const RadioGroupItem = styled(RadioGroup.Item)({
 
   '&[data-state=checked]': {
     backgroundColor: theme.colors.backgroundStandard,
-    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+    boxShadow: theme.shadow.default,
   },
 })
 

@@ -149,7 +149,7 @@ const ContentNavigationTrigger = styled.a({
   lineHeight: theme.fontSizes.xl,
   color: theme.colors.dark,
   backgroundColor: theme.colors.grayTranslucent100,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  boxShadow: theme.shadow.default,
   backdropFilter: 'blur(20px)',
   borderRadius: theme.radius.sm,
 
@@ -171,7 +171,7 @@ const ContentNavigationTrigger = styled.a({
   },
 
   '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.purple500}`,
+    boxShadow: theme.shadow.focus,
   },
 })
 

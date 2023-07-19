@@ -87,7 +87,7 @@ const StyledButton = styled.button<CustomButtonProps>(
     },
 
     '&:focus-visible': {
-      boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+      boxShadow: theme.shadow.focus,
     },
   },
   ({ size = 'large' }) => getButtonSizeStyles(size),
@@ -115,12 +115,12 @@ const PrimaryButton = styled(StyledButton)({
   },
 
   '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
+    boxShadow: theme.shadow.focusAlt,
   },
 })
 
 const shadow = css({
-  boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
+  boxShadow: theme.shadow.default,
   backdropFilter: 'blur(30px)',
 })
 

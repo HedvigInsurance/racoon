@@ -82,7 +82,7 @@ const StyledItem = styled(RadioGroup.Item)({
   },
 
   '&:focus-visible': {
-    boxShadow: `0 0 0 2px ${theme.colors.gray500}`,
+    boxShadow: theme.shadow.focusAlt,
   },
 })
 

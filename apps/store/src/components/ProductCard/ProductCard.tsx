@@ -204,7 +204,7 @@ const MainLink = styled(Link)({
   },
 
   [`&:focus-visible ~ ${CallToAction} #read-more-btn`]: {
-    boxShadow: `0 0 0 2px ${theme.colors.textPrimary}`,
+    boxShadow: theme.shadow.focus,
   },
 })
 

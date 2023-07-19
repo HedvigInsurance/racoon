@@ -1,3 +1,4 @@
+import React, { type ReactElement } from 'react'
 import { legacyTheme, theme as defaultTheme, ThemeProvider } from '../src'
 import { Global } from '@emotion/react'
 import { storybookFontStyles } from '../src/lib/storybookFontStyles'
@@ -20,7 +21,7 @@ export const parameters = {
   layout: 'centered',
 }
 
-export const withTheme = (Story, context) => {
+export const withTheme = (Story: () => ReactElement, context: any) => {
   // Get values from story parameter first
   const theme = context.parameters.theme || context.globals.theme
   const storyTheme = theme === 'legacy' ? legacyTheme : defaultTheme

@@ -25,8 +25,8 @@ export const cardStyle = ({
   border: `1px solid transparent`,
   borderColor: bordered ? getColor('gray500') : 'transparent',
 
-  boxShadow: 'rgb(0 0 0 / 10%) 0px 1px 2px',
-  minWidth: '16rem',
+  boxShadow: theme.shadow.default,
+  minWidth: CardSizes.sm,
   width: size ? CardSizes[size] : 'auto',
 })
 

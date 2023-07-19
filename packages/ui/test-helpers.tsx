@@ -1,5 +1,6 @@
-import { render, RenderResult } from '@testing-library/react'
-import { ReactElement, ReactNode } from 'react'
+import { type Theme } from '@emotion/react'
+import { render, type RenderResult } from '@testing-library/react'
+import { type ReactElement, type ReactNode } from 'react'
 import { ThemeProvider } from './src'
 
 type WrappingThemeProviderProps = {
@@ -9,11 +10,12 @@ type WrappingThemeProviderProps = {
 const mockedTheme = {
   fonts: {},
   colors: {},
-}
+  shadow: {},
+} as Theme
 
 export const renderWithTheme = (
   component: ReactElement,
-  theme: any = mockedTheme,
+  theme: Theme = mockedTheme,
 ): RenderResult => {
   const WrappingThemeProvider = ({ children }: WrappingThemeProviderProps) => (
     <ThemeProvider theme={theme}>{children}</ThemeProvider>

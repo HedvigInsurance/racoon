@@ -282,7 +282,7 @@ const TextLink = styled(Link)({
 
   ':focus-visible': {
     borderRadius: theme.radius.xxs,
-    boxShadow: `${theme.colors.light} 0 0 0 3px, ${theme.colors.textPrimary} 0 0 0 4px`,
+    boxShadow: theme.shadow.focus,
   },
 })
 
