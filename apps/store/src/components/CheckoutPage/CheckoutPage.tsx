@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
-import { CampaignsSection } from '@/components/CartInventory/CampaignsSection'
+import { CampaignSection } from '@/components/CartInventory/CampaignSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
@@ -128,9 +128,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </CartEntryList>
                 {cart.campaigns.enabled && (
                   <>
-                    <CampaignsSection
+                    <CampaignSection
                       shopSessionId={shopSessionId}
-                      campaigns={cart.campaigns.list}
+                      campaign={cart.campaigns.list[0]}
                     />
                     <HorizontalLine />
                   </>
