@@ -135,7 +135,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     <HorizontalLine />
                   </>
                 )}
-                <CostSummary {...cart.cost} campaigns={cart.campaigns.list} />
+                <CostSummary {...cart.cost} campaign={cart.campaigns.list[0]} />
                 <div />
               </Space>
 

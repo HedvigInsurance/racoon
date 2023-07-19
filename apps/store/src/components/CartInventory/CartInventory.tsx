@@ -61,7 +61,7 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
         </>
       )}
 
-      <CostSummary {...cost} campaigns={campaign ? [campaign] : []} />
+      <CostSummary {...cost} campaign={campaign} />
     </Space>
   )
 }

@@ -5,9 +5,9 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
 import { CartCampaign, CartCost } from './CartInventory.types'
 
-type Props = CartCost & { campaigns: CartCampaign[] }
+type Props = CartCost & { campaign?: CartCampaign }
 
-export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
+export const CostSummary = ({ total, crossOut, campaign }: Props) => {
   const formatter = useFormatter()
   const { t } = useTranslation('cart')
 
@@ -24,13 +24,13 @@ export const CostSummary = ({ total, crossOut, campaigns }: Props) => {
             )}
             <Text size="md">{formatter.monthlyPrice(total)}</Text>
           </PriceWrapper>
-          {campaigns.map((item) => (
-            <FlexEnd key={item.id}>
+          {campaign && (
+            <FlexEnd>
               <Text size="sm" color="textSecondary">
-                {item.discountDurationExplanation}
+                {campaign.discountDurationExplanation}
               </Text>
             </FlexEnd>
-          ))}
+          )}
         </SpaceFlex>
       </SpaceFlex>
     </SpaceBetweenWrapper>

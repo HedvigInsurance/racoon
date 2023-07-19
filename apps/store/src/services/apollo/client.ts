@@ -90,18 +90,7 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
       languageLink,
       timeoutHttpLink,
     ]),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Cart: {
-          fields: {
-            redeemedCampaigns: {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-              merge: (_, incoming) => incoming,
-            },
-          },
-        },
-      },
-    }),
+    cache: new InMemoryCache(),
     connectToDevTools: process.env.NODE_ENV === 'development',
   })
 }

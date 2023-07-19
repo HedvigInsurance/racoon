@@ -115,7 +115,7 @@ export const ManyPetsMigrationPage = ({
                   ))}
                 </CartEntryList>
 
-                <CostSummary total={totalCost} campaigns={[]} />
+                <CostSummary total={totalCost} />
                 {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
                 <SignButton ref={signButtonRef} type="submit" loading={loading}>
