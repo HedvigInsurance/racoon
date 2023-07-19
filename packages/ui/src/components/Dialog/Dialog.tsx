@@ -25,7 +25,7 @@ const StyledOverlay = styled(DialogPrimitive.Overlay, {
   position: 'fixed',
   inset: 0,
   '@media (prefers-reduced-motion: no-preference)': {
-    animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+    animation: `${overlayShow} 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
   },
 
   ...(frosted && {
