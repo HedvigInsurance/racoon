@@ -98,13 +98,7 @@ module.exports = withBundleAnalyzer({
     const locales = ['no', 'no-en', 'dk', 'dk-en']
     const shutDownMarketsInfo = [
       ...locales.map((locale) => ({
-        source: `/${locale}/new-member`,
-        destination: `/${locale}/info`,
-        permanent: true,
-        locale: false,
-      })),
-      ...locales.map((locale) => ({
-        source: `/${locale}/new-member/offer/:slug*`,
+        source: `/${locale}/new-member/:path*`,
         destination: `/${locale}/info`,
         permanent: true,
         locale: false,
