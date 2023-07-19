@@ -36,13 +36,13 @@ const SIZE_STYLES = {
     height: HEIGHT.small,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.xs,
-    borderRadius: theme.radius.xxs,
+    borderRadius: theme.radius.xs,
   },
   medium: {
     height: HEIGHT.medium,
     paddingInline: theme.space.md,
     fontSize: theme.fontSizes.md,
-    borderRadius: theme.radius[1],
+    borderRadius: theme.radius.sm,
   },
   large: {
     height: HEIGHT.large,
@@ -50,6 +50,6 @@ const SIZE_STYLES = {
     paddingInline: theme.space.xl,
     fontSize: theme.fontSizes.md,
     textAlign: 'center',
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.radius.md,
   },
 } as const
