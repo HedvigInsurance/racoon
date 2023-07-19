@@ -7,7 +7,7 @@ import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
 import { useGetCartCampaign } from './CartInventory.helpers'
 import { CostSummary } from './CostSummary'
-import { ReadOnlyCampaignCodeList } from './ReadOnlyCampaignCodeList'
+import { ReadOnlyCampaignSection } from './ReadOnlyCampaignSection'
 
 type Props = {
   shopSessionId: string
@@ -56,7 +56,7 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
       )}
       {readOnly && !!campaign && (
         <>
-          <ReadOnlyCampaignCodeList campaigns={[campaign]} />
+          <ReadOnlyCampaignSection campaign={campaign} />
           <HorizontalLine />
         </>
       )}
