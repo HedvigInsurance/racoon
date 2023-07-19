@@ -20,15 +20,19 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
   const getDiscountExplanation = useGetDiscountExplanation()
 
-  const campaigns = cart.redeemedCampaigns.map((item) => ({
-    id: item.id,
-    code: item.code,
-    discountExplanation: getDiscountExplanation(item.discount),
-    discountDurationExplanation: getDiscountDurationExplanation(
-      cart.redeemedCampaigns[0].discount,
-      cart.cost.gross,
-    ),
-  }))
+  const campaigns = cart.redeemedCampaign
+    ? [
+        {
+          id: cart.redeemedCampaign.id,
+          code: cart.redeemedCampaign.code,
+          discountExplanation: getDiscountExplanation(cart.redeemedCampaign.discount),
+          discountDurationExplanation: getDiscountDurationExplanation(
+            cart.redeemedCampaign.discount,
+            cart.cost.gross,
+          ),
+        },
+      ]
+    : []
 
   const cost = {
     total: getCartTotal(cart),
@@ -76,11 +80,9 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
 }
 
 const getCartTotal = (cart: CartFragmentFragment) => {
-  const hasDiscount = cart.redeemedCampaigns.length !== 0
+  if (!cart.redeemedCampaign) return cart.cost.net
 
-  if (!hasDiscount) return cart.cost.net
-  // TODO: Only expecting one discount right now. Going forward we'd need to make this work for multi discounts.
-  switch (cart.redeemedCampaigns[0].discount.type) {
+  switch (cart.redeemedCampaign.discount.type) {
     case CampaignDiscountType.FreeMonths:
       return cart.cost.discount
     default:
@@ -91,8 +93,9 @@ const getCartTotal = (cart: CartFragmentFragment) => {
 const getCartCrossOut = (cart: CartFragmentFragment) => {
   const hasDiscount = cart.cost.discount.amount > 0
 
-  if (!hasDiscount) return undefined
-  switch (cart.redeemedCampaigns[0].discount.type) {
+  if (!hasDiscount || !cart.redeemedCampaign) return undefined
+
+  switch (cart.redeemedCampaign.discount.type) {
     case CampaignDiscountType.FreeMonths:
     case CampaignDiscountType.MonthlyPercentage:
       return cart.cost.gross

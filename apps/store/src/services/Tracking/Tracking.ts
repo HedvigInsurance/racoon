@@ -187,7 +187,7 @@ export class Tracking {
     const event = TrackingEvent.Adtraction
     const customer = context.customer as ShopSession['customer']
     // We currently only support 1 campaign code
-    const campaignCode = cart.redeemedCampaigns[0]?.code
+    const campaignCode = cart.redeemedCampaign?.code
     const email = customer?.email
     const productCategories = getAdtractionProductCategories(cart)
     const eventData = {

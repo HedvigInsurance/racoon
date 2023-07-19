@@ -102,7 +102,7 @@ export const OfferPresenter = (props: Props) => {
 
   const discountTooltipProps = useDiscountTooltipProps(
     selectedOffer,
-    shopSession.cart.redeemedCampaigns,
+    shopSession.cart.redeemedCampaign ?? undefined,
   )
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
@@ -282,7 +282,7 @@ type GetCancellationOptionParams = {
 
 const useDiscountTooltipProps = (
   selectedOffer: ProductOfferFragment,
-  redeemedCampaigns?: Array<RedeemedCampaign>,
+  campaign?: RedeemedCampaign,
 ) => {
   const { t } = useTranslation(['purchase-form', 'cart'])
   const formatter = useFormatter()
@@ -311,11 +311,10 @@ const useDiscountTooltipProps = (
       } as const
     }
 
-    const redeemedCampaign = redeemedCampaigns?.[0]
-    if (redeemedCampaign && selectedOffer.cost.discount.amount > 0) {
+    if (campaign && selectedOffer.cost.discount.amount > 0) {
       return {
         children: getDiscountExplanation({
-          ...redeemedCampaign.discount,
+          ...campaign.discount,
           amount: selectedOffer.cost.discount,
         }),
         subtitle: t('DISCOUNT_PRICE_AFTER_EXPIRATION', {
@@ -325,7 +324,7 @@ const useDiscountTooltipProps = (
         color: 'green',
       } as const
     }
-  }, [t, formatter, getDiscountExplanation, selectedOffer, redeemedCampaigns])
+  }, [t, formatter, getDiscountExplanation, selectedOffer, campaign])
 
   return tooltipProps
 }
