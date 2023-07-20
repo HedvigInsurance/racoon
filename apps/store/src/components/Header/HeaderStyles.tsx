@@ -93,7 +93,7 @@ export const NavigationMenuListWrapper = styled.div({
 
   [mq.lg]: {
     backgroundColor: theme.colors.light,
-    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+    boxShadow: theme.shadow.default,
     borderRadius: theme.radius.sm,
     padding: theme.space.md,
   },

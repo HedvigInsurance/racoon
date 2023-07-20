@@ -83,7 +83,7 @@ const DownloadFileLink = styled.a({
   },
 
   ':focus-visible': {
-    boxShadow: `0 0 0 1px ${theme.colors.textPrimary}`,
+    boxShadow: theme.shadow.focus,
   },
 
   [mq.lg]: {

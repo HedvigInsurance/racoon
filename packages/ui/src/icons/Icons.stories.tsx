@@ -56,7 +56,7 @@ const IconWrapper = styled.div({
   overflow: 'hidden',
   backgroundColor: theme.colors.white,
   borderRadius: theme.radius.md,
-  boxShadow: 'rgb(0 0 0 / 10%) 0px 1px 2px',
+  boxShadow: theme.shadow.default,
   border: '1px solid hsla(0, 0%, 0%, 0.1)',
   ':hover': {
     cursor: 'pointer',

@@ -107,7 +107,7 @@ const DialogContentWrapper = styled.div({
   borderBottomRightRadius: theme.radius.md,
 
   backgroundColor: theme.colors.light,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  boxShadow: theme.shadow.default,
 
   [mq.lg]: {
     top: MENU_BAR_HEIGHT_DESKTOP,

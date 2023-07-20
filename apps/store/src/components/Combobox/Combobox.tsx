@@ -186,7 +186,7 @@ const Wrapper = styled.div({
 
   '&[data-expanded=true]': {
     zIndex: zIndexes.header,
-    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+    boxShadow: theme.shadow.default,
     borderTopLeftRadius: theme.radius.sm,
     borderTopRightRadius: theme.radius.sm,
   },
@@ -269,7 +269,7 @@ const List = styled.ul({
 
   position: 'absolute',
   width: '100%',
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  boxShadow: theme.shadow.default,
 })
 
 export const ComboboxOption = styled.li({

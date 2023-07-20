@@ -9,6 +9,8 @@ export const legacyTheme = {
   fontSizes,
   radius,
   space,
+  // Unsued in legacy theme
+  shadow: { default: '', focus: '', focusAlt: '' },
 }
 
 export type LegacyTheme = typeof legacyTheme

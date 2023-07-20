@@ -32,7 +32,7 @@ export const ContactCard = ({ icon, children }: ContactCardProps) => {
 const Card = styled.div({
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
-  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.15)',
+  boxShadow: theme.shadow.default,
   padding: `${theme.space.xl} ${theme.space.sm}`,
   backdropFilter: 'blur(20px)',
 

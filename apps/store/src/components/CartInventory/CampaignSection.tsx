@@ -128,7 +128,7 @@ const ChipButton = styled.button({
   cursor: 'pointer',
 
   ':focus-visible': {
-    boxShadow: `0 0 0 1px ${theme.colors.gray1000}`,
+    boxShadow: theme.shadow.focus,
   },
 
   ':disabled': {
