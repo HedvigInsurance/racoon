@@ -102,9 +102,10 @@ const usePriceIntentContextValue = () => {
   const createNewPriceIntent = useCallback(
     async (shopSession: ShopSession) => {
       priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSession.id)
-      return updatePriceIntent(shopSession)
+      await updatePriceIntent(shopSession)
+      setSelectedOffer(null)
     },
-    [apolloClient, priceTemplate.name, updatePriceIntent],
+    [apolloClient, priceTemplate.name, updatePriceIntent, setSelectedOffer],
   )
 
   const router = useRouter()
