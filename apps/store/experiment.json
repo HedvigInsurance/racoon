@@ -5,12 +5,12 @@
     {
       "name": "Original",
       "id": 0,
-      "weight": 50
+      "weight": 100
     },
     {
       "name": "Variant",
       "id": 1,
-      "weight": 50,
+      "weight": 0,
       "slug": "/start"
     }
   ]
