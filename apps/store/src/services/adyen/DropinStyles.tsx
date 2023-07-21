@@ -4,8 +4,19 @@ import { theme } from 'ui'
 export const AdyenDropinStyles = styled.div({
   '.adyen-checkout__dropin': {
     backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray500}`,
-    borderRadius: 8,
+    borderRadius: theme.radius.lg,
+    padding: theme.space.lg,
+    paddingBottom: theme.space.md,
+    boxShadow: theme.shadow.default,
+  },
+
+  '.adyen-checkout__payment-method__header': {
+    paddingInline: 0,
+    paddingTop: 0,
+  },
+
+  '.adyen-checkout__payment-method__header__title': {
+    padding: 0,
   },
 
   '.adyen-checkout__payment-method': {
@@ -14,26 +25,28 @@ export const AdyenDropinStyles = styled.div({
   },
 
   '.adyen-checkout__payment-method__details': {
-    paddingLeft: theme.space.xs,
-    paddingRight: theme.space.xs,
+    paddingInline: 0,
   },
 
   '.adyen-checkout__button': {
-    backgroundColor: theme.colors.gray900,
+    borderRadius: theme.radius.sm,
+    marginTop: theme.space.md,
   },
+  '.adyen-checkout__button__icon': { display: 'none' },
 
-  '.adyen-checkout__label__text': { color: theme.colors.gray900 },
-
-  '.adyen-checkout__label--focused': {
-    '.adyen-checkout__label__text': { color: theme.colors.gray900 },
+  '.adyen-checkout__label__text': {
+    color: theme.colors.textPrimary,
+    fontSize: theme.fontSizes.xs,
+    marginBottom: theme.space.xxs,
   },
 
   '.adyen-checkout__input': {
-    backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray300}`,
-    borderRadius: 8,
-    height: 52,
-  },
+    border: 0,
+    height: '3.5rem',
+    paddingInline: theme.space.md,
 
-  '.adyen-checkout__button__icon': { display: 'none' },
+    borderRadius: theme.radius.md,
+    // Match background of inputs inside iframes
+    backgroundColor: 'rgb(240, 240, 240)',
+  },
 })

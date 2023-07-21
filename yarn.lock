@@ -19,18 +19,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adyen/adyen-web@npm:5.49.0":
-  version: 5.49.0
-  resolution: "@adyen/adyen-web@npm:5.49.0"
+"@adyen/adyen-web@npm:3.23.0":
+  version: 3.23.0
+  resolution: "@adyen/adyen-web@npm:3.23.0"
   dependencies:
-    "@babel/runtime": ^7.15.4
-    "@babel/runtime-corejs3": ^7.20.1
-    "@types/applepayjs": ^3.0.4
-    "@types/googlepay": ^0.7.0
-    classnames: ^2.3.1
-    core-js-pure: ^3.25.3
-    preact: 10.13.2
-  checksum: 2bac4b04350728e84d648b2ce8ced7de2b9ef17edfa05df6ce3c46396586e768da59a277dfa29c5160bd791070d8207ac5b3265f0e208796ec98d6e83d813bca
+    "@types/applepayjs": ^3.0.1
+    "@types/googlepay": ^0.5.1
+    classnames: ^2.2.6
+    preact: ^10.5.12
+  checksum: 3e66c6c25b4426947e1e726f386f8dfb321b7fc77506c2d5cadd2f32a8ca596e33539ce96165230cbf1a5b4460b3d70fef4375b21dd1e40d31a09a9ddee2301a
   languageName: node
   linkType: hard
 
@@ -3435,16 +3432,6 @@ __metadata:
     core-js-pure: ^3.20.2
     regenerator-runtime: ^0.13.4
   checksum: 55a5315b2e2541aa0dcb6193b72f8f339045d1121ff08ca87b48cbcb89447bc4550a4658e8f149c05305edd75704176ba388d780f7f0461b1b8d956a00fcf123
-  languageName: node
-  linkType: hard
-
-"@babel/runtime-corejs3@npm:^7.20.1":
-  version: 7.22.6
-  resolution: "@babel/runtime-corejs3@npm:7.22.6"
-  dependencies:
-    core-js-pure: ^3.30.2
-    regenerator-runtime: ^0.13.11
-  checksum: 4e1ab78cdb797fe82668df0fcb8c2dccb6c4b12787b07536c4457952c49ff06465a9304b2cff7a31d7e21af6e57008a84ccb0c9886b6aa9cbf4b446c3a8c05e5
   languageName: node
   linkType: hard
 
@@ -9049,7 +9036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/applepayjs@npm:^3.0.4":
+"@types/applepayjs@npm:^3.0.1":
   version: 3.0.4
   resolution: "@types/applepayjs@npm:3.0.4"
   checksum: cce6b3d70f445c485f648e367e069ec38e019d6c2ac215975978d76ed5c123ff8d53b98758e076fe9cc35decd7b9a3e1d3178aa3cf9d80e1a79fe55ecf78529a
@@ -9285,10 +9272,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/googlepay@npm:^0.7.0":
-  version: 0.7.1
-  resolution: "@types/googlepay@npm:0.7.1"
-  checksum: 70ddb1a44b978ca2cfec15c8126e5bf3dfd09fad8ba7fc2637c575481f6e5af9ed29f5cb7e119d4691c4e76b5a08ebb3758581927d6caa301fc2c16697faec6a
+"@types/googlepay@npm:^0.5.1":
+  version: 0.5.2
+  resolution: "@types/googlepay@npm:0.5.2"
+  checksum: 40189c0cc633388c826d007b2d4380cf9958d46f5c84ceb429ffeb89da3e8b7f6919db0c4c746e9eaff63d584cf51c6a2463a5138a8bdd746a12001244700b6b
   languageName: node
   linkType: hard
 
@@ -12117,7 +12104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.2, classnames@npm:^2.3.1":
+"classnames@npm:2.3.2, classnames@npm:^2.2.6":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -12614,13 +12601,6 @@ __metadata:
   version: 3.29.1
   resolution: "core-js-pure@npm:3.29.1"
   checksum: 2ed91f79c13f23c1b70c31edf4224aca99a9ac3db38c79127798c294a36faac0ea0b21070218621741057cf84b3dadff595475580c1fac3a43e02cae575dc27b
-  languageName: node
-  linkType: hard
-
-"core-js-pure@npm:^3.25.3, core-js-pure@npm:^3.30.2":
-  version: 3.31.1
-  resolution: "core-js-pure@npm:3.31.1"
-  checksum: 93c3dd28471755cb81ec4828f5617bd32a7c682295d88671534a6733a0d41dae9e28f8f8000ddd1f1e597a3bec4602db5f906a03c9ba1a360534f7ae2519db7c
   languageName: node
   linkType: hard
 
@@ -20512,10 +20492,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:10.13.2":
-  version: 10.13.2
-  resolution: "preact@npm:10.13.2"
-  checksum: 3bc98aa09bcd297eb59abd7e4f3a4d499b8e345bd68b922f7678ef105ba4721dc9b9940b221e6e3443f957d51402fe407bb96ccaa0a4b65d6808ca8a3be76bfa
+"preact@npm:^10.5.12":
+  version: 10.16.0
+  resolution: "preact@npm:10.16.0"
+  checksum: 47a91f47d583b68a4afe971a7f992c06547df6d637cadf56eb3b69fee1fb202659b199af37d0e1a90637385144cadd75aa40acdb4e125cc4b3155e2883c24c07
   languageName: node
   linkType: hard
 
@@ -22664,7 +22644,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
-    "@adyen/adyen-web": 5.49.0
+    "@adyen/adyen-web": 3.23.0
     "@apollo/client": 3.7.17
     "@babel/core": 7.22.9
     "@babel/preset-env": 7.22.9
