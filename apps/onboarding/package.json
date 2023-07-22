@@ -58,7 +58,7 @@
     "@types/react-dom": "18.2.7",
     "eslint-config-custom": "workspace:",
     "jest": "29.6.1",
-    "msw": "1.2.2",
+    "msw": "1.2.3",
     "next-router-mock": "0.9.7",
     "prettier": "3.0.0",
     "start-server-and-test": "2.0.0",
