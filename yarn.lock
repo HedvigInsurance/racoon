@@ -16894,9 +16894,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-parser@npm:8.2.0":
-  version: 8.2.0
-  resolution: "i18next-parser@npm:8.2.0"
+"i18next-parser@npm:8.3.0":
+  version: 8.3.0
+  resolution: "i18next-parser@npm:8.3.0"
   dependencies:
     "@babel/runtime": ^7.15.4
     broccoli-plugin: ^4.0.7
@@ -16920,7 +16920,7 @@ __metadata:
     vue-template-compiler: ^2.6.11
   bin:
     i18next: bin/cli.js
-  checksum: 5c864911f53d99c0fe95bdc7da5c3efbf21f41ec3cb95d7c58531e94b975990977048cd80726b255299be199593caa5289185cbd122dcee96b74094c0575b373
+  checksum: 95a6bf9302b98716d4a704e47f8a1e3a16392380c20b1e264c187eee5aaf757c3b3b1ce023024082d9a56dd007e78a59c41ba0403a0bd9c66f147d131cc63e24
   languageName: node
   linkType: hard
 
@@ -23420,7 +23420,7 @@ __metadata:
     graphql: 16.7.1
     graphql-tag: 2.12.6
     i18next: 23.2.11
-    i18next-parser: 8.2.0
+    i18next-parser: 8.3.0
     jest: 29.6.1
     jest-environment-jsdom: 29.6.1
     jotai: 2.2.2
