@@ -47,8 +47,8 @@ type Props = {
 }
 
 export const OfferPresenter = (props: Props) => {
-  const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit } = props
-  const { selectedOffer } = props
+  const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit, selectedOffer } =
+    props
   const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
