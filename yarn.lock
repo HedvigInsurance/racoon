@@ -19,6 +19,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@adyen/adyen-web@npm:3.23.0":
+  version: 3.23.0
+  resolution: "@adyen/adyen-web@npm:3.23.0"
+  dependencies:
+    "@types/applepayjs": ^3.0.1
+    "@types/googlepay": ^0.5.1
+    classnames: ^2.2.6
+    preact: ^10.5.12
+  checksum: 3e66c6c25b4426947e1e726f386f8dfb321b7fc77506c2d5cadd2f32a8ca596e33539ce96165230cbf1a5b4460b3d70fef4375b21dd1e40d31a09a9ddee2301a
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.1.0, @ampproject/remapping@npm:^2.2.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -9024,6 +9036,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/applepayjs@npm:^3.0.1":
+  version: 3.0.4
+  resolution: "@types/applepayjs@npm:3.0.4"
+  checksum: cce6b3d70f445c485f648e367e069ec38e019d6c2ac215975978d76ed5c123ff8d53b98758e076fe9cc35decd7b9a3e1d3178aa3cf9d80e1a79fe55ecf78529a
+  languageName: node
+  linkType: hard
+
 "@types/aria-query@npm:^5.0.1":
   version: 5.0.1
   resolution: "@types/aria-query@npm:5.0.1"
@@ -9250,6 +9269,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 8136835e4964015a389595bea39a271e65fa8dce2590770b0e69cb8f29cbd2cd2f7376a8714766fda5796838c426929a3f575cdd565ecf0f19b048f40e0d456f
+  languageName: node
+  linkType: hard
+
+"@types/googlepay@npm:^0.5.1":
+  version: 0.5.2
+  resolution: "@types/googlepay@npm:0.5.2"
+  checksum: 40189c0cc633388c826d007b2d4380cf9958d46f5c84ceb429ffeb89da3e8b7f6919db0c4c746e9eaff63d584cf51c6a2463a5138a8bdd746a12001244700b6b
   languageName: node
   linkType: hard
 
@@ -12078,7 +12104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.2":
+"classnames@npm:2.3.2, classnames@npm:^2.2.6":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -20466,6 +20492,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"preact@npm:^10.5.12":
+  version: 10.16.0
+  resolution: "preact@npm:10.16.0"
+  checksum: 47a91f47d583b68a4afe971a7f992c06547df6d637cadf56eb3b69fee1fb202659b199af37d0e1a90637385144cadd75aa40acdb4e125cc4b3155e2883c24c07
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -22611,6 +22644,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "store@workspace:apps/store"
   dependencies:
+    "@adyen/adyen-web": 3.23.0
     "@apollo/client": 3.7.17
     "@babel/core": 7.22.9
     "@babel/preset-env": 7.22.9

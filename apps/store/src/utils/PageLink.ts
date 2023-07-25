@@ -109,6 +109,14 @@ export const PageLink = {
 
     return url.toString()
   },
+
+  paymentConnectLegacy: ({ locale }: Required<BaseParams>) => `/${locale}/payment/connect-legacy`,
+  apiAdyenCallback: ({ locale }: Required<BaseParams>) =>
+    `${ORIGIN_URL}/api/adyen-callback/${locale}`,
+  paymentConnectLegacySuccess: ({ locale }: Required<BaseParams>) =>
+    `/${locale}/payment/connect-legacy/success`,
+  paymentConnectLegacyError: ({ locale }: Required<BaseParams>) =>
+    `/${locale}/payment/connect-legacy/error`,
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {

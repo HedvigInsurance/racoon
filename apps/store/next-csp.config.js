@@ -15,6 +15,11 @@ const gtmInjectedOrigins = [
   'https://ion.hedvig.com',
 ]
 
+const adyenOrigins = [
+  'https://checkoutshopper-live.adyen.com',
+  'https://checkoutshopper-test.adyen.com',
+]
+
 const scriptSrc = [
   // Storyblok
   'https://app.storyblok.com',
@@ -26,8 +31,8 @@ const scriptSrc = [
   // C1 - Customer First
   'https://c1.hedvig.com',
 
-  // GTM injected scripts
   ...gtmInjectedOrigins,
+  ...adyenOrigins,
 
   // OLD market web
   'https://cdn.adt387.com',
@@ -78,6 +83,7 @@ const imgSrc = [
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
 
+  ...adyenOrigins,
   ...gtmInjectedOrigins,
 
   // OLD market web
@@ -112,6 +118,7 @@ const connectSrc = [
   // Facebook
   'https://connect.facebook.net',
 
+  ...adyenOrigins,
   ...gtmInjectedOrigins,
 
   // OLD market web
@@ -145,6 +152,8 @@ const frameSrc = [
 
   // Insurely
   'https://blocks.insurely.com',
+
+  ...adyenOrigins,
 
   "'self'",
 ]

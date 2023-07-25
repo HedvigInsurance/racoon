@@ -36,6 +36,7 @@
       "**/storybook-static": true,
       "**/*.tsbuildinfo": true
     },
-    "githubPullRequests.ignoredPullRequestBranches": ["main"]
+    "githubPullRequests.ignoredPullRequestBranches": ["main"],
+    "terminal.integrated.cwd": "${workspaceFolder}"
   }
 }
