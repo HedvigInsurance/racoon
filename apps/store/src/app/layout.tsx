@@ -1,4 +1,6 @@
-'use client'
+// Workaround to make app dir works with emotion compiler enabled
+// next.config.js - { compiler: { emotion: true } }
+/** @jsxImportSource react */
 
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import { contentFontClassName } from '@/utils/fonts'
