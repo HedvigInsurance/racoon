@@ -18,7 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (url === undefined) {
     console.error('Missing url: ', url)
-    return res.redirect(...fallbackRedirect)
+    res.redirect(...fallbackRedirect)
+    return
   }
 
   const nextUrl = new URL(url, ORIGIN_URL)
@@ -26,7 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const nextQueryParam = nextUrl.searchParams.get(QueryParam.Next)
   if (!nextQueryParam) {
     console.error('Missing next query parameter: ', url)
-    return res.redirect(...fallbackRedirect)
+    res.redirect(...fallbackRedirect)
+    return
   }
   nextUrl.searchParams.delete(QueryParam.Next)
   nextUrl.pathname = nextQueryParam
@@ -49,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   console.log(`Re-directing to destination: ${redirectUrl}`)
-  return res.redirect(redirectStatus, redirectUrl)
+  res.redirect(redirectStatus, redirectUrl)
 }
 
 export default handler
