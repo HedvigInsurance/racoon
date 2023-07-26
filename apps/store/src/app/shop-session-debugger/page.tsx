@@ -1,8 +1,8 @@
 'use client'
 
+import styled from '@emotion/styled'
 import Head from 'next/head'
 import { CreateSessionForm } from './CreateSessionForm'
-import { Wrapper } from './styles'
 
 const Page = () => {
   return (
@@ -17,3 +17,12 @@ const Page = () => {
 }
 
 export default Page
+
+const Wrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+  maxWidth: '20rem',
+  marginInline: 'auto',
+})
