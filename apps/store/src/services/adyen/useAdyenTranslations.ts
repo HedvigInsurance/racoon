@@ -7,6 +7,7 @@ export const useAdyenTranslations = (): {
   success: string
   retry: string
   error: { heading: string; body: string }
+  startButton: string
 } => {
   const { locale } = useCurrentLocale()
 
@@ -22,6 +23,7 @@ export const useAdyenTranslations = (): {
           heading: 'Der opstod en uventet fejl',
           body: 'Prøv venligst igen eller kontakt os i chatten hvis problemet fortsætter.',
         },
+        startButton: 'Tryk her for at begynde',
       }
     case 'nb-NO':
       return {
@@ -34,6 +36,7 @@ export const useAdyenTranslations = (): {
           heading: 'Det oppstod en feil',
           body: 'Vennligst prøv igjen eller gå tilbake. Hvis feilen vedvarer, vennligst kontakt oss i chatten',
         },
+        startButton: 'Trykk her for å begynne',
       }
     default:
       return {
@@ -46,6 +49,7 @@ export const useAdyenTranslations = (): {
           heading: 'Something went wrong',
           body: 'We could not connect your credit card. Please try again.',
         },
+        startButton: 'Press here to begin',
       }
   }
 }

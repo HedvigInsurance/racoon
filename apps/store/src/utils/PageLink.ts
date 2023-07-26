@@ -15,6 +15,7 @@ type CheckoutPage = BaseParams & { expandCart?: boolean }
 type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
+type AuthExchangeRoute = { authorizationCode: string; next?: string }
 
 type SessionLink = BaseParams & {
   shopSessionId: string
@@ -117,6 +118,10 @@ export const PageLink = {
     `/${locale}/payment/connect-legacy/success`,
   paymentConnectLegacyError: ({ locale }: Required<BaseParams>) =>
     `/${locale}/payment/connect-legacy/error`,
+  apiAuthExchange: ({ authorizationCode, next }: AuthExchangeRoute) => {
+    const nextQueryParam = next ? `?next=${next}` : ''
+    return `/api/auth/exchange/${authorizationCode}${nextQueryParam}`
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
