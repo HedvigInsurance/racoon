@@ -347,9 +347,9 @@ const SoundBars = styled.div({
 
     [`${VideoControls}[data-muted=false] &`]: {
       animation: `${soundBarsAnimation} 1s 2 alternate`,
-      '&:nth-child(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
-      '&:nth-child(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
-      '&:nth-child(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
+      '&:nth-of-type(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
+      '&:nth-of-type(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
+      '&:nth-of-type(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
     },
   },
 })
