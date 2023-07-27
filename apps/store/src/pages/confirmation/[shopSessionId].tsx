@@ -11,7 +11,7 @@ import {
   CurrentMemberDocument,
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
-  ShopSessionOutcomeQuery,
+  ShopSessionOutcomeFragment,
 } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -35,16 +35,21 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
+  const shopSession = await shopSessionService.fetchById(shopSessionId)
 
-  const [layoutWithMenuProps, shopSession, outcome, memberPartnerData, story] = await Promise.all([
+  const shopSessionOutcomeId = await shopSessionService.fetchOutcomeId(shopSessionId)
+  if (!shopSessionOutcomeId) return { notFound: true }
+
+  const [layoutWithMenuProps, outcome, memberPartnerData, story] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
-    shopSessionService.fetchById(shopSessionId),
-    shopSessionService.fetchOutcome(shopSessionId),
+    shopSessionService.fetchOutcome(shopSessionOutcomeId),
     fetchMemberPartnerData(apolloClient),
     getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
   ])
 
   if (layoutWithMenuProps === null) return { notFound: true }
+
+  if (outcome === null) return { notFound: true }
 
   // @TODO: uncomment after implementing signing
   // if (shopSession.checkout.completedAt === null) {
@@ -103,9 +108,9 @@ const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
 }
 
 const getSwitching = (
-  outcome: ShopSessionOutcomeQuery['shopSession']['outcome'],
+  outcome: ShopSessionOutcomeFragment,
 ): Pick<ConfirmationPageProps, 'switching'> | undefined => {
-  const switchingContract = outcome?.createdContracts.find(
+  const switchingContract = outcome.createdContracts.find(
     (item) => !!item.externalInsuranceCancellation?.bankSignering,
   )
 

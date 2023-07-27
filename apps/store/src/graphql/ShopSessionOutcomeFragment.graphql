@@ -1,0 +1,6 @@
+fragment ShopSessionOutcome on ShopSessionOutcome {
+  id
+  createdContracts {
+    ...SwitchingContract
+  }
+}

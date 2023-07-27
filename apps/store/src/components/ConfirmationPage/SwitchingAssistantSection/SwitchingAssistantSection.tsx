@@ -10,7 +10,7 @@ type Props = {
 
 export const SwitchingAssistantSection = (props: Props) => {
   const { t } = useTranslation('checkout')
-  const switchingContracts = useSwitchingContracts({ shopSessionId: props.shopSessionId })
+  const switchingContracts = useSwitchingContracts({ shopSessionOutcomeId: props.shopSessionId })
 
   return (
     <Space y={{ base: 1.5, lg: 2 }}>

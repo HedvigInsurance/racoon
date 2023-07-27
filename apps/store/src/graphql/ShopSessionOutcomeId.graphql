@@ -1,0 +1,7 @@
+query ShopSessionOutcomeId($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    outcome {
+      id
+    }
+  }
+}
