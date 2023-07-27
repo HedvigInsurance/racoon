@@ -23,7 +23,9 @@ export const TextWithLink = ({ children, ...otherProps }: Props) => {
   return (
     <StyledTextWithLink {...otherProps}>
       {beforeLink}
-      <Link {...otherProps}>{linkText}</Link>
+      <Link href={otherProps.href} target={otherProps.target}>
+        {linkText}
+      </Link>
       {afterLink}
     </StyledTextWithLink>
   )

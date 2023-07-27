@@ -108,7 +108,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               <Heading as="h1" variant="standard.24" align="center">
                 {t('CHECKOUT_PAGE_HEADING')}
               </Heading>
-              <Heading as="h2" balance color="textSecondary" variant="standard.24" align="center">
+              <Heading
+                as="h2"
+                balance={true}
+                color="textSecondary"
+                variant="standard.24"
+                align="center"
+              >
                 {t('CHECKOUT_PAGE_SUBHEADING')}
               </Heading>
             </Headings>
