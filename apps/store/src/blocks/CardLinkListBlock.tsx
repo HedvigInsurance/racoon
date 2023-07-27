@@ -35,18 +35,18 @@ const Content = styled.div({
   gridColumn: '1 / span 12',
 
   [mq.md]: {
-    [':nth-child(odd)']: {
+    [':nth-of-type(odd)']: {
       gridColumn: '2 / span 5',
     },
-    [':nth-child(even)']: {
+    [':nth-of-type(even)']: {
       gridColumn: '7 / span 5',
     },
   },
   [mq.lg]: {
-    [':nth-child(odd)']: {
+    [':nth-of-type(odd)']: {
       gridColumn: '3 / span 4',
     },
-    [':nth-child(even)']: {
+    [':nth-of-type(even)']: {
       gridColumn: '7 / span 4',
     },
   },
