@@ -18,11 +18,11 @@ export type BankSigneringContract = {
   approveByDate: string
 }
 
-type Params = { shopSessionId: string }
+type Params = { shopSessionOutcomeId: string }
 
-export const useSwitchingContracts = ({ shopSessionId }: Params) => {
+export const useSwitchingContracts = ({ shopSessionOutcomeId }: Params) => {
   const { data, refetch } = useShopSessionOutcomeQuery({
-    variables: { shopSessionId },
+    variables: { shopSessionOutcomeId },
     pollInterval: 10000,
   })
 
@@ -33,7 +33,7 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
   }, [refetch])
 
   return useMemo<Array<BankSigneringContract>>(() => {
-    const contracts = data?.shopSession.outcome?.createdContracts ?? []
+    const contracts = data?.shopSessionOutcome?.createdContracts ?? []
     const switchingContracts: Array<BankSigneringContract> = []
 
     contracts.forEach((contract) => {
@@ -42,7 +42,7 @@ export const useSwitchingContracts = ({ shopSessionId }: Params) => {
     })
 
     return switchingContracts
-  }, [data?.shopSession.outcome?.createdContracts])
+  }, [data?.shopSessionOutcome?.createdContracts])
 }
 
 export const convertToBankSigneringContract = (

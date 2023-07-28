@@ -5,8 +5,12 @@ import {
   ShopSessionCreateMutationVariables,
   ShopSessionDocument,
   ShopSessionOutcomeDocument,
+  ShopSessionOutcomeFragment,
   ShopSessionOutcomeQuery,
   ShopSessionOutcomeQueryVariables,
+  ShopSessionOutcomeIdQuery,
+  ShopSessionOutcomeIdQueryVariables,
+  ShopSessionOutcomeIdDocument,
   ShopSessionQuery,
   ShopSessionQueryVariables,
 } from '@/services/apollo/generated'
@@ -99,16 +103,28 @@ export class ShopSessionService {
     return shopSession
   }
 
+  public async fetchOutcomeId(shopSessionId: string) {
+    const { data } = await this.apolloClient.query<
+      ShopSessionOutcomeIdQuery,
+      ShopSessionOutcomeIdQueryVariables
+    >({
+      query: ShopSessionOutcomeIdDocument,
+      variables: { shopSessionId },
+    })
+
+    return data.shopSession.outcome?.id ?? null
+  }
+
   public async fetchOutcome(
-    shopSessionId: string,
-  ): Promise<ShopSessionOutcomeQuery['shopSession']['outcome']> {
+    shopSessionOutcomeId: string,
+  ): Promise<ShopSessionOutcomeFragment | null> {
     const { data } = await this.apolloClient.query<
       ShopSessionOutcomeQuery,
       ShopSessionOutcomeQueryVariables
     >({
       query: ShopSessionOutcomeDocument,
-      variables: { shopSessionId },
+      variables: { shopSessionOutcomeId },
     })
-    return data.shopSession.outcome
+    return data.shopSessionOutcome ?? null
   }
 }
