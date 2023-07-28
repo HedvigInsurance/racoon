@@ -1,8 +1,10 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { type ReactNode, useState } from 'react'
 import { Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { Collapsible } from './Collapsible'
 import { DetailsSheet } from './DetailsSheet'
 import { ShortSummary } from './ShortSummary'
@@ -23,6 +25,17 @@ type Props = {
 
 export const CartItem = (props: Props) => {
   const [expanded, setExpanded] = useState(props.defaultExpanded ?? false)
+  const { shopSession } = useShopSession()
+
+  const cartEntry = shopSession?.cart.entries.find(
+    (cartEntry) => cartEntry.variant.product.name === props.productName,
+  )
+  if (!cartEntry) {
+    datadogLogs.logger.error(`[CartItem]: could not found cart entry for ${props.productName}`, {
+      shopSessionId: shopSession?.id,
+    })
+    return null
+  }
 
   return (
     <Card>
@@ -45,9 +58,9 @@ export const CartItem = (props: Props) => {
 
         <Collapsible open={expanded} onOpenChange={setExpanded} cost={props.cost}>
           <DetailsSheet
+            displayItems={cartEntry.displayItems}
             documents={props.documents}
-            productName={props.productName}
-            data={props.data}
+            // TODO: take tierLevel and deductible from ProductOffer.displayItems as well.
             tierLevelDisplayName={props.tierLevelDisplayName}
             deductibleDisplayName={props.deductibleDisplayName}
           />

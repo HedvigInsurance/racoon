@@ -1,53 +1,43 @@
 import styled from '@emotion/styled'
-import { type TFunction } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { Heading, Text } from 'ui'
 import { Space, theme } from 'ui'
-import { useAutoFormat } from '@/utils/useFormatter'
-import { type DataTableRow, getDataTable } from './DataTable/DataTable'
-
-type UserData = Record<string, unknown>
+import { ProductOfferFragment } from '@/services/apollo/generated'
 
 type Props = {
+  displayItems: ProductOfferFragment['displayItems']
   documents: Array<{ displayName: string; url: string }>
-  productName: string
-  data: UserData
   tierLevelDisplayName?: string
   deductibleDisplayName?: string
 }
 
-export const DetailsSheet = (props: Props) => {
-  const { documents, productName, data } = props
+export const DetailsSheet = ({
+  documents,
+  displayItems,
+  tierLevelDisplayName,
+  deductibleDisplayName,
+}: Props) => {
   const { t } = useTranslation('cart')
-  const dataTableRows = getDataTable(productName)
-  const getDataTableValue = useGetDataTableValue()
-
-  const allRows =
-    dataTableRows?.map((item) => ({
-      title: t(item.label, { defaultValue: `${item.label} MISSING` }),
-      value: getDataTableValue(item, data),
-    })) ?? []
-  const rowsWithValues = allRows.filter((item) => item.value !== null)
 
   return (
     <Root y={1}>
       <Table>
-        {rowsWithValues.map(({ title, value }) => (
-          <Row key={title}>
-            <Text color="textSecondary">{title}</Text>
-            <Text>{value}</Text>
+        {displayItems.map(({ displayTitle, displayValue }) => (
+          <Row key={displayTitle}>
+            <Text color="textSecondary">{displayTitle}</Text>
+            <Text>{displayValue}</Text>
           </Row>
         ))}
-        {props.tierLevelDisplayName && (
+        {tierLevelDisplayName && (
           <Row>
             <Text color="textSecondary">{t('DATA_TABLE_TIER_LABEL')}</Text>
-            <Text>{props.tierLevelDisplayName}</Text>
+            <Text>{tierLevelDisplayName}</Text>
           </Row>
         )}
-        {props.deductibleDisplayName && (
+        {deductibleDisplayName && (
           <Row>
             <Text color="textSecondary">{t('DATA_TABLE_DEDUCTIBLE_LABEL')}</Text>
-            <Text>{props.deductibleDisplayName}</Text>
+            <Text>{deductibleDisplayName}</Text>
           </Row>
         )}
       </Table>
@@ -67,58 +57,6 @@ export const DetailsSheet = (props: Props) => {
       </div>
     </Root>
   )
-}
-
-const useGetDataTableValue = () => {
-  const { t } = useTranslation('cart')
-  const autoFormat = useAutoFormat()
-
-  return (row: DataTableRow, data: UserData) => {
-    const value = data[row.key]
-
-    switch (row.type) {
-      case 'AREA':
-        if (typeof value === 'number') {
-          return t('DATA_TABLE_LIVING_SPACE_VALUE', { area: value })
-        } else return null
-
-      case 'HOUSEHOLD_SIZE':
-        return formatHouseholdSize(t, data)
-
-      case 'MILEAGE':
-        if (value) {
-          return t('DATA_TABLE_MILEAGE_VALUE', { value: value })
-        } else return null
-
-      case 'CAT_GENDER':
-        if (value === 'MALE') {
-          return t('DATA_TABLE_CAT_GENDER_VALUE_MALE')
-        } else return t('DATA_TABLE_CAT_GENDER_VALUE_FEMALE')
-
-      case 'DOG_GENDER':
-        if (value === 'MALE') {
-          return t('DATA_TABLE_DOG_GENDER_VALUE_MALE')
-        } else return t('DATA_TABLE_DOG_GENDER_VALUE_FEMALE')
-
-      case 'LIST':
-        return formatList(value)
-
-      default:
-        return autoFormat(row.key, value)
-    }
-  }
-}
-
-const formatHouseholdSize = (t: TFunction<'cart', undefined>, data: UserData) => {
-  const count = parseInt(String(data['numberCoInsured']), 10)
-  if (isNaN(count)) return null
-  return t('DATA_TABLE_HOUSEHOLD_SIZE_VALUE', { count: count + 1 })
-}
-
-const formatList = (value: unknown) => {
-  if (Array.isArray(value)) {
-    return value.join(', ')
-  } else return null
 }
 
 const Root = styled(Space)({
