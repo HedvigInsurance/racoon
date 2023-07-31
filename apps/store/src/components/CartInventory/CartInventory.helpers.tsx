@@ -5,6 +5,7 @@ import {
   CampaignDiscountType,
   ExternalInsuranceCancellationOption,
   RedeemedCampaign,
+  ProductOfferFragment,
 } from '@/services/apollo/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { convertToDate } from '@/utils/date'
@@ -49,9 +50,17 @@ export const getCartEntry = (item: ShopSession['cart']['entries'][number]): Cart
     documents: item.variant.documents,
     productName: item.variant.product.name,
     data: item.priceIntentData,
+    displayItems: parseDisplayItems(item.displayItems),
     tierLevelDisplayName: getTierLevelDisplayName(item),
     deductibleDisplayName: item.deductible?.displayName,
   }
+}
+
+const parseDisplayItems = (displayItems: ProductOfferFragment['displayItems']) => {
+  return displayItems.map(({ displayTitle, displayValue }) => ({
+    title: displayTitle,
+    value: displayValue,
+  }))
 }
 
 const getTierLevelDisplayName = (item: ShopSession['cart']['entries'][number]) => {

@@ -1,7 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { useMemo } from 'react'
 import { Button, theme } from 'ui'
+import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
 import { CartItem } from '@/components/CartItem/CartItem'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
@@ -22,16 +24,10 @@ export const SingleTierOffer = (props: Props) => {
     },
   })
 
+  const cartEntry = useMemo(() => getCartEntry(props.offer), [props.offer])
+
   return (
-    <CartItem
-      pillow={props.product.pillowImage}
-      displayName={props.product.displayNameFull}
-      cost={props.offer.cost}
-      documents={props.offer.variant.documents}
-      productName={props.product.name}
-      data={props.offer.priceIntentData}
-      startDate={props.offer.startDate ? new Date(props.offer.startDate) : undefined}
-    >
+    <CartItem {...cartEntry}>
       <ButtonGroup>
         <ProductPageLink href={props.product.pageLink}>
           {t('CART_ENTRY_EDIT_BUTTON')}

@@ -12,7 +12,7 @@ type Story = StoryObj<typeof CartItem>
 
 export const ReadOnly: Story = {
   args: {
-    displayName: 'Homeowner Insurance',
+    title: 'Homeowner Insurance',
     pillow: {
       src: 'https://a.storyblok.com/f/165473/832x832/f98d88ac63/hedvig-pillows-homeowner.png',
     },
@@ -33,6 +33,28 @@ export const ReadOnly: Story = {
       street: 'Kungsgatan 1',
       zipCode: '111 22',
     },
+    displayItems: [
+      {
+        title: 'Address',
+        value: 'Kungsgatan 1',
+      },
+      {
+        title: 'Postal Code',
+        value: '111 22',
+      },
+      {
+        title: 'Living Space',
+        value: '80 m²',
+      },
+      {
+        title: 'Number of people',
+        value: 'One person',
+      },
+      {
+        title: 'Coverage level',
+        value: 'Home Insurance Rent',
+      },
+    ],
     startDate: new Date(),
     defaultExpanded: false,
   },

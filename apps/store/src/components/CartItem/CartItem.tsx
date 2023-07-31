@@ -1,76 +1,51 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { type ReactNode, useState } from 'react'
 import { Text, theme } from 'ui'
+import { type CartEntry } from '@/components/CartInventory/CartInventory.types'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { type ProductOfferFragment } from '@/services/apollo/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { Collapsible } from './Collapsible'
 import { DetailsSheet } from './DetailsSheet'
 import { ShortSummary } from './ShortSummary'
 
-type Props = {
-  pillow: { src: string; alt?: string | null }
-  displayName: string
+type Props = CartEntry & {
   children: ReactNode
-  startDate?: Date
-  productName: string
-  cost: ProductOfferFragment['cost']
-  documents: ProductOfferFragment['variant']['documents']
-  data: ProductOfferFragment['priceIntentData']
-  tierLevelDisplayName?: string
-  deductibleDisplayName?: string
   defaultExpanded?: boolean
 }
 
-export const CartItem = (props: Props) => {
-  const [expanded, setExpanded] = useState(props.defaultExpanded ?? false)
-  const { shopSession } = useShopSession()
-
-  const cartEntry = shopSession?.cart.entries.find(
-    (cartEntry) => cartEntry.variant.product.name === props.productName,
-  )
-  if (!cartEntry) {
-    datadogLogs.logger.error(`[CartItem]: could not found cart entry for ${props.productName}`, {
-      shopSessionId: shopSession?.id,
-    })
-    return null
-  }
+export const CartItem = ({ children, defaultExpanded, ...cartEntry }: Props) => {
+  const [expanded, setExpanded] = useState(defaultExpanded ?? false)
 
   return (
     <Card>
       <Hoverable>
         <Header onClick={() => setExpanded((prev) => !prev)}>
-          <Pillow size="small" {...props.pillow} />
+          <Pillow size="small" {...cartEntry.pillow} />
           <div>
             <Text as="p" size="md">
-              {props.displayName}
+              {cartEntry.title}
             </Text>
             <ShortSummary
-              startDate={props.startDate}
-              productName={props.productName}
-              data={props.data}
+              // TODO: fix that type definition
+              startDate={cartEntry.startDate ?? undefined}
+              productName={cartEntry.productName}
+              data={cartEntry.data}
             />
           </div>
         </Header>
 
         <Divider />
 
-        <Collapsible open={expanded} onOpenChange={setExpanded} cost={props.cost}>
+        <Collapsible open={expanded} onOpenChange={setExpanded} cost={cartEntry.cost}>
           <DetailsSheet
             displayItems={cartEntry.displayItems}
-            documents={props.documents}
+            documents={cartEntry.documents}
             // TODO: take tierLevel and deductible from ProductOffer.displayItems as well.
-            tierLevelDisplayName={props.tierLevelDisplayName}
-            deductibleDisplayName={props.deductibleDisplayName}
+            tierLevelDisplayName={cartEntry.tierLevelDisplayName}
+            deductibleDisplayName={cartEntry.deductibleDisplayName}
           />
         </Collapsible>
       </Hoverable>
-      {props.children ? (
-        <BottomRow>{props.children}</BottomRow>
-      ) : (
-        <div style={{ height: theme.space.lg }} />
-      )}
+      {children ? <BottomRow>{children}</BottomRow> : <div style={{ height: theme.space.lg }} />}
     </Card>
   )
 }

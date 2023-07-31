@@ -1,4 +1,6 @@
 import { useTranslation } from 'next-i18next'
+import { useMemo } from 'react'
+import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
 import { CartItem } from '@/components/CartItem/CartItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { ProductPageLink } from './ProductPageLink'
@@ -12,16 +14,10 @@ type Props = {
 export const MultiTierOffer = (props: Props) => {
   const { t } = useTranslation()
 
+  const cartEntry = useMemo(() => getCartEntry(props.defaultOffer), [props.defaultOffer])
+
   return (
-    <CartItem
-      pillow={props.product.pillowImage}
-      displayName={props.product.displayNameFull}
-      cost={props.defaultOffer.cost}
-      documents={props.defaultOffer.variant.documents}
-      productName={props.product.name}
-      data={props.defaultOffer.priceIntentData}
-      startDate={props.defaultOffer.startDate ? new Date(props.defaultOffer.startDate) : undefined}
-    >
+    <CartItem {...cartEntry}>
       <ProductPageLink href={props.product.pageLink}>
         {t('CRM_RETARGETING_CHOOSE_TIER')}
       </ProductPageLink>

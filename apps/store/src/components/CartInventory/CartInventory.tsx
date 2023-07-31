@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { Space, theme } from 'ui'
 import { CampaignDiscountType, CartFragmentFragment } from '@/services/apollo/generated'
-import { convertToDate } from '@/utils/date'
 import { CampaignSection } from './CampaignSection'
 import { CartEntryItem } from './CartEntryItem/CartEntryItem'
 import { CartEntryList } from './CartEntryList'
 import { useGetCartCampaign } from './CartInventory.helpers'
+import { getCartEntry } from './CartInventory.helpers'
 import { CostSummary } from './CostSummary'
 import { ReadOnlyCampaignSection } from './ReadOnlyCampaignSection'
 
@@ -32,19 +32,9 @@ export const CartInventory = ({ shopSessionId, cart, readOnly = false }: Props) 
         {cart.entries.map((item) => (
           <CartEntryItem
             key={item.id}
-            offerId={item.id}
-            title={item.variant.product.displayNameFull}
-            cost={item.cost}
-            pillow={{
-              src: item.variant.product.pillowImage.src,
-              alt: item.variant.product.pillowImage.alt ?? '',
-            }}
-            documents={item.variant.documents}
-            productName={item.variant.product.name}
-            data={item.priceIntentData}
-            shopSessionId={shopSessionId}
-            startDate={convertToDate(item.startDate)}
             readOnly={readOnly}
+            shopSessionId={shopSessionId}
+            {...getCartEntry(item)}
           />
         ))}
       </CartEntryList>

@@ -35,12 +35,7 @@ export const CartEntryItem = ({
   }
 
   return (
-    <CartItem
-      {...cartEntry}
-      displayName={cartEntry.title}
-      startDate={cartEntry.startDate ?? undefined}
-      defaultExpanded={defaultOpen}
-    >
+    <CartItem {...cartEntry} defaultExpanded={defaultOpen}>
       {!readOnly && (
         <ActionsRow>
           <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />

@@ -2,14 +2,12 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Heading, Text } from 'ui'
 import { Space, theme } from 'ui'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { CartEntry } from '@/components/CartInventory/CartInventory.types'
 
-type Props = {
-  displayItems: ProductOfferFragment['displayItems']
-  documents: Array<{ displayName: string; url: string }>
-  tierLevelDisplayName?: string
-  deductibleDisplayName?: string
-}
+type Props = Pick<
+  CartEntry,
+  'displayItems' | 'documents' | 'tierLevelDisplayName' | 'deductibleDisplayName'
+>
 
 export const DetailsSheet = ({
   documents,
@@ -22,10 +20,10 @@ export const DetailsSheet = ({
   return (
     <Root y={1}>
       <Table>
-        {displayItems.map(({ displayTitle, displayValue }) => (
-          <Row key={displayTitle}>
-            <Text color="textSecondary">{displayTitle}</Text>
-            <Text>{displayValue}</Text>
+        {displayItems.map(({ title, value }) => (
+          <Row key={title}>
+            <Text color="textSecondary">{title}</Text>
+            <Text>{value}</Text>
           </Row>
         ))}
         {tierLevelDisplayName && (
