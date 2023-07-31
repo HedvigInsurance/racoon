@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { TFunction } from 'next-i18next'
 import Personnummer from 'personnummer'
 import { CurrencyCode } from '@/services/apollo/generated'
@@ -65,9 +66,14 @@ const formatTitleCase = (str: string): string => {
 }
 
 const formatSsn = (ssn: string): string => {
-  const longFormat = Personnummer.parse(ssn).format(true)
-  // replace the last 4 digits with asterisks
-  return longFormat.replace(/(\d{4})$/, '****')
+  try {
+    const longFormat = Personnummer.parse(ssn).format(true)
+    // replace the last 4 digits with asterisks
+    return longFormat.replace(/(\d{4})$/, '****')
+  } catch (error) {
+    datadogLogs.logger.warn('Could not format SSN', { ssn, error })
+    return ssn
+  }
 }
 
 const formatCarRegistrationNumber = (regNumber: string): string => {
