@@ -26,3 +26,29 @@ const Layout = ({ children }: PropsWithChildren) => {
 }
 
 export default Layout
+
+export const metadata = {
+  twitter: { site: '@hedvigapp', card: 'summary_large_image' },
+  themeColor: 'hsl(0, 0%, 98%)', // theme.colors.light
+  icons: [
+    { rel: 'apple-touch-icon', sizes: '76x76', url: '/apple-touch-icon.png' },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: '/favicon-32x32.png',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      url: '/favicon-16x16.png',
+    },
+    {
+      rel: 'mask-icon',
+      url: '/safari-pinned-tab.svg',
+      color: 'hsl(0, 0%, 7%)', // theme.colors.gray1000
+    },
+  ],
+  manifest: '/site.webmanifest',
+}
