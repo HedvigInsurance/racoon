@@ -6,6 +6,7 @@ import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { contentFontClassName } from '@/utils/fonts'
+import { GlobalStyles } from './GlobalStyles'
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
@@ -15,6 +16,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <body className={contentFontClassName}>
         <ApolloWrapper>
           <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
+            <GlobalStyles />
             {children}
           </NextAppDirEmotionCacheProvider>
         </ApolloWrapper>
