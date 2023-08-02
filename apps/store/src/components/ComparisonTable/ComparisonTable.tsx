@@ -90,7 +90,7 @@ export const DataCell = ({ children, active, alignment = 'center', ...props }: D
 const TableDataCell = styled.td({
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.xs,
-  verticalAlign: 'middle',
+  verticalAlign: 'top',
   minWidth: '2.5rem',
   color: theme.colors.textSecondary,
 
