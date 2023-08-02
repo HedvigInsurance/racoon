@@ -1,6 +1,5 @@
 import { UrlObject } from 'url'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -127,16 +126,7 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
       </FullscreenDialog.Trigger>
 
       <FullscreenDialog.Modal>
-        <AnimationWrapper
-          initial={{ opacity: 0, y: '2vh' }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ...theme.transitions.framer.easeInOutCubic }}
-        >
-          <StyledSelectInsuranceGrid
-            products={productsByCategory}
-            heading={t('SELECT_INSURANCE')}
-          />
-        </AnimationWrapper>
+        <StyledSelectInsuranceGrid products={productsByCategory} heading={t('SELECT_INSURANCE')} />
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
@@ -206,10 +196,6 @@ const MainLink = styled(Link)({
   [`&:focus-visible ~ ${CallToAction} #read-more-btn`]: {
     boxShadow: theme.shadow.focus,
   },
-})
-
-const AnimationWrapper = styled(motion.div)({
-  width: '100%',
 })
 
 const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({

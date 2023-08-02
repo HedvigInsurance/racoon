@@ -1,6 +1,5 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { motion, Transition } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactElement } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
@@ -34,7 +33,6 @@ export const BankIdDialog = () => {
 
   let content: ReactElement | null = null
   let footer: ReactElement | null = null
-  let animationState = currentOperation?.state
 
   const { ssn } = currentOperation ?? {}
   if (currentOperation !== null && ssn) {
@@ -88,7 +86,6 @@ export const BankIdDialog = () => {
             {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
           </Button>
         )
-        animationState = BankIdState.Pending
         break
       }
       case BankIdState.Success: {
@@ -132,26 +129,8 @@ export const BankIdDialog = () => {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal
-        Footer={
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={ANIMATE_TRANSITION}
-          >
-            {footer}
-          </motion.div>
-        }
-        center={true}
-      >
-        <motion.div
-          key={animationState}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={ANIMATE_TRANSITION}
-        >
-          {content}
-        </motion.div>
+      <FullscreenDialog.Modal Footer={footer} center={true}>
+        {content}
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
@@ -170,9 +149,3 @@ const pulseAnimation = keyframes({
   '100%': { opacity: 0.2 },
 })
 const Pulsating = styled.div({ animation: `${pulseAnimation} 2s ease-in-out infinite` })
-
-const ANIMATE_TRANSITION: Transition = {
-  duration: 0.6,
-  delay: 0.3,
-  ...theme.transitions.framer.easeInOutCubic,
-}
