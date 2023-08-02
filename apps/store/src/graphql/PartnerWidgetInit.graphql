@@ -1,0 +1,19 @@
+mutation PartnerWidgetInit($input: PartnerWidgetInitInput!) {
+  partnerWidgetInit(input: $input) {
+    id
+    partnerName
+    partnerWidgetData {
+      trialInfo {
+        startDate
+        endDate
+        ssn
+        firstName
+        lastName
+        email
+        phoneNumber
+        birthDate
+        insuranceData
+      }
+    }
+  }
+}
