@@ -1,4 +1,6 @@
 import styled from '@emotion/styled'
+import { motion, type Transition } from 'framer-motion'
+import { type ReactNode } from 'react'
 import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
@@ -16,15 +18,25 @@ export const Modal = ({ children, Footer, center = false }: Props) => {
         </CloseButton>
       </Header>
       {center ? (
-        <CenteredMain>{children}</CenteredMain>
+        <CenteredMain>
+          <AnimateContentWrapper>{children}</AnimateContentWrapper>
+        </CenteredMain>
       ) : (
         <Main>
           <ClearHeader />
-          {children}
+          <AnimateContentWrapper>{children}</AnimateContentWrapper>
           <ClearFooter />
         </Main>
       )}
-      {Footer && <FooterWrapper>{Footer}</FooterWrapper>}
+      {Footer && (
+        <FooterWrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={ANIMATE_TRANSITION}
+        >
+          {Footer}
+        </FooterWrapper>
+      )}
     </Content>
   )
 }
@@ -80,7 +92,7 @@ const ClearFooter = styled.div({
   },
 })
 
-const FooterWrapper = styled.footer({
+const FooterWrapper = styled(motion.footer)({
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -98,6 +110,30 @@ const FooterWrapper = styled.footer({
   },
 })
 
+const AnimateContentWrapper = ({ children }: { children: ReactNode }) => {
+  return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: '2vh',
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={ANIMATE_TRANSITION}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export const Root = Dialog.Root
 export const Close = Dialog.Close
 export const Trigger = Dialog.Trigger
+
+const ANIMATE_TRANSITION: Transition = {
+  duration: 0.6,
+  delay: 0.3,
+  ...theme.transitions.framer.easeInOutCubic,
+}

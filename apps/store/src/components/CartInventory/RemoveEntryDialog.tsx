@@ -1,7 +1,6 @@
-import { motion, type Transition } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, ReactNode, useId } from 'react'
-import { Button, Text, theme } from 'ui'
+import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { CartFragmentFragment } from '@/services/apollo/generated'
 import { CartEntry } from './CartInventory.types'
@@ -31,11 +30,7 @@ export const RemoveEntryDialog = ({ children, title, ...mutationParams }: Props)
       <FullscreenDialog.Modal
         center={true}
         Footer={
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={ANIMATE_TRANSITION}
-          >
+          <>
             <Button form={formId} type="submit" loading={loading} disabled={loading}>
               {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}
             </Button>
@@ -44,32 +39,14 @@ export const RemoveEntryDialog = ({ children, title, ...mutationParams }: Props)
                 {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
               </Button>
             </FullscreenDialog.Close>
-          </motion.div>
+          </>
         }
       >
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: '20%',
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={ANIMATE_TRANSITION}
-        >
-          <form id={formId} onSubmit={handleSubmit} />
-          <Text size={{ _: 'md', lg: 'xl' }} align="center">
-            {t('REMOVE_ENTRY_MODAL_PROMPT', { name: title })}
-          </Text>
-        </motion.div>
+        <form id={formId} onSubmit={handleSubmit} />
+        <Text size={{ _: 'md', lg: 'xl' }} align="center">
+          {t('REMOVE_ENTRY_MODAL_PROMPT', { name: title })}
+        </Text>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
-}
-
-const ANIMATE_TRANSITION: Transition = {
-  duration: 0.6,
-  delay: 0.3,
-  ...theme.transitions.framer.easeInOutCubic,
 }
