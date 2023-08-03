@@ -5,6 +5,7 @@ query ProductData($productName: String!) {
     displayNameFull
     displayNameShort
     tagline
+    pageLink
     pillowImage {
       id
       alt
