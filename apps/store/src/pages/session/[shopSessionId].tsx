@@ -42,11 +42,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     return fallbackRedirect
   }
 
-  const nextURL = new URL(ORIGIN_URL)
+  const nextURL = new URL(req.url || '', ORIGIN_URL)
   nextURL.pathname = PageLink.home({ locale })
 
   const priceIntentId = query['price_intent_id']
   if (typeof priceIntentId === 'string') {
+    nextURL.searchParams.delete('price_intent_id')
     try {
       const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
       const priceIntent = await priceIntentService.get(priceIntentId)
@@ -65,6 +66,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const campaignCode = query['code']
   if (typeof campaignCode === 'string') {
+    nextURL.searchParams.delete('code')
     try {
       await apolloClient.mutate<RedeemCampaignMutation, RedeemCampaignMutationVariables>({
         mutation: RedeemCampaignDocument,
@@ -77,6 +79,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const nextQueryParam = query['next']
   if (typeof nextQueryParam === 'string') {
+    nextURL.searchParams.delete('next')
     const queryLocale = nextQueryParam.split('/')[1]
     if (isRoutingLocale(queryLocale)) {
       nextURL.pathname = nextQueryParam
