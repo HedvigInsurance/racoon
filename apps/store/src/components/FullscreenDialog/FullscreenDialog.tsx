@@ -133,7 +133,6 @@ export const Close = Dialog.Close
 export const Trigger = Dialog.Trigger
 
 const ANIMATE_TRANSITION: Transition = {
-  duration: 0.6,
-  delay: 0.3,
+  duration: 0.5,
   ...theme.transitions.framer.easeInOutCubic,
 }
