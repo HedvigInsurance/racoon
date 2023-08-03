@@ -8,6 +8,7 @@ export const productData: ProductData = {
   displayNameFull: 'Homeowner Insurance',
   displayNameShort: 'Homeowner',
   tagline: 'For you, your stuff and your apartment',
+  pageLink: '/se/apartment-brf',
   pillowImage: {
     __typename: 'StoryblokImageAsset',
     id: '9003664',
