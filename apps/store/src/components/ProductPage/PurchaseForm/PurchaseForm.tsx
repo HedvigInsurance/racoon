@@ -304,6 +304,7 @@ type EditingStateProps = {
 
 const EditingState = (props: EditingStateProps) => {
   const { shopSession, priceIntent, onComplete } = props
+  const { t } = useTranslation('purchase-form')
   const tracking = useTracking()
 
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -331,6 +332,7 @@ const EditingState = (props: EditingStateProps) => {
         onComplete()
       } else {
         setIsLoadingPrice(false)
+        onComplete(t('GENERAL_ERROR_DIALOG_PROMPT'))
       }
     } catch (error) {
       // Error is already handled in onError callback
