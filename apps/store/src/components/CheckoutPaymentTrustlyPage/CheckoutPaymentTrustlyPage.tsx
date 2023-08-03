@@ -8,6 +8,7 @@ import { Heading, Space, Text, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { publishPartnerEvent } from '@/services/partner/publishPartnerEvent'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -31,6 +32,7 @@ export const CheckoutPaymentTrustlyPage = (props: Props) => {
   const handleSuccess = () => {
     LOGGER.info('Trustly payment success', { shopSessionId: props.shopSessionId })
     setIsSuccess(true)
+    publishPartnerEvent({ status: 'success' })
     router.push(props.nextUrl)
   }
 

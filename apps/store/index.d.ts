@@ -52,6 +52,11 @@ declare global {
       config?: InsurelyConfig
       prefill?: InsurelyPrefill
     }
+
+    // React Native
+    ReactNativeWebView?: {
+      postMessage: (message: string) => void
+    }
   }
 }
 

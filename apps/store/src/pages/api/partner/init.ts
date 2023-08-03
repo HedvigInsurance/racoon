@@ -5,6 +5,7 @@ import { initializeApolloServerSide } from '@/services/apollo/client'
 import { createPartnerShopSession } from '@/services/partner/createPartnerShopSession'
 import { parseSearchParams } from '@/services/partner/parseSearchParams'
 import { parseTrialInfo } from '@/services/partner/parseTrialInfo'
+import { PARTNER_REQUEST_ID_QUERY_PARAM } from '@/services/partner/usePublishPartnerInitEvent'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -54,6 +55,13 @@ const handler: NextApiHandler = async (req, res) => {
     const { pageLink } = await getProductData({ apolloClient, productName })
     const nextUrl = new URL(pageLink, ORIGIN_URL)
     nextUrl.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+    if (partnerWidgetInitVariables.externalRequestId) {
+      nextUrl.searchParams.set(
+        PARTNER_REQUEST_ID_QUERY_PARAM,
+        partnerWidgetInitVariables.externalRequestId,
+      )
+    }
+
     res.redirect(nextUrl.toString())
   } catch (error) {
     console.error(`Failed to initialize partner widget session: ${error}`)
