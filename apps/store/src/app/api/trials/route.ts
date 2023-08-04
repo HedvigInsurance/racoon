@@ -34,12 +34,19 @@ export const GET = async (request: Request) => {
   const url = new URL(request.url, ORIGIN_URL)
 
   const apiKey = url.searchParams.get('partner')
+
+  const fallbackURL = new URL('/debugger', ORIGIN_URL)
+
   if (!apiKey) {
     console.info('No partner API key provided')
-    return NextResponse.redirect(`${ORIGIN_URL}/debugger?success=false`)
+    fallbackURL.searchParams.set('error', 'Partner API key missing')
+    return NextResponse.redirect(fallbackURL.toString())
   }
+  fallbackURL.searchParams.set('partner', apiKey)
 
   const ssn = url.searchParams.get('ssn')
+  if (ssn) fallbackURL.searchParams.set('ssn', ssn)
+
   const body = {
     ...DEFAULT_BODY,
     trialData: {
@@ -63,8 +70,9 @@ export const GET = async (request: Request) => {
 
   if (!response.ok) {
     console.info(`Failed to initialize partner widget session: ${response.status}`)
-    console.debug(await response.text())
-    return NextResponse.redirect(`${ORIGIN_URL}/debugger?success=false`)
+    const error = (await response.json()) as { errorMessage: string }
+    fallbackURL.searchParams.set('error', error.errorMessage)
+    return NextResponse.redirect(fallbackURL.toString())
   }
 
   const data = (await response.json()) as ResponseData
