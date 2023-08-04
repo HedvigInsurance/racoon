@@ -53,7 +53,11 @@ export const CartItem = (props: Props) => {
           />
         </Collapsible>
       </Hoverable>
-      <BottomRow>{props.children}</BottomRow>
+      {props.children ? (
+        <BottomRow>{props.children}</BottomRow>
+      ) : (
+        <div style={{ height: theme.space.lg }} />
+      )}
     </Card>
   )
 }
