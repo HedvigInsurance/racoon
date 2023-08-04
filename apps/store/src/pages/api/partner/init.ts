@@ -2,6 +2,7 @@ import { NextApiHandler } from 'next'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { initializeApolloServerSide } from '@/services/apollo/client'
+import { getAccessToken, resetAuthTokens } from '@/services/authApi/persist'
 import { createPartnerShopSession } from '@/services/partner/createPartnerShopSession'
 import { parseSearchParams } from '@/services/partner/parseSearchParams'
 import { parseTrialInfo } from '@/services/partner/parseTrialInfo'
@@ -19,6 +20,12 @@ const handler: NextApiHandler = async (req, res) => {
     const { locale, partnerWidgetInitVariables, productName, priceIntentData, customerData } =
       parseSearchParams(searchParams)
     console.info(`Partner Init | Partner ID = ${partnerWidgetInitVariables.partnerId}`)
+
+    const accessToken = getAccessToken({ req, res })
+    if (accessToken) {
+      console.info(`Partner Init | Discarding auth token from previous session`)
+      resetAuthTokens({ req, res })
+    }
 
     const apolloClient = await initializeApolloServerSide({ locale, req, res })
     const {
