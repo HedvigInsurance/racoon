@@ -1,6 +1,11 @@
 import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import { Money } from '@/utils/formatter'
 
+type DisplayItem = {
+  title: string
+  value: string
+}
+
 export type CartEntry = {
   offerId: string
   title: string
@@ -10,6 +15,7 @@ export type CartEntry = {
   documents: CartFragmentFragment['entries'][number]['variant']['documents']
   productName: string
   data: Record<string, unknown>
+  displayItems: Array<DisplayItem>
   tierLevelDisplayName?: string
   deductibleDisplayName?: string
 }
