@@ -153,6 +153,8 @@ const frameSrc = [
   // Insurely
   'https://blocks.insurely.com',
 
+  'https://dev.hedvigit.com',
+
   ...adyenOrigins,
 
   "'self'",
