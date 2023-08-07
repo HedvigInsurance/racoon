@@ -3,13 +3,13 @@ import { Global } from '@emotion/react'
 import { Provider as JotaiProvider } from 'jotai'
 import { appWithTranslation } from 'next-i18next'
 import type { AppPropsWithLayout } from 'next/app'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Router from 'next/router'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
-import { GlobalBanner } from '@/components/GlobalBanner/GlobalBanner'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
@@ -33,6 +33,10 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+
+const DynamicGlobalBanner = dynamic(() => import('@/components/GlobalBanner/GlobalBanner'), {
+  ssr: false,
+})
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -92,7 +96,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 <BalancerProvider>
                   <AppErrorProvider>
                     <AppErrorDialog />
-                    <GlobalBanner />
+                    <DynamicGlobalBanner />
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
