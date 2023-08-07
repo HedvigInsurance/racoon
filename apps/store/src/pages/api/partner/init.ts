@@ -36,6 +36,9 @@ const handler: NextApiHandler = async (req, res) => {
     setupShopSessionServiceServerSide({ apolloClient, req, res }).saveId(shopSessionId)
     console.info(`Partner Init | Shop Session = ${shopSessionId}, Partner = ${partnerName}`)
 
+    const { pageLink } = await getProductData({ apolloClient, productName })
+    const nextUrl = new URL(pageLink, ORIGIN_URL)
+
     const service = priceIntentServiceInitServerSide({ req, res, apolloClient })
     const priceTemplate = fetchPriceTemplate(productName)
     if (!priceTemplate) throw new Error(`Missing price template for ${productName}`)
@@ -59,9 +62,17 @@ const handler: NextApiHandler = async (req, res) => {
     }
     console.info(`Partner Init | Price Intent = ${priceIntent.id}`)
 
-    const { pageLink } = await getProductData({ apolloClient, productName })
-    const nextUrl = new URL(pageLink, ORIGIN_URL)
-    nextUrl.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+    if (process.env.FEATURE_PARTNER_AUTO_CONFIRM === 'true') {
+      try {
+        console.debug(`Partner Init | Try to confirm price intent`)
+        await service.confirm(priceIntent.id)
+        console.info(`Partner Init | Price Intent confirmed`)
+      } catch (error) {
+        console.debug(`Partner Init | Failed to confirm price intent: ${error}`)
+        nextUrl.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+      }
+    }
+
     if (partnerWidgetInitVariables.externalRequestId) {
       nextUrl.searchParams.set(
         PARTNER_REQUEST_ID_QUERY_PARAM,
