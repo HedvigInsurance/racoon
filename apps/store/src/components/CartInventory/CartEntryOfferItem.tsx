@@ -3,10 +3,9 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { atom, useAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
-import { Button, theme, Text, Space, mq } from 'ui'
+import { Button, theme, Text, mq } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
@@ -78,19 +77,15 @@ export const CartEntryOfferItem = ({ shopSessionId, product, offer }: CartOfferI
       </Layout.Content>
 
       <Layout.Actions>
-        <Space y={1}>
-          <SpaceFlex space={0.25}>
-            <form onSubmit={handleSubmitQuickAdd}>
-              <Button loading={loading} size="medium" type="submit">
-                {t('QUICK_ADD_BUTTON')}
-              </Button>
-            </form>
+        <Button type="submit" form="submit-quick-add" loading={loading} size="medium">
+          {t('QUICK_ADD_BUTTON')}
+        </Button>
 
-            <GhostButton size="medium" variant="ghost" onClick={handleClickHide}>
-              {t('QUICK_ADD_DISMISS')}
-            </GhostButton>
-          </SpaceFlex>
-        </Space>
+        <GhostButton type="button" size="medium" variant="ghost" onClick={handleClickHide}>
+          {t('QUICK_ADD_DISMISS')}
+        </GhostButton>
+
+        <form id="submit-quick-add" onSubmit={handleSubmitQuickAdd} />
       </Layout.Actions>
 
       <Layout.Price>
@@ -120,19 +115,29 @@ const Main = styled.li({
   borderRadius: theme.radius.md,
   border: `1px solid ${theme.colors.blue200}`,
 
-  [mq.lg]: {
-    padding: theme.space.lg,
-  },
-
   display: 'grid',
   gap: theme.space.md,
   gridTemplateAreas: `
     "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
     "${GRID_AREAS.Separator} ${GRID_AREAS.Separator} ${GRID_AREAS.Separator}"
     "${GRID_AREAS.Content} ${GRID_AREAS.Content} ${GRID_AREAS.Content}"
-    "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
+    "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Actions}"
+    "${GRID_AREAS.Price} ${GRID_AREAS.Price} ${GRID_AREAS.Price}"
   `,
   gridTemplateColumns: 'auto minmax(0, 1fr)',
+
+  [mq.xs]: {
+    gridTemplateAreas: `
+      "${GRID_AREAS.Pillow} ${GRID_AREAS.Title} ${GRID_AREAS.Title}"
+      "${GRID_AREAS.Separator} ${GRID_AREAS.Separator} ${GRID_AREAS.Separator}"
+      "${GRID_AREAS.Content} ${GRID_AREAS.Content} ${GRID_AREAS.Content}"
+      "${GRID_AREAS.Actions} ${GRID_AREAS.Actions} ${GRID_AREAS.Price}"
+    `,
+  },
+
+  [mq.lg]: {
+    padding: theme.space.lg,
+  },
 })
 
 const Layout = {
@@ -150,7 +155,11 @@ const Layout = {
     gap: theme.space.xs,
   }),
   Content: styled.div({ gridArea: GRID_AREAS.Content }),
-  Actions: styled.div({ gridArea: GRID_AREAS.Actions }),
+  Actions: styled.div({
+    gridArea: GRID_AREAS.Actions,
+    display: 'flex',
+    gap: theme.space.xxs,
+  }),
 } as const
 
 const GhostButton = styled(Button)({
