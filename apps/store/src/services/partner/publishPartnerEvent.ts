@@ -1,4 +1,4 @@
-type PartnerEvent =
+export type PartnerEvent =
   | { status: 'success' }
   | { status: 'cancel' }
   | { status: 'error' }
