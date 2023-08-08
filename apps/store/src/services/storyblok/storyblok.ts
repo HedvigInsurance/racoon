@@ -37,6 +37,7 @@ import { ImageBlock } from '@/blocks/ImageBlock'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
+import { InsurelyBlock } from '@/blocks/InsurelyBlock'
 import { MediaListBlock } from '@/blocks/MediaListBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -292,6 +293,7 @@ export const initStoryblok = () => {
     SelectInsuranceGridBlock,
     QuickPurchaseBlock,
     ComparisonTableBlock,
+    InsurelyBlock,
     ...blogBlocks,
     ...manyPetsBlocks,
     ...retargetingBlocks,

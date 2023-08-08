@@ -30,6 +30,7 @@ type InsurelyIframeProps = {
   onClose?: () => void
   onCollection?: (collectionId: string) => void
   onCompleted?: () => void
+  className?: string
 }
 
 export const InsurelyIframe = (props: InsurelyIframeProps) => {
@@ -65,6 +66,7 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
         id="insurely-data-aggregation"
         title="insurely-data-aggregation"
         src={IFRAME_URL}
+        className={props.className}
         sandbox="allow-scripts
     allow-same-origin
     allow-popups
@@ -84,19 +86,26 @@ type InsurelyConfig = {
   company?: string
   ssn?: string
   language?: Language
+  showCloseButton?: boolean
+  hideResultsView?: boolean
+  salesSupportToolSessionId?: string
 }
 
 export const setInsurelyConfig = (config: InsurelyConfig) => {
+  const insurelyConfig = window.insurely?.config
   window.insurely = {
     config: {
-      ...window.insurely?.config,
+      ...insurelyConfig,
       ...(config.customerId && { customerId: config.customerId }),
       ...(config.configName && { configName: config.configName }),
       ...(config.language && { language: config.language }),
 
-      showCloseButton: true,
+      showCloseButton: config.showCloseButton ?? true,
       dataAggregation: {
-        hideResultsView: true,
+        ...insurelyConfig?.dataAggregation,
+        ...(config.salesSupportToolSessionId && { sstSessionId: config.salesSupportToolSessionId }),
+        hideResultsView:
+          config.hideResultsView ?? insurelyConfig?.dataAggregation?.hideResultsView ?? true,
       },
     },
     prefill: {
