@@ -13,7 +13,7 @@ export type Product = Pick<
 >
 
 type Props = {
-  products: Product[]
+  products: Array<Product>
   heading?: string
   className?: string
 }

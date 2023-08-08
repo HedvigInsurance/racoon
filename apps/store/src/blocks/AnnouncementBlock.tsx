@@ -56,13 +56,13 @@ type Announcement = {
   variant?: BannerVariant
 }
 
-const PERSISTED_DISMISSED_ANNOUNCEMENTS = atomWithStorage<string[]>(
+const PERSISTED_DISMISSED_ANNOUNCEMENTS = atomWithStorage<Array<string>>(
   'dismissedAnnouncements',
   [],
   createJSONStorage(() => sessionStorage),
 )
 
-const ANNOUNCEMENTS_ATOM = atom<Announcement[]>([])
+const ANNOUNCEMENTS_ATOM = atom<Array<Announcement>>([])
 
 const ACTIVE_ANNOUNCEMENTS = atom(
   (get) => {

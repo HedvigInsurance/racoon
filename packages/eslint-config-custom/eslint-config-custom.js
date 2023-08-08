@@ -63,7 +63,13 @@ module.exports = {
         allowIndexSignaturePropertyAccess: true,
       },
     ],
-    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/array-type': [
+      'error',
+      {
+        default: 'generic',
+        readonly: 'generic',
+      },
+    ],
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',

@@ -11,7 +11,7 @@ type HeroBlockProps = SbBaseBlockProps<{
   background?: StoryblokAsset
   backgroundLandscape?: StoryblokAsset
   buttons: ExpectedBlockType<ButtonBlockProps>
-  content: SbBlokData[]
+  content: Array<SbBlokData>
   heightPortrait?: string
   heightLandscape?: string
   verticalAlignment?: VerticalAlignment

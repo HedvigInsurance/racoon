@@ -66,7 +66,7 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
   )
 }
 
-const removeDuplicates = <T,>(arr: T[]): T[] => Array.from(new Set(arr))
+const removeDuplicates = <T,>(arr: Array<T>): Array<T> => Array.from(new Set(arr))
 
 const getUniquePerilTitles = (tiers: Array<ProductOfferFragment>) => {
   const allPerils = tiers.flatMap((item) => item.variant.perils)

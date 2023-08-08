@@ -4,10 +4,10 @@ import { type Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
-  blocks: BlockData[] = [],
+  blocks: Array<BlockData> = [],
   targetType: string,
-): BlockData[] => {
-  const result: BlockData[] = []
+): Array<BlockData> => {
+  const result: Array<BlockData> = []
   for (const block of blocks) {
     const blockOfType = checkBlockType(block, targetType)
     if (blockOfType === null) {

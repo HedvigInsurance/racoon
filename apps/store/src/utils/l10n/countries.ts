@@ -5,7 +5,7 @@ export type CountryData = {
   adtractionScriptSrc?: string
   countryCode: CountryCode
   defaultLocale: IsoLocale
-  locales: IsoLocale[]
+  locales: Array<IsoLocale>
 }
 
 export const countries: Record<CountryLabel, CountryData> = {

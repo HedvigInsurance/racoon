@@ -18,7 +18,7 @@ const Grid = styled(GridLayout.Root)({
   gap: `${theme.space.xxl} ${theme.space.md}`,
 })
 
-const getColumns = (items: InsurableLimit[]) => {
+const getColumns = (items: Array<InsurableLimit>) => {
   const noOfItems = items.length
   if (noOfItems > 4 || noOfItems === 3) return '1/3'
   return '1/2'

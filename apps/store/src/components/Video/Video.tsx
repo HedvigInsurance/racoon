@@ -29,7 +29,7 @@ export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
   /**
    * An array of videos with different supported formats
    */
-  sources: VideoSource[]
+  sources: Array<VideoSource>
   poster?: string
   showControls?: boolean
   hideSoundControl?: boolean

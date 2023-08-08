@@ -24,7 +24,7 @@ export const Default: Story = {
   ),
 }
 
-const items: DownloadableContentProps[] = [
+const items: Array<DownloadableContentProps> = [
   {
     thumbnail: {
       id: 10046027,

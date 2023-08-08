@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { SelectInsuranceGrid, Product } from './SelectInsuranceGrid'
 
-const PRODUCTS_FIXTURE: Product[] = [
+const PRODUCTS_FIXTURE: Array<Product> = [
   {
     id: '1',
     displayNameShort: 'Bostadsrätt',
