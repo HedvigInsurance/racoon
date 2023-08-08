@@ -112,7 +112,7 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
 
   if (productsByCategory.length < 1) {
     console.warn(
-      `[ProductCard]: No products category link ${link} were found. Skipping cta render!`,
+      `[ProductCard]: No products category link ${link.url} were found. Skipping cta render!`,
     )
     return null
   }

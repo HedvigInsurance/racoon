@@ -4,7 +4,8 @@ module.exports = {
 
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'next/core-web-vitals',
     // Uses eslint-config-prettier to turn off all rules that are unnecessary or might conflict with Prettier
     'prettier',
@@ -51,10 +52,22 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
+    '@typescript-eslint/restrict-template-expressions': 'off', // Breaks with emotion styles referring to other components
+    '@typescript-eslint/consistent-indexed-object-style': 'off',
+
+    // TODO: Typed lint rules that we might want to consider in the future
+    '@typescript-eslint/dot-notation': 'off',
+    '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+    '@typescript-eslint/prefer-optional-chain': 'off',
+    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+    '@typescript-eslint/no-redundant-type-constituents': 'off',
 
     '@next/next/no-html-link-for-pages': 'off',
-    // For Storybook stories
-    'import/no-anonymous-default-export': 'off',
+    'import/no-anonymous-default-export': 'off', // For Storybook stories
   },
   overrides: [
     // Only uses Testing Library lint rules in test files
@@ -74,16 +87,6 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
-      },
-    },
-    {
-      files: ['**/*.{ts,tsx}'],
-      extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
-      rules: {
-        '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
-
-        // Breaks with emotion styles referring to other components
-        '@typescript-eslint/restrict-template-expressions': 'off',
       },
     },
   ],
