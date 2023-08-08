@@ -11,6 +11,7 @@ import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntr
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { ReadOnlyCampaignSection } from '@/components/CartInventory/ReadOnlyCampaignSection'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -132,7 +133,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     />
                   ))}
                 </CartEntryList>
-                {cart.campaigns.enabled && (
+                {cart.campaigns.enabled ? (
                   <>
                     <CampaignSection
                       shopSessionId={shopSessionId}
@@ -140,6 +141,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     />
                     <HorizontalLine />
                   </>
+                ) : (
+                  cart.campaigns.redeemed && (
+                    <>
+                      <ReadOnlyCampaignSection campaign={cart.campaigns.redeemed} />
+                      <HorizontalLine />
+                    </>
+                  )
                 )}
                 <CostSummary {...cart.cost} campaign={cart.campaigns.redeemed} />
                 <div />

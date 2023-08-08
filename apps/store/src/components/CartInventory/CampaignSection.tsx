@@ -57,7 +57,7 @@ export const CampaignSection = ({ shopSessionId, campaign }: Props) => {
           {t('CAMPAIGN_CODE_HEADING')}
         </Heading>
 
-        <Collapsible.Trigger asChild>
+        <Collapsible.Trigger asChild={true}>
           <Switch checked={open} />
         </Collapsible.Trigger>
       </SpaceBetween>
@@ -132,7 +132,8 @@ const ChipButton = styled.button({
   },
 
   ':disabled': {
-    opacity: 0.6,
+    opacity: 0.8,
+    cursor: 'not-allowed',
   },
 })
 

@@ -9,6 +9,7 @@ import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntr
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
+import { ReadOnlyCampaignSection } from '@/components/CartInventory/ReadOnlyCampaignSection'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
@@ -71,12 +72,20 @@ export const CartPage = (props: CartPageProps) => {
             ))}
         </CartEntryList>
 
-        {shopSessionId && campaignsEnabled && (
-          <Space y={{ base: 1, sm: 1.5 }}>
-            <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
-            <HorizontalLine />
-          </Space>
-        )}
+        {campaignsEnabled
+          ? shopSessionId && (
+              <Space y={{ base: 1, sm: 1.5 }}>
+                <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
+                <HorizontalLine />
+              </Space>
+            )
+          : !!campaign && (
+              <Space y={{ base: 1, sm: 1.5 }}>
+                <ReadOnlyCampaignSection campaign={campaign} />
+                <HorizontalLine />
+              </Space>
+            )}
+
         {cost && <CostSummary {...cost} campaign={campaign} />}
 
         {showProductRecommendations && (
