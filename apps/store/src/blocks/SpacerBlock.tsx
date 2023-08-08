@@ -35,9 +35,9 @@ export const SpacerBlock = ({ blok }: SpacerBlockProps) => {
 SpacerBlock.blockName = 'spacer'
 
 const Spacer = styled.div<Props>(({ size }) => ({
-  height: spaceBlockScale['_'][size as SpaceSize],
+  height: spaceBlockScale._[size as SpaceSize],
 
   [mq.md]: {
-    height: spaceBlockScale['md'][size as SpaceSize],
+    height: spaceBlockScale.md[size as SpaceSize],
   },
 }))

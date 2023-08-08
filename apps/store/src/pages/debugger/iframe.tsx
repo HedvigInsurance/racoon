@@ -46,7 +46,7 @@ export const getServerSideProps = (
     }
   }
 
-  const queryUrl = context.query['url']
+  const queryUrl = context.query.url
   const url = typeof queryUrl === 'string' ? queryUrl : DEFAULT_URL
 
   return {
