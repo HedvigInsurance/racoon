@@ -13,6 +13,7 @@ import type checkout from '../../public/locales/en/checkout.json'
 import type common from '../../public/locales/en/common.json'
 import type purchaseForm from '../../public/locales/en/purchase-form.json'
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 interface I18nNamespaces {
   bankid: typeof bankid
   cart: typeof cart
@@ -22,6 +23,7 @@ interface I18nNamespaces {
 }
 
 declare module 'i18next' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface CustomTypeOptions {
     defaultNS: 'common'
     resources: I18nNamespaces
