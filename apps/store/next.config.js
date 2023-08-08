@@ -180,33 +180,47 @@ const getExperimentVariantRedirects = () => {
   ]
 }
 
+const HOME_INSURANCE_SE_SOURCES = [
+  '/se/new-member/home-insurance',
+  '/se/new-member/home-accident-needer',
+  '/se/new-member/home-switcher',
+]
+const HOME_INSURANCE_EN_SOURCES = [
+  '/se-en/new-member/home-insurance',
+  '/se-en/new-member/home-accident-needer',
+  '/se-en/new-member/home-switcher',
+]
 const HOME_INSURANCE_REDIRECTS = [
-  {
-    source: '/se/new-member/home-insurance',
-    has: [{ type: 'query', key: 'code' }],
-    destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/se-en/new-member/home-insurance',
-    has: [{ type: 'query', key: 'code' }],
-    destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/se/new-member/home-insurance',
-    destination: '/se/forsakringar/hemforsakring',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/se-en/new-member/home-insurance',
-    destination: '/se-en/insurances/home-insurance',
-    permanent: true,
-    locale: false,
-  },
+  ...HOME_INSURANCE_SE_SOURCES.flatMap((source) => [
+    {
+      source,
+      has: [{ type: 'query', key: 'code' }],
+      destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
+      permanent: true,
+      locale: false,
+    },
+    {
+      source,
+      destination: '/se/forsakringar/hemforsakring',
+      permanent: true,
+      locale: false,
+    },
+  ]),
+  ...HOME_INSURANCE_EN_SOURCES.flatMap((source) => [
+    {
+      source,
+      has: [{ type: 'query', key: 'code' }],
+      destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
+      permanent: true,
+      locale: false,
+    },
+    {
+      source,
+      destination: '/se-en/insurances/home-insurance',
+      permanent: true,
+      locale: false,
+    },
+  ]),
 ]
 
 const CAR_INSURANCE_REDIRECTS = [
