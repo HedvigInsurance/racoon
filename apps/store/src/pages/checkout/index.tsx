@@ -34,7 +34,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     [shopSession?.cart.entries],
   )
 
-  if (!shopSession || !shopSession.customer) return null
+  if (!shopSession?.customer) return null
 
   const { authenticationStatus } = shopSession.customer
 

@@ -63,8 +63,6 @@ module.exports = {
         allowIndexSignaturePropertyAccess: true,
       },
     ],
-    '@typescript-eslint/no-unsafe-enum-comparison': 'off',
-    '@typescript-eslint/prefer-optional-chain': 'off',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',

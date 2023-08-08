@@ -247,7 +247,7 @@ const useSignMigration = (
 
       if (!shopSession) return
 
-      if (!shopSession.customer || !shopSession.customer.ssn) {
+      if (!shopSession.customer?.ssn) {
         throw new Error('Must have customer data and ssn in it')
       }
 
