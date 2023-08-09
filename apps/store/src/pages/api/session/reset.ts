@@ -8,7 +8,7 @@ import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await resetSessionServerSide(req, res)
 
-  const nextQueryParam = req.query.next
+  const nextQueryParam = req.query['next']
   const nextURL = new URL(ORIGIN_URL)
   if (typeof nextQueryParam === 'string') {
     nextURL.pathname = nextQueryParam
