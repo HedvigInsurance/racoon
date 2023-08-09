@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
-const CUSTOMER_ID = process.env.NEXT_PUBLIC_INSURELY_CUSTOMER_ID as string
+const CUSTOMER_ID = process.env.NEXT_PUBLIC_INSURELY_CUSTOMER_ID!
 const IFRAME_URL = 'https://blocks.insurely.com/'
 const BOOTSTRAP_SCRIPT_URL = 'https://blocks.insurely.com/assets/bootstrap.js'
 
