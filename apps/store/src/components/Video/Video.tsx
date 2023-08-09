@@ -32,6 +32,7 @@ export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
   sources: VideoSource[]
   poster?: string
   showControls?: boolean
+  hideSoundControl?: boolean
 } & VideoSize
 
 const autoplaySettings = {
@@ -51,6 +52,7 @@ export const Video = ({
   onPlaying,
   onPause,
   showControls = true,
+  hideSoundControl = false,
   ...delegated
 }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -60,7 +62,8 @@ export const Video = ({
   const playPauseButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, setState] = useState<State>(State.Paused)
-  const [muted, setMuted] = useState(true)
+  // Mute video if auto playing or hidden sound controls
+  const [muted, setMuted] = useState(delegated.autoPlay || hideSoundControl)
 
   useEffect(() => {
     // Lazy load videos that are autoplaying
@@ -216,21 +219,23 @@ export const Video = ({
                 {state === State.Paused ? 'Play' : 'Pause'}
               </span>
             </ControlButton>
-            <ControlButton
-              onClick={toggleSound}
-              variant="secondary"
-              size="small"
-              aria-labelledby={muteButtonId}
-            >
-              <SoundBars>
-                <span />
-                <span />
-                <span />
-              </SoundBars>
-              <span id={muteButtonId} hidden>
-                {muted ? 'Mute' : 'Unmute'}
-              </span>
-            </ControlButton>
+            {!hideSoundControl && (
+              <ControlButton
+                onClick={toggleSound}
+                variant="secondary"
+                size="small"
+                aria-labelledby={muteButtonId}
+              >
+                <SoundBars>
+                  <span />
+                  <span />
+                  <span />
+                </SoundBars>
+                <span id={muteButtonId} hidden>
+                  {muted ? 'Mute' : 'Unmute'}
+                </span>
+              </ControlButton>
+            )}
           </Controls>
         </VideoControls>
       )}
