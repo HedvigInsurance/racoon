@@ -22,7 +22,7 @@ type Props = {
  */
 export const StepperInput = (props: Props) => {
   const { max, min = 0, value, defaultValue, label, optionLabel, ...inputProps } = props
-  const [internalValue, setInternalValue] = useState(value || defaultValue || min)
+  const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? min)
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const increment: MouseEventHandler = (event) => {

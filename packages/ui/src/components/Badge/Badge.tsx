@@ -24,8 +24,8 @@ export const BadgeBase = styled(
   'div',
   elementConfig,
 )<BadgeBaseProps>(({ color, size, ...props }) => {
-  color = color || 'blueFill1'
-  size = size || 'sm'
+  color = color ?? 'blueFill1'
+  size = size ?? 'sm'
   return {
     display: 'inline-block',
     color: theme.colors.dark,

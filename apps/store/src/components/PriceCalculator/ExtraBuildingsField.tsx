@@ -66,7 +66,7 @@ export const ExtraBuildingsField = ({
     const data = Object.fromEntries(formData.entries())
 
     await onSubmit({
-      [field.name]: [...(field.value || []), convertExtraBuilding(data)],
+      [field.name]: [...(field.value ?? []), convertExtraBuilding(data)],
     })
     setIsOpen(false)
   }
@@ -75,7 +75,7 @@ export const ExtraBuildingsField = ({
     const identifier = JSON.stringify(extraBuilding)
 
     await onSubmit({
-      [field.name]: (field.value || []).filter((item) => {
+      [field.name]: (field.value ?? []).filter((item) => {
         const itemIdentifier = JSON.stringify(item)
         return itemIdentifier !== identifier
       }),
