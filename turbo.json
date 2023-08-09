@@ -25,7 +25,8 @@
     },
     "build": {
       "dependsOn": ["codegen"],
-      "outputs": [".next/**"]
+      "outputs": [".next/**"],
+      "env": ["STORYBLOK_CACHE_VERSION"]
     },
     "e2e": {
       "dependsOn": ["build"]
