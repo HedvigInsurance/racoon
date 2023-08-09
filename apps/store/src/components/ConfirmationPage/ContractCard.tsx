@@ -2,9 +2,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Space, Text, mq, theme } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useBankSigneringInitMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useFormatter } from '@/utils/useFormatter'
@@ -22,57 +22,62 @@ export const ContractCard = (props: BankSigneringContract) => {
   )
 }
 
-const PendingContractCard = ({ id, status, displayName, approveByDate }: ContractCardProps) => {
+const PendingContractCard = (props: ContractCardProps) => {
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
-  const windowRef = useRef<Window | null>(null)
 
   const { showError } = useAppErrorHandleContext()
   const [initiateBankSignering, result] = useBankSigneringInitMutation({
+    refetchQueries: 'active',
     onCompleted(data) {
-      BANK_SIGNERING_LOGGER.info('Redirecting to BankSignering')
       const cancellation =
         data.contractBankSigneringCancellationInitiate.externalInsuranceCancellation
-      const bankSigneringUrl = cancellation?.bankSignering?.url
-
-      if (windowRef.current && bankSigneringUrl) {
-        windowRef.current.location = bankSigneringUrl
+      if (!cancellation?.bankSignering?.url) {
+        BANK_SIGNERING_LOGGER.warn('BankSignering url missing')
+        showError(new Error(t('UNKNOWN_ERROR_MESSAGE', { ns: 'common' })))
       }
     },
     onError(error) {
       BANK_SIGNERING_LOGGER.warn('Failed to create BankSignering approval', {
         error: error.message,
       })
-      windowRef.current?.close()
       showError(error)
     },
   })
 
   const handleClick = (contractId: string) => () => {
-    datadogRum.addAction('initiateBankSignering', { contractId })
+    datadogRum.addAction('BankSignering Initiate', { contractId })
     // Logger context used in mutation result handlers
     BANK_SIGNERING_LOGGER.addContext('contractId', contractId)
-    // Ref: https://stackoverflow.com/questions/20696041/window-openurl-blank-not-working-on-imac-safari
-    windowRef.current = window.open(undefined, '_blank')
     initiateBankSignering({ variables: { contractId } })
   }
 
   return (
     <PendingCard>
       <Space y={1}>
-        <PendingStatusPill>{t(status.messageKey)}</PendingStatusPill>
+        <PendingStatusPill>{t(props.status.messageKey)}</PendingStatusPill>
         <Space y={1}>
           <div>
-            <Text>{displayName}</Text>
+            <Text>{props.displayName}</Text>
             <Text color="textTranslucentSecondary">
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_MESSAGE', {
-                date: formatter.fromNow(new Date(approveByDate)),
+                date: formatter.fromNow(new Date(props.approveByDate)),
               })}
             </Text>
           </div>
-          <Button onClick={handleClick(id)} loading={result.loading}>
-            {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
-          </Button>
+          {props.url ? (
+            <ButtonNextLink
+              href={props.url}
+              target="_blank"
+              data-dd-action-name="BankSignering Redirect"
+            >
+              {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
+            </ButtonNextLink>
+          ) : (
+            <Button onClick={handleClick(props.id)} loading={result.loading}>
+              {t('FLOW_ACTIVATION_BUTTON', { ns: 'common' })}
+            </Button>
+          )}
         </Space>
       </Space>
     </PendingCard>

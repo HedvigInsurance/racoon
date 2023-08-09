@@ -53,7 +53,7 @@ export const IdleState = (props: Props) => {
           <IframePlaceholder data-state={state}>
             <WideSpace y={0.5}>
               <Button loading={state === 'loading'} disabled={state === 'error'}>
-                {t('PAYMENT_CONNECT_IFRAME_LOAD_BUTTON')}
+                {t('FLOW_ACTIVATION_BUTTON')}
               </Button>
               {state === 'error' && (
                 <Text align="center">{t('PAYMENT_CONNECT_ERROR_LINK_EXPIRED')}</Text>

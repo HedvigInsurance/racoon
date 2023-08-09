@@ -16,6 +16,7 @@ export type BankSigneringContract = {
     messageKey: ParseKeys<'checkout'>
   }
   approveByDate: string
+  url?: string
 }
 
 type Params = { shopSessionOutcomeId: string }
@@ -60,6 +61,7 @@ export const convertToBankSigneringContract = (
     company: insurer,
     status: getStatus(contract.externalInsuranceCancellation.status),
     approveByDate: contract.externalInsuranceCancellation.bankSignering.approveByDate,
+    url: contract.externalInsuranceCancellation.bankSignering.url ?? undefined,
   }
 }
 
