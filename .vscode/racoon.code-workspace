@@ -5,10 +5,6 @@
       "path": "../"
     },
     {
-      "name": "📱 onboarding",
-      "path": "../apps/onboarding"
-    },
-    {
       "name": "📱 store",
       "path": "../apps/store"
     },

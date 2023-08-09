@@ -594,9 +594,4 @@ export const AccordionBlock = ({ blok }: Props) => {
 
 ## Useful links
 
-- [Web Onboarding - Offer debugger](https://www.dev.hedvigit.com/se-en/new-member/offer-debugger)
-- [Web Onboarding - Staging](https://www.dev.hedvigit.com/se-en/new-member)
-- [Web Onboarding - Production](https://hedvig.com/se-en/new-member)
-- [Market Web - Staging](https://www.dev.hedvigit.com/)
-- [Market Web - Production](https://hedvig.com/)
 - [Purchase Journey Hub](https://www.notion.so/hedviginsurance/Purchase-Journey-Hub-e21d772039fc4fed88d119c7c9e9dca6)

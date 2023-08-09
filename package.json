@@ -13,8 +13,6 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "test": "turbo run test",
-    "e2e-onboarding": "turbo run e2e --filter=onboarding",
-    "e2e-onboarding:headless": "turbo run e2e:headless --filter=onboarding",
     "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{js,mjs,cjs,ts,tsx,md,graphql}\"",
     "prepare": "husky install",

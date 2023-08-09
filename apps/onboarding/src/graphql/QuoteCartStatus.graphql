@@ -1,9 +1,0 @@
-query QuoteCartStatus($id: ID!) {
-  quoteCart(id: $id) {
-    market
-    checkout {
-      status
-      statusText
-    }
-  }
-}
