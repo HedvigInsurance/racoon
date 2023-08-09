@@ -31,10 +31,10 @@ export const useCustomerFirst = () => {
     if (!chatWidgetSrc) return
 
     const iframeOrigin = new URL(chatWidgetSrc).origin
-    const handleMessage = ({ data, origin }: MessageEvent<MessageData | unknown>) => {
+    const handleMessage = ({ data, origin }: MessageEvent<unknown>) => {
       if (origin === iframeOrigin) {
-        if (data === 'showWidget') setOpen(true)
-        else if (data === 'hideWidget') setOpen(false)
+        if (data === MessageData.ShowWidget) setOpen(true)
+        else if (data === MessageData.HideWidget) setOpen(false)
       }
     }
     window.addEventListener('message', handleMessage)
@@ -49,4 +49,7 @@ export const useCustomerFirst = () => {
   return { show } as const
 }
 
-type MessageData = 'showWidget' | 'hideWidget'
+enum MessageData {
+  ShowWidget = 'showWidget',
+  HideWidget = 'hideWidget',
+}

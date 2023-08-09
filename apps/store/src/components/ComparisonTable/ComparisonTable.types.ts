@@ -4,9 +4,9 @@ export const TableMarkers = {
   NotCovered: '[]',
 } as const
 
-type Row = Array<string | typeof TableMarkers.Covered | typeof TableMarkers.NotCovered>
+type Row = Array<string>
 
-export type Head = Array<string | typeof TableMarkers.EmptyHeader>
+export type Head = Array<string>
 
 export type Body = Array<Row>
 

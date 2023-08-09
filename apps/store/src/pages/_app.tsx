@@ -30,6 +30,7 @@ import { trackPageViews } from '@/services/Tracking/trackPageViews'
 import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
+import { UiLocale } from '@/utils/l10n/types'
 import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
@@ -58,7 +59,7 @@ if (typeof window !== 'undefined') {
   initDatadog()
 
   Router.ready(() => {
-    const { routingLocale } = getLocaleOrFallback(Router.locale)
+    const { routingLocale } = getLocaleOrFallback(Router.locale as UiLocale)
     const { countryCode } = getCountryByLocale(routingLocale)
     tracking.reportAppInit({ countryCode })
 

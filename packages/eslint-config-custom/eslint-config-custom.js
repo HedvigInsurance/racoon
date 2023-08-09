@@ -56,7 +56,7 @@ module.exports = {
     '@typescript-eslint/restrict-template-expressions': 'off', // Breaks with emotion styles referring to other components
     '@typescript-eslint/consistent-indexed-object-style': 'off',
 
-    // TODO: Typed lint rules that we might want to consider in the future
+    // Typed lint rules
     '@typescript-eslint/dot-notation': [
       'error',
       {
@@ -82,7 +82,6 @@ module.exports = {
       },
     ],
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
-    '@typescript-eslint/no-redundant-type-constituents': 'off',
 
     '@next/next/no-html-link-for-pages': 'off',
     'import/no-anonymous-default-export': 'off', // For Storybook stories
@@ -95,6 +94,13 @@ module.exports = {
       rules: {
         'testing-library/no-node-access': 'off',
         'testing-library/no-container': 'off',
+      },
+    },
+    // Graphql codegen generates types that breaks that rule
+    {
+      files: ['**/generated.ts'],
+      rules: {
+        '@typescript-eslint/no-redundant-type-constituents': 'off',
       },
     },
     // Allow requires in node js modules (assuming we don't have JS on frontend side)

@@ -17,7 +17,7 @@ export const DesktopComparisonTable = ({ className, head, body, selectedColumn }
       <ComparisonTable.Head>
         <ComparisonTable.Row>
           {head.map((headerValue, index) => {
-            if (headerValue == TableMarkers.EmptyHeader)
+            if (headerValue === TableMarkers.EmptyHeader)
               return <ComparisonTable.Header key={`empty-header-${index}`} />
 
             return (
