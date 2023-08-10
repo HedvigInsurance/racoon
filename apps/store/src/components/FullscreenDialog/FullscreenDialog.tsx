@@ -110,7 +110,7 @@ const FooterWrapper = styled(motion.footer)({
   },
 })
 
-const AnimateContentWrapper = ({ children }: { children: ReactNode }) => {
+export const AnimateContentWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <motion.div
       initial={{
