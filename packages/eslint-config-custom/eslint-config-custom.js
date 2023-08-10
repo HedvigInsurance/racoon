@@ -57,7 +57,12 @@ module.exports = {
     '@typescript-eslint/consistent-indexed-object-style': 'off',
 
     // TODO: Typed lint rules that we might want to consider in the future
-    '@typescript-eslint/dot-notation': 'off',
+    '@typescript-eslint/dot-notation': [
+      'error',
+      {
+        allowIndexSignaturePropertyAccess: true,
+      },
+    ],
     '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     '@typescript-eslint/prefer-optional-chain': 'off',
     '@typescript-eslint/array-type': 'off',
