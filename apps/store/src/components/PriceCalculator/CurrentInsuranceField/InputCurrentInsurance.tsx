@@ -25,9 +25,11 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
   const [hasInsurance, setHasInsurance] = useState(!!company)
 
   const handleRadioValueChange = (newValue: string) => {
-    datadogRum.addAction('Select HasInsurance', { value: newValue })
-    if (newValue === RadioOption.NO) onCompanyChange(undefined)
-    setHasInsurance(newValue === RadioOption.YES)
+    const newValueEnum = newValue as RadioOption
+
+    datadogRum.addAction('Select HasInsurance', { value: newValueEnum })
+    if (newValueEnum === RadioOption.NO) onCompanyChange(undefined)
+    setHasInsurance(newValueEnum === RadioOption.YES)
   }
 
   const handleChangeExternalInsurer: ChangeEventHandler<HTMLSelectElement> = (event) => {
