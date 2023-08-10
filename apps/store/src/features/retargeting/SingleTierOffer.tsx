@@ -3,8 +3,9 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Button, theme } from 'ui'
+import { useProductItemProps } from '@/components/CartInventory/CartEntryItem/useProductItemProps'
 import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
-import { CartItem } from '@/components/CartItem/CartItem'
+import { ProductItem } from '@/components/ProductItem/ProductItem'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { ProductPageLink } from './ProductPageLink'
@@ -27,7 +28,7 @@ export const SingleTierOffer = (props: Props) => {
   const cartEntry = useMemo(() => getCartEntry(props.offer), [props.offer])
 
   return (
-    <CartItem {...cartEntry}>
+    <ProductItem {...useProductItemProps(cartEntry)}>
       <ButtonGroup>
         <ProductPageLink href={props.product.pageLink}>
           {t('CART_ENTRY_EDIT_BUTTON')}
@@ -38,7 +39,7 @@ export const SingleTierOffer = (props: Props) => {
           </Button>
         </Form>
       </ButtonGroup>
-    </CartItem>
+    </ProductItem>
   )
 }
 

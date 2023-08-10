@@ -1,12 +1,12 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Dialog, theme } from 'ui'
-import { CartItem } from '@/components/CartItem/CartItem'
+import { Dialog } from 'ui'
 import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
+import { ActionButton, ProductItem } from '@/components/ProductItem/ProductItem'
 import { type CartFragmentFragment } from '@/services/apollo/generated'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'
 import { EditEntryButton } from './EditEntryButton'
+import { useProductItemProps } from './useProductItemProps'
 
 type Props = CartEntry & {
   shopSessionId: string
@@ -34,27 +34,20 @@ export const CartEntryItem = ({
     })
   }
 
+  const productItemProps = useProductItemProps(cartEntry)
   return (
-    <CartItem {...cartEntry} defaultExpanded={defaultOpen}>
+    <ProductItem {...productItemProps} defaultExpanded={defaultOpen}>
       {!readOnly && (
-        <ActionsRow>
+        <>
           <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
           <RemoveEntryDialog shopSessionId={shopSessionId} onCompleted={onRemove} {...cartEntry}>
             <Dialog.Trigger asChild={true}>
-              <Button variant="secondary-alt" size="medium">
-                {t('REMOVE_ENTRY_BUTTON')}
-              </Button>
+              <ActionButton>{t('REMOVE_ENTRY_BUTTON')}</ActionButton>
             </Dialog.Trigger>
           </RemoveEntryDialog>
-        </ActionsRow>
+        </>
       )}
-    </CartItem>
+    </ProductItem>
   )
 }
-
-const ActionsRow = styled.div({
-  display: 'grid',
-  gap: theme.space.sm,
-  gridTemplateColumns: '1fr 1fr',
-})

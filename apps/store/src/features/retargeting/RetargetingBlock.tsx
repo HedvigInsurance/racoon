@@ -2,9 +2,9 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { mq, theme } from 'ui'
-import { CartItemSkeleton } from '@/components/CartItem/CartItemSkeleton'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
+import { Skeleton } from '@/components/ProductItem/ProductItem'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { MultiTierOffer } from './MultiTierOffer'
 import { SingleTierOffer } from './SingleTierOffer'
@@ -27,7 +27,7 @@ export const RetargetingBlock = (props: Props) => {
       >
         <List>
           {offers === null ? (
-            Array.from({ length: 3 }).map((_, index) => <CartItemSkeleton key={index} />)
+            Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} />)
           ) : (
             <AnimatePresence mode="popLayout">
               {offers.map((item) => (
