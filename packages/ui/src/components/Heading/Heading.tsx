@@ -31,6 +31,7 @@ const HeadingBase = styled(
   elementConfig,
 )<HeadingBaseProps>(({ color, variant, align, ...props }) => {
   // GOTCHA: We may get empty string from Storyblok, this should be handled safely
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   variant = variant || 'standard.32'
   return {
     color: color ? getColor(color) : 'currentColor',

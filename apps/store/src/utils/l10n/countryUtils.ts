@@ -25,7 +25,7 @@ export const getCountryLocale = (country: CountryLabel, language: Language): Iso
     throw new Error(`Failed to find country id=${country}`)
   }
   return (
-    countryData.locales.find((locale) => locales[locale].language === language) ||
+    countryData.locales.find((locale) => locales[locale].language === language) ??
     countryData.defaultLocale
   )
 }

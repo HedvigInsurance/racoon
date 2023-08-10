@@ -71,7 +71,16 @@ module.exports = {
       },
     ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-    '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': [
+      'error',
+      {
+        ignoreConditionalTests: true,
+        ignorePrimitives: {
+          string: true,
+          boolean: true,
+        },
+      },
+    ],
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/no-redundant-type-constituents': 'off',
 

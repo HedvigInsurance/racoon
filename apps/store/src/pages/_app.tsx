@@ -76,7 +76,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   usePublishPartnerInitEvent()
 
   const apolloClient = useApollo(pageProps)
-  const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
     <>

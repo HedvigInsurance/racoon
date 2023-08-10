@@ -43,7 +43,9 @@ export const fetchStory = async <StoryData extends ISbStoryData>(
 ): Promise<StoryData> => {
   let cv: number | undefined
   if (params.version === 'published') {
-    cv = (STORYBLOK_CACHE_VERSION && parseInt(STORYBLOK_CACHE_VERSION)) || undefined
+    const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
+    const isCacheVersionValid = !isNaN(cacheVersion)
+    cv = isCacheVersionValid ? cacheVersion : undefined
   }
   const response = await storyblokClient.getStory(slug, {
     ...params,

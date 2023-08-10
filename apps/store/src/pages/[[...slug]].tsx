@@ -47,7 +47,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo story={abTestOriginStory || story} robots={robots} />
+      <HeadSeoInfo story={abTestOriginStory ?? story} robots={robots} />
       <StoryblokComponent blok={story.content} />
       <DefaultDebugDialog />
     </BlogContext.Provider>
