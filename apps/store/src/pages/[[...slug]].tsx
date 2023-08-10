@@ -47,7 +47,12 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo story={abTestOriginStory ?? story} robots={robots} />
+      <HeadSeoInfo
+        // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+        story={abTestOriginStory || story}
+        robots={robots}
+      />
       <StoryblokComponent blok={story.content} />
       <DefaultDebugDialog />
     </BlogContext.Provider>
