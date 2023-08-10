@@ -14,6 +14,6 @@ export const getAdtractionProductCategories = (cart: CartFragmentFragment) => {
     if (product.variant.typeOfContract.includes('CAT')) return [...acc, 'cat_0']
 
     return acc
-  }, [] as string[])
+  }, [] as Array<string>)
   return categoryList.join('-')
 }

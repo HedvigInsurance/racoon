@@ -13,7 +13,7 @@ type HeroVideoProps = PropsWithChildren & {
   /**
    * An array of videos with different supported formats
    */
-  sources: VideoSource[]
+  sources: Array<VideoSource>
   /**
    * The poster image of the video that will be displayed while the video is being loaded, or it the browser doesn't support any of the formats
    */

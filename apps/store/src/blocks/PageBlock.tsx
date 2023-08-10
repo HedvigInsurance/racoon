@@ -4,7 +4,7 @@ import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useDiscountBanner } from '@/utils/useDiscountBanner'
 
 type PageBlockProps = SbBaseBlockProps<{
-  body: SbBlokData[]
+  body: Array<SbBlokData>
 }>
 
 export const PageBlock = ({ blok }: PageBlockProps) => {

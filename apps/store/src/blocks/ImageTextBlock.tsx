@@ -22,7 +22,7 @@ export type ImageTextBlockProps = SbBaseBlockProps<{
   // TODO: Remove image field after content migration
   image: ExpectedBlockType<ImageBlockProps | VideoBlockProps>
   media: ExpectedBlockType<ImageBlockProps | VideoBlockProps>
-  body?: SbBlokData[]
+  body?: Array<SbBlokData>
   orientation?: Orientation
   // TODO: rename this to 'textVerticalAlignment'
   textAlignment?: TextAlignment

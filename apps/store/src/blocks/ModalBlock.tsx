@@ -9,7 +9,7 @@ export type ModalBlockProps = SbBaseBlockProps<{
   buttonText: string
   buttonVariant?: ComponentProps<typeof Button>['variant']
   buttonSize?: ComponentProps<typeof Button>['size']
-  modalContent: SbBlokData[]
+  modalContent: Array<SbBlokData>
 }>
 
 export const ModalBlock = ({ blok }: ModalBlockProps) => {

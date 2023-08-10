@@ -91,12 +91,12 @@ export type SbBaseBlockProps<T> = {
 }
 
 export type ExpectedBlockType<T> = [T] extends [{ blok: SbBlokData }]
-  ? T['blok'][]
+  ? Array<T['blok']>
   : `ExpectedBlock expects an argument which extends SbBlockData.
      These are likely the props of the block you are looking to render`
 
 export type StoryblokQueryParams = {
-  slug: string[]
+  slug: Array<string>
 }
 
 export type StoryblokPageProps = {
@@ -225,7 +225,7 @@ type LinkData = Pick<
 type PageLink = {
   link: LinkData
   locale: RoutingLocale
-  slugParts: string[]
+  slugParts: Array<string>
 }
 
 type NamedBlock = {
@@ -348,14 +348,14 @@ export const getStoryBySlug = <StoryData extends ISbStoryData>(
   return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
-export const getPageLinks = async (): Promise<PageLink[]> => {
+export const getPageLinks = async (): Promise<Array<PageLink>> => {
   const storyblokApi = getStoryblokApi()
   const {
     data: { links },
   } = await storyblokApi.get('cdn/links/', {
     ...(USE_DRAFT_CONTENT && { version: 'draft' }),
   })
-  const pageLinks: PageLink[] = []
+  const pageLinks: Array<PageLink> = []
   Object.values(links as Record<string, LinkData>).forEach((link) => {
     if (link.is_folder) {
       return

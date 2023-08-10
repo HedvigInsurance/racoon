@@ -2,7 +2,7 @@ import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/re
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ConfirmationPageBlockProps = SbBaseBlockProps<{
-  body: SbBlokData[]
+  body: Array<SbBlokData>
 }>
 
 export const ConfirmationPageBlock = ({ blok }: ConfirmationPageBlockProps) => {

@@ -17,9 +17,9 @@ export type PageSection = 'overview' | 'coverage'
 export type ProductPageBlockProps = SbBaseBlockProps<{
   overviewLabel: string
   coverageLabel: string
-  overview: SbBlokData[]
-  coverage: SbBlokData[]
-  body: SbBlokData[]
+  overview: Array<SbBlokData>
+  coverage: Array<SbBlokData>
+  body: Array<SbBlokData>
 }>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
@@ -215,7 +215,7 @@ const useActiveSectionChangeListener = (
   const scrollPositionRef = useRef(0)
 
   useEffect(() => {
-    const instersectionObserverCb = (entries: IntersectionObserverEntry[]) => {
+    const instersectionObserverCb = (entries: Array<IntersectionObserverEntry>) => {
       entries.forEach((entry) => {
         const id = entry.target.id
         const diff = scrollPositionRef.current - window.scrollY
