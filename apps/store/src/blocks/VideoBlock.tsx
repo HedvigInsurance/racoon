@@ -19,6 +19,7 @@ export type VideoBlockProps = SbBaseBlockProps<
     | 'aspectRatioPortrait'
     | 'maxHeightLandscape'
     | 'maxHeightPortrait'
+    | 'hideSoundControl'
   >
 > & { className?: string }
 
@@ -43,6 +44,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
         maxHeightPortrait={blok.maxHeightPortrait}
         roundedCorners={!blok.fullBleed}
         showControls={blok.controls}
+        hideSoundControl={blok.hideSoundControl}
       />
     </ConditionalWrapper>
   )
