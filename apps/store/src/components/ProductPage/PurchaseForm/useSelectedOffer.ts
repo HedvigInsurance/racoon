@@ -22,7 +22,7 @@ export const useSelectedOffer = () => {
         offer = action
       }
 
-      if (offer && offer.priceMatch) {
+      if (offer?.priceMatch) {
         datadogLogs.logger.info('Selected price matched offer', {
           offerId: offer.id,
           product: offer.variant.product.name,

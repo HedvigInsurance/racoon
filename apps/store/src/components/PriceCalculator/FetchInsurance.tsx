@@ -76,7 +76,7 @@ export const FetchInsurance = ({
       logger.info('Updated Insurely data collection ID', loggingContext)
 
       const updatedPriceIntent = priceIntentInsurelyUpdate.priceIntent
-      if (updatedPriceIntent && updatedPriceIntent.externalInsurer) {
+      if (updatedPriceIntent?.externalInsurer) {
         fetchInsuraceSuccess()
       } else {
         logger.warn('Failed to update Insurely data collection ID', loggingContext)
