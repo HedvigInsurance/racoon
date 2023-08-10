@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     return { notFound: true }
   }
 
-  const partners = (await get('partners')) as Props['partners']
+  const partners: Props['partners'] = (await get('partners')) ?? []
 
   return {
     props: {

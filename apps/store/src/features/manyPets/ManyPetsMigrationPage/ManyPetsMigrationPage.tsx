@@ -317,9 +317,13 @@ const useSignMigration = (
     }
   }, [currentOperation?.error, showError])
 
-  const signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
-    currentOperation?.state as BankIdState,
-  )
+  let signLoading = false
+  const { state: bankIdState } = currentOperation ?? {}
+  if (bankIdState) {
+    signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
+      bankIdState,
+    )
+  }
 
   return { handleSubmitSign, loading: fillCartResult.loading || signLoading }
 }

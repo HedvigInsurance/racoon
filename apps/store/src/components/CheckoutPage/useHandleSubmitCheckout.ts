@@ -37,9 +37,13 @@ export const useHandleSubmitCheckout = (options: Options) => {
     userError = { message: t('UNKNOWN_ERROR_MESSAGE') }
   }
 
-  const signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
-    currentOperation?.state as BankIdState,
-  )
+  let signLoading = false
+  const { state: bankIdState } = currentOperation ?? {}
+  if (bankIdState) {
+    signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
+      bankIdState,
+    )
+  }
 
   return [
     handleSubmit,
