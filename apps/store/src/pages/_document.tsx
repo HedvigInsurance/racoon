@@ -3,10 +3,11 @@ import { theme } from 'ui'
 import { GTMBodyScript } from '@/services/gtm'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
+import { UiLocale } from '@/utils/l10n/types'
 
 export default class MyDocument extends Document {
   lang() {
-    return getLocaleOrFallback(this.props.locale).htmlLang
+    return getLocaleOrFallback(this.props.locale as UiLocale).htmlLang
   }
 
   render() {

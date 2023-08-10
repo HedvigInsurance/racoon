@@ -41,7 +41,7 @@ export const isRoutingLocale = (locale: unknown): locale is RoutingLocale => {
 }
 
 // Fallback is global, use country.defaultLocale for country-specific fallback
-export const getLocaleOrFallback = (locale: UiLocale | string | undefined): LocaleData => {
+export const getLocaleOrFallback = (locale?: UiLocale): LocaleData => {
   if (!isRoutingLocale(locale) && !isIsoLocale(locale)) {
     return locales[FALLBACK_LOCALE]
   }
@@ -50,7 +50,7 @@ export const getLocaleOrFallback = (locale: UiLocale | string | undefined): Loca
 
 export const getUrlLocale = (url: string): RoutingLocale => {
   const routingLocale = url.split('/')[0]
-  return getLocaleOrFallback(routingLocale).routingLocale
+  return getLocaleOrFallback(routingLocale as UiLocale).routingLocale
 }
 
 export const translateCountryName = (countryCode: CountryCode | CountryLabel, t: TFunction) => {
