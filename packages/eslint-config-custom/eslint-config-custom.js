@@ -70,7 +70,7 @@ module.exports = {
         readonly: 'generic',
       },
     ],
-    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/no-redundant-type-constituents': 'off',
