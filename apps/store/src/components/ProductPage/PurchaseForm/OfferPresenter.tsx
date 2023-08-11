@@ -89,6 +89,13 @@ export const OfferPresenter = (props: Props) => {
       if (addToCartRedirect === AddToCartRedirect.Checkout) {
         tracking.reportBeginCheckout(shopSession.cart)
       }
+
+      const isBankSignering =
+        addedProductOffer.cancellation.option === ExternalInsuranceCancellationOption.Banksignering
+      if (isBankSignering && addedProductOffer.cancellation.requested) {
+        datadogRum.addAction('BankSignering Requested')
+      }
+
       onAddedToCart(addedProductOffer, nextUrl)
     },
   })
