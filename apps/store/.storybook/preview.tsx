@@ -1,11 +1,8 @@
-import { ThemeProvider } from 'ui'
-import { storybookFontStyles } from 'ui/src/lib/storybookFontStyles'
-import { Global } from '@emotion/react'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { MockedProvider } from '@apollo/client/testing'
 import './i18next'
-import React from 'react'
-import { type Decorator } from '@storybook/react'
+import { Preview } from '@storybook/react'
+import { gridDecorator, themeDecorator } from './decorators'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -25,13 +22,8 @@ export const parameters = {
   },
 }
 
-export const decorators: Array<Decorator> = [
-  (Story) => (
-    <>
-      <Global styles={storybookFontStyles} />
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    </>
-  ),
-]
+const preview: Preview = {
+  decorators: [themeDecorator, gridDecorator],
+}
+
+export default preview

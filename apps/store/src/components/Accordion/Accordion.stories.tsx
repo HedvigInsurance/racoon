@@ -50,6 +50,9 @@ const ACCORDION_ITEMS = [
 
 export default {
   component: Accordion.Root,
+  parameters: {
+    grid: '1/2',
+  },
 } as Meta<typeof Accordion.Root>
 
 const Template: StoryFn<typeof Accordion.Root> = () => {
