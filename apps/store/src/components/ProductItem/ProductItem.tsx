@@ -2,8 +2,8 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, type ReactNode } from 'react'
 import { Button, ButtonProps, Text, theme } from 'ui'
+import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { Collapsible } from './Collapsible'
 import { ProductDetails } from './ProductDetails'
 import { ProductDetailsHeader } from './ProductDetailsHeader'
 import { StartDate } from './StartDate'
@@ -40,13 +40,14 @@ export const ProductItem = (props: Props) => {
         </Header>
       </Hoverable>
 
-      <Collapsible
-        open={expanded}
-        onOpenChange={setExpanded}
-        Trigger={<StyledProductDetailsHeader price={props.price} expanded={expanded} />}
-      >
-        <StyledProductDetails items={props.productDetails} documents={props.productDocuments} />
-      </Collapsible>
+      <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
+        <Collapsible.Trigger asChild={true}>
+          <StyledProductDetailsHeader price={props.price} expanded={expanded} />
+        </Collapsible.Trigger>
+        <Collapsible.Content style={{ cursor: 'initial' }}>
+          <StyledProductDetails items={props.productDetails} documents={props.productDocuments} />
+        </Collapsible.Content>
+      </Collapsible.Root>
 
       {props.children && <Footer>{props.children}</Footer>}
     </Card>
