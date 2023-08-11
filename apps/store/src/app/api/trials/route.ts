@@ -14,8 +14,6 @@ const DEFAULT_BODY = {
     livingSpace: 38,
     subType: 'RENT',
 
-    startDate: '2024-09-10',
-
     firstName: 'Robin',
     lastName: 'Hedvall',
 
@@ -52,6 +50,7 @@ export const GET = async (request: Request) => {
     trialData: {
       ...DEFAULT_BODY.trialData,
       email: getRandomEmailAddress(),
+      startDate: new Date().toISOString().split('T')[0],
       ...(ssn && { personalNumber: ssn }),
     },
   }
