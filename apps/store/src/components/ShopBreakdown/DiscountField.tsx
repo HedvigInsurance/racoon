@@ -13,7 +13,7 @@ type Props = {
     code: string
     explanation: string
   }
-  onAdd: () => void
+  onAdd: (campaignCode: string) => void
   loadingAdd: boolean
   onRemove: () => void
   loadingRemove: boolean
@@ -24,8 +24,15 @@ export const DiscountField = (props: Props) => {
   const { t } = useTranslation('cart')
   const [active, setActive] = useState(props.defaultActive ?? false)
 
+  const handleOpenChange = (open: boolean) => {
+    setActive(open)
+    if (!open && props.campaign) {
+      props.onRemove()
+    }
+  }
+
   return (
-    <Collapsible.Root open={active} onOpenChange={setActive}>
+    <Collapsible.Root open={active} onOpenChange={handleOpenChange}>
       <Wrapper>
         <Text>{t('CAMPAIGN_CODE_HEADING')}</Text>
         <Collapsible.Trigger asChild={true}>
