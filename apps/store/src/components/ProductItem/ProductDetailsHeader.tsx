@@ -1,22 +1,16 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { type ComponentProps } from 'react'
 import { ChevronIcon, Text, theme } from 'ui'
-import { CurrencyCode } from '@/services/apollo/generated'
-import { useFormatter } from '@/utils/useFormatter'
+import { Price } from '@/components/Price'
 
 type Props = {
   expanded: boolean
-
-  price: {
-    currencyCode: CurrencyCode
-    amount: number
-    reducedAmount?: number
-  }
+  price: ComponentProps<typeof Price>
 }
 
 export const ProductDetailsHeader = ({ expanded, price, ...radixProps }: Props) => {
   const { t } = useTranslation('cart')
-  const formatter = useFormatter()
 
   return (
     <Wrapper {...radixProps}>
@@ -29,20 +23,7 @@ export const ProductDetailsHeader = ({ expanded, price, ...radixProps }: Props) 
         />
       </Trigger>
 
-      <Price>
-        {price.reducedAmount !== undefined && (
-          <Text as="p" size="md" strikethrough={true} color="textSecondary">
-            {formatter.monthlyPrice(price)}
-          </Text>
-        )}
-
-        <Text as="p" size="md">
-          {formatter.monthlyPrice({
-            ...price,
-            amount: price.reducedAmount ?? price.amount,
-          })}
-        </Text>
-      </Price>
+      <Price {...price} />
     </Wrapper>
   )
 }
@@ -64,9 +45,4 @@ const Trigger = styled(Text)({
 const AnimatedChevronIcon = styled(ChevronIcon)({
   transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
   ['&[data-state=expanded]']: { transform: 'rotate(180deg)' },
-})
-
-const Price = styled.div({
-  display: 'flex',
-  columnGap: theme.space.xs,
 })
