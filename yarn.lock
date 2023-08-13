@@ -8027,7 +8027,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^2.2.8":
+"@storyblok/js@npm:^2.2.9":
   version: 2.2.10
   resolution: "@storyblok/js@npm:2.2.10"
   dependencies:
@@ -8036,15 +8036,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:2.4.1":
-  version: 2.4.1
-  resolution: "@storyblok/react@npm:2.4.1"
+"@storyblok/react@npm:2.4.2":
+  version: 2.4.2
+  resolution: "@storyblok/react@npm:2.4.2"
   dependencies:
-    "@storyblok/js": ^2.2.8
+    "@storyblok/js": ^2.2.9
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: ec4ba1449012becccb31a2934f66a29e954b3d40d9427abe8e2dd0fb3b384fe7cffeddd64297eeb31c71043d5f4bd8d8db3dfe6dc1b1936d0807fe5cef5bd11f
+  checksum: 1ef78aaceebe10b438349b3a85a8e8511e0c010715ee7d91db9ace89ba985e5da1ff3154afa4f69dfb82ba067252fa100108adf0a451ed5d9064c06efe8083c8
   languageName: node
   linkType: hard
 
@@ -23224,7 +23224,7 @@ __metadata:
     "@radix-ui/react-switch": 1.0.3
     "@radix-ui/react-tabs": 1.0.4
     "@radix-ui/react-tooltip": 1.0.6
-    "@storyblok/react": 2.4.1
+    "@storyblok/react": 2.4.2
     "@storybook/addon-actions": 7.2.2
     "@storybook/addon-essentials": 7.2.2
     "@storybook/addon-links": 7.2.2
