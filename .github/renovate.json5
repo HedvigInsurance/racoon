@@ -5,7 +5,7 @@
   "labels": ["needs approval/merge"],
   // Don't update nextjs until client-side navigation issue is solved
   // https://github.com/vercel/next.js/issues/53967
-  "ignoreDeps": ["next", "eslint-config-next", "@next/bundle-analyzer"],
+  "ignoreDeps": ["next", "eslint-config-next", "@next/bundle-analyzer", "@apollo/client"],
   "packageRules": [
     {
       "matchDepTypes": ["dependencies"],
