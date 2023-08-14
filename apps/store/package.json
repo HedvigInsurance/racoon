@@ -78,6 +78,7 @@
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@next/bundle-analyzer": "13.4.12",
     "@storybook/addon-actions": "7.2.3",
+    "@storybook/addon-designs": "7.0.4",
     "@storybook/addon-essentials": "7.2.3",
     "@storybook/addon-links": "7.2.3",
     "@storybook/nextjs": "7.2.3",
