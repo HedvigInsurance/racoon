@@ -12,6 +12,7 @@ import { CartPage } from '@/components/CartPage/CartPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { getRevalidate } from '@/services/storyblok/storyblok'
 
 const NextCartPage: NextPageWithLayout = (props) => {
   const { shopSession } = useShopSession()
@@ -59,7 +60,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props,
-    revalidate: process.env.VERCEL_ENV === 'preview' ? 1 : false,
+    revalidate: getRevalidate(),
   }
 }
 
