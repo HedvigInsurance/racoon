@@ -1,5 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/router'
 import {
   createContext,
@@ -11,6 +12,7 @@ import {
 } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
+  ExternalInsuranceCancellationOption,
   PriceIntentFragmentFragment,
   PriceIntentQueryResult,
   ProductOfferFragment,
@@ -76,6 +78,13 @@ const usePriceIntentContextValue = () => {
         setPriceIntentId(null)
         updatePriceIntent(shopSession)
         return
+      }
+
+      const hasBankSigneringOffer = data.priceIntent.offers.some(
+        (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
+      )
+      if (hasBankSigneringOffer) {
+        datadogRum.addAction('BankSignering Offered')
       }
 
       setSelectedOffer((prev) => {
