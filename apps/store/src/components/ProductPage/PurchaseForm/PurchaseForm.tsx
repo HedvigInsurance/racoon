@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
@@ -329,6 +330,12 @@ const EditingState = (props: EditingStateProps) => {
         tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
+        const hasBankSigneringOffer = updatedPriceIntent.offers.some(
+          (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
+        )
+        if (hasBankSigneringOffer) {
+          datadogRum.addAction('BankSignering Offered')
+        }
         onComplete()
       } else {
         setIsLoadingPrice(false)

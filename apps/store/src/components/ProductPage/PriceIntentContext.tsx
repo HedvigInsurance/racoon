@@ -1,6 +1,5 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/router'
 import {
   createContext,
@@ -12,7 +11,6 @@ import {
 } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
-  ExternalInsuranceCancellationOption,
   PriceIntentFragmentFragment,
   PriceIntentQueryResult,
   ProductOfferFragment,
@@ -113,19 +111,6 @@ const usePriceIntentContextValue = () => {
       }),
     [onReady, priceIntentId, updatePriceIntent],
   )
-
-  // TODO: maybe associate this with some piece of code that is directly related with getting offers like when
-  // confirming price intent.
-  useEffect(() => {
-    if (!priceIntent) return
-
-    const hasBankSigneringOffer = priceIntent.offers.some(
-      (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
-    )
-    if (hasBankSigneringOffer) {
-      datadogRum.addAction('BankSignering Offered')
-    }
-  }, [priceIntent])
 
   useEffect(() => {
     setSelectedOffer((prev) => {
