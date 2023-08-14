@@ -18258,9 +18258,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:2.3.1":
-  version: 2.3.1
-  resolution: "jotai@npm:2.3.1"
+"jotai@npm:2.2.3":
+  version: 2.2.3
+  resolution: "jotai@npm:2.2.3"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -18269,7 +18269,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: c2e3dcb3206749cd7f63ab9cfec5d0bacd19ac8c1710e688716fcbdaa031c6bb78f10ed24ea8da65cd98b4dc3c04170c05eedb4d3284b9ad80858f834c69a914
+  checksum: 41f6c65bd115c92679047aaff47dfe99f8ec27cb4517144bf82b0fdd10b3b6a8b12c5101a80d9147c4660f5c2207aef13df138c8dc24e739f89cb15062ff2bdd
   languageName: node
   linkType: hard
 
@@ -23195,7 +23195,7 @@ __metadata:
     i18next-parser: 8.5.0
     jest: 29.6.2
     jest-environment-jsdom: 29.6.2
-    jotai: 2.3.1
+    jotai: 2.2.3
     jwt-decode: 3.1.2
     md5: 2.3.0
     msw: 1.2.3
