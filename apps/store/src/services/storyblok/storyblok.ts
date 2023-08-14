@@ -1,3 +1,4 @@
+import * as process from 'process'
 import {
   apiPlugin,
   getStoryblokApi,
@@ -415,4 +416,13 @@ export const fetchStories = async (params: ISbStoriesParams) => {
     ...params,
     version: params.version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
   })
+}
+
+// See https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation
+export const getRevalidate = () => {
+  if (process.env.VERCEL_ENV === 'production') {
+    return false
+  } else {
+    return 1
+  }
 }

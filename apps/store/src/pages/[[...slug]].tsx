@@ -19,6 +19,7 @@ import {
   getFilteredPageLinks,
   type PageStory,
   type ProductStory,
+  getRevalidate,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -109,7 +110,6 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
     breadcrumbs,
     trustpilot,
   }
-  const revalidate = process.env.VERCEL_ENV === 'preview' ? 1 : false
 
   if (isProductStory(story)) {
     const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
@@ -135,7 +135,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
         priceTemplate,
         initialSelectedVariant,
       },
-      revalidate,
+      revalidate: getRevalidate(),
     }
   }
 
@@ -145,7 +145,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await fetchBlogPageProps({ story, locale, draft: version === 'draft' })),
       ...props,
     },
-    revalidate,
+    revalidate: getRevalidate(),
   }
 }
 
