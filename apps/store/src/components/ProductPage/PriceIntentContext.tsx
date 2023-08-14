@@ -79,34 +79,9 @@ const usePriceIntentContextValue = () => {
         updatePriceIntent(shopSession)
         return
       }
-
-      const hasBankSigneringOffer = data.priceIntent.offers.some(
-        (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
-      )
-      if (hasBankSigneringOffer) {
-        datadogRum.addAction('BankSignering Offered')
-      }
-
-      setSelectedOffer((prev) => {
-        if (prev) {
-          const matchingOffer = data.priceIntent.offers.find((item) => compareOffer(item, prev))
-          if (matchingOffer) return matchingOffer
-        }
-
-        if (entryToReplace) {
-          const matchingReplaceOffer = data.priceIntent.offers.find((item) =>
-            compareOffer(item, entryToReplace),
-          )
-          if (matchingReplaceOffer) return matchingReplaceOffer
-        }
-
-        const priceMatchedOffer = data.priceIntent.offers.find((item) => item.priceMatch)
-        if (priceMatchedOffer) return priceMatchedOffer
-
-        return getOffersByPrice(data.priceIntent.offers)[0]
-      })
     },
   })
+  const priceIntent = result.data?.priceIntent
 
   const createNewPriceIntent = useCallback(
     async (shopSession: ShopSession) => {
@@ -139,7 +114,43 @@ const usePriceIntentContextValue = () => {
     [onReady, priceIntentId, updatePriceIntent],
   )
 
-  return [result.data?.priceIntent, result, createNewPriceIntent] as const
+  // TODO: maybe associate this with some piece of code that is directly related with getting offers like when
+  // confirming price intent.
+  useEffect(() => {
+    if (!priceIntent) return
+
+    const hasBankSigneringOffer = priceIntent.offers.some(
+      (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
+    )
+    if (hasBankSigneringOffer) {
+      datadogRum.addAction('BankSignering Offered')
+    }
+  }, [priceIntent])
+
+  useEffect(() => {
+    setSelectedOffer((prev) => {
+      if (!priceIntent) return prev
+
+      if (prev) {
+        const matchingOffer = priceIntent.offers.find((item) => compareOffer(item, prev))
+        if (matchingOffer) return matchingOffer
+      }
+
+      if (entryToReplace) {
+        const matchingReplaceOffer = priceIntent.offers.find((item) =>
+          compareOffer(item, entryToReplace),
+        )
+        if (matchingReplaceOffer) return matchingReplaceOffer
+      }
+
+      const priceMatchedOffer = priceIntent.offers.find((item) => item.priceMatch)
+      if (priceMatchedOffer) return priceMatchedOffer
+
+      return getOffersByPrice(priceIntent.offers)[0]
+    })
+  }, [priceIntent, entryToReplace, setSelectedOffer])
+
+  return [priceIntent, result, createNewPriceIntent] as const
 }
 
 export const usePriceIntent = () => {
