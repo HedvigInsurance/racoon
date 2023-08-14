@@ -305,6 +305,7 @@ type EditingStateProps = {
 const EditingState = (props: EditingStateProps) => {
   const { shopSession, priceIntent, onComplete } = props
   const { t } = useTranslation('purchase-form')
+  const [, setSelectedOffer] = useSelectedOffer()
   const tracking = useTracking()
 
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -329,6 +330,8 @@ const EditingState = (props: EditingStateProps) => {
         tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
+        // TODO: set initially selectedOffer based on some logic; Ideally get it from the the API
+        setSelectedOffer(updatedPriceIntent.offers[0])
         onComplete()
       } else {
         setIsLoadingPrice(false)
