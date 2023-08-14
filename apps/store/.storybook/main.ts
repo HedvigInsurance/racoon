@@ -7,6 +7,7 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     'storybook-addon-apollo-client',
+    '@storybook/addon-designs',
   ],
   framework: {
     name: '@storybook/nextjs',

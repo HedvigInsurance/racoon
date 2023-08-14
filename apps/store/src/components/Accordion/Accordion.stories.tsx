@@ -6,13 +6,13 @@ import * as Accordion from './Accordion'
 const ACCORDION_ITEMS = [
   {
     value: 'item-1',
-    title: 'Header 1',
+    title: 'Vad ingår i en hemförsäkring?',
     content:
       'Lorem ipsum dolor sit amet, florrum plorrum klufs grufs glufs. Nufs ep trop. Nufs ep trop. Lorem ipsum dolor sit amet, florrum plorrum.',
   },
   {
     value: 'item-2',
-    title: 'Header 2',
+    title: 'Måste man ha hemförsäkring?',
     content: (
       <>
         Lorem ipsum dolor sit amet, florrum plorrum klufs grufs glufs. Nufs ep trop. Nufs ep trop.
@@ -30,7 +30,7 @@ const ACCORDION_ITEMS = [
   },
   {
     value: 'item-3',
-    title: 'Header 3 which is really long and wraps',
+    title: 'Vad kostar en hemförsäkring?',
     content: (
       <>
         Lorem ipsum dolor sit amet, florrum plorrum klufs grufs glufs. Nufs ep trop. Nufs ep trop.
@@ -52,6 +52,10 @@ export default {
   component: Accordion.Root,
   parameters: {
     grid: '1/2',
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=673%3A5030',
+    },
   },
 } as Meta<typeof Accordion.Root>
 
