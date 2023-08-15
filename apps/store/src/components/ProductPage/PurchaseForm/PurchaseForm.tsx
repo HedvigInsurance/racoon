@@ -126,9 +126,21 @@ export const PurchaseForm = () => {
                   {editingStateForm}
                 </PriceCalculatorDialog>
               ) : (
-                <ProductHeroContainer size="small" compact={true}>
-                  {editingStateForm}
-                </ProductHeroContainer>
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: '1vh',
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
+                >
+                  <ProductHeroContainer size="small" compact={true}>
+                    {editingStateForm}
+                  </ProductHeroContainer>
+                </motion.div>
               )}
 
               <FullscreenDialog.Root
