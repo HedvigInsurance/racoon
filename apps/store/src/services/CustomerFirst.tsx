@@ -18,7 +18,17 @@ export const CustomerFirstScript = () => {
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
-      <Script strategy="afterInteractive" src={chatWidgetSrc} />
+      <Script
+        strategy="afterInteractive"
+        src={chatWidgetSrc}
+        onLoad={() => {
+          // C1 attaches chat iframe in a window.load event handler. Since we can't load the script
+          // with 'beforeInteractive' strategy outside _document, we dispatch a load event to
+          // window object after this gets loaded.
+          const loadEvent = new Event('load')
+          window.dispatchEvent(loadEvent)
+        }}
+      />
     </>
   )
 }
