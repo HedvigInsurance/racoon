@@ -17,7 +17,6 @@ import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -178,7 +177,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       disabled
                     />
                     {shouldCollectName && (
-                      <SpaceFlex space={0.25}>
+                      <>
                         <TextField
                           type="text"
                           label={t('FORM_FIRST_NAME_LABEL')}
@@ -191,7 +190,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                           name={FormElement.LastName}
                           required
                         />
-                      </SpaceFlex>
+                      </>
                     )}
                     {shouldCollectEmail && (
                       <TextField
