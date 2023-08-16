@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { CrossIcon, Space, Dialog, theme } from 'ui'
+import { AnimateContentWrapper } from '@/components/FullscreenDialog/FullscreenDialog'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 
 type Props = {
@@ -18,14 +19,16 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent frostedOverlay>
-        <Dialog.Close asChild>
+        <DialogClose asChild>
           <IconButton>
             <CrossIcon size="1.625rem" />
           </IconButton>
-        </Dialog.Close>
+        </DialogClose>
         <Space y={4}>
-          <HeaderWrapper>{header}</HeaderWrapper>
-          {children}
+          <AnimateContentWrapper>
+            <HeaderWrapper>{header}</HeaderWrapper>
+            {children}
+          </AnimateContentWrapper>
         </Space>
       </DialogContent>
     </Dialog.Root>
@@ -42,6 +45,11 @@ const DialogContent = styled(Dialog.Content)({
   overflow: 'auto',
   padding: theme.space.md,
   backgroundColor: 'transparent',
+  isolation: 'isolate',
+})
+
+const DialogClose = styled(Dialog.Close)({
+  zIndex: 1,
 })
 
 export const IconButton = styled.button({
