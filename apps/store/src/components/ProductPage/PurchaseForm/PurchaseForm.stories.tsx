@@ -77,6 +77,7 @@ export const Default: Story = {
                     },
                     __typename: 'CartCost',
                   },
+                  redeemedCampaign: null,
                   entries: [],
                   __typename: 'Cart',
                 },
