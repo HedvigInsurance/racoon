@@ -1,5 +1,4 @@
 import { useApolloClient } from '@apollo/client'
-import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import {
   createContext,
@@ -64,20 +63,6 @@ const usePriceIntentContextValue = () => {
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
-    onCompleted(data) {
-      if (!shopSession) {
-        datadogLogs.logger.warn('ShopSession not ready when price intent query completed', {
-          priceIntentId,
-        })
-        return
-      }
-
-      if (data.priceIntent.product.name !== productData.name) {
-        setPriceIntentId(null)
-        updatePriceIntent(shopSession)
-        return
-      }
-    },
   })
   const priceIntent = result.data?.priceIntent
 
@@ -112,6 +97,7 @@ const usePriceIntentContextValue = () => {
     [onReady, priceIntentId, updatePriceIntent],
   )
 
+  // Configure a 'selectedOffer' based on the 'priceIntent'
   useEffect(() => {
     setSelectedOffer((prev) => {
       if (!priceIntent) return prev
@@ -134,6 +120,18 @@ const usePriceIntentContextValue = () => {
       return getOffersByPrice(priceIntent.offers)[0]
     })
   }, [priceIntent, entryToReplace, setSelectedOffer])
+
+  // Make sure 'priceIntent' is synched to current product
+  useEffect(() => {
+    if (!shopSession || !priceIntent) {
+      return
+    }
+
+    if (priceIntent.product.name !== productData.name) {
+      setPriceIntentId(null)
+      updatePriceIntent(shopSession)
+    }
+  }, [shopSession, priceIntent, priceIntent?.product.name, productData.name, updatePriceIntent])
 
   return [priceIntent, result, createNewPriceIntent] as const
 }
