@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 import { theme } from 'ui'
 import { GTMBodyScript } from '@/services/gtm'
 import { contentFontClassName } from '@/utils/fonts'
@@ -8,6 +9,10 @@ import { UiLocale } from '@/utils/l10n/types'
 export default class MyDocument extends Document {
   lang() {
     return getLocaleOrFallback(this.props.locale as UiLocale).htmlLang
+  }
+
+  chatWidgetSrc() {
+    return getLocaleOrFallback(this.props.locale as UiLocale).chatWidgetSrc
   }
 
   render() {
@@ -29,6 +34,8 @@ export default class MyDocument extends Document {
           <GTMBodyScript />
           <Main />
           <NextScript />
+          {/* This needs to be loaded with 'beforeInteractive' strategy as it adds an iframe when window.load gets fired */}
+          <Script strategy="beforeInteractive" src={this.chatWidgetSrc()}></Script>
         </body>
       </Html>
     )
