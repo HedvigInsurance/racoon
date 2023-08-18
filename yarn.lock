@@ -8263,9 +8263,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-designs@npm:7.0.4":
-  version: 7.0.4
-  resolution: "@storybook/addon-designs@npm:7.0.4"
+"@storybook/addon-designs@npm:7.0.5":
+  version: 7.0.5
+  resolution: "@storybook/addon-designs@npm:7.0.5"
   dependencies:
     "@figspec/react": ^1.0.0
   peerDependencies:
@@ -8282,7 +8282,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 6b844188806facad0a9e6fd2b633b4a270d36bcc0d345797b5120daa642736e08a373ee8f16a7ff189a4c388eb281c9c67df4b56700fc162b073874e29ac1141
+  checksum: 35b987dd261c87d45c6e90587199e65db511360ad33652c73fdbe944cd7d4dc880c396d505e7e1f1f20cc77f0aeb92f433f7ec6412c3c0c31a42c2335e26fada
   languageName: node
   linkType: hard
 
@@ -23337,7 +23337,7 @@ __metadata:
     "@radix-ui/react-tooltip": 1.0.6
     "@storyblok/react": 2.4.4
     "@storybook/addon-actions": 7.3.0
-    "@storybook/addon-designs": 7.0.4
+    "@storybook/addon-designs": 7.0.5
     "@storybook/addon-essentials": 7.3.0
     "@storybook/addon-links": 7.3.0
     "@storybook/nextjs": 7.3.0
