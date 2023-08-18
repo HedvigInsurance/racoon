@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { type ComponentProps, useState, type ReactNode } from 'react'
+import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
 import { Button, ButtonProps, Text, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -54,9 +54,10 @@ export const ProductItem = (props: Props) => {
   )
 }
 
-export const ActionButton = (props: ButtonProps) => {
-  return <Button size="medium" variant="secondary-alt" {...props} />
-}
+export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  return <Button ref={ref} size="medium" variant="secondary-alt" {...props} />
+})
+ActionButton.displayName = 'ActionButton'
 
 const pulsingAnimation = keyframes({
   '0%': { opacity: 0.5 },
