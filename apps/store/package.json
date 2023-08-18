@@ -59,7 +59,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "13.1.2",
-    "react-wrap-balancer": "1.0.0",
+    "react-wrap-balancer": "1.1.0",
     "storyblok-rich-text-react-renderer": "2.9.0",
     "tss-react": "4.8.8",
     "ui": "workspace:",
