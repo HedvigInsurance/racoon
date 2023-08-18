@@ -9,11 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await resetSessionServerSide(req, res)
 
   const nextQueryParam = req.query['next']
-  const nextURL = new URL(ORIGIN_URL)
+  let nextURL = new URL(ORIGIN_URL)
   if (typeof nextQueryParam === 'string') {
-    nextURL.pathname = nextQueryParam
+    nextURL = new URL(nextQueryParam, nextURL)
   } else {
-    nextURL.pathname = PageLink.home()
+    nextURL = new URL(PageLink.home(), nextURL)
   }
 
   const destination = nextURL.toString()
