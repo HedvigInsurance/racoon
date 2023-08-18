@@ -86,6 +86,9 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
           fetchSigning({
             variables: { shopSessionSigningId },
             pollInterval: 1000,
+            // Make sure 'onCompleted' gets called during the whole pooling process
+            // https://github.com/apollographql/apollo-client/pull/10229
+            notifyOnNetworkStatusChange: true,
             async onCompleted(data) {
               if (subscriber.closed) return
               const { status, completion } = data.shopSessionSigning
