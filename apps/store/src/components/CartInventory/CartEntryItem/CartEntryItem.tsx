@@ -41,7 +41,7 @@ export const CartEntryItem = ({
         <>
           <EditEntryButton onConfirm={handleConfirmEdit} loading={editState === 'loading'} />
 
-          <RemoveEntryDialog shopSessionId={shopSessionId} onCompleted={onRemove} {...cartEntry}>
+          <RemoveEntryDialog onCompleted={onRemove} {...cartEntry}>
             <Dialog.Trigger asChild={true}>
               <ActionButton>{t('REMOVE_ENTRY_BUTTON')}</ActionButton>
             </Dialog.Trigger>
