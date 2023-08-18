@@ -105,7 +105,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   const formattedCompanyName = formatter.titleCase(props.companyName)
   const autoSwitchLabel = t('AUTO_SWITCH_START_DATE_LABEL', { company: formattedCompanyName })
 
-  if (props.requested && props.invalidRenewalDate) {
+  if (props.invalidRenewalDate) {
     return (
       <Space y={0.25}>
         <SmartDateInput date={date} onChange={props.onStartDateChange} />
