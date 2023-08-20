@@ -23390,7 +23390,7 @@ __metadata:
     subscriptions-transport-ws: 0.11.0
     ts-jest: 29.1.1
     tsconfig: "workspace:"
-    tss-react: 4.8.8
+    tss-react: 4.9.0
     typescript: 5.1.6
     ui: "workspace:"
     uuid: 9.0.0
@@ -24430,9 +24430,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tss-react@npm:4.8.8":
-  version: 4.8.8
-  resolution: "tss-react@npm:4.8.8"
+"tss-react@npm:4.9.0":
+  version: 4.9.0
+  resolution: "tss-react@npm:4.9.0"
   dependencies:
     "@emotion/cache": "*"
     "@emotion/serialize": "*"
@@ -24444,7 +24444,7 @@ __metadata:
   peerDependenciesMeta:
     "@emotion/server":
       optional: true
-  checksum: e8373dd7f3cdb3571a6c4c40e088424cee75535c5428dfa6f1ced29e6947c34af19ed221afad0a35bae3406b93c550a37bd662fa58c250655155d0782b260b10
+  checksum: ffdcdadbce6de9f51cf8169e0003c13bd1946818111f23cca33cfabcad040c15f8cb36a043cf9a78cbfe690078d2cfc61d72da4dc71dc43316dfcd8574034b96
   languageName: node
   linkType: hard
 
