@@ -37,12 +37,13 @@
   "NAV_MENU_DIALOG_OPEN": "Menu",
   "PAYMENT_CONNECT_ERROR_LINK_EXPIRED": "Unfortunately, the link has already expired",
   "PAYMENT_CONNECT_FAILURE": "Could not connect direct debit",
+  "PAYMENT_CONNECT_IFRAME_LOAD_BUTTON": "Press here to begin",
   "PAYMENT_CONNECT_RETRY": "Try again",
   "PAYMENT_CONNECT_SUCCESS": "Success! You can close this page now :)",
   "PAYMENT_CONNECT_TITLE": "Connect direct debit",
   "READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
-  "TRUSTPILOT_REVIEWS_COUNT": "Based on {{numberOfReviews}} reviews on",
+  "TRUSTPILOT_REVIEWS_COUNT": "{{numberOfReviews}} reviews on",
   "TRUSTPILOT_SCORE": "{{score}} of 5",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }
