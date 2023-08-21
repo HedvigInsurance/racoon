@@ -19,6 +19,7 @@ import { ComparisonTableBlock } from '@/blocks/ComparisonTableBlock'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
+import { CookieListBlock } from '@/blocks/CookieListBlock'
 import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
 import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
 import { GridBlock } from '@/blocks/GridBlock'
@@ -261,6 +262,7 @@ export const initStoryblok = () => {
     ImageTextBlock,
     InlineSpaceBlock,
     InsurableLimitsBlock,
+    CookieListBlock,
     MediaListBlock,
     ModalBlock,
     NavItemBlock,
