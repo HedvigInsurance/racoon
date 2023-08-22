@@ -1,3 +1,4 @@
+import { addYears } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
 import { Space, Text } from 'ui'
@@ -174,7 +175,9 @@ const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
   }
 
   const inputValue = date ? formatInputDateValue(date) : undefined
-  const inputValueToday = formatInputDateValue(dateToday)
+  // Based on underwriter guidelines: https://github.com/HedvigInsurance/underwriter/blob/master/src/main/kotlin/com/hedvig/underwriter/model/Quote.kt#L83
+  const min = formatInputDateValue(dateToday)
+  const max = formatInputDateValue(addYears(dateToday, 2))
 
   return (
     <InputDate
@@ -182,7 +185,8 @@ const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
       label={label ?? t('START_DATE_FIELD_LABEL')}
       required
       value={inputValue}
-      min={inputValueToday}
+      min={min}
+      max={max}
       onChange={handleChange}
     />
   )
