@@ -1,13 +1,105 @@
+import styled from '@emotion/styled'
+import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 
 export const CookieListBlock = () => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width={{ base: '1', md: '2/3', xxl: '1/2' }} align={'center'}>
-        <div id="ot-sdk-cookie-policy"></div>
+        <OneTrustCookieInfo id="ot-sdk-cookie-policy"></OneTrustCookieInfo>
       </GridLayout.Content>
     </GridLayout.Root>
   )
 }
+
+/**
+ * OneTrust CSS overides for Cookie List
+ * Styling is written in string litteral to make it easy
+ * to migrate between OneTrust and the component
+ */
+
+const OneTrustCookieInfo = styled.div`
+  * {
+    font-weight: 400 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy #cookie-policy-description,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy .ot-sdk-cookie-policy-group-desc {
+    font-size: ${theme.fontSizes.md};
+  }
+
+  #ot-sdk-cookie-policy .ot-sdk-container,
+  #ot-sdk-cookie-policy-v2 {
+    padding: 0 !important;
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy .ot-table-header,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy td {
+    font-size: ${theme.space.md};
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table th,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table td {
+    border-color: ${theme.colors.borderTranslucent2};
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h3,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h4 {
+    font-weight: 400;
+    line-height: 1.26;
+  }
+
+  .ot-cookies-td:before {
+    color: ${theme.colors.textPrimary};
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h3,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h4 {
+    margin-top: ${theme.space.xxl};
+    margin-bottom: ${theme.space.xs};
+    font-size: ${theme.fontSizes.md};
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy a,
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy a:hover {
+    background-color: transparent;
+  }
+
+  #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy .ot-sdk-cookie-policy-group {
+    margin-bottom: ${theme.space.xs};
+  }
+
+  ${mq.md} {
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h3,
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy h4 {
+      font-size: ${theme.fontSizes.xl};
+    }
+
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy #cookie-policy-description,
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy .ot-sdk-cookie-policy-group-desc {
+      font-size: ${theme.fontSizes.xl};
+    }
+
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy table {
+      font-size: ${theme.fontSizes.md};
+    }
+  }
+  ${mq.lg} {
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy .ot-table-header,
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy td {
+      font-size: ${theme.fontSizes.md};
+    }
+  }
+
+  /* OneTrust breakpoint override */
+  @media only screen and (max-width: 530px) {
+    #ot-sdk-cookie-policy-v2.ot-sdk-cookie-policy td:before {
+      font-weight: 400;
+      color: ${theme.colors.textPrimary};
+    }
+  }
+`
 
 CookieListBlock.blockName = 'cookieList'
