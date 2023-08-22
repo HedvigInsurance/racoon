@@ -49,7 +49,7 @@ export const CartPage = (props: CartPageProps) => {
 
   return (
     <PageWrapper>
-      <Space y={{ base: 3, sm: 6 }}>
+      <Space y={{ base: 3.5, lg: 5 }}>
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
             <Space y={{ base: 1, sm: 1.5 }}>
@@ -178,31 +178,34 @@ const EmptyState = (props: EmptyStateProps) => {
 
   return (
     <PageWrapper>
-      <GridLayout.Root>
-        <GridLayout.Content width="1/3" align="center">
-          <ShopBreakdown>
-            <EmptyStateWrapper>
-              <Space y={2}>
-                <Space y={1}>
-                  <Text align="center">¯\_(ツ)_/¯</Text>
-                  <Text align="center" color="textSecondary">
-                    {t('CART_EMPTY_SUMMARY')}
-                  </Text>
+      <Space y={{ base: 3.5, lg: 5 }}>
+        <GridLayout.Root>
+          <GridLayout.Content width="1/3" align="center">
+            <ShopBreakdown>
+              <EmptyStateWrapper>
+                <Space y={2}>
+                  <Space y={1}>
+                    <Text align="center">¯\_(ツ)_/¯</Text>
+                    <Text align="center" color="textSecondary">
+                      {t('CART_EMPTY_SUMMARY')}
+                    </Text>
+                  </Space>
+                  <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
+                    {t('GO_TO_STORE_BUTTON')}
+                  </ButtonNextLink>
                 </Space>
-                <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
-                  {t('GO_TO_STORE_BUTTON')}
-                </ButtonNextLink>
-              </Space>
-            </EmptyStateWrapper>
+              </EmptyStateWrapper>
 
-            <DiscountFieldContainer shopSession={props.shopSession} />
-            <Divider />
-            <TotalAmountContainer cart={props.shopSession.cart} />
-          </ShopBreakdown>
-        </GridLayout.Content>
-      </GridLayout.Root>
+              <DiscountFieldContainer shopSession={props.shopSession} />
+              <Divider />
+              <TotalAmountContainer cart={props.shopSession.cart} />
+            </ShopBreakdown>
+          </GridLayout.Content>
+        </GridLayout.Root>
 
-      {props.children}
+        {props.children}
+      </Space>
+
       <PageDebugDialog />
     </PageWrapper>
   )
