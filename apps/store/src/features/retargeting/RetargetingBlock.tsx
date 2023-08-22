@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
@@ -19,6 +21,9 @@ type Props = SbBaseBlockProps<{
 export const RetargetingBlock = (props: Props) => {
   const offers = useRetargetingOffers()
 
+  const isInStoryblokEditor = useIsInStoryblokEditor()
+  const showEmptyState = offers === null || (isInStoryblokEditor && offers.length === 0)
+
   return (
     <GridLayout.Root {...storyblokEditable(props.blok)}>
       <GridLayoutContent
@@ -26,8 +31,8 @@ export const RetargetingBlock = (props: Props) => {
         align={props.blok.layout?.alignment ?? 'center'}
       >
         <List>
-          {offers === null ? (
-            Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} />)
+          {showEmptyState ? (
+            <EmptyState />
           ) : (
             <AnimatePresence mode="popLayout">
               {offers.map((item) => (
@@ -65,3 +70,18 @@ const List = styled.ul({
   flexDirection: 'column',
   gap: theme.space.md,
 })
+
+const EmptyState = () => {
+  return (
+    <>
+      {Array.from({ length: 3 }).map((_, index) => (
+        <Skeleton key={index} />
+      ))}
+    </>
+  )
+}
+
+const useIsInStoryblokEditor = () => {
+  const router = useRouter()
+  return useMemo(() => router.query['draftMode'] === '1', [router.query])
+}
