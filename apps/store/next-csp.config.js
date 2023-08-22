@@ -43,6 +43,9 @@ const scriptSrc = [
   'https://blocks.insurely.com',
   'https://dc.insurely.com',
 
+  // Affiliate tracking
+  'https://addrevenue.io',
+
   'https://vercel.live',
   "'unsafe-inline'",
   "'unsafe-eval'",
