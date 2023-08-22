@@ -52,10 +52,11 @@ export const CartPage = (props: CartPageProps) => {
       <Space y={{ base: 3.5, lg: 5 }}>
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
-            <Space y={{ base: 1, sm: 1.5 }}>
-              <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
-                {t('CART_PAGE_HEADING')} ({entries.length})
+            <Space y={3.5}>
+              <Heading as="h2" align="center" variant="standard.24">
+                {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
               </Heading>
+
               <CartEntryList>
                 {shopSessionId &&
                   entries.map((item) => (
@@ -157,13 +158,15 @@ const LoadingState = () => {
     <PageWrapper>
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
-          <ShopBreakdown>
-            <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
+          <Space y={3.5}>
+            <Heading as="h2" align="center" variant="standard.24">
               {t('CART_PAGE_HEADING')}
             </Heading>
-            <Skeleton />
-            <Skeleton />
-          </ShopBreakdown>
+            <ShopBreakdown>
+              <Skeleton />
+              <Skeleton />
+            </ShopBreakdown>
+          </Space>
         </GridLayout.Content>
       </GridLayout.Root>
     </PageWrapper>
@@ -181,7 +184,7 @@ const EmptyState = (props: EmptyStateProps) => {
       <Space y={{ base: 3.5, lg: 5 }}>
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
-            <ShopBreakdown>
+            <Space y={1}>
               <EmptyStateWrapper>
                 <Space y={2}>
                   <Space y={1}>
@@ -199,7 +202,7 @@ const EmptyState = (props: EmptyStateProps) => {
               <DiscountFieldContainer shopSession={props.shopSession} />
               <Divider />
               <TotalAmountContainer cart={props.shopSession.cart} />
-            </ShopBreakdown>
+            </Space>
           </GridLayout.Content>
         </GridLayout.Root>
 
