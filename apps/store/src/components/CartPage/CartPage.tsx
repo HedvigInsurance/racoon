@@ -11,8 +11,10 @@ import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferIte
 import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { ReadOnlyCampaignSection } from '@/components/CartInventory/ReadOnlyCampaignSection'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { Skeleton } from '@/components/ProductItem/ProductItem'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -28,6 +30,8 @@ export const CartPage = (props: CartPageProps) => {
   const tracking = useTracking()
 
   useTrackViewCartEffect()
+
+  if (!shopSession) return <LoadingState />
 
   let body = (
     <EmptyState>
@@ -93,16 +97,14 @@ export const CartPage = (props: CartPageProps) => {
           </CartEntryList>
         )}
 
-        {shopSession && (
-          <ButtonNextLink
-            href={PageLink.checkout({ expandCart: true })}
-            onClick={() => {
-              tracking.reportBeginCheckout(shopSession.cart)
-            }}
-          >
-            {t('CHECKOUT_BUTTON')}
-          </ButtonNextLink>
-        )}
+        <ButtonNextLink
+          href={PageLink.checkout({ expandCart: true })}
+          onClick={() => {
+            tracking.reportBeginCheckout(shopSession.cart)
+          }}
+        >
+          {t('CHECKOUT_BUTTON')}
+        </ButtonNextLink>
       </Space>
     )
   }
@@ -145,6 +147,26 @@ const useTrackViewCartEffect = () => {
   )
 }
 
+const LoadingState = () => {
+  const { t } = useTranslation('cart')
+
+  return (
+    <PageWrapper>
+      <GridLayout.Root>
+        <GridLayout.Content width="1/3" align="center">
+          <ShopBreakdown>
+            <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
+              {t('CART_PAGE_HEADING')}
+            </Heading>
+            <Skeleton />
+            <Skeleton />
+          </ShopBreakdown>
+        </GridLayout.Content>
+      </GridLayout.Root>
+    </PageWrapper>
+  )
+}
+
 type EmptyStateProps = { children: ReactNode }
 
 const EmptyState = ({ children }: EmptyStateProps) => {
@@ -177,6 +199,7 @@ const EmptyState = ({ children }: EmptyStateProps) => {
 const PageWrapper = styled.div({
   paddingTop: theme.space.md,
   paddingBottom: theme.space.xxl,
+  minHeight: '100vh',
 
   [mq.sm]: {
     paddingTop: theme.space.xxl,
