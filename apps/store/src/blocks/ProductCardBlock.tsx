@@ -1,8 +1,15 @@
 import { storyblokEditable } from '@storyblok/react'
+import { getMediaQueryBreakpoint } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { ProductCard, type LinkType } from '@/components/ProductCard/ProductCard'
 import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+
+const SIZES = `
+  (max-width: ${getMediaQueryBreakpoint('md')}px) 100vw,
+  (max-width: ${getMediaQueryBreakpoint('lg')}px) 50vw,
+  25vw
+`
 
 export type ImageSize = {
   aspectRatio?: '1 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '2 / 3' | '3 / 4' | '4 / 5'
@@ -33,7 +40,7 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
     <ProductCard
       title={blok.title}
       subtitle={blok.subtitle}
-      image={{ src: blok.image.filename, alt: blok.image.alt }}
+      image={{ src: blok.image.filename, alt: blok.image.alt, sizes: SIZES }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
       link={{ url: link, type: linkType }}
       {...storyblokEditable(blok)}

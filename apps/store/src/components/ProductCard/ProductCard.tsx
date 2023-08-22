@@ -2,7 +2,7 @@ import { UrlObject } from 'url'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Space, theme, mq } from 'ui'
 import { ImageSize } from '@/blocks/ProductCardBlock'
@@ -14,12 +14,7 @@ import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/Purc
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { getParameterizedLink } from '@/utils/getParameterizedLink'
 
-type ImageProps = {
-  src: string
-  alt?: string
-  blurDataURL?: string
-  objectPosition?: string
-}
+type ImageProps = ComponentProps<typeof ImageWithPlaceholder>
 
 type LinkHref = string | UrlObject
 
@@ -45,7 +40,7 @@ export const ProductCard = ({
   return (
     <Container y={1}>
       <ImageWrapper aspectRatio={aspectRatio}>
-        <Image {...imageProps} alt={alt} fill sizes="100vw" />
+        <Image {...imageProps} alt={alt} fill />
       </ImageWrapper>
       <ContentWrapper>
         <MainLink href={link.url}>{title}</MainLink>

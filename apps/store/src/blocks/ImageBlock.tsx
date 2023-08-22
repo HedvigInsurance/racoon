@@ -23,6 +23,7 @@ export type ImageBlockProps = SbBaseBlockProps<{
   body?: ExpectedBlockType<HeadingBlockProps>
   priority?: boolean
   layout?: GridColumnsField
+  sizes?: string
 }>
 
 export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
@@ -52,6 +53,7 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
           roundedCorners={!blok.fullBleed}
           alt={blok.image.alt}
           fill
+          sizes={blok.sizes}
           priority={blok.priority}
         />
         <BodyWrapper>
