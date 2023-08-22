@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const url = new URL(req.url ?? '', ORIGIN_URL)
   url.searchParams.delete('secret')
 
+  url.searchParams.set('draftMode', '1')
   const targetUrl = `/${story.full_slug}`
   console.debug(`Previewing ${targetUrl}`)
   res.redirect(`${targetUrl}?${url.searchParams.toString()}`)
