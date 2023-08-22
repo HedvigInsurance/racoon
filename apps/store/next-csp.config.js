@@ -127,6 +127,9 @@ const connectSrc = [
   // OLD market web
   'https://api.storyblok.com',
 
+  // Affiliate tracking
+  'https://addrevenue.io',
+
   'https://*.hedvigit.com',
   "'self'",
 ]
