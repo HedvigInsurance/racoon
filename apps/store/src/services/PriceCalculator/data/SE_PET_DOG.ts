@@ -1,12 +1,17 @@
+import { subWeeks, subYears } from 'date-fns'
 import {
   LAYOUT,
   ssnSeSection,
   yourAddressSectionWithlivingSpace,
 } from '@/services/PriceCalculator/formFragments'
+import { formatInputDateValue } from '@/utils/date'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 import { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
+
+const MIN = formatInputDateValue(subYears(new Date(), 20)) // at maximum 20 years old
+const MAX = formatInputDateValue(subWeeks(new Date(), 8)) // at mininum 8 weeks old
 
 export const SE_PET_DOG: Template = {
   name: 'SE_PET_DOG',
@@ -54,6 +59,8 @@ export const SE_PET_DOG: Template = {
             type: 'date',
             name: 'birthDate',
             label: { key: tKey('FIELD_BIRTH_DATE_PET_LABEL') },
+            min: MIN,
+            max: MAX,
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
