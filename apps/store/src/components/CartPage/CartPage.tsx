@@ -4,12 +4,9 @@ import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { CampaignSection } from '@/components/CartInventory/CampaignSection'
 import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
-import { CostSummary } from '@/components/CartInventory/CostSummary'
-import { ReadOnlyCampaignSection } from '@/components/CartInventory/ReadOnlyCampaignSection'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Skeleton } from '@/components/ProductItem/ProductItem'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
@@ -26,7 +23,6 @@ import { PageDebugDialog } from './PageDebugDialog'
 import { TotalAmountContainer } from './TotalAmountContainer'
 
 export const CartPage = (props: CartPageProps) => {
-  const { shopSessionId, entries, campaign, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
   const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
@@ -34,18 +30,22 @@ export const CartPage = (props: CartPageProps) => {
 
   useTrackViewCartEffect()
 
-  if (!shopSession || entries === undefined) return <LoadingState />
+  if (!shopSession || props.entries === undefined) return <LoadingState />
 
   const productRecommendationList = productRecommendations && (
     <ProductRecommendationList recommendations={productRecommendations} />
   )
 
-  if (entries.length === 0) {
+  if (props.entries.length === 0) {
     return <EmptyState shopSession={shopSession}>{productRecommendationList}</EmptyState>
   }
 
+  const handleClickCheckout = () => {
+    tracking.reportBeginCheckout(shopSession.cart)
+  }
+
   const showProductRecommendations =
-    shopSessionId && productRecommendationOffers && productRecommendationOffers.length > 0
+    productRecommendationOffers && productRecommendationOffers.length > 0
 
   return (
     <PageWrapper>
@@ -57,28 +57,14 @@ export const CartPage = (props: CartPageProps) => {
                 {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
               </Heading>
 
-              <CartEntryList>
-                {shopSessionId &&
-                  entries.map((item) => (
-                    <CartEntryItem key={item.offerId} shopSessionId={shopSessionId} {...item} />
-                  ))}
-              </CartEntryList>
-
-              {campaignsEnabled
-                ? shopSessionId && (
-                    <Space y={{ base: 1, sm: 1.5 }}>
-                      <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
-                      <HorizontalLine />
-                    </Space>
-                  )
-                : !!campaign && (
-                    <Space y={{ base: 1, sm: 1.5 }}>
-                      <ReadOnlyCampaignSection campaign={campaign} />
-                      <HorizontalLine />
-                    </Space>
-                  )}
-
-              {cost && <CostSummary {...cost} campaign={campaign} />}
+              <ShopBreakdown>
+                {props.entries.map((item) => (
+                  <CartEntryItem key={item.offerId} shopSessionId={shopSession.id} {...item} />
+                ))}
+                <DiscountFieldContainer shopSession={shopSession} />
+                <Divider />
+                <TotalAmountContainer cart={shopSession.cart} />
+              </ShopBreakdown>
 
               {showProductRecommendations && (
                 <CartEntryList>
@@ -99,9 +85,7 @@ export const CartPage = (props: CartPageProps) => {
 
               <ButtonNextLink
                 href={PageLink.checkout({ expandCart: true })}
-                onClick={() => {
-                  tracking.reportBeginCheckout(shopSession.cart)
-                }}
+                onClick={handleClickCheckout}
               >
                 {t('CHECKOUT_BUTTON')}
               </ButtonNextLink>
@@ -144,11 +128,6 @@ const PageWrapper = styled.div({
   [mq.sm]: {
     paddingTop: theme.space.xxl,
   },
-})
-
-const HorizontalLine = styled.hr({
-  backgroundColor: theme.colors.gray300,
-  height: 1,
 })
 
 const LoadingState = () => {
