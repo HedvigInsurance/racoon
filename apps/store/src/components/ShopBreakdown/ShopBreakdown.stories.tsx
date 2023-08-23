@@ -8,6 +8,13 @@ import { TotalAmount } from './TotalAmount'
 const meta: Meta<typeof ShopBreakdown> = {
   title: 'Components / Shop Breakdown',
   component: ShopBreakdown,
+  argTypes: {
+    children: {
+      control: {
+        disable: true,
+      },
+    },
+  },
 }
 
 export default meta

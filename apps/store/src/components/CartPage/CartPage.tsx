@@ -23,23 +23,11 @@ import { PageDebugDialog } from './PageDebugDialog'
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, entries, campaign, campaignsEnabled, cost } = props
   const { t } = useTranslation('cart')
-  const { onReady, shopSession } = useShopSession()
+  const { shopSession } = useShopSession()
   const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
-
   const tracking = useTracking()
-  useEffect(
-    () =>
-      onReady((shopSession) => {
-        const { cart } = shopSession
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (cart) {
-          tracking.reportViewCart(cart)
-        } else {
-          datadogLogs.logger.error('No cart data on cartPage')
-        }
-      }),
-    [onReady, tracking],
-  )
+
+  useTrackViewCartEffect()
 
   let body = (
     <EmptyState>
@@ -135,6 +123,25 @@ export const CartPage = (props: CartPageProps) => {
 
       <PageDebugDialog />
     </PageWrapper>
+  )
+}
+
+const useTrackViewCartEffect = () => {
+  const { onReady } = useShopSession()
+  const tracking = useTracking()
+
+  useEffect(
+    () =>
+      onReady((shopSession) => {
+        const { cart } = shopSession
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (cart) {
+          tracking.reportViewCart(cart)
+        } else {
+          datadogLogs.logger.error('No cart data on cartPage')
+        }
+      }),
+    [onReady, tracking],
   )
 }
 
