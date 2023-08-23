@@ -15,16 +15,9 @@ export const ProductRecommendationList = ({ recommendations }: Props) => {
 
   return (
     <Wrapper y={{ base: 1.5, md: 3 }}>
-      <MobileHeader>
-        <Heading as="h2" variant="standard.24">
-          {t('RECOMMENDATIONS_HEADING')}
-        </Heading>
-      </MobileHeader>
-      <DesktopHeader>
-        <Heading as="h2" variant="standard.32">
-          {t('RECOMMENDATIONS_HEADING')}
-        </Heading>
-      </DesktopHeader>
+      <Heading as="h2" variant="standard.24" align="center">
+        {t('RECOMMENDATIONS_HEADING')}
+      </Heading>
 
       <List>
         {recommendations.map((item) => (
@@ -74,21 +67,6 @@ const calculateAspectRatio = ({
 const Wrapper = styled(Space)({
   paddingInline: theme.space.xs,
   [mq.lg]: { paddingInline: theme.space.lg },
-})
-
-const MobileHeader = styled.div({
-  paddingInline: theme.space.xs,
-
-  [mq.md]: { display: 'none' },
-})
-
-const DesktopHeader = styled.div({
-  display: 'none',
-
-  [mq.md]: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
 })
 
 // TODO: reuse styles as product grid
