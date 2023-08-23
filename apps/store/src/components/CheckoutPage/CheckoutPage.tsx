@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CampaignSection } from '@/components/CartInventory/CampaignSection'
-import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
@@ -16,7 +15,11 @@ import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { EditActionButton } from '@/components/ProductItem/EditActionButton'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
+import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -43,27 +46,22 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     suggestedEmail,
     shouldCollectName,
     customerAuthenticationStatus,
-    shopSessionId,
     checkoutSteps,
+    shopSession,
   } = props
   const { t } = useTranslation('checkout')
 
   const { routingLocale } = useCurrentLocale()
   const [showSignError, setShowSignError] = useState(false)
-  const { shopSession, reset: resetShopSession } = useShopSession()
+  const { reset: resetShopSession } = useShopSession()
   const router = useRouter()
   const apolloClient = useApolloClient()
   const tracking = useTracking()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
-    shopSessionId,
+    shopSessionId: shopSession.id,
     ssn,
     customerAuthenticationStatus,
     async onSuccess() {
-      const shopSessionId = shopSession?.id
-      if (!shopSessionId) {
-        throw new Error('shopSessionId must exists at this point')
-      }
-
       const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
         query: CurrentMemberDocument,
       })
@@ -78,7 +76,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
-      await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId }))
+      await router.push(
+        getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId: shopSession.id }),
+      )
     },
     // TODO: Never used inside, remove and refactor
     onError() {
@@ -121,21 +121,27 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
             <Space y={1}>
               <Space y={{ base: 1, lg: 1.5 }}>
-                <CartEntryList>
-                  {cart.entries.map((item) => (
-                    <CartEntryItem
-                      key={item.offerId}
-                      shopSessionId={shopSessionId}
-                      onRemove={handleRemoveCartEntry}
-                      defaultOpen={router.query[QueryParam.ExpandCart] === '1'}
-                      {...item}
-                    />
+                <ShopBreakdown>
+                  {shopSession.cart.entries.map((item) => (
+                    <ProductItemContainer
+                      key={item.id}
+                      offer={item}
+                      defaultExpanded={router.query[QueryParam.ExpandCart] === '1'}
+                    >
+                      <EditActionButton shopSessionId={shopSession.id} offer={item} />
+                      <RemoveActionButton
+                        shopSessionId={shopSession.id}
+                        offerId={item.id}
+                        title={item.variant.product.displayNameFull}
+                        onCompleted={handleRemoveCartEntry}
+                      />
+                    </ProductItemContainer>
                   ))}
-                </CartEntryList>
+                </ShopBreakdown>
                 {cart.campaigns.enabled ? (
                   <>
                     <CampaignSection
-                      shopSessionId={shopSessionId}
+                      shopSessionId={shopSession.id}
                       campaign={cart.campaigns.redeemed}
                     />
                     <HorizontalLine />
@@ -160,7 +166,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       return (
                         <CartEntryOfferItem
                           key={offer.id}
-                          shopSessionId={shopSessionId}
+                          shopSessionId={shopSession.id}
                           product={product}
                           offer={offer}
                         />
@@ -209,7 +215,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                           ShopSessionAuthenticationStatus.Authenticated
                         }
                       >
-                        {t('SIGN_BUTTON', { count: cart.entries.length })}
+                        {t('SIGN_BUTTON', { count: shopSession.cart.entries.length })}
                       </SignButton>
                       {userErrorMessage ? (
                         <Text as="p" size="xs" color="textSecondary" align="center">

@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { Dialog } from 'ui'
-import { useEditProductOffer } from '@/components/CartPage/useEditProductOffer'
 import { ActionButton, ProductItem } from '@/components/ProductItem/ProductItem'
+import { useEditProductOffer } from '@/components/ProductItem/useEditProductOffer'
 import { type CartFragmentFragment } from '@/services/apollo/generated'
 import { CartEntry } from '../CartInventory.types'
 import { RemoveEntryDialog } from '../RemoveEntryDialog'

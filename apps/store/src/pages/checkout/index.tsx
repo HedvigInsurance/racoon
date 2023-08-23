@@ -1,9 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { SSRConfig } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useMemo } from 'react'
 import {
-  getCartEntry,
   getCrossOut,
   getTotal,
   useGetCartCampaign,
@@ -23,16 +21,14 @@ import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 
-type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'customerAuthenticationStatus'>
+type NextPageProps = Omit<
+  CheckoutPageProps,
+  'cart' | 'customerAuthenticationStatus' | 'shopSession'
+>
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
   const getCartCampaign = useGetCartCampaign()
-
-  const entries = useMemo(
-    () => shopSession?.cart.entries.map(getCartEntry) ?? [],
-    [shopSession?.cart.entries],
-  )
 
   if (!shopSession?.customer) return null
 
@@ -44,7 +40,6 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
       total: getTotal(shopSession),
       crossOut: getCrossOut(shopSession),
     },
-    entries,
     campaigns: {
       enabled: shopSession.cart.campaignsEnabled,
       redeemed: shopSession.cart.redeemedCampaign
@@ -53,7 +48,14 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
     },
   } satisfies CheckoutPageProps['cart']
 
-  return <CheckoutPage {...props} cart={cart} customerAuthenticationStatus={authenticationStatus} />
+  return (
+    <CheckoutPage
+      {...props}
+      shopSession={shopSession}
+      cart={cart}
+      customerAuthenticationStatus={authenticationStatus}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
