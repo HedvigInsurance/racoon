@@ -15,13 +15,13 @@ import { ProductRecommendationList } from '@/components/ProductRecommendationLis
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { PageDebugDialog } from './PageDebugDialog'
-import { TotalAmountContainer } from './TotalAmountContainer'
 
 export const CartPage = () => {
   const { t } = useTranslation('cart')
