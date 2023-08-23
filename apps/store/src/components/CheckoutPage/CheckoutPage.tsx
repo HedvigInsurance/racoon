@@ -6,11 +6,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
-import { CampaignSection } from '@/components/CartInventory/CampaignSection'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CostSummary } from '@/components/CartInventory/CostSummary'
-import { ReadOnlyCampaignSection } from '@/components/CartInventory/ReadOnlyCampaignSection'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -19,7 +17,8 @@ import { EditActionButton } from '@/components/ProductItem/EditActionButton'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
-import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
+import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -138,22 +137,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     </ProductItemContainer>
                   ))}
                 </ShopBreakdown>
-                {cart.campaigns.enabled ? (
-                  <>
-                    <CampaignSection
-                      shopSessionId={shopSession.id}
-                      campaign={cart.campaigns.redeemed}
-                    />
-                    <HorizontalLine />
-                  </>
-                ) : (
-                  cart.campaigns.redeemed && (
-                    <>
-                      <ReadOnlyCampaignSection campaign={cart.campaigns.redeemed} />
-                      <HorizontalLine />
-                    </>
-                  )
-                )}
+                <DiscountFieldContainer shopSession={shopSession} />
+                <Divider />
                 <CostSummary {...cart.cost} campaign={cart.campaigns.redeemed} />
                 <div />
               </Space>
@@ -303,11 +288,6 @@ const TextLink = styled(Link)({
     borderRadius: theme.radius.xxs,
     boxShadow: theme.shadow.focus,
   },
-})
-
-const HorizontalLine = styled.hr({
-  backgroundColor: theme.colors.gray300,
-  height: 1,
 })
 
 type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
