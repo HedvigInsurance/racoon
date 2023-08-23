@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -17,12 +16,12 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CartPageProps } from './CartPageProps.types'
 import { DiscountFieldContainer } from './DiscountFieldContainer'
 import { PageDebugDialog } from './PageDebugDialog'
+import { ProductItemContainer } from './ProductItemContainer'
 import { TotalAmountContainer } from './TotalAmountContainer'
 
-export const CartPage = (props: CartPageProps) => {
+export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
   const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
@@ -30,13 +29,13 @@ export const CartPage = (props: CartPageProps) => {
 
   useTrackViewCartEffect()
 
-  if (!shopSession || props.entries === undefined) return <LoadingState />
+  if (!shopSession) return <LoadingState />
 
   const productRecommendationList = productRecommendations && (
     <ProductRecommendationList recommendations={productRecommendations} />
   )
 
-  if (props.entries.length === 0) {
+  if (shopSession.cart.entries.length === 0) {
     return <EmptyState shopSession={shopSession}>{productRecommendationList}</EmptyState>
   }
 
@@ -58,8 +57,8 @@ export const CartPage = (props: CartPageProps) => {
               </Heading>
 
               <ShopBreakdown>
-                {props.entries.map((item) => (
-                  <CartEntryItem key={item.offerId} shopSessionId={shopSession.id} {...item} />
+                {shopSession.cart.entries.map((item) => (
+                  <ProductItemContainer key={item.id} shopSessionId={shopSession.id} offer={item} />
                 ))}
                 <DiscountFieldContainer shopSession={shopSession} />
                 <Divider />
