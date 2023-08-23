@@ -4,7 +4,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { MultiTierOffer } from './MultiTierOffer'
 import { SingleTierOffer } from './SingleTierOffer'
 
-type OfferSingle = ComponentProps<typeof SingleTierOffer> & { type: 'single' }
+type OfferSingle = Omit<ComponentProps<typeof SingleTierOffer>, 'onSuccess'> & { type: 'single' }
 type OfferMultiple = ComponentProps<typeof MultiTierOffer> & { type: 'multiple' }
 type Offer = (OfferSingle | OfferMultiple) & { key: string }
 
@@ -19,7 +19,7 @@ export const useRetargetingOffers = (): Array<Offer> | null => {
   const offers = useMemo(() => {
     if (!shopSession || !result.data) return null
 
-    const cartOfferIds = new Set(result.data.shopSession.cart.entries.map((item) => item.id))
+    const cartOfferIds = new Set(shopSession.cart.entries.map((item) => item.id))
 
     return result.data.shopSession.priceIntents.reduce<Array<Offer>>((total, item) => {
       if (item.offers.some((offer) => cartOfferIds.has(offer.id))) {

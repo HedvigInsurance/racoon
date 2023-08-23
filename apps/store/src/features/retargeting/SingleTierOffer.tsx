@@ -11,14 +11,16 @@ type Props = {
   shopSessionId: string
   offer: ProductOfferFragment
   product: ProductOfferFragment['variant']['product']
+  onSuccess: (productOfferId: string) => void
 }
 
 export const SingleTierOffer = (props: Props) => {
   const { t } = useTranslation('cart')
   const [getHandleSubmit, loading] = useHandleSubmitAddToCart({
     shopSessionId: props.shopSessionId,
-    onSuccess: () => {
+    onSuccess: (productOfferId) => {
       datadogLogs.logger.info('CRM Retarget | Add to cart success')
+      props.onSuccess(productOfferId)
     },
   })
 

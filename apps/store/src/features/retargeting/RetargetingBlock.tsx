@@ -8,6 +8,7 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { Skeleton } from '@/components/ProductItem/ProductItem'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { PageLink } from '@/utils/PageLink'
 import { MultiTierOffer } from './MultiTierOffer'
 import { SingleTierOffer } from './SingleTierOffer'
 import { useRetargetingOffers } from './useRetargetingOffers'
@@ -23,6 +24,18 @@ export const RetargetingBlock = (props: Props) => {
 
   const isInStoryblokEditor = useIsInStoryblokEditor()
   const showEmptyState = offers === null || (isInStoryblokEditor && offers.length === 0)
+
+  const router = useRouter()
+  const handleAddOffer = (productOfferId: string) => {
+    if (offers === null) return
+
+    const lastOfferAdded =
+      offers.length === 1 && offers[0].type === 'single' && offers[0].offer.id === productOfferId
+
+    if (offers.length === 0 || lastOfferAdded) {
+      return router.push(PageLink.cart())
+    }
+  }
 
   return (
     <GridLayout.Root {...storyblokEditable(props.blok)}>
@@ -42,7 +55,9 @@ export const RetargetingBlock = (props: Props) => {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}
                 >
-                  {item.type === 'single' && <SingleTierOffer {...item} />}
+                  {item.type === 'single' && (
+                    <SingleTierOffer {...item} onSuccess={handleAddOffer} />
+                  )}
                   {item.type === 'multiple' && <MultiTierOffer {...item} />}
                 </motion.li>
               ))}
