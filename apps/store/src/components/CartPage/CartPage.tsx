@@ -14,13 +14,16 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Skeleton } from '@/components/ProductItem/ProductItem'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
-import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CartPageProps } from './CartPageProps.types'
+import { DiscountFieldContainer } from './DiscountFieldContainer'
 import { PageDebugDialog } from './PageDebugDialog'
+import { TotalAmountContainer } from './TotalAmountContainer'
 
 export const CartPage = (props: CartPageProps) => {
   const { shopSessionId, entries, campaign, campaignsEnabled, cost } = props
@@ -31,96 +34,81 @@ export const CartPage = (props: CartPageProps) => {
 
   useTrackViewCartEffect()
 
-  if (!shopSession) return <LoadingState />
+  if (!shopSession || entries === undefined) return <LoadingState />
 
-  let body = (
-    <EmptyState>
-      <Space y={1.5}>
-        <HorizontalLine />
-        {shopSessionId && campaignsEnabled === true && (
-          <>
-            <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
-            <HorizontalLine />
-          </>
-        )}
-        {cost && <CostSummary {...cost} campaign={campaign} />}
-      </Space>
-    </EmptyState>
+  const productRecommendationList = productRecommendations && (
+    <ProductRecommendationList recommendations={productRecommendations} />
   )
 
-  if (entries && entries.length > 0) {
-    const showProductRecommendations =
-      shopSessionId && productRecommendationOffers && productRecommendationOffers.length > 0
-
-    body = (
-      <Space y={{ base: 1, sm: 1.5 }}>
-        <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
-          {t('CART_PAGE_HEADING')} ({entries.length})
-        </Heading>
-        <CartEntryList>
-          {shopSessionId &&
-            entries.map((item) => (
-              <CartEntryItem key={item.offerId} shopSessionId={shopSessionId} {...item} />
-            ))}
-        </CartEntryList>
-
-        {campaignsEnabled
-          ? shopSessionId && (
-              <Space y={{ base: 1, sm: 1.5 }}>
-                <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
-                <HorizontalLine />
-              </Space>
-            )
-          : !!campaign && (
-              <Space y={{ base: 1, sm: 1.5 }}>
-                <ReadOnlyCampaignSection campaign={campaign} />
-                <HorizontalLine />
-              </Space>
-            )}
-
-        {cost && <CostSummary {...cost} campaign={campaign} />}
-
-        {showProductRecommendations && (
-          <CartEntryList>
-            {productRecommendationOffers.map(({ offer, product }) => {
-              // TODO: improve typing to get rid of this check
-              if (!offer) return null
-              return (
-                <CartEntryOfferItem
-                  key={offer.id}
-                  shopSessionId={shopSessionId}
-                  product={product}
-                  offer={offer}
-                />
-              )
-            })}
-          </CartEntryList>
-        )}
-
-        <ButtonNextLink
-          href={PageLink.checkout({ expandCart: true })}
-          onClick={() => {
-            tracking.reportBeginCheckout(shopSession.cart)
-          }}
-        >
-          {t('CHECKOUT_BUTTON')}
-        </ButtonNextLink>
-      </Space>
-    )
+  if (entries.length === 0) {
+    return <EmptyState shopSession={shopSession}>{productRecommendationList}</EmptyState>
   }
+
+  const showProductRecommendations =
+    shopSessionId && productRecommendationOffers && productRecommendationOffers.length > 0
 
   return (
     <PageWrapper>
       <Space y={{ base: 3, sm: 6 }}>
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
-            {body}
+            <Space y={{ base: 1, sm: 1.5 }}>
+              <Heading mb="3.5rem" as="h2" align="center" variant="standard.24">
+                {t('CART_PAGE_HEADING')} ({entries.length})
+              </Heading>
+              <CartEntryList>
+                {shopSessionId &&
+                  entries.map((item) => (
+                    <CartEntryItem key={item.offerId} shopSessionId={shopSessionId} {...item} />
+                  ))}
+              </CartEntryList>
+
+              {campaignsEnabled
+                ? shopSessionId && (
+                    <Space y={{ base: 1, sm: 1.5 }}>
+                      <CampaignSection shopSessionId={shopSessionId} campaign={campaign} />
+                      <HorizontalLine />
+                    </Space>
+                  )
+                : !!campaign && (
+                    <Space y={{ base: 1, sm: 1.5 }}>
+                      <ReadOnlyCampaignSection campaign={campaign} />
+                      <HorizontalLine />
+                    </Space>
+                  )}
+
+              {cost && <CostSummary {...cost} campaign={campaign} />}
+
+              {showProductRecommendations && (
+                <CartEntryList>
+                  {productRecommendationOffers.map(({ offer, product }) => {
+                    // TODO: improve typing to get rid of this check
+                    if (!offer) return null
+                    return (
+                      <CartEntryOfferItem
+                        key={offer.id}
+                        shopSessionId={shopSession.id}
+                        product={product}
+                        offer={offer}
+                      />
+                    )
+                  })}
+                </CartEntryList>
+              )}
+
+              <ButtonNextLink
+                href={PageLink.checkout({ expandCart: true })}
+                onClick={() => {
+                  tracking.reportBeginCheckout(shopSession.cart)
+                }}
+              >
+                {t('CHECKOUT_BUTTON')}
+              </ButtonNextLink>
+            </Space>
           </GridLayout.Content>
         </GridLayout.Root>
 
-        {productRecommendations && productRecommendations.length > 0 && (
-          <ProductRecommendationList recommendations={productRecommendations} />
-        )}
+        {productRecommendationList}
       </Space>
 
       <PageDebugDialog />
@@ -147,6 +135,21 @@ const useTrackViewCartEffect = () => {
   )
 }
 
+const PageWrapper = styled.div({
+  paddingTop: theme.space.md,
+  paddingBottom: theme.space.xxl,
+  minHeight: '100vh',
+
+  [mq.sm]: {
+    paddingTop: theme.space.xxl,
+  },
+})
+
+const HorizontalLine = styled.hr({
+  backgroundColor: theme.colors.gray300,
+  height: 1,
+})
+
 const LoadingState = () => {
   const { t } = useTranslation('cart')
 
@@ -167,49 +170,43 @@ const LoadingState = () => {
   )
 }
 
-type EmptyStateProps = { children: ReactNode }
+type EmptyStateProps = { shopSession: ShopSession; children: ReactNode }
 
-const EmptyState = ({ children }: EmptyStateProps) => {
-  const { routingLocale } = useCurrentLocale()
+const EmptyState = (props: EmptyStateProps) => {
   const { t } = useTranslation('cart')
+  const { routingLocale } = useCurrentLocale()
 
   return (
-    <>
-      <Heading as={'h2'} align="center">
-        {t('CART_PAGE_HEADING')}
-      </Heading>
-      <EmptyStateWrapper>
-        <Space y={2}>
-          <Space y={1}>
-            <Text align="center">¯\_(ツ)_/¯</Text>
-            <Text align="center" color="textSecondary">
-              {t('CART_EMPTY_SUMMARY')}
-            </Text>
-          </Space>
-          <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
-            {t('GO_TO_STORE_BUTTON')}
-          </ButtonNextLink>
-        </Space>
-      </EmptyStateWrapper>
-      {children}
-    </>
+    <PageWrapper>
+      <GridLayout.Root>
+        <GridLayout.Content width="1/3" align="center">
+          <ShopBreakdown>
+            <EmptyStateWrapper>
+              <Space y={2}>
+                <Space y={1}>
+                  <Text align="center">¯\_(ツ)_/¯</Text>
+                  <Text align="center" color="textSecondary">
+                    {t('CART_EMPTY_SUMMARY')}
+                  </Text>
+                </Space>
+                <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
+                  {t('GO_TO_STORE_BUTTON')}
+                </ButtonNextLink>
+              </Space>
+            </EmptyStateWrapper>
+
+            <DiscountFieldContainer shopSession={props.shopSession} />
+            <Divider />
+            <TotalAmountContainer cart={props.shopSession.cart} />
+          </ShopBreakdown>
+        </GridLayout.Content>
+      </GridLayout.Root>
+
+      {props.children}
+      <PageDebugDialog />
+    </PageWrapper>
   )
 }
-
-const PageWrapper = styled.div({
-  paddingTop: theme.space.md,
-  paddingBottom: theme.space.xxl,
-  minHeight: '100vh',
-
-  [mq.sm]: {
-    paddingTop: theme.space.xxl,
-  },
-})
-
-const HorizontalLine = styled.hr({
-  backgroundColor: theme.colors.gray300,
-  height: 1,
-})
 
 const EmptyStateWrapper = styled.div({
   height: '23rem',
