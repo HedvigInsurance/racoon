@@ -6,7 +6,7 @@ type Props = {
   children: string
 }
 
-export const ProductPageLink = (props: Props) => {
+export const ProductLinkActionButton = (props: Props) => {
   return (
     <ButtonNextLink href={props.href} size="medium" variant="secondary-alt">
       <SpaceFlex space={0.5} align="center">

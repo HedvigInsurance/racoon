@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps, useCallback } from 'react'
-import { ProductItem } from '@/components/ProductItem/ProductItem'
 import { useFormatter } from '@/utils/useFormatter'
+import { type ProductItem } from './ProductItem'
 
 type Params = {
   productName: string

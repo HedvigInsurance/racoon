@@ -8,6 +8,7 @@ import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Skeleton } from '@/components/ProductItem/ProductItem'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
@@ -17,8 +18,9 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { DiscountFieldContainer } from './DiscountFieldContainer'
+import { EditActionButton } from './EditActionButton'
 import { PageDebugDialog } from './PageDebugDialog'
-import { ProductItemContainer } from './ProductItemContainer'
+import { RemoveActionButton } from './RemoveActionButton'
 import { TotalAmountContainer } from './TotalAmountContainer'
 
 export const CartPage = () => {
@@ -58,7 +60,14 @@ export const CartPage = () => {
 
               <ShopBreakdown>
                 {shopSession.cart.entries.map((item) => (
-                  <ProductItemContainer key={item.id} shopSessionId={shopSession.id} offer={item} />
+                  <ProductItemContainer key={item.id} offer={item}>
+                    <EditActionButton shopSessionId={shopSession.id} offer={item} />
+                    <RemoveActionButton
+                      shopSessionId={shopSession.id}
+                      offerId={item.id}
+                      title={item.variant.product.displayNameFull}
+                    />
+                  </ProductItemContainer>
                 ))}
                 <DiscountFieldContainer shopSession={shopSession} />
                 <Divider />
