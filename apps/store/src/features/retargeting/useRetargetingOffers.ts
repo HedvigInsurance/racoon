@@ -40,7 +40,6 @@ export const useRetargetingOffers = (): Array<Offer> | null => {
           type: 'multiple',
           product: item.offers[0].variant.product,
           defaultOffer: item.offers[0],
-          offers: item.offers,
         })
       }
 

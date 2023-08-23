@@ -1,21 +1,17 @@
 import { useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
-import { ProductItem } from '@/components/ProductItem/ProductItem'
+import { useMemo, type ReactNode } from 'react'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
-import { EditActionButton } from './EditActionButton'
-import { RemoveActionButton } from './RemoveActionButton'
+import { ProductItem } from './ProductItem'
 import { useGetStartDateProps } from './useGetStartDateProps'
 
 type Props = {
-  shopSessionId: string
   offer: ProductOfferFragment
+  children: ReactNode
 }
 
 export const ProductItemContainer = (props: Props) => {
   const { t } = useTranslation('cart')
   const getStartDateProps = useGetStartDateProps()
-
-  const title = props.offer.variant.product.displayNameFull
 
   const hasDiscount = props.offer.cost.discount.amount > 0
   const price = {
@@ -53,19 +49,14 @@ export const ProductItemContainer = (props: Props) => {
 
   return (
     <ProductItem
-      title={title}
+      title={props.offer.variant.product.displayNameFull}
       pillowSrc={props.offer.variant.product.pillowImage.src}
       price={price}
       startDate={startDateProps}
       productDetails={productDetails}
       productDocuments={productDocuments}
     >
-      <EditActionButton shopSessionId={props.shopSessionId} offer={props.offer} />
-      <RemoveActionButton
-        shopSessionId={props.shopSessionId}
-        offerId={props.offer.id}
-        title={title}
-      />
+      {props.children}
     </ProductItem>
   )
 }

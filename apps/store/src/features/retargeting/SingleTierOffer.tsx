@@ -1,14 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
-import { Button, theme } from 'ui'
-import { useProductItemProps } from '@/components/CartInventory/CartEntryItem/useProductItemProps'
-import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
-import { ProductItem } from '@/components/ProductItem/ProductItem'
+import { ActionButton } from '@/components/ProductItem/ProductItem'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
-import { ProductPageLink } from './ProductPageLink'
+import { ProductLinkActionButton } from './ProductPageLink'
 
 type Props = {
   shopSessionId: string
@@ -25,29 +22,19 @@ export const SingleTierOffer = (props: Props) => {
     },
   })
 
-  const cartEntry = useMemo(() => getCartEntry(props.offer), [props.offer])
-
   return (
-    <ProductItem {...useProductItemProps(cartEntry)}>
-      <ButtonGroup>
-        <ProductPageLink href={props.product.pageLink}>
-          {t('CART_ENTRY_EDIT_BUTTON')}
-        </ProductPageLink>
-        <Form onSubmit={getHandleSubmit(props.offer.id)}>
-          <Button type="submit" size="medium" variant="secondary-alt" loading={loading}>
-            {t('ADD_TO_CART_BUTTON_LABEL')}
-          </Button>
-        </Form>
-      </ButtonGroup>
-    </ProductItem>
+    <ProductItemContainer offer={props.offer}>
+      <ProductLinkActionButton href={props.product.pageLink}>
+        {t('CART_ENTRY_EDIT_BUTTON')}
+      </ProductLinkActionButton>
+      <Form onSubmit={getHandleSubmit(props.offer.id)}>
+        <ActionButton type="submit" loading={loading}>
+          {t('ADD_TO_CART_BUTTON_LABEL')}
+        </ActionButton>
+      </Form>
+    </ProductItemContainer>
   )
 }
-
-const ButtonGroup = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  columnGap: theme.space.xs,
-})
 
 const Form = styled.form({
   display: 'grid',
