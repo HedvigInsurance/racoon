@@ -5,19 +5,18 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
-import { FormEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
+import { FormEventHandler, ReactNode, useCallback, useEffect } from 'react'
 import { Space, Button, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
-import { CartEntryItem } from '@/components/CartInventory/CartEntryItem/CartEntryItem'
-import { CartEntryList } from '@/components/CartInventory/CartEntryList'
-import { getCartEntry } from '@/components/CartInventory/CartInventory.helpers'
-import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
   fetchCheckoutSteps,
   getCheckoutStepLink,
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
   Money,
@@ -78,19 +77,18 @@ export const ManyPetsMigrationPage = ({
   const { shopSession: migrationShopSession } = migrationSessionQueryResult.data ?? {}
 
   const offerIds = offers.map((offer) => offer.id)
-  const cartEntries = useMemo(() => offers.map(getCartEntry), [offers])
 
   const { handleSubmitSign, loading } = useSignMigration(migrationShopSession, offerIds)
 
   const signButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const showOfferSection =
-    migrationShopSession !== undefined && (cartEntries.length > 0 || comparisonTableData.length > 0)
+    migrationShopSession !== undefined && (offers.length > 0 || comparisonTableData.length > 0)
 
   const signButtonContent = (
     <SignButtonContent>
       <BankIdIcon color="white" />
-      {t('SIGN_BUTTON', { count: cartEntries.length })}
+      {t('SIGN_BUTTON', { count: offers.length })}
     </SignButtonContent>
   )
 
@@ -103,19 +101,14 @@ export const ManyPetsMigrationPage = ({
           <OfferSection y={10}>
             <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
               <Space y={1}>
-                <CartEntryList>
-                  {cartEntries.map((item) => (
-                    <CartEntryItem
-                      key={item.offerId}
-                      shopSessionId={migrationSessionId}
-                      defaultOpen={false}
-                      readOnly={true}
-                      {...item}
-                    />
+                <ShopBreakdown>
+                  {offers.map((item) => (
+                    <ProductItemContainer key={item.id} offer={item} />
                   ))}
-                </CartEntryList>
+                </ShopBreakdown>
 
-                <CostSummary total={totalCost} />
+                {/* There are no discounts for MP shop sessions */}
+                <TotalAmount currencyCode={totalCost.currencyCode} amount={totalCost.amount} />
                 {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
                 <SignButton ref={signButtonRef} type="submit" loading={loading}>
