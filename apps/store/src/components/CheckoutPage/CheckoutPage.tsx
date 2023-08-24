@@ -35,6 +35,7 @@ import { PageLink } from '@/utils/PageLink'
 import { CheckoutHeader } from '../CheckoutHeader/CheckoutHeader'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
+import { PageDebugDialog } from './PageDebugDialog'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
@@ -242,6 +243,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
           </ErrorPrompt>
         </FullscreenDialog.Modal>
       </FullscreenDialog.Root>
+
+      <PageDebugDialog />
     </>
   )
 }
