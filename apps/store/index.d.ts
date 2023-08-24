@@ -39,7 +39,10 @@ declare global {
     TrustlyWidget: {
       init: TrustlyInitFunction
     }
-    dataLayer: DataLayerObject[]
+    Trustpilot?: {
+      loadFromElement: (element: HTMLElement, forceReload?: boolean) => void
+    }
+    dataLayer: Array<DataLayerObject>
 
     // Customer First (C1)
     customerFirstAPI?: {
