@@ -12,18 +12,20 @@ export const TotalAmountContainer = (props: Props) => {
   const getDiscountDurationExplanation = useGetDiscountDurationExplanation()
 
   const apiDiscount = props.cart.redeemedCampaign?.discount
-  const total = props.cart.cost.net
+  const totalCost = props.cart.cost.gross
+  const reducedCost = props.cart.cost.net
+
   const discount = apiDiscount
     ? {
-        reducedAmount: total.amount,
-        explanation: getDiscountDurationExplanation(apiDiscount, total),
+        reducedAmount: reducedCost.amount,
+        explanation: getDiscountDurationExplanation(apiDiscount, totalCost),
       }
     : undefined
 
   return (
     <TotalAmount
-      currencyCode={props.cart.cost.gross.currencyCode}
-      amount={props.cart.cost.gross.amount}
+      currencyCode={totalCost.currencyCode}
+      amount={totalCost.amount}
       discount={discount}
     />
   )
