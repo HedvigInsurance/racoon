@@ -6,7 +6,7 @@ import { useGetStartDateProps } from './useGetStartDateProps'
 
 type Props = {
   offer: ProductOfferFragment
-  children: ReactNode
+  children?: ReactNode
   defaultExpanded?: boolean
 }
 
