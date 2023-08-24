@@ -293,7 +293,7 @@ const VideoControls = styled.div({
 
 const Controls = styled.div({
   display: 'flex',
-  justifyContent: 'space-between',
+  gap: theme.space.xs,
   width: '100%',
   '@media (hover: hover)': {
     opacity: 0,
@@ -345,16 +345,19 @@ const SoundBars = styled.div({
     height: '14px',
     width: '2px',
     borderRadius: '2px',
-    transform: 'scaleY(.2)',
     transformOrigin: 'bottom',
     backgroundColor: theme.colors.gray1000,
     transition: 'all .4s ease-in-out',
+    '&:nth-of-type(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
+    '&:nth-of-type(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
+    '&:nth-of-type(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
+    animation: `${soundBarsAnimation} 1s 2 alternate`,
 
-    [`${VideoControls}[data-muted=false] &`]: {
-      animation: `${soundBarsAnimation} 1s 2 alternate`,
+    [`${VideoControls}[data-muted=false]${VideoControls}[data-state=${State.Playing}] &`]: {
       '&:nth-of-type(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
       '&:nth-of-type(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
       '&:nth-of-type(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
+      animation: `${soundBarsAnimation} 1s infinite alternate`,
     },
   },
 })
