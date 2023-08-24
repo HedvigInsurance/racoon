@@ -23,10 +23,10 @@ export const useHydrateTrustpilotData = (data: TrustpilotData | null) => {
 
 export const fetchTrustpilotData = async () => {
   try {
-    const hedvigBusinessUnitId = process.env.TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID
+    const hedvigBusinessUnitId = process.env.NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID
     if (!hedvigBusinessUnitId) {
       logMissingSetting(
-        'TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured, skipping Trustpilot data',
+        'NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured, skipping Trustpilot data',
       )
       return null
     }

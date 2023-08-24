@@ -67,6 +67,7 @@ import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { TrustpilotBlock } from '@/blocks/TrustpilotBlock'
+import { TrustpilotReviewsBlock } from '@/blocks/TrustpilotReviewsBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
@@ -286,6 +287,7 @@ export const initStoryblok = () => {
     TextContentBlock,
     TopPickCardBlock,
     TrustpilotBlock,
+    TrustpilotReviewsBlock,
     VideoBlock,
     VideoListBlock,
     ProductNavContainerBlock,
