@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { type ComponentProps } from 'react'
+import { FormEventHandler, type ComponentProps } from 'react'
 import { Button, Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -11,7 +11,7 @@ type Props = {
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
   cost: ComponentProps<typeof Price>
-  onAdd: () => void
+  onSubmitAdd: FormEventHandler<HTMLFormElement>
   loading: boolean
   onDismiss: () => void
 }
@@ -37,14 +37,16 @@ export const QuickAdd = (props: Props) => {
           {t('ACCIDENT_OFFER_DESCRIPTION')}
         </Text>
         <Footer>
-          <SpaceFlex space={0.5}>
-            <Button size="medium" onClick={props.onAdd} loading={props.loading}>
-              {t('QUICK_ADD_BUTTON')}
-            </Button>
-            <Button size="medium" variant="ghost" onClick={props.onDismiss}>
-              {t('QUICK_ADD_DISMISS')}
-            </Button>
-          </SpaceFlex>
+          <form onSubmit={props.onSubmitAdd}>
+            <SpaceFlex space={0.5}>
+              <Button type="submit" size="medium" loading={props.loading}>
+                {t('QUICK_ADD_BUTTON')}
+              </Button>
+              <Button type="button" size="medium" variant="ghost" onClick={props.onDismiss}>
+                {t('QUICK_ADD_DISMISS')}
+              </Button>
+            </SpaceFlex>
+          </form>
 
           <Price
             {...props.cost}
