@@ -6,8 +6,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
-import { CartEntryList } from '@/components/CartInventory/CartEntryList'
-import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -33,6 +31,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CheckoutHeader } from '../CheckoutHeader/CheckoutHeader'
+import { QuickAddAccidentContainer } from '../ShopBreakdown/QuickAddAccidentContainer'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -92,7 +91,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   }
 
   const { offerRecommendation } = useProductRecommendations()
-  const productRecommendationOffers = offerRecommendation ? [offerRecommendation] : []
 
   const userErrorMessage = userError?.message
 
@@ -145,19 +143,12 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               </Space>
 
               <Space y={2}>
-                {productRecommendationOffers.length > 0 && (
-                  <CartEntryList>
-                    {productRecommendationOffers.map(({ product, offer }) => {
-                      return (
-                        <CartEntryOfferItem
-                          key={offer.id}
-                          shopSessionId={shopSession.id}
-                          product={product}
-                          offer={offer}
-                        />
-                      )
-                    })}
-                  </CartEntryList>
+                {offerRecommendation && (
+                  <QuickAddAccidentContainer
+                    shopSessionId={shopSession.id}
+                    offer={offerRecommendation.offer}
+                    product={offerRecommendation.product}
+                  />
                 )}
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>

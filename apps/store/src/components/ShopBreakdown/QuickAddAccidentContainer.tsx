@@ -3,12 +3,12 @@ import { datadogRum } from '@datadog/browser-rum'
 import { atom, useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
-import { QuickAdd } from '@/components/ShopBreakdown/QuickAdd'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { QuickAdd } from './QuickAdd'
 
 type Props = {
   shopSessionId: string

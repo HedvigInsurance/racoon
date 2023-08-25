@@ -12,6 +12,7 @@ import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
+import { QuickAddAccidentContainer } from '@/components/ShopBreakdown/QuickAddAccidentContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -20,7 +21,6 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { PageDebugDialog } from './PageDebugDialog'
-import { QuickAddAccidentContainer } from './QuickAddAccidentContainer'
 
 export const CartPage = () => {
   const { t } = useTranslation('cart')
