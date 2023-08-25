@@ -2,19 +2,21 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'react-i18next'
 import { Button, Dialog, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { ActionButton } from '@/components/ProductItem/ProductItem'
 import {
+  type CartFragmentFragment,
   ProductRecommendationsDocument,
   ShopSessionDocument,
   useCartEntryRemoveMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { ActionButton } from './ProductItem'
 
 type Props = {
   shopSessionId: string
   offerId: string
   title: string
+  onCompleted?: (cart: CartFragmentFragment) => void
 }
 
 export const RemoveActionButton = (props: Props) => {
@@ -32,6 +34,7 @@ export const RemoveActionButton = (props: Props) => {
         const offer = updatedShopSession.cart.entries.find((item) => item.id == props.offerId)
         if (offer) {
           tracking.reportDeleteFromCart(offer)
+          props.onCompleted?.(updatedShopSession.cart)
         } else {
           datadogLogs.logger.error('Failed to find offer being removed in session cart', {
             shopSessionId: props.shopSessionId,

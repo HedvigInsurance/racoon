@@ -3,8 +3,8 @@ import { useTranslation } from 'next-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ActionButton } from './ProductItem'
 import { useEditProductOffer } from './useEditProductOffer'
 
 type Props = {
