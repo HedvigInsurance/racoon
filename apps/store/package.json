@@ -37,7 +37,7 @@
     "@radix-ui/react-switch": "1.0.3",
     "@radix-ui/react-tabs": "1.0.4",
     "@radix-ui/react-tooltip": "1.0.6",
-    "@storyblok/react": "2.4.4",
+    "@storyblok/react": "2.4.5",
     "@types/uuid": "9.0.2",
     "@vercel/edge-config": "0.2.1",
     "@vercel/otel": "0.3.0",
