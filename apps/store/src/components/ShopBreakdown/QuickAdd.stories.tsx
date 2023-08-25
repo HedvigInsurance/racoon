@@ -5,6 +5,10 @@ import { QuickAdd } from './QuickAdd'
 const meta: Meta<typeof QuickAdd> = {
   title: 'Components / Shop Breakdown / Quick Add',
   component: QuickAdd,
+  argTypes: {
+    onAdd: { action: 'onAdd' },
+    onDismiss: { action: 'onDismiss' },
+  },
 }
 
 export default meta
