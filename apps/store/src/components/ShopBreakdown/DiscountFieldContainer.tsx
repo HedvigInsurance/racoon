@@ -1,9 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { ComponentProps } from 'react'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/components/CartInventory/useCampaign'
-import { DiscountField } from '@/components/ShopBreakdown/DiscountField'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
+import { DiscountField } from './DiscountField'
 
 type Props = {
   shopSession: ShopSession
