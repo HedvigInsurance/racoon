@@ -3,14 +3,15 @@ import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import { AndroidIcon, AppleIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
-import { CartInventory } from '@/components/CartInventory/CartInventory'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { Features } from '@/utils/Features'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { SasEurobonusSectionContainer } from '../../features/sas/SasEurobonusSection'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { CheckList, CheckListItem } from './CheckList'
 import { ConfirmationPageProps } from './ConfirmationPage.types'
@@ -24,9 +25,7 @@ type Props = ConfirmationPageProps & {
 
 export const ConfirmationPage = (props: Props) => {
   const { t } = useTranslation('checkout')
-  const { cart, story } = props
-
-  const checklistItems = story.content.checklist.split('\n')
+  const checklistItems = props.story.content.checklist.split('\n')
 
   return (
     <Wrapper>
@@ -36,9 +35,13 @@ export const ConfirmationPage = (props: Props) => {
             <Space y={4}>
               <Space y={{ base: 3, lg: 4.5 }}>
                 <Heading as="h1" variant="standard.24" align="center">
-                  {story.content.title}
+                  {props.story.content.title}
                 </Heading>
-                <CartInventory shopSessionId={props.shopSessionId} cart={cart} readOnly />
+                <ShopBreakdown>
+                  {props.cart.entries.map((item) => (
+                    <ProductItemContainer key={item.id} offer={item} />
+                  ))}
+                </ShopBreakdown>
               </Space>
 
               {props.switching && (
@@ -57,10 +60,10 @@ export const ConfirmationPage = (props: Props) => {
               <Space y={{ base: 1.5, lg: 2 }}>
                 <div>
                   <Heading as="h2" variant="standard.24">
-                    {story.content.checklistTitle}
+                    {props.story.content.checklistTitle}
                   </Heading>
                   <Text as="p" color="textSecondary" size="xl">
-                    {story.content.checklistSubtitle}
+                    {props.story.content.checklistSubtitle}
                   </Text>
                 </div>
                 <CheckList>
@@ -97,10 +100,13 @@ export const ConfirmationPage = (props: Props) => {
 
         <div>
           <ImageSection
-            image={{ src: story.content.footerImage.filename, alt: story.content.footerImage.alt }}
+            image={{
+              src: props.story.content.footerImage.filename,
+              alt: props.story.content.footerImage.alt,
+            }}
           />
 
-          <ConfirmationPageBlock blok={story.content} />
+          <ConfirmationPageBlock blok={props.story.content} />
         </div>
       </Space>
     </Wrapper>
