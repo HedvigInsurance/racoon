@@ -121,6 +121,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
             if (subscriber.closed) return
             const { signing, userError } = data.shopSessionStartSign
             if (userError) {
+              bankIdLogger.warn('StartSign | Failed to sign', { error: userError })
               subscriber.error(userError)
             } else if (signing) {
               bankIdLogger.info('Signing started')
