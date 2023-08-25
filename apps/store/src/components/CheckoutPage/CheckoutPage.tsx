@@ -8,7 +8,6 @@ import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CartEntryList } from '@/components/CartInventory/CartEntryList'
 import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
-import { CostSummary } from '@/components/CartInventory/CostSummary'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -19,6 +18,7 @@ import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -39,7 +39,6 @@ import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
   const {
-    cart,
     ssn,
     shouldCollectEmail,
     suggestedEmail,
@@ -139,7 +138,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                 </ShopBreakdown>
                 <DiscountFieldContainer shopSession={shopSession} />
                 <Divider />
-                <CostSummary {...cart.cost} campaign={cart.campaigns.redeemed} />
+                <TotalAmountContainer cart={shopSession.cart} />
                 <div />
               </Space>
 

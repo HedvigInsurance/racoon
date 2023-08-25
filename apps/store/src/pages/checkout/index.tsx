@@ -1,11 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { SSRConfig } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import {
-  getCrossOut,
-  getTotal,
-  useGetCartCampaign,
-} from '@/components/CartInventory/CartInventory.helpers'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
@@ -28,31 +23,15 @@ type NextPageProps = Omit<
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()
-  const getCartCampaign = useGetCartCampaign()
 
   if (!shopSession?.customer) return null
 
   const { authenticationStatus } = shopSession.customer
 
-  const cart = {
-    id: shopSession.cart.id,
-    cost: {
-      total: getTotal(shopSession),
-      crossOut: getCrossOut(shopSession),
-    },
-    campaigns: {
-      enabled: shopSession.cart.campaignsEnabled,
-      redeemed: shopSession.cart.redeemedCampaign
-        ? getCartCampaign(shopSession.cart.cost.gross, shopSession.cart.redeemedCampaign)
-        : undefined,
-    },
-  } satisfies CheckoutPageProps['cart']
-
   return (
     <CheckoutPage
       {...props}
       shopSession={shopSession}
-      cart={cart}
       customerAuthenticationStatus={authenticationStatus}
     />
   )
