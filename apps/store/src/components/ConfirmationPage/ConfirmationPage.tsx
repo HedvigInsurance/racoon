@@ -46,7 +46,7 @@ export const ConfirmationPage = (props: Props) => {
 
               {props.switching && (
                 <SwitchingAssistantSection
-                  shopSessionId={props.shopSessionId}
+                  shopSessionOutcomeId={props.shopSessionOutcomeId}
                   {...props.switching}
                 />
               )}

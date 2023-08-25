@@ -4,13 +4,15 @@ import { CardSkeleton, ContractCard } from '../ContractCard'
 import { useSwitchingContracts } from '../useSwitchingContracts'
 
 type Props = {
-  shopSessionId: string
+  shopSessionOutcomeId: string
   companyDisplayName: string
 }
 
 export const SwitchingAssistantSection = (props: Props) => {
   const { t } = useTranslation('checkout')
-  const switchingContracts = useSwitchingContracts({ shopSessionOutcomeId: props.shopSessionId })
+  const switchingContracts = useSwitchingContracts({
+    shopSessionOutcomeId: props.shopSessionOutcomeId,
+  })
 
   return (
     <Space y={{ base: 1.5, lg: 2 }}>

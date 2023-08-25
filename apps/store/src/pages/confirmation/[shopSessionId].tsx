@@ -64,6 +64,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       currency: shopSession.currencyCode,
       story,
       memberPartnerData,
+      shopSessionOutcomeId,
       ...getSwitching(outcome),
     },
   })

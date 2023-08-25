@@ -7,6 +7,7 @@ export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
   currency: string
   cart: CartFragmentFragment
   shopSessionId: string
+  shopSessionOutcomeId: string
   switching?: {
     companyDisplayName: string
   }
