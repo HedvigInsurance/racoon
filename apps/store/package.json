@@ -86,7 +86,7 @@
     "@storybook/react": "7.3.2",
     "@swc-jotai/react-refresh": "0.1.0",
     "@testing-library/dom": "9.3.1",
-    "@testing-library/jest-dom": "6.1.1",
+    "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/clone-deep": "4.0.1",
