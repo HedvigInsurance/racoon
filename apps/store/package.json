@@ -91,7 +91,7 @@
     "@testing-library/user-event": "14.4.3",
     "@types/clone-deep": "4.0.1",
     "@types/md5": "2.3.2",
-    "@types/node": "18.17.9",
+    "@types/node": "18.17.11",
     "@types/nprogress": "0.2.0",
     "@types/react-dom": "18.2.7",
     "babel-loader": "9.1.3",
