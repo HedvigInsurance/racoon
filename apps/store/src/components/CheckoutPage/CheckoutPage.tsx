@@ -91,7 +91,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     }
   }
 
-  const { productRecommendationOffers } = useProductRecommendations()
+  const { offerRecommendation } = useProductRecommendations()
+  const productRecommendationOffers = offerRecommendation ? [offerRecommendation] : []
 
   const userErrorMessage = userError?.message
 
@@ -144,10 +145,9 @@ const CheckoutPage = (props: CheckoutPageProps) => {
               </Space>
 
               <Space y={2}>
-                {productRecommendationOffers && productRecommendationOffers.length > 0 && (
+                {productRecommendationOffers.length > 0 && (
                   <CartEntryList>
                     {productRecommendationOffers.map(({ product, offer }) => {
-                      if (!offer) return null
                       return (
                         <CartEntryOfferItem
                           key={offer.id}

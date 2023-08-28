@@ -4,8 +4,6 @@ import { useTranslation } from 'next-i18next'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { CartEntryList } from '@/components/CartInventory/CartEntryList'
-import { CartEntryOfferItem } from '@/components/CartInventory/CartEntryOfferItem'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { EditActionButton } from '@/components/ProductItem/EditActionButton'
 import { Skeleton } from '@/components/ProductItem/ProductItem'
@@ -22,11 +20,12 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { PageDebugDialog } from './PageDebugDialog'
+import { QuickAddAccidentContainer } from './QuickAddAccidentContainer'
 
 export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
-  const { productRecommendations, productRecommendationOffers } = useProductRecommendations()
+  const { productRecommendations, offerRecommendation } = useProductRecommendations()
   const tracking = useTracking()
 
   useTrackViewCartEffect()
@@ -44,9 +43,6 @@ export const CartPage = () => {
   const handleClickCheckout = () => {
     tracking.reportBeginCheckout(shopSession.cart)
   }
-
-  const showProductRecommendations =
-    productRecommendationOffers && productRecommendationOffers.length > 0
 
   return (
     <PageWrapper>
@@ -74,21 +70,11 @@ export const CartPage = () => {
                 <TotalAmountContainer cart={shopSession.cart} />
               </ShopBreakdown>
 
-              {showProductRecommendations && (
-                <CartEntryList>
-                  {productRecommendationOffers.map(({ offer, product }) => {
-                    // TODO: improve typing to get rid of this check
-                    if (!offer) return null
-                    return (
-                      <CartEntryOfferItem
-                        key={offer.id}
-                        shopSessionId={shopSession.id}
-                        product={product}
-                        offer={offer}
-                      />
-                    )
-                  })}
-                </CartEntryList>
+              {offerRecommendation && (
+                <QuickAddAccidentContainer
+                  shopSessionId={shopSession.id}
+                  {...offerRecommendation}
+                />
               )}
 
               <ButtonNextLink
