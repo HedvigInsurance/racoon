@@ -22,17 +22,17 @@ export const TrustpilotBlock = ({ blok }: Props) => {
     return null
   }
 
+  const isInternalLink = blok.link.linktype === 'story'
+
   return (
     <Wrapper {...storyblokEditable(blok)}>
-      <Link href={blok.link.url} target="_blank" rel="noopener">
-        <ScoreText as="span">
-          {t('TRUSTPILOT_SCORE', { score: data.score })}
-        </ScoreText>
-        <ReviewText as="span" color="textGreen" size={{_: 'md', md: 'xl'}}>
+      <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: data.score })}</ScoreText>
+      <Link href={blok.link.url} target={isInternalLink ? '_self' : '_blank'} rel="noopener">
+        <ReviewText as="span" color="textSecondaryOnGray">
           {t('TRUSTPILOT_REVIEWS_COUNT', {
             numberOfReviews: numberGrouping(data.totalReviews),
           })}
-          <TrustpilotLogo width="5.5em" />
+          <TrustpilotLogo width="7em" />
         </ReviewText>
       </Link>
     </Wrapper>
@@ -40,11 +40,27 @@ export const TrustpilotBlock = ({ blok }: Props) => {
 }
 
 const Wrapper = styled.div({
-  display: 'grid',
-  placeItems: 'center',
-  backgroundColor: theme.colors.signalGreenFill,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  aspectRatio: '4 / 5',
+  maxWidth: '100%',
+  background: `linear-gradient(
+    to bottom,
+    transparent 0%,
+    hsl(84, 96%, 90%) 30%,
+    hsl(84, 98%, 90%) 50%,
+    hsl(85, 100%, 90%) 70%,
+    transparent 100%
+  )`,
   paddingBlock: theme.space[10],
   paddingInline: theme.space.md,
+  fontSize: 'clamp(5.5rem, 20vw + 1.2rem, 13rem)',
+
+  [mq.lg]: {
+    aspectRatio: '16 / 9',
+  },
 })
 
 const Link = styled.a({
@@ -56,21 +72,18 @@ const Link = styled.a({
 })
 
 const ScoreText = styled(Text)({
-  lineHeight: '1.32',
-  fontSize: theme.fontSizes[11],
-  [mq.md]: {
-    // Font size this high is an edge case. That's why I'm not using Text's 'size' prop
-    fontSize: '12.5rem',
-  },
+  fontSize: '1em',
 })
 
 const ReviewText = styled(Text)({
   display: 'inline-flex',
-  alignItems: 'center',
+  alignItems: 'end',
   gap: theme.space.xxs,
+  fontSize: '0.16em',
 
   [mq.lg]: {
     gap: theme.space.xs,
+    fontSize: '0.12em',
   },
 })
 
