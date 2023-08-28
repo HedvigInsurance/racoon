@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { SyntheticEvent, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import {
   CartEntryAddMutation,
@@ -8,14 +8,14 @@ import {
   useCartEntryReplaceMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { useCartEntryToReplace } from '../ProductPage'
+import { useCartEntryToReplace } from '../components/ProductPage/ProductPage'
 
 type Params = {
   shopSessionId: string
-  onSuccess: (productOfferId: string, nextUrl?: string) => void
+  onSuccess: (productOfferId: string) => void
 }
 
-export const useHandleSubmitAddToCart = ({ shopSessionId, onSuccess }: Params) => {
+export const useAddToCart = ({ shopSessionId, onSuccess }: Params) => {
   // ProductRecommendationsQuery needs to be an active query
   // before we can "re"fetch it after adding a new product into
   // the cart
@@ -34,15 +34,11 @@ export const useHandleSubmitAddToCart = ({ shopSessionId, onSuccess }: Params) =
   const entryToReplace = useCartEntryToReplace()
   const { showError } = useAppErrorHandleContext()
 
-  const getHandleSubmit = (productOfferId: string) => {
-    return async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-      event.preventDefault()
-
-      const nextUrl = event.nativeEvent.submitter?.getAttribute('value') ?? undefined
-
+  const addToCart = useCallback(
+    async (productOfferId: string) => {
       const options = {
         onCompleted() {
-          onSuccess(productOfferId, nextUrl)
+          onSuccess(productOfferId)
         },
         onError: showError,
       } as const
@@ -62,10 +58,11 @@ export const useHandleSubmitAddToCart = ({ shopSessionId, onSuccess }: Params) =
           ...options,
         })
       }
-    }
-  }
+    },
+    [addEntry, entryToReplace, replaceEntry, shopSessionId, showError, onSuccess],
+  )
 
-  return [getHandleSubmit, loadingReplace || loading] as const
+  return [addToCart, loadingReplace || loading] as const
 }
 
 type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]

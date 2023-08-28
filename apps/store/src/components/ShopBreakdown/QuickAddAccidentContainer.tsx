@@ -2,12 +2,12 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { atom, useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { useHandleSubmitAddToCart } from '@/components/ProductPage/PurchaseForm/useHandleSubmitAddToCart'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useAddToCart } from '@/utils/useAddToCart'
 import { QuickAdd } from './QuickAdd'
 
 type Props = {
@@ -20,7 +20,7 @@ export const QuickAddAccidentContainer = (props: Props) => {
   const [show, setShow] = useShowQuickAddOffer()
   const { t } = useTranslation('cart')
 
-  const [getHandleSubmitAddToCart, loading] = useHandleSubmitAddToCart({
+  const [addToCart, loading] = useAddToCart({
     shopSessionId: props.shopSessionId,
     onSuccess() {
       datadogLogs.logger.info('Added quick offer to cart', {
@@ -31,14 +31,13 @@ export const QuickAddAccidentContainer = (props: Props) => {
   })
 
   const tracking = useTracking()
-  const handleSubmitAddToCart = getHandleSubmitAddToCart(props.offer.id)
-  const handleAdd: typeof handleSubmitAddToCart = (event) => {
+  const handleAdd = () => {
     datadogRum.addAction('Quick add to cart', {
       priceIntentId: props.offer.id,
       product: props.product.id,
     })
     tracking.reportAddToCart(props.offer, 'recommendations')
-    return handleSubmitAddToCart(event)
+    addToCart(props.offer.id)
   }
 
   if (!show) return null
@@ -63,7 +62,7 @@ export const QuickAddAccidentContainer = (props: Props) => {
       subtitle={subtitle}
       pillow={props.product.pillowImage}
       cost={cost}
-      onSubmitAdd={handleAdd}
+      onAdd={handleAdd}
       loading={loading}
       onDismiss={handleDismiss}
     />

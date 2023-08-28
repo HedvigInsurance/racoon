@@ -20,6 +20,7 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
+import { useAddToCart } from '@/utils/useAddToCart'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
@@ -28,7 +29,6 @@ import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
 import { getOffersByPrice } from './getOffersByPrice'
 import { ProductTierSelector } from './ProductTierSelector'
-import { useHandleSubmitAddToCart } from './useHandleSubmitAddToCart'
 import { useSelectedOffer } from './useSelectedOffer'
 
 enum AddToCartRedirect {
@@ -76,18 +76,20 @@ export const OfferPresenter = (props: Props) => {
 
   const [updateStartDate, updateStartDateResult] = useUpdateStartDate({ priceIntent })
 
-  const [getHandleSubmitAddToCart, loadingAddToCart] = useHandleSubmitAddToCart({
+  const [addToCart, loadingAddToCart] = useAddToCart({
     shopSessionId: shopSession.id,
-    onSuccess(productOfferId, nextUrl) {
+    onSuccess(productOfferId) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 
       if (addedProductOffer === undefined) {
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
+      let nextUrl: string | undefined = undefined
       tracking.reportAddToCart(addedProductOffer, 'store')
       if (addToCartRedirect === AddToCartRedirect.Checkout) {
         tracking.reportBeginCheckout(shopSession.cart)
+        nextUrl = PageLink.checkout({ expandCart: true })
       }
 
       const isBankSignering =
@@ -162,10 +164,15 @@ export const OfferPresenter = (props: Props) => {
     )
   }, [sortedOffers, selectedOffer])
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    addToCart(selectedOffer.id)
+  }
+
   return (
     <>
       <Space y={1}>
-        <form ref={offerRef} onSubmit={getHandleSubmitAddToCart(selectedOffer.id)}>
+        <form ref={offerRef} onSubmit={handleSubmit}>
           <Space y={2}>
             <SpaceFlex direction="vertical" align="center" space={1}>
               {discountTooltipProps && <DiscountTooltip {...discountTooltipProps} />}
@@ -221,7 +228,6 @@ export const OfferPresenter = (props: Props) => {
                 type="submit"
                 variant="primary-alt"
                 onClick={handleClickSubmit(AddToCartRedirect.Checkout)}
-                value={PageLink.checkout({ expandCart: true })}
                 loading={loading && addToCartRedirect === AddToCartRedirect.Checkout}
                 disabled={loading}
               >
