@@ -25,6 +25,7 @@ import {
   ProductOfferFragment,
   usePriceIntentConfirmMutation,
 } from '@/services/apollo/generated'
+import { BankSigneringEvent } from '@/services/bankSignering'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -346,7 +347,7 @@ const EditingState = (props: EditingStateProps) => {
           (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
         )
         if (hasBankSigneringOffer) {
-          datadogRum.addAction('BankSignering Offered')
+          datadogRum.addAction(BankSigneringEvent.Offered)
         }
         onComplete()
       } else {

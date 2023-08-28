@@ -15,6 +15,7 @@ import {
   ProductOfferFragment,
   RedeemedCampaign,
 } from '@/services/apollo/generated'
+import { BankSigneringEvent } from '@/services/bankSignering'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -94,8 +95,11 @@ export const OfferPresenter = (props: Props) => {
 
       const isBankSignering =
         addedProductOffer.cancellation.option === ExternalInsuranceCancellationOption.Banksignering
-      if (isBankSignering && addedProductOffer.cancellation.requested) {
-        datadogRum.addAction('BankSignering Requested')
+      if (isBankSignering) {
+        datadogRum.addAction(BankSigneringEvent.Available)
+        if (addedProductOffer.cancellation.requested) {
+          datadogRum.addAction(BankSigneringEvent.Requested)
+        }
       }
 
       onAddedToCart(addedProductOffer, nextUrl)
