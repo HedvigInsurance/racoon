@@ -13,6 +13,7 @@ const NextCartPage: NextPageWithLayout = () => {
     <>
       <Head>
         <title>{`${t('CART_PAGE_HEADING')} | Hedvig`}</title>
+        <meta name="robots" content="noindex,follow" />
       </Head>
       <CartPage />
     </>

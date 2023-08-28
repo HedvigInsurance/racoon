@@ -9,7 +9,7 @@ type Params = { code: string }
 const NextPage: NextPageWithLayout<Props> = (props) => (
   <>
     <Head>
-      <meta name="robots" content="noindex, follow" />
+      <meta name="robots" content="noindex,follow" />
     </Head>
     <ForeverPage {...props} />
   </>
