@@ -7,6 +7,7 @@ import { Button, Space, Text, mq, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useBankSigneringInitMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { BankSigneringEvent } from '@/services/bankSignering'
 import { useFormatter } from '@/utils/useFormatter'
 import { BankSigneringContract } from './useSwitchingContracts'
 
@@ -46,7 +47,7 @@ const PendingContractCard = (props: ContractCardProps) => {
   })
 
   const handleClick = (contractId: string) => () => {
-    datadogRum.addAction('BankSignering Initiate', { contractId })
+    datadogRum.addAction(BankSigneringEvent.Initiated, { contractId })
     // Logger context used in mutation result handlers
     BANK_SIGNERING_LOGGER.addContext('contractId', contractId)
     initiateBankSignering({ variables: { contractId } })
@@ -69,7 +70,7 @@ const PendingContractCard = (props: ContractCardProps) => {
             <ButtonNextLink
               href={props.url}
               target="_blank"
-              data-dd-action-name="BankSignering Redirect"
+              data-dd-action-name={BankSigneringEvent.Opened}
             >
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
             </ButtonNextLink>
