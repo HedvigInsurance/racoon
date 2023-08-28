@@ -330,15 +330,9 @@ const EditingState = (props: EditingStateProps) => {
       })
       onComplete(error.message)
     },
-  })
-  const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
+    onCompleted(data) {
+      const updatedPriceIntent = data.priceIntentConfirm.priceIntent
 
-  const handleConfirm = async () => {
-    setIsLoadingPrice(true)
-
-    try {
-      const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
-      const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
         tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
@@ -351,9 +345,24 @@ const EditingState = (props: EditingStateProps) => {
         }
         onComplete()
       } else {
+        datadogLogs.logger.warn(
+          'Failed to confirm price intent - No updated priceIntent returned by the API',
+          {
+            priceIntentId: priceIntent.id,
+          },
+        )
         setIsLoadingPrice(false)
         onComplete(t('GENERAL_ERROR_DIALOG_PROMPT'))
       }
+    },
+  })
+  const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
+
+  const handleConfirm = async () => {
+    setIsLoadingPrice(true)
+
+    try {
+      await Promise.all([confirmPriceIntent(), completePriceLoader()])
     } catch (error) {
       // Error is already handled in onError callback
       console.debug('Error confirming price intent', error)
