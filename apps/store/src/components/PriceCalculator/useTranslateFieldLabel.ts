@@ -6,7 +6,7 @@ export const useTranslateFieldLabel = () => {
   const { t } = useTranslation('purchase-form')
 
   return useCallback(
-    (label: Label, options: Record<string, string | number> = {}) => {
+    (label: Label, options: Record<string, string | number> = {}): string => {
       const { key } = label
       return t(key, { defaultValue: `MISSING ${key}`, ...options })
     },
