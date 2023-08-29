@@ -1,6 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useTranslation } from 'next-i18next'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { usePriceIntentDataUpdateMutation } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -13,6 +15,8 @@ type Params = {
 export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
+  const { t } = useTranslation('purchase-form')
+  const { showError } = useAppErrorHandleContext()
   const [updateData, { loading }] = usePriceIntentDataUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
     refetchQueries: 'active',
@@ -30,6 +34,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
         shopSessionId: shopSession?.id,
         priceIntentId: priceIntent?.id,
       })
+      showError(new Error(t('GENERAL_ERROR_DIALOG_PROMPT')))
     },
   })
 

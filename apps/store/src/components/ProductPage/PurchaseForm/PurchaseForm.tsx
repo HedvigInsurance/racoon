@@ -321,24 +321,24 @@ const EditingState = (props: EditingStateProps) => {
   const { t } = useTranslation('purchase-form')
   const tracking = useTracking()
 
+  const priceLoaderPromise = useRef<Promise<void> | null>(null)
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onError(error) {
-      datadogLogs.logger.error('Failed to confirm price intent', {
+      datadogLogs.logger.warn('Failed to confirm price intent', {
         error,
         priceIntentId: priceIntent.id,
       })
-      onComplete(error.message)
+      if (error.networkError || error.graphQLErrors.length > 0) {
+        // Unknown error
+        onComplete(t('GENERAL_ERROR_DIALOG_PROMPT'))
+      } else {
+        // User error
+        onComplete(error.message)
+      }
     },
-  })
-  const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
-
-  const handleConfirm = async () => {
-    setIsLoadingPrice(true)
-
-    try {
-      const [{ data }] = await Promise.all([confirmPriceIntent(), completePriceLoader()])
-      const updatedPriceIntent = data?.priceIntentConfirm.priceIntent
+    async onCompleted(data) {
+      const updatedPriceIntent = data.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
         tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
         tracking.setPriceIntentContext(updatedPriceIntent)
@@ -349,15 +349,22 @@ const EditingState = (props: EditingStateProps) => {
         if (hasBankSigneringOffer) {
           datadogRum.addAction(BankSigneringEvent.Offered)
         }
+        await priceLoaderPromise.current
         onComplete()
       } else {
-        setIsLoadingPrice(false)
-        onComplete(t('GENERAL_ERROR_DIALOG_PROMPT'))
+        throw new Error(
+          `UNEXPECTED: price intent not updated without user error (${priceIntent.id})`,
+        )
       }
-    } catch (error) {
-      // Error is already handled in onError callback
-      console.debug('Error confirming price intent', error)
-    }
+    },
+  })
+
+  // onComplete will unmount the component, so we don't need to reset the state
+  const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
+  const handleConfirm = () => {
+    setIsLoadingPrice(true)
+    confirmPriceIntent()
+    priceLoaderPromise.current = completePriceLoader()
   }
 
   return isLoadingPrice ? (
