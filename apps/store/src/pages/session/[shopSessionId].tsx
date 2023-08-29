@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const nextURL = new URL(req.url || '', ORIGIN_URL)
   nextURL.pathname = PageLink.home({ locale })
+  nextURL.searchParams.delete('shopSessionId')
 
   const priceIntentId = query['price_intent_id']
   if (typeof priceIntentId === 'string') {
