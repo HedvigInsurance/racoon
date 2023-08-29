@@ -2,8 +2,9 @@ import { type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
+import { RedirectUser } from '@/features/retargeting/RedirectUser'
 import { RetargetingPage } from '@/features/retargeting/RetargetingPage'
-import { useRedirectUser } from '@/features/retargeting/useRedirectUser'
+import { useQueryParams } from '@/features/retargeting/useQueryParams'
 import { validateUrl } from '@/features/retargeting/validateUrl'
 import { initializeApollo } from '@/services/apollo/client'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -15,7 +16,7 @@ if (typeof window !== 'undefined') {
 type Props = ComponentProps<typeof RetargetingPage>
 
 const Page = (props: Props) => {
-  useRedirectUser()
+  const redirectUserProps = useQueryParams()
 
   return (
     <>
@@ -24,6 +25,7 @@ const Page = (props: Props) => {
         <meta name="robots" content="noindex,follow" />
       </Head>
       <RetargetingPage {...props} />
+      {redirectUserProps && <RedirectUser {...redirectUserProps} />}
     </>
   )
 }
