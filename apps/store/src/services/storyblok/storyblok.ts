@@ -77,7 +77,6 @@ import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
-import { retargetingBlocks } from '@/features/retargeting/retargetingBlocks'
 import { TrustpilotData } from '@/services/trustpilot/trustpilot.types'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
@@ -301,7 +300,6 @@ export const initStoryblok = () => {
     InsurelyBlock,
     ...blogBlocks,
     ...manyPetsBlocks,
-    ...retargetingBlocks,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
