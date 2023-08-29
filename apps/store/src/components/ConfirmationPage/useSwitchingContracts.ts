@@ -73,13 +73,13 @@ const getStatus = (
     case ContractExternalInsuranceCancellationStatus.Initiated:
       return {
         type: 'PENDING',
-        messageKey: tKey('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING'),
+        messageKey: tKey<'checkout'>('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_PENDING'),
       }
 
     case ContractExternalInsuranceCancellationStatus.Completed:
       return {
         type: 'COMPLETED',
-        messageKey: tKey('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED'),
+        messageKey: tKey<'checkout'>('SWITCHING_ASSISTANT_BANK_SIGNERING_STATUS_COMPLETED'),
       }
   }
 }
