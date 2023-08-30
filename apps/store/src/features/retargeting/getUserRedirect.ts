@@ -10,9 +10,16 @@ export enum RedirectType {
   Product = 'product',
   Cart = 'cart',
   Fallback = 'fallback',
+  ModifiedCart = 'modified-cart',
 }
 
-type Redirect = { type: RedirectType; url: string }
+type Redirect =
+  | { type: Exclude<RedirectType, RedirectType.ModifiedCart>; url: string }
+  | {
+      type: RedirectType.ModifiedCart
+      url: string
+      offers: Array<string>
+    }
 
 export const getUserRedirect = (
   userParams: UserParams,
@@ -21,7 +28,7 @@ export const getUserRedirect = (
   const fallbackRedirect = {
     type: RedirectType.Fallback,
     url: new URL(PageLink.store({ locale: userParams.locale }), ORIGIN_URL).toString(),
-  }
+  } as const
 
   if (!data) return fallbackRedirect
 
@@ -50,17 +57,24 @@ export const getUserRedirect = (
     }
   }
 
-  const cheapestOffersIds = getCheapestOffersIds(data)
-  return {
-    type: RedirectType.Cart,
-    url: PageLink.session({
-      locale: userParams.locale,
-      shopSessionId: data.shopSession.id,
-      next: PageLink.cart({ locale: userParams.locale }),
-      code: userParams.campaignCode,
-      offers: cheapestOffersIds,
-    }),
+  const offers = getCheapestOffersIds(data)
+  if (offers.length > 0) {
+    return {
+      type: RedirectType.ModifiedCart,
+      url: PageLink.session({
+        locale: userParams.locale,
+        shopSessionId: data.shopSession.id,
+        next: PageLink.cart({ locale: userParams.locale }),
+        code: userParams.campaignCode,
+      }),
+      offers,
+    }
   }
+
+  console.warn(
+    `Retargeting: no confirmed price intents in shop session ${userParams.shopSessionId}. Redirecting to fallback location`,
+  )
+  return fallbackRedirect
 }
 
 const hasAddedCartEntries = (data: ShopSessionRetargetingQuery): boolean => {

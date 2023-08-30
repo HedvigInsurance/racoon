@@ -1,0 +1,32 @@
+query ShopSessionRetargeting($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    id
+    cart {
+      entries {
+        id
+      }
+    }
+    priceIntents {
+      ...RetargetingPriceIntent
+    }
+  }
+}
+
+fragment RetargetingPriceIntent on PriceIntent {
+  id
+  offers {
+    ...RetargetingOffer
+  }
+  product {
+    name
+  }
+}
+
+fragment RetargetingOffer on ProductOffer {
+  id
+  cost {
+    gross {
+      amount
+    }
+  }
+}

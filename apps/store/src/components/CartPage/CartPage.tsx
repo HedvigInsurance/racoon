@@ -33,7 +33,7 @@ export const CartPage = () => {
 
   useTrackViewCartEffect()
 
-  if (!shopSession) return <LoadingState />
+  if (!shopSession || !router.isReady) return <LoadingState />
 
   const productRecommendationList = productRecommendations && (
     <ProductRecommendationList recommendations={productRecommendations} />

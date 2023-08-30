@@ -26,8 +26,6 @@ type SessionLink = BaseParams & {
   code?: string
   // Resume the price intent and navigate to the related product page
   priceIntentId?: string
-  // Add specific offers to cart. It skips 'next' in case none of the offers can be added to the cart
-  offers?: Array<string>
 }
 
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
@@ -103,12 +101,6 @@ export const PageLink = {
 
     if (params.code) {
       url.searchParams.set('code', params.code)
-    }
-
-    if (params.offers) {
-      params.offers.forEach((offerId) => {
-        url.searchParams.append('offer_id', offerId)
-      })
     }
 
     if (params.priceIntentId) {
