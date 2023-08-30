@@ -1,4 +1,5 @@
 export enum QueryParam {
-  ShopSession = 'session',
+  ShopSession = 'shopSessionId',
   CampaignCode = 'code',
+  Locale = 'locale',
 }
