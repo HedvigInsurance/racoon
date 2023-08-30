@@ -9,23 +9,24 @@ export const useRedirectUser = () => {
   const { routingLocale } = useCurrentLocale()
   const router = useRouter()
 
-  const shopSessionId = useShopSessionId()
+  const queryParams = useQueryParams()
   useShopSessionQuery({
-    skip: !shopSessionId,
-    variables: shopSessionId ? { shopSessionId } : undefined,
+    skip: !queryParams,
+    variables: queryParams ? { shopSessionId: queryParams.shopSessionId } : undefined,
     onCompleted(data) {
       if (data.shopSession.cart.entries.length > 0) {
         router.push(
           PageLink.session({
             shopSessionId: data.shopSession.id,
             next: PageLink.cart({ locale: routingLocale }),
+            code: queryParams?.campaignCode,
           }),
         )
       }
     },
     onError(error) {
       datadogLogs.logger.warn('Retargeting | Failed to fetch shop session', {
-        shopSessionId,
+        shopSessionId: queryParams?.shopSessionId,
         error,
       })
       router.push(PageLink.store({ locale: routingLocale }))
@@ -33,8 +34,20 @@ export const useRedirectUser = () => {
   })
 }
 
-const useShopSessionId = () => {
+type QueryParamData = {
+  shopSessionId: string
+  campaignCode?: string
+}
+
+const useQueryParams = (): QueryParamData | null => {
   const router = useRouter()
   const shopSessionId = router.query[QueryParam.ShopSession]
-  return typeof shopSessionId === 'string' ? shopSessionId : undefined
+
+  if (typeof shopSessionId !== 'string') return null
+
+  const campaignCode = router.query[QueryParam.CampaignCode]
+  return {
+    shopSessionId,
+    ...(typeof campaignCode === 'string' && { campaignCode }),
+  }
 }
