@@ -1,22 +1,27 @@
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
-import { type ComponentProps } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, type ComponentProps } from 'react'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
-import { RedirectUser } from '@/features/retargeting/RedirectUser'
+import { QueryParam } from '@/features/retargeting/retargeting.constants'
 import { RetargetingPage } from '@/features/retargeting/RetargetingPage'
-import { useQueryParams } from '@/features/retargeting/useQueryParams'
-import { validateUrl } from '@/features/retargeting/validateUrl'
 import { initializeApollo } from '@/services/apollo/client'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-
-if (typeof window !== 'undefined') {
-  validateUrl()
-}
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 type Props = ComponentProps<typeof RetargetingPage>
 
 const Page = (props: Props) => {
-  const redirectUserProps = useQueryParams()
+  const router = useRouter()
+  const { routingLocale } = useCurrentLocale()
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    const shopSessionId = url.searchParams.get(QueryParam.ShopSession)
+    url.searchParams.delete(QueryParam.ShopSession)
+    url.pathname = `/api/retargeting/${shopSessionId}`
+    url.searchParams.set(QueryParam.Locale, routingLocale)
+    router.push(url)
+  }, [router, routingLocale])
 
   return (
     <>
@@ -25,7 +30,6 @@ const Page = (props: Props) => {
         <meta name="robots" content="noindex,follow" />
       </Head>
       <RetargetingPage {...props} />
-      {redirectUserProps && <RedirectUser {...redirectUserProps} />}
     </>
   )
 }
