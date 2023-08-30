@@ -1,5 +1,5 @@
 schema: ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
-documents: './src/graphql/*.graphql'
+documents: 'src/**/*.graphql'
 generates:
   ./src/services/apollo/generated.ts:
     config:
