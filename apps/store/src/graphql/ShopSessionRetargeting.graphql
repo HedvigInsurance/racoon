@@ -7,10 +7,7 @@ query ShopSessionRetargeting($shopSessionId: UUID!) {
       }
     }
     priceIntents {
-      id
-      product {
-        name
-      }
+      ...RetargetingPriceIntent
     }
   }
 }

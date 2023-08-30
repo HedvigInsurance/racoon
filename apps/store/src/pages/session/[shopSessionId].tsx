@@ -4,6 +4,9 @@ import {
   RedeemCampaignDocument,
   RedeemCampaignMutation,
   RedeemCampaignMutationVariables,
+  CartEntryAddDocument,
+  CartEntryAddMutation,
+  CartEntryAddMutationVariables,
 } from '@/services/apollo/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
@@ -78,14 +81,49 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     }
   }
 
+  const offers = query['offer_id']
+  let hasAddedOffer = true
+  if (offers) {
+    nextURL.searchParams.delete('offer_id')
+    const guaranteeArrayOffers = Array.isArray(offers) ? offers : [offers]
+    try {
+      const addToCartPromises = guaranteeArrayOffers.map((offerId) => {
+        const addToCartPromise = apolloClient.mutate<
+          CartEntryAddMutation,
+          CartEntryAddMutationVariables
+        >({
+          mutation: CartEntryAddDocument,
+          variables: {
+            offerId,
+            shopSessionId,
+          },
+        })
+        addToCartPromise.catch((error) =>
+          console.warn(`Unable to add offer ${offerId} to the cart`, error),
+        )
+      })
+
+      const result = await Promise.allSettled(addToCartPromises)
+      hasAddedOffer = result.some(({ status }) => status === 'fulfilled')
+    } catch (error) {
+      console.warn(
+        `Failed while adding offers ${JSON.stringify(guaranteeArrayOffers)} to the cart`,
+        error,
+      )
+    }
+  }
+
   const nextQueryParam = query['next']
   if (typeof nextQueryParam === 'string') {
     nextURL.searchParams.delete('next')
-    const queryLocale = nextQueryParam.split('/')[1]
-    if (isRoutingLocale(queryLocale)) {
-      nextURL.pathname = nextQueryParam
-    } else {
-      nextURL.pathname = `/${locale}${nextQueryParam}`
+    // We want to avoid redirecting to 'next' url in case we couldn't add any of the provided offers to the cart
+    if (hasAddedOffer) {
+      const queryLocale = nextQueryParam.split('/')[1]
+      if (isRoutingLocale(queryLocale)) {
+        nextURL.pathname = nextQueryParam
+      } else {
+        nextURL.pathname = `/${locale}${nextQueryParam}`
+      }
     }
   }
 
