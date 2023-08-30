@@ -16,6 +16,7 @@ type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
+type RetargetingRoute = { shopSessionId: string }
 
 type SessionLink = BaseParams & {
   shopSessionId: string
@@ -122,6 +123,7 @@ export const PageLink = {
     const nextQueryParam = next ? `?next=${next}` : ''
     return `/api/auth/exchange/${authorizationCode}${nextQueryParam}`
   },
+  apiRetargeting: ({ shopSessionId }: RetargetingRoute) => `/api/retargeting/${shopSessionId}`,
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
