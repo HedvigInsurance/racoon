@@ -1,0 +1,8 @@
+fragment RetargetingOffer on ProductOffer {
+  id
+  cost {
+    gross {
+      amount
+    }
+  }
+}
