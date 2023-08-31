@@ -7,6 +7,7 @@ import {
   ProductRecommendationsDocument,
   ShopSessionDocument,
   useCartEntryRemoveMutation,
+  type ProductOfferFragment,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -14,7 +15,7 @@ import { ActionButton } from './ProductItem'
 
 type Props = {
   shopSessionId: string
-  offerId: string
+  offer: ProductOfferFragment
   title: string
   onCompleted?: (cart: CartFragmentFragment) => void
 }
@@ -25,26 +26,29 @@ export const RemoveActionButton = (props: Props) => {
   const { showError } = useAppErrorHandleContext()
   const tracking = useTracking()
   const [removeProductOffer, result] = useCartEntryRemoveMutation({
-    variables: { shopSessionId: props.shopSessionId, offerId: props.offerId },
+    variables: { shopSessionId: props.shopSessionId, offerId: props.offer.id },
     refetchQueries: [ShopSessionDocument, ProductRecommendationsDocument],
     awaitRefetchQueries: true,
     onCompleted(data) {
       const updatedShopSession = data.shopSessionCartEntriesRemove.shopSession
       if (updatedShopSession) {
-        const offer = updatedShopSession.cart.entries.find((item) => item.id == props.offerId)
-        if (offer) {
-          tracking.reportDeleteFromCart(offer)
-          props.onCompleted?.(updatedShopSession.cart)
-        } else {
-          datadogLogs.logger.error('Failed to find offer being removed in session cart', {
-            shopSessionId: props.shopSessionId,
-            offerId: props.offerId,
-          })
-        }
+        props.onCompleted?.(updatedShopSession.cart)
       }
     },
-    onError: showError,
+    onError: (error) => {
+      datadogLogs.logger.error('Failed to remove offer from cart', {
+        shopSessionId: props.shopSessionId,
+        offerId: props.offer.id,
+        error,
+      })
+      showError(error)
+    },
   })
+
+  const handleClickRemove = () => {
+    tracking.reportDeleteFromCart(props.offer)
+    removeProductOffer()
+  }
 
   return (
     <FullscreenDialog.Root>
@@ -56,7 +60,7 @@ export const RemoveActionButton = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button onClick={() => removeProductOffer()} loading={result.loading}>
+            <Button onClick={handleClickRemove} loading={result.loading}>
               {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}
             </Button>
             <FullscreenDialog.Close asChild={true}>
