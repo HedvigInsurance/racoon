@@ -5,6 +5,7 @@ import { Text, theme, mq } from 'ui'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { LinkField } from '@/services/storyblok/storyblok'
+import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { useFormatter } from '@/utils/useFormatter'
 
@@ -27,7 +28,11 @@ export const TrustpilotBlock = ({ blok }: Props) => {
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: data.score })}</ScoreText>
-      <Link href={blok.link.url} target={isInternalLink ? '_self' : '_blank'} rel="noopener">
+      <Link
+        href={getLinkFieldURL(blok.link)}
+        target={isInternalLink ? '_self' : '_blank'}
+        rel="noopener"
+      >
         <ReviewText as="span" color="textSecondaryOnGray">
           {t('TRUSTPILOT_REVIEWS_COUNT', {
             numberOfReviews: numberGrouping(data.totalReviews),
