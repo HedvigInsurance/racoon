@@ -15,12 +15,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.end()
     return
   }
+  console.debug('Retargeting | Received user params', userParams)
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale: userParams.locale })
   const data = await fetchRetargetingData(apolloClient, userParams.shopSessionId)
   const redirect = getUserRedirect(userParams, data)
 
-  console.info(`Redirecting | Redirecting user to ${redirect.type}`)
+  console.info(`Retargeting | Redirecting user to ${redirect.type}`)
+  console.debug(`Retargeting | Redirect URL: ${redirect.url}`)
   res.redirect(redirect.url)
 }
 
