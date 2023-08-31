@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -20,11 +21,13 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { QueryParam } from './CartPage.constants'
 import { PageDebugDialog } from './PageDebugDialog'
 
 export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
+  const router = useRouter()
   const { productRecommendations, offerRecommendation } = useProductRecommendations()
   const tracking = useTracking()
 
@@ -56,7 +59,11 @@ export const CartPage = () => {
 
               <ShopBreakdown>
                 {shopSession.cart.entries.map((item) => (
-                  <ProductItemContainer key={item.id} offer={item}>
+                  <ProductItemContainer
+                    key={item.id}
+                    offer={item}
+                    defaultExpanded={router.query[QueryParam.ExpandCart] === '1'}
+                  >
                     <EditActionButton shopSessionId={shopSession.id} offer={item} />
                     <RemoveActionButton
                       shopSessionId={shopSession.id}
