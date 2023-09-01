@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -22,6 +23,8 @@ export const useApiRedirectEffect = () => {
       datadogLogs.logger.warn('Retargeting | Missing shop session ID', {
         url: window.location.href,
       })
+    } else {
+      datadogRum.setGlobalContextProperty('isRetargeting', true)
     }
 
     router.push(redirect.url)
