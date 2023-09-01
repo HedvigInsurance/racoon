@@ -11,11 +11,11 @@ import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
 import { useBlogArticleTeasers } from './useBlog'
 
-const INITIAL_VISIBLE_COUNT = 12
 const QUERY_PARAM = 'showAll'
 
 type Props = SbBaseBlockProps<{
   categories?: Array<string>
+  initiallyVisibleCount?: number
 }>
 
 export const BlogArticleListBlock = (props: Props) => {
@@ -33,12 +33,13 @@ export const BlogArticleListBlock = (props: Props) => {
   }, [teaserList, props.blok.categories])
 
   const router = useRouter()
+  const initiallyVisibleCount = props.blok.initiallyVisibleCount ?? 12
   const showAll =
-    filteredTeaserList.length <= INITIAL_VISIBLE_COUNT || router.query[QUERY_PARAM] === '1'
+    filteredTeaserList.length <= initiallyVisibleCount || router.query[QUERY_PARAM] === '1'
 
   const visibleTeaserList = showAll
     ? filteredTeaserList
-    : filteredTeaserList.slice(0, INITIAL_VISIBLE_COUNT)
+    : filteredTeaserList.slice(0, initiallyVisibleCount)
 
   return (
     <GridLayout.Root>
