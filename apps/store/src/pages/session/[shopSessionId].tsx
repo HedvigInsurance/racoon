@@ -83,8 +83,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     nextURL.searchParams.delete('next')
     const queryLocale = nextQueryParam.split('/')[1]
     if (isRoutingLocale(queryLocale)) {
+      console.info(`Valid locale ${queryLocale} contained in next url ${nextQueryParam}`)
       nextURL.pathname = nextQueryParam
     } else {
+      console.warn(
+        `Invalid locale ${queryLocale} contained in next url ${nextQueryParam}. Using ${locale} locale`,
+      )
       nextURL.pathname = `/${locale}${nextQueryParam}`
     }
   }
