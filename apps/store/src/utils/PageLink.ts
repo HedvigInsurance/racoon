@@ -123,6 +123,12 @@ export const PageLink = {
     const nextQueryParam = next ? `?next=${next}` : ''
     return `/api/auth/exchange/${authorizationCode}${nextQueryParam}`
   },
+
+  retargeting: ({ locale, shopSessionId }: BaseParams & RetargetingRoute) => {
+    const url = new URL(`${localePrefix(locale)}/session/resume`, ORIGIN_URL)
+    url.searchParams.set('shopSessionId', shopSessionId)
+    return url
+  },
   apiRetargeting: ({ shopSessionId }: RetargetingRoute) => `/api/retargeting/${shopSessionId}`,
 } as const
 
