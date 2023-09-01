@@ -64,6 +64,7 @@ export const BlogArticleListBlock = (props: Props) => {
               <InlineButtonLink
                 href={{ query: { ...router.query, [QUERY_PARAM]: '1' } }}
                 shallow={true}
+                scroll={false}
               >
                 {t('BLOG_LOAD_MORE_BUTTON')}
               </InlineButtonLink>
