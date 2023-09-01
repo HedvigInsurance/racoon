@@ -22,7 +22,9 @@ const NextSessionPage: NextPage = () => {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   const { locale, params, req, res, query } = context
 
-  const fallbackRedirect = { redirect: { destination: PageLink.home(), permanent: false } }
+  const fallbackRedirect = {
+    redirect: { destination: PageLink.home().toString(), permanent: false },
+  }
   if (!isRoutingLocale(locale)) return fallbackRedirect
 
   const shopSessionId = params?.shopSessionId
@@ -43,7 +45,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 
   const nextURL = new URL(req.url || '', ORIGIN_URL)
-  nextURL.pathname = PageLink.home({ locale })
+  nextURL.pathname = PageLink.home({ locale }).pathname
   nextURL.searchParams.delete('shopSessionId')
 
   const priceIntentId = query['price_intent_id']

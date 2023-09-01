@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const fallbackRedirect = {
-    redirect: { destination: PageLink.home({ locale }), permanent: false },
+    redirect: { destination: PageLink.home({ locale }).toString(), permanent: false },
   } as const
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })

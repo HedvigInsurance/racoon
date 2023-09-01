@@ -42,6 +42,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
     addCampaign(code)
   }
 
+  console.log('link', PageLink.home().href)
   return (
     <Layout>
       <GridLayout.Root as="main">
@@ -66,7 +67,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
       </GridLayout.Root>
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
-          <TextWithLink as="p" size="xs" align="center" balance={true} href={PageLink.home()}>
+          <TextWithLink as="p" size="xs" align="center" balance={true} href={PageLink.home().href}>
             {t('FOREVER_PAGE_FOOTER_TEXT')}
           </TextWithLink>
         </GridLayout.Content>

@@ -39,7 +39,9 @@ const recommendHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     shopSessionService.saveId(shopSession.id)
 
     const targetUrl = new URL(req.url ?? '', ORIGIN_URL)
-    targetUrl.pathname = next ? getPathnameFromUrl(next) : PageLink.home({ locale: routingLocale })
+    targetUrl.pathname = next
+      ? getPathnameFromUrl(next)
+      : PageLink.home({ locale: routingLocale }).pathname
     targetUrl.searchParams.delete('next')
     targetUrl.searchParams.delete('attributed_to')
     targetUrl.searchParams.delete('initiated_from')
@@ -47,7 +49,7 @@ const recommendHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.redirect(307, targetUrl.toString())
   } catch (err) {
     console.log('Error when handling recommend redirect, redirecting to index page', err)
-    return res.redirect(307, PageLink.home())
+    return res.redirect(307, PageLink.home().toString())
   }
 }
 

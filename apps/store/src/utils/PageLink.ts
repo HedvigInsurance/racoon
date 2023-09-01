@@ -32,7 +32,10 @@ type SessionLink = BaseParams & {
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
 export const PageLink = {
-  home: ({ locale }: BaseParams = {}) => localePrefix(locale) || '/',
+  home: ({ locale }: BaseParams = {}) => {
+    const pathname = localePrefix(locale) || '/'
+    return new URL(pathname, ORIGIN_URL)
+  },
   // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
   // and manually maintaining consistency between CMS and code
   store: ({ locale }: Required<BaseParams>) => {
@@ -80,7 +83,7 @@ export const PageLink = {
     const url = PRIVACY_POLICY_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing privacy policy link for locale', { locale })
-      return PageLink.home({ locale })
+      return PageLink.home({ locale }).toString()
     }
     return url
   },

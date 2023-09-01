@@ -14,7 +14,7 @@ enum QueryParam {
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { url } = req
-  const fallbackRedirect: [number, string] = [307, PageLink.home()]
+  const fallbackRedirect: [number, string] = [307, PageLink.home().toString()]
 
   if (url === undefined) {
     console.error('Missing url: ', url)
