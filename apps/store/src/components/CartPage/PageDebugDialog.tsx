@@ -14,6 +14,7 @@ export const PageDebugDialog = () => {
     <DebugDialog>
       <Space y={0.25}>
         <LinkToCartSection />
+        <LinkToRetargetingSection />
         <DebugShopSessionSection />
       </Space>
     </DebugDialog>
@@ -33,5 +34,20 @@ const LinkToCartSection = () => {
     })
   }, [shopSession, routingLocale])
 
-  return <CopyToClipboard label="Share link to cart">{cartLink ?? ''}</CopyToClipboard>
+  return <CopyToClipboard label="Copy link to cart">{cartLink ?? ''}</CopyToClipboard>
+}
+
+const LinkToRetargetingSection = () => {
+  const { shopSession } = useShopSession()
+  const { routingLocale } = useCurrentLocale()
+  const retargetingLink = useMemo(() => {
+    if (!shopSession) return null
+
+    return PageLink.retargeting({
+      locale: routingLocale,
+      shopSessionId: shopSession.id,
+    }).toString()
+  }, [shopSession, routingLocale])
+
+  return <CopyToClipboard label="Copy re-targeting link">{retargetingLink ?? ''}</CopyToClipboard>
 }
