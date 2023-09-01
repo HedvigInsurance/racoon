@@ -2,7 +2,7 @@ import { ShopSessionRetargetingQuery } from '@/services/apollo/generated'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { UserParams } from './retargeting.types'
 
-enum RedirectType {
+export enum RedirectType {
   Product = 'product',
   Cart = 'cart',
   Fallback = 'fallback',
