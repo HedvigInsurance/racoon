@@ -2,7 +2,7 @@
 module.exports = {
   root: true,
   extends: ['custom'],
-  ignorePatterns: ['src/services/graphql/*'],
+  ignorePatterns: ['src/services/graphql/*', '*.js'],
   rules: {
     // This allows us to use to autofocus attribute on input elements (or all elements, really)
     // It's used for the accordion effects in PriceCalculator. Without autofocus user would have to tab

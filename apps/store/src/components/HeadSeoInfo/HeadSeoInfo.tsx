@@ -2,6 +2,7 @@ import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
+import { organization } from '@/utils/jsonSchema'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
@@ -35,22 +36,7 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
         )}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'Hedvig',
-              url: 'https://www.hedvig.com',
-              logo: 'https://www.hedvig.com/apple-touch-icon.png',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: 'Malmskillnadsgatan 32',
-                addressLocality: 'Stockholm',
-                postalCode: '111 51',
-                addressCountry: 'SE',
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
         />
       </Head>
       {/* Must include link to self along with other variants */}
