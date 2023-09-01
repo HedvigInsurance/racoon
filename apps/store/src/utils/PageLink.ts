@@ -109,7 +109,7 @@ export const PageLink = {
       url.searchParams.set('next', params.next)
     }
 
-    return url.toString()
+    return url
   },
 
   paymentConnectLegacy: ({ locale }: Required<BaseParams>) => `/${locale}/payment/connect-legacy`,

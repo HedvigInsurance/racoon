@@ -31,7 +31,7 @@ const LinkToCartSection = () => {
       locale: routingLocale,
       shopSessionId: shopSession.id,
       next: PageLink.cart({ locale: routingLocale }),
-    })
+    }).toString()
   }, [shopSession, routingLocale])
 
   return <CopyToClipboard label="Copy link to cart">{cartLink ?? ''}</CopyToClipboard>
