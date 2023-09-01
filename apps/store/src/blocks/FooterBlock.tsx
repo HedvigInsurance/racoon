@@ -10,6 +10,7 @@ import { linkStyles } from '@/components/RichText/RichText.styles'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
+import { BUSINESS_REGISTRATION_NUMBER, organization } from '@/utils/jsonSchema'
 import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField } from '@/utils/l10n/locales'
@@ -128,14 +129,14 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
 
         <Disclaimer>
           <Text color="textSecondary" size="sm">
-            © 2023 Hedvig AB
+            © 2023 {organization.name} AB
             <br />
             <br />
-            Malmskillnadsgatan 32
+            {organization.address.streetAddress}
             <br />
-            SE-111 51, Stockholm
+            {organization.address.postalCode} {organization.address.addressLocality}
             <br />
-            Org.nr. 559093-0334
+            Org.nr. {BUSINESS_REGISTRATION_NUMBER}
           </Text>
         </Disclaimer>
       </RootLayout>
@@ -186,7 +187,7 @@ const Disclaimer = styled.div({
 
   [mq.md]: {
     gridRow: 2,
-    gridColumn: 'span 2',
+    gridColumn: 'span 6',
     textAlign: 'left',
   },
 
