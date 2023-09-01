@@ -33,7 +33,7 @@ const LinkToOfferSection = () => {
       locale: routingLocale,
       shopSessionId: shopSession.id,
       priceIntentId: priceIntent.id,
-    })
+    }).toString()
   }, [routingLocale, shopSession, priceIntent])
 
   return <CopyToClipboard label="Share link to offer">{link ?? ''}</CopyToClipboard>
