@@ -49,8 +49,13 @@ export const PageLink = {
     return new URL(`${localePrefix(locale)}/cart`, ORIGIN_URL)
   },
   checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {
-    const expandCartQueryParam = expandCart ? `?${QueryParam.ExpandCart}=1` : ''
-    return `${localePrefix(locale)}/checkout${expandCartQueryParam}`
+    const url = new URL(`${localePrefix(locale)}/checkout`, ORIGIN_URL)
+
+    if (expandCart) {
+      url.searchParams.set(QueryParam.ExpandCart, '1')
+    }
+
+    return url
   },
   checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) =>
     `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`,
