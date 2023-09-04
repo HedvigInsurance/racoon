@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   const { shopSessionId } = params
   if (!shopSessionId) return { notFound: true }
 
-  const nextUrl = PageLink.confirmation({ locale, shopSessionId })
+  const nextUrl = PageLink.confirmation({ locale, shopSessionId }).pathname
 
   try {
     const apolloClient = await initializeApolloServerSide({ req, res, locale })

@@ -24,9 +24,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!status || !shopSessionId) return { notFound: true }
 
   const fallbackRedirect = {
-    redirect: { destination: PageLink.confirmation({ locale, shopSessionId }), permanent: false },
+    redirect: {
+      destination: PageLink.confirmation({ locale, shopSessionId }).pathname,
+      permanent: false,
+    },
   } as const
-
+  
   let shopSession: ShopSession, apolloClient: ApolloClient<unknown>
   try {
     apolloClient = await initializeApolloServerSide({ req, res, locale })
