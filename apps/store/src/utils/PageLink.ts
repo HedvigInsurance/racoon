@@ -107,7 +107,9 @@ export const PageLink = {
 
     return url
   },
-  apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
+  apiSessionCreate: (ssn: string) => {
+    return new URL(`/api/session/create/?ssn=${ssn}`, ORIGIN_URL)
+  },
   apiCampaign: ({ code, next }: CampaignAddRoute) => {
     const nextQueryParam = next ? `?next=${next}` : ''
     return `/api/campaign/${code}${nextQueryParam}`
