@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   if (typeof authorizationCode !== 'string') {
     return {
       redirect: {
-        destination: PageLink.paymentConnectLegacyError({ locale: context.locale }),
+        destination: PageLink.paymentConnectLegacyError({ locale: context.locale }).pathname,
         permanent: false,
       },
     }

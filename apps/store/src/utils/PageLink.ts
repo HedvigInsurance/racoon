@@ -136,8 +136,9 @@ export const PageLink = {
   paymentConnectLegacySuccess: ({ locale }: Required<BaseParams>) => {
     return new URL(`/${locale}/payment/connect-legacy/success`, ORIGIN_URL)
   },
-  paymentConnectLegacyError: ({ locale }: Required<BaseParams>) =>
-    `/${locale}/payment/connect-legacy/error`,
+  paymentConnectLegacyError: ({ locale }: Required<BaseParams>) => {
+    return new URL(`/${locale}/payment/connect-legacy/error`, ORIGIN_URL)
+  },
   apiAuthExchange: ({ authorizationCode, next }: AuthExchangeRoute) => {
     const nextQueryParam = next ? `?next=${next}` : ''
     return `/api/auth/exchange/${authorizationCode}${nextQueryParam}`
