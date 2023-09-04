@@ -38,7 +38,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
-    router.prefetch(redirectUrl)
+    router.prefetch(redirectUrl.pathname)
     addCampaign(code)
   }
 

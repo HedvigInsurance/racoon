@@ -43,7 +43,7 @@ export const PageLink = {
     if (locale === 'se') {
       slug = 'forsakringar'
     }
-    return `${localePrefix(locale)}/${slug}`
+    return new URL(`${localePrefix(locale)}/${slug}`, ORIGIN_URL)
   },
   cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
   checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {

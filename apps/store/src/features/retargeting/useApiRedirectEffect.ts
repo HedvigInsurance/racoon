@@ -38,7 +38,7 @@ export const getApiRedirect = (href: string, locale: RoutingLocale): Redirect =>
   const shopSessionId = url.searchParams.get(QueryParam.ShopSession)
 
   if (!shopSessionId) {
-    url.pathname = PageLink.store({ locale })
+    url.pathname = PageLink.store({ locale }).pathname
     return { type: 'fallback', url }
   }
 
