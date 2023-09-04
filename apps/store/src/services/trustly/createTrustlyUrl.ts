@@ -16,7 +16,7 @@ export const createTrustlyUrl = async ({ apolloClient, locale }: Params): Promis
   const response = await apolloClient.mutate<TrustlyInitMutation, TrustlyInitMutationVariables>({
     mutation: TrustlyInitDocument,
     variables: {
-      successUrl: PageLink.paymentSuccess({ locale }),
+      successUrl: PageLink.paymentSuccess({ locale }).href,
       failureUrl: PageLink.paymentFailure({ locale }),
     },
   })
