@@ -17,7 +17,7 @@ export const createTrustlyUrl = async ({ apolloClient, locale }: Params): Promis
     mutation: TrustlyInitDocument,
     variables: {
       successUrl: PageLink.paymentSuccess({ locale }).href,
-      failureUrl: PageLink.paymentFailure({ locale }),
+      failureUrl: PageLink.paymentFailure({ locale }).href,
     },
   })
 
