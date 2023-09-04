@@ -21,6 +21,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { zIndexes } from '@/utils/zIndex'
 import { QueryParam } from './CartPage.constants'
 import { PageDebugDialog } from './PageDebugDialog'
 
@@ -81,12 +82,14 @@ export const CartPage = () => {
                 <QuickAddOfferContainer shopSessionId={shopSession.id} {...offerRecommendation} />
               )}
 
-              <ButtonNextLink
-                href={PageLink.checkout({ expandCart: true })}
-                onClick={handleClickCheckout}
-              >
-                {t('CHECKOUT_BUTTON')}
-              </ButtonNextLink>
+              <StickyFooter>
+                <ButtonNextLink
+                  href={PageLink.checkout({ expandCart: true })}
+                  onClick={handleClickCheckout}
+                >
+                  {t('CHECKOUT_BUTTON')}
+                </ButtonNextLink>
+              </StickyFooter>
             </Space>
           </GridLayout.Content>
         </GridLayout.Root>
@@ -125,6 +128,28 @@ const PageWrapper = styled.div({
 
   [mq.sm]: {
     paddingTop: theme.space.xxl,
+  },
+})
+
+const StickyFooter = styled.div({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  paddingBlock: theme.space.lg,
+  paddingInline: theme.space.xs,
+  backgroundColor: theme.colors.backgroundStandard,
+  boxShadow: 'rgba(0, 0, 0, 0.06) 0 -2px 12px',
+  zIndex: zIndexes.header,
+  borderTopWidth: 1,
+  borderTopStyle: 'solid',
+  borderTopColor: theme.colors.borderOpaque1,
+
+  [mq.lg]: {
+    position: 'static',
+    boxShadow: 'none',
+    padding: 0,
+    backgroundColor: 'transparent',
   },
 })
 
