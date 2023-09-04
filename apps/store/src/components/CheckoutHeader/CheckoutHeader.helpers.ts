@@ -47,7 +47,7 @@ export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckout
     case CheckoutStep.Checkout:
       return PageLink.checkout().href
     case CheckoutStep.Payment:
-      return PageLink.checkoutPaymentTrustly({ locale, shopSessionId })
+      return PageLink.checkoutPaymentTrustly({ locale, shopSessionId }).href
     case CheckoutStep.Confirmation:
     case CheckoutStep.Done:
       return PageLink.confirmation({ locale, shopSessionId })
