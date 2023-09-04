@@ -130,8 +130,9 @@ export const PageLink = {
   paymentConnectLegacy: ({ locale }: Required<BaseParams>) => {
     return new URL(`/${locale}/payment/connect-legacy`, ORIGIN_URL)
   },
-  apiAdyenCallback: ({ locale }: Required<BaseParams>) =>
-    `${ORIGIN_URL}/api/adyen-callback/${locale}`,
+  apiAdyenCallback: ({ locale }: Required<BaseParams>) => {
+    return new URL(`api/adyen-callback/${locale}`, ORIGIN_URL)
+  },
   paymentConnectLegacySuccess: ({ locale }: Required<BaseParams>) =>
     `/${locale}/payment/connect-legacy/success`,
   paymentConnectLegacyError: ({ locale }: Required<BaseParams>) =>

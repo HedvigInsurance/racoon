@@ -19,7 +19,7 @@ export const useTokenizePaymentDetails = () => {
             browserInfo,
             paymentMethodDetails: JSON.stringify(paymentMethod),
             channel: TokenizationChannel.Web,
-            returnUrl: PageLink.apiAdyenCallback({ locale: routingLocale }),
+            returnUrl: PageLink.apiAdyenCallback({ locale: routingLocale }).href,
           },
         },
       })
