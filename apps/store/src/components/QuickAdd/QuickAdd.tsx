@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import { type ComponentProps } from 'react'
 import { Button, Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -10,6 +11,7 @@ type Props = {
   title: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
+  href: string
   cost: ComponentProps<typeof Price>
   onAdd: () => void
   loading: boolean
@@ -26,9 +28,11 @@ export const QuickAdd = (props: Props) => {
           <SpaceFlex space={1} align="center">
             <Pillow size="small" {...props.pillow} />
             <div>
-              <Text as="p" color="textTranslucentPrimary">
-                {props.title}
-              </Text>
+              <StyledLink href={props.href}>
+                <Text as="span" color="textTranslucentPrimary">
+                  {props.title}
+                </Text>
+              </StyledLink>
               <Text as="p" color="textTranslucentSecondary">
                 {props.subtitle}
               </Text>
@@ -62,18 +66,21 @@ export const QuickAdd = (props: Props) => {
 }
 
 const Card = styled.div({
-  backgroundColor: theme.colors.blueFill1,
+  backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.md,
   padding: theme.space.md,
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: theme.colors.borderTranslucent1,
 
   [mq.lg]: { padding: theme.space.lg },
 })
 
 const Header = styled.div({
   paddingBottom: theme.space.xs,
+})
+
+const StyledLink = styled(Link)({
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 })
 
 const Divider = styled.div({

@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, Text, theme } from 'ui'
+import { Button, ButtonProps, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductDetails } from './ProductDetails'
@@ -75,8 +75,13 @@ export const Skeleton = styled.div({
 const Card = styled.div({
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.md,
-  padding: theme.space.lg,
-  paddingBottom: `calc(${theme.space.lg} - ${theme.space.md})`,
+  padding: theme.space.md,
+  paddingBottom: 0,
+
+  [mq.lg]: {
+    padding: theme.space.lg,
+    paddingBottom: `calc(${theme.space.lg} - ${theme.space.md})`,
+  },
 })
 
 const Hoverable = styled.div({
