@@ -12,7 +12,6 @@ type BaseParams = { locale?: RoutingLocale }
 
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
-type ForeverPage = BaseParams & { code: string }
 type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
@@ -71,8 +70,6 @@ export const PageLink = {
   paymentFailure: ({ locale }: Required<BaseParams>) => {
     return new URL(`${locale}/payment-failure`, ORIGIN_URL)
   },
-
-  forever: ({ locale, code }: ForeverPage) => `${localePrefix(locale)}/forever/${code}`,
 
   customerService: ({ locale }: Required<BaseParams>) => {
     const url = CUSTOMER_SERVICE_URL[locale]
