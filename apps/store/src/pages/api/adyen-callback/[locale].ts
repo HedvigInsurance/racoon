@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
 
-  res.redirect(302, PageLink.paymentConnectLegacySuccess({ locale: req.query.locale }))
+  res.redirect(302, PageLink.paymentConnectLegacySuccess({ locale: req.query.locale }).href)
 }
 
 export default handler
