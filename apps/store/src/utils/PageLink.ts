@@ -150,9 +150,9 @@ const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
   'se-en': new URL('/se-en/help/customer-service', ORIGIN_URL),
 }
 
-const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
-  se: '/se/forsakringar/djurforsakring/sjalvrisk',
-  'se-en': '/se-en/insurances/pet-insurance/deductible',
+const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/forsakringar/djurforsakring/sjalvrisk', ORIGIN_URL),
+  'se-en': new URL('/se-en/insurances/pet-insurance/deductible', ORIGIN_URL),
 }
 
 const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, string>> = {
