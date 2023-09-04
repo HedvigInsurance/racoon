@@ -93,7 +93,7 @@ export const PageLink = {
     const url = PRIVACY_POLICY_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing privacy policy link for locale', { locale })
-      return PageLink.home({ locale }).toString()
+      return PageLink.home({ locale })
     }
     return url
   },
@@ -155,7 +155,7 @@ const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {
   'se-en': new URL('/se-en/insurances/pet-insurance/deductible', ORIGIN_URL),
 }
 
-const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, string>> = {
-  se: '/se/hedvig/personuppgifter',
-  'se-en': '/se-en/hedvig/privacy-policy',
+const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hedvig/personuppgifter', ORIGIN_URL),
+  'se-en': new URL('/se-en/hedvig/privacy-policy', ORIGIN_URL),
 }
