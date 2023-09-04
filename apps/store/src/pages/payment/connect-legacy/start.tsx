@@ -18,7 +18,7 @@ const Page = (props: Props) => {
   const authUrl = PageLink.apiAuthExchange({
     authorizationCode: props.authorizationCode,
     next: nextUrl,
-  })
+  }).href
 
   return (
     <Layout title={title}>

@@ -140,8 +140,13 @@ export const PageLink = {
     return new URL(`/${locale}/payment/connect-legacy/error`, ORIGIN_URL)
   },
   apiAuthExchange: ({ authorizationCode, next }: AuthExchangeRoute) => {
-    const nextQueryParam = next ? `?next=${next}` : ''
-    return `/api/auth/exchange/${authorizationCode}${nextQueryParam}`
+    const url = new URL(`/api/auth/exchange/${authorizationCode}`, ORIGIN_URL)
+
+    if (next) {
+      url.searchParams.set('next', next)
+    }
+
+    return url
   },
 
   retargeting: ({ locale, shopSessionId }: BaseParams & RetargetingRoute) => {
