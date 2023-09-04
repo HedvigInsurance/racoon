@@ -45,7 +45,9 @@ export const PageLink = {
     }
     return new URL(`${localePrefix(locale)}/${slug}`, ORIGIN_URL)
   },
-  cart: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/cart`,
+  cart: ({ locale }: BaseParams = {}) => {
+    return new URL(`${localePrefix(locale)}/cart`, ORIGIN_URL)
+  },
   checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {
     const expandCartQueryParam = expandCart ? `?${QueryParam.ExpandCart}=1` : ''
     return `${localePrefix(locale)}/checkout${expandCartQueryParam}`
