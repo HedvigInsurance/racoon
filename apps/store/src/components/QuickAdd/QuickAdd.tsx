@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { type ComponentProps } from 'react'
-import { Button, Space, Text, mq, theme } from 'ui'
+import { type ReactNode, type ComponentProps } from 'react'
+import { Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -13,14 +12,11 @@ type Props = {
   pillow: ComponentProps<typeof Pillow>
   href: string
   cost: ComponentProps<typeof Price>
-  onAdd: () => void
-  loading: boolean
-  onDismiss: () => void
+  Body: ReactNode
+  children: ReactNode
 }
 
 export const QuickAdd = (props: Props) => {
-  const { t } = useTranslation('cart')
-
   return (
     <Card>
       <Space y={1}>
@@ -40,19 +36,9 @@ export const QuickAdd = (props: Props) => {
           </SpaceFlex>
         </Header>
         <Divider />
-        <Text as="p" color="textTranslucentSecondary">
-          {/* TODO: move this text to the api so it can be used with other offer types */}
-          {t('ACCIDENT_OFFER_DESCRIPTION')}
-        </Text>
+        {props.Body}
         <Footer>
-          <SpaceFlex space={0.5}>
-            <Button size="medium" onClick={props.onAdd} loading={props.loading}>
-              {t('QUICK_ADD_BUTTON')}
-            </Button>
-            <Button size="medium" variant="ghost" onClick={props.onDismiss}>
-              {t('QUICK_ADD_DISMISS')}
-            </Button>
-          </SpaceFlex>
+          <SpaceFlex space={0.5}>{props.children}</SpaceFlex>
 
           <Price
             {...props.cost}
@@ -100,3 +86,31 @@ const Footer = styled.div({
     alignItems: 'center',
   },
 })
+
+const StyledProductDetail = styled.li({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
+type ProductDetailProps = {
+  children: string | ReactNode
+  value: string
+}
+
+export const ProductDetail = (props: ProductDetailProps) => {
+  return (
+    <StyledProductDetail>
+      {typeof props.children === 'string' ? (
+        <Text as="p" color="textSecondary">
+          {props.children}
+        </Text>
+      ) : (
+        props.children
+      )}
+      <Text as="p" color="textSecondary">
+        {props.value}
+      </Text>
+    </StyledProductDetail>
+  )
+}

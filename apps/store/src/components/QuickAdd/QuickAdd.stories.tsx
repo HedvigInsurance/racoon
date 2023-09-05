@@ -1,14 +1,12 @@
 import { type Meta, type StoryObj } from '@storybook/react'
+import { Button, Text } from 'ui'
 import { CurrencyCode } from '@/services/apollo/generated'
-import { QuickAdd } from './QuickAdd'
+import { StartDate } from '../ProductItem/StartDate'
+import { ProductDetail, QuickAdd } from './QuickAdd'
 
 const meta: Meta<typeof QuickAdd> = {
   title: 'Components / Quick Add',
   component: QuickAdd,
-  argTypes: {
-    onAdd: { action: 'onAdd' },
-    onDismiss: { action: 'onDismiss' },
-  },
 }
 
 export default meta
@@ -26,6 +24,18 @@ export const Default: Story = {
       currencyCode: CurrencyCode.Sek,
       amount: 99,
     },
+    Body: (
+      <Text as="p" color="textTranslucentSecondary">
+        Få upp till 1 miljon kronor i ersättning för skador och förlorad arbetsförmåga vid olycka.
+        Ingen självrisk.
+      </Text>
+    ),
+    children: (
+      <>
+        <Button>Buy</Button>
+        <Button variant="ghost">Details</Button>
+      </>
+    ),
   },
 }
 
@@ -43,6 +53,28 @@ export const WithDiscount: Story = {
 export const Loading: Story = {
   args: {
     ...Default.args,
-    loading: true,
+    children: (
+      <>
+        <Button loading={true}>Buy</Button>
+        <Button variant="ghost">Details</Button>
+      </>
+    ),
+  },
+}
+
+export const Complete: Story = {
+  args: {
+    ...Default.args,
+    Body: (
+      <ul>
+        <ProductDetail value="Folksam">Insurance company</ProductDetail>
+        <ProductDetail value="AHK 234">License</ProductDetail>
+        <ProductDetail value="1000 km/year">Milage</ProductDetail>
+        <ProductDetail value="Full insurance">Tier</ProductDetail>
+        <ProductDetail value="2024.04.24">
+          <StartDate label="Activates" tooltip="Some explanation here." />
+        </ProductDetail>
+      </ul>
+    ),
   },
 }

@@ -2,6 +2,11 @@ fragment OfferRecommendation on ProductOffer {
   id
   startDate
   priceIntentData
+  displayItems {
+    key
+    displayTitle
+    displayValue
+  }
   variant {
     typeOfContract
     product {

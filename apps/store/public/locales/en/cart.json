@@ -54,6 +54,7 @@
   "GO_TO_STORE_BUTTON": "Browse our insurances",
   "QUICK_ADD_BUTTON": "Add",
   "QUICK_ADD_DISMISS": "No, thanks",
+  "QUICK_ADD_EDIT": "Edit",
   "QUICK_ADD_HOUSEHOLD_SIZE_one": "Covers {{count}} person",
   "QUICK_ADD_HOUSEHOLD_SIZE_other": "Covers {{count}} people",
   "RECOMMENDATIONS_HEADING": "Discover more insurances",

@@ -54,6 +54,7 @@
   "GO_TO_STORE_BUTTON": "Se våra försäkringar",
   "QUICK_ADD_BUTTON": "Lägg till",
   "QUICK_ADD_DISMISS": "Nej tack",
+  "QUICK_ADD_EDIT": "Ändra",
   "QUICK_ADD_HOUSEHOLD_SIZE_one": "Täcker {{count}} person",
   "QUICK_ADD_HOUSEHOLD_SIZE_other": "Täcker {{count}} personer",
   "RECOMMENDATIONS_HEADING": "Upptäck fler försäkringar",
