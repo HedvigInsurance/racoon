@@ -203,7 +203,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                           size="xs"
                           align="center"
                           balance={true}
-                          href={PageLink.privacyPolicy({ locale: routingLocale })}
+                          href={PageLink.privacyPolicy({ locale: routingLocale }).href}
                           target="_blank"
                         >
                           {t('SIGN_DISCLAIMER')}
