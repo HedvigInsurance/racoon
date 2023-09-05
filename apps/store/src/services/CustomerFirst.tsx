@@ -1,12 +1,13 @@
 import { Global } from '@emotion/react'
 import { atom, useAtomValue, useSetAtom } from 'jotai'
+import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 const OPEN_ATOM = atom(false)
 
-export const CustomerFirstLauncher = () => {
+export const CustomerFirstScript = () => {
   const isDesktop = useBreakpoint('lg')
   const open = useAtomValue(OPEN_ATOM)
   const { chatWidgetSrc } = useCurrentLocale()
@@ -14,8 +15,12 @@ export const CustomerFirstLauncher = () => {
   if (!chatWidgetSrc) return null
 
   const showLauncher = isDesktop || open
-
-  return <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
+  return (
+    <>
+      <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
+      <Script strategy="afterInteractive" src={chatWidgetSrc} />
+    </>
+  )
 }
 
 export const useCustomerFirst = () => {
