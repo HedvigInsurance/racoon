@@ -45,7 +45,7 @@ type GetCheckoutStepLinkParams = {
 export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckoutStepLinkParams) => {
   switch (step) {
     case CheckoutStep.Checkout:
-      return PageLink.checkout()
+      return PageLink.checkout().href
     case CheckoutStep.Payment:
       return PageLink.checkoutPaymentTrustly({ locale, shopSessionId })
     case CheckoutStep.Confirmation:
