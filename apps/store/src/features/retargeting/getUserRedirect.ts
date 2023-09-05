@@ -3,7 +3,7 @@ import {
   RetargetingPriceIntentFragment,
   RetargetingOfferFragment,
 } from '@/services/apollo/generated'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { UserParams } from './retargeting.types'
 
 export enum RedirectType {
@@ -27,7 +27,7 @@ export const getUserRedirect = (
 ): Redirect => {
   const fallbackRedirect = {
     type: RedirectType.Fallback,
-    url: new URL(PageLink.store({ locale: userParams.locale }), ORIGIN_URL),
+    url: PageLink.store({ locale: userParams.locale }),
   } as const
 
   if (!data) return fallbackRedirect
