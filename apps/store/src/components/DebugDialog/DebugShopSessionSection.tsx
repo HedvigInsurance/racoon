@@ -19,7 +19,7 @@ export const DebugShopSessionSection = () => {
     <Space y={0.25}>
       <CopyToClipboard label="Shop Session">{shopSession.id}</CopyToClipboard>
 
-      <Button variant="secondary" href={PageLink.apiSessionReset({ next: nextUrl })}>
+      <Button variant="secondary" href={PageLink.apiSessionReset({ next: nextUrl }).href}>
         Reset Shop Session
       </Button>
 

@@ -99,8 +99,13 @@ export const PageLink = {
   },
 
   apiSessionReset: ({ next }: { next?: string } = {}) => {
-    const nextQueryParam = next ? `?next=${next}` : ''
-    return `/api/session/reset${nextQueryParam}`
+    const url = new URL('/api/session/reset', ORIGIN_URL)
+
+    if (next) {
+      url.searchParams.set('next', next)
+    }
+
+    return url
   },
   apiSessionCreate: (ssn: string) => `/api/session/create/?ssn=${ssn}`,
   apiCampaign: ({ code, next }: CampaignAddRoute) => {
