@@ -68,7 +68,9 @@ export const PageLink = {
   paymentSuccess: ({ locale }: Required<BaseParams>) => {
     return new URL(`${locale}/payment-success`, ORIGIN_URL)
   },
-  paymentFailure: ({ locale }: Required<BaseParams>) => `${ORIGIN_URL}/${locale}/payment-failure`,
+  paymentFailure: ({ locale }: Required<BaseParams>) => {
+    return new URL(`${locale}/payment-failure`, ORIGIN_URL)
+  },
   paymentConnect: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/payment/connect`,
 
   forever: ({ locale, code }: ForeverPage) => `${localePrefix(locale)}/forever/${code}`,

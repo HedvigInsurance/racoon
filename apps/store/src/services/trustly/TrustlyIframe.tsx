@@ -35,7 +35,7 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
       const url = event.currentTarget.contentWindow?.location.href
       if (url === PageLink.paymentSuccess({ locale: routingLocale }).href) {
         onSuccess()
-      } else if (url === PageLink.paymentFailure({ locale: routingLocale })) {
+      } else if (url === PageLink.paymentFailure({ locale: routingLocale }).href) {
         onFail()
       }
     } catch (error) {
