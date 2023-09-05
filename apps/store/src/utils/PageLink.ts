@@ -57,8 +57,10 @@ export const PageLink = {
 
     return url
   },
-  checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) =>
-    `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`,
+  checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) => {
+    const pathname = `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`
+    return new URL(pathname, ORIGIN_URL)
+  },
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
     `${localePrefix(locale)}/confirmation/${shopSessionId}`,
 
