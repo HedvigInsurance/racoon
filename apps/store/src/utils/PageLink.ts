@@ -154,7 +154,9 @@ export const PageLink = {
     url.searchParams.set('shopSessionId', shopSessionId)
     return url
   },
-  apiRetargeting: ({ shopSessionId }: RetargetingRoute) => `/api/retargeting/${shopSessionId}`,
+  apiRetargeting: ({ shopSessionId }: RetargetingRoute) => {
+    return new URL(`/api/retargeting/${shopSessionId}`, ORIGIN_URL)
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {

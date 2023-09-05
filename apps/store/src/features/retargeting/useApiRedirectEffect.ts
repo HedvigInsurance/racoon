@@ -43,7 +43,7 @@ export const getApiRedirect = (href: string, locale: RoutingLocale): Redirect =>
   }
 
   url.searchParams.delete(QueryParam.ShopSession)
-  url.pathname = PageLink.apiRetargeting({ shopSessionId })
+  url.pathname = PageLink.apiRetargeting({ shopSessionId }).pathname
   url.searchParams.set(QueryParam.Locale, locale)
   return { type: 'api', url }
 }
