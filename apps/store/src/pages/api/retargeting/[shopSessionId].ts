@@ -23,17 +23,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const apolloClient = await initializeApolloServerSide({ req, res, locale: userParams.locale })
   const data = await fetchRetargetingData(apolloClient, userParams.shopSessionId)
   const redirect = getUserRedirect(userParams, data)
-  const nextURL = new URL(redirect.url)
 
   // TODO: handle the case we failed to add offers
   if (redirect.type === RedirectType.ModifiedCart) {
     await addOffersToCart(apolloClient, userParams.shopSessionId, redirect.offers)
-    nextURL.searchParams.set(CartPageQueryParam.ExpandCart, '1')
+    redirect.url.searchParams.set(CartPageQueryParam.ExpandCart, '1')
   }
 
   console.info(`Retargeting | Redirecting user to ${redirect.type}`)
-  console.debug(`Retargeting | Redirect URL: ${nextURL.toString()}`)
-  res.redirect(nextURL.toString())
+  console.debug(`Retargeting | Redirect URL: ${redirect.url.toString()}`)
+  res.redirect(redirect.url.toString())
 }
 
 export default handler

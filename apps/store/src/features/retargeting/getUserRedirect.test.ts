@@ -68,7 +68,7 @@ describe('getUserRedirect', () => {
 
     // Assert
     expect(result.type).toEqual(RedirectType.Product)
-    expect(result.url).toContain(priceIntentId)
+    expect(result.url.toString()).toContain(priceIntentId)
   })
 
   describe('when multiple quotes are present but none are added into the cart', () => {

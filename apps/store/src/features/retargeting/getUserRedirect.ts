@@ -14,10 +14,10 @@ export enum RedirectType {
 }
 
 type Redirect =
-  | { type: Exclude<RedirectType, RedirectType.ModifiedCart>; url: string }
+  | { type: Exclude<RedirectType, RedirectType.ModifiedCart>; url: URL }
   | {
       type: RedirectType.ModifiedCart
-      url: string
+      url: URL
       offers: Array<string>
     }
 
@@ -27,7 +27,7 @@ export const getUserRedirect = (
 ): Redirect => {
   const fallbackRedirect = {
     type: RedirectType.Fallback,
-    url: new URL(PageLink.store({ locale: userParams.locale }), ORIGIN_URL).toString(),
+    url: new URL(PageLink.store({ locale: userParams.locale }), ORIGIN_URL),
   } as const
 
   if (!data) return fallbackRedirect
