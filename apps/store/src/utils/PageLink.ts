@@ -12,7 +12,6 @@ type BaseParams = { locale?: RoutingLocale }
 
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
-type CampaignAddRoute = { code: string; next?: string }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
 type RetargetingRoute = { shopSessionId: string }
@@ -109,10 +108,6 @@ export const PageLink = {
   },
   apiSessionCreate: (ssn: string) => {
     return new URL(`/api/session/create/?ssn=${ssn}`, ORIGIN_URL)
-  },
-  apiCampaign: ({ code, next }: CampaignAddRoute) => {
-    const nextQueryParam = next ? `?next=${next}` : ''
-    return `/api/campaign/${code}${nextQueryParam}`
   },
 
   session: (params: SessionLink) => {
