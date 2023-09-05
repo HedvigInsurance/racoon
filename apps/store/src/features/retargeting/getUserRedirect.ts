@@ -38,7 +38,7 @@ export const getUserRedirect = (
       url: PageLink.session({
         locale: userParams.locale,
         shopSessionId: data.shopSession.id,
-        next: PageLink.cart({ locale: userParams.locale }),
+        next: PageLink.cart({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
     }
@@ -64,7 +64,7 @@ export const getUserRedirect = (
       url: PageLink.session({
         locale: userParams.locale,
         shopSessionId: data.shopSession.id,
-        next: PageLink.cart({ locale: userParams.locale }),
+        next: PageLink.cart({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
       offers,

@@ -27,7 +27,7 @@ export const CreateSessionForm = () => {
     }
 
     window.localStorage.setItem(HEDVIG_DEBUGGER_SSN, ssn)
-    window.location.href = PageLink.cart({ locale: 'se-en' })
+    window.location.href = PageLink.cart({ locale: 'se-en' }).href
   }
 
   return (

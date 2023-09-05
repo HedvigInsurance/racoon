@@ -18,7 +18,7 @@ import {
 } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 
 const TEST_SSN = '199808302393'
 const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
@@ -65,9 +65,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     throw new Error('Unable to create ShopSession with products', { cause: error })
   }
 
-  const nextURL = new URL(ORIGIN_URL)
-  nextURL.pathname = PageLink.cart({ locale: DEFAULT_LOCALE })
-  const destination = nextURL.toString()
+  const destination = PageLink.cart({ locale: DEFAULT_LOCALE }).href
   console.log(`Re-directing to destination: ${destination}`)
   return res.redirect(destination)
 }

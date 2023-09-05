@@ -30,7 +30,7 @@ const LinkToCartSection = () => {
     return PageLink.session({
       locale: routingLocale,
       shopSessionId: shopSession.id,
-      next: PageLink.cart({ locale: routingLocale }),
+      next: PageLink.cart({ locale: routingLocale }).pathname,
     }).toString()
   }, [shopSession, routingLocale])
 
