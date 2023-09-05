@@ -145,9 +145,9 @@ export const PageLink = {
   apiRetargeting: ({ shopSessionId }: RetargetingRoute) => `/api/retargeting/${shopSessionId}`,
 } as const
 
-const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, string>> = {
-  se: '/se/hjalp/kundservice',
-  'se-en': '/se-en/help/customer-service',
+const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hjalp/kundservice', ORIGIN_URL),
+  'se-en': new URL('/se-en/help/customer-service', ORIGIN_URL),
 }
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, string>> = {
