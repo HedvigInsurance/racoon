@@ -14,7 +14,7 @@ const Page = (props: Props) => {
   const { routingLocale: locale } = useCurrentLocale()
   const { title, startButton } = useAdyenTranslations()
 
-  const nextUrl = PageLink.paymentConnectLegacy({ locale })
+  const nextUrl = PageLink.paymentConnectLegacy({ locale }).pathname
   const authUrl = PageLink.apiAuthExchange({
     authorizationCode: props.authorizationCode,
     next: nextUrl,
