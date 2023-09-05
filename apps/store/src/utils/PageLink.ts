@@ -61,9 +61,10 @@ export const PageLink = {
     const pathname = `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`
     return new URL(pathname, ORIGIN_URL)
   },
-  confirmation: ({ locale, shopSessionId }: ConfirmationPage) =>
-    `${localePrefix(locale)}/confirmation/${shopSessionId}`,
-
+  confirmation: ({ locale, shopSessionId }: ConfirmationPage) => {
+    const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
+    return new URL(pathname, ORIGIN_URL)
+  },
   paymentSuccess: ({ locale }: Required<BaseParams>) => `${ORIGIN_URL}/${locale}/payment-success`,
   paymentFailure: ({ locale }: Required<BaseParams>) => `${ORIGIN_URL}/${locale}/payment-failure`,
   paymentConnect: ({ locale }: BaseParams = {}) => `${localePrefix(locale)}/payment/connect`,
