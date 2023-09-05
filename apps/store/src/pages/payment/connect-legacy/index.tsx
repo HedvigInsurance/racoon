@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     console.info('Payment Connect Legacy | No access token')
     return {
       redirect: {
-        destination: PageLink.paymentConnectLegacyError({ locale: context.locale }),
+        destination: PageLink.paymentConnectLegacyError({ locale: context.locale }).pathname,
         permanent: false,
       },
     }

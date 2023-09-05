@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await submitAdyenRedirection(apolloClient, { md, pares })
   } catch (error) {
     console.warn('Payment Connect Legacy | Error submitting redirection: ', error)
-    res.redirect(302, PageLink.paymentConnectLegacyError({ locale: req.query.locale }))
+    res.redirect(302, PageLink.paymentConnectLegacyError({ locale: req.query.locale }).href)
     return
   }
 
