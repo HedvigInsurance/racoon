@@ -52,9 +52,13 @@ export const QuickAdd = (props: Props) => {
 }
 
 const Card = styled.div({
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.md,
   padding: theme.space.md,
+
+  borderRadius: theme.radius.md,
+  backgroundColor: theme.colors.blueFill1,
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: theme.colors.borderTranslucent1,
 
   [mq.lg]: { padding: theme.space.lg },
 })
