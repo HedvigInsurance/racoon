@@ -1,13 +1,13 @@
-import { datadogRum } from '@datadog/browser-rum'
-import { atom, useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { Button, Text } from 'ui'
+import { Text } from 'ui'
 import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { AddToCartButton } from './AddToCartButton'
+import { DismissButton } from './DismissButton'
 import { QuickAdd } from './QuickAdd'
+import { useShowQuickAdd } from './useShowQuickAdd'
 
 const CO_INSURED_DATA_KEY = 'numberCoInsured'
 
@@ -19,7 +19,7 @@ type Props = {
 
 export const QuickAddOfferContainer = (props: Props) => {
   const { t } = useTranslation('cart')
-  const [show, setShow] = useShowQuickAddOffer()
+  const [show] = useShowQuickAdd()
 
   // Assume Accident insurance
   const householdSize = (parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY]) || 0) + 1
@@ -30,11 +30,6 @@ export const QuickAddOfferContainer = (props: Props) => {
     amount: props.offer.cost.gross.amount,
     reducedAmount: props.offer.cost.discount.amount > 0 ? props.offer.cost.net.amount : undefined,
   } as const
-
-  const handleDismiss = () => {
-    datadogRum.addAction('Quick Add Hide', { offerId: props.offer.id, product: props.product.name })
-    setShow(false)
-  }
 
   if (!show) return null
 
@@ -57,15 +52,7 @@ export const QuickAddOfferContainer = (props: Props) => {
         productName={props.product.name}
         offer={props.offer}
       />
-      <Button size="medium" variant="ghost" onClick={handleDismiss}>
-        {t('QUICK_ADD_DISMISS')}
-      </Button>
+      <DismissButton />
     </QuickAdd>
   )
-}
-
-const SHOW_QUICK_ADD_OFFER_ATOM = atom(true)
-
-const useShowQuickAddOffer = () => {
-  return useAtom(SHOW_QUICK_ADD_OFFER_ATOM)
 }
