@@ -44,12 +44,27 @@ export const useGetStartDateProps = (): GetStartDateProps => {
 }
 
 // TODO: retrieve this from API or some sort of central config.
-const getProductBasedSummary = (productName: string, data: Record<string, unknown>) => {
+const PET_NAME_FIELD = 'name'
+const CAR_REGISTRATION_NUMBER_FIELD = 'registrationNumber'
+
+const getProductBasedSummary = (
+  productName: string,
+  data: Record<string, unknown>,
+): string | null => {
   switch (productName) {
     case 'SE_PET_DOG':
     case 'SE_PET_CAT':
-      return data.name != null ? (data.name as string) : null
+      return getStringOrNull(data[PET_NAME_FIELD])
+    case 'SE_CAR':
+      return (
+        getStringOrNull(data[CAR_REGISTRATION_NUMBER_FIELD])?.replace(/(.{3})(.{3})/, '$1 $2') ??
+        null
+      )
     default:
       return null
   }
+}
+
+const getStringOrNull = (value: unknown): string | null => {
+  return typeof value === 'string' ? value : null
 }
