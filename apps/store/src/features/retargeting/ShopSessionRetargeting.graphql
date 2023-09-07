@@ -14,6 +14,7 @@ query ShopSessionRetargeting($shopSessionId: UUID!) {
 
 fragment RetargetingPriceIntent on PriceIntent {
   id
+  data
   offers {
     ...RetargetingOffer
   }
