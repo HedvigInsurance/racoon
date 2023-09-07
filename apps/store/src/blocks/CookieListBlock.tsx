@@ -6,6 +6,9 @@ export const CookieListBlock = () => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width={{ base: '1', md: '2/3', xxl: '1/2' }} align={'center'}>
+        <PreferenceButton id="ot-sdk-btn" className="ot-sdk-show-settings">
+          Cookies Settings
+        </PreferenceButton>
         <OneTrustCookieInfo id="ot-sdk-cookie-policy"></OneTrustCookieInfo>
       </GridLayout.Content>
     </GridLayout.Root>
@@ -17,6 +20,32 @@ export const CookieListBlock = () => {
  * Styling is written in string litteral to make it easy
  * to migrate between OneTrust and the component
  */
+
+const PreferenceButton = styled.button({
+  '&#ot-sdk-btn.ot-sdk-show-settings': {
+    backgroundColor: theme.colors.translucent1,
+    color: theme.colors.textPrimary,
+    height: '2.5rem',
+    paddingInline: theme.space.md,
+    paddingBlock: 0,
+    fontSize: theme.fontSizes.md,
+    borderRadius: theme.radius.sm,
+    border: 0,
+    boxShadow: theme.shadow.default,
+    backdropFilter: 'blur(30px)',
+
+    '@media (hover: hover)': {
+      ':hover': {
+        backgroundColor: theme.colors.translucent2,
+        color: theme.colors.textPrimary,
+      },
+    },
+
+    ':active': {
+      backgroundColor: theme.colors.translucent2,
+    },
+  },
+})
 
 const OneTrustCookieInfo = styled.div`
   * {
