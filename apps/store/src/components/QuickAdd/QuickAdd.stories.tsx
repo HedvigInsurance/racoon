@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { Button, Text } from 'ui'
+import { StartDate } from '@/components/ProductItem/StartDate'
 import { CurrencyCode } from '@/services/apollo/generated'
-import { StartDate } from '../ProductItem/StartDate'
 import { ProductDetail, QuickAdd } from './QuickAdd'
 
 const meta: Meta<typeof QuickAdd> = {
@@ -32,8 +32,10 @@ export const Default: Story = {
     ),
     children: (
       <>
-        <Button>Buy</Button>
-        <Button variant="ghost">Details</Button>
+        <Button size="medium">Buy</Button>
+        <Button size="medium" variant="ghost">
+          Details
+        </Button>
       </>
     ),
   },
@@ -55,8 +57,12 @@ export const Loading: Story = {
     ...Default.args,
     children: (
       <>
-        <Button loading={true}>Buy</Button>
-        <Button variant="ghost">Details</Button>
+        <Button size="medium" loading={true}>
+          Buy
+        </Button>
+        <Button size="medium" variant="ghost">
+          Details
+        </Button>
       </>
     ),
   },
