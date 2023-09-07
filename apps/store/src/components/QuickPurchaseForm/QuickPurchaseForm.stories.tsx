@@ -30,7 +30,7 @@ const options: Array<ProductOption> = [
 ]
 
 const Template: StoryFn<typeof QuickPurchaseForm> = () => {
-  return <QuickPurchaseForm productOptions={options} onSubmit={(e) => e.preventDefault()} />
+  return <QuickPurchaseForm productOptions={options} />
 }
 
 export const Default = Template.bind({})

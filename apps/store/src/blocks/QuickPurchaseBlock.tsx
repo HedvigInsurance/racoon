@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
@@ -17,13 +18,16 @@ import {
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/apollo/generated'
+import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
 type QuickPurchaseBlockProps = SbBaseBlockProps<{
   products: Array<string>
   showSsnField: boolean
   campaignCode?: string
+  attributedTo?: string
 }>
 
 export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) => {
@@ -33,7 +37,9 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
   const router = useRouter()
   const { t } = useTranslation()
 
-  const { shopSession } = useShopSession()
+  const apolloClient = useApolloClient()
+  const { countryCode } = useCurrentCountry()
+  const { shopSession: currentShopSession } = useShopSession()
   const productMetadata = useProductMetadata()
 
   const [updateCustomer] = useShopSessionCustomerUpdateMutation()
@@ -60,7 +66,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
   }, [blok.products, productMetadata])
 
   if (productOptions.length === 0) {
-    throw new Error('[QuickPurchaseBlock]: no product options were found')
+    throw new Error('QuickPurchaseBlock | no product options found')
   }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -70,24 +76,39 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       setError({})
       setIsSubmitting(true)
 
-      if (!shopSession) {
-        setError((prevState) => ({ ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }))
-        throw new Error('[QuickPurchaseBlock]: could not found shop session')
-      }
-
       const formData = new FormData(event.currentTarget)
-      const formState = Object.fromEntries(formData.entries())
-      const { [SSN_FIELDNAME]: ssn, [PRODUCT_FIELDNAME]: productName } = formState
+      const ssn = formData.get(SSN_FIELDNAME)
+      const productName = formData.get(PRODUCT_FIELDNAME)
 
       // This should never happen since QuickPurchaseForm controls are required
       if (typeof ssn !== 'string' || typeof productName !== 'string') {
-        throw new Error('[QuickPurchaseBlock]: ssn and product are required')
+        throw new Error('QuickPurchaseBlock | ssn and product are required')
+      }
+
+      let shopSession = currentShopSession
+      if (blok.attributedTo) {
+        // Partner attribution can influence pricing, so we need to create a new shop session
+        datadogLogs.addLoggerGlobalContext('attributedTo', blok.attributedTo)
+        datadogLogs.logger.info(
+          `QuickPurchaseBlock | create shop session attributed to ${blok.attributedTo}`,
+        )
+        const shopSessionService = setupShopSessionServiceClientSide(apolloClient)
+        shopSession = await shopSessionService.create({
+          countryCode,
+          attributedTo: blok.attributedTo,
+        })
+        shopSessionService.saveId(shopSession.id)
+      }
+
+      if (!shopSession) {
+        setError((prevState) => ({ ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }))
+        throw new Error('QuickPurchaseBlock | shop session not found')
       }
 
       const pageLink = productOptions.find((product) => product.value === productName)?.pageLink
       if (pageLink === undefined) {
         setError((prevState) => ({ ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }))
-        throw new Error(`[QuickPurchaseBlock]: Could not found pageLink for product ${productName}`)
+        throw new Error(`QuickPurchaseBlock | PDP link for ${productName} not found`)
       }
 
       // Pre-fetches PDP page - instant transitions
@@ -112,9 +133,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
               }
               return { ...prevState, general: t('UNKNOWN_ERROR_MESSAGE') }
             })
-            throw new Error(
-              `[QuickPurchaseBlock]: Failed while updating customer: ${error.message}`,
-            )
+            throw new Error(`QuickPurchaseBlock | failed to update customer: ${error.message}`)
           },
         })
       }
@@ -127,7 +146,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
           },
           onError(error) {
             datadogLogs.logger.error(
-              `[QuickPurchaseBlock]: Failed while redeeming campaign code ${blok.campaignCode}: ${error.message}`,
+              `QuickPurchaseBlock | failed to redeem code ${blok.campaignCode}: ${error.message}`,
             )
           },
         })
@@ -135,7 +154,13 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
 
       const url = new URL(pageLink, window.location.origin)
       url.searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-      router.push(url.toString())
+
+      if (shopSession.id !== currentShopSession?.id) {
+        // Opt out of client side nav to make sure we use the latest shop session
+        window.location.assign(url.toString())
+      } else {
+        router.push(url.toString())
+      }
     } catch (error) {
       setIsSubmitting(false)
       datadogLogs.logger.error((error as Error).message)
@@ -144,14 +169,15 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
 
   return (
     <Wrapper data-nested={nested}>
-      <QuickPurchaseForm
-        productOptions={productOptions}
-        onSubmit={handleSubmit}
-        submitting={isSubmitting}
-        showSsnField={blok.showSsnField}
-        ssnDefaultValue={shopSession?.customer?.ssn ?? ''}
-        error={error}
-      />
+      <form onSubmit={handleSubmit}>
+        <QuickPurchaseForm
+          productOptions={productOptions}
+          submitting={isSubmitting}
+          showSsnField={blok.showSsnField}
+          ssnDefaultValue={currentShopSession?.customer?.ssn ?? ''}
+          error={error}
+        />
+      </form>
     </Wrapper>
   )
 }
