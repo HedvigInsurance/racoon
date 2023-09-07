@@ -131,6 +131,7 @@ export type LinkField = {
   url: string
   linktype: 'multilink' | 'story' | 'url'
   target?: string
+  rel?: string
   cached_url: string
   title?: string
   story?: {
