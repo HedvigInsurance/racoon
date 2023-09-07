@@ -1,7 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { Button } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
@@ -9,11 +7,9 @@ import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
-import { useTracking } from '@/services/Tracking/useTracking'
-import { useAddToCart } from '@/utils/useAddToCart'
+import { ORIGIN_URL } from '@/utils/PageLink'
+import { AddToCartButton } from './AddToCartButton'
 import { ProductDetail, QuickAdd } from './QuickAdd'
-
-const STREET_ADDRESS_DATA_KEY = 'street'
 
 type Props = {
   shopSessionId: string
@@ -24,30 +20,7 @@ type Props = {
 
 export const QuickAddCompleteContainer = (props: Props) => {
   const { t } = useTranslation('cart')
-
-  const [addToCart, loading] = useAddToCart({
-    shopSessionId: props.shopSessionId,
-    onSuccess() {
-      datadogLogs.logger.info('Quick Add Complete | added offer to cart', {
-        productOfferId: props.offer.id,
-        product: props.product.id,
-      })
-    },
-  })
-
-  const tracking = useTracking()
-  const handleAdd = () => {
-    datadogRum.addAction('Quick Add To Cart', {
-      type: 'complete',
-      productOfferId: props.offer.id,
-      product: props.product.id,
-    })
-    tracking.reportAddToCart(props.offer, 'recommendations')
-    addToCart(props.offer.id)
-  }
-
-  // TODO: Exposure -> should be fetched from API
-  const subtitle = props.offer.priceIntentData[STREET_ADDRESS_DATA_KEY]
+  const subtitle = useProductSubtitle(props.offer)
 
   const cost = {
     currencyCode: props.offer.cost.net.currencyCode,
@@ -55,7 +28,7 @@ export const QuickAddCompleteContainer = (props: Props) => {
     reducedAmount: props.offer.cost.discount.amount > 0 ? props.offer.cost.net.amount : undefined,
   } as const
 
-  const editLink = new URL(props.product.pageLink)
+  const editLink = new URL(props.product.pageLink, ORIGIN_URL)
   editLink.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
   editLink.searchParams.set(PRELOADED_PRICE_INTENT_QUERY_PARAM, props.priceIntentId)
 
@@ -76,12 +49,31 @@ export const QuickAddCompleteContainer = (props: Props) => {
         </ul>
       }
     >
-      <Button loading={loading} onClick={handleAdd}>
-        {t('QUICK_ADD_BUTTON')}
-      </Button>
-      <ButtonNextLink variant="ghost" href={editLink}>
+      <AddToCartButton
+        shopSessionId={props.shopSessionId}
+        productName={props.product.name}
+        offer={props.offer}
+      />
+      <ButtonNextLink size="medium" variant="ghost" href={editLink}>
         {t('QUICK_ADD_EDIT')}
       </ButtonNextLink>
     </QuickAdd>
   )
+}
+
+const STREET_ADDRESS_DATA_KEY = 'street'
+
+const useProductSubtitle = (offer: OfferRecommendationFragment) => {
+  // Assume Home insurance
+  const streetAddress = offer.priceIntentData[STREET_ADDRESS_DATA_KEY]
+  if (typeof streetAddress === 'string') {
+    return streetAddress
+  }
+
+  // Should never happen
+  datadogLogs.logger.error('Quick Add Complete | street address not found', {
+    productOfferId: offer.id,
+    product: offer.variant.product.id,
+  })
+  return ''
 }

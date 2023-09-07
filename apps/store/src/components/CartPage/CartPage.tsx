@@ -12,8 +12,8 @@ import { ProductItemContainer } from '@/components/ProductItem/ProductItemContai
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
+import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { QuickAddAccidentContainer } from '@/components/ShopBreakdown/QuickAddAccidentContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -78,10 +78,7 @@ export const CartPage = () => {
               </ShopBreakdown>
 
               {offerRecommendation && (
-                <QuickAddAccidentContainer
-                  shopSessionId={shopSession.id}
-                  {...offerRecommendation}
-                />
+                <QuickAddOfferContainer shopSessionId={shopSession.id} {...offerRecommendation} />
               )}
 
               <ButtonNextLink

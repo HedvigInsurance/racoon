@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
+import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import { getCheckoutStepLink } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
@@ -14,6 +15,7 @@ import { EditActionButton } from '@/components/ProductItem/EditActionButton'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
+import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -30,8 +32,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { CheckoutHeader } from '../CheckoutHeader/CheckoutHeader'
-import { QuickAddAccidentContainer } from '../ShopBreakdown/QuickAddAccidentContainer'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -144,11 +144,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
               <Space y={2}>
                 {offerRecommendation && (
-                  <QuickAddAccidentContainer
-                    shopSessionId={shopSession.id}
-                    offer={offerRecommendation.offer}
-                    product={offerRecommendation.product}
-                  />
+                  <QuickAddOfferContainer shopSessionId={shopSession.id} {...offerRecommendation} />
                 )}
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>

@@ -1,5 +1,6 @@
 fragment ProductRecommendation on Product {
   id
+  name
   displayNameFull
   displayNameShort
   pageLink
