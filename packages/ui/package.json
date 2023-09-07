@@ -19,10 +19,10 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@babel/core": "7.22.11",
-    "@babel/preset-env": "7.22.14",
-    "@babel/preset-react": "7.22.5",
-    "@babel/preset-typescript": "7.22.11",
+    "@babel/core": "7.22.15",
+    "@babel/preset-env": "7.22.15",
+    "@babel/preset-react": "7.22.15",
+    "@babel/preset-typescript": "7.22.15",
     "@emotion/babel-plugin": "11.11.0",
     "@emotion/jest": "11.11.0",
     "@storybook/addon-actions": "7.3.2",
