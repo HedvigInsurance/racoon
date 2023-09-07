@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
 import { Button, Space } from 'ui'
 import { ProductSelector } from './ProductSelector'
 import { SsnField } from './SsnField'
@@ -21,7 +20,6 @@ export type FormError = Partial<Record<typeof SSN_FIELDNAME | 'general', string>
 
 type Props = {
   productOptions: Array<ProductOption>
-  onSubmit?: FormEventHandler<HTMLFormElement>
   submitting?: boolean
   showSsnField?: boolean
   ssnDefaultValue?: string
@@ -30,7 +28,6 @@ type Props = {
 
 export const QuickPurchaseForm = ({
   productOptions,
-  onSubmit,
   submitting = false,
   ssnDefaultValue = '',
   showSsnField = false,
@@ -39,34 +36,32 @@ export const QuickPurchaseForm = ({
   const { t } = useTranslation('purchase-form')
 
   return (
-    <form onSubmit={onSubmit}>
-      <Space y={0.25}>
-        {productOptions.length === 1 && (
-          <input type="hidden" name={PRODUCT_FIELDNAME} value={productOptions[0].value} />
-        )}
-        {productOptions.length > 1 && (
-          <ProductSelector
-            productOptions={productOptions}
-            name={PRODUCT_FIELDNAME}
-            disabled={submitting}
-            required={true}
-          />
-        )}
-        <SsnField
-          name={SSN_FIELDNAME}
-          defaultValue={ssnDefaultValue}
-          required={true}
+    <Space y={0.25}>
+      {productOptions.length === 1 && (
+        <input type="hidden" name={PRODUCT_FIELDNAME} value={productOptions[0].value} />
+      )}
+      {productOptions.length > 1 && (
+        <ProductSelector
+          productOptions={productOptions}
+          name={PRODUCT_FIELDNAME}
           disabled={submitting}
-          warning={!!error?.ssn}
-          message={error?.ssn}
-          hidden={!showSsnField}
+          required={true}
         />
-        <Button type="submit" loading={submitting}>
-          {t('BUTTON_LABEL_GET_PRICE')}
-        </Button>
-        {error?.general && <GeneralErrorMessage>{error.general}</GeneralErrorMessage>}
-      </Space>
-    </form>
+      )}
+      <SsnField
+        name={SSN_FIELDNAME}
+        defaultValue={ssnDefaultValue}
+        required={true}
+        disabled={submitting}
+        warning={!!error?.ssn}
+        message={error?.ssn}
+        hidden={!showSsnField}
+      />
+      <Button type="submit" loading={submitting}>
+        {t('BUTTON_LABEL_GET_PRICE')}
+      </Button>
+      {error?.general && <GeneralErrorMessage>{error.general}</GeneralErrorMessage>}
+    </Space>
   )
 }
 
