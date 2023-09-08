@@ -20,7 +20,7 @@ export const Default: Story = {
       src: 'https://a.storyblok.com/f/165473/832x832/a61cfbf4ae/hedvig-pillows-cat.png',
     },
     href: '/se',
-    cost: {
+    price: {
       currencyCode: CurrencyCode.Sek,
       amount: 99,
     },
@@ -44,7 +44,7 @@ export const Default: Story = {
 export const WithDiscount: Story = {
   args: {
     ...Default.args,
-    cost: {
+    price: {
       currencyCode: CurrencyCode.Sek,
       amount: 99,
       reducedAmount: 49,

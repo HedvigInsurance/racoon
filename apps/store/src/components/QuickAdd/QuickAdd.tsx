@@ -11,7 +11,7 @@ type Props = {
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
   href: string
-  cost?: ComponentProps<typeof Price>
+  price?: ComponentProps<typeof Price>
   Body: ReactNode
   children: ReactNode
 }
@@ -40,9 +40,9 @@ export const QuickAdd = (props: Props) => {
         <Footer>
           <SpaceFlex space={0.5}>{props.children}</SpaceFlex>
 
-          {props.cost && (
+          {props.price && (
             <Price
-              {...props.cost}
+              {...props.price}
               color="textTranslucentPrimary"
               secondaryColor="textTranslucentSecondary"
             />

@@ -13,6 +13,7 @@ import {
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { ProductDetail, QuickAdd } from './QuickAdd'
@@ -42,13 +43,7 @@ export const QuickAddIncompleteContainer = (props: Props) => {
   type Offer = (typeof props.priceIntent.offers)[number]
   const offer = props.priceIntent.offers[0] as Offer | undefined
 
-  const cost = offer
-    ? {
-        currencyCode: offer.cost.net.currencyCode,
-        amount: offer.cost.gross.amount,
-        reducedAmount: offer.cost.discount.amount > 0 ? offer.cost.net.amount : undefined,
-      }
-    : undefined
+  const offerPrice = offer ? getOfferPrice(offer.cost) : undefined
 
   const [updateStartDate, startDateResult] = useStartDateUpdateMutation()
   const [changedStartDate, setChangedStartDate] = useState<Date | undefined>(undefined)
@@ -143,7 +138,7 @@ export const QuickAddIncompleteContainer = (props: Props) => {
       // TODO: fetch from API
       pillow={{ src: PILLOW_PLACEHOLDER }}
       href={props.priceIntent.product.pageLink}
-      cost={cost}
+      price={offerPrice}
       Body={Body}
     >
       <Button size="medium" onClick={handleClickAdd} loading={loading}>

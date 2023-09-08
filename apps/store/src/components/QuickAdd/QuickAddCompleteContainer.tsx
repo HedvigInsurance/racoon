@@ -7,6 +7,7 @@ import {
   OfferRecommendationFragment,
   ProductRecommendationFragment,
 } from '@/services/apollo/generated'
+import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { AddToCartButton } from './AddToCartButton'
 import { ProductDetail, QuickAdd } from './QuickAdd'
@@ -22,11 +23,7 @@ export const QuickAddCompleteContainer = (props: Props) => {
   const { t } = useTranslation('cart')
   const subtitle = useProductSubtitle(props.offer)
 
-  const cost = {
-    currencyCode: props.offer.cost.net.currencyCode,
-    amount: props.offer.cost.gross.amount,
-    reducedAmount: props.offer.cost.discount.amount > 0 ? props.offer.cost.net.amount : undefined,
-  } as const
+  const price = getOfferPrice(props.offer.cost)
 
   const editLink = new URL(props.product.pageLink, ORIGIN_URL)
   editLink.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
@@ -38,7 +35,7 @@ export const QuickAddCompleteContainer = (props: Props) => {
       subtitle={subtitle}
       pillow={props.product.pillowImage}
       href={props.product.pageLink}
-      cost={cost}
+      price={price}
       Body={
         <ul>
           {props.offer.displayItems.map((item) => (
