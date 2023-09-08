@@ -1,11 +1,8 @@
-import { addYears } from 'date-fns'
 import { useTranslation } from 'next-i18next'
-import { ChangeEventHandler } from 'react'
 import { Space, Text } from 'ui'
-import { InputDate } from '@/components/InputDate/InputDate'
+import { InputStartDate } from '@/components/InputDate/InputStartDate'
 import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
-import { formatInputDateValue } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { SelfSwitcherBubble } from './SelfSwitcherBubble'
 
@@ -53,7 +50,7 @@ type NoCancellationProps = Pick<Props, 'onStartDateChange' | 'startDate'>
 const NoCancellation = ({ onStartDateChange, startDate, ...props }: NoCancellationProps) => {
   const date = startDate ?? new Date()
 
-  return <SmartDateInput {...props} date={date} onChange={onStartDateChange} />
+  return <InputStartDate {...props} date={date} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<
@@ -79,7 +76,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         companyName={companyName}
       />
 
-      {!requested && <SmartDateInput date={date} onChange={onStartDateChange} />}
+      {!requested && <InputStartDate date={date} onChange={onStartDateChange} />}
     </Space>
   )
 }
@@ -109,7 +106,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   if (props.invalidRenewalDate) {
     return (
       <Space y={0.25}>
-        <SmartDateInput date={date} onChange={props.onStartDateChange} />
+        <InputStartDate date={date} onChange={props.onStartDateChange} />
         <SelfSwitcherBubble date={props.invalidRenewalDate} />
       </Space>
     )
@@ -122,7 +119,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
         onCheckedChange={handleCheckedChange}
         companyName={props.companyName}
       />
-      <SmartDateInput
+      <InputStartDate
         date={date}
         onChange={props.onStartDateChange}
         label={props.requested ? autoSwitchLabel : undefined}
@@ -155,39 +152,5 @@ const AutoSwitchInput = ({ onCheckedChange, value, companyName }: AutoSwitchInpu
         </Text>
       )}
     </ToggleCard>
-  )
-}
-
-type SmartDateInputProps = {
-  label?: string
-  date?: Date
-  onChange?: (date: Date) => void
-}
-
-const SmartDateInput = ({ label, date, onChange }: SmartDateInputProps) => {
-  const { t } = useTranslation('purchase-form')
-  const dateToday = new Date()
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (event.target.valueAsDate) {
-      onChange?.(event.target.valueAsDate)
-    }
-  }
-
-  const inputValue = date ? formatInputDateValue(date) : undefined
-  // Based on underwriter guidelines: https://github.com/HedvigInsurance/underwriter/blob/master/src/main/kotlin/com/hedvig/underwriter/model/Quote.kt#L83
-  const min = formatInputDateValue(dateToday)
-  const max = formatInputDateValue(addYears(dateToday, 2))
-
-  return (
-    <InputDate
-      type="date"
-      label={label ?? t('START_DATE_FIELD_LABEL')}
-      required
-      value={inputValue}
-      min={min}
-      max={max}
-      onChange={handleChange}
-    />
   )
 }
