@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
+import { type ChangeEventHandler, type MouseEvent, type MouseEventHandler, useState } from 'react'
 import { MinusIcon, PlusIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -14,6 +14,7 @@ type Props = {
   required?: boolean
   label?: string
   optionLabel: (count: number) => string
+  onChange?: (value: number) => void
 }
 
 /**
@@ -25,21 +26,28 @@ export const StepperInput = (props: Props) => {
   const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? min)
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
-  const increment: MouseEventHandler = (event) => {
+  const changeValue = (event: MouseEvent, amount: 1 | -1) => {
     event.preventDefault()
     highlight()
-    setInternalValue((value) => Math.min(max, value + 1))
+    setInternalValue((value) => {
+      const nextValue = Math.min(max, Math.max(min, value + amount))
+      props.onChange?.(nextValue)
+      return nextValue
+    })
+  }
+
+  const increment: MouseEventHandler = (event) => {
+    changeValue(event, 1)
   }
 
   const decrement: MouseEventHandler = (event) => {
-    event.preventDefault()
-    highlight()
-    setInternalValue((value) => Math.max(value - 1, min))
+    changeValue(event, -1)
   }
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const numberValue = parseInt(event.target.value, 10)
     setInternalValue(numberValue)
+    props.onChange?.(numberValue)
   }
 
   const options = Array.from({ length: max + 1 }, (_, count) => ({
