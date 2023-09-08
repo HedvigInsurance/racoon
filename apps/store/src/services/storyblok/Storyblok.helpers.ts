@@ -1,5 +1,6 @@
 import { StoryblokClient } from '@storyblok/js'
 import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
+import { Features } from '@/utils/Features'
 import { type Language } from '@/utils/l10n/types'
 import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
 
@@ -103,4 +104,12 @@ export const getOptimizedImageUrl = (
     optimizationRules = `fit-in/${options.maxWidth ?? 0}x${options.maxHeight ?? 0}`
   }
   return `${originalUrl}/m/${optimizationRules}`
+}
+
+// Replace domain for Storyblok assets
+export const getImgSrc = (src: string) => {
+  if (!Features.enabled('CUSTOM_ASSET_DOMAIN')) {
+    return src
+  }
+  return (src || '').replace('//a.storyblok.com', '//assets.hedvig.com')
 }
