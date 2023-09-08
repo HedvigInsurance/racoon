@@ -1,5 +1,6 @@
 import { InputDate } from '@/components/InputDate/InputDate'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -12,7 +13,6 @@ import { ExtraBuildingsField } from './ExtraBuildingsField'
 import * as InputRadio from './InputRadio'
 import { PetCatBreedsField } from './PetCatBreedsField'
 import { PetDogBreedsField } from './PetDogBreedsField'
-import { StepperInput } from './StepperInput/StepperInput'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
