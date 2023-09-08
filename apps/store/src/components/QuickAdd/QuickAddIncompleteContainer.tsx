@@ -5,13 +5,20 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { InputStartDate } from '@/components/InputDate/InputStartDate'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
-import { useStartDateUpdateMutation } from '@/services/apollo/generated'
+import { StepperInput } from '@/components/StepperInput/StepperInput'
+import {
+  usePriceIntentConfirmMutation,
+  usePriceIntentDataUpdateMutation,
+  useStartDateUpdateMutation,
+} from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { formatAPIDate } from '@/utils/date'
+import { convertToDate, formatAPIDate } from '@/utils/date'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { ProductDetail, QuickAdd } from './QuickAdd'
 import { useShowQuickAdd } from './useShowQuickAdd'
+
+const NUMBER_OF_CO_INSURED_DATA_KEY = 'numberCoInsured'
 
 const PILLOW_PLACEHOLDER =
   'https://a.storyblok.com/f/165473/832x832/fa27811442/hedvig-pillow-home.png'
@@ -62,6 +69,7 @@ export const QuickAddIncompleteContainer = (props: Props) => {
   const [addToCart, loadingAddToCart] = useAddToCart({
     shopSessionId: props.shopSessionId,
     onSuccess(productOfferId) {
+      // TODO: remove and do something interesting here
       console.log('Added to cart', productOfferId)
     },
   })
@@ -77,7 +85,27 @@ export const QuickAddIncompleteContainer = (props: Props) => {
     await addToCart(productOfferId)
   }
 
+  const [confirm, confirmResult] = usePriceIntentConfirmMutation({
+    variables: { priceIntentId: props.priceIntent.id },
+  })
+  const [updateData, updateDateResult] = usePriceIntentDataUpdateMutation({
+    onCompleted() {
+      confirm()
+    },
+  })
+  const handleChangeValue = (value: number) => {
+    updateData({
+      variables: {
+        priceIntentId: props.priceIntent.id,
+        data: { [NUMBER_OF_CO_INSURED_DATA_KEY]: value },
+        customer: { shopSessionId: props.shopSessionId },
+      },
+    })
+  }
+
   if (!show) return null
+
+  const startDate = convertToDate(offer?.startDate) ?? changedStartDate
 
   const Body = (
     <Space y={1}>
@@ -89,11 +117,23 @@ export const QuickAddIncompleteContainer = (props: Props) => {
         ))}
       </ul>
 
-      <InputStartDate date={changedStartDate} onChange={handleChangeStartDate} />
+      <Space y={0.25}>
+        <StepperInput
+          label={t('purchase-form:FIELD_HOUSEHOLD_SIZE_LABEL')}
+          max={5}
+          min={0}
+          required={true}
+          defaultValue={offer?.priceIntentData[NUMBER_OF_CO_INSURED_DATA_KEY]}
+          optionLabel={(count) => t('purchase-form:HOUSEHOLD_SIZE_VALUE', { count })}
+          onChange={handleChangeValue}
+        />
+        <InputStartDate date={startDate} onChange={handleChangeStartDate} />
+      </Space>
     </Space>
   )
 
-  const loading = startDateResult.loading || loadingAddToCart
+  const loading =
+    startDateResult.loading || loadingAddToCart || updateDateResult.loading || confirmResult.loading
 
   return (
     <QuickAdd
