@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ReactNode } from 'react'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
+import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'
 import { useGetStartDateProps } from './useGetStartDateProps'
 
@@ -14,12 +15,7 @@ export const ProductItemContainer = (props: Props) => {
   const { t } = useTranslation('cart')
   const getStartDateProps = useGetStartDateProps()
 
-  const hasDiscount = props.offer.cost.discount.amount > 0
-  const price = {
-    currencyCode: props.offer.cost.net.currencyCode,
-    amount: props.offer.cost.gross.amount,
-    reducedAmount: hasDiscount ? props.offer.cost.net.amount : undefined,
-  }
+  const price = getOfferPrice(props.offer.cost)
 
   const startDateProps = getStartDateProps({
     productName: props.offer.variant.product.name,
