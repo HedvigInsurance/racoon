@@ -89,7 +89,7 @@
     "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
-    "@types/clone-deep": "4.0.1",
+    "@types/clone-deep": "4.0.2",
     "@types/md5": "2.3.2",
     "@types/node": "18.17.14",
     "@types/nprogress": "0.2.0",
