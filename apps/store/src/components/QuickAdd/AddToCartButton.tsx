@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { Button } from 'ui'
-import { OfferRecommendationFragment } from '@/services/apollo/generated'
+import { type OfferRecommendationFragment } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 
@@ -18,7 +18,7 @@ export const AddToCartButton = (props: Props) => {
   const [addToCart, loading] = useAddToCart({
     shopSessionId: props.shopSessionId,
     onSuccess() {
-      datadogLogs.logger.info('Quick Add Complete | added offer to cart', {
+      datadogLogs.logger.info('Quick Add | Added offer to cart', {
         productOfferId: props.offer.id,
         product: props.productName,
       })

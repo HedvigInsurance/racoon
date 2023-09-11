@@ -4,8 +4,8 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import {
-  OfferRecommendationFragment,
-  ProductRecommendationFragment,
+  type OfferRecommendationFragment,
+  type ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ORIGIN_URL } from '@/utils/PageLink'
