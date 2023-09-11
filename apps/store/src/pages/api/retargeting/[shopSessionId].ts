@@ -8,7 +8,7 @@ import { parseQueryParams } from '@/features/retargeting/parseQueryParams'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 
 /**
- * Redirect user to the correct page from a retargeting link.
+ * Redirect user to the correct page from a re-targeting link.
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.info('Retargeting | Redirecting user')
@@ -24,11 +24,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = await fetchRetargetingData(apolloClient, userParams.shopSessionId)
   const redirect = getUserRedirect(userParams, data)
 
-  // TODO: handle the case we failed to add offers
+  // TODO: handle the case where we fail to add offers
   if (redirect.type === RedirectType.ModifiedCart) {
     await addOffersToCart(apolloClient, userParams.shopSessionId, redirect.offers)
     redirect.url.searchParams.set(CartPageQueryParam.ExpandCart, '1')
   }
+
+  userParams.queryParams.forEach(([key, value]) =>
+    redirect.url.searchParams.set(key, String(value)),
+  )
 
   console.info(`Retargeting | Redirecting user to ${redirect.type}`)
   console.debug(`Retargeting | Redirect URL: ${redirect.url.toString()}`)

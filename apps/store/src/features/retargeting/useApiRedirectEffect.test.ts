@@ -25,4 +25,16 @@ describe('getApiRedirect', () => {
     expect(result.type).toEqual('api')
     expect(result.url.pathname).toContain(shopSessionId)
   })
+
+  test('should forward query params to the api route', () => {
+    // Arrange
+    const shopSessionId = '12345'
+    const url = `https://www.example.com?${QueryParam.ShopSession}=${shopSessionId}&foo=bar`
+
+    // Act
+    const result = getApiRedirect(url, 'se')
+
+    // Assert
+    expect(result.url.searchParams.get('foo')).toEqual('bar')
+  })
 })

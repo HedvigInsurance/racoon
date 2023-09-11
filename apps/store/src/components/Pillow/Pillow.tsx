@@ -5,12 +5,21 @@ type PillowProps = {
   size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
   src?: string
   alt?: string | null
+  priority?: boolean
 }
 
-export const Pillow = ({ alt, src, ...props }: PillowProps) => {
+export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {
   if (!src) return <FallbackPillow {...props} size={props.size} />
   return (
-    <StyledImage {...props} src={src} alt={alt ?? ''} width={208} height={208} decoding="sync" />
+    <StyledImage
+      {...props}
+      src={src}
+      alt={alt ?? ''}
+      width={208}
+      height={208}
+      decoding="sync"
+      priority={priority}
+    />
   )
 }
 

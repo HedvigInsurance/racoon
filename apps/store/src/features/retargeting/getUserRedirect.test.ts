@@ -3,7 +3,7 @@ import { RedirectType, getUserRedirect } from './getUserRedirect'
 import { UserParams } from './retargeting.types'
 
 describe('getUserRedirect', () => {
-  const userParams: UserParams = { shopSessionId: '123', locale: 'se' }
+  const userParams: UserParams = { shopSessionId: '123', locale: 'se', queryParams: [] }
 
   it('should return fallback redirect if no data is provided', () => {
     // Arrange

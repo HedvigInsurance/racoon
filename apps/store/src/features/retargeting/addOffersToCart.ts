@@ -8,7 +8,7 @@ import {
 export const addOffersToCart = async (
   apolloClient: ApolloClient<unknown>,
   shopSessionId: string,
-  offers: Array<string>,
+  offerIds: Array<string>,
 ) => {
   try {
     const { data } = await apolloClient.mutate<
@@ -16,10 +16,7 @@ export const addOffersToCart = async (
       CartEntriesAddMutationVariables
     >({
       mutation: CartEntriesAddDocument,
-      variables: {
-        shopSessionId,
-        offerIds: offers,
-      },
+      variables: { shopSessionId, offerIds },
     })
 
     if (!data?.shopSessionCartEntriesAdd.shopSession) {
@@ -29,6 +26,6 @@ export const addOffersToCart = async (
       )
     }
   } catch (error) {
-    console.warn(`Retargeting: Failed to add offers ${JSON.stringify(offers)}`, error)
+    console.warn(`Retargeting | Failed to add offers ${JSON.stringify(offerIds)}`, error)
   }
 }

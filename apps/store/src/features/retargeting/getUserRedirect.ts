@@ -1,16 +1,16 @@
 import {
-  ShopSessionRetargetingQuery,
-  RetargetingPriceIntentFragment,
-  RetargetingOfferFragment,
+  type ShopSessionRetargetingQuery,
+  type RetargetingPriceIntentFragment,
+  type RetargetingOfferFragment,
 } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
-import { UserParams } from './retargeting.types'
+import { type UserParams } from './retargeting.types'
 
 export enum RedirectType {
   Product = 'product',
   Cart = 'cart',
-  Fallback = 'fallback',
   ModifiedCart = 'modified-cart',
+  Fallback = 'fallback',
 }
 
 type Redirect =
@@ -25,10 +25,10 @@ export const getUserRedirect = (
   userParams: UserParams,
   data: ShopSessionRetargetingQuery | null,
 ): Redirect => {
-  const fallbackRedirect = {
+  const fallbackRedirect: Redirect = {
     type: RedirectType.Fallback,
     url: PageLink.store({ locale: userParams.locale }),
-  } as const
+  }
 
   if (!data) return fallbackRedirect
 
@@ -72,7 +72,7 @@ export const getUserRedirect = (
     }
   }
 
-  console.warn(`Retargeting: no confirmed price intents in ${userParams.shopSessionId}`)
+  console.warn(`Retargeting | no confirmed price intents in ${userParams.shopSessionId}`)
   return fallbackRedirect
 }
 
@@ -122,7 +122,6 @@ const getCheapestOffersIds = (priceIntents: Array<RetargetingPriceIntentFragment
     const cheapestOffer = getCheapestOffer(priceIntent)
     return [...result, cheapestOffer.id]
   }, [])
-
   return cheapestOffersIds
 }
 
@@ -133,6 +132,5 @@ const getCheapestOffer = (
     (offerA, offerB) => offerA.cost.gross.amount - offerB.cost.gross.amount,
   )
   const cheapestOffer = sortedOffersByPrice[0]
-
   return cheapestOffer
 }
