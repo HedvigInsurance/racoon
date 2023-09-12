@@ -42,7 +42,6 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
     addCampaign(code)
   }
 
-  console.log('link', PageLink.home().href)
   return (
     <Layout>
       <GridLayout.Root as="main">

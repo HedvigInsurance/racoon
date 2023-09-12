@@ -4,7 +4,8 @@ import { type ComponentProps } from 'react'
 import { Text } from 'ui'
 import { nestedLinkStyles } from './RichText/RichText.styles'
 
-type Props = ComponentProps<typeof Text> & ComponentProps<typeof Link> & { children: string }
+type Props = ComponentProps<typeof Text> &
+  Pick<ComponentProps<typeof Link>, 'href' | 'target'> & { children: string }
 
 export const TextWithLink = ({ children, href, target, ...otherProps }: Props) => {
   const [beforeLink, rest] = children.split('[[', 2)
