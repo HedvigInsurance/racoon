@@ -22252,9 +22252,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:13.2.0":
-  version: 13.2.0
-  resolution: "react-i18next@npm:13.2.0"
+"react-i18next@npm:13.2.2":
+  version: 13.2.2
+  resolution: "react-i18next@npm:13.2.2"
   dependencies:
     "@babel/runtime": ^7.22.5
     html-parse-stringify: ^3.0.1
@@ -22266,7 +22266,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 6f7e375b22481dbd1b8c2498505f5a2309263a228bdc3dcd4cbc2e2f7b8d3945397a2560ffab87337341e14fb919a804d20189dcf0f651de8d006fd550830aea
+  checksum: 2b85bfb347af1a00add1c02901025706f7d2037fade4e8aa08159287ddf012e8cf35626eb9f5c578b9d1c24c065c69f2ad4b5a3087fb5cdbea540f8bc18c0f59
   languageName: node
   linkType: hard
 
@@ -23903,7 +23903,7 @@ __metadata:
     prettier: 3.0.3
     react: 18.2.0
     react-dom: 18.2.0
-    react-i18next: 13.2.0
+    react-i18next: 13.2.2
     react-wrap-balancer: 1.1.0
     storyblok-rich-text-react-renderer: 2.9.0
     storybook: 7.4.0
