@@ -67,7 +67,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
       </GridLayout.Root>
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
-          <TextWithLink as="p" size="xs" align="center" balance={true} href={PageLink.home().href}>
+          <TextWithLink as="p" size="xs" align="center" balance={true} href={PageLink.home()}>
             {t('FOREVER_PAGE_FOOTER_TEXT')}
           </TextWithLink>
         </GridLayout.Content>
