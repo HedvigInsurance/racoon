@@ -1,8 +1,8 @@
 import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
 import {
-  OfferRecommendationFragment,
-  ProductRecommendationFragment,
+  type OfferRecommendationFragment,
+  type ProductRecommendationFragment,
 } from '@/services/apollo/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'

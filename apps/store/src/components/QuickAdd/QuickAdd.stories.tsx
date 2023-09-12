@@ -84,3 +84,10 @@ export const Complete: Story = {
     ),
   },
 }
+
+export const WithoutPrice: Story = {
+  args: {
+    ...Default.args,
+    price: undefined,
+  },
+}
