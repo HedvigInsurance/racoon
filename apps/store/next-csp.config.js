@@ -75,6 +75,7 @@ const fontSrc = [
 ]
 const imgSrc = [
   'https://promise.hedvig.com',
+  'https://assets.hedvig.com',
   'https://*.storyblok.com',
   // Google
   'https://*.gstatic.com', // www + fonts

@@ -17,7 +17,7 @@ module.exports = withBundleAnalyzer({
     emotion: true,
   },
   images: {
-    domains: ['a.storyblok.com'],
+    domains: ['a.storyblok.com', 'assets.hedvig.com'],
   },
   productionBrowserSourceMaps: true,
   i18n,

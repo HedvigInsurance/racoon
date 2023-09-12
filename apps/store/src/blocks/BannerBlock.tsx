@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { Heading, Text, mq, theme } from 'ui'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type ImageSize = {
   aspectRatioLandscape?: '4 / 3' | '16 / 9'
@@ -26,7 +27,7 @@ export const BannerBlock = ({ blok }: BannerBlockProps) => {
       aspectRatioPortrait={blok.aspectRatioPortrait ?? '1 / 1'}
       {...storyblokEditable(blok)}
     >
-      <Image src={blok.image.filename} alt={blok.image.alt} fill={true} />
+      <Image src={getImgSrc(blok.image.filename)} alt={blok.image.alt} fill={true} />
       {hasContent && (
         <BodyWrapper>
           {blok.title && (

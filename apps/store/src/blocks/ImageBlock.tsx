@@ -11,7 +11,7 @@ import {
   type SbBaseBlockProps,
   type StoryblokAsset,
 } from '@/services/storyblok/storyblok'
-import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { filterByBlockType, getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
 
@@ -48,7 +48,7 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
         aspectRatioPortrait={blok.aspectRatioPortrait}
       >
         <Image
-          src={blok.image.filename}
+          src={getImgSrc(blok.image.filename)}
           roundedCorners={!blok.fullBleed}
           alt={blok.image.alt}
           fill

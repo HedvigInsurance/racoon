@@ -9,6 +9,7 @@ import { ProductItemContainer } from '@/components/ProductItem/ProductItemContai
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { Features } from '@/utils/Features'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -101,7 +102,7 @@ export const ConfirmationPage = (props: Props) => {
         <div>
           <ImageSection
             image={{
-              src: props.story.content.footerImage.filename,
+              src: getImgSrc(props.story.content.footerImage.filename),
               alt: props.story.content.footerImage.alt,
             }}
           />
