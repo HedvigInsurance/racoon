@@ -18,7 +18,7 @@ export const RetargetingPage = (props: Props) => {
       <Grid>
         {props.pillows.map((item, index) => (
           <PillowWrapper key={item.id} index={index}>
-            <Pillow {...item} />
+            <Pillow {...item} priority={true} />
           </PillowWrapper>
         ))}
       </Grid>
@@ -27,7 +27,7 @@ export const RetargetingPage = (props: Props) => {
 }
 
 const Wrapper = styled.div({
-  height: '100dvh',
+  height: ['100dvh', '100vh'],
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

@@ -15,6 +15,7 @@ type CheckoutPage = BaseParams & { expandCart?: boolean }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
 type RetargetingRoute = { shopSessionId: string }
+type RetargetingApiRoute = { shopSessionId: string; locale: RoutingLocale }
 
 type SessionLink = BaseParams & {
   shopSessionId: string
@@ -154,8 +155,10 @@ export const PageLink = {
     url.searchParams.set('shopSessionId', shopSessionId)
     return url
   },
-  apiRetargeting: ({ shopSessionId }: RetargetingRoute) => {
-    return new URL(`/api/retargeting/${shopSessionId}`, ORIGIN_URL)
+  apiRetargeting: ({ shopSessionId, locale }: RetargetingApiRoute) => {
+    const url = new URL(`/api/retargeting/${shopSessionId}`, ORIGIN_URL)
+    url.searchParams.set('locale', locale)
+    return url
   },
 } as const
 

@@ -30,6 +30,7 @@ describe('parseQueryParams', () => {
       shopSessionId: query[QueryParam.ShopSession],
       locale: query[QueryParam.Locale],
       campaignCode: query[QueryParam.CampaignCode],
+      queryParams: [],
     })
   })
 
@@ -53,5 +54,21 @@ describe('parseQueryParams', () => {
 
     // Assert
     expect(result?.locale).toEqual(locales[FALLBACK_LOCALE].routingLocale)
+  })
+
+  test('should return unknown query params', () => {
+    // Arrange
+    const query = {
+      [QueryParam.ShopSession]: '123',
+      [QueryParam.Locale]: 'se',
+      [QueryParam.CampaignCode]: 'ANICEDEAL',
+      foo: 'bar',
+    }
+
+    // Act
+    const result = parseQueryParams(query)
+
+    // Assert
+    expect(result?.queryParams).toEqual([['foo', 'bar']])
   })
 })

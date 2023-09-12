@@ -1,8 +1,8 @@
 import { type ApolloClient } from '@apollo/client'
 import {
   ShopSessionRetargetingDocument,
-  ShopSessionRetargetingQuery,
-  ShopSessionRetargetingQueryVariables,
+  type ShopSessionRetargetingQuery,
+  type ShopSessionRetargetingQueryVariables,
 } from '@/services/apollo/generated'
 
 export const fetchRetargetingData = async (
