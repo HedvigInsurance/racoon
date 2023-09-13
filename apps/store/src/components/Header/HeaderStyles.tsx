@@ -44,6 +44,7 @@ const NavigationTriggerLink = styled(Link)({
   display: 'flex',
   alignItems: 'center',
   gap: theme.space.xs,
+  whiteSpace: 'nowrap',
   ...focusableStyles,
 
   [mq.lg]: {
