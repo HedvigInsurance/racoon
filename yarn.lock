@@ -17037,10 +17037,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"headers-polyfill@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "headers-polyfill@npm:3.1.2"
-  checksum: 510ca9637ef652404dbd432e680418f8d418ba18094ef2f64c3d8de955ebf6e68d553c7f0aeaa5fc937d130b139c1e2d7c2066cd4cf0f740a4627924eaaee9db
+"headers-polyfill@npm:^3.2.0":
+  version: 3.2.3
+  resolution: "headers-polyfill@npm:3.2.3"
+  checksum: 771bb2093eed5b7ab09b48218603abc56eb03e78210d173a301bab508b4691f6a57ff49d10e9983c6c4381f22b0302cdcc5091208234f03c93f0fc019cc90d9e
   languageName: node
   linkType: hard
 
@@ -20313,9 +20313,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:1.2.5":
-  version: 1.2.5
-  resolution: "msw@npm:1.2.5"
+"msw@npm:1.3.0":
+  version: 1.3.0
+  resolution: "msw@npm:1.3.0"
   dependencies:
     "@mswjs/cookies": ^0.2.2
     "@mswjs/interceptors": ^0.17.5
@@ -20326,7 +20326,7 @@ __metadata:
     chokidar: ^3.4.2
     cookie: ^0.4.2
     graphql: ^15.0.0 || ^16.0.0
-    headers-polyfill: ^3.1.2
+    headers-polyfill: ^3.2.0
     inquirer: ^8.2.0
     is-node-process: ^1.2.0
     js-levenshtein: ^1.1.6
@@ -20337,13 +20337,13 @@ __metadata:
     type-fest: ^2.19.0
     yargs: ^17.3.1
   peerDependencies:
-    typescript: ">= 4.4.x <= 5.1.x"
+    typescript: ">= 4.4.x <= 5.2.x"
   peerDependenciesMeta:
     typescript:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 652c44a100cba0382d6cdf4c2a4dfb90edd9665c7d06bc10f15bd96fe458c6a6f4943c2dec3f1a9d5efef0f7d59ae805ebdf289b52991956d95601e5f42fb8b1
+  checksum: 5ec31d58b0b8841906427738b3f20efd93c45673022f1f8f2221e2880bf76d8ce85902a4f2656727bdcd6d3124d06bb61ff7827a3f9b218ceba6a09d3f6508be
   languageName: node
   linkType: hard
 
@@ -23894,7 +23894,7 @@ __metadata:
     jotai: 2.4.2
     jwt-decode: 3.1.2
     md5: 2.3.0
-    msw: 1.2.5
+    msw: 1.3.0
     next: 13.4.12
     next-i18next: 14.0.3
     next-router-mock: 0.9.9
