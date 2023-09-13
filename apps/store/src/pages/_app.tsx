@@ -14,7 +14,7 @@ import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { CustomerFirstScript } from '@/services/CustomerFirst'
+// import { CustomerFirstScript } from '@/services/CustomerFirst'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
@@ -107,7 +107,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
-          <CustomerFirstScript />
+          {/* <CustomerFirstScript /> */}
         </JotaiProvider>
       </ApolloProvider>
     </>
