@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, getCookies, setCookie } from 'cookies-next'
-import { OptionsType } from 'cookies-next/lib/types'
-import { CookieParams } from '@/utils/types'
-import { SimplePersister } from './Persister.types'
+import { type DefaultOptions } from 'cookies-next/lib/types'
+import { type CookieParams } from '@/utils/types'
+import { type SimplePersister } from './Persister.types'
 
 export class ServerCookiePersister implements SimplePersister {
   constructor(
@@ -10,7 +10,7 @@ export class ServerCookiePersister implements SimplePersister {
     private readonly response: CookieParams['res'],
   ) {}
 
-  public save(value: string, cookieKey = this.cookieKey, options?: OptionsType) {
+  public save(value: string, cookieKey = this.cookieKey, options?: DefaultOptions) {
     setCookie(cookieKey, value, {
       ...this.defaultOptions(),
       ...options,
@@ -26,7 +26,7 @@ export class ServerCookiePersister implements SimplePersister {
     deleteCookie(cookieKey, this.defaultOptions())
   }
 
-  private defaultOptions() {
+  private defaultOptions(): DefaultOptions {
     return { path: '/', req: this.request, res: this.response }
   }
 
