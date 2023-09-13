@@ -31,14 +31,14 @@ const localeMiddleware = (req: NextRequest): NextResponse => {
 
   if (cookiePath) {
     nextURL.locale = cookiePath.value
-    console.log(`Found user preference in cookies: ${cookiePath.value}, redirecting`)
-    return NextResponse.redirect(nextURL, 308)
+    console.info(`Found user preference in cookies: ${cookiePath.value}, redirecting`)
+    return NextResponse.redirect(nextURL)
   }
 
   // Default routing to /se
   nextURL.locale = toRoutingLocale(countries.SE.defaultLocale)
-  console.log(`Routing visitor from ${req.url} to ${nextURL}`)
-  return NextResponse.redirect(nextURL)
+  console.info(`Routing visitor from ${req.url} to ${nextURL}`)
+  return NextResponse.redirect(nextURL, 308)
 }
 
 type Redirect = {
