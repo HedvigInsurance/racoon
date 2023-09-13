@@ -20,7 +20,7 @@ export const Trigger = styled(AccordionPrimitives.Trigger)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: theme.space.xs,
+  gap: theme.space.md,
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.md,
   fontSize: theme.fontSizes.md,
@@ -50,6 +50,8 @@ export const Item = styled(AccordionPrimitives.Item)({
   },
 })
 
+const OPEN_CLOSE_ICON_SIZE = '1rem'
+
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
 }
@@ -60,8 +62,8 @@ export const HeaderWithTrigger = ({ children }: HeaderWithTriggerProps) => {
       <Trigger>
         {children}
 
-        <OpenIcon size="1rem" />
-        <CloseIcon size="1rem" />
+        <OpenIcon size={OPEN_CLOSE_ICON_SIZE} />
+        <CloseIcon size={OPEN_CLOSE_ICON_SIZE} />
       </Trigger>
     </AccordionPrimitives.Header>
   )
@@ -84,7 +86,7 @@ type ContentProps = AccordionPrimitives.AccordionContentProps & { open: boolean 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ children, open, ...props }, forwardedRef) => {
     return (
-      <StyledContent {...props} ref={forwardedRef} forceMount>
+      <StyledContent {...props} ref={forwardedRef} forceMount={true}>
         <motion.div
           initial={open ? 'opened' : 'closed'}
           transition={{
@@ -117,6 +119,7 @@ const StyledContent = styled(AccordionPrimitives.Content)({
   paddingInline: theme.space.md,
 
   [mq.lg]: {
-    paddingInline: theme.space.lg,
+    paddingLeft: theme.space.lg,
+    paddingRight: `calc(${theme.space.lg} + ${OPEN_CLOSE_ICON_SIZE})`,
   },
 })
