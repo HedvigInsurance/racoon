@@ -129,6 +129,7 @@ const ContentWrapper = styled.div({
   justifyContent: 'flex-end',
   alignItems: 'center',
   flex: 1,
+  gap: theme.space.xs,
 
   [mq.lg]: {
     justifyContent: 'space-between',
