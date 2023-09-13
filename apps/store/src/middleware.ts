@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 import { experimentMiddleware } from '@/services/Tracking/experimentMiddleware'
 import { countries } from '@/utils/l10n/countries'
 import { LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
-import { isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 
 export const config = {
   matcher: [
@@ -15,12 +15,8 @@ export const config = {
 }
 
 export async function middleware(req: NextRequest) {
-  if (!isRoutingLocale(req.nextUrl.locale)) {
-    // Workaround for Vercel edge middleware matching requests for static resources despite config specifying not to do so
-    if (req.nextUrl.pathname !== '/') {
-      return
-    }
-    return countrySelectorMiddleware(req)
+  if (req.nextUrl.locale === 'default') {
+    return localeMiddleware(req)
   } else {
     const redirectResponse = await redirectMiddleware(req)
     if (redirectResponse) return redirectResponse
@@ -29,33 +25,19 @@ export async function middleware(req: NextRequest) {
   }
 }
 
-const countrySelectorMiddleware = (req: NextRequest): NextResponse => {
+const localeMiddleware = (req: NextRequest): NextResponse => {
   const nextURL = req.nextUrl.clone()
   const cookiePath = req.cookies.get(LOCALE_COOKIE_KEY)
 
   if (cookiePath) {
-    nextURL.pathname = cookiePath.value
+    nextURL.locale = cookiePath.value
     console.log(`Found user preference in cookies: ${cookiePath.value}, redirecting`)
-    return NextResponse.redirect(nextURL)
+    return NextResponse.redirect(nextURL, 308)
   }
 
-  const country = req.geo?.country
-
-  switch (country) {
-    case countries.NO.id:
-      nextURL.pathname = toRoutingLocale(countries.NO.defaultLocale)
-      break
-    case countries.DK.id:
-      nextURL.pathname = toRoutingLocale(countries.DK.defaultLocale)
-      break
-    default:
-      // Default routing to /se with a permanent status of 308
-      nextURL.pathname = toRoutingLocale(countries.SE.defaultLocale)
-      console.log(`Default routing to ${nextURL}`)
-      return NextResponse.redirect(nextURL, 308)
-  }
-
-  console.log(`Routing visitor from ${country} to ${nextURL}`)
+  // Default routing to /se
+  nextURL.locale = toRoutingLocale(countries.SE.defaultLocale)
+  console.log(`Routing visitor from ${req.url} to ${nextURL}`)
   return NextResponse.redirect(nextURL)
 }
 
