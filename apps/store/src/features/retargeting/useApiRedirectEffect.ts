@@ -27,8 +27,9 @@ export const useApiRedirectEffect = () => {
       datadogRum.setGlobalContextProperty('isRetargeting', true)
     }
 
-    router.push(redirect.url)
-  }, [router, redirect])
+    // Avoid `router.push` since it triggers middleware for API routes
+    window.location.assign(redirect.url.toString())
+  }, [router, redirect, routingLocale])
 }
 
 type Redirect = { type: 'api' | 'fallback'; url: URL }
