@@ -120,7 +120,7 @@ export const ManyPetsMigrationPage = ({
                   size={{ _: 'xs', md: 'sm' }}
                   align="center"
                   color="textSecondary"
-                  href={PageLink.privacyPolicy({ locale: routingLocale }).href}
+                  href={PageLink.privacyPolicy({ locale: routingLocale })}
                   target="_blank"
                 >
                   {t('SIGN_DISCLAIMER')}
