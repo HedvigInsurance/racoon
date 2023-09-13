@@ -8,9 +8,16 @@ import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 
 export const config = {
   matcher: [
-    '/', // Failsafe, always match root
-    // Anything that can be a subject to redirect
-    '/((?!api|_next|favicon.ico|favicon-32x32|site.webmanifest).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     *
+     * OR paths that contain a period (.) from public-folder
+     */
+    '/((?!api|_next/static|_next/image|.*\\.).*)',
+    '/',
   ],
 }
 
