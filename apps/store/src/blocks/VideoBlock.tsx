@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
-import { getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc, getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
@@ -24,8 +24,9 @@ export type VideoBlockProps = SbBaseBlockProps<
 > & { className?: string }
 
 export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps) => {
-  const posterUrl = blok.poster?.filename
-    ? getOptimizedImageUrl(blok.poster.filename, {
+  const posterImg = blok.poster?.filename
+  const posterUrl = posterImg
+    ? getOptimizedImageUrl(getImgSrc(posterImg), {
         maxWidth: getMediaQueryBreakpoint('lg'),
       })
     : undefined

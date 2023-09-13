@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'ui'
 import { StoryblokAsset } from '@/services/storyblok/storyblok'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { ImageWithPlaceholder } from '../ImageWithPlaceholder/ImageWithPlaceholder'
 import { linkStyles } from '../RichText/RichText.styles'
 
@@ -16,7 +17,7 @@ export const DownloadableContentItem = ({ thumbnail, url }: DownloadableContentP
   return (
     <div>
       <Wrapper>
-        <Image src={thumbnail.filename} alt={thumbnail.alt} fill />
+        <Image src={getImgSrc(thumbnail.filename)} alt={thumbnail.alt} fill />
       </Wrapper>
       <Link href={url}>{t('DOWNLOAD_ASSET')}</Link>
     </div>

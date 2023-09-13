@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type PillowProps = {
   size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
@@ -13,7 +14,7 @@ export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {
   return (
     <StyledImage
       {...props}
-      src={src}
+      src={getImgSrc(src)}
       alt={alt ?? ''}
       width={208}
       height={208}

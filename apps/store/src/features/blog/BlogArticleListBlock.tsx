@@ -6,6 +6,7 @@ import { Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { useFormatter } from '@/utils/useFormatter'
 import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
@@ -54,7 +55,12 @@ export const BlogArticleListBlock = (props: Props) => {
                 ingress={item.text}
                 date={formatter.dateFull(new Date(item.date))}
               >
-                <ArticleTeaser.Image {...item.image} alt={item.image.alt} priority={index < 6} />
+                <ArticleTeaser.Image
+                  {...item.image}
+                  alt={item.image.alt}
+                  src={getImgSrc(item.image.src)}
+                  priority={index < 6}
+                />
               </ArticleTeaser.Root>
             ))}
           </List>

@@ -3,7 +3,7 @@ import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { TopPickCard } from '@/components/TopPickCard/TopPickCard'
 import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
-import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type TopPickCardBlockProps = SbBaseBlockProps<{
   title: string
@@ -18,7 +18,7 @@ export const TopPickCardBlock = ({ blok }: TopPickCardBlockProps) => {
       <TopPickCard
         title={blok.title}
         subtitle={blok.subtitle}
-        image={{ src: blok.image.filename, alt: blok.image.alt }}
+        image={{ src: getImgSrc(blok.image.filename), alt: blok.image.alt }}
       />
     </StyledLink>
   )

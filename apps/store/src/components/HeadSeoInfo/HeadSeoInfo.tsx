@@ -1,6 +1,7 @@
 import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
 import { SEOData } from '@/services/storyblok/storyblok'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
 import { organization } from '@/utils/jsonSchema'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
@@ -27,7 +28,9 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
             <meta property="og:description" content={seoMetaDescription} />
           </>
         )}
-        {seoMetaOgImage?.filename && <meta property="og:image" content={seoMetaOgImage.filename} />}
+        {seoMetaOgImage?.filename && (
+          <meta property="og:image" content={getImgSrc(seoMetaOgImage.filename)} />
+        )}
         {seoTitle && (
           <>
             <meta property="og:title" content={seoTitle} />

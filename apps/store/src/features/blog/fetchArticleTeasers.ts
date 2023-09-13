@@ -1,6 +1,6 @@
 import { type SbBlokData, type ISbStoryData, type ISbRichtext } from '@storyblok/react'
 import { type SEOData, type StoryblokAsset, fetchStories } from '@/services/storyblok/storyblok'
-import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc, getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
@@ -31,7 +31,7 @@ export const fetchArticleTeasers = async (
       categories: item.content.categories.map(convertToBlogArticleCategory),
       text: item.content.teaser_text,
       image: {
-        src: item.content.teaser_image.filename,
+        src: getImgSrc(item.content.teaser_image.filename),
         alt: item.content.teaser_image.alt,
         ...sizeProps,
       },
