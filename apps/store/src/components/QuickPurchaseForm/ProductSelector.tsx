@@ -1,5 +1,18 @@
 import styled from '@emotion/styled'
-import * as SelectPrimitive from '@radix-ui/react-select'
+import {
+  Root as SelectPrimitiveRoot,
+  Trigger as SelectPrimitiveTrigger,
+  Value as SelectPrimitiveValue,
+  Icon as SelectPrimitiveIcon,
+  Portal as SelectPrimitivePortal,
+  Content as SelectPrimitiveContent,
+  Viewport as SelectPrimitiveViewport,
+  Item as SelectPrimitiveItem,
+  ItemText as SelectPrimitiveItemText,
+  ItemIndicator as SelectPrimitiveItemIndicator,
+  Separator as SelectPrimitiveSeparator,
+  type SelectProps as SelectPrimitiveProps,
+} from '@radix-ui/react-select'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import { CheckIcon, ChevronIcon, theme } from 'ui'
@@ -16,48 +29,48 @@ export type ProductOption = {
 
 type Props = {
   productOptions: Array<ProductOption>
-} & Omit<SelectPrimitive.SelectProps, 'children'>
+} & Omit<SelectPrimitiveProps, 'children'>
 
 export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
-    <SelectPrimitive.Root {...delegated}>
+    <SelectPrimitiveRoot {...delegated}>
       <SelectTrigger>
-        <SelectPrimitive.Value placeholder={t('FIELD_INSURANCE_SELECTOR_PLACEHOLDER')} />
-        <SelectPrimitive.Icon>
+        <SelectPrimitiveValue placeholder={t('FIELD_INSURANCE_SELECTOR_PLACEHOLDER')} />
+        <SelectPrimitiveIcon>
           <StyledChevronIcon size="1rem" />
-        </SelectPrimitive.Icon>
+        </SelectPrimitiveIcon>
       </SelectTrigger>
 
-      <SelectPrimitive.Portal>
+      <SelectPrimitivePortal>
         <SelectContent position="popper" sideOffset={4}>
-          <SelectPrimitive.Viewport>
+          <SelectPrimitiveViewport>
             {productOptions.map((option, index) => (
               <Fragment key={option.value}>
                 {index !== 0 && <Separator />}
                 <SelectItem value={option.value}>
-                  <SelectPrimitive.ItemText asChild={true}>
+                  <SelectPrimitiveItemText asChild={true}>
                     <ItemDisplay>
                       <Pillow size="xxsmall" {...option.img} />
                       <span>{option.name}</span>
                     </ItemDisplay>
-                  </SelectPrimitive.ItemText>
+                  </SelectPrimitiveItemText>
 
-                  <SelectPrimitive.ItemIndicator>
+                  <SelectPrimitiveItemIndicator>
                     <StyledCheckIcon size="1rem" />
-                  </SelectPrimitive.ItemIndicator>
+                  </SelectPrimitiveItemIndicator>
                 </SelectItem>
               </Fragment>
             ))}
-          </SelectPrimitive.Viewport>
+          </SelectPrimitiveViewport>
         </SelectContent>
-      </SelectPrimitive.Portal>
-    </SelectPrimitive.Root>
+      </SelectPrimitivePortal>
+    </SelectPrimitiveRoot>
   )
 }
 
-const SelectTrigger = styled(SelectPrimitive.Trigger)({
+const SelectTrigger = styled(SelectPrimitiveTrigger)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -91,7 +104,7 @@ const StyledChevronIcon = styled(ChevronIcon)({
   },
 })
 
-const SelectContent = styled(SelectPrimitive.Content)({
+const SelectContent = styled(SelectPrimitiveContent)({
   width: 'var(--radix-select-trigger-width)',
   maxHeight: 'var(--radix-select-content-available-height)',
   backgroundColor: theme.colors.opaque1,
@@ -100,7 +113,7 @@ const SelectContent = styled(SelectPrimitive.Content)({
   overflow: 'hidden',
 })
 
-const SelectItem = styled(SelectPrimitive.Item)({
+const SelectItem = styled(SelectPrimitiveItem)({
   position: 'relative',
   minHeight: '3rem',
   paddingInline: theme.space.md,
@@ -120,7 +133,7 @@ const SelectItem = styled(SelectPrimitive.Item)({
   },
 })
 
-const Separator = styled(SelectPrimitive.Separator)({
+const Separator = styled(SelectPrimitiveSeparator)({
   height: 1,
   backgroundColor: theme.colors.opaque2,
   marginInline: theme.space.md,
