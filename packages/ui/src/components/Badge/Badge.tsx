@@ -5,7 +5,7 @@ import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor, theme } from '../../lib/theme/theme'
 import { BadgeSizeProps, getBadgeSize } from './Badge.helper'
 
-type BadgeColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'green50'>
+type BadgeColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50'>
 
 export type BadgeProps = Margins & {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
@@ -25,7 +25,7 @@ export const BadgeBase = styled(
   elementConfig,
 )<BadgeBaseProps>(({ color, size, ...props }) => {
   color = color ?? 'blueFill1'
-  size = size ?? 'sm'
+  size = size ?? 'small'
   return {
     display: 'inline-block',
     color: theme.colors.dark,

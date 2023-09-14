@@ -76,7 +76,7 @@ export const ProductNavigationLink = ({
         <Pillow size="xsmall" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
         {label && (
-          <Badge size={{ _: 'lg', lg: 'sm' }} as="span" color="green50">
+          <Badge size={{ _: 'big', lg: 'small' }} as="span" color="green50">
             {label}
           </Badge>
         )}
