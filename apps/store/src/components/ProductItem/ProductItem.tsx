@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, Text, mq, theme } from 'ui'
+import { Badge, Button, ButtonProps, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductDetails } from './ProductDetails'
@@ -17,6 +17,7 @@ type Props = {
   productDocuments: ComponentProps<typeof ProductDetails>['documents']
   defaultExpanded?: boolean
   children?: ReactNode
+  badge?: string
 }
 
 export const ProductItem = (props: Props) => {
@@ -31,12 +32,19 @@ export const ProductItem = (props: Props) => {
       <Hoverable onClick={handleClickHoverable}>
         <Header>
           <Pillow size="small" src={props.pillowSrc} alt="" />
-          <div>
-            <Text as="p" size="md">
-              {props.title}
-            </Text>
-            <StartDate {...props.startDate} />
-          </div>
+          <HeaderContent>
+            <div>
+              <Text as="p" size="md">
+                {props.title}
+              </Text>
+              <StartDate {...props.startDate} />
+            </div>
+            {props.badge && (
+              <DesktopOnlyBadge size="big" color="blueFill3">
+                {props.badge}
+              </DesktopOnlyBadge>
+            )}
+          </HeaderContent>
         </Header>
       </Hoverable>
 
@@ -104,6 +112,21 @@ const Header = styled.div({
   borderBottomWidth: 1,
   borderBottomStyle: 'solid',
   borderBottomColor: theme.colors.borderTranslucent2,
+})
+
+const HeaderContent = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '1fr auto',
+  columnGap: theme.space.md,
+  alignItems: 'start',
+})
+
+const DesktopOnlyBadge = styled(Badge)({
+  display: 'none',
+
+  [mq.lg]: {
+    display: 'block',
+  },
 })
 
 const StyledProductDetailsHeader = styled(ProductDetailsHeader)({

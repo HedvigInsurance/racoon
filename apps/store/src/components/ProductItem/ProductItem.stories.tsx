@@ -52,3 +52,16 @@ export const WithoutChildren: Story = {
     children: undefined,
   },
 }
+
+export const ActiveContract: Story = {
+  args: {
+    ...Default.args,
+    title: 'Trial 2 months',
+    startDate: {
+      label: 'Full insurance until 02.12.24',
+      tooltip: 'You need to sign a new insurance before this date.',
+    },
+    badge: 'Active',
+    children: undefined,
+  },
+}
