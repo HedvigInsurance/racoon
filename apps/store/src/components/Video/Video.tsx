@@ -1,3 +1,4 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
@@ -64,6 +65,8 @@ export const Video = ({
   const [state, setState] = useState<State>(State.Paused)
   // Mute video if auto playing or hidden sound controls
   const [muted, setMuted] = useState(delegated.autoPlay || hideSoundControl)
+
+  useLazyLoadVideoPoster(videoRef.current)
 
   useEffect(() => {
     // Lazy load videos that are autoplaying
@@ -176,9 +179,9 @@ export const Video = ({
     */}
       <StyledVideo
         ref={videoRef}
+        data-poster={poster}
         playsInline
         preload="metadata"
-        poster={poster}
         aspectRatioLandscape={aspectRatioLandscape}
         aspectRatioPortrait={aspectRatioPortrait}
         maxHeightLandscape={maxHeightLandscape}
@@ -369,4 +372,57 @@ const getAspectRatio = (aspectRatio: AspectRatioLandscape | AspectRatioPortrait)
     default:
       return { aspectRatio: aspectRatio }
   }
+}
+
+// TODO: remove this logic when native support for lazy load video poster gets added
+// https://github.com/whatwg/html/pull/8428
+const useLazyLoadVideoPoster = (videoElement: HTMLVideoElement | null) => {
+  useEffect(() => {
+    if (!videoElement) return
+
+    const isAutoPlayEnabled = videoElement.getAttribute('autoplay') != null
+    if (isAutoPlayEnabled) {
+      const poster = videoElement.getAttribute('data-poster')
+      if (poster) {
+        videoElement.setAttribute('poster', poster)
+      }
+
+      return datadogLogs.logger.info(
+        'Autoplayed videos should have their poster fetched right away. Skipping lazy loading for video poster',
+      )
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      const poster = videoElement.getAttribute('data-poster')
+      if (poster) {
+        videoElement.setAttribute('poster', poster)
+      }
+
+      return datadogLogs.logger.info(
+        'InterserctionObserver API not supported. Skipping lazy loading for video poster',
+      )
+    }
+
+    const intesectionObserverCb = (entries: Array<IntersectionObserverEntry>) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const video = entry.target
+          const poster = video.getAttribute('data-poster')
+
+          if (poster) {
+            video.setAttribute('poster', poster)
+            video.removeAttribute('data-poster')
+          }
+        }
+      })
+    }
+
+    const lazyLoadPosterObserver = new IntersectionObserver(intesectionObserverCb, {
+      // should fetch poster when it's 50% of screen height away of being visible
+      rootMargin: '0% 0% 50% 0%',
+    })
+    lazyLoadPosterObserver.observe(videoElement)
+
+    return () => lazyLoadPosterObserver.disconnect()
+  }, [videoElement])
 }
