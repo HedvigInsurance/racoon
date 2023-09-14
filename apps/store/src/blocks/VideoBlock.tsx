@@ -6,9 +6,8 @@ import { getImgSrc, getOptimizedImageUrl } from '@/services/storyblok/Storyblok.
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
-    // TODO: Remove video field once migrated to videoUrl
-    video: StoryblokAsset
-    videoUrl?: string
+    videoUrlWebm?: string
+    videoUrl: string
     poster?: StoryblokAsset
     fullBleed?: boolean
     controls?: boolean
@@ -24,6 +23,10 @@ export type VideoBlockProps = SbBaseBlockProps<
 > & { className?: string }
 
 export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps) => {
+  const videoSources = [
+    ...(blok.videoUrlWebm ? [{ url: blok.videoUrlWebm }] : []),
+    { url: blok.videoUrl },
+  ]
   const posterImg = blok.poster?.filename
   const posterUrl = posterImg
     ? getOptimizedImageUrl(getImgSrc(posterImg), {
@@ -36,7 +39,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
       <Video
-        sources={[{ url: blok.videoUrl || blok.video.filename }]}
+        sources={videoSources}
         poster={posterUrl}
         autoPlay={blok.autoPlay}
         aspectRatioLandscape={blok.aspectRatioLandscape}
