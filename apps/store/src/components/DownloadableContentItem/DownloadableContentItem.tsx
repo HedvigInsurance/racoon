@@ -19,7 +19,9 @@ export const DownloadableContentItem = ({ thumbnail, url }: DownloadableContentP
       <Wrapper>
         <Image src={getImgSrc(thumbnail.filename)} alt={thumbnail.alt} fill />
       </Wrapper>
-      <Link href={url}>{t('DOWNLOAD_ASSET')}</Link>
+      <Link href={url} download={true}>
+        {t('DOWNLOAD_ASSET')}
+      </Link>
     </div>
   )
 }
