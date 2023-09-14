@@ -110,7 +110,7 @@
     "ts-jest": "29.1.1",
     "tsconfig": "workspace:",
     "typescript": "5.2.2",
-    "whatwg-fetch": "3.6.18"
+    "whatwg-fetch": "3.6.19"
   },
   "msw": {
     "workerDirectory": "public"
