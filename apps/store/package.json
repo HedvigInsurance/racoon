@@ -64,7 +64,7 @@
     "storyblok-rich-text-react-renderer": "2.9.0",
     "tss-react": "4.9.0",
     "ui": "workspace:",
-    "uuid": "9.0.0",
+    "uuid": "9.0.1",
     "zen-observable-ts": "1.2.5"
   },
   "devDependencies": {
