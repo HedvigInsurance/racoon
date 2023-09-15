@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
-import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '../ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 
 type State = 'idle' | 'loading' | 'error'
 
@@ -30,7 +30,14 @@ export const useEditProductOffer = () => {
     // TODO: Check if product offer is connected to price intent -- if not, create new one
 
     const product = products?.find((item) => item.name === params.productName)
-    if (!product) throw new Error('Product not found')
+    if (!product) {
+      datadogLogs.logger.error('Edit Offer | Product not found', {
+        productName: params.productName,
+        productNames: products?.map((item) => item.name),
+        offerId: params.offerId,
+      })
+      throw new Error(`Edit Offer | Product not found: ${params.productName}`)
+    }
 
     const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
     const priceTemplate = fetchPriceTemplate(params.productName)

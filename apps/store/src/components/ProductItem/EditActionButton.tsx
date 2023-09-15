@@ -4,6 +4,7 @@ import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ProductOfferFragment } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { ActionButton } from './ProductItem'
 import { useEditProductOffer } from './useEditProductOffer'
 
@@ -13,16 +14,21 @@ type Props = {
 }
 
 export const EditActionButton = (props: Props) => {
-  const { t } = useTranslation('cart')
+  const { showError } = useAppErrorHandleContext()
+  const { t } = useTranslation(['cart', 'common'])
   const [editProductOffer, state] = useEditProductOffer()
 
   const handleConfirmEdit = () => {
-    editProductOffer({
-      shopSessionId: props.shopSessionId,
-      offerId: props.offer.id,
-      productName: props.offer.variant.product.name,
-      data: props.offer.priceIntentData,
-    })
+    try {
+      editProductOffer({
+        shopSessionId: props.shopSessionId,
+        offerId: props.offer.id,
+        productName: props.offer.variant.product.name,
+        data: props.offer.priceIntentData,
+      })
+    } catch (error) {
+      showError(new Error(t('common:UNKNOWN_ERROR_MESSAGE')))
+    }
   }
 
   return (
