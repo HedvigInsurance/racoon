@@ -12,11 +12,16 @@ type Params = CookieParams & {
 
 export const getCurrentShopSessionServerSide = async (params: Params) => {
   const shopSessionService = setupShopSessionServiceServerSide(params)
-  const shopSession = await shopSessionService.fetch()
 
-  if (shopSession === null) throw new Error('Current ShopSession not found')
+  const shopSessionId = shopSessionService.shopSessionId()
 
-  return shopSession
+  if (shopSessionId === null) {
+    console.warn('Current ShopSession ID not found')
+    console.info('All cookies: ', params.req?.headers.cookie)
+    throw new Error('Current ShopSession not found')
+  }
+
+  return shopSessionService.fetchById(shopSessionId)
 }
 
 export const getShopSessionServerSide = async (params: GetShopSessionParams) => {
