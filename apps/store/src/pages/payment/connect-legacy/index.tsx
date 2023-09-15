@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     return {
       redirect: {
         destination: PageLink.paymentConnectLegacyError({ locale: context.locale }).pathname,
-        permanent: false,
+        statusCode: 307,
       },
     }
   }
