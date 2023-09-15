@@ -15,4 +15,5 @@ export type ProductPageProps = StoryblokPageProps & {
   productData: ProductData
   initialSelectedVariant?: ProductDataVariant
   trustpilot: TrustpilotData | null
+  hideChat?: boolean
 }

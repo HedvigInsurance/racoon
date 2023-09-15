@@ -109,6 +109,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
     [STORY_PROP_NAME]: story,
     breadcrumbs,
     trustpilot,
+    hideChat: story.content.hideChat ?? false,
   }
 
   if (isProductStory(story)) {

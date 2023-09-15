@@ -1,5 +1,5 @@
 import { Global } from '@emotion/react'
-import { atom, useAtomValue, useSetAtom } from 'jotai'
+import { atom, useAtom } from 'jotai'
 import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -7,14 +7,18 @@ import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 const OPEN_ATOM = atom(false)
 
-export const CustomerFirstScript = () => {
+type Props = {
+  hideChat?: boolean
+}
+
+export const CustomerFirstScript = ({ hideChat = false }: Props) => {
   const isDesktop = useBreakpoint('lg')
-  const open = useAtomValue(OPEN_ATOM)
   const { chatWidgetSrc } = useCurrentLocale()
+  const { open } = useCustomerFirst()
 
   if (!chatWidgetSrc) return null
 
-  const showLauncher = isDesktop || open
+  const showLauncher = hideChat ? open : isDesktop || open
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
@@ -24,7 +28,7 @@ export const CustomerFirstScript = () => {
 }
 
 export const useCustomerFirst = () => {
-  const setOpen = useSetAtom(OPEN_ATOM)
+  const [open, setOpen] = useAtom(OPEN_ATOM)
   const { chatWidgetSrc } = useCurrentLocale()
 
   useEffect(() => {
@@ -46,7 +50,7 @@ export const useCustomerFirst = () => {
     window.customerFirstAPI?.openWidget()
   }, [setOpen])
 
-  return { show } as const
+  return { open, show } as const
 }
 
 enum MessageData {
