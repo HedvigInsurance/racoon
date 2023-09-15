@@ -1,4 +1,4 @@
-export const convertToDate = (value: unknown) => {
+export const convertToDate = (value: unknown): Date | null => {
   if (typeof value === 'string') {
     const date = new Date(value)
     if (isNaN(date.getTime())) return null
@@ -8,7 +8,7 @@ export const convertToDate = (value: unknown) => {
   return null
 }
 
-export const formatAPIDate = (date: Date) => {
+export const formatAPIDate = (date: Date): string => {
   return date.toISOString().split('T')[0]
 }
 

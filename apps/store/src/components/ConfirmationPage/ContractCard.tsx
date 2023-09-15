@@ -46,11 +46,15 @@ const PendingContractCard = (props: ContractCardProps) => {
     },
   })
 
-  const handleClick = (contractId: string) => () => {
+  const handleClickInitiate = (contractId: string) => () => {
     datadogRum.addAction(BankSigneringEvent.Initiated, { contractId })
     // Logger context used in mutation result handlers
     BANK_SIGNERING_LOGGER.addContext('contractId', contractId)
     initiateBankSignering({ variables: { contractId } })
+  }
+
+  const handleClickOpen = (contractId: string) => () => {
+    datadogRum.addAction(BankSigneringEvent.Opened, { contractId })
   }
 
   return (
@@ -67,15 +71,11 @@ const PendingContractCard = (props: ContractCardProps) => {
             </Text>
           </div>
           {props.url ? (
-            <ButtonNextLink
-              href={props.url}
-              target="_blank"
-              data-dd-action-name={BankSigneringEvent.Opened}
-            >
+            <ButtonNextLink href={props.url} target="_blank" onClick={handleClickOpen(props.id)}>
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
             </ButtonNextLink>
           ) : (
-            <Button onClick={handleClick(props.id)} loading={result.loading}>
+            <Button onClick={handleClickInitiate(props.id)} loading={result.loading}>
               {t('FLOW_ACTIVATION_BUTTON', { ns: 'common' })}
             </Button>
           )}
