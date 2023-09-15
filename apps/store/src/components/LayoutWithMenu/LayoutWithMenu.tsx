@@ -4,7 +4,7 @@ import { Fragment, type ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
-import { PageStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { GlobalStory, PageStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
@@ -18,10 +18,11 @@ const Wrapper = styled.div({
 
 type LayoutWithMenuProps = {
   children: ReactElement<
-    Omit<StoryblokPageProps, 'story'> & {
+    Pick<StoryblokPageProps, 'trustpilot'> & {
       className: string
       [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
       story: PageStory | undefined
+      globalStory: GlobalStory | undefined
       breadcrumbs?: Array<BreadcrumbListItem>
     }
   >
@@ -35,6 +36,9 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
 
   const handleLocaleChange = useChangeLocale(story)
+
+  // Happens for transitions from pages with layout to pages without layout
+  if (!globalStory) return null
 
   // Announcements are added as reusable blocks for Page and ProductPage content types
   const reusableBlock = filterByBlockType(
