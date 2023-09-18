@@ -9,8 +9,8 @@ export default {
 
 const Template: StoryFn<typeof Badge> = (args) => (
   <Space x={1}>
-    <Badge size="sm" {...args} />
-    <Badge size="lg" {...args} />
+    <Badge size="small" {...args} />
+    <Badge size="big" {...args} />
   </Space>
 )
 

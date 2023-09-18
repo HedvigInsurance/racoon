@@ -4,7 +4,7 @@ import { theme } from '../../lib/theme/theme'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
 
-type BadgeSize = 'sm' | 'lg'
+type BadgeSize = 'small' | 'big'
 
 export type BadgeSizeProps = BadgeSize | PartialRecord<Level | '_', BadgeSize>
 
@@ -35,12 +35,12 @@ export const getBadgeSize = (sizes: BadgeSizeProps): CSSObject => {
 }
 
 const STYLES: Record<BadgeSize, CSSObject> = {
-  sm: {
+  small: {
     paddingBlock: theme.space.xxs,
     paddingInline: theme.space.xs,
     fontSize: theme.fontSizes.sm,
   },
-  lg: {
+  big: {
     paddingBlock: theme.space.xs,
     paddingInline: theme.space.sm,
     fontSize: theme.fontSizes.md,
