@@ -105,6 +105,7 @@ export type StoryblokPageProps = {
   [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
   trustpilot: TrustpilotData | null
+  hideChat?: boolean
 }
 
 export type StoryblokVersion = 'draft' | 'published'
@@ -179,6 +180,7 @@ export type PageStory = ISbStoryData<
     overlayMenu?: boolean
     hideFooter?: boolean
     hideBreadcrumbs?: boolean
+    hideChat?: boolean
   } & SEOData
 >
 
@@ -193,6 +195,7 @@ export type ProductStory = ISbStoryData<
     announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
     globalStory: GlobalStory
+    hideChat?: boolean
   } & SEOData
 >
 

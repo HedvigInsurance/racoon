@@ -107,7 +107,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
-          <CustomerFirstScript />
+          <CustomerFirstScript hideChat={pageProps.hideChat} />
         </JotaiProvider>
       </ApolloProvider>
     </>
