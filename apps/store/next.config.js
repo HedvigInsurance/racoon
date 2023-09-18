@@ -9,6 +9,7 @@ const { i18n } = require('./next-i18next.config')
 module.exports = withBundleAnalyzer({
   experimental: {
     instrumentationHook: true,
+    strictNextHead: true,
   },
   reactStrictMode: true,
   swcMinify: true,
