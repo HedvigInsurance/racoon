@@ -58,6 +58,8 @@
   "QUICK_ADD_HOUSEHOLD_SIZE_one": "Covers {{count}} person",
   "QUICK_ADD_HOUSEHOLD_SIZE_other": "Covers {{count}} people",
   "RECOMMENDATIONS_HEADING": "Discover more insurances",
+  "REMOVE_CONTRACT_MODAL_PROMPT_SUBTITLE": "We would like to remind you to take out another insurance in good time before your trial insurance with Hedvig has expired. Otherwise, you risk the car becoming uninsured.",
+  "REMOVE_CONTRACT_MODAL_PROMPT_TITLE": "Are you sure you want to remove the insurance?",
   "REMOVE_ENTRY_BUTTON": "Remove",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Cancel",
   "REMOVE_ENTRY_MODAL_CONFIRM_BUTTON": "Yes, remove",
