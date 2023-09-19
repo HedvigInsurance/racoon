@@ -1,10 +1,12 @@
 import { useTranslation } from 'next-i18next'
+import { type ComponentProps } from 'react'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { CarMileageField as CarMileageFieldType } from '@/services/PriceCalculator/Field.types'
+import { type CarMileageField as CarMileageFieldType } from '@/services/PriceCalculator/Field.types'
 
 type Props = {
   field: CarMileageFieldType
   autoFocus?: boolean
+  backgroundColor?: ComponentProps<typeof InputSelect>['backgroundColor']
 }
 
 // NOTE: API values are in Scandinavian miles (1=10km)
@@ -16,7 +18,7 @@ const options = [
   { displayValue: '2 500+', value: '2501' },
 ]
 
-export const CarMileageField = ({ field, autoFocus }: Props) => {
+export const CarMileageField = ({ field, autoFocus, backgroundColor }: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
@@ -30,6 +32,7 @@ export const CarMileageField = ({ field, autoFocus }: Props) => {
         value: option.value,
       }))}
       autoFocus={autoFocus}
+      backgroundColor={backgroundColor}
     />
   )
 }
