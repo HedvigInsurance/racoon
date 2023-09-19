@@ -4,7 +4,7 @@ import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { ProductItem } from './ProductItem'
 
-type Contract = NonNullable<ContractQuery['contract']>
+type Contract = Pick<NonNullable<ContractQuery['contract']>, 'id' | 'variant'>
 
 type Props = {
   contract: Contract
