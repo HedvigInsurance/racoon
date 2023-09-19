@@ -69,13 +69,15 @@ const fontSrc = [
   'https://fonts.gstatic.com',
   // Vercel
   'https://*.vercel.com',
-  // OLD market web
+  // Hedvig CDN S3 bucket
   'https://cdn.hedvig.com',
   "'self'",
 ]
 const imgSrc = [
   'https://promise.hedvig.com',
   'https://assets.hedvig.com',
+  // Hedvig CDN S3 bucket
+  'https://cdn.hedvig.com',
   'https://*.storyblok.com',
   // Google
   'https://*.gstatic.com', // www + fonts
@@ -100,6 +102,8 @@ const imgSrc = [
   "'self'",
 ]
 const mediaSrc = [
+  // Hedvig CDN S3 bucket
+  'https://cdn.hedvig.com',
   'https://dc.insurely.com',
   'https://vercel.live',
   'https://a.storyblok.com',
