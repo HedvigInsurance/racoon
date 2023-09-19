@@ -47,6 +47,7 @@ declare global {
 
     // Customer First (C1)
     customerFirstAPI?: {
+      createWidget(): void
       openWidget(): void
       closeWidget(): void
     }
