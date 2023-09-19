@@ -22,7 +22,11 @@ export const CustomerFirstScript = ({ hideChat = false }: Props) => {
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
-      <Script strategy="afterInteractive" src={chatWidgetSrc} />
+      <Script
+        strategy="afterInteractive"
+        src={chatWidgetSrc}
+        onLoad={() => window.customerFirstAPI?.createWidget()}
+      />
     </>
   )
 }
