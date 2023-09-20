@@ -7,7 +7,7 @@ import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { EditActionButton } from '@/components/ProductItem/EditActionButton'
-import { Skeleton } from '@/components/ProductItem/ProductItem'
+import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
@@ -140,8 +140,8 @@ const LoadingState = () => {
               {t('CART_PAGE_HEADING')}
             </Heading>
             <ShopBreakdown>
-              <Skeleton />
-              <Skeleton />
+              <ProductItemSkeleton />
+              <ProductItemSkeleton />
             </ShopBreakdown>
           </Space>
         </GridLayout.Content>
