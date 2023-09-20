@@ -171,7 +171,7 @@ const ContentWrapper = styled.div({
 
 const Subtitle = styled.p({
   fontSize: theme.fontSizes.md,
-  color: theme.colors.gray600,
+  color: theme.colors.textSecondary,
 })
 
 const CallToAction = styled.div({
