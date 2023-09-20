@@ -1,11 +1,11 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { type ComponentProps, useState } from 'react'
+import { useState } from 'react'
 import { BankIdIcon, Button, RestartIcon, Space, Text } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ProductItemContractContainerCar } from '@/components/ProductItem/ProductItemContractContainer'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { CurrencyCode, type ProductOfferFragment } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/apollo/generated'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ActionButtonsCar } from './ActionButtonsCar'
 
@@ -16,26 +16,26 @@ type Props = {
   priceIntent: PriceIntent
 }
 
-type UpdateOfferFunction = ComponentProps<typeof ActionButtonsCar>['onUpdateOffer']
-
 export const TrialExtensionBlock = (props: Props) => {
   const { t } = useTranslation('checkout')
   const [isHidden, setIsHidden] = useState(false)
-  const [selectedOffer, setSelectedOffer] = useState<ProductOfferFragment>(() => {
+
+  const [tierLevel, setTierLevel] = useState(() => {
     // Use `PriceIntent.defaultOffer` when available
-    return props.priceIntent.offers[0]
+    return props.priceIntent.offers[0].variant.typeOfContract
   })
+  const selectedOffer =
+    props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel) ??
+    // Use `PriceIntent.defaultOffer` when available
+    props.priceIntent.offers[0]
 
-  const handleUpdateOffer: UpdateOfferFunction = (offer) => {
-    const newOffer = props.priceIntent.offers.find((item) => item.id === offer?.id)
-
-    if (newOffer) {
-      setSelectedOffer(newOffer)
-      return
+  const handleUpdate = (tierLevel: string) => {
+    const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
+    if (!match) {
+      throw new Error(`Unable to find offer with tierLevel ${tierLevel}`)
     }
 
-    // Use `PriceIntent.defaultOffer` when available
-    setSelectedOffer(props.priceIntent.offers[0])
+    setTierLevel(tierLevel)
   }
 
   const handleRemove = () => {
@@ -74,7 +74,7 @@ export const TrialExtensionBlock = (props: Props) => {
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
                 onRemove={handleRemove}
-                onUpdateOffer={handleUpdateOffer}
+                onUpdate={handleUpdate}
               />
             </ProductItemContainer>
             {/* TODO: Add blue info card */}
