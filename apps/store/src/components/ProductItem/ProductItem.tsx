@@ -138,7 +138,7 @@ const StyledProductDetails = styled(ProductDetails)({
 
 const Footer = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
+  gridAutoFlow: 'column',
   columnGap: theme.space.xs,
   paddingBottom: theme.space.md,
 })
