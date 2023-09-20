@@ -16,7 +16,6 @@ type Offer = Pick<ProductOfferFragment, 'id'> & {
 }
 
 type Props = {
-  shopSessionId: string
   priceIntent: Pick<PriceIntent, 'id' | 'data'> & { offers: Array<Offer> }
   offer: Offer
 
@@ -28,7 +27,6 @@ export const ActionButtonsCar = (props: Props) => {
   const [state, setState] = useState<State>('IDLE')
 
   const [editAndConfirm, loading] = useEditAndConfirm({
-    shopSessionId: props.shopSessionId,
     priceIntentId: props.priceIntent.id,
 
     onCompleted(priceIntent) {

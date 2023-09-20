@@ -2,15 +2,13 @@ import { type ApolloError } from '@apollo/client'
 import { useTranslation } from 'next-i18next'
 import {
   usePriceIntentConfirmMutation,
-  usePriceIntentDataUpdateMutation,
+  usePriceIntentDataUpdateCarMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 
 type EditAndConfirmParams = {
-  shopSessionId: string
   priceIntentId: string
-
   onCompleted: (priceIntent: PriceIntent) => void
 }
 
@@ -33,7 +31,7 @@ export const useEditAndConfirm = (params: EditAndConfirmParams) => {
     showError(new Error(t('UNKNOWN_ERROR_MESSAGE')))
   }
 
-  const [updateData, updateResult] = usePriceIntentDataUpdateMutation({
+  const [updateData, updateResult] = usePriceIntentDataUpdateCarMutation({
     onCompleted() {
       confirm()
     },
@@ -45,7 +43,6 @@ export const useEditAndConfirm = (params: EditAndConfirmParams) => {
       variables: {
         priceIntentId: params.priceIntentId,
         data,
-        customer: { shopSessionId: params.shopSessionId },
       },
       onError: handleError,
     })
