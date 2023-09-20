@@ -2,14 +2,19 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useState } from 'react'
 import { theme } from 'ui'
+import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ActionButton } from '../../components/ProductItem/ProductItem'
 import { ActionStateEdit } from './ActionStateEdit'
 import { RemoveCarOfferActionButton } from './RemoveCarOfferActionButton'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
-type State = 'IDLE' | 'EDITING'
+type State = { type: 'IDLE' } | { type: 'EDITING' } | { type: 'SUBMITTING'; tierLevel?: string }
+
+const STATE: Record<Exclude<State['type'], 'SUBMITTING'>, State> = {
+  IDLE: { type: 'IDLE' },
+  EDITING: { type: 'EDITING' },
+}
 
 type Offer = Pick<ProductOfferFragment, 'id'> & {
   variant: Pick<ProductOfferFragment['variant'], 'typeOfContract' | 'displayName'>
@@ -19,28 +24,28 @@ type Props = {
   priceIntent: Pick<PriceIntent, 'id' | 'data'> & { offers: Array<Offer> }
   offer: Offer
 
-  onUpdateOffer: (offer: Offer | null) => void
+  onUpdate: (tierLevel: string) => void
   onRemove: () => void
 }
 
 export const ActionButtonsCar = (props: Props) => {
-  const [state, setState] = useState<State>('IDLE')
+  const [state, setState] = useState<State>(STATE.IDLE)
 
   const [editAndConfirm, loading] = useEditAndConfirm({
     priceIntentId: props.priceIntent.id,
 
-    onCompleted(priceIntent) {
-      const newOffer = priceIntent.offers.find(
-        (offer) => offer.variant.typeOfContract === props.offer.variant.typeOfContract,
-      )
-      props.onUpdateOffer(newOffer ?? null)
-      setState('IDLE')
+    onCompleted() {
+      if (state.type === 'SUBMITTING' && state.tierLevel) {
+        props.onUpdate(state.tierLevel)
+      }
+
+      setState(STATE.IDLE)
     },
   })
 
   const handleClickEdit = () => {
     datadogRum.addAction('Offer Car Edit')
-    setState('EDITING')
+    setState(STATE.EDITING)
   }
 
   const handleClickRemove = () => {
@@ -48,14 +53,15 @@ export const ActionButtonsCar = (props: Props) => {
     props.onRemove()
   }
 
-  if (state === 'EDITING') {
-    const handleCancel = () => setState('IDLE')
+  if (state.type === 'EDITING' || state.type === 'SUBMITTING') {
+    const handleCancel = () => setState(STATE.IDLE)
 
-    const handleSave = (option: string, data: Record<string, unknown>) => {
-      const newOffer = props.priceIntent.offers.find((offer) => offer.id === option)
-      if (newOffer && newOffer.id !== props.offer.id) {
-        props.onUpdateOffer(newOffer)
-      }
+    const handleSave = (tierLevel: string, data: Record<string, unknown>) => {
+      setState({
+        type: 'SUBMITTING',
+        tierLevel: tierLevel !== props.offer.variant.typeOfContract ? tierLevel : undefined,
+      })
+
       editAndConfirm(data)
     }
 

@@ -5,11 +5,10 @@ import {
   usePriceIntentDataUpdateCarMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 
 type EditAndConfirmParams = {
   priceIntentId: string
-  onCompleted: (priceIntent: PriceIntent) => void
+  onCompleted: () => void
 }
 
 export const useEditAndConfirm = (params: EditAndConfirmParams) => {
@@ -18,17 +17,15 @@ export const useEditAndConfirm = (params: EditAndConfirmParams) => {
 
   const [confirm, confirmResult] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: params.priceIntentId },
-    onCompleted(data) {
-      const priceIntent = data.priceIntentConfirm.priceIntent
-      if (priceIntent) {
-        params.onCompleted(priceIntent)
-      }
+    onCompleted() {
+      params.onCompleted()
     },
   })
 
   const handleError = (error: ApolloError) => {
     console.warn('EditAndConfirm error', error)
     showError(new Error(t('UNKNOWN_ERROR_MESSAGE')))
+    params.onCompleted()
   }
 
   const [updateData, updateResult] = usePriceIntentDataUpdateCarMutation({
