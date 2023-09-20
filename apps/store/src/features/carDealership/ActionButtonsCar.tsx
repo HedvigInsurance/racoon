@@ -6,6 +6,7 @@ import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ActionButton } from '../../components/ProductItem/ProductItem'
 import { ActionStateEdit } from './ActionStateEdit'
+import { RemoveCarOfferActionButton } from './RemoveCarOfferActionButton'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
 type State = 'IDLE' | 'EDITING'
@@ -79,7 +80,7 @@ export const ActionButtonsCar = (props: Props) => {
   return (
     <ButtonWrapper>
       <ActionButton onClick={handleClickEdit}>Edit</ActionButton>
-      <ActionButton onClick={handleClickRemove}>Remove</ActionButton>
+      <RemoveCarOfferActionButton onConfirm={handleClickRemove} />
     </ButtonWrapper>
   )
 }

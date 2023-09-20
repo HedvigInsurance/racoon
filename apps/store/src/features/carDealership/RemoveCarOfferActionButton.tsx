@@ -1,18 +1,20 @@
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'react-i18next'
 import { Button, Text } from 'ui'
 import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { ActionButton } from './ProductItem'
+import { ActionButton } from '@/components/ProductItem/ProductItem'
 
 type Props = {
-  onRemoveContract: () => void
+  onConfirm: () => void
 }
 
-export const CartDealershipRemoveButton = (props: Props) => {
+export const RemoveCarOfferActionButton = (props: Props) => {
   const { t } = useTranslation('cart')
 
-  const handleRemoveContract = () => {
-    props.onRemoveContract()
+  const handleClick = () => {
+    datadogRum.addAction('Car dearlership | Offer removed')
+    props.onConfirm()
   }
 
   return (
@@ -25,7 +27,7 @@ export const CartDealershipRemoveButton = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button onClick={handleRemoveContract}>{t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}</Button>
+            <Button onClick={handleClick}>{t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}</Button>
             <FullScreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost">
                 {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
