@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
+import { ProductItem } from '@/components/ProductItem/ProductItem'
 import { type ContractQuery, CurrencyCode } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
-import { ProductItem } from './ProductItem'
 
 type Contract = Pick<NonNullable<ContractQuery['contract']>, 'id' | 'variant'>
 
