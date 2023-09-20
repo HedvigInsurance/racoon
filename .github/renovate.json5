@@ -2,8 +2,8 @@
   // https://docs.renovatebot.com/
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
-  // Restrict automerge so we can react quickly if something goes wrong (UTC time = 09:00 CEST)
-  "schedule": ["7am every weekday", "8am every weekday", "9am every weekday"],
+  "timezone": "Europe/Stockholm",
+  "schedule": ["after 6am and before 11am every weekday"],
   "labels": ["needs approval/merge"],
   // Don't update nextjs until client-side navigation issue is solved
   // https://github.com/vercel/next.js/issues/53967
