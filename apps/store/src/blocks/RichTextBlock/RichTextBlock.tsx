@@ -1,5 +1,6 @@
 import { ISbRichtext, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
+import { useMemo, type ReactNode } from 'react'
 import { render, RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
@@ -12,7 +13,23 @@ export type RichTextBlockProps = SbBaseBlockProps<{
   largeText?: boolean
 }>
 
-const richTextRenderOptions: RenderOptions = {
+export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
+  const content = useMemo(() => renderRichText(blok.content), [blok.content])
+
+  return (
+    <GridLayout.Root {...storyblokEditable(blok)}>
+      <GridLayout.Content
+        width={blok.layout?.widths ?? { base: '1', md: '2/3', xl: '1/2' }}
+        align={blok.layout?.alignment ?? 'center'}
+      >
+        <RichText largeText={blok.largeText}>{content}</RichText>
+      </GridLayout.Content>
+    </GridLayout.Root>
+  )
+}
+RichTextBlock.blockName = 'richText'
+
+const RENDER_OPTIONS: RenderOptions = {
   blokResolvers: {
     image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
   },
@@ -55,18 +72,7 @@ const isExternalLink = (href?: string) => href?.match(/^(https?:)?\/\//)
 
 const appendAnchor = (href: string, anchor?: string) => (anchor ? `${href}#${anchor}` : href)
 
-export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
-  return (
-    <GridLayout.Root {...storyblokEditable(blok)}>
-      <GridLayout.Content
-        width={blok.layout?.widths ?? { base: '1', md: '2/3', xl: '1/2' }}
-        align={blok.layout?.alignment ?? 'center'}
-      >
-        <RichText largeText={blok.largeText}>
-          {render(blok.content, richTextRenderOptions)}
-        </RichText>
-      </GridLayout.Content>
-    </GridLayout.Root>
-  )
-}
-RichTextBlock.blockName = 'richText'
+export const renderRichText = (
+  content: ISbRichtext,
+  renderOptions: RenderOptions = RENDER_OPTIONS,
+) => render(content, renderOptions) as ReactNode
