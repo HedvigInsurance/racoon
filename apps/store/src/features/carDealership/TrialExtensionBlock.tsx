@@ -13,7 +13,6 @@ const SIGN_AND_PAY_BUTTON = 'Signera och betala'
 const UNDO_REMOVE_BUTTON = 'Ångra borttagning'
 
 type Props = {
-  shopSessionId: string
   priceIntent: PriceIntent
 }
 
@@ -72,7 +71,6 @@ export const TrialExtensionBlock = (props: Props) => {
           <Space y={1}>
             <ProductItemContainer offer={selectedOffer} defaultExpanded={true}>
               <ActionButtonsCar
-                shopSessionId={props.shopSessionId}
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
                 onRemove={handleRemove}
