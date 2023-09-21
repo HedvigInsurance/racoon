@@ -4,15 +4,13 @@ import { TrialExtensionForm } from './TrialExtensionForm'
 
 type Story = StoryObj<typeof TrialExtensionForm>
 
-const noop = () => {}
-
 const meta: Meta<typeof TrialExtensionForm> = {
   title: 'TrialExtensionForm',
   component: TrialExtensionForm,
 }
 
 export const WithoutExtension: Story = {
-  render: () => <TrialExtensionForm contract={FIXTURE_CONTRACT} onUndo={noop} />,
+  render: () => <TrialExtensionForm contract={FIXTURE_CONTRACT} />,
 }
 
 export default meta

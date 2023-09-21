@@ -75,6 +75,7 @@ import { type ContentWidth, type ContentAlignment } from '@/components/GridLayou
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
+import { carDealershipBlocks } from '@/features/carDealership/carDealershipBlocks'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
 import { TrustpilotData } from '@/services/trustpilot/trustpilot.types'
@@ -305,6 +306,7 @@ export const initStoryblok = () => {
     InsurelyBlock,
     ...blogBlocks,
     ...manyPetsBlocks,
+    ...carDealershipBlocks,
   ]
   const blockAliases = { reusableBlock: PageBlock }
   const components = {
