@@ -1,9 +1,9 @@
-import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
 import { Badge, Button, ButtonProps, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
+import { Skeleton } from '@/components/Skeleton'
 import { ProductDetails } from './ProductDetails'
 import { ProductDetailsHeader } from './ProductDetailsHeader'
 import { StartDate } from './StartDate'
@@ -67,18 +67,7 @@ export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, r
 })
 ActionButton.displayName = 'ActionButton'
 
-const pulsingAnimation = keyframes({
-  '0%': { opacity: 0.5 },
-  '50%': { opacity: 1 },
-  '100%': { opacity: 0.5 },
-})
-
-export const Skeleton = styled.div({
-  backgroundColor: theme.colors.grayTranslucent100,
-  borderRadius: theme.radius.sm,
-  height: '13.5rem',
-  animation: `${pulsingAnimation} 1.5s ease-in-out infinite`,
-})
+export const ProductItemSkeleton = styled(Skeleton)({ height: '13.5rem' })
 
 const Card = styled.div({
   backgroundColor: theme.colors.opaque1,
