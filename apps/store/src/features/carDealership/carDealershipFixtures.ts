@@ -1,5 +1,5 @@
 // TODO: Remove this file as soon we start to get data from the API
-import { CurrencyCode, Peril } from '@/services/apollo/generated'
+import { CurrencyCode, Peril, ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 
 const DEFAULT_OFFER = {
   id: '123456',
@@ -114,6 +114,19 @@ export const CAR_TRIAL_DATA_QUERY = {
       },
     ],
     defaultOffer: DEFAULT_OFFER as typeof DEFAULT_OFFER | undefined,
+  },
+
+  shopSession: {
+    id: '71723912',
+
+    customer: {
+      ssn: '199001011234',
+      authenticationStatus: ShopSessionAuthenticationStatus.None,
+    },
+
+    cart: {
+      entries: [],
+    },
   },
 }
 
