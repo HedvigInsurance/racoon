@@ -1,56 +1,28 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
+import { CAR_TRIAL_DATA_QUERY } from './carDealershipFixtures'
 import { TrialExtensionForm } from './TrialExtensionForm'
 
 type Story = StoryObj<typeof TrialExtensionForm>
 
 const meta: Meta<typeof TrialExtensionForm> = {
-  title: 'TrialExtensionForm',
+  title: 'Car Dealership / Trial Extension Form',
   component: TrialExtensionForm,
 }
 
 export const WithoutExtension: Story = {
-  render: () => <TrialExtensionForm contract={FIXTURE_CONTRACT} />,
+  args: {
+    contract: CAR_TRIAL_DATA_QUERY.trialContract,
+    priceIntent: CAR_TRIAL_DATA_QUERY.priceIntent,
+  },
+
+  render(args) {
+    return (
+      <AppErrorProvider>
+        <TrialExtensionForm {...args} />
+      </AppErrorProvider>
+    )
+  },
 }
 
 export default meta
-
-const FIXTURE_CONTRACT = {
-  id: 'contrac1',
-  cost: { amount: 299, currencyCode: CurrencyCode.Sek },
-
-  endDate: '2024-12-24',
-
-  displayItems: [
-    {
-      displayTitle: 'Registration number',
-      displayValue: 'ABC 123',
-    },
-    {
-      displayTitle: 'Address',
-      displayValue: 'Hedvigsgatan 11',
-    },
-    {
-      displayTitle: 'Milage',
-      displayValue: '1,500 km/year',
-    },
-  ],
-
-  variant: {
-    displayName: 'Product',
-    product: {
-      pillowImage: { src: 'https://placekitten.com/200/300' },
-    },
-
-    documents: [
-      {
-        displayName: 'Insurance terms',
-        url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/villkor',
-      },
-      {
-        displayName: 'Insurance letter',
-        url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/brev',
-      },
-    ],
-  },
-}

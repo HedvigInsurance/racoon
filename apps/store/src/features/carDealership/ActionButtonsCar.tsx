@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { theme } from 'ui'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ActionStateEdit } from './ActionStateEdit'
+import { type CarTrialData } from './carDealershipFixtures'
 import { RemoveCarOfferActionButton } from './RemoveCarOfferActionButton'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
@@ -21,7 +21,7 @@ type Offer = Pick<ProductOfferFragment, 'id'> & {
 }
 
 type Props = {
-  priceIntent: Pick<PriceIntent, 'id' | 'data'> & { offers: Array<Offer> }
+  priceIntent: CarTrialData['priceIntent']
   offer: Offer
 
   onUpdate: (tierLevel: string) => void

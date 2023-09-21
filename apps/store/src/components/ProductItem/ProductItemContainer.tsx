@@ -5,8 +5,13 @@ import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'
 import { useGetStartDateProps } from './useGetStartDateProps'
 
+type Offer = Pick<
+  ProductOfferFragment,
+  'cost' | 'priceIntentData' | 'startDate' | 'displayItems' | 'deductible' | 'variant'
+>
+
 type Props = {
-  offer: ProductOfferFragment
+  offer: Offer
   children?: ReactNode
   defaultExpanded?: boolean
 }
@@ -59,7 +64,7 @@ export const ProductItemContainer = (props: Props) => {
   )
 }
 
-const getTierLevelDisplayName = (item: ProductOfferFragment) => {
+const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant'>) => {
   // TODO: small hack, move logic to API
   return item.variant.displayName !== item.variant.product.displayNameFull
     ? item.variant.displayName

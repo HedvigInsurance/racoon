@@ -1,28 +1,104 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { type ComponentProps } from 'react'
-import { Space, Button, RestartIcon } from 'ui'
+import { useState } from 'react'
+import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
+import { InfoCard } from '@/components/InfoCard/InfoCard'
+import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { ActionButtonsCar } from './ActionButtonsCar'
+import { type CarTrialData } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
-type Props = Pick<ComponentProps<typeof ProductItemContractContainerCar>, 'contract'>
+const SIGN_AND_PAY_BUTTON = 'Sign and pay'
+const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
+const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
+const UNDO_REMOVE_BUTTON = 'Undo removal'
+
+type Props = {
+  contract: CarTrialData['trialContract']
+  priceIntent: CarTrialData['priceIntent']
+}
 
 export const TrialExtensionForm = (props: Props) => {
+  const [userWantsExtension, setUserWantsExtension] = useState(true)
+
+  const [tierLevel, setTierLevel] = useState<string>(() => {
+    return (
+      props.priceIntent.defaultOffer?.variant.typeOfContract ??
+      props.priceIntent.offers[0].variant.typeOfContract
+    )
+  })
+  const selectedOffer =
+    props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel) ??
+    // Use `PriceIntent.defaultOffer` when available
+    props.priceIntent.offers[0]
+
+  const handleUpdate = (tierLevel: string) => {
+    const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
+    if (!match) {
+      throw new Error(`Unable to find offer with tierLevel ${tierLevel}`)
+    }
+
+    setTierLevel(tierLevel)
+  }
+
+  const handleRemove = () => {
+    datadogRum.addAction('Car dealership | Remove')
+    setUserWantsExtension(false)
+  }
+
   const handleUndo = () => {
-    datadogRum.addAction('Car dealership | Undo extension removal')
+    datadogRum.addAction('Car dealership | Undo remove')
+    setUserWantsExtension(true)
+  }
+
+  const handleSignAndPay = () => {
+    datadogRum.addAction('Car dealership | Sign and pay')
+    // TODO: implement
+  }
+
+  if (!userWantsExtension) {
+    return (
+      <Space y={2}>
+        <Space y={1}>
+          <ProductItemContractContainerCar contract={props.contract} />
+          <Button variant="secondary" onClick={handleUndo}>
+            <SpaceFlex direction="horizontal" space={0.5}>
+              <RestartIcon />
+              {UNDO_REMOVE_BUTTON}
+            </SpaceFlex>
+          </Button>
+          <Button variant="primary">{CONTINUE_WITHOUT_EXTENSION_BUTTON}</Button>
+        </Space>
+      </Space>
+    )
   }
 
   return (
     <Space y={2}>
-      <Space y={1}>
+      <Space y={1.5}>
+        <Text align="center">{props.contract.exposure.displayNameFull}</Text>
         <ProductItemContractContainerCar contract={props.contract} />
-        <Button variant="secondary" onClick={handleUndo}>
-          <SpaceFlex direction="horizontal" space={0.5}>
-            <RestartIcon />
-            Ångra borttagning
+
+        <Space y={0.75}>
+          <ProductItemContainer offer={selectedOffer} defaultExpanded={true}>
+            <ActionButtonsCar
+              priceIntent={props.priceIntent}
+              offer={selectedOffer}
+              onRemove={handleRemove}
+              onUpdate={handleUpdate}
+            />
+          </ProductItemContainer>
+
+          <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
+        </Space>
+
+        <Button onClick={handleSignAndPay}>
+          <SpaceFlex space={0.5} align="center">
+            <BankIdIcon />
+            {SIGN_AND_PAY_BUTTON}
           </SpaceFlex>
         </Button>
       </Space>
-      <Button variant="primary">Koppla betalning i appen</Button>
     </Space>
   )
 }
