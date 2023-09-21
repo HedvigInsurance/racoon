@@ -4,15 +4,11 @@ import { Space, Button, RestartIcon } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
-type Props = { onUndo: () => void } & Pick<
-  ComponentProps<typeof ProductItemContractContainerCar>,
-  'contract'
->
+type Props = Pick<ComponentProps<typeof ProductItemContractContainerCar>, 'contract'>
 
 export const TrialExtensionForm = (props: Props) => {
   const handleUndo = () => {
     datadogRum.addAction('Car dealership | Undo extension removal')
-    props.onUndo()
   }
 
   return (
