@@ -1,12 +1,21 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Cart, ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { PageLink } from '@/utils/PageLink'
+import { useAddToCart } from '@/utils/useAddToCart'
 import { ActionButtonsCar } from './ActionButtonsCar'
 import { type CarTrialData } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
+
+const carDealershipLogger = datadogLogs.createLogger('car-dealership')
 
 const SIGN_AND_PAY_BUTTON = 'Sign and pay'
 const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
@@ -16,10 +25,17 @@ const UNDO_REMOVE_BUTTON = 'Undo removal'
 type Props = {
   contract: CarTrialData['trialContract']
   priceIntent: CarTrialData['priceIntent']
+  shopSession: CarTrialData['shopSession']
 }
 
 export const TrialExtensionForm = (props: Props) => {
   const [userWantsExtension, setUserWantsExtension] = useState(true)
+  const { signAndPay, loading } = useSignAndPay({
+    shopSessionId: props.shopSession.id,
+    ssn: props.shopSession.customer.ssn,
+    authenticationStatus: props.shopSession.customer.authenticationStatus,
+    cartEntries: props.shopSession.cart.entries,
+  })
 
   const [tierLevel, setTierLevel] = useState<string>(() => {
     return (
@@ -29,7 +45,7 @@ export const TrialExtensionForm = (props: Props) => {
   })
   const selectedOffer =
     props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel) ??
-    // Use `PriceIntent.defaultOffer` when available
+    props.priceIntent.defaultOffer ??
     props.priceIntent.offers[0]
 
   const handleUpdate = (tierLevel: string) => {
@@ -53,7 +69,7 @@ export const TrialExtensionForm = (props: Props) => {
 
   const handleSignAndPay = () => {
     datadogRum.addAction('Car dealership | Sign and pay')
-    // TODO: implement
+    signAndPay(selectedOffer.id)
   }
 
   if (!userWantsExtension) {
@@ -92,7 +108,7 @@ export const TrialExtensionForm = (props: Props) => {
           <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
         </Space>
 
-        <Button onClick={handleSignAndPay}>
+        <Button onClick={handleSignAndPay} loading={loading}>
           <SpaceFlex space={0.5} align="center">
             <BankIdIcon />
             {SIGN_AND_PAY_BUTTON}
@@ -101,4 +117,62 @@ export const TrialExtensionForm = (props: Props) => {
       </Space>
     </Space>
   )
+}
+
+type Params = {
+  shopSessionId: string
+  ssn: string
+  authenticationStatus: ShopSessionAuthenticationStatus
+  cartEntries: Cart['entries']
+}
+
+const useSignAndPay = (params: Params) => {
+  const { startCheckoutSign } = useBankIdContext()
+  const router = useRouter()
+  const { showError } = useAppErrorHandleContext()
+
+  const performSign = () => {
+    startCheckoutSign({
+      shopSessionId: params.shopSessionId,
+      ssn: params.ssn,
+      customerAuthenticationStatus: params.authenticationStatus,
+
+      onSuccess() {
+        console.info('Successfully signed shop session')
+        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSessionId }))
+      },
+    })
+  }
+
+  const [addToCart, loadingAddToCart] = useAddToCart({
+    shopSessionId: params.shopSessionId,
+    onSuccess(productOfferId) {
+      console.info('Successfully added product to cart', productOfferId)
+      performSign()
+    },
+  })
+
+  const addAndOrSign = (offerId: string) => {
+    if (params.cartEntries.length > 1) {
+      showError(
+        new Error(
+          `Cart has unexpected items in it. cartOfferIds=${params.cartEntries.map(
+            ({ id }) => id,
+          )}. Offer to be added: ${offerId}`,
+        ),
+      )
+      return
+    }
+
+    const alreadyAdded = params.cartEntries.some((entry) => entry.id === offerId)
+    if (alreadyAdded) {
+      carDealershipLogger.info('Offer already added to cart')
+      performSign()
+    } else {
+      carDealershipLogger.info(`Adding offer to cart: ${offerId}`)
+      addToCart(offerId)
+    }
+  }
+
+  return { signAndPay: addAndOrSign, loading: loadingAddToCart } as const
 }

@@ -20,6 +20,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
       {...storyblokEditable(props.blok)}
       contract={data.trialContract}
       priceIntent={data.priceIntent}
+      shopSession={data.shopSession}
     />
   )
 }
