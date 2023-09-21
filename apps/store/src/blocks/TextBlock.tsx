@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { ISbRichtext, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { Text, getColor, UIColors, FontSizes } from 'ui'
-import { RichText } from '@/components/RichText/RichText'
+import { Text, theme, UIColors, FontSizes } from 'ui'
+import { listStyles, nestedLinkStyles } from '@/components/RichText/RichText.styles'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { renderRichText } from './RichTextBlock/RichTextBlock'
 
@@ -24,7 +24,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     ...(blok.fontSizeDesktop && { md: blok.fontSizeDesktop }),
   }
   return (
-    <Text
+    <StyledText
       {...storyblokEditable(blok)}
       as="div"
       align={blok.textAlignment}
@@ -32,32 +32,19 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
       color={blok.color ?? 'textPrimary'}
       size={fontSizes}
     >
-      <StyledRichText color={blok.color ?? 'textSecondary'}>{content}</StyledRichText>
-    </Text>
+      {content}
+    </StyledText>
   )
 }
 
-const StyledRichText = styled(RichText)<{ color: TextColor }>(({ color }) => ({
-  fontSize: 'inherit',
-
-  p: {
-    color: 'inherit',
-    fontSize: 'inherit',
-  },
-  'h2, h3, h4': {
-    color: 'inherit',
-    fontSize: 'inherit',
-  },
-  'ul li': {
-    '&::before': {
-      backgroundColor: getColor(color),
+const StyledText = styled(Text)(
+  {
+    'p:not(:first-child)': {
+      marginTop: theme.space.md,
     },
   },
-  'ol li': {
-    '::marker': {
-      color: 'inherit',
-    },
-  },
-}))
+  listStyles,
+  nestedLinkStyles,
+)
 
 TextBlock.blockName = 'text'

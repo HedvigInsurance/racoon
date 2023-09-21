@@ -59,6 +59,10 @@ export const listStyles = css({
     marginBlock: theme.space.xs,
   },
 
+  'li > p': {
+    marginBlock: 0,
+  },
+
   'ul li': {
     position: 'relative',
     paddingLeft: theme.space.lg,
@@ -72,7 +76,7 @@ export const listStyles = css({
       width: 15,
       height: 15,
       borderRadius: '100%',
-      backgroundColor: theme.colors.textSecondary,
+      backgroundColor: 'var(--color, currentColor)',
     },
 
     ul: {
@@ -107,7 +111,7 @@ export const listStyles = css({
   'ol li': {
     marginLeft: theme.space.lg,
     '::marker': {
-      color: theme.colors.textSecondary,
+      color: 'var(--color, currentColor)',
     },
 
     ol: {
@@ -116,43 +120,49 @@ export const listStyles = css({
   },
 })
 
+export const typographyStyles = css({
+  fontSize: theme.fontSizes.md,
+  lineHeight: 1.32,
+})
+
+export const paragraphStyles = css({
+  p: {
+    marginTop: theme.space.xs,
+    marginBottom: theme.space.lg,
+    color: theme.colors.textSecondary,
+  },
+})
+
+export const headingStyles = css({
+  'h4 + p': {
+    marginTop: 0,
+  },
+
+  'h2, h3, h4': {
+    fontSize: theme.fontSizes.md,
+  },
+
+  h2: {
+    marginTop: theme.space.xxl,
+  },
+
+  h3: {
+    marginTop: theme.space.xl,
+  },
+})
+
+export const customClassesStyles = css({
+  '.preamble': {
+    display: 'block',
+    marginBottom: theme.space.xl,
+    fontSize: theme.fontSizes.xl,
+    color: theme.colors.textPrimary,
+  },
+})
+
 export const richTextStyles = css(
   {
-    fontSize: theme.fontSizes.md,
-    lineHeight: 1.32,
-
-    '.preamble': {
-      display: 'block',
-      marginBottom: theme.space.xl,
-      fontSize: theme.fontSizes.xl,
-      color: theme.colors.textPrimary,
-    },
-
-    p: {
-      marginTop: theme.space.xs,
-      marginBottom: theme.space.lg,
-      color: theme.colors.textSecondary,
-    },
-
-    'h4 + p': {
-      marginTop: 0,
-    },
-
-    'li > p': {
-      marginBlock: 0,
-    },
-
-    'h2, h3, h4': {
-      fontSize: theme.fontSizes.md,
-    },
-
-    h2: {
-      marginTop: theme.space.xxl,
-    },
-
-    h3: {
-      marginTop: theme.space.xl,
-    },
+    '--color': theme.colors.textSecondary,
 
     hr: {
       marginBlock: theme.space.xxxl,
@@ -196,6 +206,10 @@ export const richTextStyles = css(
       },
     },
   },
+  typographyStyles,
+  headingStyles,
+  paragraphStyles,
   nestedLinkStyles,
   listStyles,
+  customClassesStyles,
 )
