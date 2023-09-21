@@ -1,5 +1,4 @@
-import styled from '@emotion/styled'
-import { Text, InfoIcon, theme } from 'ui'
+import { InfoCard } from '@/components/InfoCard/InfoCard'
 
 export const LatestAdoptionNote = ({ date }: { date: string }) => {
   const formattedDate = new Date(date).toLocaleString('sv-SE', {
@@ -9,32 +8,8 @@ export const LatestAdoptionNote = ({ date }: { date: string }) => {
   })
 
   return (
-    <Wrapper>
-      <StyledInfoIcon color={theme.colors.blue600} />
-      <Text as="p" size={{ _: 'xs', md: 'sm' }} color="textSecondary">
-        Teckna innan{' '}
-        <Text as="span" size={{ _: 'xs', md: 'sm' }} color="textPrimary">
-          {formattedDate}
-        </Text>{' '}
-        så börjar försäkringen gälla när din nuvarande förfaller.
-      </Text>
-    </Wrapper>
+    <InfoCard>
+      {`Teckna innan ${formattedDate} så börjar försäkringen gälla när din nuvarande förfaller.`}
+    </InfoCard>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'flex',
-  gap: theme.space.xs,
-  alignItems: 'baseline',
-  backgroundColor: theme.colors.blueFill1,
-  border: `1px solid ${theme.colors.blue200}`,
-  borderRadius: theme.radius.sm,
-  padding: theme.space.md,
-})
-
-const StyledInfoIcon = styled(InfoIcon)({
-  flex: '0 0 auto',
-  // Optical alignment with text
-  position: 'relative',
-  top: 3,
-})

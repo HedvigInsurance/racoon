@@ -21,6 +21,10 @@ type TextColor = Pick<
   | 'textGreen'
   | 'textAmber'
   | 'textRed'
+  | 'signalBlueText'
+  | 'signalRedText'
+  | 'signalGreenText'
+  | 'signalAmberText'
 >
 
 export type TextProps = {
