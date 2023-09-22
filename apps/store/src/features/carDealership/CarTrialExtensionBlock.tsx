@@ -21,6 +21,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
       contract={data.trialContract}
       priceIntent={data.priceIntent}
       shopSession={data.shopSession}
+      requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
     />
   )
 }

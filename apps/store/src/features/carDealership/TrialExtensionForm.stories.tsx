@@ -12,11 +12,12 @@ const meta: Meta<typeof TrialExtensionForm> = {
   component: TrialExtensionForm,
 }
 
-export const WithoutExtension: Story = {
+export const WithPaymentConnected: Story = {
   args: {
     contract: CAR_TRIAL_DATA_QUERY.trialContract,
     priceIntent: CAR_TRIAL_DATA_QUERY.priceIntent,
     shopSession: CAR_TRIAL_DATA_QUERY.shopSession,
+    requirePaymentConnection: false,
   },
 
   render(args) {
