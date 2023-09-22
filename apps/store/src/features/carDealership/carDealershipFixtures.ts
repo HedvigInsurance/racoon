@@ -6,16 +6,16 @@ const DEFAULT_OFFER = {
   variant: {
     displayName: 'Full insurance',
     typeOfContract: 'SE_CAR_FULL',
-    product: {
-      id: 'car-full',
-      displayNameFull: '',
-      displayNameShort: 'Car insurance',
-      name: 'Car Full',
-      pageLink: '',
-      pillowImage: { id: 'car-full-pillow', src: 'https://placekitten.com/200/300' },
-    },
     perils: [] as Array<Peril>,
     documents: [] as Array<any>,
+  },
+  product: {
+    id: 'car-full',
+    displayNameFull: '',
+    displayNameShort: 'Car insurance',
+    name: 'Car Full',
+    pageLink: '',
+    pillowImage: { id: 'car-full-pillow', src: 'https://placekitten.com/200/300' },
   },
   startDate: '2023-12-31',
   cost: {
@@ -71,15 +71,15 @@ export const CAR_TRIAL_DATA_QUERY = {
         variant: {
           displayName: 'Half insurance',
           typeOfContract: 'SE_CAR_HALF',
-          product: {
-            id: 'car-half',
-            name: 'Car Half',
-            displayNameFull: '',
-            pageLink: '',
-            pillowImage: { id: 'car-half-pillow', src: 'https://placekitten.com/200/300' },
-          },
           perils: [],
           documents: [],
+        },
+        product: {
+          id: 'car-half',
+          name: 'Car Half',
+          displayNameFull: '',
+          pageLink: '',
+          pillowImage: { id: 'car-half-pillow', src: 'https://placekitten.com/200/300' },
         },
         cost: {
           net: { amount: 479, currencyCode: CurrencyCode.Sek },
@@ -94,15 +94,15 @@ export const CAR_TRIAL_DATA_QUERY = {
         variant: {
           displayName: 'Traffic insurance',
           typeOfContract: 'SE_CAR_TRAFFIC',
-          product: {
-            id: 'car-traffic',
-            name: 'Car Traffic',
-            displayNameFull: '',
-            pageLink: '',
-            pillowImage: { id: 'car-traffic-pillow', src: 'https://placekitten.com/200/300' },
-          },
           perils: [],
           documents: [],
+        },
+        product: {
+          id: 'car-traffic',
+          name: 'Car Traffic',
+          displayNameFull: '',
+          pageLink: '',
+          pillowImage: { id: 'car-traffic-pillow', src: 'https://placekitten.com/200/300' },
         },
         cost: {
           net: { amount: 379, currencyCode: CurrencyCode.Sek },

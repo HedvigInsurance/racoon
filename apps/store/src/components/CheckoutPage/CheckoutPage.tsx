@@ -130,7 +130,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       <RemoveActionButton
                         shopSessionId={shopSession.id}
                         offer={item}
-                        title={item.variant.product.displayNameFull}
+                        title={item.product.displayNameFull}
                         onCompleted={handleRemoveCartEntry}
                       />
                     </ProductItemContainer>

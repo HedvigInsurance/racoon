@@ -68,7 +68,7 @@ export const CartPage = () => {
                     <RemoveActionButton
                       shopSessionId={shopSession.id}
                       offer={item}
-                      title={item.variant.product.displayNameFull}
+                      title={item.product.displayNameFull}
                     />
                   </ProductItemContainer>
                 ))}
