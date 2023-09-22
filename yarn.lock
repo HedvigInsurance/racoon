@@ -41,9 +41,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.8.3":
-  version: 3.8.3
-  resolution: "@apollo/client@npm:3.8.3"
+"@apollo/client@npm:3.8.4":
+  version: 3.8.4
+  resolution: "@apollo/client@npm:3.8.4"
   dependencies:
     "@graphql-typed-document-node/core": ^3.1.1
     "@wry/context": ^0.7.3
@@ -73,13 +73,13 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: cdecd5d613c0f941d00fc1904b9ecdeb502fc157c10400430231adb47d8f67727c78eed1b7489aed91cce6e20e32fc44e16b6c2d5424a42d7c100dcef65b942b
+  checksum: 509e37cdce7462cacda0a86c413ce471cd8f618625fb8ac3a60d6347d12f37a4fc60e12fc3fc1a375799caa21e56ff58d709e13ef5e13ab15e4dfc828a527848
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.4.2":
-  version: 0.4.2
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.4.2"
+"@apollo/experimental-nextjs-app-support@npm:0.4.3":
+  version: 0.4.3
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.4.3"
   dependencies:
     server-only: ^0.0.1
     superjson: ^1.12.2
@@ -88,7 +88,7 @@ __metadata:
     "@apollo/client": ">=3.8.0-rc || ^3.8.0"
     next: ^13.4.1
     react: ^18
-  checksum: 402b52aa307cd676420234599105347a57a0993d2e61cc0f7fa34498cd603b8ab0a23d6ad649f6353e2bb1d4777c931294b2d389801477def19f5be261e439b4
+  checksum: bbcb4be91a7967bf1379dc89ab80beb467c459b34acd615226a8aa8d13f420d1570f568d994d9cf2854e2c5a7ff045399d37dca0ca8d901954fd203902df2c53
   languageName: node
   linkType: hard
 
@@ -23894,8 +23894,8 @@ __metadata:
   resolution: "store@workspace:apps/store"
   dependencies:
     "@adyen/adyen-web": 3.23.0
-    "@apollo/client": 3.8.3
-    "@apollo/experimental-nextjs-app-support": 0.4.2
+    "@apollo/client": 3.8.4
+    "@apollo/experimental-nextjs-app-support": 0.4.3
     "@babel/core": 7.22.20
     "@babel/preset-env": 7.22.20
     "@babel/preset-react": 7.22.15
