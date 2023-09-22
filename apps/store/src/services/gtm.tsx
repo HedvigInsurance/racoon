@@ -113,31 +113,6 @@ export const GTMBodyScript = () => {
   )
 }
 
-export const TikTokPixelScript = () => {
-  const TIKTOK_PIXEL_ID = "YOUR_TIKTOK_PIXEL_ID"; // Replace with your actual TikTok Pixel ID
-
-  if (!TIKTOK_PIXEL_ID) return null;
-
-  return (
-    <Script
-      id="tiktok-pixel-base"
-      strategy="lazyOnload"
-      dangerouslySetInnerHTML={{
-        __html: `
-          !function(w,d,t) {
-              var s = d.createElement(t), m = d.getElementsByTagName(t)[0];
-              s.async = 1;
-              s.src = "https://analytics.tiktok.com/i18n/pixel/sdk.js";
-              m.parentNode.insertBefore(s, m);
-              w.ttq = w.ttq || [];
-              w.ttq.push('init', '${TIKTOK_PIXEL_ID}');
-          }(window, document, 'script');
-        `,
-      }}
-    />
-  );
-};
-
 
 export type AppTrackingContext = {
   countryCode: CountryCode
