@@ -5,7 +5,7 @@ import { theme } from 'ui'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { ActionStateEdit } from './ActionStateEdit'
-import { type CarTrialData } from './carDealershipFixtures'
+import { type TrialExtension } from './carDealershipFixtures'
 import { RemoveCarOfferActionButton } from './RemoveCarOfferActionButton'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
@@ -21,9 +21,8 @@ type Offer = Pick<ProductOfferFragment, 'id'> & {
 }
 
 type Props = {
-  priceIntent: CarTrialData['priceIntent']
+  priceIntent: TrialExtension['priceIntent']
   offer: Offer
-
   onUpdate: (tierLevel: string) => void
   onRemove: () => void
 }

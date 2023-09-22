@@ -15,7 +15,7 @@ const meta: Meta<typeof TrialExtensionForm> = {
 export const WithPaymentConnected: Story = {
   args: {
     contract: CAR_TRIAL_DATA_QUERY.trialContract,
-    priceIntent: CAR_TRIAL_DATA_QUERY.priceIntent,
+    priceIntent: CAR_TRIAL_DATA_QUERY.shopSession.priceIntents[0]!,
     shopSession: CAR_TRIAL_DATA_QUERY.shopSession,
     requirePaymentConnection: false,
   },

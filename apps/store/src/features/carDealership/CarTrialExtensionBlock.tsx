@@ -1,8 +1,8 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCarTrialExtensionQuery } from '@/services/apollo/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { CAR_TRIAL_DATA_QUERY, CarTrialData } from './carDealershipFixtures'
+import { CAR_TRIAL_DATA_QUERY, type TrialExtension } from './carDealershipFixtures'
 import { LoadingSkeleton } from './LoadingSkeleton'
 import { TrialExtensionForm } from './TrialExtensionForm'
 
@@ -32,18 +32,20 @@ const useCarTrialQuery = () => {
   const queryParam = router.query['id']
   const id = typeof queryParam === 'string' ? queryParam : undefined
 
-  const [data, setData] = useState<CarTrialData>()
+  const { data: carTrialExtensionData } = useCarTrialExtensionQuery({
+    variables: id ? { shopSessionId: id } : undefined,
+    skip: !id,
+  })
 
-  useEffect(() => {
-    // if (!id) return
-    if (!router.isReady) return
+  if (carTrialExtensionData) {
+    const data: TrialExtension = {
+      ...CAR_TRIAL_DATA_QUERY,
+      shopSession: carTrialExtensionData.shopSession,
+      priceIntent: carTrialExtensionData.shopSession.priceIntents[0],
+    }
 
-    const handle = setTimeout(() => {
-      setData(CAR_TRIAL_DATA_QUERY)
-    }, 1000)
+    return data
+  }
 
-    return () => clearTimeout(handle)
-  }, [router.isReady, id])
-
-  return data
+  return null
 }
