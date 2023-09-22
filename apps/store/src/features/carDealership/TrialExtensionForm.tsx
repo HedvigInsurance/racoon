@@ -7,6 +7,7 @@ import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Cart, ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { useCurrentMemberLazyQuery } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
@@ -18,6 +19,7 @@ import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 const carDealershipLogger = datadogLogs.createLogger('car-dealership')
 
 const SIGN_AND_PAY_BUTTON = 'Sign and pay'
+const SIGN_BUTTON = 'Sign insurance'
 const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
 const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
 const UNDO_REMOVE_BUTTON = 'Undo removal'
@@ -26,6 +28,7 @@ type Props = {
   contract: CarTrialData['trialContract']
   priceIntent: CarTrialData['priceIntent']
   shopSession: CarTrialData['shopSession']
+  requirePaymentConnection: boolean
 }
 
 export const TrialExtensionForm = (props: Props) => {
@@ -35,6 +38,7 @@ export const TrialExtensionForm = (props: Props) => {
     ssn: props.shopSession.customer.ssn,
     authenticationStatus: props.shopSession.customer.authenticationStatus,
     cartEntries: props.shopSession.cart.entries,
+    requirePaymentConnection: props.requirePaymentConnection,
   })
 
   const [tierLevel, setTierLevel] = useState<string>(() => {
@@ -111,7 +115,7 @@ export const TrialExtensionForm = (props: Props) => {
         <Button onClick={handleSignAndPay} loading={loading}>
           <SpaceFlex space={0.5} align="center">
             <BankIdIcon />
-            {SIGN_AND_PAY_BUTTON}
+            {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
           </SpaceFlex>
         </Button>
       </Space>
@@ -124,12 +128,29 @@ type Params = {
   ssn: string
   authenticationStatus: ShopSessionAuthenticationStatus
   cartEntries: Cart['entries']
+  requirePaymentConnection: boolean
 }
 
 const useSignAndPay = (params: Params) => {
   const { startCheckoutSign } = useBankIdContext()
   const router = useRouter()
   const { showError } = useAppErrorHandleContext()
+
+  const [getCurrentMember] = useCurrentMemberLazyQuery({
+    onCompleted(data) {
+      if (data.currentMember.hasActivePaymentConnection) {
+        carDealershipLogger.info('Member has active payment connection', {
+          promptedPayment: params.requirePaymentConnection,
+        })
+        router.push(PageLink.confirmation({ shopSessionId: params.shopSessionId }))
+      } else {
+        carDealershipLogger.info('Member does not have active payment connection', {
+          promptedPayment: params.requirePaymentConnection,
+        })
+        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSessionId }))
+      }
+    },
+  })
 
   const performSign = () => {
     startCheckoutSign({
@@ -139,7 +160,7 @@ const useSignAndPay = (params: Params) => {
 
       onSuccess() {
         console.info('Successfully signed shop session')
-        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSessionId }))
+        getCurrentMember()
       },
     })
   }
