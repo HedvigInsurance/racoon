@@ -70,7 +70,7 @@ const useProductSubtitle = (offer: OfferRecommendationFragment) => {
   // Should never happen
   datadogLogs.logger.error('Quick Add Complete | street address not found', {
     productOfferId: offer.id,
-    product: offer.variant.product.id,
+    product: offer.product.id,
   })
   return ''
 }

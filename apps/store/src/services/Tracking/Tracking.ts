@@ -21,12 +21,12 @@ type TrackingProductData = {
 
 type TrackingOffer = {
   cost: ProductOfferFragment['cost']
+  product: {
+    id: ProductOfferFragment['product']['id']
+    displayNameFull: ProductOfferFragment['product']['displayNameFull']
+  }
   variant: {
     typeOfContract: ProductOfferFragment['variant']['typeOfContract']
-    product: {
-      id: ProductOfferFragment['variant']['product']['id']
-      displayNameFull: ProductOfferFragment['variant']['product']['displayNameFull']
-    }
   }
   priceMatch?: ProductOfferFragment['priceMatch']
 }
@@ -144,7 +144,7 @@ export class Tracking {
         currency: offer.cost.gross.currencyCode as string,
 
         insurance_type: offer.variant.typeOfContract,
-        flow_type: offer.variant.product.name,
+        flow_type: offer.product.name,
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
       userData,
@@ -170,7 +170,7 @@ export class Tracking {
         currency: cart.cost.net.currencyCode as string,
 
         insurance_type: cart.entries[0].variant.typeOfContract,
-        flow_type: cart.entries[0].variant.product.name,
+        flow_type: cart.entries[0].product.name,
         memberId: memberId,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
@@ -308,8 +308,8 @@ const offerToEcommerceEvent = ({
       currency: offer.cost.gross.currencyCode,
       items: [
         {
-          item_id: offer.variant.product.id,
-          item_name: offer.variant.product.displayNameFull,
+          item_id: offer.product.id,
+          item_name: offer.product.displayNameFull,
           price: offer.cost.gross.amount,
           item_variant: offer.variant.typeOfContract,
           ...(source && { item_list_id: source }),
@@ -339,8 +339,8 @@ const cartToEcommerceEvent = (
       value: cart.cost.net.amount,
       currency: cart.cost.net.currencyCode,
       items: cart.entries.map((entry) => ({
-        item_id: entry.variant.product.id,
-        item_name: entry.variant.product.displayNameFull,
+        item_id: entry.product.id,
+        item_name: entry.product.displayNameFull,
         price: entry.cost.gross.amount,
         variant: entry.variant.typeOfContract,
       })),

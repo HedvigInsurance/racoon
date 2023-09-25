@@ -7,7 +7,7 @@ import { useGetStartDateProps } from './useGetStartDateProps'
 
 type Offer = Pick<
   ProductOfferFragment,
-  'cost' | 'priceIntentData' | 'startDate' | 'displayItems' | 'deductible' | 'variant'
+  'cost' | 'priceIntentData' | 'startDate' | 'displayItems' | 'deductible' | 'variant' | 'product'
 >
 
 type Props = {
@@ -23,7 +23,7 @@ export const ProductItemContainer = (props: Props) => {
   const price = getOfferPrice(props.offer.cost)
 
   const startDateProps = getStartDateProps({
-    productName: props.offer.variant.product.name,
+    productName: props.offer.product.name,
     data: props.offer.priceIntentData,
     startDate: props.offer.startDate,
   })
@@ -51,8 +51,8 @@ export const ProductItemContainer = (props: Props) => {
 
   return (
     <ProductItem
-      title={props.offer.variant.product.displayNameFull}
-      pillowSrc={props.offer.variant.product.pillowImage.src}
+      title={props.offer.product.displayNameFull}
+      pillowSrc={props.offer.product.pillowImage.src}
       price={price}
       startDate={startDateProps}
       productDetails={productDetails}
@@ -64,9 +64,9 @@ export const ProductItemContainer = (props: Props) => {
   )
 }
 
-const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant'>) => {
+const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant' | 'product'>) => {
   // TODO: small hack, move logic to API
-  return item.variant.displayName !== item.variant.product.displayNameFull
+  return item.variant.displayName !== item.product.displayNameFull
     ? item.variant.displayName
     : undefined
 }

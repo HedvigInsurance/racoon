@@ -7,12 +7,12 @@ fragment OfferRecommendation on ProductOffer {
     displayTitle
     displayValue
   }
+  product {
+    id
+    displayNameFull
+  }
   variant {
     typeOfContract
-    product {
-      id
-      displayNameFull
-    }
   }
   cost {
     gross {

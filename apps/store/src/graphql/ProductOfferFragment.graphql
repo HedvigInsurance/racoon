@@ -1,19 +1,19 @@
 fragment ProductOffer on ProductOffer {
   id
+  product {
+    id
+    name
+    pageLink
+    displayNameFull
+    pillowImage {
+      id
+      alt
+      src
+    }
+  }
   variant {
     typeOfContract
     displayName
-    product {
-      id
-      name
-      pageLink
-      displayNameFull
-      pillowImage {
-        id
-        alt
-        src
-      }
-    }
     perils {
       ...Peril
     }

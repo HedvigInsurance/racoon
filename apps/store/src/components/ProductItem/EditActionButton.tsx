@@ -23,7 +23,7 @@ export const EditActionButton = (props: Props) => {
       editProductOffer({
         shopSessionId: props.shopSessionId,
         offerId: props.offer.id,
-        productName: props.offer.variant.product.name,
+        productName: props.offer.product.name,
         data: props.offer.priceIntentData,
       })
     } catch (error) {
