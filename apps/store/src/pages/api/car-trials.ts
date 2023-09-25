@@ -4,8 +4,11 @@ import { CountryCode } from '@/services/apollo/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 const PRODUCT_NAME_CAR = 'SE_CAR'
+const SLUG = 'se/test-car-extension-offer'
+const URL = `${ORIGIN_URL}/${SLUG}`
 
 const handler: NextApiHandler = async (req, res) => {
   // Get ssn from request body
@@ -47,7 +50,10 @@ const handler: NextApiHandler = async (req, res) => {
   await priceIntentService.confirm(priceIntent.id)
 
   // res.redirect(302, `/se/car-trials/${shopSession.id}`)
-  res.json({ shopSessioId: shopSession.id })
+  res.json({
+    shopSessioId: shopSession.id,
+    url: `${URL}?id=${shopSession.id}`,
+  })
 }
 
 export default handler

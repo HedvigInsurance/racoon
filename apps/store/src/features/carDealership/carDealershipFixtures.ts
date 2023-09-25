@@ -8,6 +8,30 @@ const DEFAULT_OFFER = {
     typeOfContract: 'SE_CAR_FULL',
     perils: [] as Array<Peril>,
     documents: [] as Array<any>,
+
+    // Deprecated
+    product: {
+      id: 'car-full',
+      displayNameFull: 'Car insurance',
+      displayNameShort: 'Car',
+      name: 'Car Full',
+      pageLink: '',
+      pillowImage: {
+        id: 'car-full-pillow',
+        src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+      },
+    },
+  },
+  product: {
+    id: 'car-full',
+    displayNameFull: 'Car insurance',
+    displayNameShort: 'Car',
+    name: 'Car Full',
+    pageLink: '',
+    pillowImage: {
+      id: 'car-full-pillow',
+      src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+    },
   },
   product: {
     id: 'car-full',
@@ -49,6 +73,18 @@ export const CAR_TRIAL_DATA_QUERY = {
       displayNameFull: 'Volkswagen Polo · LPP 083',
     },
 
+    currentAgreement: {
+      displayName: 'Full insurance',
+
+      displayItems: [
+        {
+          displayTitle: 'Address',
+          displayValue: 'Hedvigsgatan 11',
+        },
+      ],
+    },
+
+    // Deprecated
     variant: {
       displayName: 'Full insurance',
 
@@ -73,6 +109,28 @@ export const CAR_TRIAL_DATA_QUERY = {
           typeOfContract: 'SE_CAR_HALF',
           perils: [],
           documents: [],
+
+          // Deprecated
+          product: {
+            id: 'car-half',
+            name: 'Half insurance',
+            displayNameFull: '',
+            pageLink: '',
+            pillowImage: {
+              id: 'car-half-pillow',
+              src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+            },
+          },
+        },
+        product: {
+          id: 'car-half',
+          name: 'Half insurance',
+          displayNameFull: '',
+          pageLink: '',
+          pillowImage: {
+            id: 'car-half-pillow',
+            src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+          },
         },
         product: {
           id: 'car-half',
@@ -96,6 +154,28 @@ export const CAR_TRIAL_DATA_QUERY = {
           typeOfContract: 'SE_CAR_TRAFFIC',
           perils: [],
           documents: [],
+
+          // Deprecated
+          product: {
+            id: 'car-traffic',
+            name: 'Traffic insurance',
+            displayNameFull: '',
+            pageLink: '',
+            pillowImage: {
+              id: 'car-traffic-pillow',
+              src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+            },
+          },
+        },
+        product: {
+          id: 'car-traffic',
+          name: 'Traffic insurance',
+          displayNameFull: '',
+          pageLink: '',
+          pillowImage: {
+            id: 'car-traffic-pillow',
+            src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+          },
         },
         product: {
           id: 'car-traffic',

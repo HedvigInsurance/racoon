@@ -23,7 +23,7 @@
     }'
   ```
 
-- Step 2: go to link: http://localhost:8040/se/car-trials?id={SHOP_SESSION_ID}
+- Step 2: go to the link in the response
 
 - Step 3: page fetches Shop Session and extracts Price Intent
 
