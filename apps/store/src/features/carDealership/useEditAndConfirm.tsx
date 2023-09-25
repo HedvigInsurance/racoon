@@ -1,5 +1,4 @@
 import { type ApolloError } from '@apollo/client'
-import { useTranslation } from 'next-i18next'
 import {
   usePriceIntentConfirmMutation,
   usePriceIntentDataUpdateCarMutation,
@@ -12,21 +11,20 @@ type EditAndConfirmParams = {
 }
 
 export const useEditAndConfirm = (params: EditAndConfirmParams) => {
-  const { t } = useTranslation('common')
   const { showError } = useAppErrorHandleContext()
+
+  const handleError = (error: ApolloError) => {
+    showError(error)
+    params.onCompleted()
+  }
 
   const [confirm, confirmResult] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: params.priceIntentId },
     onCompleted() {
       params.onCompleted()
     },
+    onError: handleError,
   })
-
-  const handleError = (error: ApolloError) => {
-    console.warn('EditAndConfirm error', error)
-    showError(new Error(t('UNKNOWN_ERROR_MESSAGE')))
-    params.onCompleted()
-  }
 
   const [updateData, updateResult] = usePriceIntentDataUpdateCarMutation({
     onCompleted() {
@@ -41,7 +39,6 @@ export const useEditAndConfirm = (params: EditAndConfirmParams) => {
         priceIntentId: params.priceIntentId,
         data,
       },
-      onError: handleError,
     })
   }
 
