@@ -5,10 +5,10 @@ const config: StorybookConfig = {
   stories: [
     {
       directory: '../../../packages/ui/src',
-      files: '**/*.stories.@(ts|tsx)',
+      files: '**/*.stories.@(ts|tsx|mdx)',
       titlePrefix: 'UI Kit',
     },
-    '../src/**/*.stories.@(ts|tsx)',
+    '../src/**/*.stories.@(ts|tsx|mdx)',
   ],
   addons: [
     '@storybook/addon-links',
