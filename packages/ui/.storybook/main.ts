@@ -5,7 +5,7 @@ const config: StorybookConfig = {
   stories: [
     {
       directory: '../src',
-      titlePrefix: 'UI',
+      titlePrefix: 'UI Kit',
       files: '**/*.stories.*',
     },
   ],
@@ -18,12 +18,6 @@ const config: StorybookConfig = {
     buildStoriesJson: true,
   },
   babel: () => babelConfig,
-  refs: {
-    store: {
-      title: 'Hedvig.com',
-      url: 'http://localhost:6008',
-    },
-  },
 }
 
 export default config

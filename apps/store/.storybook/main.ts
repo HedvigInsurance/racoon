@@ -2,7 +2,14 @@ import type { StorybookConfig } from '@storybook/nextjs'
 import babelConfig from './babelConfig'
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: [
+    {
+      directory: '../../../packages/ui/src',
+      files: '**/*.stories.@(ts|tsx)',
+      titlePrefix: 'UI Kit',
+    },
+    '../src/**/*.stories.@(ts|tsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
