@@ -1,0 +1,33 @@
+mutation CarDealershipRemoveAdd(
+  $shopSessionId: UUID!
+  $removeOfferIds: [UUID!]!
+  $addOfferIds: [UUID!]!
+) {
+  shopSessionCartEntriesRemove(
+    input: { shopSessionId: $shopSessionId, offerIds: $removeOfferIds }
+  ) {
+    shopSession {
+      cart {
+        entries {
+          id
+        }
+      }
+    }
+    userError {
+      message
+    }
+  }
+
+  shopSessionCartEntriesAdd(input: { shopSessionId: $shopSessionId, offerIds: $addOfferIds }) {
+    shopSession {
+      cart {
+        entries {
+          id
+        }
+      }
+    }
+    userError {
+      message
+    }
+  }
+}
