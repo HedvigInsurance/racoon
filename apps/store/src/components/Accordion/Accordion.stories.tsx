@@ -53,6 +53,7 @@ export default {
   parameters: {
     grid: '1/2',
     design: {
+      allowFullscreen: true,
       type: 'figma',
       url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=673%3A5030',
     },
