@@ -20,6 +20,13 @@ type Story = StoryObj<typeof DesktopComparisonTable>
 export default {
   title: 'Components/Comparison Table/Desktop',
   component: DesktopComparisonTable,
+  parameters: {
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=3273-18638&mode=design&t=RSlyuJ47E727hGaQ-4',
+    },
+  },
 } as Meta<typeof DesktopComparisonTable>
 
 export const Desktop: Story = {
