@@ -75,7 +75,9 @@ const FIXTURE_CONTRACT = {
 
   variant: {
     product: {
-      pillowImage: { src: 'https://placekitten.com/200/300' },
+      pillowImage: {
+        src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
+      },
     },
 
     documents: [
