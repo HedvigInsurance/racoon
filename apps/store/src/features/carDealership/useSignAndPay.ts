@@ -1,10 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
-import { useCurrentMemberLazyQuery } from '@/services/apollo/generated'
+import {
+  useCarDealershipRemoveAddMutation,
+  useCurrentMemberLazyQuery,
+} from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
-import { useAddToCart } from '@/utils/useAddToCart'
 import { type TrialExtension } from './carDealershipFixtures'
 
 const LOGGER = datadogLogs.createLogger('car-dealership')
@@ -56,36 +58,35 @@ export const useSignAndPay = (params: Params) => {
     })
   }
 
-  const [addToCart, loadingAddToCart] = useAddToCart({
-    shopSessionId: params.shopSession.id,
-    onSuccess(productOfferId) {
-      console.info('Successfully added product to cart', productOfferId)
+  const [cartRemoveAdd, { loading: loadingRemoveAdd }] = useCarDealershipRemoveAddMutation({
+    onCompleted() {
+      LOGGER.info('Offer already added to cart')
       performSign()
     },
+    onError: showError,
   })
 
   const addAndOrSign = (offerId: string) => {
-    const cartEntries = params.shopSession.cart.entries
-    if (cartEntries.length > 1) {
-      showError(
-        new Error(
-          `Cart has unexpected items in it. cartOfferIds=${cartEntries.map(
-            ({ id }) => id,
-          )}. Offer to be added: ${offerId}`,
-        ),
-      )
-      return
+    const cartOfferIds = params.shopSession.cart.entries.map((item) => item.id)
+    const removeOfferIds = cartOfferIds.filter((id) => id !== offerId)
+    const addOfferIds = cartOfferIds.includes(offerId) ? [] : [offerId]
+
+    if (removeOfferIds.length > 0) {
+      LOGGER.info('Removing offers from cart', { offers: removeOfferIds })
     }
 
-    const alreadyAdded = cartEntries.some((entry) => entry.id === offerId)
-    if (alreadyAdded) {
-      LOGGER.info('Offer already added to cart')
-      performSign()
-    } else {
-      LOGGER.info(`Adding offer to cart: ${offerId}`)
-      addToCart(offerId)
+    if (addOfferIds.length > 0) {
+      LOGGER.info('Adding offers to cart', { offers: addOfferIds })
     }
+
+    cartRemoveAdd({
+      variables: {
+        shopSessionId: params.shopSession.id,
+        removeOfferIds,
+        addOfferIds,
+      },
+    })
   }
 
-  return { signAndPay: addAndOrSign, loading: loadingAddToCart } as const
+  return { signAndPay: addAndOrSign, loading: loadingRemoveAdd } as const
 }
