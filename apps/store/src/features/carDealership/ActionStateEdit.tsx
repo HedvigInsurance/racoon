@@ -13,7 +13,8 @@ type EditingStateProps = {
   onSave: (option: string, data: Record<string, unknown>) => void
   loading: boolean
 
-  options: Array<{ name: string; value: string }>
+  defaultTierLevel: string
+  tierLevelOptions: Array<{ name: string; value: string }>
 
   onCancel: () => void
 }
@@ -45,16 +46,16 @@ export const ActionStateEdit = (props: EditingStateProps) => {
     props.onSave(option, data)
   }
 
+  const mileage = props.data[MILEAGE_DATA_KEY]
+  const defaultMileageValue = typeof mileage === 'string' ? mileage : undefined
+
   const mileageField = {
     type: 'car-mileage',
     name: MILEAGE_DATA_KEY,
     label: { key: 'FIELD_MILEAGE_LABEL' },
     required: true,
-    defaultValue: '1000',
+    defaultValue: defaultMileageValue,
   } as const
-
-  const mileage = props.data[MILEAGE_DATA_KEY]
-  const defaultValue = typeof mileage === 'string' ? mileage : undefined
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
@@ -62,9 +63,9 @@ export const ActionStateEdit = (props: EditingStateProps) => {
         <InputSelect
           name={OFFER_KEY}
           onChange={handleChangeTierLevel}
-          defaultValue={defaultValue}
-          options={props.options}
+          options={props.tierLevelOptions}
           backgroundColor="backgroundStandard"
+          defaultValue={props.defaultTierLevel}
         />
         <CarMileageField field={mileageField} backgroundColor="backgroundStandard" />
       </InputWrapper>
