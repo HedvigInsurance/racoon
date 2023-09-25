@@ -109,40 +109,36 @@ export const PurchaseForm = () => {
             />
           )
 
+          const editor = isLarge ? (
+            <motion.div
+              initial={{ opacity: 0, y: '1vh' }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
+            >
+              <ProductHeroContainer size="small" compact={true}>
+                {editingStateForm}
+              </ProductHeroContainer>
+            </motion.div>
+          ) : (
+            <PriceCalculatorDialog
+              isOpen
+              toggleDialog={() => setFormState('IDLE')}
+              header={
+                <SpaceFlex direction="vertical" align="center" space={0.5}>
+                  <Pillow size="large" {...productData.pillowImage} />
+                  <Heading as="h2" variant="standard.18">
+                    {productData.displayNameShort}
+                  </Heading>
+                </SpaceFlex>
+              }
+            >
+              {editingStateForm}
+            </PriceCalculatorDialog>
+          )
+
           return (
             <>
-              {formState.state !== 'ERROR' && !isLarge ? (
-                <PriceCalculatorDialog
-                  isOpen
-                  toggleDialog={() => setFormState('IDLE')}
-                  header={
-                    <SpaceFlex direction="vertical" align="center" space={0.5}>
-                      <Pillow size="large" {...productData.pillowImage} />
-                      <Heading as="h2" variant="standard.18">
-                        {productData.displayNameShort}
-                      </Heading>
-                    </SpaceFlex>
-                  }
-                >
-                  {editingStateForm}
-                </PriceCalculatorDialog>
-              ) : (
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: '1vh',
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
-                >
-                  <ProductHeroContainer size="small" compact={true}>
-                    {editingStateForm}
-                  </ProductHeroContainer>
-                </motion.div>
-              )}
+              {formState.state === 'ERROR' ? null : editor}
 
               <FullscreenDialog.Root
                 open={formState.state === 'ERROR'}
@@ -359,7 +355,6 @@ const EditingState = (props: EditingStateProps) => {
     },
   })
 
-  // onComplete will unmount the component, so we don't need to reset the state
   const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
   const handleConfirm = () => {
     setIsLoadingPrice(true)
