@@ -1,0 +1,77 @@
+query CarTrialExtension($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    id
+    customer {
+      ssn
+      authenticationStatus
+    }
+    cart {
+      id
+      entries {
+        id
+      }
+    }
+    priceIntents {
+      id
+      data
+      offers {
+        id
+        startDate
+        cost {
+          net {
+            amount
+            currencyCode
+          }
+          gross {
+            amount
+            currencyCode
+          }
+          discount {
+            amount
+            currencyCode
+          }
+        }
+        displayItems {
+          key
+          value
+          displayTitle
+          displayValue
+        }
+        priceIntentData
+        deductible {
+          displayName
+          tagline
+        }
+        product {
+          id
+          name
+          displayNameFull
+          pageLink
+          pillowImage {
+            id
+            src
+            alt
+          }
+        }
+        variant {
+          typeOfContract
+          displayName
+          perils {
+            ...Peril
+          }
+          documents {
+            type
+            displayName
+            url
+          }
+        }
+      }
+      defaultOffer {
+        id
+        variant {
+          typeOfContract
+        }
+      }
+    }
+  }
+}

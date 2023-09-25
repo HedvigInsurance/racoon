@@ -1,22 +1,16 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
-import {
-  Cart,
-  ShopSessionAuthenticationStatus,
-  useCurrentMemberLazyQuery,
-} from '@/services/apollo/generated'
+import { useCurrentMemberLazyQuery } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
+import { type TrialExtension } from './carDealershipFixtures'
 
 const LOGGER = datadogLogs.createLogger('car-dealership')
 
 type Params = {
-  shopSessionId: string
-  ssn: string
-  authenticationStatus: ShopSessionAuthenticationStatus
-  cartEntries: Cart['entries']
+  shopSession: TrialExtension['shopSession']
   requirePaymentConnection: boolean
 }
 
@@ -31,21 +25,29 @@ export const useSignAndPay = (params: Params) => {
         LOGGER.info('Member has active payment connection', {
           promptedPayment: params.requirePaymentConnection,
         })
-        router.push(PageLink.confirmation({ shopSessionId: params.shopSessionId }))
+        router.push(PageLink.confirmation({ shopSessionId: params.shopSession.id }))
       } else {
         LOGGER.info('Member does not have active payment connection', {
           promptedPayment: params.requirePaymentConnection,
         })
-        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSessionId }))
+        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }))
       }
     },
   })
 
   const performSign = () => {
+    const { ssn, authenticationStatus } = params.shopSession.customer ?? {}
+
+    if (!ssn || !authenticationStatus) {
+      return LOGGER.info(
+        `Impossible to sign shopSession: ${params.shopSession.id} - lacking 'ssn' and 'authenticationStatus'`,
+      )
+    }
+
     startCheckoutSign({
-      shopSessionId: params.shopSessionId,
-      ssn: params.ssn,
-      customerAuthenticationStatus: params.authenticationStatus,
+      shopSessionId: params.shopSession.id,
+      customerAuthenticationStatus: authenticationStatus,
+      ssn,
 
       onSuccess() {
         console.info('Successfully signed shop session')
@@ -55,7 +57,7 @@ export const useSignAndPay = (params: Params) => {
   }
 
   const [addToCart, loadingAddToCart] = useAddToCart({
-    shopSessionId: params.shopSessionId,
+    shopSessionId: params.shopSession.id,
     onSuccess(productOfferId) {
       console.info('Successfully added product to cart', productOfferId)
       performSign()
@@ -63,10 +65,11 @@ export const useSignAndPay = (params: Params) => {
   })
 
   const addAndOrSign = (offerId: string) => {
-    if (params.cartEntries.length > 1) {
+    const cartEntries = params.shopSession.cart.entries
+    if (cartEntries.length > 1) {
       showError(
         new Error(
-          `Cart has unexpected items in it. cartOfferIds=${params.cartEntries.map(
+          `Cart has unexpected items in it. cartOfferIds=${cartEntries.map(
             ({ id }) => id,
           )}. Offer to be added: ${offerId}`,
         ),
@@ -74,7 +77,7 @@ export const useSignAndPay = (params: Params) => {
       return
     }
 
-    const alreadyAdded = params.cartEntries.some((entry) => entry.id === offerId)
+    const alreadyAdded = cartEntries.some((entry) => entry.id === offerId)
     if (alreadyAdded) {
       LOGGER.info('Offer already added to cart')
       performSign()

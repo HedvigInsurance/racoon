@@ -49,7 +49,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   await priceIntentService.confirm(priceIntent.id)
 
-  // res.redirect(302, `/se/car-trials/${shopSession.id}`)
+  // res.redirect(302, `/se/test-car-extension-offer?id=${shopSession.id}`)
   res.json({
     shopSessioId: shopSession.id,
     url: `${URL}?id=${shopSession.id}`,

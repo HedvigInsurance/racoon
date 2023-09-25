@@ -1,11 +1,11 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ActionButtonsCar } from './ActionButtonsCar'
-import { type CarTrialData } from './carDealershipFixtures'
+import { type TrialExtension } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useSignAndPay } from './useSignAndPay'
 
@@ -16,19 +16,16 @@ const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.
 const UNDO_REMOVE_BUTTON = 'Undo removal'
 
 type Props = {
-  contract: CarTrialData['trialContract']
-  priceIntent: CarTrialData['priceIntent']
-  shopSession: CarTrialData['shopSession']
+  contract: TrialExtension['trialContract']
+  priceIntent: TrialExtension['priceIntent']
+  shopSession: TrialExtension['shopSession']
   requirePaymentConnection: boolean
 }
 
 export const TrialExtensionForm = (props: Props) => {
   const [userWantsExtension, setUserWantsExtension] = useState(true)
   const { signAndPay, loading } = useSignAndPay({
-    shopSessionId: props.shopSession.id,
-    ssn: props.shopSession.customer.ssn,
-    authenticationStatus: props.shopSession.customer.authenticationStatus,
-    cartEntries: props.shopSession.cart.entries,
+    shopSession: props.shopSession,
     requirePaymentConnection: props.requirePaymentConnection,
   })
 
@@ -38,10 +35,10 @@ export const TrialExtensionForm = (props: Props) => {
       props.priceIntent.offers[0].variant.typeOfContract
     )
   })
-  const selectedOffer =
-    props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel) ??
-    props.priceIntent.defaultOffer ??
-    props.priceIntent.offers[0]
+  const selectedOffer = useMemo(
+    () => getSelectedOffer(props.priceIntent, tierLevel),
+    [props.priceIntent, tierLevel],
+  )
 
   const handleUpdate = (tierLevel: string) => {
     const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
@@ -112,4 +109,33 @@ export const TrialExtensionForm = (props: Props) => {
       </Space>
     </Space>
   )
+}
+
+const getSelectedOffer = (
+  priceIntent: TrialExtension['priceIntent'],
+  selectedTierLevel: string,
+) => {
+  const matchedSelectedOffer = getOfferByTierLevel(priceIntent.offers, selectedTierLevel)
+  if (matchedSelectedOffer) {
+    return matchedSelectedOffer
+  }
+
+  if (priceIntent.defaultOffer) {
+    const matchedDefaultOffer = getOfferByTierLevel(
+      priceIntent.offers,
+      priceIntent.defaultOffer.variant.typeOfContract,
+    )
+    if (matchedDefaultOffer) {
+      return matchedDefaultOffer
+    }
+  }
+
+  return priceIntent.offers[0]
+}
+
+const getOfferByTierLevel = (
+  offers: TrialExtension['priceIntent']['offers'],
+  tierLevel: string,
+) => {
+  return offers.find((offer) => offer.variant.typeOfContract === tierLevel)
 }
