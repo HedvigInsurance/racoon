@@ -7,7 +7,14 @@ import { useGetStartDateProps } from './useGetStartDateProps'
 
 type Offer = Pick<
   ProductOfferFragment,
-  'cost' | 'priceIntentData' | 'startDate' | 'displayItems' | 'deductible' | 'variant' | 'product'
+  | 'cost'
+  | 'priceIntentData'
+  | 'startDate'
+  | 'displayItems'
+  | 'deductible'
+  | 'variant'
+  | 'product'
+  | 'exposure'
 >
 
 type Props = {
@@ -23,7 +30,7 @@ export const ProductItemContainer = (props: Props) => {
   const price = getOfferPrice(props.offer.cost)
 
   const startDateProps = getStartDateProps({
-    productName: props.offer.product.name,
+    exposure: props.offer.exposure.displayNameShort,
     data: props.offer.priceIntentData,
     startDate: props.offer.startDate,
   })

@@ -37,6 +37,7 @@ export type TextProps = {
   className?: string
   uppercase?: boolean
   strikethrough?: boolean
+  title?: string
 }
 
 const elementConfig = {

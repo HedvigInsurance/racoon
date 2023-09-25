@@ -31,6 +31,9 @@ query CarTrialExtension($shopSessionId: UUID!) {
             currencyCode
           }
         }
+        exposure {
+          displayNameShort
+        }
         displayItems {
           key
           value

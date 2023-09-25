@@ -72,4 +72,7 @@ fragment ProductOffer on ProductOffer {
     displayTitle
     displayValue
   }
+  exposure {
+    displayNameShort
+  }
 }
