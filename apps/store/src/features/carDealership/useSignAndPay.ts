@@ -21,21 +21,7 @@ export const useSignAndPay = (params: Params) => {
   const router = useRouter()
   const { showError } = useAppErrorHandleContext()
 
-  const [getCurrentMember] = useCurrentMemberLazyQuery({
-    onCompleted(data) {
-      if (data.currentMember.hasActivePaymentConnection) {
-        LOGGER.info('Member has active payment connection', {
-          promptedPayment: params.requirePaymentConnection,
-        })
-        router.push(PageLink.confirmation({ shopSessionId: params.shopSession.id }))
-      } else {
-        LOGGER.info('Member does not have active payment connection', {
-          promptedPayment: params.requirePaymentConnection,
-        })
-        router.push(PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }))
-      }
-    },
-  })
+  const [getCurrentMember] = useCurrentMemberLazyQuery()
 
   const performSign = () => {
     const { ssn, authenticationStatus } = params.shopSession.customer ?? {}
@@ -51,9 +37,27 @@ export const useSignAndPay = (params: Params) => {
       customerAuthenticationStatus: authenticationStatus,
       ssn,
 
-      onSuccess() {
-        console.info('Successfully signed shop session')
-        getCurrentMember()
+      async onSuccess() {
+        const { data, error } = await getCurrentMember()
+
+        if (!data) {
+          showError(error ?? new Error('Failed to fetch current member'))
+          return
+        }
+
+        if (data.currentMember.hasActivePaymentConnection) {
+          LOGGER.info('Member has active payment connection', {
+            promptedPayment: params.requirePaymentConnection,
+          })
+          await router.push(PageLink.confirmation({ shopSessionId: params.shopSession.id }))
+        } else {
+          LOGGER.info('Member does not have active payment connection', {
+            promptedPayment: params.requirePaymentConnection,
+          })
+          await router.push(
+            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }),
+          )
+        }
       },
     })
   }
