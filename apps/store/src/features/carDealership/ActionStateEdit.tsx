@@ -46,15 +46,12 @@ export const ActionStateEdit = (props: EditingStateProps) => {
     props.onSave(option, data)
   }
 
-  const mileage = props.data[MILEAGE_DATA_KEY]
-  const defaultMileageValue = typeof mileage === 'string' ? mileage : undefined
-
   const mileageField = {
     type: 'car-mileage',
     name: MILEAGE_DATA_KEY,
     label: { key: 'FIELD_MILEAGE_LABEL' },
     required: true,
-    defaultValue: defaultMileageValue,
+    defaultValue: props.data[MILEAGE_DATA_KEY]?.toString(),
   } as const
 
   return (

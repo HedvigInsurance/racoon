@@ -1,7 +1,7 @@
 import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { type ChangeEventHandler } from 'react'
-import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, theme } from 'ui'
+import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, theme, getColor } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 export type InputSelectProps = InputBaseProps & {
@@ -32,7 +32,7 @@ export const InputSelect = ({
   ...rest
 }: InputSelectProps) => {
   const { highlight, animationProps } = useHighlightAnimation<HTMLSelectElement>({
-    defaultColor: backgroundColor,
+    ...(backgroundColor && { defaultColor: getColor(backgroundColor) }),
   })
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
