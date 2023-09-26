@@ -76,7 +76,7 @@ type SignOptions = {
 export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
   const [fetchSigning, signingResult] = useShopSessionSigningLazyQuery({})
 
-  const [starSignMutate] = useShopSessionStartSignMutation()
+  const [startSignMutate] = useShopSessionStartSignMutation()
 
   const subscriptionRef = useRef<Subscription | null>(null)
   const startSign = useCallback(
@@ -115,7 +115,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
           })
         }
 
-        starSignMutate({
+        startSignMutate({
           variables: { shopSessionId },
           onCompleted(data) {
             if (subscriber.closed) return
@@ -147,7 +147,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
         },
       })
     },
-    [dispatch, fetchSigning, signingResult, starSignMutate],
+    [dispatch, fetchSigning, signingResult, startSignMutate],
   )
   const cancelSign = () => {
     signingResult.stopPolling()
