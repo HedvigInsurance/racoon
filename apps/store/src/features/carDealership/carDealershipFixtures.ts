@@ -56,8 +56,9 @@ const DEFAULT_OFFER = {
   priceIntentData: {},
   product: {
     id: 'car-full',
-    name: 'Car Full',
+    name: 'SE_CAR',
     displayNameFull: 'Car insurance',
+    displayNameShort: 'Car',
     pageLink: '',
     pillowImage: {
       id: 'car-full-pillow',
