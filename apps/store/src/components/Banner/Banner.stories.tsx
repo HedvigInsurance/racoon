@@ -7,6 +7,11 @@ const meta: Meta<typeof Banner> = {
   component: Banner,
   parameters: {
     layout: 'fullscreen',
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=3255-13073&mode=design&t=RSlyuJ47E727hGaQ-4',
+    },
   },
 }
 

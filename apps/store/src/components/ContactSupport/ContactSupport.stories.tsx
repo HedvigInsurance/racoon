@@ -5,6 +5,13 @@ import { ContactSupport, ContactSupportProps } from './ContactSupport'
 export default {
   component: ContactSupport,
   argTypes: {},
+  parameters: {
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=947-6989&mode=design&t=RSlyuJ47E727hGaQ-4',
+    },
+  },
 } as Meta<typeof ContactSupport>
 
 const Template: StoryFn<ContactSupportProps> = (props) => {

@@ -26,6 +26,11 @@ export default {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphone12mini',
     },
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=3388-14879&mode=design&t=RSlyuJ47E727hGaQ-4',
+    },
   },
 } as Meta<typeof MobileComparisonTable>
 

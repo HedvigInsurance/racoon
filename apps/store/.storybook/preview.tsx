@@ -20,9 +20,6 @@ export const parameters = {
     locale: 'se-en',
     path: '/se-en',
   },
-  design: {
-    allowFullscreen: true,
-  },
 }
 
 const preview: Preview = {
