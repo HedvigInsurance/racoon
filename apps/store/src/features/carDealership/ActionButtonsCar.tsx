@@ -66,12 +66,13 @@ export const ActionButtonsCar = (props: Props) => {
 
     const options = props.priceIntent.offers.map((offer) => ({
       name: offer.variant.displayName,
-      value: offer.id,
+      value: offer.variant.typeOfContract,
     }))
 
     return (
       <ActionStateEdit
-        options={options}
+        tierLevelOptions={options}
+        defaultTierLevel={props.offer.variant.typeOfContract}
         onSave={handleSave}
         onCancel={handleCancel}
         loading={loading}
