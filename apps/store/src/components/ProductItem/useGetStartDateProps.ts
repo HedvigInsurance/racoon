@@ -4,7 +4,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { type ProductItem } from './ProductItem'
 
 type Params = {
-  productName: string
+  exposure: string
   data: Record<string, unknown>
   startDate?: string
 }
@@ -19,18 +19,12 @@ export const useGetStartDateProps = (): GetStartDateProps => {
 
   return useCallback(
     (params) => {
-      const content: Array<string> = []
-
-      const productBasedSummary = getProductBasedSummary(params.productName, params.data)
-      if (productBasedSummary) {
-        content.push(productBasedSummary)
-      }
-
-      content.push(
+      const content = [
+        params.exposure,
         params.startDate
           ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(new Date(params.startDate)) })
           : t('CART_ENTRY_AUTO_SWITCH'),
-      )
+      ]
 
       return {
         label: content.join(' • '),
@@ -41,30 +35,4 @@ export const useGetStartDateProps = (): GetStartDateProps => {
     },
     [t, formatter],
   )
-}
-
-// TODO: retrieve this from API or some sort of central config.
-const PET_NAME_FIELD = 'name'
-const CAR_REGISTRATION_NUMBER_FIELD = 'registrationNumber'
-
-const getProductBasedSummary = (
-  productName: string,
-  data: Record<string, unknown>,
-): string | null => {
-  switch (productName) {
-    case 'SE_PET_DOG':
-    case 'SE_PET_CAT':
-      return getStringOrNull(data[PET_NAME_FIELD])
-    case 'SE_CAR':
-      return (
-        getStringOrNull(data[CAR_REGISTRATION_NUMBER_FIELD])?.replace(/(.{3})(.{3})/, '$1 $2') ??
-        null
-      )
-    default:
-      return null
-  }
-}
-
-const getStringOrNull = (value: unknown): string | null => {
-  return typeof value === 'string' ? value : null
 }

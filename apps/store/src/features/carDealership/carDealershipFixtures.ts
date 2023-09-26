@@ -39,6 +39,9 @@ const TRIAL_CONTRACT = {
 
 const DEFAULT_OFFER = {
   id: '123456',
+  exposure: {
+    displayNameShort: 'LPP 083',
+  },
   startDate: '2023-12-31',
   cost: {
     net: { amount: 579, currencyCode: CurrencyCode.Sek },
@@ -115,6 +118,9 @@ export const CAR_TRIAL_DATA_QUERY = {
                 src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
               },
             },
+            exposure: {
+              displayNameShort: 'LPP 083',
+            },
             cost: {
               net: { amount: 479, currencyCode: CurrencyCode.Sek },
               gross: { amount: 479, currencyCode: CurrencyCode.Sek },
@@ -140,6 +146,9 @@ export const CAR_TRIAL_DATA_QUERY = {
                 id: 'car-traffic-pillow',
                 src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
               },
+            },
+            exposure: {
+              displayNameShort: 'LPP 083',
             },
             cost: {
               net: { amount: 379, currencyCode: CurrencyCode.Sek },

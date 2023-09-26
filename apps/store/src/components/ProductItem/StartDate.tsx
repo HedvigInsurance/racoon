@@ -1,5 +1,5 @@
+import styled from '@emotion/styled'
 import { InfoIcon, Text, theme } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from './Tooltip'
 
 type Props = {
@@ -13,13 +13,35 @@ export const StartDate = (props: Props) => {
   }
 
   return (
-    <SpaceFlex space={0.25} align="center">
-      <Text color="textSecondary">{props.label}</Text>
-      <Tooltip message={props.tooltip}>
-        <button onClick={handleClick} style={{ marginBottom: -2 }}>
-          <InfoIcon color={theme.colors.textSecondary} />
-        </button>
-      </Tooltip>
-    </SpaceFlex>
+    <Wrapper>
+      <SingleLineText color="textSecondary" title={props.label}>
+        {props.label}
+      </SingleLineText>
+      <TooltipWrapper>
+        <Tooltip message={props.tooltip}>
+          <button onClick={handleClick} style={{ marginBottom: -2 }}>
+            <InfoIcon color={theme.colors.textSecondary} />
+          </button>
+        </Tooltip>
+      </TooltipWrapper>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div({
+  width: '100%',
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  gap: theme.space.xxs,
+})
+
+const SingleLineText = styled(Text)({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+})
+
+const TooltipWrapper = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+})

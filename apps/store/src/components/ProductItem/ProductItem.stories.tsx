@@ -5,6 +5,9 @@ import { ActionButton, ProductItem } from './ProductItem'
 const meta: Meta<typeof ProductItem> = {
   title: 'Components / Product Item',
   component: ProductItem,
+  argTypes: {
+    startDate: { control: { disable: true } },
+  },
 }
 
 export default meta
@@ -15,7 +18,7 @@ export const Default: Story = {
     pillowSrc: 'https://placekitten.com/200/300',
     title: 'Hemförsäkring Bostadsrätt',
     startDate: {
-      label: 'Activated on 02.12.24',
+      label: 'Hedvigsgatan 12 · Activated on 02.12.24',
       tooltip: 'You can change the start date of your insurance in the app',
     },
     price: {
