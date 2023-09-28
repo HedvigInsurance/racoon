@@ -16,7 +16,7 @@ export type InputSelectProps = InputBaseProps & {
   autoFocus?: boolean
   className?: string
   size?: 'large' | 'small'
-  backgroundColor?: Extract<UIColorKeys, 'backgroundStandard'>
+  backgroundColor?: Extract<UIColorKeys, 'backgroundStandard' | 'backgroundFrostedGlass'>
 }
 
 export const InputSelect = ({
@@ -28,11 +28,13 @@ export const InputSelect = ({
   placeholder,
   label,
   size = 'large',
-  backgroundColor,
+  backgroundColor: _backgroundColor,
   ...rest
 }: InputSelectProps) => {
+  const backgroundColor = _backgroundColor ? getColor(_backgroundColor) : undefined
+
   const { highlight, animationProps } = useHighlightAnimation<HTMLSelectElement>({
-    ...(backgroundColor && { defaultColor: getColor(backgroundColor) }),
+    ...(backgroundColor && { defaultColor: backgroundColor }),
   })
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {

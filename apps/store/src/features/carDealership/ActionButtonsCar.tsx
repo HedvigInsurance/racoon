@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { theme } from 'ui'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
@@ -28,6 +29,7 @@ type Props = {
 }
 
 export const ActionButtonsCar = (props: Props) => {
+  const { t } = useTranslation('cart')
   const [state, setState] = useState<State>(STATE.IDLE)
 
   const [editAndConfirm, loading] = useEditAndConfirm({
@@ -83,7 +85,9 @@ export const ActionButtonsCar = (props: Props) => {
 
   return (
     <ButtonWrapper>
-      <ActionButton onClick={handleClickEdit}>Edit</ActionButton>
+      <ActionButton variant="primary" onClick={handleClickEdit}>
+        {t('EDIT_CAR_TRIAL_EXTENSION_BUTTON')}
+      </ActionButton>
       <RemoveCarOfferActionButton onConfirm={handleClickRemove} />
     </ButtonWrapper>
   )

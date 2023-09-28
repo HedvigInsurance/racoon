@@ -154,7 +154,7 @@ export const TrialExtensionForm = (props: Props) => {
 
         <Space y={2}>
           <Space y={1}>
-            <ProductItemContainer offer={selectedOffer} defaultExpanded={true}>
+            <ProductItemContainer offer={selectedOffer} defaultExpanded={true} variant="green">
               <ActionButtonsCar
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
