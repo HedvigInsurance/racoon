@@ -21,6 +21,10 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   const headersLink = createHeadersLink(defaultHeaders)
 
+  const gitCommitRef = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF
+  const gitCommitSha = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
+  const version = gitCommitSha ? `${gitCommitRef}_${gitCommitSha}` : undefined
+
   return new ApolloClient({
     name: 'Web:Racoon:Store',
     ssrMode: typeof window === 'undefined',
@@ -35,6 +39,7 @@ const createApolloClient = (defaultHeaders?: Record<string, string>) => {
     ]),
     cache: new InMemoryCache(),
     connectToDevTools: process.env.NODE_ENV === 'development',
+    version,
   })
 }
 
