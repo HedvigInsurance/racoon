@@ -20,6 +20,8 @@ const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.
 const UNDO_REMOVE_BUTTON = 'Undo removal'
 const COST_EXPLANATION = 'discounted price until {}'
 const ATTENTION_CARD_CONTENT = 'Keep in mind that you are uninsured from {}'
+const TRIAL_HEADING = 'Starter offer'
+const EXTENSION_HEADING = 'Extend your insurance'
 
 type Props = {
   contract: TrialExtension['trialContract']
@@ -79,9 +81,14 @@ export const TrialExtensionForm = (props: Props) => {
 
   if (!userWantsExtension) {
     return (
-      <Space y={2}>
-        <Space y={1}>
+      <Space y={4}>
+        <Space y={1.5}>
+          <Text align="center">{TRIAL_HEADING}</Text>
           <ProductItemContractContainerCar contract={props.contract} />
+        </Space>
+
+        <Space y={1.5}>
+          <Text align="center">{EXTENSION_HEADING}</Text>
           <Space y={2}>
             <Space y={1}>
               <Space y={0.75}>
@@ -112,10 +119,14 @@ export const TrialExtensionForm = (props: Props) => {
   }
 
   return (
-    <Space y={2}>
+    <Space y={4}>
       <Space y={1.5}>
-        <Text align="center">{props.contract.exposure.displayNameFull}</Text>
+        <Text align="center">{TRIAL_HEADING}</Text>
         <ProductItemContractContainerCar contract={props.contract} />
+      </Space>
+
+      <Space y={1.5}>
+        <Text align="center">{EXTENSION_HEADING}</Text>
 
         <Space y={2}>
           <Space y={1}>
@@ -137,7 +148,6 @@ export const TrialExtensionForm = (props: Props) => {
               }}
             />
           </Space>
-
           <Space y={0.5}>
             <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
 
