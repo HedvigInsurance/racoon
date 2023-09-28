@@ -1,4 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
+import { LockIcon, theme } from 'ui'
 import { CurrencyCode } from '@/services/apollo/generated'
 import { ActionButton, ProductItem } from './ProductItem'
 
@@ -64,7 +65,8 @@ export const ActiveContract: Story = {
       label: 'Full insurance until 02.12.24',
       tooltip: 'You need to sign a new insurance before this date.',
     },
-    badge: 'Active',
+    Icon: <LockIcon color={theme.colors.textTranslucentSecondary} />,
+    subtitle: 'Hedvigsgatan 12 · 2 people',
     children: undefined,
   },
 }

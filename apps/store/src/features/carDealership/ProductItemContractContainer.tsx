@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { LockIcon, theme } from 'ui'
 import { ProductItem } from '@/components/ProductItem/ProductItem'
 import { type ContractQuery, CurrencyCode } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
@@ -47,6 +48,7 @@ export const ProductItemContractContainerCar = (props: Props) => {
       productDetails={productDetails}
       productDocuments={productDocuments}
       subtitle={FIXTURE_CONTRACT.exposure.displayNameFull}
+      Icon={<LockIcon color={theme.colors.textTranslucentSecondary} />}
     />
   )
 }

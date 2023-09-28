@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Badge, Button, ButtonProps, Space, Text, mq, theme } from 'ui'
+import { Button, ButtonProps, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Skeleton } from '@/components/Skeleton'
@@ -17,8 +17,8 @@ type Props = {
   productDocuments: ComponentProps<typeof ProductDetails>['documents']
   defaultExpanded?: boolean
   children?: ReactNode
-  badge?: string
   subtitle?: string
+  Icon?: ReactNode
 }
 
 export const ProductItem = (props: Props) => {
@@ -34,19 +34,15 @@ export const ProductItem = (props: Props) => {
         <Space y={1}>
           <Header>
             <Pillow size="small" src={props.pillowSrc} alt="" />
-            <HeaderContent>
-              <div>
+            <div>
+              <HeaderRow>
                 <Text as="p" size="md">
                   {props.title}
                 </Text>
-                <StartDate {...props.startDate} />
-              </div>
-              {props.badge && (
-                <DesktopOnlyBadge size="big" color="blueFill3">
-                  {props.badge}
-                </DesktopOnlyBadge>
-              )}
-            </HeaderContent>
+                {props.Icon}
+              </HeaderRow>
+              <StartDate {...props.startDate} />
+            </div>
           </Header>
 
           {props.subtitle && (
@@ -112,19 +108,11 @@ const Header = styled.div({
   borderBottomColor: theme.colors.borderTranslucent2,
 })
 
-const HeaderContent = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '1fr auto',
-  columnGap: theme.space.md,
-  alignItems: 'start',
-})
-
-const DesktopOnlyBadge = styled(Badge)({
-  display: 'none',
-
-  [mq.lg]: {
-    display: 'block',
-  },
+const HeaderRow = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: theme.space.xs,
+  alignItems: 'center',
 })
 
 const StyledProductDetailsHeader = styled(ProductDetailsHeader)({
