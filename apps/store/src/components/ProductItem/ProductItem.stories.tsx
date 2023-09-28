@@ -18,7 +18,7 @@ export const Default: Story = {
     pillowSrc: 'https://placekitten.com/200/300',
     title: 'Hemförsäkring Bostadsrätt',
     startDate: {
-      label: 'Hedvigsgatan 12 · Activated on 02.12.24',
+      label: 'Activated on 02.12.24',
       tooltip: 'You can change the start date of your insurance in the app',
     },
     price: {
@@ -66,5 +66,12 @@ export const ActiveContract: Story = {
     },
     badge: 'Active',
     children: undefined,
+  },
+}
+
+export const WithSubtitle: Story = {
+  args: {
+    ...Default.args,
+    subtitle: 'Hedvigsgatan 12 · 2 people',
   },
 }

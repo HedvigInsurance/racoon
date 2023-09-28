@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Badge, Button, ButtonProps, Text, mq, theme } from 'ui'
+import { Badge, Button, ButtonProps, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Skeleton } from '@/components/Skeleton'
@@ -18,6 +18,7 @@ type Props = {
   defaultExpanded?: boolean
   children?: ReactNode
   badge?: string
+  subtitle?: string
 }
 
 export const ProductItem = (props: Props) => {
@@ -30,22 +31,30 @@ export const ProductItem = (props: Props) => {
   return (
     <Card>
       <Hoverable onClick={handleClickHoverable}>
-        <Header>
-          <Pillow size="small" src={props.pillowSrc} alt="" />
-          <HeaderContent>
-            <div>
-              <Text as="p" size="md">
-                {props.title}
-              </Text>
-              <StartDate {...props.startDate} />
-            </div>
-            {props.badge && (
-              <DesktopOnlyBadge size="big" color="blueFill3">
-                {props.badge}
-              </DesktopOnlyBadge>
-            )}
-          </HeaderContent>
-        </Header>
+        <Space y={1}>
+          <Header>
+            <Pillow size="small" src={props.pillowSrc} alt="" />
+            <HeaderContent>
+              <div>
+                <Text as="p" size="md">
+                  {props.title}
+                </Text>
+                <StartDate {...props.startDate} />
+              </div>
+              {props.badge && (
+                <DesktopOnlyBadge size="big" color="blueFill3">
+                  {props.badge}
+                </DesktopOnlyBadge>
+              )}
+            </HeaderContent>
+          </Header>
+
+          {props.subtitle && (
+            <Text as="p" size="md" color="textTranslucentSecondary">
+              {props.subtitle}
+            </Text>
+          )}
+        </Space>
       </Hoverable>
 
       <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
