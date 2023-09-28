@@ -56,7 +56,7 @@ export const ProductItemContractContainerCar = (props: Props) => {
 const FIXTURE_CONTRACT = {
   cost: { amount: 299, currencyCode: CurrencyCode.Sek },
 
-  endDate: '2024-12-24',
+  endDate: '2024-12-01',
 
   displayItems: [
     {
