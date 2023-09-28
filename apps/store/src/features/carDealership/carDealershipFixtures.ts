@@ -17,6 +17,7 @@ const TRIAL_CONTRACT = {
     currencyCode: CurrencyCode.Sek,
   },
 
+  startDate: '2023-12-01',
   terminationDate: '2023-12-31',
 
   exposure: {
