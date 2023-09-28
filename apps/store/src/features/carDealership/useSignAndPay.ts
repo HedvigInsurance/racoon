@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import {
   useCarDealershipRemoveAddMutation,
   useCurrentMemberLazyQuery,
@@ -17,11 +18,17 @@ type Params = {
 }
 
 export const useSignAndPay = (params: Params) => {
-  const { startCheckoutSign } = useBankIdContext()
+  const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
   const { showError } = useAppErrorHandleContext()
-
   const [getCurrentMember] = useCurrentMemberLazyQuery()
+
+  useEffect(() => {
+    const error = currentOperation?.error
+    if (error instanceof Error) {
+      showError(error)
+    }
+  }, [showError, currentOperation])
 
   const performSign = () => {
     const { ssn, authenticationStatus } = params.shopSession.customer ?? {}
