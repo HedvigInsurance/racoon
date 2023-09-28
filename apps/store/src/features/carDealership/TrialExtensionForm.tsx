@@ -3,7 +3,10 @@ import { useState, useMemo } from 'react'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
+import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { convertToDate } from '@/utils/date'
+import { useFormatter } from '@/utils/useFormatter'
 import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
@@ -14,6 +17,7 @@ const SIGN_BUTTON = 'Sign insurance'
 const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
 const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
 const UNDO_REMOVE_BUTTON = 'Undo removal'
+const COST_EXPLANATION = 'discounted price until {}'
 
 type Props = {
   contract: TrialExtension['trialContract']
@@ -39,6 +43,13 @@ export const TrialExtensionForm = (props: Props) => {
     () => getSelectedOffer(props.priceIntent, tierLevel),
     [props.priceIntent, tierLevel],
   )
+
+  const formatter = useFormatter()
+  const terminationDate = convertToDate(props.contract.terminationDate)
+  if (!terminationDate) {
+    throw new Error(`Unable to parse terminationDate: ${props.contract.terminationDate}`)
+  }
+  const costExplanation = COST_EXPLANATION.replace('{}', formatter.fromNow(terminationDate))
 
   const handleUpdate = (tierLevel: string) => {
     const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
@@ -69,13 +80,22 @@ export const TrialExtensionForm = (props: Props) => {
       <Space y={2}>
         <Space y={1}>
           <ProductItemContractContainerCar contract={props.contract} />
-          <Button variant="secondary" onClick={handleUndo}>
-            <SpaceFlex direction="horizontal" space={0.5}>
-              <RestartIcon />
-              {UNDO_REMOVE_BUTTON}
-            </SpaceFlex>
-          </Button>
-          <Button variant="primary">{CONTINUE_WITHOUT_EXTENSION_BUTTON}</Button>
+          <Space y={2}>
+            <Space y={1}>
+              <Button variant="secondary" onClick={handleUndo}>
+                <SpaceFlex direction="horizontal" space={0.5}>
+                  <RestartIcon />
+                  {UNDO_REMOVE_BUTTON}
+                </SpaceFlex>
+              </Button>
+
+              <TotalAmount
+                amount={props.contract.premium.amount}
+                currencyCode={props.contract.premium.currencyCode}
+              />
+            </Space>
+            <Button variant="primary">{CONTINUE_WITHOUT_EXTENSION_BUTTON}</Button>
+          </Space>
         </Space>
       </Space>
     )
@@ -87,25 +107,38 @@ export const TrialExtensionForm = (props: Props) => {
         <Text align="center">{props.contract.exposure.displayNameFull}</Text>
         <ProductItemContractContainerCar contract={props.contract} />
 
-        <Space y={0.75}>
-          <ProductItemContainer offer={selectedOffer} defaultExpanded={true}>
-            <ActionButtonsCar
-              priceIntent={props.priceIntent}
-              offer={selectedOffer}
-              onRemove={handleRemove}
-              onUpdate={handleUpdate}
+        <Space y={2}>
+          <Space y={1}>
+            <ProductItemContainer offer={selectedOffer} defaultExpanded={true}>
+              <ActionButtonsCar
+                priceIntent={props.priceIntent}
+                offer={selectedOffer}
+                onRemove={handleRemove}
+                onUpdate={handleUpdate}
+              />
+            </ProductItemContainer>
+
+            <TotalAmount
+              amount={selectedOffer.cost.net.amount}
+              currencyCode={props.contract.premium.currencyCode}
+              discount={{
+                reducedAmount: props.contract.premium.amount,
+                explanation: costExplanation,
+              }}
             />
-          </ProductItemContainer>
+          </Space>
 
-          <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
+          <Space y={0.5}>
+            <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
+
+            <Button onClick={handleSignAndPay} loading={loading}>
+              <SpaceFlex space={0.5} align="center">
+                <BankIdIcon />
+                {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
+              </SpaceFlex>
+            </Button>
+          </Space>
         </Space>
-
-        <Button onClick={handleSignAndPay} loading={loading}>
-          <SpaceFlex space={0.5} align="center">
-            <BankIdIcon />
-            {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
-          </SpaceFlex>
-        </Button>
       </Space>
     </Space>
   )
