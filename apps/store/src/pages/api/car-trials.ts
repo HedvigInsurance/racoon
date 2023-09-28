@@ -1,6 +1,11 @@
 import { type NextApiHandler } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
-import { CountryCode } from '@/services/apollo/generated'
+import {
+  CountryCode,
+  StartDateUpdateDocument,
+  type StartDateUpdateMutation,
+  type StartDateUpdateMutationVariables,
+} from '@/services/apollo/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
@@ -47,7 +52,15 @@ const handler: NextApiHandler = async (req, res) => {
     },
   })
 
-  await priceIntentService.confirm(priceIntent.id)
+  const result = await priceIntentService.confirm(priceIntent.id)
+
+  await apolloClient.mutate<StartDateUpdateMutation, StartDateUpdateMutationVariables>({
+    mutation: StartDateUpdateDocument,
+    variables: {
+      productOfferIds: result.offers.map((item) => item.id),
+      startDate: '2023-12-01',
+    },
+  })
 
   // res.redirect(302, `/se/test-car-extension-offer?id=${shopSession.id}`)
   res.json({

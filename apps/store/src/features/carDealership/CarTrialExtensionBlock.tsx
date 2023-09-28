@@ -1,5 +1,6 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useRouter } from 'next/router'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery } from '@/services/apollo/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { CAR_TRIAL_DATA_QUERY, type TrialExtension } from './carDealershipFixtures'
@@ -16,13 +17,17 @@ export const CarTrialExtensionBlock = (props: Props) => {
   if (!data) return <LoadingSkeleton {...storyblokEditable(props.blok)} />
 
   return (
-    <TrialExtensionForm
-      {...storyblokEditable(props.blok)}
-      contract={data.trialContract}
-      priceIntent={data.priceIntent}
-      shopSession={data.shopSession}
-      requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
-    />
+    <GridLayout.Root>
+      <GridLayout.Content width="1/3" align="center">
+        <TrialExtensionForm
+          {...storyblokEditable(props.blok)}
+          contract={data.trialContract}
+          priceIntent={data.priceIntent}
+          shopSession={data.shopSession}
+          requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
+        />
+      </GridLayout.Content>
+    </GridLayout.Root>
   )
 }
 CarTrialExtensionBlock.blockName = 'carTrialExtension'
