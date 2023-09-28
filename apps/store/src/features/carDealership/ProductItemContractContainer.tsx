@@ -46,8 +46,7 @@ export const ProductItemContractContainerCar = (props: Props) => {
       startDate={startDateProps}
       productDetails={productDetails}
       productDocuments={productDocuments}
-      // TODO: translate
-      badge="Active"
+      subtitle={FIXTURE_CONTRACT.exposure.displayNameFull}
     />
   )
 }
@@ -57,6 +56,10 @@ const FIXTURE_CONTRACT = {
   cost: { amount: 299, currencyCode: CurrencyCode.Sek },
 
   endDate: '2024-12-01',
+
+  exposure: {
+    displayNameFull: 'ABC 123 · Volkswagen Polo',
+  },
 
   displayItems: [
     {
