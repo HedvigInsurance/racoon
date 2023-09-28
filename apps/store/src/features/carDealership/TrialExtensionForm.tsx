@@ -1,7 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useState, useMemo } from 'react'
+import { TextProps } from 'ui/src/components/Text/Text'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
-import { InfoCard } from '@/components/InfoCard/InfoCard'
+import { AttentionCard, InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -18,6 +19,7 @@ const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
 const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
 const UNDO_REMOVE_BUTTON = 'Undo removal'
 const COST_EXPLANATION = 'discounted price until {}'
+const ATTENTION_CARD_CONTENT = 'Keep in mind that you are uninsured from {}'
 
 type Props = {
   contract: TrialExtension['trialContract']
@@ -82,12 +84,20 @@ export const TrialExtensionForm = (props: Props) => {
           <ProductItemContractContainerCar contract={props.contract} />
           <Space y={2}>
             <Space y={1}>
-              <Button variant="secondary" onClick={handleUndo}>
-                <SpaceFlex direction="horizontal" space={0.5}>
-                  <RestartIcon />
-                  {UNDO_REMOVE_BUTTON}
-                </SpaceFlex>
-              </Button>
+              <Space y={0.75}>
+                <Button variant="secondary" onClick={handleUndo}>
+                  <SpaceFlex direction="horizontal" space={0.5}>
+                    <RestartIcon />
+                    {UNDO_REMOVE_BUTTON}
+                  </SpaceFlex>
+                </Button>
+
+                <AttentionCard>
+                  <ReplaceText color="textPrimary" size="xs" text="1 November 2023" as="span">
+                    {ATTENTION_CARD_CONTENT}
+                  </ReplaceText>
+                </AttentionCard>
+              </Space>
 
               <TotalAmount
                 amount={props.contract.premium.amount}
@@ -141,6 +151,23 @@ export const TrialExtensionForm = (props: Props) => {
         </Space>
       </Space>
     </Space>
+  )
+}
+
+type ReplaceTextProps = TextProps & {
+  text: string
+  children: string
+}
+
+const ReplaceText = ({ text, children, ...props }: ReplaceTextProps) => {
+  const placeholder = '{}'
+  const [before, after] = children.split(placeholder, 2)
+  return (
+    <>
+      {before}
+      <Text {...props}>{text}</Text>
+      {after}
+    </>
   )
 }
 
