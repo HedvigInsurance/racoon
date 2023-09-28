@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
 import { TextProps } from 'ui/src/components/Text/Text'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
-import { AttentionCard, InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
@@ -19,7 +19,7 @@ import { useSignAndPay } from './useSignAndPay'
 const SIGN_AND_PAY_BUTTON = 'Sign and pay'
 const SIGN_BUTTON = 'Sign insurance'
 const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment'
-const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
+const INFO_TOAST_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
 const UNDO_REMOVE_BUTTON = 'Undo removal'
 const COST_EXPLANATION = 'discounted price until {}'
 const ATTENTION_CARD_CONTENT = 'Keep in mind that you are uninsured from {}'
@@ -118,11 +118,11 @@ export const TrialExtensionForm = (props: Props) => {
                   </SpaceFlex>
                 </Button>
 
-                <AttentionCard>
+                <AttentionToastBar>
                   <ReplaceText color="textPrimary" size="xs" text="1 November 2023" as="span">
                     {ATTENTION_CARD_CONTENT}
                   </ReplaceText>
-                </AttentionCard>
+                </AttentionToastBar>
               </Space>
 
               <TotalAmount
@@ -173,7 +173,7 @@ export const TrialExtensionForm = (props: Props) => {
             />
           </Space>
           <Space y={0.5}>
-            <InfoCard>{INFO_CARD_CONTENT}</InfoCard>
+            <InfoToastBar>{INFO_TOAST_CONTENT}</InfoToastBar>
 
             <Button onClick={handleSignAndPay} loading={loading}>
               <SpaceFlex space={0.5} align="center">
