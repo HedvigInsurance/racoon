@@ -4192,15 +4192,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.14.8":
-  version: 7.21.0
-  resolution: "@babel/runtime@npm:7.21.0"
-  dependencies:
-    regenerator-runtime: ^0.13.11
-  checksum: 7b33e25bfa9e0e1b9e8828bb61b2d32bdd46b41b07ba7cb43319ad08efc6fda8eb89445193e67d6541814627df0ca59122c0ea795e412b99c5183a0540d338ab
-  languageName: node
-  linkType: hard
-
 "@babel/runtime@npm:^7.20.13":
   version: 7.20.13
   resolution: "@babel/runtime@npm:7.20.13"
@@ -4225,6 +4216,15 @@ __metadata:
   dependencies:
     regenerator-runtime: ^0.14.0
   checksum: 524d41517e68953dbc73a4f3616b8475e5813f64e28ba89ff5fca2c044d535c2ea1a3f310df1e5bb06162e1f0b401b5c4af73fe6e2519ca2450d9d8c44cf268d
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.22.15":
+  version: 7.23.1
+  resolution: "@babel/runtime@npm:7.23.1"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 0cd0d43e6e7dc7f9152fda8c8312b08321cda2f56ef53d6c22ebdd773abdc6f5d0a69008de90aa41908d00e2c1facb24715ff121274e689305c858355ff02c70
   languageName: node
   linkType: hard
 
@@ -13486,10 +13486,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compute-scroll-into-view@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "compute-scroll-into-view@npm:2.0.4"
-  checksum: f3d1db9276c16af42155b572750514939cd0ab0a0f46498906f6811c5b654c5ff2b3f9bfd65958e57439e000a5e1ae092eb96b9e153d194a73e52ffd2380550c
+"compute-scroll-into-view@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "compute-scroll-into-view@npm:3.0.3"
+  checksum: 7143869648d4de8ff2cb60eb8e96a21b47948c3210d15d1bfaa7e88de722c7f83f06676b97ebff94831dde0c03e42458ecfbde466747945187ee5c7667c68395
   languageName: node
   linkType: hard
 
@@ -14504,18 +14504,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:8.1.0":
-  version: 8.1.0
-  resolution: "downshift@npm:8.1.0"
+"downshift@npm:8.2.1":
+  version: 8.2.1
+  resolution: "downshift@npm:8.2.1"
   dependencies:
-    "@babel/runtime": ^7.14.8
-    compute-scroll-into-view: ^2.0.4
-    prop-types: ^15.7.2
-    react-is: ^17.0.2
-    tslib: ^2.3.0
+    "@babel/runtime": ^7.22.15
+    compute-scroll-into-view: ^3.0.3
+    prop-types: ^15.8.1
+    react-is: ^18.2.0
+    tslib: ^2.6.2
   peerDependencies:
     react: ">=16.12.0"
-  checksum: 5ede6190dc85ad295f623b30d3ad035a83b9ef5753084096e71e6fad5276a9abd3b1c1a26583958368e4e7fe14a40ef8b5a246f9f6eec058c4eba30a5104539d
+  checksum: f6cf5e18d7958ea924bda0b13b46045cbd64a419e4e3079460e6edce8a25b0d99972b0ff607971016a09568cb46dfd53c924a2c86be8f4a5825ef2f2d703f0da
   languageName: node
   linkType: hard
 
@@ -22358,14 +22358,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^17.0.1, react-is@npm:^17.0.2":
+"react-is@npm:^17.0.1":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
   languageName: node
   linkType: hard
 
-"react-is@npm:^18.0.0":
+"react-is@npm:^18.0.0, react-is@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
@@ -23946,7 +23946,7 @@ __metadata:
     clone-deep: 4.0.1
     cookies-next: 4.0.0
     date-fns: 2.30.0
-    downshift: 8.1.0
+    downshift: 8.2.1
     eslint: 8.49.0
     eslint-config-custom: "workspace:"
     framer-motion: 10.16.4
@@ -25026,6 +25026,13 @@ __metadata:
   version: 2.5.2
   resolution: "tslib@npm:2.5.2"
   checksum: 4d3c1e238b94127ed0e88aa0380db3c2ddae581dc0f4bae5a982345e9f50ee5eda90835b8bfba99b02df10a5734470be197158c36f9129ac49fdc14a6a9da222
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
   languageName: node
   linkType: hard
 
