@@ -14,7 +14,7 @@ export const StartDate = (props: Props) => {
 
   return (
     <Wrapper>
-      <SingleLineText color="textSecondary" title={props.label}>
+      <SingleLineText color="textTranslucentSecondary" title={props.label}>
         {props.label}
       </SingleLineText>
       <TooltipWrapper>
