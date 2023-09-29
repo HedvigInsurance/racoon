@@ -20,7 +20,7 @@ export const RemoveCarOfferActionButton = (props: Props) => {
   return (
     <FullScreenDialog.Root>
       <FullScreenDialog.Trigger asChild={true}>
-        <ActionButton>{t('REMOVE_ENTRY_BUTTON')}</ActionButton>
+        <ActionButton variant="ghost">{t('REMOVE_CAR_TRIAL_EXTENSION_BUTTON')}</ActionButton>
       </FullScreenDialog.Trigger>
 
       <FullScreenDialog.Modal

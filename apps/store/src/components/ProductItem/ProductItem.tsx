@@ -19,6 +19,7 @@ type Props = {
   children?: ReactNode
   subtitle?: string
   Icon?: ReactNode
+  variant?: 'green'
 }
 
 export const ProductItem = (props: Props) => {
@@ -29,8 +30,8 @@ export const ProductItem = (props: Props) => {
   }
 
   return (
-    <Card>
-      <Hoverable onClick={handleClickHoverable}>
+    <Card data-variant={props.variant}>
+      <Hoverable onClick={handleClickHoverable} data-variant={props.variant}>
         <Space y={1}>
           <Header>
             <Pillow size="small" src={props.pillowSrc} alt="" />
@@ -75,10 +76,12 @@ ActionButton.displayName = 'ActionButton'
 export const ProductItemSkeleton = styled(Skeleton)({ height: '13.5rem' })
 
 const Card = styled.div({
-  backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.md,
   padding: theme.space.md,
   paddingBottom: 0,
+
+  backgroundColor: theme.colors.opaque1,
+  ['&[data-variant="green"]']: { backgroundColor: theme.colors.signalGreenFill },
 
   [mq.lg]: {
     padding: theme.space.lg,
@@ -92,6 +95,7 @@ const Hoverable = styled.div({
 
     [`${Card}:has(> &:hover)`]: {
       backgroundColor: theme.colors.grayTranslucent200,
+      ['&[data-variant="green"]']: { backgroundColor: theme.colors.green200 },
     },
   },
 })

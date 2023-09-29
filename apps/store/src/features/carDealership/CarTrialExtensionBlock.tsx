@@ -14,18 +14,20 @@ type Props = SbBaseBlockProps<{
 export const CarTrialExtensionBlock = (props: Props) => {
   const data = useCarTrialQuery()
 
-  if (!data) return <LoadingSkeleton {...storyblokEditable(props.blok)} />
-
   return (
     <GridLayout.Root>
       <GridLayout.Content width="1/3" align="center">
-        <TrialExtensionForm
-          {...storyblokEditable(props.blok)}
-          contract={data.trialContract}
-          priceIntent={data.priceIntent}
-          shopSession={data.shopSession}
-          requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
-        />
+        {data ? (
+          <TrialExtensionForm
+            {...storyblokEditable(props.blok)}
+            contract={data.trialContract}
+            priceIntent={data.priceIntent}
+            shopSession={data.shopSession}
+            requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
+          />
+        ) : (
+          <LoadingSkeleton />
+        )}
       </GridLayout.Content>
     </GridLayout.Root>
   )

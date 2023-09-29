@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { useMemo, type ReactNode } from 'react'
+import { useMemo, type ReactNode, ComponentProps } from 'react'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'
@@ -21,6 +21,7 @@ type Props = {
   offer: Offer
   children?: ReactNode
   defaultExpanded?: boolean
+  variant?: ComponentProps<typeof ProductItem>['variant']
 }
 
 export const ProductItemContainer = (props: Props) => {
@@ -65,6 +66,7 @@ export const ProductItemContainer = (props: Props) => {
       productDetails={productDetails}
       productDocuments={productDocuments}
       defaultExpanded={props.defaultExpanded}
+      variant={props.variant}
     >
       {props.children}
     </ProductItem>

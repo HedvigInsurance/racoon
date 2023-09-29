@@ -61,17 +61,17 @@ export const ActionStateEdit = (props: EditingStateProps) => {
           name={OFFER_KEY}
           onChange={handleChangeTierLevel}
           options={props.tierLevelOptions}
-          backgroundColor="backgroundStandard"
+          backgroundColor="backgroundFrostedGlass"
           defaultValue={props.defaultTierLevel}
         />
-        <CarMileageField field={mileageField} backgroundColor="backgroundStandard" />
+        <CarMileageField field={mileageField} backgroundColor="backgroundFrostedGlass" />
       </InputWrapper>
 
       <ButtonWrapper>
-        <ActionButton type="submit" variant="primary-alt" loading={props.loading}>
+        <ActionButton type="submit" variant="primary" loading={props.loading}>
           Save
         </ActionButton>
-        <ActionButton type="button" onClick={handleClickCancel}>
+        <ActionButton type="button" variant="ghost" onClick={handleClickCancel}>
           Cancel
         </ActionButton>
       </ButtonWrapper>

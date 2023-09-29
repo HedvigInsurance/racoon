@@ -77,3 +77,11 @@ export const WithSubtitle: Story = {
     subtitle: 'Hedvigsgatan 12 · 2 people',
   },
 }
+
+export const Green: Story = {
+  args: {
+    ...Default.args,
+    variant: 'green',
+    defaultExpanded: true,
+  },
+}
