@@ -23,7 +23,7 @@
   "FORM_LAST_NAME_LABEL": "Efternamn",
   "MANYPETS_COMPARISON_HEADER": "Byt till Hedvig och behåll ditt skydd.",
   "PAYMENT_HEADER_HELP_LINK": "Hjälp",
-  "PAYMENT_TRUSTLY_FOOTNOTE": "Säker betalning med Trustly.",
+  "PAYMENT_TRUSTLY_FOOTNOTE": "Säker betalning med Trustly. Denna betalningsmetod kommer också användas för andra försäkringar du tecknar hos Hedvig.",
   "PAYMENT_TRUSTLY_MESSAGE": "Koppla autogiro. Betalning dras månadsvis, den 27:e.",
   "PAYMENT_TRUSTLY_SUCCESS_MESSAGE": "Autogiro kopplat",
   "SAS_BONUS_NUMBER_INPUT_LABEL": "Nummer",
