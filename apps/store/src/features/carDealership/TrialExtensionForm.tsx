@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
 import { TextProps } from 'ui/src/components/Text/Text'
@@ -7,9 +8,11 @@ import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { TextWithLink } from '@/components/TextWithLink'
 import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { ActionButtonsCar } from './ActionButtonsCar'
@@ -36,6 +39,8 @@ type Props = {
 
 export const TrialExtensionForm = (props: Props) => {
   const [userWantsExtension, setUserWantsExtension] = useState(true)
+  const { t } = useTranslation('checkout')
+  const { routingLocale } = useCurrentLocale()
   const { signAndPay, loading } = useSignAndPay({
     shopSession: props.shopSession,
     requirePaymentConnection: props.requirePaymentConnection,
@@ -177,12 +182,26 @@ export const TrialExtensionForm = (props: Props) => {
           <Space y={0.5}>
             <InfoToastBar>{INFO_TOAST_CONTENT}</InfoToastBar>
 
-            <Button onClick={handleSignAndPay} loading={loading}>
-              <SpaceFlex space={0.5} align="center">
-                <BankIdIcon />
-                {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
-              </SpaceFlex>
-            </Button>
+            <Space y={1}>
+              <Button onClick={handleSignAndPay} loading={loading}>
+                <SpaceFlex space={0.5} align="center">
+                  <BankIdIcon />
+                  {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
+                </SpaceFlex>
+              </Button>
+
+              <TextWithLink
+                as="p"
+                size={{ _: 'xs', md: 'sm' }}
+                align="center"
+                balance={true}
+                color="textSecondary"
+                href={PageLink.privacyPolicy({ locale: routingLocale })}
+                target="_blank"
+              >
+                {t('SIGN_DISCLAIMER')}
+              </TextWithLink>
+            </Space>
           </Space>
         </Space>
       </Space>
