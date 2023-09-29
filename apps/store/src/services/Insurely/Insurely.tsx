@@ -89,6 +89,7 @@ type InsurelyConfig = {
   showCloseButton?: boolean
   hideResultsView?: boolean
   salesSupportToolSessionId?: string
+  multiCompanySelect?: boolean
 }
 
 export const setInsurelyConfig = (config: InsurelyConfig) => {
@@ -104,8 +105,8 @@ export const setInsurelyConfig = (config: InsurelyConfig) => {
       dataAggregation: {
         ...insurelyConfig?.dataAggregation,
         ...(config.salesSupportToolSessionId && { sstSessionId: config.salesSupportToolSessionId }),
-        hideResultsView:
-          config.hideResultsView ?? insurelyConfig?.dataAggregation?.hideResultsView ?? true,
+        ...(config.hideResultsView !== undefined && { hideResultsView: config.hideResultsView }),
+        ...(config.multiCompanySelect !== undefined && { multiSelect: config.multiCompanySelect }),
       },
     },
     prefill: {

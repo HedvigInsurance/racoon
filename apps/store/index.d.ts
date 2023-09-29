@@ -36,6 +36,7 @@ type MerchantCallbackData = { accountId: string }
 type TrustlyOptions = { locale: string }
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
     TrustlyWidget: {
       init: TrustlyInitFunction
@@ -72,6 +73,7 @@ type InsurelyConfig = {
   language?: 'en' | 'no' | 'sv' | 'da'
   dataAggregation?: {
     hideResultsView?: boolean
+    multiSelect?: boolean
   }
 }
 

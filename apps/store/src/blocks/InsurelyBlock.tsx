@@ -39,6 +39,7 @@ export const InsurelyBlock = (props: Props) => {
       showCloseButton: false,
       hideResultsView: false,
       salesSupportToolSessionId: typeof sessionId === 'string' ? sessionId : undefined,
+      multiCompanySelect: true,
     })
   }, [router.isReady, router.query.sessionId])
 
