@@ -14,6 +14,7 @@
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Lägg till",
   "CHECKOUT_BUTTON": "Fortsätt till kassan",
   "CHECKOUT_PRICE_TOTAL": "Totalt",
+  "CONNECT_PAYMENT_BANNER": "Koppla din betalning innan {dueDate} för att försäkringen ska gälla",
   "DATA_TABLE_ANCILLARY_AREA_LABEL": "Biyta",
   "DATA_TABLE_BREEDS_LABEL": "Ras(er)",
   "DATA_TABLE_CAT_GENDER_VALUE_FEMALE": "Hona",

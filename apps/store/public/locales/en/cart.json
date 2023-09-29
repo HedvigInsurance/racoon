@@ -14,6 +14,7 @@
   "CHECKOUT_ADD_DISCOUNT_BUTTON": "Add",
   "CHECKOUT_BUTTON": "Go to checkout",
   "CHECKOUT_PRICE_TOTAL": "Total",
+  "CONNECT_PAYMENT_BANNER": "Connect payment before {dueDate} for activate the insurance",
   "DATA_TABLE_ANCILLARY_AREA_LABEL": "Ancillary area",
   "DATA_TABLE_BREEDS_LABEL": "Breed(s)",
   "DATA_TABLE_CAT_GENDER_VALUE_FEMALE": "Female",
