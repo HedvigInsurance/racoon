@@ -64,6 +64,9 @@ export const PageLink = {
     const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
     return new URL(pathname, ORIGIN_URL)
   },
+  paymentConnect: (params?: BaseParams) => {
+    return new URL(`${localePrefix(params?.locale)}/payment/connect`, ORIGIN_URL)
+  },
   paymentSuccess: ({ locale }: Required<BaseParams>) => {
     return new URL(`${locale}/payment-success`, ORIGIN_URL)
   },
