@@ -15,6 +15,7 @@ const Wrapper = styled.div({
   display: 'flex',
   columnGap: theme.space.xs,
   justifyContent: 'center',
+  alignItems: 'center',
 })
 
 const RigidIconStyled = css({
