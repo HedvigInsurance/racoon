@@ -1,4 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
 import { TextProps } from 'ui/src/components/Text/Text'
 import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
@@ -6,7 +7,9 @@ import { AttentionCard, InfoCard } from '@/components/InfoCard/InfoCard'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
+import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
@@ -15,7 +18,7 @@ import { useSignAndPay } from './useSignAndPay'
 
 const SIGN_AND_PAY_BUTTON = 'Sign and pay'
 const SIGN_BUTTON = 'Sign insurance'
-const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment in the app'
+const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment'
 const INFO_CARD_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
 const UNDO_REMOVE_BUTTON = 'Undo removal'
 const COST_EXPLANATION = 'discounted price until {}'
@@ -79,6 +82,22 @@ export const TrialExtensionForm = (props: Props) => {
     signAndPay(selectedOffer.id)
   }
 
+  const router = useRouter()
+  const { startLogin } = useBankIdContext()
+  const handleClickPay = () => {
+    datadogRum.addAction('Car dealership | BankID login')
+    const ssn = props.shopSession.customer?.ssn
+    if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
+
+    startLogin({
+      ssn,
+      async onSuccess() {
+        console.log('Car dealership | BankID login success')
+        await router.push(PageLink.paymentConnect())
+      },
+    })
+  }
+
   if (!userWantsExtension) {
     return (
       <Space y={4}>
@@ -111,7 +130,12 @@ export const TrialExtensionForm = (props: Props) => {
                 currencyCode={props.contract.premium.currencyCode}
               />
             </Space>
-            <Button variant="primary">{CONTINUE_WITHOUT_EXTENSION_BUTTON}</Button>
+            <Button variant="primary" onClick={handleClickPay}>
+              <SpaceFlex space={0.5} align="center">
+                <BankIdIcon />
+                {CONTINUE_WITHOUT_EXTENSION_BUTTON}
+              </SpaceFlex>
+            </Button>
           </Space>
         </Space>
       </Space>
