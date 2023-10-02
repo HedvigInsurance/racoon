@@ -1,9 +1,11 @@
 {
   "ATTENTION_TOAST_CONTENT": "Keep in mind that you are uninsured from {{date}}",
+  "CONNECT_PAYMENT_BANNER": "Sign before {{dueDate}} to remain insured",
   "CONNECT_PAYMENT_BUTTON": "Connect payment",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
   "EXTENSION_HEADING": "Extend your insurance",
   "INFO_TOAST_CONTENT": "No binding time. Cancel anytime in the [[Hedvig-app]].",
+  "REMAIN_INSURED_BANNER": "Connect payment before {{dueDate}} for activate the insurance",
   "REMOVE_EXTENSION_BUTTON": "No, thanks",
   "REMOVE_EXTENSION_CONFIRM_BUTTON": "Yes, remove",
   "REMOVE_EXTENSION_MODAL_CANCEL_BUTTON": "Cancel",

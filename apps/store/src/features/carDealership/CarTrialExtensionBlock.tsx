@@ -20,7 +20,7 @@ type Props = SbBaseBlockProps<{
 export const CarTrialExtensionBlock = (props: Props) => {
   const { dateFull } = useFormatter()
   const { addBanner } = useGlobalBanner()
-  const { t } = useTranslation('cart')
+  const { t } = useTranslation('carDealership')
 
   const data = useCarTrialQuery({
     onCompleted(data) {
