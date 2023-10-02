@@ -15,7 +15,6 @@ import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { useFormatter } from '@/utils/useFormatter'
 import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
@@ -48,7 +47,6 @@ export const TrialExtensionForm = (props: Props) => {
     [props.priceIntent, tierLevel],
   )
 
-  const formatter = useFormatter()
   const terminationDate = convertToDate(props.contract.terminationDate)
   if (!terminationDate) {
     throw new Error(`Unable to parse terminationDate: ${props.contract.terminationDate}`)
@@ -116,10 +114,7 @@ export const TrialExtensionForm = (props: Props) => {
                 </AttentionToastBar>
               </Space>
 
-              <TotalAmount
-                amount={props.contract.premium.amount}
-                currencyCode={props.contract.premium.currencyCode}
-              />
+              <TotalAmount {...props.contract.premium} />
             </Space>
             <Button variant="primary" onClick={handleClickPay}>
               <SpaceFlex space={0.5} align="center">
@@ -157,15 +152,13 @@ export const TrialExtensionForm = (props: Props) => {
             </ProductItemContainer>
 
             <TotalAmount
-              amount={selectedOffer.cost.net.amount}
-              currencyCode={props.contract.premium.currencyCode}
-              discount={{
-                reducedAmount: props.contract.premium.amount,
-                explanation: t('TRIAL_COST_EXPLANATION', {
-                  date: formatter.fromNow(terminationDate),
-                  amount: formatter.monthlyPrice(selectedOffer.cost.net),
-                }),
-              }}
+              {...selectedOffer.cost.net}
+              {...(props.requirePaymentConnection && {
+                discount: {
+                  reducedAmount: props.contract.premium.amount,
+                  explanation: t('TRIAL_COST_EXPLANATION'),
+                },
+              })}
             />
           </Space>
           <Space y={0.5}>
