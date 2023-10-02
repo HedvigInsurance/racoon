@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { LockIcon, theme } from 'ui'
 import { ProductItem } from '@/components/ProductItem/ProductItem'
@@ -13,8 +14,7 @@ type Props = {
 
 export const ProductItemContractContainerCar = (props: Props) => {
   const formatter = useFormatter()
-
-  const tierLevel = props.contract.variant.displayName
+  const { t } = useTranslation('carDealership')
 
   const productDetails = useMemo(
     () =>
@@ -34,15 +34,14 @@ export const ProductItemContractContainerCar = (props: Props) => {
   if (endDate === null) throw new Error(`Invalid end date for contract ${props.contract.id}`)
 
   const startDateProps = {
-    // TODO: translate
-    label: `${tierLevel} until ${formatter.fromNow(endDate)}`,
-    tooltip: 'You need to sign a new contract to continue your insurance',
+    label: t('TRIAL_TERMINATION_DATE_MESSAGE', { date: formatter.fromNow(endDate) }),
+    tooltip: t('TRIAL_TERMINATION_DATE_TOOLTIP'),
   }
 
   return (
     <ProductItem
-      title={props.contract.variant.displayName}
-      pillowSrc={FIXTURE_CONTRACT.variant.product.pillowImage.src}
+      title={t('TRIAL_TITLE')}
+      pillowSrc={FIXTURE_CONTRACT.product.pillowImage.src}
       price={FIXTURE_CONTRACT.cost}
       startDate={startDateProps}
       productDetails={productDetails}
@@ -78,13 +77,13 @@ const FIXTURE_CONTRACT = {
     },
   ],
 
-  variant: {
-    product: {
-      pillowImage: {
-        src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
-      },
+  product: {
+    pillowImage: {
+      src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
     },
+  },
 
+  variant: {
     documents: [
       {
         displayName: 'Insurance terms',

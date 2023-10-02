@@ -9,6 +9,7 @@ import { ProductItemContainer } from '@/components/ProductItem/ProductItemContai
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
+import { WithLink } from '@/components/TextWithLink'
 import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
@@ -20,16 +21,6 @@ import { type TrialExtension } from './carDealershipFixtures'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useSignAndPay } from './useSignAndPay'
 
-const SIGN_AND_PAY_BUTTON = 'Sign and pay'
-const SIGN_BUTTON = 'Sign insurance'
-const CONTINUE_WITHOUT_EXTENSION_BUTTON = 'Connect payment'
-const INFO_TOAST_CONTENT = 'Se allt om din prova på-försäkring i Hedvig-appen.'
-const UNDO_REMOVE_BUTTON = 'Undo removal'
-const COST_EXPLANATION = 'discounted price until {}'
-const ATTENTION_CARD_CONTENT = 'Keep in mind that you are uninsured from {}'
-const TRIAL_HEADING = 'Starter offer'
-const EXTENSION_HEADING = 'Extend your insurance'
-
 type Props = {
   contract: TrialExtension['trialContract']
   priceIntent: TrialExtension['priceIntent']
@@ -38,8 +29,8 @@ type Props = {
 }
 
 export const TrialExtensionForm = (props: Props) => {
+  const { t } = useTranslation(['carDealership', 'checkout'])
   const [userWantsExtension, setUserWantsExtension] = useState(true)
-  const { t } = useTranslation('checkout')
   const { routingLocale } = useCurrentLocale()
   const { signAndPay, loading } = useSignAndPay({
     shopSession: props.shopSession,
@@ -62,7 +53,6 @@ export const TrialExtensionForm = (props: Props) => {
   if (!terminationDate) {
     throw new Error(`Unable to parse terminationDate: ${props.contract.terminationDate}`)
   }
-  const costExplanation = COST_EXPLANATION.replace('{}', formatter.fromNow(terminationDate))
 
   const handleUpdate = (tierLevel: string) => {
     const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
@@ -108,25 +98,25 @@ export const TrialExtensionForm = (props: Props) => {
     return (
       <Space y={4}>
         <Space y={1.5}>
-          <Text align="center">{TRIAL_HEADING}</Text>
+          <Text align="center">{t('TRIAL_HEADING')}</Text>
           <ProductItemContractContainerCar contract={props.contract} />
         </Space>
 
         <Space y={1.5}>
-          <Text align="center">{EXTENSION_HEADING}</Text>
+          <Text align="center">{t('EXTENSION_HEADING')}</Text>
           <Space y={2}>
             <Space y={1}>
               <Space y={0.75}>
                 <Button variant="secondary" onClick={handleUndo}>
                   <SpaceFlex direction="horizontal" space={0.5}>
                     <StyledRestartIcon />
-                    {UNDO_REMOVE_BUTTON}
+                    {t('UNDO_REMOVE_EXTENSION_BUTTON')}
                   </SpaceFlex>
                 </Button>
 
                 <AttentionToastBar>
                   <ReplaceText color="textPrimary" size="xs" text="1 November 2023" as="span">
-                    {ATTENTION_CARD_CONTENT}
+                    {t('ATTENTION_TOAST_CONTENT')}
                   </ReplaceText>
                 </AttentionToastBar>
               </Space>
@@ -139,7 +129,7 @@ export const TrialExtensionForm = (props: Props) => {
             <Button variant="primary" onClick={handleClickPay}>
               <SpaceFlex space={0.5} align="center">
                 <BankIdIcon />
-                {CONTINUE_WITHOUT_EXTENSION_BUTTON}
+                {t('CONNECT_PAYMENT_BUTTON')}
               </SpaceFlex>
             </Button>
           </Space>
@@ -151,12 +141,12 @@ export const TrialExtensionForm = (props: Props) => {
   return (
     <Space y={4}>
       <Space y={1.5}>
-        <Text align="center">{TRIAL_HEADING}</Text>
+        <Text align="center">{t('TRIAL_HEADING')}</Text>
         <ProductItemContractContainerCar contract={props.contract} />
       </Space>
 
       <Space y={1.5}>
-        <Text align="center">{EXTENSION_HEADING}</Text>
+        <Text align="center">{t('EXTENSION_HEADING')}</Text>
 
         <Space y={2}>
           <Space y={1}>
@@ -175,18 +165,25 @@ export const TrialExtensionForm = (props: Props) => {
               currencyCode={props.contract.premium.currencyCode}
               discount={{
                 reducedAmount: props.contract.premium.amount,
-                explanation: costExplanation,
+                explanation: t('TRIAL_COST_EXPLANATION', {
+                  date: formatter.fromNow(terminationDate),
+                  amount: formatter.monthlyPrice(selectedOffer.cost.net),
+                }),
               }}
             />
           </Space>
           <Space y={0.5}>
-            <InfoToastBar>{INFO_TOAST_CONTENT}</InfoToastBar>
+            <InfoToastBar>
+              <WithLink href={'/api/redirect/appstore'} target="_blank">
+                {t('INFO_TOAST_CONTENT')}
+              </WithLink>
+            </InfoToastBar>
 
             <Space y={1}>
               <Button onClick={handleSignAndPay} loading={loading}>
                 <SpaceFlex space={0.5} align="center">
                   <BankIdIcon />
-                  {props.requirePaymentConnection ? SIGN_AND_PAY_BUTTON : SIGN_BUTTON}
+                  {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
                 </SpaceFlex>
               </Button>
 
@@ -199,7 +196,7 @@ export const TrialExtensionForm = (props: Props) => {
                 href={PageLink.privacyPolicy({ locale: routingLocale })}
                 target="_blank"
               >
-                {t('SIGN_DISCLAIMER')}
+                {t('checkout:SIGN_DISCLAIMER')}
               </TextWithLink>
             </Space>
           </Space>
