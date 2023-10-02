@@ -1,9 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'react-i18next'
-import { Button, Text } from 'ui'
+import { Button, Text, WarningTriangleIcon, theme } from 'ui'
 import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
   onConfirm: () => void
@@ -37,20 +38,23 @@ export const RemoveCarOfferActionButton = (props: Props) => {
           </>
         }
       >
-        <TextWrapper>
-          <Text size={{ _: 'md', lg: 'xl' }} align="center">
-            {t('REMOVE_EXTENSION_MODAL_PROMPT_TITLE')}
-          </Text>
-          <Text size={{ _: 'md', lg: 'xl' }} color="textSecondary" align="center" balance={true}>
-            {t('REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE')}
-          </Text>
-        </TextWrapper>
+        <Wrapper direction="vertical" space={1.5} align="center">
+          <WarningTriangleIcon color={theme.colors.signalAmberElement} />
+          <p>
+            <Text size={{ _: 'md', lg: 'xl' }} align="center">
+              {t('REMOVE_EXTENSION_MODAL_PROMPT_TITLE')}
+            </Text>
+            <Text size={{ _: 'md', lg: 'xl' }} color="textSecondary" align="center" balance={true}>
+              {t('REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE')}
+            </Text>
+          </p>
+        </Wrapper>
       </FullScreenDialog.Modal>
     </FullScreenDialog.Root>
   )
 }
 
-const TextWrapper = styled.div({
+const Wrapper = styled(SpaceFlex)({
   maxWidth: '38rem',
   marginInline: 'auto',
 })
