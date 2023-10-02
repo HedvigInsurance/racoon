@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const RemoveCarOfferActionButton = (props: Props) => {
-  const { t } = useTranslation('cart')
+  const { t } = useTranslation('carDealership')
 
   const handleClick = () => {
     datadogRum.addAction('Car dearlership | Offer removed')
@@ -20,17 +20,17 @@ export const RemoveCarOfferActionButton = (props: Props) => {
   return (
     <FullScreenDialog.Root>
       <FullScreenDialog.Trigger asChild={true}>
-        <ActionButton variant="ghost">{t('REMOVE_CAR_TRIAL_EXTENSION_BUTTON')}</ActionButton>
+        <ActionButton variant="ghost">{t('REMOVE_EXTENSION_BUTTON')}</ActionButton>
       </FullScreenDialog.Trigger>
 
       <FullScreenDialog.Modal
         center={true}
         Footer={
           <>
-            <Button onClick={handleClick}>{t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}</Button>
+            <Button onClick={handleClick}>{t('REMOVE_EXTENSION_CONFIRM_BUTTON')}</Button>
             <FullScreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost">
-                {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
+                {t('REMOVE_EXTENSION_MODAL_CANCEL_BUTTON')}
               </Button>
             </FullScreenDialog.Close>
           </>
@@ -38,10 +38,10 @@ export const RemoveCarOfferActionButton = (props: Props) => {
       >
         <TextWrapper>
           <Text size={{ _: 'md', lg: 'xl' }} align="center">
-            {t('REMOVE_CONTRACT_MODAL_PROMPT_TITLE')}
+            {t('REMOVE_EXTENSION_MODAL_PROMPT_TITLE')}
           </Text>
           <Text size={{ _: 'md', lg: 'xl' }} color="textSecondary" align="center" balance={true}>
-            {t('REMOVE_CONTRACT_MODAL_PROMPT_SUBTITLE')}
+            {t('REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE')}
           </Text>
         </TextWrapper>
       </FullScreenDialog.Modal>

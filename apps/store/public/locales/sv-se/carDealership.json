@@ -1,0 +1,20 @@
+{
+  "ATTENTION_TOAST_CONTENT": "Tänk på att du är oförsäkrad från {{date}}",
+  "CONNECT_PAYMENT_BUTTON": "Koppla betalning",
+  "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Ändra",
+  "EXTENSION_HEADING": "Förläng din försäkring",
+  "INFO_TOAST_CONTENT": "Ingen bindningstid. Avsluta när du vill i [[Hedvig-appen]].",
+  "REMOVE_EXTENSION_BUTTON": "Nej, tack",
+  "REMOVE_EXTENSION_CONFIRM_BUTTON": "Ja, ta bort",
+  "REMOVE_EXTENSION_MODAL_CANCEL_BUTTON": "Avbryt",
+  "REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE": "Tänk på att du och din bil blir oförsäkrade efter att ditt starterbjudande har löpt ut. Trafikförsäkring är obligatoriskt enligt lag för att du ska få köra bilen.",
+  "REMOVE_EXTENSION_MODAL_PROMPT_TITLE": "Är du säker på att du vill ta bort försäkringen?",
+  "SIGN_AND_PAY_BUTTON": "Signera och betala",
+  "SIGN_BUTTON": "Teckna försäkring",
+  "TRIAL_COST_EXPLANATION": "till {{date}} sedan {{amount}}",
+  "TRIAL_HEADING": "Starterbjudande",
+  "TRIAL_TERMINATION_DATE_MESSAGE": "Löper ut {{date}}",
+  "TRIAL_TERMINATION_DATE_TOOLTIP": "Du måste teckna ett nytt avtal för att förlänga din försäkring.",
+  "TRIAL_TITLE": "Bilförsäkring 60 dagar",
+  "UNDO_REMOVE_EXTENSION_BUTTON": "Ångra"
+}

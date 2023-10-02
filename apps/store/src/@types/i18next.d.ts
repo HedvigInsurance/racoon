@@ -8,6 +8,7 @@
 import 'i18next'
 
 import type bankid from '../../public/locales/en/bankid.json'
+import type carDealership from '../../public/locales/en/carDealership.json'
 import type cart from '../../public/locales/en/cart.json'
 import type checkout from '../../public/locales/en/checkout.json'
 import type common from '../../public/locales/en/common.json'
@@ -20,6 +21,7 @@ interface I18nNamespaces {
   checkout: typeof checkout
   common: typeof common
   'purchase-form': typeof purchaseForm
+  carDealership: typeof carDealership
 }
 
 declare module 'i18next' {

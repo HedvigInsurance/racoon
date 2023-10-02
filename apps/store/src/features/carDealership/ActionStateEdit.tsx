@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { theme } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { CarMileageField } from '@/components/PriceCalculator/CarMileageField'
-import { ActionButton } from '../../components/ProductItem/ProductItem'
+import { ActionButton } from '@/components/ProductItem/ProductItem'
 
 const MILEAGE_DATA_KEY = 'mileage'
 const OFFER_KEY = 'offer'

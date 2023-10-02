@@ -30,7 +30,7 @@ type Props = {
 }
 
 export const ActionButtonsCar = (props: Props) => {
-  const { t } = useTranslation('cart')
+  const { t } = useTranslation('carDealership')
   const [state, setState] = useState<State>(STATE.IDLE)
 
   const [editAndConfirm, loading] = useEditAndConfirm({
