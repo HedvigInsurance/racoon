@@ -97,10 +97,10 @@ export const TrialExtensionForm = (props: Props) => {
   if (!userWantsExtension) {
     return (
       <Space y={4}>
-        <Space y={1.5}>
-          <Text align="center">{t('TRIAL_HEADING')}</Text>
-          <ProductItemContractContainerCar contract={props.contract} />
-        </Space>
+        <TrialOffer
+          contract={props.contract}
+          requirePaymentConnection={props.requirePaymentConnection}
+        />
 
         <Space y={1.5}>
           <Text align="center">{t('EXTENSION_HEADING')}</Text>
@@ -140,17 +140,20 @@ export const TrialExtensionForm = (props: Props) => {
 
   return (
     <Space y={4}>
-      <Space y={1.5}>
-        <Text align="center">{t('TRIAL_HEADING')}</Text>
-        <ProductItemContractContainerCar contract={props.contract} />
-      </Space>
+      <TrialOffer
+        contract={props.contract}
+        requirePaymentConnection={props.requirePaymentConnection}
+      />
 
       <Space y={1.5}>
         <Text align="center">{t('EXTENSION_HEADING')}</Text>
-
         <Space y={2}>
           <Space y={1}>
-            <ProductItemContainer offer={selectedOffer} defaultExpanded={true} variant="green">
+            <ProductItemContainer
+              offer={selectedOffer}
+              defaultExpanded={true}
+              variant={props.requirePaymentConnection ? 'green' : undefined}
+            >
               <ActionButtonsCar
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
@@ -202,6 +205,24 @@ export const TrialExtensionForm = (props: Props) => {
           </Space>
         </Space>
       </Space>
+    </Space>
+  )
+}
+
+type TrialOfferProps = {
+  contract: TrialExtension['trialContract']
+  requirePaymentConnection: boolean
+}
+
+const TrialOffer = (props: TrialOfferProps) => {
+  const { t } = useTranslation('carDealership')
+
+  if (!props.requirePaymentConnection) return null
+
+  return (
+    <Space y={1.5}>
+      <Text align="center">{t('TRIAL_HEADING')}</Text>
+      <ProductItemContractContainerCar contract={props.contract} />
     </Space>
   )
 }
