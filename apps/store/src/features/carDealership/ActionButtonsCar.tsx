@@ -26,6 +26,7 @@ type Props = {
   offer: Offer
   onUpdate: (tierLevel: string) => void
   onRemove: () => void
+  requirePaymentConnection: boolean
 }
 
 export const ActionButtonsCar = (props: Props) => {
@@ -85,10 +86,15 @@ export const ActionButtonsCar = (props: Props) => {
 
   return (
     <ButtonWrapper>
-      <ActionButton variant="primary" onClick={handleClickEdit}>
+      <ActionButton
+        variant={props.requirePaymentConnection ? 'primary' : 'ghost'}
+        onClick={handleClickEdit}
+      >
         {t('EDIT_CAR_TRIAL_EXTENSION_BUTTON')}
       </ActionButton>
-      <RemoveCarOfferActionButton onConfirm={handleClickRemove} />
+      {props.requirePaymentConnection && (
+        <RemoveCarOfferActionButton onConfirm={handleClickRemove} />
+      )}
     </ButtonWrapper>
   )
 }

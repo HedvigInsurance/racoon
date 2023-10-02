@@ -161,6 +161,7 @@ export const TrialExtensionForm = (props: Props) => {
                 offer={selectedOffer}
                 onRemove={handleRemove}
                 onUpdate={handleUpdate}
+                requirePaymentConnection={props.requirePaymentConnection}
               />
             </ProductItemContainer>
 
