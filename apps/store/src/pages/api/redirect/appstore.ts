@@ -4,7 +4,6 @@ import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { LOCALE_COOKIE_KEY, FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { isIsoLocale, isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
-import { PageLink } from '@/utils/PageLink'
 
 const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
   console.debug('QR code | Initiating redirect to AppStore')
@@ -22,8 +21,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
     return
   }
 
-  console.info(`QR code | Redirect to home page: ${req.headers['user-agent']}`)
-  res.redirect(PageLink.home({ locale }).toString())
+  console.info(`QR code | Fallback redirect too App Store: ${req.headers['user-agent']}`)
+  res.redirect(getAppStoreLink('apple', locale).toString())
   return
 }
 
