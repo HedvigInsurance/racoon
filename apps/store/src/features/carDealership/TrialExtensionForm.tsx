@@ -1,4 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
+import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
 import { TextProps } from 'ui/src/components/Text/Text'
@@ -113,7 +114,7 @@ export const TrialExtensionForm = (props: Props) => {
               <Space y={0.75}>
                 <Button variant="secondary" onClick={handleUndo}>
                   <SpaceFlex direction="horizontal" space={0.5}>
-                    <RestartIcon />
+                    <StyledRestartIcon />
                     {UNDO_REMOVE_BUTTON}
                   </SpaceFlex>
                 </Button>
@@ -187,6 +188,12 @@ export const TrialExtensionForm = (props: Props) => {
     </Space>
   )
 }
+
+const StyledRestartIcon = styled(RestartIcon)({
+  // Optically align RestartIcon
+  position: 'relative',
+  top: 2,
+})
 
 type ReplaceTextProps = TextProps & {
   text: string
