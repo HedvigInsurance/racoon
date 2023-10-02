@@ -1,6 +1,5 @@
 import { getFilteredPageLinks } from '@/services/storyblok/storyblok'
-
-const BASE_URL = 'https://www.hedvig.com'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 const generateSiteMap = (pages) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -9,7 +8,7 @@ const generateSiteMap = (pages) => {
        .map((page) => {
          return `
           <url>
-            <loc>${`${BASE_URL}/${page.link.slug}`}</loc>
+            <loc>${`${ORIGIN_URL}/${page.link.slug}`}</loc>
           </url>
         `
        })
