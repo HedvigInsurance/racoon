@@ -12,7 +12,7 @@
   "REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE": "Tänk på att du och din bil blir oförsäkrade efter att ditt starterbjudande har löpt ut. Trafikförsäkring är obligatoriskt enligt lag för att du ska få köra bilen.",
   "REMOVE_EXTENSION_MODAL_PROMPT_TITLE": "Är du säker på att du vill ta bort försäkringen?",
   "SIGN_AND_PAY_BUTTON": "Signera och betala",
-  "SIGN_BUTTON": "Teckna försäkring",
+  "SIGN_BUTTON": "Förläng försäkring",
   "TRIAL_COST_EXPLANATION": "till {{date}} sedan {{amount}}",
   "TRIAL_HEADING": "Starterbjudande",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Löper ut {{date}}",
