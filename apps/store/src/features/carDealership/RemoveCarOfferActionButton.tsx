@@ -9,6 +9,7 @@ type Props = {
   onConfirm: () => void
 }
 
+// TODO: Deprecated
 export const RemoveCarOfferActionButton = (props: Props) => {
   const { t } = useTranslation('carDealership')
 
