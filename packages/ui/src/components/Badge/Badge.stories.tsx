@@ -1,18 +1,28 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import { Space } from '../Space'
 import { Badge } from './Badge'
 
-export default {
+const meta: Meta<typeof Badge> = {
   title: 'Badge',
   component: Badge,
-} as Meta<typeof Badge>
+  parameters: {
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=3208-13289&mode=design&t=vZvysCYZ1EU8kxI4-4',
+    },
+  },
+}
+export default meta
 
-const Template: StoryFn<typeof Badge> = (args) => (
-  <Space x={1}>
-    <Badge size="small" {...args} />
-    <Badge size="big" {...args} />
-  </Space>
-)
+type Story = StoryObj<typeof Badge>
 
-export const Default = Template.bind({})
+export const Default: Story = {
+  render: (args) => (
+    <Space x={1}>
+      <Badge size="big" {...args} />
+      <Badge size="small" {...args} />
+    </Space>
+  ),
+}
 Default.args = { children: 'Badge' }
