@@ -1,60 +1,63 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'react-i18next'
-import { Button, Text, WarningTriangleIcon, theme } from 'ui'
+import { BankIdIcon, Button, Text, WarningTriangleIcon, theme } from 'ui'
 import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
   onConfirm: () => void
 }
 
-// TODO: Deprecated
-export const RemoveCarOfferActionButton = (props: Props) => {
+export const ConfirmPayWithoutExtensionButton = (props: Props) => {
   const { t } = useTranslation('carDealership')
 
   const handleClick = () => {
-    datadogRum.addAction('Car dearlership | Offer removed')
+    datadogRum.addAction('Car dearlership | Confirm pay without extension')
     props.onConfirm()
   }
 
   return (
     <FullScreenDialog.Root>
       <FullScreenDialog.Trigger asChild={true}>
-        <ActionButton variant="ghost">{t('REMOVE_EXTENSION_BUTTON')}</ActionButton>
+        <Button variant="primary">
+          <SpaceFlex space={0.5} align="center">
+            <BankIdIcon />
+            {t('CONNECT_PAYMENT_BUTTON')}
+          </SpaceFlex>
+        </Button>
       </FullScreenDialog.Trigger>
 
       <FullScreenDialog.Modal
         center={true}
         Footer={
           <>
-            <Button onClick={handleClick}>{t('REMOVE_EXTENSION_CONFIRM_BUTTON')}</Button>
+            <Button onClick={handleClick}>{t('PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM')}</Button>
             <FullScreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost">
-                {t('REMOVE_EXTENSION_MODAL_CANCEL_BUTTON')}
+                {t('PAY_WITHOUT_EXTENSION_DIALOG_CANCEL')}
               </Button>
             </FullScreenDialog.Close>
           </>
         }
       >
-        <Wrapper direction="vertical" space={1.5} align="center">
-          <WarningTriangleIcon color={theme.colors.signalAmberElement} />
-          <p>
+        <SpaceFlex direction="vertical" space={1} align="center">
+          <WarningTriangleIcon size="1.5rem" color={theme.colors.signalAmberElement} />
+          <TextWrapper>
             <Text size={{ _: 'md', lg: 'xl' }} align="center">
-              {t('REMOVE_EXTENSION_MODAL_PROMPT_TITLE')}
+              {t('PAY_WITHOUT_EXTENSION_DIALOG_TITLE')}
             </Text>
             <Text size={{ _: 'md', lg: 'xl' }} color="textSecondary" align="center" balance={true}>
-              {t('REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE')}
+              {t('PAY_WITHOUT_EXTENSION_DIALOG_SUBTITLE')}
             </Text>
-          </p>
-        </Wrapper>
+          </TextWrapper>
+        </SpaceFlex>
       </FullScreenDialog.Modal>
     </FullScreenDialog.Root>
   )
 }
 
-const Wrapper = styled(SpaceFlex)({
+const TextWrapper = styled.div({
   maxWidth: '38rem',
   marginInline: 'auto',
 })
