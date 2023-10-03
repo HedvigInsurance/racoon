@@ -73,8 +73,9 @@ export const TrialExtensionForm = (props: Props) => {
 
   const router = useRouter()
   const { startLogin } = useBankIdContext()
-  const handleClickPay = () => {
-    datadogRum.addAction('Car dealership | BankID login')
+  const handleDeclineExtensionOffer = () => {
+    datadogRum.addAction('Car dealership | Decline extension offer')
+
     const ssn = props.shopSession.customer?.ssn
     if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
 
@@ -116,7 +117,7 @@ export const TrialExtensionForm = (props: Props) => {
 
               <TotalAmount {...props.contract.premium} />
             </Space>
-            <Button variant="primary" onClick={handleClickPay}>
+            <Button variant="primary" onClick={handleDeclineExtensionOffer}>
               <SpaceFlex space={0.5} align="center">
                 <BankIdIcon />
                 {t('CONNECT_PAYMENT_BUTTON')}

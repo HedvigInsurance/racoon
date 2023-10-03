@@ -4,6 +4,7 @@ import { forwardRef, ReactNode } from 'react'
 
 type SpaceFlexProps = {
   children?: ReactNode
+  className?: string
   space?: number
   direction?: 'horizontal' | 'vertical'
   align?: 'start' | 'center' | 'end'
@@ -21,8 +22,15 @@ const SpaceFlexWrapper = styled('div', { shouldForwardProp: isPropValid })(
 )
 
 export const SpaceFlex = forwardRef<HTMLDivElement, SpaceFlexProps>(
-  ({ children, space = 1, direction = 'horizontal', align = 'start', wrap }, ref) => (
-    <SpaceFlexWrapper ref={ref} space={space} direction={direction} align={align} wrap={wrap}>
+  ({ children, className, space = 1, direction = 'horizontal', align = 'start', wrap }, ref) => (
+    <SpaceFlexWrapper
+      ref={ref}
+      className={className}
+      space={space}
+      direction={direction}
+      align={align}
+      wrap={wrap}
+    >
       {children}
     </SpaceFlexWrapper>
   ),
