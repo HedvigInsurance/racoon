@@ -63,11 +63,6 @@ export const TrialExtensionForm = (props: Props) => {
     setTierLevel(tierLevel)
   }
 
-  const handleRemove = () => {
-    datadogRum.addAction('Car dealership | Remove')
-    setUserWantsExtension(false)
-  }
-
   const handleUndo = () => {
     datadogRum.addAction('Car dealership | Undo remove')
     setUserWantsExtension(true)
@@ -157,9 +152,7 @@ export const TrialExtensionForm = (props: Props) => {
               <ActionButtonsCar
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
-                onRemove={handleRemove}
                 onUpdate={handleUpdate}
-                requirePaymentConnection={props.requirePaymentConnection}
               />
             </ProductItemContainer>
 

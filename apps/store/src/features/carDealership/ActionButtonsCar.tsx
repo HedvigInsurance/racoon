@@ -1,13 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum'
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { theme } from 'ui'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { ActionStateEdit } from './ActionStateEdit'
 import { type TrialExtension } from './carDealershipFixtures'
-import { RemoveCarOfferActionButton } from './RemoveCarOfferActionButton'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
 type State = { type: 'IDLE' } | { type: 'EDITING' } | { type: 'SUBMITTING'; tierLevel?: string }
@@ -25,8 +22,6 @@ type Props = {
   priceIntent: TrialExtension['priceIntent']
   offer: Offer
   onUpdate: (tierLevel: string) => void
-  onRemove: () => void
-  requirePaymentConnection: boolean
 }
 
 export const ActionButtonsCar = (props: Props) => {
@@ -48,11 +43,6 @@ export const ActionButtonsCar = (props: Props) => {
   const handleClickEdit = () => {
     datadogRum.addAction('Offer Car Edit')
     setState(STATE.EDITING)
-  }
-
-  const handleClickRemove = () => {
-    datadogRum.addAction('Offer Car Remove')
-    props.onRemove()
   }
 
   if (state.type === 'EDITING' || state.type === 'SUBMITTING') {
@@ -85,22 +75,8 @@ export const ActionButtonsCar = (props: Props) => {
   }
 
   return (
-    <ButtonWrapper>
-      <ActionButton
-        variant={props.requirePaymentConnection ? 'primary' : 'ghost'}
-        onClick={handleClickEdit}
-      >
-        {t('EDIT_CAR_TRIAL_EXTENSION_BUTTON')}
-      </ActionButton>
-      {props.requirePaymentConnection && (
-        <RemoveCarOfferActionButton onConfirm={handleClickRemove} />
-      )}
-    </ButtonWrapper>
+    <ActionButton variant="secondary-alt" onClick={handleClickEdit}>
+      {t('EDIT_CAR_TRIAL_EXTENSION_BUTTON')}
+    </ActionButton>
   )
 }
-
-const ButtonWrapper = styled.div({
-  display: 'grid',
-  gridAutoFlow: 'column',
-  gap: theme.space.xs,
-})

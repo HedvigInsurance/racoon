@@ -183,7 +183,7 @@ const SecondaryAltButton = styled(SecondaryButton)({
 
   '@media (hover: hover)': {
     ':hover': {
-      backgroundColor: theme.colors.offWhiteTranslucent,
+      backgroundColor: theme.colors.grayTranslucentDark25,
     },
   },
 
