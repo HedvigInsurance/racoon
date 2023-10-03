@@ -1,22 +1,18 @@
 {
-  "ATTENTION_TOAST_CONTENT": "Keep in mind that you are uninsured from {{date}}",
   "CONNECT_PAYMENT_BANNER": "Sign before {{dueDate}} to remain insured",
   "CONNECT_PAYMENT_BUTTON": "Connect payment",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
-  "EXTENSION_HEADING": "Extend your insurance",
   "INFO_TOAST_CONTENT": "No binding time. Cancel anytime in the [[Hedvig-app]].",
+  "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Cancel",
+  "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Yes, go ahead",
+  "PAY_WITHOUT_EXTENSION_DIALOG_SUBTITLE": "We would like to remind you to sign another insurance in good time before your trial period with Hedvig has expired. Otherwise, you risk that your car will become uninsured.",
+  "PAY_WITHOUT_EXTENSION_DIALOG_TITLE": "Do you want to continue without extending?",
   "REMAIN_INSURED_BANNER": "Connect payment before {{dueDate}} for activate the insurance",
-  "REMOVE_EXTENSION_BUTTON": "No, thanks",
-  "REMOVE_EXTENSION_CONFIRM_BUTTON": "Yes, go ahead",
-  "REMOVE_EXTENSION_MODAL_CANCEL_BUTTON": "Cancel",
-  "REMOVE_EXTENSION_MODAL_PROMPT_SUBTITLE": "We would like to remind you to sign another insurance in good time before your trial period with Hedvig has expired. Otherwise, you risk that your car will become uninsured.",
-  "REMOVE_EXTENSION_MODAL_PROMPT_TITLE": "Are you sure you want to remove the insurance?",
   "SIGN_AND_PAY_BUTTON": "Sign and pay",
   "SIGN_BUTTON": "Extend insurance",
   "TRIAL_COST_EXPLANATION": "discounted for 60 days",
   "TRIAL_HEADING": "Starter offer",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Expires {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
-  "TRIAL_TITLE": "Car insurance 60 days",
-  "UNDO_REMOVE_EXTENSION_BUTTON": "Undo"
+  "TRIAL_TITLE": "Car insurance 60 days"
 }

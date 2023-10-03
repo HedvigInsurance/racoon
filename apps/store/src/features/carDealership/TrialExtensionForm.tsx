@@ -1,22 +1,21 @@
 import { datadogRum } from '@datadog/browser-rum'
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
-import { TextProps } from 'ui/src/components/Text/Text'
-import { Space, Button, RestartIcon, Text, BankIdIcon } from 'ui'
+import { Space, Button, Text, BankIdIcon } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import { WithLink } from '@/components/TextWithLink'
-import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
+import { InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
+import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useSignAndPay } from './useSignAndPay'
 
@@ -29,7 +28,7 @@ type Props = {
 
 export const TrialExtensionForm = (props: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
-  const [userWantsExtension, setUserWantsExtension] = useState(true)
+  const [userWantsExtension] = useState(true)
   const { routingLocale } = useCurrentLocale()
   const { signAndPay, loading } = useSignAndPay({
     shopSession: props.shopSession,
@@ -61,11 +60,6 @@ export const TrialExtensionForm = (props: Props) => {
     setTierLevel(tierLevel)
   }
 
-  const handleUndo = () => {
-    datadogRum.addAction('Car dealership | Undo remove')
-    setUserWantsExtension(true)
-  }
-
   const handleSignAndPay = () => {
     datadogRum.addAction('Car dealership | Sign and pay')
     signAndPay(selectedOffer.id)
@@ -73,9 +67,8 @@ export const TrialExtensionForm = (props: Props) => {
 
   const router = useRouter()
   const { startLogin } = useBankIdContext()
-  const handleDeclineExtensionOffer = () => {
+  const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
-
     const ssn = props.shopSession.customer?.ssn
     if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
 
@@ -96,34 +89,9 @@ export const TrialExtensionForm = (props: Props) => {
           requirePaymentConnection={props.requirePaymentConnection}
         />
 
-        <Space y={1.5}>
-          <Text align="center">{t('EXTENSION_HEADING')}</Text>
-          <Space y={2}>
-            <Space y={1}>
-              <Space y={0.75}>
-                <Button variant="secondary" onClick={handleUndo}>
-                  <SpaceFlex direction="horizontal" space={0.5}>
-                    <StyledRestartIcon />
-                    {t('UNDO_REMOVE_EXTENSION_BUTTON')}
-                  </SpaceFlex>
-                </Button>
-
-                <AttentionToastBar>
-                  <ReplaceText color="textPrimary" size="xs" text="1 November 2023" as="span">
-                    {t('ATTENTION_TOAST_CONTENT')}
-                  </ReplaceText>
-                </AttentionToastBar>
-              </Space>
-
-              <TotalAmount {...props.contract.premium} />
-            </Space>
-            <Button variant="primary" onClick={handleDeclineExtensionOffer}>
-              <SpaceFlex space={0.5} align="center">
-                <BankIdIcon />
-                {t('CONNECT_PAYMENT_BUTTON')}
-              </SpaceFlex>
-            </Button>
-          </Space>
+        <Space y={2}>
+          <TotalAmount {...props.contract.premium} />
+          <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
         </Space>
       </Space>
     )
@@ -136,59 +104,56 @@ export const TrialExtensionForm = (props: Props) => {
         requirePaymentConnection={props.requirePaymentConnection}
       />
 
-      <Space y={1.5}>
-        <Text align="center">{t('EXTENSION_HEADING')}</Text>
-        <Space y={2}>
-          <Space y={1}>
-            <ProductItemContainer
+      <Space y={2}>
+        <Space y={1}>
+          <ProductItemContainer
+            offer={selectedOffer}
+            defaultExpanded={true}
+            variant={props.requirePaymentConnection ? 'green' : undefined}
+          >
+            <ActionButtonsCar
+              priceIntent={props.priceIntent}
               offer={selectedOffer}
-              defaultExpanded={true}
-              variant={props.requirePaymentConnection ? 'green' : undefined}
-            >
-              <ActionButtonsCar
-                priceIntent={props.priceIntent}
-                offer={selectedOffer}
-                onUpdate={handleUpdate}
-              />
-            </ProductItemContainer>
-
-            <TotalAmount
-              {...selectedOffer.cost.net}
-              {...(props.requirePaymentConnection && {
-                discount: {
-                  reducedAmount: props.contract.premium.amount,
-                  explanation: t('TRIAL_COST_EXPLANATION'),
-                },
-              })}
+              onUpdate={handleUpdate}
             />
-          </Space>
-          <Space y={0.5}>
-            <InfoToastBar>
-              <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
-                {t('INFO_TOAST_CONTENT')}
-              </WithLink>
-            </InfoToastBar>
+          </ProductItemContainer>
 
-            <Space y={1}>
-              <Button onClick={handleSignAndPay} loading={loading}>
-                <SpaceFlex space={0.5} align="center">
-                  <BankIdIcon />
-                  {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-                </SpaceFlex>
-              </Button>
+          <TotalAmount
+            {...selectedOffer.cost.net}
+            {...(props.requirePaymentConnection && {
+              discount: {
+                reducedAmount: props.contract.premium.amount,
+                explanation: t('TRIAL_COST_EXPLANATION'),
+              },
+            })}
+          />
+        </Space>
+        <Space y={0.5}>
+          <InfoToastBar>
+            <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
+              {t('INFO_TOAST_CONTENT')}
+            </WithLink>
+          </InfoToastBar>
 
-              <TextWithLink
-                as="p"
-                size={{ _: 'xs', md: 'sm' }}
-                align="center"
-                balance={true}
-                color="textSecondary"
-                href={PageLink.privacyPolicy({ locale: routingLocale })}
-                target="_blank"
-              >
-                {t('checkout:SIGN_DISCLAIMER')}
-              </TextWithLink>
-            </Space>
+          <Space y={1}>
+            <Button onClick={handleSignAndPay} loading={loading}>
+              <SpaceFlex space={0.5} align="center">
+                <BankIdIcon />
+                {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+              </SpaceFlex>
+            </Button>
+
+            <TextWithLink
+              as="p"
+              size={{ _: 'xs', md: 'sm' }}
+              align="center"
+              balance={true}
+              color="textSecondary"
+              href={PageLink.privacyPolicy({ locale: routingLocale })}
+              target="_blank"
+            >
+              {t('checkout:SIGN_DISCLAIMER')}
+            </TextWithLink>
           </Space>
         </Space>
       </Space>
@@ -211,29 +176,6 @@ const TrialOffer = (props: TrialOfferProps) => {
       <Text align="center">{t('TRIAL_HEADING')}</Text>
       <ProductItemContractContainerCar contract={props.contract} />
     </Space>
-  )
-}
-
-const StyledRestartIcon = styled(RestartIcon)({
-  // Optically align RestartIcon
-  position: 'relative',
-  top: 2,
-})
-
-type ReplaceTextProps = TextProps & {
-  text: string
-  children: string
-}
-
-const ReplaceText = ({ text, children, ...props }: ReplaceTextProps) => {
-  const placeholder = '{}'
-  const [before, after] = children.split(placeholder, 2)
-  return (
-    <>
-      {before}
-      <Text {...props}>{text}</Text>
-      {after}
-    </>
   )
 }
 
