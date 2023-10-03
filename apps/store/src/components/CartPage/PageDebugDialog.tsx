@@ -5,6 +5,7 @@ import { Space } from 'ui'
 import { CopyToClipboard } from '@/components/DebugDialog/CopyToClipboard'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
+import { DebugTextKeys } from '@/components/DebugDialog/DebugTextKeys'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -16,6 +17,7 @@ export const PageDebugDialog = () => {
         <LinkToCartSection />
         <LinkToRetargetingSection />
         <DebugShopSessionSection />
+        <DebugTextKeys />
       </Space>
     </DebugDialog>
   )
