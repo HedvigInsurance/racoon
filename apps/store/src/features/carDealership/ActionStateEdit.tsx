@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { theme } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { CarMileageField } from '@/components/PriceCalculator/CarMileageField'
@@ -20,6 +21,8 @@ type EditingStateProps = {
 }
 
 export const ActionStateEdit = (props: EditingStateProps) => {
+  const { t } = useTranslation('carDealership')
+
   const handleChangeTierLevel = () => {
     datadogRum.addAction('Offer Car Tier Level Change')
   }
@@ -68,11 +71,11 @@ export const ActionStateEdit = (props: EditingStateProps) => {
       </InputWrapper>
 
       <ButtonWrapper>
-        <ActionButton type="submit" variant="primary" loading={props.loading}>
-          Save
+        <ActionButton type="submit" variant="secondary-alt" loading={props.loading}>
+          {t('EDIT_OFFER_SAVE')}
         </ActionButton>
         <ActionButton type="button" variant="ghost" onClick={handleClickCancel}>
-          Cancel
+          {t('EDIT_OFFER_CANCEL')}
         </ActionButton>
       </ButtonWrapper>
     </FormWrapper>
