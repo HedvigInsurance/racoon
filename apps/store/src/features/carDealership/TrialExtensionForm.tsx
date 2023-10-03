@@ -163,7 +163,7 @@ export const TrialExtensionForm = (props: Props) => {
           </Space>
           <Space y={0.5}>
             <InfoToastBar>
-              <WithLink href={'/api/redirect/appstore'} target="_blank">
+              <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
                 {t('INFO_TOAST_CONTENT')}
               </WithLink>
             </InfoToastBar>

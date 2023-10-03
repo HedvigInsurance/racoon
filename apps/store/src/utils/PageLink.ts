@@ -163,6 +163,10 @@ export const PageLink = {
     url.searchParams.set('locale', locale)
     return url
   },
+
+  apiAppStoreRedirect: () => {
+    return new URL(`/api/redirect/appstore`, ORIGIN_URL)
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
