@@ -17,16 +17,12 @@ const GlobalBanner = () => {
 
   return (
     <Banner variant={banner.variant} handleClose={handleClose}>
-      <Ellipsis dangerouslySetInnerHTML={{ __html: banner.content }} />
+      <Content dangerouslySetInnerHTML={{ __html: banner.content }} />
     </Banner>
   )
 }
 
-const Ellipsis = styled.span({
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-
+const Content = styled.span({
   // GlobalBanner receives a HTML formatted string.
   // This is meant to style important text wrapped into <b> tags
   '& > b': {
