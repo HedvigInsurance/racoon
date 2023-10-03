@@ -1,6 +1,6 @@
 # Racoon 🦝
 
-Proof of concept monorepo to support all purchase journey related projects.
+Monorepo to for everything related to Hedvig.com.
 
 ## Why Racoon?
 
@@ -31,7 +31,7 @@ yarn
 
 #### Environment variables
 
-Ask someone from the Purchase Journey team to help you out :)
+Ask someone from the Web domain team to help you out :)
 
 If you're already part of the Vercel-team you can run:
 
@@ -48,7 +48,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-For deployment, pulling translations, using CMS, etc you will need access tokens. Refer to Notion for setup details
+For deployment, updating translations, using CMS, etc. you will need access tokens. Refer to Notion for setup details.
 
 #### Running a specific package
 
@@ -56,20 +56,20 @@ For deployment, pulling translations, using CMS, etc you will need access tokens
 yarn dev --filter=store
 ```
 
-Read more about package filtering in turboreo [here](https://turborepo.org/docs/core-concepts/filtering).
+Refer to the Turborepo documentation about [package filtering](https://turborepo.org/docs/core-concepts/filtering) for more details.
 
 ## What's inside?
 
-This Turborepo includes the following packages and apps:
+This Turborepo monorepo includes the following packages and apps:
 
 ### Apps & Packages
 
-- `store`: Hedvig Coverage Store
-- `ui`: Hedvig React UI library
+- `store`: Hedvig.com website
+- `ui`: Hedvig UI library (React)
 - `scripts`: ESLint configurations
 - `tsconfig`: TypeScript configs used throughout the monorepo
 
-Each package and app is 100% Typescript.
+Every package/app is 100% written in Typescript.
 
 Below is an up-to-date visualization of the files and folders that make up the repository:
 
