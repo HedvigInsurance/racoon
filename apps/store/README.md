@@ -1,10 +1,10 @@
-# Racoon | Coverage Store
+# Racoon | Store
 
-Hedvig Coverage Store.
+The Hedvig.com Website.
 
-## Storyblok
+## [Storyblok](https://www.storyblok.com/home)
 
-Storyblok is the CMS we use for editors to edit the content (text, images, videos, etc) on hedvig.com. Storyblok is a headless, modular CMS where you build pages with blocks.
+Storyblok is the CMS we use for editors to edit the content (text, images, videos, etc.) on hedvig.com. Storyblok is a headless, modular CMS where you build pages with blocks.
 
 The schema for blocks are defined in the Storyblok UI and corresponds to a component implementation in `src/blocks`.
 
@@ -142,17 +142,3 @@ We use a few custom headers when communicating with the API. These are:
 ## Page Debug Menu
 
 To show the page debug menu, press `Ctrl + d`. The menu will show the current shop session ID and other helpful information based on the page your are viewing.
-
-## Feature: Retargeting
-
-Entry point: `/{LOCALE}/session/resume?shopSessionId={SHOP_SESSION_ID}`
-
-This feature is used to re-target users who have started a shop session but not completed it. Users are sent here via CRM (email). The page shows a loading state while determining the next step. The next step is determined as follows:
-
-- If the user has a non-empty cart, they are redirected to the cart page.
-- If the user has confirmed a single price intent, they are redirected to the relevant product page.
-- If the user has confirmed multiple price intents, one offer per price intent is added, and the user is redirected to the cart page.
-
-Additional query parameters:
-
-- `?code={CAMPAIGN_CODE}`: Set a campaign code for the session
