@@ -10,16 +10,12 @@ type Story = StoryObj<typeof TrialExtensionForm>
 const meta: Meta<typeof TrialExtensionForm> = {
   title: 'Car Dealership / Trial Extension Form',
   component: TrialExtensionForm,
+  parameters: {
+    grid: '1/3',
+  },
 }
 
-export const WithPaymentConnected: Story = {
-  args: {
-    contract: CAR_TRIAL_DATA_QUERY.trialContract,
-    priceIntent: CAR_TRIAL_DATA_QUERY.shopSession.priceIntents[0]!,
-    shopSession: CAR_TRIAL_DATA_QUERY.shopSession,
-    requirePaymentConnection: false,
-  },
-
+const Template: Story = {
   render(args) {
     return (
       <AppErrorProvider>
@@ -30,6 +26,24 @@ export const WithPaymentConnected: Story = {
         </BankIdContextProvider>
       </AppErrorProvider>
     )
+  },
+}
+
+export const WithoutPaymentConnected = {
+  ...Template,
+  args: {
+    contract: CAR_TRIAL_DATA_QUERY.trialContract,
+    priceIntent: CAR_TRIAL_DATA_QUERY.shopSession.priceIntents[0]!,
+    shopSession: CAR_TRIAL_DATA_QUERY.shopSession,
+    requirePaymentConnection: true,
+  },
+}
+
+export const WithPaymentConnected = {
+  ...Template,
+  args: {
+    ...WithoutPaymentConnected.args,
+    requirePaymentConnection: false,
   },
 }
 
