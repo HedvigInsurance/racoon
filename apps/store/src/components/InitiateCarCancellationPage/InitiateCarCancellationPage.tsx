@@ -32,10 +32,7 @@ export const InitiateCarCancellationPage = (props: Props) => {
     skip: !isAuthenticated,
     onError: showError,
     onCompleted(data) {
-      const bankSigneringContract = data.contract
-        ? convertToBankSigneringContract(data.contract)
-        : undefined
-
+      const bankSigneringContract = convertToBankSigneringContract(data.contract)
       if (!bankSigneringContract) {
         datadogLogs.logger.warn(
           'Rendered InitiateCarCancellationPage without BankSigneringContract',
