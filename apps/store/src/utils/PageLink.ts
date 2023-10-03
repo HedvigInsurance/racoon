@@ -167,6 +167,9 @@ export const PageLink = {
   apiAppStoreRedirect: () => {
     return new URL(`/api/redirect/appstore`, ORIGIN_URL)
   },
+  fourOhFour: ({ locale }: BaseParams = {}) => {
+    return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {

@@ -1,4 +1,5 @@
 import { type QueryHookOptions } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -6,6 +7,7 @@ import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery, type CarTrialExtensionQuery } from '@/services/apollo/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { CAR_TRIAL_DATA_QUERY, type TrialExtension } from './carDealershipFixtures'
 import { LoadingSkeleton } from './LoadingSkeleton'
@@ -73,10 +75,17 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   const shopSessionId = typeof queryParam === 'string' ? queryParam : undefined
 
   const { data } = useCarTrialExtensionQuery({
-    variables: shopSessionId ? { shopSessionId: shopSessionId } : undefined,
+    variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
     onCompleted(data) {
       params.onCompleted?.(getTrialExtension(data))
+    },
+    onError(error) {
+      datadogLogs.logger.warn('Car dealership | Failed to load trial data', {
+        name: error.name,
+        message: error.message,
+      })
+      router.push(PageLink.fourOhFour())
     },
   })
 
