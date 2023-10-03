@@ -1,12 +1,5 @@
 'use client'
 
-import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
-import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
+import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 
-export const PageDebugDialog = () => {
-  return (
-    <DebugDialog>
-      <DebugShopSessionSection />
-    </DebugDialog>
-  )
-}
+export const PageDebugDialog = DefaultDebugDialog

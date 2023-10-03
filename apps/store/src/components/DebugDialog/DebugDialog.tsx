@@ -5,12 +5,14 @@ import styled from '@emotion/styled'
 import { type ReactNode, useEffect, useState } from 'react'
 import { Dialog, mq, theme } from 'ui'
 
+const CTRL_SHIFT_D = '∆'
+
 export const DebugDialog = (props: { children: ReactNode }) => {
   const [isOpen, setOpen] = useState(false)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === 'd') {
+      if ((event.ctrlKey && event.key === 'd') || event.key === CTRL_SHIFT_D) {
         datadogRum.addAction('open debug-dialog')
         setOpen(true)
       }
