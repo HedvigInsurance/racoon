@@ -5,6 +5,7 @@
   "EDIT_OFFER_CANCEL": "Cancel",
   "EDIT_OFFER_SAVE": "Save",
   "INFO_TOAST_CONTENT": "No binding time. Cancel anytime in the [[Hedvig-app]].",
+  "NOTICE_TOAST_CONTENT": "Don't want to take this offer? [[Cancel it here]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Cancel",
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Yes, go ahead",
   "PAY_WITHOUT_EXTENSION_DIALOG_SUBTITLE": "We would like to remind you to sign another insurance in good time before your trial period with Hedvig has expired. Otherwise, you risk that your car will become uninsured.",
