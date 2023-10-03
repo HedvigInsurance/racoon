@@ -34,7 +34,11 @@ export const CarTrialExtensionBlock = (props: Props) => {
         dueDate.setDate(dueDate.getDate() + FOURTEEN_DAYS)
 
         if (today <= dueDate) {
-          addBanner(t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }), 'info')
+          addBanner(
+            t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }),
+            'info',
+            { force: true },
+          )
         }
       } else {
         addBanner(
@@ -42,6 +46,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
             dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
           }),
           'warning',
+          { force: true },
         )
       }
     },
