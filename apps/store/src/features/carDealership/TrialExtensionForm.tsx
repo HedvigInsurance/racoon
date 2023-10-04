@@ -81,6 +81,18 @@ export const TrialExtensionForm = (props: Props) => {
     })
   }
 
+  const TotalAmountComponent = (
+    <TotalAmount
+      {...selectedOffer.cost.net}
+      {...(props.requirePaymentConnection && {
+        discount: {
+          reducedAmount: props.contract.premium.amount,
+          explanation: t('TRIAL_COST_EXPLANATION'),
+        },
+      })}
+    />
+  )
+
   if (!userWantsExtension) {
     return (
       <Space y={4}>
@@ -90,7 +102,7 @@ export const TrialExtensionForm = (props: Props) => {
         />
 
         <Space y={2}>
-          <TotalAmount {...props.contract.premium} />
+          {TotalAmountComponent}
           <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
         </Space>
       </Space>
@@ -118,15 +130,7 @@ export const TrialExtensionForm = (props: Props) => {
             />
           </ProductItemContainer>
 
-          <TotalAmount
-            {...selectedOffer.cost.net}
-            {...(props.requirePaymentConnection && {
-              discount: {
-                reducedAmount: props.contract.premium.amount,
-                explanation: t('TRIAL_COST_EXPLANATION'),
-              },
-            })}
-          />
+          {TotalAmountComponent}
         </Space>
         <Space y={0.5}>
           <InfoToastBar>
