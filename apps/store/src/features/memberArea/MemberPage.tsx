@@ -48,7 +48,6 @@ export const MemberPage = () => {
         </Navigation>
 
         <div>
-          <p>TODO: Body</p>
           {loading && 'Loading...'}
           {data && <MemberInfo data={data} />}
         </div>
@@ -68,10 +67,7 @@ const MemberInfo = ({ data }: MemberInfoProps) => {
       <Heading as={'h2'} variant="standard.32">
         {greeting}
       </Heading>
-      <PaymentsSection hasActivePaymentConnection={currentMember.hasActivePaymentConnection} />
-      <pre style={{ width: '100%' }}>
-        <code>{JSON.stringify(currentMember, null, 2)}</code>
-      </pre>
+      <PaymentsSection />
     </>
   )
 }
