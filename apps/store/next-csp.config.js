@@ -46,6 +46,9 @@ const scriptSrc = [
   // Affiliate tracking
   'https://addrevenue.io',
 
+  // Clearbits partnership tracking
+  'https://tag.clearbitscripts.com',
+
   'https://vercel.live',
   "'unsafe-inline'",
   "'unsafe-eval'",
