@@ -1,0 +1,9 @@
+schema: schema.graphql
+include:
+  - schema.graphql
+  - src/graphql/*.graphql
+extensions:
+  endpoints:
+    dev:
+      url: https://apollo-router.dev.hedvigit.com
+      introspect: false
