@@ -1,0 +1,26 @@
+query MemberAreaMemberInfo {
+  currentMember {
+    activeContracts {
+      id
+      exposureDisplayName
+      currentAgreement {
+        activeFrom
+        activeTo
+        certificateUrl
+        displayItems {
+          displayTitle
+          displayValue
+        }
+        premium {
+          amount
+          currencyCode
+        }
+        productVariant {
+          displayName
+          typeOfContract
+          termsVersion
+        }
+      }
+    }
+  }
+}

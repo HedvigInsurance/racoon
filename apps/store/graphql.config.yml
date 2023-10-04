@@ -1,7 +1,7 @@
 schema: schema.graphql
 include:
   - schema.graphql
-  - src/graphql/*.graphql
+  - src/*.graphql
 extensions:
   endpoints:
     dev:
