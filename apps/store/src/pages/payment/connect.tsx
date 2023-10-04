@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { ErrorDialog } from '@/components/PaymentConnectPage/ErrorDialog'
 import { IdleState } from '@/components/PaymentConnectPage/IdleState'
+import { Layout } from '@/components/PaymentConnectPage/Layout'
 import { ReadyState } from '@/components/PaymentConnectPage/ReadyState'
 import { SuccessState } from '@/components/PaymentConnectPage/SuccessState'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -58,7 +59,9 @@ const PaymentConnectPage = () => {
   return (
     <>
       {state.trustlyUrl && (
-        <ReadyState trustlyUrl={state.trustlyUrl} onSuccess={handleSuccess} onFail={handleFail} />
+        <Layout>
+          <ReadyState trustlyUrl={state.trustlyUrl} onSuccess={handleSuccess} onFail={handleFail} />
+        </Layout>
       )}
 
       <ErrorDialog open={state.type === 'FAILED'} onRetry={handleRetry} />
