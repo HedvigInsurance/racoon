@@ -2,8 +2,7 @@ import styled from '@emotion/styled'
 import { t } from 'i18next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Button } from 'ui'
-import { HedvigLogo, mq, theme } from 'ui'
+import { Button, Heading, HedvigLogo, mq, theme } from 'ui'
 import { LogoWrapper, LogoLink } from '@/components/Header/Header'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import {
@@ -12,6 +11,7 @@ import {
 } from '@/services/apollo/generated'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { PageLink } from '@/utils/PageLink'
+import { PaymentsSection } from './PaymentsSection'
 
 export const MemberPage = () => {
   const { data, loading } = useMemberAreaMemberInfoQuery()
@@ -61,10 +61,18 @@ type MemberInfoProps = {
   data: MemberAreaMemberInfoQuery
 }
 const MemberInfo = ({ data }: MemberInfoProps) => {
+  const { currentMember } = data
+  const greeting = `Hello, ${currentMember.firstName} ${currentMember.lastName}`
   return (
-    <pre style={{ width: '100%' }}>
-      <code>{JSON.stringify(data, null, 2)}</code>
-    </pre>
+    <>
+      <Heading as={'h2'} variant="standard.32">
+        {greeting}
+      </Heading>
+      <PaymentsSection hasActivePaymentConnection={currentMember.hasActivePaymentConnection} />
+      <pre style={{ width: '100%' }}>
+        <code>{JSON.stringify(currentMember, null, 2)}</code>
+      </pre>
+    </>
   )
 }
 
