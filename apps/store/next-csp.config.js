@@ -48,6 +48,7 @@ const scriptSrc = [
 
   // Clearbits partnership tracking
   'https://tag.clearbitscripts.com',
+  'https://x.clearbitjs.com',
 
   'https://vercel.live',
   "'unsafe-inline'",
