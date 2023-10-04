@@ -5,7 +5,7 @@ import { Button } from 'ui'
 type ButtonProps = ComponentProps<typeof Button>
 
 type Props = LinkProps &
-  Partial<Pick<HTMLAnchorElement, 'target' | 'title'>> &
+  Partial<Pick<HTMLAnchorElement, 'target' | 'title' | 'download'>> &
   Pick<ButtonProps, 'variant' | 'size' | 'loading' | 'onClick' | 'children' | 'className'>
 
 export const ButtonNextLink = (props: Props) => {

@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { Text, theme } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MemberContractFragment } from '@/services/apollo/generated'
+import { TravelCertificateButton } from './TravelCertificateButton'
 
 type InsuranceCardProps = {
   contract: MemberContractFragment
@@ -8,6 +10,7 @@ type InsuranceCardProps = {
 
 export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
   const { currentAgreement, exposureDisplayName } = contract
+
   return (
     <Card>
       <Info>
@@ -15,6 +18,17 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
           {currentAgreement.productVariant.displayName}
         </Text>
         <Text color="textTranslucentTertiary">{exposureDisplayName}</Text>
+        {currentAgreement.certificateUrl && (
+          <ButtonNextLink
+            href={currentAgreement.certificateUrl}
+            download={''}
+            variant="secondary"
+            size="small"
+          >
+            Insurance certificate
+          </ButtonNextLink>
+        )}
+        <TravelCertificateButton contractId={contract.id} />
       </Info>
       <PillowBackground />
     </Card>
