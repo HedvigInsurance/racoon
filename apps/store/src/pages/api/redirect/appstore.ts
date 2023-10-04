@@ -5,6 +5,8 @@ import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { LOCALE_COOKIE_KEY, FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { isIsoLocale, isRoutingLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
 
+const FALLBACK_APP_LINK = 'https://hedvig.page.link/home_app_fallback_se'
+
 const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
   console.debug('QR code | Initiating redirect to AppStore')
   const cookieLocale = getCookie(LOCALE_COOKIE_KEY, { req, res })
@@ -21,8 +23,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse<void>) => {
     return
   }
 
-  console.info(`QR code | Fallback redirect too App Store: ${req.headers['user-agent']}`)
-  res.redirect(getAppStoreLink('apple', locale).toString())
+  console.info(`QR code | Fallback redirect: ${req.headers['user-agent']}`)
+  res.redirect(FALLBACK_APP_LINK)
   return
 }
 
