@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { FormEventHandler } from 'react'
@@ -6,6 +7,8 @@ import { BankIdIcon, Button, Text, theme } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+
+const SSN_FIELD_NAME = 'ssn'
 
 export const LoginPage = () => {
   const router = useRouter()
@@ -22,13 +25,21 @@ export const LoginPage = () => {
         <title>Hedvig member login</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
-      <LoginForm onSuccess={handleLoginSuccess} />
+      <LoginForm
+        defaultSsn={singleQueryParam(router.query, SSN_FIELD_NAME)}
+        onSuccess={handleLoginSuccess}
+      />
     </>
   )
 }
 
-const SSN_FIELD_NAME = 'ssn'
-const LoginForm = ({ onSuccess }: { onSuccess: any }) => {
+const LoginForm = ({
+  defaultSsn = '',
+  onSuccess,
+}: {
+  defaultSsn?: string
+  onSuccess: () => void
+}) => {
   const { startLogin, currentOperation } = useBankIdContext()
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
@@ -47,7 +58,7 @@ const LoginForm = ({ onSuccess }: { onSuccess: any }) => {
             name={SSN_FIELD_NAME}
             label="Personal number"
             autoFocus={true}
-            defaultValue={''}
+            defaultValue={defaultSsn}
             required={true}
           />
         </FieldWrapper>
@@ -74,3 +85,11 @@ const FieldWrapper = styled.div({
   marginTop: theme.space.lg,
   marginBottom: theme.space.xxs,
 })
+
+const singleQueryParam = (query: NextParsedUrlQuery, key: string): string | undefined => {
+  const val = query[key]
+  if (Array.isArray(val)) {
+    return val[0]
+  }
+  return val
+}
