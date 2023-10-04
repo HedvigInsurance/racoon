@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { Text, theme } from 'ui'
-import { Contract } from '@/services/apollo/generated'
+import { MemberContractFragment } from '@/services/apollo/generated'
 
 type InsuranceCardProps = {
-  contract: Contract
+  contract: MemberContractFragment
 }
 
 export const InsuranceCard = ({ contract }: InsuranceCardProps) => {

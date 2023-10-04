@@ -1,30 +1,34 @@
 query MemberAreaMemberInfo {
   currentMember {
     activeContracts {
-      id
-      exposureDisplayName
-      currentAgreement {
-        activeFrom
-        activeTo
-        certificateUrl
-        displayItems {
-          displayTitle
-          displayValue
-        }
-        premium {
-          amount
-          currencyCode
-        }
-        productVariant {
-          displayName
-          typeOfContract
-          termsVersion
-        }
-      }
+      ...MemberContract
     }
     firstName
     lastName
     email
     hasActivePaymentConnection
   }
+}
+
+fragment MemberContract on Contract {
+  id
+  currentAgreement {
+    activeFrom
+    activeTo
+    certificateUrl
+    displayItems {
+      displayTitle
+      displayValue
+    }
+    premium {
+      amount
+      currencyCode
+    }
+    productVariant {
+      displayName
+      typeOfContract
+      termsVersion
+    }
+  }
+  exposureDisplayName
 }

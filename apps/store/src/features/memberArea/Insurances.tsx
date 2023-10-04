@@ -13,7 +13,6 @@ export const Insurances = ({ data }: MemberInfoProps) => {
       <Heading as="h1">Your insurances</Heading>
       <Grid>
         {data.currentMember.activeContracts.map((contract) => (
-          // @ts-expect-error ignore
           <InsuranceCard key={contract.id} contract={contract} />
         ))}
       </Grid>
