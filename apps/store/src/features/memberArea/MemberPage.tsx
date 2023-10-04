@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button, Heading, HedvigLogo, mq, theme } from 'ui'
 import { LogoWrapper, LogoLink } from '@/components/Header/Header'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
+import { Insurances } from '@/features/memberArea/Insurances'
 import {
   MemberAreaMemberInfoQuery,
   useMemberAreaMemberInfoQuery,
@@ -68,6 +69,9 @@ const MemberInfo = ({ data }: MemberInfoProps) => {
       <Heading as={'h2'} variant="standard.32">
         {greeting}
       </Heading>
+      <Insurances data={data} />
+      <br />
+      <br />
       <PaymentsSection />
     </>
   )
