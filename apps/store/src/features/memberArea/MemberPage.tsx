@@ -47,10 +47,11 @@ export const MemberPage = () => {
           </NavigationList>
         </Navigation>
 
-        <div>
+        <Content>
+          <p>TODO: Body</p>
           {loading && 'Loading...'}
           {data && <MemberInfo data={data} />}
-        </div>
+        </Content>
       </Main>
     </>
   )
@@ -133,5 +134,13 @@ const NavigationList = styled.ul({
   [mq.lg]: {
     flexDirection: 'column',
     gap: theme.space.xl,
+  },
+})
+
+const Content = styled.div({
+  paddingInline: theme.space.md,
+
+  [mq.lg]: {
+    paddingInline: theme.space.xl,
   },
 })
