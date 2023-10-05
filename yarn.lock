@@ -11013,6 +11013,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@upstash/redis@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@upstash/redis@npm:1.22.0"
+  dependencies:
+    isomorphic-fetch: ^3.0.0
+  checksum: 894b7d4e318c55fdcbf0f322efd9ace94a37f1b8f9d7cb2cdf8b8b4859814379665c7e00feef3565578455d98492710d14ed4a2b043ec412b5d640a4d5a2dd55
+  languageName: node
+  linkType: hard
+
 "@vercel/edge-config-fs@npm:0.1.0":
   version: 0.1.0
   resolution: "@vercel/edge-config-fs@npm:0.1.0"
@@ -11026,6 +11035,15 @@ __metadata:
   dependencies:
     "@vercel/edge-config-fs": 0.1.0
   checksum: b391d20385aae2c5fab24ed25f55320441b28ffa128a4dc720097e59cb24079fe63ecd5ca1d0b5256e9f0046254fbf5a7853127b0558d218c202f3a68ebfcd38
+  languageName: node
+  linkType: hard
+
+"@vercel/kv@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@vercel/kv@npm:0.2.3"
+  dependencies:
+    "@upstash/redis": 1.22.0
+  checksum: 3a2b1e3a0ebf605b69341b449bd81edde94f9d00393cc6971759b950c90cff782e1e4fa5daf672f4769aa8301e00f7b7fdec07cdd98d40530652d83c043125ed
   languageName: node
   linkType: hard
 
@@ -18224,6 +18242,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-fetch@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "isomorphic-fetch@npm:3.0.0"
+  dependencies:
+    node-fetch: ^2.6.1
+    whatwg-fetch: ^3.4.1
+  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
+  languageName: node
+  linkType: hard
+
 "isomorphic-ws@npm:5.0.0, isomorphic-ws@npm:^5.0.0":
   version: 5.0.0
   resolution: "isomorphic-ws@npm:5.0.0"
@@ -23932,6 +23960,7 @@ __metadata:
     "@types/react-dom": 18.2.8
     "@types/uuid": 9.0.4
     "@vercel/edge-config": 0.4.1
+    "@vercel/kv": 0.2.3
     "@vercel/otel": 0.3.0
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
@@ -26132,7 +26161,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:3.6.19":
+"whatwg-fetch@npm:3.6.19, whatwg-fetch@npm:^3.4.1":
   version: 3.6.19
   resolution: "whatwg-fetch@npm:3.6.19"
   checksum: 2896bc9ca867ea514392c73e2a272f65d5c4916248fe0837a9df5b1b92f247047bc76cf7c29c28a01ac6c5fb4314021d2718958c8a08292a96d56f72b2f56806

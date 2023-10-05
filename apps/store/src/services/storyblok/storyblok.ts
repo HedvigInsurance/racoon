@@ -10,6 +10,7 @@ import {
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { AnnouncementBlock } from '@/blocks/AnnouncementBlock'
+import { AverageRatingBlock } from '@/blocks/AverageRatingBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { CardLinkBlock } from '@/blocks/CardLinkBlock'
@@ -245,6 +246,7 @@ export const initStoryblok = () => {
     AccordionBlock,
     AccordionItemBlock,
     AnnouncementBlock,
+    AverageRatingBlock,
     BannerBlock,
     ButtonBlock,
     CheckListBlock,
