@@ -33,6 +33,10 @@ const Template: Story = {
 const props = {
   priceTemplate: SE_APARTMENT_BRF,
   productData: productData,
+  averageRating: {
+    score: 5,
+    reviewCount: 1000,
+  },
   globalStory: globalStory,
   trustpilot: null,
 }
