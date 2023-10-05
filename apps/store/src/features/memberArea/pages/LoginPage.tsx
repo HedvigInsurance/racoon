@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import Head from 'next/head'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FormEventHandler } from 'react'
 import { BankIdIcon, Button, Text, theme } from 'ui'
@@ -25,6 +26,28 @@ export const LoginPage = () => {
         <title>Hedvig member login</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
+      <SpaceFlex direction="horizontal" align="center">
+        <ImageWrapper>
+          <Image
+            src={'https://a.storyblok.com/f/165473/1566x1308/86d40cd5d1/seal-demo-image.png'}
+            alt={'Smiling seal'}
+            fill={true}
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+        </ImageWrapper>
+        <ImageWrapper>
+          <Image
+            src={'https://a.storyblok.com/f/165473/1566x1308/86d40cd5d1/seal-demo-image.png'}
+            alt={'Smiling seal'}
+            fill={true}
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+        </ImageWrapper>
+      </SpaceFlex>
       <LoginForm
         defaultSsn={singleQueryParam(router.query, SSN_FIELD_NAME)}
         onSuccess={handleLoginSuccess}
@@ -72,6 +95,12 @@ const LoginForm = ({
     </FormWrapper>
   )
 }
+
+const ImageWrapper = styled.div({
+  width: '50%',
+  aspectRatio: '1/1',
+  position: 'relative',
+})
 
 const FormWrapper = styled(SpaceFlex)({
   marginTop: theme.space.xxxl,

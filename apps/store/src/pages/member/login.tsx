@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { LoginPage } from '@/features/memberArea/LoginPage'
+import { LoginPage } from '@/features/memberArea/pages/LoginPage'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
