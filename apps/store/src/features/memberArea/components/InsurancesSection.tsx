@@ -1,14 +1,10 @@
 import styled from '@emotion/styled'
 import { Heading, mq } from 'ui'
-import { MemberAreaMemberInfoQuery } from '@/services/apollo/generated'
+import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
 
-type MemberInfoProps = {
-  data: MemberAreaMemberInfoQuery
-}
-
-export const Insurances = ({ data }: MemberInfoProps) => {
-  const { currentMember } = data
+export const Insurances = () => {
+  const currentMember = useMemberAreaInfo()
   const greeting = `Hello, ${currentMember.firstName} ${currentMember.lastName}`
   return (
     <>
@@ -19,7 +15,7 @@ export const Insurances = ({ data }: MemberInfoProps) => {
         Your insurances
       </Heading>
       <Grid>
-        {data.currentMember.activeContracts.map((contract) => (
+        {currentMember.activeContracts.map((contract) => (
           <InsuranceCard key={contract.id} contract={contract} />
         ))}
       </Grid>
