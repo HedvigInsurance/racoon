@@ -16,12 +16,12 @@ export const Header = () => (
 )
 
 const HeaderWrapper = styled.header({
-  width: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-
-  top: 0,
+  maxWidth: '80rem',
+  width: '100%',
+  marginInline: 'auto',
 
   height: MENU_BAR_HEIGHT_MOBILE,
   paddingInline: theme.space.md,

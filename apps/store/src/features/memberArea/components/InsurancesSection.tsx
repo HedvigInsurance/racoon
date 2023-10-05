@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Heading, mq } from 'ui'
+import { Heading, mq, theme } from 'ui'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
 
@@ -25,11 +25,12 @@ export const Insurances = () => {
 
 const Grid = styled.div({
   display: 'grid',
-  gridGap: '1rem',
+  gridGap: theme.space.md,
   marginTop: '1rem',
 
   [mq.lg]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
+    gridGap: theme.space.xxl,
   },
 })
