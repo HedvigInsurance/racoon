@@ -35,7 +35,7 @@ export type BankIdLoginOptions = {
   onSuccess: () => void
 }
 
-export type StartLoginOptions = { ssn: string; onSuccess?: () => void }
+export type StartLoginOptions = { ssn: string; onSuccess?: () => void | Promise<void> }
 
 export type CheckoutSignOptions = {
   customerAuthenticationStatus: ShopSessionAuthenticationStatus

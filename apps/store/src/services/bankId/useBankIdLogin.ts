@@ -35,10 +35,11 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
 
       startLogin({
         ...options,
-        onSuccess() {
+        async onSuccess() {
           datadogRum.addAction('bankIdLogin complete')
           onLoginPromptCompletedRef.current?.()
-          options.onSuccess?.()
+          // Wrap into Promise.resolve to allow both sync and async callbacks
+          await Promise.resolve(options.onSuccess?.())
           dispatch({ type: 'success' })
         },
       })
