@@ -1,11 +1,10 @@
-import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import Head from 'next/head'
 import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 const MAX_SCORE = 5
 
@@ -53,25 +52,12 @@ export const ProductAverageRatingBlock = () => {
                 Based on {averageRating.reviewCount} reviews
               </Text>
 
-              {/* TODO: extract this into a reusable Tooltip component (ProductItem/StartDate) */}
-              <TooltipPrimitive.Provider>
-                <TooltipPrimitive.Root delayDuration={0}>
-                  <TooltipPrimitive.Trigger asChild={true}>
-                    <button style={{ marginTop: 2 }}>
-                      <InfoIcon color={theme.colors.textSecondary} />
-                    </button>
-                  </TooltipPrimitive.Trigger>
-                  <TooltipPrimitive.Portal>
-                    <Content sideOffset={5} onClick={(event) => event.stopPropagation()}>
-                      <Text size="xs" color="textNegative" align="center">
-                        {/* TODO: lokalise this */}
-                        These ratings are obtained from users that have made a claim
-                      </Text>
-                      <TooltipPrimitive.Arrow />
-                    </Content>
-                  </TooltipPrimitive.Portal>
-                </TooltipPrimitive.Root>
-              </TooltipPrimitive.Provider>
+              {/* TODO: lokalise this */}
+              <Tooltip message="These ratings are obtained from users that have made a claim">
+                <button style={{ marginTop: 2 }}>
+                  <InfoIcon color={theme.colors.textSecondary} />
+                </button>
+              </Tooltip>
             </SpaceFlex>
           </Wrapper>
         </GridLayout.Content>
@@ -108,39 +94,6 @@ const Stars = styled.div<{ score: number }>(({ score }) => ({
     WebkitTextFillColor: 'transparent',
   },
 }))
-
-const slideUpAndFadeAnimation = keyframes({
-  '0%': { opacity: 0, transform: 'translateY(10px)' },
-  '100%': { opacity: 1, transform: 'translateY(0)' },
-})
-
-const slideDownAndFadeAnimation = keyframes({
-  '0%': { opacity: 0, transform: 'translateY(-10px)' },
-  '100%': { opacity: 1, transform: 'translateY(0)' },
-})
-
-const Content = styled(TooltipPrimitive.Content)({
-  paddingInline: theme.space.sm,
-  paddingBlock: theme.space.xs,
-  paddingBottom: `calc(${theme.space.xs} + 2px)`,
-  backgroundColor: theme.colors.gray1000,
-  borderRadius: theme.radius[1],
-
-  maxWidth: '20rem',
-  maxHeight: 'var(--radix-tooltip-content-available-height)',
-
-  animationDuration: '0.6s',
-  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  transformOrigin: 'var(--radix-tooltip-content-transform-origin)',
-
-  '&[data-side="top"]': {
-    animationName: slideUpAndFadeAnimation,
-  },
-
-  '&[data-side="bottom"]': {
-    animationName: slideDownAndFadeAnimation,
-  },
-})
 
 const getProductStructuredData = (product: Product, averageRating: AverageRating) => {
   return {
