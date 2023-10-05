@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { LoginPage } from '@/features/memberArea/LoginPage'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -12,8 +13,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   // TODO: If logged in - redirect to next, preserving other query params, default to /member
 
+  const translations = await serverSideTranslations(locale)
   return {
-    props: {},
+    props: {
+      ...translations,
+    },
   }
 }
 

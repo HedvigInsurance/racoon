@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { MemberPage } from '@/features/memberArea/MemberPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { getAccessToken } from '@/services/authApi/persist'
@@ -24,8 +25,11 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (context)
 
   const apolloClient = await initializeApolloServerSide({ locale, req, res })
 
+  const translations = await serverSideTranslations(locale)
   return addApolloState(apolloClient, {
-    props: {},
+    props: {
+      ...translations,
+    },
   })
 }
 export default MemberPage
