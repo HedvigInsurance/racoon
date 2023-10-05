@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Heading, mq } from 'ui'
 import { MemberAreaMemberInfoQuery } from '@/services/apollo/generated'
-import { InsuranceCard } from './components/InsuranceCard'
+import { InsuranceCard } from './InsuranceCard'
 
 type MemberInfoProps = {
   data: MemberAreaMemberInfoQuery
