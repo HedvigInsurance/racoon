@@ -8,10 +8,10 @@ export const Menu = () => {
     <Navigation>
       <NavigationList>
         <li>
-          <Link href={'/member'}>Insurances</Link>
+          <Link href={'/member/insurances'}>Insurances</Link>
         </li>
         <li>
-          <Link href={'/member/profile'}>Profile</Link>
+          <Link href={'/member/payments'}>Payments</Link>
         </li>
         <li>
           <Link href={'/member/claim'}>Make a claim</Link>
