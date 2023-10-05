@@ -8,6 +8,7 @@ import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 export const PaymentsSection = () => {
+  // Not using simplified hook, we need access to refetch
   const { data, refetch } = useMemberAreaMemberInfoQuery()
 
   if (data == null) {

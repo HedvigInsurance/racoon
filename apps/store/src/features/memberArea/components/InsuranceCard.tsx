@@ -19,12 +19,7 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
         </Text>
         <Text color="textTranslucentTertiary">{exposureDisplayName}</Text>
         {currentAgreement.certificateUrl && (
-          <ButtonNextLink
-            href={currentAgreement.certificateUrl}
-            download={''}
-            variant="secondary"
-            size="small"
-          >
+          <ButtonNextLink href={currentAgreement.certificateUrl} variant="secondary" size="small">
             Insurance certificate
           </ButtonNextLink>
         )}

@@ -1,16 +1,12 @@
 import Link from 'next/link'
 import { useCallback } from 'react'
 import { Button } from 'ui'
-import {
-  useMemberAreaMemberInfoQuery,
-  useTravelCertificateCreateMutation,
-} from '@/services/apollo/generated'
+import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
+import { useTravelCertificateCreateMutation } from '@/services/apollo/generated'
 import { formatAPIDate } from '@/utils/date'
 
 export const TravelCertificateButton = ({ contractId }: { contractId: string }) => {
-  // Using same query as expected parent components instead of prop-drilling currentMember.email
-  // Not sure it's production-quality solution
-  const { data } = useMemberAreaMemberInfoQuery()
+  const currentMember = useMemberAreaInfo()
   const [sendRequest, result] = useTravelCertificateCreateMutation()
 
   const handleRequestCertificate = useCallback(() => {
@@ -23,19 +19,14 @@ export const TravelCertificateButton = ({ contractId }: { contractId: string }) 
       variables: {
         input: {
           contractId,
-          email: data!.currentMember.email,
+          email: currentMember.email,
           isMemberIncluded: true,
           startDate: formatAPIDate(new Date()),
           coInsured: [],
         },
       },
     })
-  }, [contractId, data, sendRequest])
-
-  if (data == null) {
-    console.warn('Expected to have MemberAreaMemberInfoQuery.data')
-    return null
-  }
+  }, [contractId, currentMember, sendRequest])
 
   if (result.data != null) {
     return (
