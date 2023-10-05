@@ -1,34 +1,20 @@
-import styled from '@emotion/styled'
-import Head from 'next/head'
-import { Heading, mq, theme } from 'ui'
+import { NextPageWithLayout } from 'next'
+import { Heading } from 'ui'
 import { Insurances } from '@/features/memberArea/Insurances'
 import {
   MemberAreaMemberInfoQuery,
   useMemberAreaMemberInfoQuery,
 } from '@/services/apollo/generated'
-import { Header } from './components/Header'
-import { Menu } from './components/Menu'
+import { LayoutWithMenu } from './components/LayoutWithMenu'
 import { PaymentsSection } from './PaymentsSection'
 
-export const MemberPage = () => {
+export const MemberPage: NextPageWithLayout = () => {
   const { data, loading } = useMemberAreaMemberInfoQuery()
 
   return (
     <>
-      <Head>
-        <title>Member page</title>
-        <meta name="robots" content="noindex,follow" />
-      </Head>
-      <Header />
-      <Main>
-        <Menu />
-
-        <Content>
-          <p>TODO: Body</p>
-          {loading && 'Loading...'}
-          {data && <MemberInfo data={data} />}
-        </Content>
-      </Main>
+      {loading && 'Loading...'}
+      {data && <MemberInfo data={data} />}
     </>
   )
 }
@@ -52,21 +38,4 @@ const MemberInfo = ({ data }: MemberInfoProps) => {
   )
 }
 
-const Main = styled.main({
-  width: '100%',
-  display: 'grid',
-  gridTemplateRows: '60px 1fr',
-
-  [mq.lg]: {
-    gridTemplateColumns: '200px 1fr',
-    gridTemplateRows: 'auto',
-  },
-})
-
-const Content = styled.div({
-  paddingInline: theme.space.md,
-
-  [mq.lg]: {
-    paddingInline: theme.space.xl,
-  },
-})
+MemberPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
