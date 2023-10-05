@@ -7584,9 +7584,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-navigation-menu@npm:1.1.3":
-  version: 1.1.3
-  resolution: "@radix-ui/react-navigation-menu@npm:1.1.3"
+"@radix-ui/react-navigation-menu@npm:1.1.4":
+  version: 1.1.4
+  resolution: "@radix-ui/react-navigation-menu@npm:1.1.4"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@radix-ui/primitive": 1.0.1
@@ -7594,7 +7594,7 @@ __metadata:
     "@radix-ui/react-compose-refs": 1.0.1
     "@radix-ui/react-context": 1.0.1
     "@radix-ui/react-direction": 1.0.1
-    "@radix-ui/react-dismissable-layer": 1.0.4
+    "@radix-ui/react-dismissable-layer": 1.0.5
     "@radix-ui/react-id": 1.0.1
     "@radix-ui/react-presence": 1.0.1
     "@radix-ui/react-primitive": 1.0.3
@@ -7613,7 +7613,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 006b3df72fcbad1eb8db7ca157fed6c6517e036c4725c5b5083eadf7046429a5d23fbe4dde7acee5a2bfdcb71ba53ecbf859f1b5a2b33eac93e6e5410bc2d7e1
+  checksum: cdbb2621262597689a173011ec4745c219e5d8fe83965035bd8778c062b11ca7ac731178b8cdfdc33df3fc9d5e35d630dcf6c4a31a55428360f65c89f15e8f74
   languageName: node
   linkType: hard
 
@@ -23973,7 +23973,7 @@ __metadata:
     "@radix-ui/react-accordion": 1.1.2
     "@radix-ui/react-collapsible": 1.0.3
     "@radix-ui/react-dialog": 1.0.5
-    "@radix-ui/react-navigation-menu": 1.1.3
+    "@radix-ui/react-navigation-menu": 1.1.4
     "@radix-ui/react-radio-group": 1.1.3
     "@radix-ui/react-select": 1.2.2
     "@radix-ui/react-switch": 1.0.3
