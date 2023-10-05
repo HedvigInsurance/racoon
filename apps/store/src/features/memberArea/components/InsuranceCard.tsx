@@ -35,7 +35,6 @@ const Card = styled.div({
   position: 'relative',
   overflow: 'hidden',
   minHeight: '182px',
-  maxWidth: '343px',
   padding: `1.125rem ${theme.space.md}`,
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,

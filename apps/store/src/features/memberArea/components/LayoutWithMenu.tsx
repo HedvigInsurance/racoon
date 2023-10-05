@@ -16,7 +16,6 @@ export const LayoutWithMenu = ({ children }: Props) => {
       <Header />
       <Main>
         <Menu />
-
         <Content>{children}</Content>
       </Main>
     </>
@@ -24,20 +23,19 @@ export const LayoutWithMenu = ({ children }: Props) => {
 }
 
 const Main = styled.main({
-  width: '100%',
   display: 'grid',
   gridTemplateRows: '60px 1fr',
+  maxWidth: '80rem',
+  width: '100%',
+  marginInline: 'auto',
 
   [mq.lg]: {
-    gridTemplateColumns: '200px 1fr',
+    paddingTop: theme.space.xxl,
+    gridTemplateColumns: '18rem 1fr',
     gridTemplateRows: 'auto',
   },
 })
 
 const Content = styled.div({
   paddingInline: theme.space.md,
-
-  [mq.lg]: {
-    paddingInline: theme.space.xl,
-  },
 })
