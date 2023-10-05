@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Text, theme } from 'ui'
+import { HedvigSymbol, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MemberContractFragment } from '@/services/apollo/generated'
 import { TravelCertificateButton } from './TravelCertificateButton'
@@ -13,6 +13,9 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
 
   return (
     <Card>
+      <CardHeader>
+        <HedvigSymbol size="1.5rem" />
+      </CardHeader>
       <Info>
         <Text size="md" color="textNegative">
           {currentAgreement.productVariant.displayName}
@@ -32,6 +35,7 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
 
 const Card = styled.div({
   display: 'flex',
+  flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
   minHeight: '182px',
@@ -40,6 +44,12 @@ const Card = styled.div({
   borderRadius: theme.radius.md,
   boxShadow: theme.shadow.default,
   isolation: 'isolate',
+})
+
+const CardHeader = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
 })
 
 const PillowBackground = styled.div({
@@ -54,6 +64,7 @@ const PillowBackground = styled.div({
   filter: 'blur(20px)',
   backgroundImage: `url('https://a.storyblok.com/f/165473/832x832/fa27811442/hedvig-pillow-home.png')`,
   zIndex: -1,
+  pointerEvents: 'none',
 })
 
 const Info = styled.div({
