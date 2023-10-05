@@ -1,14 +1,14 @@
 import { NextPageWithLayout } from 'next'
 import { Heading } from 'ui'
-import { Insurances } from '@/features/memberArea/Insurances'
+import { Insurances } from '@/features/memberArea/components/Insurances'
 import {
   MemberAreaMemberInfoQuery,
   useMemberAreaMemberInfoQuery,
 } from '@/services/apollo/generated'
-import { LayoutWithMenu } from './components/LayoutWithMenu'
-import { PaymentsSection } from './PaymentsSection'
+import { LayoutWithMenu } from '../components/LayoutWithMenu'
+import { PaymentsSection } from '../PaymentsSection'
 
-export const MemberPage: NextPageWithLayout = () => {
+export const InsurancePage: NextPageWithLayout = () => {
   const { data, loading } = useMemberAreaMemberInfoQuery()
 
   return (
@@ -38,4 +38,4 @@ const MemberInfo = ({ data }: MemberInfoProps) => {
   )
 }
 
-MemberPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+InsurancePage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>

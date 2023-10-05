@@ -13,7 +13,7 @@ const SSN_FIELD_NAME = 'ssn'
 export const LoginPage = () => {
   const router = useRouter()
   const handleLoginSuccess = async () => {
-    const { next: nextPathname = '/member', ...targetQuery } = router.query
+    const { next: nextPathname = '/member/insurances', ...targetQuery } = router.query
     const redirectTarget = { pathname: String(nextPathname), query: targetQuery }
     console.log(`Logged in, redirecting to ${JSON.stringify(redirectTarget)}`)
     await router.replace(redirectTarget)

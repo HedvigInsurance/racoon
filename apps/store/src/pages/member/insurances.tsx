@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { MemberPage } from '@/features/memberArea/MemberPage'
+import { InsurancePage } from '@/features/memberArea/pages/InsurancePage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { getAccessToken } from '@/services/authApi/persist'
 import { Features } from '@/utils/Features'
@@ -32,4 +32,4 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (context)
     },
   })
 }
-export default MemberPage
+export default InsurancePage
