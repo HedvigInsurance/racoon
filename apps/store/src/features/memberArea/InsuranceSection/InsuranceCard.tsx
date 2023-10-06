@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 import { HedvigSymbol, Text, theme } from 'ui'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MemberContractFragment } from '@/services/apollo/generated'
-import { TravelCertificateButton } from './TravelCertificateButton'
 
 type InsuranceCardProps = {
   contract: MemberContractFragment
@@ -21,12 +19,6 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
           {currentAgreement.productVariant.displayName}
         </Text>
         <Text color="textTranslucentTertiary">{exposureDisplayName}</Text>
-        {currentAgreement.certificateUrl && (
-          <ButtonNextLink href={currentAgreement.certificateUrl} variant="secondary" size="small">
-            Insurance certificate
-          </ButtonNextLink>
-        )}
-        <TravelCertificateButton contractId={contract.id} />
       </Info>
       <PillowBackground />
     </Card>
@@ -38,7 +30,8 @@ const Card = styled.div({
   flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
-  minHeight: '182px',
+  maxWidth: '400px',
+  aspectRatio: '343/182',
   padding: `1.125rem ${theme.space.md}`,
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
@@ -65,6 +58,13 @@ const PillowBackground = styled.div({
   backgroundImage: `url('https://a.storyblok.com/f/165473/832x832/fa27811442/hedvig-pillow-home.png')`,
   zIndex: -1,
   pointerEvents: 'none',
+  transition: 'filter 0.2s ease-in-out',
+
+  '@media (hover: hover)': {
+    [`button:hover &`]: {
+      filter: 'blur(50px)',
+    },
+  },
 })
 
 const Info = styled.div({
