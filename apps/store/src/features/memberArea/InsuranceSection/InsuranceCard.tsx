@@ -65,7 +65,7 @@ const PillowBackground = styled.div<{ imgSrc: string }>(({ imgSrc }) => ({
   transition: 'all 0.2s ease-in-out',
 
   '@media (hover: hover)': {
-    [`button:hover &`]: {
+    [`a:hover &`]: {
       filter: 'blur(50px)',
       transform: 'scale(1.1) translate(-50%, -50%)',
     },

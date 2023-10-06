@@ -1,40 +1,30 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import Link from 'next/link'
 import { Heading, mq, theme } from 'ui'
-import { MemberContractFragment } from '@/services/apollo/generated'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
-import { InsuranceDetails } from './InsuranceDetails'
 
 export const Insurances = () => {
   const currentMember = useMemberAreaInfo()
   const greeting = `Hello, ${currentMember.firstName} ${currentMember.lastName}`
-  const [displayedContract, setDisplayedContract] = useState<null | MemberContractFragment>(null)
 
-  const handleClick = (contract: MemberContractFragment) => {
-    setDisplayedContract(contract)
-  }
   return (
     <>
-      {!displayedContract && (
-        <>
-          <Heading as={'h2'} variant="standard.32">
-            {greeting}
-          </Heading>
-          <Heading as="h1" variant="standard.32">
-            Your insurances
-          </Heading>
-          <Grid>
-            {currentMember.activeContracts.map((contract) => (
-              <InuranceButton key={contract.id} onClick={() => handleClick(contract)}>
-                <InsuranceCard contract={contract} />
-              </InuranceButton>
-            ))}
-          </Grid>
-        </>
-      )}
-
-      {displayedContract && <InsuranceDetails contract={displayedContract} />}
+      <>
+        <Heading as={'h2'} variant="standard.32">
+          {greeting}
+        </Heading>
+        <Heading as="h1" variant="standard.32">
+          Your insurances
+        </Heading>
+        <Grid>
+          {currentMember.activeContracts.map((contract) => (
+            <InuranceLink key={contract.id} href={`/member/insurances/${contract.id}`}>
+              <InsuranceCard contract={contract} />
+            </InuranceLink>
+          ))}
+        </Grid>
+      </>
     </>
   )
 }
@@ -52,6 +42,6 @@ const Grid = styled.div({
   },
 })
 
-export const InuranceButton = styled.button({
+export const InuranceLink = styled(Link)({
   cursor: 'pointer',
 })
