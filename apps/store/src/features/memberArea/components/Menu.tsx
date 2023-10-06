@@ -93,6 +93,7 @@ const NavigationLink = styled(Link)({
   padding: theme.space.sm,
   borderRadius: theme.radius.sm,
   whiteSpace: 'nowrap',
+  fontSize: theme.fontSizes.md,
 
   [mq.lg]: {
     width: '100%',
@@ -100,7 +101,7 @@ const NavigationLink = styled(Link)({
   },
 
   '&[data-active="true"]': {
-    backgroundColor: theme.colors.grayTranslucent100,
+    backgroundColor: theme.colors.blueFill1,
   },
 
   '@media (hover: hover)': {
