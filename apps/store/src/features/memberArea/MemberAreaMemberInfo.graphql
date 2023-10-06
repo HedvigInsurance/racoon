@@ -7,6 +7,9 @@ query MemberAreaMemberInfo {
     lastName
     email
     hasActivePaymentConnection
+    insuranceCost {
+      ...MemberInsuranceCost
+    }
   }
 }
 
@@ -31,4 +34,20 @@ fragment MemberContract on Contract {
     }
   }
   exposureDisplayName
+}
+
+fragment MemberInsuranceCost on MemberInsuranceCost {
+  freeUntil
+  monthlyDiscount {
+    amount
+    currencyCode
+  }
+  monthlyGross {
+    amount
+    currencyCode
+  }
+  monthlyNet {
+    currencyCode
+    amount
+  }
 }
