@@ -31,6 +31,17 @@ fragment MemberContract on Contract {
       displayName
       typeOfContract
       termsVersion
+      insurableLimits {
+        label
+        limit
+      }
+      perils {
+        colorCode
+        covered
+        description
+        exceptions
+        title
+      }
     }
   }
   exposureDisplayName

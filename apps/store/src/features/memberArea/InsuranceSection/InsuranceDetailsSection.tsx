@@ -3,6 +3,7 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import { useRouter } from 'next/router'
 import { Button, Heading, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { Perils } from '@/components/Perils/Perils'
 import { MemberContractFragment } from '@/services/apollo/generated'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
@@ -68,7 +69,21 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
         ))}
       </RadixTabs.TabsContent>
 
-      <RadixTabs.TabsContent value="coverage">Coverage</RadixTabs.TabsContent>
+      <RadixTabs.TabsContent value="coverage">
+        <Space y={1}>
+          <div>
+            {contract.currentAgreement.productVariant.insurableLimits.map((limit) => (
+              <Row key={limit.label}>
+                <Text size={{ _: 'sm', lg: 'md' }}>{limit.label}</Text>
+                <Text color="textSecondary" size={{ _: 'sm', lg: 'md' }}>
+                  {limit.limit}
+                </Text>
+              </Row>
+            ))}
+          </div>
+          <Perils items={contract.currentAgreement.productVariant.perils} />
+        </Space>
+      </RadixTabs.TabsContent>
 
       <RadixTabs.TabsContent value="documents">
         <Documents>
@@ -116,7 +131,8 @@ const Row = styled.div({
   alignItems: 'center',
   justifyContent: 'space-between',
   height: '3rem',
-  ':not(:last-child)': {
-    borderBottom: '1px solid hsla(0, 0%, 7%, 0.1)',
+
+  ':not(:first-child)': {
+    borderTop: '1px solid hsla(0, 0%, 7%, 0.1)',
   },
 })

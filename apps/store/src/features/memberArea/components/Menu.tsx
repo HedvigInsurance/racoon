@@ -13,7 +13,7 @@ export const Menu = () => {
         <NavgationItem>
           <NavigationLink
             href={'/member/insurances'}
-            data-active={currentRoute === '/member/insurances'}
+            data-active={currentRoute.includes('/member/insurances')}
           >
             Your Insurances
           </NavigationLink>
