@@ -2,6 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { useCallback, useState } from 'react'
 import { Button, Heading, Text } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ReadyState } from '@/components/PaymentConnectPage/ReadyState'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
@@ -16,6 +17,10 @@ export const PaymentsSection = () => {
       <GeneralInfo />
       <InsuranceCost />
       <PaymentConnection />
+      {/* NOTE that URL is locale-specific */}
+      <ButtonNextLink href={'/se-en/help/faq'} locale={false} size="small" variant="secondary">
+        Payments FAQ
+      </ButtonNextLink>
     </SpaceFlex>
   )
 }
@@ -23,18 +28,14 @@ export const PaymentsSection = () => {
 // Might be a CMS block in the future
 const GeneralInfo = () => {
   return (
-    <>
-      <Text as="p">
+    <div style={{ maxWidth: '450px' }}>
+      <InfoCard>
         At Hedvig, you pay at the end of the month for the current month. Your monthly payment is
         handled via digital direct debit on the 27th of every month (or the closest following bank
         day). We work with Trustly as our payment partner and you can connect your direct debit on
         this page below
-      </Text>
-      {/* NOTE that URL is locale-specific */}
-      <ButtonNextLink href={'/se-en/help/faq'} locale={false} size="small" variant="secondary">
-        Payments FAQ
-      </ButtonNextLink>
-    </>
+      </InfoCard>
+    </div>
   )
 }
 
