@@ -4,6 +4,7 @@ import { addApolloState, initializeApolloServerSide } from '@/services/apollo/cl
 import { getAccessToken } from '@/services/authApi/persist'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 // Add props here when they appear
 type PageProps = {
@@ -17,9 +18,11 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
 
   const accessToken = getAccessToken({ req, res })
   if (!accessToken) {
-    // TODO: Remove hardcoded path, add next param and preserve any other query params
     console.log('Not authenticated, redirecting to login page')
-    return { redirect: { destination: '/member/login', permanent: false } }
+    const redirectTarget = new URL(context.resolvedUrl, ORIGIN_URL)
+    redirectTarget.searchParams.set('next', redirectTarget.pathname)
+    redirectTarget.pathname = '/member/login'
+    return { redirect: { destination: redirectTarget.toString(), permanent: false } }
   }
 
   const apolloClient = await initializeApolloServerSide({ locale, req, res })
