@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { HedvigSymbol, Text, theme } from 'ui'
+import { HedvigSymbol, Text, mq, theme } from 'ui'
 import { MemberContractFragment } from '@/services/apollo/generated'
 
 type InsuranceCardProps = {
@@ -30,13 +30,17 @@ const Card = styled.div({
   flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
-  maxWidth: '400px',
   aspectRatio: '343/182',
+  maxWidth: '400px',
   padding: `1.125rem ${theme.space.md}`,
   backgroundColor: theme.colors.gray100,
   borderRadius: theme.radius.md,
   boxShadow: theme.shadow.default,
   isolation: 'isolate',
+
+  [mq.md]: {
+    maxWidth: 'unset',
+  },
 })
 
 const CardHeader = styled.div({
