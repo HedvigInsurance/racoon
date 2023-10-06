@@ -15,7 +15,7 @@ export const Menu = () => {
             href={'/member/insurances'}
             data-active={currentRoute === '/member/insurances'}
           >
-            Insurances
+            Your Insurances
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
@@ -23,11 +23,13 @@ export const Menu = () => {
             href={'/member/payments'}
             data-active={currentRoute === '/member/payments'}
           >
-            Payments
+            Payment
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
-          <NavigationLink href={'/member/claim'}>Make a claim</NavigationLink>
+          <NavigationLink href={'/member/claim'} data-active={currentRoute === '/member/claim'}>
+            How to make a claim
+          </NavigationLink>
         </NavgationItem>
         <LogoutButton />
       </NavigationList>
