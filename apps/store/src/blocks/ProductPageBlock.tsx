@@ -1,13 +1,16 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { motion, useScroll } from 'framer-motion'
+import { Fragment } from 'react'
 import { useState, useEffect, useRef, ReactNode } from 'react'
-import { theme, mq } from 'ui'
+import { theme, mq, Heading } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
 import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
+import { AverageRatingBlock } from './AverageRatingBlock'
+import { ProductReviewCommentsBlock } from './ProductReviewCommentsBlock'
 
 export const NAVIGATION_LIST_HEIGHT = '2.5rem'
 const SCROLL_PERCENTAGE_THRESHOLD = 10 // 10%
@@ -65,9 +68,20 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
 
         <OverviewGridArea width="1/2" align="left">
           <section id="overview">
-            {blok.overview.map((nestedBlock) => (
-              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-            ))}
+            {blok.overview.map((nestedBlock) => {
+              // TODO: remove this. Hack for Makers days demo purposes
+              if (nestedBlock.component === 'videoBlock') {
+                return (
+                  <Fragment key={nestedBlock._uid}>
+                    <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+                    <div style={{ marginTop: '2rem' }} />
+                    <AverageRatingBlock />
+                  </Fragment>
+                )
+              }
+
+              return <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+            })}
           </section>
         </OverviewGridArea>
 
@@ -80,9 +94,23 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </GridLayout.Content>
       </Grid>
 
-      {blok.body.map((nestedBlock) => (
-        <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-      ))}
+      {blok.body.map((nestedBlock) => {
+        // TODO: remove this. Hack for Makers days demo purposes
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (nestedBlock.reference?.name === 'Alltid med Hedvig 3') {
+          return (
+            <Fragment key={nestedBlock._uid}>
+              <Heading as="h3" align="center">
+                Reviews & Comments
+              </Heading>
+              <div style={{ marginBottom: '2rem' }} />
+              <ProductReviewCommentsBlock />
+            </Fragment>
+          )
+        }
+        return <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+      })}
     </main>
   )
 }
