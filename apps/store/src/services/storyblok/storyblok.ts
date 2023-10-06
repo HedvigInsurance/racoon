@@ -51,6 +51,7 @@ import { ProductGridBlock } from '@/blocks/ProductGridBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBlock'
 import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillowsBlock'
+import { ProductReviewCommentsBlock } from '@/blocks/ProductReviewCommentsBlock'
 import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
 import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
 import { QuickPurchaseBlock } from '@/blocks/QuickPurchaseBlock'
@@ -283,6 +284,7 @@ export const initStoryblok = () => {
     ProductGridBlock,
     ProductPillowBlock,
     ProductPillowsBlock,
+    ProductReviewCommentsBlock,
     ProductSlideshowBlock,
     ProductVariantSelectorBlock,
     RichTextBlock,
