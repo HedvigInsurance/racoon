@@ -31,7 +31,7 @@ const Main = styled.main({
   paddingBottom: theme.space.xxl,
 
   [mq.lg]: {
-    paddingTop: theme.space.xxl,
+    paddingTop: theme.space.md,
     gridTemplateColumns: '18rem 1fr',
     gridTemplateRows: 'auto',
   },
