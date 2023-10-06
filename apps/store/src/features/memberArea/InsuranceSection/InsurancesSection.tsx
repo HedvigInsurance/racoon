@@ -34,11 +34,15 @@ const Grid = styled.div({
   gridGap: theme.space.md,
   marginTop: '1rem',
 
-  [mq.lg]: {
+  [mq.sm]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
+    gridGap: theme.space.md,
+  },
+
+  [mq.md]: {
     gridGap: theme.space.xl,
-    marginRight: theme.space.xl,
+    marginRight: theme.space.xxl,
   },
 })
 

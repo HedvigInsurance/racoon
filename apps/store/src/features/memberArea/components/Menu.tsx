@@ -31,6 +31,9 @@ export const Menu = () => {
             How to make a claim
           </NavigationLink>
         </NavgationItem>
+        <NavgationItem>
+          <NavigationLink href={'/help/faq'}>FAQ</NavigationLink>
+        </NavgationItem>
         <LogoutButton />
       </NavigationList>
     </Navigation>
