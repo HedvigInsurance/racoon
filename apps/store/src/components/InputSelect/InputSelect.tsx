@@ -6,7 +6,7 @@ import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 
 export type InputSelectProps = InputBaseProps & {
   name: string
-  options: ReadonlyArray<{ name: string; value: string }>
+  options: ReadonlyArray<{ name: string; value: string; disabled?: boolean }>
   value?: string
   defaultValue?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
@@ -63,8 +63,8 @@ export const InputSelect = ({
                 {labelText}
               </option>
             )}
-            {options.map(({ name, value }) => (
-              <option key={value} value={value}>
+            {options.map(({ name, value, disabled }) => (
+              <option key={value} value={value} disabled={disabled}>
                 {name}
               </option>
             ))}

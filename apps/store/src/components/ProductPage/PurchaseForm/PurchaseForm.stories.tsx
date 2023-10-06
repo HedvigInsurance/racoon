@@ -37,6 +37,7 @@ const props = {
     score: 5,
     reviewCount: 1000,
   },
+  reviewComments: null,
   globalStory: globalStory,
   trustpilot: null,
 }

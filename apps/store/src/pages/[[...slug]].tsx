@@ -11,8 +11,11 @@ import { type ProductPageProps } from '@/components/ProductPage/ProductPage.type
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { initializeApollo } from '@/services/apollo/client'
-import { getProductAverageRating } from '@/services/averageRating/averageRating'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import {
+  getProductAverageRating,
+  getProductReviewComments,
+} from '@/services/productReviews/productReviews'
 import {
   getStoryBySlug,
   StoryblokPageProps,
@@ -129,6 +132,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       productData.variants.find((item) => item.typeOfContract === defaultProductVariant) ?? null
 
     const averageRating = await getProductAverageRating(productData.name)
+    const reviewComments = await getProductReviewComments(productData.name)
 
     return {
       props: {
@@ -137,6 +141,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
         [STORY_PROP_NAME]: story,
         productData,
         averageRating,
+        reviewComments,
         priceTemplate,
         initialSelectedVariant,
       },
