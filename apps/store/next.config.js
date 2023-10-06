@@ -127,7 +127,24 @@ module.exports = withBundleAnalyzer({
             ...HOME_INSURANCE_REDIRECTS,
           ]
         : []
-    return [...shutDownMarketsInfo, ...oldSiteRedirects, ...getExperimentVariantRedirects()]
+
+    let memberAreaDefault = []
+    if (process.env.NEXT_PUBLIC_FEATURE_MEMBER_AREA === 'true') {
+      memberAreaDefault = [
+        {
+          source: '/member',
+          destination: '/member/insurances',
+          permanent: false,
+        },
+      ]
+    }
+
+    return [
+      ...shutDownMarketsInfo,
+      ...oldSiteRedirects,
+      ...getExperimentVariantRedirects(),
+      ...memberAreaDefault,
+    ]
   },
 })
 
