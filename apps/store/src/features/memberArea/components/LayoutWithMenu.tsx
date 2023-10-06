@@ -28,6 +28,7 @@ const Main = styled.main({
   maxWidth: '80rem',
   width: '100%',
   marginInline: 'auto',
+  paddingBottom: theme.space.xxl,
 
   [mq.lg]: {
     paddingTop: theme.space.xxl,

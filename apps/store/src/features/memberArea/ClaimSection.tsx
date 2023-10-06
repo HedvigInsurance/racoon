@@ -46,10 +46,10 @@ export const ClaimSection = () => {
 }
 
 const Wrapper = styled.div({
+  display: 'grid',
+  gridGap: theme.space.lg,
   width: '100%',
   [mq.lg]: {
-    display: 'grid',
-    gridGap: theme.space.lg,
     gridTemplateColumns: '1fr 1fr',
   },
 })

@@ -54,6 +54,7 @@ const LogoutButton = () => {
 const Navigation = styled.nav({
   paddingInline: theme.space.md,
   paddingBottom: theme.space.sm,
+  overflow: 'auto',
   [mq.lg]: {
     paddingInline: theme.space.xl,
   },
@@ -77,16 +78,23 @@ const NavigationList = styled.ul({
 
 const NavgationItem = styled.li({
   display: 'flex',
-  width: '100%',
+  [mq.lg]: {
+    width: '100%',
+  },
 })
 
 const NavigationLink = styled(Link)({
   display: 'flex',
   alignItems: 'center',
-  width: '100%',
-  height: '3.25rem',
+  height: '2.5rem',
   padding: theme.space.sm,
   borderRadius: theme.radius.sm,
+  whiteSpace: 'nowrap',
+
+  [mq.lg]: {
+    width: '100%',
+    height: '3.25rem',
+  },
 
   '&[data-active="true"]': {
     backgroundColor: theme.colors.grayTranslucent100,
