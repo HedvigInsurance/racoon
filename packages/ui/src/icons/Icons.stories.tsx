@@ -78,7 +78,9 @@ const IconName = styled.div({
 
 const updateClipboard = async (newClip: string) => {
   try {
-    await navigator.clipboard.writeText(newClip).catch((e) => console.warn(e))
+    // @ts-expect-error temp
+    // eslint-disable-next-line
+    await window.navigator.clipboard.writeText(newClip).catch((e) => console.warn(e))
     console.log(`Copied ${newClip} to clipboard`)
   } catch (error) {
     console.warn(error)
