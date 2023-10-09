@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Meta, StoryFn } from '@storybook/react'
+import { useCallback } from 'react'
 import { Heading } from '../components/Heading/Heading'
 import { Space } from '../components/Space'
 import { theme } from '../lib/theme/theme'
@@ -13,14 +14,24 @@ const Icon = ({ icon }: IconProps) => {
   return <Component />
 }
 
-export default {
+const meta: Meta<typeof Icon> = {
   title: 'Icons',
   component: Icon,
-} as Meta<typeof Icon>
+}
+export default meta
 
 const AllIconNames = Object.keys(AllIcons)
 
 const Template: StoryFn<typeof Icon> = () => {
+  const updateClipboard = useCallback(async (newClip: string) => {
+    try {
+      await window.navigator.clipboard.writeText(newClip).catch((e) => console.warn(e))
+      console.log(`Copied ${newClip} to clipboard`)
+    } catch (error) {
+      console.warn(error)
+    }
+  }, [])
+
   return (
     <Page>
       <Space y={1}>
@@ -75,14 +86,3 @@ const IconGrid = styled.div({
 const IconName = styled.div({
   paddingTop: '1rem',
 })
-
-const updateClipboard = async (newClip: string) => {
-  try {
-    // @ts-expect-error temp
-    // eslint-disable-next-line
-    await window.navigator.clipboard.writeText(newClip).catch((e) => console.warn(e))
-    console.log(`Copied ${newClip} to clipboard`)
-  } catch (error) {
-    console.warn(error)
-  }
-}

@@ -11,6 +11,11 @@
     "node_modules"
   ],
   "compilerOptions": {
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   }
 }
