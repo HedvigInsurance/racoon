@@ -11269,10 +11269,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.17.17":
-  version: 18.17.17
-  resolution: "@types/node@npm:18.17.17"
-  checksum: ff28f347c77723780836f9bb2ffa6db0cd72490bfd7604397c03db31db34f1f2899e82f0aaf3e825efeb09c15bd94d076ea9aca19a1407e1b56cb4603318936c
+"@types/node@npm:18.18.4":
+  version: 18.18.4
+  resolution: "@types/node@npm:18.18.4"
+  checksum: 4901e91c4cc479bb58acbcd79236a97a0ad6db4a53cb1f4ba4cf32af15324c61b16faa6e31c1b09bf538a20feb5f5274239157ce5237f5741db0b9ab71e69c52
   languageName: node
   linkType: hard
 
@@ -24764,7 +24764,7 @@ __metadata:
     "@testing-library/user-event": 14.5.1
     "@types/clone-deep": 4.0.2
     "@types/md5": 2.3.3
-    "@types/node": 18.17.17
+    "@types/node": 18.18.4
     "@types/nprogress": 0.2.1
     "@types/react-dom": 18.2.8
     "@types/uuid": 9.0.4
