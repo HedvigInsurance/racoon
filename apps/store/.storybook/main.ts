@@ -1,6 +1,10 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 import babelConfig from './babelConfig'
 
+const path = require('path')
+const resolveDependency = (npmName) =>
+  path.dirname(require.resolve(path.join(npmName, 'package.json')))
+
 const config: StorybookConfig = {
   stories: [
     {
@@ -11,13 +15,13 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(ts|tsx|mdx)',
   ],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    'storybook-addon-apollo-client',
-    '@storybook/addon-designs',
+    resolveDependency('@storybook/addon-links'),
+    resolveDependency('@storybook/addon-essentials'),
+    resolveDependency('storybook-addon-apollo-client'),
+    resolveDependency('@storybook/addon-designs'),
   ],
   framework: {
-    name: '@storybook/nextjs',
+    name: resolveDependency('@storybook/nextjs'),
     options: {},
   },
   features: {
