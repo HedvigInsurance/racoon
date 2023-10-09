@@ -39,5 +39,10 @@
     "prettier": "3.0.3",
     "turbo": "1.10.14",
     "typescript": "5.2.2"
+  },
+  "dependenciesMeta": {
+    "cpu-features": {
+      "built": false
+    }
   }
 }
