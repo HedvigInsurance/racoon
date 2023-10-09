@@ -5,6 +5,10 @@ module.exports = {
   root: true,
   ...baseConfig,
   ignorePatterns: ['src/services/graphql/*', '*.js'],
+  parserOptions: {
+    project: ['./tsconfig.json'],
+    tsconfigRootDir: __dirname,
+  },
   rules: {
     ...baseConfig.rules,
     // This allows us to use to autofocus attribute on input elements (or all elements, really)
@@ -18,15 +22,10 @@ module.exports = {
     ...baseConfig.overrides,
     {
       files: ['**/*.{ts,tsx}'],
-      parserOptions: {
-        project: ['./tsconfig.json'],
-        tsconfigRootDir: __dirname,
-      },
       rules: {
         // Causes eslint timeout on our code (src/blocks/HeaderBlock.tsx)
         '@typescript-eslint/no-misused-promises': 'off',
         // TODO: Consider fixing errors and enabling these rules
-
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
