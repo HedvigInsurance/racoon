@@ -23175,6 +23175,11 @@ __metadata:
   dependenciesMeta:
     cpu-features:
       built: false
+    ssh2:
+      built: false
+  peerDependenciesMeta:
+    webpack:
+      optional: true
   languageName: unknown
   linkType: soft
 
