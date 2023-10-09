@@ -1,6 +1,6 @@
-/** @type {import('eslint').Linter.Config} */
 const baseConfig = require('eslint-config-custom')
 
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
     ...baseConfig,
