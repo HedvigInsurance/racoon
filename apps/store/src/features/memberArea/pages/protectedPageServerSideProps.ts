@@ -19,9 +19,9 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
   const accessToken = getAccessToken({ req, res })
   if (!accessToken) {
     console.log('Not authenticated, redirecting to login page')
-    const redirectTarget = new URL(context.resolvedUrl, ORIGIN_URL)
+    const redirectTarget = new URL(`${locale}/${context.resolvedUrl}`, ORIGIN_URL)
     redirectTarget.searchParams.set('next', redirectTarget.pathname)
-    redirectTarget.pathname = '/member/login'
+    redirectTarget.pathname = `${locale}/member/login`
     return { redirect: { destination: redirectTarget.toString(), permanent: false } }
   }
 
