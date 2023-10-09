@@ -5,6 +5,7 @@ import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
 import { useTravelCertificateCreateMutation } from '@/services/apollo/generated'
 import { formatAPIDate } from '@/utils/date'
 
+// Temporary demo implementation, should be replaced by flow with certificate params form before sending the request
 export const TravelCertificateButton = ({ contractId }: { contractId: string }) => {
   const currentMember = useMemberAreaInfo()
   const [sendRequest, result] = useTravelCertificateCreateMutation()
