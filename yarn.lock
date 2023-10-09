@@ -22318,7 +22318,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-browserify@npm:^1.0.1":
+"path-browserify@npm:1.0.1, path-browserify@npm:^1.0.1":
   version: 1.0.1
   resolution: "path-browserify@npm:1.0.1"
   checksum: c6d7fa376423fe35b95b2d67990060c3ee304fc815ff0a2dc1c6c3cfaff2bd0d572ee67e18f19d0ea3bbe32e8add2a05021132ac40509416459fffee35200699
@@ -23177,9 +23177,6 @@ __metadata:
       built: false
     ssh2:
       built: false
-  peerDependenciesMeta:
-    webpack:
-      optional: true
   languageName: unknown
   linkType: soft
 
@@ -24893,6 +24890,7 @@ __metadata:
     "@datadog/browser-logs": 4.49.0
     "@datadog/browser-rum": 4.49.0
     "@datadog/datadog-ci": 2.22.0
+    "@emotion/babel-plugin": 11.11.0
     "@emotion/is-prop-valid": 1.2.1
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
@@ -24966,6 +24964,7 @@ __metadata:
     next-i18next: 14.0.3
     next-router-mock: 0.9.10
     nprogress: 0.2.0
+    path-browserify: 1.0.1
     personnummer: 3.2.1
     prettier: 3.0.3
     react: 18.2.0
@@ -24983,6 +24982,7 @@ __metadata:
     typescript: 5.2.2
     ui: "workspace:"
     uuid: 9.0.1
+    webpack: 5.76.2
     whatwg-fetch: 3.6.19
     zen-observable-ts: 1.2.5
   languageName: unknown
@@ -27110,7 +27110,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5":
+"webpack@npm:5, webpack@npm:5.76.2":
   version: 5.76.2
   resolution: "webpack@npm:5.76.2"
   dependencies:
