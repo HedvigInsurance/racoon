@@ -1,9 +1,5 @@
 import Personnummer from 'personnummer'
-import {
-  PartnerWidgetInitInput,
-  ShopSessionCustomerUpdateInput,
-  TypeOfContract,
-} from '@/services/apollo/generated'
+import { PartnerWidgetInitInput, ShopSessionCustomerUpdateInput } from '@/services/apollo/generated'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { isIsoLocale, toRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -109,12 +105,12 @@ const parseNumber = (value: string): number | undefined => {
 const getProductName = (productType: string | null, subType: string | null) => {
   switch (productType) {
     case 'SWEDISH_APARTMENT':
-      return subType === 'BRF' ? TypeOfContract.SeApartmentBrf : TypeOfContract.SeApartmentRent
+      return subType === 'BRF' ? 'SE_APARTMENT_BRF' : 'SE_APARTMENT_RENT'
     case 'SWEDISH_HOUSE':
-      return TypeOfContract.SeHouse
+      return 'SE_HOUSE'
     case 'SWEDISH_ACCIDENT':
-      return TypeOfContract.SeAccident
+      return 'SE_ACCIDENT'
     default:
-      return TypeOfContract.SeApartmentRent
+      return 'SE_APARTMENT_RENT'
   }
 }
