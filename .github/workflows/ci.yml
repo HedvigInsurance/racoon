@@ -45,11 +45,11 @@ jobs:
       - name: Codegen
         run: yarn codegen:ci
 
-      - name: Lint
-        run: yarn lint
-
       - name: Typecheck
         run: yarn typecheck
+
+      - name: Lint
+        run: yarn lint
 
       - name: Unit Test
         run: yarn test
