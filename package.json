@@ -47,5 +47,10 @@
     "ssh2": {
       "built": false
     }
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    }
   }
 }
