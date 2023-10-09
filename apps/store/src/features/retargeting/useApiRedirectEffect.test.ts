@@ -1,5 +1,4 @@
-import {describe, expect, test} from '@jest/globals'
-
+import { describe, expect, test } from '@jest/globals'
 import { QueryParam } from './retargeting.constants'
 import { getApiRedirect } from './useApiRedirectEffect'
 

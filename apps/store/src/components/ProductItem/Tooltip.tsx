@@ -1,13 +1,13 @@
 // Based on Radix Tooltip (https://www.radix-ui.com/docs/primitives/components/tooltip)
-
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { ReactNode } from 'react'
 import { Text, theme } from 'ui'
 
 type Props = {
   message: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const Tooltip = ({ children, message }: Props) => {
