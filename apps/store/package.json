@@ -62,7 +62,7 @@
     "react-i18next": "13.2.2",
     "react-wrap-balancer": "1.1.0",
     "storyblok-rich-text-react-renderer": "2.9.0",
-    "tss-react": "4.9.0",
+    "tss-react": "4.9.2",
     "ui": "workspace:",
     "uuid": "9.0.1",
     "zen-observable-ts": "1.2.5"
