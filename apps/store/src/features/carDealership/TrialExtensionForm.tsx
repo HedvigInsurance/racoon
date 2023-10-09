@@ -8,7 +8,8 @@ import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import { WithLink } from '@/components/TextWithLink'
-import { InfoToastBar } from '@/components/ToastBar/ToastBar'
+import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
+import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -28,7 +29,7 @@ type Props = {
 
 export const TrialExtensionForm = (props: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
-  const [userWantsExtension] = useState(true)
+  const [userWantsExtension, setUserWantsExtension] = useState(true)
   const { routingLocale } = useCurrentLocale()
   const { signAndPay, loading } = useSignAndPay({
     shopSession: props.shopSession,
@@ -93,74 +94,81 @@ export const TrialExtensionForm = (props: Props) => {
     />
   )
 
-  if (!userWantsExtension) {
-    return (
-      <Space y={4}>
-        <TrialOffer
-          contract={props.contract}
-          requirePaymentConnection={props.requirePaymentConnection}
-        />
-
-        <Space y={2}>
-          {TotalAmountComponent}
-          <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
-        </Space>
-      </Space>
-    )
-  }
-
   return (
-    <Space y={4}>
+    <Space y={1}>
       <TrialOffer
         contract={props.contract}
         requirePaymentConnection={props.requirePaymentConnection}
       />
 
-      <Space y={2}>
-        <Space y={1}>
-          <ProductItemContainer
-            offer={selectedOffer}
-            defaultExpanded={true}
-            variant={props.requirePaymentConnection ? 'green' : undefined}
-          >
-            <ActionButtonsCar
-              priceIntent={props.priceIntent}
+      <ToggleCard
+        label={t('TOGGLE_EXTENSION_LABEL')}
+        defaultChecked={true}
+        onCheckedChange={setUserWantsExtension}
+      >
+        {t('TOGGLE_EXTENSION_DESCRIPTION')}
+      </ToggleCard>
+
+      {userWantsExtension && (
+        <>
+          <Space y={1.5}>
+            <ProductItemContainer
               offer={selectedOffer}
-              onUpdate={handleUpdate}
-            />
-          </ProductItemContainer>
-
-          {TotalAmountComponent}
-        </Space>
-        <Space y={0.5}>
-          <InfoToastBar>
-            <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
-              {t('INFO_TOAST_CONTENT')}
-            </WithLink>
-          </InfoToastBar>
-
-          <Space y={1}>
-            <Button onClick={handleSignAndPay} loading={loading}>
-              <SpaceFlex space={0.5} align="center">
-                <BankIdIcon />
-                {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-              </SpaceFlex>
-            </Button>
-
-            <TextWithLink
-              as="p"
-              size={{ _: 'xs', md: 'sm' }}
-              align="center"
-              balance={true}
-              color="textSecondary"
-              href={PageLink.privacyPolicy({ locale: routingLocale })}
-              target="_blank"
+              defaultExpanded={true}
+              variant={props.requirePaymentConnection ? 'green' : undefined}
             >
-              {t('checkout:SIGN_DISCLAIMER')}
-            </TextWithLink>
+              <ActionButtonsCar
+                priceIntent={props.priceIntent}
+                offer={selectedOffer}
+                onUpdate={handleUpdate}
+              />
+            </ProductItemContainer>
+
+            {TotalAmountComponent}
+
+            <Space y={0.5}>
+              <InfoToastBar>
+                <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
+                  {t('INFO_TOAST_CONTENT')}
+                </WithLink>
+              </InfoToastBar>
+
+              <Space y={1}>
+                <Button onClick={handleSignAndPay} loading={loading}>
+                  <SpaceFlex space={0.5} align="center">
+                    <BankIdIcon />
+                    {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+                  </SpaceFlex>
+                </Button>
+
+                <TextWithLink
+                  as="p"
+                  size={{ _: 'xs', md: 'sm' }}
+                  align="center"
+                  balance={true}
+                  color="textSecondary"
+                  href={PageLink.privacyPolicy({ locale: routingLocale })}
+                  target="_blank"
+                >
+                  {t('checkout:SIGN_DISCLAIMER')}
+                </TextWithLink>
+              </Space>
+            </Space>
           </Space>
-        </Space>
-      </Space>
+        </>
+      )}
+
+      {!userWantsExtension && (
+        <>
+          {TotalAmountComponent}
+          <AttentionToastBar>
+            <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
+              {t('NOTICE_TOAST_CONTENT')}
+            </WithLink>
+          </AttentionToastBar>
+          <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
+        </>
+      )}
     </Space>
   )
 }
