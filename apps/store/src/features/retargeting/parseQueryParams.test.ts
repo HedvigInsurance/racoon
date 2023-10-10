@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { FALLBACK_LOCALE, locales } from '@/utils/l10n/locales'
 import { parseQueryParams } from './parseQueryParams'
 import { QueryParam } from './retargeting.constants'

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FormEventHandler } from 'react'
 import { BankIdIcon, Button, HedvigLogo, Text, mq, theme } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Video } from '@/components/Video/Video'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 
 const SSN_FIELD_NAME = 'ssn'
@@ -26,22 +26,24 @@ export const LoginPage = () => {
         <title>Hedvig member login</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
-      <Wrapper>
-        <ImageWrapper>
-          <Image
-            src={'https://a.storyblok.com/f/165473/1566x1308/86d40cd5d1/seal-demo-image.png'}
-            alt={'Smiling seal'}
-            fill={true}
-            style={{
-              objectFit: 'cover',
-            }}
-          />
-        </ImageWrapper>
+      <Grid>
+        <LoginVideo
+          autoPlay={true}
+          showControls={false}
+          sources={[
+            {
+              url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.webm',
+            },
+            {
+              url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.mp4',
+            },
+          ]}
+        />
         <LoginForm
           defaultSsn={singleQueryParam(router.query, SSN_FIELD_NAME)}
           onSuccess={handleLoginSuccess}
         />
-      </Wrapper>
+      </Grid>
     </>
   )
 }
@@ -89,7 +91,7 @@ const LoginForm = ({
   )
 }
 
-const Wrapper = styled.div({
+const Grid = styled.div({
   display: 'grid',
   gridTemplateRows: '1fr 1fr',
   justifyItems: 'center',
@@ -102,14 +104,10 @@ const Wrapper = styled.div({
   },
 })
 
-const ImageWrapper = styled.div({
-  width: '100%',
-  aspectRatio: '1/1',
+const LoginVideo = styled(Video)({
   position: 'relative',
-  [mq.lg]: {
-    aspectRatio: 'unset',
-    order: 2,
-  },
+  width: '100%',
+  height: '100%',
 })
 
 const LoginWrapper = styled.div({
@@ -117,6 +115,9 @@ const LoginWrapper = styled.div({
   gridTemplateRows: '1fr 200px',
   alignItems: 'center',
   justifyItems: 'center',
+  [mq.lg]: {
+    order: -1,
+  },
 })
 
 const FormWrapper = styled(SpaceFlex)({

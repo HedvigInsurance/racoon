@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals'
 import { ShopSessionRetargetingQuery } from '@/services/apollo/generated'
 import { RedirectType, getUserRedirect } from './getUserRedirect'
 import { UserParams } from './retargeting.types'
@@ -194,7 +195,9 @@ describe('getUserRedirect', () => {
     // Act
     const result = getUserRedirect(userParams, data) as Extract<
       ReturnType<typeof getUserRedirect>,
-      { type: RedirectType.ModifiedCart }
+      {
+        type: RedirectType.ModifiedCart
+      }
     >
 
     // Assert

@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals'
 import { isIsoLocale, isRoutingLocale } from './localeUtils'
 
 describe('isIsoLocale', () => {
@@ -7,7 +8,7 @@ describe('isIsoLocale', () => {
     ['sv-SE', true],
     ['SV-se', false],
     [undefined, false],
-  ])('asserts %p expecting %p', (locale, expected) => {
+  ])('asserts %p expecting %p', (locale: string | undefined, expected: boolean) => {
     expect(isIsoLocale(locale)).toBe(expected)
   })
 })
@@ -20,7 +21,7 @@ describe('isRoutingLocale', () => {
     ['sv-dk', false],
     ['default', false],
     [undefined, false],
-  ])('asserts %p expecting %p', (locale, expected) => {
+  ])('asserts %p expecting %p', (locale: string | undefined, expected: boolean) => {
     expect(isRoutingLocale(locale)).toBe(expected)
   })
 })

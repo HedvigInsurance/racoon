@@ -1,15 +1,19 @@
+import { afterEach, beforeEach, describe, it, jest, expect } from '@jest/globals'
 import { renderHook } from '@testing-library/react'
 import { type Level } from 'ui'
 import { useBreakpoint } from './useBreakpoint'
+import Spied = jest.Spied
 
 describe('useBreakpoint', () => {
-  let spy: jest.SpyInstance
+  let spy: Spied<typeof window.requestAnimationFrame>
 
   beforeEach(() => {
-    spy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
-      callback(0)
-      return 0
-    })
+    spy = jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((callback: FrameRequestCallback) => {
+        callback(0)
+        return 0
+      })
   })
 
   afterEach(() => {
