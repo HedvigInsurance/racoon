@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
+import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { ActionStateEdit } from './ActionStateEdit'
 import { type TrialExtension } from './carDealershipFixtures'
 import { useEditAndConfirm } from './useEditAndConfirm'
@@ -14,7 +15,7 @@ const STATE: Record<Exclude<State['type'], 'SUBMITTING'>, State> = {
   EDITING: { type: 'EDITING' },
 }
 
-type Offer = Pick<ProductOfferFragment, 'id'> & {
+type Offer = Pick<ProductOfferFragment, 'id' | 'cost'> & {
   variant: Pick<ProductOfferFragment['variant'], 'typeOfContract' | 'displayName'>
 }
 
@@ -57,7 +58,8 @@ export const ActionButtonsCar = (props: Props) => {
       editAndConfirm(data)
     }
 
-    const options = props.priceIntent.offers.map((offer) => ({
+    const sortedOffers = getOffersByPrice(props.priceIntent.offers)
+    const options = sortedOffers.map((offer) => ({
       name: offer.variant.displayName,
       value: offer.variant.typeOfContract,
     }))

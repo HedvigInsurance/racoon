@@ -19,8 +19,8 @@ import {
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { useCartEntryToReplace } from './ProductPage'
-import { getOffersByPrice } from './PurchaseForm/getOffersByPrice'
 import { usePreloadedPriceIntentId } from './PurchaseForm/usePreloadedPriceIntentId'
 import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
