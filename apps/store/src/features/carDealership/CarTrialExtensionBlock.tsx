@@ -1,8 +1,10 @@
 import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
+import addDays from 'date-fns/addDays'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { useCallback } from 'react'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery, type CarTrialExtensionQuery } from '@/services/apollo/generated'
@@ -20,35 +22,11 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const CarTrialExtensionBlock = (props: Props) => {
-  const { dateFull } = useFormatter()
-  const { addBanner } = useGlobalBanner()
-  const { t } = useTranslation('carDealership')
+  const addNotificationBanner = useAddNotificationBanner()
 
   const data = useCarTrialQuery({
     onCompleted(data) {
-      const requirePaymentConnection = props.blok.requirePaymentConnection ?? false
-
-      if (requirePaymentConnection) {
-        const today = new Date()
-        const dueDate = new Date(data.trialContract.startDate)
-        dueDate.setDate(dueDate.getDate() + FOURTEEN_DAYS)
-
-        if (today <= dueDate) {
-          addBanner(
-            t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }),
-            'info',
-            { force: true },
-          )
-        }
-      } else {
-        addBanner(
-          t('REMAIN_INSURED_BANNER', {
-            dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
-          }),
-          'warning',
-          { force: true },
-        )
-      }
+      addNotificationBanner({ data, requirePaymentConnection: props.blok.requirePaymentConnection })
     },
   })
 
@@ -99,6 +77,47 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   }
 
   return null
+}
+
+type AddNotificationBannerOptions = {
+  data: TrialExtension
+  requirePaymentConnection?: boolean
+}
+
+const useAddNotificationBanner = () => {
+  const { addBanner } = useGlobalBanner()
+  const { dateFull } = useFormatter()
+  const { t } = useTranslation('carDealership')
+
+  const addNotificationBanner = useCallback(
+    ({ data, requirePaymentConnection = false }: AddNotificationBannerOptions) => {
+      if (requirePaymentConnection) {
+        const today = new Date()
+        const dueDate = addDays(today, FOURTEEN_DAYS)
+
+        if (today <= dueDate) {
+          addBanner(
+            t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }),
+            'info',
+            {
+              force: true,
+            },
+          )
+        }
+      } else {
+        addBanner(
+          t('REMAIN_INSURED_BANNER', {
+            dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
+          }),
+          'warning',
+          { force: true },
+        )
+      }
+    },
+    [addBanner, dateFull, t],
+  )
+
+  return addNotificationBanner
 }
 
 // TODO: we're gonna be able to remove this when API is complete
