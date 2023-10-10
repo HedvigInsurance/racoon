@@ -17,7 +17,7 @@ type Params = {
   requirePaymentConnection: boolean
 }
 
-export const useSignAndPay = (params: Params) => {
+export const useAcceptExtension = (params: Params) => {
   const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
   const { showError } = useAppErrorHandleContext()
@@ -77,7 +77,7 @@ export const useSignAndPay = (params: Params) => {
     onError: showError,
   })
 
-  const addAndOrSign = (offerId: string) => {
+  const addExtensionOffer = (offerId: string) => {
     const cartOfferIds = params.shopSession.cart.entries.map((item) => item.id)
     const removeOfferIds = cartOfferIds.filter((id) => id !== offerId)
     const addOfferIds = cartOfferIds.includes(offerId) ? [] : [offerId]
@@ -99,5 +99,5 @@ export const useSignAndPay = (params: Params) => {
     })
   }
 
-  return { signAndPay: addAndOrSign, loading: loadingRemoveAdd } as const
+  return [addExtensionOffer, loadingRemoveAdd] as const
 }

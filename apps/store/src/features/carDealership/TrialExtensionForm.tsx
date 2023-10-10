@@ -18,7 +18,7 @@ import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
-import { useSignAndPay } from './useSignAndPay'
+import { useAcceptExtension } from './useAcceptExtension'
 
 type Props = {
   contract: TrialExtension['trialContract']
@@ -31,7 +31,7 @@ export const TrialExtensionForm = (props: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const [userWantsExtension, setUserWantsExtension] = useState(true)
   const { routingLocale } = useCurrentLocale()
-  const { signAndPay, loading } = useSignAndPay({
+  const [acceptExtension, loading] = useAcceptExtension({
     shopSession: props.shopSession,
     requirePaymentConnection: props.requirePaymentConnection,
   })
@@ -61,9 +61,9 @@ export const TrialExtensionForm = (props: Props) => {
     setTierLevel(tierLevel)
   }
 
-  const handleSignAndPay = () => {
-    datadogRum.addAction('Car dealership | Sign and pay')
-    signAndPay(selectedOffer.id)
+  const handleClickSign = () => {
+    datadogRum.addAction('Car dealership | Click Sign')
+    acceptExtension(selectedOffer.id)
   }
 
   const router = useRouter()
@@ -134,7 +134,7 @@ export const TrialExtensionForm = (props: Props) => {
               </InfoToastBar>
 
               <Space y={1}>
-                <Button onClick={handleSignAndPay} loading={loading}>
+                <Button onClick={handleClickSign} loading={loading}>
                   <SpaceFlex space={0.5} align="center">
                     <BankIdIcon />
                     {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
