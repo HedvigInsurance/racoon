@@ -1,14 +1,23 @@
 import styled from '@emotion/styled'
-import { useId } from 'react'
+import { ReactNode, useId } from 'react'
 import { Space, theme } from 'ui'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { Switch, SwitchProps } from '../Switch'
 
 type Props = SwitchProps & {
   label: string
+  Icon?: ReactNode
 }
 
-export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxProps }: Props) => {
+export const ToggleCard = ({
+  id,
+  label,
+  children,
+  onCheckedChange,
+  Icon,
+  ...checkboxProps
+}: Props) => {
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
   const backupId = useId()
   const identifier = id || backupId
@@ -22,7 +31,10 @@ export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxPr
     <InputWrapper {...animationProps}>
       <Space y={0.5}>
         <CheckboxHeader>
-          <StyledLabel htmlFor={identifier}>{label}</StyledLabel>
+          <SpaceFlex align="center" space={0.5}>
+            {Icon}
+            <StyledLabel htmlFor={identifier}>{label}</StyledLabel>
+          </SpaceFlex>
           <Switch id={identifier} onCheckedChange={handleCheckedChange} {...checkboxProps} />
         </CheckboxHeader>
         {children}
@@ -34,6 +46,7 @@ export const ToggleCard = ({ id, label, children, onCheckedChange, ...checkboxPr
 const InputWrapper = styled.div({
   backgroundColor: theme.colors.opaque1,
   padding: theme.space.md,
+  paddingTop: theme.space.sm,
   borderRadius: theme.radius.sm,
 })
 
