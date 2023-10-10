@@ -2,7 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
-import { Space, Button, Text, BankIdIcon } from 'ui'
+import { Space, Button, Text, BankIdIcon, CampaignIcon, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -105,8 +105,11 @@ export const TrialExtensionForm = (props: Props) => {
         label={t('TOGGLE_EXTENSION_LABEL')}
         defaultChecked={true}
         onCheckedChange={setUserWantsExtension}
+        Icon={<CampaignIcon size="1rem" color={theme.colors.signalGreenElement} />}
       >
-        {t('TOGGLE_EXTENSION_DESCRIPTION')}
+        <Text as="p" color="textTranslucentSecondary" size="xs">
+          {t('TOGGLE_EXTENSION_DESCRIPTION')}
+        </Text>
       </ToggleCard>
 
       {userWantsExtension && (
