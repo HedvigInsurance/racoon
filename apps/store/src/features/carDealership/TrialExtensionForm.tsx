@@ -14,9 +14,9 @@ import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
-import { ActionButtonsCar } from './ActionButtonsCar'
 import { type TrialExtension } from './carDealershipFixtures'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
+import { EditActionButton } from './EditActionButton'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useSignAndPay } from './useSignAndPay'
 
@@ -117,7 +117,7 @@ export const TrialExtensionForm = (props: Props) => {
               defaultExpanded={true}
               variant={props.requirePaymentConnection ? 'green' : undefined}
             >
-              <ActionButtonsCar
+              <EditActionButton
                 priceIntent={props.priceIntent}
                 offer={selectedOffer}
                 onUpdate={handleUpdate}

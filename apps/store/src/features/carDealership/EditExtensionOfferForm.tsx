@@ -9,7 +9,7 @@ import { ActionButton } from '@/components/ProductItem/ProductItem'
 const MILEAGE_DATA_KEY = 'mileage'
 const OFFER_KEY = 'offer'
 
-type EditingStateProps = {
+type EditExtensionOfferFormProps = {
   data: Record<string, unknown>
   onSave: (option: string, data: Record<string, unknown>) => void
   loading: boolean
@@ -20,7 +20,7 @@ type EditingStateProps = {
   onCancel: () => void
 }
 
-export const ActionStateEdit = (props: EditingStateProps) => {
+export const EditExtensionOfferForm = (props: EditExtensionOfferFormProps) => {
   const { t } = useTranslation('carDealership')
 
   const handleChangeTierLevel = () => {
