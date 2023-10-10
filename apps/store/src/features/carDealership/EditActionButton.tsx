@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
 import { type ProductOfferFragment } from '@/services/apollo/generated'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
-import { ActionStateEdit } from './ActionStateEdit'
 import { type TrialExtension } from './carDealershipFixtures'
+import { EditExtensionOfferForm } from './EditExtensionOfferForm'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
 type State = { type: 'IDLE' } | { type: 'EDITING' } | { type: 'SUBMITTING'; tierLevel?: string }
@@ -25,7 +25,7 @@ type Props = {
   onUpdate: (tierLevel: string) => void
 }
 
-export const ActionButtonsCar = (props: Props) => {
+export const EditActionButton = (props: Props) => {
   const { t } = useTranslation('carDealership')
   const [state, setState] = useState<State>(STATE.IDLE)
 
@@ -65,7 +65,7 @@ export const ActionButtonsCar = (props: Props) => {
     }))
 
     return (
-      <ActionStateEdit
+      <EditExtensionOfferForm
         tierLevelOptions={options}
         defaultTierLevel={props.offer.variant.typeOfContract}
         onSave={handleSave}
