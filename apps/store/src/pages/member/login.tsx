@@ -15,7 +15,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const isAuthenticated = getAccessToken({ req, res })
   if (isAuthenticated) {
     const redirectTarget = new URL(resolvedUrl, ORIGIN_URL)
-    redirectTarget.pathname = redirectTarget.searchParams.get('next') ?? '/member/insurances'
+    redirectTarget.pathname =
+      redirectTarget.searchParams.get('next') ?? `${locale}/member/insurances`
     redirectTarget.searchParams.delete('next')
     console.log(`Logged in, redirecting to ${redirectTarget.toString()}`)
     return { redirect: { destination: redirectTarget.toString(), permanent: false } }

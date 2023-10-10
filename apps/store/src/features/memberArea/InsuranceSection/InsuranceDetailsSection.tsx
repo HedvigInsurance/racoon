@@ -7,7 +7,6 @@ import { Perils } from '@/components/Perils/Perils'
 import { MemberContractFragment } from '@/services/apollo/generated'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
-import { TravelCertificateButton } from './TravelCertificateButton'
 
 export const InsuranceDetailsSection = () => {
   const { query } = useRouter()
@@ -97,7 +96,6 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
               Insurance certificate
             </ButtonNextLink>
           )}
-          <TravelCertificateButton contractId={contract.id} />
         </Documents>
       </RadixTabs.TabsContent>
     </RadixTabs.Tabs>
