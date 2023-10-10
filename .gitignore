@@ -51,7 +51,6 @@ storybook-static
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
-!.yarn/sdks
 !.yarn/versions
 /.pnp.cjs
 /.pnp.loader.mjs

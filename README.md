@@ -40,6 +40,10 @@ vercel --scope hedvig link --project hedvig-dot-com --yes
 vercel env pull apps/store/.env.local
 ```
 
+### If you're using VSCode
+
+Follow [this guide](https://yarnpkg.com/getting-started/editor-sdks#vscode) to setup VS Code in order Yarn PnP and Typescript to work accordingly.
+
 #### Run the development server
 
 ```sh
