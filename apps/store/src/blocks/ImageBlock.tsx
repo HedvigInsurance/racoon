@@ -1,6 +1,7 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
+import { ImageProps } from 'next/image'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -82,11 +83,13 @@ const ImageWrapper = styled('div', { shouldForwardProp: isPropValid })<WrapperPr
   }),
 )
 
-type ImageProps = { roundedCorners: boolean }
+type ExtraImageProps = {
+  roundedCorners: boolean
+} & ImageProps
 
 const Image = styled(ImageWithPlaceholder, {
   shouldForwardProp: (prop) => (prop === 'priority' ? true : isPropValid(prop)),
-})<ImageProps>(({ roundedCorners }) => ({
+})<ExtraImageProps>(({ roundedCorners }) => ({
   objectFit: 'cover',
   ...(roundedCorners && {
     borderRadius: theme.radius.md,

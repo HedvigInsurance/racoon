@@ -1,6 +1,12 @@
 import type { StorybookConfig } from '@storybook/react-webpack5'
 import babelConfig from './babelConfig'
 
+const path = require('path')
+// Extracted inline declarations from storybook docs for supporting PNP mode
+// Just specifying package name no longer works
+const resolveDependency = (npmName) =>
+  path.dirname(require.resolve(path.join(npmName, 'package.json')))
+
 const config: StorybookConfig = {
   stories: [
     {
@@ -9,9 +15,12 @@ const config: StorybookConfig = {
       files: '**/*.stories.*',
     },
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    resolveDependency('@storybook/addon-links'),
+    resolveDependency('@storybook/addon-essentials'),
+  ],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: resolveDependency('@storybook/react-webpack5'),
     options: {},
   },
   features: {

@@ -4,15 +4,15 @@ export default {
   sourceType: 'unambiguous',
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         targets: {
           chrome: 100,
         },
       },
     ],
-    '@babel/preset-typescript',
-    ['@babel/preset-react', { runtime: 'automatic' }],
+    require.resolve('@babel/preset-typescript'),
+    [require.resolve('@babel/preset-react'), { runtime: 'automatic' }],
   ],
-  plugins: ['@emotion'],
+  plugins: [require.resolve('@emotion/babel-plugin')],
 } as TransformOptions

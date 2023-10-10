@@ -1,5 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
+import styled, { StyledOptions } from '@emotion/styled'
 import { mq, theme } from 'ui'
 import { ContentAlignment, getGridLayout, ContentWidth } from './GridLayout.helper'
 
@@ -26,7 +26,7 @@ type ContentProps = {
   align?: ContentAlignment
 }
 
-const elementConfig = {
+const elementConfig: StyledOptions = {
   shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'width',
 }
 

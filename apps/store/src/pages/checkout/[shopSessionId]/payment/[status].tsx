@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       permanent: false,
     },
   } as const
-  
+
   let shopSession: ShopSession, apolloClient: ApolloClient<unknown>
   try {
     apolloClient = await initializeApolloServerSide({ req, res, locale })

@@ -11,14 +11,17 @@ import { CoverageList } from './CoverageList'
 type Peril = PerilFragment & { disabled?: boolean }
 
 const getPerilColumns = (items: Array<Peril>, columns: number) =>
-  items.reduce((acc, item, index) => {
-    const columnIndex = index % columns
-    if (!acc[columnIndex]) {
-      acc[columnIndex] = []
-    }
-    acc[columnIndex].push(item)
-    return acc
-  }, [] as Array<Array<Peril>>)
+  items.reduce(
+    (acc, item, index) => {
+      const columnIndex = index % columns
+      if (!acc[columnIndex]) {
+        acc[columnIndex] = []
+      }
+      acc[columnIndex].push(item)
+      return acc
+    },
+    [] as Array<Array<Peril>>,
+  )
 
 type Props = {
   items: Array<PerilFragment>

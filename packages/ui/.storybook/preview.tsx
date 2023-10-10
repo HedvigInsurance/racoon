@@ -1,4 +1,4 @@
-import React, { type ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { legacyTheme, theme as defaultTheme, ThemeProvider } from '../src'
 import { Global } from '@emotion/react'
 import { storybookFontStyles } from '../src/lib/storybookFontStyles'

@@ -17,7 +17,10 @@ export const fetchJson = async <T extends object>(
 }
 
 export class ServerError extends Error {
-  constructor(message: string, public data: any) {
+  constructor(
+    message: string,
+    public data: any,
+  ) {
     super(message)
   }
 }

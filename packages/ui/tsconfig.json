@@ -1,8 +1,21 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [".", "./jest-setup.ts"],
-  "exclude": ["dist", "build", "node_modules"],
+  "include": [
+    ".",
+    "./.eslintrc.js",
+    "./jest-setup.ts"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ],
   "compilerOptions": {
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   }
 }
