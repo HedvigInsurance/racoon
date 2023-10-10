@@ -11346,12 +11346,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.8":
-  version: 18.2.8
-  resolution: "@types/react-dom@npm:18.2.8"
+"@types/react-dom@npm:18.2.11":
+  version: 18.2.11
+  resolution: "@types/react-dom@npm:18.2.11"
   dependencies:
     "@types/react": "*"
-  checksum: d36264631028d021b73cd9e015f10b95c4959ae1ce8f7a7419f318d1f05b1d063e6afffcd2a349a6bccd64ccc9ee9d2d976e1f0437643f0e7db621fa035bca65
+  checksum: 70dbdd2f8836a797ab8a3771c773f51023aab187d4d88ed3733bb3f2cbc2146057788a0095a03637101aeab9a48fce0ea369f96a35fc07e785ef53b8ab870885
   languageName: node
   linkType: hard
 
@@ -24929,7 +24929,7 @@ __metadata:
     "@types/node": 18.18.4
     "@types/nprogress": 0.2.1
     "@types/react": 18.2.25
-    "@types/react-dom": 18.2.8
+    "@types/react-dom": 18.2.11
     "@types/uuid": 9.0.5
     "@typescript-eslint/eslint-plugin": 6.7.0
     "@typescript-eslint/parser": 6.7.0
@@ -26358,7 +26358,7 @@ __metadata:
     "@testing-library/user-event": 14.5.1
     "@types/jest": 29.5.5
     "@types/react": 18.2.25
-    "@types/react-dom": 18.2.8
+    "@types/react-dom": 18.2.11
     "@typescript-eslint/eslint-plugin": 6.7.0
     "@typescript-eslint/parser": 6.7.0
     babel-jest: 29.7.0

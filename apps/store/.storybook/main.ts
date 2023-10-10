@@ -2,6 +2,8 @@ import type { StorybookConfig } from '@storybook/nextjs'
 import babelConfig from './babelConfig'
 
 const path = require('path')
+// Extracted inline declarations from storybook docs for supporting PNP mode
+// Just specifying package name no longer works
 const resolveDependency = (npmName) =>
   path.dirname(require.resolve(path.join(npmName, 'package.json')))
 
