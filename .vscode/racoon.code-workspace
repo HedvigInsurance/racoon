@@ -24,13 +24,17 @@
   "settings": {
     "jest.disabledWorkspaceFolders": ["✨ ROOT", "📦 eslint-config-custom", "📦 tsconfig"],
     "jest.jestCommandLine": "yarn test",
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "eslint.nodePath": ".yarn/sdks",
+    "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+    "typescript.tsdk": ".yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "search.exclude": {
       "**/.next": true,
       "**/coverage": true,
       "**/storybook-static": true,
-      "**/*.tsbuildinfo": true
+      "**/*.tsbuildinfo": true,
+      "**/.yarn": true,
+      "**/.pnp.*": true
     },
     "githubPullRequests.ignoredPullRequestBranches": ["main"],
     "terminal.integrated.cwd": "${workspaceFolder}"
