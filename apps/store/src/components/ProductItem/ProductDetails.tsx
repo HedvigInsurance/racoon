@@ -15,17 +15,17 @@ export const ProductDetails = ({ items, documents, ...props }: Props) => {
       <ul>
         {items.map(({ title, value }) => (
           <ListItem key={title}>
-            <Text as="p" color="textSecondary">
+            <Text as="p" color="textTranslucentSecondary">
               {title}
             </Text>
-            <Text as="p" color="textSecondary">
+            <Text as="p" color="textTranslucentSecondary">
               {value}
             </Text>
           </ListItem>
         ))}
       </ul>
 
-      <Heading as="h4" variant="standard.18">
+      <Heading as="h4" variant="standard.18" color="textTranslucentPrimary">
         {t('DOCUMENTS')}
       </Heading>
 
@@ -33,7 +33,7 @@ export const ProductDetails = ({ items, documents, ...props }: Props) => {
         {documents.map(({ title, url }) => (
           <li key={title}>
             <a href={url} target="_blank" rel="noopener noreferrer">
-              <DocumentLink color="textSecondary">
+              <DocumentLink color="textTranslucentSecondary">
                 {title}
                 <Sup> PDF</Sup>
               </DocumentLink>

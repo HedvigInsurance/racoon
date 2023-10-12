@@ -9,7 +9,15 @@ import { getHeadingVariantStyles, HeadingVariant } from './Heading.helpers'
 
 export type { PossibleHeadingVariant } from './Heading.helpers'
 
-type HeadingColors = Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textNegative'>
+type HeadingColors = Pick<
+  UIColors,
+  | 'textPrimary'
+  | 'textSecondary'
+  | 'textNegative'
+  | 'textTranslucentPrimary'
+  | 'textTranslucentSecondary'
+  | 'textTranslucentTertiary'
+>
 
 export type HeadingProps = Margins & {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'

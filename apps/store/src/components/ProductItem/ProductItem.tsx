@@ -37,7 +37,7 @@ export const ProductItem = (props: Props) => {
             <Pillow size="small" src={props.pillowSrc} alt="" />
             <div>
               <HeaderRow>
-                <Text as="p" size="md">
+                <Text as="p" size="md" color="textTranslucentPrimary">
                   {props.title}
                 </Text>
                 {props.Icon}
