@@ -121,6 +121,7 @@
   "SECTION_TITLE_YOUR_DOG": "Your dog",
   "SECTION_TITLE_YOUR_FAMILY": "Number of people",
   "SECTION_TITLE_YOUR_HOME": "Your home",
+  "SECTION_TOOLTIP_YOUR_CAR": "You need to be the owner of the car to buy an insurance for it.",
   "SELF_SWICHER_MESSAGE": "Hedvig will be activated {{date}}. If your current insurance expires within a week, you need to cancel it yourself.",
   "SE_CAR_FULL_DESCRIPTION": "All in traffic and half, plus carriage damage",
   "SE_CAR_HALF_DESCRIPTION": "Theft & burglary, fire, glass damage, etc.",

@@ -91,6 +91,7 @@ export const PriceCalculatorAccordion = ({
               active={section.id === activeSectionId}
               valid={section.state === 'valid'}
               title={translateLabel(section.title)}
+              tooltip={section.tooltip}
               value={section.id}
               previewFieldName={section.preview?.fieldName}
               previewLabel={section.preview?.label}

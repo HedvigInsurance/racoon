@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useMemo } from 'react'
-import { Heading, Text, theme } from 'ui'
+import { Heading, InfoIcon, Text, theme } from 'ui'
 import { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
+import { Tooltip } from '../ProductItem/Tooltip'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
@@ -13,6 +14,7 @@ type Props = {
   active: boolean
   valid: boolean
   title: string
+  tooltip?: Label
   value: string
   previewFieldName?: string
   previewLabel?: Label
@@ -64,6 +66,14 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
               {props.title}
             </Heading>
           </GridTitle>
+
+          {props.tooltip && !showEditButton && (
+            <Tooltip message={translateLabel(props.tooltip)}>
+              <button>
+                <InfoIcon color={theme.colors.textSecondary} size="1.25rem" />
+              </button>
+            </Tooltip>
+          )}
 
           <GridEdit hidden={!showEditButton}>
             <Accordion.Trigger>
