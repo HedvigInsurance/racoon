@@ -5,9 +5,16 @@
   "timezone": "Europe/Stockholm",
   "schedule": ["after 6am and before 11am every weekday"],
   "labels": ["needs approval/merge"],
-  // Don't update nextjs until client-side navigation issue is solved
-  // https://github.com/vercel/next.js/issues/53967
-  "ignoreDeps": ["next", "eslint-config-next", "@next/bundle-analyzer", "@adyen/adyen-web"],
+  "ignoreDeps": [
+    // Don't update nextjs until client-side navigation issue is solved
+    // https://github.com/vercel/next.js/issues/53967
+    "next", "eslint-config-next", "@next/bundle-analyzer",
+    // Not actively used, only needed in closing markets
+    "@adyen/adyen-web",
+    // Must match storybook deps, don't update automatically
+    "webpack"
+  ],
+
   "packageRules": [
     {
       "matchDepTypes": ["dependencies"],
