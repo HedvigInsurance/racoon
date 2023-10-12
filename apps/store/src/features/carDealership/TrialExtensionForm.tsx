@@ -1,22 +1,19 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
 import { useState, useMemo } from 'react'
-import { Space, Button, Text, BankIdIcon, CampaignIcon, theme } from 'ui'
+import { Space, Button, Text, BankIdIcon } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import { WithLink } from '@/components/TextWithLink'
-import { AttentionToastBar, InfoToastBar } from '@/components/ToastBar/ToastBar'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
-import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { type TrialExtension } from './carDealershipFixtures'
-import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { EditActionButton } from './EditActionButton'
+import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
@@ -29,7 +26,6 @@ type Props = {
 
 export const TrialExtensionForm = (props: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
-  const [userWantsExtension, setUserWantsExtension] = useState(true)
   const { routingLocale } = useCurrentLocale()
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: props.shopSession,
@@ -66,130 +62,69 @@ export const TrialExtensionForm = (props: Props) => {
     acceptExtension(selectedOffer.id)
   }
 
-  const router = useRouter()
-  const { startLogin } = useBankIdContext()
-  const handleConfirmPay = () => {
-    datadogRum.addAction('Car dealership | Decline extension offer')
-    const ssn = props.shopSession.customer?.ssn
-    if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
-
-    startLogin({
-      ssn,
-      async onSuccess() {
-        console.log('Car dealership | BankID login success')
-        await router.push(PageLink.paymentConnect())
-      },
-    })
-  }
-
-  const TotalAmountComponent = (
-    <TotalAmount
-      {...selectedOffer.cost.net}
-      {...(props.requirePaymentConnection && {
-        discount: {
-          reducedAmount: props.contract.premium.amount,
-          explanation: t('TRIAL_COST_EXPLANATION'),
-        },
-      })}
-    />
-  )
-
   return (
     <Space y={1}>
-      <TrialOffer
-        contract={props.contract}
-        requirePaymentConnection={props.requirePaymentConnection}
-      />
-
-      <ToggleCard
-        label={t('TOGGLE_EXTENSION_LABEL')}
-        defaultChecked={true}
-        onCheckedChange={setUserWantsExtension}
-        Icon={<CampaignIcon size="1rem" color={theme.colors.signalGreenElement} />}
-      >
-        <Text as="p" color="textTranslucentSecondary" size="xs">
-          {t('TOGGLE_EXTENSION_DESCRIPTION')}
-        </Text>
-      </ToggleCard>
-
-      {userWantsExtension && (
-        <>
-          <Space y={1.5}>
-            <ProductItemContainer
-              offer={selectedOffer}
-              defaultExpanded={true}
-              variant={props.requirePaymentConnection ? 'green' : undefined}
-            >
-              <EditActionButton
-                priceIntent={props.priceIntent}
-                offer={selectedOffer}
-                onUpdate={handleUpdate}
-              />
-            </ProductItemContainer>
-
-            {TotalAmountComponent}
-
-            <Space y={0.5}>
-              <InfoToastBar>
-                <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
-                  {t('INFO_TOAST_CONTENT')}
-                </WithLink>
-              </InfoToastBar>
-
-              <Space y={1}>
-                <Button onClick={handleClickSign} loading={loading}>
-                  <SpaceFlex space={0.5} align="center">
-                    <BankIdIcon />
-                    {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-                  </SpaceFlex>
-                </Button>
-
-                <TextWithLink
-                  as="p"
-                  size={{ _: 'xs', md: 'sm' }}
-                  align="center"
-                  balance={true}
-                  color="textSecondary"
-                  href={PageLink.privacyPolicy({ locale: routingLocale })}
-                  target="_blank"
-                >
-                  {t('checkout:SIGN_DISCLAIMER')}
-                </TextWithLink>
-              </Space>
-            </Space>
-          </Space>
-        </>
+      {props.requirePaymentConnection && (
+        <Space y={1.5}>
+          <Text align="center">{t('TRIAL_HEADING')}</Text>
+          <ProductItemContractContainerCar contract={props.contract} />
+        </Space>
       )}
 
-      {!userWantsExtension && (
-        <>
-          {TotalAmountComponent}
-          <AttentionToastBar>
+      <ExtensionOfferToggle />
+
+      <Space y={1.5}>
+        <ProductItemContainer
+          offer={selectedOffer}
+          defaultExpanded={true}
+          variant={props.requirePaymentConnection ? 'green' : undefined}
+        >
+          <EditActionButton
+            priceIntent={props.priceIntent}
+            offer={selectedOffer}
+            onUpdate={handleUpdate}
+          />
+        </ProductItemContainer>
+
+        <TotalAmount
+          {...selectedOffer.cost.net}
+          {...(props.requirePaymentConnection && {
+            discount: {
+              reducedAmount: props.contract.premium.amount,
+              explanation: t('TRIAL_COST_EXPLANATION'),
+            },
+          })}
+        />
+
+        <Space y={0.5}>
+          <InfoToastBar>
             <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
-              {t('NOTICE_TOAST_CONTENT')}
+              {t('INFO_TOAST_CONTENT')}
             </WithLink>
-          </AttentionToastBar>
-          <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
-        </>
-      )}
-    </Space>
-  )
-}
+          </InfoToastBar>
 
-type TrialOfferProps = {
-  contract: TrialExtension['trialContract']
-  requirePaymentConnection: boolean
-}
+          <Space y={1}>
+            <Button onClick={handleClickSign} loading={loading}>
+              <SpaceFlex space={0.5} align="center">
+                <BankIdIcon />
+                {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+              </SpaceFlex>
+            </Button>
 
-const TrialOffer = (props: TrialOfferProps) => {
-  const { t } = useTranslation('carDealership')
-
-  if (!props.requirePaymentConnection) return null
-
-  return (
-    <Space y={1.5}>
-      <Text align="center">{t('TRIAL_HEADING')}</Text>
-      <ProductItemContractContainerCar contract={props.contract} />
+            <TextWithLink
+              as="p"
+              size={{ _: 'xs', md: 'sm' }}
+              align="center"
+              balance={true}
+              color="textSecondary"
+              href={PageLink.privacyPolicy({ locale: routingLocale })}
+              target="_blank"
+            >
+              {t('checkout:SIGN_DISCLAIMER')}
+            </TextWithLink>
+          </Space>
+        </Space>
+      </Space>
     </Space>
   )
 }
