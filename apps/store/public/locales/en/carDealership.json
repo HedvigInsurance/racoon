@@ -4,7 +4,6 @@
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
   "EDIT_OFFER_CANCEL": "Cancel",
   "EDIT_OFFER_SAVE": "Save",
-  "INFO_TOAST_CONTENT": "No binding time. Cancel anytime in the [[Hedvig-app]].",
   "NOTICE_TOAST_CONTENT": "Don't want to take this offer? [[Cancel it here]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Cancel",
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Yes, go ahead",
@@ -19,5 +18,6 @@
   "TRIAL_HEADING": "Starter offer",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Expires {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
-  "TRIAL_TITLE": "Car insurance 60 days"
+  "TRIAL_TITLE": "Car insurance 60 days",
+  "USP_TEXT": "No binding time"
 }

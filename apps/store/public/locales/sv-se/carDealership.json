@@ -4,7 +4,6 @@
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Ändra",
   "EDIT_OFFER_CANCEL": "Avbryt",
   "EDIT_OFFER_SAVE": "Spara",
-  "INFO_TOAST_CONTENT": "Ingen bindningstid. Avsluta när du vill i [[Hedvig-appen]].",
   "NOTICE_TOAST_CONTENT": "Vill du inte ta del av starterbjudandet? [[Avsluta erbjudandet här]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Avbryt",
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Ja, fortsätt",
@@ -19,5 +18,6 @@
   "TRIAL_HEADING": "Starterbjudande",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Löper ut {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "Du måste teckna ett nytt avtal för att förlänga din försäkring.",
-  "TRIAL_TITLE": "Bilförsäkring 60 dagar"
+  "TRIAL_TITLE": "Bilförsäkring 60 dagar",
+  "USP_TEXT": "Ingen bindningstid"
 }

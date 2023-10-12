@@ -1,13 +1,12 @@
 import { datadogRum } from '@datadog/browser-rum'
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
-import { Space, Button, Text, BankIdIcon } from 'ui'
+import { Space, Button, Text, BankIdIcon, CheckIcon, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
-import { WithLink } from '@/components/TextWithLink'
-import { InfoToastBar } from '@/components/ToastBar/ToastBar'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -96,38 +95,43 @@ export const TrialExtensionForm = (props: Props) => {
           })}
         />
 
-        <Space y={0.5}>
-          <InfoToastBar>
-            <WithLink href={PageLink.apiAppStoreRedirect()} target="_blank">
-              {t('INFO_TOAST_CONTENT')}
-            </WithLink>
-          </InfoToastBar>
+        <Space y={1}>
+          <Button onClick={handleClickSign} loading={loading}>
+            <SpaceFlex space={0.5} align="center">
+              <BankIdIcon />
+              {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+            </SpaceFlex>
+          </Button>
 
-          <Space y={1}>
-            <Button onClick={handleClickSign} loading={loading}>
-              <SpaceFlex space={0.5} align="center">
-                <BankIdIcon />
-                {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-              </SpaceFlex>
-            </Button>
+          <UspWrapper>
+            <CheckIcon size="1rem" />
+            <Text size="xs">{t('USP_TEXT')}</Text>
+          </UspWrapper>
 
-            <TextWithLink
-              as="p"
-              size={{ _: 'xs', md: 'sm' }}
-              align="center"
-              balance={true}
-              color="textSecondary"
-              href={PageLink.privacyPolicy({ locale: routingLocale })}
-              target="_blank"
-            >
-              {t('checkout:SIGN_DISCLAIMER')}
-            </TextWithLink>
-          </Space>
+          <TextWithLink
+            as="p"
+            size="xs"
+            align="center"
+            balance={true}
+            color="textSecondary"
+            href={PageLink.privacyPolicy({ locale: routingLocale })}
+            target="_blank"
+          >
+            {t('checkout:SIGN_DISCLAIMER')}
+          </TextWithLink>
         </Space>
       </Space>
     </Space>
   )
 }
+
+const UspWrapper = styled.div({
+  height: '2.5rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.xs,
+})
 
 const getSelectedOffer = (
   priceIntent: TrialExtension['priceIntent'],
