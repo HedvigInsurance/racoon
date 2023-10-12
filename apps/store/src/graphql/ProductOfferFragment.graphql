@@ -13,7 +13,7 @@ fragment ProductOffer on ProductOffer {
   }
   variant {
     typeOfContract
-    displayName
+    displayNameSubtype
     perils {
       ...Peril
     }

@@ -75,7 +75,7 @@ export const ProductItemContainer = (props: Props) => {
 
 const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant' | 'product'>) => {
   // TODO: small hack, move logic to API
-  return item.variant.displayName !== item.product.displayNameFull
-    ? item.variant.displayName
+  return item.variant.displayNameSubtype !== item.product.displayNameFull
+    ? item.variant.displayNameSubtype
     : undefined
 }

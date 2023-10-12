@@ -21,7 +21,7 @@ export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Pr
     <TierSelector.Root defaultOpen={true}>
       <TierSelector.Header>
         <Text>{t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}</Text>
-        <ToggleText>{selectedOffer.variant.displayName}</ToggleText>
+        <ToggleText>{selectedOffer.variant.displayNameSubtype}</ToggleText>
       </TierSelector.Header>
 
       <TierSelector.Content>
@@ -30,7 +30,7 @@ export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Pr
             <TierLevelRadioGroup.Item
               key={offer.id}
               value={offer.id}
-              title={offer.variant.displayName}
+              title={offer.variant.displayNameSubtype}
               price={formatter.monthlyPrice(offer.cost.net)}
               description={getVariantDescription(offer.variant.typeOfContract)}
             />

@@ -26,7 +26,7 @@ export const useSelectedOffer = () => {
         datadogLogs.logger.info('Selected price matched offer', {
           offerId: offer.id,
           product: offer.product.name,
-          productVariant: offer.variant.displayName,
+          productVariant: offer.variant.displayNameSubtype,
           externalInsurer: offer.priceMatch.externalInsurer.displayName,
           priceReduction: offer.priceMatch.priceReduction.amount,
         })

@@ -16,7 +16,7 @@ const STATE: Record<Exclude<State['type'], 'SUBMITTING'>, State> = {
 }
 
 type Offer = Pick<ProductOfferFragment, 'id' | 'cost'> & {
-  variant: Pick<ProductOfferFragment['variant'], 'typeOfContract' | 'displayName'>
+  variant: Pick<ProductOfferFragment['variant'], 'typeOfContract' | 'displayNameSubtype'>
 }
 
 type Props = {
@@ -60,7 +60,7 @@ export const EditActionButton = (props: Props) => {
 
     const sortedOffers = getOffersByPrice(props.priceIntent.offers)
     const options = sortedOffers.map((offer) => ({
-      name: offer.variant.displayName,
+      name: offer.variant.displayNameSubtype,
       value: offer.variant.typeOfContract,
     }))
 

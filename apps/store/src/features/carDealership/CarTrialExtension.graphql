@@ -58,7 +58,7 @@ query CarTrialExtension($shopSessionId: UUID!) {
         }
         variant {
           typeOfContract
-          displayName
+          displayNameSubtype
           perils {
             ...Peril
           }
