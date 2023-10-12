@@ -64,13 +64,11 @@ export const TrialExtensionForm = (props: Props) => {
   return (
     <Space y={1}>
       {props.requirePaymentConnection && (
-        <Space y={1.5}>
-          <Text align="center">{t('TRIAL_HEADING')}</Text>
+        <>
           <ProductItemContractContainerCar contract={props.contract} />
-        </Space>
+          <ExtensionOfferToggle />
+        </>
       )}
-
-      <ExtensionOfferToggle />
 
       <Space y={1.5}>
         <ProductItemContainer

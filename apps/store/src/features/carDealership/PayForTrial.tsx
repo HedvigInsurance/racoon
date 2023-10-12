@@ -1,7 +1,7 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { Space, Text } from 'ui'
+import { Space } from 'ui'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { WithLink } from '@/components/TextWithLink'
 import { AttentionToastBar } from '@/components/ToastBar/ToastBar'
@@ -36,10 +36,7 @@ export const PayForTrial = (props: Props) => {
 
   return (
     <Space y={1}>
-      <Space y={1.5}>
-        <Text align="center">{t('TRIAL_HEADING')}</Text>
-        <ProductItemContractContainerCar contract={props.contract} />
-      </Space>
+      <ProductItemContractContainerCar contract={props.contract} />
 
       <ExtensionOfferToggle />
 

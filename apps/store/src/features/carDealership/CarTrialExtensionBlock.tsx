@@ -5,6 +5,7 @@ import addDays from 'date-fns/addDays'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
+import { Heading, Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery, type CarTrialExtensionQuery } from '@/services/apollo/generated'
@@ -20,6 +21,7 @@ import { TrialExtensionForm } from './TrialExtensionForm'
 const FOURTEEN_DAYS = 14
 
 type Props = SbBaseBlockProps<{
+  title: string
   requirePaymentConnection?: boolean
 }>
 
@@ -36,26 +38,36 @@ export const CarTrialExtensionBlock = (props: Props) => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width="1/3" align="center">
-        {!data && <LoadingSkeleton />}
+        {!data ? (
+          <LoadingSkeleton />
+        ) : (
+          <Space y={1.5}>
+            <Heading as="h3" variant="standard.18" align="center" balance={true}>
+              {populateTitle(props.blok.title, data.trialContract.exposure.displayNameFull)}
+            </Heading>
 
-        {data && userWantsExtension && (
-          <TrialExtensionForm
-            {...storyblokEditable(props.blok)}
-            contract={data.trialContract}
-            priceIntent={data.priceIntent}
-            shopSession={data.shopSession}
-            requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
-          />
-        )}
-
-        {data && !userWantsExtension && (
-          <PayForTrial contract={data.trialContract} ssn={data.ssn} />
+            {userWantsExtension ? (
+              <TrialExtensionForm
+                {...storyblokEditable(props.blok)}
+                contract={data.trialContract}
+                priceIntent={data.priceIntent}
+                shopSession={data.shopSession}
+                requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
+              />
+            ) : (
+              <PayForTrial contract={data.trialContract} ssn={data.ssn} />
+            )}
+          </Space>
         )}
       </GridLayout.Content>
     </GridLayout.Root>
   )
 }
 CarTrialExtensionBlock.blockName = 'carTrialExtension'
+
+const populateTitle = (title: string, registrationNumber: string) => {
+  return title.replace(/{{registrationNumber}}/g, registrationNumber)
+}
 
 type UseCarTrialQueryParams = Pick<QueryHookOptions<TrialExtension>, 'onCompleted'>
 

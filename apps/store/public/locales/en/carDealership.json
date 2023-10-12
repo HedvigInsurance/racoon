@@ -15,7 +15,6 @@
   "TOGGLE_EXTENSION_DESCRIPTION": "Passa på att förlänga din bilförsäkring direkt, så du fortsätter vara försäkrad. Tänk på att du och din bil blir oförsäkrade efter att de 60 dagarna har löpt ut.",
   "TOGGLE_EXTENSION_LABEL": "Extend after 60 days",
   "TRIAL_COST_EXPLANATION": "discounted for 60 days",
-  "TRIAL_HEADING": "Starter offer",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Expires {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
   "TRIAL_TITLE": "Car insurance 60 days",
