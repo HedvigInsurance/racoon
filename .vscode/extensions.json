@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "unifiedjs.vscode-mdx",
-    "apollographql.vscode-apollo"
+    "apollographql.vscode-apollo",
+    "arcanis.vscode-zipfs"
   ]
 }
