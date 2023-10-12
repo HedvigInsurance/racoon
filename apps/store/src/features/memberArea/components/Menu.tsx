@@ -1,11 +1,13 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 import { theme, mq, Button } from 'ui'
 import { resetAuthTokens } from '@/services/authApi/persist'
 
 export const Menu = () => {
   const router = useRouter()
+  const { t } = useTranslation('memberArea')
   const currentRoute = router.pathname
   return (
     <Navigation>
@@ -15,7 +17,7 @@ export const Menu = () => {
             href={'/member/insurances'}
             data-active={currentRoute.includes('/member/insurances')}
           >
-            Your Insurances
+            {t('MENU_ITEM_LABEL_INSURANCE')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
@@ -23,12 +25,12 @@ export const Menu = () => {
             href={'/member/payments'}
             data-active={currentRoute === '/member/payments'}
           >
-            Payment
+            {t('MENU_ITEM_LABEL_PAYMENT')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
           <NavigationLink href={'/member/claim'} data-active={currentRoute === '/member/claim'}>
-            How to make a claim
+            {t('MENU_ITEM_LABEL_CLAIM')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
