@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { Heading, mq, theme } from 'ui'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
@@ -6,6 +7,7 @@ import { InsuranceCard } from './InsuranceCard'
 
 export const Insurances = () => {
   const currentMember = useMemberAreaInfo()
+  const { t } = useTranslation('memberArea')
   const greeting = `Hello, ${currentMember.firstName} ${currentMember.lastName}`
 
   return (
@@ -15,7 +17,7 @@ export const Insurances = () => {
           {greeting}
         </Heading>
         <Heading as="h1" variant="standard.32">
-          Your insurances
+          {t('MENU_ITEM_LABEL_INSURANCE')}
         </Heading>
         <Grid>
           {currentMember.activeContracts.map((contract) => (

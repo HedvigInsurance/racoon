@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Button, Heading, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -34,29 +35,30 @@ type InsuranceTabsProps = {
 }
 
 const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
+  const { t } = useTranslation('memberArea')
   return (
     <RadixTabs.Tabs defaultValue="overview">
       <TabsList>
         <RadixTabs.Trigger asChild={true} value="overview">
           <TabButton variant="secondary" size="medium">
-            Overview
+            {t('INSURANCE_DETAILS_TAB_OVERVIEW')}
           </TabButton>
         </RadixTabs.Trigger>
         <RadixTabs.Trigger asChild={true} value="coverage">
           <TabButton variant="secondary" size="medium">
-            Coverage
+            {t('INSURANCE_DETAILS_TAB_COVERAGE')}
           </TabButton>
         </RadixTabs.Trigger>
         <RadixTabs.Trigger asChild={true} value="documents">
           <TabButton variant="secondary" size="medium">
-            Documents
+            {t('INSURANCE_DETAILS_TAB_DOCUMENTS')}
           </TabButton>
         </RadixTabs.Trigger>
       </TabsList>
 
       <RadixTabs.TabsContent value="overview">
         <Heading as="h2" variant="standard.24" mt={theme.space.lg}>
-          Overview
+          {t('INSURANCE_DETAILS_TAB_OVERVIEW')}
         </Heading>
         {contract.currentAgreement.displayItems.map((displayItem) => (
           <Row key={displayItem.displayTitle}>
@@ -93,7 +95,7 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
               variant="secondary"
               size="small"
             >
-              Insurance certificate
+              {t('INSURANCE_DETAILS_CERTIFICATE_BUTTON')}
             </ButtonNextLink>
           )}
         </Documents>
