@@ -1,7 +1,10 @@
 fragment SwitchingContract on Contract {
   id
-  variant {
-    displayName
+  currentAgreement {
+    productVariant {
+      displayName
+      displayNameSubtype
+    }
   }
   externalInsuranceCancellation {
     ...ContractExternalInsuranceCancellation

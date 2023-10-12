@@ -6,7 +6,7 @@ import { type ContractQuery, CurrencyCode } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 
-type Contract = Pick<NonNullable<ContractQuery['contract']>, 'id' | 'variant'>
+type Contract = Pick<NonNullable<ContractQuery['contract']>, 'id'>
 
 type Props = {
   contract: Contract
@@ -25,10 +25,12 @@ export const ProductItemContractContainerCar = (props: Props) => {
     [],
   )
 
-  const productDocuments = FIXTURE_CONTRACT.variant.documents.map((item) => ({
-    title: item.displayName,
-    url: item.url,
-  }))
+  const productDocuments = FIXTURE_CONTRACT.currentAgreement.productVariant.documents.map(
+    (item) => ({
+      title: item.displayName,
+      url: item.url,
+    }),
+  )
 
   const endDate = convertToDate(FIXTURE_CONTRACT.endDate)
   if (endDate === null) throw new Error(`Invalid end date for contract ${props.contract.id}`)
@@ -83,16 +85,18 @@ const FIXTURE_CONTRACT = {
     },
   },
 
-  variant: {
-    documents: [
-      {
-        displayName: 'Insurance terms',
-        url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/villkor',
-      },
-      {
-        displayName: 'Insurance letter',
-        url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/brev',
-      },
-    ],
+  currentAgreement: {
+    productVariant: {
+      documents: [
+        {
+          displayName: 'Insurance terms',
+          url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/villkor',
+        },
+        {
+          displayName: 'Insurance letter',
+          url: 'https://www.hedvig.com/se/forsakringar/hemforsakring/brev',
+        },
+      ],
+    },
   },
 }

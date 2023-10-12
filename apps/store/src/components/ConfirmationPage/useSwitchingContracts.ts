@@ -52,7 +52,8 @@ export const convertToBankSigneringContract = (
   if (!contract.externalInsuranceCancellation) return
   if (!contract.externalInsuranceCancellation.bankSignering) return
 
-  const product = contract.variant.displayName
+  const productVariant = contract.currentAgreement.productVariant
+  const product = productVariant.displayNameSubtype || productVariant.displayName
   const insurer = contract.externalInsuranceCancellation.externalInsurer.displayName
 
   return {
