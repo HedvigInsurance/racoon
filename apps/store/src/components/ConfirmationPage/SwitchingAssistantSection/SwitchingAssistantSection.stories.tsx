@@ -52,9 +52,11 @@ export const Default: Story = {
                 createdContracts: [
                   {
                     id: '11f48e7e-62de-4fdc-ac3b-6863a908c58f',
-                    variant: {
-                      displayName: 'Full coverage',
-                      __typename: 'ProductVariant',
+                    currentAgreement: {
+                      productVariant: {
+                        displayNameSubtype: '',
+                        displayName: 'Full coverage',
+                      },
                     },
                     externalInsuranceCancellation: {
                       id: '9f015c25-b8bf-4da2-afab-077f2b2f28a1',
@@ -106,9 +108,11 @@ export const Completed: Story = {
                 createdContracts: [
                   {
                     id: '11f48e7e-62de-4fdc-ac3b-6863a908c58f',
-                    variant: {
-                      displayName: 'Full coverage',
-                      __typename: 'ProductVariant',
+                    currentAgreement: {
+                      productVariant: {
+                        displayNameSubtype: '',
+                        displayName: 'Full coverage',
+                      },
                     },
                     externalInsuranceCancellation: {
                       id: '9f015c25-b8bf-4da2-afab-077f2b2f28a1',
