@@ -16339,17 +16339,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:6.0.1":
-  version: 6.0.1
-  resolution: "eslint-plugin-testing-library@npm:6.0.1"
-  dependencies:
-    "@typescript-eslint/utils": ^5.58.0
-  peerDependencies:
-    eslint: ^7.5.0 || ^8.0.0
-  checksum: eff1a134cb62f1c39d2136d8b89d4f231a32003fe45da2a905e5dfaa820c4a235f601ea66be6f44dd51e91debc69a36a70b586af65ac8831102b9bd411bc2705
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-testing-library@npm:6.0.2":
   version: 6.0.2
   resolution: "eslint-plugin-testing-library@npm:6.0.2"
@@ -24988,7 +24977,7 @@ __metadata:
     eslint-config-next: 13.4.12
     eslint-config-prettier: 9.0.0
     eslint-plugin-jest: 27.4.2
-    eslint-plugin-testing-library: 6.0.1
+    eslint-plugin-testing-library: 6.0.2
     framer-motion: 10.16.4
     graphql: 16.8.1
     graphql-tag: 2.12.6
@@ -26408,7 +26397,7 @@ __metadata:
     eslint-config-next: 13.4.12
     eslint-config-prettier: 9.0.0
     eslint-plugin-jest: 27.4.2
-    eslint-plugin-testing-library: 6.0.1
+    eslint-plugin-testing-library: 6.0.2
     jest: 29.7.0
     jest-environment-jsdom: 29.7.0
     react: 18.2.0
