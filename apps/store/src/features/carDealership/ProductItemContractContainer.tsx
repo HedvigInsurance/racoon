@@ -1,6 +1,5 @@
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { LockIcon, theme } from 'ui'
 import { ProductItem } from '@/components/ProductItem/ProductItem'
 import { type ContractQuery, CurrencyCode } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
@@ -40,14 +39,12 @@ export const ProductItemContractContainerCar = (props: Props) => {
 
   return (
     <ProductItem
-      title={t('TRIAL_TITLE')}
-      pillowSrc={FIXTURE_CONTRACT.product.pillowImage.src}
+      title={FIXTURE_CONTRACT.product.displayNameFull}
       price={FIXTURE_CONTRACT.cost}
       startDate={startDateProps}
       productDetails={productDetails}
       productDocuments={productDocuments}
-      subtitle={FIXTURE_CONTRACT.exposure.displayNameFull}
-      Icon={<LockIcon color={theme.colors.textTranslucentSecondary} />}
+      badge={{ children: t('CONTRACT_CARD_BADGE'), color: 'signalAmberHighlight' }}
     />
   )
 }
@@ -78,6 +75,7 @@ const FIXTURE_CONTRACT = {
   ],
 
   product: {
+    displayNameFull: 'Bilförsäkring',
     pillowImage: {
       src: 'https://a.storyblok.com/f/165473/832x832/1fe7a75de6/hedvig-pillows-car.png',
     },

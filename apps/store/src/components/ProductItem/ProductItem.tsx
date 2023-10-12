@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, Space, Text, mq, theme } from 'ui'
+import { Badge, Button, ButtonProps, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Skeleton } from '@/components/Skeleton'
@@ -10,7 +10,7 @@ import { StartDate } from './StartDate'
 
 type Props = {
   title: string
-  pillowSrc: string
+  pillowSrc?: string
   startDate: ComponentProps<typeof StartDate>
   price: ComponentProps<typeof ProductDetailsHeader>['price']
   productDetails: ComponentProps<typeof ProductDetails>['items']
@@ -18,8 +18,8 @@ type Props = {
   defaultExpanded?: boolean
   children?: ReactNode
   subtitle?: string
-  Icon?: ReactNode
   variant?: 'green'
+  badge?: ComponentProps<typeof Badge>
 }
 
 export const ProductItem = (props: Props) => {
@@ -33,14 +33,14 @@ export const ProductItem = (props: Props) => {
     <Card data-variant={props.variant}>
       <Hoverable onClick={handleClickHoverable} data-variant={props.variant}>
         <Space y={1}>
-          <Header>
-            <Pillow size="small" src={props.pillowSrc} alt="" />
+          <Header style={{ gridTemplateColumns: props.pillowSrc ? 'auto 1fr' : '1fr' }}>
+            {props.pillowSrc && <Pillow size="small" src={props.pillowSrc} alt="" />}
             <div>
               <HeaderRow>
                 <Text as="p" size="md" color="textTranslucentPrimary">
                   {props.title}
                 </Text>
-                {props.Icon}
+                {props.badge && <AlignedBadge size="big" {...props.badge} />}
               </HeaderRow>
               <StartDate {...props.startDate} />
             </div>
@@ -102,7 +102,6 @@ const Hoverable = styled.div({
 
 const Header = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'auto 1fr',
   columnGap: theme.space.md,
   alignItems: 'center',
 
@@ -113,10 +112,16 @@ const Header = styled.div({
 })
 
 const HeaderRow = styled.div({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
-  gap: theme.space.xs,
   alignItems: 'center',
+  width: '100%',
+})
+
+const AlignedBadge = styled(Badge)({
+  position: 'absolute',
+  right: 0,
 })
 
 const StyledProductDetailsHeader = styled(ProductDetailsHeader)({

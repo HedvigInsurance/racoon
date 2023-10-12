@@ -5,7 +5,10 @@ import { UIColors } from '../../lib/theme/colors/colors'
 import { getColor, theme } from '../../lib/theme/theme'
 import { BadgeSizeProps, getBadgeSize } from './Badge.helper'
 
-type BadgeColors = Pick<UIColors, 'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50'>
+type BadgeColors = Pick<
+  UIColors,
+  'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50' | 'signalAmberHighlight'
+>
 
 export type BadgeProps = Margins & {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
