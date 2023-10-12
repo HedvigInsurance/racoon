@@ -12,7 +12,9 @@ import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { CAR_TRIAL_DATA_QUERY, type TrialExtension } from './carDealershipFixtures'
+import { useUserWantsExtension } from './ExtensionOfferToggle'
 import { LoadingSkeleton } from './LoadingSkeleton'
+import { PayForTrial } from './PayForTrial'
 import { TrialExtensionForm } from './TrialExtensionForm'
 
 const FOURTEEN_DAYS = 14
@@ -22,6 +24,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const CarTrialExtensionBlock = (props: Props) => {
+  const userWantsExtension = useUserWantsExtension()
   const addNotificationBanner = useAddNotificationBanner()
 
   const data = useCarTrialQuery({
@@ -33,7 +36,9 @@ export const CarTrialExtensionBlock = (props: Props) => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width="1/3" align="center">
-        {data ? (
+        {!data && <LoadingSkeleton />}
+
+        {data && userWantsExtension && (
           <TrialExtensionForm
             {...storyblokEditable(props.blok)}
             contract={data.trialContract}
@@ -41,8 +46,10 @@ export const CarTrialExtensionBlock = (props: Props) => {
             shopSession={data.shopSession}
             requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
           />
-        ) : (
-          <LoadingSkeleton />
+        )}
+
+        {data && !userWantsExtension && (
+          <PayForTrial contract={data.trialContract} ssn={data.ssn} />
         )}
       </GridLayout.Content>
     </GridLayout.Root>
@@ -122,9 +129,13 @@ const useAddNotificationBanner = () => {
 
 // TODO: we're gonna be able to remove this when API is complete
 const getTrialExtension = (data: CarTrialExtensionQuery): TrialExtension => {
+  const ssn = data.shopSession.customer?.ssn
+  if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
+
   return {
     ...CAR_TRIAL_DATA_QUERY,
     shopSession: data.shopSession,
     priceIntent: data.shopSession.priceIntents[0],
+    ssn,
   }
 }

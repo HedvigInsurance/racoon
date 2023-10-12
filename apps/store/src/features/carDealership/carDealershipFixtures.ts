@@ -7,6 +7,7 @@ export type TrialExtension = {
   trialContract: typeof TRIAL_CONTRACT
   shopSession: CarTrialExtensionQuery['shopSession']
   priceIntent: CarTrialExtensionQuery['shopSession']['priceIntents'][number]
+  ssn: string
 }
 
 const TRIAL_CONTRACT = {
