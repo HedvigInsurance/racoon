@@ -34,7 +34,6 @@ export const EditExtensionOfferForm = (props: EditExtensionOfferFormProps) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    datadogRum.addAction('Offer Car Save')
 
     const formData = new FormData(event.currentTarget)
     const data = {
@@ -47,6 +46,11 @@ export const EditExtensionOfferForm = (props: EditExtensionOfferFormProps) => {
     }
 
     props.onSave(option, data)
+
+    datadogRum.addAction('Offer Car Save', {
+      changedMileage: data[MILEAGE_DATA_KEY] !== props.data[MILEAGE_DATA_KEY]?.toString(),
+      changedTierLevel: option !== props.defaultTierLevel,
+    })
   }
 
   const mileageField = {
