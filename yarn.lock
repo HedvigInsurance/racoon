@@ -17825,7 +17825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:16.8.1, graphql@npm:^16.8.1":
+"graphql@npm:*, graphql@npm:16.8.1, graphql@npm:^16.8.1":
   version: 16.8.1
   resolution: "graphql@npm:16.8.1"
   checksum: 8d304b7b6f708c8c5cc164b06e92467dfe36aff6d4f2cf31dd19c4c2905a0e7b89edac4b7e225871131fd24e21460836b369de0c06532644d15b461d55b1ccc0
@@ -24884,7 +24884,6 @@ __metadata:
     storybook-addon-apollo-client: 5.0.0
     subscriptions-transport-ws: 0.11.0
     ts-jest: 29.1.1
-    tsconfig: "workspace:"
     tss-react: 4.9.2
     typescript: 5.2.2
     ui: "workspace:"
@@ -25905,12 +25904,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig@workspace:, tsconfig@workspace:packages/tsconfig":
-  version: 0.0.0-use.local
-  resolution: "tsconfig@workspace:packages/tsconfig"
-  languageName: unknown
-  linkType: soft
-
 "tslib@npm:2.5.3":
   version: 2.5.3
   resolution: "tslib@npm:2.5.3"
@@ -26283,7 +26276,6 @@ __metadata:
     react-wrap-balancer: 1.1.0
     storybook: 7.4.6
     ts-jest: 29.1.1
-    tsconfig: "workspace:"
     tsconfig-paths-webpack-plugin: 4.1.0
     typescript: 5.2.2
   languageName: unknown
