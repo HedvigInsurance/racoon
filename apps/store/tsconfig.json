@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "exclude": [
-    "node_modules"
-  ],
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
@@ -59,9 +56,8 @@
     "strict": true,
     "composite": false,
     "esModuleInterop": true,
-    "preserveWatchOutput": true,
     "skipLibCheck": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleResolution": "node",
@@ -72,5 +68,8 @@
     "src",
     "*.d.ts",
     ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
