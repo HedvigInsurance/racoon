@@ -11,8 +11,10 @@
     "next", "eslint-config-next", "@next/bundle-analyzer",
     // Not actively used, only needed in closing markets
     "@adyen/adyen-web",
-    // Must match storybook deps, don't update automatically
-    "webpack"
+    // Following dependencies are brought in as direct to solve versioning conflicts
+    // Renovate should not try to update those
+    "storyblok-js-client", // @storyblok/js
+    "webpack" // storybook
   ],
 
   "packageRules": [
