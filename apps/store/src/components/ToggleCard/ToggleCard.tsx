@@ -47,7 +47,7 @@ const InputWrapper = styled.div({
   backgroundColor: theme.colors.opaque1,
   padding: theme.space.md,
   paddingTop: theme.space.sm,
-  borderRadius: theme.radius.sm,
+  borderRadius: theme.radius.md,
 })
 
 const CheckboxHeader = styled.div({

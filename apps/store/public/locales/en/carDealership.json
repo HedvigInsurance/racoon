@@ -1,6 +1,7 @@
 {
   "CONNECT_PAYMENT_BANNER": "Sign before {{dueDate}} to remain insured",
   "CONNECT_PAYMENT_BUTTON": "Connect payment",
+  "CONTRACT_CARD_BADGE": "60 days",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
   "EDIT_OFFER_CANCEL": "Cancel",
   "EDIT_OFFER_SAVE": "Save",
@@ -17,6 +18,5 @@
   "TRIAL_COST_EXPLANATION": "discounted for 60 days",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Expires {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
-  "TRIAL_TITLE": "Car insurance 60 days",
   "USP_TEXT": "No binding time"
 }
