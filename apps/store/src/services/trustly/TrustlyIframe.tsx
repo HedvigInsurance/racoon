@@ -74,6 +74,7 @@ const Iframe = styled.iframe(trustlyIframeStyles, {
 
   '&[data-loading=true]': {
     backgroundColor: theme.colors.gray200,
-    animation: `${pulseAnimation} 2s infinite`,
+    animation: `${pulseAnimation} 2s`,
+    animationIterationCount: 3,
   },
 })

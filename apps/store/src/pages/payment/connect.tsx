@@ -64,7 +64,7 @@ const PaymentConnectPage = () => {
         </Layout>
       )}
 
-      <ErrorDialog open={state.type === 'FAILED'} onRetry={handleRetry} />
+      <ErrorDialog open={state.type === 'FAILED'} onRetry={handleRetry} onClose={handleRetry} />
     </>
   )
 }
