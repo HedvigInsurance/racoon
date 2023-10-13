@@ -80,7 +80,7 @@
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "3.3.7",
+    "@graphql-codegen/typescript-react-apollo": "4.0.0",
     "@jest/globals": "29.7.0",
     "@next/bundle-analyzer": "13.4.12",
     "@storybook/addon-actions": "7.4.6",
