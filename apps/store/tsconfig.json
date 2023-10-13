@@ -57,7 +57,7 @@
     "composite": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleResolution": "node",
