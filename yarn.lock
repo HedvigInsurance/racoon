@@ -24884,7 +24884,6 @@ __metadata:
     storybook-addon-apollo-client: 5.0.0
     subscriptions-transport-ws: 0.11.0
     ts-jest: 29.1.1
-    tsconfig: "workspace:"
     tss-react: 4.9.2
     typescript: 5.2.2
     ui: "workspace:"
