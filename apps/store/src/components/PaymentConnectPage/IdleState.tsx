@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type NextRouter, useRouter } from 'next/router'
@@ -12,13 +13,15 @@ import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { Layout } from './Layout'
 
+type State = 'IDLE' | 'LOADING' | 'ERROR'
+
 type Props = {
   onCompleted: (trustlyUrl: string) => void
   onFailed: () => void
 }
 
 export const IdleState = (props: Props) => {
-  const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [state, setState] = useState<State>('IDLE')
   const { t } = useTranslation(['common', 'checkout'])
   const router = useRouter()
   const apolloClient = useApolloClient()
@@ -26,14 +29,14 @@ export const IdleState = (props: Props) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
-    setState('loading')
     datadogRum.addAction('Payment Connect Init')
+    setState('LOADING')
 
     try {
       await consumeAuthorizationCode(router)
     } catch (error) {
-      setState('error')
-      datadogRum.addError('Payment Connect link expired', { error })
+      setState('ERROR')
+      datadogLogs.logger.warn('Payment Connect link expired', { error })
       return
     }
 
@@ -41,7 +44,7 @@ export const IdleState = (props: Props) => {
       const trustlyUrl = await createTrustlyUrl({ apolloClient, locale: routingLocale })
       props.onCompleted(trustlyUrl)
     } catch (error) {
-      datadogRum.addError(error)
+      datadogLogs.logger.warn('Payment Connect failed to create trustly url', { error })
       props.onFailed()
     }
   }
@@ -52,10 +55,10 @@ export const IdleState = (props: Props) => {
         <form onSubmit={handleSubmit}>
           <IframePlaceholder data-state={state}>
             <WideSpace y={0.5}>
-              <Button loading={state === 'loading'} disabled={state === 'error'}>
+              <Button loading={state === 'LOADING'} disabled={state === 'ERROR'}>
                 {t('FLOW_ACTIVATION_BUTTON')}
               </Button>
-              {state === 'error' && (
+              {state === 'ERROR' && (
                 <Text align="center">{t('PAYMENT_CONNECT_ERROR_LINK_EXPIRED')}</Text>
               )}
             </WideSpace>
