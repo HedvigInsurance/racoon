@@ -8,8 +8,10 @@
   "MENU_ITEM_LABEL_INSURANCE": "Your insurances",
   "MENU_ITEM_LABEL_PAYMENT": "Payment",
   "PAYMENTS_CONNECTION_TITLE": "Payment connection",
+  "PAYMENTS_DISCOUNT_LABEL": "Discount",
   "PAYMENTS_FREE_UNTIL": "Free until",
   "PAYMENTS_MONTLY_COST": "Monthly cost",
   "PAYMENTS_PAYMENT_CONNECTED": "Connected",
-  "PAYMENTS_PAYMENT_NOT_CONNECTED": "Not connected"
+  "PAYMENTS_PAYMENT_NOT_CONNECTED": "Not connected",
+  "PAYMENTS_TOTAL_LABEL": "Total"
 }

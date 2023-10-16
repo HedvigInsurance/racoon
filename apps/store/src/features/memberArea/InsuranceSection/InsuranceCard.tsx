@@ -80,7 +80,7 @@ const Info = styled.div({
   marginTop: 'auto',
 })
 
-const getPillowSrc = (typeOfContract: string) => {
+export const getPillowSrc = (typeOfContract: string) => {
   switch (typeOfContract) {
     case 'SE_HOUSE':
       return 'https://a.storyblok.com/f/165473/832x832/a50cf6d846/hedvig-pillows-house-villa.png'
