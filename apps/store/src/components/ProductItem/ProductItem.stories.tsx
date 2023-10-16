@@ -73,10 +73,10 @@ export const ActiveContract: Story = {
   },
 }
 
-export const WithSubtitle: Story = {
+export const WithExposure: Story = {
   args: {
     ...Default.args,
-    subtitle: 'Hedvigsgatan 12 · 2 people',
+    exposure: 'Hedvigsgatan 12',
   },
 }
 

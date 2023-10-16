@@ -31,7 +31,6 @@ export const ProductItemContainer = (props: Props) => {
   const price = getOfferPrice(props.offer.cost)
 
   const startDateProps = getStartDateProps({
-    exposure: props.offer.exposure.displayNameShort,
     data: props.offer.priceIntentData,
     startDate: props.offer.startDate,
   })
@@ -67,6 +66,7 @@ export const ProductItemContainer = (props: Props) => {
       productDocuments={productDocuments}
       defaultExpanded={props.defaultExpanded}
       variant={props.variant}
+      exposure={props.offer.exposure.displayNameShort}
     >
       {props.children}
     </ProductItem>
