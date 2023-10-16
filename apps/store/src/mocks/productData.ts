@@ -20,6 +20,7 @@ export const productData: ProductData = {
       __typename: 'ProductVariant',
       typeOfContract: 'SE_APARTMENT_BRF',
       displayName: 'Home Insurance Homeowner',
+      displayNameSubtype: 'Homeowner',
       perils: [
         {
           __typename: 'Peril',
