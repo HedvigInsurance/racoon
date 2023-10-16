@@ -2,8 +2,16 @@
   // https://docs.renovatebot.com/
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
+
+  // Scheduling
   "timezone": "Europe/Stockholm",
-  "schedule": ["after 6am and before 11am every weekday"],
+  "schedule": ["before 11am every weekday"],
+  "automergeSchedule": ["after 6am and before 11am every weekday"],
+
+  // Do not create PRs for changes than will be automerged
+  // https://docs.renovatebot.com/key-concepts/automerge/#branch-vs-pr-automerging
+  automergeType: "branch",
+
   "labels": ["needs approval/merge"],
   "ignoreDeps": [
     // Don't update nextjs until client-side navigation issue is solved
@@ -30,7 +38,6 @@
       "labels": ["dev-deps"]
     }
   ],
-  "prCreation": "immediate",
   "prConcurrentLimit": 12,
   // Default: 2, this is way too low for trying to go through daily PR flow in short window
   // Effectively we may have only 1-2 renovate during daily window, so let's jam all valid PRs
