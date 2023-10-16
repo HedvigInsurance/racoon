@@ -4,37 +4,50 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { theme, mq, Button } from 'ui'
 import { resetAuthTokens } from '@/services/authApi/persist'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 
 export const Menu = () => {
   const router = useRouter()
   const { t } = useTranslation('memberArea')
+  const { routingLocale } = useCurrentLocale()
   const currentRoute = router.pathname
+
+  const internalItems = {
+    claim: PageLink.memberAreaClaim({ locale: routingLocale }),
+    insurances: PageLink.memberAreaInsurances({ locale: routingLocale }),
+    payments: PageLink.memberAreaPayments({ locale: routingLocale }),
+  }
+
   return (
     <Navigation>
       <NavigationList>
         <NavgationItem>
           <NavigationLink
-            href={'/member/insurances'}
-            data-active={currentRoute.includes('/member/insurances')}
+            href={internalItems.insurances}
+            data-active={currentRoute.includes(internalItems.insurances.pathname)}
           >
             {t('MENU_ITEM_LABEL_INSURANCE')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
           <NavigationLink
-            href={'/member/payments'}
-            data-active={currentRoute === '/member/payments'}
+            href={internalItems.payments}
+            data-active={currentRoute.includes(internalItems.payments.pathname)}
           >
             {t('MENU_ITEM_LABEL_PAYMENT')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
-          <NavigationLink href={'/member/claim'} data-active={currentRoute === '/member/claim'}>
+          <NavigationLink
+            href={internalItems.claim}
+            data-active={currentRoute.includes(internalItems.claim.pathname)}
+          >
             {t('MENU_ITEM_LABEL_CLAIM')}
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
-          <NavigationLink href={'/help/faq'}>FAQ</NavigationLink>
+          <NavigationLink href={PageLink.faq({ locale: routingLocale })}>FAQ</NavigationLink>
         </NavgationItem>
         <LogoutButton />
       </NavigationList>
