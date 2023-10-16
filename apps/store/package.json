@@ -71,10 +71,10 @@
     "zen-observable-ts": "1.2.5"
   },
   "devDependencies": {
-    "@babel/core": "7.23.0",
-    "@babel/preset-env": "7.22.20",
+    "@babel/core": "7.23.2",
+    "@babel/preset-env": "7.23.2",
     "@babel/preset-react": "7.22.15",
-    "@babel/preset-typescript": "7.23.0",
+    "@babel/preset-typescript": "7.23.2",
     "@datadog/datadog-ci": "2.22.0",
     "@emotion/babel-plugin": "11.11.0",
     "@graphql-codegen/cli": "5.0.0",
