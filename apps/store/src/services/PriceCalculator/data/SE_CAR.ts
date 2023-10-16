@@ -18,6 +18,7 @@ export const SE_CAR: Template = {
       id: 'your-car',
       title: { key: tKey('SECTION_TITLE_YOUR_CAR') },
       submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
+      tooltip: { key: tKey('SECTION_TOOLTIP_YOUR_CAR') },
       items: [
         {
           field: carRegistrationNumberField,

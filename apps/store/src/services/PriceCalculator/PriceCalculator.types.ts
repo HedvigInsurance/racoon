@@ -33,6 +33,7 @@ export type TemplateSection = {
   id: string
   title: Label
   submitLabel: Label
+  tooltip?: Label
   items: Array<SectionItem>
   preview?: {
     fieldName: string
