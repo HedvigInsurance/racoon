@@ -27,6 +27,10 @@ type SessionLink = BaseParams & {
   priceIntentId?: string
 }
 
+type MemberLoginPage = BaseParams & {
+  next?: string
+}
+
 // We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
 const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
 
@@ -90,6 +94,13 @@ export const PageLink = {
   paymentConnect: (params?: BaseParams) => {
     return new URL(`${localePrefix(params?.locale)}/payment/connect`, ORIGIN_URL)
   },
+  paymentConnectReady: (params?: BaseParams) => {
+    return new URL(`${localePrefix(params?.locale)}/payment/connect/ready`, ORIGIN_URL)
+  },
+  paymentConnectSuccess: (params?: BaseParams) => {
+    return new URL(`${localePrefix(params?.locale)}/payment/connect/success`, ORIGIN_URL)
+  },
+
   paymentSuccess: ({ locale }: Required<BaseParams>) => {
     return new URL(`${locale}/payment-success`, ORIGIN_URL)
   },
@@ -192,6 +203,16 @@ export const PageLink = {
   },
   fourOhFour: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
+  },
+
+  memberLogin: (params: MemberLoginPage = {}) => {
+    const url = new URL(`${localePrefix(params.locale)}/member/login`, ORIGIN_URL)
+
+    if (params.next) {
+      url.searchParams.set('next', params.next)
+    }
+
+    return url
   },
 } as const
 

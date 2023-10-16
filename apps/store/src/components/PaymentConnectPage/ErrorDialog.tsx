@@ -6,13 +6,14 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 type Props = {
   open: boolean
   onRetry: () => void
+  onClose: () => void
 }
 
 export const ErrorDialog = (props: Props) => {
   const { t } = useTranslation()
 
   return (
-    <FullscreenDialog.Root open={props.open}>
+    <FullscreenDialog.Root open={props.open} onOpenChange={props.onClose}>
       <FullscreenDialog.Modal
         center={true}
         Footer={
