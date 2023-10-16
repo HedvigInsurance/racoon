@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
 import { Button, Heading, Text } from 'ui'
@@ -10,56 +11,31 @@ import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
 import { useMemberAreaMemberInfoQuery } from '@/services/apollo/generated'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useFormatter } from '@/utils/useFormatter'
+import { InsuranceCost } from './InsuranceCost'
 
 export const PaymentsSection = () => {
   return (
-    <SpaceFlex direction="vertical">
-      <GeneralInfo />
+    <Wrapper direction="vertical">
       <InsuranceCost />
       <PaymentConnection />
       {/* NOTE that URL is locale-specific */}
       <ButtonNextLink href={'/se-en/help/faq'} locale={false} size="small" variant="secondary">
         Payments FAQ
       </ButtonNextLink>
-    </SpaceFlex>
+      <GeneralInfo />
+    </Wrapper>
   )
 }
 
 // Might be a CMS block in the future
 const GeneralInfo = () => {
   return (
-    <div style={{ maxWidth: '450px' }}>
-      <InfoCard>
-        At Hedvig, you pay at the end of the month for the current month. Your monthly payment is
-        handled via digital direct debit on the 27th of every month (or the closest following bank
-        day). We work with Trustly as our payment partner and you can connect your direct debit on
-        this page below
-      </InfoCard>
-    </div>
-  )
-}
-
-const InsuranceCost = () => {
-  const { insuranceCost } = useMemberAreaInfo()
-  const formatter = useFormatter()
-  const { t } = useTranslation('memberArea')
-
-  return (
-    <>
-      <Heading as="h3" variant="standard.24">
-        {t('PAYMENTS_MONTLY_COST')}
-      </Heading>
-      {insuranceCost.monthlyDiscount.amount > 0 && (
-        <Text color="textSecondary" strikethrough={true}>
-          {formatter.monthlyPrice(insuranceCost.monthlyGross)}
-        </Text>
-      )}
-      <Text>{formatter.monthlyPrice(insuranceCost.monthlyNet)}</Text>
-      {insuranceCost.freeUntil && (
-        <Text>{`${t('PAYMENTS_FREE_UNTIL')} ${formatter.dateFull(insuranceCost.freeUntil)}`}</Text>
-      )}
-    </>
+    <InfoCard>
+      At Hedvig, you pay at the end of the month for the current month. Your monthly payment is
+      handled via digital direct debit on the 27th of every month (or the closest following bank
+      day). We work with Trustly as our payment partner and you can connect your direct debit on
+      this page below
+    </InfoCard>
   )
 }
 
@@ -138,3 +114,8 @@ const PaymentConfiguration = ({ startButtonText }: { startButtonText: string }) 
     </>
   )
 }
+
+const Wrapper = styled(SpaceFlex)({
+  width: '100%',
+  maxWidth: '29rem',
+})

@@ -8,8 +8,10 @@
   "MENU_ITEM_LABEL_INSURANCE": "Dina försäkringar",
   "MENU_ITEM_LABEL_PAYMENT": "Betalning",
   "PAYMENTS_CONNECTION_TITLE": "Kopplad betalning",
+  "PAYMENTS_DISCOUNT_LABEL": "Rabatt",
   "PAYMENTS_FREE_UNTIL": "Gratis till och med",
   "PAYMENTS_MONTLY_COST": "Månadskostnad",
   "PAYMENTS_PAYMENT_CONNECTED": "Betalning kopplad",
-  "PAYMENTS_PAYMENT_NOT_CONNECTED": "Ingen betalning kopplad"
+  "PAYMENTS_PAYMENT_NOT_CONNECTED": "Ingen betalning kopplad",
+  "PAYMENTS_TOTAL_LABEL": "Totalt"
 }
