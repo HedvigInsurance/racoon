@@ -64,6 +64,29 @@ export const PageLink = {
     const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
     return new URL(pathname, ORIGIN_URL)
   },
+
+  faq: ({ locale }: { locale: RoutingLocale }) => {
+    const url = FAQ_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing faq link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+
+  memberArea: ({ locale }: BaseParams) => {
+    return new URL(`${localePrefix(locale)}/member`, ORIGIN_URL)
+  },
+  memberAreaClaim: ({ locale }: BaseParams) => {
+    return new URL(`${localePrefix(locale)}/member/claim`, ORIGIN_URL)
+  },
+  memberAreaInsurances: ({ locale }: BaseParams) => {
+    return new URL(`${localePrefix(locale)}/member/insurances`, ORIGIN_URL)
+  },
+  memberAreaPayments: ({ locale }: BaseParams) => {
+    return new URL(`${localePrefix(locale)}/member/payments`, ORIGIN_URL)
+  },
+
   paymentConnect: (params?: BaseParams) => {
     return new URL(`${localePrefix(params?.locale)}/payment/connect`, ORIGIN_URL)
   },
@@ -175,6 +198,11 @@ export const PageLink = {
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hjalp/kundservice', ORIGIN_URL),
   'se-en': new URL('/se-en/help/customer-service', ORIGIN_URL),
+}
+
+const FAQ_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hjalp/faq', ORIGIN_URL),
+  'se-en': new URL('/se-en/help/faq', ORIGIN_URL),
 }
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {
