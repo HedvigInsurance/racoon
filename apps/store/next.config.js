@@ -41,6 +41,11 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
+  webpack(config) {
+    // Suppress known warnings from webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo comlpaining about PNP modules
+    config.infrastructureLogging = { level: 'error' }
+    return config
+  },
   async rewrites() {
     const foreverRedirect = {
       source: '/forever',
