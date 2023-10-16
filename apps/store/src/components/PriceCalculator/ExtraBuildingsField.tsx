@@ -182,12 +182,14 @@ export const ExtraBuildingsField = ({
 const convertExtraBuilding = (data: Record<string, FormDataEntryValue>): ExtraBuilding => {
   const type = data[Field.Type]
   if (typeof type !== 'string') {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     throw new Error(`ExtraBuilding.type must be a string: ${data.type}`)
   }
 
-  const area = parseInt(data[Field.Area].toString(), 10)
+  const areaStr = String(data[Field.Area])
+  const area = parseInt(areaStr, 10)
   if (typeof area !== 'number') {
-    throw new Error(`ExtraBuilding.area must be a number: ${data.area}`)
+    throw new Error(`ExtraBuilding.area must be a number: ${areaStr}`)
   }
 
   return {
