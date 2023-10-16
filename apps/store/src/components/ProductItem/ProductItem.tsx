@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
+import { useTranslation } from 'next-i18next'
+import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
 import { Badge, Button, ButtonProps, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -17,12 +18,13 @@ type Props = {
   productDocuments: ComponentProps<typeof ProductDetails>['documents']
   defaultExpanded?: boolean
   children?: ReactNode
-  subtitle?: string
+  exposure?: string
   variant?: 'green'
   badge?: ComponentProps<typeof Badge>
 }
 
 export const ProductItem = (props: Props) => {
+  const { t } = useTranslation('cart')
   const [expanded, setExpanded] = useState(props.defaultExpanded ?? false)
 
   const handleClickHoverable = () => {
@@ -46,10 +48,11 @@ export const ProductItem = (props: Props) => {
             </div>
           </Header>
 
-          {props.subtitle && (
-            <Text as="p" size="md" color="textTranslucentSecondary">
-              {props.subtitle}
-            </Text>
+          {props.exposure && (
+            <Exposure>
+              <span>{t('EXPOSURE_LABEL')}</span>
+              <span>{props.exposure}</span>
+            </Exposure>
           )}
         </Space>
       </Hoverable>
@@ -124,9 +127,19 @@ const AlignedBadge = styled(Badge)({
   right: 0,
 })
 
+const Exposure = styled.div({
+  display: 'flex',
+  gap: theme.space.sm,
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  fontSize: theme.fontSizes.md,
+  color: theme.colors.textTranslucentSecondary,
+})
+
 const StyledProductDetailsHeader = styled(ProductDetailsHeader)({
   paddingBlock: theme.space.md,
 })
+
 const StyledProductDetails = styled(ProductDetails)({
   paddingBottom: theme.space.md,
 })

@@ -47,6 +47,7 @@ export const ProductItemContractContainerCar = (props: Props) => {
       productDetails={productDetails}
       productDocuments={productDocuments}
       badge={{ children: t('CONTRACT_CARD_BADGE'), color: 'signalAmberHighlight' }}
+      exposure={FIXTURE_CONTRACT.exposure.displayNameShort}
     />
   )
 }
@@ -58,7 +59,7 @@ const FIXTURE_CONTRACT = {
   endDate: '2024-12-01',
 
   exposure: {
-    displayNameFull: 'ABC 123 · Volkswagen Polo',
+    displayNameShort: 'ABC 123',
   },
 
   displayItems: [
