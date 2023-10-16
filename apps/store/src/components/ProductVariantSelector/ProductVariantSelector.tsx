@@ -9,9 +9,9 @@ export const ProductVariantSelector = ({ className }: Props) => {
 
   const variantOptions = useMemo(
     () =>
-      productData.variants.map(({ displayName, typeOfContract }) => ({
-        name: displayName,
-        value: typeOfContract,
+      productData.variants.map((item) => ({
+        name: item.displayNameSubtype || item.displayName,
+        value: item.typeOfContract,
       })),
     [productData],
   )
