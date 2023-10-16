@@ -6,5 +6,10 @@
   "INSURANCE_SECTION_TITLE": "Your insurances",
   "MENU_ITEM_LABEL_CLAIM": "How to make a claim",
   "MENU_ITEM_LABEL_INSURANCE": "Your insurances",
-  "MENU_ITEM_LABEL_PAYMENT": "Payment"
+  "MENU_ITEM_LABEL_PAYMENT": "Payment",
+  "PAYMENTS_CONNECTION_TITLE": "Payment connection",
+  "PAYMENTS_FREE_UNTIL": "Free until",
+  "PAYMENTS_MONTLY_COST": "Monthly cost",
+  "PAYMENTS_PAYMENT_CONNECTED": "Connected",
+  "PAYMENTS_PAYMENT_NOT_CONNECTED": "Not connected"
 }

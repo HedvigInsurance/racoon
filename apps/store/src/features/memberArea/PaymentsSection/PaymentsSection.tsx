@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
 import { Button, Heading, Text } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -42,11 +43,12 @@ const GeneralInfo = () => {
 const InsuranceCost = () => {
   const { insuranceCost } = useMemberAreaInfo()
   const formatter = useFormatter()
+  const { t } = useTranslation('memberArea')
 
   return (
     <>
       <Heading as="h3" variant="standard.24">
-        Monthly cost
+        {t('PAYMENTS_MONTLY_COST')}
       </Heading>
       {insuranceCost.monthlyDiscount.amount > 0 && (
         <Text color="textSecondary" strikethrough={true}>
@@ -55,7 +57,7 @@ const InsuranceCost = () => {
       )}
       <Text>{formatter.monthlyPrice(insuranceCost.monthlyNet)}</Text>
       {insuranceCost.freeUntil && (
-        <Text>Free until {formatter.dateFull(insuranceCost.freeUntil)}</Text>
+        <Text>{`${t('PAYMENTS_FREE_UNTIL')} ${formatter.dateFull(insuranceCost.freeUntil)}`}</Text>
       )}
     </>
   )
@@ -63,20 +65,21 @@ const InsuranceCost = () => {
 
 const PaymentConnection = () => {
   const currentMember = useMemberAreaInfo()
+  const { t } = useTranslation('memberArea')
 
   return (
     <>
       <Heading as="h3" variant="standard.24">
-        Payment connection
+        {t('PAYMENTS_CONNECTION_TITLE')}
       </Heading>
       {currentMember.hasActivePaymentConnection ? (
         <>
-          <Text>✅&nbsp;Connected</Text>
+          <Text>✅&nbsp;{t('PAYMENTS_PAYMENT_CONNECTED')}</Text>
           <PaymentConfiguration startButtonText="Change connection" />
         </>
       ) : (
         <>
-          <Text>Not connected yet</Text>
+          <Text>{t('PAYMENTS_PAYMENT_NOT_CONNECTED')}</Text>
           <PaymentConfiguration startButtonText="Connect" />
         </>
       )}
