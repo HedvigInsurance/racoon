@@ -15,14 +15,16 @@ import {
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { FetchInsuranceSuccess } from '../FetchInsuranceSuccess/FetchInsuranceSuccess'
+import { Features } from '@/utils/Features'
+import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {
   useFetchInsuranceCompare,
   useFetchInsuranceState,
   useFetchInsuranceSuccess,
 } from './useFetchInsurance'
 
-const logger = datadogLogs.createLogger('FetchInsurance')
+const LOGGER = datadogLogs.createLogger('FetchInsurance')
+const USE_NATIVE_SUCCESS = Features.enabled('INSURELY_NATIVE_SUCCESS')
 
 type OnCompleted = NonNullable<ComponentProps<typeof InsurelyIframe>['onCompleted']>
 
@@ -64,8 +66,7 @@ export const FetchInsurance = ({
     datadogRum.addAction('Fetch Insurance Skip', loggingContext)
     dismiss()
   }
-
-  const handleDismissClick = () => {
+  const handleClickDismiss = () => {
     datadogRum.addAction('Fetch Insurance Dismiss', loggingContext)
     dismiss()
   }
@@ -73,18 +74,18 @@ export const FetchInsurance = ({
   const [dataCollectionId, setDataCollectionId] = useState<string | null>(null)
   const [updateDataCollectionId] = usePriceIntentInsurelyUpdateMutation({
     onCompleted({ priceIntentInsurelyUpdate }) {
-      logger.info('Updated Insurely data collection ID', loggingContext)
+      LOGGER.info('Updated Insurely data collection ID', loggingContext)
 
       const updatedPriceIntent = priceIntentInsurelyUpdate.priceIntent
       if (updatedPriceIntent?.externalInsurer) {
         fetchInsuraceSuccess()
       } else {
-        logger.warn('Failed to update Insurely data collection ID', loggingContext)
+        LOGGER.warn('Failed to update Insurely data collection ID', loggingContext)
         dismiss()
       }
     },
     onError(error) {
-      logger.warn('Error updating Insurely data collection ID', {
+      LOGGER.warn('Error updating Insurely data collection ID', {
         ...loggingContext,
         error,
       })
@@ -94,10 +95,10 @@ export const FetchInsurance = ({
   const [createDataCollection] = useInsurelyDataCollectionCreateMutation({
     onCompleted(data) {
       setDataCollectionId(data.insurelyInitiateIframeDataCollection.dataCollectionId)
-      logger.addContext('dataCollectionId', dataCollectionId)
+      LOGGER.addContext('dataCollectionId', dataCollectionId)
     },
     onError(error) {
-      logger.warn('Error creating Insurely data collection', {
+      LOGGER.warn('Error creating Insurely data collection', {
         ...loggingContext,
         error,
       })
@@ -114,7 +115,7 @@ export const FetchInsurance = ({
         variables: { priceIntentId, dataCollectionId },
       })
     } else {
-      logger.error('Completed Insurely without creating data collection ID', loggingContext)
+      LOGGER.error('Completed Insurely without creating data collection ID', loggingContext)
     }
   }, [updateDataCollectionId, priceIntentId, dataCollectionId, loggingContext])
 
@@ -132,7 +133,7 @@ export const FetchInsurance = ({
         </DialogContent>
       )}
 
-      {state === 'COMPARE' && (
+      {(state === 'COMPARE' || (USE_NATIVE_SUCCESS && state === 'SUCCESS')) && (
         <DialogIframeContent onClose={dismiss} centerContent={true}>
           <DialogIframeWindow>
             <InsurelyIframe
@@ -145,12 +146,12 @@ export const FetchInsurance = ({
         </DialogIframeContent>
       )}
 
-      {state === 'SUCCESS' && (
+      {!USE_NATIVE_SUCCESS && state === 'SUCCESS' && (
         <DialogContent onClose={dismiss} centerContent={true}>
           <DialogWindow>
             <FetchInsuranceSuccess
               company={externalInsurer.displayName}
-              onClick={handleDismissClick}
+              onClick={handleClickDismiss}
             >
               <Text>
                 {externalInsurer.displayName} {productName}
