@@ -17,7 +17,7 @@ type InputOptions = Array<InputSelectProps['options'][number]>
 type AvailableScore = '5' | '4' | '3' | '2' | '1'
 
 export const ProductReviewCommentsBlock = () => {
-  const { productData, reviewComments } = useProductPageContext()
+  const { reviewComments } = useProductPageContext()
   const [selectedScore, setSelectedScore] = useState<AvailableScore>('5')
 
   const filterOptions = useMemo<InputOptions>(() => {
@@ -29,7 +29,7 @@ export const ProductReviewCommentsBlock = () => {
       const commentsByScore = reviewComments.commentsByScore[score]
       // It should not happen. Just being safe
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (commentsByScore == null) {
+      if (commentsByScore === null) {
         datadogLogs.logger.warn(
           `ProductReviewCommentBlock | could not find reviews for score ${score}`,
         )
@@ -48,7 +48,7 @@ export const ProductReviewCommentsBlock = () => {
   }, [reviewComments])
 
   if (!reviewComments) {
-    console.warn(`ProductReviewCommentsBlock | no comments found for product ${productData.name}`)
+    // We already log the absence of reviews during build
     return null
   }
 
@@ -68,10 +68,11 @@ export const ProductReviewCommentsBlock = () => {
             <InputSelect
               name="product-review-filter-by-score"
               options={filterOptions}
-              defaultValue={selectedScore}
+              value={selectedScore}
               onChange={handleFilterChange}
             />
 
+            {/* TODO: Lokalise this */}
             <Text color="textSecondary">Showing our latest reviews</Text>
           </SpaceFlex>
 
@@ -99,7 +100,7 @@ type CommentProps = {
 const Comment = ({ content, date, author, score }: CommentProps) => {
   return (
     <CommentWrapper>
-      <ProductRating style={{ '--size': '1.5rem' } as React.CSSProperties} score={score} />
+      <ProductRating score={score} />
       <Content>
         <Text balance={true}>{content}</Text>
       </Content>
