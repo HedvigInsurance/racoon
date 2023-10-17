@@ -14,9 +14,9 @@ export const Menu = () => {
   const currentRoute = router.pathname
 
   const internalItems = {
-    claim: PageLink.memberAreaClaim({ locale: routingLocale }),
-    insurances: PageLink.memberAreaInsurances({ locale: routingLocale }),
-    payments: PageLink.memberAreaPayments({ locale: routingLocale }),
+    claim: PageLink.memberAreaClaim(),
+    insurances: PageLink.memberAreaInsurances(),
+    payments: PageLink.memberAreaPayments(),
   }
 
   return (
@@ -25,7 +25,7 @@ export const Menu = () => {
         <NavgationItem>
           <NavigationLink
             href={internalItems.insurances}
-            data-active={currentRoute.includes(internalItems.insurances.pathname)}
+            data-active={router.pathname === internalItems.insurances.pathname}
           >
             {t('MENU_ITEM_LABEL_INSURANCE')}
           </NavigationLink>
@@ -72,7 +72,8 @@ const LogoutButton = () => {
 const Navigation = styled.nav({
   paddingInline: theme.space.md,
   paddingBottom: theme.space.sm,
-  overflow: 'auto',
+  overflowX: 'auto',
+
   [mq.lg]: {
     paddingInline: theme.space.xl,
   },
@@ -81,13 +82,9 @@ const Navigation = styled.nav({
 const NavigationList = styled.ul({
   display: 'flex',
   alignItems: 'baseline',
-  justifyContent: 'flex-start',
-  flexDirection: 'row',
-  listStyle: 'none',
-  margin: 0,
-  padding: 0,
-  height: '100%',
-  gap: theme.space.md,
+  gap: theme.space.xs,
+  width: 'fit-content',
+
   [mq.lg]: {
     flexDirection: 'column',
     gap: theme.space.md,
@@ -96,6 +93,7 @@ const NavigationList = styled.ul({
 
 const NavgationItem = styled.li({
   display: 'flex',
+
   [mq.lg]: {
     width: '100%',
   },
@@ -115,13 +113,19 @@ const NavigationLink = styled(Link)({
     height: '3.25rem',
   },
 
-  '&[data-active="true"]': {
-    backgroundColor: theme.colors.blueFill1,
-  },
-
   '@media (hover: hover)': {
     '&:hover': {
       backgroundColor: theme.colors.grayTranslucent100,
+    },
+  },
+
+  '&[data-active="true"]': {
+    backgroundColor: theme.colors.blueFill1,
+
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.blueFill1,
+      },
     },
   },
 })
