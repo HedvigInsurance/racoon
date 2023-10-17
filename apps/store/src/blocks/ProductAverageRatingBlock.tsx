@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { Rating } from '@/components/Rating/Rating'
+import { ProductRating } from '@/components/ProductRating/ProductRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 
@@ -40,7 +40,7 @@ export const ProductAverageRatingBlock = () => {
           }}
         >
           <Wrapper>
-            <Rating score={averageRating.score} />
+            <ProductRating score={averageRating.score} />
 
             <SpaceFlex direction="horizontal" space={0.5} align="center">
               <Text size={{ _: 'sm', md: 'md' }}>

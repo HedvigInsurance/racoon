@@ -5,7 +5,7 @@ type Props = {
   score: number
 }
 
-export const Rating = styled.div<Props>(({ score }) => ({
+export const ProductRating = styled.div<Props>(({ score }) => ({
   '--percentage': `calc(${score} / 5 * 100%)`,
 
   display: 'inline-block',
