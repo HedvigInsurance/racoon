@@ -3,6 +3,11 @@ import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ProductStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { type TrustpilotData } from '@/services/trustpilot/trustpilot.types'
 
+export type AverageRating = {
+  score: number
+  reviewCount: number
+}
+
 export type ProductData = Exclude<ProductDataQuery['product'], null | undefined>
 
 export type ProductDataVariant =
@@ -15,5 +20,6 @@ export type ProductPageProps = StoryblokPageProps & {
   productData: ProductData
   initialSelectedVariant?: ProductDataVariant
   trustpilot: TrustpilotData | null
+  averageRating: AverageRating | null
   hideChat?: boolean
 }

@@ -5,3 +5,5 @@ dist
 storybook-static
 
 generated.ts
+
+mockServiceWorker.js
