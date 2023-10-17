@@ -7,6 +7,15 @@ import {
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
+export const getTrustlyInitMutationVariables = (
+  locale: RoutingLocale,
+): TrustlyInitMutationVariables => {
+  return {
+    successUrl: PageLink.paymentSuccess({ locale }).href,
+    failureUrl: PageLink.paymentFailure({ locale }).href,
+  }
+}
+
 type Params = {
   apolloClient: ApolloClient<unknown>
   locale: RoutingLocale
@@ -15,10 +24,7 @@ type Params = {
 export const createTrustlyUrl = async ({ apolloClient, locale }: Params): Promise<string> => {
   const response = await apolloClient.mutate<TrustlyInitMutation, TrustlyInitMutationVariables>({
     mutation: TrustlyInitDocument,
-    variables: {
-      successUrl: PageLink.paymentSuccess({ locale }).href,
-      failureUrl: PageLink.paymentFailure({ locale }).href,
-    },
+    variables: getTrustlyInitMutationVariables(locale),
   })
 
   if (!response.data) {

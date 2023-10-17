@@ -1,23 +1,36 @@
-import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useState } from 'react'
-import { Button, Heading, Text } from 'ui'
+import { Heading, Text } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
-import { ReadyState } from '@/components/PaymentConnectPage/ReadyState'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
-import { useMemberAreaMemberInfoQuery } from '@/services/apollo/generated'
-import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { InsuranceCost } from './InsuranceCost'
+import { PaymentConnection } from './PaymentConnection'
 
 export const PaymentsSection = () => {
+  const currentMember = useMemberAreaInfo()
+  const { t } = useTranslation('memberArea')
+
   return (
     <Wrapper direction="vertical">
       <InsuranceCost />
-      <PaymentConnection />
+
+      <Heading as="h3" variant="standard.24">
+        {t('PAYMENTS_CONNECTION_TITLE')}
+      </Heading>
+      {currentMember.hasActivePaymentConnection ? (
+        <>
+          <Text>✅&nbsp;{t('PAYMENTS_PAYMENT_CONNECTED')}</Text>
+          <PaymentConnection startButtonText="Change connection" />
+        </>
+      ) : (
+        <>
+          <Text>{t('PAYMENTS_PAYMENT_NOT_CONNECTED')}</Text>
+          <PaymentConnection startButtonText="Connect" />
+        </>
+      )}
+
       {/* NOTE that URL is locale-specific */}
       <ButtonNextLink href={'/se-en/help/faq'} locale={false} size="small" variant="secondary">
         Payments FAQ
@@ -36,82 +49,6 @@ const GeneralInfo = () => {
       day). We work with Trustly as our payment partner and you can connect your direct debit on
       this page below
     </InfoCard>
-  )
-}
-
-const PaymentConnection = () => {
-  const currentMember = useMemberAreaInfo()
-  const { t } = useTranslation('memberArea')
-
-  return (
-    <>
-      <Heading as="h3" variant="standard.24">
-        {t('PAYMENTS_CONNECTION_TITLE')}
-      </Heading>
-      {currentMember.hasActivePaymentConnection ? (
-        <>
-          <Text>✅&nbsp;{t('PAYMENTS_PAYMENT_CONNECTED')}</Text>
-          <PaymentConfiguration startButtonText="Change connection" />
-        </>
-      ) : (
-        <>
-          <Text>{t('PAYMENTS_PAYMENT_NOT_CONNECTED')}</Text>
-          <PaymentConfiguration startButtonText="Connect" />
-        </>
-      )}
-    </>
-  )
-}
-
-type PaymentConfigurationState =
-  | { type: 'IDLE' }
-  | { type: 'LOADING' }
-  | { type: 'ERROR' }
-  | { type: 'READY'; trustlyUrl: string }
-
-const PaymentConfiguration = ({ startButtonText }: { startButtonText: string }) => {
-  const { routingLocale } = useCurrentLocale()
-  const apolloClient = useApolloClient()
-  // Not using simplified hook, we need access to refetch
-  const { refetch } = useMemberAreaMemberInfoQuery()
-  const [state, setState] = useState<PaymentConfigurationState>({ type: 'IDLE' })
-
-  const handleStart = useCallback(async () => {
-    try {
-      const trustlyUrl = await createTrustlyUrl({ apolloClient, locale: routingLocale })
-      setState({ type: 'READY', trustlyUrl })
-    } catch (err: unknown) {
-      console.warn('Failed to create Trustly URL', err)
-      setState({ type: 'ERROR' })
-    }
-  }, [apolloClient, routingLocale])
-
-  const handleTrustlyError = () => {
-    window.alert('Something went wrong')
-    setState({ type: 'IDLE' })
-  }
-
-  if (state.type === 'READY') {
-    return (
-      <div style={{ minWidth: '70vw' }}>
-        <ReadyState
-          trustlyUrl={state.trustlyUrl}
-          onSuccess={async () => {
-            await refetch()
-            setState({ type: 'IDLE' })
-          }}
-          onFail={handleTrustlyError}
-        />
-      </div>
-    )
-  }
-  return (
-    <>
-      <Button loading={state.type === 'LOADING'} size="small" onClick={handleStart}>
-        {startButtonText}
-      </Button>
-      {state.type === 'ERROR' && <Text>Something went wrong, please try again</Text>}
-    </>
   )
 }
 

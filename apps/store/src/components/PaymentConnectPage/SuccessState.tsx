@@ -1,7 +1,6 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { CheckIcon, Text, theme } from 'ui'
-import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
+import { IframePlaceholder } from './IdleState'
 import { Layout } from './Layout'
 
 export const SuccessState = () => {
@@ -16,11 +15,3 @@ export const SuccessState = () => {
     </Layout>
   )
 }
-
-const IframePlaceholder = styled.div(trustlyIframeStyles, {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  gap: theme.space.xs,
-})
