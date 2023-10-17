@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { ProductRating } from '@/components/ProductRating/ProductRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 
@@ -39,7 +40,7 @@ export const ProductAverageRatingBlock = () => {
           }}
         >
           <Wrapper>
-            <Stars score={averageRating.score} />
+            <ProductRating score={averageRating.score} />
 
             <SpaceFlex direction="horizontal" space={0.5} align="center">
               <Text size={{ _: 'sm', md: 'md' }}>
@@ -74,26 +75,6 @@ const Wrapper = styled.div({
   gap: theme.space.xs,
   flexWrap: 'wrap',
 })
-
-const Stars = styled.div<{ score: number }>(({ score }) => ({
-  '--percentage': `calc(${score} / 5 * 100%)`,
-
-  display: 'inline-block',
-  lineHeight: 1,
-  fontSize: theme.fontSizes.xxl,
-  fontFamily: 'Times', // make sure ★ appears correctly
-
-  '&::before': {
-    content: '"★★★★★"',
-    background: `linear-gradient(
-      to right,
-      ${theme.colors.gray1000} var(--percentage),
-      ${theme.colors.gray300} var(--percentage)
-    )`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-}))
 
 const getProductStructuredData = (product: Product, averageRating: AverageRating) => {
   return {
