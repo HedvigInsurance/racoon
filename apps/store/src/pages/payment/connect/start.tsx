@@ -1,4 +1,3 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type GetStaticProps } from 'next'
@@ -8,14 +7,10 @@ import { useRouter } from 'next/router'
 import { type FormEventHandler, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { Layout } from '@/components/PaymentConnectPage/Layout'
-import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { getAccessToken, saveAuthTokens } from '@/services/authApi/persist'
+import { getAccessToken } from '@/services/authApi/persist'
 import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
-
-const LOGGER = datadogLogs.createLogger('PaymentConnect')
-const AUTHORIZATION_CODE_SEARCH_PARAM = 'authorization_code'
 
 export const getStaticProps: GetStaticProps = async (context) => {
   if (!isRoutingLocale(context.locale)) return { notFound: true }
@@ -32,22 +27,8 @@ const Page = () => {
     datadogRum.addAction('Payment Connect Init')
     setLoading(true)
 
-    const authorizationCodeParam = router.query[AUTHORIZATION_CODE_SEARCH_PARAM]
-    const authorizationCode =
-      typeof authorizationCodeParam === 'string' ? authorizationCodeParam : undefined
-
-    if (authorizationCode) {
-      try {
-        const reponse = await exchangeAuthorizationCode(authorizationCode)
-        saveAuthTokens(reponse)
-        return await router.push(PageLink.paymentConnectReady())
-      } catch (error) {
-        LOGGER.warn('Failed to exchange authorization code', { error })
-      }
-    }
-
     const isLoggedIn = !!getAccessToken()
-    if (!authorizationCode && isLoggedIn) {
+    if (isLoggedIn) {
       return await router.push(PageLink.paymentConnectReady())
     }
 
