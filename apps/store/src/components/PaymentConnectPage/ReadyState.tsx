@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Space, Text } from 'ui'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
@@ -13,10 +14,16 @@ export const ReadyState = (props: Props) => {
 
   return (
     <Space y={0.75}>
-      <TrustlyIframe url={props.trustlyUrl} onSuccess={props.onSuccess} onFail={props.onFail} />
+      <InlineTrustlyIframe
+        url={props.trustlyUrl}
+        onSuccess={props.onSuccess}
+        onFail={props.onFail}
+      />
       <Text size="xs" align="center">
         {t('PAYMENT_TRUSTLY_FOOTNOTE')}
       </Text>
     </Space>
   )
 }
+
+const InlineTrustlyIframe = styled(TrustlyIframe)({ height: '60vh' })

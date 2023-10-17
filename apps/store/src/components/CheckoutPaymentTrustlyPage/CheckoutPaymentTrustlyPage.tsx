@@ -65,7 +65,7 @@ export const CheckoutPaymentTrustlyPage = (props: Props) => {
                 {t('PAYMENT_TRUSTLY_MESSAGE')}
               </Heading>
               <Space y={0.75}>
-                <TrustlyIframe
+                <InlineTrustlyIframe
                   url={props.trustlyUrl}
                   onSuccess={handleSuccess}
                   onFail={handleFail}
@@ -93,3 +93,5 @@ const TextLink = styled(Link)({
     boxShadow: theme.shadow.focus,
   },
 })
+
+const InlineTrustlyIframe = styled(TrustlyIframe)({ height: '60vh' })

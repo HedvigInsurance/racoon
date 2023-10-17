@@ -72,12 +72,13 @@ export const IdleState = (props: Props) => {
   )
 }
 
-const IframePlaceholder = styled.div(trustlyIframeStyles, {
+export const IframePlaceholder = styled.div(trustlyIframeStyles, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'stretch',
   backgroundColor: theme.colors.white,
   paddingInline: theme.space.xl,
+  height: '60vh',
 })
 
 const WideSpace = styled(Space)({ width: '100%' })

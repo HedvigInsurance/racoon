@@ -9,9 +9,10 @@ type Props = {
   url: string
   onSuccess: () => void
   onFail: () => void
+  className?: string
 }
 
-export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
+export const TrustlyIframe = ({ url, onSuccess, onFail, className }: Props) => {
   const { routingLocale } = useCurrentLocale()
 
   useEffect(() => {
@@ -46,16 +47,20 @@ export const TrustlyIframe = ({ url, onSuccess, onFail }: Props) => {
     setLoading(false)
   }
 
-  return <Iframe src={url} onLoad={handleLoad} data-loading={loading} />
+  return <Iframe src={url} onLoad={handleLoad} className={className} data-loading={loading} />
 }
+
+export const TRUSTLY_IFRAME_MAX_WIDTH = 600
+const TRUSTLY_IFRAME_MIN_HEIGHT = 500
+export const TRUSTLY_IFRAME_MAX_HEIGHT = 800
 
 export const trustlyIframeStyles = css({
   width: '100%',
-  maxWidth: 600,
+  maxWidth: TRUSTLY_IFRAME_MAX_WIDTH,
 
-  minHeight: 500,
-  height: '60vh',
-  maxHeight: 800,
+  minHeight: TRUSTLY_IFRAME_MIN_HEIGHT,
+  height: '100%',
+  maxHeight: TRUSTLY_IFRAME_MAX_HEIGHT,
 
   boxShadow: theme.shadow.default,
   marginInline: 'auto',
