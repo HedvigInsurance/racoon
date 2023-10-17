@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { InfoIcon, Text, theme } from 'ui'
-import { Tooltip } from './Tooltip'
+import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 type Props = {
   label: string
