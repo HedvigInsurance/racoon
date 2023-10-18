@@ -1,4 +1,4 @@
-import { getFilteredPageLinks } from '@/services/storyblok/storyblok'
+import { fetchStories } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
 const generateSiteMap = (pages) => {
@@ -8,7 +8,7 @@ const generateSiteMap = (pages) => {
        .map((page) => {
          return `
           <url>
-            <loc>${`${ORIGIN_URL}/${page.link.slug}`}</loc>
+            <loc>${`${ORIGIN_URL}/${page.full_slug}`}</loc>
           </url>
         `
        })
@@ -21,8 +21,37 @@ const SiteMap = () => {
   // getServerSideProps will do the heavy lifting
 }
 
+const getFilteredPages = async () => {
+  /**
+   * Sitemap should exclude pages that are:
+   * - set to noindex
+   * - excluded slugs
+   * - draft pages
+   */
+
+  let response = {}
+  let filteredPages = []
+  let currentPage = 1
+  let perPage = 100
+  let paginating = false
+
+  while (!paginating) {
+    response = await fetchStories({
+      excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*`,
+      'filter_query[robots][not_in]': 'noindex',
+      page: currentPage,
+      per_page: perPage,
+    })
+    filteredPages.push(...response.data.stories)
+    paginating = response.headers.total <= currentPage * perPage
+    currentPage++
+  }
+
+  return filteredPages
+}
+
 export const getServerSideProps = async ({ res }) => {
-  const pageLinks = await getFilteredPageLinks()
+  const pageLinks = await getFilteredPages()
   const sitemap = generateSiteMap(pageLinks)
 
   res.setHeader('Content-Type', 'text/xml')
