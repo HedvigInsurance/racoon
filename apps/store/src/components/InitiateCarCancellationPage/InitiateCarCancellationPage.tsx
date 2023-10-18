@@ -2,19 +2,18 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
 import { useMemo, type FormEventHandler, ReactNode, useState } from 'react'
-import { Button, Heading, HedvigLogo, Space, Text, mq, theme } from 'ui'
+import { Button, Heading, Space, Text, mq, theme } from 'ui'
 import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
 import { convertToBankSigneringContract } from '@/components/ConfirmationPage/useSwitchingContracts'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
+import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { useContractQuery } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { getAccessToken } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { PageLink } from '@/utils/PageLink'
 
 const SSN_FIELD_NAME = 'ssn'
 
@@ -137,9 +136,7 @@ const Layout = (props: { children: ReactNode }) => {
   return (
     <Space y={2}>
       <Header>
-        <Link href={PageLink.home()}>
-          <HedvigLogo width={78} />
-        </Link>
+        <LogoHomeLink />
       </Header>
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">

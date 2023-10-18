@@ -23,7 +23,7 @@ const NextPage: NextPageWithLayout = () => {
         <ButtonNextLink
           variant="primary"
           size={{ base: 'small', lg: 'medium' }}
-          href={PageLink.home()}
+          href={PageLink.home().pathname}
         >
           {t('404_PAGE_BUTTON')}
         </ButtonNextLink>
