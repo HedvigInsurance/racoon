@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
   const isLoggedIn = !!getAccessToken({ req: context.req })
   if (!isLoggedIn) {
-    const redirectUrl = PageLink.memberLogin({
+    const redirectUrl = PageLink.memberAreaLogin({
       locale: context.locale,
       next: context.resolvedUrl,
     }).toString()
