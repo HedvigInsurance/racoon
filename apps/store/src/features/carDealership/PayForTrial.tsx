@@ -29,7 +29,7 @@ export const PayForTrial = (props: Props) => {
       ssn: props.ssn,
       async onSuccess() {
         console.log('Car dealership | BankID login success')
-        await router.push(PageLink.paymentConnect())
+        await router.push(PageLink.paymentConnect().pathname)
       },
     })
   }

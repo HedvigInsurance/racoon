@@ -29,7 +29,7 @@ const Page = () => {
 
     const isLoggedIn = !!getAccessToken()
     if (isLoggedIn) {
-      return await router.push(PageLink.paymentConnectReady())
+      return await router.push(PageLink.paymentConnectReady().pathname)
     }
 
     return await router.push(
