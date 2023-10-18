@@ -2,6 +2,16 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
+class ExtendedURL extends URL {
+  constructor(url: string, base?: string) {
+    super(url, base)
+  }
+
+  toRelative() {
+    return this.pathname + this.search + this.hash
+  }
+}
+
 export const ORIGIN_URL =
   process.env.NEXT_PUBLIC_ORIGIN_URL ??
   (process.env.NEXT_PUBLIC_VERCEL_URL
@@ -52,7 +62,7 @@ export const PageLink = {
     return new URL(`${localePrefix(locale)}/cart`, ORIGIN_URL)
   },
   checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {
-    const url = new URL(`${localePrefix(locale)}/checkout`, ORIGIN_URL)
+    const url = new ExtendedURL(`${localePrefix(locale)}/checkout`, ORIGIN_URL)
 
     if (expandCart) {
       url.searchParams.set(QueryParam.ExpandCart, '1')

@@ -90,9 +90,7 @@ export const OfferPresenter = (props: Props) => {
       tracking.reportAddToCart(addedProductOffer, 'store')
       if (addToCartRedirect === AddToCartRedirect.Checkout) {
         tracking.reportBeginCheckout(shopSession.cart)
-        const checkoutUrl = PageLink.checkout({ expandCart: true })
-        const checkoutRelativeUrl = checkoutUrl.pathname + checkoutUrl.search
-        nextUrl = checkoutRelativeUrl
+        nextUrl = PageLink.checkout({ expandCart: true }).toRelative()
       }
 
       const isBankSignering =
