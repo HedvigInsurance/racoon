@@ -103,33 +103,23 @@ module.exports = withBundleAnalyzer({
       process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
         ? [
             {
-              source: '/(se/)?new-member(/hedvig)?',
-              has: [{ type: 'query', key: 'code' }],
-              destination: '/api/campaign/:code?code=&next=/se/forsakringar',
+              source: '/new-member(.*)',
+              destination: '/se',
               permanent: true,
               locale: false,
             },
             {
-              source: '/se-en/new-member(/hedvig)?',
-              has: [{ type: 'query', key: 'code' }],
-              destination: '/api/campaign/:code?code=&next=/se-en/insurances',
+              source: '/se/new-member(.*)',
+              destination: '/se',
               permanent: true,
               locale: false,
             },
             {
-              source: '/(se/)?new-member(/hedvig)?',
-              destination: '/se/forsakringar',
+              source: '/se-en/new-member(.*)',
+              destination: '/se-en',
               permanent: true,
               locale: false,
             },
-            {
-              source: '/se-en/new-member(/hedvig)?',
-              destination: '/se-en/insurances',
-              permanent: true,
-              locale: false,
-            },
-            ...CAR_INSURANCE_REDIRECTS,
-            ...HOME_INSURANCE_REDIRECTS,
           ]
         : []
 
@@ -190,84 +180,6 @@ const getExperimentVariantRedirects = () => {
     },
   ]
 }
-
-const HOME_INSURANCE_SE_SOURCES = [
-  '/se/new-member/home-insurance',
-  '/se/new-member/home-accident-needer',
-  '/se/new-member/home-switcher',
-]
-const HOME_INSURANCE_EN_SOURCES = [
-  '/se-en/new-member/home-insurance',
-  '/se-en/new-member/home-accident-needer',
-  '/se-en/new-member/home-switcher',
-]
-const HOME_INSURANCE_REDIRECTS = [
-  ...HOME_INSURANCE_SE_SOURCES.flatMap((source) => [
-    {
-      source,
-      has: [{ type: 'query', key: 'code' }],
-      destination: '/api/campaign/:code?code=&next=/se/forsakringar/hemforsakring',
-      permanent: true,
-      locale: false,
-    },
-    {
-      source,
-      destination: '/se/forsakringar/hemforsakring',
-      permanent: true,
-      locale: false,
-    },
-  ]),
-  ...HOME_INSURANCE_EN_SOURCES.flatMap((source) => [
-    {
-      source,
-      has: [{ type: 'query', key: 'code' }],
-      destination: '/api/campaign/:code?code=&next=/se-en/insurances/home-insurance',
-      permanent: true,
-      locale: false,
-    },
-    {
-      source,
-      destination: '/se-en/insurances/home-insurance',
-      permanent: true,
-      locale: false,
-    },
-  ]),
-]
-
-const CAR_INSURANCE_REDIRECTS = [
-  {
-    source: '/(se/)?new-member/car',
-    has: [{ type: 'query', key: 'code' }],
-    destination: '/api/campaign/:code?code=&next=/se/forsakringar/bilforsakring',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/se-en/new-member/car',
-    has: [{ type: 'query', key: 'code' }],
-    destination: '/api/campaign/:code?code=&next=/se-en/insurances/car-insurance',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/(se/)?new-member/car/:path*',
-    destination: '/se/forsakringar/bilforsakring',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/se-en/new-member/car/:path*',
-    destination: '/se-en/insurances/car-insurance',
-    permanent: true,
-    locale: false,
-  },
-  {
-    source: '/new-member/initiate-car-cancellation',
-    has: [{ type: 'query', key: 'contractId' }],
-    destination: '/cancellation/car/initiate/:contractId',
-    permanent: true,
-  },
-]
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
 console.log('next.config.js %O', module.exports)
