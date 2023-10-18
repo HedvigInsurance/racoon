@@ -89,6 +89,34 @@ module.exports = withBundleAnalyzer({
     }
   },
   redirects() {
+    // Redirect all NO/DK pages to home page (except customer service pages)
+    const noDkRedirects = [
+      {
+        source: '/no/((?!hjelp/kundeservice|payment/connect-legacy).*)',
+        destination: '/no',
+        permanent: true,
+        locale: false,
+      },
+      {
+        source: '/no-en/((?!help/customer-service|payment/connect-legacy).*)',
+        destination: '/no-en',
+        permanent: true,
+        locale: false,
+      },
+      {
+        source: '/dk/((?!hjaelp/kundeservice|payment/connect-legacy).*)',
+        destination: '/dk',
+        permanent: true,
+        locale: false,
+      },
+      {
+        source: '/dk-en/((?!help/customer-service|payment/connect-legacy).*)',
+        destination: '/dk-en',
+        permanent: true,
+        locale: false,
+      },
+    ]
+
     const locales = ['no', 'no-en', 'dk', 'dk-en']
     const shutDownMarketsInfo = [
       ...locales.map((locale) => ({
@@ -99,29 +127,26 @@ module.exports = withBundleAnalyzer({
       })),
     ]
 
-    const oldSiteRedirects =
-      process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
-        ? [
-            {
-              source: '/new-member(.*)',
-              destination: '/se',
-              permanent: true,
-              locale: false,
-            },
-            {
-              source: '/se/new-member(.*)',
-              destination: '/se',
-              permanent: true,
-              locale: false,
-            },
-            {
-              source: '/se-en/new-member(.*)',
-              destination: '/se-en',
-              permanent: true,
-              locale: false,
-            },
-          ]
-        : []
+    const oldSiteRedirects = [
+      {
+        source: '/new-member(.*)',
+        destination: '/se',
+        permanent: true,
+        locale: false,
+      },
+      {
+        source: '/se/new-member(.*)',
+        destination: '/se',
+        permanent: true,
+        locale: false,
+      },
+      {
+        source: '/se-en/new-member(.*)',
+        destination: '/se-en',
+        permanent: true,
+        locale: false,
+      },
+    ]
 
     let memberAreaDefault = []
     if (process.env.NEXT_PUBLIC_FEATURE_MEMBER_AREA === 'true') {
@@ -135,8 +160,10 @@ module.exports = withBundleAnalyzer({
     }
 
     return [
-      ...shutDownMarketsInfo,
-      ...oldSiteRedirects,
+      ...(process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
+        ? [...shutDownMarketsInfo, ...oldSiteRedirects]
+        : noDkRedirects),
+
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
     ]
