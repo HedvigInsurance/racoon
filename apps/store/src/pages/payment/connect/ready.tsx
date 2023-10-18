@@ -58,7 +58,7 @@ export const Page = (props: Props) => {
   const router = useRouter()
   const handleSuccess = async () => {
     LOGGER.info('Successfully connected to Trustly')
-    await router.push(PageLink.paymentConnectSuccess())
+    await router.push(PageLink.paymentConnectSuccess().pathname)
   }
 
   const handleFail = () => {
