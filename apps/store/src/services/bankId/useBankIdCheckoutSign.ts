@@ -1,3 +1,4 @@
+import { type ApolloError } from '@apollo/client'
 import { useCallback, useRef } from 'react'
 import { Observable, Subscription } from 'zen-observable-ts'
 import {
@@ -28,6 +29,7 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
       shopSessionId,
       ssn,
       onSuccess,
+      onError,
     }: // eslint-disable-next-line @typescript-eslint/require-await
     CheckoutSignOptions) => {
       const handleSuccess = async () => {
@@ -46,11 +48,11 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
         startLogin({
           ssn,
           onSuccess() {
-            startSign({ shopSessionId, onSuccess: handleSuccess })
+            startSign({ shopSessionId, onSuccess: handleSuccess, onError })
           },
         })
       } else {
-        startSign({ shopSessionId, onSuccess: handleSuccess })
+        startSign({ shopSessionId, onSuccess: handleSuccess, onError })
       }
     },
     [dispatch, startLogin, startSign],
@@ -71,6 +73,7 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
 type SignOptions = {
   shopSessionId: string
   onSuccess: () => void
+  onError?: (error: ApolloError | Error) => void
 }
 
 export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
@@ -80,7 +83,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
 
   const subscriptionRef = useRef<Subscription | null>(null)
   const startSign = useCallback(
-    ({ shopSessionId, onSuccess }: SignOptions) => {
+    ({ shopSessionId, onSuccess, onError }: SignOptions) => {
       subscriptionRef.current = new Observable<BankIdState>((subscriber) => {
         const startPolling = (shopSessionSigningId: string) => {
           fetchSigning({
@@ -102,6 +105,11 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
                 saveAuthTokens({ accessToken, refreshToken })
                 bankIdLogger.info('Got access token')
                 subscriber.complete()
+              } else if (status === ShopSessionSigningStatus.Failed) {
+                signingResult.stopPolling()
+                bankIdLogger.info('Signing failed')
+                // TODO: figure it what error to show here. Maybe exposing something from ShopsessionSigningQuery
+                subscriber.error(new Error('Signing failed'))
               }
             },
             onError(error) {
@@ -144,6 +152,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
         error(error) {
           subscriptionRef.current = null
           dispatch({ type: 'error', error })
+          onError?.(error)
         },
       })
     },

@@ -78,7 +78,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId: shopSession.id }),
       )
     },
-    // TODO: Never used inside, remove and refactor
     onError() {
       setShowSignError(true)
     },
