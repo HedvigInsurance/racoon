@@ -10,10 +10,7 @@
 
   // Do not create PRs for changes than will be automerged
   // https://docs.renovatebot.com/key-concepts/automerge/#branch-vs-pr-automerging
-//  automergeType: "branch",
-
-  // TEMP: Force creating pending branches
-  "prCreation": "immediate",
+  automergeType: "branch",
 
   "labels": ["needs approval/merge"],
   "ignoreDeps": [
