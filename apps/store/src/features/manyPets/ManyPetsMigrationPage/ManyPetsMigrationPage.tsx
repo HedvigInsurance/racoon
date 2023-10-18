@@ -246,7 +246,7 @@ const useSignMigration = (
 
       const shopSessionId = shopSession.id
       const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
-      manypetsLogger.addContext('shopSessionId', shopSessionId)
+      manypetsLogger.setContextProperty('shopSessionId', shopSessionId)
 
       datadogRum.addAction('ManyPets StartingSigning', {
         shopSessionId,

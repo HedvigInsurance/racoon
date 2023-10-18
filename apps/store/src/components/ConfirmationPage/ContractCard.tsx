@@ -49,7 +49,7 @@ const PendingContractCard = (props: ContractCardProps) => {
   const handleClickInitiate = (contractId: string) => () => {
     datadogRum.addAction(BankSigneringEvent.Initiated, { contractId })
     // Logger context used in mutation result handlers
-    BANK_SIGNERING_LOGGER.addContext('contractId', contractId)
+    BANK_SIGNERING_LOGGER.setContextProperty('contractId', contractId)
     initiateBankSignering({ variables: { contractId } })
   }
 

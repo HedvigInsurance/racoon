@@ -34,7 +34,7 @@ export const InsurelyBlock = (props: Props) => {
     if (!router.isReady) return
 
     const sessionId = router.query.sessionId
-    datadogLogs.addLoggerGlobalContext('insurelySalesSupportToolSessionId', sessionId)
+    datadogLogs.setGlobalContextProperty('insurelySalesSupportToolSessionId', sessionId)
     setInsurelyConfig({
       showCloseButton: false,
       hideResultsView: false,

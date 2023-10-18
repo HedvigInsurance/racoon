@@ -11,7 +11,7 @@ if (!version) {
 }
 const CLIENT_CONFIG = {
   env,
-  sampleRate: 100,
+  sessionSampleRate: 100,
   service: process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
   site: 'datadoghq.eu',
   version,
@@ -39,6 +39,7 @@ export const initDatadog = () => {
           console[event.status](event.message)
         }
       }
+      return true
     }
   }
   datadogLogs.init(datadogLogsConfig)
@@ -48,6 +49,8 @@ export const initDatadog = () => {
     clientToken,
     applicationId,
     trackUserInteractions: true,
+
+    sessionReplaySampleRate: 100,
     defaultPrivacyLevel: 'mask-user-input',
     silentMultipleInit: true,
 

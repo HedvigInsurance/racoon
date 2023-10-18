@@ -95,7 +95,7 @@ export const FetchInsurance = ({
   const [createDataCollection] = useInsurelyDataCollectionCreateMutation({
     onCompleted(data) {
       setDataCollectionId(data.insurelyInitiateIframeDataCollection.dataCollectionId)
-      LOGGER.addContext('dataCollectionId', dataCollectionId)
+      LOGGER.setContextProperty('dataCollectionId', dataCollectionId)
     },
     onError(error) {
       LOGGER.warn('Error creating Insurely data collection', {

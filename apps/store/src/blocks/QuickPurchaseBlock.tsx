@@ -88,7 +88,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
       let shopSession = currentShopSession
       if (blok.attributedTo) {
         // Partner attribution can influence pricing, so we need to create a new shop session
-        datadogLogs.addLoggerGlobalContext('attributedTo', blok.attributedTo)
+        datadogLogs.setGlobalContextProperty('attributedTo', blok.attributedTo)
         datadogLogs.logger.info(
           `QuickPurchaseBlock | create shop session attributed to ${blok.attributedTo}`,
         )
