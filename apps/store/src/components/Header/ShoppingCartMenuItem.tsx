@@ -11,7 +11,7 @@ export const ShoppingCartMenuItem = () => {
 
   return (
     <Wrapper>
-      <StyledLink href={PageLink.cart()} aria-label="shopping cart">
+      <StyledLink href={PageLink.cart().pathname} aria-label="shopping cart">
         <ShoppingBagIcon count={cartLineCount} />
       </StyledLink>
     </Wrapper>

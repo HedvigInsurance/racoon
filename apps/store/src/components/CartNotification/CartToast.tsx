@@ -54,7 +54,7 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
             <ProductItem {...productItemProps} />
             <Space y={0.5}>
               <ButtonNextLink
-                href={PageLink.cart()}
+                href={PageLink.cart().pathname}
                 variant="primary"
                 onClick={handleClickLink('Primary')}
               >
