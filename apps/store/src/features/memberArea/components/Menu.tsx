@@ -14,9 +14,9 @@ export const Menu = () => {
   const currentRoute = router.pathname
 
   const internalItems = {
-    claim: PageLink.memberAreaClaim(),
-    insurances: PageLink.memberAreaInsurances(),
-    payments: PageLink.memberAreaPayments(),
+    claim: PageLink.memberAreaClaim().pathname,
+    insurances: PageLink.memberAreaInsurances().pathname,
+    payments: PageLink.memberAreaPayments().pathname,
   }
 
   return (
@@ -25,7 +25,7 @@ export const Menu = () => {
         <NavgationItem>
           <NavigationLink
             href={internalItems.insurances}
-            data-active={router.pathname === internalItems.insurances.pathname}
+            data-active={router.pathname === internalItems.insurances}
           >
             {t('MENU_ITEM_LABEL_INSURANCE')}
           </NavigationLink>
@@ -33,7 +33,7 @@ export const Menu = () => {
         <NavgationItem>
           <NavigationLink
             href={internalItems.payments}
-            data-active={currentRoute.includes(internalItems.payments.pathname)}
+            data-active={currentRoute.includes(internalItems.payments)}
           >
             {t('MENU_ITEM_LABEL_PAYMENT')}
           </NavigationLink>
@@ -41,7 +41,7 @@ export const Menu = () => {
         <NavgationItem>
           <NavigationLink
             href={internalItems.claim}
-            data-active={currentRoute.includes(internalItems.claim.pathname)}
+            data-active={currentRoute.includes(internalItems.claim)}
           >
             {t('MENU_ITEM_LABEL_CLAIM')}
           </NavigationLink>
