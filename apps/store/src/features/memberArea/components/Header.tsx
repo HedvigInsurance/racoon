@@ -1,16 +1,13 @@
 import styled from '@emotion/styled'
-import { t } from 'i18next'
-import { HedvigLogo, mq, theme } from 'ui'
-import { LogoLink, LogoWrapper } from '@/components/Header/Header'
+import { mq, theme } from 'ui'
+import { LogoWrapper } from '@/components/Header/Header'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
-import { PageLink } from '@/utils/PageLink'
+import { LogoHomeLink } from '@/components/LogoHomeLink'
 
 export const Header = () => (
   <HeaderWrapper>
     <LogoWrapper>
-      <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
-        <HedvigLogo />
-      </LogoLink>
+      <LogoHomeLink />
     </LogoWrapper>
   </HeaderWrapper>
 )

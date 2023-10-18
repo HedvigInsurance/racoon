@@ -1,9 +1,7 @@
 import styled from '@emotion/styled'
 import { motion, Transition } from 'framer-motion'
-import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
-import { HedvigLogo, mq, theme } from 'ui'
-import { PageLink } from '@/utils/PageLink'
+import { mq, theme } from 'ui'
+import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_PX } from './HeaderStyles'
@@ -47,7 +45,6 @@ type HeaderProps = {
 export const Header = (props: HeaderProps) => {
   const { children, opaque = false, overlay = false, static: staticPosition = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
-  const { t } = useTranslation('common')
 
   const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
 
@@ -67,9 +64,7 @@ export const Header = (props: HeaderProps) => {
         transition={TRANSITION}
       >
         <LogoWrapper>
-          <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
-            <HedvigLogo />
-          </LogoLink>
+          <LogoHomeLink />
         </LogoWrapper>
         <ContentWrapper>
           {children}
@@ -116,11 +111,6 @@ export const LogoWrapper = styled.div({
   // Fix to make sure line-height doesn't affect wrapper height
   fontSize: 0,
   flex: 1,
-})
-
-export const LogoLink = styled(Link)({
-  display: 'inline-block',
-  ':active': { opacity: 0.75 },
 })
 
 const ContentWrapper = styled.div({

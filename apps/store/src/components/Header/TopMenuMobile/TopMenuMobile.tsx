@@ -3,12 +3,12 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { AndroidIcon, AppleIcon, Button, HedvigLogo, mq, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
+import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { PageLink } from '@/utils/PageLink'
-import { LogoLink, LogoWrapper } from '../Header'
+import { LogoWrapper } from '../Header'
 import {
   focusableStyles,
   MENU_BAR_HEIGHT_MOBILE,
@@ -73,9 +73,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
           <Wrapper>
             <TopMenuHeader>
               <LogoWrapper>
-                <LogoLink href={PageLink.home()} aria-label={t('HOME_PAGE_LINK_LABEL')}>
-                  <HedvigLogo />
-                </LogoLink>
+                <LogoHomeLink />
               </LogoWrapper>
               <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
               <ShoppingCartMenuItem />

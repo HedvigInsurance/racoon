@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
-import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { HedvigLogo, mq, theme } from 'ui'
+import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
-import { PageLink } from '@/utils/PageLink'
+import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs'
 
 type Props = BreadcrumbsProps & {
@@ -15,9 +14,7 @@ export const CheckoutHeader = ({ children, steps, activeStep }: Props) => {
   return (
     <HeaderLayout>
       <HeaderLogo>
-        <Link href={PageLink.home()}>
-          <HedvigLogo width={78} />
-        </Link>
+        <LogoHomeLink />
       </HeaderLogo>
       <HeaderBreadcrumbs width="1/3" align="center">
         <Breadcrumbs steps={steps} activeStep={activeStep} />
