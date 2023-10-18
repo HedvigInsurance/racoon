@@ -1,5 +1,9 @@
 import { kv } from '@vercel/kv'
 import { AverageRating, ReviewComments } from './productReviews.types'
+import {
+  validateProductReviewsComments,
+  validateProductAverageRating,
+} from './productReviews.utils'
 
 // Data format and used keys are defined in the cloud function:
 // https://console.cloud.google.com/functions/details/europe-north1/product_review_v2?env=gen2&cloudshell=false&project=hedvig-dagobah
@@ -24,6 +28,12 @@ export const getProductAverageRating = async (productId: string) => {
     return null
   }
 
+  const validationResult = validateProductAverageRating(productAverageRating)
+  if (!validationResult.success) {
+    console.warn(`productAverageRating | validation error: ${validationResult.error}`)
+    return null
+  }
+
   return productAverageRating
 }
 
@@ -41,5 +51,11 @@ export const getProductReviewComments = async (productId: string) => {
     return null
   }
 
-  return productReviewComments
+  const validationResult = validateProductReviewsComments(productReviewComments)
+  if (!validationResult.success) {
+    console.warn(`productReviewComments | validation error: ${validationResult.error}`)
+    return null
+  }
+
+  return validationResult.data
 }
