@@ -117,8 +117,8 @@ const mediaSrc = [
 const connectSrc = [
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
-  // Our logging
-  'https://*.browser-intake-datadoghq.eu',
+  // Our logging and RUM
+  'https://browser-intake-datadoghq.eu',
   // Vercel preview comments
   'https://*.pusher.com/',
   'wss://*.pusher.com',
