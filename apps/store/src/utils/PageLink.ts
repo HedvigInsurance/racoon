@@ -78,16 +78,16 @@ export const PageLink = {
     return url
   },
 
-  memberArea: ({ locale }: BaseParams) => {
+  memberArea: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member`, ORIGIN_URL)
   },
-  memberAreaClaim: ({ locale }: BaseParams) => {
+  memberAreaClaim: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member/claim`, ORIGIN_URL)
   },
-  memberAreaInsurances: ({ locale }: BaseParams) => {
+  memberAreaInsurances: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member/insurances`, ORIGIN_URL)
   },
-  memberAreaPayments: ({ locale }: BaseParams) => {
+  memberAreaPayments: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member/payments`, ORIGIN_URL)
   },
 
