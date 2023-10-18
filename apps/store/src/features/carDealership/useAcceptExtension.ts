@@ -56,13 +56,15 @@ export const useAcceptExtension = (params: Params) => {
           LOGGER.info('Member has active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
-          await router.push(PageLink.confirmation({ shopSessionId: params.shopSession.id }))
+          await router.push(
+            PageLink.confirmation({ shopSessionId: params.shopSession.id }).pathname,
+          )
         } else {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
           await router.push(
-            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }),
+            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }).pathname,
           )
         }
       },
