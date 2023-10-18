@@ -82,7 +82,7 @@ export const CartPage = () => {
               )}
 
               <ButtonNextLink
-                href={PageLink.checkout({ expandCart: true })}
+                href={PageLink.checkout({ expandCart: true }).toRelative()}
                 onClick={handleClickCheckout}
               >
                 {t('CHECKOUT_BUTTON')}
