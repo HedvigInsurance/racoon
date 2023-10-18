@@ -33,7 +33,7 @@ const Page = () => {
     }
 
     return await router.push(
-      PageLink.memberLogin({ next: PageLink.paymentConnectReady().pathname }),
+      PageLink.memberAreaLogin({ next: PageLink.paymentConnectReady().pathname }).toRelative(),
     )
   }
 

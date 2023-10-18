@@ -87,7 +87,7 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
         name: error.name,
         message: error.message,
       })
-      router.push(PageLink.fourOhFour())
+      router.push(PageLink.fourOhFour().pathname)
     },
   })
 

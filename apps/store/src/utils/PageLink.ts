@@ -100,6 +100,15 @@ export const PageLink = {
   memberAreaPayments: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member/payments`, ORIGIN_URL)
   },
+  memberAreaLogin: (params: MemberLoginPage = {}) => {
+    const url = new ExtendedURL(`${localePrefix(params.locale)}/member/login`, ORIGIN_URL)
+
+    if (params.next) {
+      url.searchParams.set('next', params.next)
+    }
+
+    return url
+  },
 
   paymentConnect: (params?: BaseParams) => {
     return new URL(`${localePrefix(params?.locale)}/payment/connect`, ORIGIN_URL)
@@ -213,16 +222,6 @@ export const PageLink = {
   },
   fourOhFour: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
-  },
-
-  memberLogin: (params: MemberLoginPage = {}) => {
-    const url = new URL(`${localePrefix(params.locale)}/member/login`, ORIGIN_URL)
-
-    if (params.next) {
-      url.searchParams.set('next', params.next)
-    }
-
-    return url
   },
 } as const
 
