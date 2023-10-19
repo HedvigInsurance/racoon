@@ -69,7 +69,8 @@
     "tss-react": "4.9.2",
     "ui": "workspace:",
     "uuid": "9.0.1",
-    "zen-observable-ts": "1.2.5"
+    "zen-observable-ts": "1.2.5",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@babel/core": "7.23.2",

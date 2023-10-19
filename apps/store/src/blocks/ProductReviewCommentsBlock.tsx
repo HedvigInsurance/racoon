@@ -1,4 +1,3 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useState, useMemo, ChangeEventHandler } from 'react'
 import { Text, Space, Badge, theme } from 'ui'
@@ -24,24 +23,13 @@ export const ProductReviewCommentsBlock = () => {
     if (!reviewComments) return []
 
     const availableScores: Array<AvailableScore> = ['5', '4', '3', '2', '1']
-    const options: InputOptions = []
-    availableScores.forEach((score) => {
+    const options = availableScores.map<InputOptions[number]>((score) => {
       const commentsByScore = reviewComments.commentsByScore[score]
-      // It should not happen. Just being safe
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (commentsByScore === null) {
-        datadogLogs.logger.warn(
-          `ProductReviewCommentBlock | could not find reviews for score ${score}`,
-        )
-        return
-      }
-
-      const option: InputOptions[number] = {
+      return {
         name: getScoreFilterOptionName(score, commentsByScore.total),
         value: score,
         disabled: commentsByScore.total === 0,
       }
-      options.push(option)
     })
 
     return options
