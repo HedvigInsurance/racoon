@@ -49,7 +49,7 @@ export const getLocaleOrFallback = (locale?: UiLocale): LocaleData => {
 }
 
 export const getUrlLocale = (url: string): RoutingLocale => {
-  const routingLocale = url.split('/')[0]
+  const routingLocale = url.split('/')[1]
   return getLocaleOrFallback(routingLocale as UiLocale).routingLocale
 }
 
