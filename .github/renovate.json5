@@ -5,8 +5,8 @@
 
   // Scheduling
   "timezone": "Europe/Stockholm",
-  "schedule": ["before 11am every weekday"],
-  "automergeSchedule": ["after 6am and before 11am every weekday"],
+  "schedule": ["before 2pm every weekday"],
+  "automergeSchedule": ["after 6am and before 2pm every weekday"],
 
   // Do not create PRs for changes than will be automerged
   // https://docs.renovatebot.com/key-concepts/automerge/#branch-vs-pr-automerging
