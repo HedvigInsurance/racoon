@@ -16,7 +16,7 @@ type Options = {
 
 export const useHandleSubmitCheckout = (options: Options) => {
   const { t } = useTranslation('common')
-  const { customerAuthenticationStatus, shopSessionId, ssn, onSuccess } = options
+  const { customerAuthenticationStatus, shopSessionId, ssn, onSuccess, onError } = options
   const [updateCustomer, updateCustomerResult] = useUpdateCustomer({ shopSessionId })
 
   const { currentOperation, startCheckoutSign } = useBankIdContext()
@@ -28,7 +28,7 @@ export const useHandleSubmitCheckout = (options: Options) => {
       const formData = new FormData(event.currentTarget)
       await updateCustomer(formData)
     }
-    startCheckoutSign({ customerAuthenticationStatus, shopSessionId, ssn, onSuccess })
+    startCheckoutSign({ customerAuthenticationStatus, shopSessionId, ssn, onSuccess, onError })
   }
 
   let userError = updateCustomerResult.userError

@@ -1,3 +1,4 @@
+import { type ApolloError } from '@apollo/client'
 import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 
 export enum BankIdState {
@@ -42,4 +43,5 @@ export type CheckoutSignOptions = {
   shopSessionId: string
   ssn: string
   onSuccess: () => void | Promise<void>
+  onError?: (error: ApolloError | Error) => void
 }
