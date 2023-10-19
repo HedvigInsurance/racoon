@@ -21,6 +21,7 @@ const SiteMap = () => {
   // getServerSideProps will do the heavy lifting
 }
 
+const STORYBLOK_CACHE_VERSION = process.env.STORYBLOK_CACHE_VERSION
 const getFilteredPages = async () => {
   /**
    * Sitemap should exclude pages that are:
@@ -35,12 +36,17 @@ const getFilteredPages = async () => {
   let perPage = 100
   let paginating = false
 
+  const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
+  const isCacheVersionValid = !isNaN(cacheVersion)
+  const cv = isCacheVersionValid ? cacheVersion : undefined
+
   while (!paginating) {
     response = await fetchStories({
       excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*`,
       'filter_query[robots][not_in]': 'noindex',
       page: currentPage,
       per_page: perPage,
+      cv,
     })
     filteredPages.push(...response.data.stories)
     paginating = response.headers.total <= currentPage * perPage
