@@ -88,7 +88,8 @@ const TabsRoot = styled(RadixTabs.Root)({
 const TabsList = styled(RadixTabs.List)({
   display: 'flex',
   gap: theme.space.xs,
-  marginBottom: theme.space.xs,
+  paddingBottom: theme.space.sm,
+  overflowX: 'auto',
 })
 
 const TabButton = styled(Button)({
