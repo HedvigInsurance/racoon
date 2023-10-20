@@ -90,9 +90,6 @@ module.exports = withBundleAnalyzer({
     }
   },
   async redirects() {
-    // Get Redirects from Storyblok
-    const redirects = await getStoryblokRedirects()
-
     // Redirect all NO/DK pages to home page (except customer service pages)
     const noDkRedirects = [
       {
@@ -163,6 +160,11 @@ module.exports = withBundleAnalyzer({
       ]
     }
 
+    let storyblokRedirects = []
+    if (process.env.NEXT_PUBLIC_FEATURE_STORYBLOK_REDIRECTS === 'true') {
+      storyblokRedirects = await getStoryblokRedirects()
+    }
+
     return [
       ...(process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
         ? [...shutDownMarketsInfo, ...oldSiteRedirects]
@@ -170,7 +172,7 @@ module.exports = withBundleAnalyzer({
 
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
-      ...redirects,
+      ...storyblokRedirects,
     ]
   },
 })
