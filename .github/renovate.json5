@@ -43,5 +43,7 @@
   // Effectively we may have only 1-2 renovate during daily window, so let's jam all valid PRs
   // ASAP. Set a limit here if we observe long build queue that interferes with daily work
   "prHourlyLimit": 0,
-  "stabilityDays": 2
+  // Npm packages can be unpublished during first 72h, let's use older ones
+  // https://docs.renovatebot.com/configuration-options/#minimumreleaseage
+  "minimumReleaseAge": "3 days"
 }
