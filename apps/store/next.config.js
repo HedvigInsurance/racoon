@@ -223,9 +223,16 @@ const getStoryblokRedirects = async () => {
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   })
 
+  const cacheVersion = process.env.STORYBLOK_CACHE_VERSION
+    ? parseInt(process.env.STORYBLOK_CACHE_VERSION)
+    : NaN
+  const isCacheVersionValid = !isNaN(cacheVersion)
+  const cv = isCacheVersionValid ? cacheVersion : undefined
+
   try {
     const repsonse = await storyblokClient.getAll('cdn/datasource_entries', {
       datasource: 'permanent-redirects',
+      cv,
     })
 
     const redirects = repsonse.map((entry) => ({
