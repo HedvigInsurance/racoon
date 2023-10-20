@@ -32,65 +32,9 @@ There's no platform we would rather develop for than the web. Therefore we appro
 
 ## File and Directory structure
 
-This project follows Josh Comeau's [Delightful File/Directory Structure](https://www.joshwcomeau.com/react/file-structure) with the following exceptions:
+The general [code organization guidelines](https://www.notion.so/hedviginsurance/Code-organization-ac87b6ec9ec5401aafb387a566dfeb86?pvs=4) are documented in Notion. We've taken some inspiration from Josh Comeau's [Delightful File/Directory Structure](https://www.joshwcomeau.com/react/file-structure), however, we have made quite a few changes to fit our needs.
 
-- Skip `index.ts` files inside component folders
-- Name hooks as `useThing.ts`
-- Use PascalCase for React components and camelCase for all other files
-
-### General folder structure (Next.js workspace)
-
-```text
-├─ components/
-│  ├─ Widget/
-│  │  ├─ Widget.tsx             <-- main React component
-│  │  ├─ Widget.stories.tsx     <-- Storybook file
-│  │  ├─ WidgetChild.tsx        <-- sub-component
-│  │  ├─ Widget.helpers.tsx     <-- component-level helper functions
-│  │  ├─ Widget.constants.tsx   <-- component-level constants
-│  │  ├─ useThing.tsx           <-- component-level hook
-├─ helpers/
-│  ├─ auth.helper.ts            <-- app-level helper function
-├─ utils.ts                     <-- app-level generic functions like "lodash"
-├─ hooks/
-│  ├─ useBoop.ts                <-- app-level hook
-├─ services/
-│  ├─ i18n.ts                   <-- namespaced utilities related to "i18n"
-├─ features/
-│  ├─ blog/                     <-- app-level features
-├─ constants.ts                 <-- app-level constants
-├─ types.ts                     <-- app-level types
-├─ graphql                      <-- app-level types
-│  ├─ Query.graphql             <-- GraphQL schema query/mutation/fragment
-├─ pages/
-│  ├─ about.ts                  <-- Next.js page component
-```
-
-### Feature-folders
-
-We've made one addition to the directory structure suggested by Josh Comeau. We've added a `features` folder. Josh makes some good points why grouping modules into features can be a bad idea. However, we've found that in some limited cases it's a very powerful concept.
-
-When starting a new project, consider if it could fit as a separate feature. Optimize for **clean feature** versus cramming everthing into feature-folders.
-
-You can tell that a set of modules work as a feature if they:
-
-- Share common business logic
-
-- Often change together (a change in one file often requires a change in another file)
-
-- Represent a standalone concept (can be easily deleteled and feature-flagged)
-
-  - Never import modules from one feature into another
-
-A feature is not:
-
-- A page or route (they are already grouped together in the `/pages` folder)
-
-- A component (use the `/components` folder if all your need is to group React components)
-
-- An API wrapper around e.g. Storyblok or Insurely (use the `/services` folder)
-
-#### Next.js-layer
+### Next.js-layer
 
 Aim to contain all Next.js specific logic under the `/pages` folder. This means that we should build things under e.g. `/components` in a way so they could be copied over to a non-Next.js based project without major changes.
 
