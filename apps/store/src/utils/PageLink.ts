@@ -87,6 +87,14 @@ export const PageLink = {
     }
     return url
   },
+  help: ({ locale }: { locale: RoutingLocale }) => {
+    const url = HELP_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing help page link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
 
   memberArea: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/member`, ORIGIN_URL)
@@ -233,6 +241,11 @@ const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
 const FAQ_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hjalp/faq', ORIGIN_URL),
   'se-en': new URL('/se-en/help/faq', ORIGIN_URL),
+}
+
+const HELP_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hjalp', ORIGIN_URL),
+  'se-en': new URL('/se-en/help', ORIGIN_URL),
 }
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {
