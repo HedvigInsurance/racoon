@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { Space } from 'ui'
+import { Space, CheckIcon } from 'ui'
 import { Button } from './Button'
 
 export default {
@@ -82,4 +82,10 @@ export const Small = Template.bind({})
 Small.args = {
   children: 'Button label',
   size: 'small',
+}
+
+export const WithIcon = Template.bind({})
+WithIcon.args = {
+  children: 'Button label',
+  Icon: <CheckIcon size="18px" />,
 }
