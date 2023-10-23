@@ -70,13 +70,14 @@ export const listStyles = css({
     '&::before': {
       content: '""',
       position: 'absolute',
-      top: 5,
+      top: '50%',
       left: 0,
       display: 'inline-block',
       width: 15,
       height: 15,
       borderRadius: '100%',
       backgroundColor: 'var(--color, currentColor)',
+      transform: 'translateY(-50%)',
     },
 
     ul: {
@@ -93,7 +94,6 @@ export const listStyles = css({
     [mq.md]: {
       paddingLeft: '1.75rem',
       '&::before': {
-        top: 7,
         width: 19,
         height: 19,
       },
