@@ -39,25 +39,27 @@ export const Content = (props: Props) => {
       </Text>
 
       <AppButtons>
-        <StyledButton
+        <Button
           href={getAppStoreLink('apple', routingLocale).toString()}
           target="_blank"
           variant="secondary"
           size="small"
           onClick={handleClickIosButton}
+          Icon={<AppleIcon size="18px" />}
         >
-          <AppleIcon size="18px" /> App Store
-        </StyledButton>
+          App Store
+        </Button>
 
-        <StyledButton
+        <Button
           href={getAppStoreLink('google', routingLocale).toString()}
           target="_blank"
           variant="secondary"
           size="small"
           onClick={handleClickAndroidButton}
+          Icon={<AndroidIcon size="18px" />}
         >
-          <AndroidIcon size="18px" /> Google Play
-        </StyledButton>
+          Google Play
+        </Button>
       </AppButtons>
 
       <Paper>
@@ -135,8 +137,4 @@ const AppButtons = styled.div({
   alignItems: 'center',
   justifyContent: 'center',
   gap: theme.space.md,
-})
-
-const StyledButton = styled(Button)({
-  gap: theme.space.xs,
 })
