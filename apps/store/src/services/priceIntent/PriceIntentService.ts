@@ -82,8 +82,12 @@ export class PriceIntentService {
     }
 
     // Deduplicate mutation, Apollo won't do this for us
-    const paramsEquals = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
-    if (!this.createPromise || !paramsEquals(this.createParams, params)) {
+    const isEqual =
+      params.shopSessionId === this.createParams?.shopSessionId &&
+      params.productName === this.createParams.productName &&
+      params.priceTemplate.name === this.createParams.priceTemplate.name
+
+    if (!this.createPromise || !isEqual) {
       this.createParams = params
       this.createPromise = this.create(params)
     }
@@ -152,8 +156,17 @@ type FetchParams = {
   shopSessionId: string
 }
 
+let PRICE_INTENT_SERVICE: PriceIntentService | null = null
+
 export const priceIntentServiceInitClientSide = (apolloClient: ApolloClient<unknown>) => {
-  return new PriceIntentService(new CookiePersister('UNUSED_DEFAULT_KEY'), apolloClient)
+  if (!PRICE_INTENT_SERVICE) {
+    PRICE_INTENT_SERVICE = new PriceIntentService(
+      new CookiePersister('UNUSED_DEFAULT_KEY'),
+      apolloClient,
+    )
+  }
+
+  return PRICE_INTENT_SERVICE
 }
 
 type ServerSideParams = {
