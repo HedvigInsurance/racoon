@@ -4,6 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const experimentJson = require('./experiment.json')
 const { SiteCsp, StoryblokCsp } = require('./next-csp.config')
 const { i18n } = require('./next-i18next.config')
+const StoryblokClient = require('storyblok-js-client')
 
 /** @type {import('next').NextConfig} */
 module.exports = withBundleAnalyzer({
@@ -88,7 +89,10 @@ module.exports = withBundleAnalyzer({
       ],
     }
   },
-  redirects() {
+  async redirects() {
+    // Get Redirects from Storyblok
+    const redirects = await getStoryblokRedirects()
+
     // Redirect all NO/DK pages to home page (except customer service pages)
     const noDkRedirects = [
       {
@@ -166,6 +170,7 @@ module.exports = withBundleAnalyzer({
 
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
+      ...redirects,
     ]
   },
 })
@@ -206,6 +211,32 @@ const getExperimentVariantRedirects = () => {
       locale: false,
     },
   ]
+}
+
+/**
+ * Fetch redirects from Storyblok datasource
+ * */
+const getStoryblokRedirects = async () => {
+  const storyblokClient = new StoryblokClient({
+    accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+  })
+
+  try {
+    const repsonse = await storyblokClient.getAll('cdn/datasource_entries', {
+      datasource: 'permanent-redirects',
+    })
+
+    const redirects = repsonse.map((entry) => ({
+      source: entry.name,
+      destination: entry.value,
+      permanent: true,
+      locale: false,
+    }))
+
+    return redirects
+  } catch (error) {
+    console.error('Error updating redirects', error)
+  }
 }
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
