@@ -15,6 +15,7 @@ import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
+import { CustomerFirstScript } from '@/services/CustomerFirst'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
@@ -27,6 +28,7 @@ import { trackExperimentImpression } from '@/services/Tracking/trackExperimentIm
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackPageViews } from '@/services/Tracking/trackPageViews'
+import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
@@ -107,7 +109,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
-          <ContactUs />
+          {Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />}
         </JotaiProvider>
       </ApolloProvider>
     </>
