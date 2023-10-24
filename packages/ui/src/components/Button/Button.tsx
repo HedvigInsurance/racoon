@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react'
 import { theme } from '../../lib/theme/theme'
 import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
@@ -15,6 +15,7 @@ type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
   size?: ButtonSize
   loading?: boolean
+  Icon?: ReactNode
 } & LinkProps
 
 export type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
@@ -24,7 +25,9 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const buttonChildren = (
     <>
-      <span style={{ opacity: loading ? 0 : 1 }}>{children}</span>
+      <ChildrenWrapper style={{ opacity: loading ? 0 : 1 }}>
+        {props.Icon} {children}
+      </ChildrenWrapper>
       {loading && (
         <Centered>
           <DotPulse />
@@ -64,6 +67,12 @@ const Centered = styled.span({
   position: 'absolute',
   display: 'flex',
   justifyContent: 'center',
+})
+
+const ChildrenWrapper = styled.span({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xs,
 })
 
 const StyledButton = styled.button<CustomButtonProps>(
