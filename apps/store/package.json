@@ -66,7 +66,7 @@
     "react-wrap-balancer": "1.1.0",
     "storyblok-js-client": "5.14.4",
     "storyblok-rich-text-react-renderer": "2.9.0",
-    "tss-react": "4.9.2",
+    "tss-react": "4.9.3",
     "ui": "workspace:",
     "uuid": "9.0.1",
     "zen-observable-ts": "1.2.5",
