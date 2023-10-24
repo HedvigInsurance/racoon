@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import Link, { LinkProps } from 'next/link'
+import Link from 'next/link'
 import { Badge, mq, Space, Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { focusableStyles } from './HeaderStyles'
@@ -32,13 +32,25 @@ const ProductNavigationLinkCard = styled(Space)({
   },
 })
 
-type NavigationLinkProps = Pick<LinkProps, 'href'> &
+type NavigationLinkProps = Pick<HTMLAnchorElement, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'> & {
     pillowImageSrc?: string
     label?: string
+    absoluteUrl?: boolean
   }
 
 export const NavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
+  // Render a regular <a> tag for manual URLs containing https://. Thats because when linking between locales (/no -> /se),
+  // you end up on /no/se with using Next internal routing. This will also work for external links.
+  const isExternalLink = href.match(/^(https?:)?\/\//)
+  if (isExternalLink) {
+    return (
+      <StyledNavigationLink href={href} {...rest}>
+        {children}
+      </StyledNavigationLink>
+    )
+  }
+
   return (
     <Link href={href} passHref legacyBehavior>
       <StyledNavigationLink {...rest}>{children}</StyledNavigationLink>
@@ -71,7 +83,7 @@ export const ProductNavigationLink = ({
   label,
 }: NavigationLinkProps) => {
   return (
-    <Link href={href}>
+    <a href={href}>
       <ProductNavigationLinkCard>
         <Pillow size="xsmall" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
@@ -81,7 +93,7 @@ export const ProductNavigationLink = ({
           </Badge>
         )}
       </ProductNavigationLinkCard>
-    </Link>
+    </a>
   )
 }
 
