@@ -75,4 +75,9 @@ export const globalStyles = css`
   :where([hidden]) {
     display: none;
   }
+
+  /* Isolate app stacking context so it doesn't mess up with portals */
+  #__next {
+    isolation: isolate;
+  }
 `

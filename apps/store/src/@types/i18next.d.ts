@@ -12,6 +12,7 @@ import type carDealership from '../../public/locales/en/carDealership.json'
 import type cart from '../../public/locales/en/cart.json'
 import type checkout from '../../public/locales/en/checkout.json'
 import type common from '../../public/locales/en/common.json'
+import type contactUs from '../../public/locales/en/contact-us.json'
 import type memberArea from '../../public/locales/en/memberArea.json'
 import type purchaseForm from '../../public/locales/en/purchase-form.json'
 
@@ -24,6 +25,7 @@ interface I18nNamespaces {
   'purchase-form': typeof purchaseForm
   carDealership: typeof carDealership
   memberArea: typeof memberArea
+  'contact-us': typeof contactUs
 }
 
 declare module 'i18next' {

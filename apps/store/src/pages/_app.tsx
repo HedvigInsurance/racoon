@@ -10,11 +10,11 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
+import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { CustomerFirstScript } from '@/services/CustomerFirst'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
@@ -107,7 +107,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
-          <CustomerFirstScript hideChat={pageProps.hideChat} />
+          <ContactUs />
         </JotaiProvider>
       </ApolloProvider>
     </>

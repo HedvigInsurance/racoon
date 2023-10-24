@@ -1,22 +1,27 @@
 import styled from '@emotion/styled'
 import { motion, type Transition } from 'framer-motion'
-import { type ReactNode } from 'react'
+import React, { ReactElement, type ReactNode } from 'react'
 import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
-  children: React.ReactNode
-  Footer?: React.ReactNode
+  children: ReactNode
+  Header?: ReactElement
+  Footer?: ReactNode
   center?: boolean
 }
 
-export const Modal = ({ children, Footer, center = false }: Props) => {
+export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
     <Content frostedOverlay={true}>
-      <Header>
-        <CloseButton>
-          <CrossIcon />
-        </CloseButton>
-      </Header>
+      {Header ? (
+        React.cloneElement(Header, { style: { height: HEADER_HEIGHT } })
+      ) : (
+        <ModalHeader>
+          <CloseButton>
+            <CrossIcon />
+          </CloseButton>
+        </ModalHeader>
+      )}
       {center ? (
         <CenteredMain>
           <AnimateContentWrapper>{children}</AnimateContentWrapper>
@@ -48,7 +53,7 @@ const Content = styled(Dialog.Content)({
 })
 
 const HEADER_HEIGHT = '3.5rem'
-const Header = styled.header({
+const ModalHeader = styled.header({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
