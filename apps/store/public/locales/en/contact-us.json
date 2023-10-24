@@ -1,5 +1,6 @@
 {
-  "ALREADY_MEMBER_SUB_HEADING": "Already a member? Get help fast in the Hedvig app.",
+  "ALREADY_MEMBER_HEADING": "Already a member?",
+  "ALREADY_MEMBER_SUB_HEADING": "Get help fast in the Hedvig app.",
   "CHAT_HEADING": "How can we help you?",
   "CHAT_OPTION_LABEL": "Web chat",
   "CHAT_UNAVAILABLE_LABEL": "No agents available",
