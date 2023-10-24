@@ -38,11 +38,16 @@
       "labels": ["dev-deps"]
     }
   ],
-  "prConcurrentLimit": 12,
-  // Default: 2, this is way too low for trying to go through daily PR flow in short window
-  // Effectively we may have only 1-2 renovate during daily window, so let's jam all valid PRs
-  // ASAP. Set a limit here if we observe long build queue that interferes with daily work
+  // Rate limits
+  // Load on our build system is effectively quadratic per number of open branches / PRs
+  // When we merge something or commit to main, all other PRs are rebased and run
+  // To keep this load manageable, we should try to limit number of open branches from renovate
+  // It's more efficient to have queue of unprocessed change on Renovate side if we have many pending
+  // updates than to have it in form of branches that trigger builds on every rebase
+  "branchConcurrentLimit": null, // Inherit prConcurrentLimit below
+  "prConcurrentLimit": 4,
   "prHourlyLimit": 0,
+
   // Npm packages can be unpublished during first 72h, let's use older ones
   // https://docs.renovatebot.com/configuration-options/#minimumreleaseage
   "minimumReleaseAge": "3 days"
