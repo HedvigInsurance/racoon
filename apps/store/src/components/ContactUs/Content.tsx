@@ -7,17 +7,12 @@ import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 
-type Props = {
-  onClickPhoneLink?: () => void
-}
-
-export const Content = (props: Props) => {
+export const Content = () => {
   const { t } = useTranslation('contact-us')
   const { routingLocale } = useCurrentLocale()
 
   const handleClickPhoneLink = () => {
     datadogRum.addAction('Contact us | phone')
-    props.onClickPhoneLink?.()
   }
 
   const handleClickFaqLink = () => {
@@ -34,9 +29,14 @@ export const Content = (props: Props) => {
 
   return (
     <Wrapper y={2}>
-      <Text as="p" align="center" balance={true}>
-        {t('ALREADY_MEMBER_SUB_HEADING')}
-      </Text>
+      <div>
+        <Text as="p" align="center" balance={true}>
+          {t('ALREADY_MEMBER_HEADING')}
+        </Text>
+        <Text as="p" align="center" balance={true}>
+          {t('ALREADY_MEMBER_SUB_HEADING')}
+        </Text>
+      </div>
 
       <AppButtons>
         <Button
@@ -85,6 +85,7 @@ export const Content = (props: Props) => {
 
             <LinkButton
               href={PageLink.help({ locale: routingLocale }).pathname}
+              target="_blank"
               onClick={handleClickPhoneLink}
             >
               <span>{t('TELEPHONE_OPTION_LABEL')}</span>
@@ -121,7 +122,7 @@ const LinkButton = styled(Link)({
 
   '&[aria-disabled=true]': {
     pointerEvents: 'none',
-    color: theme.colors.textDisabled,
+    color: theme.colors.textTertiary,
   },
 
   '@media(hover: hover)': {

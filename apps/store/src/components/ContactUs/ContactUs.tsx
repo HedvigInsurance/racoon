@@ -39,10 +39,6 @@ export const ContactUs = () => {
   // There's no way to determine how this component should look on the server
   if (!hasMounted) return null
 
-  const handleClickPhoneLink = () => {
-    setOpen(false)
-  }
-
   if (isDesktop) {
     return (
       <Popover.Root open={open} onOpenChange={setOpen}>
@@ -63,7 +59,7 @@ export const ContactUs = () => {
                 }
               />
 
-              <Content onClickPhoneLink={handleClickPhoneLink} />
+              <Content />
             </ChatWindow>
           </Popover.Content>
         </Popover.Portal>
@@ -89,7 +85,7 @@ export const ContactUs = () => {
           />
         }
       >
-        <Content onClickPhoneLink={handleClickPhoneLink} />
+        <Content />
       </FullScreenDialog.Modal>
     </FullScreenDialog.Root>
   )

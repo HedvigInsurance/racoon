@@ -1,7 +1,8 @@
 {
-  "ALREADY_MEMBER_SUB_HEADING": "Är du redan medlem? Få snabbast hjälp i Hedvig-appen",
+  "ALREADY_MEMBER_HEADING": "Är du redan medlem?",
+  "ALREADY_MEMBER_SUB_HEADING": "Få snabbast hjälp i Hedvig-appen",
   "CHAT_HEADING": "Hur kan vi hjälpa dig?",
-  "CHAT_OPTION_LABEL": "Webchatt",
+  "CHAT_OPTION_LABEL": "Webbchatt",
   "CHAT_UNAVAILABLE_LABEL": "Chatten är stängd",
   "CONTACT_US_BUTTON_LABEL": "Kontakta oss",
   "FAQ_OPTION_LABEL": "Frågor och svar",
