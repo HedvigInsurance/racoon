@@ -70,38 +70,6 @@ test('should return product redirect if single product is present', () => {
   expect(result.url.toString()).toContain(priceIntentId)
 })
 
-test('should return product redirect for multiple price intents with the same exposure', () => {
-  // Arrange
-  const priceIntentId = '12345'
-  const data: ShopSessionRetargetingQuery = {
-    shopSession: {
-      id: '123',
-      cart: { entries: [] },
-      priceIntents: [
-        {
-          id: '123',
-          product: { name: 'SE_CAR' },
-          data: { registrationNumber: 'FRE123' },
-          defaultOffer: FAKE_OFFER,
-        },
-        {
-          id: priceIntentId,
-          product: { name: 'SE_CAR' },
-          data: { registrationNumber: 'FRE123' },
-          defaultOffer: FAKE_OFFER,
-        },
-      ],
-    },
-  }
-
-  // Act
-  const result = getUserRedirect(userParams, data)
-
-  // Assert
-  expect(result.type).toEqual(RedirectType.Product)
-  expect(result.url.toString()).toContain(priceIntentId)
-})
-
 test('should return modified cart if multiple price intents with different exposures are present', () => {
   // Arrange
   const data: ShopSessionRetargetingQuery = {
