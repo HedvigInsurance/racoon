@@ -1,5 +1,5 @@
-import { fetchStories } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import StoryblokClient from 'storyblok-js-client'
 
 const generateSiteMap = (pages) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -22,6 +22,7 @@ const SiteMap = () => {
 }
 
 const STORYBLOK_CACHE_VERSION = process.env.STORYBLOK_CACHE_VERSION
+
 const getFilteredPages = async () => {
   /**
    * Sitemap should exclude pages that are:
@@ -30,28 +31,19 @@ const getFilteredPages = async () => {
    * - draft pages
    */
 
-  let response = {}
-  let filteredPages = []
-  let currentPage = 1
-  let perPage = 100
-  let paginating = false
+  const storyblokClient = new StoryblokClient({
+    accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+  })
 
   const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
   const isCacheVersionValid = !isNaN(cacheVersion)
   const cv = isCacheVersionValid ? cacheVersion : undefined
 
-  while (!paginating) {
-    response = await fetchStories({
-      excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*`,
-      'filter_query[robots][not_in]': 'noindex',
-      page: currentPage,
-      per_page: perPage,
-      cv,
-    })
-    filteredPages.push(...response.data.stories)
-    paginating = response.headers.total <= currentPage * perPage
-    currentPage++
-  }
+  const filteredPages = await storyblokClient.getAll('cdn/stories', {
+    excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*`,
+    'filter_query[robots][not_in]': 'noindex',
+    cv,
+  })
 
   return filteredPages
 }
