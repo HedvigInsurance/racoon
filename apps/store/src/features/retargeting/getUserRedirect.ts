@@ -1,7 +1,4 @@
-import {
-  type ShopSessionRetargetingQuery,
-  type RetargetingPriceIntentFragment,
-} from '@/services/apollo/generated'
+import { type ShopSessionRetargetingQuery } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { type UserParams } from './retargeting.types'
 
@@ -43,7 +40,7 @@ export const getUserRedirect = (
     }
   }
 
-  const priceIntents = getPriceIntentsByExposure(data)
+  const { priceIntents } = data.shopSession
 
   if (priceIntents.length === 1) {
     return {
@@ -79,41 +76,4 @@ export const getUserRedirect = (
 
 const hasAddedCartEntries = (data: ShopSessionRetargetingQuery): boolean => {
   return data.shopSession.cart.entries.length > 0
-}
-
-const getPriceIntentsByExposure = (
-  data: ShopSessionRetargetingQuery,
-): Array<RetargetingPriceIntentFragment> => {
-  const exposures = new Set()
-  const uniquePriceIntents = data.shopSession.priceIntents
-    .filter((item) => item.defaultOffer != null)
-    // We care about the last confirmed price intent
-    .reverse()
-    .filter((item) => {
-      const exposure = getProductExposure(item.product.name, item.data)
-      if (exposures.has(exposure)) return false
-      exposures.add(exposure)
-      return true
-    })
-
-  return uniquePriceIntents
-}
-
-const CAR_EXPOSURE_FIELD = 'registrationNumber'
-const PET_EXPOSURE_FIELD = 'name'
-const getProductExposure = (productName: string, data: Record<string, unknown>): string => {
-  switch (productName) {
-    case 'SE_CAR':
-      return [productName, getAsString(data[CAR_EXPOSURE_FIELD])].join('')
-    case 'SE_PET_DOG':
-    case 'SE_PET_CAT':
-      return [productName, getAsString(data[PET_EXPOSURE_FIELD])].join('')
-    default:
-      // You can only add one Home / Accident
-      return productName
-  }
-}
-
-const getAsString = (value: unknown): string | undefined => {
-  return typeof value === 'string' ? value : undefined
 }
