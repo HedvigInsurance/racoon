@@ -1,7 +1,6 @@
 import {
   type ShopSessionRetargetingQuery,
   type RetargetingPriceIntentFragment,
-  type RetargetingOfferFragment,
 } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { type UserParams } from './retargeting.types'
@@ -58,8 +57,10 @@ export const getUserRedirect = (
     }
   }
 
-  const offers = getCheapestOffersIds(priceIntents)
-  if (offers.length > 0) {
+  const offerIds = priceIntents
+    .map((priceIntent) => priceIntent.defaultOffer?.id)
+    .filter(Boolean) as Array<string>
+  if (offerIds.length > 0) {
     return {
       type: RedirectType.ModifiedCart,
       url: PageLink.session({
@@ -68,7 +69,7 @@ export const getUserRedirect = (
         next: PageLink.cart({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
-      offers,
+      offers: offerIds,
     }
   }
 
@@ -85,7 +86,7 @@ const getPriceIntentsByExposure = (
 ): Array<RetargetingPriceIntentFragment> => {
   const exposures = new Set()
   const uniquePriceIntents = data.shopSession.priceIntents
-    .filter((item) => item.offers.length > 0)
+    .filter((item) => item.defaultOffer != null)
     // We care about the last confirmed price intent
     .reverse()
     .filter((item) => {
@@ -115,22 +116,4 @@ const getProductExposure = (productName: string, data: Record<string, unknown>):
 
 const getAsString = (value: unknown): string | undefined => {
   return typeof value === 'string' ? value : undefined
-}
-
-const getCheapestOffersIds = (priceIntents: Array<RetargetingPriceIntentFragment>) => {
-  const cheapestOffersIds = priceIntents.reduce<Array<string>>((result, priceIntent) => {
-    const cheapestOffer = getCheapestOffer(priceIntent)
-    return [...result, cheapestOffer.id]
-  }, [])
-  return cheapestOffersIds
-}
-
-const getCheapestOffer = (
-  priceIntent: RetargetingPriceIntentFragment,
-): RetargetingOfferFragment => {
-  const sortedOffersByPrice = [...priceIntent.offers].sort(
-    (offerA, offerB) => offerA.cost.gross.amount - offerB.cost.gross.amount,
-  )
-  const cheapestOffer = sortedOffersByPrice[0]
-  return cheapestOffer
 }
