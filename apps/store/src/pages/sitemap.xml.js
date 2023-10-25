@@ -1,6 +1,10 @@
 import { ORIGIN_URL } from '@/utils/PageLink'
 import StoryblokClient from 'storyblok-js-client'
 
+const removeTrailingSlash = (url) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
+}
+
 const generateSiteMap = (pages) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -8,7 +12,7 @@ const generateSiteMap = (pages) => {
        .map((page) => {
          return `
           <url>
-            <loc>${`${ORIGIN_URL}/${page.full_slug}`}</loc>
+            <loc>${`${ORIGIN_URL}/${removeTrailingSlash(page.full_slug)}`}</loc>
           </url>
         `
        })
