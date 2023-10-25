@@ -30,7 +30,7 @@ describe('getUserRedirect', () => {
             id: '123',
             product: { name: 'test' },
             data: { street: 'testgatan 1' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
         ],
       },
@@ -57,7 +57,7 @@ describe('getUserRedirect', () => {
             id: priceIntentId,
             product: { name: 'test' },
             data: { street: 'testgatan 1' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
         ],
       },
@@ -83,13 +83,13 @@ describe('getUserRedirect', () => {
             id: '123',
             product: { name: 'SE_CAR' },
             data: { registrationNumber: 'FRE123' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
           {
             id: priceIntentId,
             product: { name: 'SE_CAR' },
             data: { registrationNumber: 'FRE123' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
         ],
       },
@@ -114,13 +114,13 @@ describe('getUserRedirect', () => {
             id: '123',
             product: { name: 'SE_CAR' },
             data: { registrationNumber: 'FRE123' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
           {
             id: '456',
             product: { name: 'SE_CAR' },
             data: { registrationNumber: 'FRE456' },
-            offers: [FAKE_OFFER],
+            defaultOffer: FAKE_OFFER,
           },
         ],
       },
@@ -131,78 +131,6 @@ describe('getUserRedirect', () => {
 
     // Assert
     expect(result.type).toEqual(RedirectType.ModifiedCart)
-  })
-
-  it('should return modified cart with cheapest offers for every product', () => {
-    // Arrange
-    const data: ShopSessionRetargetingQuery = {
-      shopSession: {
-        id: '123',
-        cart: {
-          entries: [],
-        },
-        priceIntents: [
-          {
-            id: '123',
-            product: { name: 'product1' },
-            data: { street: 'testgatan 1' },
-            offers: [
-              {
-                id: '123:offer1',
-                cost: {
-                  gross: {
-                    amount: 100,
-                  },
-                },
-              },
-              {
-                id: '123:offer2',
-                cost: {
-                  gross: {
-                    amount: 200,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            id: '456',
-            product: { name: 'product2' },
-            data: { street: 'testgatan 1' },
-            offers: [
-              {
-                id: '456:offer1',
-                cost: {
-                  gross: {
-                    amount: 200,
-                  },
-                },
-              },
-              {
-                id: '456:offer2',
-                cost: {
-                  gross: {
-                    amount: 150,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-    }
-
-    // Act
-    const result = getUserRedirect(userParams, data) as Extract<
-      ReturnType<typeof getUserRedirect>,
-      {
-        type: RedirectType.ModifiedCart
-      }
-    >
-
-    // Assert
-    expect(result.type).toEqual(RedirectType.ModifiedCart)
-    expect(result.offers).toEqual(expect.arrayContaining(['123:offer1', '456:offer2']))
   })
 })
 
