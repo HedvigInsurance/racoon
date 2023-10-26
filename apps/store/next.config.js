@@ -54,40 +54,7 @@ module.exports = withBundleAnalyzer({
       destination: '/forever/:code',
     }
 
-    const FALLBACK_ORIGIN_URL = process.env.FALLBACK_ORIGIN_URL
-
-    if (!FALLBACK_ORIGIN_URL) {
-      return [foreverRedirect]
-    }
-
-    return {
-      beforeFiles: [
-        // Static files needed for OLD market web
-        {
-          source: '/static/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/static/:path*`,
-        },
-        // Storyblok assets proxy
-        {
-          source: '/f/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/f/:path*`,
-        },
-      ],
-      afterFiles: [foreverRedirect],
-      fallback: [
-        // Avoid redirect to /default/:path* when URL locale is missing
-        {
-          source: '/default/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
-          locale: false,
-        },
-        {
-          source: '/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
-          locale: false,
-        },
-      ],
-    }
+    return [foreverRedirect]
   },
   async redirects() {
     // Redirect all NO/DK pages to home page (except customer service pages)
