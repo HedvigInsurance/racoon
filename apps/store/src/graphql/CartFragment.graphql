@@ -16,19 +16,23 @@ fragment CartFragment on Cart {
     }
   }
   redeemedCampaign {
-    id
-    code
-    discount {
-      type
-      amount {
-        currencyCode
-        amount
-      }
-      percentage
-      months
-    }
+    ...RedeemedCampaign
   }
   entries {
     ...ProductOffer
+  }
+}
+
+fragment RedeemedCampaign on RedeemedCampaign {
+  id
+  code
+  discount {
+    type
+    amount {
+      currencyCode
+      amount
+    }
+    percentage
+    months
   }
 }

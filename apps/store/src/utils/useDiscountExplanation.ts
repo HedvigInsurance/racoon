@@ -24,6 +24,11 @@ export const useGetDiscountExplanation = () => {
         return t('DISCOUNT_STATE_INDEFINITE_PERCENTAGE', {
           percentage: discount.percentage,
         })
+
+      // Not a case we care about, this discount type is evil and should no longer be used
+      // For now it's used with some partner integrations
+      case CampaignDiscountType.VisibleNoDiscount:
+        return ''
     }
   }
 }
