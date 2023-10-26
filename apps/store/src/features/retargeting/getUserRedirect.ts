@@ -1,8 +1,4 @@
-import {
-  type ShopSessionRetargetingQuery,
-  type RetargetingPriceIntentFragment,
-  type RetargetingOfferFragment,
-} from '@/services/apollo/generated'
+import { type ShopSessionRetargetingQuery } from '@/services/apollo/generated'
 import { PageLink } from '@/utils/PageLink'
 import { type UserParams } from './retargeting.types'
 
@@ -44,7 +40,7 @@ export const getUserRedirect = (
     }
   }
 
-  const priceIntents = getPriceIntentsByExposure(data)
+  const { priceIntents } = data.shopSession
 
   if (priceIntents.length === 1) {
     return {
@@ -58,8 +54,10 @@ export const getUserRedirect = (
     }
   }
 
-  const offers = getCheapestOffersIds(priceIntents)
-  if (offers.length > 0) {
+  const offerIds = priceIntents
+    .map((priceIntent) => priceIntent.defaultOffer?.id)
+    .filter(Boolean) as Array<string>
+  if (offerIds.length > 0) {
     return {
       type: RedirectType.ModifiedCart,
       url: PageLink.session({
@@ -68,7 +66,7 @@ export const getUserRedirect = (
         next: PageLink.cart({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
-      offers,
+      offers: offerIds,
     }
   }
 
@@ -78,59 +76,4 @@ export const getUserRedirect = (
 
 const hasAddedCartEntries = (data: ShopSessionRetargetingQuery): boolean => {
   return data.shopSession.cart.entries.length > 0
-}
-
-const getPriceIntentsByExposure = (
-  data: ShopSessionRetargetingQuery,
-): Array<RetargetingPriceIntentFragment> => {
-  const exposures = new Set()
-  const uniquePriceIntents = data.shopSession.priceIntents
-    .filter((item) => item.offers.length > 0)
-    // We care about the last confirmed price intent
-    .reverse()
-    .filter((item) => {
-      const exposure = getProductExposure(item.product.name, item.data)
-      if (exposures.has(exposure)) return false
-      exposures.add(exposure)
-      return true
-    })
-
-  return uniquePriceIntents
-}
-
-const CAR_EXPOSURE_FIELD = 'registrationNumber'
-const PET_EXPOSURE_FIELD = 'name'
-const getProductExposure = (productName: string, data: Record<string, unknown>): string => {
-  switch (productName) {
-    case 'SE_CAR':
-      return [productName, getAsString(data[CAR_EXPOSURE_FIELD])].join('')
-    case 'SE_PET_DOG':
-    case 'SE_PET_CAT':
-      return [productName, getAsString(data[PET_EXPOSURE_FIELD])].join('')
-    default:
-      // You can only add one Home / Accident
-      return productName
-  }
-}
-
-const getAsString = (value: unknown): string | undefined => {
-  return typeof value === 'string' ? value : undefined
-}
-
-const getCheapestOffersIds = (priceIntents: Array<RetargetingPriceIntentFragment>) => {
-  const cheapestOffersIds = priceIntents.reduce<Array<string>>((result, priceIntent) => {
-    const cheapestOffer = getCheapestOffer(priceIntent)
-    return [...result, cheapestOffer.id]
-  }, [])
-  return cheapestOffersIds
-}
-
-const getCheapestOffer = (
-  priceIntent: RetargetingPriceIntentFragment,
-): RetargetingOfferFragment => {
-  const sortedOffersByPrice = [...priceIntent.offers].sort(
-    (offerA, offerB) => offerA.cost.gross.amount - offerB.cost.gross.amount,
-  )
-  const cheapestOffer = sortedOffersByPrice[0]
-  return cheapestOffer
 }

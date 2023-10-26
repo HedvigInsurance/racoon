@@ -1,13 +1,25 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
+import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { MinusIcon, CrossIcon, theme } from 'ui'
-import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import {
+  Text,
+  Space,
+  Heading,
+  Button,
+  HedvigSymbol,
+  MinusIcon,
+  AndroidIcon,
+  AppleIcon,
+  theme,
+} from 'ui'
+import { getAppStoreLink } from '@/utils/appStoreLinks'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { PageLink } from '@/utils/PageLink'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
-import { ContactUsButton } from './ContactUsButton'
-import { Content } from './Content'
-import { Header } from './Header'
+import { zIndexes } from '@/utils/zIndex'
 
 const scaleIn = keyframes({
   from: {
@@ -33,65 +45,104 @@ const scaleOut = keyframes({
 
 export const ContactUs = () => {
   const hasMounted = useHasMounted()
-  const isDesktop = useBreakpoint('xs')
+  const isDesktop = useBreakpoint('lg')
+  const { t } = useTranslation('contact-us')
+  const { routingLocale } = useCurrentLocale()
   const [open, setOpen] = useState(false)
 
   // There's no way to determine how this component should look on the server
-  if (!hasMounted) return null
+  if (!hasMounted || !isDesktop) return null
 
-  const handleClickPhoneLink = () => {
-    setOpen(false)
-  }
-
-  if (isDesktop) {
-    return (
-      <Popover.Root open={open} onOpenChange={setOpen}>
-        <Popover.Trigger asChild={true}>
-          <ContactUsButton />
-        </Popover.Trigger>
-
-        <Popover.Portal>
-          <Popover.Content side="bottom" align="end" sideOffset={8} asChild={true}>
-            <ChatWindow>
-              <Header
-                CloseBtn={
-                  <Popover.Close asChild={true}>
-                    <CloseButton>
-                      <MinusIcon size="18px" />
-                    </CloseButton>
-                  </Popover.Close>
-                }
-              />
-
-              <Content onClickPhoneLink={handleClickPhoneLink} />
-            </ChatWindow>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
-    )
-  }
   return (
-    <FullScreenDialog.Root open={open} onOpenChange={setOpen}>
-      <FullScreenDialog.Trigger asChild={true}>
-        <ContactUsButton />
-      </FullScreenDialog.Trigger>
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger asChild={true}>
+        <ContactUsButton Icon={<Status />} variant="secondary" size="medium">
+          {t('CONTACT_US_BUTTON_LABEL')}
+        </ContactUsButton>
+      </Popover.Trigger>
 
-      <FullScreenDialog.Modal
-        Header={
-          <Header
-            CloseBtn={
-              <FullScreenDialog.Close asChild={true}>
-                <CloseButton>
-                  <CrossIcon size="24px" />
-                </CloseButton>
-              </FullScreenDialog.Close>
-            }
-          />
-        }
-      >
-        <Content onClickPhoneLink={handleClickPhoneLink} />
-      </FullScreenDialog.Modal>
-    </FullScreenDialog.Root>
+      <Popover.Portal>
+        <Popover.Content side="bottom" align="end" sideOffset={8} asChild={true}>
+          <ChatWindow>
+            <Header>
+              <HedvigSymbol size="24px" />
+              <Text as="span">Hedvig</Text>
+              <CloseButton>
+                <MinusIcon size="18px" />
+              </CloseButton>
+            </Header>
+
+            <Content y={2}>
+              <div>
+                <Text as="p" align="center" balance={true}>
+                  {t('ALREADY_MEMBER_HEADING')}
+                </Text>
+                <Text as="p" align="center" balance={true}>
+                  {t('ALREADY_MEMBER_SUB_HEADING')}
+                </Text>
+              </div>
+
+              <AppButtons>
+                <Button
+                  data-dd-action-name="Contact us | IOS App"
+                  href={getAppStoreLink('apple', routingLocale).toString()}
+                  target="_blank"
+                  variant="secondary"
+                  size="small"
+                  Icon={<AppleIcon size="18px" />}
+                >
+                  App Store
+                </Button>
+
+                <Button
+                  data-dd-action-name="Contact us | Android App"
+                  href={getAppStoreLink('google', routingLocale).toString()}
+                  target="_blank"
+                  variant="secondary"
+                  size="small"
+                  Icon={<AndroidIcon size="18px" />}
+                >
+                  Google Play
+                </Button>
+              </AppButtons>
+
+              <Paper>
+                <Space y={1}>
+                  <Heading as="h1" variant="standard.18" align="center">
+                    {t('CHAT_HEADING')}
+                  </Heading>
+
+                  <Space y={0.5}>
+                    <LinkButton
+                      data-dd-action-name="Contact us | faq"
+                      href={PageLink.faq({ locale: routingLocale }).pathname}
+                      target="_blank"
+                    >
+                      <span>{t('FAQ_OPTION_LABEL')}</span>
+                      <span>{t('FAQ_OPTION_VALUE')}</span>
+                    </LinkButton>
+
+                    <LinkButton href="#" aria-disabled="true">
+                      <span>{t('CHAT_OPTION_LABEL')}</span>
+                      <span>{t('CHAT_UNAVAILABLE_LABEL')}</span>
+                    </LinkButton>
+
+                    <LinkButton
+                      data-dd-action-name="Contact us | phone"
+                      href={PageLink.help({ locale: routingLocale }).pathname}
+                      target="_blank"
+                    >
+                      <span>{t('TELEPHONE_OPTION_LABEL')}</span>
+                      <span>{t('TELEPHONE_OPTION_VALUE')}</span>
+                    </LinkButton>
+                  </Space>
+                </Space>
+              </Paper>
+            </Content>
+          </ChatWindow>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   )
 }
 
@@ -104,6 +155,23 @@ const useHasMounted = () => {
 
   return hasMounted
 }
+
+const ContactUsButton = styled(Button)({
+  position: 'fixed',
+  right: theme.space.lg,
+  bottom: theme.space.lg,
+  width: 'auto',
+  zIndex: zIndexes.contactUs,
+})
+
+const Status = styled.span({
+  flex: '0 0 auto',
+  display: 'inline-block',
+  width: 14,
+  aspectRatio: '1 / 1',
+  borderRadius: '50%',
+  backgroundColor: theme.colors.signalBlueElement,
+})
 
 const ChatWindow = styled.div({
   display: 'grid',
@@ -123,6 +191,61 @@ const ChatWindow = styled.div({
   },
 })
 
-const CloseButton = styled.button({
+const Header = styled.header({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.space.xs,
+  color: theme.colors.white,
+  backgroundColor: theme.colors.black,
+  paddingBlock: theme.space.sm,
+  paddingInline: theme.space.md,
+  borderTopLeftRadius: 'inherit',
+  borderTopRightRadius: 'inherit',
+})
+
+const CloseButton = styled(Popover.Close)({
   cursor: 'pointer',
+})
+
+const Content = styled(Space)({
+  padding: theme.space.md,
+  overflowY: 'auto',
+})
+
+const Paper = styled.div({
+  padding: theme.space.md,
+  borderRadius: theme.radius.xs,
+  boxShadow: theme.shadow.default,
+  backgroundColor: theme.colors.offWhite,
+})
+
+const LinkButton = styled(Link)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: theme.space.sm,
+  fontSize: theme.fontSizes.sm,
+  border: `1px solid ${theme.colors.gray200}`,
+  borderRadius: theme.radius.sm,
+  paddingBlock: theme.space.md,
+  paddingInline: theme.space.md,
+
+  '&[aria-disabled=true]': {
+    pointerEvents: 'none',
+    color: theme.colors.textTertiary,
+  },
+
+  '@media(hover: hover)': {
+    '&:not([aria-disabled=true]):hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.gray200,
+    },
+  },
+})
+
+const AppButtons = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.md,
 })

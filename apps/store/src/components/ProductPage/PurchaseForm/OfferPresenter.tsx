@@ -13,7 +13,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
-  RedeemedCampaign,
+  RedeemedCampaignFragment,
 } from '@/services/apollo/generated'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -300,7 +300,7 @@ type GetCancellationOptionParams = {
 
 const useDiscountTooltipProps = (
   selectedOffer: ProductOfferFragment,
-  campaign?: RedeemedCampaign,
+  campaign?: RedeemedCampaignFragment,
 ) => {
   const { t } = useTranslation(['purchase-form', 'cart'])
   const formatter = useFormatter()

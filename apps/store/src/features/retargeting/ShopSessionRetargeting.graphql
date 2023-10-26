@@ -6,7 +6,7 @@ query ShopSessionRetargeting($shopSessionId: UUID!) {
         id
       }
     }
-    priceIntents {
+    priceIntents(filters: { uniqueConfirmed: true }) {
       ...RetargetingPriceIntent
     }
   }
@@ -15,19 +15,15 @@ query ShopSessionRetargeting($shopSessionId: UUID!) {
 fragment RetargetingPriceIntent on PriceIntent {
   id
   data
-  offers {
-    ...RetargetingOffer
+  defaultOffer {
+    id
+    cost {
+      gross {
+        amount
+      }
+    }
   }
   product {
     name
-  }
-}
-
-fragment RetargetingOffer on ProductOffer {
-  id
-  cost {
-    gross {
-      amount
-    }
   }
 }

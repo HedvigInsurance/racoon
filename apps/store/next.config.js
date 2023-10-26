@@ -54,40 +54,7 @@ module.exports = withBundleAnalyzer({
       destination: '/forever/:code',
     }
 
-    const FALLBACK_ORIGIN_URL = process.env.FALLBACK_ORIGIN_URL
-
-    if (!FALLBACK_ORIGIN_URL) {
-      return [foreverRedirect]
-    }
-
-    return {
-      beforeFiles: [
-        // Static files needed for OLD market web
-        {
-          source: '/static/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/static/:path*`,
-        },
-        // Storyblok assets proxy
-        {
-          source: '/f/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/f/:path*`,
-        },
-      ],
-      afterFiles: [foreverRedirect],
-      fallback: [
-        // Avoid redirect to /default/:path* when URL locale is missing
-        {
-          source: '/default/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
-          locale: false,
-        },
-        {
-          source: '/:path*',
-          destination: `${process.env.FALLBACK_ORIGIN_URL}/:path*`,
-          locale: false,
-        },
-      ],
-    }
+    return [foreverRedirect]
   },
   async redirects() {
     // Redirect all NO/DK pages to home page (except customer service pages)
@@ -118,16 +85,7 @@ module.exports = withBundleAnalyzer({
       },
     ]
 
-    const locales = ['no', 'no-en', 'dk', 'dk-en']
-    const shutDownMarketsInfo = [
-      ...locales.map((locale) => ({
-        source: `/${locale}/new-member/:path*`,
-        destination: `/${locale}/info`,
-        permanent: true,
-        locale: false,
-      })),
-    ]
-
+    // Redirect old web-onboarding pages to root
     const oldSiteRedirects = [
       {
         source: '/new-member(.*)',
@@ -166,10 +124,8 @@ module.exports = withBundleAnalyzer({
     }
 
     return [
-      ...(process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
-        ? [...shutDownMarketsInfo, ...oldSiteRedirects]
-        : noDkRedirects),
-
+      ...noDkRedirects,
+      ...oldSiteRedirects,
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
       ...storyblokRedirects,

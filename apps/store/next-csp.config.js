@@ -139,6 +139,9 @@ const connectSrc = [
   // Affiliate tracking
   'https://addrevenue.io',
 
+  // Clearbits partnership tracking
+  'https://app.clearbit.com',
+
   'https://*.hedvigit.com',
   "'self'",
 ]
