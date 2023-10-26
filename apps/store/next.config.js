@@ -118,16 +118,7 @@ module.exports = withBundleAnalyzer({
       },
     ]
 
-    const locales = ['no', 'no-en', 'dk', 'dk-en']
-    const shutDownMarketsInfo = [
-      ...locales.map((locale) => ({
-        source: `/${locale}/new-member/:path*`,
-        destination: `/${locale}/info`,
-        permanent: true,
-        locale: false,
-      })),
-    ]
-
+    // Redirect old web-onboarding pages to root
     const oldSiteRedirects = [
       {
         source: '/new-member(.*)',
@@ -166,10 +157,8 @@ module.exports = withBundleAnalyzer({
     }
 
     return [
-      ...(process.env.FEATURE_OLD_SITE_REDIRECTS === 'true'
-        ? [...shutDownMarketsInfo, ...oldSiteRedirects]
-        : noDkRedirects),
-
+      ...noDkRedirects,
+      ...oldSiteRedirects,
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
       ...storyblokRedirects,
