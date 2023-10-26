@@ -42,7 +42,11 @@ jobs:
           cache: yarn
 
       - name: Install
-        run: yarn install --immutable
+        run: |
+          yarn --version
+          corepack enable
+          yarn --version
+          yarn install --immutable
 
       - name: Codegen
         run: yarn codegen:ci
