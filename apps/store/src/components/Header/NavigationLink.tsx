@@ -83,7 +83,7 @@ export const ProductNavigationLink = ({
   label,
 }: NavigationLinkProps) => {
   return (
-    <a href={href}>
+    <Link href={href}>
       <ProductNavigationLinkCard>
         <Pillow size="xsmall" src={pillowImageSrc} />
         <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
@@ -93,7 +93,7 @@ export const ProductNavigationLink = ({
           </Badge>
         )}
       </ProductNavigationLinkCard>
-    </a>
+    </Link>
   )
 }
 
