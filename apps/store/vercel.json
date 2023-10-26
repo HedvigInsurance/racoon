@@ -2,7 +2,7 @@
   "$schema": "http://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && STORYBLOK_CACHE_VERSION=$(node ./apps/store/scripts/storyblok-cache-version.js) yarn turbo run build --filter=store && ./apps/store/scripts/upload-sourcemaps-vercel.sh",
-  "ignoreCommand": "../../bin/vercel-ignore-step.sh",
+  "ignoreCommand": "yarn --version && corepack enable && yarn --version",
   "installCommand": "cd ../.. && YARN_CACHE_FOLDER=./.next/cache/yarn-cache yarn install --immutable && yarn --version",
   "regions": ["arn1"],
   "github": {
