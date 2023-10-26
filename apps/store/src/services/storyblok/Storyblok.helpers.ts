@@ -73,6 +73,7 @@ export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
 }
 
 const makeAbsolute = (url: string) => {
+  url = removeTrailingSlash(url)
   if (/^(\/|https?:\/\/|\/\/)/.test(url)) {
     return url
   }
@@ -114,4 +115,8 @@ export const getImgSrc = (src: string) => {
     return src
   }
   return (src || '').replace('//a.storyblok.com', '//assets.hedvig.com')
+}
+
+export const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
 }
