@@ -7,18 +7,14 @@ import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 const OPEN_ATOM = atom(false)
 
-type Props = {
-  hideChat?: boolean
-}
-
-export const CustomerFirstScript = ({ hideChat = false }: Props) => {
+export const CustomerFirstScript = () => {
   const isDesktop = useBreakpoint('lg')
   const { chatWidgetSrc } = useCurrentLocale()
   const { open } = useCustomerFirst()
 
   if (!chatWidgetSrc) return null
 
-  const showLauncher = hideChat ? open : isDesktop || open
+  const showLauncher = isDesktop || open
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />
