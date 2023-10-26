@@ -175,7 +175,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: pageLinks.map(({ locale, slugParts }) => {
       return { params: { slug: slugParts }, locale }
     }),
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
