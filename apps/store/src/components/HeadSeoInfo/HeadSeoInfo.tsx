@@ -1,7 +1,7 @@
 import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
 import { SEOData } from '@/services/storyblok/storyblok'
-import { getImgSrc, removeTrailingSlash } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
 import { organization } from '@/utils/jsonSchema'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
@@ -80,4 +80,8 @@ const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
 const getHrefLang = (fullSlug: string) => {
   const slugLocale = fullSlug.split('/')[0]
   return isRoutingLocale(slugLocale) ? toIsoLocale(slugLocale) : 'x-default'
+}
+
+const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
 }
