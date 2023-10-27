@@ -2,7 +2,7 @@ import { StoryblokClient } from '@storyblok/js'
 import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
 import { Features } from '@/utils/Features'
 import { type Language } from '@/utils/l10n/types'
-import { LinkField, ProductStory, StoryblokVersion } from './storyblok'
+import { LinkField, ProductStory, WidgetFlowStory, StoryblokVersion } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: Array<BlockData> = [],
@@ -83,6 +83,10 @@ const appendAnchor = (url: string, anchor?: string) => (anchor ? `${url}#${ancho
 
 export const isProductStory = (story: ISbStoryData): story is ProductStory => {
   return story.content.component === 'product'
+}
+
+export const isWidgetFlowStory = (story: ISbStoryData): story is WidgetFlowStory => {
+  return story.content.component === 'widget-flow'
 }
 
 export const getStoryblokImageSize = (filename: string) => {
