@@ -6,6 +6,7 @@ import type { AppPropsWithLayout } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Router from 'next/router'
+import { type ReactNode } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
@@ -81,6 +82,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout ?? ((page) => page)
 
+  let Chat: ReactNode = null
+  if (!pageProps.hideChat) {
+    Chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
+  }
+
   return (
     <>
       <Head>
@@ -109,7 +115,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </TrackingProvider>
           </ShopSessionProvider>
-          {Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />}
+          {Chat}
         </JotaiProvider>
       </ApolloProvider>
     </>
