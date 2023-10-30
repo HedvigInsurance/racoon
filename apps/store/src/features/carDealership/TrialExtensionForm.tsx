@@ -10,6 +10,7 @@ import { TextWithLink } from '@/components/TextWithLink'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { useFormatter } from '@/utils/useFormatter'
 import { type TrialExtension } from './carDealershipFixtures'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
@@ -26,6 +27,7 @@ type Props = {
 export const TrialExtensionForm = (props: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const { routingLocale } = useCurrentLocale()
+  const formatter = useFormatter()
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: props.shopSession,
     requirePaymentConnection: props.requirePaymentConnection,
@@ -41,6 +43,10 @@ export const TrialExtensionForm = (props: Props) => {
     () => getSelectedOffer(props.priceIntent, tierLevel),
     [props.priceIntent, tierLevel],
   )
+  const activationDate = convertToDate(selectedOffer.startDate)
+  if (activationDate === null) {
+    throw new Error(`Start date must be defined for offer  ${selectedOffer.id}`)
+  }
 
   const terminationDate = convertToDate(props.contract.terminationDate)
   if (!terminationDate) {
@@ -88,7 +94,9 @@ export const TrialExtensionForm = (props: Props) => {
           {...(props.requirePaymentConnection && {
             discount: {
               reducedAmount: props.contract.premium.amount,
-              explanation: t('TRIAL_COST_EXPLANATION'),
+              explanation: t('TRIAL_COST_EXPLANATION', {
+                date: formatter.dateFull(activationDate, { hideYear: true, abbreviateMonth: true }),
+              }),
             },
           })}
         />
