@@ -1,8 +1,6 @@
 const gtmInjectedOrigins = [
   'https://*.onetrust.com',
   'https://*.cookielaw.org',
-  'https://*.hotjar.com',
-  'https://*.hotjar.io',
   'https://sc-static.net',
   'https://*.snapchat.com',
   'https://*.facebook.net',
@@ -34,10 +32,8 @@ const scriptSrc = [
   ...gtmInjectedOrigins,
   ...adyenOrigins,
 
-  // OLD market web
+  // Adtraction
   'https://cdn.adt387.com',
-  'http://widget.trustpilot.com',
-  'https://widget.trustpilot.com',
 
   // Insurely
   'https://blocks.insurely.com',
@@ -159,11 +155,6 @@ const frameSrc = [
 
   // GTM-injected scripts
   'https://*.snapchat.com',
-  'https://*.hotjar.com',
-
-  // OLD market web
-  'https://www.youtube.com/',
-  'https://widget.trustpilot.com/',
 
   // Google Optimize
   'https://optimize.google.com',
