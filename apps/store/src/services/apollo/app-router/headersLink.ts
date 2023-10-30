@@ -1,5 +1,5 @@
 import { setContext } from '@apollo/client/link/context'
-import jwtDecode, { type JwtPayload } from 'jwt-decode'
+import { jwtDecode, type JwtPayload } from 'jwt-decode'
 import { headers } from 'next/headers'
 import {
   getAccessToken,
