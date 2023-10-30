@@ -4553,9 +4553,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.22.1":
-  version: 2.22.1
-  resolution: "@datadog/datadog-ci@npm:2.22.1"
+"@datadog/datadog-ci@npm:2.23.0":
+  version: 2.23.0
+  resolution: "@datadog/datadog-ci@npm:2.23.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.427.0
     "@aws-sdk/client-iam": ^3.427.0
@@ -4587,7 +4587,6 @@ __metadata:
     js-yaml: 3.13.1
     jszip: ^3.10.1
     ora: 5.4.1
-    protobufjs: ^7.2.4
     proxy-agent: ^6.3.0
     rimraf: ^3.0.2
     semver: ^7.5.3
@@ -4604,7 +4603,7 @@ __metadata:
     yamux-js: 0.1.2
   bin:
     datadog-ci: dist/cli.js
-  checksum: 211de665a2a13e6b20cd8fffb35da06258f6b02ad50c1eb4978368593eabe3675129ed891d5303215b99d23a8ddd9bc6fe3a8b56c81fc5485a349ef4f1e3f4b2
+  checksum: dcf6279c7057b88bbd3bb4cd6360260bfc61774e14ee00fdaf41ff6b1c174d43783c27b2ca6de16ab8a713f8fd194dad5afb385c704ff4e7ee3c5c3c25885d29
   languageName: node
   linkType: hard
 
@@ -22085,26 +22084,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^7.2.4":
-  version: 7.2.5
-  resolution: "protobufjs@npm:7.2.5"
-  dependencies:
-    "@protobufjs/aspromise": ^1.1.2
-    "@protobufjs/base64": ^1.1.2
-    "@protobufjs/codegen": ^2.0.4
-    "@protobufjs/eventemitter": ^1.1.0
-    "@protobufjs/fetch": ^1.1.0
-    "@protobufjs/float": ^1.0.2
-    "@protobufjs/inquire": ^1.1.0
-    "@protobufjs/path": ^1.1.2
-    "@protobufjs/pool": ^1.1.0
-    "@protobufjs/utf8": ^1.1.0
-    "@types/node": ">=13.7.0"
-    long: ^5.0.0
-  checksum: 3770a072114061faebbb17cfd135bc4e187b66bc6f40cd8bac624368b0270871ec0cfb43a02b9fb4f029c8335808a840f1afba3c2e7ede7063b98ae6b98a703f
-  languageName: node
-  linkType: hard
-
 "proxy-addr@npm:~2.0.7":
   version: 2.0.7
   resolution: "proxy-addr@npm:2.0.7"
@@ -24030,7 +24009,7 @@ __metadata:
     "@babel/preset-typescript": 7.23.2
     "@datadog/browser-logs": 5.1.0
     "@datadog/browser-rum": 5.1.0
-    "@datadog/datadog-ci": 2.22.1
+    "@datadog/datadog-ci": 2.23.0
     "@emotion/babel-plugin": 11.11.0
     "@emotion/is-prop-valid": 1.2.1
     "@emotion/react": 11.11.1
