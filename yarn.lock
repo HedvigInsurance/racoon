@@ -5472,9 +5472,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/typescript-react-apollo@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@graphql-codegen/typescript-react-apollo@npm:4.0.0"
+"@graphql-codegen/typescript-react-apollo@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@graphql-codegen/typescript-react-apollo@npm:4.1.0"
   dependencies:
     "@graphql-codegen/plugin-helpers": ^3.0.0
     "@graphql-codegen/visitor-plugin-common": 2.13.1
@@ -5484,7 +5484,7 @@ __metadata:
   peerDependencies:
     graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     graphql-tag: ^2.0.0
-  checksum: 2665f3cca98fae24b567e806657f2ac6bf342a9544ae7e0c06e92223fd90e3a1f58f3d9c9059106f350ddfb1036076025a3aaa04ee7a2de7cf356d1d81ba1199
+  checksum: b002f409f9d3057621fa94bdf8941439505ada10f95a5c5d7fd3c15e077e5f30ce08a1478b305afb076826030de6d3320622ff7f1f7651307af852ca1b9b9d23
   languageName: node
   linkType: hard
 
@@ -24017,7 +24017,7 @@ __metadata:
     "@graphql-codegen/cli": 5.0.0
     "@graphql-codegen/typescript": 4.0.1
     "@graphql-codegen/typescript-operations": 4.0.1
-    "@graphql-codegen/typescript-react-apollo": 4.0.0
+    "@graphql-codegen/typescript-react-apollo": 4.1.0
     "@jest/globals": 29.7.0
     "@lottiefiles/react-lottie-player": 3.5.3
     "@next/bundle-analyzer": 13.4.12
