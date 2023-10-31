@@ -26,9 +26,9 @@ export const WidgetFlowBlock = ({ blok }: Props) => {
     </GridLayout.Root>
   )
 }
-WidgetFlowBlock.blockName = 'widget-flow'
+WidgetFlowBlock.blockName = 'widgetFlow'
 
-const RecoomendationSkeleton = styled(Skeleton)({
+const RecommendationSkeleton = styled(Skeleton)({
   height: '16rem',
 })
 
@@ -65,7 +65,7 @@ const CheckoutContentPlaceholder = () => {
       <Space y={1}>
         <Space y={2}>
           <ProductItemSkeleton />
-          <RecoomendationSkeleton />
+          <RecommendationSkeleton />
         </Space>
         <SignButtonSkeleton />
       </Space>
