@@ -13,40 +13,16 @@ import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isWidgetFlowStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextWidgetContentPageProps = {
-  type: 'content'
-  [STORY_PROP_NAME]: PageStory
+type PageProps = {
+  type: 'content' | 'flow'
+  [STORY_PROP_NAME]: PageStory | WidgetFlowStory
   hideChat?: boolean
 }
 
-type NextWidgetFlowPageProps = {
-  type: 'flow'
-  [STORY_PROP_NAME]: WidgetFlowStory
-  hideChat: true
-}
-
-type PageProps = NextWidgetContentPageProps | NextWidgetFlowPageProps
-
 const WidgetCmsPage = (props: PageProps) => {
-  if (props.type === 'flow') {
-    return <NextWidgetFlowPage {...props} />
-  }
-
-  return <NextWidgetContentPage {...props} />
-}
-
-const NextWidgetFlowPage = (props: NextWidgetFlowPageProps) => {
-  const story = useStoryblokState(props[STORY_PROP_NAME])
-
-  if (!story) {
-    return null
-  }
-
-  return <StoryblokComponent blok={story.content} />
-}
-
-const NextWidgetContentPage = (props: NextWidgetContentPageProps) => {
-  const story = useStoryblokState(props[STORY_PROP_NAME])
+  // PageStory and WidgetFlowStory are incompatible types but we don't actually care that
+  // pros[STORY_PROP_NAME] gets properly typed here.
+  const story = useStoryblokState(props[STORY_PROP_NAME] as any)
 
   if (!story) {
     return null
