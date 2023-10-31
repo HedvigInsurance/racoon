@@ -21,11 +21,11 @@ import { TrialExtensionForm } from './TrialExtensionForm'
 const FOURTEEN_DAYS = 14
 
 type Props = SbBaseBlockProps<{
-  title: string
   requirePaymentConnection?: boolean
 }>
 
 export const CarTrialExtensionBlock = (props: Props) => {
+  const { t } = useTranslation('carDealership')
   const userWantsExtension = useUserWantsExtension()
   const addNotificationBanner = useAddNotificationBanner()
 
@@ -43,7 +43,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
         ) : (
           <Space y={1.5}>
             <Heading as="h3" variant="standard.18" align="center" balance={true}>
-              {populateTitle(props.blok.title, data.trialContract.exposure.displayNameFull)}
+              {t('INITIAL_OFFER_HEADING')}
             </Heading>
 
             {userWantsExtension ? (
@@ -64,10 +64,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
   )
 }
 CarTrialExtensionBlock.blockName = 'carTrialExtension'
-
-const populateTitle = (title: string, registrationNumber: string) => {
-  return title.replace(/{{registrationNumber}}/g, registrationNumber)
-}
 
 type UseCarTrialQueryParams = Pick<QueryHookOptions<TrialExtension>, 'onCompleted'>
 

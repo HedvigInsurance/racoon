@@ -99,12 +99,21 @@ export class Formatter {
   public money = (money: Money) => formatMoney(money, this.options)
   public monthlyPrice = (price: Money) => formatMonthlyPrice(price, this.options)
   public fromNow = (date: Date) => formatDateFromNow(date, this.options)
-  public dateFull = (date: Date) =>
-    date.toLocaleDateString(this.options.locale, {
-      year: 'numeric',
-      month: 'long',
+  public dateFull = (date: Date, options?: { hideYear?: boolean; abbreviateMonth?: boolean }) => {
+    const formattedDate = date.toLocaleDateString(this.options.locale, {
+      year: options?.hideYear ? undefined : 'numeric',
+      month: options?.abbreviateMonth ? 'short' : 'long',
       day: 'numeric',
     })
+
+    // Removes '.' used for abbreviations
+    if (options?.abbreviateMonth) {
+      return formattedDate.replace('.', '')
+    }
+
+    return formattedDate
+  }
+
   public titleCase = (str: string) => formatTitleCase(str)
   public ssn = formatSsn
   public carRegistrationNumber = formatCarRegistrationNumber

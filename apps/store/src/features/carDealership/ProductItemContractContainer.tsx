@@ -35,7 +35,9 @@ export const ProductItemContractContainerCar = (props: Props) => {
   if (endDate === null) throw new Error(`Invalid end date for contract ${props.contract.id}`)
 
   const startDateProps = {
-    label: t('TRIAL_TERMINATION_DATE_MESSAGE', { date: formatter.fromNow(endDate) }),
+    label: t('TRIAL_TERMINATION_DATE_MESSAGE', {
+      date: formatter.dateFull(endDate, { abbreviateMonth: true }),
+    }),
     tooltip: t('TRIAL_TERMINATION_DATE_TOOLTIP'),
   }
 
@@ -54,12 +56,12 @@ export const ProductItemContractContainerCar = (props: Props) => {
 
 // TODO: remove this when we can get the data from the API
 const FIXTURE_CONTRACT = {
-  cost: { amount: 299, currencyCode: CurrencyCode.Sek },
+  cost: { amount: 579, currencyCode: CurrencyCode.Sek, reducedAmount: 299 },
 
-  endDate: '2024-12-01',
+  endDate: '2023-11-11',
 
   exposure: {
-    displayNameShort: 'ABC 123',
+    displayNameShort: 'LPP 083 ∙ Helförsäkring',
   },
 
   displayItems: [
