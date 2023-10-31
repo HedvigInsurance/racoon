@@ -35,6 +35,10 @@ const scriptSrc = [
   // Adtraction
   'https://cdn.adt387.com',
 
+  // Trustpilot Widget
+  'http://widget.trustpilot.com',
+  'https://widget.trustpilot.com',
+
   // Insurely
   'https://blocks.insurely.com',
   'https://dc.insurely.com',
@@ -155,6 +159,9 @@ const frameSrc = [
 
   // GTM-injected scripts
   'https://*.snapchat.com',
+
+  // Trustpilot
+  'https://widget.trustpilot.com/',
 
   // Google Optimize
   'https://optimize.google.com',
