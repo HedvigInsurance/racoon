@@ -1,0 +1,16 @@
+fragment PriceIntentCarTrialExtension on PriceIntent {
+  id
+  data
+  suggestedData
+  offers {
+    ...ProductOffer
+  }
+  product {
+    name
+    displayNameShort
+    pageLink
+  }
+  defaultOffer {
+    ...ProductOffer
+  }
+}

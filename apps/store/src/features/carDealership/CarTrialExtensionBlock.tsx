@@ -8,11 +8,11 @@ import { useCallback } from 'react'
 import { Heading, Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { useCarTrialExtensionQuery, type CarTrialExtensionQuery } from '@/services/apollo/generated'
+import { useCarTrialExtensionQuery } from '@/services/apollo/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
-import { CAR_TRIAL_DATA_QUERY, type TrialExtension } from './carDealershipFixtures'
+import { CarTrialExtension } from './carDealership.types'
 import { useUserWantsExtension } from './ExtensionOfferToggle'
 import { LoadingSkeleton } from './LoadingSkeleton'
 import { PayForTrial } from './PayForTrial'
@@ -38,7 +38,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
   return (
     <GridLayout.Root>
       <GridLayout.Content width="1/3" align="center">
-        {!data ? (
+        {!data?.carTrial ? (
           <LoadingSkeleton />
         ) : (
           <Space y={1.5}>
@@ -49,13 +49,16 @@ export const CarTrialExtensionBlock = (props: Props) => {
             {userWantsExtension ? (
               <TrialExtensionForm
                 {...storyblokEditable(props.blok)}
-                contract={data.trialContract}
-                priceIntent={data.priceIntent}
-                shopSession={data.shopSession}
+                trialContract={data.carTrial.trialContract}
+                priceIntent={data.carTrial.priceIntent}
+                shopSession={data.carTrial.shopSession}
                 requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
               />
             ) : (
-              <PayForTrial contract={data.trialContract} ssn={data.ssn} />
+              <PayForTrial
+                contract={data.carTrial.trialContract}
+                ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}
+              />
             )}
           </Space>
         )}
@@ -65,18 +68,20 @@ export const CarTrialExtensionBlock = (props: Props) => {
 }
 CarTrialExtensionBlock.blockName = 'carTrialExtension'
 
-type UseCarTrialQueryParams = Pick<QueryHookOptions<TrialExtension>, 'onCompleted'>
+type UseCarTrialQueryParams = Pick<QueryHookOptions<CarTrialExtension>, 'onCompleted'>
 
 const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   const router = useRouter()
   const queryParam = router.query['id']
-  const shopSessionId = typeof queryParam === 'string' ? queryParam : undefined
+  const contractId = typeof queryParam === 'string' ? queryParam : undefined
 
   const { data } = useCarTrialExtensionQuery({
-    variables: shopSessionId ? { shopSessionId } : undefined,
-    skip: !shopSessionId,
+    variables: contractId ? { contractId } : undefined,
+    skip: !contractId,
     onCompleted(data) {
-      params.onCompleted?.(getTrialExtension(data))
+      const { carTrial } = data
+      if (!carTrial) return
+      params.onCompleted?.(carTrial)
     },
     onError(error) {
       datadogLogs.logger.warn('Car dealership | Failed to load trial data', {
@@ -87,15 +92,11 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
     },
   })
 
-  if (data) {
-    return getTrialExtension(data)
-  }
-
-  return null
+  return data
 }
 
 type AddNotificationBannerOptions = {
-  data: TrialExtension
+  data: CarTrialExtension
   requirePaymentConnection?: boolean
 }
 
@@ -122,7 +123,7 @@ const useAddNotificationBanner = () => {
       } else {
         addBanner(
           t('REMAIN_INSURED_BANNER', {
-            dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
+            dueDate: `<b>${dateFull(new Date(data?.trialContract.terminationDate))}</b>`,
           }),
           'warning',
           { force: true },
@@ -133,17 +134,4 @@ const useAddNotificationBanner = () => {
   )
 
   return addNotificationBanner
-}
-
-// TODO: we're gonna be able to remove this when API is complete
-const getTrialExtension = (data: CarTrialExtensionQuery): TrialExtension => {
-  const ssn = data.shopSession.customer?.ssn
-  if (!ssn) throw new Error('Car dealership | No SSN in Shop Session')
-
-  return {
-    ...CAR_TRIAL_DATA_QUERY,
-    shopSession: data.shopSession,
-    priceIntent: data.shopSession.priceIntents[0],
-    ssn,
-  }
 }

@@ -2,9 +2,8 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
-import { type ProductOfferFragment } from '@/services/apollo/generated'
+import { PriceIntentFragment, type ProductOfferFragment } from '@/services/apollo/generated'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
-import { type TrialExtension } from './carDealershipFixtures'
 import { EditExtensionOfferForm } from './EditExtensionOfferForm'
 import { useEditAndConfirm } from './useEditAndConfirm'
 
@@ -20,7 +19,7 @@ type Offer = Pick<ProductOfferFragment, 'id' | 'cost'> & {
 }
 
 type Props = {
-  priceIntent: TrialExtension['priceIntent']
+  priceIntent: PriceIntentFragment
   offer: Offer
   onUpdate: (tierLevel: string) => void
 }

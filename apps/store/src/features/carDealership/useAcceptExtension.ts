@@ -2,18 +2,18 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import {
+  ShopSessionFragment,
   useCarDealershipRemoveAddMutation,
   useCurrentMemberLazyQuery,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
-import { type TrialExtension } from './carDealershipFixtures'
 
 const LOGGER = datadogLogs.createLogger('car-dealership')
 
 type Params = {
-  shopSession: TrialExtension['shopSession']
+  shopSession: ShopSessionFragment
   requirePaymentConnection: boolean
 }
 

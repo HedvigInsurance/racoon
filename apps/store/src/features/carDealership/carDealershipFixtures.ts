@@ -1,12 +1,17 @@
 // TODO: Remove this file as soon we start to get data from the API
-import { CurrencyCode, Peril, ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
-import { CarTrialExtensionQuery } from '@/services/apollo/generated'
+import {
+  CurrencyCode,
+  Peril,
+  PriceIntent,
+  ShopSession,
+  ShopSessionAuthenticationStatus,
+} from '@/services/apollo/generated'
 
 export type TrialExtension = {
   id: string
   trialContract: typeof TRIAL_CONTRACT
-  shopSession: CarTrialExtensionQuery['shopSession']
-  priceIntent: CarTrialExtensionQuery['shopSession']['priceIntents'][number]
+  shopSession: ShopSession
+  priceIntent: PriceIntent
   ssn: string
 }
 
