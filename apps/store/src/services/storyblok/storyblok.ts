@@ -73,6 +73,7 @@ import { TrustpilotReviewsBlock } from '@/blocks/TrustpilotReviewsBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { VideoListBlock } from '@/blocks/VideoListBlock'
+import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
 import { type ContentWidth, type ContentAlignment } from '@/components/GridLayout/GridLayout.helper'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { blogBlocks } from '@/features/blog/blogBlocks'
@@ -80,6 +81,7 @@ import { blogBlocks } from '@/features/blog/blogBlocks'
 import { carDealershipBlocks } from '@/features/carDealership/carDealershipBlocks'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
+import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { TrustpilotData } from '@/services/trustpilot/trustpilot.types'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
@@ -202,6 +204,16 @@ export type ProductStory = ISbStoryData<
   } & SEOData
 >
 
+export type WidgetFlowStory = ISbStoryData<{
+  partner: string
+  products?: Array<string>
+  backToAppButtonLabel?: string
+  campaignCode?: string
+  compareInsurance?: boolean
+  showRecommendations?: boolean
+  checkoutPageContent?: Array<SbBlokData>
+}>
+
 export type GlobalStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     header: ExpectedBlockType<HeaderBlockProps>
@@ -299,6 +311,7 @@ export const initStoryblok = () => {
     TrustpilotReviewsBlock,
     VideoBlock,
     VideoListBlock,
+    WidgetFlowBlock,
     ProductNavContainerBlock,
     USPBlock,
     USPBlockItem,
@@ -394,6 +407,7 @@ const EXCLUDE_SLUGS = new Set([
   'reusable-blocks',
   'product-metadata',
   STORYBLOK_MANYPETS_FOLDER_SLUG,
+  STORYBLOK_WIDGET_FOLDER_SLUG,
 ])
 // TODO: Consider filtering by content-type on CMS side to exclude things like reusable-blocks
 export const getFilteredPageLinks = async () => {

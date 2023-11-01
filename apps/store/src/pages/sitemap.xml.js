@@ -44,7 +44,7 @@ const getFilteredPages = async () => {
   const cv = isCacheVersionValid ? cacheVersion : undefined
 
   const filteredPages = await storyblokClient.getAll('cdn/stories', {
-    excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*`,
+    excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*, */widget/*`,
     'filter_query[robots][not_in]': 'noindex',
     cv,
   })
