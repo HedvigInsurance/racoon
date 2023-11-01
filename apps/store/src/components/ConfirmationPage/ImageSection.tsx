@@ -19,6 +19,8 @@ const Wrapper = styled.section({
   pointerEvents: 'none',
 
   position: 'relative',
+  // Make the image appear like a background image
+  zIndex: '-1',
   top: '-20vw',
   height: '100vw',
 
