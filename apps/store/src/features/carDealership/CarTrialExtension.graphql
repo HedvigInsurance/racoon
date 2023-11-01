@@ -1,17 +1,7 @@
-query CarTrialExtension($shopSessionId: UUID!) {
-  shopSession(id: $shopSessionId) {
+query CarTrialExtension($contractId: UUID!) {
+  carTrial(contractId: $contractId) {
     id
-    customer {
-      ssn
-      authenticationStatus
-    }
-    cart {
-      id
-      entries {
-        id
-      }
-    }
-    priceIntents {
+    priceIntent {
       id
       data
       offers {
@@ -70,12 +60,26 @@ query CarTrialExtension($shopSessionId: UUID!) {
           }
         }
       }
-      defaultOffer {
+      product {
+        displayNameFull
+      }
+      suggestedData
+    }
+    shopSession {
+      id
+      customer {
+        ssn
+        authenticationStatus
+      }
+      cart {
         id
-        variant {
-          typeOfContract
+        entries {
+          id
         }
       }
+    }
+    trialContract {
+      ...TrialContract
     }
   }
 }
