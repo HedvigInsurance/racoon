@@ -50,6 +50,9 @@ const scriptSrc = [
   'https://tag.clearbitscripts.com',
   'https://x.clearbitjs.com',
 
+  // Linkedin
+  'https://snap.licdn.com',
+
   'https://vercel.live',
   "'unsafe-inline'",
   "'unsafe-eval'",
@@ -92,6 +95,8 @@ const imgSrc = [
   'https://vercel.live',
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
+  // Linkedin
+  'https://px.ads.linkedin.com',
 
   ...adyenOrigins,
   ...gtmInjectedOrigins,
