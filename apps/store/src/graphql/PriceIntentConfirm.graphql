@@ -1,7 +1,7 @@
 mutation PriceIntentConfirm($priceIntentId: UUID!) {
   priceIntentConfirm(priceIntentId: $priceIntentId) {
     priceIntent {
-      ...PriceIntentFragment
+      ...PriceIntent
     }
     userError {
       message

@@ -1,4 +1,4 @@
-fragment PriceIntentFragment on PriceIntent {
+fragment PriceIntent on PriceIntent {
   id
   data
   suggestedData

@@ -1,5 +1,5 @@
 query PriceIntent($priceIntentId: UUID!) {
   priceIntent(id: $priceIntentId) {
-    ...PriceIntentFragment
+    ...PriceIntent
   }
 }
