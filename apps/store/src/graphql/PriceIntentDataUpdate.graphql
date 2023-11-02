@@ -5,7 +5,7 @@ mutation PriceIntentDataUpdate(
 ) {
   priceIntentDataUpdate(priceIntentId: $priceIntentId, data: $data) {
     priceIntent {
-      ...PriceIntentFragment
+      ...PriceIntent
     }
     userError {
       message

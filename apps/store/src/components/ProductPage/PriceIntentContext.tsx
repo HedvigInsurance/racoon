@@ -11,7 +11,7 @@ import {
 } from 'react'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
-  PriceIntentFragmentFragment,
+  PriceIntentFragment,
   PriceIntentQueryResult,
   ProductOfferFragment,
   usePriceIntentQuery,
@@ -26,7 +26,7 @@ import { useSelectedOffer } from './PurchaseForm/useSelectedOffer'
 
 type SetupPriceIntent = (shopSession: ShopSession) => Promise<void>
 type ContextValue =
-  | readonly [PriceIntentFragmentFragment | undefined, PriceIntentQueryResult, SetupPriceIntent]
+  | readonly [PriceIntentFragment | undefined, PriceIntentQueryResult, SetupPriceIntent]
   | null
 
 export const PriceIntentContext = createContext<ContextValue>(null)

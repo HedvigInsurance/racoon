@@ -1,7 +1,7 @@
 mutation PriceIntentDataUpdateCar($priceIntentId: UUID!, $data: PricingFormData!) {
   priceIntentDataUpdate(priceIntentId: $priceIntentId, data: $data) {
     priceIntent {
-      ...PriceIntentFragment
+      ...PriceIntent
     }
     userError {
       message
