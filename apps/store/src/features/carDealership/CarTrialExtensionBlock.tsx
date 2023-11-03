@@ -68,7 +68,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
 }
 CarTrialExtensionBlock.blockName = 'carTrialExtension'
 
-type UseCarTrialQueryParams = Pick<QueryHookOptions<CarTrialExtension>, 'onCompleted'>
+type UseCarTrialQueryParams = Pick<QueryHookOptions<NonNullable<CarTrialExtension>>, 'onCompleted'>
 
 const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   const router = useRouter()
@@ -96,7 +96,7 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
 }
 
 type AddNotificationBannerOptions = {
-  data: CarTrialExtension
+  data: NonNullable<CarTrialExtension>
   requirePaymentConnection?: boolean
 }
 
@@ -123,7 +123,7 @@ const useAddNotificationBanner = () => {
       } else {
         addBanner(
           t('REMAIN_INSURED_BANNER', {
-            dueDate: `<b>${dateFull(new Date(data?.trialContract.terminationDate))}</b>`,
+            dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
           }),
           'warning',
           { force: true },
