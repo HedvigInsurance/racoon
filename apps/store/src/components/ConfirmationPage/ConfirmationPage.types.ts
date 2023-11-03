@@ -4,11 +4,10 @@ import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 export type MemberPartnerData = CurrentMemberQuery['currentMember']['partnerData']
 
 export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
-  currency: string
-  cart: CartFragmentFragment
   shopSessionId: string
-  shopSessionOutcomeId: string
+  cart: CartFragmentFragment
   switching?: {
+    shopSessionOutcomeId: string
     companyDisplayName: string
   }
   memberPartnerData: MemberPartnerData | null

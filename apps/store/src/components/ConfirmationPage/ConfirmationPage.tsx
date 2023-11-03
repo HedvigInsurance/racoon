@@ -45,12 +45,7 @@ export const ConfirmationPage = (props: Props) => {
                 </ShopBreakdown>
               </Space>
 
-              {props.switching && (
-                <SwitchingAssistantSection
-                  shopSessionOutcomeId={props.shopSessionOutcomeId}
-                  {...props.switching}
-                />
-              )}
+              {props.switching && <SwitchingAssistantSection {...props.switching} />}
 
               {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
                 <SasEurobonusSectionContainer
@@ -67,6 +62,7 @@ export const ConfirmationPage = (props: Props) => {
                     {props.story.content.checklistSubtitle}
                   </Text>
                 </div>
+
                 <CheckList>
                   {checklistItems.map((item, index) => {
                     const isLast = index === checklistItems.length - 1
