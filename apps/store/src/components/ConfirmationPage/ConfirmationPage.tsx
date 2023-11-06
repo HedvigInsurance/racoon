@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import { AndroidIcon, AppleIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
@@ -51,6 +52,10 @@ export const ConfirmationPage = (props: Props) => {
                   <TotalAmountContainer cart={props.cart} />
                 </ShopBreakdown>
               </Space>
+
+              {props.story.content.ctaSection?.map((nestedBlock) => (
+                <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+              ))}
 
               {props.switching && <SwitchingAssistantSection {...props.switching} />}
 

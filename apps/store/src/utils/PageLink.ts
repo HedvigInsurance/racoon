@@ -91,6 +91,15 @@ export const PageLink = {
     const pathname = `${localePrefix(locale)}/car-buyer/confirmation-with-extension/${contractId}`
     return new URL(pathname, ORIGIN_URL)
   },
+  carDealershipConfirmationWithoutExtension: ({
+    locale,
+    contractId,
+  }: CarDealershipConfirmationPage) => {
+    const pathname = `${localePrefix(
+      locale,
+    )}/car-buyer/confirmation-without-extension/${contractId}`
+    return new URL(pathname, ORIGIN_URL)
+  },
 
   faq: ({ locale }: { locale: RoutingLocale }) => {
     const url = FAQ_URL[locale]
