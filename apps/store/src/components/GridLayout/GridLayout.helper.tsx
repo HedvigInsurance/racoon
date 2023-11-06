@@ -100,7 +100,7 @@ const fiveSixthsCenterStyles: CSSObject = {
   [mq.lg]: { gridColumn: '2 / span 10' },
 }
 
-const STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>> = {
+export const STYLES: Record<ColumnWidth, Record<ContentAlignment, CSSObject>> = {
   '1': { left: {}, center: {}, right: {} },
   '5/6': { left: {}, center: fiveSixthsCenterStyles, right: {} },
   '2/3': {
