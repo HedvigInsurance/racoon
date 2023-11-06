@@ -70,6 +70,7 @@
   "FIELD_INSURANCE_SELECTOR_PLACEHOLDER": "Välj försäkring",
   "FIELD_IS_NEUTERED_CAT_LABEL": "Är din katt kastrerad?",
   "FIELD_IS_NEUTERED_DOG_LABEL": "Är din hund kastrerad?",
+  "FIELD_IS_STUDENT_LABEL": "Är du student?",
   "FIELD_IS_SUBLETED_LABEL": "Hyr du ut hela eller delar av huset?",
   "FIELD_IS_SUBLETED_OPTION_NO": "Nej",
   "FIELD_IS_SUBLETED_OPTION_YES": "Ja",
