@@ -70,6 +70,7 @@
   "FIELD_INSURANCE_SELECTOR_PLACEHOLDER": "Select insurance",
   "FIELD_IS_NEUTERED_CAT_LABEL": "Is your cat neutered?",
   "FIELD_IS_NEUTERED_DOG_LABEL": "Is your dog neutered?",
+  "FIELD_IS_STUDENT_LABEL": "Are you a student?",
   "FIELD_IS_SUBLETED_LABEL": "Are you subletting (parts of) the house?",
   "FIELD_IS_SUBLETED_OPTION_NO": "No",
   "FIELD_IS_SUBLETED_OPTION_YES": "Yes",

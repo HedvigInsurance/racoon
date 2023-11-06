@@ -142,6 +142,34 @@ export const yourApartmentSection: TemplateSection = {
   },
 }
 
+const studentField: InputField = {
+  type: 'radio',
+  name: 'isStudent',
+  label: { key: tKey('FIELD_IS_STUDENT_LABEL') },
+  options: [
+    {
+      label: { key: tKey('LABEL_YES') },
+      value: 'true',
+    },
+    {
+      label: { key: tKey('LABEL_NO') },
+      value: 'false',
+    },
+  ],
+  required: true,
+}
+
+export const yourApartmentAndStudentSection: TemplateSection = {
+  ...yourApartmentSection,
+  items: [
+    ...yourApartmentSection.items,
+    {
+      field: studentField,
+      layout: LAYOUT.FULL_WIDTH,
+    },
+  ],
+}
+
 export const yourFamilySection: TemplateSection = {
   id: 'your-family',
   title: { key: tKey('SECTION_TITLE_YOUR_FAMILY') },
