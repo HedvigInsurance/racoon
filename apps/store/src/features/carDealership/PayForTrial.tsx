@@ -2,16 +2,16 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/router'
 import { Space } from 'ui'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
+import { TrialContractFragment } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
-import { type TrialExtension } from './carDealershipFixtures'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
 type Props = {
-  contract: TrialExtension['trialContract']
-  ssn: string
+  contract: TrialContractFragment
+  ssn?: string
 }
 
 export const PayForTrial = (props: Props) => {
@@ -19,6 +19,10 @@ export const PayForTrial = (props: Props) => {
   const { startLogin } = useBankIdContext()
   const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
+
+    if (!props.ssn) {
+      throw new Error('Must have customer ssn')
+    }
 
     startLogin({
       ssn: props.ssn,
@@ -35,7 +39,7 @@ export const PayForTrial = (props: Props) => {
 
       <ExtensionOfferToggle />
 
-      <TotalAmount {...props.contract.premium} />
+      <TotalAmount {...props.contract.currentAgreement.premium} />
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>

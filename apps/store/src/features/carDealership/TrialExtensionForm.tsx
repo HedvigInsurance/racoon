@@ -7,54 +7,64 @@ import { ProductItemContainer } from '@/components/ProductItem/ProductItemContai
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
+import {
+  PriceIntentCarTrialExtensionFragment,
+  ProductOfferFragment,
+  ShopSessionFragment,
+  TrialContractFragment,
+} from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
-import { type TrialExtension } from './carDealershipFixtures'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
 type Props = {
-  contract: TrialExtension['trialContract']
-  priceIntent: TrialExtension['priceIntent']
-  shopSession: TrialExtension['shopSession']
+  trialContract: TrialContractFragment
+  priceIntent: PriceIntentCarTrialExtensionFragment
+  shopSession: ShopSessionFragment
   requirePaymentConnection: boolean
 }
 
-export const TrialExtensionForm = (props: Props) => {
+export const TrialExtensionForm = ({
+  trialContract,
+  priceIntent,
+  shopSession,
+  requirePaymentConnection,
+}: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const { routingLocale } = useCurrentLocale()
   const formatter = useFormatter()
   const [acceptExtension, loading] = useAcceptExtension({
-    shopSession: props.shopSession,
-    requirePaymentConnection: props.requirePaymentConnection,
+    shopSession: shopSession,
+    requirePaymentConnection: requirePaymentConnection,
   })
 
   const [tierLevel, setTierLevel] = useState<string>(() => {
     return (
-      props.priceIntent.defaultOffer?.variant.typeOfContract ??
-      props.priceIntent.offers[0].variant.typeOfContract
+      priceIntent.defaultOffer?.variant.typeOfContract ??
+      priceIntent.offers[0].variant.typeOfContract
     )
   })
   const selectedOffer = useMemo(
-    () => getSelectedOffer(props.priceIntent, tierLevel),
-    [props.priceIntent, tierLevel],
+    () => getSelectedOffer(priceIntent, tierLevel),
+    [priceIntent, tierLevel],
   )
   const activationDate = convertToDate(selectedOffer.startDate)
   if (activationDate === null) {
     throw new Error(`Start date must be defined for offer  ${selectedOffer.id}`)
   }
 
-  const terminationDate = convertToDate(props.contract.terminationDate)
+  const terminationDate = convertToDate(trialContract.terminationDate)
   if (!terminationDate) {
-    throw new Error(`Unable to parse terminationDate: ${props.contract.terminationDate}`)
+    throw new Error(`Unable to parse terminationDate: ${trialContract.terminationDate}`)
   }
 
   const handleUpdate = (tierLevel: string) => {
-    const match = props.priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
+    const match = priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
     if (!match) {
       throw new Error(`Unable to find offer with tierLevel ${tierLevel}`)
     }
@@ -69,9 +79,9 @@ export const TrialExtensionForm = (props: Props) => {
 
   return (
     <Space y={1}>
-      {props.requirePaymentConnection && (
+      {requirePaymentConnection && (
         <>
-          <ProductItemContractContainerCar contract={props.contract} />
+          <ProductItemContractContainerCar contract={trialContract} />
           <ExtensionOfferToggle />
         </>
       )}
@@ -80,10 +90,10 @@ export const TrialExtensionForm = (props: Props) => {
         <ProductItemContainer
           offer={selectedOffer}
           defaultExpanded={true}
-          variant={props.requirePaymentConnection ? 'green' : undefined}
+          variant={requirePaymentConnection ? 'green' : undefined}
         >
           <EditActionButton
-            priceIntent={props.priceIntent}
+            priceIntent={priceIntent}
             offer={selectedOffer}
             onUpdate={handleUpdate}
           />
@@ -91,9 +101,9 @@ export const TrialExtensionForm = (props: Props) => {
 
         <TotalAmount
           {...selectedOffer.cost.net}
-          {...(props.requirePaymentConnection && {
+          {...(requirePaymentConnection && {
             discount: {
-              reducedAmount: props.contract.premium.amount,
+              reducedAmount: trialContract.currentAgreement.premium.amount,
               explanation: t('TRIAL_COST_EXPLANATION', {
                 date: formatter.dateFull(activationDate, { hideYear: true, abbreviateMonth: true }),
               }),
@@ -105,7 +115,7 @@ export const TrialExtensionForm = (props: Props) => {
           <Button onClick={handleClickSign} loading={loading}>
             <SpaceFlex space={0.5} align="center">
               <BankIdIcon />
-              {props.requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+              {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
             </SpaceFlex>
           </Button>
 
@@ -140,7 +150,7 @@ const UspWrapper = styled.div({
 })
 
 const getSelectedOffer = (
-  priceIntent: TrialExtension['priceIntent'],
+  priceIntent: PriceIntentCarTrialExtensionFragment,
   selectedTierLevel: string,
 ) => {
   const matchedSelectedOffer = getOfferByTierLevel(priceIntent.offers, selectedTierLevel)
@@ -161,9 +171,6 @@ const getSelectedOffer = (
   return priceIntent.offers[0]
 }
 
-const getOfferByTierLevel = (
-  offers: TrialExtension['priceIntent']['offers'],
-  tierLevel: string,
-) => {
+const getOfferByTierLevel = (offers: Array<ProductOfferFragment>, tierLevel: string) => {
   return offers.find((offer) => offer.variant.typeOfContract === tierLevel)
 }
