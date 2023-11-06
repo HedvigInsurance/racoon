@@ -2,6 +2,7 @@ import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import { type Props } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage'
+import { QueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
@@ -16,14 +17,18 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   locale,
   req,
   res,
-  params = {},
+  params,
+  query,
 }) => {
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  const { shopSessionId } = params
+  const { shopSessionId } = params ?? {}
   if (!shopSessionId) return { notFound: true }
 
-  const nextUrl = PageLink.confirmation({ locale, shopSessionId }).pathname
+  const nextUrl =
+    typeof query[QueryParam.NextUrl] === 'string'
+      ? query[QueryParam.NextUrl]
+      : PageLink.confirmation({ locale, shopSessionId }).pathname
 
   try {
     const apolloClient = await initializeApolloServerSide({ req, res, locale })

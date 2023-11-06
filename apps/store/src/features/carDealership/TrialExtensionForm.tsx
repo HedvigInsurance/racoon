@@ -40,6 +40,7 @@ export const TrialExtensionForm = ({
   const formatter = useFormatter()
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: shopSession,
+    trialContractId: trialContract.id,
     requirePaymentConnection: requirePaymentConnection,
   })
 

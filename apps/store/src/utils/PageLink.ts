@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { QueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
+import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
+import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import { RoutingLocale } from '@/utils/l10n/types'
 
 class ExtendedURL extends URL {
@@ -23,7 +24,10 @@ type BaseParams = { locale?: RoutingLocale }
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CarDealershipConfirmationPage = BaseParams & { contractId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
-type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
+type CheckoutPaymentTrustlyPage = BaseParams & {
+  shopSessionId: string
+  nextUrl?: string
+}
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
 type RetargetingRoute = { shopSessionId: string }
 type RetargetingApiRoute = { shopSessionId: string; locale: RoutingLocale }
@@ -71,14 +75,20 @@ export const PageLink = {
     const url = new ExtendedURL(`${localePrefix(locale)}/checkout`, ORIGIN_URL)
 
     if (expandCart) {
-      url.searchParams.set(QueryParam.ExpandCart, '1')
+      url.searchParams.set(CheckoutPageQueryParam.ExpandCart, '1')
     }
 
     return url
   },
-  checkoutPaymentTrustly: ({ locale, shopSessionId }: CheckoutPaymentTrustlyPage) => {
+  checkoutPaymentTrustly: ({ locale, shopSessionId, nextUrl }: CheckoutPaymentTrustlyPage) => {
     const pathname = `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`
-    return new URL(pathname, ORIGIN_URL)
+    const url = new URL(pathname, ORIGIN_URL)
+
+    if (nextUrl) {
+      url.searchParams.append(CheckoutTrustlyQueryParam.NextUrl, nextUrl)
+    }
+
+    return url
   },
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) => {
     const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`

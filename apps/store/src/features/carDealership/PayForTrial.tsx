@@ -14,11 +14,12 @@ import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
 type Props = {
   trialContract: TrialContractFragment
+  shopSessionId: string
   defaultOffer?: ProductOfferFragment
   ssn?: string
 }
 
-export const PayForTrial = ({ trialContract, defaultOffer, ssn }: Props) => {
+export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }: Props) => {
   const router = useRouter()
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
@@ -34,7 +35,12 @@ export const PayForTrial = ({ trialContract, defaultOffer, ssn }: Props) => {
       ssn,
       async onSuccess() {
         console.log('Car dealership | BankID login success')
-        await router.push(PageLink.paymentConnect().pathname)
+        const nextUrl = PageLink.carDealershipConfirmationWithoutExtension({
+          contractId: trialContract.id,
+        }).pathname
+        await router.push(
+          PageLink.checkoutPaymentTrustly({ shopSessionId: shopSessionId, nextUrl }).href,
+        )
       },
     })
   }

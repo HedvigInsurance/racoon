@@ -14,6 +14,7 @@ const LOGGER = datadogLogs.createLogger('car-dealership')
 
 type Params = {
   shopSession: ShopSessionFragment
+  trialContractId: string
   requirePaymentConnection: boolean
 }
 
@@ -57,14 +58,19 @@ export const useAcceptExtension = (params: Params) => {
             promptedPayment: params.requirePaymentConnection,
           })
           await router.push(
-            PageLink.confirmation({ shopSessionId: params.shopSession.id }).pathname,
+            PageLink.carDealershipConfirmationWithExtension({ contractId: params.trialContractId })
+              .pathname,
           )
         } else {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
+          const nextUrl = PageLink.carDealershipConfirmationWithExtension({
+            contractId: params.trialContractId,
+          }).pathname
           await router.push(
-            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id }).pathname,
+            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl })
+              .pathname,
           )
         }
       },
