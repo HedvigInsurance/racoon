@@ -142,7 +142,7 @@ export const yourApartmentSection: TemplateSection = {
   },
 }
 
-const studentField: InputField = {
+export const studentField: InputField = {
   type: 'radio',
   name: 'isStudent',
   label: { key: tKey('FIELD_IS_STUDENT_LABEL') },
@@ -157,17 +157,6 @@ const studentField: InputField = {
     },
   ],
   required: true,
-}
-
-export const yourApartmentAndStudentSection: TemplateSection = {
-  ...yourApartmentSection,
-  items: [
-    ...yourApartmentSection.items,
-    {
-      field: studentField,
-      layout: LAYOUT.FULL_WIDTH,
-    },
-  ],
 }
 
 export const yourFamilySection: TemplateSection = {
