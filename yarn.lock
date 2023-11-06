@@ -11169,12 +11169,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@upstash/redis@npm:1.22.0":
-  version: 1.22.0
-  resolution: "@upstash/redis@npm:1.22.0"
+"@upstash/redis@npm:1.24.3":
+  version: 1.24.3
+  resolution: "@upstash/redis@npm:1.24.3"
   dependencies:
-    isomorphic-fetch: ^3.0.0
-  checksum: 894b7d4e318c55fdcbf0f322efd9ace94a37f1b8f9d7cb2cdf8b8b4859814379665c7e00feef3565578455d98492710d14ed4a2b043ec412b5d640a4d5a2dd55
+    crypto-js: ^4.2.0
+  checksum: 7fbecc3b46616e31f60ad0d68f9a8b53d8cf36e53bc35f475b43366d8a832c7fa2fe64f279f7b3ba8a4d184eb7aa5e71586a00df6b3fadf3c05366efd34ceaa3
   languageName: node
   linkType: hard
 
@@ -11194,12 +11194,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/kv@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@vercel/kv@npm:0.2.3"
+"@vercel/kv@npm:0.2.4":
+  version: 0.2.4
+  resolution: "@vercel/kv@npm:0.2.4"
   dependencies:
-    "@upstash/redis": 1.22.0
-  checksum: 3a2b1e3a0ebf605b69341b449bd81edde94f9d00393cc6971759b950c90cff782e1e4fa5daf672f4769aa8301e00f7b7fdec07cdd98d40530652d83c043125ed
+    "@upstash/redis": 1.24.3
+  checksum: c2827287f70ed978a00bf49c997829ebc869082770d66f0db7ff387694c8eb6cf9acb44088addfccc83eb60f5d3fa00dadba7758cee08a0f7b1b29bb865268d1
   languageName: node
   linkType: hard
 
@@ -13998,6 +13998,13 @@ __metadata:
     randombytes: ^2.0.0
     randomfill: ^1.0.3
   checksum: c1609af82605474262f3eaa07daa0b2140026bd264ab316d4bf1170272570dbe02f0c49e29407fe0d3634f96c507c27a19a6765fb856fed854a625f9d15618e2
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "crypto-js@npm:4.2.0"
+  checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
   languageName: node
   linkType: hard
 
@@ -18412,16 +18419,6 @@ __metadata:
   version: 3.0.1
   resolution: "isobject@npm:3.0.1"
   checksum: db85c4c970ce30693676487cca0e61da2ca34e8d4967c2e1309143ff910c207133a969f9e4ddb2dc6aba670aabce4e0e307146c310350b298e74a31f7d464703
-  languageName: node
-  linkType: hard
-
-"isomorphic-fetch@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "isomorphic-fetch@npm:3.0.0"
-  dependencies:
-    node-fetch: ^2.6.1
-    whatwg-fetch: ^3.4.1
-  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
   languageName: node
   linkType: hard
 
@@ -24055,7 +24052,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 6.9.1
     "@typescript-eslint/parser": 6.9.1
     "@vercel/edge-config": 0.4.1
-    "@vercel/kv": 0.2.3
+    "@vercel/kv": 0.2.4
     "@vercel/otel": 0.3.0
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
@@ -26273,7 +26270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:3.6.19, whatwg-fetch@npm:^3.4.1":
+"whatwg-fetch@npm:3.6.19":
   version: 3.6.19
   resolution: "whatwg-fetch@npm:3.6.19"
   checksum: 2896bc9ca867ea514392c73e2a272f65d5c4916248fe0837a9df5b1b92f247047bc76cf7c29c28a01ac6c5fb4314021d2718958c8a08292a96d56f72b2f56806
