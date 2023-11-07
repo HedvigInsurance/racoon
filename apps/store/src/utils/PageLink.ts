@@ -26,6 +26,11 @@ type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
 type RetargetingRoute = { shopSessionId: string }
 type RetargetingApiRoute = { shopSessionId: string; locale: RoutingLocale }
+type WidgetParams = BaseParams & {
+  flow: string
+  shopSessionId: string
+  priceIntentId: string
+}
 
 type SessionLink = BaseParams & {
   shopSessionId: string
@@ -230,6 +235,13 @@ export const PageLink = {
   },
   fourOhFour: ({ locale }: BaseParams = {}) => {
     return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
+  },
+
+  widgetCalculatePrice: (params: WidgetParams) => {
+    return new URL(
+      `${localePrefix(params.locale)}/widget/${params.flow}/${params.shopSessionId}/calculate`,
+      ORIGIN_URL,
+    )
   },
 } as const
 

@@ -1,41 +1,28 @@
-import styled from '@emotion/styled'
-import { HedvigLogo, mq } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { STYLES } from '@/components/GridLayout/GridLayout.helper'
-import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
+import { type GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { type ComponentProps } from 'react'
+import { SelectProductPage } from '@/features/widget/SelectProductPage'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-const Page = () => {
-  return (
-    <div>
-      <Header as="header">
-        <LogoArea>
-          <HedvigLogo />
-        </LogoArea>
+type Props = ComponentProps<typeof SelectProductPage>
 
-        <ProgressArea>
-          <ProgressIndicator.Root>
-            <ProgressIndicator.Step active={true}>Your info</ProgressIndicator.Step>
-            <ProgressIndicator.Step>Sign</ProgressIndicator.Step>
-            <ProgressIndicator.Step>Pay</ProgressIndicator.Step>
-          </ProgressIndicator.Root>
-        </ProgressArea>
-      </Header>
-    </div>
-  )
+type Params = {
+  flow: string
+  shopSessionId: string
 }
 
-const Header = styled(GridLayout.Root)({
-  height: '4rem',
-  alignItems: 'center',
-})
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
+  if (!context.params) throw new Error('Missing params')
+  if (!isRoutingLocale(context.locale)) throw new Error(`Invalid locale: ${context.locale}`)
 
-const LogoArea = styled.div({
-  display: 'none',
-  [mq.md]: { display: 'block', gridColumn: '1 / span 2' },
-})
+  const translations = await serverSideTranslations(context.locale)
 
-const ProgressArea = styled.div(STYLES['1/3'].center, {
-  gridColumn: '1 / span 12',
-})
+  return {
+    props: {
+      ...translations,
+      ...context.params,
+    },
+  }
+}
 
-export default Page
+export default SelectProductPage
