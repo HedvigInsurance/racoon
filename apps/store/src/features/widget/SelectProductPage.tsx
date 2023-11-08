@@ -5,7 +5,7 @@ import { useState, type FormEventHandler } from 'react'
 import { Button, Heading, HedvigLogo, Space, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { STYLES } from '@/components/GridLayout/GridLayout.helper'
-import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
+import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
@@ -15,12 +15,11 @@ import { type WidgetProductName, getPriceTemplate, isWidgetProductName } from '.
 type Props = {
   flow: string
   shopSessionId: string
+  products: GlobalProductMetadata
 }
 
 export const SelectProductPage = (props: Props) => {
   const [productName, setProductName] = useState<WidgetProductName | undefined>(undefined)
-
-  const products = useProductMetadata()
 
   const router = useRouter()
   const apolloClient = useApolloClient()
@@ -80,7 +79,7 @@ export const SelectProductPage = (props: Props) => {
                   required={true}
                 >
                   <Space y={0.5}>
-                    {products?.map((item) => (
+                    {props.products.map((item) => (
                       <RadioOptionList.ProductOption
                         key={item.name}
                         value={item.name}

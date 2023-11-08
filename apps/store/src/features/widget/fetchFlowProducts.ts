@@ -16,7 +16,7 @@ type Params = {
 type ProductMetadataStory = ISbStoryData<{ productName: string }>
 type Story = ISbStoryData<{ products: Array<ProductMetadataStory> }>
 
-export const fetchProductMetadata = async (params: Params): Promise<GlobalProductMetadata> => {
+export const fetchFlowProducts = async (params: Params): Promise<GlobalProductMetadata> => {
   const apolloClient = initializeApollo({ locale: params.locale })
 
   const [allProductMetadata, story] = await Promise.all([
@@ -29,6 +29,5 @@ export const fetchProductMetadata = async (params: Params): Promise<GlobalProduc
   ])
 
   const selected = new Set<string>(story.content.products.map((item) => item.content.productName))
-  const productMetadata = allProductMetadata.filter((item) => selected.has(item.name))
-  return productMetadata
+  return allProductMetadata.filter((item) => selected.has(item.name))
 }
