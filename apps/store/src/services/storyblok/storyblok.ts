@@ -375,6 +375,21 @@ export const getStoryBySlug = <StoryData extends ISbStoryData>(
   return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
 }
 
+type GetStoryByIdParams = {
+  id: string
+  version?: StoryblokVersion
+  resolve_relations?: string
+}
+
+export const getStoryById = <StoryData extends ISbStoryData>(
+  params: GetStoryByIdParams,
+): Promise<StoryData> => {
+  return fetchStory<StoryData>(getStoryblokApi(), params.id, {
+    version: params.version ?? (USE_DRAFT_CONTENT ? 'draft' : 'published'),
+    resolve_relations: params.resolve_relations,
+  })
+}
+
 export const getPageLinks = async (): Promise<Array<PageLink>> => {
   const storyblokApi = getStoryblokApi()
   const {
