@@ -239,7 +239,14 @@ export const PageLink = {
 
   widgetCalculatePrice: (params: WidgetParams) => {
     return new URL(
-      `${localePrefix(params.locale)}/widget/${params.flow}/${params.shopSessionId}/calculate`,
+      [
+        localePrefix(params.locale),
+        'widget',
+        params.flow,
+        params.shopSessionId,
+        params.priceIntentId,
+        'calculate',
+      ].join('/'),
       ORIGIN_URL,
     )
   },
