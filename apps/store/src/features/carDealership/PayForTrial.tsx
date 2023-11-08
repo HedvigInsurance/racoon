@@ -1,31 +1,37 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Space } from 'ui'
-import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
-import { TrialContractFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment, TrialContractFragment } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
+import { useFormatter } from '@/utils/useFormatter'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
+import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
 type Props = {
-  contract: TrialContractFragment
+  trialContract: TrialContractFragment
+  defaultOffer?: ProductOfferFragment
   ssn?: string
 }
 
-export const PayForTrial = (props: Props) => {
+export const PayForTrial = ({ trialContract, defaultOffer, ssn }: Props) => {
   const router = useRouter()
+  const { t } = useTranslation('carDealership')
+  const formatter = useFormatter()
   const { startLogin } = useBankIdContext()
   const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
 
-    if (!props.ssn) {
+    if (!ssn) {
       throw new Error('Must have customer ssn')
     }
 
     startLogin({
-      ssn: props.ssn,
+      ssn: ssn,
       async onSuccess() {
         console.log('Car dealership | BankID login success')
         await router.push(PageLink.paymentConnect().pathname)
@@ -33,13 +39,30 @@ export const PayForTrial = (props: Props) => {
     })
   }
 
+  const trialTerminationDate = convertToDate(trialContract.terminationDate)
+  if (!trialTerminationDate) {
+    throw new Error(`Unable to parse terminationDate: ${trialContract.terminationDate}`)
+  }
+
   return (
     <Space y={1}>
-      <ProductItemContractContainerCar contract={props.contract} />
+      <ProductItemContractContainerCar contract={trialContract} />
 
       <ExtensionOfferToggle />
 
-      <TotalAmount {...props.contract.currentAgreement.premium} />
+      <PriceBreakdown
+        amount={trialContract.currentAgreement.premium.amount}
+        defaultAmount={defaultOffer?.cost.net.amount}
+        currencyCode={trialContract.currentAgreement.premium.currencyCode}
+        title={t('TRIAL_TITLE')}
+        subTitle={trialContract.currentAgreement.productVariant.displayNameSubtype}
+        priceExplanation={t('TRIAL_COST_EXPLANATION', {
+          date: formatter.dateFull(trialTerminationDate, {
+            hideYear: true,
+            abbreviateMonth: true,
+          }),
+        })}
+      />
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>
