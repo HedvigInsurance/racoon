@@ -5,6 +5,8 @@
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
   "EDIT_OFFER_CANCEL": "Cancel",
   "EDIT_OFFER_SAVE": "Save",
+  "EXTENSION_COST_EXPLANATION": "active from {{date}}",
+  "EXTENSION_TITLE": "Extension",
   "INITIAL_OFFER_HEADING": "Your initial offer",
   "NOTICE_TOAST_CONTENT": "Don't want to take this offer? [[Cancel it here]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Cancel",
@@ -19,5 +21,6 @@
   "TRIAL_COST_EXPLANATION": "discounted price until {{date}}",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Valid until {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
+  "TRIAL_TITLE": "Trial offer",
   "USP_TEXT": "No binding time"
 }

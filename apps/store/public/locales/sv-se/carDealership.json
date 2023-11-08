@@ -5,6 +5,8 @@
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Ändra",
   "EDIT_OFFER_CANCEL": "Avbryt",
   "EDIT_OFFER_SAVE": "Spara",
+  "EXTENSION_COST_EXPLANATION": "gäller från {{date}}",
+  "EXTENSION_TITLE": "Förlängning",
   "INITIAL_OFFER_HEADING": "Ditt starterbjudande",
   "NOTICE_TOAST_CONTENT": "Vill du inte ta del av starterbjudandet? [[Avsluta erbjudandet här]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Avbryt",
@@ -19,5 +21,6 @@
   "TRIAL_COST_EXPLANATION": "rabatterat pris till {{date}}",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Gäller till {{date}}",
   "TRIAL_TERMINATION_DATE_TOOLTIP": "Du måste teckna ett nytt avtal för att förlänga din försäkring.",
+  "TRIAL_TITLE": "Starterbjudande",
   "USP_TEXT": "Ingen bindningstid"
 }
