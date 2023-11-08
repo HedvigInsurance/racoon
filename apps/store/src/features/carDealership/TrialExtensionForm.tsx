@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
 import { Space, Button, Text, BankIdIcon, CheckIcon, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
-import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -55,7 +54,7 @@ export const TrialExtensionForm = ({
     [priceIntent, tierLevel],
   )
   const extensionActivationDate = convertToDate(selectedOffer.startDate)
-  if (extensionActivationDate === null) {
+  if (!extensionActivationDate) {
     throw new Error(`Start date must be defined for offer  ${selectedOffer.id}`)
   }
 
@@ -102,7 +101,7 @@ export const TrialExtensionForm = ({
 
         <PriceBreakdown
           amount={trialContract.currentAgreement.premium.amount}
-          defaultAmount={priceIntent.defaultOffer?.cost.net.amount}
+          crossedOverAmount={priceIntent.defaultOffer?.cost.net.amount}
           currencyCode={trialContract.currentAgreement.premium.currencyCode}
           title={t('TRIAL_TITLE')}
           subTitle={trialContract.currentAgreement.productVariant.displayNameSubtype}
@@ -166,6 +165,19 @@ const UspWrapper = styled.div({
   justifyContent: 'center',
   gap: theme.space.xs,
 })
+
+export const Divider = () => {
+  return (
+    <div
+      style={{
+        height: 1,
+        borderBottomWidth: 1,
+        borderBottomStyle: 'solid',
+        borderBottomColor: theme.colors.borderOpaque1,
+      }}
+    />
+  )
+}
 
 const getSelectedOffer = (
   priceIntent: PriceIntentCarTrialExtensionFragment,

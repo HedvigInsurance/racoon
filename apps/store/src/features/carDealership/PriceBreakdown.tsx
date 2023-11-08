@@ -5,7 +5,7 @@ import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
   amount: number
-  defaultAmount?: number
+  crossedOverAmount?: number
   currencyCode: CurrencyCode
   title: string
   subTitle: string
@@ -14,23 +14,23 @@ type Props = {
 
 export const PriceBreakdown = ({
   amount,
-  defaultAmount,
+  crossedOverAmount,
   currencyCode,
   title,
   subTitle,
   priceExplanation,
 }: Props) => {
   const formatter = useFormatter()
-
+  const showCrossedOverAmount = crossedOverAmount !== undefined && crossedOverAmount > amount
   return (
     <div>
       <Row>
         <Text>{title}</Text>
         <Wrapper>
-          {defaultAmount !== undefined && (
+          {showCrossedOverAmount && (
             <Text as="p" size="md" strikethrough={true} color="textSecondary">
               {formatter.monthlyPrice({
-                amount: defaultAmount,
+                amount: crossedOverAmount,
                 currencyCode: currencyCode,
               })}
             </Text>
