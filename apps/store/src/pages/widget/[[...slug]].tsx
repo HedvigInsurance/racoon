@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   }
 
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/${(params?.slug ?? []).join('/')}`
-  const version = draftMode ? 'draft' : 'published'
+  const version = draftMode ? 'draft' : undefined
 
   const [story, translations] = await Promise.all([
     getStoryBySlug<PageStory | WidgetFlowStory>(slug, { version, locale }),
