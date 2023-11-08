@@ -2,14 +2,13 @@ import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, type FormEventHandler } from 'react'
-import { Button, Heading, HedvigLogo, Space, mq, theme } from 'ui'
+import { Button, Heading, Space, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { STYLES } from '@/components/GridLayout/GridLayout.helper'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
-import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { PageLink } from '@/utils/PageLink'
+import { Header } from './Header'
 import { type WidgetProductName, getPriceTemplate, isWidgetProductName } from './widget.helpers'
 
 type Props = {
@@ -50,19 +49,7 @@ export const SelectProductPage = (props: Props) => {
 
   return (
     <Space y={4}>
-      <Header as="header">
-        <LogoArea>
-          <HedvigLogo />
-        </LogoArea>
-
-        <ProgressArea>
-          <ProgressIndicator.Root>
-            <ProgressIndicator.Step active={true}>Your info</ProgressIndicator.Step>
-            <ProgressIndicator.Step>Sign</ProgressIndicator.Step>
-            <ProgressIndicator.Step>Pay</ProgressIndicator.Step>
-          </ProgressIndicator.Root>
-        </ProgressArea>
-      </Header>
+      <Header step="YOUR_INFO" />
 
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
@@ -102,20 +89,6 @@ export const SelectProductPage = (props: Props) => {
     </Space>
   )
 }
-
-const Header = styled(GridLayout.Root)({
-  height: '4rem',
-  alignItems: 'center',
-})
-
-const LogoArea = styled.div({
-  display: 'none',
-  [mq.md]: { display: 'block', gridColumn: '1 / span 2' },
-})
-
-const ProgressArea = styled.div(STYLES['1/3'].center, {
-  gridColumn: '1 / span 12',
-})
 
 const CustomButton = styled(Button)({
   // Appear disabled but remain clickable (for a11y reasons)
