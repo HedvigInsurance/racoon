@@ -1,31 +1,16 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useState, type ComponentProps, type FormEventHandler } from 'react'
+import { useState, type FormEventHandler } from 'react'
 import { Button, Heading, HedvigLogo, Space, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { STYLES } from '@/components/GridLayout/GridLayout.helper'
+import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
 import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { PageLink } from '@/utils/PageLink'
 import { type WidgetProductName, getPriceTemplate, isWidgetProductName } from './widget.helpers'
-
-const PRODUCTS: Array<{
-  name: WidgetProductName
-  title: string
-  subtitle: string
-  pillow: ComponentProps<typeof RadioOptionList.ProductOption>['pillow']
-}> = [
-  {
-    name: 'SE_WIDGET_APARTMENT_RENT',
-    title: 'Hyresrätt',
-    subtitle: 'För dig som hyr bostad',
-    pillow: {
-      src: 'https://a.storyblok.com/f/165473/832x832/fb3ddd4632/hedvig-pillows-rental.png',
-    },
-  },
-]
 
 type Props = {
   flow: string
@@ -34,6 +19,8 @@ type Props = {
 
 export const SelectProductPage = (props: Props) => {
   const [productName, setProductName] = useState<WidgetProductName | undefined>(undefined)
+
+  const products = useProductMetadata()
 
   const router = useRouter()
   const apolloClient = useApolloClient()
@@ -93,13 +80,13 @@ export const SelectProductPage = (props: Props) => {
                   required={true}
                 >
                   <Space y={0.5}>
-                    {PRODUCTS.map((item) => (
+                    {products?.map((item) => (
                       <RadioOptionList.ProductOption
                         key={item.name}
                         value={item.name}
-                        title={item.title}
-                        subtitle={item.subtitle}
-                        pillow={item.pillow}
+                        title={item.displayNameShort}
+                        subtitle={item.tagline}
+                        pillow={item.pillowImage}
                       />
                     ))}
                   </Space>
