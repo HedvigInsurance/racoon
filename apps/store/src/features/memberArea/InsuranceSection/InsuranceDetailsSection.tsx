@@ -6,6 +6,7 @@ import { Button, Heading, Space, Text, theme } from 'ui'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
 import { Perils } from '@/components/Perils/Perils'
 import { MemberContractFragment } from '@/services/apollo/generated'
+import { singleQueryParam } from '@/utils/singleQueryParam'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
 
@@ -36,8 +37,9 @@ type InsuranceTabsProps = {
 
 const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
   const { t } = useTranslation('memberArea')
+  const { query } = useRouter()
   return (
-    <RadixTabs.Tabs defaultValue="overview">
+    <RadixTabs.Tabs defaultValue={singleQueryParam(query, 'section') ?? 'overview'}>
       <TabsList>
         <RadixTabs.Trigger asChild={true} value="overview">
           <TabButton variant="secondary" size="medium">

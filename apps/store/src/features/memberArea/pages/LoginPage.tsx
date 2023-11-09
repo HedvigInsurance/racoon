@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
-import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { FormEventHandler } from 'react'
-import { BankIdIcon, Button, HedvigLogo, Text, mq, theme } from 'ui'
+import { BankIdIcon, Button, HedvigLogo, mq, Text, theme } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Video } from '@/components/Video/Video'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { singleQueryParam } from '@/utils/singleQueryParam'
 
 const SSN_FIELD_NAME = 'ssn'
 
@@ -132,11 +132,3 @@ const FieldWrapper = styled.div({
   marginTop: theme.space.lg,
   marginBottom: theme.space.xxs,
 })
-
-const singleQueryParam = (query: NextParsedUrlQuery, key: string): string | undefined => {
-  const val = query[key]
-  if (Array.isArray(val)) {
-    return val[0]
-  }
-  return val
-}
