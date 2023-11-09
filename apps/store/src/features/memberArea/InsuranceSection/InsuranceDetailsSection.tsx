@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
+import { useCallback } from 'react'
 import { Button, Heading, Space, Text, theme } from 'ui'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
 import { Perils } from '@/components/Perils/Perils'
@@ -9,6 +10,8 @@ import { MemberContractFragment } from '@/services/apollo/generated'
 import { singleQueryParam } from '@/utils/singleQueryParam'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
+
+const SECTION_QUERY_PARAM = 'section'
 
 export const InsuranceDetailsSection = () => {
   const { query } = useRouter()
@@ -38,8 +41,16 @@ type InsuranceTabsProps = {
 const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
   const { t } = useTranslation('memberArea')
   const { query } = useRouter()
+
+  const handleTabChange = useCallback((activeTab: string) => {
+    router.replace({ query: { ...router.query, [SECTION_QUERY_PARAM]: activeTab } })
+  }, [])
+
   return (
-    <RadixTabs.Tabs defaultValue={singleQueryParam(query, 'section') ?? 'overview'}>
+    <RadixTabs.Tabs
+      defaultValue={singleQueryParam(query, SECTION_QUERY_PARAM) ?? 'overview'}
+      onValueChange={handleTabChange}
+    >
       <TabsList>
         <RadixTabs.Trigger asChild={true} value="overview">
           <TabButton variant="secondary" size="medium">
