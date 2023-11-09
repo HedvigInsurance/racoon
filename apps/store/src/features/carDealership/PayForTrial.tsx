@@ -52,7 +52,7 @@ export const PayForTrial = ({ trialContract, defaultOffer, ssn }: Props) => {
 
       <PriceBreakdown
         amount={trialContract.currentAgreement.premium.amount}
-        defaultAmount={defaultOffer?.cost.net.amount}
+        crossedOverAmount={defaultOffer?.cost.net.amount}
         currencyCode={trialContract.currentAgreement.premium.currencyCode}
         title={t('TRIAL_TITLE')}
         subTitle={trialContract.currentAgreement.productVariant.displayNameSubtype}
