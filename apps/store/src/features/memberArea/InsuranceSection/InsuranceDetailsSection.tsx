@@ -3,7 +3,7 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Button, Heading, Space, Text, theme } from 'ui'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
 import { Perils } from '@/components/Perils/Perils'
 import { MemberContractFragment } from '@/services/apollo/generated'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
@@ -87,20 +87,32 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
       </RadixTabs.TabsContent>
 
       <RadixTabs.TabsContent value="documents">
-        <Documents>
-          {contract.currentAgreement.certificateUrl && (
-            <ButtonNextLink
-              href={contract.currentAgreement.certificateUrl}
-              target="_blank"
-              variant="secondary"
-              size="small"
-            >
-              {t('INSURANCE_DETAILS_CERTIFICATE_BUTTON')}
-            </ButtonNextLink>
-          )}
-        </Documents>
+        <Documents currentAgreement={contract.currentAgreement} />
       </RadixTabs.TabsContent>
     </RadixTabs.Tabs>
+  )
+}
+
+type Agreement = MemberContractFragment['currentAgreement']
+
+const Documents = ({ currentAgreement }: { currentAgreement: Agreement }) => {
+  const { t } = useTranslation('memberArea')
+  return (
+    <DocumentList>
+      {currentAgreement.certificateUrl && (
+        <InsuranceDocumentLink
+          displayName={t('INSURANCE_DETAILS_CERTIFICATE_BUTTON')}
+          url={currentAgreement.certificateUrl}
+        />
+      )}
+      {currentAgreement.productVariant.documents.map((document) => (
+        <InsuranceDocumentLink
+          key={document.url}
+          url={document.url}
+          displayName={document.displayName}
+        />
+      ))}
+    </DocumentList>
   )
 }
 
@@ -119,9 +131,9 @@ const TabButton = styled(Button)({
 
 const Overview = styled.div({ maxWidth: '400px' })
 
-const Documents = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
+const DocumentList = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
   gap: theme.space.md,
   marginTop: theme.space.lg,
 })

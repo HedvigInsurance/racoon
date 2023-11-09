@@ -31,6 +31,9 @@ fragment MemberContract on Contract {
       displayName
       typeOfContract
       termsVersion
+      documents {
+        ...InsuranceDocument
+      }
       insurableLimits {
         label
         limit

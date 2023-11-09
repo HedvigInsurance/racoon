@@ -1,0 +1,4 @@
+fragment InsuranceDocument on InsuranceDocument {
+    displayName
+    url
+}

@@ -25,10 +25,10 @@ query ProductData($productName: String!) {
         description
       }
       documents {
-        type
-        displayName
-        url
+        ...InsuranceDocument
       }
     }
   }
 }
+
+
