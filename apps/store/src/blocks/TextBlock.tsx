@@ -39,8 +39,9 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
 
 const StyledText = styled(Text)(
   {
-    'p:not(:first-child)': {
+    'p:not(:first-of-type)': {
       marginTop: theme.space.md,
+      backgroundColor: theme.colors.red100,
     },
   },
   listStyles,

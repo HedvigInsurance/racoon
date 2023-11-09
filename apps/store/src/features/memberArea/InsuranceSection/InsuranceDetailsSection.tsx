@@ -146,7 +146,7 @@ const Row = styled.div({
   justifyContent: 'space-between',
   height: '3rem',
 
-  ':not(:first-child)': {
+  ':not(:first-of-type)': {
     borderTop: '1px solid hsla(0, 0%, 7%, 0.1)',
   },
 })
