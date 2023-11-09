@@ -63,6 +63,8 @@ export const TrialExtensionForm = ({
     throw new Error(`Unable to parse terminationDate: ${trialContract.terminationDate}`)
   }
 
+  const defaultOfferCost = priceIntent.defaultOffer?.cost.net
+
   const handleUpdate = (tierLevel: string) => {
     const match = priceIntent.offers.find((item) => item.variant.typeOfContract === tierLevel)
     if (!match) {
@@ -81,7 +83,10 @@ export const TrialExtensionForm = ({
     <Space y={1}>
       {requirePaymentConnection && (
         <>
-          <ProductItemContractContainerCar contract={trialContract} />
+          <ProductItemContractContainerCar
+            contract={trialContract}
+            crossedOverAmount={defaultOfferCost}
+          />
           <ExtensionOfferToggle />
         </>
       )}
@@ -101,7 +106,7 @@ export const TrialExtensionForm = ({
 
         <PriceBreakdown
           amount={trialContract.premium.amount}
-          crossedOverAmount={priceIntent.defaultOffer?.cost.net.amount}
+          crossedOverAmount={defaultOfferCost?.amount}
           currencyCode={trialContract.premium.currencyCode}
           title={t('TRIAL_TITLE')}
           subTitle={trialContract.productVariant.displayNameSubtype}
@@ -166,7 +171,7 @@ const UspWrapper = styled.div({
   gap: theme.space.xs,
 })
 
-export const Divider = () => {
+const Divider = () => {
   return (
     <div
       style={{

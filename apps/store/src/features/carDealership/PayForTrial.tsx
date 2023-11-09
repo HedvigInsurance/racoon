@@ -31,7 +31,7 @@ export const PayForTrial = ({ trialContract, defaultOffer, ssn }: Props) => {
     }
 
     startLogin({
-      ssn: ssn,
+      ssn,
       async onSuccess() {
         console.log('Car dealership | BankID login success')
         await router.push(PageLink.paymentConnect().pathname)
