@@ -15,11 +15,7 @@ type ProductPageContextData = ProductPageProps & {
 
 const ProductPageContext = createContext<ProductPageContextData | null>(null)
 
-type Props = PropsWithChildren<
-  ProductPageProps & {
-    initialSelectedVariant?: ProductDataVariant
-  }
->
+type Props = PropsWithChildren<ProductPageProps>
 
 export const ProductPageContextProvider = ({
   children,
