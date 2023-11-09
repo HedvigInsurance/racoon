@@ -41,7 +41,6 @@ const StyledText = styled(Text)(
   {
     'p:not(:first-of-type)': {
       marginTop: theme.space.md,
-      backgroundColor: theme.colors.red100,
     },
   },
   listStyles,
