@@ -12,8 +12,6 @@ export const ProductItemContractContainerCar = ({ contract }: Props) => {
   const formatter = useFormatter()
   const { t } = useTranslation('carDealership')
 
-  console.log('contract', contract)
-
   // TODO: displayItems is failing in carTrialExtensionQuery
   const productDetails = [
     {

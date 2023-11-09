@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
 import { Space, Button, Text, BankIdIcon, CheckIcon, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
-import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
+import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -19,6 +19,7 @@ import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
+import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
@@ -53,13 +54,13 @@ export const TrialExtensionForm = ({
     () => getSelectedOffer(priceIntent, tierLevel),
     [priceIntent, tierLevel],
   )
-  const activationDate = convertToDate(selectedOffer.startDate)
-  if (activationDate === null) {
+  const extensionActivationDate = convertToDate(selectedOffer.startDate)
+  if (extensionActivationDate === null) {
     throw new Error(`Start date must be defined for offer  ${selectedOffer.id}`)
   }
 
-  const terminationDate = convertToDate(trialContract.terminationDate)
-  if (!terminationDate) {
+  const trialTerminationDate = convertToDate(trialContract.terminationDate)
+  if (!trialTerminationDate) {
     throw new Error(`Unable to parse terminationDate: ${trialContract.terminationDate}`)
   }
 
@@ -99,15 +100,32 @@ export const TrialExtensionForm = ({
           />
         </ProductItemContainer>
 
-        <TotalAmount
-          {...selectedOffer.cost.net}
-          {...(requirePaymentConnection && {
-            discount: {
-              reducedAmount: trialContract.currentAgreement.premium.amount,
-              explanation: t('TRIAL_COST_EXPLANATION', {
-                date: formatter.dateFull(activationDate, { hideYear: true, abbreviateMonth: true }),
-              }),
-            },
+        <PriceBreakdown
+          amount={trialContract.currentAgreement.premium.amount}
+          defaultAmount={priceIntent.defaultOffer?.cost.net.amount}
+          currencyCode={trialContract.currentAgreement.premium.currencyCode}
+          title={t('TRIAL_TITLE')}
+          subTitle={trialContract.currentAgreement.productVariant.displayNameSubtype}
+          priceExplanation={t('TRIAL_COST_EXPLANATION', {
+            date: formatter.dateFull(trialTerminationDate, {
+              hideYear: true,
+              abbreviateMonth: true,
+            }),
+          })}
+        />
+
+        <Divider />
+
+        <PriceBreakdown
+          amount={selectedOffer.cost.net.amount}
+          currencyCode={selectedOffer.cost.net.currencyCode}
+          title={t('EXTENSION_TITLE')}
+          subTitle={selectedOffer.variant.displayNameSubtype}
+          priceExplanation={t('EXTENSION_COST_EXPLANATION', {
+            date: formatter.dateFull(extensionActivationDate, {
+              hideYear: true,
+              abbreviateMonth: true,
+            }),
           })}
         />
 
