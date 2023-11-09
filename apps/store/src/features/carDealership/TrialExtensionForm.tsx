@@ -100,11 +100,11 @@ export const TrialExtensionForm = ({
         </ProductItemContainer>
 
         <PriceBreakdown
-          amount={trialContract.currentAgreement.premium.amount}
+          amount={trialContract.premium.amount}
           crossedOverAmount={priceIntent.defaultOffer?.cost.net.amount}
-          currencyCode={trialContract.currentAgreement.premium.currencyCode}
+          currencyCode={trialContract.premium.currencyCode}
           title={t('TRIAL_TITLE')}
-          subTitle={trialContract.currentAgreement.productVariant.displayNameSubtype}
+          subTitle={trialContract.productVariant.displayNameSubtype}
           priceExplanation={t('TRIAL_COST_EXPLANATION', {
             date: formatter.dateFull(trialTerminationDate, {
               hideYear: true,

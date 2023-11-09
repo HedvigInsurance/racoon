@@ -1,22 +1,24 @@
-fragment TrialContract on Contract {
+fragment TrialContract on TrialContract {
   id
   exposureDisplayName
   terminationDate
-  currentAgreement {
-    activeFrom
-    activeTo
-    premium {
-      amount
-      currencyCode
-    }
-    productVariant {
+  activeFrom
+  activeTo
+  displayItems {
+    displayTitle
+    displayValue
+  }
+  premium {
+    amount
+    currencyCode
+  }
+  productVariant {
+    displayName
+    displayNameSubtype
+    documents {
       displayName
-      displayNameSubtype
-      documents {
-        displayName
-        type
-        url
-      }
+      type
+      url
     }
   }
 }
