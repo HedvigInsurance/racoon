@@ -1,12 +1,13 @@
 import styled from '@emotion/styled'
-import { mq, NeArrow, Space, Text, theme } from 'ui'
+import { mq, Space, Text, theme } from 'ui'
 import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
-import { InsuranceDocument } from '@/services/apollo/generated'
+import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
+import { InsuranceDocumentFragment } from '@/services/apollo/generated'
 
 type Props = {
   heading: string
   description: string
-  docs: Array<InsuranceDocument>
+  docs: Array<InsuranceDocumentFragment>
 }
 
 export const ProductDocuments = ({ heading, description, docs }: Props) => {
@@ -23,25 +24,11 @@ export const ProductDocuments = ({ heading, description, docs }: Props) => {
       <GridLayout.Content width="1/2" align="right">
         <Space y={{ base: 0.25, lg: 0.5 }}>
           {docs.map((doc, index) => (
-            <ProductDocument key={index} doc={doc} />
+            <InsuranceDocumentLink key={index} url={doc.url} displayName={doc.displayName} />
           ))}
         </Space>
       </GridLayout.Content>
     </Layout>
-  )
-}
-
-const ProductDocument = ({ doc }: { doc: InsuranceDocument }) => {
-  const documentType = doc.url.includes('.') ? doc.url.substring(doc.url.lastIndexOf('.') + 1) : ''
-
-  return (
-    <DownloadFileLink href={doc.url} target="_blank" rel="noopener nofollow">
-      <Ellipsis>
-        {doc.displayName} <DocumentType>{documentType}</DocumentType>
-      </Ellipsis>
-
-      <StyledNeArrow size="1rem" />
-    </DownloadFileLink>
   )
 }
 
@@ -62,48 +49,3 @@ const Content = styled.div({
   },
 })
 
-const DownloadFileLink = styled.a({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: theme.space.md,
-  // Counter the padding from the "DocumentType"
-  paddingTop: theme.space.xs,
-  height: 'auto',
-  fontSize: theme.fontSizes.md,
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.sm,
-
-  ':hover': {
-    backgroundColor: theme.colors.gray200,
-  },
-
-  ':active': {
-    backgroundColor: theme.colors.opaque3,
-  },
-
-  ':focus-visible': {
-    boxShadow: theme.shadow.focus,
-  },
-
-  [mq.lg]: {
-    fontSize: theme.fontSizes.lg,
-  },
-})
-
-const Ellipsis = styled.span({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-})
-
-const DocumentType = styled.sup({
-  fontVariant: 'small-caps',
-  verticalAlign: 'super',
-})
-
-const StyledNeArrow = styled(NeArrow)({
-  flexShrink: 0,
-  position: 'relative',
-  top: theme.space.xxs,
-})

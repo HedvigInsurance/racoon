@@ -1,5 +1,5 @@
 import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { InsurableLimitType, InsuranceDocumentType } from '@/services/apollo/generated'
+import { InsurableLimitType } from '@/services/apollo/generated'
 
 export const productData: ProductData = {
   __typename: 'Product',
@@ -278,19 +278,16 @@ export const productData: ProductData = {
       documents: [
         {
           __typename: 'InsuranceDocument',
-          type: InsuranceDocumentType.TermsAndConditions,
           displayName: 'SE Apartment Terms and Conditions',
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_T_and_C_2022_11_01_HEDVIG_4b078e6dc8.pdf',
         },
         {
           __typename: 'InsuranceDocument',
-          type: InsuranceDocumentType.PreSaleInfo,
           displayName: 'SE Apartment BRF IPID',
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_IPID_2022_11_01_20c6e37d9f.pdf',
         },
         {
           __typename: 'InsuranceDocument',
-          type: InsuranceDocumentType.PreSaleInfo,
           displayName: 'SE Apartment BRF Presale',
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_PRESALE_2022_11_01_990f775ff6.pdf',
         },
