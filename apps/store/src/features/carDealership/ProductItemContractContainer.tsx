@@ -12,20 +12,17 @@ export const ProductItemContractContainerCar = ({ contract }: Props) => {
   const formatter = useFormatter()
   const { t } = useTranslation('carDealership')
 
-  // TODO: displayItems is failing in carTrialExtensionQuery
-  const productDetails = [
-    {
-      title: 'Registration number',
-      value: 'ABC 123',
-    },
-  ]
+  const productDetails = contract.displayItems.map((item) => ({
+    title: item.displayTitle,
+    value: item.displayValue,
+  }))
 
-  const productDocuments = contract.currentAgreement.productVariant.documents.map((item) => ({
+  const productDocuments = contract.productVariant.documents.map((item) => ({
     title: item.displayName,
     url: item.url,
   }))
 
-  const endDate = convertToDate(contract.currentAgreement.activeTo)
+  const endDate = convertToDate(contract.activeTo)
   if (endDate === null) throw new Error(`Invalid end date for contract ${contract.id}`)
 
   const startDateProps = {
@@ -37,8 +34,8 @@ export const ProductItemContractContainerCar = ({ contract }: Props) => {
 
   return (
     <ProductItem
-      title={contract.currentAgreement.productVariant.displayName}
-      price={contract.currentAgreement.premium}
+      title={contract.productVariant.displayName}
+      price={contract.premium}
       startDate={startDateProps}
       productDetails={productDetails}
       productDocuments={productDocuments}
