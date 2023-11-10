@@ -15,6 +15,7 @@ import {
 } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -37,19 +38,14 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
   const shopSession = await shopSessionService.fetchById(shopSessionId)
 
-  const shopSessionOutcomeId = await shopSessionService.fetchOutcomeId(shopSessionId)
-  if (!shopSessionOutcomeId) return { notFound: true }
-
   const [layoutWithMenuProps, outcome, memberPartnerData, story] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
-    shopSessionService.fetchOutcome(shopSessionOutcomeId),
+    fetchOutcomeData(shopSessionService, shopSessionId),
     fetchMemberPartnerData(apolloClient),
     getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
   ])
 
   if (layoutWithMenuProps === null) return { notFound: true }
-
-  if (outcome === null) return { notFound: true }
 
   // @TODO: uncomment after implementing signing
   // if (shopSession.checkout.completedAt === null) {
@@ -61,11 +57,9 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
       ...layoutWithMenuProps,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
       cart: shopSession.cart,
-      currency: shopSession.currencyCode,
       story,
       memberPartnerData,
-      shopSessionOutcomeId,
-      ...getSwitching(outcome),
+      ...(outcome ? getSwitching(outcome) : {}),
     },
   })
 }
@@ -108,6 +102,16 @@ const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
   }
 }
 
+const fetchOutcomeData = async (shopSessionService: ShopSessionService, shopSessionId: string) => {
+  const shopSessionOutcomeId = await shopSessionService.fetchOutcomeId(shopSessionId)
+  if (!shopSessionOutcomeId) {
+    return null
+  }
+
+  const outcome = await shopSessionService.fetchOutcome(shopSessionOutcomeId)
+  return outcome
+}
+
 const getSwitching = (
   outcome: ShopSessionOutcomeFragment,
 ): Pick<ConfirmationPageProps, 'switching'> | undefined => {
@@ -121,5 +125,10 @@ const getSwitching = (
 
   if (!externalInsurer) return undefined
 
-  return { switching: { companyDisplayName: externalInsurer.displayName } }
+  return {
+    switching: {
+      shopSessionOutcomeId: outcome.id,
+      companyDisplayName: externalInsurer.displayName,
+    },
+  }
 }
