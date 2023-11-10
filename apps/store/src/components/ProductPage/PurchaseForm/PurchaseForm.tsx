@@ -26,6 +26,7 @@ import {
   usePriceIntentConfirmMutation,
 } from '@/services/apollo/generated'
 import { BankSigneringEvent } from '@/services/bankSignering'
+import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -105,6 +106,7 @@ export const PurchaseForm = () => {
             <EditingState
               shopSession={shopSession}
               priceIntent={priceIntent}
+              priceTemplate={priceTemplate}
               onComplete={handleComplete}
             />
           )
@@ -309,11 +311,12 @@ const IdleState = ({ onClick }: IdleStateProps) => {
 type EditingStateProps = {
   shopSession: ShopSession
   priceIntent: PriceIntent
+  priceTemplate: Template
   onComplete: (error?: string) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { shopSession, priceIntent, onComplete } = props
+  const { shopSession, priceIntent, onComplete, priceTemplate } = props
   const { t } = useTranslation('purchase-form')
   const tracking = useTracking()
 
@@ -372,6 +375,7 @@ const EditingState = (props: EditingStateProps) => {
         key={priceIntent.id}
         priceIntent={priceIntent}
         shopSession={shopSession}
+        priceTemplate={priceTemplate}
         onConfirm={handleConfirm}
       />
     </PriceCalculatorWrapper>

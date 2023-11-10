@@ -1,12 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useMemo, useState } from 'react'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
   prefillData,
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
+import { type Template, type Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
@@ -20,6 +19,7 @@ import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator
 type Props = {
   priceIntent: PriceIntent
   shopSession: ShopSession
+  priceTemplate: Template
   onConfirm: () => void
 }
 
@@ -29,8 +29,7 @@ type CustomerData = {
 }
 
 export const PriceCalculator = (props: Props) => {
-  const { priceIntent, shopSession, onConfirm } = props
-  const { priceTemplate } = useProductPageContext()
+  const { priceIntent, shopSession, onConfirm, priceTemplate } = props
 
   const form = useMemo(() => {
     return setupForm({
