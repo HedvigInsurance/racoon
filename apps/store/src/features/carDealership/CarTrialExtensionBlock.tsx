@@ -57,6 +57,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
             ) : (
               <PayForTrial
                 trialContract={data.carTrial.trialContract}
+                shopSessionId={data.carTrial.shopSession.id}
                 defaultOffer={data.carTrial.priceIntent.defaultOffer ?? undefined}
                 ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}
               />
