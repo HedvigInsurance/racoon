@@ -10218,10 +10218,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/clone-deep@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@types/clone-deep@npm:4.0.3"
-  checksum: ce604fc83412a361c9170d9aaae304a436d7ed447caaa571e2d40b6e7fa427f306fb9f1447e6b5e3ec5b47849ee14453db5b4f386d903bd8cc4262b3c90e6303
+"@types/clone-deep@npm:4.0.4":
+  version: 4.0.4
+  resolution: "@types/clone-deep@npm:4.0.4"
+  checksum: 84cfd1ad9abe164aed3c8c4e9af0b3beab6f68f959cb77174cc00618ce3a752954b9025af0783e8f9923e736286dd5be4d2883ec712d6c86fbc2b66a7176433d
   languageName: node
   linkType: hard
 
@@ -24042,7 +24042,7 @@ __metadata:
     "@testing-library/jest-dom": 6.1.4
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.5.1
-    "@types/clone-deep": 4.0.3
+    "@types/clone-deep": 4.0.4
     "@types/md5": 2.3.4
     "@types/node": 20.8.10
     "@types/nprogress": 0.2.2
