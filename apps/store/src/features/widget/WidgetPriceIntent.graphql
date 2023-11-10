@@ -1,0 +1,16 @@
+query WidgetPriceIntent($priceIntentId: UUID!) {
+  priceIntent(id: $priceIntentId) {
+    ...WidgetPriceIntent
+  }
+}
+
+fragment WidgetPriceIntent on PriceIntent {
+  ...PriceIntent
+  product {
+    displayNameShort
+    pillowImage {
+      src
+      alt
+    }
+  }
+}
