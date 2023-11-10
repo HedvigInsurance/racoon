@@ -1,7 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { useCallback } from 'react'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 
 type State = 'INITIAL' | 'PROMPT' | 'COMPARE' | 'SUCCESS' | 'DISMISSED'
@@ -19,7 +18,6 @@ export const useFetchInsuranceState = () => {
 export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
   const setState = useSetAtom(STATE_ATOM)
   const tracking = useTracking()
-  const { productData } = useProductPageContext()
 
   return useCallback(
     ({ force = false }: { force?: boolean } = {}) => {
@@ -31,10 +29,7 @@ export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
           window.sessionStorage.setItem(sessionStorageKey, 'true')
 
           datadogLogs.logger.info('Display FetchInsurancePrompt', { priceIntentId })
-          tracking.reportInsurelyPrompted({
-            id: productData.id,
-            displayNameFull: productData.displayNameFull,
-          })
+          tracking.reportInsurelyPrompted()
 
           return 'PROMPT'
         }
@@ -42,36 +37,28 @@ export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
         return currentState
       })
     },
-    [setState, priceIntentId, tracking, productData],
+    [setState, priceIntentId, tracking],
   )
 }
 
 export const useFetchInsuranceCompare = () => {
   const setState = useSetAtom(STATE_ATOM)
   const tracking = useTracking()
-  const { productData } = useProductPageContext()
 
   return useCallback(() => {
-    tracking.reportInsurelyAccepted({
-      id: productData.id,
-      displayNameFull: productData.displayNameFull,
-    })
+    tracking.reportInsurelyAccepted()
 
     setState('COMPARE')
-  }, [setState, tracking, productData])
+  }, [setState, tracking])
 }
 
 export const useFetchInsuranceSuccess = () => {
   const setState = useSetAtom(STATE_ATOM)
   const tracking = useTracking()
-  const { productData } = useProductPageContext()
 
   return useCallback(() => {
-    tracking.reportInsurelyCorrectlyFetched({
-      id: productData.id,
-      displayNameFull: productData.displayNameFull,
-    })
+    tracking.reportInsurelyCorrectlyFetched()
 
     setState('SUCCESS')
-  }, [setState, tracking, productData])
+  }, [setState, tracking])
 }
