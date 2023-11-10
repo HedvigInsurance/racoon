@@ -5,7 +5,7 @@ import addDays from 'date-fns/addDays'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { Heading, Space } from 'ui'
+import { Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery } from '@/services/apollo/generated'
@@ -25,7 +25,6 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const CarTrialExtensionBlock = (props: Props) => {
-  const { t } = useTranslation('carDealership')
   const userWantsExtension = useUserWantsExtension()
   const addNotificationBanner = useAddNotificationBanner()
 
@@ -42,10 +41,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
           <LoadingSkeleton />
         ) : (
           <Space y={1.5}>
-            <Heading as="h3" variant="standard.18" align="center" balance={true}>
-              {t('INITIAL_OFFER_HEADING')}
-            </Heading>
-
             {userWantsExtension ? (
               <TrialExtensionForm
                 {...storyblokEditable(props.blok)}
