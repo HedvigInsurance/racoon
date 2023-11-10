@@ -7,6 +7,8 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
+import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
@@ -38,10 +40,15 @@ export const ConfirmationPage = (props: Props) => {
                 <Heading as="h1" variant="standard.24" align="center">
                   {props.story.content.title}
                 </Heading>
+
                 <ShopBreakdown>
+                  {props.carTrialContract && (
+                    <ProductItemContractContainerCar contract={props.carTrialContract} />
+                  )}
                   {props.cart.entries.map((item) => (
                     <ProductItemContainer key={item.id} offer={item} />
                   ))}
+                  <TotalAmountContainer cart={props.cart} />
                 </ShopBreakdown>
               </Space>
 

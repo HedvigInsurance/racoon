@@ -21,6 +21,7 @@ export const ORIGIN_URL =
 type BaseParams = { locale?: RoutingLocale }
 
 type ConfirmationPage = BaseParams & { shopSessionId: string }
+type CarDealershipConfirmationPage = BaseParams & { contractId: string }
 type CheckoutPage = BaseParams & { expandCart?: boolean }
 type CheckoutPaymentTrustlyPage = BaseParams & { shopSessionId: string }
 type AuthExchangeRoute = { authorizationCode: string; next?: string }
@@ -81,6 +82,13 @@ export const PageLink = {
   },
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) => {
     const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
+    return new URL(pathname, ORIGIN_URL)
+  },
+  carDealershipConfirmationWithExtension: ({
+    locale,
+    contractId,
+  }: CarDealershipConfirmationPage) => {
+    const pathname = `${localePrefix(locale)}/car-buyer/confirmation-with-extension/${contractId}`
     return new URL(pathname, ORIGIN_URL)
   },
 
