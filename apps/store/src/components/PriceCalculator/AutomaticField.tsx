@@ -5,7 +5,6 @@ import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { CarMileageField } from './CarMileageField'
 import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
@@ -25,7 +24,6 @@ type Props = {
 
 export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocus }: Props) => {
   const translateLabel = useTranslateFieldLabel()
-  const { productData } = useProductPageContext()
 
   switch (field.type) {
     case 'text':
@@ -148,7 +146,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       return (
         <CurrentInsuranceField
           label={translateLabel(field.label)}
-          productName={productData.name}
+          productName={priceIntent.product.name}
           priceIntentId={priceIntent.id}
           externalInsurer={priceIntent.externalInsurer?.id}
         />
