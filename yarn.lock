@@ -10550,10 +10550,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/md5@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@types/md5@npm:2.3.4"
-  checksum: 9a724277b2e4b5c6fce4d34d2e2baab821ef47904eccdcbd389fb9973f2e5198f71a4aa98ddcf092fe32457be307d2f3d3f1e099a53d1642c6e569ade5450548
+"@types/md5@npm:2.3.5":
+  version: 2.3.5
+  resolution: "@types/md5@npm:2.3.5"
+  checksum: a86baf0521006e3072488bd79089b84831780866102e5e4b4f7afabfab17e0270a3791f3331776b73efb2cc9317efd56a334fd3d2698c7929e9b18593ca3fd39
   languageName: node
   linkType: hard
 
@@ -24064,7 +24064,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.5.1
     "@types/clone-deep": 4.0.4
-    "@types/md5": 2.3.4
+    "@types/md5": 2.3.5
     "@types/node": 20.8.10
     "@types/nprogress": 0.2.2
     "@types/react": 18.2.35
