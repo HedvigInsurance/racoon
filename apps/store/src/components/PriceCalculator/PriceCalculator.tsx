@@ -47,6 +47,7 @@ export const PriceCalculator = (props: Props) => {
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId: priceIntent.id })
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
+    shopSession,
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
         customer,
