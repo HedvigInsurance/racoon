@@ -272,7 +272,7 @@ export const PageLink = {
         params.flow,
         params.shopSessionId,
         params.priceIntentId,
-        'calculate',
+        'calculate-price',
       ].join('/'),
       ORIGIN_URL,
     )

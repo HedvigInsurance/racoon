@@ -9,7 +9,7 @@ import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
-import { type WidgetProductName, getPriceTemplate, isWidgetProductName } from './widget.helpers'
+import { getPriceTemplate } from './widget.helpers'
 
 type Props = {
   flow: string
@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const SelectProductPage = (props: Props) => {
-  const [productName, setProductName] = useState<WidgetProductName | undefined>(undefined)
+  const [productName, setProductName] = useState<string | undefined>(undefined)
 
   const router = useRouter()
   const apolloClient = useApolloClient()
@@ -43,7 +43,6 @@ export const SelectProductPage = (props: Props) => {
   }
 
   const handleValueChange = (value: string) => {
-    if (!isWidgetProductName(value)) throw new Error(`Invalid product: ${value}`)
     setProductName(value)
   }
 
