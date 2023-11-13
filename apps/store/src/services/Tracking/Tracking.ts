@@ -60,6 +60,8 @@ export enum TrackingContextKey {
   ShopSessionId = 'shopSessionId',
   MigrationSessionId = 'migrationSessionId',
   ZipCode = 'zipCode',
+  ProductId = 'productId',
+  ProductDisplayName = 'productDisplayName',
 }
 
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
@@ -89,6 +91,11 @@ export class Tracking {
     )
     this.setContext(TrackingContextKey.ZipCode, priceIntent.data.zipCode)
     this.setContext(TrackingContextKey.City, priceIntent.data.city)
+  }
+
+  public setProductContext = (product: TrackingProductData) => {
+    this.setContext(TrackingContextKey.ProductId, product.id)
+    this.setContext(TrackingContextKey.ProductDisplayName, product.displayNameFull)
   }
 
   public reportAppInit = (context: AppTrackingContext) => {
@@ -254,23 +261,31 @@ export class Tracking {
     this.reportAdtractionEvent(cart, this.context)
   }
 
-  public reportInsurelyPrompted(productData: TrackingProductData) {
+  private productData(): TrackingProductData {
+    const id = typeof this.context.productId === 'string' ? this.context.productId : ''
+    const displayNameFull =
+      typeof this.context.productDisplayName === 'string' ? this.context.productDisplayName : ''
+
+    return { id, displayNameFull }
+  }
+
+  public reportInsurelyPrompted() {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, productData, this.context),
+      productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, this.productData(), this.context),
     )
   }
 
-  public reportInsurelyAccepted(productData: TrackingProductData) {
+  public reportInsurelyAccepted() {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(TrackingEvent.InsurelyAccepted, productData, this.context),
+      productDataToEcommerceEvent(TrackingEvent.InsurelyAccepted, this.productData(), this.context),
     )
   }
 
-  public reportInsurelyCorrectlyFetched(productData: TrackingProductData) {
+  public reportInsurelyCorrectlyFetched() {
     this.reportEcommerceEvent(
       productDataToEcommerceEvent(
         TrackingEvent.InsurelyCorrectlyFetched,
-        productData,
+        this.productData(),
         this.context,
       ),
     )
