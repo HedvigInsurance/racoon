@@ -2,6 +2,9 @@ mutation PriceIntentConfirm($priceIntentId: UUID!) {
   priceIntentConfirm(priceIntentId: $priceIntentId) {
     priceIntent {
       ...PriceIntent
+      defaultOffer {
+        id
+      }
     }
     userError {
       message
