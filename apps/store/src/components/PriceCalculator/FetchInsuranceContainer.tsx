@@ -1,23 +1,23 @@
+import { ComponentProps, type ReactNode } from 'react'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { Features } from '@/utils/Features'
 import { FetchInsurance } from './FetchInsurance'
 
+type ChildrenProps = Pick<ComponentProps<typeof FetchInsurance>, 'externalInsurer' | 'insurely'>
+
 type Props = {
   priceIntent: PriceIntent
+  children: (props: ChildrenProps) => ReactNode
 }
 
-export const FetchInsuranceContainer = ({ priceIntent }: Props) => {
+export const FetchInsuranceContainer = (props: Props) => {
   if (!Features.enabled('INSURELY')) return null
-  if (priceIntent.product.name === 'SE_CAR' && !Features.enabled('INSURELY_CAR')) return null
-  if (!priceIntent.externalInsurer) return null
-  if (!priceIntent.insurely) return null
+  if (props.priceIntent.product.name === 'SE_CAR' && !Features.enabled('INSURELY_CAR')) return null
+  if (!props.priceIntent.externalInsurer) return null
+  if (!props.priceIntent.insurely) return null
 
-  return (
-    <FetchInsurance
-      priceIntentId={priceIntent.id}
-      externalInsurer={priceIntent.externalInsurer}
-      insurely={priceIntent.insurely}
-      productName={priceIntent.product.displayNameShort}
-    />
-  )
+  return props.children({
+    externalInsurer: props.priceIntent.externalInsurer,
+    insurely: props.priceIntent.insurely,
+  })
 }
