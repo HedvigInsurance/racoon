@@ -14,7 +14,7 @@ import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { Features } from '@/utils/Features'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {
@@ -29,22 +29,21 @@ const USE_NATIVE_SUCCESS = Features.enabled('INSURELY_NATIVE_SUCCESS')
 type OnCompleted = NonNullable<ComponentProps<typeof InsurelyIframe>['onCompleted']>
 
 type Props = {
+  shopSession: ShopSession
   priceIntentId: string
   externalInsurer: ExternalInsurer
   insurely: { configName: string; partner: string }
   productName: string
 }
 
-export const FetchInsurance = ({
-  priceIntentId,
-  externalInsurer,
-  insurely,
-  productName,
-}: Props) => {
-  const { shopSession } = useShopSession()
+export const FetchInsurance = (props: Props) => {
   const loggingContext = useMemo(
-    () => ({ priceIntentId, companyName: externalInsurer.displayName, productName }),
-    [priceIntentId, externalInsurer.displayName, productName],
+    () => ({
+      priceIntentId: props.priceIntentId,
+      companyName: props.externalInsurer.displayName,
+      productName: props.productName,
+    }),
+    [props.priceIntentId, props.externalInsurer.displayName, props.productName],
   )
 
   const [state, setState] = useFetchInsuranceState()
@@ -58,8 +57,8 @@ export const FetchInsurance = ({
     datadogRum.addAction('Fetch Insurance Compare', loggingContext)
     fetchInsuranceCompare()
     setInsurelyConfig({
-      company: externalInsurer.insurelyId ?? undefined,
-      ssn: shopSession?.customer?.ssn ?? undefined,
+      company: props.externalInsurer.insurelyId ?? undefined,
+      ssn: props.shopSession.customer?.ssn ?? undefined,
     })
   }
   const handleClickSkip = () => {
@@ -106,18 +105,18 @@ export const FetchInsurance = ({
   })
 
   const handleInsurelyCollection = (collectionId: string) => {
-    createDataCollection({ variables: { collectionId, partner: insurely.partner } })
+    createDataCollection({ variables: { collectionId, partner: props.insurely.partner } })
   }
 
   const handleInsurelyCompleted: OnCompleted = useCallback(() => {
     if (dataCollectionId) {
       updateDataCollectionId({
-        variables: { priceIntentId, dataCollectionId },
+        variables: { priceIntentId: props.priceIntentId, dataCollectionId },
       })
     } else {
       LOGGER.error('Completed Insurely without creating data collection ID', loggingContext)
     }
-  }, [updateDataCollectionId, priceIntentId, dataCollectionId, loggingContext])
+  }, [updateDataCollectionId, props.priceIntentId, dataCollectionId, loggingContext])
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={dismiss}>
@@ -125,7 +124,7 @@ export const FetchInsurance = ({
         <DialogContent onClose={dismiss} centerContent={true}>
           <DialogWindow>
             <FetchInsurancePrompt
-              company={externalInsurer.displayName}
+              company={props.externalInsurer.displayName}
               onClickConfirm={handleClickConfirm}
               onClickSkip={handleClickSkip}
             />
@@ -137,7 +136,7 @@ export const FetchInsurance = ({
         <DialogIframeContent onClose={dismiss} centerContent={true}>
           <DialogIframeWindow>
             <InsurelyIframe
-              configName={insurely.configName}
+              configName={props.insurely.configName}
               onCollection={handleInsurelyCollection}
               onClose={dismiss}
               onCompleted={handleInsurelyCompleted}
@@ -150,11 +149,11 @@ export const FetchInsurance = ({
         <DialogContent onClose={dismiss} centerContent={true}>
           <DialogWindow>
             <FetchInsuranceSuccess
-              company={externalInsurer.displayName}
+              company={props.externalInsurer.displayName}
               onClick={handleClickDismiss}
             >
               <Text>
-                {externalInsurer.displayName} {productName}
+                {props.externalInsurer.displayName} {props.productName}
               </Text>
             </FetchInsuranceSuccess>
           </DialogWindow>

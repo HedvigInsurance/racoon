@@ -9,6 +9,7 @@ import { type Template, type Form } from '@/services/PriceCalculator/PriceCalcul
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { AutomaticField } from './AutomaticField'
+import { FetchInsurance } from './FetchInsurance'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid'
 import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
@@ -117,7 +118,17 @@ export const PriceCalculator = (props: Props) => {
         )}
       </PriceCalculatorAccordion>
 
-      <FetchInsuranceContainer priceIntent={priceIntent} />
+      <FetchInsuranceContainer priceIntent={priceIntent}>
+        {({ externalInsurer, insurely }) => (
+          <FetchInsurance
+            shopSession={shopSession}
+            priceIntentId={priceIntent.id}
+            externalInsurer={externalInsurer}
+            insurely={insurely}
+            productName={priceIntent.product.name}
+          />
+        )}
+      </FetchInsuranceContainer>
     </>
   )
 }
