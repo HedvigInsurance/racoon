@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ComponentPropsWithoutRef } from 'react'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
-import { getPriceTemplate, isWidgetProductName } from '@/features/widget/widget.helpers'
+import { getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { addApolloState } from '@/services/apollo/client'
 import {
@@ -37,11 +37,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
       shopSessionService.fetchById(context.params.shopSessionId),
     ])
-
-    if (!isWidgetProductName(priceIntent.product.name)) {
-      console.warn(`Invalid product name: ${priceIntent.product.name}`)
-      return { notFound: true }
-    }
 
     const priceTemplate = getPriceTemplate(priceIntent.product.name)
 
