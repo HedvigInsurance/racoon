@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
-import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { usePriceIntentDataUpdateMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -9,11 +8,11 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type Params = {
   shopSession: ShopSession
+  priceIntent: PriceIntent
   onSuccess: (values: { priceIntent: PriceIntent; customer: ShopSession['customer'] }) => void
 }
 
 export const useHandleSubmitPriceCalculator = (params: Params) => {
-  const [priceIntent] = usePriceIntent()
   const { t } = useTranslation('purchase-form')
   const { showError } = useAppErrorHandleContext()
   const [updateData, { loading }] = usePriceIntentDataUpdateMutation({
@@ -31,7 +30,7 @@ export const useHandleSubmitPriceCalculator = (params: Params) => {
       datadogLogs.logger.error("Couldn't update price intent", {
         error,
         shopSessionId: params.shopSession.id,
-        priceIntentId: priceIntent?.id,
+        priceIntentId: params.priceIntent.id,
       })
       showError(new Error(t('GENERAL_ERROR_DIALOG_PROMPT')))
     },
@@ -42,12 +41,12 @@ export const useHandleSubmitPriceCalculator = (params: Params) => {
     if (customerData) {
       datadogLogs.logger.warn("Submitting customer data out of section isn't supported", {
         shopSessionId: params.shopSession.id,
-        priceIntentId: priceIntent?.id,
+        priceIntentId: params.priceIntent.id,
       })
     }
     return await updateData({
       variables: {
-        priceIntentId: priceIntent!.id,
+        priceIntentId: params.priceIntent.id,
         data: priceIntentData,
         customer: { shopSessionId: params.shopSession.id },
       },
@@ -55,17 +54,14 @@ export const useHandleSubmitPriceCalculator = (params: Params) => {
   }
 
   // NOTE: We probably want to refactor this in the future and stop editing priceIntent and customer data as a mix
-  // We should either refactor this
-  // - when we support Denmark / Norway
-  // - when current solution becomes a problem
+  // We should refactor this when current solution becomes a problem
   const handleSubmitSection = (data: JSONData) => {
-    if (!priceIntent) throw new Error('Not enough data to submit price calculator')
     const [customerData, priceIntentData] = separateCustomerData(data)
 
     if (priceIntentData) {
       updateData({
         variables: {
-          priceIntentId: priceIntent.id,
+          priceIntentId: params.priceIntent.id,
           data: priceIntentData,
           customer: { shopSessionId: params.shopSession.id, ...customerData },
         },
