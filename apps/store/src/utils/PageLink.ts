@@ -264,6 +264,14 @@ export const PageLink = {
     return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
   },
 
+  widgetSelectProduct: (params: Omit<WidgetParams, 'priceIntentId'>) => {
+    return new URL(
+      [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'select'].join(
+        '/',
+      ),
+      ORIGIN_URL,
+    )
+  },
   widgetCalculatePrice: (params: WidgetParams) => {
     return new URL(
       [
