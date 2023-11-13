@@ -1,8 +1,12 @@
+import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
+import { useRef, useState } from 'react'
 import { Space, Heading } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PriceLoader, completePriceLoader } from '@/components/PriceLoader'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   usePriceIntentConfirmMutation,
@@ -23,13 +27,20 @@ type Props = {
 }
 
 export const CalculatePricePage = (props: Props) => {
+  const [loading, setLoading] = useState(false)
   const { showError } = useAppErrorHandleContext()
+  const priceLoaderPromise = useRef<Promise<void> | null>(null)
 
   const router = useRouter()
   const [addToCart] = useAddToCart({
     shopSessionId: props.shopSession.id,
-    onSuccess() {
-      router.push(
+    async onError() {
+      await priceLoaderPromise.current
+      setLoading(false)
+    },
+    async onSuccess() {
+      await priceLoaderPromise.current
+      await router.push(
         PageLink.widgetSign({
           flow: props.flow,
           shopSessionId: props.shopSession.id,
@@ -40,9 +51,12 @@ export const CalculatePricePage = (props: Props) => {
 
   const [confirm] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: props.priceIntent.id },
-    onError: showError,
+    async onError(error) {
+      await priceLoaderPromise.current
+      showError(error)
+      setLoading(false)
+    },
     onCompleted(data) {
-      console.debug('Completed')
       const productOfferId = data.priceIntentConfirm.priceIntent?.defaultOffer?.id
       if (!productOfferId) throw new Error('Missing default offer')
       addToCart(productOfferId)
@@ -50,7 +64,9 @@ export const CalculatePricePage = (props: Props) => {
   })
 
   const handleConfirm = () => {
+    setLoading(true)
     confirm()
+    priceLoaderPromise.current = completePriceLoader()
   }
 
   return (
@@ -76,6 +92,19 @@ export const CalculatePricePage = (props: Props) => {
           </GridLayout.Content>
         </GridLayout.Root>
       </Space>
+
+      <FullscreenDialog.Root open={loading}>
+        <FullscreenDialog.Modal center={true}>
+          <PriceLoaderWrapper>
+            <PriceLoader />
+          </PriceLoaderWrapper>
+        </FullscreenDialog.Modal>
+      </FullscreenDialog.Root>
     </Space>
   )
 }
+
+const PriceLoaderWrapper = styled.div({
+  width: '22rem',
+  maxWidth: '100%',
+})
