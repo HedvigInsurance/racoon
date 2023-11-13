@@ -15,7 +15,10 @@ import {
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = ComponentPropsWithoutRef<typeof CalculatePricePage>
+type Props = Pick<ComponentPropsWithoutRef<typeof CalculatePricePage>, 'flow' | 'priceTemplate'> & {
+  priceIntentId: string
+  shopSessionId: string
+}
 
 type Params = {
   flow: string
@@ -27,8 +30,11 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!context.params) throw new Error('Missing params')
   if (!isRoutingLocale(context.locale)) throw new Error(`Invalid locale: ${context.locale}`)
 
-  const serviceParams = { req: context.req, res: context.res }
-  const apolloClient = await initializeApolloServerSide(serviceParams)
+  const apolloClient = await initializeApolloServerSide({
+    req: context.req,
+    res: context.res,
+    locale: context.locale,
+  })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
   try {
@@ -63,7 +69,7 @@ const Page = (props: Props) => {
   // TODO: Handle loading state
   if (!shopSession || !priceIntent) return null
 
-  return <CalculatePricePage {...props} priceIntent={priceIntent} />
+  return <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
 }
 
 export default Page
@@ -74,9 +80,7 @@ const fetchWidgetPriceIntent = async (
 ) => {
   const { data } = await apolloClient.query<WidgetPriceIntentQuery>({
     query: WidgetPriceIntentDocument,
-    variables: {
-      priceIntentId,
-    },
+    variables: { priceIntentId },
   })
 
   return data.priceIntent
