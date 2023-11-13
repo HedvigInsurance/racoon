@@ -6,14 +6,13 @@ import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type Params = {
+  shopSession: ShopSession
   onSuccess: (values: { priceIntent: PriceIntent; customer: ShopSession['customer'] }) => void
 }
 
-export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
-  const { shopSession } = useShopSession()
+export const useHandleSubmitPriceCalculator = (params: Params) => {
   const [priceIntent] = usePriceIntent()
   const { t } = useTranslation('purchase-form')
   const { showError } = useAppErrorHandleContext()
@@ -25,13 +24,13 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
       const { priceIntent } = data.priceIntentDataUpdate
       const { shopSession: updatedShopSession } = data.shopSessionCustomerUpdate
       if (updatedShopSession && priceIntent) {
-        onSuccess({ priceIntent, customer: updatedShopSession.customer })
+        params.onSuccess({ priceIntent, customer: updatedShopSession.customer })
       }
     },
     onError(error) {
       datadogLogs.logger.error("Couldn't update price intent", {
         error,
-        shopSessionId: shopSession?.id,
+        shopSessionId: params.shopSession.id,
         priceIntentId: priceIntent?.id,
       })
       showError(new Error(t('GENERAL_ERROR_DIALOG_PROMPT')))
@@ -42,7 +41,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
     const [customerData, priceIntentData] = separateCustomerData(data)
     if (customerData) {
       datadogLogs.logger.warn("Submitting customer data out of section isn't supported", {
-        shopSessionId: shopSession?.id,
+        shopSessionId: params.shopSession.id,
         priceIntentId: priceIntent?.id,
       })
     }
@@ -50,7 +49,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
       variables: {
         priceIntentId: priceIntent!.id,
         data: priceIntentData,
-        customer: { shopSessionId: shopSession!.id },
+        customer: { shopSessionId: params.shopSession.id },
       },
     })
   }
@@ -60,7 +59,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
   // - when we support Denmark / Norway
   // - when current solution becomes a problem
   const handleSubmitSection = (data: JSONData) => {
-    if (!shopSession || !priceIntent) throw new Error('Not enough data to submit price calculator')
+    if (!priceIntent) throw new Error('Not enough data to submit price calculator')
     const [customerData, priceIntentData] = separateCustomerData(data)
 
     if (priceIntentData) {
@@ -68,7 +67,7 @@ export const useHandleSubmitPriceCalculator = ({ onSuccess }: Params) => {
         variables: {
           priceIntentId: priceIntent.id,
           data: priceIntentData,
-          customer: { shopSessionId: shopSession.id, ...customerData },
+          customer: { shopSessionId: params.shopSession.id, ...customerData },
         },
       })
     }
