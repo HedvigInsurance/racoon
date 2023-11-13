@@ -86,7 +86,7 @@ export const isProductStory = (story: ISbStoryData): story is ProductStory => {
 }
 
 export const isWidgetFlowStory = (story: ISbStoryData): story is WidgetFlowStory => {
-  return story.content.component === 'widget-flow'
+  return story.content.component === 'widgetFlow'
 }
 
 export const getStoryblokImageSize = (filename: string) => {
