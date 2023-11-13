@@ -1,0 +1,76 @@
+import { type GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { ComponentPropsWithoutRef } from 'react'
+import { SignPage } from '@/features/widget/SignPage'
+import { initializeApolloServerSide } from '@/services/apollo/client'
+import { useShopSessionQuery } from '@/services/apollo/generated'
+import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+
+type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession'> & {
+  shopSessionId: string
+}
+
+const NextWidgetSignPage = (props: Props) => {
+  const shopSessionResult = useShopSessionQuery({
+    variables: { shopSessionId: props.shopSessionId },
+  })
+  const shopSession = shopSessionResult.data?.shopSession
+
+  if (!shopSession) return null
+
+  return <SignPage shopSession={shopSession} {...props} />
+}
+
+type Params = {
+  flow: string
+  shopSessionId: string
+}
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
+  if (!context.params) throw new Error('Missing params')
+  if (!isRoutingLocale(context.locale)) throw new Error(`Invalid locale: ${context.locale}`)
+
+  const apolloClient = await initializeApolloServerSide({
+    req: context.req,
+    res: context.res,
+    locale: context.locale,
+  })
+  const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
+
+  try {
+    const [translations, shopSession] = await Promise.all([
+      serverSideTranslations(context.locale),
+      shopSessionService.fetchById(context.params.shopSessionId),
+    ])
+
+    const customer = shopSession.customer
+    if (!customer) {
+      throw new Error(`No customer in shop session ${shopSession.id}`)
+    }
+
+    if (!customer.ssn) {
+      throw new Error(`No SSN in shop session ${shopSession.id}`)
+    }
+
+    return {
+      props: {
+        ...translations,
+        ssn: customer.ssn,
+        shouldCollectEmail: getShouldCollectEmail(customer),
+        shouldCollectName: getShouldCollectName(customer),
+        customerAuthenticationStatus: customer.authenticationStatus,
+        ...(customer.email && { suggestedEmail: customer.email }),
+        shopSessionId: context.params.shopSessionId,
+        // TODO: check if we want to control this via CMS
+        hideChat: true,
+      },
+    }
+  } catch (error) {
+    console.error('Widget Checkout | Unable to render', error)
+    return { notFound: true }
+  }
+}
+
+export default NextWidgetSignPage
