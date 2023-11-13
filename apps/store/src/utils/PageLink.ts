@@ -277,6 +277,18 @@ export const PageLink = {
       ORIGIN_URL,
     )
   },
+  widgetConfirmation: (params: Omit<WidgetParams, 'priceIntentId'>) => {
+    return new URL(
+      [
+        localePrefix(params.locale),
+        'widget',
+        params.flow,
+        params.shopSessionId,
+        'confirmation',
+      ].join('/'),
+      ORIGIN_URL,
+    )
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
