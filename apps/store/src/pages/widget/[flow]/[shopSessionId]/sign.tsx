@@ -70,6 +70,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...(customer.email && { suggestedEmail: customer.email }),
         shopSessionId: context.params.shopSessionId,
         content: signPageContent,
+        flow: context.params.flow,
         // TODO: check if we want to control this via CMS
         hideChat: true,
       },

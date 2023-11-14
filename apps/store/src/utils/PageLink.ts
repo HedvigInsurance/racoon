@@ -289,6 +289,13 @@ export const PageLink = {
   widgetSign: (params: WidgetSignParams) => {
     return new URL(
       [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'sign'].join('/'),
+    )
+  },
+  widgetPayment: (params: Omit<WidgetParams, 'priceIntentId'>) => {
+    return new URL(
+      [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'payment'].join(
+        '/',
+      ),
       ORIGIN_URL,
     )
   },
