@@ -18,7 +18,8 @@ import { LoadingSkeleton } from './LoadingSkeleton'
 import { PayForTrial } from './PayForTrial'
 import { TrialExtensionForm } from './TrialExtensionForm'
 
-const FOURTEEN_DAYS = 14
+// We cancel the trial after 28 days if member hasn't connected payment
+const DAYS_UNTIL_TERMINATION = 28
 
 type Props = SbBaseBlockProps<{
   requirePaymentConnection?: boolean
@@ -106,7 +107,7 @@ const useAddNotificationBanner = () => {
     ({ data, requirePaymentConnection = false }: AddNotificationBannerOptions) => {
       if (requirePaymentConnection) {
         const today = new Date()
-        const dueDate = addDays(today, FOURTEEN_DAYS)
+        const dueDate = addDays(today, DAYS_UNTIL_TERMINATION)
 
         if (today <= dueDate) {
           addBanner(
