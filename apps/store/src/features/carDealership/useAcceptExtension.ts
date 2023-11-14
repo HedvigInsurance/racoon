@@ -69,8 +69,7 @@ export const useAcceptExtension = (params: Params) => {
             contractId: params.trialContractId,
           }).pathname
           await router.push(
-            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl })
-              .pathname,
+            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl }),
           )
         }
       },
