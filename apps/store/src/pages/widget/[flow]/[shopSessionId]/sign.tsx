@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ComponentPropsWithoutRef } from 'react'
+import { fetchSignPageContent } from '@/features/widget/fetchSignPageContent'
 import { SignPage } from '@/features/widget/SignPage'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
@@ -40,9 +41,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
   try {
-    const [translations, shopSession] = await Promise.all([
+    const [translations, shopSession, signPageContent] = await Promise.all([
       serverSideTranslations(context.locale),
       shopSessionService.fetchById(context.params.shopSessionId),
+      fetchSignPageContent({
+        flow: context.params.flow,
+        locale: context.locale,
+        draft: context.draftMode,
+      }),
     ])
 
     const customer = shopSession.customer
@@ -63,6 +69,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         customerAuthenticationStatus: customer.authenticationStatus,
         ...(customer.email && { suggestedEmail: customer.email }),
         shopSessionId: context.params.shopSessionId,
+        content: signPageContent,
         // TODO: check if we want to control this via CMS
         hideChat: true,
       },
