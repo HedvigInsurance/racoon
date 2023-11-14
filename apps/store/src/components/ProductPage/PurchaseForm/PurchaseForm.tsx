@@ -1,18 +1,19 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { motion, Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Balancer } from 'react-wrap-balancer'
-import { Button, Heading, mq, Space, Text, theme, WarningTriangleIcon } from 'ui'
+import { Button, Heading, mq, Text, theme, WarningTriangleIcon } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
@@ -382,61 +383,10 @@ const EditingState = (props: EditingStateProps) => {
   )
 }
 
-const ANIMATION_DURATION_SEC = 2
-
-const completePriceLoader = () =>
-  new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, ANIMATION_DURATION_SEC * 1000)
-  })
-
-const PriceLoader = () => {
-  const { t } = useTranslation('purchase-form')
-
-  const variants: Variants = {
-    enter: {
-      width: '0%',
-    },
-    animate: {
-      width: '100%',
-      transition: {
-        delay: 0,
-        // Acconut for delay in mounting the component
-        duration: ANIMATION_DURATION_SEC * 0.8,
-        ease: 'easeInOut',
-      },
-    },
-  }
-
-  return (
-    <Space y={2}>
-      <Text size="md" align="center">
-        {t('LOADING_PRICE_ANIMATION_LABEL')}
-      </Text>
-      <Bar>
-        <ProgressBar variants={variants} initial="enter" animate="animate" exit="enter" />
-      </Bar>
-    </Space>
-  )
-}
-
 const PriceLoaderWrapper = styled.div({
   paddingTop: theme.space.xxl,
-})
-
-const Bar = styled.div({
-  height: theme.space.xxs,
   maxWidth: '16rem',
   marginInline: 'auto',
-  backgroundColor: theme.colors.gray500,
-  borderRadius: theme.radius.xxs,
-})
-
-const ProgressBar = styled(motion.div)({
-  height: '100%',
-  backgroundColor: theme.colors.gray1000,
-  borderRadius: theme.radius.xxs,
 })
 
 type ShowOfferStateProps = {
