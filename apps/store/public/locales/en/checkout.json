@@ -46,5 +46,8 @@
   "SWITCHING_ASSISTANT_NEXT_LINK": "Continue",
   "SWITCHING_ASSISTANT_SKIP_LINK": "Remind me later",
   "SWITCHING_ASSISTANT_SUPPORT_LINK": "Help",
-  "SWITCHING_ASSISTANT_TITLE": "Cancel your old car insurance"
+  "SWITCHING_ASSISTANT_TITLE": "Cancel your old car insurance",
+  "USP_TEXT": "No binding time",
+  "WIDGET_CHECKOUT_PAGE_HEADING": "Your offer",
+  "WIDGET_CHECKOUT_PAGE_SUBHEADING": "Choose a start date and sign below"
 }
