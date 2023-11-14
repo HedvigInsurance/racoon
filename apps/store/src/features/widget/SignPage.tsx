@@ -1,5 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { SbBlokData } from '@storyblok/js'
+import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useState, type PropsWithChildren } from 'react'
 import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme } from 'ui'
@@ -36,6 +38,7 @@ type Props = {
   shouldCollectEmail: boolean
   shouldCollectName: boolean
   suggestedEmail?: string
+  content?: Array<SbBlokData>
 }
 
 export const SignPage = (props: Props) => {
@@ -189,6 +192,10 @@ export const SignPage = (props: Props) => {
                 </form>
               </Space>
             </Space>
+
+            {props.content?.map((nestedBlock) => (
+              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+            ))}
           </GridLayout.Content>
         </GridLayout.Root>
       </Space>
