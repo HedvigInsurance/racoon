@@ -62,6 +62,7 @@ export const trustlyIframeStyles = css({
   height: '100%',
   maxHeight: TRUSTLY_IFRAME_MAX_HEIGHT,
 
+  borderRadius: 16,
   boxShadow: theme.shadow.default,
   marginInline: 'auto',
   backgroundColor: theme.colors.white,
