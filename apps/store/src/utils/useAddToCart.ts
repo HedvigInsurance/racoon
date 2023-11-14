@@ -13,9 +13,10 @@ import { useCartEntryToReplace } from '../components/ProductPage/ProductPage'
 type Params = {
   shopSessionId: string
   onSuccess: (productOfferId: string) => void
+  onError?: (error: Error) => void
 }
 
-export const useAddToCart = ({ shopSessionId, onSuccess }: Params) => {
+export const useAddToCart = (params: Params) => {
   // ProductRecommendationsQuery needs to be an active query
   // before we can "re"fetch it after adding a new product into
   // the cart
@@ -38,15 +39,18 @@ export const useAddToCart = ({ shopSessionId, onSuccess }: Params) => {
     async (productOfferId: string) => {
       const options = {
         onCompleted() {
-          onSuccess(productOfferId)
+          params.onSuccess(productOfferId)
         },
-        onError: showError,
+        onError(error: Error) {
+          params.onError?.(error)
+          showError(error)
+        },
       } as const
 
       if (entryToReplace) {
         await replaceEntry({
           variables: {
-            shopSessionId,
+            shopSessionId: params.shopSessionId,
             removeOfferId: entryToReplace.id,
             addOfferId: productOfferId,
           },
@@ -54,12 +58,12 @@ export const useAddToCart = ({ shopSessionId, onSuccess }: Params) => {
         })
       } else {
         await addEntry({
-          variables: { shopSessionId, offerId: productOfferId },
+          variables: { shopSessionId: params.shopSessionId, offerId: productOfferId },
           ...options,
         })
       }
     },
-    [addEntry, entryToReplace, replaceEntry, shopSessionId, showError, onSuccess],
+    [addEntry, entryToReplace, replaceEntry, showError, params],
   )
 
   return [addToCart, loadingReplace || loading] as const
