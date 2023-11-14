@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { SbBlokData } from '@storyblok/js'
 import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { useState, type PropsWithChildren } from 'react'
 import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme } from 'ui'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
@@ -38,12 +39,14 @@ type Props = {
   shouldCollectEmail: boolean
   shouldCollectName: boolean
   suggestedEmail?: string
+  flow: string
   content?: Array<SbBlokData>
 }
 
 export const SignPage = (props: Props) => {
   const { t } = useTranslation('checkout')
   const { routingLocale } = useCurrentLocale()
+  const router = useRouter()
 
   const { offerRecommendation } = useProductRecommendations()
 
@@ -69,7 +72,12 @@ export const SignPage = (props: Props) => {
 
       resetShopSession()
 
-      // TODO: Redirect to payment page
+      const nextUrl = PageLink.widgetPayment({
+        flow: props.flow,
+        shopSessionId: props.shopSession.id,
+        locale: routingLocale,
+      })
+      router.push(nextUrl)
     },
     onError() {
       setShowSignError(true)
