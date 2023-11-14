@@ -11320,10 +11320,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/nprogress@npm:0.2.2":
-  version: 0.2.2
-  resolution: "@types/nprogress@npm:0.2.2"
-  checksum: 441eff4b29c3596b85c125950da3fd3408167a0baf9415905c7a74a294a1dff95dcc03c990e852292055c882d15e1d2687668ccbf77a74cdaec38f57387ec4d1
+"@types/nprogress@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@types/nprogress@npm:0.2.3"
+  checksum: 2bd96ba1167f548e8f898ae8a790b6501a5422217621c9b8ea75962f3e8473f0e371058b79d83e04e80a6bfee2d66fc6612cdb28296648007b35d3c2a6d64e5c
   languageName: node
   linkType: hard
 
@@ -24724,7 +24724,7 @@ __metadata:
     "@types/clone-deep": 4.0.4
     "@types/md5": 2.3.5
     "@types/node": 20.8.10
-    "@types/nprogress": 0.2.2
+    "@types/nprogress": 0.2.3
     "@types/react": 18.2.35
     "@types/react-dom": 18.2.14
     "@types/uuid": 9.0.6
