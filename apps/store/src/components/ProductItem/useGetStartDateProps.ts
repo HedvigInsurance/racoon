@@ -20,7 +20,9 @@ export const useGetStartDateProps = (): GetStartDateProps => {
     (params) => {
       return {
         label: params.startDate
-          ? t('CART_ENTRY_DATE_LABEL', { date: formatter.fromNow(new Date(params.startDate)) })
+          ? t('CART_ENTRY_DATE_LABEL', {
+              date: formatter.dateFull(new Date(params.startDate), { abbreviateMonth: true }),
+            })
           : t('CART_ENTRY_AUTO_SWITCH'),
         tooltip: params.startDate
           ? t('CART_ITEM_TOOLTIP_SELF_SWITCH')
