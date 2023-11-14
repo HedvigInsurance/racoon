@@ -1,5 +1,5 @@
 {
-  "CONNECT_PAYMENT_BANNER": "Sign before {{dueDate}} to remain insured",
+  "CONNECT_PAYMENT_BANNER": "Connect payment before {{dueDate}} for activate the insurance",
   "CONNECT_PAYMENT_BUTTON": "Connect payment",
   "CONTRACT_CARD_BADGE": "60 days",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
@@ -13,7 +13,7 @@
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Yes, go ahead",
   "PAY_WITHOUT_EXTENSION_DIALOG_SUBTITLE": "Keep in mind that you and your car are uninsured after the intial offer expires. And remember that you need traffic insurance to be allowed to drive the car.",
   "PAY_WITHOUT_EXTENSION_DIALOG_TITLE": "Do you want to continue without renewing your insurance?",
-  "REMAIN_INSURED_BANNER": "Connect payment before {{dueDate}} for activate the insurance",
+  "REMAIN_INSURED_BANNER": "Sign before {{dueDate}} to remain insured",
   "SIGN_AND_PAY_BUTTON": "Sign and pay",
   "SIGN_BUTTON": "Extend insurance",
   "TOGGLE_EXTENSION_DESCRIPTION": "Passa på att förlänga din bilförsäkring direkt, så du fortsätter vara försäkrad. Tänk på att du och din bil blir oförsäkrade efter att de 60 dagarna har löpt ut.",

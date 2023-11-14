@@ -1,5 +1,5 @@
 {
-  "CONNECT_PAYMENT_BANNER": "Teckna före {{dueDate}} för att fortsätta vara försäkrad",
+  "CONNECT_PAYMENT_BANNER": "Koppla din betalning innan {{dueDate}} för att försäkringen ska gälla",
   "CONNECT_PAYMENT_BUTTON": "Koppla betalning",
   "CONTRACT_CARD_BADGE": "60 dagar",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Ändra",
@@ -13,7 +13,7 @@
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Ja, fortsätt",
   "PAY_WITHOUT_EXTENSION_DIALOG_SUBTITLE": "Tänk på att du och din bil är oförsäkrade efter att starterbjudandet löpt ut. Och kom ihåg att du behöver en trafikförsäkring för att du ska få köra bilen.",
   "PAY_WITHOUT_EXTENSION_DIALOG_TITLE": "Vill du fortsätta utan att förlänga din försäkring?",
-  "REMAIN_INSURED_BANNER": "Koppla din betalning innan {{dueDate}} för att försäkringen ska gälla",
+  "REMAIN_INSURED_BANNER": "Teckna före {{dueDate}} för att fortsätta vara försäkrad",
   "SIGN_AND_PAY_BUTTON": "Signera och betala",
   "SIGN_BUTTON": "Förläng försäkring",
   "TOGGLE_EXTENSION_DESCRIPTION": "Passa på att förlänga din bilförsäkring direkt, så du fortsätter vara försäkrad. Tänk på att du och din bil blir oförsäkrade efter att de 60 dagarna har löpt ut.",
