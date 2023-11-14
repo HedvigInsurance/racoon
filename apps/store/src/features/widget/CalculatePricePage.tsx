@@ -1,11 +1,18 @@
+import { useRouter } from 'next/router'
 import { Space, Heading } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { type WidgetPriceIntentFragment } from '@/services/apollo/generated'
+import {
+  usePriceIntentConfirmMutation,
+  type WidgetPriceIntentFragment,
+} from '@/services/apollo/generated'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { PageLink } from '@/utils/PageLink'
+import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
 
 type Props = {
@@ -16,8 +23,34 @@ type Props = {
 }
 
 export const CalculatePricePage = (props: Props) => {
+  const { showError } = useAppErrorHandleContext()
+
+  const router = useRouter()
+  const [addToCart] = useAddToCart({
+    shopSessionId: props.shopSession.id,
+    onSuccess() {
+      router.push(
+        PageLink.widgetSign({
+          flow: props.flow,
+          shopSessionId: props.shopSession.id,
+        }),
+      )
+    },
+  })
+
+  const [confirm] = usePriceIntentConfirmMutation({
+    variables: { priceIntentId: props.priceIntent.id },
+    onError: showError,
+    onCompleted(data) {
+      console.debug('Completed')
+      const productOfferId = data.priceIntentConfirm.priceIntent?.defaultOffer?.id
+      if (!productOfferId) throw new Error('Missing default offer')
+      addToCart(productOfferId)
+    },
+  })
+
   const handleConfirm = () => {
-    console.debug('Confirm')
+    confirm()
   }
 
   return (
