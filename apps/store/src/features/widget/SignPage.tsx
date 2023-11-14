@@ -88,12 +88,10 @@ export const SignPage = (props: Props) => {
             <Space y={3.5}>
               <Headings>
                 <Heading as="h1" variant="standard.24" align="center">
-                  {/* TODO: translate this */}
-                  Ditt erbjudande
+                  {t('WIDGET_CHECKOUT_PAGE_HEADING')}
                 </Heading>
                 <Text as="p" balance={true} color="textSecondary" align="center" size="xl">
-                  {/* TODO: translate this */}
-                  Välj startdatum och signera nedan
+                  {t('WIDGET_CHECKOUT_PAGE_SUBHEADING')}
                 </Text>
               </Headings>
 
@@ -163,10 +161,7 @@ export const SignPage = (props: Props) => {
                       <Space y={1.6}>
                         <UspWrapper>
                           <CheckIcon size="1rem" />
-                          <Text size="xs">
-                            {/* TODO: translate this */}
-                            Ingen bindningstid
-                          </Text>
+                          <Text size="xs">{t('USP_TEXT')}</Text>
                         </UspWrapper>
 
                         {userErrorMessage ? (
