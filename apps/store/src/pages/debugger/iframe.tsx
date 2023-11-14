@@ -3,7 +3,7 @@ import { type GetServerSidePropsContext, type GetServerSidePropsResult } from 'n
 import { useEffect, useState } from 'react'
 import { Space, Text, theme, Button } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
-import { type PartnerEvent } from '@/services/partner/publishPartnerEvent'
+import { type WidgetEvent } from '@/features/widget/publishWidgetEvent'
 
 type Props = {
   url: string
@@ -34,8 +34,7 @@ const Page = (props: Props) => {
   )
 }
 
-const DEFAULT_URL =
-  'http://localhost:8040/api/partner/init?partnerId=2ce2405b-aa3a-4e0b-81cf-ac4775d477d1&requestId=a37ea8e0-34fd-11ee-be56-0242ac120002'
+const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy'
 
 export const getServerSideProps = (
   context: GetServerSidePropsContext,
@@ -55,14 +54,14 @@ export const getServerSideProps = (
 }
 
 const MessageLogger = () => {
-  const [messages, setMessages] = useState<Array<PartnerEvent>>([])
+  const [messages, setMessages] = useState<Array<WidgetEvent>>([])
 
   useEffect(() => {
     const handler = (event: MessageEvent) => {
       switch (event.data.status) {
         case 'event':
         case 'success':
-          setMessages((prev) => [...prev, event.data as PartnerEvent])
+          setMessages((prev) => [...prev, event.data as WidgetEvent])
       }
     }
 

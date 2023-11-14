@@ -13,6 +13,7 @@ import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
+import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -21,7 +22,6 @@ import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
-import { usePublishPartnerInitEvent } from '@/services/partner/usePublishPartnerInitEvent'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -77,7 +77,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useAllowActiveStylesInSafari()
   // Override to correct html lang set by i18next
   useForceHtmlLangAttribute()
-  usePublishPartnerInitEvent()
+  usePublishWidgetInitEvent()
 
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout ?? ((page) => page)

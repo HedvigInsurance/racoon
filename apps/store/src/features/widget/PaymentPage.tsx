@@ -4,10 +4,10 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Heading, Space, Text } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { publishPartnerEvent } from '@/services/partner/publishPartnerEvent'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
+import { publishWidgetEvent } from './publishWidgetEvent'
 
 const LOGGER = datadogLogs.createLogger('widget-payment')
 
@@ -27,7 +27,7 @@ export const PaymentPage = (props: Props) => {
 
   const handleSuccess = () => {
     LOGGER.info('Trustly payment success', { shopSessionId: props.shopSessionId })
-    publishPartnerEvent({ status: 'success' })
+    publishWidgetEvent({ status: 'success' })
     router.push(nextUrl)
   }
 
