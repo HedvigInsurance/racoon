@@ -1,4 +1,6 @@
 import { type GetServerSideProps } from 'next'
+import { parseCustomerDataSearchParams } from '@/features/widget/parseSearchParams'
+import { shopSessionCustomerUpdate } from '@/features/widget/shopSessionCustomerUpdate'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import {
@@ -51,17 +53,30 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
     variables: { input: { countryCode, partnerName: story.content.partner } },
   })
 
-  const shopSessionId = result.data?.shopSessionCreatePartner.id
-  if (!shopSessionId) throw new Error('Missing shopSessionId')
+  if (!result.data) throw new Error('Failed to create Partner Shop Session')
+
+  const [customerData, updatedSearchParams] = parseCustomerDataSearchParams(url.searchParams)
+  if (Object.keys(customerData).length > 0) {
+    try {
+      await shopSessionCustomerUpdate({
+        apolloClient,
+        variables: { shopSessionId: result.data.shopSessionCreatePartner.id, ...customerData },
+      })
+    } catch (error) {
+      console.warn('Failed to update customer data', error)
+    }
+  }
+
+  const nextUrl = PageLink.widgetSelectProduct({
+    locale: context.locale,
+    flow,
+    shopSessionId: result.data.shopSessionCreatePartner.id,
+  })
+  nextUrl.search = updatedSearchParams.toString()
 
   return {
     redirect: {
-      // TODO: Pass along any query params
-      destination: PageLink.widgetSelectProduct({
-        locale: context.locale,
-        flow,
-        shopSessionId,
-      }).href,
+      destination: nextUrl.href,
       permanent: false,
     },
   }
