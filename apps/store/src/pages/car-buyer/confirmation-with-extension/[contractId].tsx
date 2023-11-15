@@ -27,11 +27,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
   // with-extension | without-extension
   const confirmationStorySlug = resolvedUrl.split('/')[2]
+  const slug = `car-buyer/${confirmationStorySlug}`
 
   const [trialExtension, layoutWithMenuProps, story] = await Promise.all([
     fetchTrialExtensionData(apolloClient, contractId),
     getLayoutWithMenuProps(context, apolloClient),
-    getStoryBySlug<ConfirmationStory>(confirmationStorySlug, { locale }),
+    getStoryBySlug<ConfirmationStory>(slug, { locale }),
   ])
 
   if (trialExtension == null) return { notFound: true }
