@@ -49,5 +49,8 @@
   "SWITCHING_ASSISTANT_TITLE": "Cancel your old car insurance",
   "USP_TEXT": "No binding time",
   "WIDGET_CHECKOUT_PAGE_HEADING": "Your offer",
-  "WIDGET_CHECKOUT_PAGE_SUBHEADING": "Choose a start date and sign below"
+  "WIDGET_CHECKOUT_PAGE_SUBHEADING": "Choose a start date and sign below",
+  "WIDGET_PROGRESS_PAY": "Pay",
+  "WIDGET_PROGRESS_SIGN": "Sign",
+  "WIDGET_PROGRESS_YOUR_INFO": "Your info"
 }
