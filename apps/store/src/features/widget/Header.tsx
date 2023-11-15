@@ -1,14 +1,38 @@
 import styled from '@emotion/styled'
-import { HedvigLogo, mq } from 'ui'
+import { useTranslation } from 'next-i18next'
+import { CheckIcon, HedvigLogo, mq } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { STYLES } from '@/components/GridLayout/GridLayout.helper'
 import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
 
+const STEPS = ['YOUR_INFO', 'SIGN', 'PAY', 'CONFIRMATION'] as const
+type Step = (typeof STEPS)[number]
+
 type Props = {
-  step: 'YOUR_INFO' | 'SIGN' | 'PAY'
+  step: Step
 }
 
+type ProgressStep = { key: Step; label: string }
+
 export const Header = (props: Props) => {
+  const { t } = useTranslation('checkout')
+  const progressSteps: Array<ProgressStep> = [
+    {
+      key: 'YOUR_INFO',
+      label: t('WIDGET_PROGRESS_YOUR_INFO'),
+    },
+    {
+      key: 'SIGN',
+      label: t('WIDGET_PROGRESS_SIGN'),
+    },
+    {
+      key: 'PAY',
+      label: t('WIDGET_PROGRESS_PAY'),
+    },
+  ]
+
+  const stepIndex = STEPS.indexOf(props.step)
+
   return (
     <Wrapper as="header">
       <LogoArea>
@@ -17,11 +41,12 @@ export const Header = (props: Props) => {
 
       <ProgressArea>
         <ProgressIndicator.Root>
-          <ProgressIndicator.Step active={props.step === 'YOUR_INFO'}>
-            Your info
-          </ProgressIndicator.Step>
-          <ProgressIndicator.Step active={props.step === 'SIGN'}>Sign</ProgressIndicator.Step>
-          <ProgressIndicator.Step active={props.step === 'PAY'}>Pay</ProgressIndicator.Step>
+          {progressSteps.map((item, index) => (
+            <ProgressIndicator.Step key={item.key} active={props.step === item.key}>
+              {index < stepIndex && <CheckIcon size="1rem" />}
+              {item.label}
+            </ProgressIndicator.Step>
+          ))}
         </ProgressIndicator.Root>
       </ProgressArea>
     </Wrapper>
