@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentProps } from 'react'
+import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
 import { ConfirmationPage } from '@/features/widget/ConfirmationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
@@ -27,12 +28,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     locale: context.locale,
   })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
-  const [translations, story] = await Promise.all([
+  const [translations, story, confirmationStory] = await Promise.all([
     serverSideTranslations(context.locale),
     getStoryById<WidgetFlowStory>({
       id: context.params.flow,
       version: context.draftMode ? 'draft' : undefined,
     }),
+    fetchConfirmationStory(context.locale),
     shopSessionService.fetchById(context.params.shopSessionId),
   ])
 
@@ -40,6 +42,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     props: {
       ...translations,
       ...context.params,
+      title: confirmationStory.content.title,
+      staticContent: confirmationStory.content,
       backToAppButton: story.content.backToAppButtonLabel,
     },
   })

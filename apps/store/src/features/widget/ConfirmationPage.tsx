@@ -1,12 +1,16 @@
 import { Button, Heading, Space } from 'ui'
+import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Header } from './Header'
 import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
+  staticContent: ConfirmationStory['content']
+  title: string
   shopSession: ShopSession
   backToAppButton?: string
 }
@@ -23,8 +27,7 @@ export const ConfirmationPage = (props: Props) => {
         <GridLayout.Content width="1/3" align="center">
           <Space y={4}>
             <Heading as="h1" variant="standard.24" align="center">
-              {/* TODO: lokalise */}
-              Ditt köp är klart!
+              {props.title}
             </Heading>
             <Space y={1}>
               {props.shopSession.cart.entries.map((item) => (
@@ -38,6 +41,8 @@ export const ConfirmationPage = (props: Props) => {
           </Space>
         </GridLayout.Content>
       </GridLayout.Root>
+
+      <StaticContent content={props.staticContent} />
     </Space>
   )
 }
