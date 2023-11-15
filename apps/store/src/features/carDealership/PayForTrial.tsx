@@ -39,7 +39,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
           contractId: trialContract.id,
         }).pathname
         await router.push(
-          PageLink.checkoutPaymentTrustly({ shopSessionId: shopSessionId, nextUrl }).href,
+          PageLink.checkoutPaymentTrustly({ shopSessionId: shopSessionId, nextUrl }),
         )
       },
     })
