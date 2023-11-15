@@ -8,6 +8,7 @@ import {
   type ShopSessionCreatePartnerMutation,
   type ShopSessionCreatePartnerMutationVariables,
 } from '@/services/apollo/generated'
+import { getAccessToken, resetAuthTokens } from '@/services/authApi/persist'
 import {
   type PageStory,
   type WidgetFlowStory,
@@ -41,6 +42,11 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   if (!isWidgetFlowStory(story)) {
     console.warn('Story is not a widget flow story:', story.slug)
     return { notFound: true }
+  }
+
+  if (getAccessToken(context)) {
+    console.info(`Widget | Discarding auth token from previous session`)
+    resetAuthTokens(context)
   }
 
   const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
