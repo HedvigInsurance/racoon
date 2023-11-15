@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
 import { Space, Button, Text, BankIdIcon, CheckIcon, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
+import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
@@ -105,34 +106,42 @@ export const TrialExtensionForm = ({
           />
         </ProductItemContainer>
 
-        <PriceBreakdown
-          amount={trialContract.premium.amount}
-          crossedOverAmount={defaultOfferCost?.amount}
-          currencyCode={trialContract.premium.currencyCode}
-          title={t('TRIAL_TITLE')}
-          subTitle={trialContract.productVariant.displayNameSubtype}
-          priceExplanation={t('TRIAL_COST_EXPLANATION', {
-            date: formatter.dateFull(trialTerminationDate, {
-              hideYear: true,
-              abbreviateMonth: true,
-            }),
-          })}
-        />
+        {requirePaymentConnection ? (
+          <>
+            <PriceBreakdown
+              amount={trialContract.premium.amount}
+              crossedOverAmount={defaultOfferCost?.amount}
+              currencyCode={trialContract.premium.currencyCode}
+              title={t('TRIAL_TITLE')}
+              subTitle={trialContract.productVariant.displayNameSubtype}
+              priceExplanation={t('TRIAL_COST_EXPLANATION', {
+                date: formatter.dateFull(trialTerminationDate, {
+                  hideYear: true,
+                  abbreviateMonth: true,
+                }),
+              })}
+            />
 
-        <Divider />
-
-        <PriceBreakdown
-          amount={selectedOffer.cost.net.amount}
-          currencyCode={selectedOffer.cost.net.currencyCode}
-          title={t('EXTENSION_TITLE')}
-          subTitle={selectedOffer.variant.displayNameSubtype}
-          priceExplanation={t('EXTENSION_COST_EXPLANATION', {
-            date: formatter.dateFull(extensionActivationDate, {
-              hideYear: true,
-              abbreviateMonth: true,
-            }),
-          })}
-        />
+            <Divider />
+            <PriceBreakdown
+              amount={selectedOffer.cost.net.amount}
+              currencyCode={selectedOffer.cost.net.currencyCode}
+              title={t('EXTENSION_TITLE')}
+              subTitle={selectedOffer.variant.displayNameSubtype}
+              priceExplanation={t('EXTENSION_COST_EXPLANATION', {
+                date: formatter.dateFull(extensionActivationDate, {
+                  hideYear: true,
+                  abbreviateMonth: true,
+                }),
+              })}
+            />
+          </>
+        ) : (
+          <TotalAmount
+            amount={selectedOffer.cost.net.amount}
+            currencyCode={selectedOffer.cost.net.currencyCode}
+          />
+        )}
 
         <Space y={1}>
           <Button onClick={handleClickSign} loading={loading}>
