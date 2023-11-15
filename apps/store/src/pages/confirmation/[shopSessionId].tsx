@@ -1,26 +1,25 @@
-import { ApolloClient, isApolloError } from '@apollo/client'
+import { type ApolloClient, isApolloError } from '@apollo/client'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
-import { ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
+import { type ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
+import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import {
   CurrentMemberDocument,
-  CurrentMemberQuery,
-  CurrentMemberQueryVariables,
-  ShopSessionOutcomeFragment,
+  type CurrentMemberQuery,
+  type CurrentMemberQueryVariables,
+  type ShopSessionOutcomeFragment,
 } from '@/services/apollo/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
-import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
+import { type ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-
-const CONFIRMATION_PAGE_SLUG = 'confirmation'
 
 type Params = { shopSessionId: string }
 
@@ -42,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     getLayoutWithMenuProps(context, apolloClient),
     fetchOutcomeData(shopSessionService, shopSessionId),
     fetchMemberPartnerData(apolloClient),
-    getStoryBySlug(CONFIRMATION_PAGE_SLUG, { locale }),
+    fetchConfirmationStory(locale),
   ])
 
   if (layoutWithMenuProps === null) return { notFound: true }
