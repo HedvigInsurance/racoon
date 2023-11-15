@@ -31,6 +31,8 @@ export const ConfirmationPage = (props: Props) => {
   const { t } = useTranslation('checkout')
   const checklistItems = props.story.content.checklist.split('\n')
 
+  const cartTotalCost = props.cart.cost.gross.amount
+
   return (
     <Wrapper>
       <Space y={4}>
@@ -49,7 +51,8 @@ export const ConfirmationPage = (props: Props) => {
                   {props.cart.entries.map((item) => (
                     <ProductItemContainer key={item.id} offer={item} />
                   ))}
-                  <TotalAmountContainer cart={props.cart} />
+                  {/* // We might have some cases of confirmation pages for shop sessions that doesn't include any products into the cart: car dealership */}
+                  {cartTotalCost > 0 && <TotalAmountContainer cart={props.cart} />}
                 </ShopBreakdown>
               </Space>
 
