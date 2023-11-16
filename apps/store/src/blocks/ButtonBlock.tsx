@@ -1,33 +1,43 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { ComponentProps } from 'react'
+import { useRouter } from 'next/router'
+import { ComponentProps, useMemo } from 'react'
 import { Button, ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { mergeSearchParams } from '@/utils/mergeSearchParams'
 
 export type ButtonBlockProps = SbBaseBlockProps<{
   text: string
   link: LinkField
   variant: ComponentProps<typeof Button>['variant']
   size: ComponentProps<typeof Button>['size']
+  forwardQueryString?: boolean
 }>
 
 export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
-  // Can't use ButtonNextLink for links to old web
-  const Component = blok.link.linktype === 'url' ? Button : ButtonNextLink
+  const router = useRouter()
+  const href = useMemo(() => {
+    if (blok.forwardQueryString) {
+      return mergeSearchParams(getLinkFieldURL(blok.link, blok.text), router.query)
+    }
+
+    return getLinkFieldURL(blok.link, blok.text)
+  }, [router.query, blok.forwardQueryString, blok.link, blok.text])
+
   return (
     <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
-      <Component
+      <ButtonNextLink
         {...storyblokEditable(blok)}
-        href={getLinkFieldURL(blok.link, blok.text)}
+        href={href}
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
         target={blok.link.target}
         title={blok.link.title}
       >
         {blok.text}
-      </Component>
+      </ButtonNextLink>
     </ConditionalWrapper>
   )
 }
