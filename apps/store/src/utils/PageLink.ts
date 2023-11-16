@@ -95,20 +95,8 @@ export const PageLink = {
     const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
     return new URL(pathname, ORIGIN_URL)
   },
-  carDealershipConfirmationWithExtension: ({
-    locale,
-    contractId,
-  }: CarDealershipConfirmationPage) => {
-    const pathname = `${localePrefix(locale)}/car-buyer/confirmation-with-extension/${contractId}`
-    return new URL(pathname, ORIGIN_URL)
-  },
-  carDealershipConfirmationWithoutExtension: ({
-    locale,
-    contractId,
-  }: CarDealershipConfirmationPage) => {
-    const pathname = `${localePrefix(
-      locale,
-    )}/car-buyer/confirmation-without-extension/${contractId}`
+  carDealershipConfirmation: ({ locale, contractId }: CarDealershipConfirmationPage) => {
+    const pathname = `${localePrefix(locale)}/car-buyer/confirmation/${contractId}`
     return new URL(pathname, ORIGIN_URL)
   },
 
