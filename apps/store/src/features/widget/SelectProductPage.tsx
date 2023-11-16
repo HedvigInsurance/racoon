@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useState, type FormEventHandler } from 'react'
-import { Button, Heading, Space, theme } from 'ui'
+import { Button, Heading, Space, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
@@ -47,7 +47,7 @@ export const SelectProductPage = (props: Props) => {
   }
 
   return (
-    <Space y={4}>
+    <Wrapper y={4}>
       <Header step="YOUR_INFO" />
 
       <GridLayout.Root>
@@ -85,9 +85,14 @@ export const SelectProductPage = (props: Props) => {
           </Space>
         </GridLayout.Content>
       </GridLayout.Root>
-    </Space>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.lg,
+  [mq.lg]: { paddingBottom: theme.space.xxl },
+})
 
 const CustomButton = styled(Button)({
   // Appear disabled but remain clickable (for a11y reasons)

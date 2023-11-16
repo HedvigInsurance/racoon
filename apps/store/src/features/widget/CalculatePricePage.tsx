@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
-import { Space, Heading } from 'ui'
+import { Space, Heading, mq, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -70,7 +70,7 @@ export const CalculatePricePage = (props: Props) => {
   }
 
   return (
-    <Space y={3}>
+    <Wrapper y={3}>
       <Header step="YOUR_INFO" />
 
       <Space y={2.5}>
@@ -100,9 +100,14 @@ export const CalculatePricePage = (props: Props) => {
           </PriceLoaderWrapper>
         </FullscreenDialog.Modal>
       </FullscreenDialog.Root>
-    </Space>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.lg,
+  [mq.lg]: { paddingBottom: theme.space.xxl },
+})
 
 const PriceLoaderWrapper = styled.div({
   width: '22rem',

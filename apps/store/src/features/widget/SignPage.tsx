@@ -5,7 +5,7 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, type PropsWithChildren } from 'react'
-import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme } from 'ui'
+import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme, mq } from 'ui'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -88,7 +88,7 @@ export const SignPage = (props: Props) => {
 
   return (
     <>
-      <Space y={4}>
+      <Wrapper y={4}>
         <Header step="SIGN" />
 
         <GridLayout.Root>
@@ -203,7 +203,7 @@ export const SignPage = (props: Props) => {
             ))}
           </GridLayout.Content>
         </GridLayout.Root>
-      </Space>
+      </Wrapper>
 
       <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
         <FullscreenDialog.Modal
@@ -224,6 +224,11 @@ export const SignPage = (props: Props) => {
     </>
   )
 }
+
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.lg,
+  [mq.lg]: { paddingBottom: theme.space.xxl },
+})
 
 const Headings = styled.div({ maxWidth: '35ch', marginInline: 'auto' })
 

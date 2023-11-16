@@ -1,4 +1,5 @@
-import { Button, Heading, Space } from 'ui'
+import styled from '@emotion/styled'
+import { Button, Heading, Space, mq, theme } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
@@ -21,7 +22,7 @@ export const ConfirmationPage = (props: Props) => {
   }
 
   return (
-    <Space y={4}>
+    <Wrapper y={4}>
       <Header step="CONFIRMATION" />
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
@@ -43,6 +44,11 @@ export const ConfirmationPage = (props: Props) => {
       </GridLayout.Root>
 
       <StaticContent content={props.staticContent} />
-    </Space>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.lg,
+  [mq.lg]: { paddingBottom: theme.space.xxl },
+})
