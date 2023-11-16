@@ -9,7 +9,7 @@ import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
-import { getPriceTemplate } from './widget.helpers'
+import { createPriceIntent } from './widget.helpers'
 
 type Props = {
   flow: string
@@ -26,11 +26,10 @@ export const SelectProductPage = (props: Props) => {
     event.preventDefault()
     if (!productName) throw new Error('Missing product')
 
-    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-    const priceIntent = await priceIntentService.create({
-      productName: productName,
-      priceTemplate: getPriceTemplate(productName),
+    const priceIntent = await createPriceIntent({
+      service: priceIntentServiceInitClientSide(apolloClient),
       shopSessionId: props.shopSessionId,
+      productName,
     })
 
     await router.push(
