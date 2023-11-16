@@ -7114,14 +7114,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/cookies@npm:^1.0.0":
+"@mswjs/cookies@npm:^1.1.0":
   version: 1.1.0
   resolution: "@mswjs/cookies@npm:1.1.0"
   checksum: 1d9be44548907b92ff6acd46795292968661be19f1c04c43fdb2beb98bc7e58b8ffcef3be19d0f2cb58df07a36a6b53b4bbc0ea34e023b7366dbc28ffee90338
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.25.1":
+"@mswjs/interceptors@npm:^0.25.11":
   version: 0.25.11
   resolution: "@mswjs/interceptors@npm:0.25.11"
   dependencies:
@@ -17061,16 +17061,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formdata-node@npm:4.4.1":
-  version: 4.4.1
-  resolution: "formdata-node@npm:4.4.1"
-  dependencies:
-    node-domexception: 1.0.0
-    web-streams-polyfill: 4.0.0-beta.3
-  checksum: d91d4f667cfed74827fc281594102c0dabddd03c9f8b426fc97123eedbf73f5060ee43205d89284d6854e2fc5827e030cd352ef68b93beda8decc2d72128c576
-  languageName: node
-  linkType: hard
-
 "forwarded@npm:0.2.0":
   version: 0.2.0
   resolution: "forwarded@npm:0.2.0"
@@ -21221,22 +21211,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.0.3":
-  version: 2.0.3
-  resolution: "msw@npm:2.0.3"
+"msw@npm:2.0.6":
+  version: 2.0.6
+  resolution: "msw@npm:2.0.6"
   dependencies:
     "@bundled-es-modules/cookie": ^2.0.0
     "@bundled-es-modules/js-levenshtein": ^2.0.1
     "@bundled-es-modules/statuses": ^1.0.1
-    "@mswjs/cookies": ^1.0.0
-    "@mswjs/interceptors": ^0.25.1
+    "@mswjs/cookies": ^1.1.0
+    "@mswjs/interceptors": ^0.25.11
     "@open-draft/until": ^2.1.0
     "@types/cookie": ^0.4.1
     "@types/js-levenshtein": ^1.1.1
     "@types/statuses": ^2.0.1
     chalk: ^4.1.2
     chokidar: ^3.4.2
-    formdata-node: 4.4.1
     graphql: ^16.8.1
     headers-polyfill: ^4.0.1
     inquirer: ^8.2.0
@@ -21255,7 +21244,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 3c0ef3c2fc11064dc76d6b6769e0fe575efd3c0b8a189ed280b0bd6b04b601a7a80c270e02a76d839e497243202a81cb4daec54a08429ad4802d33cc87efa131
+  checksum: 5171e9522d2ac6d5989010dfefc1e15e1f8c6ec2b7dc9df8aff1596a4a0508190ce130749a17865181b04790f90ff03bc0b901dfaa1fc00281aac6453ef817a1
   languageName: node
   linkType: hard
 
@@ -21422,13 +21411,6 @@ __metadata:
   dependencies:
     minimatch: ^3.0.2
   checksum: 29de9560e52cdac8d3f794d38d782f6799e13d4d11aaf96d3da8c28458e1c5e33bb5f8edfb42dc34172ec5516c50c5b8850c9e1526542616757a969267263328
-  languageName: node
-  linkType: hard
-
-"node-domexception@npm:1.0.0":
-  version: 1.0.0
-  resolution: "node-domexception@npm:1.0.0"
-  checksum: ee1d37dd2a4eb26a8a92cd6b64dfc29caec72bff5e1ed9aba80c294f57a31ba4895a60fd48347cf17dd6e766da0ae87d75657dfd1f384ebfa60462c2283f5c7f
   languageName: node
   linkType: hard
 
@@ -24757,7 +24739,7 @@ __metadata:
     jotai: 2.5.1
     jwt-decode: 4.0.0
     md5: 2.3.0
-    msw: 2.0.3
+    msw: 2.0.6
     next: 13.4.12
     next-i18next: 15.0.0
     next-router-mock: 0.9.10
@@ -26767,13 +26749,6 @@ __metadata:
   dependencies:
     defaults: ^1.0.3
   checksum: 814e9d1ddcc9798f7377ffa448a5a3892232b9275ebb30a41b529607691c0491de47cba426e917a4d08ded3ee7e9ba2f3fe32e62ee3cd9c7d3bafb7754bd553c
-  languageName: node
-  linkType: hard
-
-"web-streams-polyfill@npm:4.0.0-beta.3":
-  version: 4.0.0-beta.3
-  resolution: "web-streams-polyfill@npm:4.0.0-beta.3"
-  checksum: dfec1fbf52b9140e4183a941e380487b6c3d5d3838dd1259be81506c1c9f2abfcf5aeb670aeeecfd9dff4271a6d8fef931b193c7bedfb42542a3b05ff36c0d16
   languageName: node
   linkType: hard
 
