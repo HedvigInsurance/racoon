@@ -230,7 +230,6 @@ export type ReusableStory = ISbStoryData & {
 export type ConfirmationStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     body?: Array<SbBlokData>
-    ctaSection?: Array<SbBlokData>
     title: string
     checklistTitle: string
     checklistSubtitle: string

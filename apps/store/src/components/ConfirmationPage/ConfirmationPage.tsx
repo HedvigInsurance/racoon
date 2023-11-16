@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { StoryblokComponent } from '@storyblok/react'
 import { Heading, mq, Space, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
@@ -42,10 +41,6 @@ export const ConfirmationPage = (props: Props) => {
                   {cartTotalCost > 0 && <TotalAmountContainer cart={props.cart} />}
                 </ShopBreakdown>
               </Space>
-
-              {props.story.content.ctaSection?.map((nestedBlock) => (
-                <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
-              ))}
 
               {props.switching && <SwitchingAssistantSection {...props.switching} />}
 
