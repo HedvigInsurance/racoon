@@ -1,6 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
-import { SbBlokData } from '@storyblok/js'
+import { type SbBlokData } from '@storyblok/js'
 import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -20,13 +20,12 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
-  CurrentMemberQuery,
-  CurrentMemberQueryVariables,
+  type CurrentMemberQuery,
+  type CurrentMemberQueryVariables,
   CurrentMemberDocument,
   ShopSessionAuthenticationStatus,
 } from '@/services/apollo/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -50,7 +49,6 @@ export const SignPage = (props: Props) => {
 
   const { offerRecommendation } = useProductRecommendations()
 
-  const { reset: resetShopSession } = useShopSession()
   const apolloClient = useApolloClient()
   const [showSignError, setShowSignError] = useState(false)
   const tracking = useTracking()
@@ -70,14 +68,12 @@ export const SignPage = (props: Props) => {
         props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
       )
 
-      resetShopSession()
-
       const nextUrl = PageLink.widgetPayment({
         flow: props.flow,
         shopSessionId: props.shopSession.id,
         locale: routingLocale,
       })
-      router.push(nextUrl)
+      await router.push(nextUrl)
     },
     onError() {
       setShowSignError(true)
