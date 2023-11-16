@@ -88,20 +88,20 @@ export const SignPage = (props: Props) => {
 
   return (
     <>
-      <Wrapper y={4}>
+      <Wrapper y={3}>
         <Header step="SIGN" />
 
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
             <Space y={3.5}>
-              <Headings>
+              <div>
                 <Heading as="h1" variant="standard.24" align="center">
                   {t('WIDGET_CHECKOUT_PAGE_HEADING')}
                 </Heading>
                 <Text as="p" balance={true} color="textSecondary" align="center" size="xl">
                   {t('WIDGET_CHECKOUT_PAGE_SUBHEADING')}
                 </Text>
-              </Headings>
+              </div>
 
               <Space y={{ base: 1, lg: 1.5 }}>
                 <ShopBreakdown>
@@ -229,8 +229,6 @@ const Wrapper = styled(Space)({
   paddingBottom: theme.space.lg,
   [mq.lg]: { paddingBottom: theme.space.xxl },
 })
-
-const Headings = styled.div({ maxWidth: '35ch', marginInline: 'auto' })
 
 type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
 const SignButton = ({ children, loading, showBankIdIcon }: SignButtonProps) => {
