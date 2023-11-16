@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { Heading, Space, Text } from 'ui'
+import { Heading, Space, Text, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
 import { PageLink } from '@/utils/PageLink'
@@ -37,7 +37,7 @@ export const PaymentPage = (props: Props) => {
   }
 
   return (
-    <Space y={4}>
+    <Wrapper y={4}>
       <Header step="PAY" />
 
       <GridLayout.Root>
@@ -66,8 +66,13 @@ export const PaymentPage = (props: Props) => {
           </Space>
         </GridLayout.Content>
       </GridLayout.Root>
-    </Space>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Space)({
+  paddingBottom: theme.space.lg,
+  [mq.lg]: { paddingBottom: theme.space.xxl },
+})
 
 const StyledTrustlyIframe = styled(TrustlyIframe)({ height: '60vh' })
