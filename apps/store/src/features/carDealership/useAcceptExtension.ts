@@ -54,21 +54,19 @@ export const useAcceptExtension = (params: Params) => {
           return
         }
 
+        const nextUrl = PageLink.carDealershipConfirmation({
+          contractId: params.trialContractId,
+        }).pathname
+
         if (data.currentMember.hasActivePaymentConnection) {
           LOGGER.info('Member has active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
-          await router.push(
-            PageLink.carDealershipConfirmationWithExtension({ contractId: params.trialContractId })
-              .pathname,
-          )
+          await router.push(nextUrl)
         } else {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
-          const nextUrl = PageLink.carDealershipConfirmationWithExtension({
-            contractId: params.trialContractId,
-          }).pathname
           await router.push(
             PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl }),
           )

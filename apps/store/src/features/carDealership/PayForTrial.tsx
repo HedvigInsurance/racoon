@@ -35,7 +35,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
       ssn,
       async onSuccess() {
         console.log('Car dealership | BankID login success')
-        const nextUrl = PageLink.carDealershipConfirmationWithoutExtension({
+        const nextUrl = PageLink.carDealershipConfirmation({
           contractId: trialContract.id,
         }).pathname
         await router.push(

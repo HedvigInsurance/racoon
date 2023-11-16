@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { ComponentPropsWithoutRef } from 'react'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
+import { STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG } from '@/features/carDealership/carDearlership.constants'
 import { initializeApolloServerSide, addApolloState } from '@/services/apollo/client'
 import {
   CarTrialExtensionDocument,
@@ -17,7 +18,7 @@ type Props = ComponentPropsWithoutRef<typeof ConfirmationPage>
 type Params = { contractId: string }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
-  const { req, res, locale, params, resolvedUrl } = context
+  const { req, res, locale, params } = context
 
   if (!isRoutingLocale(locale)) return { notFound: true }
 
@@ -25,9 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!contractId) return { notFound: true }
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  // with-extension | without-extension
-  const confirmationStorySlug = resolvedUrl.split('/')[2]
-  const slug = `car-buyer/${confirmationStorySlug}`
+  const slug = `${STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG}/confirmation`
 
   const [trialExtension, layoutWithMenuProps, story] = await Promise.all([
     fetchTrialExtensionData(apolloClient, contractId),
