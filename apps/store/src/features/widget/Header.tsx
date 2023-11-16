@@ -15,7 +15,7 @@ type Props = {
 type ProgressStep = { key: Step; label: string }
 
 export const Header = (props: Props) => {
-  const { t } = useTranslation('checkout')
+  const { t } = useTranslation('widget')
   const progressSteps: Array<ProgressStep> = [
     {
       key: 'YOUR_INFO',

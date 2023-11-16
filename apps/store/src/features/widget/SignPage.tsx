@@ -44,7 +44,7 @@ type Props = {
 }
 
 export const SignPage = (props: Props) => {
-  const { t } = useTranslation('checkout')
+  const { t } = useTranslation(['widget', 'checkout'])
   const { routingLocale } = useCurrentLocale()
   const router = useRouter()
 
@@ -128,7 +128,7 @@ export const SignPage = (props: Props) => {
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>
                     <PersonalNumberField
-                      label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+                      label={t('checkout:FIELD_PERSONAL_NUMBER_SE_LABEL')}
                       value={props.ssn}
                       readOnly
                       disabled
@@ -138,13 +138,13 @@ export const SignPage = (props: Props) => {
                       <>
                         <TextField
                           type="text"
-                          label={t('FORM_FIRST_NAME_LABEL')}
+                          label={t('checkout:FORM_FIRST_NAME_LABEL')}
                           name={FormElement.FirstName}
                           required
                         />
                         <TextField
                           type="text"
-                          label={t('FORM_LAST_NAME_LABEL')}
+                          label={t('checkout:FORM_LAST_NAME_LABEL')}
                           name={FormElement.LastName}
                           required
                         />
@@ -154,7 +154,7 @@ export const SignPage = (props: Props) => {
                     {props.shouldCollectEmail && (
                       <TextField
                         type="email"
-                        label={t('FORM_EMAIL_LABEL')}
+                        label={t('checkout:FORM_EMAIL_LABEL')}
                         name={FormElement.Email}
                         defaultValue={props.suggestedEmail}
                         required
@@ -163,7 +163,9 @@ export const SignPage = (props: Props) => {
 
                     <Space y={1}>
                       <SignButton loading={loading} showBankIdIcon={true}>
-                        {t('SIGN_BUTTON', { count: props.shopSession.cart.entries.length })}
+                        {t('checkout:SIGN_BUTTON', {
+                          count: props.shopSession.cart.entries.length,
+                        })}
                       </SignButton>
 
                       <Space y={1.6}>
@@ -186,7 +188,7 @@ export const SignPage = (props: Props) => {
                             href={PageLink.privacyPolicy({ locale: routingLocale })}
                             target="_blank"
                           >
-                            {t('SIGN_DISCLAIMER')}
+                            {t('checkout:SIGN_DISCLAIMER')}
                           </TextWithLink>
                         )}
                       </Space>
@@ -209,13 +211,13 @@ export const SignPage = (props: Props) => {
           Footer={
             <FullscreenDialog.Close asChild>
               <Button type="button" variant="primary">
-                {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+                {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
               </Button>
             </FullscreenDialog.Close>
           }
         >
           <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-            {t('ERROR_GENERAL_DIALOG_PROMPT')}
+            {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
           </ErrorPrompt>
         </FullscreenDialog.Modal>
       </FullscreenDialog.Root>
