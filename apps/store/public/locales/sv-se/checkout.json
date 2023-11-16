@@ -25,9 +25,7 @@
   "PAYMENT_HEADER_HELP_LINK": "Hjälp",
   "PAYMENT_TRUSTLY_FOOTNOTE": "Säker betalning med Trustly. Denna betalningsmetod kommer också användas för andra försäkringar du tecknar hos Hedvig.",
   "PAYMENT_TRUSTLY_MESSAGE": "Koppla autogiro. Betalning dras månadsvis, den 27:e.",
-  "PAYMENT_TRUSTLY_SUBTITLE": "Pengarna kommer dras den 27:e varje månad",
   "PAYMENT_TRUSTLY_SUCCESS_MESSAGE": "Autogiro kopplat",
-  "PAYMENT_TRUSTLY_TITLE": "Koppla autogiro",
   "SAS_BONUS_NUMBER_INPUT_LABEL": "Nummer",
   "SAS_BONUS_NUMBER_SAVED": "Ditt SAS EuroBonus är nu kopplat",
   "SAS_BONUS_NUMBER_SAVE_BUTTON": "Spara",
@@ -46,11 +44,5 @@
   "SWITCHING_ASSISTANT_NEXT_LINK": "Gå vidare",
   "SWITCHING_ASSISTANT_SKIP_LINK": "Påminn mig senare",
   "SWITCHING_ASSISTANT_SUPPORT_LINK": "Hjälp",
-  "SWITCHING_ASSISTANT_TITLE": "Säg upp din gamla bilförsäkring",
-  "USP_TEXT": "Ingen bindningstid",
-  "WIDGET_CHECKOUT_PAGE_HEADING": "Ditt erbjudande",
-  "WIDGET_CHECKOUT_PAGE_SUBHEADING": "Välj startdatum och signera nedan",
-  "WIDGET_PROGRESS_PAY": "Betala",
-  "WIDGET_PROGRESS_SIGN": "Signera",
-  "WIDGET_PROGRESS_YOUR_INFO": "Din info"
+  "SWITCHING_ASSISTANT_TITLE": "Säg upp din gamla bilförsäkring"
 }

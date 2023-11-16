@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const PaymentPage = (props: Props) => {
-  const { t } = useTranslation('checkout')
+  const { t } = useTranslation(['widget', 'checkout'])
   const router = useRouter()
   const nextUrl = PageLink.widgetConfirmation({
     flow: props.flow,
@@ -54,7 +54,7 @@ export const PaymentPage = (props: Props) => {
 
             <Space y={1}>
               <Text size="xs" color="textSecondary" align="center" balance={true}>
-                {t('PAYMENT_TRUSTLY_FOOTNOTE')}
+                {t('checkout:PAYMENT_TRUSTLY_FOOTNOTE')}
               </Text>
 
               <StyledTrustlyIframe
