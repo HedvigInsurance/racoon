@@ -5,6 +5,9 @@ import { ShopSessionCustomerUpdateInput } from '@/services/apollo/generated'
 enum SearchParam {
   Email = 'email',
   Ssn = 'ssn',
+
+  ProductType = 'productType',
+  ApartmentSubType = 'subType',
 }
 
 type CustomerData = Omit<ShopSessionCustomerUpdateInput, 'shopSessionId'>
@@ -31,4 +34,33 @@ export const parseCustomerDataSearchParams = (
     },
     updatedSearchParams,
   ]
+}
+
+export const parseProductNameSearchParams = (
+  searchParams: URLSearchParams,
+): [string | null, URLSearchParams] => {
+  const updatedSearchParams = new URLSearchParams(searchParams.toString())
+
+  const productType = updatedSearchParams.get(SearchParam.ProductType)
+  if (productType) updatedSearchParams.delete(SearchParam.ProductType)
+
+  const subType = updatedSearchParams.get(SearchParam.ApartmentSubType)
+  if (subType) updatedSearchParams.delete(SearchParam.ApartmentSubType)
+
+  const productName = getProductName(productType, subType)
+
+  return [productName || productType, updatedSearchParams]
+}
+
+// Legacy, used by Partner Widget
+// TODO: migrate to use our new product names directly in the URL
+const getProductName = (productType: string | null, subType: string | null): string | undefined => {
+  switch (productType) {
+    case 'SWEDISH_APARTMENT':
+      return subType === 'BRF' ? 'SE_APARTMENT_BRF' : 'SE_APARTMENT_RENT'
+    case 'SWEDISH_HOUSE':
+      return 'SE_HOUSE'
+    case 'SWEDISH_ACCIDENT':
+      return 'SE_ACCIDENT'
+  }
 }
