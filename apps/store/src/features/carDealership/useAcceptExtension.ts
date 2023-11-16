@@ -7,6 +7,7 @@ import {
   useCurrentMemberLazyQuery,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { PageLink } from '@/utils/PageLink'
 
@@ -106,5 +107,14 @@ export const useAcceptExtension = (params: Params) => {
     })
   }
 
-  return [addExtensionOffer, loadingRemoveAdd] as const
+  let signLoading = false
+  const { state: bankIdState } = currentOperation ?? {}
+  if (bankIdState) {
+    signLoading = [BankIdState.Starting, BankIdState.Pending, BankIdState.Success].includes(
+      bankIdState,
+    )
+  }
+  const loading = loadingRemoveAdd || signLoading
+
+  return [addExtensionOffer, loading] as const
 }
