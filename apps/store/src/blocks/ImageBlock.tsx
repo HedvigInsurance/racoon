@@ -2,7 +2,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ImageProps } from 'next/image'
-import { ConditionalWrapper, mq, theme } from 'ui'
+import { ConditionalWrapper, mq, theme, DEFAULT_IMAGE_QUALITY } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
@@ -54,6 +54,7 @@ export const ImageBlock = ({ blok, nested }: ImageBlockProps) => {
           alt={blok.image.alt}
           fill
           priority={blok.priority}
+          quality={DEFAULT_IMAGE_QUALITY}
         />
         <BodyWrapper>
           {headingBlocks.map((nestedBlock) => (

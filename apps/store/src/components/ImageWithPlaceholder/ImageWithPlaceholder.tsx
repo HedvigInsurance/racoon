@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { default as NextImage, ImageProps } from 'next/image'
 import { useState } from 'react'
-import { theme } from 'ui'
+import { theme, DEFAULT_IMAGE_QUALITY } from 'ui'
 
 export const ImageWithPlaceholder = ({ ...props }: ImageProps) => {
   const [hasLoaded, setHasLoaded] = useState(false)
@@ -11,6 +11,7 @@ export const ImageWithPlaceholder = ({ ...props }: ImageProps) => {
   }
 
   const imageProps = {
+    quality: DEFAULT_IMAGE_QUALITY,
     ...props,
     ...(hasLoaded && { 'data-loaded': true }),
   } as const
