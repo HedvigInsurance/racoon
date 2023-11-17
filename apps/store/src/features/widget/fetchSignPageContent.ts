@@ -11,7 +11,6 @@ export const fetchSignPageContent = async (params: Params) => {
   const story = await getStoryById<WidgetFlowStory>({
     id: params.flow,
     version: params.draft ? 'draft' : undefined,
-    resolve_relations: 'widgetFlow.checkoutPageContent',
   })
 
   return story.content.checkoutPageContent
