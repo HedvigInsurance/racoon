@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { mq } from 'ui'
+import { DEFAULT_IMAGE_QUALITY, mq } from 'ui'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = {
@@ -10,7 +10,12 @@ type Props = {
 export const ImageSection = ({ image }: Props) => {
   return (
     <Wrapper>
-      <StyledImage src={getImgSrc(image.src)} alt={image.alt} fill={true} />
+      <StyledImage
+        src={getImgSrc(image.src)}
+        alt={image.alt}
+        fill={true}
+        quality={DEFAULT_IMAGE_QUALITY}
+      />
     </Wrapper>
   )
 }

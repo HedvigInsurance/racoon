@@ -15,7 +15,7 @@ export type { Level } from './lib/media-query'
 export { mq, getMediaQueryBreakpoint } from './lib/media-query'
 
 export type { FontSizes } from './lib/theme/typography'
-export { theme, getColor } from './lib/theme/theme'
+export { theme, getColor, DEFAULT_IMAGE_QUALITY } from './lib/theme/theme'
 export { legacyTheme } from './lib/theme/legacy/legacyTheme'
 export type { UIColors, UIColorKeys } from './lib/theme/colors/colors'
 export { ThemeProvider } from './lib/theme/ThemeProvider'
