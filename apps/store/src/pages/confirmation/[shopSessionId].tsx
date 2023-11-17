@@ -33,34 +33,37 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   const shopSessionId = params?.shopSessionId
   if (!shopSessionId) return { notFound: true }
 
-  const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
-  const shopSession = await shopSessionService.fetchById(shopSessionId)
+  try {
+    const apolloClient = await initializeApolloServerSide({ req, res, locale })
+    const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
+    const shopSession = await shopSessionService.fetchById(shopSessionId)
 
-  const [layoutWithMenuProps, outcome, memberPartnerData, story] = await Promise.all([
-    getLayoutWithMenuProps(context, apolloClient),
-    fetchOutcomeData(shopSessionService, shopSessionId),
-    fetchMemberPartnerData(apolloClient),
-    fetchConfirmationStory(locale),
-  ])
+    const [layoutWithMenuProps, outcome, memberPartnerData, story] = await Promise.all([
+      getLayoutWithMenuProps(context, apolloClient),
+      fetchOutcomeData(shopSessionService, shopSessionId),
+      fetchMemberPartnerData(apolloClient),
+      fetchConfirmationStory(locale),
+    ])
 
-  if (layoutWithMenuProps === null) return { notFound: true }
+    // @TODO: uncomment after implementing signing
+    // if (shopSession.checkout.completedAt === null) {
+    //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
+    // }
 
-  // @TODO: uncomment after implementing signing
-  // if (shopSession.checkout.completedAt === null) {
-  //   return { redirect: { destination: PageLink.store({ locale }), permanent: false } }
-  // }
-
-  return addApolloState(apolloClient, {
-    props: {
-      ...layoutWithMenuProps,
-      [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      cart: shopSession.cart,
-      story,
-      memberPartnerData,
-      ...(outcome ? getSwitching(outcome) : {}),
-    },
-  })
+    return addApolloState(apolloClient, {
+      props: {
+        ...layoutWithMenuProps,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
+        cart: shopSession.cart,
+        story,
+        memberPartnerData,
+        ...(outcome ? getSwitching(outcome) : {}),
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 
 const CheckoutConfirmationPage: NextPageWithLayout<

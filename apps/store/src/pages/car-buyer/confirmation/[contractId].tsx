@@ -25,29 +25,32 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const contractId = params?.contractId
   if (!contractId) return { notFound: true }
 
-  const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  const slug = `${STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG}/confirmation`
+  try {
+    const apolloClient = await initializeApolloServerSide({ req, res, locale })
+    const slug = `${STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG}/confirmation`
 
-  const [trialExtension, layoutWithMenuProps, story] = await Promise.all([
-    fetchTrialExtensionData(apolloClient, contractId),
-    getLayoutWithMenuProps(context, apolloClient),
-    getStoryBySlug<ConfirmationStory>(slug, { locale }),
-  ])
+    const [trialExtension, layoutWithMenuProps, story] = await Promise.all([
+      fetchTrialExtensionData(apolloClient, contractId),
+      getLayoutWithMenuProps(context, apolloClient),
+      getStoryBySlug<ConfirmationStory>(slug, { locale }),
+    ])
 
-  if (trialExtension == null) return { notFound: true }
+    if (trialExtension == null) return { notFound: true }
 
-  if (layoutWithMenuProps === null) return { notFound: true }
-
-  return addApolloState(apolloClient, {
-    props: {
-      ...layoutWithMenuProps,
-      shopSessionId: trialExtension.shopSession.id,
-      cart: trialExtension.shopSession.cart,
-      carTrialContract: trialExtension.trialContract,
-      story,
-      memberPartnerData: null,
-    },
-  })
+    return addApolloState(apolloClient, {
+      props: {
+        ...layoutWithMenuProps,
+        shopSessionId: trialExtension.shopSession.id,
+        cart: trialExtension.shopSession.cart,
+        carTrialContract: trialExtension.trialContract,
+        story,
+        memberPartnerData: null,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 
 const fetchTrialExtensionData = async (

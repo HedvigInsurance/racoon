@@ -39,7 +39,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   context.locale = locale
 
   const props = await getLayoutWithMenuProps(context)
-  if (props === null) return { notFound: true }
 
   return { props }
 }

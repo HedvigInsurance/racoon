@@ -15,8 +15,7 @@ export const getLayoutWithMenuProps = async (
   defaultApolloClient?: ApolloClient<unknown>,
 ) => {
   if (!isRoutingLocale(context.locale)) {
-    console.warn(`Locale ${context.locale} is not supported`)
-    return null
+    throw new Error(`Locale ${context.locale} is not supported`)
   }
 
   let apolloClient = defaultApolloClient

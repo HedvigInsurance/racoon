@@ -18,14 +18,18 @@ const NextPage: NextPageWithLayout<Props> = (props) => (
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   if (!context.params?.code) return { notFound: true }
 
-  const layoutWithMenuProps = await getLayoutWithMenuProps(context)
-  if (layoutWithMenuProps === null) return { notFound: true }
+  try {
+    const layoutWithMenuProps = await getLayoutWithMenuProps(context)
 
-  return {
-    props: {
-      ...layoutWithMenuProps,
-      code: context.params.code,
-    },
+    return {
+      props: {
+        ...layoutWithMenuProps,
+        code: context.params.code,
+      },
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
   }
 }
 
