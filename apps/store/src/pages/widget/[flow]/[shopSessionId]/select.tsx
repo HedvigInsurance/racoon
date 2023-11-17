@@ -94,13 +94,14 @@ type RedirectToProductParams = {
 }
 
 const redirectToProduct = async (params: RedirectToProductParams): Promise<Redirect> => {
-  const priceIntent = await createPriceIntent({
+  const [priceIntent, updatedSearchParams] = await createPriceIntent({
     service: priceIntentServiceInitServerSide({
       ...params.context,
       apolloClient: params.apolloClient,
     }),
     shopSessionId: params.shopSessionId,
     productName: params.productName,
+    searchParams: params.searchParams,
   })
 
   const nextUrl = PageLink.widgetCalculatePrice({
@@ -109,7 +110,7 @@ const redirectToProduct = async (params: RedirectToProductParams): Promise<Redir
     shopSessionId: params.shopSessionId,
     priceIntentId: priceIntent.id,
   })
-  nextUrl.search = params.searchParams.toString()
+  nextUrl.search = updatedSearchParams.toString()
 
   return { destination: nextUrl.href, permanent: false }
 }

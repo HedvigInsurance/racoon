@@ -3,11 +3,27 @@ import { ShopSessionCustomerUpdateInput } from '@/services/apollo/generated'
 
 // Search Params from Partner Widget
 enum SearchParam {
+  // Customer Data
   Email = 'email',
   Ssn = 'ssn',
 
+  // Product Name Data
   ProductType = 'productType',
   ApartmentSubType = 'subType',
+
+  // Price Intent Data
+  StreetAddress = 'street',
+  ZipCode = 'zipCode',
+  City = 'city',
+  LivingSpace = 'livingSpace',
+  NumberCoInsured = 'coInsured',
+
+  // No longer used?
+  PhoneNumber = 'phoneNumber',
+  BirthDate = 'birthDate',
+  FirstName = 'firstName',
+  LastName = 'lastName',
+  Student = 'student', // can't find what the values are supposed to be
 }
 
 type CustomerData = Omit<ShopSessionCustomerUpdateInput, 'shopSessionId'>
@@ -63,4 +79,38 @@ const getProductName = (productType: string | null, subType: string | null): str
     case 'SWEDISH_ACCIDENT':
       return 'SE_ACCIDENT'
   }
+}
+
+export const parsePriceIntentDataSearchParams = (
+  searchParams: URLSearchParams,
+): [Record<string, unknown>, URLSearchParams] => {
+  const updatedSearchParams = new URLSearchParams(searchParams.toString())
+
+  const street = searchParams.get(SearchParam.StreetAddress)
+  updatedSearchParams.delete(SearchParam.StreetAddress)
+  const zipCode = searchParams.get(SearchParam.ZipCode)
+  updatedSearchParams.delete(SearchParam.ZipCode)
+  const city = searchParams.get(SearchParam.City)
+  updatedSearchParams.delete(SearchParam.City)
+  const searchLivingSpace = searchParams.get(SearchParam.LivingSpace)
+  const livingSpace = searchLivingSpace ? parseNumber(searchLivingSpace) : undefined
+  if (livingSpace !== undefined) updatedSearchParams.delete(SearchParam.LivingSpace)
+  const searchNumberCoInsured = searchParams.get(SearchParam.NumberCoInsured)
+  const numberCoInsured = searchNumberCoInsured ? parseNumber(searchNumberCoInsured) : undefined
+  if (numberCoInsured !== undefined) updatedSearchParams.delete(SearchParam.NumberCoInsured)
+
+  const data = {
+    ...(street && { street }),
+    ...(zipCode && { zipCode }),
+    ...(city && { city }),
+    ...(livingSpace && { livingSpace }),
+    ...(numberCoInsured && { numberCoInsured }),
+  }
+
+  return [data, updatedSearchParams]
+}
+
+const parseNumber = (value: string): number | undefined => {
+  const parsed = parseInt(value, 10)
+  return isNaN(parsed) ? undefined : parsed
 }
