@@ -1,5 +1,9 @@
 import Personnummer from 'personnummer'
-import { ShopSessionCustomerUpdateInput } from '@/services/apollo/generated'
+import {
+  type ShopSessionCreatePartnerMutationVariables,
+  type ShopSessionCustomerUpdateInput,
+} from '@/services/apollo/generated'
+import { EXTERNAL_REQUEST_ID_QUERY_PARAM } from './widget.constants'
 
 // Search Params from Partner Widget
 enum SearchParam {
@@ -24,6 +28,10 @@ enum SearchParam {
   FirstName = 'firstName',
   LastName = 'lastName',
   Student = 'student', // can't find what the values are supposed to be
+
+  // Shop Session Create Partner Data
+  ExternalMemberId = 'externalMemberId',
+  ExternalRequestId = EXTERNAL_REQUEST_ID_QUERY_PARAM,
 }
 
 type CustomerData = Omit<ShopSessionCustomerUpdateInput, 'shopSessionId'>
@@ -113,4 +121,24 @@ export const parsePriceIntentDataSearchParams = (
 const parseNumber = (value: string): number | undefined => {
   const parsed = parseInt(value, 10)
   return isNaN(parsed) ? undefined : parsed
+}
+
+export const parseShopSessionCreatePartnerSearchParams = (
+  searchParams: URLSearchParams,
+): [Partial<ShopSessionCreatePartnerMutationVariables['input']>, URLSearchParams] => {
+  const updatedSearchParams = new URLSearchParams(searchParams.toString())
+
+  const externalRequestId = updatedSearchParams.get(SearchParam.ExternalRequestId)
+  if (externalRequestId) updatedSearchParams.delete(SearchParam.ExternalRequestId)
+
+  const externalMemberId = updatedSearchParams.get(SearchParam.ExternalMemberId)
+  if (externalMemberId) updatedSearchParams.delete(SearchParam.ExternalMemberId)
+
+  return [
+    {
+      ...(externalRequestId && { partnerRequestId: externalRequestId }),
+      ...(externalMemberId && { externalMemberId }),
+    },
+    updatedSearchParams,
+  ]
 }
