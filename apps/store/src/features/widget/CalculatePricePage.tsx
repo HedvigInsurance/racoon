@@ -13,6 +13,7 @@ import {
   type WidgetPriceIntentFragment,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { EXTERNAL_INSURANCE_FIELD_NAME } from '@/services/PriceCalculator/formFragments'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { PageLink } from '@/utils/PageLink'
@@ -24,6 +25,7 @@ type Props = {
   priceIntent: WidgetPriceIntentFragment
   priceTemplate: Template
   flow: string
+  compareInsurance: boolean
 }
 
 export const CalculatePricePage = (props: Props) => {
@@ -88,6 +90,7 @@ export const CalculatePricePage = (props: Props) => {
               priceIntent={props.priceIntent}
               priceTemplate={props.priceTemplate}
               onConfirm={handleConfirm}
+              hideFields={props.compareInsurance ? undefined : [EXTERNAL_INSURANCE_FIELD_NAME]}
             />
           </GridLayout.Content>
         </GridLayout.Root>

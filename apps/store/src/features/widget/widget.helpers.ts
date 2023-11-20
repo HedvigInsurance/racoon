@@ -2,6 +2,7 @@ import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.h
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
+import { WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
 import { parsePriceIntentDataSearchParams } from './parseSearchParams'
 
 const PRODUCT_TO_TEMPLATE = new Map<string, string>([
@@ -45,4 +46,11 @@ export const createPriceIntent = async (
   })
 
   return [priceIntent, updatedSearchParams]
+}
+
+export const fetchFlowStory = (flow: string, draft?: boolean) => {
+  return getStoryById<WidgetFlowStory>({
+    id: flow,
+    version: draft ? 'draft' : undefined,
+  })
 }

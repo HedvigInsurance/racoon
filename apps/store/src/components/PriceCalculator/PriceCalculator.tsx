@@ -22,6 +22,7 @@ type Props = {
   shopSession: ShopSession
   priceTemplate: Template
   onConfirm: () => void
+  hideFields?: Array<string>
 }
 
 type CustomerData = {
@@ -101,19 +102,21 @@ export const PriceCalculator = (props: Props) => {
             last={sectionIndex === form.sections.length - 1}
           >
             <FormGrid items={section.items}>
-              {(field, index) => (
-                <AutomaticField
-                  field={field}
-                  onSubmit={handleSubmit}
-                  loading={isLoading}
-                  priceIntent={priceIntent}
-                  // We don't want to mess up focusing for the user by setting autoFocus on the
-                  // first item in the form, since that would make it unintuitive to navigate our
-                  // site. But when the user is in the form editing, even having submitted the first
-                  // section, we want to set autoFocus for the next section. Hence sectionIndex > 0
-                  autoFocus={sectionIndex > 0 && index === 0}
-                />
-              )}
+              {(field, index) =>
+                !props.hideFields?.includes(field.name) && (
+                  <AutomaticField
+                    field={field}
+                    onSubmit={handleSubmit}
+                    loading={isLoading}
+                    priceIntent={priceIntent}
+                    // We don't want to mess up focusing for the user by setting autoFocus on the
+                    // first item in the form, since that would make it unintuitive to navigate our
+                    // site. But when the user is in the form editing, even having submitted the first
+                    // section, we want to set autoFocus for the next section. Hence sectionIndex > 0
+                    autoFocus={sectionIndex > 0 && index === 0}
+                  />
+                )
+              }
             </FormGrid>
           </PriceCalculatorSection>
         )}

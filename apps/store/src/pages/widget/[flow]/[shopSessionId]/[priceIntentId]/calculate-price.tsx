@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ComponentPropsWithoutRef } from 'react'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
-import { getPriceTemplate } from '@/features/widget/widget.helpers'
+import { fetchFlowStory, getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { addApolloState } from '@/services/apollo/client'
 import {
@@ -15,7 +15,10 @@ import {
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = Pick<ComponentPropsWithoutRef<typeof CalculatePricePage>, 'flow' | 'priceTemplate'> & {
+type Props = Pick<
+  ComponentPropsWithoutRef<typeof CalculatePricePage>,
+  'flow' | 'priceTemplate' | 'compareInsurance'
+> & {
   priceIntentId: string
   shopSessionId: string
 }
@@ -38,16 +41,23 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
   try {
-    const [translations, priceIntent] = await Promise.all([
+    const [translations, priceIntent, story] = await Promise.all([
       serverSideTranslations(context.locale),
       fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
+      fetchFlowStory(context.params.flow, context.draftMode),
       shopSessionService.fetchById(context.params.shopSessionId),
     ])
 
     const priceTemplate = getPriceTemplate(priceIntent.product.name)
 
     return addApolloState(apolloClient, {
-      props: { priceIntent, priceTemplate, ...translations, ...context.params },
+      props: {
+        priceIntent,
+        priceTemplate,
+        compareInsurance: story.content.compareInsurance ?? false,
+        ...translations,
+        ...context.params,
+      },
     })
   } catch (error) {
     console.error('Widget Calculate Price | Unable to render', error)
