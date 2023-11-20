@@ -1,13 +1,16 @@
 import { stringify } from 'querystring'
-import { type GetServerSideProps } from 'next'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import { Redirect, type GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentProps } from 'react'
 import { fetchFlowProducts } from '@/features/widget/fetchFlowProducts'
+import { parseProductNameSearchParams } from '@/features/widget/parseSearchParams'
 import { SelectProductPage } from '@/features/widget/SelectProductPage'
 import { createPriceIntent } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
 type Props = ComponentProps<typeof SelectProductPage>
@@ -36,22 +39,41 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     throw new Error(`No products found for flow ${context.params.flow}`)
   }
 
+  const searchParams = new URLSearchParams(stringify(context.query))
+
   if (products.length === 1) {
-    const priceIntent = await createPriceIntent({
-      service: priceIntentServiceInitServerSide({ ...context, apolloClient }),
-      shopSessionId: context.params.shopSessionId,
-      productName: products[0].name,
-    })
+    const productName = products[0].name
 
-    const nextUrl = PageLink.widgetCalculatePrice({
-      locale: context.locale,
-      flow: context.params.flow,
-      shopSessionId: context.params.shopSessionId,
-      priceIntentId: priceIntent.id,
-    })
-    nextUrl.search = stringify(context.query)
+    return {
+      redirect: await redirectToProduct({
+        context,
+        apolloClient,
+        productName,
+        shopSessionId: context.params.shopSessionId,
+        locale: context.locale,
+        flow: context.params.flow,
+        searchParams,
+      }),
+    }
+  }
 
-    return { redirect: { destination: nextUrl.href, permanent: false } }
+  const [preSelectedProductName, updatedSearchParams] = parseProductNameSearchParams(searchParams)
+  if (preSelectedProductName) {
+    if (products.find((product) => product.name === preSelectedProductName)) {
+      return {
+        redirect: await redirectToProduct({
+          context,
+          apolloClient,
+          productName: preSelectedProductName,
+          shopSessionId: context.params.shopSessionId,
+          locale: context.locale,
+          flow: context.params.flow,
+          searchParams: updatedSearchParams,
+        }),
+      }
+    } else {
+      console.warn(`Widget | Pre-selected product not found: ${preSelectedProductName}`)
+    }
   }
 
   return {
@@ -60,3 +82,34 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 }
 
 export default SelectProductPage
+
+type RedirectToProductParams = {
+  context: GetServerSidePropsContext
+  apolloClient: ApolloClient<NormalizedCacheObject>
+  shopSessionId: string
+  productName: string
+  locale: RoutingLocale
+  flow: string
+  searchParams: URLSearchParams
+}
+
+const redirectToProduct = async (params: RedirectToProductParams): Promise<Redirect> => {
+  const priceIntent = await createPriceIntent({
+    service: priceIntentServiceInitServerSide({
+      ...params.context,
+      apolloClient: params.apolloClient,
+    }),
+    shopSessionId: params.shopSessionId,
+    productName: params.productName,
+  })
+
+  const nextUrl = PageLink.widgetCalculatePrice({
+    locale: params.locale,
+    flow: params.flow,
+    shopSessionId: params.shopSessionId,
+    priceIntentId: priceIntent.id,
+  })
+  nextUrl.search = params.searchParams.toString()
+
+  return { destination: nextUrl.href, permanent: false }
+}
