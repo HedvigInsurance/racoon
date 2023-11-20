@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, type PropsWithChildren } from 'react'
 import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme, mq } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -33,6 +34,7 @@ import { Header } from './Header'
 
 type Props = {
   shopSession: ShopSession
+  priceIntentId: string
   customerAuthenticationStatus: ShopSessionAuthenticationStatus
   ssn: string
   shouldCollectEmail: boolean
@@ -43,7 +45,7 @@ type Props = {
 }
 
 export const SignPage = (props: Props) => {
-  const { t } = useTranslation(['widget', 'checkout'])
+  const { t } = useTranslation(['widget', 'checkout', 'cart'])
   const { routingLocale } = useCurrentLocale()
   const router = useRouter()
 
@@ -80,6 +82,19 @@ export const SignPage = (props: Props) => {
     },
   })
 
+  const getEditLink = (offerId: string) => {
+    const url = PageLink.widgetCalculatePrice({
+      flow: props.flow,
+      shopSessionId: props.shopSession.id,
+      priceIntentId: props.priceIntentId,
+      locale: routingLocale,
+    })
+
+    url.searchParams.set('replace', offerId)
+
+    return url
+  }
+
   const userErrorMessage = userError?.message
 
   return (
@@ -103,7 +118,13 @@ export const SignPage = (props: Props) => {
                 <ShopBreakdown>
                   {props.shopSession.cart.entries.map((item) => (
                     <ProductItemContainer key={item.id} offer={item}>
-                      {/* <EditActionButton shopSessionId={shopSession.id} offer={item} /> */}
+                      <ButtonNextLink
+                        variant="secondary-alt"
+                        size="medium"
+                        href={getEditLink(item.id)}
+                      >
+                        {t('cart:CART_ENTRY_EDIT_BUTTON')}
+                      </ButtonNextLink>
                     </ProductItemContainer>
                   ))}
                 </ShopBreakdown>
