@@ -1,10 +1,10 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { ComponentProps } from 'react'
+import { type ComponentProps } from 'react'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/utils/useCampaign'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { Discount } from './Discount'
 import { DiscountField } from './DiscountField'
+import { useDiscountProps } from './useDiscountExplanation'
 
 type Props = {
   shopSession: ShopSession
@@ -35,22 +35,16 @@ export const DiscountFieldContainer = (props: Props) => {
   const redeemedCampaign = props.shopSession.cart.redeemedCampaign
   const hasCampaign = !!redeemedCampaign
 
-  const getDiscountExplanation = useGetDiscountExplanation()
-  const campaign = hasCampaign
-    ? {
-        code: redeemedCampaign.code,
-        explanation: getDiscountExplanation(redeemedCampaign.discount),
-      }
-    : undefined
+  const discount = useDiscountProps(redeemedCampaign)
 
   if (!props.shopSession.cart.campaignsEnabled) {
-    return campaign ? <Discount {...campaign} /> : null
+    return discount ? <Discount {...discount} /> : null
   }
 
   return (
     <DiscountField
       defaultActive={hasCampaign}
-      campaign={campaign}
+      discount={discount}
       onAdd={handleAdd}
       loadingAdd={loadingRedeem}
       onRemove={handleRemove}

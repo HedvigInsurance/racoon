@@ -3,7 +3,10 @@ import { Button, Heading, Space, mq, theme } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
+import { Discount } from '@/components/ShopBreakdown/Discount'
+import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
+import { useDiscountProps } from '@/components/ShopBreakdown/useDiscountExplanation'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Header } from './Header'
@@ -21,6 +24,8 @@ export const ConfirmationPage = (props: Props) => {
     publishWidgetEvent({ status: 'close' })
   }
 
+  const discount = useDiscountProps(props.shopSession.cart.redeemedCampaign)
+
   return (
     <Wrapper y={4}>
       <Header step="CONFIRMATION" />
@@ -34,6 +39,14 @@ export const ConfirmationPage = (props: Props) => {
               {props.shopSession.cart.entries.map((item) => (
                 <ProductItemContainer key={item.id} offer={item} />
               ))}
+
+              {discount && (
+                <>
+                  <Discount {...discount} />
+                  <Divider />
+                </>
+              )}
+
               <TotalAmountContainer cart={props.shopSession.cart} />
               {props.backToAppButton && (
                 <Button onClick={handleClickBackToApp}>{props.backToAppButton}</Button>

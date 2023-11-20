@@ -40,7 +40,7 @@ export const ActiveError: Story = {
 export const ActiveAdded: Story = {
   args: {
     ...Active.args,
-    campaign: {
+    discount: {
       code: 'SUMMER',
       explanation: '3 months for free',
     },

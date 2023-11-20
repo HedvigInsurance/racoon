@@ -9,7 +9,7 @@ import { AddedCampaignForm } from './AddedCampaignForm'
 
 type Props = {
   defaultActive?: boolean
-  campaign?: {
+  discount?: {
     code: string
     explanation: string
   }
@@ -26,7 +26,7 @@ export const DiscountField = (props: Props) => {
 
   const handleOpenChange = (open: boolean) => {
     setActive(open)
-    if (!open && props.campaign) {
+    if (!open && props.discount) {
       props.onRemove()
     }
   }
@@ -40,13 +40,13 @@ export const DiscountField = (props: Props) => {
         </Collapsible.Trigger>
       </Wrapper>
       <Collapsible.Content style={{ paddingTop: theme.space.md }}>
-        {props.campaign ? (
+        {props.discount ? (
           <AddedCampaignForm
-            campaignCode={props.campaign.code}
+            campaignCode={props.discount.code}
             onRemove={props.onRemove}
             loading={props.loadingRemove}
           >
-            {props.campaign.explanation}
+            {props.discount.explanation}
           </AddedCampaignForm>
         ) : (
           <AddCampaignForm
