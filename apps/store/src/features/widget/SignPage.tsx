@@ -193,12 +193,14 @@ export const SignPage = (props: Props) => {
                 </form>
               </Space>
             </Space>
-
-            {props.content?.map((nestedBlock) => (
-              <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
-            ))}
           </GridLayout.Content>
         </GridLayout.Root>
+
+        <div>
+          {props.content?.map((nestedBlock) => (
+            <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} />
+          ))}
+        </div>
       </Wrapper>
 
       <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
