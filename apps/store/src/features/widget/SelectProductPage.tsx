@@ -26,19 +26,23 @@ export const SelectProductPage = (props: Props) => {
     event.preventDefault()
     if (!productName) throw new Error('Missing product')
 
-    const priceIntent = await createPriceIntent({
+    const searchParams = new URLSearchParams(window.location.search)
+
+    const [priceIntent, updatedSearchParams] = await createPriceIntent({
       service: priceIntentServiceInitClientSide(apolloClient),
       shopSessionId: props.shopSessionId,
       productName,
+      searchParams,
     })
 
-    await router.push(
-      PageLink.widgetCalculatePrice({
-        flow: props.flow,
-        shopSessionId: props.shopSessionId,
-        priceIntentId: priceIntent.id,
-      }),
-    )
+    const nextUrl = PageLink.widgetCalculatePrice({
+      flow: props.flow,
+      shopSessionId: props.shopSessionId,
+      priceIntentId: priceIntent.id,
+    })
+    nextUrl.search = updatedSearchParams.toString()
+
+    await router.push(nextUrl)
   }
 
   const handleValueChange = (value: string) => {
