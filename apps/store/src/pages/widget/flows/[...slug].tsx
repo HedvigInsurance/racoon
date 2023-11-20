@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   if (!context.params) throw new Error('Missing params')
   if (!isRoutingLocale(context.locale)) return { notFound: true }
 
-  const url = new URL(context.req.url ?? '', ORIGIN_URL)
+  const url = new URL(context.resolvedUrl, ORIGIN_URL)
   const redirect = redirectIfRunningInStoryblokEditor(url, context.locale)
   if (redirect) return { redirect }
 
