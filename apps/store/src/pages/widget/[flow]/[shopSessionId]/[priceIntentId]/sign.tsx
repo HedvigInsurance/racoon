@@ -27,6 +27,7 @@ const NextWidgetSignPage = (props: Props) => {
 type Params = {
   flow: string
   shopSessionId: string
+  priceIntentId: string
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
@@ -71,6 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         shopSessionId: context.params.shopSessionId,
         content: signPageContent,
         flow: context.params.flow,
+        priceIntentId: context.params.priceIntentId,
         // TODO: check if we want to control this via CMS
         hideChat: true,
       },

@@ -44,6 +44,7 @@ export const CalculatePricePage = (props: Props) => {
         PageLink.widgetSign({
           flow: props.flow,
           shopSessionId: props.shopSession.id,
+          priceIntentId: props.priceIntent.id,
         }),
       )
     },
