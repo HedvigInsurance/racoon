@@ -25,6 +25,7 @@ import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
+import { useCartEntryToReplace } from '../ProductPage'
 import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
@@ -77,8 +78,10 @@ export const OfferPresenter = (props: Props) => {
 
   const [updateStartDate, updateStartDateResult] = useUpdateStartDate({ priceIntent })
 
+  const entryToReplace = useCartEntryToReplace()
   const [addToCart, loadingAddToCart] = useAddToCart({
     shopSessionId: shopSession.id,
+    entryToReplace: entryToReplace?.id,
     onSuccess(productOfferId) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
 

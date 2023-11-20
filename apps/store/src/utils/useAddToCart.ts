@@ -8,12 +8,12 @@ import {
   useCartEntryReplaceMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { useCartEntryToReplace } from '../components/ProductPage/ProductPage'
 
 type Params = {
   shopSessionId: string
   onSuccess: (productOfferId: string) => void
   onError?: (error: Error) => void
+  entryToReplace?: string
 }
 
 export const useAddToCart = (params: Params) => {
@@ -32,7 +32,6 @@ export const useAddToCart = (params: Params) => {
     awaitRefetchQueries: true,
   })
 
-  const entryToReplace = useCartEntryToReplace()
   const { showError } = useAppErrorHandleContext()
 
   const addToCart = useCallback(
@@ -47,11 +46,11 @@ export const useAddToCart = (params: Params) => {
         },
       } as const
 
-      if (entryToReplace) {
+      if (params.entryToReplace) {
         await replaceEntry({
           variables: {
             shopSessionId: params.shopSessionId,
-            removeOfferId: entryToReplace.id,
+            removeOfferId: params.entryToReplace,
             addOfferId: productOfferId,
           },
           ...options,
@@ -63,7 +62,7 @@ export const useAddToCart = (params: Params) => {
         })
       }
     },
-    [addEntry, entryToReplace, replaceEntry, showError, params],
+    [addEntry, replaceEntry, showError, params],
   )
 
   return [addToCart, loadingReplace || loading] as const
