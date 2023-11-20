@@ -4,8 +4,8 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 
 const PRODUCT_TO_TEMPLATE = new Map<string, string>([
-  ['SE_WIDGET_APARTMENT_BRF', 'SE_WIDGET_APARTMENT'],
-  ['SE_WIDGET_APARTMENT_RENT', 'SE_WIDGET_APARTMENT'],
+  ['SE_APARTMENT_BRF', 'SE_WIDGET_APARTMENT'],
+  ['SE_APARTMENT_RENT', 'SE_WIDGET_APARTMENT'],
 ])
 
 export const getPriceTemplate = (product: string): Template => {
