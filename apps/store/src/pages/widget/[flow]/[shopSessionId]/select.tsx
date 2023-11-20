@@ -6,8 +6,9 @@ import { type ComponentProps } from 'react'
 import { fetchFlowProducts } from '@/features/widget/fetchFlowProducts'
 import { parseProductNameSearchParams } from '@/features/widget/parseSearchParams'
 import { SelectProductPage } from '@/features/widget/SelectProductPage'
-import { createPriceIntent } from '@/features/widget/widget.helpers'
+import { createPriceIntent, getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
+import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -25,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   if (!isRoutingLocale(context.locale)) throw new Error(`Invalid locale: ${context.locale}`)
 
   const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
-  const [translations, products] = await Promise.all([
+  const [translations, [story, products]] = await Promise.all([
     serverSideTranslations(context.locale),
     fetchFlowProducts({
       apolloClient,
@@ -40,6 +41,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 
   const searchParams = new URLSearchParams(stringify(context.query))
+  const compareInsurance = story.content.compareInsurance ?? false
 
   if (products.length === 1) {
     const productName = products[0].name
@@ -53,6 +55,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         locale: context.locale,
         flow: context.params.flow,
         searchParams,
+        priceTemplate: getPriceTemplate(productName, compareInsurance),
       }),
     }
   }
@@ -69,6 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
           locale: context.locale,
           flow: context.params.flow,
           searchParams: updatedSearchParams,
+          priceTemplate: getPriceTemplate(preSelectedProductName, compareInsurance),
         }),
       }
     } else {
@@ -77,7 +81,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 
   return {
-    props: { ...translations, products, ...context.params },
+    props: {
+      ...translations,
+      ...context.params,
+      products,
+      compareInsurance,
+    },
   }
 }
 
@@ -91,6 +100,7 @@ type RedirectToProductParams = {
   locale: RoutingLocale
   flow: string
   searchParams: URLSearchParams
+  priceTemplate: Template
 }
 
 const redirectToProduct = async (params: RedirectToProductParams): Promise<Redirect> => {
@@ -102,6 +112,7 @@ const redirectToProduct = async (params: RedirectToProductParams): Promise<Redir
     shopSessionId: params.shopSessionId,
     productName: params.productName,
     searchParams: params.searchParams,
+    priceTemplate: params.priceTemplate,
   })
 
   const nextUrl = PageLink.widgetCalculatePrice({

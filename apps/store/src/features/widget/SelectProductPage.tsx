@@ -9,12 +9,13 @@ import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
-import { createPriceIntent } from './widget.helpers'
+import { createPriceIntent, getPriceTemplate } from './widget.helpers'
 
 type Props = {
   flow: string
   shopSessionId: string
   products: GlobalProductMetadata
+  compareInsurance: boolean
 }
 
 export const SelectProductPage = (props: Props) => {
@@ -33,6 +34,7 @@ export const SelectProductPage = (props: Props) => {
       shopSessionId: props.shopSessionId,
       productName,
       searchParams,
+      priceTemplate: getPriceTemplate(productName, props.compareInsurance),
     })
 
     const nextUrl = PageLink.widgetCalculatePrice({

@@ -5,13 +5,16 @@ import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 import { WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
 import { parsePriceIntentDataSearchParams } from './parseSearchParams'
 
-const PRODUCT_TO_TEMPLATE = new Map<string, string>([
-  ['SE_APARTMENT_BRF', 'SE_WIDGET_APARTMENT'],
-  ['SE_APARTMENT_RENT', 'SE_WIDGET_APARTMENT'],
-])
+const widgetPriceTemplateName = (product: string, compare: boolean): string | undefined => {
+  switch (product) {
+    case 'SE_APARTMENT_BRF':
+    case 'SE_APARTMENT_RENT':
+      return compare ? 'SE_WIDGET_APARTMENT' : 'SE_WIDGET_APARTMENT_NO_COMPARE'
+  }
+}
 
-export const getPriceTemplate = (product: string): Template => {
-  const templateName = PRODUCT_TO_TEMPLATE.get(product)
+export const getPriceTemplate = (product: string, compare: boolean): Template => {
+  const templateName = widgetPriceTemplateName(product, compare)
   const template = fetchPriceTemplate(templateName || product)
   if (!template) throw new Error(`No template found for product ${product}`)
   return template
@@ -20,6 +23,7 @@ export const getPriceTemplate = (product: string): Template => {
 type CreatePriceIntentParams = {
   service: PriceIntentService
   productName: string
+  priceTemplate: Template
   shopSessionId: string
   searchParams: URLSearchParams
 }
@@ -29,7 +33,7 @@ export const createPriceIntent = async (
 ): Promise<[PriceIntent, URLSearchParams]> => {
   const priceIntent = await params.service.create({
     productName: params.productName,
-    priceTemplate: getPriceTemplate(params.productName),
+    priceTemplate: params.priceTemplate,
     shopSessionId: params.shopSessionId,
   })
 

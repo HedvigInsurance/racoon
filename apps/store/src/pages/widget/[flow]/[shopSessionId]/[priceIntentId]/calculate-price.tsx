@@ -15,10 +15,7 @@ import {
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = Pick<
-  ComponentPropsWithoutRef<typeof CalculatePricePage>,
-  'flow' | 'priceTemplate' | 'compareInsurance'
-> & {
+type Props = Pick<ComponentPropsWithoutRef<typeof CalculatePricePage>, 'flow' | 'priceTemplate'> & {
   priceIntentId: string
   shopSessionId: string
 }
@@ -48,13 +45,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       shopSessionService.fetchById(context.params.shopSessionId),
     ])
 
-    const priceTemplate = getPriceTemplate(priceIntent.product.name)
+    const compareInsurance = story.content.compareInsurance ?? false
+    const priceTemplate = getPriceTemplate(priceIntent.product.name, compareInsurance)
 
     return addApolloState(apolloClient, {
       props: {
         priceIntent,
         priceTemplate,
-        compareInsurance: story.content.compareInsurance ?? false,
         ...translations,
         ...context.params,
       },

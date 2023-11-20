@@ -9,7 +9,7 @@ import { SE_HOUSE } from './data/SE_HOUSE'
 import { SE_PET_CAT } from './data/SE_PET_CAT'
 import { SE_PET_DOG } from './data/SE_PET_DOG'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
-import { SE_WIDGET_APARTMENT } from './data/SE_WIDGET_APARTMENT'
+import { SE_WIDGET_APARTMENT, SE_WIDGET_APARTMENT_NO_COMPARE } from './data/SE_WIDGET_APARTMENT'
 import { InputField, MIXED_BREED_OPTION_ID } from './Field.types'
 import { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
@@ -23,6 +23,7 @@ const TEMPLATES: Record<string, Template | undefined> = {
   SE_PET_CAT,
   SE_PET_DOG,
   SE_WIDGET_APARTMENT,
+  SE_WIDGET_APARTMENT_NO_COMPARE,
 }
 
 export const fetchPriceTemplate = (id: string) => {
