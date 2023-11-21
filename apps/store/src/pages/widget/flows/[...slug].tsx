@@ -1,5 +1,8 @@
 import { type GetServerSideProps } from 'next'
-import { parseCustomerDataSearchParams } from '@/features/widget/parseSearchParams'
+import {
+  parseCustomerDataSearchParams,
+  parseShopSessionCreatePartnerSearchParams,
+} from '@/features/widget/parseSearchParams'
 import { shopSessionCustomerUpdate } from '@/features/widget/shopSessionCustomerUpdate'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApolloServerSide } from '@/services/apollo/client'
@@ -50,18 +53,27 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   }
 
   const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
+  const [variables, updatedSearchParams] = parseShopSessionCreatePartnerSearchParams(
+    url.searchParams,
+  )
   const { countryCode } = getCountryByLocale(context.locale)
   const result = await apolloClient.mutate<
     ShopSessionCreatePartnerMutation,
     ShopSessionCreatePartnerMutationVariables
   >({
     mutation: ShopSessionCreatePartnerDocument,
-    variables: { input: { countryCode, partnerName: story.content.partner } },
+    variables: {
+      input: {
+        ...variables,
+        countryCode,
+        partnerName: story.content.partner,
+      },
+    },
   })
 
   if (!result.data) throw new Error('Failed to create Partner Shop Session')
 
-  const [customerData, updatedSearchParams] = parseCustomerDataSearchParams(url.searchParams)
+  const [customerData, unusedSearchParams] = parseCustomerDataSearchParams(updatedSearchParams)
   if (Object.keys(customerData).length > 0) {
     try {
       await shopSessionCustomerUpdate({
@@ -78,7 +90,7 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
     flow,
     shopSessionId: result.data.shopSessionCreatePartner.id,
   })
-  nextUrl.search = updatedSearchParams.toString()
+  nextUrl.search = unusedSearchParams.toString()
 
   return {
     redirect: {
