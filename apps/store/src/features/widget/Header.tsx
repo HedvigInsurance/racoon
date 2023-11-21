@@ -34,7 +34,7 @@ export const Header = (props: Props) => {
   const stepIndex = STEPS.indexOf(props.step)
 
   return (
-    <Wrapper as="header">
+    <HeaderFrame>
       <LogoArea>
         <HedvigLogo />
       </LogoArea>
@@ -49,11 +49,11 @@ export const Header = (props: Props) => {
           ))}
         </ProgressIndicator.Root>
       </ProgressArea>
-    </Wrapper>
+    </HeaderFrame>
   )
 }
 
-const Wrapper = styled(GridLayout.Root)({
+export const HeaderFrame = styled(GridLayout.Root)({
   height: '4rem',
   alignItems: 'center',
 })
