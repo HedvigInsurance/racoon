@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { type ReactNode } from 'react'
+import { ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { InfoIcon, CampaignIcon, WarningTriangleIcon, CrossIconSmall, mq, theme } from 'ui'
 import { BannerVariant } from './Banner.types'
 
@@ -18,7 +18,7 @@ export const Banner = ({ children, handleClose, variant = 'info' }: Props) => {
   return (
     <Wrapper variant={variant}>
       <Content>
-        <Icon variant={variant} />
+        <StyledIcon variant={variant} />
         {children}
       </Content>
       <CloseButton onClick={handleClose}>
@@ -28,27 +28,37 @@ export const Banner = ({ children, handleClose, variant = 'info' }: Props) => {
   )
 }
 
-const Icon = ({ variant }: { variant: BannerVariant }) => {
+type IconProps = ComponentPropsWithoutRef<
+  typeof InfoIcon | typeof CampaignIcon | typeof WarningTriangleIcon
+> & { variant: BannerVariant }
+
+const Icon = ({ variant, ...others }: IconProps) => {
   const size = '1rem'
 
   let icon: ReactNode = null
   switch (variant) {
     case 'info':
-      icon = <InfoIcon color={theme.colors.blue600} size={size} />
+      icon = <InfoIcon color={theme.colors.blue600} size={size} {...others} />
       break
     case 'campaign':
-      icon = <CampaignIcon color={theme.colors.signalGreenElement} size={size} />
+      icon = <CampaignIcon color={theme.colors.signalGreenElement} size={size} {...others} />
       break
     case 'warning':
-      icon = <WarningTriangleIcon color={theme.colors.signalAmberElement} size={size} />
+      icon = <WarningTriangleIcon color={theme.colors.signalAmberElement} size={size} {...others} />
       break
     case 'error':
-      icon = <WarningTriangleIcon color={theme.colors.signalRedElement} size={size} />
+      icon = <WarningTriangleIcon color={theme.colors.signalRedElement} size={size} {...others} />
       break
   }
 
   return icon
 }
+
+const StyledIcon = styled(Icon)({
+  alignSelf: 'start',
+  // Optical alignment
+  marginTop: 1,
+})
 
 const Wrapper = styled.div<{ variant: BannerVariant }>(({ variant }) => ({
   minHeight: '3rem',
