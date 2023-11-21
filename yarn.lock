@@ -15392,9 +15392,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:8.2.2":
-  version: 8.2.2
-  resolution: "downshift@npm:8.2.2"
+"downshift@npm:8.2.3":
+  version: 8.2.3
+  resolution: "downshift@npm:8.2.3"
   dependencies:
     "@babel/runtime": ^7.22.15
     compute-scroll-into-view: ^3.0.3
@@ -15403,7 +15403,7 @@ __metadata:
     tslib: ^2.6.2
   peerDependencies:
     react: ">=16.12.0"
-  checksum: 6477ea1255d5590bbd2432e68a82967d609fdf61e9ee0c12407370e861ec894419feb72158c7487206838ae93de4b16751daf07e3fe98076ece7cda50d8b2c38
+  checksum: d218096d0b8488b6504553e2dd4199e24da96ffcba43e2d97bf9e87a3ed30a8a626bcc191e3c800981f52f2d7673d50bfe5fb34e091d1338e9df0f08a34fc658
   languageName: node
   linkType: hard
 
@@ -24721,7 +24721,7 @@ __metadata:
     cookies-next: 4.0.0
     date-fns: 2.30.0
     dotenv: 16.3.1
-    downshift: 8.2.2
+    downshift: 8.2.3
     eslint: 8.53.0
     eslint-config-custom: "workspace:"
     eslint-config-next: 13.4.12
