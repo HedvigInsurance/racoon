@@ -4,7 +4,7 @@ import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 type Props = {
   label: string
-  tooltip: string
+  tooltip?: string
 }
 
 export const StartDate = (props: Props) => {
@@ -17,13 +17,15 @@ export const StartDate = (props: Props) => {
       <SingleLineText color="textTranslucentSecondary" title={props.label}>
         {props.label}
       </SingleLineText>
-      <TooltipWrapper>
-        <Tooltip message={props.tooltip}>
-          <button onClick={handleClick} style={{ marginBottom: -2 }}>
-            <InfoIcon color={theme.colors.textSecondary} />
-          </button>
-        </Tooltip>
-      </TooltipWrapper>
+      {props.tooltip && (
+        <TooltipWrapper>
+          <Tooltip message={props.tooltip}>
+            <button onClick={handleClick} style={{ marginBottom: -2 }}>
+              <InfoIcon color={theme.colors.textSecondary} />
+            </button>
+          </Tooltip>
+        </TooltipWrapper>
+      )}
     </Wrapper>
   )
 }

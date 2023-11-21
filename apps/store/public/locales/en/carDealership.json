@@ -19,7 +19,6 @@
   "TOGGLE_EXTENSION_LABEL": "Extend after 60 days",
   "TRIAL_COST_EXPLANATION": "discounted price until {{date}}",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Valid until {{date}}",
-  "TRIAL_TERMINATION_DATE_TOOLTIP": "You need to sign a new contract to continue your insurance.",
   "TRIAL_TITLE": "Trial offer",
   "USP_TEXT": "No binding time"
 }
