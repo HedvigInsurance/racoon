@@ -390,11 +390,16 @@ export const getStoryById = <StoryData extends ISbStoryData>(
   })
 }
 
-export const getPageLinks = async (): Promise<Array<PageLink>> => {
+type GetPageLinksParams = {
+  startsWith?: string
+}
+
+export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<PageLink>> => {
   const storyblokApi = getStoryblokApi()
   const {
     data: { links },
   } = await storyblokApi.get('cdn/links/', {
+    ...(params?.startsWith && { starts_with: params.startsWith }),
     ...(USE_DRAFT_CONTENT && { version: 'draft' }),
   })
   const pageLinks: Array<PageLink> = []
@@ -432,12 +437,6 @@ export const getFilteredPageLinks = async () => {
 
 export const getGlobalStory = (options: StoryOptions): Promise<GlobalStory> => {
   return getStoryBySlug<GlobalStory>('global', options)
-}
-
-const PRODUCTS_SLUG = 'products'
-export const getFilteredProductLinks = async () => {
-  const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => slugParts[0] === PRODUCTS_SLUG)
 }
 
 export const getStoriesBySlug = async (
