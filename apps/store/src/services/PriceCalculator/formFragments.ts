@@ -35,9 +35,10 @@ export const livingSpaceField: InputField = {
   suffix: 'm²',
 }
 
+export const EXTERNAL_INSURANCE_FIELD_NAME = 'externalInsurer'
 export const currentInsuranceField: InputField = {
   type: 'current-insurance',
-  name: 'externalInsurer',
+  name: EXTERNAL_INSURANCE_FIELD_NAME,
   // TODO: Do we want promise-specific labels?
   label: { key: tKey('FIELD_EXTERNAL_INSURER_LABEL') },
 }

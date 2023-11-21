@@ -1,10 +1,10 @@
-import { ApolloClient } from '@apollo/client'
-import { ISbStoryData } from '@storyblok/react'
+import { type ApolloClient } from '@apollo/client'
+import { type ISbStoryData } from '@storyblok/react'
 import {
-  GlobalProductMetadata,
+  type GlobalProductMetadata,
   fetchGlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
-import { getStoryById } from '@/services/storyblok/storyblok'
+import { type WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
 import { RoutingLocale } from '@/utils/l10n/types'
 
 type Params = {
@@ -15,9 +15,15 @@ type Params = {
 }
 
 type ProductMetadataStory = ISbStoryData<{ productName: string }>
-type Story = ISbStoryData<{ products: Array<ProductMetadataStory> }>
+type Story = Omit<WidgetFlowStory, 'content'> & {
+  content: Omit<WidgetFlowStory['content'], 'products'> & {
+    products: Array<ProductMetadataStory>
+  }
+}
 
-export const fetchFlowProducts = async (params: Params): Promise<GlobalProductMetadata> => {
+export const fetchFlowProducts = async (
+  params: Params,
+): Promise<[Story, GlobalProductMetadata]> => {
   const [allProductMetadata, story] = await Promise.all([
     fetchGlobalProductMetadata({ apolloClient: params.apolloClient }),
     getStoryById<Story>({
@@ -28,5 +34,5 @@ export const fetchFlowProducts = async (params: Params): Promise<GlobalProductMe
   ])
 
   const selected = new Set<string>(story.content.products.map((item) => item.content.productName))
-  return allProductMetadata.filter((item) => selected.has(item.name))
+  return [story, allProductMetadata.filter((item) => selected.has(item.name))]
 }
