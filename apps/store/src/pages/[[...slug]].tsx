@@ -2,8 +2,6 @@ import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
-import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
-import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
@@ -16,19 +14,16 @@ import {
   getProductAverageRating,
   getProductReviewComments,
 } from '@/services/productReviews/productReviews'
+import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
 import {
-  getStoryBySlug,
   StoryblokPageProps,
   StoryblokQueryParams,
   getFilteredPageLinks,
-  type PageStory,
-  type ProductStory,
   getRevalidate,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
-import { fetchTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextContentPageProps = StoryblokPageProps & { type: 'content' }
@@ -84,78 +79,55 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
 
   const apolloClient = initializeApollo({ locale })
 
-  const timerName = `Get static props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
-  console.time(timerName)
-  const version = draftMode ? 'draft' : undefined
-  const [layoutWithMenuProps, breadcrumbs, trustpilot] = await Promise.all([
-    getLayoutWithMenuProps(context, apolloClient),
-    fetchBreadcrumbs(slug, { version, locale }),
-    fetchTrustpilotData(),
-  ]).catch((error) => {
-    throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
-  })
-
-  if (layoutWithMenuProps === null) return { notFound: true }
-
-  let story: PageStory | ProductStory
   try {
-    story = await getStoryBySlug<PageStory | ProductStory>(slug, { version, locale })
-  } catch (error) {
-    console.info(`Story with slug ${locale}/${slug} not found`)
-    console.debug(error)
-    return { notFound: true }
-  } finally {
-    console.timeEnd(timerName)
-  }
+    const props = await getStoryblokPageProps({ context, slug, locale, draftMode })
 
-  const props = {
-    ...layoutWithMenuProps,
-    [STORY_PROP_NAME]: story,
-    breadcrumbs,
-    trustpilot,
-    hideChat: story.content.hideChat ?? false,
-  }
+    if (isProductStory(props.story)) {
+      const priceTemplate = fetchPriceTemplate(props.story.content.priceFormTemplateId)
+      if (priceTemplate === undefined) {
+        throw new Error(`Unknown price template: ${props.story.content.priceFormTemplateId}`)
+      }
 
-  if (isProductStory(story)) {
-    const priceTemplate = fetchPriceTemplate(story.content.priceFormTemplateId)
-    if (priceTemplate === undefined) {
-      throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
+      const productData = await getProductData({
+        apolloClient,
+        productName: props.story.content.productId,
+      })
+
+      const defaultProductVariant = props.story.content.defaultProductVariant
+      const initialSelectedVariant =
+        productData.variants.find((item) => item.typeOfContract === defaultProductVariant) ?? null
+
+      const averageRating = await getProductAverageRating(productData.name)
+      const reviewComments = await getProductReviewComments(productData.name)
+
+      return {
+        props: {
+          type: 'product',
+          ...props,
+          [STORY_PROP_NAME]: props.story,
+          productData,
+          averageRating,
+          reviewComments,
+          priceTemplate,
+          initialSelectedVariant,
+        },
+        revalidate: getRevalidate(),
+      }
     }
-
-    const productData = await getProductData({
-      apolloClient,
-      productName: story.content.productId,
-    })
-
-    const defaultProductVariant = story.content.defaultProductVariant
-    const initialSelectedVariant =
-      productData.variants.find((item) => item.typeOfContract === defaultProductVariant) ?? null
-
-    const averageRating = await getProductAverageRating(productData.name)
-    const reviewComments = await getProductReviewComments(productData.name)
 
     return {
       props: {
-        type: 'product',
+        type: 'content',
         ...props,
-        [STORY_PROP_NAME]: story,
-        productData,
-        averageRating,
-        reviewComments,
-        priceTemplate,
-        initialSelectedVariant,
+        ...(await fetchBlogPageProps({ story: props.story, locale, draft: draftMode })),
+        [STORY_PROP_NAME]: props.story,
       },
       revalidate: getRevalidate(),
     }
-  }
-
-  return {
-    props: {
-      type: 'content',
-      ...(await fetchBlogPageProps({ story, locale, draft: version === 'draft' })),
-      ...props,
-    },
-    revalidate: getRevalidate(),
+  } catch (error) {
+    console.debug(error)
+    console.error(error)
+    return { notFound: true }
   }
 }
 
