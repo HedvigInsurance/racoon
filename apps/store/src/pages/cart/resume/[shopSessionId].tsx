@@ -32,38 +32,44 @@ const NextPage: NextPageWithLayout<Props> = (props) => {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   if (!context.params) throw new Error('No params in context')
   if (!isRoutingLocale(context.locale)) return { notFound: true }
-  const shopSessionId = context.params.shopSessionId
 
-  const apolloClient = await initializeApolloServerSide({
-    req: context.req,
-    res: context.res,
-    locale: context.locale,
-  })
+  try {
+    const shopSessionId = context.params.shopSessionId
 
-  const shopSessionService = setupShopSessionServiceServerSide({
-    apolloClient,
-    req: context.req,
-    res: context.res,
-  })
-
-  shopSessionService.saveId(shopSessionId)
-
-  const slug = 'cart/resume'
-  const [story, layoutWithMenuProps] = await Promise.all([
-    getStoryBySlug<PageStory>(slug, {
+    const apolloClient = await initializeApolloServerSide({
+      req: context.req,
+      res: context.res,
       locale: context.locale,
-      ...(context.draftMode && { version: 'draft' }),
-    }),
-    getLayoutWithMenuProps(context, apolloClient),
-  ])
+    })
 
-  return addApolloState(apolloClient, {
-    props: {
-      ...layoutWithMenuProps,
-      story,
-      [SHOP_SESSION_PROP_NAME]: shopSessionId,
-    },
-  })
+    const shopSessionService = setupShopSessionServiceServerSide({
+      apolloClient,
+      req: context.req,
+      res: context.res,
+    })
+
+    shopSessionService.saveId(shopSessionId)
+
+    const slug = 'cart/resume'
+    const [story, layoutWithMenuProps] = await Promise.all([
+      getStoryBySlug<PageStory>(slug, {
+        locale: context.locale,
+        ...(context.draftMode && { version: 'draft' }),
+      }),
+      getLayoutWithMenuProps(context, apolloClient),
+    ])
+
+    return addApolloState(apolloClient, {
+      props: {
+        ...layoutWithMenuProps,
+        story,
+        [SHOP_SESSION_PROP_NAME]: shopSessionId,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 
 NextPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>

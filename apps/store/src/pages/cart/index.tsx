@@ -23,12 +23,15 @@ const NextCartPage: NextPageWithLayout = () => {
 NextCartPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const props = await getLayoutWithMenuProps(context)
-  if (props === null) return { notFound: true }
+  try {
+    const props = await getLayoutWithMenuProps(context)
 
-  return {
-    props,
-    revalidate: getRevalidate(),
+    return {
+      props,
+      revalidate: getRevalidate(),
+    }
+  } catch {
+    return { notFound: true }
   }
 }
 
