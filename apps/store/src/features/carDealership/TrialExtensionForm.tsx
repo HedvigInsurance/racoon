@@ -11,12 +11,12 @@ import {
   PriceIntentCarTrialExtensionFragment,
   ProductOfferFragment,
   ShopSessionFragment,
-  TrialContractFragment,
 } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
+import { type TrialContract } from './carDealership.types'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { PriceBreakdown } from './PriceBreakdown'
@@ -24,7 +24,7 @@ import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
 type Props = {
-  trialContract: TrialContractFragment
+  trialContract: TrialContract
   priceIntent: PriceIntentCarTrialExtensionFragment
   shopSession: ShopSessionFragment
   requirePaymentConnection: boolean
