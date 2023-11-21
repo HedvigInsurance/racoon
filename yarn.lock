@@ -5119,9 +5119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.23.1":
-  version: 2.23.1
-  resolution: "@datadog/datadog-ci@npm:2.23.1"
+"@datadog/datadog-ci@npm:2.24.0":
+  version: 2.24.0
+  resolution: "@datadog/datadog-ci@npm:2.24.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.445.0
     "@aws-sdk/client-iam": ^3.445.0
@@ -5131,6 +5131,7 @@ __metadata:
     "@google-cloud/logging": ^10.5.0
     "@google-cloud/run": ^0.6.0
     "@smithy/property-provider": ^2.0.12
+    "@smithy/util-retry": ^2.0.4
     "@types/datadog-metrics": 0.6.1
     "@types/retry": 0.12.0
     ajv: ^8.12.0
@@ -5169,7 +5170,7 @@ __metadata:
     yamux-js: 0.1.2
   bin:
     datadog-ci: dist/cli.js
-  checksum: 07bd3095494ab6b96440df21103e04680ebf77bd509503bf5b43c8146d754324160bb617775fad150bee44c81a8c659e015ff3e6665f02888718cf62ddb01472
+  checksum: 24aa260865cbf321be5ae8f3ab6ac301cca9f9ae62613ed2f89b5121d9cf872f0bf779c5090f1140b883929544153c678efb288dc8d41166889d2421705d2b78
   languageName: node
   linkType: hard
 
@@ -9436,7 +9437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@smithy/util-retry@npm:^2.0.5, @smithy/util-retry@npm:^2.0.6":
+"@smithy/util-retry@npm:^2.0.4, @smithy/util-retry@npm:^2.0.5, @smithy/util-retry@npm:^2.0.6":
   version: 2.0.6
   resolution: "@smithy/util-retry@npm:2.0.6"
   dependencies:
@@ -24666,7 +24667,7 @@ __metadata:
     "@babel/preset-typescript": 7.23.3
     "@datadog/browser-logs": 5.1.0
     "@datadog/browser-rum": 5.1.0
-    "@datadog/datadog-ci": 2.23.1
+    "@datadog/datadog-ci": 2.24.0
     "@emotion/babel-plugin": 11.11.0
     "@emotion/is-prop-valid": 1.2.1
     "@emotion/react": 11.11.1
