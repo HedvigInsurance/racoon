@@ -1,25 +1,15 @@
-import { type GetServerSideProps } from 'next'
+import { type GetServerSidePropsContext, type GetServerSideProps } from 'next'
 import {
-  parseCustomerDataSearchParams,
-  parseShopSessionCreatePartnerSearchParams,
-} from '@/features/widget/parseSearchParams'
-import { shopSessionCustomerUpdate } from '@/features/widget/shopSessionCustomerUpdate'
-import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
+  createPartnerShopSession,
+  fetchFlowMetadata,
+  redirectIfRunningInStoryblokEditor,
+  updateCustomerDataIfPresent,
+} from '@/features/widget/StartFlow.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
-import {
-  ShopSessionCreatePartnerDocument,
-  type ShopSessionCreatePartnerMutation,
-  type ShopSessionCreatePartnerMutationVariables,
-} from '@/services/apollo/generated'
 import { getAccessToken, resetAuthTokens } from '@/services/authApi/persist'
-import {
-  type PageStory,
-  type WidgetFlowStory,
-  getStoryBySlug,
-} from '@/services/storyblok/storyblok'
-import { isWidgetFlowStory } from '@/services/storyblok/Storyblok.helpers'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 type Params = { slug: Array<string> }
@@ -29,68 +19,60 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   if (!isRoutingLocale(context.locale)) return { notFound: true }
 
   const url = new URL(context.req.url ?? '', ORIGIN_URL)
-  const runningInStoryblokEditor = url.searchParams.has('_storyblok')
-  if (runningInStoryblokEditor) {
-    url.pathname = url.pathname.replace('/widget/flows', `${context.locale}/widget/preview`)
-    return { redirect: { destination: url.href, permanent: false } }
-  }
+  const redirect = redirectIfRunningInStoryblokEditor(url, context.locale)
+  if (redirect) return { redirect }
 
-  const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/flows/${context.params.slug.join('/')}`
-  const story = await getStoryBySlug<PageStory | WidgetFlowStory>(slug, {
-    version: context.draftMode ? 'draft' : undefined,
+  const flowMetadata = await fetchFlowMetadata({
     locale: context.locale,
+    slug: context.params.slug.join('/'),
   })
-  const flow = String(story.id)
+  if (!flowMetadata) return { notFound: true }
 
-  if (!isWidgetFlowStory(story)) {
-    console.warn('Story is not a widget flow story:', story.slug)
-    return { notFound: true }
-  }
+  resetAuthTokensIfPresent(context)
 
+  const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
+  const [shopSessionId, searchParams] = await createPartnerShopSession({
+    apolloClient,
+    countryCode: getCountryByLocale(context.locale).countryCode,
+    partnerName: flowMetadata.partnerName,
+    searchParams: url.searchParams,
+  })
+
+  const unusedSearchParams = await updateCustomerDataIfPresent({
+    apolloClient,
+    shopSessionId,
+    searchParams,
+  })
+
+  return createRedirect({
+    locale: context.locale,
+    flow: flowMetadata.flow,
+    shopSessionId,
+    searchParams: unusedSearchParams,
+  })
+}
+
+const resetAuthTokensIfPresent = (context: GetServerSidePropsContext) => {
   if (getAccessToken(context)) {
     console.info(`Widget | Discarding auth token from previous session`)
     resetAuthTokens(context)
   }
+}
 
-  const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
-  const [variables, updatedSearchParams] = parseShopSessionCreatePartnerSearchParams(
-    url.searchParams,
-  )
-  const { countryCode } = getCountryByLocale(context.locale)
-  const result = await apolloClient.mutate<
-    ShopSessionCreatePartnerMutation,
-    ShopSessionCreatePartnerMutationVariables
-  >({
-    mutation: ShopSessionCreatePartnerDocument,
-    variables: {
-      input: {
-        ...variables,
-        countryCode,
-        partnerName: story.content.partner,
-      },
-    },
-  })
+type CreateRedirectParams = {
+  locale: RoutingLocale
+  flow: string
+  shopSessionId: string
+  searchParams: URLSearchParams
+}
 
-  if (!result.data) throw new Error('Failed to create Partner Shop Session')
-
-  const [customerData, unusedSearchParams] = parseCustomerDataSearchParams(updatedSearchParams)
-  if (Object.keys(customerData).length > 0) {
-    try {
-      await shopSessionCustomerUpdate({
-        apolloClient,
-        variables: { shopSessionId: result.data.shopSessionCreatePartner.id, ...customerData },
-      })
-    } catch (error) {
-      console.warn('Failed to update customer data', error)
-    }
-  }
-
+const createRedirect = (params: CreateRedirectParams) => {
   const nextUrl = PageLink.widgetSelectProduct({
-    locale: context.locale,
-    flow,
-    shopSessionId: result.data.shopSessionCreatePartner.id,
+    locale: params.locale,
+    flow: params.flow,
+    shopSessionId: params.shopSessionId,
   })
-  nextUrl.search = unusedSearchParams.toString()
+  nextUrl.search = params.searchParams.toString()
 
   return {
     redirect: {
