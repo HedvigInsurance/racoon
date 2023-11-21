@@ -88,7 +88,7 @@ import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
-import { fetchStory, StoryblokFetchParams } from './Storyblok.helpers'
+import { fetchStory, getCacheVersion, StoryblokFetchParams } from './Storyblok.helpers'
 
 const USE_DRAFT_CONTENT = process.env.NEXT_PUBLIC_STORYBLOK_DRAFT_CONTENT === 'true'
 
@@ -400,7 +400,12 @@ export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<P
     data: { links },
   } = await storyblokApi.get('cdn/links/', {
     ...(params?.startsWith && { starts_with: params.startsWith }),
-    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
+    ...(USE_DRAFT_CONTENT
+      ? { version: 'draft' }
+      : {
+          version: 'published',
+          cv: getCacheVersion(),
+        }),
   })
   const pageLinks: Array<PageLink> = []
   Object.values(links as Record<string, LinkData>).forEach((link) => {

@@ -42,19 +42,19 @@ export const fetchStory = async <StoryData extends ISbStoryData>(
   slug: string,
   params: StoryblokFetchParams,
 ): Promise<StoryData> => {
-  let cv: number | undefined
-  if (params.version === 'published') {
-    const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
-    const isCacheVersionValid = !isNaN(cacheVersion)
-    cv = isCacheVersionValid ? cacheVersion : undefined
-  }
   const response = await storyblokClient.getStory(slug, {
     ...params,
-    cv,
+    cv: params.version === 'published' ? getCacheVersion() : undefined,
     resolve_links: 'url',
   })
 
   return response.data.story as StoryData
+}
+
+export const getCacheVersion = (): number | undefined => {
+  const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
+  const isCacheVersionValid = !isNaN(cacheVersion)
+  return isCacheVersionValid ? cacheVersion : undefined
 }
 
 const MISSING_LINKS = new Set()
