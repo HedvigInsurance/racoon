@@ -157,6 +157,7 @@ export const studentField: InputField = {
     },
   ],
   required: true,
+  defaultValue: 'false',
 }
 
 export const yourFamilySection: TemplateSection = {
