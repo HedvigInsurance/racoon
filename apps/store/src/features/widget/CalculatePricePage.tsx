@@ -32,8 +32,10 @@ export const CalculatePricePage = (props: Props) => {
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
 
   const router = useRouter()
+  const entryToReplace = typeof router.query.replace === 'string' ? router.query.replace : undefined
   const [addToCart] = useAddToCart({
     shopSessionId: props.shopSession.id,
+    entryToReplace,
     async onError() {
       await priceLoaderPromise.current
       setLoading(false)
