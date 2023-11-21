@@ -99,7 +99,7 @@ export const SignPage = (props: Props) => {
                 </Text>
               </div>
 
-              <Space y={{ base: 1, lg: 1.5 }}>
+              <Space y={1}>
                 <ShopBreakdown>
                   {props.shopSession.cart.entries.map((item) => (
                     <ProductItemContainer key={item.id} offer={item}>

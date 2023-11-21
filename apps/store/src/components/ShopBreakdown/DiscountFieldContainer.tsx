@@ -3,6 +3,7 @@ import { ComponentProps } from 'react'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/utils/useCampaign'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
+import { Discount } from './Discount'
 import { DiscountField } from './DiscountField'
 
 type Props = {
@@ -41,6 +42,10 @@ export const DiscountFieldContainer = (props: Props) => {
         explanation: getDiscountExplanation(redeemedCampaign.discount),
       }
     : undefined
+
+  if (!props.shopSession.cart.campaignsEnabled) {
+    return campaign ? <Discount {...campaign} /> : null
+  }
 
   return (
     <DiscountField
