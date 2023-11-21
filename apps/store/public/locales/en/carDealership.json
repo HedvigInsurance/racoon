@@ -1,7 +1,6 @@
 {
   "CONNECT_PAYMENT_BANNER": "Connect payment before {{dueDate}} for activate the insurance",
   "CONNECT_PAYMENT_BUTTON": "Connect payment",
-  "CONTRACT_CARD_BADGE": "60 days",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Edit",
   "EDIT_OFFER_CANCEL": "Cancel",
   "EDIT_OFFER_SAVE": "Save",

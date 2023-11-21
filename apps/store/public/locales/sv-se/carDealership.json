@@ -1,7 +1,6 @@
 {
   "CONNECT_PAYMENT_BANNER": "Koppla din betalning innan {{dueDate}} för att försäkringen ska gälla",
   "CONNECT_PAYMENT_BUTTON": "Koppla betalning",
-  "CONTRACT_CARD_BADGE": "60 dagar",
   "EDIT_CAR_TRIAL_EXTENSION_BUTTON": "Ändra",
   "EDIT_OFFER_CANCEL": "Avbryt",
   "EDIT_OFFER_SAVE": "Spara",
