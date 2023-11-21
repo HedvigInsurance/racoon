@@ -3,7 +3,7 @@ import { ReactNode, useId } from 'react'
 import { Space, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { Switch, SwitchProps } from '../Switch'
+import { Switch, SwitchProps, SwitchWrapper } from '../Switch'
 
 type Props = SwitchProps & {
   label: string
@@ -44,10 +44,11 @@ export const ToggleCard = ({
 }
 
 const InputWrapper = styled.div({
-  backgroundColor: theme.colors.opaque1,
   padding: theme.space.md,
   paddingTop: theme.space.sm,
   borderRadius: theme.radius.md,
+  backgroundColor: theme.colors.opaque1,
+  [`:has(${SwitchWrapper}[aria-checked=true])`]: { backgroundColor: theme.colors.signalGreenFill },
 })
 
 const CheckboxHeader = styled.div({
