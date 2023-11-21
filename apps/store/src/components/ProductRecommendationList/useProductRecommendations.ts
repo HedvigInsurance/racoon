@@ -17,10 +17,10 @@ type ReturnType = {
   offerRecommendation: OfferRecommendation | null
 }
 
-export const useProductRecommendations = (): ReturnType => {
+export const useProductRecommendations = (customShopSessionId?: string): ReturnType => {
   const { shopSession } = useShopSession()
+  const shopSessionId = customShopSessionId ?? shopSession?.id
 
-  const shopSessionId = shopSession?.id
   const result = useProductRecommendationsQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,

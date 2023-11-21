@@ -47,7 +47,7 @@ export const SignPage = (props: Props) => {
   const { routingLocale } = useCurrentLocale()
   const router = useRouter()
 
-  const { offerRecommendation } = useProductRecommendations()
+  const { offerRecommendation } = useProductRecommendations(props.shopSession.id)
 
   const apolloClient = useApolloClient()
   const [showSignError, setShowSignError] = useState(false)
