@@ -36,7 +36,6 @@ type WidgetParams = BaseParams & {
   shopSessionId: string
   priceIntentId: string
 }
-type WidgetSignParams = Omit<WidgetParams, 'priceIntentId'>
 
 type SessionLink = BaseParams & {
   shopSessionId: string
@@ -274,9 +273,16 @@ export const PageLink = {
       ORIGIN_URL,
     )
   },
-  widgetSign: (params: WidgetSignParams) => {
+  widgetSign: (params: WidgetParams) => {
     return new URL(
-      [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'sign'].join('/'),
+      [
+        localePrefix(params.locale),
+        'widget',
+        params.flow,
+        params.shopSessionId,
+        params.priceIntentId,
+        'sign',
+      ].join('/'),
       ORIGIN_URL,
     )
   },
