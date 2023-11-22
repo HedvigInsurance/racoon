@@ -85,19 +85,6 @@ export const SignPage = (props: Props) => {
     },
   })
 
-  const getEditLink = (offerId: string) => {
-    const url = PageLink.widgetCalculatePrice({
-      flow: props.flow,
-      shopSessionId: props.shopSession.id,
-      priceIntentId: props.priceIntentId,
-      locale: routingLocale,
-    })
-
-    url.searchParams.set('replace', offerId)
-
-    return url
-  }
-
   const userErrorMessage = userError?.message
 
   const mainOffer = props.shopSession.cart.entries.find(
@@ -138,7 +125,12 @@ export const SignPage = (props: Props) => {
                       <ButtonNextLink
                         variant="secondary"
                         size="medium"
-                        href={getEditLink(mainOffer.id)}
+                        href={PageLink.widgetCalculatePrice({
+                          flow: props.flow,
+                          shopSessionId: props.shopSession.id,
+                          priceIntentId: props.priceIntentId,
+                          locale: routingLocale,
+                        })}
                       >
                         {t('cart:CART_ENTRY_EDIT_BUTTON')}
                       </ButtonNextLink>
