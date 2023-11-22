@@ -369,6 +369,17 @@ export const colors = {
   signalBlueHighlight: signal.blue.highlight,
   signalBlueElement: signal.blue.element,
   signalBlueText: signal.blue.text,
+
+  // Buttons
+  buttonPrimary: gray[1000],
+  buttonPrimaryHover: gray[900],
+  buttonPrimaryDisabled: gray[400],
+  buttonPrimaryAlt: green[50],
+  buttonPrimaryAltHover: green[200],
+  buttonPrimaryAltDisabled: gray[400],
+  buttonSecondary: gray[50],
+  buttonSecondaryHover: gray[300],
+  buttonSecondaryDisabled: gray[50],
 } as const
 
 export type UIColors = typeof colors

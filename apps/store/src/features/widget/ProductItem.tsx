@@ -4,7 +4,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, InfoIcon, Space, Text, mq, theme } from 'ui'
+import { Button, ButtonProps, CrossIconSmall, InfoIcon, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDate } from '@/components/InputDate/InputDate'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -28,6 +28,7 @@ type Props = {
   startDate?: string
   onChangeStartDate: (value: string) => void
   loading: boolean
+  onDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const ProductItem = (props: Props) => {
@@ -57,6 +58,12 @@ export const ProductItem = (props: Props) => {
                 <Text as="p" size="md" color="textTranslucentPrimary">
                   {props.title}
                 </Text>
+
+                {props.onDelete && (
+                  <DeleteButton onClick={props.onDelete}>
+                    <CrossIconSmall color={theme.colors.textSecondary} />
+                  </DeleteButton>
+                )}
               </HeaderRow>
               <SpaceFlex align="center" space={0.25}>
                 <Text as="p" color="textTranslucentSecondary">
@@ -106,6 +113,7 @@ const Card = styled.div({
   borderRadius: theme.radius.md,
   padding: theme.space.md,
   paddingBottom: 0,
+  position: 'relative',
 
   backgroundColor: theme.colors.opaque1,
   ['&[data-variant="green"]']: { backgroundColor: theme.colors.signalGreenFill },
@@ -155,4 +163,19 @@ const Footer = styled.div({
   gridAutoFlow: 'column',
   columnGap: theme.space.xs,
   paddingBottom: theme.space.md,
+})
+
+const DeleteButton = styled.button({
+  width: '1.5rem',
+  height: '1.5rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '50%',
+  backgroundColor: theme.colors.buttonSecondary,
+  cursor: 'pointer',
+
+  '&:hover': {
+    backgroundColor: theme.colors.buttonSecondaryHover,
+  },
 })

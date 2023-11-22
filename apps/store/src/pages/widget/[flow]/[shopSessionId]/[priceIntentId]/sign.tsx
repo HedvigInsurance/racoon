@@ -5,6 +5,7 @@ import { fetchSignPageContent } from '@/features/widget/fetchSignPageContent'
 import { SignPage } from '@/features/widget/SignPage'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
+import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -40,9 +41,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     locale: context.locale,
   })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
+  const priceIntentService = priceIntentServiceInitServerSide({
+    apolloClient,
+    req: context.req,
+    res: context.res,
+  })
 
   try {
-    const [translations, shopSession, signPageContent] = await Promise.all([
+    const [translations, shopSession, signPageContent, priceIntent] = await Promise.all([
       serverSideTranslations(context.locale),
       shopSessionService.fetchById(context.params.shopSessionId),
       fetchSignPageContent({
@@ -50,6 +56,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         locale: context.locale,
         draft: context.draftMode,
       }),
+      priceIntentService.get(context.params.priceIntentId),
     ])
 
     const customer = shopSession.customer
@@ -59,6 +66,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
     if (!customer.ssn) {
       throw new Error(`No SSN in shop session ${shopSession.id}`)
+    }
+
+    if (!priceIntent) {
+      throw new Error(`No price intent ${context.params.priceIntentId}`)
     }
 
     return {
@@ -72,9 +83,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         shopSessionId: context.params.shopSessionId,
         content: signPageContent,
         flow: context.params.flow,
-        priceIntentId: context.params.priceIntentId,
+        priceIntentId: priceIntent.id,
         // TODO: check if we want to control this via CMS
         hideChat: true,
+        productName: priceIntent.product.name,
       },
     }
   } catch (error) {
