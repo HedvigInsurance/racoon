@@ -102,6 +102,9 @@ const StyledSelect = styled(
   paddingRight: theme.space.xxl,
   cursor: 'pointer',
   backgroundColor: theme.colors.translucent1,
+  // Truncate if there's not enough space
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
 
   ...(variantSize === 'small' && {
     height: '2.5rem',
