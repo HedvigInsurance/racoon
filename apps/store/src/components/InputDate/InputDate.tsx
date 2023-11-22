@@ -11,6 +11,7 @@ type Props = InputProps & {
   label: string
   value?: string
   defaultValue?: string
+  backgroundColor?: 'default' | 'light'
 }
 
 export const InputDate = (props: Props) => {
@@ -21,8 +22,14 @@ export const InputDate = (props: Props) => {
   const dateValue = convertToDate(inputValue)
   const formatter = useFormatter()
 
+  const backgroundColor =
+    props.backgroundColor === 'light'
+      ? theme.colors.backgroundFrostedGlass
+      : theme.colors.translucent1
   const identifier = useId()
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>({
+    defaultColor: backgroundColor,
+  })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setInternalValue(event.target.value)
@@ -58,7 +65,7 @@ export const InputDate = (props: Props) => {
   )
 
   return (
-    <Wrapper {...animationProps} data-active={!!inputValue}>
+    <Wrapper {...animationProps} data-active={!!inputValue} style={{ backgroundColor }}>
       <Label htmlFor={inputProps.id} data-disabled={inputProps.disabled}>
         {label}
       </Label>
@@ -79,7 +86,6 @@ export const InputDate = (props: Props) => {
 const Wrapper = styled.div({
   position: 'relative',
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.translucent1,
   height: '4.5rem',
   width: '100%',
   cursor: 'pointer',
