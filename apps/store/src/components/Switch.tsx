@@ -12,7 +12,7 @@ export const Switch = (props: SwitchProps) => {
   )
 }
 
-const SwitchWrapper = styled(RadixSwitch.Root)({
+export const SwitchWrapper = styled(RadixSwitch.Root)({
   boxSizing: 'border-box',
   width: '1.75rem',
   borderRadius: 9999,
