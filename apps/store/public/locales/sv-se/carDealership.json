@@ -19,7 +19,6 @@
   "TOGGLE_EXTENSION_LABEL": "Förläng efter 60 dagar",
   "TRIAL_COST_EXPLANATION": "rabatterat pris till {{date}}",
   "TRIAL_TERMINATION_DATE_MESSAGE": "Gäller till {{date}}",
-  "TRIAL_TERMINATION_DATE_TOOLTIP": "Du måste teckna ett nytt avtal för att förlänga din försäkring.",
   "TRIAL_TITLE": "Starterbjudande",
   "USP_TEXT": "Ingen bindningstid"
 }

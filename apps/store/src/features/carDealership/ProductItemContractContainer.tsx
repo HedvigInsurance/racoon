@@ -41,7 +41,6 @@ export const ProductItemContractContainerCar = ({ contract, crossedOverAmount }:
     label: t('TRIAL_TERMINATION_DATE_MESSAGE', {
       date: formatter.dateFull(endDate, { abbreviateMonth: true }),
     }),
-    tooltip: t('TRIAL_TERMINATION_DATE_TOOLTIP'),
   }
 
   return (
