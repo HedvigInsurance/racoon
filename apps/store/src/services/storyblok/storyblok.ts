@@ -6,6 +6,7 @@ import {
   storyblokInit,
   ISbStoryData,
   ISbStoriesParams,
+  StoryblokClient,
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
@@ -88,9 +89,6 @@ import { Features } from '@/utils/Features'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
-import { fetchStory, getCacheVersion, StoryblokFetchParams } from './Storyblok.helpers'
-
-const USE_DRAFT_CONTENT = process.env.NEXT_PUBLIC_STORYBLOK_DRAFT_CONTENT === 'true'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -367,12 +365,10 @@ export const getStoryBySlug = <StoryData extends ISbStoryData>(
   slug: string,
   { version, locale }: StoryOptions,
 ): Promise<StoryData> => {
-  const params: StoryblokFetchParams = {
-    version: version ?? (USE_DRAFT_CONTENT ? 'draft' : 'published'),
+  return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, {
+    version,
     resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
-  }
-
-  return fetchStory<StoryData>(getStoryblokApi(), `${locale}/${slug}`, params)
+  })
 }
 
 type GetStoryByIdParams = {
@@ -384,10 +380,7 @@ type GetStoryByIdParams = {
 export const getStoryById = <StoryData extends ISbStoryData>(
   params: GetStoryByIdParams,
 ): Promise<StoryData> => {
-  return fetchStory<StoryData>(getStoryblokApi(), params.id, {
-    version: params.version ?? (USE_DRAFT_CONTENT ? 'draft' : 'published'),
-    resolve_relations: params.resolve_relations,
-  })
+  return fetchStory<StoryData>(getStoryblokApi(), params.id, params)
 }
 
 type GetPageLinksParams = {
@@ -398,15 +391,10 @@ export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<P
   const storyblokApi = getStoryblokApi()
   const {
     data: { links },
-  } = await storyblokApi.get('cdn/links/', {
-    ...(params?.startsWith && { starts_with: params.startsWith }),
-    ...(USE_DRAFT_CONTENT
-      ? { version: 'draft' }
-      : {
-          version: 'published',
-          cv: getCacheVersion(),
-        }),
-  })
+  } = await storyblokApi.get(
+    'cdn/links/',
+    storyblokParams({ ...(params?.startsWith && { starts_with: params.startsWith }) }),
+  )
   const pageLinks: Array<PageLink> = []
   Object.values(links as Record<string, LinkData>).forEach((link) => {
     if (link.is_folder) {
@@ -448,20 +436,15 @@ export const getStoriesBySlug = async (
   slugs: Array<string>,
   options: Pick<StoryOptions, 'version'>,
 ) => {
-  const response = await getStoryblokApi().getStories({
-    by_slugs: slugs.join(','),
-    ...options,
-    ...(USE_DRAFT_CONTENT && { version: 'draft' }),
-  })
+  const response = await getStoryblokApi().getStories(
+    storyblokParams({ ...options, by_slugs: slugs.join(',') }),
+  )
 
   return response.data.stories
 }
 
 export const fetchStories = async (params: ISbStoriesParams) => {
-  return getStoryblokApi().getStories({
-    ...params,
-    version: params.version ?? USE_DRAFT_CONTENT ? 'draft' : 'published',
-  })
+  return getStoryblokApi().getStories(storyblokParams(params))
 }
 
 // See https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation
@@ -471,4 +454,39 @@ export const getRevalidate = () => {
   } else {
     return 1
   }
+}
+
+export type StoryblokFetchParams = {
+  version?: StoryblokVersion
+  language?: Language
+  resolve_relations?: string
+}
+
+export const fetchStory = async <StoryData extends ISbStoryData>(
+  storyblokClient: StoryblokClient,
+  slug: string,
+  params: StoryblokFetchParams,
+): Promise<StoryData> => {
+  const response = await storyblokClient.getStory(
+    slug,
+    storyblokParams({ ...params, resolve_links: 'url' }),
+  )
+  return response.data.story as StoryData
+}
+
+const USE_DRAFT_CONTENT = process.env.NEXT_PUBLIC_STORYBLOK_DRAFT_CONTENT === 'true'
+const storyblokParams = (params: ISbStoriesParams): ISbStoriesParams => {
+  const version = params.version ?? (USE_DRAFT_CONTENT ? 'draft' : 'published')
+  return {
+    ...params,
+    version,
+    ...(version === 'published' && { cv: getCacheVersion() }),
+  }
+}
+
+const STORYBLOK_CACHE_VERSION = process.env.STORYBLOK_CACHE_VERSION
+const getCacheVersion = (): number | undefined => {
+  const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
+  const isCacheVersionValid = !isNaN(cacheVersion)
+  return isCacheVersionValid ? cacheVersion : undefined
 }

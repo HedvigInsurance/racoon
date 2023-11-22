@@ -1,10 +1,10 @@
 // Next.js Draft Mode
 // nextjs.org/docs/pages/building-your-application/configuring/draft-mode#step-1-create-and-access-the-api-route
 
-import { ISbStoryData } from '@storyblok/react'
+import { ISbStoryData, ISbStoriesParams } from '@storyblok/react'
 import { NextApiRequest, NextApiResponse } from 'next'
 import StoryblokClient from 'storyblok-js-client'
-import { StoryblokFetchParams, fetchStory } from '@/services/storyblok/Storyblok.helpers'
+import { fetchStory } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -44,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 type PreviewParams = {
-  version: StoryblokFetchParams['version']
+  version: ISbStoriesParams['version']
   pageId: string
 }
 
