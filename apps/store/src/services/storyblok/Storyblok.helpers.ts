@@ -1,8 +1,6 @@
-import { StoryblokClient } from '@storyblok/js'
 import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
 import { Features } from '@/utils/Features'
-import { type Language } from '@/utils/l10n/types'
-import { LinkField, ProductStory, WidgetFlowStory, StoryblokVersion } from './storyblok'
+import { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: Array<BlockData> = [],
@@ -28,33 +26,6 @@ export const checkBlockType = <BlockData extends SbBlokData>(
 ): BlockData | null => {
   if (block.component === targetType) return block as BlockData
   else return null
-}
-
-export type StoryblokFetchParams = {
-  version: StoryblokVersion
-  language?: Language
-  resolve_relations?: string
-}
-
-const STORYBLOK_CACHE_VERSION = process.env.STORYBLOK_CACHE_VERSION
-export const fetchStory = async <StoryData extends ISbStoryData>(
-  storyblokClient: StoryblokClient,
-  slug: string,
-  params: StoryblokFetchParams,
-): Promise<StoryData> => {
-  const response = await storyblokClient.getStory(slug, {
-    ...params,
-    cv: params.version === 'published' ? getCacheVersion() : undefined,
-    resolve_links: 'url',
-  })
-
-  return response.data.story as StoryData
-}
-
-export const getCacheVersion = (): number | undefined => {
-  const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
-  const isCacheVersionValid = !isNaN(cacheVersion)
-  return isCacheVersionValid ? cacheVersion : undefined
 }
 
 const MISSING_LINKS = new Set()
