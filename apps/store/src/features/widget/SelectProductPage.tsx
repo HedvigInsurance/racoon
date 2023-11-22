@@ -1,5 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState, type FormEventHandler } from 'react'
 import { Button, Heading, Space, mq, theme } from 'ui'
@@ -19,6 +20,7 @@ type Props = {
 }
 
 export const SelectProductPage = (props: Props) => {
+  const { t } = useTranslation('widget')
   const [productName, setProductName] = useState<string | undefined>(undefined)
 
   const router = useRouter()
@@ -59,7 +61,7 @@ export const SelectProductPage = (props: Props) => {
         <GridLayout.Content width="1/3" align="center">
           <Space y={3.5}>
             <Heading as="h1" variant="standard.24" align="center">
-              Select your insurance
+              {t('SELECT_PAGE_TITLE')}
             </Heading>
 
             <form onSubmit={handleSubmit}>
@@ -83,7 +85,7 @@ export const SelectProductPage = (props: Props) => {
                 </RadioOptionList.Root>
 
                 <CustomButton type="submit" variant="primary" aria-disabled={!productName}>
-                  Continue
+                  {t('SELECT_CONTINUE_BUTTON')}
                 </CustomButton>
               </Space>
             </form>

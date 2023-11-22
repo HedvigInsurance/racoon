@@ -1,6 +1,8 @@
 {
   "PAYMENT_TRUSTLY_SUBTITLE": "Pengarna kommer dras den 27:e varje månad",
   "PAYMENT_TRUSTLY_TITLE": "Koppla autogiro",
+  "SELECT_CONTINUE_BUTTON": "Fortsätt",
+  "SELECT_PAGE_TITLE": "Välj din försäkring",
   "USP_TEXT": "Ingen bindningstid",
   "WIDGET_CHECKOUT_PAGE_HEADING": "Ditt erbjudande",
   "WIDGET_CHECKOUT_PAGE_SUBHEADING": "Välj startdatum och signera nedan",
