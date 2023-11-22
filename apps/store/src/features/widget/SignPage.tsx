@@ -12,7 +12,6 @@ import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubm
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
@@ -31,6 +30,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
+import { ProductItemContainer } from './ProductItemContainer'
 
 type Props = {
   shopSession: ShopSession
@@ -118,11 +118,7 @@ export const SignPage = (props: Props) => {
                 <ShopBreakdown>
                   {props.shopSession.cart.entries.map((item) => (
                     <ProductItemContainer key={item.id} offer={item}>
-                      <ButtonNextLink
-                        variant="secondary-alt"
-                        size="medium"
-                        href={getEditLink(item.id)}
-                      >
+                      <ButtonNextLink variant="secondary" size="medium" href={getEditLink(item.id)}>
                         {t('cart:CART_ENTRY_EDIT_BUTTON')}
                       </ButtonNextLink>
                     </ProductItemContainer>
