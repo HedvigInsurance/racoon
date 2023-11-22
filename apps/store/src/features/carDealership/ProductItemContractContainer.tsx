@@ -51,7 +51,6 @@ export const ProductItemContractContainerCar = ({ contract, crossedOverAmount }:
       startDate={startDateProps}
       productDetails={productDetails}
       productDocuments={productDocuments}
-      badge={{ children: t('CONTRACT_CARD_BADGE'), color: 'signalAmberHighlight' }}
       exposure={contract.exposureDisplayName}
     />
   )
