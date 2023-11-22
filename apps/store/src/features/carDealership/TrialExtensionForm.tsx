@@ -87,7 +87,7 @@ export const TrialExtensionForm = ({
         <>
           <ProductItemContractContainerCar
             contract={trialContract}
-            crossedOverAmount={defaultOfferCost}
+            crossedOutAmount={defaultOfferCost}
           />
           <ExtensionOfferToggle />
         </>
@@ -110,7 +110,7 @@ export const TrialExtensionForm = ({
           <>
             <PriceBreakdown
               amount={trialContract.premium.amount}
-              crossedOverAmount={defaultOfferCost?.amount}
+              crossedOutAmount={defaultOfferCost?.amount}
               currencyCode={trialContract.premium.currencyCode}
               title={t('TRIAL_TITLE')}
               subTitle={trialContract.productVariant.displayNameSubtype}

@@ -51,15 +51,20 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
     throw new Error(`Unable to parse terminationDate: ${trialContract.terminationDate}`)
   }
 
+  const crossedOutAmount = defaultOffer?.cost.net
+
   return (
     <Space y={1}>
-      <ProductItemContractContainerCar contract={trialContract} />
+      <ProductItemContractContainerCar
+        contract={trialContract}
+        crossedOutAmount={crossedOutAmount}
+      />
 
       <ExtensionOfferToggle />
 
       <PriceBreakdown
         amount={trialContract.premium.amount}
-        crossedOverAmount={defaultOffer?.cost.net.amount}
+        crossedOutAmount={crossedOutAmount?.amount}
         currencyCode={trialContract.premium.currencyCode}
         title={t('TRIAL_TITLE')}
         subTitle={trialContract.productVariant.displayNameSubtype}
