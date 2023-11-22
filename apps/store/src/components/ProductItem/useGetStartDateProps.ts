@@ -8,7 +8,7 @@ type Params = {
   startDate?: string
 }
 
-type StartDateProps = ComponentProps<typeof ProductItem>['startDate']
+type StartDateProps = Required<ComponentProps<typeof ProductItem>['startDate']>
 
 type GetStartDateProps = (params: Params) => StartDateProps
 
