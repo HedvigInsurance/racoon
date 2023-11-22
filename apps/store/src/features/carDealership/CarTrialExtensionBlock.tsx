@@ -18,8 +18,8 @@ import { LoadingSkeleton } from './LoadingSkeleton'
 import { PayForTrial } from './PayForTrial'
 import { TrialExtensionForm } from './TrialExtensionForm'
 
-// We cancel the trial after 28 days if member hasn't connected payment
-const DAYS_UNTIL_TERMINATION = 28
+// We cancel the trial if member hasn't connected payment
+const DAYS_UNTIL_TERMINATION = 14
 
 type Props = SbBaseBlockProps<{
   requirePaymentConnection?: boolean
