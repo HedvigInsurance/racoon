@@ -2,9 +2,10 @@ import { useApolloClient } from '@apollo/client'
 import styled from '@emotion/styled'
 import { type SbBlokData } from '@storyblok/js'
 import { StoryblokComponent } from '@storyblok/react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useState, type PropsWithChildren } from 'react'
+import { useState, type PropsWithChildren, MouseEvent } from 'react'
 import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme, mq } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
@@ -24,6 +25,7 @@ import {
   type CurrentMemberQueryVariables,
   CurrentMemberDocument,
   ShopSessionAuthenticationStatus,
+  useCartEntryRemoveMutation,
 } from '@/services/apollo/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -42,6 +44,7 @@ type Props = {
   suggestedEmail?: string
   flow: string
   content?: Array<SbBlokData>
+  productName: string
 }
 
 export const SignPage = (props: Props) => {
@@ -97,6 +100,20 @@ export const SignPage = (props: Props) => {
 
   const userErrorMessage = userError?.message
 
+  const mainOffer = props.shopSession.cart.entries.find(
+    (item) => item.product.name === props.productName,
+  )
+  const crossSellOffers = props.shopSession.cart.entries.filter((item) => item.id !== mainOffer?.id)
+
+  const [removeCartItem, result] = useCartEntryRemoveMutation({
+    refetchQueries: 'active',
+    awaitRefetchQueries: true,
+  })
+  const handleRemoveCartItem = (offerId: string) => (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation() // Prevent `ProductItem` from expanding
+    removeCartItem({ variables: { shopSessionId: props.shopSession.id, offerId } })
+  }
+
   return (
     <>
       <Wrapper y={3}>
@@ -116,13 +133,34 @@ export const SignPage = (props: Props) => {
 
               <Space y={1}>
                 <ShopBreakdown>
-                  {props.shopSession.cart.entries.map((item) => (
-                    <ProductItemContainer key={item.id} offer={item}>
-                      <ButtonNextLink variant="secondary" size="medium" href={getEditLink(item.id)}>
+                  {mainOffer && (
+                    <ProductItemContainer offer={mainOffer}>
+                      <ButtonNextLink
+                        variant="secondary"
+                        size="medium"
+                        href={getEditLink(mainOffer.id)}
+                      >
                         {t('cart:CART_ENTRY_EDIT_BUTTON')}
                       </ButtonNextLink>
                     </ProductItemContainer>
-                  ))}
+                  )}
+                  <AnimatePresence initial={false}>
+                    {crossSellOffers.map((item) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ opacity: 0, height: 0 }}
+                        style={{ position: 'relative' }}
+                      >
+                        <ProductItemContainer
+                          offer={item}
+                          onDelete={handleRemoveCartItem(item.id)}
+                        />
+                        {result.loading && <ProductItemLoadingOverlay />}
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </ShopBreakdown>
 
                 <DiscountFieldContainer shopSession={props.shopSession} />
@@ -256,6 +294,13 @@ const SignButton = ({ children, loading, showBankIdIcon }: SignButtonProps) => {
     </Button>
   )
 }
+
+const ProductItemLoadingOverlay = styled.div({
+  backgroundColor: theme.colors.grayTranslucentDark700,
+  position: 'absolute',
+  inset: 0,
+  borderRadius: theme.radius.md,
+})
 
 const StyledSignButtonContent = styled.div({
   display: 'flex',

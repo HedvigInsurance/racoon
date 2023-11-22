@@ -23,6 +23,7 @@ type Props = {
   children?: ReactNode
   defaultExpanded?: boolean
   variant?: ComponentProps<typeof ProductItem>['variant']
+  onDelete?: ComponentProps<typeof ProductItem>['onDelete']
 }
 
 export const ProductItemContainer = (props: Props) => {
@@ -78,6 +79,7 @@ export const ProductItemContainer = (props: Props) => {
       startDate={props.offer.startDate}
       onChangeStartDate={handleChangeStartDate}
       loading={result.loading}
+      onDelete={props.onDelete}
     >
       {props.children}
     </ProductItem>
