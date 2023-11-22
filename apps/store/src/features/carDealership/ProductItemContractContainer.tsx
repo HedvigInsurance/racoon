@@ -7,10 +7,10 @@ import { type TrialContract } from './carDealership.types'
 
 type Props = {
   contract: TrialContract
-  crossedOverAmount?: Money
+  crossedOutAmount?: Money
 }
 
-export const ProductItemContractContainerCar = ({ contract, crossedOverAmount }: Props) => {
+export const ProductItemContractContainerCar = ({ contract, crossedOutAmount }: Props) => {
   const formatter = useFormatter()
   const { t } = useTranslation('carDealership')
 
@@ -21,11 +21,11 @@ export const ProductItemContractContainerCar = ({ contract, crossedOverAmount }:
 
   // Only show crossed over amount if default offer is more expensive than the trial
   const showCrossedOverAmount =
-    crossedOverAmount !== undefined && crossedOverAmount.amount > contract.premium.amount
+    crossedOutAmount !== undefined && crossedOutAmount.amount > contract.premium.amount
 
   let productPrice
   if (showCrossedOverAmount) {
-    productPrice = { ...crossedOverAmount, reducedAmount: contract.premium.amount }
+    productPrice = { ...crossedOutAmount, reducedAmount: contract.premium.amount }
   } else {
     productPrice = { ...contract.premium }
   }
