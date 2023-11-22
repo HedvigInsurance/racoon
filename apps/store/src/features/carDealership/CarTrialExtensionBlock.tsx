@@ -4,7 +4,7 @@ import { storyblokEditable } from '@storyblok/react'
 import addDays from 'date-fns/addDays'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -12,7 +12,7 @@ import { useCarTrialExtensionQuery } from '@/services/apollo/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
-import { CarTrialExtension } from './carDealership.types'
+import { CarTrialExtension, TrialContract } from './carDealership.types'
 import { useUserWantsExtension } from './ExtensionOfferToggle'
 import { LoadingSkeleton } from './LoadingSkeleton'
 import { PayForTrial } from './PayForTrial'
@@ -35,24 +35,35 @@ export const CarTrialExtensionBlock = (props: Props) => {
     },
   })
 
+  const trialContact: TrialContract | null = useMemo(() => {
+    if (data?.carTrial) {
+      return {
+        ...data.carTrial.trialContract,
+        pillowSrc: data.carTrial.priceIntent.product.pillowImage.src,
+      }
+    }
+
+    return null
+  }, [data])
+
   return (
     <GridLayout.Root>
       <GridLayout.Content width="1/3" align="center">
-        {!data?.carTrial ? (
+        {!data?.carTrial || !trialContact ? (
           <LoadingSkeleton />
         ) : (
           <Space y={1.5}>
             {userWantsExtension ? (
               <TrialExtensionForm
                 {...storyblokEditable(props.blok)}
-                trialContract={data.carTrial.trialContract}
+                trialContract={trialContact}
                 priceIntent={data.carTrial.priceIntent}
                 shopSession={data.carTrial.shopSession}
                 requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
               />
             ) : (
               <PayForTrial
-                trialContract={data.carTrial.trialContract}
+                trialContract={trialContact}
                 shopSessionId={data.carTrial.shopSession.id}
                 defaultOffer={data.carTrial.priceIntent.defaultOffer ?? undefined}
                 ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}

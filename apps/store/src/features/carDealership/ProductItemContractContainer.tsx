@@ -1,11 +1,12 @@
 import { useTranslation } from 'next-i18next'
 import { ProductItem } from '@/components/ProductItem/ProductItem'
-import { Money, TrialContractFragment } from '@/services/apollo/generated'
+import { Money } from '@/services/apollo/generated'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
+import { type TrialContract } from './carDealership.types'
 
 type Props = {
-  contract: TrialContractFragment
+  contract: TrialContract
   crossedOverAmount?: Money
 }
 
@@ -51,6 +52,7 @@ export const ProductItemContractContainerCar = ({ contract, crossedOverAmount }:
       productDetails={productDetails}
       productDocuments={productDocuments}
       exposure={contract.exposureDisplayName}
+      pillowSrc={contract.pillowSrc}
     />
   )
 }

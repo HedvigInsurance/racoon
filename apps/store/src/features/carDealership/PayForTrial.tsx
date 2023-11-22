@@ -2,18 +2,19 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Space } from 'ui'
-import { ProductOfferFragment, TrialContractFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
+import { type TrialContract } from './carDealership.types'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 
 type Props = {
-  trialContract: TrialContractFragment
+  trialContract: TrialContract
   shopSessionId: string
   defaultOffer?: ProductOfferFragment
   ssn?: string

@@ -9,6 +9,9 @@ fragment PriceIntentCarTrialExtension on PriceIntent {
     name
     displayNameShort
     pageLink
+    pillowImage {
+      src
+    }
   }
   defaultOffer {
     ...ProductOffer
