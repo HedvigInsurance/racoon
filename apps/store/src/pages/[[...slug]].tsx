@@ -3,8 +3,8 @@ import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } fro
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
-import { getProductData } from '@/components/ProductPage/ProductPage.helpers'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
         throw new Error(`Unknown price template: ${props.story.content.priceFormTemplateId}`)
       }
 
-      const productData = await getProductData({
+      const productData = await fetchProductData({
         apolloClient,
         productName: props.story.content.productId,
       })
