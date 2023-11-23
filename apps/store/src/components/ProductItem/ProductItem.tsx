@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Badge, Button, ButtonProps, Space, Text, mq, theme } from 'ui'
+import { Badge, Button, ButtonProps, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Skeleton } from '@/components/Skeleton'
@@ -34,27 +34,25 @@ export const ProductItem = (props: Props) => {
   return (
     <Card data-variant={props.variant}>
       <Hoverable onClick={handleClickHoverable} data-variant={props.variant}>
-        <Space y={1}>
-          <Header style={{ gridTemplateColumns: props.pillowSrc ? 'auto 1fr' : '1fr' }}>
-            {props.pillowSrc && <Pillow size="small" src={props.pillowSrc} alt="" />}
-            <div>
-              <HeaderRow>
-                <Text as="p" size="md" color="textTranslucentPrimary">
-                  {props.title}
-                </Text>
-                {props.badge && <AlignedBadge size="big" {...props.badge} />}
-              </HeaderRow>
-              <StartDate {...props.startDate} />
-            </div>
-          </Header>
+        <Header style={{ gridTemplateColumns: props.pillowSrc ? 'auto 1fr' : '1fr' }}>
+          {props.pillowSrc && <Pillow size="small" src={props.pillowSrc} alt="" />}
+          <div>
+            <HeaderRow>
+              <Text as="p" size="md" color="textTranslucentPrimary">
+                {props.title}
+              </Text>
+              {props.badge && <AlignedBadge size="big" {...props.badge} />}
+            </HeaderRow>
+            <StartDate {...props.startDate} />
+          </div>
+        </Header>
 
-          {props.exposure && (
-            <Exposure>
-              <span>{t('EXPOSURE_LABEL')}</span>
-              <span>{props.exposure}</span>
-            </Exposure>
-          )}
-        </Space>
+        {props.exposure && (
+          <Exposure>
+            <span>{t('EXPOSURE_LABEL')}</span>
+            <span>{props.exposure}</span>
+          </Exposure>
+        )}
       </Hoverable>
 
       <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
@@ -108,7 +106,7 @@ const Header = styled.div({
   columnGap: theme.space.md,
   alignItems: 'center',
 
-  paddingBottom: theme.space.lg,
+  paddingBottom: theme.space.md,
   borderBottomWidth: 1,
   borderBottomStyle: 'solid',
   borderBottomColor: theme.colors.borderTranslucent2,
@@ -132,6 +130,7 @@ const Exposure = styled.div({
   gap: theme.space.sm,
   alignItems: 'center',
   justifyContent: 'space-between',
+  marginTop: theme.space.sm,
   fontSize: theme.fontSizes.md,
   color: theme.colors.textTranslucentSecondary,
 })
