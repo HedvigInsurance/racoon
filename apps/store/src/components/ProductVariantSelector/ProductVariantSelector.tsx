@@ -1,13 +1,15 @@
-import { ChangeEventHandler, useMemo } from 'react'
+import { type ChangeEventHandler, useMemo } from 'react'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import {
+  useProductData,
+  useSelectedTypeOfContract,
+} from '@/components/ProductData/ProductDataProvider'
 
 type Props = { className?: string }
 
 export const ProductVariantSelector = ({ className }: Props) => {
-  const { selectedVariant, selectedVariantUpdate } = useProductPageContext()
   const productData = useProductData()
+  const [selectedTypeOfContract, setSelectedTypeOfContract] = useSelectedTypeOfContract()
 
   const variantOptions = useMemo(
     () =>
@@ -19,16 +21,10 @@ export const ProductVariantSelector = ({ className }: Props) => {
   )
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const newSelectedVariant = productData.variants.find(
-      (variant) => variant.typeOfContract === event.target.value,
-    )
-
-    if (newSelectedVariant) {
-      selectedVariantUpdate(newSelectedVariant)
-    }
+    setSelectedTypeOfContract(event.target.value)
   }
 
-  const defaultValue = selectedVariant?.typeOfContract ?? productData.variants[0].typeOfContract
+  const defaultValue = selectedTypeOfContract ?? productData.variants[0].typeOfContract
 
   return (
     <InputSelect

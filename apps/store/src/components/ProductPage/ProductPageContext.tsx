@@ -1,9 +1,7 @@
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react'
-import { ProductPageProps, ProductDataVariant } from './ProductPage.types'
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
+import { ProductPageProps } from './ProductPage.types'
 
-type ProductPageContextData = ProductPageProps & {
-  selectedVariant: ProductDataVariant
-  selectedVariantUpdate: (variant: ProductDataVariant) => void
+type ProductPageContextData = Omit<ProductPageProps, 'productData'> & {
   content: {
     product: {
       name: string
@@ -17,18 +15,10 @@ const ProductPageContext = createContext<ProductPageContextData | null>(null)
 
 type Props = PropsWithChildren<ProductPageProps>
 
-export const ProductPageContextProvider = ({
-  children,
-  initialSelectedVariant = null,
-  ...rest
-}: Props) => {
-  const [selectedVariant, setSelectVariant] = useState(initialSelectedVariant)
-
+export const ProductPageContextProvider = ({ children, ...rest }: Props) => {
   const contextValue = useMemo(
     () => ({
       ...rest,
-      selectedVariant,
-      selectedVariantUpdate: setSelectVariant,
       content: {
         product: {
           name: rest.story.content.name || rest.productData.displayNameShort,
@@ -37,7 +27,7 @@ export const ProductPageContextProvider = ({
         },
       },
     }),
-    [rest, selectedVariant],
+    [rest],
   )
 
   return <ProductPageContext.Provider value={contextValue}>{children}</ProductPageContext.Provider>

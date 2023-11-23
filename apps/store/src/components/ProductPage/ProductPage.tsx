@@ -22,7 +22,10 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
   useDiscountBanner()
 
   return (
-    <ProductDataProvider productData={props.productData}>
+    <ProductDataProvider
+      productData={props.productData}
+      selectedTypeOfContract={props.initialSelectedTypeOfContract}
+    >
       <ProductPageContextProvider {...props} story={story}>
         <PriceIntentContextProvider>
           <StoryblokComponent blok={story.content} />
