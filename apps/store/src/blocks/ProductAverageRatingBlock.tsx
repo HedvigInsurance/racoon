@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductRating } from '@/components/ProductRating/ProductRating'
@@ -10,7 +11,6 @@ import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 const MAX_SCORE = 5
 
-type Product = ReturnType<typeof useProductPageContext>['productData']
 type AverageRating = NonNullable<ReturnType<typeof useProductPageContext>['averageRating']>
 
 export const ProductAverageRatingBlock = () => {
@@ -78,7 +78,7 @@ const Wrapper = styled.div({
   flexWrap: 'wrap',
 })
 
-const getProductStructuredData = (product: Product, averageRating: AverageRating) => {
+const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
   return {
     '@context': 'https://schema.org/',
     '@type': 'Product',

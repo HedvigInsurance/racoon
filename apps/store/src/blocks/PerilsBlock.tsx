@@ -3,9 +3,11 @@ import { useMemo } from 'react'
 import { Badge, Space } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Perils } from '@/components/Perils/Perils'
-import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import {
+  useProductData,
+  useSelectedProductVariant,
+} from '@/components/ProductData/ProductDataProvider'
+import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type PerilsBlockProps = SbBaseBlockProps<{
   heading?: string
@@ -13,28 +15,21 @@ type PerilsBlockProps = SbBaseBlockProps<{
 }>
 
 export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
-  const { selectedVariant } = useProductPageContext()
-  const productData = useProductData()
+  const { variants } = useProductData()
+  const selectedProductVariant = useSelectedProductVariant()
 
   const allPerils = useMemo(() => {
     const perilsMap = new Map(
-      productData.variants.flatMap((item) => item.perils.map((peril) => [peril.title, peril])),
+      variants.flatMap((item) => item.perils.map((peril) => [peril.title, peril])),
     )
     return Array.from(perilsMap.values())
-  }, [productData.variants])
+  }, [variants])
 
   const items = useMemo(() => {
-    const selectedProductVariant = productData.variants.find(
-      (item) => item.typeOfContract === selectedVariant?.typeOfContract,
-    )
-
-    const productVariant = selectedProductVariant ?? productData.variants[0]
-
-    return productVariant.perils.map((item) => ({
-      id: item.title,
-      ...item,
-    }))
-  }, [productData, selectedVariant])
+    const productVariant = selectedProductVariant ?? variants.at(0)
+    if (!productVariant) return []
+    return productVariant.perils.map((item) => ({ id: item.title, ...item }))
+  }, [variants, selectedProductVariant])
 
   const missingItems = useMemo(() => {
     const addedPerils = new Set<string>(items.map((item) => item.id))

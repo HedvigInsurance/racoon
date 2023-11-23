@@ -1,7 +1,9 @@
 import { storyblokEditable } from '@storyblok/react'
-import { useProductData } from '@/components/ProductData/ProductDataProvider'
+import {
+  useProductData,
+  useSelectedProductVariant,
+} from '@/components/ProductData/ProductDataProvider'
 import { ProductDocuments } from '@/components/ProductPage/ProductDocuments'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = SbBaseBlockProps<{
@@ -10,7 +12,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const ProductDocumentsBlock = ({ blok }: Props) => {
-  const { selectedVariant } = useProductPageContext()
+  const selectedVariant = useSelectedProductVariant()
   const productData = useProductData()
   const { heading, description } = blok
 

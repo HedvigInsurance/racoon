@@ -61,8 +61,10 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
 const NextProductPage = (props: ProductPageProps) => {
   const { story: initialStory, ...pageProps } = props
+
   const story = useStoryblokState(initialStory)
   if (!story) return null
+
   return (
     <>
       <HeadSeoInfo story={story} />
@@ -94,8 +96,10 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       })
 
       const defaultProductVariant = props.story.content.defaultProductVariant
-      const initialSelectedVariant =
-        productData.variants.find((item) => item.typeOfContract === defaultProductVariant) ?? null
+      const initialSelectedVariant = productData.variants.find(
+        (item) => item.typeOfContract === defaultProductVariant,
+      )
+      const initialSelectedTypeOfContract = initialSelectedVariant?.typeOfContract
 
       const averageRating = await getProductAverageRating(productData.name)
       const reviewComments = await getProductReviewComments(productData.name)
@@ -109,7 +113,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
           averageRating,
           reviewComments,
           priceTemplate,
-          initialSelectedVariant,
+          ...(initialSelectedTypeOfContract && { initialSelectedTypeOfContract }),
         },
         revalidate: getRevalidate(),
       }

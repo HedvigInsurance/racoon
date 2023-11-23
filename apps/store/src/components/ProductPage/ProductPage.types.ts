@@ -14,7 +14,7 @@ export type ProductPageProps = StoryblokPageProps & {
   story: ProductStory
   priceTemplate: Template
   productData: ProductData
-  initialSelectedVariant?: ProductDataVariant
+  initialSelectedTypeOfContract?: string
   trustpilot: TrustpilotData | null
   averageRating: AverageRating | null
   reviewComments: ReviewComments | null
