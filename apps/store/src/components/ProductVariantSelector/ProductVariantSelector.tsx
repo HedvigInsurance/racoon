@@ -1,11 +1,13 @@
 import { ChangeEventHandler, useMemo } from 'react'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 
 type Props = { className?: string }
 
 export const ProductVariantSelector = ({ className }: Props) => {
-  const { productData, selectedVariant, selectedVariantUpdate } = useProductPageContext()
+  const { selectedVariant, selectedVariantUpdate } = useProductPageContext()
+  const productData = useProductData()
 
   const variantOptions = useMemo(
     () =>

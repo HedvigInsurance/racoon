@@ -14,6 +14,7 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
@@ -45,7 +46,8 @@ import { useSelectedOffer } from './useSelectedOffer'
 
 export const PurchaseForm = () => {
   const { t } = useTranslation('purchase-form')
-  const { priceTemplate, productData } = useProductPageContext()
+  const { priceTemplate } = useProductPageContext()
+  const productData = useProductData()
   const { shopSession } = useShopSession()
   const formatter = useFormatter()
   const [priceIntent, , createNewPriceIntent] = usePriceIntent()
@@ -269,7 +271,8 @@ type ProductHeroContainerProps = {
 }
 
 const ProductHeroContainer = (props: ProductHeroContainerProps) => {
-  const { content, productData } = useProductPageContext()
+  const { content } = useProductPageContext()
+  const productData = useProductData()
 
   return (
     <ProductHeroWrapper compact={props.compact ?? false}>

@@ -1,6 +1,7 @@
 import { StoryblokComponent } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
+import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -21,12 +22,14 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
   useDiscountBanner()
 
   return (
-    <ProductPageContextProvider {...props} story={story}>
-      <PriceIntentContextProvider>
-        <StoryblokComponent blok={story.content} />
-        <PageDebugDialog />
-      </PriceIntentContextProvider>
-    </ProductPageContextProvider>
+    <ProductDataProvider productData={props.productData}>
+      <ProductPageContextProvider {...props} story={story}>
+        <PriceIntentContextProvider>
+          <StoryblokComponent blok={story.content} />
+          <PageDebugDialog />
+        </PriceIntentContextProvider>
+      </ProductPageContextProvider>
+    </ProductDataProvider>
   )
 }
 

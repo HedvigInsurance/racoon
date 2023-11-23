@@ -1,9 +1,11 @@
 import { storyblokEditable } from '@storyblok/react'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 
 export const InsurableLimitsBlock = () => {
-  const { productData, selectedVariant } = useProductPageContext()
+  const { selectedVariant } = useProductPageContext()
+  const productData = useProductData()
 
   const selectedProductVariant = productData.variants.find(
     (item) => item.typeOfContract === selectedVariant?.typeOfContract,
