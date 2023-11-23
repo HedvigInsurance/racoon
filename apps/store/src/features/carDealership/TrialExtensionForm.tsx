@@ -93,7 +93,7 @@ export const TrialExtensionForm = ({
         </>
       )}
 
-      <Space y={1.5}>
+      <Space y={1}>
         <ProductItemContainer
           offer={selectedOffer}
           defaultExpanded={true}
@@ -123,6 +123,7 @@ export const TrialExtensionForm = ({
             />
 
             <Divider />
+
             <PriceBreakdown
               amount={selectedOffer.cost.net.amount}
               currencyCode={selectedOffer.cost.net.currencyCode}
