@@ -9,6 +9,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import {
   PriceIntentFragment,
@@ -40,7 +41,8 @@ export const PriceIntentContextProvider = ({ children }: Props) => {
 }
 
 const usePriceIntentContextValue = () => {
-  const { priceTemplate, productData } = useProductPageContext()
+  const { priceTemplate } = useProductPageContext()
+  const productData = useProductData()
   const apolloClient = useApolloClient()
   const { onReady, shopSession } = useShopSession()
 

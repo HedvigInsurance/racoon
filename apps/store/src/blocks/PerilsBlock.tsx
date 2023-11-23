@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { Badge, Space } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Perils } from '@/components/Perils/Perils'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -12,7 +13,8 @@ type PerilsBlockProps = SbBaseBlockProps<{
 }>
 
 export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
-  const { productData, selectedVariant } = useProductPageContext()
+  const { selectedVariant } = useProductPageContext()
+  const productData = useProductData()
 
   const allPerils = useMemo(() => {
     const perilsMap = new Map(

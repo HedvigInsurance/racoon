@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { ConditionalWrapper, theme, mq } from 'ui'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { zIndexes } from '@/utils/zIndex'
 import { NAVIGATION_LIST_HEIGHT } from './ProductPageBlock'
@@ -10,7 +10,7 @@ type ProductVariantSelectorBlockProps = {
 }
 
 export const ProductVariantSelectorBlock = ({ nested }: ProductVariantSelectorBlockProps) => {
-  const { productData } = useProductPageContext()
+  const productData = useProductData()
 
   if (productData.variants.length < 2) return null
 

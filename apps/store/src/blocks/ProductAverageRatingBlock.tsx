@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductRating } from '@/components/ProductRating/ProductRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -13,7 +14,8 @@ type Product = ReturnType<typeof useProductPageContext>['productData']
 type AverageRating = NonNullable<ReturnType<typeof useProductPageContext>['averageRating']>
 
 export const ProductAverageRatingBlock = () => {
-  const { productData, averageRating } = useProductPageContext()
+  const { averageRating } = useProductPageContext()
+  const productData = useProductData()
 
   if (!averageRating) {
     console.warn(`AverageRatingBlock | Average rating for product ${productData.name} not found`)
