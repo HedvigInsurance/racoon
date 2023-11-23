@@ -73,11 +73,14 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
     return { paths: [], fallback: 'blocking' }
   }
 
-  const nestedPageLinks = await Promise.all(
-    (context.locales ?? []).map((locale) =>
-      getPageLinks({ startsWith: `${locale}/${STORYBLOK_WIDGET_FOLDER_SLUG}` }),
-    ),
-  )
+  // Call in sequence to avoid hitting Storyblok rate limit
+  const nestedPageLinks: Array<Array<{ slugParts: Array<string>; locale: string }>> = []
+  for (const locale of context.locales ?? []) {
+    const pageLinks = await getPageLinks({
+      startsWith: `${locale}/${STORYBLOK_WIDGET_FOLDER_SLUG}`,
+    })
+    nestedPageLinks.push(pageLinks)
+  }
 
   return {
     paths: nestedPageLinks
