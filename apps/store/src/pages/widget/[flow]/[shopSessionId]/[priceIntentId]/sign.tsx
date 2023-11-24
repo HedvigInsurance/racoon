@@ -1,6 +1,9 @@
 import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef } from 'react'
+import { fetchProductData } from '@/components/ProductData/fetchProductData'
+import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { ProductData } from '@/components/ProductPage/ProductPage.types'
 import { fetchSignPageContent } from '@/features/widget/fetchSignPageContent'
 import { SignPage } from '@/features/widget/SignPage'
 import { initializeApolloServerSide } from '@/services/apollo/client'
@@ -12,6 +15,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession'> & {
   shopSessionId: string
+  productData: ProductData
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -22,7 +26,11 @@ const NextWidgetSignPage = (props: Props) => {
 
   if (!shopSession) return null
 
-  return <SignPage shopSession={shopSession} {...props} />
+  return (
+    <ProductDataProvider productData={props.productData}>
+      <SignPage shopSession={shopSession} {...props} />
+    </ProductDataProvider>
+  )
 }
 
 type Params = {
@@ -72,6 +80,11 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       throw new Error(`No price intent ${context.params.priceIntentId}`)
     }
 
+    const productData = await fetchProductData({
+      apolloClient,
+      productName: priceIntent.product.name,
+    })
+
     return {
       props: {
         ...translations,
@@ -87,6 +100,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         // TODO: check if we want to control this via CMS
         hideChat: true,
         productName: priceIntent.product.name,
+        productData,
       },
     }
   } catch (error) {
