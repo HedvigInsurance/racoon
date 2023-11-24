@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import {
   ShopSessionFragment,
   useCarDealershipRemoveAddMutation,
@@ -22,6 +23,7 @@ type Params = {
 export const useAcceptExtension = (params: Params) => {
   const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
+  const { dismissBanner } = useGlobalBanner()
   const { showError } = useAppErrorHandleContext()
   const [getCurrentMember] = useCurrentMemberLazyQuery()
 
@@ -62,11 +64,13 @@ export const useAcceptExtension = (params: Params) => {
           LOGGER.info('Member has active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
+          dismissBanner()
           await router.push(nextUrl)
         } else {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
+          dismissBanner()
           await router.push(
             PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl }),
           )
