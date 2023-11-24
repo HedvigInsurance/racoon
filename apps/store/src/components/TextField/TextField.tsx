@@ -73,7 +73,7 @@ export const TextField = (props: Props) => {
     <Space y={0.25}>
       <Wrapper
         {...animationProps}
-        data-active={!!inputValue}
+        data-active={!!inputValue || !!inputProps.placeholder}
         data-warning={warning}
         data-readonly={inputProps.readOnly ? '' : undefined}
         onClick={handleClickWrapper}
