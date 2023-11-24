@@ -2,6 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Space } from 'ui'
+import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { ProductOfferFragment } from '@/services/apollo/generated'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { convertToDate } from '@/utils/date'
@@ -24,6 +25,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
   const router = useRouter()
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
+  const { dismissBanner } = useGlobalBanner()
   const { startLogin } = useBankIdContext()
   const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
@@ -39,6 +41,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
         const nextUrl = PageLink.carDealershipConfirmation({
           contractId: trialContract.id,
         }).pathname
+        dismissBanner()
         await router.push(
           PageLink.checkoutPaymentTrustly({ shopSessionId: shopSessionId, nextUrl }),
         )
