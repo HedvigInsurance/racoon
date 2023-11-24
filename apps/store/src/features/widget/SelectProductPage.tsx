@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -29,6 +30,12 @@ export const SelectProductPage = (props: Props) => {
     event.preventDefault()
     if (!productName) throw new Error('Missing product')
 
+    datadogRum.addAction('Widget Select Product', {
+      shopSessionId: props.shopSessionId,
+      flow: props.flow,
+      productName,
+    })
+
     const searchParams = new URLSearchParams(window.location.search)
 
     const [priceIntent, updatedSearchParams] = await createPriceIntent({
@@ -38,6 +45,8 @@ export const SelectProductPage = (props: Props) => {
       searchParams,
       priceTemplate: getPriceTemplate(productName, props.compareInsurance),
     })
+
+    datadogRum.setGlobalContextProperty('priceIntentId', priceIntent.id)
 
     const nextUrl = PageLink.widgetCalculatePrice({
       flow: props.flow,

@@ -28,6 +28,8 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   })
   if (!flowMetadata) return { notFound: true }
 
+  console.info(`Widget | Starting flow ${flowMetadata.flow} (${flowMetadata.partnerName})`)
+
   resetAuthTokensIfPresent(context)
 
   const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
@@ -37,6 +39,8 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
     partnerName: flowMetadata.partnerName,
     searchParams: url.searchParams,
   })
+
+  console.info(`Widget | Created Shop Session: ${shopSessionId}`)
 
   const unusedSearchParams = await updateCustomerDataIfPresent({
     apolloClient,

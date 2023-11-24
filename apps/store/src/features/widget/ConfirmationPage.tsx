@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { Button, Heading, Space, mq, theme } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
@@ -21,6 +22,7 @@ type Props = {
 
 export const ConfirmationPage = (props: Props) => {
   const handleClickBackToApp = () => {
+    datadogRum.addAction('Widget Back To App')
     publishWidgetEvent({ status: 'close' })
   }
 

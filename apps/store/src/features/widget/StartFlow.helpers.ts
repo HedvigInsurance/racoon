@@ -67,6 +67,12 @@ export const createPartnerShopSession = async (
     params.searchParams,
   )
 
+  if (variables.externalMemberId) {
+    console.info(`Widget | Creating Trial Extension Shop Session: ${variables.externalMemberId}`)
+  } else {
+    console.info(`Widget | Creating Partner Shop Session`)
+  }
+
   const result = await params.apolloClient.mutate<
     ShopSessionCreatePartnerMutation,
     ShopSessionCreatePartnerMutationVariables

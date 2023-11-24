@@ -8,7 +8,7 @@ import { initializeApolloServerSide } from '@/services/apollo/client'
 import { addApolloState } from '@/services/apollo/client'
 import {
   WidgetPriceIntentDocument,
-  WidgetPriceIntentQuery,
+  type WidgetPriceIntentQuery,
   useShopSessionQuery,
   useWidgetPriceIntentQuery,
 } from '@/services/apollo/generated'
@@ -47,6 +47,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
     const compareInsurance = story.content.compareInsurance ?? false
     const priceTemplate = getPriceTemplate(priceIntent.product.name, compareInsurance)
+
+    console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
+    console.info(`Widget | Compare insurance: ${compareInsurance}`)
 
     return addApolloState(apolloClient, {
       props: {

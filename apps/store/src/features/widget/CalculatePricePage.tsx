@@ -1,3 +1,5 @@
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
@@ -43,6 +45,7 @@ export const CalculatePricePage = (props: Props) => {
       setLoading(false)
     },
     async onSuccess() {
+      datadogLogs.logger.debug('Widget | Added to cart')
       await priceLoaderPromise.current
       await router.push(
         PageLink.widgetSign({
@@ -64,11 +67,20 @@ export const CalculatePricePage = (props: Props) => {
     onCompleted(data) {
       const productOfferId = data.priceIntentConfirm.priceIntent?.defaultOffer?.id
       if (!productOfferId) throw new Error('Missing default offer')
+      datadogLogs.logger.debug('Widget | Adding to cart', {
+        productOfferId,
+        isReplacingEntry: !!entryToReplace,
+      })
       addToCart(productOfferId)
     },
   })
 
   const handleConfirm = () => {
+    datadogRum.addAction('Widget Confirm Price', {
+      shopSessionId: props.shopSession.id,
+      flow: props.flow,
+      productName: props.priceIntent.product.name,
+    })
     setLoading(true)
     confirm()
     priceLoaderPromise.current = completePriceLoader()
