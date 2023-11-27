@@ -17,6 +17,7 @@ import {
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
@@ -34,6 +35,7 @@ export const CalculatePricePage = (props: Props) => {
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
 
   const router = useRouter()
+  const tracking = useTracking()
   const entryToReplace = props.shopSession.cart.entries.find(
     (item) => item.product.name === props.priceIntent.product.name,
   )
@@ -44,8 +46,9 @@ export const CalculatePricePage = (props: Props) => {
       await priceLoaderPromise.current
       setLoading(false)
     },
-    async onSuccess() {
+    async onSuccess(_, updatedCart) {
       datadogLogs.logger.debug('Widget | Added to cart')
+      tracking.reportViewCart(updatedCart)
       await priceLoaderPromise.current
       await router.push(
         PageLink.widgetSign({
