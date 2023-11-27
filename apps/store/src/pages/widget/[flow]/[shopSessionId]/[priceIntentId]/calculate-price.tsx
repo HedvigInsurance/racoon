@@ -1,6 +1,8 @@
 import { ApolloClient } from '@apollo/client'
 import { GetServerSideProps } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { ComponentPropsWithoutRef } from 'react'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
 import { fetchFlowStory, getPriceTemplate } from '@/features/widget/widget.helpers'
@@ -66,6 +68,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 }
 
 const Page = (props: Props) => {
+  const { t } = useTranslation('widget')
+
   const shopSessionResult = useShopSessionQuery({
     variables: { shopSessionId: props.shopSessionId },
   })
@@ -79,7 +83,14 @@ const Page = (props: Props) => {
   // TODO: Handle loading state
   if (!shopSession || !priceIntent) return null
 
-  return <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
+  return (
+    <>
+      <Head>
+        <title>{`Hedvig | ${t('CALCULATE_PRICE_PAGE_TITLE')}`}</title>
+      </Head>
+      <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
+    </>
+  )
 }
 
 export default Page
