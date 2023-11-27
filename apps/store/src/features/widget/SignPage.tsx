@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type SbBlokData } from '@storyblok/js'
@@ -22,11 +22,9 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
-  type CurrentMemberQuery,
-  type CurrentMemberQueryVariables,
-  CurrentMemberDocument,
   ShopSessionAuthenticationStatus,
   useCartEntryRemoveMutation,
+  useCurrentMemberLazyQuery,
 } from '@/services/apollo/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -50,38 +48,42 @@ type Props = {
 
 export const SignPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout', 'cart'])
-  const { routingLocale } = useCurrentLocale()
-  const router = useRouter()
+  const { routingLocale: locale } = useCurrentLocale()
 
   const { offerRecommendation } = useProductRecommendations(props.shopSession.id)
 
-  const apolloClient = useApolloClient()
+  const [fetchCurrentMember] = useCurrentMemberLazyQuery()
   const [showSignError, setShowSignError] = useState(false)
   const tracking = useTracking()
+  const router = useRouter()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId: props.shopSession.id,
     ssn: props.ssn,
     customerAuthenticationStatus: props.customerAuthenticationStatus,
     async onSuccess() {
-      const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
-        query: CurrentMemberDocument,
-      })
-      const memberId = data.currentMember.id
+      datadogLogs.logger.info('Widget Sign | Sign Success', { shopSessionId: props.shopSession.id })
+
+      const { data } = await fetchCurrentMember()
+      if (!data) throw new Error('Widget Sign | Missing current member')
 
       tracking.reportPurchase(
         props.shopSession.cart,
-        memberId,
+        data.currentMember.id,
         props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
       )
 
-      const nextUrl = PageLink.widgetPayment({
-        flow: props.flow,
-        shopSessionId: props.shopSession.id,
-        locale: routingLocale,
+      datadogLogs.logger.info('Widget Sign | Purchase Complete', {
+        hasActivePaymentConnection: data.currentMember.hasActivePaymentConnection,
       })
+
+      const nextUrl = data.currentMember.hasActivePaymentConnection
+        ? PageLink.widgetConfirmation({ flow: props.flow, shopSessionId: props.shopSession.id })
+        : PageLink.widgetPayment({ flow: props.flow, shopSessionId: props.shopSession.id })
+
       await router.push(nextUrl)
     },
     onError() {
+      datadogLogs.logger.warn('Widget Sign | Sign Error', { shopSessionId: props.shopSession.id })
       setShowSignError(true)
     },
   })
@@ -140,7 +142,6 @@ export const SignPage = (props: Props) => {
                           flow: props.flow,
                           shopSessionId: props.shopSession.id,
                           priceIntentId: props.priceIntentId,
-                          locale: routingLocale,
                         })}
                       >
                         {t('cart:CART_ENTRY_EDIT_BUTTON')}
@@ -239,7 +240,7 @@ export const SignPage = (props: Props) => {
                             size="xs"
                             align="center"
                             balance={true}
-                            href={PageLink.privacyPolicy({ locale: routingLocale })}
+                            href={PageLink.privacyPolicy({ locale })}
                             target="_blank"
                           >
                             {t('checkout:SIGN_DISCLAIMER')}
