@@ -1,15 +1,18 @@
 import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { useRef } from 'react'
+import { type ReactNode, useRef } from 'react'
 import { Heading, mq, theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { usePageState } from './usePageState'
 
-const SUCCESS_ANIMATION_URL = '/confirmation/success-animation.mp4'
+const SUCCESS_ANIMATION_SOURCES = [
+  { src: '/confirmation/success-animation.webm', type: 'video/webm' },
+  { src: '/confirmation/success-animation.mp4', type: 'video/mp4' },
+]
 
 type Props = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const SuccessAnimation = ({ children }: Props) => {
@@ -34,7 +37,9 @@ export const SuccessAnimation = ({ children }: Props) => {
                 key="animation"
                 {...VIDEO_ANIMATION}
               >
-                <source src={SUCCESS_ANIMATION_URL} type="video/mp4" />
+                {SUCCESS_ANIMATION_SOURCES.map(({ src, type }) => (
+                  <source key={src} src={src} type={type} />
+                ))}
               </StyledVideo>
             )}
 
