@@ -69,15 +69,15 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
     const customer = shopSession.customer
     if (!customer) {
-      throw new Error(`No customer in shop session ${shopSession.id}`)
+      throw new Error(`Widget Sign | No customer in Shop Session: ${shopSession.id}`)
     }
 
     if (!customer.ssn) {
-      throw new Error(`No SSN in shop session ${shopSession.id}`)
+      throw new Error(`Widget Sign | No SSN in Shop Session: ${shopSession.id}`)
     }
 
     if (!priceIntent) {
-      throw new Error(`No price intent ${context.params.priceIntentId}`)
+      throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
     }
 
     const productData = await fetchProductData({
@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       },
     }
   } catch (error) {
-    console.error('Widget Checkout | Unable to render', error)
+    console.error('Widget Sign | Unable to render', error)
     return { notFound: true }
   }
 }

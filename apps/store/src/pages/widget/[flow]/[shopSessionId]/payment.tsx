@@ -22,6 +22,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     res: context.res,
     locale: context.locale,
   })
+
   const [translations, trustlyUrl] = await Promise.all([
     serverSideTranslations(context.locale),
     createTrustlyUrl({ apolloClient, locale: context.locale }),

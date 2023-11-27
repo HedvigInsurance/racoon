@@ -1,11 +1,12 @@
 import { useApolloClient } from '@apollo/client'
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type SbBlokData } from '@storyblok/js'
 import { StoryblokComponent } from '@storyblok/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useState, type PropsWithChildren, MouseEvent } from 'react'
+import { useState, type PropsWithChildren, type MouseEvent, type FormEvent } from 'react'
 import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme, mq } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
@@ -85,6 +86,15 @@ export const SignPage = (props: Props) => {
     },
   })
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    datadogRum.addAction('Widget Sign', {
+      shopSessionId: props.shopSession.id,
+      flow: props.flow,
+      products: props.shopSession.cart.entries.map((item) => item.product.name),
+    })
+    handleSubmitSign(event)
+  }
+
   const userErrorMessage = userError?.message
 
   const mainOffer = props.shopSession.cart.entries.find(
@@ -98,6 +108,7 @@ export const SignPage = (props: Props) => {
   })
   const handleRemoveCartItem = (offerId: string) => (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation() // Prevent `ProductItem` from expanding
+    datadogRum.addAction('Widget Remove Cart Item', { offerId })
     removeCartItem({ variables: { shopSessionId: props.shopSession.id, offerId } })
   }
 
@@ -168,7 +179,7 @@ export const SignPage = (props: Props) => {
                   />
                 )}
 
-                <form onSubmit={handleSubmitSign}>
+                <form onSubmit={handleSubmit}>
                   <Space y={0.25}>
                     <PersonalNumberField
                       label={t('checkout:FIELD_PERSONAL_NUMBER_SE_LABEL')}

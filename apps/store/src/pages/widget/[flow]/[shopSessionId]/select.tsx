@@ -1,6 +1,6 @@
 import { stringify } from 'querystring'
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import { Redirect, type GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
+import { Redirect, type GetServerSideProps, type GetServerSidePropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentProps } from 'react'
 import { fetchFlowProducts } from '@/features/widget/fetchFlowProducts'
@@ -45,6 +45,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   if (products.length === 1) {
     const productName = products[0].name
+    console.info(`Widget | Single product flow: ${productName}`)
 
     return {
       redirect: await redirectToProduct({
@@ -62,6 +63,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const [preSelectedProductName, updatedSearchParams] = parseProductNameSearchParams(searchParams)
   if (preSelectedProductName) {
+    console.info(`Widget | Pre-selected product: ${preSelectedProductName}`)
+
     if (products.find((product) => product.name === preSelectedProductName)) {
       return {
         redirect: await redirectToProduct({
