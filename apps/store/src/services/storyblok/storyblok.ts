@@ -210,6 +210,7 @@ export type WidgetFlowStory = ISbStoryData<{
   compareInsurance?: boolean
   showRecommendations?: boolean
   checkoutPageContent?: Array<SbBlokData>
+  pageTitle?: string
 }>
 
 export type GlobalStory = ISbStoryData & {

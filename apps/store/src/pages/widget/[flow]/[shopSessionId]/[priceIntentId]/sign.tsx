@@ -1,11 +1,12 @@
 import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { type ComponentPropsWithoutRef } from 'react'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { fetchSignPageContent } from '@/features/widget/fetchSignPageContent'
+import { type ProductData } from '@/components/ProductPage/ProductPage.types'
 import { SignPage } from '@/features/widget/SignPage'
+import { fetchFlowStory } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
@@ -16,6 +17,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession'> & {
   shopSessionId: string
   productData: ProductData
+  pageTitle: string
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -27,9 +29,14 @@ const NextWidgetSignPage = (props: Props) => {
   if (!shopSession) return null
 
   return (
-    <ProductDataProvider productData={props.productData}>
-      <SignPage shopSession={shopSession} {...props} />
-    </ProductDataProvider>
+    <>
+      <Head>
+        <title>{props.pageTitle}</title>
+      </Head>
+      <ProductDataProvider productData={props.productData}>
+        <SignPage shopSession={shopSession} {...props} />
+      </ProductDataProvider>
+    </>
   )
 }
 
@@ -56,14 +63,10 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
 
   try {
-    const [translations, shopSession, signPageContent, priceIntent] = await Promise.all([
+    const [translations, shopSession, story, priceIntent] = await Promise.all([
       serverSideTranslations(context.locale),
       shopSessionService.fetchById(context.params.shopSessionId),
-      fetchSignPageContent({
-        flow: context.params.flow,
-        locale: context.locale,
-        draft: context.draftMode,
-      }),
+      fetchFlowStory(context.params.flow, context.draftMode),
       priceIntentService.get(context.params.priceIntentId),
     ])
 
@@ -94,13 +97,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         customerAuthenticationStatus: customer.authenticationStatus,
         ...(customer.email && { suggestedEmail: customer.email }),
         shopSessionId: context.params.shopSessionId,
-        content: signPageContent,
+        content: story.content.checkoutPageContent,
         flow: context.params.flow,
         priceIntentId: priceIntent.id,
         // TODO: check if we want to control this via CMS
         hideChat: true,
         productName: priceIntent.product.name,
         productData,
+        pageTitle: story.content.pageTitle ?? 'Hedvig',
       },
     }
   } catch (error) {
