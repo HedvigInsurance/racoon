@@ -89,19 +89,19 @@ module.exports = withBundleAnalyzer({
     const oldSiteRedirects = [
       {
         source: '/new-member(.*)',
-        destination: '/se',
+        destination: '/se/forsakringar',
         permanent: true,
         locale: false,
       },
       {
         source: '/se/new-member(.*)',
-        destination: '/se',
+        destination: '/se/forsakringar',
         permanent: true,
         locale: false,
       },
       {
         source: '/se-en/new-member(.*)',
-        destination: '/se-en',
+        destination: '/se-en/insurances',
         permanent: true,
         locale: false,
       },
