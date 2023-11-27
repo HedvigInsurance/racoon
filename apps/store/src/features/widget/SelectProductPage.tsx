@@ -9,6 +9,7 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { createPriceIntent, getPriceTemplate } from './widget.helpers'
@@ -26,24 +27,27 @@ export const SelectProductPage = (props: Props) => {
 
   const router = useRouter()
   const apolloClient = useApolloClient()
+  const tracking = useTracking()
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
-    if (!productName) throw new Error('Missing product')
+    const product = props.products.find((item) => item.name === productName)
+    if (!product) throw new Error(`Product not found: ${productName}`)
 
     datadogRum.addAction('Widget Select Product', {
       shopSessionId: props.shopSessionId,
       flow: props.flow,
       productName,
     })
+    tracking.reportSelectItem(product, 'widget')
 
     const searchParams = new URLSearchParams(window.location.search)
 
     const [priceIntent, updatedSearchParams] = await createPriceIntent({
       service: priceIntentServiceInitClientSide(apolloClient),
       shopSessionId: props.shopSessionId,
-      productName,
+      productName: product.name,
       searchParams,
-      priceTemplate: getPriceTemplate(productName, props.compareInsurance),
+      priceTemplate: getPriceTemplate(product.name, props.compareInsurance),
     })
 
     datadogRum.setGlobalContextProperty('priceIntentId', priceIntent.id)
