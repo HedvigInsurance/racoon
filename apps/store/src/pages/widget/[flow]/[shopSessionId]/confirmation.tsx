@@ -1,7 +1,9 @@
 import { type GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
+import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { ConfirmationPage } from '@/features/widget/ConfirmationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
@@ -55,9 +57,16 @@ const Page = (props: Props) => {
   })
   const shopSession = shopSessionResult.data?.shopSession
 
-  if (!shopSession) return null
-
-  return <ConfirmationPage {...props} shopSession={shopSession} />
+  return (
+    <>
+      <Head>
+        <title>{props.title}</title>
+      </Head>
+      <SuccessAnimation>
+        {shopSession && <ConfirmationPage {...props} shopSession={shopSession} />}
+      </SuccessAnimation>
+    </>
+  )
 }
 
 export default Page
