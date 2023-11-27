@@ -1,7 +1,9 @@
 import { stringify } from 'querystring'
 import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
 import { Redirect, type GetServerSideProps, type GetServerSidePropsContext } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { fetchFlowProducts } from '@/features/widget/fetchFlowProducts'
 import { parseProductNameSearchParams } from '@/features/widget/parseSearchParams'
@@ -93,7 +95,20 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-export default SelectProductPage
+const NextPage = (props: Props) => {
+  const { t } = useTranslation('widget')
+
+  return (
+    <>
+      <Head>
+        <title>{`Hedvig | ${t('SELECT_PAGE_TITLE')}`}</title>
+      </Head>
+      <SelectProductPage {...props} />
+    </>
+  )
+}
+
+export default NextPage
 
 type RedirectToProductParams = {
   context: GetServerSidePropsContext
