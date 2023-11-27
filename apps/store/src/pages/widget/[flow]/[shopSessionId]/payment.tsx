@@ -1,5 +1,7 @@
 import { type GetServerSideProps } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { PaymentPage } from '@/features/widget/PaymentPage'
 import { initializeApolloServerSide } from '@/services/apollo/client'
@@ -33,4 +35,17 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-export default PaymentPage
+const NextPage = (props: Props) => {
+  const { t } = useTranslation('widget')
+
+  return (
+    <>
+      <Head>
+        <title>{`Hedvig | ${t('PAYMENT_TRUSTLY_TITLE')}`}</title>
+      </Head>
+      <PaymentPage {...props} />
+    </>
+  )
+}
+
+export default NextPage
