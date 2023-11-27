@@ -54,11 +54,6 @@ This step renders a custom "confirmation" page. This is the end of the flow.
 
 ## Testing
 
-You can test the flow by running the following command:
+- "Hedvig Embedded" can be tested in the [iframe simulator](http://localhost:8040/se/debugger/iframe). It runs the widget in an iframe while listing all the post messages sent to the parent window.
 
-```bash
-http POST http://localhost:8040/api/widget flow=396324726 locale=se
-```
-
-- `flow` - The id of the Storyblok story (content type: `WidgetFlow`)
-- returns a redirect to the beginning of the flow
+- "Hedvig Included" can be tested by first visiting the [Trial Contract Debugger](http://localhost:8040/se/debugger/trial). After creating a trial contract, you will be redirected to the widget.
