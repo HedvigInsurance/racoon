@@ -128,10 +128,12 @@ export class Tracking {
   }
 
   public reportViewProductPage(productData: TrackingProductData) {
+    this.reportSelectItem(productData, 'store')
+  }
+
+  public reportSelectItem(productData: TrackingProductData, itemListId: string) {
     const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
-    Object.assign(event.ecommerce, {
-      item_list_id: 'store',
-    })
+    Object.assign(event.ecommerce, { item_list_id: itemListId })
     this.reportEcommerceEvent(event)
   }
 
