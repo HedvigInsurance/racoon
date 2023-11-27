@@ -1,20 +1,18 @@
-import { createContext, ProviderProps, useEffect } from 'react'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { Tracking, TrackingContextKey } from '@/services/Tracking/Tracking'
+import { type ReactNode, createContext, useMemo } from 'react'
+import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { type Tracking } from './Tracking'
 
-export const TrackingContext = createContext(new Tracking())
+export const TrackingContext = createContext<Tracking['context']>({})
 
-export const TrackingProvider = ({ value: tracking, children }: ProviderProps<Tracking>) => {
-  useTrackShopSession(tracking)
-
-  return <TrackingContext.Provider value={tracking}>{children}</TrackingContext.Provider>
+type Props = {
+  children: ReactNode
+  shopSession?: ShopSession
 }
 
-export const useTrackShopSession = (tracking: Tracking) => {
-  const { onReady } = useShopSession()
-  useEffect(() => {
-    return onReady((shopSession) => {
-      tracking.setContext(TrackingContextKey.ShopSessionId, shopSession.id)
-    })
-  }, [onReady, tracking])
+export const TrackingProvider = (props: Props) => {
+  const data = useMemo<Tracking['context']>(() => {
+    return { shopSessionId: props.shopSession?.id }
+  }, [props.shopSession?.id])
+
+  return <TrackingContext.Provider value={data}>{props.children}</TrackingContext.Provider>
 }

@@ -15,6 +15,7 @@ import {
   useWidgetPriceIntentQuery,
 } from '@/services/apollo/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Props = Pick<ComponentPropsWithoutRef<typeof CalculatePricePage>, 'flow' | 'priceTemplate'> & {
@@ -88,7 +89,9 @@ const Page = (props: Props) => {
       <Head>
         <title>{`Hedvig | ${t('CALCULATE_PRICE_PAGE_TITLE')}`}</title>
       </Head>
-      <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
+      <TrackingProvider shopSession={shopSession}>
+        <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
+      </TrackingProvider>
     </>
   )
 }
