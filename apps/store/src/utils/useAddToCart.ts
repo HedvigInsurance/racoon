@@ -2,16 +2,17 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
 import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import {
-  CartEntryAddMutation,
   useCartEntryAddMutation,
   ProductRecommendationsDocument,
   useCartEntryReplaceMutation,
+  CartEntryAddMutation,
 } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type Params = {
   shopSessionId: string
-  onSuccess: (productOfferId: string) => void
+  onSuccess: (productOfferId: string, data: ShopSession['cart']) => void
   onError?: (error: Error) => void
   entryToReplace?: string
 }
@@ -22,43 +23,58 @@ export const useAddToCart = (params: Params) => {
   // the cart
   useProductRecommendations()
 
-  const [addEntry, { loading }] = useCartEntryAdd({
+  const options = {
     refetchQueries: [ProductRecommendationsDocument],
     awaitRefetchQueries: true,
-  })
+  }
 
-  const [replaceEntry, { loading: loadingReplace }] = useCartEntryReplaceMutation({
-    refetchQueries: [ProductRecommendationsDocument],
-    awaitRefetchQueries: true,
-  })
+  const [addEntry, { loading }] = useCartEntryAddMutation(options)
+  const [replaceEntry, { loading: loadingReplace }] = useCartEntryReplaceMutation(options)
 
   const { showError } = useAppErrorHandleContext()
-
   const addToCart = useCallback(
     async (productOfferId: string) => {
-      const options = {
-        onCompleted() {
-          params.onSuccess(productOfferId)
-        },
-        onError(error: Error) {
-          params.onError?.(error)
-          showError(error)
-        },
-      } as const
+      const handleCompleted = (data: CartEntryAddMutation) => {
+        const updatedShopSession = data.shopSessionCartEntriesAdd.shopSession
+        if (!updatedShopSession) return
+
+        const addedOffer = updatedShopSession.cart.entries.find(
+          (entry) => entry.id === productOfferId,
+        )
+
+        if (!addedOffer) {
+          datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
+            shopSessionId: params.shopSessionId,
+            productOfferId,
+          })
+        }
+
+        params.onSuccess(productOfferId, updatedShopSession.cart)
+      }
+
+      const handleError = (error: Error) => {
+        params.onError?.(error)
+        showError(error)
+      }
 
       if (params.entryToReplace) {
         await replaceEntry({
           variables: {
             shopSessionId: params.shopSessionId,
-            removeOfferId: params.entryToReplace,
             addOfferId: productOfferId,
+            removeOfferId: params.entryToReplace,
           },
-          ...options,
+          onCompleted: handleCompleted,
+          onError: handleError,
         })
       } else {
         await addEntry({
-          variables: { shopSessionId: params.shopSessionId, offerId: productOfferId },
-          ...options,
+          variables: {
+            shopSessionId: params.shopSessionId,
+            offerId: productOfferId,
+          },
+          onCompleted: handleCompleted,
+          onError: handleError,
         })
       }
     },
@@ -66,35 +82,4 @@ export const useAddToCart = (params: Params) => {
   )
 
   return [addToCart, loadingReplace || loading] as const
-}
-
-type CartEntryAddOptions = Parameters<typeof useCartEntryAddMutation>[0]
-
-const useCartEntryAdd = (mutationOptions: CartEntryAddOptions = {}) => {
-  const [mutate, mutationResult] = useCartEntryAddMutation(mutationOptions)
-  const addCartEntry = useCallback(
-    (options: CartEntryAddOptions = {}) => {
-      const handleCompleted = (data: CartEntryAddMutation) => {
-        const updatedShopSession = data.shopSessionCartEntriesAdd.shopSession
-        if (!updatedShopSession) return
-
-        const { variables } = options
-        const addedOffer = updatedShopSession.cart.entries.find(
-          (entry) => entry.id === variables?.offerId,
-        )
-
-        if (!addedOffer) {
-          datadogLogs.logger.error('Added offer missing in cart, this should not happen', {
-            ...variables,
-          })
-        }
-
-        options.onCompleted?.(data)
-      }
-
-      return mutate({ ...options, onCompleted: handleCompleted })
-    },
-    [mutate],
-  )
-  return [addCartEntry, mutationResult] as const
 }
