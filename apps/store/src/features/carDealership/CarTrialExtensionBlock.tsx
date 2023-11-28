@@ -82,7 +82,13 @@ type UseCarTrialQueryParams = Pick<QueryHookOptions<NonNullable<CarTrialExtensio
 const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   const router = useRouter()
   const queryParam = router.query['contractId']
-  const contractId = typeof queryParam === 'string' ? queryParam : undefined
+
+  let contractId = undefined
+  if (typeof queryParam === 'string') {
+    contractId = queryParam
+  } else if (Array.isArray(queryParam)) {
+    contractId = queryParam[0]
+  }
 
   const { data } = useCarTrialExtensionQuery({
     variables: contractId ? { contractId } : undefined,
