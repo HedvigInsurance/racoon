@@ -27,7 +27,7 @@
 
   "packageRules": [
     {
-      "matchDepTypes": ["dependencies"],
+      "matchDepTypes": ["dependencies", "engines"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
       "labels": ["deps"]
