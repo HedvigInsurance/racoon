@@ -20,7 +20,6 @@ import {
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useTracking } from '@/services/Tracking/useTracking'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { useCartEntryToReplace } from './ProductPage'
 import { usePreloadedPriceIntentId } from './PurchaseForm/usePreloadedPriceIntentId'
@@ -64,7 +63,6 @@ const usePriceIntentContextValue = () => {
     [apolloClient, priceTemplate, productData.name],
   )
 
-  const tracking = useTracking()
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
@@ -81,8 +79,6 @@ const usePriceIntentContextValue = () => {
         updatePriceIntent(shopSession)
         return
       }
-
-      tracking.setProductContext(productData)
     },
   })
   const priceIntent = result.data?.priceIntent

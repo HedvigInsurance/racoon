@@ -1,7 +1,7 @@
 import { StoryblokComponent } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
-import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { ProductDataProvider, useProductData } from '@/components/ProductData/ProductDataProvider'
 import {
   PriceIntentContextProvider,
   usePriceIntent,
@@ -45,9 +45,10 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
 const ProductPageTrackingProvider = (props: { children: React.ReactNode }) => {
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
+  const productData = useProductData()
 
   return (
-    <TrackingProvider shopSession={shopSession} priceIntent={priceIntent}>
+    <TrackingProvider shopSession={shopSession} priceIntent={priceIntent} productData={productData}>
       {props.children}
     </TrackingProvider>
   )

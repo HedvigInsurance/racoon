@@ -1,4 +1,5 @@
 import { type ReactNode, createContext, useMemo } from 'react'
+import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { type Tracking } from './Tracking'
@@ -9,6 +10,7 @@ type Props = {
   children: ReactNode
   shopSession?: ShopSession
   priceIntent?: PriceIntent
+  productData?: ProductData
 }
 
 export const TrackingProvider = (props: Props) => {
@@ -17,8 +19,14 @@ export const TrackingProvider = (props: Props) => {
       shopSessionId: props.shopSession?.id,
       ...parseCustomerData(props.shopSession?.customer),
       ...parsePriceIntentData(props.priceIntent?.data ?? {}),
+      ...(props.productData && parseProductData(props.productData)),
     }
-  }, [props.shopSession?.id, props.shopSession?.customer, props.priceIntent?.data])
+  }, [
+    props.shopSession?.id,
+    props.shopSession?.customer,
+    props.priceIntent?.data,
+    props.productData,
+  ])
 
   return <TrackingContext.Provider value={data}>{props.children}</TrackingContext.Provider>
 }
@@ -44,3 +52,8 @@ const parseNumber = (value: unknown): number | undefined => {
   if (typeof value === 'string') parseInt(value, 10)
   return undefined
 }
+
+const parseProductData = (data: ProductData): Tracking['context'] => ({
+  productId: data.id,
+  productDisplayName: data.displayNameFull,
+})
