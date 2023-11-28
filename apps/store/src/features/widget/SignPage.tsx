@@ -22,6 +22,7 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
+  type ProductOfferFragment,
   ShopSessionAuthenticationStatus,
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
@@ -108,11 +109,18 @@ export const SignPage = (props: Props) => {
     refetchQueries: 'active',
     awaitRefetchQueries: true,
   })
-  const handleRemoveCartItem = (offerId: string) => (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation() // Prevent `ProductItem` from expanding
-    datadogRum.addAction('Widget Remove Cart Item', { offerId })
-    removeCartItem({ variables: { shopSessionId: props.shopSession.id, offerId } })
-  }
+  const handleRemoveCartItem =
+    (offer: ProductOfferFragment) => (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation() // Prevent `ProductItem` from expanding
+      datadogRum.addAction('Widget Remove Cart Item', { offerId: offer.id })
+      tracking.reportDeleteFromCart(offer)
+      removeCartItem({
+        variables: {
+          shopSessionId: props.shopSession.id,
+          offerId: offer.id,
+        },
+      })
+    }
 
   return (
     <>
@@ -157,10 +165,7 @@ export const SignPage = (props: Props) => {
                         exit={{ opacity: 0, height: 0 }}
                         style={{ position: 'relative' }}
                       >
-                        <ProductItemContainer
-                          offer={item}
-                          onDelete={handleRemoveCartItem(item.id)}
-                        />
+                        <ProductItemContainer offer={item} onDelete={handleRemoveCartItem(item)} />
                         {result.loading && <ProductItemLoadingOverlay />}
                       </motion.div>
                     ))}
