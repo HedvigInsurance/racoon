@@ -9,7 +9,6 @@ import {
   initializeGtm,
 } from '@/services/gtm'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
@@ -55,7 +54,9 @@ export enum TrackingEvent {
 export enum TrackingContextKey {
   City = 'city',
   CountryCode = 'countryCode',
-  Customer = 'customer',
+  CustomerFirstName = 'customerFirstName',
+  CustomerLastName = 'customerLastName',
+  CustomerEmail = 'customerEmail',
   NumberOfPeople = 'numberOfPeople',
   ShopSessionId = 'shopSessionId',
   MigrationSessionId = 'migrationSessionId',
@@ -194,10 +195,10 @@ export class Tracking {
 
   public reportAdtractionEvent(cart: CartFragmentFragment, context: TrackingContext) {
     const event = TrackingEvent.Adtraction
-    const customer = context.customer as ShopSession['customer']
     // We currently only support 1 campaign code
     const campaignCode = cart.redeemedCampaign?.code
-    const email = customer?.email
+    // TODO: explicitly define tracking context in the future
+    const email = typeof context.customerEmail === 'string' ? context.customerEmail : undefined
     const productCategories = getAdtractionProductCategories(cart)
     const eventData = {
       adtraction: {
@@ -407,18 +408,19 @@ const getLegacyEventFlags = (typesOfContract: Array<string>) => {
 // Reference for formatting user data
 // https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/customer-information-parameters
 const getLegacyUserData = async (context: TrackingContext) => {
-  const customer = context.customer as ShopSession['customer']
-  if (!customer) return {}
-  const firstName = await hashValue(normalizeUserValue(customer.firstName))
-  const lastName = await hashValue(normalizeUserValue(customer.lastName))
-  const email = await hashValue(normalizeUserValue(customer.email))
+  const firstName =
+    typeof context.customerFirstName === 'string' ? context.customerFirstName : undefined
+  const lastName =
+    typeof context.customerLastName === 'string' ? context.customerLastName : undefined
+  const email = typeof context.customerEmail === 'string' ? context.customerEmail : undefined
+  if (!firstName || !lastName || !email) return {}
   const zipCode = await hashValue(normalizeUserValue(context.zipCode))
   const city = await hashValue(normalizeUserValue(context.city))
   const country = await hashValue(normalizeUserValue(context.countryCode))
   return {
-    fn: firstName,
-    ln: lastName,
-    em: email,
+    fn: await hashValue(normalizeUserValue(firstName)),
+    ln: await hashValue(normalizeUserValue(lastName)),
+    em: await hashValue(normalizeUserValue(email)),
     ad: {
       zp: zipCode,
       ct: city,
