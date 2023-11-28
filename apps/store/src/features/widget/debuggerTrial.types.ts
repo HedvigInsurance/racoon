@@ -1,5 +1,6 @@
 export enum Field {
   // Required
+  partner = 'partner',
   firstName = 'firstName',
   lastName = 'lastName',
   startDate = 'startDate',
@@ -9,6 +10,9 @@ export enum Field {
   subType = 'subType',
 
   // Optional
-  ssn = 'ssn',
+  ssn = 'personalNumber',
   birthDate = 'birthDate',
+  livingSpace = 'livingSpace',
+  numberCoInsured = 'numberCoInsured',
+  isStudent = 'isStudent',
 }
