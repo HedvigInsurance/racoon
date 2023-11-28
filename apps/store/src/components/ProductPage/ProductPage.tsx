@@ -2,8 +2,12 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
+import {
+  PriceIntentContextProvider,
+  usePriceIntent,
+} from '@/components/ProductPage/PriceIntentContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useDiscountBanner } from '@/utils/useDiscountBanner'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -28,11 +32,24 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
     >
       <ProductPageContextProvider {...props} story={story}>
         <PriceIntentContextProvider>
-          <StoryblokComponent blok={story.content} />
-          <PageDebugDialog />
+          <ProductPageTrackingProvider>
+            <StoryblokComponent blok={story.content} />
+            <PageDebugDialog />
+          </ProductPageTrackingProvider>
         </PriceIntentContextProvider>
       </ProductPageContextProvider>
     </ProductDataProvider>
+  )
+}
+
+const ProductPageTrackingProvider = (props: { children: React.ReactNode }) => {
+  const { shopSession } = useShopSession()
+  const [priceIntent] = usePriceIntent()
+
+  return (
+    <TrackingProvider shopSession={shopSession} priceIntent={priceIntent}>
+      {props.children}
+    </TrackingProvider>
   )
 }
 
