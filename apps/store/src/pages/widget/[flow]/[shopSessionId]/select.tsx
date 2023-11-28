@@ -10,8 +10,10 @@ import { parseProductNameSearchParams } from '@/features/widget/parseSearchParam
 import { SelectProductPage } from '@/features/widget/SelectProductPage'
 import { createPriceIntent, getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
+import { useShopSessionQuery } from '@/services/apollo/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -97,13 +99,16 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
 const NextPage = (props: Props) => {
   const { t } = useTranslation('widget')
+  const { data } = useShopSessionQuery({ variables: { shopSessionId: props.shopSessionId } })
 
   return (
     <>
       <Head>
         <title>{`Hedvig | ${t('SELECT_PAGE_TITLE')}`}</title>
       </Head>
-      <SelectProductPage {...props} />
+      <TrackingProvider shopSession={data?.shopSession}>
+        <SelectProductPage {...props} />
+      </TrackingProvider>
     </>
   )
 }

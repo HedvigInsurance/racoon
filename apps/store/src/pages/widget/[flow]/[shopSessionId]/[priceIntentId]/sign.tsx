@@ -11,6 +11,7 @@ import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -34,7 +35,9 @@ const NextWidgetSignPage = (props: Props) => {
         <title>{props.pageTitle}</title>
       </Head>
       <ProductDataProvider productData={props.productData}>
-        <SignPage shopSession={shopSession} {...props} />
+        <TrackingProvider shopSession={shopSession} productData={props.productData}>
+          <SignPage shopSession={shopSession} {...props} />
+        </TrackingProvider>
       </ProductDataProvider>
     </>
   )
