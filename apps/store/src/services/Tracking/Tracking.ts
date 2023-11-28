@@ -126,7 +126,7 @@ export class Tracking {
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
       userData,
-      shopSession: { id: this.context.shopSessionId },
+      ...this.shopSessionData(),
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
@@ -150,7 +150,7 @@ export class Tracking {
         memberId: memberId,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
-      shopSession: { id: this.context.shopSessionId },
+      ...this.shopSessionData(),
       userData,
     }
     this.logger.log(event, eventData)
@@ -233,6 +233,16 @@ export class Tracking {
     }
   }
 
+  static shopSessionData(context: TrackingContext) {
+    return {
+      shopSession: { id: context.shopSessionId },
+    }
+  }
+
+  private shopSessionData() {
+    return Tracking.shopSessionData(this.context)
+  }
+
   public reportInsurelyPrompted() {
     this.reportEcommerceEvent(
       productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, this.productData(), this.context),
@@ -295,7 +305,7 @@ const offerToEcommerceEvent = ({
         },
       ],
     },
-    shopSession: { id: context.shopSessionId },
+    ...Tracking.shopSessionData(context),
     price_match: {
       exposure_matched: !!offer.priceMatch,
       price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
@@ -322,7 +332,7 @@ const cartToEcommerceEvent = (
         variant: entry.variant.typeOfContract,
       })),
     },
-    shopSession: { id: context.shopSessionId },
+    ...Tracking.shopSessionData(context),
   } as const
 }
 
@@ -341,7 +351,7 @@ const productDataToEcommerceEvent = (
         },
       ],
     },
-    shopSession: { id: context.shopSessionId },
+    ...Tracking.shopSessionData(context),
   } as const
 }
 
