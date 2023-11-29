@@ -1,13 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import md5 from 'md5'
-import { CartFragmentFragment, ProductOfferFragment } from '@/services/apollo/generated'
 import {
-  AppTrackingContext,
-  EcommerceEvent,
-  pushToGTMDataLayer,
-  initializeGtm,
-} from '@/services/gtm'
+  CartFragmentFragment,
+  CountryCode,
+  ProductOfferFragment,
+} from '@/services/apollo/generated'
+import { EcommerceEvent, pushToGTMDataLayer, initializeGtm } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
@@ -83,9 +82,8 @@ export class Tracking {
     }
   }
 
-  public reportAppInit = (context: AppTrackingContext) => {
-    this.setContext(TrackingContextKey.CountryCode, context.countryCode)
-    initializeGtm(context)
+  public reportAppInit = (countryCode: CountryCode) => {
+    initializeGtm(countryCode)
   }
 
   public reportPageView(urlPath: string) {

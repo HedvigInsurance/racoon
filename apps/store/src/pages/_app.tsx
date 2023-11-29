@@ -64,7 +64,7 @@ if (typeof window !== 'undefined') {
   Router.ready(() => {
     const { routingLocale } = getLocaleOrFallback(Router.locale as UiLocale)
     const { countryCode } = getCountryByLocale(routingLocale)
-    tracking.reportAppInit({ countryCode })
+    tracking.reportAppInit(countryCode)
 
     trackExperimentImpression(tracking)
     trackPageViews(tracking)
