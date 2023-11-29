@@ -9,8 +9,6 @@ import {
 import { EcommerceEvent, pushToGTMDataLayer, initializeGtm } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
 
-type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
-
 type TrackingProductData = {
   id: string
   displayNameFull: string
@@ -49,18 +47,18 @@ export enum TrackingEvent {
   InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
 }
 
-enum TrackingContextKey {
-  City = 'city',
-  CountryCode = 'countryCode',
-  CustomerFirstName = 'customerFirstName',
-  CustomerLastName = 'customerLastName',
-  CustomerEmail = 'customerEmail',
-  NumberOfPeople = 'numberOfPeople',
-  ShopSessionId = 'shopSessionId',
-  ZipCode = 'zipCode',
-  ProductId = 'productId',
-  ProductDisplayName = 'productDisplayName',
-}
+type TrackingContext = Partial<{
+  city: string
+  countryCode: CountryCode
+  customerFirstName: string
+  customerLastName: string
+  customerEmail: string
+  numberOfPeople: number
+  shopSessionId: string
+  zipCode: string
+  productId: string
+  productDisplayName: string
+}>
 
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
@@ -128,9 +126,7 @@ export class Tracking {
         ...getLegacyEventFlags([offer.variant.typeOfContract]),
       },
       userData,
-      shopSession: {
-        id: this.context[TrackingContextKey.ShopSessionId] as string,
-      },
+      shopSession: { id: this.context.shopSessionId },
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
@@ -154,9 +150,7 @@ export class Tracking {
         memberId: memberId,
         ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
       },
-      shopSession: {
-        id: this.context[TrackingContextKey.ShopSessionId] as string,
-      },
+      shopSession: { id: this.context.shopSessionId },
       userData,
     }
     this.logger.log(event, eventData)
@@ -167,8 +161,6 @@ export class Tracking {
     const event = TrackingEvent.Adtraction
     // We currently only support 1 campaign code
     const campaignCode = cart.redeemedCampaign?.code
-    // TODO: explicitly define tracking context in the future
-    const email = typeof context.customerEmail === 'string' ? context.customerEmail : undefined
     const productCategories = getAdtractionProductCategories(cart)
     const eventData = {
       adtraction: {
@@ -177,7 +169,7 @@ export class Tracking {
         transactionTotal: 0,
         transactionProductCategories: productCategories,
         ...(campaignCode && { transactionPromoCode: campaignCode }),
-        ...(email && { md5: md5(email) }),
+        ...(context.customerEmail && { md5: md5(context.customerEmail) }),
       },
     }
     this.logger.log(event, eventData)
@@ -235,11 +227,10 @@ export class Tracking {
   }
 
   private productData(): TrackingProductData {
-    const id = typeof this.context.productId === 'string' ? this.context.productId : ''
-    const displayNameFull =
-      typeof this.context.productDisplayName === 'string' ? this.context.productDisplayName : ''
-
-    return { id, displayNameFull }
+    return {
+      id: this.context.productId ?? '',
+      displayNameFull: this.context.productDisplayName ?? '',
+    }
   }
 
   public reportInsurelyPrompted() {
@@ -304,9 +295,7 @@ const offerToEcommerceEvent = ({
         },
       ],
     },
-    shopSession: {
-      id: context[TrackingContextKey.ShopSessionId] as string,
-    },
+    shopSession: { id: context.shopSessionId },
     price_match: {
       exposure_matched: !!offer.priceMatch,
       price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
@@ -333,9 +322,7 @@ const cartToEcommerceEvent = (
         variant: entry.variant.typeOfContract,
       })),
     },
-    shopSession: {
-      id: context[TrackingContextKey.ShopSessionId] as string,
-    },
+    shopSession: { id: context.shopSessionId },
   } as const
 }
 
@@ -354,9 +341,7 @@ const productDataToEcommerceEvent = (
         },
       ],
     },
-    shopSession: {
-      id: context[TrackingContextKey.ShopSessionId] as string,
-    },
+    shopSession: { id: context.shopSessionId },
   } as const
 }
 
@@ -378,19 +363,14 @@ const getLegacyEventFlags = (typesOfContract: Array<string>) => {
 // Reference for formatting user data
 // https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/customer-information-parameters
 const getLegacyUserData = async (context: TrackingContext) => {
-  const firstName =
-    typeof context.customerFirstName === 'string' ? context.customerFirstName : undefined
-  const lastName =
-    typeof context.customerLastName === 'string' ? context.customerLastName : undefined
-  const email = typeof context.customerEmail === 'string' ? context.customerEmail : undefined
-  if (!firstName || !lastName || !email) return {}
+  if (!context.customerFirstName || !context.customerLastName || !context.customerEmail) return {}
   const zipCode = await hashValue(normalizeUserValue(context.zipCode))
   const city = await hashValue(normalizeUserValue(context.city))
   const country = await hashValue(normalizeUserValue(context.countryCode))
   return {
-    fn: await hashValue(normalizeUserValue(firstName)),
-    ln: await hashValue(normalizeUserValue(lastName)),
-    em: await hashValue(normalizeUserValue(email)),
+    fn: await hashValue(normalizeUserValue(context.customerFirstName)),
+    ln: await hashValue(normalizeUserValue(context.customerLastName)),
+    em: await hashValue(normalizeUserValue(context.customerEmail)),
     ad: {
       zp: zipCode,
       ct: city,

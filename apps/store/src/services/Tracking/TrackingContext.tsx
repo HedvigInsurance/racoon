@@ -37,9 +37,9 @@ export const TrackingProvider = (props: Props) => {
 }
 
 const parseCustomerData = (data: ShopSession['customer']): Tracking['context'] => ({
-  customerFirstName: data?.firstName,
-  customerLastName: data?.lastName,
-  customerEmail: data?.email,
+  customerFirstName: data?.firstName ?? undefined,
+  customerLastName: data?.lastName ?? undefined,
+  customerEmail: data?.email ?? undefined,
 })
 
 const parsePriceIntentData = (data: Record<string, unknown>): Tracking['context'] => {
@@ -47,8 +47,8 @@ const parsePriceIntentData = (data: Record<string, unknown>): Tracking['context'
 
   return {
     numberOfPeople: numberCoInsured ? numberCoInsured + 1 : undefined,
-    zipCode: data.zipCode,
-    city: data.city,
+    zipCode: typeof data.zipCode === 'string' ? data.zipCode : undefined,
+    city: typeof data.city === 'string' ? data.city : undefined,
   }
 }
 
