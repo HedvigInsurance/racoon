@@ -20,21 +20,19 @@ export const QuickAdd = (props: Props) => {
   return (
     <Card>
       <Space y={1}>
-        <Header>
-          <SpaceFlex space={1} align="center">
-            <Pillow size="small" {...props.pillow} />
-            <div>
-              <StyledLink href={props.href}>
-                <Text as="span" color="textTranslucentPrimary">
-                  {props.title}
-                </Text>
-              </StyledLink>
-              <Text as="p" color="textTranslucentSecondary">
-                {props.subtitle}
+        <SpaceFlex space={1} align="center">
+          <Pillow size="small" {...props.pillow} />
+          <div>
+            <StyledLink href={props.href}>
+              <Text as="span" color="textTranslucentPrimary">
+                {props.title}
               </Text>
-            </div>
-          </SpaceFlex>
-        </Header>
+            </StyledLink>
+            <Text as="p" color="textTranslucentSecondary">
+              {props.subtitle}
+            </Text>
+          </div>
+        </SpaceFlex>
         <Divider />
         {props.Body}
         <Footer>
@@ -65,10 +63,6 @@ const Card = styled.div({
   [mq.lg]: { padding: theme.space.lg },
 })
 
-const Header = styled.div({
-  paddingBottom: theme.space.xs,
-})
-
 const StyledLink = styled(Link)({
   '&:hover': {
     textDecoration: 'underline',
@@ -86,7 +80,7 @@ const Footer = styled.div({
   gridTemplateRows: 'auto auto',
   gap: theme.space.md,
 
-  [mq.sm]: {
+  [mq.xs]: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
