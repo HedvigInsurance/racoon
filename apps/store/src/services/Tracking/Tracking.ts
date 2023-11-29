@@ -83,11 +83,6 @@ export class Tracking {
     }
   }
 
-  public setProductContext = (product: TrackingProductData) => {
-    this.setContext(TrackingContextKey.ProductId, product.id)
-    this.setContext(TrackingContextKey.ProductDisplayName, product.displayNameFull)
-  }
-
   public reportAppInit = (context: AppTrackingContext) => {
     this.setContext(TrackingContextKey.CountryCode, context.countryCode)
     initializeGtm(context)
