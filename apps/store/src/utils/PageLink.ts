@@ -254,7 +254,7 @@ export const PageLink = {
 
   widgetSelectProduct: (params: Omit<WidgetParams, 'priceIntentId'>) => {
     return new URL(
-      [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'select'].join(
+      [localePrefix(params.locale), 'widget/run', params.flow, params.shopSessionId, 'select'].join(
         '/',
       ),
       ORIGIN_URL,
@@ -264,7 +264,7 @@ export const PageLink = {
     return new URL(
       [
         localePrefix(params.locale),
-        'widget',
+        'widget/run',
         params.flow,
         params.shopSessionId,
         params.priceIntentId,
@@ -277,7 +277,7 @@ export const PageLink = {
     return new URL(
       [
         localePrefix(params.locale),
-        'widget',
+        'widget/run',
         params.flow,
         params.shopSessionId,
         params.priceIntentId,
@@ -288,9 +288,13 @@ export const PageLink = {
   },
   widgetPayment: (params: Omit<WidgetParams, 'priceIntentId'>) => {
     return new URL(
-      [localePrefix(params.locale), 'widget', params.flow, params.shopSessionId, 'payment'].join(
-        '/',
-      ),
+      [
+        localePrefix(params.locale),
+        'widget/run',
+        params.flow,
+        params.shopSessionId,
+        'payment',
+      ].join('/'),
       ORIGIN_URL,
     )
   },
@@ -298,7 +302,7 @@ export const PageLink = {
     return new URL(
       [
         localePrefix(params.locale),
-        'widget',
+        'widget/run',
         params.flow,
         params.shopSessionId,
         'confirmation',
