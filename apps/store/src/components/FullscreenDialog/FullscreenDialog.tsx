@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { motion, type Transition } from 'framer-motion'
-import React, { ReactElement, type ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
   children: ReactNode
-  Header?: ReactElement
+  Header?: ReactNode
   Footer?: ReactNode
   center?: boolean
 }
@@ -13,14 +13,14 @@ type Props = {
 export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
     <Content frostedOverlay={true}>
-      {Header ? (
-        React.cloneElement(Header, { style: { height: HEADER_HEIGHT } })
-      ) : (
+      {Header === undefined ? (
         <ModalHeader>
           <CloseButton>
             <CrossIcon />
           </CloseButton>
         </ModalHeader>
+      ) : (
+        Header
       )}
       {center ? (
         <CenteredMain>
