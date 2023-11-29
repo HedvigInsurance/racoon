@@ -14463,14 +14463,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookies-next@npm:4.0.0":
-  version: 4.0.0
-  resolution: "cookies-next@npm:4.0.0"
+"cookies-next@npm:4.1.0":
+  version: 4.1.0
+  resolution: "cookies-next@npm:4.1.0"
   dependencies:
     "@types/cookie": ^0.4.1
     "@types/node": ^16.10.2
     cookie: ^0.4.0
-  checksum: d9ee812bcac2c96e7004704d3bfaf1214c293d3c1155093915c180cc1479fb8e1c78e3486c55b6c0323137b6ec31fb6e19b92a03403538efe961383d80c51a81
+  checksum: 03e7199c0e1988d1cee4047d56afede6faaa26aa176b7f05775f341d337bfb0f62e4010e9372f5e16d4fa0311271c305c26c525672e684707c68638382443bd7
   languageName: node
   linkType: hard
 
@@ -24719,7 +24719,7 @@ __metadata:
     apollo-link-timeout: 4.0.0
     babel-loader: 9.1.3
     clone-deep: 4.0.1
-    cookies-next: 4.0.0
+    cookies-next: 4.1.0
     date-fns: 2.30.0
     dotenv: 16.3.1
     downshift: 8.2.3
