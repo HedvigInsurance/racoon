@@ -49,7 +49,7 @@ export enum TrackingEvent {
   InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
 }
 
-export enum TrackingContextKey {
+enum TrackingContextKey {
   City = 'city',
   CountryCode = 'countryCode',
   CustomerFirstName = 'customerFirstName',
@@ -57,7 +57,6 @@ export enum TrackingContextKey {
   CustomerEmail = 'customerEmail',
   NumberOfPeople = 'numberOfPeople',
   ShopSessionId = 'shopSessionId',
-  MigrationSessionId = 'migrationSessionId',
   ZipCode = 'zipCode',
   ProductId = 'productId',
   ProductDisplayName = 'productDisplayName',
@@ -70,17 +69,6 @@ export class Tracking {
   constructor(public context: TrackingContext = {}) {}
 
   private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
-
-  public setContext = (key: TrackingContextKey, value: unknown) => {
-    if (this.context[key] !== value) {
-      console.debug(`tracking context ${key}:`, value)
-    }
-    if (value != null) {
-      this.context[key] = value
-    } else {
-      delete this.context[key]
-    }
-  }
 
   public reportAppInit = (countryCode: CountryCode) => {
     initializeGtm(countryCode)

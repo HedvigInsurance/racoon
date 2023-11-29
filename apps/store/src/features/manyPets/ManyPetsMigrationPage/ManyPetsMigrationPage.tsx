@@ -29,8 +29,7 @@ import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { TrackingContextKey } from '@/services/Tracking/Tracking'
-import { useTracking } from '@/services/Tracking/useTracking'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { type ComparisonTableData } from '../manyPets.types'
@@ -66,13 +65,8 @@ export const ManyPetsMigrationPage = ({
   const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
 
-  const tracking = useTracking()
   const migrationSessionQueryResult = useShopSessionQuery({
     variables: { shopSessionId: migrationSessionId },
-    onCompleted() {
-      // Not currently used, but may be nice to have if we send some new events from migration session
-      tracking.setContext(TrackingContextKey.MigrationSessionId, migrationSessionId)
-    },
   })
   const { shopSession: migrationShopSession } = migrationSessionQueryResult.data ?? {}
 
@@ -93,7 +87,7 @@ export const ManyPetsMigrationPage = ({
   )
 
   return (
-    <>
+    <TrackingProvider shopSession={migrationSessionQueryResult.data?.shopSession}>
       {announcement}
       <main>
         {preOfferContent}
@@ -176,7 +170,7 @@ export const ManyPetsMigrationPage = ({
           </SignButton>
         </FloatSignButtonWrapper>
       </main>
-    </>
+    </TrackingProvider>
   )
 }
 
