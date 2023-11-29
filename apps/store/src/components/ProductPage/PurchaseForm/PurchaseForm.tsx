@@ -32,7 +32,6 @@ import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { TrackingContextKey } from '@/services/Tracking/Tracking'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
@@ -343,8 +342,6 @@ const EditingState = (props: EditingStateProps) => {
     async onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
-        tracking.setContext(TrackingContextKey.Customer, shopSession.customer)
-        tracking.setPriceIntentContext(updatedPriceIntent)
         updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
         const hasBankSigneringOffer = updatedPriceIntent.offers.some(
           (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
