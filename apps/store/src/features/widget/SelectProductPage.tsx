@@ -67,18 +67,20 @@ export const SelectProductPage = (props: Props) => {
   }
 
   return (
-    <Wrapper y={4}>
+    <Wrapper y={2.5}>
       <Header step="YOUR_INFO" />
 
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
           <Space y={3.5}>
-            <Heading as="h1" variant="standard.24" align="center">
-              {t('SELECT_PAGE_TITLE')}
-            </Heading>
+            <HeadingWrapper>
+              <Heading as="h1" variant="standard.24" align="center" balance={true}>
+                {t('SELECT_PAGE_TITLE')}
+              </Heading>
+            </HeadingWrapper>
 
             <form onSubmit={handleSubmit}>
-              <Space y={0.5}>
+              <Space y={1}>
                 <RadioOptionList.Root
                   value={productName}
                   onValueChange={handleValueChange}
@@ -121,4 +123,9 @@ const CustomButton = styled(Button)({
     color: theme.colors.textDisabled,
     cursor: 'default',
   },
+})
+
+const HeadingWrapper = styled.div({
+  width: '50%',
+  marginInline: 'auto',
 })
