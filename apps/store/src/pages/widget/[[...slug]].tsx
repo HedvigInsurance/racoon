@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
-import { HeaderFrame } from '@/features/widget/Header'
+import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import {
   getStoryBySlug,
@@ -33,7 +33,9 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
         robots="noindex"
       />
       <HeaderFrame>
-        <HedvigLogo />
+        <LogoArea>
+          <HedvigLogo />
+        </LogoArea>
       </HeaderFrame>
       <StoryblokComponent blok={story.content} />
       <DefaultDebugDialog />
