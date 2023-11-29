@@ -58,9 +58,11 @@ export const HeaderFrame = styled(GridLayout.Root)({
   alignItems: 'center',
 })
 
-const LogoArea = styled.div({
-  display: 'none',
-  [mq.md]: { display: 'block', gridColumn: '1 / span 2' },
+export const LogoArea = styled.div({
+  gridColumn: '1/span 12',
+  justifySelf: 'center',
+  paddingBlock: '1.25rem',
+  [mq.md]: { display: 'block', gridColumn: '1 / span 2', justifySelf: 'unset' },
 })
 
 const ProgressArea = styled.div(STYLES['1/3'].center, {
