@@ -54,6 +54,7 @@ type DataLayerObject = {
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData
   shopSession?: GTMShopSessionData
+  user_id?: string
 }
 
 export type EcommerceEvent = {
@@ -122,4 +123,9 @@ export const initializeGtm = (countryCode: CountryCode) => {
       environment: getGtmEnvironment(),
     },
   })
+}
+
+// https://developers.google.com/analytics/devguides/collection/ga4/user-id?client_type=gtm#send_user_ids
+export const setUserId = (userId: string) => {
+  pushToGTMDataLayer({ user_id: userId })
 }

@@ -2,11 +2,11 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import md5 from 'md5'
 import {
-  CartFragmentFragment,
-  CountryCode,
-  ProductOfferFragment,
+  type CartFragmentFragment,
+  type CountryCode,
+  type ProductOfferFragment,
 } from '@/services/apollo/generated'
-import { EcommerceEvent, pushToGTMDataLayer, initializeGtm } from '@/services/gtm'
+import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingProductData = {
@@ -217,10 +217,13 @@ export class Tracking {
   }
 
   public reportPurchase(cart: CartFragmentFragment, memberId: string, isNewMember: boolean) {
+    setUserId(memberId)
+
     const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
     event.ecommerce.transaction_id = cart.id
     event.new_customer = isNewMember
     this.reportEcommerceEvent(event)
+
     // Also report in web-onboarding format
     this.reportSignedCustomer(cart, memberId)
     this.reportAdtractionEvent(cart, this.context)
