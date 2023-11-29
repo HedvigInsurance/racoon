@@ -79,7 +79,12 @@ export const createPartnerShopSession = async (
   >({
     mutation: ShopSessionCreatePartnerDocument,
     variables: {
-      input: { countryCode: params.countryCode, partnerName: params.partnerName, ...variables },
+      input: {
+        countryCode: params.countryCode,
+        partnerName: params.partnerName,
+        initiatedFrom: 'WIDGET',
+        ...variables,
+      },
     },
   })
 
