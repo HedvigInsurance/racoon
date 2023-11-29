@@ -23,7 +23,7 @@ import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
+import { ShopSessionProvider, useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { Tracking } from '@/services/Tracking/Tracking'
@@ -102,7 +102,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <PageTransitionProgressBar />
         <JotaiProvider>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
-            <TrackingProvider value={tracking}>
+            <ShopSessionTrackingProvider>
               <BankIdContextProvider>
                 <BalancerProvider>
                   <AppErrorProvider>
@@ -113,13 +113,18 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 </BalancerProvider>
                 <BankIdDialog />
               </BankIdContextProvider>
-            </TrackingProvider>
+            </ShopSessionTrackingProvider>
           </ShopSessionProvider>
           {Chat}
         </JotaiProvider>
       </ApolloProvider>
     </>
   )
+}
+
+const ShopSessionTrackingProvider = (props: { children: ReactNode }) => {
+  const { shopSession } = useShopSession()
+  return <TrackingProvider shopSession={shopSession}>{props.children}</TrackingProvider>
 }
 
 export default appWithTranslation(MyApp)

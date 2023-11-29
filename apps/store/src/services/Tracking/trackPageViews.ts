@@ -1,6 +1,6 @@
 import router from 'next/router'
 import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
-import { Tracking } from '@/services/Tracking/Tracking'
+import { type Tracking } from '@/services/Tracking/Tracking'
 
 export const trackPageViews = (tracking: Tracking) => {
   router.ready(() => {

@@ -1,6 +1,11 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
+import { Tracking } from './Tracking'
 import { TrackingContext } from './TrackingContext'
 
 export const useTracking = () => {
-  return useContext(TrackingContext)
+  const data = useContext(TrackingContext)
+
+  return useMemo(() => {
+    return new Tracking(data)
+  }, [data])
 }
