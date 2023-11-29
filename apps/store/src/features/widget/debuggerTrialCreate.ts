@@ -1,5 +1,4 @@
 import Crypto from 'crypto'
-import { ORIGIN_URL } from '@/utils/PageLink'
 import { Field } from './debuggerTrial.types'
 
 type RequestData = {
@@ -14,14 +13,22 @@ type RequestData = {
     [Field.zipCode]: string
     [Field.subType]: string
     [Field.birthDate]?: string
+    [Field.ssn]?: string
+    [Field.livingSpace]?: number
+    [Field.numberCoInsured]?: number
+    [Field.isStudent]?: boolean
   }
 }
 
 type ResponseData = { externalMemberId: string }
+type ErrorResponseData = { errorCode: string; errorMessage: string }
 
 const ENDPOINT = 'https://extapi.dev.hedvigit.com/v1/trials'
-export const createTrial = async (data: RequestData): Promise<string> => {
-  const basicAuth = Buffer.from(`${process.env.RAPIO_USERNAME}:`).toString('base64')
+export const createTrial = async (partner: string, data: RequestData): Promise<string> => {
+  const username = process.env[`RAPIO_USERNAME_${partner}`]
+  if (!username) throw new Error(`Missing username for partner: ${partner}`)
+
+  const basicAuth = Buffer.from(`${username}:`).toString('base64')
   const response = await fetch(ENDPOINT, {
     method: 'POST',
     body: JSON.stringify(data),
@@ -33,13 +40,14 @@ export const createTrial = async (data: RequestData): Promise<string> => {
   })
 
   if (!response.ok) {
-    console.warn('Failed to create trial', await response.text())
+    const text = await response.text()
+    console.warn('Failed to create trial', text)
     console.warn('Request headers', response.headers)
     console.warn('Request data', data)
     console.warn('Response status', response.status)
-    console.warn('Response status text', response.statusText)
-    console.warn('Response data', await response.json())
-    throw new Error(response.statusText)
+
+    const json = JSON.parse(text) as ErrorResponseData
+    throw new Error(`${json.errorCode}: ${json.errorMessage}`)
   }
 
   const json = (await response.json()) as ResponseData
@@ -48,6 +56,7 @@ export const createTrial = async (data: RequestData): Promise<string> => {
 
 export const getTrialData = (body: Record<string, string | undefined>): RequestData => {
   const birthDate = body[Field.birthDate]
+  const ssn = body[Field.ssn]
 
   return {
     requestId: Crypto.randomUUID(),
@@ -61,8 +70,18 @@ export const getTrialData = (body: Record<string, string | undefined>): RequestD
       [Field.zipCode]: getOrThrow(body, Field.zipCode),
       [Field.subType]: getOrThrow(body, Field.subType),
       ...(birthDate && { [Field.birthDate]: birthDate }),
+      ...(ssn && { [Field.ssn]: ssn }),
+      ...(body[Field.livingSpace] && { [Field.livingSpace]: Number(body[Field.livingSpace]) }),
+      ...(body[Field.numberCoInsured] && {
+        [Field.numberCoInsured]: Number(body[Field.numberCoInsured]),
+      }),
+      ...(body[Field.isStudent] && { [Field.isStudent]: body[Field.isStudent] === 'true' }),
     },
   }
+}
+
+export const getPartner = (body: Record<string, string | undefined>): string => {
+  return getOrThrow(body, Field.partner)
 }
 
 const getOrThrow = (data: Record<string, unknown>, field: string): string => {
@@ -74,11 +93,4 @@ const getOrThrow = (data: Record<string, unknown>, field: string): string => {
 const getRandomEmailAddress = () => {
   const randomId = Crypto.getRandomValues(new Uint32Array(1))[0]
   return `sven.svensson.${randomId}@hedvig.com`
-}
-
-const WIDGET_AVY_URL = '/se/widget/flows/avy'
-export const getAvyWidgetUrl = (externalMemberId: string): URL => {
-  const url = new URL(WIDGET_AVY_URL, ORIGIN_URL)
-  url.searchParams.set('externalMemberId', externalMemberId)
-  return url
 }
