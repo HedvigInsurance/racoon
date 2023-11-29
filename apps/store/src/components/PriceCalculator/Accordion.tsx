@@ -12,8 +12,11 @@ export const Content = styled(Accordion.Content)({
 export const Root = Accordion.Root
 export const Item = styled(Accordion.Item)({
   paddingTop: theme.space.sm,
-  '&:not(:last-child)': {
-    borderBottom: '1px solid hsla(0, 0%, 7%, 0.15)',
+
+  '&[data-state=closed]:not(:last-child)': {
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.colors.borderTranslucent1,
     paddingBottom: theme.space.sm,
   },
 })
