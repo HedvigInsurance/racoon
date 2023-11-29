@@ -8,7 +8,6 @@ import {
   pushToGTMDataLayer,
   initializeGtm,
 } from '@/services/gtm'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingContext = Partial<Record<TrackingContextKey, unknown>>
@@ -82,16 +81,6 @@ export class Tracking {
     } else {
       delete this.context[key]
     }
-  }
-
-  public setPriceIntentContext = (priceIntent: PriceIntent) => {
-    const { numberCoInsured } = priceIntent.data
-    this.setContext(
-      TrackingContextKey.NumberOfPeople,
-      numberCoInsured ? parseInt(numberCoInsured, 10) + 1 : undefined,
-    )
-    this.setContext(TrackingContextKey.ZipCode, priceIntent.data.zipCode)
-    this.setContext(TrackingContextKey.City, priceIntent.data.city)
   }
 
   public setProductContext = (product: TrackingProductData) => {
