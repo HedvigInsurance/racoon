@@ -2,7 +2,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import { Text, theme } from 'ui'
 
 type Props = {
@@ -11,10 +11,15 @@ type Props = {
 }
 
 export const Tooltip = ({ children, message }: Props) => {
+  const [open, setOpen] = useState(false)
+  const handleClick = () => setOpen((prevOpen) => !prevOpen)
+
   return (
     <TooltipPrimitive.Provider>
-      <TooltipPrimitive.Root delayDuration={0}>
-        <TooltipPrimitive.Trigger asChild={true}>{children}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Root delayDuration={0} open={open} onOpenChange={setOpen}>
+        <TooltipPrimitive.Trigger asChild={true} onClick={handleClick}>
+          {children}
+        </TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal>
           <Content sideOffset={5} onClick={(event) => event.stopPropagation()}>
             <Text size="xs" color="textNegative" align="center">
