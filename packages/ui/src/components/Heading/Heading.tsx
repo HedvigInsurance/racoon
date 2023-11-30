@@ -47,6 +47,7 @@ const HeadingBase = styled(
     fontWeight: 400,
     lineHeight: 1.2,
     textAlign: align ?? 'left',
+    whiteSpace: 'pre-wrap',
     ...getMargins(props),
     ...getHeadingVariantStyles(variant),
   }
