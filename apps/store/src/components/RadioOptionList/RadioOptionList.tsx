@@ -61,11 +61,11 @@ const Item = styled(RadioGroup.Item)({
   height: '1.375rem',
 
   cursor: 'pointer',
-  border: `1px solid ${theme.colors.borderTranslucent3}`,
+  border: `1px solid ${theme.colors.borderOpaque2}`,
   borderRadius: '50%',
 
   '&[data-state=checked]': {
-    borderColor: theme.colors.gray1000,
+    borderColor: theme.colors.textPrimary,
   },
 
   '&:focus-visible': {
@@ -75,7 +75,7 @@ const Item = styled(RadioGroup.Item)({
 
 const Indicator = styled(RadioGroup.Indicator)({
   display: 'block',
-  backgroundColor: theme.colors.gray1000,
+  backgroundColor: theme.colors.textPrimary,
   borderRadius: '50%',
   width: '100%',
   height: '100%',
