@@ -114,7 +114,7 @@ export const CalculatePricePage = (props: Props) => {
       </Space>
 
       <FullscreenDialog.Root open={loading}>
-        <FullscreenDialog.Modal center={true}>
+        <FullscreenDialog.Modal center={true} Header={null}>
           <PriceLoaderWrapper>
             <PriceLoader />
           </PriceLoaderWrapper>
