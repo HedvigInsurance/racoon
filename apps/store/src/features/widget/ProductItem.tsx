@@ -172,10 +172,10 @@ const DeleteButton = styled.button({
   justifyContent: 'center',
   alignItems: 'center',
   borderRadius: '50%',
-  backgroundColor: theme.colors.buttonSecondary,
+  backgroundColor: theme.colors.grayTranslucent200,
   cursor: 'pointer',
 
   '&:hover': {
-    backgroundColor: theme.colors.buttonSecondaryHover,
+    backgroundColor: theme.colors.grayTranslucent300,
   },
 })
