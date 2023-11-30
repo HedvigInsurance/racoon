@@ -37,7 +37,7 @@ export const PaymentPage = (props: Props) => {
   }
 
   return (
-    <Wrapper y={4}>
+    <Wrapper y={2.5}>
       <Header step="PAY" />
 
       <GridLayout.Root>
@@ -53,15 +53,15 @@ export const PaymentPage = (props: Props) => {
             </div>
 
             <Space y={1}>
-              <Text size="xs" color="textSecondary" align="center" balance={true}>
-                {t('checkout:PAYMENT_TRUSTLY_FOOTNOTE')}
-              </Text>
-
               <StyledTrustlyIframe
                 url={props.trustlyUrl}
                 onSuccess={handleSuccess}
                 onFail={handleFail}
               />
+
+              <Text size="xs" color="textSecondary" align="center" balance={true}>
+                {t('checkout:PAYMENT_TRUSTLY_FOOTNOTE')}
+              </Text>
             </Space>
           </Space>
         </GridLayout.Content>
