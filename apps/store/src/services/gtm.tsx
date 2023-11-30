@@ -112,7 +112,7 @@ export const GTMBodyScript = () => {
     </noscript>
   )
 }
-/*
+
 export const TikTokPixelScript = () => {
   const TIKTOK_PIXEL_ID = "YOUR_TIKTOK_PIXEL_ID"; // Replace with your actual TikTok Pixel ID
 
@@ -137,7 +137,7 @@ export const TikTokPixelScript = () => {
     />
   );
 }; 
-*/
+
 export type AppTrackingContext = {
   countryCode: CountryCode
 }
