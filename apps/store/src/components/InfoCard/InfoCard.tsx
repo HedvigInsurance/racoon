@@ -26,9 +26,13 @@ export const InfoCard = (props: Props) => {
   return (
     <InfoWrapper>
       <RigidInfoIcon color={theme.colors.signalBlueElement} />
-      <Text as="p" color="signalBlueText" size="xs">
-        {props.children}
-      </Text>
+      {typeof props.children === 'string' ? (
+        <Text as="p" color="signalBlueText" size="xs">
+          {props.children}
+        </Text>
+      ) : (
+        props.children
+      )}
     </InfoWrapper>
   )
 }
@@ -42,9 +46,13 @@ export const AttentionCard = (props: Props) => {
   return (
     <AttentionWrapper>
       <RigidWarningTriangleIcon size="1rem" color={theme.colors.signalAmberElement} />
-      <Text as="p" color="signalAmberText" size="xs">
-        {props.children}
-      </Text>
+      {typeof props.children === 'string' ? (
+        <Text as="p" color="signalAmberText" size="xs">
+          {props.children}
+        </Text>
+      ) : (
+        props.children
+      )}
     </AttentionWrapper>
   )
 }
@@ -59,13 +67,36 @@ export const ErrorCard = (props: Props) => {
   return (
     <ErrorWrapper>
       <RigidWarningTriangleIcon size="1rem" color={theme.colors.signalRedElement} />
-      <Text as="p" color="signalRedText" size="xs">
-        {props.children}
-      </Text>
+      {typeof props.children === 'string' ? (
+        <Text as="p" color="signalRedText" size="xs">
+          {props.children}
+        </Text>
+      ) : (
+        props.children
+      )}
     </ErrorWrapper>
   )
 }
 
 const ErrorWrapper = styled(Wrapper)({
   backgroundColor: theme.colors.signalRedFill,
+})
+
+export const CampaignCard = (props: Props) => {
+  return (
+    <CampaignWrapper>
+      <RigidInfoIcon color={theme.colors.signalGreenElement} />
+      {typeof props.children === 'string' ? (
+        <Text as="p" color="signalGreenText" size="xs">
+          {props.children}
+        </Text>
+      ) : (
+        props.children
+      )}
+    </CampaignWrapper>
+  )
+}
+
+const CampaignWrapper = styled(Wrapper)({
+  backgroundColor: theme.colors.signalGreenFill,
 })
