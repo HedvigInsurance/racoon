@@ -8,5 +8,7 @@ Disallow: /se-en/confirmation
 Disallow: /country-selector
 Disallow: /reusable-blocks
 Disallow: /referrals
+Disallow: /se/widget/run
+Disallow: /se-en/widget/run
 
 Sitemap: https://www.hedvig.com/sitemap.xml
