@@ -49,6 +49,7 @@ export const TextBase = styled(
   elementConfig,
 )<TextProps>(({ align, color, size = 'md', uppercase = false, strikethrough = false }) => ({
   color: color ? theme.colors[color] : 'inherit',
+  whiteSpace: 'pre-wrap',
   ...getFontSize(size),
   ...(align && { textAlign: align }),
   ...(uppercase && { textTransform: 'uppercase' }),
