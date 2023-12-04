@@ -17,9 +17,9 @@ export const Tooltip = ({ children, message }: Props) => {
   return (
     <TooltipPrimitive.Provider>
       <TooltipPrimitive.Root delayDuration={0} open={open} onOpenChange={setOpen}>
-        <TooltipPrimitive.Trigger asChild={true} onClick={handleClick}>
+        <Trigger asChild={true} onClick={handleClick}>
           {children}
-        </TooltipPrimitive.Trigger>
+        </Trigger>
         <TooltipPrimitive.Portal>
           <Content sideOffset={5} onClick={(event) => event.stopPropagation()}>
             <Text size="xs" color="textNegative" align="center">
@@ -63,5 +63,29 @@ const Content = styled(TooltipPrimitive.Content)({
 
   '&[data-side="bottom"]': {
     animationName: slideDownAndFadeAnimation,
+  },
+})
+
+const Trigger = styled(TooltipPrimitive.Trigger)({
+  position: 'relative',
+
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+  },
+
+  '@media (pointer: coarse)': {
+    '::after': {
+      '--click-target-minimum': '2.75rem', // 44px --> minimal tap target size recommended by Apple
+      // Will evaluate to the number of pixels needed so the tap target is at least 44px.
+      // Consider the following example:
+      // width: 60px and height: 24px
+      // left/right = min(0px, calc((60px - 44px) / 2)) = min(0px, 8px) = 0px
+      // top/bottom = min(0px, calc((24px - 44px) / 2)) = min(0px, -10px) = -10px
+      // So the tap target will be 60px x 44px
+      '--inset-by': 'min(0px, calc((100% - var(--click-target-minimum)) / 2))',
+      inset: 'var(--inset-by)',
+    },
   },
 })
