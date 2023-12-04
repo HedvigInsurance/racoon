@@ -129,6 +129,7 @@ const Wrapper = styled.div({
   position: 'fixed',
   top: 0,
   width: '100%',
+  color: theme.colors.textPrimary,
 })
 
 const TopMenuHeader = styled.div({
