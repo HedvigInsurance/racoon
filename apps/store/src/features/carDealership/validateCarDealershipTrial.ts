@@ -10,8 +10,12 @@ export type ValidateCarTrialParams = {
 }
 
 type ResponseData = { errorCode: string | null; errorMessage: string | null }
+type ErrorData = { message: string; error: string }
 
 export const validateCarDealershipTrial = async (params: ValidateCarTrialParams) => {
+  console.debug(
+    `Car Dealership | Validate trial for ${params.registrationNumber} (${params.dealerId})`,
+  )
   const url = new URL(API_ENDPOINT)
   url.searchParams.append('validateOnly', 'true')
   url.searchParams.append('initiatedFrom', params.dealerId)
@@ -28,28 +32,29 @@ export const validateCarDealershipTrial = async (params: ValidateCarTrialParams)
     ...getTrialDataPlaceholders(),
   }
 
-  const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Basic ${basicAuth}`,
-    },
-  })
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${basicAuth}`,
+      },
+    })
 
-  if (!response.ok) {
-    const text = await response.text()
-    console.warn('Failed to validate trial', text)
-    console.warn('Response status', response.status)
+    if (!response.ok) {
+      const json = (await response.json()) as ErrorData
+      throw new Error(json.error)
+    }
 
-    const json = JSON.parse(text)
-    throw new Error(`${json.errorCode}: ${json.errorMessage}`)
-  }
+    const json = (await response.json()) as ResponseData
 
-  const json = (await response.json()) as ResponseData
-
-  if (json.errorCode) {
-    return { code: json.errorCode, message: json.errorMessage ?? 'Oväntat fel' }
+    if (json.errorCode) {
+      return { code: json.errorCode, message: json.errorMessage ?? 'Oväntat fel' }
+    }
+  } catch (error) {
+    console.warn('Failed to validate trial', error)
+    return { code: 'UNKNOWN_ERROR', message: 'Oväntat fel' }
   }
 
   return null
