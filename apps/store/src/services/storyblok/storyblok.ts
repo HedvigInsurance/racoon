@@ -182,6 +182,7 @@ export type PageStory = ISbStoryData<
     body: Array<SbBlokData>
     hideMenu?: boolean
     overlayMenu?: boolean
+    darkBackground?: boolean
     hideFooter?: boolean
     hideBreadcrumbs?: boolean
     hideChat?: boolean

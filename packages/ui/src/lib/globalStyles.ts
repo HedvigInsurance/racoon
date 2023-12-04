@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { getColor } from './theme/theme'
+import { theme } from './theme/theme'
 
 export const globalStyles = css`
   /***
@@ -22,6 +22,11 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 
+  :root {
+    --body-bg-color: ${theme.colors.backgroundStandard};
+    --body-text-color: ${theme.colors.textPrimary};
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
@@ -34,8 +39,8 @@ export const globalStyles = css`
 
   /* Set default font rules and color on body */
   body {
-    color: ${getColor('textPrimary')};
-    background-color: ${getColor('light')};
+    color: var(--body-text-color);
+    background-color: var(--body-bg-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
