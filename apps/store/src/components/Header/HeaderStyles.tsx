@@ -67,6 +67,7 @@ const NavigationTriggerLink = styled(Link)({
 export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)({
   padding: `${theme.space.md} ${theme.space.md} `,
   marginLeft: theme.space.md,
+  color: theme.colors.textPrimary,
 
   [mq.lg]: {
     padding: `${theme.space.xs} ${theme.space.sm}`,
@@ -134,6 +135,7 @@ export const ProductNavigationList = styled(NavigationMenuPrimitive.List)({
   flexDirection: 'column',
   rowGap: theme.space.xs,
   fontSize: theme.fontSizes.md,
+  color: theme.colors.textPrimary,
 
   [mq.lg]: {
     minWidth: '16rem',
