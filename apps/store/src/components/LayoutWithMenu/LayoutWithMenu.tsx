@@ -1,6 +1,8 @@
+import { Global } from '@emotion/react'
 import styled from '@emotion/styled'
 import { StoryblokComponent } from '@storyblok/react'
 import { Fragment, type ReactElement } from 'react'
+import { theme } from 'ui'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
@@ -51,37 +53,50 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   const showHeader = !story?.content.hideMenu
   const showMenuOverlay = story?.content.overlayMenu ?? props.overlayMenu
   const showFooter = !props.hideFooter && !story?.content.hideFooter
+  const darkBackground = story?.content.darkBackground
 
   const showBreadcrumbList = !story?.content.hideBreadcrumbs && breadcrumbs?.length !== 0 && story
   const breadcrumbItems = [...(breadcrumbs ?? []), ...(story ? [{ label: story.name }] : [])]
 
   return (
-    <Wrapper className={className}>
-      {reusableBlock.map((referencedBlok) => (
-        <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
-      ))}
-      {showHeader &&
-        headerBlock.map((nestedBlock) => (
-          <HeaderBlock
-            key={nestedBlock._uid}
-            blok={nestedBlock}
-            overlay={showMenuOverlay}
-            static={story && isProductStory(story)}
-          />
+    <>
+      {darkBackground && (
+        <Global
+          styles={{
+            ':root': {
+              '--body-bg-color': theme.colors.dark,
+              '--body-text-color': theme.colors.textNegative,
+            },
+          }}
+        />
+      )}
+      <Wrapper className={className}>
+        {reusableBlock.map((referencedBlok) => (
+          <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
         ))}
-      {props.children}
-      {showFooter &&
-        footerBlock.map((nestedBlock) => (
-          <Fragment key={nestedBlock._uid}>
-            {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}
-
-            <FooterBlock
+        {showHeader &&
+          headerBlock.map((nestedBlock) => (
+            <HeaderBlock
               key={nestedBlock._uid}
               blok={nestedBlock}
-              onLocaleChange={handleLocaleChange}
+              overlay={showMenuOverlay}
+              static={story && isProductStory(story)}
             />
-          </Fragment>
-        ))}
-    </Wrapper>
+          ))}
+        {props.children}
+        {showFooter &&
+          footerBlock.map((nestedBlock) => (
+            <Fragment key={nestedBlock._uid}>
+              {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}
+
+              <FooterBlock
+                key={nestedBlock._uid}
+                blok={nestedBlock}
+                onLocaleChange={handleLocaleChange}
+              />
+            </Fragment>
+          ))}
+      </Wrapper>
+    </>
   )
 }
