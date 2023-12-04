@@ -1,5 +1,6 @@
 import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
+import { globalStore } from '@/utils/globalStore'
 import { type TrustpilotData } from './trustpilot.types'
 
 type JSONResponse = {
@@ -14,11 +15,11 @@ type JSONResponse = {
 const trustpilotAtom = atom<TrustpilotData | null>(null)
 
 export const useTrustpilotData = () => {
-  return useAtomValue(trustpilotAtom)
+  return useAtomValue(trustpilotAtom, { store: globalStore })
 }
 
 export const useHydrateTrustpilotData = (data: TrustpilotData | null) => {
-  useHydrateAtoms([[trustpilotAtom, data] as const])
+  useHydrateAtoms([[trustpilotAtom, data]], { store: globalStore })
 }
 
 export const fetchTrustpilotData = async () => {
