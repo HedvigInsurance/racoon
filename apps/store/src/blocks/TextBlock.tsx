@@ -31,6 +31,8 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
       balance={blok.balance}
       color={blok.color ?? 'textPrimary'}
       size={fontSizes}
+      // TODO: handle larger text sizes
+      data-large-text={blok.fontSizeDesktop === 'xl'}
     >
       {content}
     </StyledText>
