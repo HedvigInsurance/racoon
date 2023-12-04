@@ -12127,12 +12127,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/kv@npm:0.2.4":
-  version: 0.2.4
-  resolution: "@vercel/kv@npm:0.2.4"
+"@vercel/kv@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@vercel/kv@npm:1.0.0"
   dependencies:
     "@upstash/redis": 1.24.3
-  checksum: c2827287f70ed978a00bf49c997829ebc869082770d66f0db7ff387694c8eb6cf9acb44088addfccc83eb60f5d3fa00dadba7758cee08a0f7b1b29bb865268d1
+  checksum: 91f870f75ac74a74f8e6a55c44fa59b081dd6721fa696aa412e8c8c33c3cfecb4852222e034b0cbb4142a46e5ef397e756b087418c830043d396a8de97d0fc5b
   languageName: node
   linkType: hard
 
@@ -25061,7 +25061,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 6.12.0
     "@typescript-eslint/parser": 6.12.0
     "@vercel/edge-config": 0.4.1
-    "@vercel/kv": 0.2.4
+    "@vercel/kv": 1.0.0
     "@vercel/otel": 0.3.0
     ajv: 8.12.0
     apollo-link-timeout: 4.0.0
