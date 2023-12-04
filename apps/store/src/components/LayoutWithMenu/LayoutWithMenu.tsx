@@ -66,6 +66,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
             ':root': {
               '--body-bg-color': theme.colors.dark,
               '--body-text-color': theme.colors.textNegative,
+              '--header-bg-transparent-color': 'hsla(0, 0%, 7%, 0)',
             },
           }}
         />

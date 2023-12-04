@@ -25,6 +25,7 @@ export const globalStyles = css`
   :root {
     --body-bg-color: ${theme.colors.backgroundStandard};
     --body-text-color: ${theme.colors.textPrimary};
+    --header-bg-transparent-color: 'hsla(0, 0%, 98%, 0)';
   }
 
   html {

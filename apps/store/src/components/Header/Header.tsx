@@ -10,14 +10,11 @@ import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
 export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`
 
-// Not possible to animate HSL to "transparent"
-const TRANSPARENT_HSL_COLOR = 'hsla(0, 0%, 98%, 0)'
-
 const ANIMATION_VARIANTS = {
   SLIDE_IN: {
     y: 0,
     position: 'fixed',
-    backgroundColor: theme.colors.backgroundStandard,
+    backgroundColor: 'var(--body-bg-color)',
     boxShadow: 'rgba(0, 0, 0, 0.06) 0px 2px 12px',
   },
   SLIDE_OUT: {
@@ -46,9 +43,9 @@ export const Header = (props: HeaderProps) => {
   const { children, opaque = false, overlay = false, static: staticPosition = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
-  const backgroundColor = opaque ? theme.colors.backgroundStandard : TRANSPARENT_HSL_COLOR
-
-  const initialStyles = { backgroundColor } as const
+  const initialStyles = {
+    backgroundColor: opaque ? 'var(--body-bg-color)' : 'var(--header-bg-transparent-color)',
+  }
 
   let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
   animate = scrollState === 'BELOW' ? 'HIDE' : animate
