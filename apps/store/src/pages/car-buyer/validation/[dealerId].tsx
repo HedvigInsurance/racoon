@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = (context) =
 const needsAuthentication = (context: GetServerSidePropsContext): boolean => {
   const expectedUsername = process.env.CAR_TRIAL_VALIDATION_USERNAME
   const expectedPassword = process.env.CAR_TRIAL_VALIDATION_PASSWORD
-  const isProtected = !!expectedUsername && !!expectedPassword
+  const isProtected = typeof expectedUsername === 'string' && typeof expectedPassword === 'string'
 
   if (!isProtected) return false
 
