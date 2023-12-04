@@ -43,7 +43,7 @@
     "@storyblok/react": "2.4.7",
     "@types/uuid": "9.0.7",
     "@vercel/edge-config": "0.4.1",
-    "@vercel/kv": "0.2.4",
+    "@vercel/kv": "1.0.0",
     "@vercel/otel": "0.3.0",
     "ajv": "8.12.0",
     "apollo-link-timeout": "4.0.0",
