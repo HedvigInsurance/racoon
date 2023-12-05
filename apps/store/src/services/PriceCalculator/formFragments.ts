@@ -4,6 +4,8 @@ import { setI18nNamespace, tKey } from '@/utils/i18n'
 
 setI18nNamespace('purchase-form')
 
+export const SSN_SE_SECTION_ID = 'ssn-se'
+
 export const LAYOUT = {
   HALF_WIDTH: { columnSpan: 3 },
   FULL_WIDTH: { columnSpan: 6 },
@@ -101,7 +103,7 @@ const ssnSeField: InputField = {
 }
 
 export const ssnSeSection: TemplateSection = {
-  id: 'ssn-se',
+  id: SSN_SE_SECTION_ID,
   title: { key: tKey('SECTION_TITLE_PERSONAL_NUMBER') },
   // TODO: Ignored, remove or remodel
   submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },

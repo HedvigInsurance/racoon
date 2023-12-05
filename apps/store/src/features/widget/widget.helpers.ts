@@ -6,10 +6,16 @@ import { WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
 import { parsePriceIntentDataSearchParams } from './parseSearchParams'
 
 const widgetPriceTemplateName = (product: string, compare: boolean): string | undefined => {
+  const WIDGET_PREFIX = 'SE_WIDGET_'
+  const PRODUCT_PREFIX = 'SE_'
+
   switch (product) {
     case 'SE_APARTMENT_BRF':
     case 'SE_APARTMENT_RENT':
       return compare ? 'SE_WIDGET_APARTMENT' : 'SE_WIDGET_APARTMENT_NO_COMPARE'
+    default:
+      // Eg: SE_HOUSE --> SE_WIDGET_HOUSE
+      return WIDGET_PREFIX + product.split(PRODUCT_PREFIX)[1]
   }
 }
 
