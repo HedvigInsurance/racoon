@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { Heading } from 'ui'
 import { CarBuyerValidationPage } from '@/features/carDealership/CarBuyerValidationPage'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 
 type Props = ComponentProps<typeof CarBuyerValidationPage> & { authenticated: boolean }
 type Params = { dealerId: string }
@@ -21,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = (context) =
     props: {
       authenticated: true,
       dealerId: context.params.dealerId,
-      hideChat: true,
+      ...hideChatOnPage(),
     },
   }
 }

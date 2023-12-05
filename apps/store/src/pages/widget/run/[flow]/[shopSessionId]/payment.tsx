@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { PaymentPage } from '@/features/widget/PaymentPage'
 import { initializeApolloServerSide } from '@/services/apollo/client'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -31,7 +32,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   ])
 
   return {
-    props: { ...translations, trustlyUrl, ...context.params },
+    props: {
+      trustlyUrl,
+      ...hideChatOnPage(),
+      ...translations,
+      ...context.params,
+    },
   }
 }
 

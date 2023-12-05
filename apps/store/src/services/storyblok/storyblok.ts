@@ -109,7 +109,6 @@ export type StoryblokPageProps = {
   [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
   trustpilot: TrustpilotData | null
-  hideChat?: boolean
 }
 
 export type StoryblokVersion = 'draft' | 'published'

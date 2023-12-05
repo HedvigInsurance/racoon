@@ -14,7 +14,6 @@ declare module 'next' {
 
 type GlobalAppProps = SSRConfig & {
   [SHOP_SESSION_PROP_NAME]?: string
-  hideChat?: boolean
 }
 
 declare module 'next/app' {

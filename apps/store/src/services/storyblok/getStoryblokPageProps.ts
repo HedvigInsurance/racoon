@@ -3,6 +3,7 @@ import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
+import { hideChatOnPage } from '../CustomerFirst'
 import { fetchTrustpilotData } from '../trustpilot/trustpilot'
 import { PageStory, ProductStory, getStoryBySlug } from './storyblok'
 import { STORY_PROP_NAME } from './Storyblok.constant'
@@ -45,9 +46,9 @@ export const getStoryblokPageProps = async ({
 
   return {
     ...layoutWithMenuProps,
+    ...hideChatOnPage(story.content.hideChat ?? false),
     [STORY_PROP_NAME]: story,
     breadcrumbs,
     trustpilot,
-    hideChat: story.content.hideChat ?? false,
   }
 }
