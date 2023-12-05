@@ -15,11 +15,13 @@ import {
   getPageLinks,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type PageProps = Pick<StoryblokPageProps, 'story' | 'hideChat'>
+type PageProps = Pick<StoryblokPageProps, 'story' | 'hideChat' | 'trustpilot'>
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
+  useHydrateTrustpilotData(props.trustpilot)
   const story = useStoryblokState(props.story)
 
   if (!story) return null
@@ -64,6 +66,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await serverSideTranslations(context.locale)),
       [STORY_PROP_NAME]: story,
       hideChat: story.content.hideChat ?? false,
+      trustpilot: await fetchTrustpilotData(),
     },
     revalidate: getRevalidate(),
   }
