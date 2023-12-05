@@ -27,6 +27,7 @@ type Props = {
   tooltip: string
   startDate?: string
   onChangeStartDate: (value: string) => void
+  disableStartDate?: boolean
   loading: boolean
   onDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
@@ -80,13 +81,22 @@ export const ProductItem = (props: Props) => {
         </Space>
       </Hoverable>
 
-      <InputDate
-        label={t('purchase-form:START_DATE_FIELD_LABEL')}
-        value={props.startDate}
-        backgroundColor="light"
-        onChange={handleChangeStartDate}
-        disabled={props.loading}
-      />
+      {props.disableStartDate ? (
+        <InputDate
+          label={t('purchase-form:START_DATE_FIELD_LABEL')}
+          value={props.startDate}
+          backgroundColor="light"
+          disabled={true}
+        />
+      ) : (
+        <InputDate
+          label={t('purchase-form:START_DATE_FIELD_LABEL')}
+          value={props.startDate}
+          backgroundColor="light"
+          onChange={handleChangeStartDate}
+          disabled={props.loading}
+        />
+      )}
 
       <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
         <Collapsible.Trigger asChild={true}>

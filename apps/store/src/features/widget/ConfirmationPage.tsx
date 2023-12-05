@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { Button, Heading, Space, mq, theme } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { Discount } from '@/components/ShopBreakdown/Discount'
 import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -11,6 +10,7 @@ import { useDiscountProps } from '@/components/ShopBreakdown/useDiscountExplanat
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Header } from './Header'
+import { ProductItemContainer } from './ProductItemContainer'
 import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
@@ -39,7 +39,7 @@ export const ConfirmationPage = (props: Props) => {
             </Heading>
             <Space y={1}>
               {props.shopSession.cart.entries.map((item) => (
-                <ProductItemContainer key={item.id} offer={item} />
+                <ProductItemContainer key={item.id} offer={item} disableStartDate={true} />
               ))}
 
               {discount && (

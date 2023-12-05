@@ -24,6 +24,7 @@ type Props = {
   defaultExpanded?: boolean
   variant?: ComponentProps<typeof ProductItem>['variant']
   onDelete?: ComponentProps<typeof ProductItem>['onDelete']
+  disableStartDate?: boolean
 }
 
 export const ProductItemContainer = (props: Props) => {
@@ -78,6 +79,7 @@ export const ProductItemContainer = (props: Props) => {
       tooltip={tooltip}
       startDate={props.offer.startDate}
       onChangeStartDate={handleChangeStartDate}
+      disableStartDate={props.disableStartDate ?? false}
       loading={result.loading}
       onDelete={props.onDelete}
     >

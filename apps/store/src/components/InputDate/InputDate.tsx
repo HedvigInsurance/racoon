@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler, InputHTMLAttributes, useId, useState } from 'react'
-import { ChevronIcon, theme, Text } from 'ui'
+import { ChevronIcon, theme, Text, LockIcon } from 'ui'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
@@ -70,7 +70,12 @@ export const InputDate = (props: Props) => {
         {label}
       </Label>
       <InnerWrapper>
-        {displayValue} <StyledChevronIcon size="1rem" />
+        {displayValue}{' '}
+        {inputProps.disabled ? (
+          <LockIcon size="1rem" color={theme.colors.textSecondary} />
+        ) : (
+          <StyledChevronIcon size="1rem" />
+        )}
       </InnerWrapper>
       <StyledInput
         type="date"

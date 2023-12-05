@@ -8,6 +8,7 @@ const meta: Meta<typeof ProductItem> = {
   argTypes: {
     startDate: { control: { disable: true } },
   },
+  parameters: { grid: '1/3' },
 }
 
 export default meta
