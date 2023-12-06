@@ -23,7 +23,7 @@ type Props = {
 export const ConfirmationPage = (props: Props) => {
   const handleClickBackToApp = () => {
     datadogRum.addAction('Widget Back To App')
-    publishWidgetEvent({ status: 'close' })
+    publishWidgetEvent.close()
   }
 
   const discount = useDiscountProps(props.shopSession.cart.redeemedCampaign)
