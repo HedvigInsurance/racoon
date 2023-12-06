@@ -6,6 +6,7 @@ import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import {
   getStoryBySlug,
   type StoryblokPageProps,
@@ -18,7 +19,7 @@ import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type PageProps = Pick<StoryblokPageProps, 'story' | 'hideChat' | 'trustpilot'>
+type PageProps = Pick<StoryblokPageProps, 'story' | 'trustpilot'>
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
   useHydrateTrustpilotData(props.trustpilot)
@@ -64,8 +65,8 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   return {
     props: {
       ...(await serverSideTranslations(context.locale)),
+      ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
-      hideChat: story.content.hideChat ?? false,
       trustpilot: await fetchTrustpilotData(),
     },
     revalidate: getRevalidate(),

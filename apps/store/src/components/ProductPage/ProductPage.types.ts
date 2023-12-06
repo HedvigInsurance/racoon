@@ -18,5 +18,4 @@ export type ProductPageProps = StoryblokPageProps & {
   trustpilot: TrustpilotData | null
   averageRating: AverageRating | null
   reviewComments: ReviewComments | null
-  hideChat?: boolean
 }

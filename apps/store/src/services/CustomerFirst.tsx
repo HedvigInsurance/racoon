@@ -5,6 +5,11 @@ import { useCallback, useEffect } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
+const HIDE_CHAT_PAGE_PROP = '_hideChat'
+
+export const hideChatOnPage = (hidden?: boolean) => ({ [HIDE_CHAT_PAGE_PROP]: hidden ?? true })
+export const hasHiddenChat = (props: Record<string, unknown>) => Boolean(props[HIDE_CHAT_PAGE_PROP])
+
 const OPEN_ATOM = atom(false)
 
 export const CustomerFirstScript = () => {

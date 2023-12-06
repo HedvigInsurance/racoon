@@ -17,7 +17,7 @@ import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetIni
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { CustomerFirstScript } from '@/services/CustomerFirst'
+import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
 import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
@@ -84,7 +84,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   let Chat: ReactNode = null
-  if (!pageProps.hideChat) {
+  if (!hasHiddenChat(pageProps)) {
     Chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
   }
 

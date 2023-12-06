@@ -7,6 +7,7 @@ import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation
 import { ConfirmationPage } from '@/features/widget/ConfirmationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { type WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     props: {
       ...translations,
       ...context.params,
+      ...hideChatOnPage(),
       title: confirmationStory.content.title,
       staticContent: confirmationStory.content,
       backToAppButton: story.content.backToAppButtonLabel,

@@ -9,6 +9,7 @@ import { SignPage } from '@/features/widget/SignPage'
 import { fetchFlowStory } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -104,7 +105,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         flow: context.params.flow,
         priceIntentId: priceIntent.id,
         // TODO: check if we want to control this via CMS
-        hideChat: true,
+        ...hideChatOnPage(),
         productName: priceIntent.product.name,
         productData,
         pageTitle: story.content.pageTitle ?? 'Hedvig',

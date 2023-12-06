@@ -11,6 +11,7 @@ import { SelectProductPage } from '@/features/widget/SelectProductPage'
 import { createPriceIntent, getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { useShopSessionQuery } from '@/services/apollo/generated'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -91,6 +92,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     props: {
       ...translations,
       ...context.params,
+      ...hideChatOnPage(),
       products,
       compareInsurance,
     },

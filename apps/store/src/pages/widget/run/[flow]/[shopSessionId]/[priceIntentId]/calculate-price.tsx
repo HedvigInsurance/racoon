@@ -14,6 +14,7 @@ import {
   useShopSessionQuery,
   useWidgetPriceIntentQuery,
 } from '@/services/apollo/generated'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -58,6 +59,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       props: {
         priceIntent,
         priceTemplate,
+        ...hideChatOnPage(),
         ...translations,
         ...context.params,
       },
