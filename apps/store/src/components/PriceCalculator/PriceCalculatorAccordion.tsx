@@ -95,6 +95,7 @@ export const PriceCalculatorAccordion = ({
               value={section.id}
               previewFieldName={section.preview?.fieldName}
               previewLabel={section.preview?.label}
+              editable={section.editable}
               items={section.items}
             >
               {content}

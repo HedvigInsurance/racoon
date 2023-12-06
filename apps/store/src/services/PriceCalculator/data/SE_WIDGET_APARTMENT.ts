@@ -11,7 +11,10 @@ import { Template } from '../PriceCalculator.types'
 export const SE_WIDGET_APARTMENT: Template = {
   name: 'SE_WIDGET_APARTMENT',
   sections: [
-    ssnSeSection,
+    {
+      ...ssnSeSection,
+      editable: false,
+    },
     {
       ...yourApartmentSection,
       items: [

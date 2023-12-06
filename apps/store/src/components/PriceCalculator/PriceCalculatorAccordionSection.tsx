@@ -18,6 +18,7 @@ type Props = {
   value: string
   previewFieldName?: string
   previewLabel?: Label
+  editable?: boolean
   items: Array<SectionItem>
 }
 
@@ -26,7 +27,8 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
   const translateLabel = useTranslateFieldLabel()
 
   const showMutedHeading = !(props.active || props.valid)
-  const showEditButton = props.valid && !props.active
+  const isSectionEditable = props.editable ?? true
+  const showEditButton = isSectionEditable && props.valid && !props.active
 
   const stepIconState = useMemo(() => {
     if (props.active) return 'filled'
