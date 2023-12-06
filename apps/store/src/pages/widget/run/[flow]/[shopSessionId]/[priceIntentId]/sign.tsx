@@ -90,6 +90,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     const productData = await fetchProductData({
       apolloClient,
       productName: priceIntent.product.name,
+      partnerName: story.content.partner,
     })
 
     return {
