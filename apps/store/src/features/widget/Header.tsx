@@ -54,8 +54,10 @@ export const Header = (props: Props) => {
 }
 
 export const HeaderFrame = styled(GridLayout.Root)({
-  height: '4rem',
-  alignItems: 'center',
+  [mq.md]: {
+    height: '4rem',
+    alignItems: 'center',
+  },
 })
 
 export const LogoArea = styled.div({

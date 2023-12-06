@@ -126,6 +126,8 @@ const CustomButton = styled(Button)({
 })
 
 const HeadingWrapper = styled.div({
-  width: '50%',
-  marginInline: 'auto',
+  [mq.md]: {
+    width: '50%',
+    marginInline: 'auto',
+  },
 })
