@@ -27,7 +27,7 @@ export const PaymentPage = (props: Props) => {
 
   const handleSuccess = () => {
     LOGGER.info('Trustly payment success', { shopSessionId: props.shopSessionId })
-    publishWidgetEvent({ status: 'success' })
+    publishWidgetEvent.success()
     router.push(nextUrl)
   }
 

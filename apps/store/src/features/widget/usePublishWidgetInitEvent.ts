@@ -11,7 +11,7 @@ export const usePublishWidgetInitEvent = () => {
     if (!router.isReady) return
     if (typeof requestId !== 'string') return
 
-    publishWidgetEvent({ status: 'event', message: { requestId } })
+    publishWidgetEvent.event({ requestId })
 
     const newQuery = { ...router.query }
     delete newQuery[EXTERNAL_REQUEST_ID_QUERY_PARAM]

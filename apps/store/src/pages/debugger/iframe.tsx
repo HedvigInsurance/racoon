@@ -3,7 +3,7 @@ import { type GetServerSidePropsContext, type GetServerSidePropsResult } from 'n
 import { useEffect, useState } from 'react'
 import { Space, Text, theme, Button } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
-import { type WidgetEvent } from '@/features/widget/publishWidgetEvent'
+import { isWidgetEvent, type WidgetEvent } from '@/features/widget/publishWidgetEvent'
 
 type Props = {
   url: string
@@ -34,7 +34,7 @@ const Page = (props: Props) => {
   )
 }
 
-const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy'
+const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy-embedded'
 
 export const getServerSideProps = (
   context: GetServerSidePropsContext,
@@ -58,10 +58,8 @@ const MessageLogger = () => {
 
   useEffect(() => {
     const handler = (event: MessageEvent) => {
-      switch (event.data.status) {
-        case 'event':
-        case 'success':
-          setMessages((prev) => [...prev, event.data as WidgetEvent])
+      if (isWidgetEvent(event)) {
+        setMessages((prev) => [...prev, event.data])
       }
     }
 
