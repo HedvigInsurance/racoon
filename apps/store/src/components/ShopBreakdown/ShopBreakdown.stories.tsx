@@ -15,6 +15,7 @@ const meta: Meta<typeof ShopBreakdown> = {
       },
     },
   },
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

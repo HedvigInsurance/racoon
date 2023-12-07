@@ -9,6 +9,7 @@ export default {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphone12',
     },
+    grid: { width: '1/2' },
   },
 } as Meta<typeof Video>
 
@@ -17,9 +18,7 @@ const Template: StoryFn<typeof Video> = (args) => <Video {...args} />
 export const Default = Template.bind({})
 Default.args = {
   autoPlay: true,
-  sources: [
-    { url: 'https://cdn.dev.hedvigit.com/assets/videos/HEDVIG_FILM01_1x1_15sec_CLEAN.mp4' },
-  ],
+  sources: [{ url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.webm' }],
 }
 
 export const ProductVideo = Template.bind({})

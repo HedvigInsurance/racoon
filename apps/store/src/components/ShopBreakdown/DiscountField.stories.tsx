@@ -8,6 +8,7 @@ const meta: Meta<typeof DiscountField> = {
     onAdd: { action: 'onAdd', table: { disable: true } },
     onRemove: { action: 'onRemove', table: { disable: true } },
   },
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

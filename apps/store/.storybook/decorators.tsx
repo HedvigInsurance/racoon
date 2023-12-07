@@ -21,11 +21,13 @@ export const themeDecorator: Decorator = (Story) => (
  * },
  */
 export const gridDecorator: Decorator = (Story, options) => {
-  const width = options.parameters.grid
-  if (!width) return <Story />
+  if (!options.parameters.grid) return <Story />
+  const width = options.parameters.grid.width
+  const align = options.parameters.grid.align ?? 'left'
+
   return (
     <GridLayout.Root style={{ paddingInline: 0 }}>
-      <GridLayout.Content width={width} align="center">
+      <GridLayout.Content width={width} align={align}>
         <Story />
       </GridLayout.Content>
     </GridLayout.Root>

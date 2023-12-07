@@ -7,6 +7,7 @@ import { ProductDetail, QuickAdd } from './QuickAdd'
 const meta: Meta<typeof QuickAdd> = {
   title: 'Components / Quick Add',
   component: QuickAdd,
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

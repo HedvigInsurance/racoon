@@ -5,6 +5,7 @@ import { InfoToastBar, AttentionToastBar, ErrorToastBar } from './ToastBar'
 const meta: Meta<typeof InfoToastBar> = {
   title: 'Components / Toast Bar',
   component: InfoToastBar,
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

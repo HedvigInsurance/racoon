@@ -51,7 +51,7 @@ const ACCORDION_ITEMS = [
 export default {
   component: Accordion.Root,
   parameters: {
-    grid: '1/2',
+    grid: { width: '1/2' },
     design: {
       allowFullscreen: true,
       type: 'figma',

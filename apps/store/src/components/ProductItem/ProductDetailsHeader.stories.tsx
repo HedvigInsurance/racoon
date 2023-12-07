@@ -5,6 +5,7 @@ import { ProductDetailsHeader } from './ProductDetailsHeader'
 const meta: Meta<typeof ProductDetailsHeader> = {
   title: 'Components / Product Item / Product Details Header',
   component: ProductDetailsHeader,
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

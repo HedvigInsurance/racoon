@@ -11,7 +11,7 @@ const meta: Meta<typeof TrialExtensionForm> = {
   title: 'Car Dealership / Trial Extension Form',
   component: TrialExtensionForm,
   parameters: {
-    grid: '1/3',
+    grid: { width: '1/2' },
   },
 }
 
