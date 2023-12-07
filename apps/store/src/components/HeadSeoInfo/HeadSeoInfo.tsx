@@ -4,6 +4,7 @@ import { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
 import { organization } from '@/utils/jsonSchema'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
@@ -79,7 +80,13 @@ const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
 
 const getHrefLang = (fullSlug: string) => {
   const slugLocale = fullSlug.split('/')[0]
-  return isRoutingLocale(slugLocale) ? getLocaleOrFallback(slugLocale).htmlLang : 'x-default'
+  if (isRoutingLocale(slugLocale)) {
+    const locale = getLocaleOrFallback(slugLocale)
+    const country = getCountryByLocale(slugLocale)
+    return `${locale.language}-${country.countryCode}`
+  }
+
+  return 'x-default'
 }
 
 const removeTrailingSlash = (url: string) => {
