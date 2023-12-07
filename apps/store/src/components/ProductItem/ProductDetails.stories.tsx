@@ -4,6 +4,7 @@ import { ProductDetails } from './ProductDetails'
 const meta: Meta<typeof ProductDetails> = {
   title: 'Components / Product Item / Product Details',
   component: ProductDetails,
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta

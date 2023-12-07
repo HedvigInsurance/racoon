@@ -49,4 +49,5 @@ export const WithProductOptions: Story = {
       },
     ],
   },
+  parameters: { grid: { width: '1/3' } },
 }

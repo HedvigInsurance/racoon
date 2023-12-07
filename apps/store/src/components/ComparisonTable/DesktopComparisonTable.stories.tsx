@@ -26,6 +26,7 @@ export default {
       type: 'figma',
       url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=3273-18638&mode=design&t=RSlyuJ47E727hGaQ-4',
     },
+    grid: { width: '1/2' },
   },
 } as Meta<typeof DesktopComparisonTable>
 

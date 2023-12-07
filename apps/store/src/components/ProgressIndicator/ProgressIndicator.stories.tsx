@@ -13,6 +13,7 @@ type Args = React.ComponentProps<typeof ProgressIndicator.Root> & {
 const meta: Meta<Args> = {
   title: 'Components / Progress Indicator',
   component: ProgressIndicator.Root,
+  parameters: { grid: { width: '1/3' } },
   render: (args) => (
     <ProgressIndicator.Root>
       {args.items.map((item, index) => (

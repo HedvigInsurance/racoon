@@ -10,6 +10,7 @@ export default {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphone12',
     },
+    grid: { width: '1/3' },
   },
 } as Meta<typeof ProductCard>
 

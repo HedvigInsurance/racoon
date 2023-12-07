@@ -5,6 +5,7 @@ import { TotalAmount } from './TotalAmount'
 const meta: Meta<typeof TotalAmount> = {
   title: 'Components / Shop Breakdown / Total Amount',
   component: TotalAmount,
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta
