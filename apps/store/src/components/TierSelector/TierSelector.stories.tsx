@@ -6,6 +6,7 @@ import * as TierSelector from './TierSelector'
 export default {
   title: 'Purchase Form / Tier Selector',
   component: TierSelector.Root,
+  parameters: { grid: { width: '1/3' } },
 } as Meta<typeof TierSelector.Root>
 
 const Template: StoryFn<typeof TierSelector.Root> = () => {

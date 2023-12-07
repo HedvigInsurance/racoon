@@ -3,6 +3,7 @@ import { ArticleTeaser } from './ArticleTeaser'
 
 const meta: Meta = {
   title: 'Blog / Article Teaser',
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta
@@ -20,7 +21,7 @@ export const Primary: Story = {
       date="2021.05.12"
     >
       <ArticleTeaser.Image
-        src="https://www.hedvig.com/f/62762/800x450/42924b7dde/mimmi-thumbnail.jpg"
+        src="https://assets.hedvig.com/f/165473/1000x700/641eb5d891/mimmi-blomqvist-hedvig-blogg.jpg"
         width={800}
         height={450}
         alt="Mimmi"

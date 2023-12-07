@@ -12,6 +12,7 @@ export default {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphonese2',
     },
+    grid: { width: '1/3' },
   },
   argTypes: {
     onStartDateChange: { action: 'change start date' },

@@ -11,6 +11,7 @@ const meta: Meta<typeof InputDate> = {
     defaultValue: todayAsIsoString(),
   },
   argTypes: { onChange: { action: 'change' } },
+  parameters: { grid: { width: '1/3' } },
 }
 export default meta
 

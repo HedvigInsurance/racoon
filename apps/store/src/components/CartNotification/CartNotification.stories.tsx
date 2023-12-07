@@ -4,6 +4,7 @@ import { CartNotificationContent } from './CartToast'
 
 const config = {
   title: 'Cart / Cart Notification',
+  parameters: { grid: { width: '1/3' } },
 }
 
 export const Open: StoryFn<typeof CartNotificationContent> = (props) => (
