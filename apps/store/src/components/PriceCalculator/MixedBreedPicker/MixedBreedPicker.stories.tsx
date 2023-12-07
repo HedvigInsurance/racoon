@@ -1,11 +1,12 @@
-import { ComponentMeta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Breed } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker'
 
 export default {
   title: 'Inputs / Mixed Breed Picker',
   component: MixedBreedPicker,
-} as ComponentMeta<typeof MixedBreedPicker>
+  parameters: { grid: { width: '1/3' } },
+} as Meta<typeof MixedBreedPicker>
 
 const BREEDS: Array<Breed> = [
   {

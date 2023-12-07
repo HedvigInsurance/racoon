@@ -10,6 +10,7 @@ const meta: Meta<typeof InputSelect> = {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphonese2',
     },
+    grid: { width: '1/3' },
   },
 }
 

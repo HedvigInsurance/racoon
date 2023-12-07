@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Breadcrumbs, CheckoutStep } from './Breadcrumbs'
 
 const meta: Meta<typeof Breadcrumbs> = {
@@ -10,19 +9,14 @@ const meta: Meta<typeof Breadcrumbs> = {
       table: { disable: true },
     },
   },
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta
 type Story = StoryObj<typeof Breadcrumbs>
 
 const Template: Story = {
-  render: (args) => (
-    <GridLayout.Root>
-      <GridLayout.Content width="1/3" align="center">
-        <Breadcrumbs {...args} />
-      </GridLayout.Content>
-    </GridLayout.Root>
-  ),
+  render: (args) => <Breadcrumbs {...args} />,
 }
 
 export const Default = {

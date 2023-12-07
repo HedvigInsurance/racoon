@@ -5,9 +5,7 @@ const meta: Meta<typeof ProductHero> = {
   title: 'Purchase Form / Product Hero',
   component: ProductHero,
   parameters: {
-    viewport: {
-      defaultViewport: 'mobile2',
-    },
+    grid: { width: '1/3' },
   },
 }
 

@@ -6,6 +6,7 @@ export default {
   title: 'Inputs / Combobox',
   component: Combobox,
   argTypes: {},
+  parameters: { grid: { width: '1/3' } },
 } as Meta<typeof Combobox>
 
 const FRUIT = [

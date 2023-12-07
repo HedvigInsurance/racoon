@@ -10,6 +10,7 @@ export default {
       viewports: INITIAL_VIEWPORTS,
       defaultViewport: 'iphonese2',
     },
+    grid: { width: '1/3' },
   },
   argTypes: { onCompanyChange: { action: 'changed' } },
 } as Meta<typeof InputCurrentInsurance>

@@ -14,6 +14,7 @@ const meta: Meta<typeof SasEurobonusSection> = {
       control: 'select',
     },
   },
+  parameters: { grid: { width: '1/3' } },
 }
 
 export default meta
