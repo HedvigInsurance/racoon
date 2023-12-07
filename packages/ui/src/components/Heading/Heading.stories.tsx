@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { Heading, HeadingProps } from './Heading'
 
 export default {
-  title: 'Heading New',
+  title: 'Heading',
   component: Heading,
   parameters: {
     backgrounds: {

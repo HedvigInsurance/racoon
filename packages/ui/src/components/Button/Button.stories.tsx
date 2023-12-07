@@ -3,13 +3,13 @@ import { Space, CheckIcon } from 'ui'
 import { Button } from './Button'
 
 export default {
-  title: 'Base / Button',
+  title: 'Button',
   component: Button,
 } as Meta<typeof Button>
 
 const Template: StoryFn<typeof Button> = (props) => {
   return (
-    <Space y={2}>
+    <Space y={2} style={{ maxWidth: '20rem' }}>
       <Space y={1}>
         <div>
           <Button {...props} variant="primary" />

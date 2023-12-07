@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Meta, Story } from '@storybook/react'
 import { useState } from 'react'
+import { Button } from '../Button/Button'
 import { Heading } from '../Heading/Heading'
 import { Space } from '../Space'
 import * as Dialog from './Dialog'
@@ -11,6 +12,7 @@ const storyMeta: Meta = {
     backgrounds: {
       default: 'gray100',
     },
+    layout: 'centered',
   },
 }
 
@@ -22,7 +24,7 @@ export const Default: Story = () => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <button>Open Dialog</button>
+        <Button>Open Dialog</Button>
       </Dialog.Trigger>
       <DialogContent>
         <Wrapper>
@@ -45,6 +47,7 @@ export const Default: Story = () => {
 const DialogContent = styled(Dialog.Content)({
   display: 'grid',
   placeItems: 'center',
+  height: '100vh',
 })
 
 const Wrapper = styled.div({
