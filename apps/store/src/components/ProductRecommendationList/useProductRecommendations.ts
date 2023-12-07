@@ -22,6 +22,7 @@ export const useProductRecommendations = (customShopSessionId?: string): ReturnT
   const shopSessionId = customShopSessionId ?? shopSession?.id
 
   const result = useProductRecommendationsQuery({
+    fetchPolicy: 'cache-and-network',
     variables: shopSessionId ? { shopSessionId } : undefined,
     skip: !shopSessionId,
     onCompleted(data) {

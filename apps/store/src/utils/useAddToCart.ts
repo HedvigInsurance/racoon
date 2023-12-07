@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
-import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import {
   useCartEntryAddMutation,
   ProductRecommendationsDocument,
@@ -18,11 +17,6 @@ type Params = {
 }
 
 export const useAddToCart = (params: Params) => {
-  // ProductRecommendationsQuery needs to be an active query
-  // before we can "re"fetch it after adding a new product into
-  // the cart
-  useProductRecommendations()
-
   const options = {
     refetchQueries: [ProductRecommendationsDocument],
     awaitRefetchQueries: true,
