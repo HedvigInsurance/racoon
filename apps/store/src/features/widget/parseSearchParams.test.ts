@@ -18,11 +18,10 @@ describe('parsePriceIntentDataSearchParams', () => {
     expect(priceIntentData).toEqual({
       street: '123 Main St',
       zipCode: '12345',
-      city: 'New York',
       livingSpace: 100,
       numberCoInsured: 2,
     })
-    expect(remainingSearchParams.toString()).toBe('')
+    expect(remainingSearchParams.toString()).toBe('city=New+York')
   })
 
   it('should handle empty search params', () => {
@@ -51,5 +50,18 @@ describe('parsePriceIntentDataSearchParams', () => {
     // Assert
     expect(priceIntentData).toEqual({ street: '123 Main St' })
     expect(remainingSearchParams.toString()).toBe('coInsured=xyz&livingSpace=abc&unknown=xyz')
+  })
+
+  it('should handle boolean values', () => {
+    // Arrange
+    const searchParams = new URLSearchParams()
+    searchParams.set('student', 'yes')
+
+    // Act
+    const [priceIntentData, remainingSearchParams] = parsePriceIntentDataSearchParams(searchParams)
+
+    // Assert
+    expect(priceIntentData).toEqual({ isStudent: true })
+    expect(remainingSearchParams.toString()).toBe('')
   })
 })
