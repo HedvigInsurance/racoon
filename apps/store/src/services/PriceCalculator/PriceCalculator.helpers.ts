@@ -47,11 +47,13 @@ export const prefillData = ({ form, data, valueField }: FillDataParams): Form =>
       ...section,
       items: section.items.map((item) => {
         const dataValue = data[item.field.name]
+        const parsedValue = item.field.type === 'radio' ? dataValue?.toString() : dataValue
+
         return {
           ...item,
           field: {
             ...item.field,
-            [valueField]: dataValue ?? item.field[valueField],
+            [valueField]: parsedValue ?? item.field[valueField],
           },
         }
       }),

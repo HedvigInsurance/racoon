@@ -18,16 +18,12 @@ enum SearchParam {
   // Price Intent Data
   StreetAddress = 'street',
   ZipCode = 'zipCode',
-  City = 'city',
   LivingSpace = 'livingSpace',
   NumberCoInsured = 'coInsured',
+  Student = 'student',
 
   // No longer used?
   PhoneNumber = 'phoneNumber',
-  BirthDate = 'birthDate',
-  FirstName = 'firstName',
-  LastName = 'lastName',
-  Student = 'student', // can't find what the values are supposed to be
 
   // Shop Session Create Partner Data
   ExternalMemberId = 'externalMemberId',
@@ -96,23 +92,27 @@ export const parsePriceIntentDataSearchParams = (
 
   const street = searchParams.get(SearchParam.StreetAddress)
   updatedSearchParams.delete(SearchParam.StreetAddress)
+
   const zipCode = searchParams.get(SearchParam.ZipCode)
   updatedSearchParams.delete(SearchParam.ZipCode)
-  const city = searchParams.get(SearchParam.City)
-  updatedSearchParams.delete(SearchParam.City)
+
   const searchLivingSpace = searchParams.get(SearchParam.LivingSpace)
   const livingSpace = searchLivingSpace ? parseNumber(searchLivingSpace) : undefined
   if (livingSpace !== undefined) updatedSearchParams.delete(SearchParam.LivingSpace)
+
   const searchNumberCoInsured = searchParams.get(SearchParam.NumberCoInsured)
   const numberCoInsured = searchNumberCoInsured ? parseNumber(searchNumberCoInsured) : undefined
   if (numberCoInsured !== undefined) updatedSearchParams.delete(SearchParam.NumberCoInsured)
 
+  const isStudent = parseBoolean(searchParams.get(SearchParam.Student)?.toLowerCase())
+  if (isStudent !== undefined) updatedSearchParams.delete(SearchParam.Student)
+
   const data = {
     ...(street && { street }),
     ...(zipCode && { zipCode }),
-    ...(city && { city }),
     ...(livingSpace && { livingSpace }),
     ...(numberCoInsured && { numberCoInsured }),
+    ...(isStudent !== undefined && { isStudent }),
   }
 
   return [data, updatedSearchParams]
@@ -121,6 +121,17 @@ export const parsePriceIntentDataSearchParams = (
 const parseNumber = (value: string): number | undefined => {
   const parsed = parseInt(value, 10)
   return isNaN(parsed) ? undefined : parsed
+}
+
+const parseBoolean = (value: unknown): boolean | undefined => {
+  switch (value) {
+    case 'yes':
+      return true
+    case 'no':
+      return false
+    default:
+      return undefined
+  }
 }
 
 export const parseShopSessionCreatePartnerSearchParams = (
