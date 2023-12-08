@@ -114,7 +114,7 @@ export const FetchInsurance = (props: Props) => {
   const handleInsurelyCompleted: OnCompleted = useCallback(() => {
     if (dataCollectionId) {
       LOGGER.info(
-        `Saving Insurely data collection ID: ${dataCollectionId}, priceIntenId: ${props.priceIntentId}`,
+        `Saving Insurely data collection ID: ${dataCollectionId}, priceIntentId: ${props.priceIntentId}`,
       )
       updateDataCollectionId({
         variables: { priceIntentId: props.priceIntentId, dataCollectionId },
