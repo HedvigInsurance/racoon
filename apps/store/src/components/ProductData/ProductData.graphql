@@ -1,5 +1,5 @@
-query ProductData($productName: String!) {
-  product(productName: $productName) {
+query ProductData($productName: String!, $partnerName: String) {
+  product(productName: $productName, partnerName: $partnerName) {
     id
     name
     displayNameFull
@@ -30,5 +30,3 @@ query ProductData($productName: String!) {
     }
   }
 }
-
-

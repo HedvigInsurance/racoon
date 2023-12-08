@@ -6,19 +6,21 @@ import {
 } from '@/services/apollo/generated'
 import { ProductData } from './ProductData.types'
 
-type Params = {
+type Params = ProductDataQueryVariables & {
   apolloClient: ApolloClient<unknown>
-  productName: string
 }
 
-export const fetchProductData = async (params: Params): Promise<ProductData> => {
-  const { data } = await params.apolloClient.query<ProductDataQuery, ProductDataQueryVariables>({
+export const fetchProductData = async ({
+  apolloClient,
+  ...variables
+}: Params): Promise<ProductData> => {
+  const { data } = await apolloClient.query<ProductDataQuery, ProductDataQueryVariables>({
     query: ProductDataDocument,
-    variables: { productName: params.productName },
+    variables,
   })
 
   if (!data.product) {
-    throw new Error(`Unable to fetch product data: ${params.productName}`)
+    throw new Error(`Unable to fetch product data: ${variables.productName}`)
   }
 
   return data.product
