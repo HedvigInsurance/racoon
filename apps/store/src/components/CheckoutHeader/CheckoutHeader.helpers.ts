@@ -1,14 +1,15 @@
 import { ApolloClient } from '@apollo/client'
 import {
   CurrentMemberDocument,
-  CurrentMemberQuery,
-  CurrentMemberQueryVariables,
+  type CurrentMemberQuery,
+  type CurrentMemberQueryVariables,
+  MemberPaymentConnectionStatus,
 } from '@/services/apollo/generated'
 import { getAccessToken } from '@/services/authApi/persist'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
-import { RoutingLocale } from '@/utils/l10n/types'
+import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { type RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { CookieParams } from '@/utils/types'
+import { type CookieParams } from '@/utils/types'
 import { CheckoutStep } from './Breadcrumbs'
 
 type Params = {
@@ -25,7 +26,8 @@ export const fetchCheckoutSteps = async ({ apolloClient, req, res }: Params) => 
       query: CurrentMemberDocument,
     })
 
-    showPayment = !data.currentMember.hasActivePaymentConnection
+    showPayment =
+      data.currentMember.paymentInformation.status === MemberPaymentConnectionStatus.NeedsSetup
   }
 
   const steps: Array<CheckoutStep> = [CheckoutStep.Checkout]

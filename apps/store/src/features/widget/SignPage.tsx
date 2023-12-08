@@ -26,6 +26,7 @@ import {
   ShopSessionAuthenticationStatus,
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
+  MemberPaymentConnectionStatus,
 } from '@/services/apollo/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -73,13 +74,13 @@ export const SignPage = (props: Props) => {
         props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
       )
 
-      datadogLogs.logger.info('Widget Sign | Purchase Complete', {
-        hasActivePaymentConnection: data.currentMember.hasActivePaymentConnection,
-      })
+      const paymentStatus = data.currentMember.paymentInformation.status
+      datadogLogs.logger.info('Widget Sign | Purchase Complete', { paymentStatus })
 
-      const nextUrl = data.currentMember.hasActivePaymentConnection
-        ? PageLink.widgetConfirmation({ flow: props.flow, shopSessionId: props.shopSession.id })
-        : PageLink.widgetPayment({ flow: props.flow, shopSessionId: props.shopSession.id })
+      const nextUrl =
+        paymentStatus === MemberPaymentConnectionStatus.NeedsSetup
+          ? PageLink.widgetPayment({ flow: props.flow, shopSessionId: props.shopSession.id })
+          : PageLink.widgetConfirmation({ flow: props.flow, shopSessionId: props.shopSession.id })
 
       await router.push(nextUrl)
     },
