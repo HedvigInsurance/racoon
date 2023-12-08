@@ -14,6 +14,7 @@ type LinkProps = {
 type CustomButtonProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
   size?: ButtonSize
+  fullWidth?: boolean
   loading?: boolean
   Icon?: ReactNode
 } & LinkProps
@@ -100,6 +101,7 @@ const StyledButton = styled.button<CustomButtonProps>(
     },
   },
   ({ size = 'large' }) => getButtonSizeStyles(size),
+  ({ fullWidth }) => fullWidth && { width: '100%' },
 )
 
 const PrimaryButton = styled(StyledButton)({
