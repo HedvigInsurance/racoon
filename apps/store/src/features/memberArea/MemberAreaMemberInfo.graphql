@@ -6,7 +6,9 @@ query MemberAreaMemberInfo {
     firstName
     lastName
     email
-    hasActivePaymentConnection
+    paymentInformation {
+      status
+    }
     insuranceCost {
       ...MemberInsuranceCost
     }

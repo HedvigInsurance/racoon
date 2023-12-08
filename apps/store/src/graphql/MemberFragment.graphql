@@ -1,6 +1,8 @@
 fragment Member on Member {
   id
-  hasActivePaymentConnection
+  paymentInformation {
+    status
+  }
   partnerData {
     sas {
       eligible

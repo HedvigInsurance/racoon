@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import {
-  ShopSessionFragment,
+  MemberPaymentConnectionStatus,
+  type ShopSessionFragment,
   useCarDealershipRemoveAddMutation,
   useCurrentMemberLazyQuery,
 } from '@/services/apollo/generated'
@@ -60,13 +61,9 @@ export const useAcceptExtension = (params: Params) => {
           contractId: params.trialContractId,
         }).pathname
 
-        if (data.currentMember.hasActivePaymentConnection) {
-          LOGGER.info('Member has active payment connection', {
-            promptedPayment: params.requirePaymentConnection,
-          })
-          dismissBanner()
-          await router.push(nextUrl)
-        } else {
+        if (
+          data.currentMember.paymentInformation.status === MemberPaymentConnectionStatus.NeedsSetup
+        ) {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
@@ -74,6 +71,12 @@ export const useAcceptExtension = (params: Params) => {
           await router.push(
             PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl }),
           )
+        } else {
+          LOGGER.info('Member has active payment connection', {
+            promptedPayment: params.requirePaymentConnection,
+          })
+          dismissBanner()
+          await router.push(nextUrl)
         }
       },
     })

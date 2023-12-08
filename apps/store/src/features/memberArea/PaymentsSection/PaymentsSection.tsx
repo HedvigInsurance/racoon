@@ -5,12 +5,16 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
+import { MemberPaymentConnectionStatus } from '@/services/apollo/generated'
 import { InsuranceCost } from './InsuranceCost'
 import { PaymentConnection } from './PaymentConnection'
 
 export const PaymentsSection = () => {
   const currentMember = useMemberAreaInfo()
   const { t } = useTranslation('memberArea')
+
+  const needsPaymentSetup =
+    currentMember.paymentInformation.status === MemberPaymentConnectionStatus.NeedsSetup
 
   return (
     <Wrapper direction="vertical">
@@ -19,15 +23,15 @@ export const PaymentsSection = () => {
       <Heading as="h3" variant="standard.24">
         {t('PAYMENTS_CONNECTION_TITLE')}
       </Heading>
-      {currentMember.hasActivePaymentConnection ? (
-        <>
-          <Text>✅&nbsp;{t('PAYMENTS_PAYMENT_CONNECTED')}</Text>
-          <PaymentConnection startButtonText="Change connection" />
-        </>
-      ) : (
+      {needsPaymentSetup ? (
         <>
           <Text>{t('PAYMENTS_PAYMENT_NOT_CONNECTED')}</Text>
           <PaymentConnection startButtonText="Connect" />
+        </>
+      ) : (
+        <>
+          <Text>✅&nbsp;{t('PAYMENTS_PAYMENT_CONNECTED')}</Text>
+          <PaymentConnection startButtonText="Change connection" />
         </>
       )}
 
