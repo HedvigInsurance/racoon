@@ -93,8 +93,11 @@ export const FetchInsurance = (props: Props) => {
 
   const [createDataCollection] = useInsurelyDataCollectionCreateMutation({
     onCompleted(data) {
-      setDataCollectionId(data.insurelyInitiateIframeDataCollection.dataCollectionId)
+      const { dataCollectionId } = data.insurelyInitiateIframeDataCollection
+      setDataCollectionId(dataCollectionId)
+      // TODO: Debug and fix, we're not seeing the value in Datadog
       LOGGER.setContextProperty('dataCollectionId', dataCollectionId)
+      LOGGER.info(`Created data collection ID: ${dataCollectionId}`)
     },
     onError(error) {
       LOGGER.warn('Error creating Insurely data collection', {
@@ -110,6 +113,9 @@ export const FetchInsurance = (props: Props) => {
 
   const handleInsurelyCompleted: OnCompleted = useCallback(() => {
     if (dataCollectionId) {
+      LOGGER.info(
+        `Saving Insurely data collection ID: ${dataCollectionId}, priceIntenId: ${props.priceIntentId}`,
+      )
       updateDataCollectionId({
         variables: { priceIntentId: props.priceIntentId, dataCollectionId },
       })
