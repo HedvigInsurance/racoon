@@ -4,8 +4,8 @@ import { Text, Space, Badge, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect, type InputSelectProps } from '@/components/InputSelect/InputSelect'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import { ProductRating } from '@/components/ProductRating/ProductRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Stars } from '@/components/Stars/Stars'
 
 const MAX_SCORE = 5
 const FILLED_STAR = '★'
@@ -88,7 +88,7 @@ type CommentProps = {
 const Comment = ({ content, date, author, score }: CommentProps) => {
   return (
     <CommentWrapper>
-      <ProductRating score={score} />
+      <Stars score={score} />
       <Content>
         <Text balance={true}>{content}</Text>
       </Content>
