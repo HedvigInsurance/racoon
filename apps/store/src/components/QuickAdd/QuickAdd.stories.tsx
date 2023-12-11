@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { Button, Text } from 'ui'
 import { StartDate } from '@/components/ProductItem/StartDate'
 import { CurrencyCode } from '@/services/apollo/generated'
-import { ProductDetail, QuickAdd } from './QuickAdd'
+import { ProductDetail, ProductUsp, QuickAdd } from './QuickAdd'
 
 const meta: Meta<typeof QuickAdd> = {
   title: 'Components / Quick Add',
@@ -45,6 +45,25 @@ export const Default: Story = {
         <Button size="medium" variant="ghost" fullWidth={true}>
           {"See what's included"}
         </Button>
+      </>
+    ),
+  },
+}
+
+export const WithUsps: Story = {
+  args: {
+    ...Default.args,
+    Body: (
+      <>
+        <Text as="p" color="textTranslucentSecondary">
+          Increase your coverage with our accident insurance. Get compensation for dental, scars and
+          much more.
+        </Text>
+        <ul>
+          <ProductUsp>Extra coverage for injuries and accidents</ProductUsp>
+          <ProductUsp>Up to 1 000 000kr in compensation</ProductUsp>
+          <ProductUsp>No deductible</ProductUsp>
+        </ul>
       </>
     ),
   },

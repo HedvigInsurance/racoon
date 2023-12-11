@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { type ReactNode, type ComponentProps } from 'react'
-import { Badge, Space, Text, mq, theme } from 'ui'
+import { type ReactNode, type ComponentProps, PropsWithChildren } from 'react'
+import { Badge, CheckIcon, Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -143,5 +143,25 @@ export const ProductDetail = (props: ProductDetailProps) => {
         {props.value}
       </Text>
     </StyledProductDetail>
+  )
+}
+
+const ProductUspItem = styled.li({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  columnGap: theme.space.xs,
+  paddingBlock: theme.space.md,
+  '&:not(:last-of-type)': {
+    borderBottom: `1px solid ${theme.colors.borderTranslucent1}`,
+  },
+})
+
+export const ProductUsp = ({ children }: PropsWithChildren) => {
+  return (
+    <ProductUspItem>
+      <Text color="textTranslucentSecondary">{children}</Text>
+      <CheckIcon size="1rem" aria-label="Covered" />
+    </ProductUspItem>
   )
 }
