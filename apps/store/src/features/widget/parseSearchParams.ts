@@ -12,14 +12,21 @@ enum SearchParam {
   Ssn = 'ssn',
 
   // Product Name Data
+  ProductName = 'productName',
+  // @deprecated: replaced by "productName"
   ProductType = 'productType',
+  // @deprecated: replaced by "productName"
   ApartmentSubType = 'subType',
 
   // Price Intent Data
   StreetAddress = 'street',
   ZipCode = 'zipCode',
   LivingSpace = 'livingSpace',
-  NumberCoInsured = 'coInsured',
+  NumberCoInsured = 'numberCoInsured',
+  // @deprecated: replaced by "numberCoInsured"
+  CoInsured = 'coInsured',
+  IsStudent = 'isStudent',
+  // @deprecated: replaced by "isStudent"
   Student = 'student',
 
   // No longer used?
@@ -61,20 +68,24 @@ export const parseProductNameSearchParams = (
 ): [string | null, URLSearchParams] => {
   const updatedSearchParams = new URLSearchParams(searchParams.toString())
 
+  const productName = updatedSearchParams.get(SearchParam.ProductName)
+  updatedSearchParams.delete(SearchParam.ProductName)
+  if (productName) {
+    return [productName, updatedSearchParams]
+  }
+
   const productType = updatedSearchParams.get(SearchParam.ProductType)
   if (productType) updatedSearchParams.delete(SearchParam.ProductType)
 
   const subType = updatedSearchParams.get(SearchParam.ApartmentSubType)
   if (subType) updatedSearchParams.delete(SearchParam.ApartmentSubType)
 
-  const productName = getProductName(productType, subType)
-
-  return [productName || productType, updatedSearchParams]
+  return [getProductName(productType, subType), updatedSearchParams]
 }
 
 // Legacy, used by Partner Widget
 // TODO: migrate to use our new product names directly in the URL
-const getProductName = (productType: string | null, subType: string | null): string | undefined => {
+const getProductName = (productType: string | null, subType: string | null): string | null => {
   switch (productType) {
     case 'SWEDISH_APARTMENT':
       return subType === 'BRF' ? 'SE_APARTMENT_BRF' : 'SE_APARTMENT_RENT'
@@ -82,6 +93,8 @@ const getProductName = (productType: string | null, subType: string | null): str
       return 'SE_HOUSE'
     case 'SWEDISH_ACCIDENT':
       return 'SE_ACCIDENT'
+    default:
+      return null
   }
 }
 
@@ -101,11 +114,24 @@ export const parsePriceIntentDataSearchParams = (
   if (livingSpace !== undefined) updatedSearchParams.delete(SearchParam.LivingSpace)
 
   const searchNumberCoInsured = searchParams.get(SearchParam.NumberCoInsured)
-  const numberCoInsured = searchNumberCoInsured ? parseNumber(searchNumberCoInsured) : undefined
+  let numberCoInsured = searchNumberCoInsured ? parseNumber(searchNumberCoInsured) : undefined
   if (numberCoInsured !== undefined) updatedSearchParams.delete(SearchParam.NumberCoInsured)
 
-  const isStudent = parseBoolean(searchParams.get(SearchParam.Student)?.toLowerCase())
-  if (isStudent !== undefined) updatedSearchParams.delete(SearchParam.Student)
+  if (numberCoInsured === undefined) {
+    // Legacy, used by Partner Widget
+    const searchCoInsured = searchParams.get(SearchParam.CoInsured)
+    numberCoInsured = searchCoInsured ? parseNumber(searchCoInsured) : undefined
+    if (numberCoInsured !== undefined) updatedSearchParams.delete(SearchParam.CoInsured)
+  }
+
+  let isStudent = parseBoolean(searchParams.get(SearchParam.IsStudent))
+  if (isStudent !== undefined) updatedSearchParams.delete(SearchParam.IsStudent)
+
+  if (isStudent === undefined) {
+    // Legacy, used by Partner Widget
+    isStudent = parseBoolean(searchParams.get(SearchParam.Student)?.toLowerCase())
+    if (isStudent !== undefined) updatedSearchParams.delete(SearchParam.Student)
+  }
 
   const data = {
     ...(street && { street }),
@@ -128,6 +154,10 @@ const parseBoolean = (value: unknown): boolean | undefined => {
     case 'yes':
       return true
     case 'no':
+      return false
+    case '1':
+      return true
+    case '0':
       return false
     default:
       return undefined
