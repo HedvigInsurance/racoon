@@ -35,6 +35,8 @@
     {
       "matchDepTypes": ["devDependencies"],
       "automerge": true,
+      // It's much less likely that dev dependencies will break our site, so let's automerge starting from midnight
+      "automergeSchedule": ["before 2pm every weekday"],
       "labels": ["dev-deps"]
     }
   ],
