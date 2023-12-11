@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { useState, useMemo, ChangeEventHandler } from 'react'
-import { Text, Space, Badge, theme } from 'ui'
+import { Text, Space, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { InputSelect, type InputSelectProps } from '@/components/InputSelect/InputSelect'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { ReviewComment } from '@/components/ReviewComment/ReviewComment'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Stars } from '@/components/Stars/Stars'
 
 const MAX_SCORE = 5
 const FILLED_STAR = '★'
@@ -67,7 +67,7 @@ export const ProductReviewCommentsBlock = () => {
           {/* Key here is used to reset horizontal scroll */}
           <CommentsList key={selectedScore}>
             {reviewComments.commentsByScore[selectedScore].latestComments.map((comment, index) => (
-              <Comment key={`${comment.date}:${index}`} {...comment} />
+              <ReviewComment key={`${comment.date}:${index}`} {...comment} />
             ))}
           </CommentsList>
         </Space>
@@ -78,64 +78,12 @@ export const ProductReviewCommentsBlock = () => {
 
 ProductReviewCommentsBlock.blockName = 'productReviewComments'
 
-type CommentProps = {
-  score: number
-  date: string
-  author: string
-  content: string
-}
-
-const Comment = ({ content, date, author, score }: CommentProps) => {
-  return (
-    <CommentWrapper>
-      <Stars score={score} />
-      <Content>
-        <Text balance={true}>{content}</Text>
-      </Content>
-      <Footer>
-        <Text
-          size={{
-            _: 'sm',
-          }}
-          color="textSecondaryOnGray"
-        >
-          {author}
-        </Text>
-        <Badge color="blueFill2">{date}</Badge>
-      </Footer>
-    </CommentWrapper>
-  )
-}
-
 const CommentsList = styled.div({
   display: 'flex',
   gap: theme.space.md,
   overflowX: 'auto',
   // Breathing room between scroll bar and comments
   paddingBottom: theme.space.md,
-})
-
-const CommentWrapper = styled.div({
-  flex: '0 0 auto',
-
-  display: 'inline-flex',
-  flexDirection: 'column',
-  gap: theme.space.md,
-  padding: theme.space.md,
-  borderRadius: theme.radius.md,
-  backgroundColor: theme.colors.gray200,
-  width: '16.25rem',
-  aspectRatio: '1/1',
-})
-
-const Content = styled.div({
-  flex: '1 0',
-})
-
-const Footer = styled.footer({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
 })
 
 const getScoreFilterOptionName = (score: AvailableScore, count: number) => {
