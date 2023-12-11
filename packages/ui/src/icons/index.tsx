@@ -1,3 +1,4 @@
+export * from './Root'
 export { AndroidIcon } from './AndroidIcon'
 export { AppleIcon } from './AppleIcon'
 export { ArrowForwardIcon } from './ArrowIcon'

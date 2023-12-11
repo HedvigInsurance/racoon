@@ -45,5 +45,6 @@
   "SELECT_INSURANCE": "Select insurance",
   "TRUSTPILOT_REVIEWS_COUNT": "{{numberOfReviews}} reviews on",
   "TRUSTPILOT_SCORE": "{{score}} of 5",
-  "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
+  "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again.",
+  "VERIFIED_CUSTOMER_LABEL": "Verified customer"
 }
