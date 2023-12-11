@@ -11,6 +11,7 @@ type Props = {
   title: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
+  mainOfferPillow?: ComponentProps<typeof Pillow>
   badge?: ComponentProps<typeof Badge>
   href: string
   price?: ComponentProps<typeof Price>
@@ -24,7 +25,14 @@ export const QuickAdd = (props: Props) => {
     <Card>
       <Space y={1}>
         <SpaceFlex space={1} align="center">
-          <Pillow size="small" {...props.pillow} />
+          {props.mainOfferPillow ? (
+            <PillowWrapper>
+              <Pillow size="mini" {...props.mainOfferPillow} />
+              <Pillow size="mini" {...props.pillow} />
+            </PillowWrapper>
+          ) : (
+            <Pillow size="small" {...props.pillow} />
+          )}
           <div>
             <StyledLink href={props.href}>
               <Text as="span" color="textTranslucentPrimary">
@@ -77,6 +85,15 @@ const Card = styled.div({
 const StyledLink = styled(Link)({
   '&:hover': {
     textDecoration: 'underline',
+  },
+})
+
+const PillowWrapper = styled.div({
+  width: '3rem',
+  height: '3rem',
+
+  '& > *:last-of-type': {
+    marginLeft: 'auto',
   },
 })
 

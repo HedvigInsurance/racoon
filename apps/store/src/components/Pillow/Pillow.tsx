@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type PillowProps = {
-  size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  size?: 'mini' | 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
   src?: string
   alt?: string | null
   priority?: boolean
@@ -45,6 +45,8 @@ const FallbackPillow = ({ size, ...props }: Pick<PillowProps, 'size'>) => {
 
 const getSize = (size: PillowProps['size']) => {
   switch (size) {
+    case 'mini':
+      return { width: '1.5rem', height: '1.5rem' }
     case 'xxsmall':
       return { width: '1.75rem', height: '1.75rem' }
     case 'xsmall':
