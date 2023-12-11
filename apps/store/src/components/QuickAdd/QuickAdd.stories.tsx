@@ -33,9 +33,11 @@ export const Default: Story = {
     ),
     children: (
       <>
-        <Button size="medium">Buy</Button>
-        <Button size="medium" variant="ghost">
-          Details
+        <Button size="medium" fullWidth={true}>
+          Upgrade
+        </Button>
+        <Button size="medium" variant="ghost" fullWidth={true}>
+          {"See what's included"}
         </Button>
       </>
     ),
@@ -59,10 +61,10 @@ export const Loading: Story = {
     children: (
       <>
         <Button size="medium" loading={true}>
-          Buy
+          Upgrade
         </Button>
         <Button size="medium" variant="ghost">
-          Details
+          {"See what's included"}
         </Button>
       </>
     ),
