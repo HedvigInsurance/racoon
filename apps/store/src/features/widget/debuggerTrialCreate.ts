@@ -20,11 +20,14 @@ type RequestData = {
   }
 }
 
-type ResponseData = { externalMemberId: string }
+type ResponseData = {
+  externalMemberId: string
+  fullUrl: string
+}
 type ErrorResponseData = { errorCode: string; errorMessage: string }
 
 const ENDPOINT = 'https://extapi.dev.hedvigit.com/v1/trials'
-export const createTrial = async (partner: string, data: RequestData): Promise<string> => {
+export const createTrial = async (partner: string, data: RequestData): Promise<ResponseData> => {
   const username = process.env[`RAPIO_USERNAME_${partner}`]
   if (!username) throw new Error(`Missing username for partner: ${partner}`)
 
@@ -50,8 +53,7 @@ export const createTrial = async (partner: string, data: RequestData): Promise<s
     throw new Error(`${json.errorCode}: ${json.errorMessage}`)
   }
 
-  const json = (await response.json()) as ResponseData
-  return json.externalMemberId
+  return (await response.json()) as ResponseData
 }
 
 export const getTrialData = (body: Record<string, string | undefined>): RequestData => {
