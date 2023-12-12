@@ -37,7 +37,7 @@ export const AddToCartButton = (props: Props) => {
   }
 
   return (
-    <Button size="medium" loading={loading} onClick={handleAdd}>
+    <Button size="medium" fullWidth={true} loading={loading} onClick={handleAdd}>
       {t('QUICK_ADD_BUTTON')}
     </Button>
   )

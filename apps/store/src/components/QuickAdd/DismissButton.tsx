@@ -13,7 +13,7 @@ export const DismissButton = () => {
   }
 
   return (
-    <Button size="medium" variant="ghost" onClick={handleDismiss}>
+    <Button size="medium" variant="ghost" fullWidth={true} onClick={handleDismiss}>
       {t('QUICK_ADD_DISMISS')}
     </Button>
   )
