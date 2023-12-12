@@ -5,39 +5,17 @@
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/blocks/*": [
-        "blocks/*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/pages/*": [
-        "pages/*"
-      ],
-      "@/styles/*": [
-        "styles/*"
-      ],
-      "@/services/*": [
-        "services/*"
-      ],
-      "@/hooks/*": [
-        "hooks/*"
-      ],
-      "@/test/*": [
-        "test/*"
-      ],
-      "@/utils/*": [
-        "utils/*"
-      ],
-      "@/features/*": [
-        "features/*"
-      ],
-      "@/mocks/*": [
-        "mocks/*"
-      ]
+      "@/lib/*": ["lib/*"],
+      "@/blocks/*": ["blocks/*"],
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
+      "@/services/*": ["services/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/test/*": ["test/*"],
+      "@/utils/*": ["utils/*"],
+      "@/features/*": ["features/*"],
+      "@/mocks/*": ["mocks/*"]
     },
     "incremental": true,
     "plugins": [
@@ -46,11 +24,7 @@
       }
     ],
     "target": "ESNext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noEmit": true,
     "strict": true,
@@ -64,12 +38,6 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext"
   },
-  "include": [
-    "src",
-    "*.d.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src", "*.d.ts", ".next/types/**/*.ts", "codegen.ts"],
+  "exclude": ["node_modules"]
 }
