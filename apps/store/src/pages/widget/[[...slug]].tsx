@@ -51,6 +51,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   if (!context.params) throw new Error('Missing params')
 
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/${context.params.slug.join('/')}`
+  console.info(`Widget | Fetching story for slug: ${slug}`)
   let story: PageStory
   try {
     story = await getStoryBySlug<PageStory>(slug, {
@@ -58,8 +59,9 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       locale: context.locale,
     })
   } catch (error) {
-    console.error(`Failed to fetch story for slug: ${slug}`)
-    throw error
+    console.warn(`Widget | Failed to fetch story for slug: ${slug}`)
+    console.warn(error)
+    return { notFound: true }
   }
 
   return {
@@ -88,31 +90,27 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
     nestedPageLinks.push(pageLinks)
   }
 
-  return {
-    paths: nestedPageLinks
-      .flat()
-      .filter((item) => !item.slugParts.includes('flows'))
-      .map((item) => ({
-        params: {
-          slug: filterFirst(item.slugParts, (part) => part !== STORYBLOK_WIDGET_FOLDER_SLUG),
-        },
+  const paths = nestedPageLinks
+    .flat()
+    .filter((item) => !item.slugParts.includes('flows'))
+    .map((item) => {
+      if (item.slugParts[0] !== STORYBLOK_WIDGET_FOLDER_SLUG) {
+        throw new Error(`Widget | Invalid slug: ${item.slugParts.join('/')}`)
+      }
+
+      // Remove the first part of the slug, which is the page folder name
+      return {
+        params: { slug: item.slugParts.slice(1) },
         locale: item.locale,
-      })),
+      }
+    })
+
+  console.info(`Widget | Generating ${paths.length} paths for widget landing pages`)
+
+  return {
+    paths,
     fallback: 'blocking',
   }
-}
-
-const filterFirst = <T,>(array: Array<T>, predicate: (item: T) => boolean) => {
-  let isFirstMatch = false
-
-  return array.filter((item) => {
-    if (isFirstMatch) return true
-    if (predicate(item)) {
-      isFirstMatch = true
-      return false
-    }
-    return true
-  })
 }
 
 export default NextPage
