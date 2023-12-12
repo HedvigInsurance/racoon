@@ -181,6 +181,7 @@ export const SignPage = (props: Props) => {
 
                 {offerRecommendation && (
                   <QuickAddOfferContainer
+                    cart={props.shopSession.cart}
                     shopSessionId={props.shopSession.id}
                     {...offerRecommendation}
                   />

@@ -143,7 +143,11 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
               <Space y={2}>
                 {offerRecommendation && (
-                  <QuickAddOfferContainer shopSessionId={shopSession.id} {...offerRecommendation} />
+                  <QuickAddOfferContainer
+                    cart={shopSession.cart}
+                    shopSessionId={shopSession.id}
+                    {...offerRecommendation}
+                  />
                 )}
                 <form onSubmit={handleSubmitSign}>
                   <Space y={0.25}>

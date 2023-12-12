@@ -78,7 +78,11 @@ export const CartPage = () => {
               </ShopBreakdown>
 
               {offerRecommendation && (
-                <QuickAddOfferContainer shopSessionId={shopSession.id} {...offerRecommendation} />
+                <QuickAddOfferContainer
+                  cart={shopSession.cart}
+                  shopSessionId={shopSession.id}
+                  {...offerRecommendation}
+                />
               )}
 
               <ButtonNextLink

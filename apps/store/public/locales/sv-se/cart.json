@@ -59,6 +59,7 @@
   "QUICK_ADD_EDIT": "Ändra",
   "QUICK_ADD_HOUSEHOLD_SIZE_one": "Täcker {{count}} person",
   "QUICK_ADD_HOUSEHOLD_SIZE_other": "Täcker {{count}} personer",
+  "QUICK_ADD_TITLE": "Hem + {{product}}",
   "RECOMMENDATIONS_HEADING": "Upptäck fler försäkringar",
   "REMOVE_ENTRY_BUTTON": "Ta bort",
   "REMOVE_ENTRY_MODAL_CANCEL_BUTTON": "Avbryt",
