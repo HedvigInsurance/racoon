@@ -7,13 +7,17 @@ import React, { type ComponentProps, useState, forwardRef, type ReactNode } from
 import { Button, ButtonProps, CrossIconSmall, InfoIcon, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDate } from '@/components/InputDate/InputDate'
+import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductDetails } from '@/components/ProductItem/ProductDetails'
 import { ProductDetailsHeader } from '@/components/ProductItem/ProductDetailsHeader'
 import { Skeleton } from '@/components/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
-import { formatAPIDate } from '@/utils/date'
+import { convertToDate, formatAPIDate } from '@/utils/date'
+import { Features } from '@/utils/Features'
+
+const USE_DAY_PICKER = Features.enabled('DAY_PICKER')
 
 type Props = {
   title: string
@@ -49,7 +53,8 @@ export const ProductItem = (props: Props) => {
     props.onChangeStartDate(event.target.value)
   }
 
-  const today = formatAPIDate(new Date())
+  const todayDate = new Date()
+  const today = formatAPIDate(todayDate)
 
   return (
     <Card data-variant={props.variant}>
@@ -84,12 +89,13 @@ export const ProductItem = (props: Props) => {
         </Space>
       </Hoverable>
 
-      {props.disableStartDate ? (
-        <InputDate
+      {USE_DAY_PICKER ? (
+        <InputDay
           label={t('purchase-form:START_DATE_FIELD_LABEL')}
-          value={props.startDate}
-          backgroundColor="light"
-          disabled={true}
+          selected={convertToDate(props.startDate) ?? undefined}
+          onSelect={(date) => props.onChangeStartDate(formatAPIDate(date))}
+          fromDate={todayDate}
+          disabled={props.disableStartDate || props.loading}
         />
       ) : (
         <InputDate
@@ -97,7 +103,7 @@ export const ProductItem = (props: Props) => {
           value={props.startDate}
           backgroundColor="light"
           onChange={handleChangeStartDate}
-          disabled={props.loading}
+          disabled={props.disableStartDate || props.loading}
           min={today}
         />
       )}

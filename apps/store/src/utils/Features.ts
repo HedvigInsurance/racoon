@@ -18,6 +18,7 @@ const config = {
   CUSTOM_ASSET_DOMAIN: process.env.NEXT_PUBLIC_FEATURE_CUSTOM_ASSET_DOMAIN === 'true',
   INSURELY_NATIVE_SUCCESS: process.env.NEXT_PUBLIC_FEATURE_INSURELY_NATIVE_SUCCESS === 'true',
   CUSTOM_CHAT: process.env.NEXT_PUBLIC_FEATURE_CUSTOM_CHAT === 'true',
+  DAY_PICKER: process.env.NEXT_PUBLIC_FEATURE_DAY_PICKER === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

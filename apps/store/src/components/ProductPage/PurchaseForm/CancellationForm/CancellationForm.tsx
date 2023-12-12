@@ -1,10 +1,15 @@
 import { useTranslation } from 'next-i18next'
 import { Space, Text } from 'ui'
 import { InputStartDate } from '@/components/InputDate/InputStartDate'
+import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
+import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 import { SelfSwitcherBubble } from './SelfSwitcherBubble'
+
+const USE_DAY_PICKER = Features.enabled('DAY_PICKER')
+const StartDatePicker = USE_DAY_PICKER ? InputStartDay : InputStartDate
 
 export type CancellationOption =
   | { type: ExternalInsuranceCancellationOption.None; message?: string }
@@ -50,7 +55,7 @@ type NoCancellationProps = Pick<Props, 'onStartDateChange' | 'startDate'>
 const NoCancellation = ({ onStartDateChange, startDate, ...props }: NoCancellationProps) => {
   const date = startDate ?? new Date()
 
-  return <InputStartDate {...props} date={date} onChange={onStartDateChange} />
+  return <StartDatePicker {...props} date={date} onChange={onStartDateChange} />
 }
 
 type IEXCancellationProps = Pick<
@@ -76,7 +81,7 @@ const IEXCancellation = (props: IEXCancellationProps) => {
         companyName={companyName}
       />
 
-      {!requested && <InputStartDate date={date} onChange={onStartDateChange} />}
+      {!requested && <StartDatePicker date={date} onChange={onStartDateChange} />}
     </Space>
   )
 }
@@ -106,7 +111,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
   if (props.invalidRenewalDate) {
     return (
       <Space y={0.25}>
-        <InputStartDate date={date} onChange={props.onStartDateChange} />
+        <StartDatePicker date={date} onChange={props.onStartDateChange} />
         <SelfSwitcherBubble date={props.invalidRenewalDate} />
       </Space>
     )
@@ -119,7 +124,7 @@ const BankSigneringCancellation = (props: BankSigneringCancellationProps) => {
         onCheckedChange={handleCheckedChange}
         companyName={props.companyName}
       />
-      <InputStartDate
+      <StartDatePicker
         date={date}
         onChange={props.onStartDateChange}
         label={props.requested ? autoSwitchLabel : undefined}
