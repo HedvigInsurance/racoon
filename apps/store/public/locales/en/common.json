@@ -41,6 +41,8 @@
   "PAYMENT_CONNECT_RETRY": "Try again",
   "PAYMENT_CONNECT_SUCCESS": "Success! You can close this page now :)",
   "PAYMENT_CONNECT_TITLE": "Connect direct debit",
+  "RATING_REVIEWS_COUNT_LABEL": "Based on {{reviewsCount}} reviews",
+  "RATING_SCORE_LABEL": "{{score}} of {{maxScore}}",
   "READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
   "TRUSTPILOT_REVIEWS_COUNT": "{{numberOfReviews}} reviews on",
