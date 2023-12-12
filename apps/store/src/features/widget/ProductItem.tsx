@@ -13,6 +13,7 @@ import { ProductDetailsHeader } from '@/components/ProductItem/ProductDetailsHea
 import { Skeleton } from '@/components/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
+import { formatAPIDate } from '@/utils/date'
 
 type Props = {
   title: string
@@ -47,6 +48,8 @@ export const ProductItem = (props: Props) => {
   const handleChangeStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.onChangeStartDate(event.target.value)
   }
+
+  const today = formatAPIDate(new Date())
 
   return (
     <Card data-variant={props.variant}>
@@ -95,6 +98,7 @@ export const ProductItem = (props: Props) => {
           backgroundColor="light"
           onChange={handleChangeStartDate}
           disabled={props.loading}
+          min={today}
         />
       )}
 
