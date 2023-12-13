@@ -3718,9 +3718,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.24.1":
-  version: 2.24.1
-  resolution: "@datadog/datadog-ci@npm:2.24.1"
+"@datadog/datadog-ci@npm:2.25.0":
+  version: 2.25.0
+  resolution: "@datadog/datadog-ci@npm:2.25.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": ^3.454.0
     "@aws-sdk/client-iam": ^3.454.0
@@ -3761,7 +3761,7 @@ __metadata:
     ssh2-streams: 0.4.10
     sshpk: 1.16.1
     terminal-link: 2.1.1
-    tiny-async-pool: 1.2.0
+    tiny-async-pool: ^2.1.0
     typanion: ^3.14.0
     uuid: ^9.0.0
     ws: 7.4.6
@@ -3769,7 +3769,7 @@ __metadata:
     yamux-js: 0.1.2
   bin:
     datadog-ci: dist/cli.js
-  checksum: 4fa93b739facf60cce92cfd939fe606793fcbc51ef71516e66c36265b85a0231985e173e8c9008be9f60f3d314f00a57c7e0862e6634d7f4de32985524e65f59
+  checksum: 8830227cbf4fcdbf74a3d7cc3848d674aa8da332fb158a270c2a81a656a6daabb329fa9122c17527cf49eed835f7dce6cf27617c1be78380d2a05a52e8874922
   languageName: node
   linkType: hard
 
@@ -22895,7 +22895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.5.0, semver@npm:^5.6.0":
+"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.6.0":
   version: 5.7.1
   resolution: "semver@npm:5.7.1"
   bin:
@@ -23583,7 +23583,7 @@ __metadata:
     "@babel/preset-typescript": 7.23.3
     "@datadog/browser-logs": 5.4.0
     "@datadog/browser-rum": 5.4.0
-    "@datadog/datadog-ci": 2.24.1
+    "@datadog/datadog-ci": 2.25.0
     "@emotion/babel-plugin": 11.11.0
     "@emotion/is-prop-valid": 1.2.1
     "@emotion/react": 11.11.1
@@ -24490,13 +24490,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tiny-async-pool@npm:1.2.0":
-  version: 1.2.0
-  resolution: "tiny-async-pool@npm:1.2.0"
-  dependencies:
-    semver: ^5.5.0
-    yaassertion: ^1.0.0
-  checksum: 026a6f72dd5620366a236adf94da477220a8b39bfb62dbe969d9ad694fbc2274f49a0b09031e2f43ff0beecf0a190084f1d0a213106c6f4fe54b21693826f3cc
+"tiny-async-pool@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tiny-async-pool@npm:2.1.0"
+  checksum: 8891326f30e587590f94c5e1f8cab59c9aa305e442fc5b9f7ea997f8611d805a797aae2ea93cd00b42b494ef749353df38b4555e2a769d6fff31a3db7add7208
   languageName: node
   linkType: hard
 
@@ -26211,13 +26208,6 @@ __metadata:
   version: 5.0.8
   resolution: "y18n@npm:5.0.8"
   checksum: 54f0fb95621ee60898a38c572c515659e51cc9d9f787fb109cef6fde4befbe1c4602dc999d30110feee37456ad0f1660fa2edcfde6a9a740f86a290999550d30
-  languageName: node
-  linkType: hard
-
-"yaassertion@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "yaassertion@npm:1.0.2"
-  checksum: 14f698fc768f54bfa385a79415f37b2880b56f3478d108f8f41dabc7c866e96b714408a4cd4f29e36a2a6d53d9df9aef57f21aef710839816a7d0104572e0605
   languageName: node
   linkType: hard
 
