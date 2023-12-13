@@ -15,15 +15,18 @@ import {
 } from '@/services/apollo/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
+import { InputStartDay } from '../InputDay/InputStartDay'
 import { ProductDetail, QuickAdd } from './QuickAdd'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 const NUMBER_OF_CO_INSURED_DATA_KEY = 'numberCoInsured'
+const USE_DAY_PICKER = Features.enabled('DAY_PICKER')
 
 const PILLOW_PLACEHOLDER =
   'https://a.storyblok.com/f/165473/832x832/fa27811442/hedvig-pillow-home.png'
@@ -134,7 +137,11 @@ export const QuickAddIncompleteContainer = (props: Props) => {
           optionLabel={(count) => t('purchase-form:HOUSEHOLD_SIZE_VALUE', { count })}
           onChange={handleChangeValue}
         />
-        <InputStartDate date={startDate} onChange={handleChangeStartDate} />
+        {USE_DAY_PICKER ? (
+          <InputStartDay date={startDate} onChange={handleChangeStartDate} />
+        ) : (
+          <InputStartDate date={startDate} onChange={handleChangeStartDate} />
+        )}
       </Space>
     </Space>
   )

@@ -5,6 +5,9 @@ import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import { convertToDate } from '@/utils/date'
+import { Features } from '@/utils/Features'
+import { InputDay } from '../InputDay/InputDay'
 import { CarMileageField } from './CarMileageField'
 import { CarRegistrationNumberField } from './CarRegistrationField'
 import { CurrentInsuranceField } from './CurrentInsuranceField/CurrentInsuranceField'
@@ -13,6 +16,8 @@ import * as InputRadio from './InputRadio'
 import { PetCatBreedsField } from './PetCatBreedsField'
 import { PetDogBreedsField } from './PetDogBreedsField'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
+
+const USE_DAY_PICKER = Features.enabled('DAY_PICKER')
 
 type Props = {
   field: InputFieldType
@@ -60,7 +65,17 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'date':
-      return (
+      return USE_DAY_PICKER ? (
+        <InputDay
+          name={field.name}
+          label={translateLabel(field.label)}
+          required={field.required}
+          defaultSelected={convertToDate(field.value ?? field.defaultValue) ?? undefined}
+          fromDate={convertToDate(field.min) ?? undefined}
+          toDate={convertToDate(field.max) ?? undefined}
+          autoFocus={autoFocus}
+        />
+      ) : (
         <InputDate
           name={field.name}
           label={translateLabel(field.label)}

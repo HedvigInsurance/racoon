@@ -27,6 +27,7 @@ type Props = {
   disabled?: boolean
   backgroundColor?: 'default' | 'light'
   required?: boolean
+  autoFocus?: boolean
 }
 
 export const InputDay = (props: Props) => {
@@ -42,7 +43,7 @@ export const InputDay = (props: Props) => {
     toDate: props.toDate,
   })
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(props.autoFocus ?? false)
 
   const autoIdentifier = useId()
   const inputId = props.id ?? autoIdentifier
