@@ -21985,6 +21985,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-day-picker@npm:8.9.1":
+  version: 8.9.1
+  resolution: "react-day-picker@npm:8.9.1"
+  peerDependencies:
+    date-fns: ^2.28.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 1a609bd3621f66fd93c58635990246c6129e57ea33d05345256bdd561f56035a04b201213a279aa37129dbbe149ae5f0f15259a9d06309910d1c9a6bb6c0eccc
+  languageName: node
+  linkType: hard
+
 "react-docgen-typescript@npm:^2.2.2":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
@@ -23664,6 +23674,7 @@ __metadata:
     personnummer: 3.2.1
     prettier: 3.1.1
     react: 18.2.0
+    react-day-picker: 8.9.1
     react-dom: 18.2.0
     react-i18next: 13.3.1
     react-wrap-balancer: 1.1.0
