@@ -1,4 +1,5 @@
 /src/services/**/generated.ts
+/src/services/apollo/gql/
 .vercel
 # Local cache, used in WebStorem GraphQL plugin
 schema.graphql

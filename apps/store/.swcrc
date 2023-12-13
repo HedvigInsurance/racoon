@@ -1,7 +1,13 @@
 {
   "jsc": {
     "experimental": {
-      "plugins": [["@swc-jotai/react-refresh", {}]]
+      "plugins": [
+        ["@swc-jotai/react-refresh", {}],
+        [
+          "@graphql-codegen/client-preset-swc-plugin",
+          { "artifactDirectory": "./src/services/apollo/gql", "gqlTagName": "graphql" }
+        ]
+      ]
     }
   }
 }

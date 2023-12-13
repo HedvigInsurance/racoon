@@ -2,13 +2,16 @@ import { type CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-  documents: 'src/**/*.graphql',
   generates: {
-    './src/services/apollo/generated.ts': {
+    './src/services/apollo/gql/': {
+      documents: 'src/**/!(generated).{ts,tsx}',
+      preset: 'client',
+      config: { scalars: { UUID: 'string' } },
+    },
+    'src/services/apollo/generated.ts': {
+      documents: 'src/**/*.graphql',
       plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
-      config: {
-        scalars: { UUID: 'string' },
-      },
+      config: { scalars: { UUID: 'string' } },
     },
   },
 }
