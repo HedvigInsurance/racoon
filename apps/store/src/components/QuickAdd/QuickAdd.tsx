@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { type ReactNode, type ComponentProps, PropsWithChildren } from 'react'
-import { Badge, CheckIcon, Space, Text, mq, theme } from 'ui'
+import { type ReactNode, type ComponentProps } from 'react'
+import { Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -11,8 +10,6 @@ type Props = {
   title: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
-  mainOfferPillow?: ComponentProps<typeof Pillow>
-  badge?: ComponentProps<typeof Badge>
   href: string
   price?: ComponentProps<typeof Price>
   Body: ReactNode
@@ -20,19 +17,11 @@ type Props = {
 }
 
 export const QuickAdd = (props: Props) => {
-  const { t } = useTranslation('cart')
   return (
     <Card>
       <Space y={1}>
         <SpaceFlex space={1} align="center">
-          {props.mainOfferPillow ? (
-            <PillowWrapper>
-              <Pillow size="mini" {...props.mainOfferPillow} />
-              <Pillow size="mini" {...props.pillow} />
-            </PillowWrapper>
-          ) : (
-            <Pillow size="small" {...props.pillow} />
-          )}
+          <Pillow size="small" {...props.pillow} />
           <div>
             <StyledLink href={props.href}>
               <Text as="span" color="textTranslucentPrimary">
@@ -43,27 +32,19 @@ export const QuickAdd = (props: Props) => {
               {props.subtitle}
             </Text>
           </div>
-          {props.badge && <AlignedBadge color="blueFill3" {...props.badge} />}
         </SpaceFlex>
         <Divider />
         {props.Body}
         <Footer>
+          <SpaceFlex space={0.5}>{props.children}</SpaceFlex>
+
           {props.price && (
-            <PriceWrapper>
-              <Text as="p" color="textTranslucentPrimary">
-                {t('ACCIDENT_OFFER_PRICE_LABEL')}
-              </Text>
-              <SpaceFlex space={0}>
-                <Text color="textTranslucentPrimary">+</Text>
-                <Price
-                  {...props.price}
-                  color="textTranslucentPrimary"
-                  secondaryColor="textTranslucentSecondary"
-                />
-              </SpaceFlex>
-            </PriceWrapper>
+            <Price
+              {...props.price}
+              color="textTranslucentPrimary"
+              secondaryColor="textTranslucentSecondary"
+            />
           )}
-          <Space y={0.5}>{props.children}</Space>
         </Footer>
       </Space>
     </Card>
@@ -88,20 +69,6 @@ const StyledLink = styled(Link)({
   },
 })
 
-const PillowWrapper = styled.div({
-  width: '3rem',
-  height: '3rem',
-
-  '& > *:last-of-type': {
-    marginLeft: 'auto',
-  },
-})
-
-const AlignedBadge = styled(Badge)({
-  alignSelf: 'flex-start',
-  marginLeft: 'auto',
-})
-
 const Divider = styled.div({
   height: 1,
   backgroundColor: theme.colors.borderTranslucent1,
@@ -109,13 +76,15 @@ const Divider = styled.div({
 
 const Footer = styled.div({
   paddingTop: theme.space.xs,
-})
+  display: 'grid',
+  gridTemplateRows: 'auto auto',
+  gap: theme.space.md,
 
-const PriceWrapper = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: theme.space.lg,
+  [mq.xs]: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 })
 
 const StyledProductDetail = styled.li({
@@ -143,25 +112,5 @@ export const ProductDetail = (props: ProductDetailProps) => {
         {props.value}
       </Text>
     </StyledProductDetail>
-  )
-}
-
-const ProductUspItem = styled.li({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  columnGap: theme.space.xs,
-  paddingBlock: theme.space.md,
-  '&:not(:last-of-type)': {
-    borderBottom: `1px solid ${theme.colors.borderTranslucent1}`,
-  },
-})
-
-export const ProductUsp = ({ children }: PropsWithChildren) => {
-  return (
-    <ProductUspItem>
-      <Text color="textTranslucentSecondary">{children}</Text>
-      <CheckIcon size="1rem" aria-label="Covered" />
-    </ProductUspItem>
   )
 }

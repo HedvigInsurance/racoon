@@ -5,13 +5,17 @@ import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
 } from '@/services/apollo/generated'
+import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
-import { ProductUsp, QuickAdd } from './QuickAdd'
+import { QuickAdd } from './QuickAdd'
+import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
+const USE_QUICK_ADD_BUNDLE_VIEW = Features.enabled('QUICK_ADD_BUNDLE_VIEW')
 const CO_INSURED_DATA_KEY = 'numberCoInsured'
+const homeInsurances = ['SE_HOUSE', 'SE_APARTMENT_RENT', 'SE_APARTMENT_BRF', 'SE_STUDENT_APARTMENT']
 
 type Props = {
   shopSessionId: string
@@ -19,8 +23,6 @@ type Props = {
   offer: OfferRecommendationFragment
   product: ProductRecommendationFragment
 }
-
-const homeInsurances = ['SE_HOUSE', 'SE_APARTMENT_RENT', 'SE_APARTMENT_BRF', 'SE_STUDENT_APARTMENT']
 
 export const QuickAddOfferContainer = (props: Props) => {
   const { t } = useTranslation('cart')
@@ -42,33 +44,64 @@ export const QuickAddOfferContainer = (props: Props) => {
   if (!show) return null
 
   return (
-    <QuickAdd
-      title={title}
-      subtitle={subtitle}
-      pillow={props.product.pillowImage}
-      mainOfferPillow={homeInsuranceInCart?.product.pillowImage}
-      href={props.product.pageLink}
-      price={price}
-      Body={
-        // Assume Accident insurance
-        <>
-          <Text as="p" color="textTranslucentSecondary">
-            {t('ACCIDENT_OFFER_DESCRIPTION')}
-          </Text>
-          <ul>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
-          </ul>
-        </>
-      }
-    >
-      <AddToCartButton
-        shopSessionId={props.shopSessionId}
-        productName={props.product.name}
-        offer={props.offer}
-      />
-      <DismissButton />
-    </QuickAdd>
+    <>
+      {USE_QUICK_ADD_BUNDLE_VIEW ? (
+        <QuickAddBundleView
+          title={title}
+          subtitle={subtitle}
+          pillow={props.product.pillowImage}
+          mainOfferPillow={homeInsuranceInCart?.product.pillowImage}
+          href={props.product.pageLink}
+          price={price}
+          Body={
+            // Assume Accident insurance
+            <>
+              <Text as="p" color="textTranslucentSecondary">
+                {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
+              </Text>
+              <ul>
+                <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
+                <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
+                <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
+              </ul>
+            </>
+          }
+        >
+          <AddToCartButton
+            shopSessionId={props.shopSessionId}
+            productName={props.product.name}
+            offer={props.offer}
+          >
+            {t('QUICK_ADD_BUTTON_BUNDLE')}
+          </AddToCartButton>
+          <DismissButton />
+        </QuickAddBundleView>
+      ) : (
+        <QuickAdd
+          title={props.product.displayNameFull}
+          subtitle={subtitle}
+          pillow={props.product.pillowImage}
+          href={props.product.pageLink}
+          price={price}
+          Body={
+            // Assume Accident insurance
+            <>
+              <Text as="p" color="textTranslucentSecondary">
+                {t('ACCIDENT_OFFER_DESCRIPTION')}
+              </Text>
+            </>
+          }
+        >
+          <AddToCartButton
+            shopSessionId={props.shopSessionId}
+            productName={props.product.name}
+            offer={props.offer}
+          >
+            {t('QUICK_ADD_BUTTON')}
+          </AddToCartButton>
+          <DismissButton />
+        </QuickAdd>
+      )}
+    </>
   )
 }

@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import { useTranslation } from 'next-i18next'
+import { type ReactNode } from 'react'
 import { Button } from 'ui'
 import { type OfferRecommendationFragment } from '@/services/apollo/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -10,11 +10,10 @@ type Props = {
   shopSessionId: string
   offer: OfferRecommendationFragment
   productName: string
+  children: ReactNode
 }
 
 export const AddToCartButton = (props: Props) => {
-  const { t } = useTranslation('cart')
-
   const [addToCart, loading] = useAddToCart({
     shopSessionId: props.shopSessionId,
     onSuccess() {
@@ -38,7 +37,7 @@ export const AddToCartButton = (props: Props) => {
 
   return (
     <Button size="medium" fullWidth={true} loading={loading} onClick={handleAdd}>
-      {t('QUICK_ADD_BUTTON')}
+      {props.children}
     </Button>
   )
 }
