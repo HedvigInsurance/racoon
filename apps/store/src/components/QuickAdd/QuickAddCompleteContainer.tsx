@@ -50,7 +50,9 @@ export const QuickAddCompleteContainer = (props: Props) => {
         shopSessionId={props.shopSessionId}
         productName={props.product.name}
         offer={props.offer}
-      />
+      >
+        {t('QUICK_ADD_BUTTON')}
+      </AddToCartButton>
       <ButtonNextLink size="medium" variant="ghost" href={editLink}>
         {t('QUICK_ADD_EDIT')}
       </ButtonNextLink>
