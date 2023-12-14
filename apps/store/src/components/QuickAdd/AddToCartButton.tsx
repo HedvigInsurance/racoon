@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { type ReactNode } from 'react'
 import { Button } from 'ui'
-import { type OfferRecommendationFragment } from '@/services/apollo/generated'
+import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 

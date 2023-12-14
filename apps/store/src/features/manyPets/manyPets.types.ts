@@ -1,6 +1,6 @@
 import { ISbStoryData, SbBlokData } from '@storyblok/react'
 import { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/graphql/generated'
 import { ExpectedBlockType, SEOData } from '@/services/storyblok/storyblok'
 
 export type TierLevel = 'BASIC' | 'STANDARD' | 'PREMIUM'

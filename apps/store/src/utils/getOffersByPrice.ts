@@ -1,4 +1,4 @@
-import { Money } from '@/services/apollo/generated'
+import { Money } from '@/services/graphql/generated'
 
 type SortableOffer = {
   cost: {

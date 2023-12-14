@@ -13,7 +13,7 @@ import {
   PriceIntentConfirmDocument,
   PriceIntentConfirmMutation,
   PriceIntentConfirmMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'

@@ -5,7 +5,7 @@ import {
   PriceIntent,
   ShopSession,
   ShopSessionAuthenticationStatus,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 export type TrialExtension = {
   id: string

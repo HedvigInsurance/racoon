@@ -1,5 +1,5 @@
 import { StoryblokComponent } from '@storyblok/react'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { ManyPetsMigrationStory } from './manyPets.types'
 import { ManyPetsMigrationPage } from './ManyPetsMigrationPage/ManyPetsMigrationPage'

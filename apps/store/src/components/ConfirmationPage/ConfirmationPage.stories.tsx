@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
-import { ShopSessionOutcomeDocument } from '@/services/apollo/generated'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
+import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
+import { ShopSessionOutcomeDocument } from '@/services/graphql/generated'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { ConfirmationPage } from './ConfirmationPage'
 

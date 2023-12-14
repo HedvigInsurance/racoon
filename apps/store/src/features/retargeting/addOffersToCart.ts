@@ -3,7 +3,7 @@ import {
   CartEntriesAddDocument,
   CartEntriesAddMutation,
   CartEntriesAddMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 export const addOffersToCart = async (
   apolloClient: ApolloClient<unknown>,

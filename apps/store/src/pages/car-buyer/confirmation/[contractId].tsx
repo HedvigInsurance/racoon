@@ -9,7 +9,7 @@ import {
   CarTrialExtensionDocument,
   CarTrialExtensionQuery,
   CarTrialExtensionQueryVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 

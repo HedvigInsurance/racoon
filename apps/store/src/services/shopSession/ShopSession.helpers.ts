@@ -1,5 +1,5 @@
 import { ApolloClient } from '@apollo/client'
-import type { CountryCode } from '@/services/apollo/generated'
+import type { CountryCode } from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
 import { CookieParams } from '@/utils/types'

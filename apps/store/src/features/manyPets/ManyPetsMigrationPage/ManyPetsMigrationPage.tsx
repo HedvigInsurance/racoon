@@ -18,15 +18,15 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { TextWithLink } from '@/components/TextWithLink'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { BankIdState } from '@/services/bankId/bankId.types'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import {
   Money,
   ProductOfferFragment,
   useManyPetsFillCartMutation,
   useShopSessionQuery,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { BankIdState } from '@/services/bankId/bankId.types'
-import { useBankIdContext } from '@/services/bankId/BankIdContext'
+} from '@/services/graphql/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'

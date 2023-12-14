@@ -27,7 +27,7 @@ import {
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
   MemberPaymentConnectionStatus,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'

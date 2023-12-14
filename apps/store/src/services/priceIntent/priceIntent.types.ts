@@ -2,7 +2,7 @@ import type {
   PriceIntentCreateMutationVariables,
   PriceIntentDataUpdateMutationVariables,
   PriceIntentQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 
 export type PriceIntentCreateParams = PriceIntentCreateMutationVariables & {

@@ -1,4 +1,4 @@
-import { ShopSessionAuthenticationStatus, ShopSessionCustomer } from '@/services/apollo/generated'
+import { ShopSessionAuthenticationStatus, ShopSessionCustomer } from '@/services/graphql/generated'
 
 const isNewMember = (customer: ShopSessionCustomer) =>
   customer.authenticationStatus === ShopSessionAuthenticationStatus.None

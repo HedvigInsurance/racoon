@@ -2,14 +2,14 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'react-i18next'
 import { Button, Dialog, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   type CartFragmentFragment,
   ProductRecommendationsDocument,
   ShopSessionDocument,
   useCartEntryRemoveMutation,
   type ProductOfferFragment,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+} from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { ActionButton } from './ProductItem'
 

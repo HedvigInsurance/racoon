@@ -4,7 +4,7 @@ const baseConfig = require('eslint-config-custom')
 module.exports = {
   root: true,
   ...baseConfig,
-  ignorePatterns: ['src/services/apollo/generated.ts', 'src/services/apollo/gql/*', '*.js'],
+  ignorePatterns: ['src/services/graphql/*', '*.js'],
   parserOptions: {
     project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname,

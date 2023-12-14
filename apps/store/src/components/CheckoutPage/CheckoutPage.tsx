@@ -27,7 +27,7 @@ import {
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
   ShopSessionAuthenticationStatus,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'

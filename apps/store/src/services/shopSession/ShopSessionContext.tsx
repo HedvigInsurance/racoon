@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/apollo/generated'
+import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/graphql/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'

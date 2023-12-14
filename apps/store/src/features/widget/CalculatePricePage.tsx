@@ -10,11 +10,11 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PriceLoader, completePriceLoader } from '@/components/PriceLoader'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   usePriceIntentConfirmMutation,
   type WidgetPriceIntentFragment,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+} from '@/services/graphql/generated'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'

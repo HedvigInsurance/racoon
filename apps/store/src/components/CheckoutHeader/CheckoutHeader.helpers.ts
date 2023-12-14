@@ -1,11 +1,11 @@
 import { ApolloClient } from '@apollo/client'
+import { getAccessToken } from '@/services/authApi/persist'
 import {
   CurrentMemberDocument,
   type CurrentMemberQuery,
   type CurrentMemberQueryVariables,
   MemberPaymentConnectionStatus,
-} from '@/services/apollo/generated'
-import { getAccessToken } from '@/services/authApi/persist'
+} from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'

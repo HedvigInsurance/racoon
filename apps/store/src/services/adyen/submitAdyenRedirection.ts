@@ -3,7 +3,7 @@ import {
   AdyenSubmitRedirectionDocument,
   type AdyenSubmitRedirectionMutation,
   type AdyenSubmitRedirectionMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 export const submitAdyenRedirection = async (
   apolloClient: ApolloClient<unknown>,

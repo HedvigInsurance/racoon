@@ -1,6 +1,6 @@
 import { type ComponentProps } from 'react'
 import { Price } from '@/components/Price'
-import { ProductOfferCost } from '@/services/apollo/generated'
+import { ProductOfferCost } from '@/services/graphql/generated'
 
 type Cost = Pick<ProductOfferCost, 'net' | 'gross' | 'discount'>
 

@@ -1,4 +1,4 @@
-import { CartFragmentFragment } from '@/services/apollo/generated'
+import { CartFragmentFragment } from '@/services/graphql/generated'
 
 // Adtraction Product Category Tracking https://adtraction.com/productcategory.htm?tp=1719019650
 // We don't need to send amount since provision isn't based on order amount for our program

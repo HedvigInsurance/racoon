@@ -1,6 +1,7 @@
 import { ApolloClient } from '@apollo/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import {
   CartEntryAddDocument,
   CartEntryAddMutation,
@@ -8,9 +9,8 @@ import {
   ShopSessionCustomerUpdateDocument,
   ShopSessionCustomerUpdateMutation,
   ShopSessionCustomerUpdateMutationVariables,
-} from '@/services/apollo/generated'
-import { CountryCode } from '@/services/apollo/generated'
-import { resetAuthTokens } from '@/services/authApi/persist'
+} from '@/services/graphql/generated'
+import { CountryCode } from '@/services/graphql/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   PriceIntentService,

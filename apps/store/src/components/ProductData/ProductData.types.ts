@@ -1,3 +1,3 @@
-import { ProductDataQuery } from '@/services/apollo/generated'
+import { ProductDataQuery } from '@/services/graphql/generated'
 
 export type ProductData = NonNullable<ProductDataQuery['product']>

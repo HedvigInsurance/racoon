@@ -5,7 +5,7 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
-import { MemberPaymentConnectionStatus } from '@/services/apollo/generated'
+import { MemberPaymentConnectionStatus } from '@/services/graphql/generated'
 import { InsuranceCost } from './InsuranceCost'
 import { PaymentConnection } from './PaymentConnection'
 

@@ -8,13 +8,13 @@ import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
 import { fetchFlowStory, getPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { addApolloState } from '@/services/apollo/client'
+import { hideChatOnPage } from '@/services/CustomerFirst'
 import {
   WidgetPriceIntentDocument,
   type WidgetPriceIntentQuery,
   useShopSessionQuery,
   useWidgetPriceIntentQuery,
-} from '@/services/apollo/generated'
-import { hideChatOnPage } from '@/services/CustomerFirst'
+} from '@/services/graphql/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'

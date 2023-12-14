@@ -1,4 +1,7 @@
-import { useRedeemCampaignMutation, useUnredeemCampaignMutation } from '@/services/apollo/generated'
+import {
+  useRedeemCampaignMutation,
+  useUnredeemCampaignMutation,
+} from '@/services/graphql/generated'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
 type Params = {

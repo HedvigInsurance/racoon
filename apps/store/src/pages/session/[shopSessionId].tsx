@@ -4,7 +4,7 @@ import {
   RedeemCampaignDocument,
   RedeemCampaignMutation,
   RedeemCampaignMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'

@@ -1,7 +1,7 @@
 import {
   MemberAreaMemberInfoQuery,
   useMemberAreaMemberInfoQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 export const useMemberAreaInfo = (): MemberAreaMemberInfoQuery['currentMember'] => {
   const { data } = useMemberAreaMemberInfoQuery()

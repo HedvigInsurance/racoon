@@ -5,7 +5,7 @@ import { FormEventHandler, useCallback } from 'react'
 import { Button, CheckIcon, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import { useSasEurobonusNumberUpdateMutation } from '@/services/apollo/generated'
+import { useSasEurobonusNumberUpdateMutation } from '@/services/graphql/generated'
 
 type EurobonusSectionState = 'idle' | 'loading' | 'error' | 'complete'
 

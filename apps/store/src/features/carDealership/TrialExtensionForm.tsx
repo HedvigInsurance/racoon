@@ -11,7 +11,7 @@ import {
   PriceIntentCarTrialExtensionFragment,
   ProductOfferFragment,
   ShopSessionFragment,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'

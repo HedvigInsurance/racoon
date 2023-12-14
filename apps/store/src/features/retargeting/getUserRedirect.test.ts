@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { ShopSessionRetargetingQuery } from '@/services/apollo/generated'
+import { ShopSessionRetargetingQuery } from '@/services/graphql/generated'
 import { RedirectType, getUserRedirect } from './getUserRedirect'
 import { UserParams } from './retargeting.types'
 

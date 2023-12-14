@@ -5,9 +5,9 @@ import { ReactElement } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 
 export const BankIdDialog = () => {
   const { t } = useTranslation('bankid')

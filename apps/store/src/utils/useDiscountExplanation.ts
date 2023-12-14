@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { CampaignDiscount, CampaignDiscountType } from '@/services/apollo/generated'
+import { CampaignDiscount, CampaignDiscountType } from '@/services/graphql/generated'
 import { useFormatter } from './useFormatter'
 
 export const useGetDiscountExplanation = () => {

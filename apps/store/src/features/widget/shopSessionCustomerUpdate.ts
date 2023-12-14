@@ -3,7 +3,7 @@ import {
   ShopSessionCustomerUpdateDocument,
   type ShopSessionCustomerUpdateMutation,
   type ShopSessionCustomerUpdateMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 type Params = {
   apolloClient: ApolloClient<any>

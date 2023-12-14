@@ -1,4 +1,4 @@
-import { ShopSessionCustomer } from '@/services/apollo/generated'
+import { ShopSessionCustomer } from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { getShouldCollectEmail } from '@/utils/customer'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'

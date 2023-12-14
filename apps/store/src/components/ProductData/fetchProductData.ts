@@ -3,7 +3,7 @@ import {
   ProductDataDocument,
   type ProductDataQuery,
   type ProductDataQueryVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { ProductData } from './ProductData.types'
 
 type Params = ProductDataQueryVariables & {

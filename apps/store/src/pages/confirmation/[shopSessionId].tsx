@@ -13,7 +13,7 @@ import {
   type CurrentMemberQuery,
   type CurrentMemberQueryVariables,
   type ShopSessionOutcomeFragment,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionService } from '@/services/shopSession/ShopSessionService'

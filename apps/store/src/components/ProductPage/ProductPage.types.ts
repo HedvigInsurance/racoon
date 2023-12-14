@@ -1,4 +1,4 @@
-import { ProductDataQuery } from '@/services/apollo/generated'
+import { ProductDataQuery } from '@/services/graphql/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { AverageRating, ReviewComments } from '@/services/productReviews/productReviews.types'
 import { ProductStory, StoryblokPageProps } from '@/services/storyblok/storyblok'

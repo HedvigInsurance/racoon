@@ -1,7 +1,7 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
-import { ExternalInsuranceCancellationOption } from '@/services/apollo/generated'
+import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { CancellationForm } from './CancellationForm'
 
 export default {

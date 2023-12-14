@@ -4,7 +4,7 @@ import {
   RedeemCampaignDocument,
   RedeemCampaignMutation,
   RedeemCampaignMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'

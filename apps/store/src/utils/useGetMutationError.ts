@@ -1,7 +1,7 @@
 import { MutationResult } from '@apollo/client'
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
-import { UserError } from '@/services/apollo/generated'
+import { UserError } from '@/services/graphql/generated'
 
 /**
  * @deprecated Use useErrorMessage() instead

@@ -10,10 +10,10 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { useContractQuery } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { getAccessToken } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { useContractQuery } from '@/services/graphql/generated'
 
 const SSN_FIELD_NAME = 'ssn'
 

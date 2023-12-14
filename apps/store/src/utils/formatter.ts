@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { TFunction } from 'next-i18next'
 import Personnummer from 'personnummer'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { IsoLocale } from '@/utils/l10n/types'
 
 type MoneyFormatOptions = { locale: IsoLocale }

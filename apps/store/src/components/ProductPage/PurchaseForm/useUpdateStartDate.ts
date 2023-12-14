@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useStartDateUpdateMutation } from '@/services/apollo/generated'
+import { useStartDateUpdateMutation } from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { formatAPIDate } from '@/utils/date'
 

@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { Button, Text } from 'ui'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
 
 const meta: Meta<typeof QuickAddBundleView> = {

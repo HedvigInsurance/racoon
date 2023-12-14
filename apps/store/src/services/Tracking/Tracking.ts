@@ -5,7 +5,7 @@ import {
   type CartFragmentFragment,
   type CountryCode,
   type ProductOfferFragment,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
 

@@ -9,7 +9,7 @@ import { MobileComparisonTable } from '@/components/ComparisonTable/MobileCompar
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/graphql/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 

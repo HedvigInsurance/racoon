@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { Button, Text } from 'ui'
 import { StartDate } from '@/components/ProductItem/StartDate'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { ProductDetail, QuickAdd } from './QuickAdd'
 
 const meta: Meta<typeof QuickAdd> = {

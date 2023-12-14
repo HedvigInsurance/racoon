@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShowFetchInsurance } from '../useFetchInsurance'
 import { InputCurrentInsurance } from './InputCurrentInsurance'

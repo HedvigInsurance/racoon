@@ -1,4 +1,4 @@
-import { PriceIntentAnimalBreed } from '@/services/apollo/generated'
+import { PriceIntentAnimalBreed } from '@/services/graphql/generated'
 import { Label } from './PriceCalculator.types'
 
 export const MIXED_BREED_OPTION_ID = '-1'

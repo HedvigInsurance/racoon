@@ -16,7 +16,7 @@ import {
   PriceIntentQueryResult,
   ProductOfferFragment,
   usePriceIntentQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
