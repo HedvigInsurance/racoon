@@ -37,9 +37,8 @@ type DateFormatOptions = { locale: IsoLocale } & { t: TFunction }
 const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
   const today = new Date()
   const isSameDay =
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) ===
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
 
   if (isSameDay) {
     return options.t('DATE_SAME_DAY')
@@ -50,6 +49,7 @@ const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    timeZone: 'Europe/Stockholm',
   })
 
   return result.replace(/-/g, '.')
@@ -104,6 +104,7 @@ export class Formatter {
       year: options?.hideYear ? undefined : 'numeric',
       month: options?.abbreviateMonth ? 'short' : 'long',
       day: 'numeric',
+      timeZone: 'Europe/Stockholm',
     })
 
     // Removes '.' used for abbreviations
