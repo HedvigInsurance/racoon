@@ -17045,10 +17045,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-fs-backend@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "i18next-fs-backend@npm:2.2.0"
-  checksum: 33e00ccc8ec66a9fc20363513c3189a201a59e8601f167f0483c0a0d53ecee1dd4bb43b83d0f5661784e7a7ca3e43cd9c771d426cec73d8f819b9b823b77d724
+"i18next-fs-backend@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "i18next-fs-backend@npm:2.3.1"
+  checksum: 86273eecdebfb055c171d466e41e4e3d50b9d8184eed3a88dde4fca2cd30cc7bd92e3ae3d69a6aa51f74bad2f429384388b61b121c3a09596870670bbb833bdb
   languageName: node
   linkType: hard
 
@@ -20141,21 +20141,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-i18next@npm:15.0.0":
-  version: 15.0.0
-  resolution: "next-i18next@npm:15.0.0"
+"next-i18next@npm:15.1.1":
+  version: 15.1.1
+  resolution: "next-i18next@npm:15.1.1"
   dependencies:
     "@babel/runtime": ^7.23.2
     "@types/hoist-non-react-statics": ^3.3.4
     core-js: ^3
     hoist-non-react-statics: ^3.3.2
-    i18next-fs-backend: ^2.2.0
+    i18next-fs-backend: ^2.3.1
   peerDependencies:
-    i18next: ^23.6.0
+    i18next: ^23.7.7
     next: ">= 12.0.0"
     react: ">= 17.0.2"
-    react-i18next: ^13.3.1
-  checksum: d5a5b29db033e4eaf9147f9fc6abb4997e041b8bf515722202038d682faadccb4255616530e586f528f9707398cadf26efdfddda5f70ef19ea5f14dfe485102e
+    react-i18next: ^13.5.0
+  checksum: 26001fc1b972e981115f1b2b9cc5787d4287ce0c42d984ad7fb372dfbcb3cd456eb7f956b969cb0854c718c88cd8dbf901b157389b9e3d544e6ecff131d12da8
   languageName: node
   linkType: hard
 
@@ -23667,7 +23667,7 @@ __metadata:
     md5: 2.3.0
     msw: 2.0.10
     next: 13.4.12
-    next-i18next: 15.0.0
+    next-i18next: 15.1.1
     next-router-mock: 0.9.10
     nprogress: 0.2.0
     path-browserify: 1.0.1
