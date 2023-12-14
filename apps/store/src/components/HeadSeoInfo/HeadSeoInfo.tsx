@@ -20,8 +20,8 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
   const robotsContent = robots ?? story.content.robots
 
   const router = useRouter()
-  // Remove trailing slash from path
-  const pathname = [router.asPath.replace(/\/$/, ''), router.locale].join('/')
+  // remove trailing slash
+  const pathname = `${router.locale}${router.asPath}`.replace(/\/$/, '')
   const pageURL = new URL(pathname, ORIGIN_URL)
 
   return (
@@ -29,7 +29,7 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
       <Head>
         <meta property="og:type" content="website" />
 
-        <link rel="canonical" href={canonicalUrl ?? pageURL.toString()} />
+        <link rel="canonical" href={canonicalUrl || pageURL.toString()} />
         <meta property="og:url" content={pageURL.toString()} />
         <meta name="robots" content={robotsContent} />
         {seoMetaDescription && (
