@@ -8,7 +8,7 @@ import {
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
-import { QuickAdd } from './QuickAdd'
+import { ProductUsp, QuickAdd } from './QuickAdd'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 const CO_INSURED_DATA_KEY = 'numberCoInsured'
@@ -51,9 +51,16 @@ export const QuickAddOfferContainer = (props: Props) => {
       price={price}
       Body={
         // Assume Accident insurance
-        <Text as="p" color="textTranslucentSecondary">
-          {t('ACCIDENT_OFFER_DESCRIPTION')}
-        </Text>
+        <>
+          <Text as="p" color="textTranslucentSecondary">
+            {t('ACCIDENT_OFFER_DESCRIPTION')}
+          </Text>
+          <ul>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
+          </ul>
+        </>
       }
     >
       <AddToCartButton
