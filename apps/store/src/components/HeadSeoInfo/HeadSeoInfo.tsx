@@ -1,5 +1,6 @@
 import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { Features } from '@/utils/Features'
@@ -18,10 +19,18 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
   // Make it possible to override robots value for A/B test cases
   const robotsContent = robots ?? story.content.robots
 
+  const router = useRouter()
+  // Remove trailing slash from path
+  const pathname = [router.asPath.replace(/\/$/, ''), router.locale].join('/')
+  const pageURL = new URL(pathname, ORIGIN_URL)
+
   return (
     <>
       <Head>
-        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        <meta property="og:type" content="website" />
+
+        <link rel="canonical" href={canonicalUrl ?? pageURL.toString()} />
+        <meta property="og:url" content={pageURL.toString()} />
         <meta name="robots" content={robotsContent} />
         {seoMetaDescription && (
           <>
