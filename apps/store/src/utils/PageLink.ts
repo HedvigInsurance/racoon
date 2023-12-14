@@ -310,6 +310,10 @@ export const PageLink = {
       ORIGIN_URL,
     )
   },
+
+  forever: (params: Required<BaseParams> & { code: string }) => {
+    return new URL(`${params.locale}/forever/${params.code}`, ORIGIN_URL)
+  },
 } as const
 
 const CUSTOMER_SERVICE_URL: Partial<Record<RoutingLocale, URL>> = {
