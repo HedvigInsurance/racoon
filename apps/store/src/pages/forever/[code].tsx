@@ -1,22 +1,30 @@
 import { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
-import { ForeverPage, type Props } from '@/components/ForeverPage/ForeverPage'
+import { ForeverPage, type Props as ForeverPageProps } from '@/components/ForeverPage/ForeverPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
+import { PageLink } from '@/utils/PageLink'
 
 type Params = { code: string }
+type Props = ForeverPageProps & { canonicalUrl: string }
 
-const NextPage: NextPageWithLayout<Props> = (props) => (
-  <>
-    <Head>
-      <meta name="robots" content="noindex,follow" />
-    </Head>
-    <ForeverPage {...props} />
-  </>
-)
+const NextPage: NextPageWithLayout<Props> = (props) => {
+  return (
+    <>
+      <Head>
+        <meta name="robots" content="noindex,follow" />
+        <meta name="canonical" content={props.canonicalUrl} />
+      </Head>
+      <ForeverPage {...props} />
+    </>
+  )
+}
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   if (!context.params?.code) return { notFound: true }
+  if (!isRoutingLocale(context.locale)) return { notFound: true }
 
   try {
     const layoutWithMenuProps = await getLayoutWithMenuProps(context)
@@ -25,11 +33,21 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       props: {
         ...layoutWithMenuProps,
         code: context.params.code,
+        canonicalUrl: getCanonicalUrl(context.locale).toString(),
       },
     }
   } catch (error) {
     console.error(error)
     return { notFound: true }
+  }
+}
+
+const getCanonicalUrl = (locale: RoutingLocale): URL => {
+  switch (locale) {
+    case 'se-en':
+      return PageLink.forever({ locale, code: 'discount' })
+    default:
+      return PageLink.forever({ locale, code: 'rabatt' })
   }
 }
 
