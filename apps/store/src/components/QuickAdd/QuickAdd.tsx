@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { type ReactNode, type ComponentProps } from 'react'
 import { Space, Text, mq, theme } from 'ui'
@@ -17,6 +18,7 @@ type Props = {
 }
 
 export const QuickAdd = (props: Props) => {
+  const { t } = useTranslation('cart')
   return (
     <Card>
       <Space y={1}>
@@ -36,15 +38,22 @@ export const QuickAdd = (props: Props) => {
         <Divider />
         {props.Body}
         <Footer>
-          <SpaceFlex space={0.5}>{props.children}</SpaceFlex>
-
           {props.price && (
-            <Price
-              {...props.price}
-              color="textTranslucentPrimary"
-              secondaryColor="textTranslucentSecondary"
-            />
+            <PriceWrapper>
+              <Text as="p" color="textTranslucentPrimary">
+                {t('ACCIDENT_OFFER_PRICE_LABEL')}
+              </Text>
+              <SpaceFlex space={0}>
+                <Text color="textTranslucentPrimary">+</Text>
+                <Price
+                  {...props.price}
+                  color="textTranslucentPrimary"
+                  secondaryColor="textTranslucentSecondary"
+                />
+              </SpaceFlex>
+            </PriceWrapper>
           )}
+          <Space y={0.5}>{props.children}</Space>
         </Footer>
       </Space>
     </Card>
@@ -76,15 +85,13 @@ const Divider = styled.div({
 
 const Footer = styled.div({
   paddingTop: theme.space.xs,
-  display: 'grid',
-  gridTemplateRows: 'auto auto',
-  gap: theme.space.md,
+})
 
-  [mq.xs]: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+const PriceWrapper = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: theme.space.lg,
 })
 
 const StyledProductDetail = styled.li({
