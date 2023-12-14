@@ -15,10 +15,13 @@ type Story = StoryObj<typeof QuickAdd>
 
 export const Default: Story = {
   args: {
-    title: 'Accident insurance',
+    title: 'Home + Accident',
     subtitle: 'Covers 2 people',
     pillow: {
-      src: 'https://a.storyblok.com/f/165473/832x832/a61cfbf4ae/hedvig-pillows-cat.png',
+      src: 'https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png',
+    },
+    mainOfferPillow: {
+      src: 'https://assets.hedvig.com/f/165473/832x832/cdaaa91242/hedvig-pillows-home.png',
     },
     href: '/se',
     price: {
