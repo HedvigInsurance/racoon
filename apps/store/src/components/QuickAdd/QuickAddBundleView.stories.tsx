@@ -1,12 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { Button, Text } from 'ui'
+import { Button, Heading, Text, theme } from 'ui'
+import { Pillow } from '@/components/Pillow/Pillow'
+import { Price } from '@/components/Price'
 import { CurrencyCode } from '@/services/graphql/generated'
 import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
+import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 
 const meta: Meta<typeof QuickAddBundleView> = {
   title: 'Components / Quick Add / Bundle View',
   component: QuickAddBundleView,
-  parameters: { grid: { width: '1/3' } },
+  parameters: { grid: { width: '1/3', align: 'center' } },
 }
 
 export default meta
@@ -48,9 +51,26 @@ export const Default: Story = {
         <Button size="medium" fullWidth={true}>
           Upgrade
         </Button>
-        <Button size="medium" variant="ghost" fullWidth={true}>
-          {"See what's included"}
-        </Button>
+        <QuickAddInfoDialog
+          Header={
+            <>
+              <Pillow
+                size="xlarge"
+                src="https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png"
+              />
+              <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                Accident insurance
+              </Heading>
+              <Price
+                color="textTranslucentSecondary"
+                amount={100}
+                currencyCode={CurrencyCode.Sek}
+              />
+            </>
+          }
+        >
+          <Text align="center">Perils here</Text>
+        </QuickAddInfoDialog>
       </>
     ),
   },
