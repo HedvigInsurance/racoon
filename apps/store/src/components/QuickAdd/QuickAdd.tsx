@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { type ReactNode, type ComponentProps } from 'react'
-import { Space, Text, mq, theme } from 'ui'
+import { Badge, Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -11,6 +11,7 @@ type Props = {
   title: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
+  badge?: ComponentProps<typeof Badge>
   href: string
   price?: ComponentProps<typeof Price>
   Body: ReactNode
@@ -34,6 +35,7 @@ export const QuickAdd = (props: Props) => {
               {props.subtitle}
             </Text>
           </div>
+          {props.badge && <AlignedBadge color="blueFill3" {...props.badge} />}
         </SpaceFlex>
         <Divider />
         {props.Body}
@@ -76,6 +78,11 @@ const StyledLink = styled(Link)({
   '&:hover': {
     textDecoration: 'underline',
   },
+})
+
+const AlignedBadge = styled(Badge)({
+  alignSelf: 'flex-start',
+  marginLeft: 'auto',
 })
 
 const Divider = styled.div({

@@ -31,6 +31,9 @@ export const Default: Story = {
         Ingen självrisk.
       </Text>
     ),
+    badge: {
+      children: 'Popular',
+    },
     children: (
       <>
         <Button size="medium" fullWidth={true}>
