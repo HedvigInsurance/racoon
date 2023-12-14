@@ -14,7 +14,7 @@ const NextPage: NextPageWithLayout<Props> = (props) => {
   return (
     <>
       <Head>
-        <meta name="robots" content="noindex,follow" />
+        <meta name="robots" content="noindex, follow" />
         <meta name="canonical" content={props.canonicalUrl} />
       </Head>
       <ForeverPage {...props} />
