@@ -1,21 +1,18 @@
 import styled from '@emotion/styled'
 import { Text, theme, mq } from 'ui'
-import { Stars } from '@/components/Stars/Stars'
+import { Stars } from './Stars'
 
 type Props = {
-  score: number
-  scoreReviewCount: number
-  totalReviewCount: number
+  score: string
+  percentage: number
 }
 
-export const RatingCount = (props: Props) => {
-  const scoreCountPercentage = (props.scoreReviewCount / props.totalReviewCount) * 100 + '%'
-
+export const ReviewsDistributionByScore = (props: Props) => {
   return (
     <Wrapper>
       <Stars score={props.score} />
-      <Progress reviewCount={scoreCountPercentage} />
-      <Text>{scoreCountPercentage}</Text>
+      <AmountBar filledPortion={props.percentage} />
+      <PercentageLabel>{props.percentage + '%'}</PercentageLabel>
     </Wrapper>
   )
 }
@@ -35,7 +32,7 @@ const Wrapper = styled.div({
   },
 })
 
-const Progress = styled.div(({ reviewCount }: { reviewCount: string }) => ({
+const AmountBar = styled.div(({ filledPortion }: { filledPortion: number }) => ({
   position: 'relative',
   flex: '1 1',
   height: '0.25rem',
@@ -48,8 +45,14 @@ const Progress = styled.div(({ reviewCount }: { reviewCount: string }) => ({
     top: 0,
     left: 0,
     height: '100%',
-    width: reviewCount,
+    width: `${filledPortion}%`,
     borderRadius: 'inherit',
     backgroundColor: theme.colors.textPrimary,
   },
 }))
+
+const PercentageLabel = styled(Text)({
+  // A fixed size ensures percentage labels are aligned
+  width: '2.8rem',
+  textAlign: 'right',
+})
