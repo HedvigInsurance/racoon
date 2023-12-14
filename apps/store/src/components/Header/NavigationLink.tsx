@@ -12,26 +12,6 @@ const StyledSecondaryNavigationLink = styled(NavigationMenuPrimitive.Link)({
   ...focusableStyles,
 })
 
-const ProductNavigationLinkCard = styled(Space)({
-  ...focusableStyles,
-  display: 'flex',
-  columnGap: theme.space.sm,
-  placeItems: 'center',
-  flexShrink: 0,
-  paddingBlock: theme.space.xs,
-
-  [mq.lg]: {
-    columnGap: theme.space.xs,
-    paddingInline: theme.space.xs,
-    borderRadius: theme.radius.sm,
-    '@media (hover: hover)': {
-      '&:hover': {
-        backgroundColor: theme.colors.grayTranslucent100,
-      },
-    },
-  },
-})
-
 type NavigationLinkProps = Pick<HTMLAnchorElement, 'href'> &
   Omit<NavigationMenuPrimitive.NavigationMenuLinkProps, 'href'> & {
     pillowImageSrc?: string
@@ -83,19 +63,51 @@ export const ProductNavigationLink = ({
   label,
 }: NavigationLinkProps) => {
   return (
-    <Link href={href}>
-      <ProductNavigationLinkCard>
-        <Pillow size="xsmall" src={pillowImageSrc} />
-        <Text size={{ _: 'xl', lg: 'md' }}>{children}</Text>
-        {label && (
-          <Badge size={{ _: 'big', lg: 'small' }} as="span" color="green50">
-            {label}
-          </Badge>
-        )}
-      </ProductNavigationLinkCard>
-    </Link>
+    <ProductNavigationLinkCard>
+      <Pillow size="xsmall" src={pillowImageSrc} />
+      <ExpandingLink href={href}>
+        <Text as="span" size={{ _: 'xl', lg: 'md' }}>
+          {children}
+        </Text>
+      </ExpandingLink>
+      {label && (
+        <Badge size={{ _: 'big', lg: 'small' }} as="span" color="green50">
+          {label}
+        </Badge>
+      )}
+    </ProductNavigationLinkCard>
   )
 }
+
+const ProductNavigationLinkCard = styled(Space)({
+  ...focusableStyles,
+  display: 'flex',
+  columnGap: theme.space.sm,
+  placeItems: 'center',
+  flexShrink: 0,
+  paddingBlock: theme.space.xs,
+  position: 'relative',
+
+  [mq.lg]: {
+    columnGap: theme.space.xs,
+    paddingInline: theme.space.xs,
+    borderRadius: theme.radius.sm,
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.grayTranslucent100,
+      },
+    },
+  },
+})
+
+const ExpandingLink = styled(Link)({
+  // Make the whole card clickable - CallToAction height
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+  },
+})
 
 export const SecondaryNavigationLink = ({ href, children, ...rest }: NavigationLinkProps) => {
   return (
