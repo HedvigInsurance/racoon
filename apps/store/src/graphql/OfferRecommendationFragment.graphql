@@ -13,6 +13,9 @@ fragment OfferRecommendation on ProductOffer {
   }
   variant {
     typeOfContract
+    perils {
+      ...Peril
+    }
   }
   cost {
     gross {
