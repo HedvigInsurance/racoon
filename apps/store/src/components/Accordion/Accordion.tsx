@@ -36,6 +36,11 @@ export const Trigger = styled(AccordionPrimitives.Trigger)({
       cursor: 'pointer',
     },
   },
+
+  ':focus-visible': {
+    boxShadow: theme.shadow.focus,
+    borderRadius: theme.radius.sm,
+  },
 })
 
 export const Item = styled(AccordionPrimitives.Item)({
