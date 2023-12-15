@@ -32,12 +32,10 @@ export const ProductDetails = ({ items, documents, ...props }: Props) => {
       <ul>
         {documents.map(({ title, url }) => (
           <li key={title}>
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              <DocumentLink color="textTranslucentSecondary">
-                {title}
-                <Sup> PDF</Sup>
-              </DocumentLink>
-            </a>
+            <DocumentLink href={url} target="_blank" rel="noopener noreferrer">
+              {title}
+              <Sup> PDF</Sup>
+            </DocumentLink>
           </li>
         ))}
       </ul>
@@ -57,10 +55,16 @@ const ListItem = styled.li({
   alignItems: 'center',
 })
 
-const DocumentLink = styled(Text)({
+const DocumentLink = styled.a({
+  fontFamily: theme.fonts.standard,
+  fontSize: theme.fontSizes.md,
   lineHeight: '1.6',
-  '&:hover': {
-    color: theme.colors.textTranslucentPrimary,
+  color: theme.colors.textTranslucentSecondary,
+
+  '&:hover': { color: theme.colors.textTranslucentPrimary },
+  '&:focus-visible': {
+    boxShadow: theme.shadow.focus,
+    borderRadius: theme.space.xxs,
   },
 })
 
