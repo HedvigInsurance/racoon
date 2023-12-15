@@ -58,6 +58,10 @@ export const SE_PET_CAT: Template = {
             name: 'birthDate',
             label: { key: tKey('FIELD_BIRTH_DATE_PET_LABEL') },
             required: true,
+            // Arbitrary date range to be able to show year dropdown
+            // UW filter breeches are handled by the backend
+            min: '1990-01-01',
+            max: 'TODAY',
           },
           layout: LAYOUT.FULL_WIDTH,
         },

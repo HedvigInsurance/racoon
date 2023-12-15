@@ -5,7 +5,7 @@ import { TextField } from '@/components/TextField/TextField'
 import { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { convertToDate } from '@/utils/date'
+import { convertToDate, formatAPIDate } from '@/utils/date'
 import { Features } from '@/utils/Features'
 import { InputDay } from '../InputDay/InputDay'
 import { CarMileageField } from './CarMileageField'
@@ -71,8 +71,8 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           label={translateLabel(field.label)}
           required={field.required}
           defaultSelected={convertToDate(field.value ?? field.defaultValue) ?? undefined}
-          fromDate={convertToDate(field.min) ?? undefined}
-          toDate={convertToDate(field.max) ?? undefined}
+          fromDate={field.min === 'TODAY' ? new Date() : convertToDate(field.min) ?? undefined}
+          toDate={field.max === 'TODAY' ? new Date() : convertToDate(field.max) ?? undefined}
           autoFocus={autoFocus}
         />
       ) : (
@@ -81,8 +81,8 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           label={translateLabel(field.label)}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
-          min={field.min}
-          max={field.max}
+          min={field.min === 'TODAY' ? formatAPIDate(new Date()) : field.min}
+          max={field.max === 'TODAY' ? formatAPIDate(new Date()) : field.max}
           autoFocus={autoFocus}
         />
       )
