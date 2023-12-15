@@ -1,6 +1,6 @@
 import { type GetServerSidePropsContext, type GetServerSideProps } from 'next'
+import { createPartnerShopSession } from '@/features/widget/createPartnerShopSession'
 import {
-  createPartnerShopSession,
   fetchFlowMetadata,
   redirectIfRunningInStoryblokEditor,
   updateCustomerDataIfPresent,

@@ -1,12 +1,9 @@
 import Personnummer from 'personnummer'
-import {
-  type ShopSessionCreatePartnerMutationVariables,
-  type ShopSessionCustomerUpdateInput,
-} from '@/services/apollo/generated'
+import { type ShopSessionCustomerUpdateInput } from '@/services/apollo/gql/graphql'
 import { EXTERNAL_REQUEST_ID_QUERY_PARAM } from './widget.constants'
 
 // Search Params from Partner Widget
-enum SearchParam {
+export enum SearchParam {
   // Customer Data
   Email = 'email',
   Ssn = 'ssn',
@@ -162,24 +159,4 @@ const parseBoolean = (value: unknown): boolean | undefined => {
     default:
       return undefined
   }
-}
-
-export const parseShopSessionCreatePartnerSearchParams = (
-  searchParams: URLSearchParams,
-): [Partial<ShopSessionCreatePartnerMutationVariables['input']>, URLSearchParams] => {
-  const updatedSearchParams = new URLSearchParams(searchParams.toString())
-
-  const externalRequestId = updatedSearchParams.get(SearchParam.ExternalRequestId)
-  if (externalRequestId) updatedSearchParams.delete(SearchParam.ExternalRequestId)
-
-  const externalMemberId = updatedSearchParams.get(SearchParam.ExternalMemberId)
-  if (externalMemberId) updatedSearchParams.delete(SearchParam.ExternalMemberId)
-
-  return [
-    {
-      ...(externalRequestId && { partnerRequestId: externalRequestId }),
-      ...(externalMemberId && { externalMemberId }),
-    },
-    updatedSearchParams,
-  ]
 }
