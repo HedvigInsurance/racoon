@@ -1,23 +1,24 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text, theme, mq } from 'ui'
-import { Stars } from '@/components/ProductReviews/Stars'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useFormatter } from '@/utils/useFormatter'
-import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
+import { Stars } from './Stars'
 import { VerifiedIcon } from './VerifiedIcon'
 
 type Props = {
   score: number
   date: string
   content: string
+  className?: string
 }
 
-export const ReviewComment = ({ content, date, score }: Props) => {
+export const ReviewComment = ({ content, date, score, className }: Props) => {
   const { t } = useTranslation('common')
   const formatter = useFormatter()
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Stars score={String(score)} />
       <Content>
         <Text balance={true}>{content}</Text>
