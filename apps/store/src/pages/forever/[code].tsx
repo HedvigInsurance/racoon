@@ -5,7 +5,7 @@ import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWit
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { PageLink } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/PageLink'
 
 type Params = { code: string }
 type Props = ForeverPageProps & { canonicalUrl: string }
@@ -45,9 +45,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 const getCanonicalUrl = (locale: RoutingLocale): URL => {
   switch (locale) {
     case 'se-en':
-      return PageLink.forever({ locale, code: 'discount' })
+      return new URL('/se-en/hedvig/discount', ORIGIN_URL)
     default:
-      return PageLink.forever({ locale, code: 'rabatt' })
+      return new URL('/se/hedvig/rabatt', ORIGIN_URL)
   }
 }
 
