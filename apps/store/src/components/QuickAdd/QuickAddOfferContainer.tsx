@@ -1,5 +1,8 @@
 import { useTranslation } from 'next-i18next'
-import { Text } from 'ui'
+import { Heading, Text, theme } from 'ui'
+import { Perils } from '@/components/Perils/Perils'
+import { Pillow } from '@/components/Pillow/Pillow'
+import { Price } from '@/components/Price'
 import {
   CartFragmentFragment,
   type OfferRecommendationFragment,
@@ -11,6 +14,7 @@ import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
 import { QuickAdd } from './QuickAdd'
 import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
+import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 const USE_QUICK_ADD_BUNDLE_VIEW = Features.enabled('QUICK_ADD_BUNDLE_VIEW')
@@ -74,7 +78,19 @@ export const QuickAddOfferContainer = (props: Props) => {
           >
             {t('QUICK_ADD_BUTTON_BUNDLE')}
           </AddToCartButton>
-          <DismissButton />
+          <QuickAddInfoDialog
+            Header={
+              <>
+                <Pillow size="xlarge" {...props.product.pillowImage} />
+                <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                  {props.product.displayNameFull}
+                </Heading>
+                <Price color="textTranslucentSecondary" {...price} />
+              </>
+            }
+          >
+            <Perils items={props.offer.variant.perils} />
+          </QuickAddInfoDialog>
         </QuickAddBundleView>
       ) : (
         <QuickAdd
