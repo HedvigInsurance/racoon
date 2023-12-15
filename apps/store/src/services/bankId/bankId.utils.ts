@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { ShopSessionSigningStatus } from '@/services/apollo/generated'
+import { ShopSessionSigningStatus } from '@/services/graphql/generated'
 import { BankIdState } from './bankId.types'
 
 const stateMapping = {

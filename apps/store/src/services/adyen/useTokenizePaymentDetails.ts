@@ -3,7 +3,7 @@ import {
   type BrowserInfo,
   TokenizationChannel,
   useAdyenTokenizePaymentDetailsMutation,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 

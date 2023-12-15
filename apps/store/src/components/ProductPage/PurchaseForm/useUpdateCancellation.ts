@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useCancellationRequestedUpdateMutation } from '@/services/apollo/generated'
+import { useCancellationRequestedUpdateMutation } from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 

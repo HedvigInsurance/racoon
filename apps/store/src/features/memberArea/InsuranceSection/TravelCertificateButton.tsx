@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useCallback } from 'react'
 import { Button } from 'ui'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
-import { useTravelCertificateCreateMutation } from '@/services/apollo/generated'
+import { useTravelCertificateCreateMutation } from '@/services/graphql/generated'
 import { formatAPIDate } from '@/utils/date'
 
 // Temporary demo implementation, should be replaced by flow with certificate params form before sending the request

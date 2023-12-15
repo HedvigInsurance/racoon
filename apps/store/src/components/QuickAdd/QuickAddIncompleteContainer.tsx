@@ -12,7 +12,7 @@ import {
   usePriceIntentConfirmMutation,
   usePriceIntentDataUpdateMutation,
   useStartDateUpdateMutation,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { convertToDate, formatAPIDate } from '@/utils/date'
 import { Features } from '@/utils/Features'

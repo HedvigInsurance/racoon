@@ -1,5 +1,5 @@
 import { ProductData } from '@/components/ProductPage/ProductPage.types'
-import { InsurableLimitType } from '@/services/apollo/generated'
+import { InsurableLimitType } from '@/services/graphql/generated'
 
 export const productData: ProductData = {
   __typename: 'Product',

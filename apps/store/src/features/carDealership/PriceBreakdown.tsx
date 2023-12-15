@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Text, theme } from 'ui'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {

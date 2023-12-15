@@ -6,7 +6,7 @@ import {
   CampaignDiscountType,
   CartCost,
   Money,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useFormatter } from '@/utils/useFormatter'
 

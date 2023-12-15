@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from 'next'
-import { useMemberAreaMemberInfoQuery } from '@/services/apollo/generated'
+import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import { LayoutWithMenu } from '../components/LayoutWithMenu'
 import { Insurances } from '../InsuranceSection/InsurancesSection'
 

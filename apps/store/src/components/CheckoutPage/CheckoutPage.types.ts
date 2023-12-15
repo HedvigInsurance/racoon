@@ -1,5 +1,5 @@
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export type CheckoutPageProps = {

@@ -17,7 +17,7 @@ import {
 import {
   useRedeemCampaignMutation,
   useShopSessionCustomerUpdateMutation,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'

@@ -6,7 +6,7 @@ import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/Pur
 import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { AddToCartButton } from './AddToCartButton'

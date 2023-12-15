@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
-import { usePriceIntentDataUpdateMutation } from '@/services/apollo/generated'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { usePriceIntentDataUpdateMutation } from '@/services/graphql/generated'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'

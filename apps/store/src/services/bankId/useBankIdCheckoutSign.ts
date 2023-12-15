@@ -1,14 +1,14 @@
 import { type ApolloError } from '@apollo/client'
 import { useCallback, useRef } from 'react'
 import { Observable, Subscription } from 'zen-observable-ts'
+import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
+import { saveAuthTokens } from '@/services/authApi/persist'
 import {
   ShopSessionAuthenticationStatus,
   ShopSessionSigningStatus,
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
-} from '@/services/apollo/generated'
-import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
-import { saveAuthTokens } from '@/services/authApi/persist'
+} from '@/services/graphql/generated'
 import { BankIdState, CheckoutSignOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import { BankIdDispatch } from './bankIdReducer'

@@ -8,7 +8,7 @@ import {
   ExternalInsurer,
   useInsurelyDataCollectionCreateMutation,
   usePriceIntentInsurelyUpdateMutation,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,

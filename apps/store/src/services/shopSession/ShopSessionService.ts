@@ -13,7 +13,7 @@ import {
   ShopSessionOutcomeIdDocument,
   ShopSessionQuery,
   ShopSessionQueryVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { SimplePersister } from '@/services/persister/Persister.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 

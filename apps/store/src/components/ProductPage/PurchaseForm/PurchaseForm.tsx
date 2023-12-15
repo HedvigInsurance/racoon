@@ -22,12 +22,12 @@ import {
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { BankSigneringEvent } from '@/services/bankSignering'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
   usePriceIntentConfirmMutation,
-} from '@/services/apollo/generated'
-import { BankSigneringEvent } from '@/services/bankSignering'
+} from '@/services/graphql/generated'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'

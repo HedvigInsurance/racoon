@@ -3,7 +3,7 @@ import { ApolloClient } from '@apollo/client'
 import {
   AdyenAvailablePaymentMethodsDocument,
   type AdyenAvailablePaymentMethodsQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 type PaymentMethodsResponseObject = Required<CoreOptions>['paymentMethodsResponse']
 

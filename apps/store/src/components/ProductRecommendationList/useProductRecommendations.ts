@@ -4,7 +4,7 @@ import {
   type ProductRecommendationFragment,
   type ProductRecommendationsQuery,
   useProductRecommendationsQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type OfferRecommendation = {

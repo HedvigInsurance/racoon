@@ -1,4 +1,4 @@
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/graphql/generated'
 import { TableDataTemplate } from './data/SE_PET_INSURANCE_COMPARISON_TABLE'
 import {
   ComparisonTableTemplate,

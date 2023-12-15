@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { ActionButton, ProductItem } from './ProductItem'
 
 const meta: Meta<typeof ProductItem> = {

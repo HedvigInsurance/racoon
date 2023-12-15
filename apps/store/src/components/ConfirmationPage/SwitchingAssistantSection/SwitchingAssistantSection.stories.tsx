@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import {
   ContractExternalInsuranceCancellationStatus,
   ShopSessionOutcomeDocument,
   type ShopSessionOutcomeQuery,
   type ShopSessionOutcomeQueryVariables,
-} from '@/services/apollo/generated'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
+} from '@/services/graphql/generated'
 import { SwitchingAssistantSection } from './SwitchingAssistantSection'
 
 const meta: Meta<typeof SwitchingAssistantSection> = {

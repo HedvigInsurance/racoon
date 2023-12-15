@@ -1,3 +1,3 @@
-import { ShopSessionQuery } from '@/services/apollo/generated'
+import { ShopSessionQuery } from '@/services/graphql/generated'
 
 export type ShopSession = ShopSessionQuery['shopSession']

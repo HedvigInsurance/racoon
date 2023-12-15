@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { ShopSessionAuthenticationStatus } from '@/services/apollo/generated'
+import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { BankIdOperation, BankIdState } from './bankId.types'
 
 export type BankIdAction =

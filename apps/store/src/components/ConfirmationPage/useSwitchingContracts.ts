@@ -3,8 +3,8 @@ import { useEffect, useMemo } from 'react'
 import {
   ContractExternalInsuranceCancellationStatus,
   SwitchingContractFragment,
-} from '@/services/apollo/generated'
-import { useShopSessionOutcomeQuery } from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
+import { useShopSessionOutcomeQuery } from '@/services/graphql/generated'
 import { tKey } from '@/utils/i18n'
 
 export type BankSigneringContract = {

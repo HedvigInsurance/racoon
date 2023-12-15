@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { ProductItem } from '@/components/ProductItem/ProductItem'
-import { Money } from '@/services/apollo/generated'
+import { Money } from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'

@@ -1,4 +1,4 @@
-import { type ShopSessionRetargetingQuery } from '@/services/apollo/generated'
+import { type ShopSessionRetargetingQuery } from '@/services/graphql/generated'
 import { PageLink } from '@/utils/PageLink'
 import { type UserParams } from './retargeting.types'
 

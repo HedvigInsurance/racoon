@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Space } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
-import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/apollo/generated'
+import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import {
   PetDogBreedsField as InputFieldPetDogBreeds,
   Breed,

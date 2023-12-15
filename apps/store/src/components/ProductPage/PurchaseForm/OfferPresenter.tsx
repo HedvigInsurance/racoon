@@ -10,12 +10,12 @@ import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpd
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { BankSigneringEvent } from '@/services/bankSignering'
 import {
   ExternalInsuranceCancellationOption,
   ProductOfferFragment,
   RedeemedCampaignFragment,
-} from '@/services/apollo/generated'
-import { BankSigneringEvent } from '@/services/bankSignering'
+} from '@/services/graphql/generated'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'

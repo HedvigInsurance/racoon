@@ -2,15 +2,15 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { BankIdState } from '@/services/bankId/bankId.types'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import {
   MemberPaymentConnectionStatus,
   type ShopSessionFragment,
   useCarDealershipRemoveAddMutation,
   useCurrentMemberLazyQuery,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { BankIdState } from '@/services/bankId/bankId.types'
-import { useBankIdContext } from '@/services/bankId/BankIdContext'
+} from '@/services/graphql/generated'
 import { PageLink } from '@/utils/PageLink'
 
 const LOGGER = datadogLogs.createLogger('car-dealership')

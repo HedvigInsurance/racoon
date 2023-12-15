@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { ActionButton, ProductItem } from '@/components/ProductItem/ProductItem'
-import { CurrencyCode } from '@/services/apollo/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 import { DiscountField } from './DiscountField'
 import { Divider, ShopBreakdown } from './ShopBreakdown'
 import { TotalAmount } from './TotalAmount'

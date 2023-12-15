@@ -1,5 +1,5 @@
 import Personnummer from 'personnummer'
-import { type ShopSessionCustomerUpdateInput } from '@/services/apollo/gql/graphql'
+import { type ShopSessionCustomerUpdateInput } from '@/services/graphql/graphql'
 import { EXTERNAL_REQUEST_ID_QUERY_PARAM } from './widget.constants'
 
 // Search Params from Partner Widget

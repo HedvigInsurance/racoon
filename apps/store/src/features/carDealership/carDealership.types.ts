@@ -1,4 +1,4 @@
-import { CarTrialExtensionQuery, TrialContractFragment } from '@/services/apollo/generated'
+import { CarTrialExtensionQuery, TrialContractFragment } from '@/services/graphql/generated'
 
 export type CarTrialExtension = CarTrialExtensionQuery['carTrial']
 

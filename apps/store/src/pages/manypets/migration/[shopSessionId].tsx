@@ -12,6 +12,7 @@ import {
 } from '@/features/manyPets/ManyPetsMigrationPage/ManyPetsMigrationPage'
 import { getComparisonTableData } from '@/features/manyPets/manyPetsService'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
+import { resetAuthTokens } from '@/services/authApi/persist'
 import {
   ManyPetsMigrationOffersDocument,
   ManyPetsMigrationOffersQuery,
@@ -21,8 +22,7 @@ import {
   ShopSessionDocument,
   ShopSessionQuery,
   ShopSessionQueryVariables,
-} from '@/services/apollo/generated'
-import { resetAuthTokens } from '@/services/authApi/persist'
+} from '@/services/graphql/generated'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'

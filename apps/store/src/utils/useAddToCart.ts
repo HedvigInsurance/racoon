@@ -1,12 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   useCartEntryAddMutation,
   ProductRecommendationsDocument,
   useCartEntryReplaceMutation,
   CartEntryAddMutation,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+} from '@/services/graphql/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type Params = {

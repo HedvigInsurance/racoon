@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
-import { ProductOfferFragment } from '@/services/apollo/generated'
+import { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {

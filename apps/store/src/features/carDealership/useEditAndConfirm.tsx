@@ -1,9 +1,9 @@
 import { type ApolloError } from '@apollo/client'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   usePriceIntentConfirmMutation,
   usePriceIntentDataUpdateCarMutation,
-} from '@/services/apollo/generated'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+} from '@/services/graphql/generated'
 
 type EditAndConfirmParams = {
   priceIntentId: string

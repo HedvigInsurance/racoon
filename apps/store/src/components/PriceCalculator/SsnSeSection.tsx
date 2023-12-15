@@ -3,11 +3,11 @@ import { useTranslation } from 'next-i18next'
 import { type FormEventHandler } from 'react'
 import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
-} from '@/services/apollo/generated'
-import { useBankIdContext } from '@/services/bankId/BankIdContext'
+} from '@/services/graphql/generated'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 

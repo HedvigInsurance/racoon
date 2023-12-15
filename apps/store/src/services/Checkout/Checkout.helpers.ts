@@ -4,7 +4,7 @@ import {
   ShopSessionSigningDocument,
   ShopSessionSigningQuery,
   ShopSessionSigningQueryVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 type FetchParams = ShopSessionSigningQueryVariables & {
   apolloClient: ApolloClient<unknown>

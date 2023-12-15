@@ -1,6 +1,6 @@
 import { type ApolloClient } from '@apollo/client'
 import { type VariablesOf } from '@graphql-typed-document-node/core'
-import { graphql } from '@/services/apollo/gql'
+import { graphql } from '@/services/graphql'
 import { SearchParam } from './parseSearchParams'
 
 const ShopSessionCreatePartnerDocument = graphql(/* GraphQL */ `

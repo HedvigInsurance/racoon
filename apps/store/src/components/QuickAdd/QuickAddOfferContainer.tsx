@@ -4,7 +4,7 @@ import {
   CartFragmentFragment,
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'

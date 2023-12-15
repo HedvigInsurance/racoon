@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useShopSessionCustomerUpdateMutation } from '@/services/apollo/generated'
+import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import { FormElement } from './CheckoutPage.constants'

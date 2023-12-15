@@ -3,7 +3,7 @@ import {
   TrustlyInitDocument,
   TrustlyInitMutation,
   TrustlyInitMutationVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 

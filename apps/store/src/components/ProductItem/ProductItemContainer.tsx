@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ReactNode, ComponentProps } from 'react'
-import { type ProductOfferFragment } from '@/services/apollo/generated'
+import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'
 import { useGetStartDateProps } from './useGetStartDateProps'

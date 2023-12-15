@@ -3,7 +3,7 @@ import {
   ShopSessionRetargetingDocument,
   type ShopSessionRetargetingQuery,
   type ShopSessionRetargetingQueryVariables,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 
 export const fetchRetargetingData = async (
   apolloClient: ApolloClient<unknown>,

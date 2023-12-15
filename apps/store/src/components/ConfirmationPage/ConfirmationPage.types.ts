@@ -2,7 +2,7 @@ import {
   CartFragmentFragment,
   TrialContractFragment,
   CurrentMemberQuery,
-} from '@/services/apollo/generated'
+} from '@/services/graphql/generated'
 import { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 export type MemberPartnerData = CurrentMemberQuery['currentMember']['partnerData']
