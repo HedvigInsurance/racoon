@@ -40,6 +40,13 @@ const Trigger = styled(Text)({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.space.xs,
+
+  padding: theme.space.xxxs,
+  margin: `-${theme.space.xxxs}`,
+  [`${Wrapper}:focus-visible &`]: {
+    boxShadow: theme.shadow.focus,
+    borderRadius: theme.radius.xxs,
+  },
 })
 
 const AnimatedChevronIcon = styled(ChevronIcon)({
