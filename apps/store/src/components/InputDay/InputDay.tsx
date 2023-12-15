@@ -53,7 +53,7 @@ export const InputDay = (props: Props) => {
       ? theme.colors.backgroundFrostedGlass
       : theme.colors.translucent1
 
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>({
+  const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>({
     defaultColor: backgroundColor,
   })
 
@@ -72,35 +72,33 @@ export const InputDay = (props: Props) => {
 
   return (
     <Popover.Root open={open} onOpenChange={handleOpenChange}>
-      <Popover.Trigger asChild={true} disabled={props.disabled}>
-        <Wrapper {...animationProps} data-active={!!props.selected} style={{ backgroundColor }}>
-          <Label htmlFor={inputId} data-disabled={props.disabled}>
-            {props.label}
-          </Label>
-          <InnerWrapper>
-            {dateValue ? (
-              <Text size="xl">{formatter.fromNow(dateValue)}</Text>
-            ) : (
-              <Text size="xl" color="textTertiary">
-                {t('DATE_INPUT_EMPTY_LABEL')}
-              </Text>
-            )}
-            {props.disabled ? (
-              <LockIcon size="1rem" color={theme.colors.textSecondary} />
-            ) : (
-              <StyledChevronIcon size="1rem" />
-            )}
-          </InnerWrapper>
+      <Wrapper {...animationProps} disabled={props.disabled} style={{ backgroundColor }}>
+        <Label htmlFor={inputId} data-disabled={props.disabled}>
+          {props.label}
+        </Label>
+        <InnerWrapper>
+          {dateValue ? (
+            <Text size="xl">{formatter.fromNow(dateValue)}</Text>
+          ) : (
+            <Text size="xl" color="textTertiary">
+              {t('DATE_INPUT_EMPTY_LABEL')}
+            </Text>
+          )}
+          {props.disabled ? (
+            <LockIcon size="1rem" color={theme.colors.textSecondary} />
+          ) : (
+            <StyledChevronIcon size="1rem" />
+          )}
+        </InnerWrapper>
 
-          <input
-            {...inputProps}
-            id={inputId}
-            name={props.name}
-            hidden={true}
-            disabled={props.disabled}
-          />
-        </Wrapper>
-      </Popover.Trigger>
+        <input
+          {...inputProps}
+          id={inputId}
+          name={props.name}
+          hidden={true}
+          disabled={props.disabled}
+        />
+      </Wrapper>
 
       <Popover.Portal>
         <PopoverContent side="bottom" align="start" sideOffset={-4} alignOffset={-4}>
@@ -183,12 +181,17 @@ const StyledDayPicker = styled(DayPicker)({
   },
 })
 
-const Wrapper = styled.div({
+const Wrapper = styled(Popover.Trigger)({
   position: 'relative',
   borderRadius: theme.radius.sm,
   height: '4.5rem',
   width: '100%',
   cursor: 'pointer',
+
+  ':focus-visible': {
+    boxShadow: theme.shadow.focus,
+    borderRadius: theme.radius.sm,
+  },
 })
 
 const InnerWrapper = styled.div({
@@ -222,7 +225,7 @@ const StyledChevronIcon = styled(ChevronIcon)(() => ({
   pointerEvents: 'none',
   transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
 
-  [`${Wrapper}:focus-within &`]: {
+  [`${Wrapper}[data-state=open] &`]: {
     transform: 'rotate(180deg)',
   },
 }))
