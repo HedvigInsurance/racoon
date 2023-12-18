@@ -95,6 +95,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...hideChatOnPage(),
       products,
       compareInsurance,
+      showBackButton: story.content.showBackButton ?? false,
     },
   }
 }

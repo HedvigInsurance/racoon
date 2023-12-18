@@ -19,6 +19,7 @@ type Props = {
   shopSessionId: string
   products: GlobalProductMetadata
   compareInsurance: boolean
+  showBackButton?: boolean
 }
 
 export const SelectProductPage = (props: Props) => {
@@ -68,7 +69,7 @@ export const SelectProductPage = (props: Props) => {
 
   return (
     <Wrapper y={2.5}>
-      <Header step="YOUR_INFO" />
+      <Header step="YOUR_INFO" showBackButton={props.showBackButton} />
 
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">

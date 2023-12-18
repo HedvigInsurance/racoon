@@ -110,6 +110,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         productName: priceIntent.product.name,
         productData,
         pageTitle: story.content.pageTitle ?? 'Hedvig',
+        showBackButton: story.content.showBackButton ?? false,
       },
     }
   } catch (error) {

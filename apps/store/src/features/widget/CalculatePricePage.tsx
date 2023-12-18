@@ -27,6 +27,7 @@ type Props = {
   priceIntent: WidgetPriceIntentFragment
   priceTemplate: Template
   flow: string
+  showBackButton?: boolean
 }
 
 export const CalculatePricePage = (props: Props) => {
@@ -91,7 +92,7 @@ export const CalculatePricePage = (props: Props) => {
 
   return (
     <Wrapper y={3}>
-      <Header step="YOUR_INFO" />
+      <Header step="YOUR_INFO" showBackButton={props.showBackButton} />
 
       <Space y={2.5}>
         <SpaceFlex align="center" direction="vertical">
