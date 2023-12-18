@@ -1,10 +1,9 @@
-import { type ReviewComments } from './productReviews.types'
-
-type Score = '5' | '4' | '3' | '2' | '1'
-
-type ScoreDistributionTuple = [Score, number]
-
-type ReviewsDistribution = Array<ScoreDistributionTuple>
+import type {
+  ReviewsDistribution,
+  Score,
+  ScoreDistributionTuple,
+  ReviewComments,
+} from './productReviews.types'
 
 // It uses Largest Remainder Method (LRM) to distribute round the percetages
 // https://stackoverflow.com/questions/13483430/how-to-make-rounded-percentages-add-up-to-100
