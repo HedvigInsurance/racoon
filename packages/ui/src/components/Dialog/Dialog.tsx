@@ -29,7 +29,7 @@ const StyledOverlay = styled(DialogPrimitive.Overlay, {
   },
 
   ...(frosted && {
-    backgroundColor: 'rgba(250, 250, 250, 0.75)',
+    backgroundColor: theme.colors.backgroundFrostedGlass,
     backdropFilter: 'blur(64px)',
   }),
 }))

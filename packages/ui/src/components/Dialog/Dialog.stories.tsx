@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Button } from '../Button/Button'
 import { Heading } from '../Heading/Heading'
 import { Space } from '../Space'
 import * as Dialog from './Dialog'
 
-const storyMeta: Meta = {
+export default {
   title: 'Dialog',
   parameters: {
     backgrounds: {
@@ -14,11 +14,9 @@ const storyMeta: Meta = {
     },
     layout: 'centered',
   },
-}
+} as Meta<typeof Dialog>
 
-export default storyMeta
-
-export const Default: Story = () => {
+export const Default: StoryFn<typeof Dialog> = () => {
   const [open, setOpen] = useState(false)
 
   return (
