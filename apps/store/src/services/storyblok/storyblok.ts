@@ -212,6 +212,7 @@ export type WidgetFlowStory = ISbStoryData<{
   showRecommendations?: boolean
   checkoutPageContent?: Array<SbBlokData>
   pageTitle?: string
+  showBackButton?: boolean
 }>
 
 export type GlobalStory = ISbStoryData & {

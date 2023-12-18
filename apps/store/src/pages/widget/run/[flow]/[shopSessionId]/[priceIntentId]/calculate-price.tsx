@@ -19,7 +19,10 @@ import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSe
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type Props = Pick<ComponentPropsWithoutRef<typeof CalculatePricePage>, 'flow' | 'priceTemplate'> & {
+type Props = Pick<
+  ComponentPropsWithoutRef<typeof CalculatePricePage>,
+  'flow' | 'priceTemplate' | 'showBackButton'
+> & {
   priceIntentId: string
   shopSessionId: string
 }
@@ -62,6 +65,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...hideChatOnPage(),
         ...translations,
         ...context.params,
+        showBackButton: story.content.showBackButton ?? false,
       },
     })
   } catch (error) {

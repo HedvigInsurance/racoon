@@ -46,6 +46,7 @@ type Props = {
   flow: string
   content?: Array<SbBlokData>
   productName: string
+  showBackButton?: boolean
 }
 
 export const SignPage = (props: Props) => {
@@ -126,7 +127,7 @@ export const SignPage = (props: Props) => {
   return (
     <>
       <Wrapper y={3}>
-        <Header step="SIGN" />
+        <Header step="SIGN" showBackButton={props.showBackButton} />
 
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">

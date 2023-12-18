@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { CheckIcon, HedvigLogo, mq } from 'ui'
+import { useRouter } from 'next/router'
+import { CheckIcon, ChevronIcon, HedvigLogo, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { STYLES } from '@/components/GridLayout/GridLayout.helper'
+import { STYLES as GRID_LAYOUT_STYLES } from '@/components/GridLayout/GridLayout.helper'
 import * as ProgressIndicator from '@/components/ProgressIndicator/ProgressIndicator'
 
 const STEPS = ['YOUR_INFO', 'SIGN', 'PAY', 'CONFIRMATION'] as const
@@ -10,6 +11,7 @@ type Step = (typeof STEPS)[number]
 
 type Props = {
   step: Step
+  showBackButton?: boolean
 }
 
 type ProgressStep = { key: Step; label: string }
@@ -33,9 +35,16 @@ export const Header = (props: Props) => {
 
   const stepIndex = STEPS.indexOf(props.step)
 
+  const router = useRouter()
+
   return (
     <HeaderFrame>
       <LogoArea>
+        {props.showBackButton && (
+          <BackButton type="button" onClick={() => router.back()}>
+            <ArrowBackIcon size="1.125rem" />
+          </BackButton>
+        )}
         <HedvigLogo />
       </LogoArea>
 
@@ -54,6 +63,8 @@ export const Header = (props: Props) => {
 }
 
 export const HeaderFrame = styled(GridLayout.Root)({
+  position: 'relative',
+
   [mq.md]: {
     height: '4rem',
     alignItems: 'center',
@@ -61,12 +72,56 @@ export const HeaderFrame = styled(GridLayout.Root)({
 })
 
 export const LogoArea = styled.div({
-  gridColumn: '1/span 12',
-  justifySelf: 'center',
-  paddingBlock: '1.25rem',
-  [mq.md]: { display: 'block', gridColumn: '1 / span 2', justifySelf: 'unset' },
+  position: 'relative',
+  gridColumn: '1 / span 12',
+
+  height: '4rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  [mq.md]: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    justifyContent: 'space-between',
+  },
 })
 
-const ProgressArea = styled.div(STYLES['1/3'].center, {
+const BackButton = styled.button({
+  position: 'absolute',
+  left: 0,
+  cursor: 'pointer',
+  width: '2rem',
+  height: '2rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  // visually align
+  marginLeft: `-${theme.space.xs}`,
+
+  ':hover': {
+    color: theme.colors.buttonPrimaryHover,
+  },
+
+  ':active': {
+    color: theme.colors.gray500,
+  },
+
+  ':focus-visible': {
+    outline: `2px solid ${theme.colors.buttonPrimaryHover}`,
+    borderRadius: theme.radius.xxs,
+  },
+
+  [mq.md]: {
+    position: 'unset',
+  },
+})
+
+const ArrowBackIcon = styled(ChevronIcon)({
+  transform: 'rotate(90deg)',
+})
+
+const ProgressArea = styled.div(GRID_LAYOUT_STYLES['1/3'].center, {
   gridColumn: '1 / span 12',
 })
