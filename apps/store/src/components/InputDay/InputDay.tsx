@@ -105,9 +105,13 @@ export const InputDay = (props: Props) => {
           <StyledDayPicker
             {...dayPickerProps}
             mode="single"
-            captionLayout="dropdown"
+            captionLayout="dropdown-buttons"
             onSelect={handleSelect}
             weekStartsOn={1}
+            components={{
+              IconRight: () => <ChevronRightIcon size="1rem" />,
+              IconLeft: () => <ChevronLeftIcon size="1rem" />,
+            }}
           />
         </PopoverContent>
       </Popover.Portal>
@@ -148,17 +152,19 @@ const PopoverContent = styled(Popover.Content)({
 const StyledDayPicker = styled(DayPicker)({
   // Docs: https://react-day-picker.js.org/basics/styling
 
-  '--rdp-accent-color': theme.colors.signalBlueElement,
-  '--rdp-background-color': theme.colors.signalBlueFill,
+  '--rdp-accent-color': theme.colors.buttonPrimary,
+  '--rdp-background-color': theme.colors.gray200,
+  '--rdp-outline': `1px solid ${theme.colors.borderTranslucent1}`,
 
   fontFamily: theme.fonts.body,
   color: theme.colors.textPrimary,
   margin: 0,
   padding: theme.space.md,
 
-  '.rdp-day': {
+  '.rdp-day, .rdp-nav_button': {
     height: 'calc(var(--rdp-cell-size) * 0.9)',
     width: 'calc(var(--rdp-cell-size) * 0.9)',
+    borderRadius: theme.radius.xs,
   },
 
   '.rdp-day_today': {
@@ -167,12 +173,12 @@ const StyledDayPicker = styled(DayPicker)({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '100%',
     backgroundColor: theme.colors.gray200,
   },
 
   '.rdp-caption_label': {
     fontWeight: 'normal',
+    borderWidth: 1,
   },
 
   '.rdp-head_cell': {
@@ -180,6 +186,9 @@ const StyledDayPicker = styled(DayPicker)({
     fontWeight: 'normal',
   },
 })
+
+const ChevronRightIcon = styled(ChevronIcon)({ transform: 'rotate(-90deg)' })
+const ChevronLeftIcon = styled(ChevronIcon)({ transform: 'rotate(90deg)' })
 
 const Wrapper = styled(Popover.Trigger)({
   position: 'relative',
