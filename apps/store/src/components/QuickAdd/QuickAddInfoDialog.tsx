@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState, type ReactNode } from 'react'
-import { Button, CrossIcon, Dialog, Space, mq, theme } from 'ui'
+import { Button, CrossIconSmall, Dialog, Space, mq, theme } from 'ui'
 
 type Props = {
   children: ReactNode
@@ -22,7 +22,7 @@ export const QuickAddInfoDialog = ({ children, Header }: Props) => {
         <Wrapper>
           <ScrollWrapper>
             <CloseButton onClick={() => setOpen(false)}>
-              <CrossIcon size="1rem" />
+              <CrossIconSmall size="1rem" />
             </CloseButton>
             <Space y={4}>
               {Header && <DialogHeader>{Header}</DialogHeader>}
@@ -50,6 +50,7 @@ const Wrapper = styled.div({
   paddingInline: theme.space.md,
   backgroundColor: theme.colors.backgroundStandard,
   borderRadius: theme.radius.lg,
+  border: `1px solid ${theme.colors.borderTranslucent1}`,
   boxShadow: theme.shadow.default,
   isolation: 'isolate',
   overflow: 'hidden',
@@ -89,9 +90,13 @@ const CloseButton = styled.button({
   position: 'absolute',
   top: theme.space.md,
   right: theme.space.md,
-  padding: theme.space.xxs,
+  padding: theme.space.xs,
   borderRadius: '100%',
-  backgroundColor: theme.colors.translucent2,
+  backgroundColor: theme.colors.translucent1,
   cursor: 'pointer',
   zIndex: 1,
+
+  '&:hover': {
+    backgroundColor: theme.colors.translucent2,
+  },
 })
