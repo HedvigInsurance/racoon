@@ -67,6 +67,7 @@ const PerilsAccordionGrid = styled.div({
   gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
   [mq.md]: {
     columnGap: theme.space.md,
+    rowGap: theme.space.xs,
   },
 })
 
