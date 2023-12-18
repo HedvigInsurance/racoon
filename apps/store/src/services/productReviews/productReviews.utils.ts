@@ -6,6 +6,7 @@ export const averageRatingSchema = z.object({
 })
 
 const commentSchema = z.object({
+  id: z.string(),
   date: z.string(),
   score: z.number(),
   content: z.string(),
