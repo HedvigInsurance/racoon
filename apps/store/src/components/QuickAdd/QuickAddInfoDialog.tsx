@@ -18,18 +18,16 @@ export const QuickAddInfoDialog = ({ children, Header }: Props) => {
           {t('QUICK_ADD_INCLUDED_DIALOG_BUTTON')}
         </Button>
       </Dialog.Trigger>
-      <DialogContent frostedOverlay={true}>
-        <Wrapper>
-          <ScrollWrapper>
-            <CloseButton onClick={() => setOpen(false)}>
-              <CrossIconSmall size="1rem" />
-            </CloseButton>
-            <Space y={4}>
-              {Header && <DialogHeader>{Header}</DialogHeader>}
-              <DialogBody>{children}</DialogBody>
-            </Space>
-          </ScrollWrapper>
-        </Wrapper>
+      <DialogContent centerContent={true} frostedOverlay={true}>
+        <ScrollWrapper>
+          <CloseButton onClick={() => setOpen(false)}>
+            <CrossIconSmall size="1rem" />
+          </CloseButton>
+          <Space y={4}>
+            {Header && <DialogHeader>{Header}</DialogHeader>}
+            <DialogBody>{children}</DialogBody>
+          </Space>
+        </ScrollWrapper>
       </DialogContent>
     </Dialog.Root>
   )
@@ -38,13 +36,8 @@ export const QuickAddInfoDialog = ({ children, Header }: Props) => {
 const DIALOG_HEIGHT = `min(45rem, calc(100vh - ${theme.space.xl}))`
 
 const DialogContent = styled(Dialog.Content)({
-  display: 'grid',
-  placeItems: 'center',
-  height: '100vh',
-})
-
-const Wrapper = styled.div({
   position: 'relative',
+  alignSelf: 'center',
   width: `min(35.5rem, calc(100vw - ${theme.space.xl}))`,
   height: DIALOG_HEIGHT,
   paddingInline: theme.space.md,
