@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useRouter } from 'next/router'
-import { ComponentProps, useMemo } from 'react'
+import { type ComponentProps, useMemo, useState } from 'react'
 import { Button, ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { LinkField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { mergeSearchParams } from '@/utils/mergeSearchParams'
 
@@ -14,9 +14,11 @@ export type ButtonBlockProps = SbBaseBlockProps<{
   variant: ComponentProps<typeof Button>['variant']
   size: ComponentProps<typeof Button>['size']
   forwardQueryString?: boolean
+  showLoading?: boolean
 }>
 
 export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const href = useMemo(() => {
     if (blok.forwardQueryString) {
@@ -31,10 +33,12 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
       <ButtonNextLink
         {...storyblokEditable(blok)}
         href={href}
+        onClick={() => setLoading(true)}
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
         target={blok.link.target}
         title={blok.link.title}
+        loading={blok.showLoading && loading}
       >
         {blok.text}
       </ButtonNextLink>
