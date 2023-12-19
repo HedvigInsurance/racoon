@@ -58,6 +58,11 @@ const DialogContent = styled(Dialog.Content)({
 const ScrollWrapper = styled.div({
   height: DIALOG_HEIGHT,
   overflow: 'auto',
+  // Hide scrollbar in Dialog
+  scrollbarWidth: 'none',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 
   [mq.md]: {
     paddingInline: theme.space.lg,
@@ -73,7 +78,7 @@ const DialogHeader = styled.div({
 })
 
 const DialogBody = styled.div({
-  paddingBottom: theme.space.md,
+  paddingBottom: theme.space.xl,
 
   [mq.md]: {
     paddingBottom: theme.space.xxl,
