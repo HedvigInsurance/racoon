@@ -1,8 +1,7 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { TFunction } from 'next-i18next'
+import { type TFunction } from 'next-i18next'
 import Personnummer from 'personnummer'
-import { CurrencyCode } from '@/services/graphql/generated'
-import { IsoLocale } from '@/utils/l10n/types'
+import { type CurrencyCode } from '@/services/graphql/generated'
+import { type IsoLocale } from '@/utils/l10n/types'
 
 type MoneyFormatOptions = { locale: IsoLocale }
 
@@ -71,7 +70,7 @@ const formatSsn = (ssn: string): string => {
     // replace the last 4 digits with asterisks
     return longFormat.replace(/(\d{4})$/, '****')
   } catch (error) {
-    datadogLogs.logger.warn('Could not format SSN', { ssn, error })
+    console.warn(`Could not format SSN: ${ssn}`, error)
     return ssn
   }
 }
