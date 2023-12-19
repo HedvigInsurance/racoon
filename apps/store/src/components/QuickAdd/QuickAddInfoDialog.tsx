@@ -33,7 +33,11 @@ export const QuickAddInfoDialog = ({ children, Header }: Props) => {
   )
 }
 
-const DIALOG_HEIGHT = `min(45rem, calc(100vh - ${theme.space.xl}))`
+// Use dvh when the browser supports it to make the dialog proper height in mobile
+const DIALOG_HEIGHT = [
+  `min(45rem, calc(100vh - ${theme.space.xl}))`,
+  `min(45rem, calc(100dvh - ${theme.space.xl}))`,
+]
 
 const DialogContent = styled(Dialog.Content)({
   position: 'relative',
