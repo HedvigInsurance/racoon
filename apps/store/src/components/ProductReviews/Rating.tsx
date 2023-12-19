@@ -48,5 +48,4 @@ const Wrapper = styled.div({
   display: 'inline-flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: 'min(28.5rem, 100%)',
 })
