@@ -62,6 +62,19 @@ export const QuickAddOfferContainer = (props: Props) => {
             <>
               <Text as="p" color="textTranslucentSecondary">
                 {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
+                <QuickAddInfoDialog
+                  Header={
+                    <>
+                      <Pillow size="xlarge" {...props.product.pillowImage} />
+                      <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                        {props.product.displayNameFull}
+                      </Heading>
+                      <Price color="textTranslucentSecondary" {...price} />
+                    </>
+                  }
+                >
+                  <Perils items={props.offer.variant.perils} />
+                </QuickAddInfoDialog>
               </Text>
               <ul>
                 <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
@@ -78,19 +91,7 @@ export const QuickAddOfferContainer = (props: Props) => {
           >
             {t('QUICK_ADD_BUTTON_BUNDLE')}
           </AddToCartButton>
-          <QuickAddInfoDialog
-            Header={
-              <>
-                <Pillow size="xlarge" {...props.product.pillowImage} />
-                <Heading as="h1" variant="standard.18" mt={theme.space.md}>
-                  {props.product.displayNameFull}
-                </Heading>
-                <Price color="textTranslucentSecondary" {...price} />
-              </>
-            }
-          >
-            <Perils items={props.offer.variant.perils} />
-          </QuickAddInfoDialog>
+          <DismissButton />
         </QuickAddBundleView>
       ) : (
         <QuickAdd
