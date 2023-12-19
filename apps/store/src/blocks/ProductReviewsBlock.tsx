@@ -15,7 +15,7 @@ type InputOptions = Array<InputSelectProps['options'][number]>
 
 type AvailableScore = '5' | '4' | '3' | '2' | '1'
 
-export const ProductReviewCommentsBlock = () => {
+export const ProductReviewsBlock = () => {
   const { reviewComments } = useProductPageContext()
   const [selectedScore, setSelectedScore] = useState<AvailableScore>('5')
 
@@ -76,7 +76,7 @@ export const ProductReviewCommentsBlock = () => {
   )
 }
 
-ProductReviewCommentsBlock.blockName = 'productReviewComments'
+ProductReviewsBlock.blockName = 'productReviews'
 
 const CommentsList = styled.div({
   display: 'flex',
