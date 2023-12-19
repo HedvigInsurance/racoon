@@ -12,9 +12,5 @@ export const usePublishWidgetInitEvent = () => {
     if (typeof requestId !== 'string') return
 
     publishWidgetEvent.event({ requestId })
-
-    const newQuery = { ...router.query }
-    delete newQuery[EXTERNAL_REQUEST_ID_QUERY_PARAM]
-    router.replace({ query: newQuery }, undefined, { shallow: true })
   }, [requestId, router])
 }
