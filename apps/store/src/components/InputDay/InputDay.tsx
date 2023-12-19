@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next'
 import { useId, useState } from 'react'
 import { useInput, DayPicker, type SelectSingleEventHandler } from 'react-day-picker'
 import { ChevronIcon, theme, Text, LockIcon } from 'ui'
+import { LoadingDots } from '@/components/LoadingDots/LoadingDots'
 import { convertToDate } from '@/utils/date'
 import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
@@ -28,6 +29,7 @@ type Props = {
   backgroundColor?: 'default' | 'light'
   required?: boolean
   autoFocus?: boolean
+  loading?: boolean
 }
 
 export const InputDay = (props: Props) => {
@@ -64,7 +66,7 @@ export const InputDay = (props: Props) => {
   }
 
   const handleOpenChange = (open: boolean) => {
-    if (open && props.disabled) return
+    if (open && (props.disabled || props.loading)) return
     setOpen(open)
   }
 
@@ -84,7 +86,11 @@ export const InputDay = (props: Props) => {
               {t('DATE_INPUT_EMPTY_LABEL')}
             </Text>
           )}
-          {props.disabled ? (
+
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {props.loading ? (
+            <LoadingDots color={theme.colors.textPrimary} />
+          ) : props.disabled ? (
             <LockIcon size="1rem" color={theme.colors.textSecondary} />
           ) : (
             <StyledChevronIcon size="1rem" />

@@ -1,48 +1,12 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import React from 'react'
 import { theme } from 'ui'
 
-const spin = keyframes({
-  '0%': {
-    opacity: '0.25',
-  },
-  '50%': {
-    opacity: '1',
-    transform: 'scale(1.33)',
-  },
-  '100%': {
-    opacity: 0.25,
-  },
-})
-
-export type LoadingDotsProps = {
+type Props = {
   color?: string
 }
-const Dots = styled.div<LoadingDotsProps>(({ color }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color,
-}))
 
-const Dot = styled.span({
-  width: '0.375rem',
-  height: '0.375rem',
-  margin: '0.25rem',
-  borderRadius: '100%',
-  backgroundColor: 'currentColor',
-  opacity: '0.25',
-  animation: `${spin} 1000ms both infinite`,
-  '& :nth-of-type(2)': {
-    animationDelay: '150ms',
-  },
-  '&:last-of-type': {
-    animationDelay: '300ms',
-  },
-})
-
-export const LoadingDots = ({ color = theme.colors.gray800 }: LoadingDotsProps) => {
+export const LoadingDots = ({ color = theme.colors.gray800 }: Props) => {
   return (
     <Dots color={color}>
       <Dot />
@@ -51,3 +15,31 @@ export const LoadingDots = ({ color = theme.colors.gray800 }: LoadingDotsProps) 
     </Dots>
   )
 }
+
+const Dots = styled.div<Props>(({ color }) => ({
+  width: '1.875rem',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  color,
+}))
+
+const spin = keyframes({
+  '0%': { opacity: 0.25 },
+  '50%': { opacity: 1 },
+  '100%': { opacity: 0.25 },
+})
+
+const DOT_SIZE = '0.375rem'
+
+const Dot = styled.span({
+  width: DOT_SIZE,
+  height: DOT_SIZE,
+  borderRadius: '100%',
+  backgroundColor: 'currentColor',
+  opacity: 0.25,
+  animation: `${spin} 1000ms both infinite`,
+
+  '&:nth-of-type(2)': { animationDelay: '150ms' },
+  '&:nth-of-type(3)': { animationDelay: '300ms' },
+})

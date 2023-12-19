@@ -95,7 +95,8 @@ export const ProductItem = (props: Props) => {
           selected={convertToDate(props.startDate) ?? undefined}
           onSelect={(date) => props.onChangeStartDate(formatAPIDate(date))}
           fromDate={todayDate}
-          disabled={props.disableStartDate || props.loading}
+          disabled={props.disableStartDate}
+          loading={props.loading}
         />
       ) : (
         <InputDate
