@@ -55,7 +55,6 @@ const DialogContent = styled(Dialog.Content)({
 
 const ScrollWrapper = styled.div({
   height: DIALOG_HEIGHT,
-  paddingInline: theme.space.md,
   overflow: 'auto',
 
   [mq.md]: {
