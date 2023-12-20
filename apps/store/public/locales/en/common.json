@@ -49,5 +49,6 @@
   "TRUSTPILOT_REVIEWS_DISCLAIMER": "We encourage our members to write reviews about us on Trustpilot. The platform is open to everyone and there is no system to verify that only Hedvig's members leave reviews.",
   "TRUSTPILOT_SCORE": "{{score}} of 5",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again.",
-  "VERIFIED_CUSTOMER_LABEL": "Verified customer"
+  "VERIFIED_CUSTOMER_LABEL": "Verified customer",
+  "VIEW_REVIEWS_LABEL": "View reviews"
 }

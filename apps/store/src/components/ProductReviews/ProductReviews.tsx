@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export const ProductReviews = (props: Props) => {
+  const { t } = useTranslation('common')
   const { averageRating, reviewComments } = useProductPageContext()
   const [selectedScore, setSelectedScore] = useState<Score>('5')
 
@@ -51,7 +53,7 @@ export const ProductReviews = (props: Props) => {
 
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <Button variant="ghost">Visa omdömen</Button>
+            <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
           </Dialog.Trigger>
 
           <DialogContent centerContent={true}>
@@ -80,7 +82,7 @@ export const ProductReviews = (props: Props) => {
                   <CommentsList y={{ base: 0.5, md: 1 }}>
                     {comments.map((comment) => (
                       <Comment
-                        key={`${comment.score}-${comment.date}`}
+                        key={comment.id}
                         score={comment.score}
                         date={comment.date}
                         content={comment.content}
