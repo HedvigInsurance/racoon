@@ -134,6 +134,8 @@ const connectSrc = [
   'https://www.gstatic.com',
   // Facebook
   'https://connect.facebook.net',
+  // Linkedin
+  'https://px.ads.linkedin.com',
 
   ...adyenOrigins,
   ...gtmInjectedOrigins,
@@ -170,6 +172,9 @@ const frameSrc = [
 
   // Google Optimize
   'https://optimize.google.com',
+
+  // Google Doubleclick
+  'https://td.doubleclick.net',
 
   // Insurely
   'https://blocks.insurely.com',
