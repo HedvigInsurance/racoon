@@ -108,6 +108,9 @@ export const InputDay = (props: Props) => {
 
       <Popover.Portal>
         <PopoverContent side="bottom" align="start" sideOffset={-4} alignOffset={-4}>
+          {/* Fix issue on iOS where month dropdown is focused and can't be tapped */}
+          <div tabIndex={1} aria-hidden={true} />
+
           <StyledDayPicker
             {...dayPickerProps}
             mode="single"
