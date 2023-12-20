@@ -42,7 +42,8 @@
   "RATING_SCORE_LABEL": "{{score}} av {{maxScore}}",
   "READ_MORE": "Läs mer",
   "SELECT_INSURANCE": "Välj försäkring",
-  "TRUSTPILOT_REVIEWS_COUNT": "{{numberOfReviews}} recensioner på",
+  "TRUSTPILOT_REVIEWS_COUNT": "Baserat på {{numberOfReviews}} omdömen",
+  "TRUSTPILOT_REVIEWS_DISCLAIMER": "Vi uppmanar våra medlemmar att tycka till om oss på Trustpilot. Plattformen är öppen för alla och det finns inget system för att säkerställa att enbart Hedvigs medlemmar lämnar omdömen.",
   "TRUSTPILOT_SCORE": "{{score}} av 5",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen.",
   "VERIFIED_CUSTOMER_LABEL": "Verifierad kund"
