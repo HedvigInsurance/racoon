@@ -1,6 +1,6 @@
 import path from 'path'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import StoryblokClient from 'storyblok-js-client'
+import { getStoryblokApi } from '@/services/storyblok/api'
 
 type Payload = {
   action: 'published' | 'unpublished' | 'deleted'
@@ -18,14 +18,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.query.secret !== process.env.REVALIDATE_SECRET) {
     return res.status(401).json({ message: 'Invalid token' })
   }
-  const storyblokClient = new StoryblokClient({
-    accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
-  })
 
   const { story_id } = req.body as Payload
 
   try {
-    const { data } = await storyblokClient.getStory(`${story_id}`, {})
+    const { data } = await getStoryblokApi().getStory(`${story_id}`, {})
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug

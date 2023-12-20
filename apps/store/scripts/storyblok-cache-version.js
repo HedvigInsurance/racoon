@@ -1,11 +1,14 @@
-const StoryblokClient = require('storyblok-js-client')
+const { storyblokInit, apiPlugin } = require('@storyblok/js')
 
 const main = async () => {
-  const client = new StoryblokClient({
+  const { storyblokApi } = storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+    use: [apiPlugin],
   })
 
-  const { data } = await client.getStory('/se')
+  if (!storyblokApi) throw new Error('Storyblok API not initialized')
+
+  const { data } = await storyblokApi.getStory('/se')
   console.log(data.cv)
 }
 

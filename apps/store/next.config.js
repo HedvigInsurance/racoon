@@ -4,7 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const experimentJson = require('./experiment.json')
 const { SiteCsp, StoryblokCsp } = require('./next-csp.config')
 const { i18n } = require('./next-i18next.config')
-const StoryblokClient = require('storyblok-js-client')
+const { storyblokInit, apiPlugin } = require('@storyblok/js')
 
 /** @type {import('next').NextConfig} */
 module.exports = withBundleAnalyzer({
@@ -175,9 +175,12 @@ const getExperimentVariantRedirects = () => {
  * Fetch redirects from Storyblok datasource
  * */
 const getStoryblokRedirects = async () => {
-  const storyblokClient = new StoryblokClient({
+  const { storyblokApi } = storyblokInit({
     accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
+    use: [apiPlugin],
   })
+
+  if (!storyblokApi) throw new Error('Storyblok API not initialized')
 
   const cacheVersion = process.env.STORYBLOK_CACHE_VERSION
     ? parseInt(process.env.STORYBLOK_CACHE_VERSION)
@@ -186,7 +189,7 @@ const getStoryblokRedirects = async () => {
   const cv = isCacheVersionValid ? cacheVersion : undefined
 
   try {
-    const repsonse = await storyblokClient.getAll('cdn/datasource_entries', {
+    const repsonse = await storyblokApi.getAll('cdn/datasource_entries', {
       datasource: 'permanent-redirects',
       cv,
     })

@@ -24006,7 +24006,6 @@ __metadata:
     react-dom: 18.2.0
     react-i18next: 13.5.0
     react-wrap-balancer: 1.1.0
-    storyblok-js-client: 5.14.4
     storyblok-rich-text-react-renderer: 2.9.1
     storybook: 7.6.5
     storybook-addon-apollo-client: 5.0.0
@@ -24023,7 +24022,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:5.14.4, storyblok-js-client@npm:^5.14.2":
+"storyblok-js-client@npm:^5.14.2":
   version: 5.14.4
   resolution: "storyblok-js-client@npm:5.14.4"
   checksum: 8d325fed7d228bbd96e0152c1d6f39befd769b7b2676505ef01853cade1b49c0bb1f3c5af36f20fa58a9510894d82c6659c85c9d5e03441c437af3332d2b79d3
