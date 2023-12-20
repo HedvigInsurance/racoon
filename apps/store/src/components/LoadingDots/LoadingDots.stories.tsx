@@ -1,15 +1,20 @@
-import { Meta, StoryFn } from '@storybook/react'
-import React from 'react'
-import { LoadingDots, LoadingDotsProps } from './LoadingDots'
+import { type Meta, type StoryObj } from '@storybook/react'
+import { LoadingDots } from './LoadingDots'
 
-export default {
+const meta: Meta<typeof LoadingDots> = {
   component: LoadingDots,
   parameters: {
     layout: 'centered',
     paddings: [{ name: 'Large', value: '64px', default: true }],
+    design: {
+      allowFullscreen: true,
+      type: 'figma',
+      url: 'https://www.figma.com/file/qUhLjrKl98PAzHov9ilaDH/Hedvig-UI-Kit?type=design&node-id=1938-8577&mode=dev',
+    },
   },
-} as Meta<typeof LoadingDots>
-
-export const Default: StoryFn<LoadingDotsProps> = (props) => {
-  return <LoadingDots {...props} />
 }
+export default meta
+
+type Story = StoryObj<typeof LoadingDots>
+
+export const Info: Story = {}

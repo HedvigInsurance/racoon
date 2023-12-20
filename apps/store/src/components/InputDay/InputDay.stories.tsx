@@ -25,3 +25,7 @@ export const BirthDayPicker: Story = {
 export const Disabled: Story = {
   args: { disabled: true, selected: new Date() },
 }
+
+export const Loading: Story = {
+  args: { loading: true, selected: new Date() },
+}
