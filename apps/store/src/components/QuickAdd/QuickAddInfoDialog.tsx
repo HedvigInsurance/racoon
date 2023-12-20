@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState, type ReactNode } from 'react'
-import { Button, CrossIconSmall, Dialog, Space, mq, theme } from 'ui'
+import { CrossIconSmall, Dialog, Space, mq, theme } from 'ui'
 
 type Props = {
   children: ReactNode
@@ -14,9 +14,7 @@ export const QuickAddInfoDialog = ({ children, Header }: Props) => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild={true}>
-        <Button size="medium" variant="ghost" fullWidth={true}>
-          {t('QUICK_ADD_INCLUDED_DIALOG_BUTTON')}
-        </Button>
+        <TextButton>{t('QUICK_ADD_INCLUDED_DIALOG_BUTTON')}</TextButton>
       </Dialog.Trigger>
       <DialogContent centerContent={true} frostedOverlay={true}>
         <ScrollWrapper>
@@ -79,6 +77,22 @@ const DialogBody = styled.div({
 
   [mq.md]: {
     paddingBottom: theme.space.xxl,
+  },
+})
+
+const TextButton = styled.button({
+  marginLeft: theme.space.xxs,
+  cursor: 'pointer',
+  textDecoration: 'underline',
+
+  '&:focus-visible': {
+    boxShadow: theme.shadow.focus,
+  },
+
+  '@media (hover: hover)': {
+    '&:hover': {
+      textDecorationColor: theme.colors.textPrimary,
+    },
   },
 })
 
