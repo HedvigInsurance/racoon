@@ -110,6 +110,7 @@ const CloseButton = styled.button({
   backgroundColor: theme.colors.translucent1,
   cursor: 'pointer',
   zIndex: 1,
+  backdropFilter: 'blur(30px)',
 
   '&:hover': {
     backgroundColor: theme.colors.translucent2,
