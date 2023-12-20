@@ -13,7 +13,6 @@ export const globalStory: GlobalStory = {
   parent_id: 194195645,
   meta_data: null,
   group_id: 'a903696e-a2dc-4360-b023-48327abb01ab',
-  first_published_at: '2022-08-23T07:40:24.747Z',
   lang: 'default',
   alternates: [],
   created_at: '2021-03-02T10:00:00.000Z',
