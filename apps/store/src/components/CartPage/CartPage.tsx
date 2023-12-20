@@ -52,38 +52,39 @@ export const CartPage = () => {
       <Space y={{ base: 3.5, lg: 5 }}>
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
-            <Space y={3.5}>
+            <Space y={2}>
               <Heading as="h2" align="center" variant="standard.24">
                 {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
               </Heading>
-
-              <ShopBreakdown>
-                {shopSession.cart.entries.map((item) => (
-                  <ProductItemContainer
-                    key={item.id}
-                    offer={item}
-                    defaultExpanded={router.query[QueryParam.ExpandCart] === '1'}
-                  >
-                    <EditActionButton shopSessionId={shopSession.id} offer={item} />
-                    <RemoveActionButton
-                      shopSessionId={shopSession.id}
+              <Space y={1}>
+                <ShopBreakdown>
+                  {shopSession.cart.entries.map((item) => (
+                    <ProductItemContainer
+                      key={item.id}
                       offer={item}
-                      title={item.product.displayNameFull}
-                    />
-                  </ProductItemContainer>
-                ))}
-                <DiscountFieldContainer shopSession={shopSession} />
-                <Divider />
-                <TotalAmountContainer cart={shopSession.cart} />
-              </ShopBreakdown>
+                      defaultExpanded={router.query[QueryParam.ExpandCart] === '1'}
+                    >
+                      <EditActionButton shopSessionId={shopSession.id} offer={item} />
+                      <RemoveActionButton
+                        shopSessionId={shopSession.id}
+                        offer={item}
+                        title={item.product.displayNameFull}
+                      />
+                    </ProductItemContainer>
+                  ))}
+                  <DiscountFieldContainer shopSession={shopSession} />
+                  <Divider />
+                  <TotalAmountContainer cart={shopSession.cart} />
+                </ShopBreakdown>
 
-              {offerRecommendation && (
-                <QuickAddOfferContainer
-                  cart={shopSession.cart}
-                  shopSessionId={shopSession.id}
-                  {...offerRecommendation}
-                />
-              )}
+                {offerRecommendation && (
+                  <QuickAddOfferContainer
+                    cart={shopSession.cart}
+                    shopSessionId={shopSession.id}
+                    {...offerRecommendation}
+                  />
+                )}
+              </Space>
 
               <ButtonNextLink
                 href={PageLink.checkout({ expandCart: true }).toRelative()}
