@@ -67,7 +67,6 @@
     "react-dom": "18.2.0",
     "react-i18next": "13.5.0",
     "react-wrap-balancer": "1.1.0",
-    "storyblok-js-client": "5.14.4",
     "storyblok-rich-text-react-renderer": "2.9.1",
     "tss-react": "4.9.3",
     "ui": "workspace:",

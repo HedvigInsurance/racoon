@@ -3,7 +3,7 @@
 
 import { ISbStoryData, ISbStoriesParams } from '@storyblok/react'
 import { NextApiRequest, NextApiResponse } from 'next'
-import StoryblokClient from 'storyblok-js-client'
+import { getStoryblokApi } from '@/services/storyblok/api'
 import { fetchStory } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
@@ -15,10 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { version, pageId } = getPreviewParams(req)
   let story: ISbStoryData
   try {
-    const client = new StoryblokClient({
-      accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
-    })
-    story = await fetchStory(client, pageId, { version })
+    story = await fetchStory(getStoryblokApi(), pageId, { version })
   } catch (error) {
     return res.status(401).json({ message: 'Invalid page ID' })
   }

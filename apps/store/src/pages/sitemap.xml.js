@@ -1,5 +1,5 @@
+import { getStoryblokApi } from '@/services/storyblok/api'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import StoryblokClient from 'storyblok-js-client'
 
 const removeTrailingSlash = (url) => {
   return url.endsWith('/') ? url.slice(0, -1) : url
@@ -35,15 +35,11 @@ const getFilteredPages = async () => {
    * - draft pages
    */
 
-  const storyblokClient = new StoryblokClient({
-    accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
-  })
-
   const cacheVersion = STORYBLOK_CACHE_VERSION ? parseInt(STORYBLOK_CACHE_VERSION) : NaN
   const isCacheVersionValid = !isNaN(cacheVersion)
   const cv = isCacheVersionValid ? cacheVersion : undefined
 
-  const filteredPages = await storyblokClient.getAll('cdn/stories', {
+  const filteredPages = await getStoryblokApi().getAll('cdn/stories', {
     excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*, */widget/*`,
     'filter_query[robots][not_in]': 'noindex',
     cv,
