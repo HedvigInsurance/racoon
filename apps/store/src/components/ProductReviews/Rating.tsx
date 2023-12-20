@@ -45,7 +45,7 @@ export const Rating = (props: Props) => {
 }
 
 const Wrapper = styled.div({
-  display: 'inline-flex',
+  display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
 })
