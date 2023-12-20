@@ -8,8 +8,7 @@ import { useProductPageContext } from '@/components/ProductPage/ProductPageConte
 import { Stars } from '@/components/ProductReviews/Stars'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
-
-const MAX_SCORE = 5
+import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 
 type AverageRating = NonNullable<ReturnType<typeof useProductPageContext>['averageRating']>
 
