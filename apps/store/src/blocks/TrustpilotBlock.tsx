@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'react-i18next'
-import { Text, theme, mq } from 'ui'
+import { Text, InfoIcon, theme, mq } from 'ui'
+import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { LinkField } from '@/services/storyblok/storyblok'
@@ -27,19 +28,23 @@ export const TrustpilotBlock = ({ blok }: Props) => {
 
   return (
     <Wrapper {...storyblokEditable(blok)}>
+      <StyledTrustpilotLogo />
+
       <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: data.score })}</ScoreText>
-      <Link
-        href={getLinkFieldURL(blok.link)}
-        target={isInternalLink ? '_self' : '_blank'}
-        rel="noopener"
-      >
-        <ReviewText as="span" color="textSecondaryOnGray">
+
+      <ReviewText as="span" size="md" color="textSecondaryOnGray">
+        <a href={getLinkFieldURL(blok.link)} target={isInternalLink ? '_self' : '_blank'}>
           {t('TRUSTPILOT_REVIEWS_COUNT', {
             numberOfReviews: numberGrouping(data.totalReviews),
           })}
-          <TrustpilotLogo width="7em" />
-        </ReviewText>
-      </Link>
+        </a>
+
+        <Tooltip message={t('TRUSTPILOT_REVIEWS_DISCLAIMER')}>
+          <button>
+            <InfoIcon size="1em" color={theme.colors.textSecondary} />
+          </button>
+        </Tooltip>
+      </ReviewText>
     </Wrapper>
   )
 }
@@ -68,28 +73,24 @@ const Wrapper = styled.div({
   },
 })
 
-const Link = styled.a({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: theme.space.md,
+const StyledTrustpilotLogo = styled(TrustpilotLogo)({
+  width: '1em',
+
+  [mq.sm]: {
+    width: '0.85em',
+  },
 })
 
 const ScoreText = styled(Text)({
   fontSize: '1em',
+  lineHeight: 1,
 })
 
 const ReviewText = styled(Text)({
-  display: 'inline-flex',
-  alignItems: 'end',
-  gap: theme.space.xxs,
-  fontSize: '0.16em',
-
-  [mq.lg]: {
-    gap: theme.space.xs,
-    fontSize: '0.12em',
-  },
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.space.xs,
+  marginTop: theme.space.lg,
 })
 
 TrustpilotBlock.blockName = 'trustpilot'
