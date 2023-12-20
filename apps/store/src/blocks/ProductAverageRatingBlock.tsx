@@ -5,8 +5,8 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { Stars } from '@/components/ProductReviews/Stars'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Stars } from '@/components/Stars/Stars'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 const MAX_SCORE = 5
@@ -42,7 +42,7 @@ export const ProductAverageRatingBlock = () => {
           }}
         >
           <Wrapper>
-            <Stars score={averageRating.score} />
+            <Stars score={String(averageRating.score)} />
 
             <SpaceFlex direction="horizontal" space={0.5} align="center">
               <Text size={{ _: 'sm', md: 'md' }}>

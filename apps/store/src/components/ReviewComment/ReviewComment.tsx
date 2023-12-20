@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text, theme, mq } from 'ui'
-import { Stars } from '@/components/Stars/Stars'
+import { Stars } from '@/components/ProductReviews/Stars'
 import { useFormatter } from '@/utils/useFormatter'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { VerifiedIcon } from './VerifiedIcon'
@@ -18,7 +18,7 @@ export const ReviewComment = ({ content, date, score }: Props) => {
 
   return (
     <Wrapper>
-      <Stars score={score} />
+      <Stars score={String(score)} />
       <Content>
         <Text balance={true}>{content}</Text>
       </Content>

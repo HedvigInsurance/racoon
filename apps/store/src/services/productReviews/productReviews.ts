@@ -57,5 +57,5 @@ export const getProductReviewComments = async (productId: string) => {
     return null
   }
 
-  return validationResult.data
+  return productReviewComments
 }
