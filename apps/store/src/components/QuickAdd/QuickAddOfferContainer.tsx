@@ -57,6 +57,7 @@ export const QuickAddOfferContainer = (props: Props) => {
           mainOfferPillow={homeInsuranceInCart?.product.pillowImage}
           href={props.product.pageLink}
           price={price}
+          badge={{ children: t('QUICK_ADD_BADGE_LABEL') }}
           Body={
             // Assume Accident insurance
             <>
