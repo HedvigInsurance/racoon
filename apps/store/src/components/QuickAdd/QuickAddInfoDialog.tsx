@@ -86,7 +86,6 @@ const DialogBody = styled.div({
 })
 
 const TextButton = styled.button({
-  marginLeft: theme.space.xxs,
   cursor: 'pointer',
   textDecoration: 'underline',
 
