@@ -1,5 +1,6 @@
 import { GlobalStory, ProductStory } from '@/services/storyblok/storyblok'
 
+// @ts-expect-error TODO: find a way to mock without specifying every property most of which we don't use
 export const globalStory: GlobalStory = {
   id: 123,
   uuid: '123',
@@ -43,6 +44,7 @@ const storyblokStory = {
   tag_list: [],
 }
 
+// @ts-expect-error TODO: find a way to mock without specifying every property most of which we don't use
 export const productStoryBRF: ProductStory = {
   ...storyblokStory,
   content: {

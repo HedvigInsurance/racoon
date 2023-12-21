@@ -100,6 +100,7 @@ const cart = {
 }
 
 // TODO: get this from some fixture module
+// @ts-expect-error TODO: find a way to mock without specifying every property most of which we don't use
 const story: ConfirmationStory = {
   ...storyblokStory,
   content: {
