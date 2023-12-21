@@ -1,4 +1,4 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
@@ -16,6 +16,7 @@ import {
   getPageLinks,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -23,7 +24,7 @@ type PageProps = Pick<StoryblokPageProps, 'story' | 'trustpilot'>
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
   useHydrateTrustpilotData(props.trustpilot)
-  const story = useStoryblokState(props.story)
+  const story = useEditableStory(props.story)
 
   if (!story) return null
 
