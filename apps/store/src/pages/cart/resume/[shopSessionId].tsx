@@ -1,4 +1,4 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent } from '@storyblok/react'
 import { type GetServerSideProps, type NextPageWithLayout } from 'next'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
@@ -7,6 +7,7 @@ import { addApolloState, initializeApolloServerSide } from '@/services/apollo/cl
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { PageStory, getStoryBySlug } from '@/services/storyblok/storyblok'
+import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type Props = {
@@ -18,7 +19,7 @@ type Params = {
 }
 
 const NextPage: NextPageWithLayout<Props> = (props) => {
-  const story = useStoryblokState(props.story)
+  const story = useEditableStory(props.story)
   if (!story) return null
 
   return (

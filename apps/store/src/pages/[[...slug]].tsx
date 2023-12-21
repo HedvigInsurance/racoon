@@ -1,4 +1,4 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
@@ -23,6 +23,7 @@ import {
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -39,7 +40,7 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
 }
 
 const NextStoryblokPage = (props: NextContentPageProps) => {
-  const story = useStoryblokState(props.story)
+  const story = useEditableStory(props.story)
   if (!story) return null
   const abTestOriginStory = story.content.abTestOrigin
   // Always use robots value from the source page in A/B test cases
@@ -62,7 +63,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 const NextProductPage = (props: ProductPageProps) => {
   const { story: initialStory, ...pageProps } = props
 
-  const story = useStoryblokState(initialStory)
+  const story = useEditableStory(initialStory)
   if (!story) return null
 
   return (

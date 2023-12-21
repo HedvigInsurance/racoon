@@ -1,4 +1,4 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { StoryblokComponent } from '@storyblok/react'
 import type { GetStaticProps, GetStaticPaths } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
@@ -13,6 +13,7 @@ import {
   getStoryBySlug,
 } from '@/services/storyblok/storyblok'
 import { isWidgetFlowStory } from '@/services/storyblok/Storyblok.helpers'
+import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 const EXAMPLE_PRODUCT_NAME = 'SE_APARTMENT_RENT'
@@ -23,7 +24,7 @@ type PageProps = {
 }
 
 const WidgetCmsPage = (props: PageProps) => {
-  const story = useStoryblokState(props.story)
+  const story = useEditableStory(props.story)
 
   if (!story) return null
 
