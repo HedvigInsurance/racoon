@@ -1,4 +1,4 @@
-import { StoryblokComponent } from '@storyblok/react'
+import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
@@ -11,14 +11,13 @@ import {
   StoryblokQueryParams,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type PageProps = { story: PageStory }
 
 const ManyPetsCmsPage = ({ story: initialStory }: PageProps) => {
-  const story = useEditableStory(initialStory)
+  const story = useStoryblokState(initialStory)
   if (!story) return null
 
   return (

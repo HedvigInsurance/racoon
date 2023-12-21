@@ -1,8 +1,7 @@
-import { StoryblokComponent } from '@storyblok/react'
+import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { getStoryBySlug, ReusableStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
-import { useEditableStory } from '@/services/storyblok/useEditableStory'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type ReusableBlockPageProps = {
@@ -10,7 +9,7 @@ type ReusableBlockPageProps = {
 }
 
 const NextReusableBlockPage: NextPage<ReusableBlockPageProps> = (props) => {
-  const story = useEditableStory(props.story)
+  const story = useStoryblokState(props.story)
   if (!story) return null
 
   return (
