@@ -10,6 +10,7 @@ export const DismissButton = () => {
   const handleDismiss = () => {
     datadogRum.addAction('Quick Add Hide')
     setShow(false)
+    window.scrollTo({ top: 0 })
   }
 
   return (
