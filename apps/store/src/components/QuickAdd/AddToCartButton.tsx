@@ -21,7 +21,7 @@ export const AddToCartButton = (props: Props) => {
         productOfferId: props.offer.id,
         product: props.productName,
       })
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.scrollTo({ top: 0 })
     },
   })
 
