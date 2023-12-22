@@ -1,7 +1,7 @@
 import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
-import addDays from 'date-fns/addDays'
+import { addDays } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
