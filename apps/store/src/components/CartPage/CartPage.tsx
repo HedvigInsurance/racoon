@@ -76,21 +76,22 @@ export const CartPage = () => {
                   <Divider />
                   <TotalAmountContainer cart={shopSession.cart} />
                 </ShopBreakdown>
-
-                {offerRecommendation && (
-                  <QuickAddOfferContainer
-                    cart={shopSession.cart}
-                    shopSessionId={shopSession.id}
-                    {...offerRecommendation}
-                  />
-                )}
-                <ButtonNextLink
-                  href={PageLink.checkout({ expandCart: true }).toRelative()}
-                  onClick={handleClickCheckout}
-                >
-                  {t('CHECKOUT_BUTTON')}
-                </ButtonNextLink>
               </Space>
+
+              {offerRecommendation && (
+                <QuickAddOfferContainer
+                  cart={shopSession.cart}
+                  shopSessionId={shopSession.id}
+                  {...offerRecommendation}
+                />
+              )}
+
+              <ButtonNextLink
+                href={PageLink.checkout({ expandCart: true }).toRelative()}
+                onClick={handleClickCheckout}
+              >
+                {t('CHECKOUT_BUTTON')}
+              </ButtonNextLink>
             </Space>
           </GridLayout.Content>
         </GridLayout.Root>
