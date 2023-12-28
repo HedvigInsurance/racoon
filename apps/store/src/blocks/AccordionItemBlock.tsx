@@ -1,10 +1,10 @@
-import styled from '@emotion/styled'
-import { storyblokEditable, renderRichText, ISbRichtext } from '@storyblok/react'
-import { useId } from 'react'
-import { Text, mq, theme } from 'ui'
+import { storyblokEditable, type ISbRichtext } from '@storyblok/react'
+import { useId, useMemo } from 'react'
+import { Text } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
-import { richTextStyles } from '@/components/RichText/RichText.styles'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { RichText } from '@/components/RichText/RichText'
+import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { renderRichText } from './RichTextBlock/RichTextBlock'
 
 export type AccordionItemBlockProps = SbBaseBlockProps<{
   title: string
@@ -13,7 +13,7 @@ export type AccordionItemBlockProps = SbBaseBlockProps<{
 
 export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) => {
   const defaultId = useId()
-  const contentHtml = renderRichText(blok.body)
+  const content = useMemo(() => renderRichText(blok.body), [blok.body])
   const value = blok._uid || defaultId
 
   return (
@@ -22,36 +22,9 @@ export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) 
         <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
       </Accordion.HeaderWithTrigger>
       <Accordion.Content open={openItem === value} asChild={true}>
-        <ContentWrapper>
-          <Content dangerouslySetInnerHTML={{ __html: contentHtml }} />
-        </ContentWrapper>
+        <RichText>{content}</RichText>
       </Accordion.Content>
     </Accordion.Item>
   )
 }
 AccordionItemBlock.blockName = 'accordionItem'
-
-const ContentWrapper = styled.div({
-  paddingTop: theme.space.xxs,
-  paddingBottom: theme.space.md,
-
-  [mq.lg]: {
-    paddingTop: 0,
-    paddingBottom: theme.space.lg,
-  },
-})
-
-const Content = styled.div(richTextStyles, {
-  p: {
-    marginBlock: 0,
-    color: theme.colors.textSecondaryOnGray,
-  },
-
-  a: {
-    textDecorationColor: theme.colors.gray500,
-  },
-
-  '& > *:not(:last-of-type)': {
-    marginBottom: theme.space.md,
-  },
-})
