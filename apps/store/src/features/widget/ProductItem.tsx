@@ -4,7 +4,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, CrossIconSmall, InfoIcon, Space, Text, mq, theme } from 'ui'
+import { Button, ButtonProps, CrossIconSmall, InfoIcon, LockIcon, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDate } from '@/components/InputDate/InputDate'
 import { InputDay } from '@/components/InputDay/InputDay'
@@ -30,6 +30,7 @@ type Props = {
   exposure: string
   variant?: 'green'
   tooltip: string
+  autoSwitch: boolean
   startDate?: string
   onChangeStartDate: (value: string) => void
   disableStartDate?: boolean
@@ -78,18 +79,38 @@ export const ProductItem = (props: Props) => {
                 <Text as="p" color="textTranslucentSecondary">
                   {props.exposure}
                 </Text>
-                <Tooltip message={props.tooltip}>
-                  <button onClick={handleClickTooltip}>
-                    <InfoIcon color={theme.colors.textSecondary} />
-                  </button>
-                </Tooltip>
+                {!props.autoSwitch && (
+                  <Tooltip message={props.tooltip}>
+                    <button onClick={handleClickTooltip}>
+                      <InfoIcon color={theme.colors.textSecondary} />
+                    </button>
+                  </Tooltip>
+                )}
               </SpaceFlex>
             </div>
           </Header>
         </Space>
       </Hoverable>
 
-      {USE_DAY_PICKER ? (
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {props.autoSwitch ? (
+        <FakeInput>
+          <Text as="p" color="textTranslucentSecondary" size="xs">
+            {t('purchase-form:START_DATE_FIELD_LABEL')}
+          </Text>
+          <FakeInputRow>
+            <Text as="p" size="xl">
+              {t('CART_ENTRY_AUTO_SWITCH')}
+            </Text>
+
+            <Tooltip message={props.tooltip}>
+              <button onClick={handleClickTooltip}>
+                <LockIcon size="1rem" color={theme.colors.textSecondary} />
+              </button>
+            </Tooltip>
+          </FakeInputRow>
+        </FakeInput>
+      ) : USE_DAY_PICKER ? (
         <InputDay
           label={t('purchase-form:START_DATE_FIELD_LABEL')}
           selected={convertToDate(props.startDate) ?? undefined}
@@ -199,4 +220,19 @@ const DeleteButton = styled.button({
   '&:hover': {
     backgroundColor: theme.colors.grayTranslucent300,
   },
+})
+
+const FakeInput = styled.div({
+  position: 'relative',
+  padding: theme.space.sm,
+  backgroundColor: theme.colors.translucent1,
+  borderRadius: theme.radius.sm,
+  height: '4.5rem',
+  width: '100%',
+})
+
+const FakeInputRow = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 })

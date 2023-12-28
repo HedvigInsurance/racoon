@@ -273,6 +273,19 @@ export const PageLink = {
       ORIGIN_URL,
     )
   },
+  widgetSwitch: (params: WidgetParams) => {
+    return new URL(
+      [
+        localePrefix(params.locale),
+        'widget/run',
+        params.flow,
+        params.shopSessionId,
+        params.priceIntentId,
+        'switch',
+      ].join('/'),
+      ORIGIN_URL,
+    )
+  },
   widgetSign: (params: WidgetParams) => {
     return new URL(
       [

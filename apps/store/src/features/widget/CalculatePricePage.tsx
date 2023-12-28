@@ -12,15 +12,19 @@ import { PriceLoader, completePriceLoader } from '@/components/PriceLoader'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
+  ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
   type WidgetPriceIntentFragment,
 } from '@/services/graphql/generated'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
+
+const WIDGET_SWITCH = Features.enabled('WIDGET_SWITCH')
 
 type Props = {
   shopSession: ShopSession
@@ -47,17 +51,30 @@ export const CalculatePricePage = (props: Props) => {
       await priceLoaderPromise.current
       setLoading(false)
     },
-    async onSuccess(_, updatedCart) {
+    async onSuccess(productOfferId, updatedCart) {
       datadogLogs.logger.debug('Widget | Added to cart')
       tracking.reportViewCart(updatedCart)
+
       await priceLoaderPromise.current
-      await router.push(
-        PageLink.widgetSign({
-          flow: props.flow,
-          shopSessionId: props.shopSession.id,
-          priceIntentId: props.priceIntent.id,
-        }),
-      )
+
+      const offer = updatedCart.entries.find((item) => item.id === productOfferId)
+      if (WIDGET_SWITCH && offer?.cancellation.option === ExternalInsuranceCancellationOption.Iex) {
+        await router.push(
+          PageLink.widgetSwitch({
+            flow: props.flow,
+            shopSessionId: props.shopSession.id,
+            priceIntentId: props.priceIntent.id,
+          }),
+        )
+      } else {
+        await router.push(
+          PageLink.widgetSign({
+            flow: props.flow,
+            shopSessionId: props.shopSession.id,
+            priceIntentId: props.priceIntent.id,
+          }),
+        )
+      }
     },
   })
 
