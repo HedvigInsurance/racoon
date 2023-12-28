@@ -4,14 +4,16 @@ import { type ComponentProps } from 'react'
 import { Text } from 'ui'
 import { nestedLinkStyles } from './RichText/RichText.styles'
 
-type WithLinkProps = Pick<ComponentProps<typeof Link>, 'href' | 'target'> & { children: string }
+type WithLinkProps = Pick<ComponentProps<typeof Link>, 'href' | 'target' | 'rel'> & {
+  children: string
+}
 
 type Props = WithLinkProps & ComponentProps<typeof Text>
 
-export const TextWithLink = ({ children, href, target, ...otherProps }: Props) => {
+export const TextWithLink = ({ children, href, target, rel, ...otherProps }: Props) => {
   return (
     <Text {...otherProps}>
-      <WithLink href={href} target={target}>
+      <WithLink href={href} target={target} rel={rel}>
         {children}
       </WithLink>
     </Text>
@@ -26,10 +28,13 @@ export const WithLink = (props: WithLinkProps) => {
 
   const [linkText, afterLink] = rest.split(']]', 2)
 
+  // If no rel is provided, we default to noopener for external links
+  const rel = props.rel ?? props.target === '_blank' ? 'noopener' : undefined
+
   return (
     <NestedLink>
       {beforeLink}
-      <Link href={props.href} target={props.target}>
+      <Link href={props.href} target={props.target} rel={rel}>
         {linkText}
       </Link>
       {afterLink}

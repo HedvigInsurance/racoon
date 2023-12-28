@@ -26,6 +26,9 @@ export const TrustpilotBlock = ({ blok }: Props) => {
 
   const isInternalLink = blok.link.linktype === 'story'
 
+  // If no rel is provided, we default to noopener for external links
+  const rel = blok.link.rel ?? isInternalLink ? undefined : 'noopener'
+
   return (
     <Wrapper {...storyblokEditable(blok)}>
       <StyledTrustpilotLogo />
@@ -33,7 +36,7 @@ export const TrustpilotBlock = ({ blok }: Props) => {
       <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: data.score })}</ScoreText>
 
       <ReviewText as="span" size="md" color="textSecondaryOnGray">
-        <a href={getLinkFieldURL(blok.link)} target={isInternalLink ? '_self' : '_blank'}>
+        <a href={getLinkFieldURL(blok.link)} target={isInternalLink ? '_self' : '_blank'} rel={rel}>
           {t('TRUSTPILOT_REVIEWS_COUNT', {
             numberOfReviews: numberGrouping(data.totalReviews),
           })}

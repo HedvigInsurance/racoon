@@ -22,7 +22,7 @@ type CustomButtonProps = {
 export type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  const { variant = 'primary', loading, children, target, title, ...baseProps } = props
+  const { variant = 'primary', loading, children, target, title, rel, ...baseProps } = props
 
   const buttonChildren = (
     <>
@@ -44,7 +44,8 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ref,
     disabled: props.disabled || loading,
     ...(loading && { 'data-loading': true }),
-    ...(target === '_blank' && { target: '_blank', rel: 'noreferrer' }),
+    ...(target === '_blank' && { target: '_blank', rel: 'noopener' }),
+    ...(rel ? { rel: rel } : {}),
     ...(title ? { title: title } : {}),
   } as const
 

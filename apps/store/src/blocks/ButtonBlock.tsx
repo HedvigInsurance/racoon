@@ -37,6 +37,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
         variant={blok.variant ?? 'primary'}
         size={blok.size ?? 'medium'}
         target={blok.link.target}
+        rel={blok.link.rel}
         title={blok.link.title}
         loading={blok.showLoading && loading}
       >
