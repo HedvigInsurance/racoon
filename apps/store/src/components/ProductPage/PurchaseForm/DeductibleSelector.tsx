@@ -73,7 +73,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
           <Link
             href={PageLink.deductibleHelp({ locale: routingLocale })}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Text as="span" size="xs">
               {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
