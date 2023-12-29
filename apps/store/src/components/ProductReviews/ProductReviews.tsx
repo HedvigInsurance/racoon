@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useState, type MouseEventHandler } from 'react'
+import { useState } from 'react'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type {
@@ -18,13 +17,7 @@ import { Rating } from './Rating'
 import { ReviewComment, type Review } from './ReviewComment'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 import { ReviewsFilter } from './ReviewsFilter'
-
-const Tabs = {
-  PRODUCT: 'product',
-  TRUSTPILOT: 'trustpilot',
-} as const
-
-type Tab = (typeof Tabs)[keyof typeof Tabs]
+import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
 
 type Props = {
   tooltipText?: string
@@ -33,17 +26,10 @@ type Props = {
 export const ProductReviews = (props: Props) => {
   const { t } = useTranslation('common')
 
-  const { averageRating } = useProductPageContext()
-  const trustpilotData = useTrustpilotData()
   const getReviewsData = useGetReviewsData()
 
   const [selectedScore, setSelectedScore] = useState<Score>(5)
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tabs.PRODUCT)
-
-  const handleTabChange: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const tab = event.currentTarget.value as Tab
-    setSelectedTab(tab)
-  }
+  const [selectedTab, setSelectedTab] = useState<Tab>(TABS.PRODUCT)
 
   const reviewsData = getReviewsData(selectedTab, selectedScore)
   if (!reviewsData) {
@@ -62,37 +48,16 @@ export const ProductReviews = (props: Props) => {
       />
 
       <Space y={1}>
-        {averageRating && trustpilotData && (
-          <SpaceFlex space={0.5}>
-            <Button
-              value={Tabs.PRODUCT}
-              size="medium"
-              variant={selectedTab === Tabs.PRODUCT ? 'primary-alt' : 'secondary'}
-              fullWidth={true}
-              onClick={handleTabChange}
-            >
-              {t('PRODUCT_REVIEWS_TAB_LABEL', { score: averageRating.score })}
-            </Button>
-            <Button
-              value={Tabs.TRUSTPILOT}
-              size="medium"
-              variant={selectedTab === Tabs.TRUSTPILOT ? 'primary-alt' : 'secondary'}
-              fullWidth={true}
-              onClick={handleTabChange}
-            >
-              {t('TRUSTPILOT_REVIEWS_TAB_LABEL', { score: trustpilotData.score })}
-            </Button>
-          </SpaceFlex>
-        )}
+        <ReviewTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
-        {selectedTab === Tabs.PRODUCT && (
+        {selectedTab === TABS.PRODUCT && (
           <div>
             {reviewsDistribution.map(([score, percentage]) => (
               <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
             ))}
           </div>
         )}
-        {selectedTab === Tabs.TRUSTPILOT && (
+        {selectedTab === TABS.TRUSTPILOT && (
           <StyledTrustpilotWidget variant="mini" data-style-height="112px" />
         )}
 
@@ -118,26 +83,9 @@ export const ProductReviews = (props: Props) => {
                 />
 
                 <Space y={1}>
-                  {averageRating && trustpilotData && (
-                    <SpaceFlex space={0.5}>
-                      <Button
-                        value={Tabs.PRODUCT}
-                        size="medium"
-                        variant={selectedTab === Tabs.PRODUCT ? 'primary-alt' : 'secondary'}
-                        fullWidth={true}
-                        onClick={handleTabChange}
-                      >{`Omdömen (${averageRating.score})`}</Button>
-                      <Button
-                        value={Tabs.TRUSTPILOT}
-                        size="medium"
-                        variant={selectedTab === Tabs.TRUSTPILOT ? 'primary-alt' : 'secondary'}
-                        fullWidth={true}
-                        onClick={handleTabChange}
-                      >{`Trustpilot (${trustpilotData.score})`}</Button>
-                    </SpaceFlex>
-                  )}
+                  <ReviewTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
-                  {selectedTab === Tabs.PRODUCT && (
+                  {selectedTab === TABS.PRODUCT && (
                     <ReviewsFilter
                       reviewsDistribution={reviewsDistribution}
                       selectedScore={selectedScore}
@@ -170,23 +118,23 @@ const useGetReviewsData = () => {
     }
 
     const rating = { score: 0, totalOfReviews: 0 }
-    if (selectedTab === Tabs.PRODUCT && averageRating) {
+    if (selectedTab === TABS.PRODUCT && averageRating) {
       rating.score = averageRating.score
       rating.totalOfReviews = averageRating.reviewCount
-    } else if (selectedTab === Tabs.TRUSTPILOT && trustpilotData) {
+    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
       rating.score = trustpilotData.score
       rating.totalOfReviews = trustpilotData.totalReviews
     }
 
     let comments: Array<Review> = []
-    if (selectedTab === Tabs.PRODUCT && reviewComments) {
+    if (selectedTab === TABS.PRODUCT && reviewComments) {
       comments = parseProductReviews(reviewComments.commentsByScore[selectedScore].latestComments)
-    } else if (selectedTab === Tabs.TRUSTPILOT && trustpilotData?.reviews) {
+    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData?.reviews) {
       comments = parseCompanyReviews(trustpilotData.reviews)
     }
 
     let reviewsDistribution: ReviewsDistribution = []
-    if (selectedTab === Tabs.PRODUCT && reviewComments) {
+    if (selectedTab === TABS.PRODUCT && reviewComments) {
       reviewsDistribution = getReviewsDistribution(reviewComments)
     }
 
