@@ -14,7 +14,7 @@ export const getReviewsDistribution = (reviews: ReviewComments) => {
   const realReviewsDistribution: ReviewsDistribution = Object.entries(reviews.commentsByScore).map(
     ([score, comments]) => {
       const percentage = (comments.total / reviewsTotal) * 100
-      return [score as Score, percentage]
+      return [Number(score) as Score, percentage]
     },
   )
 

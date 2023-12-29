@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await serverSideTranslations(context.locale)),
       ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
-      trustpilot: await fetchTrustpilotData(),
+      trustpilot: await fetchTrustpilotData(context.locale),
     },
     revalidate: getRevalidate(),
   }

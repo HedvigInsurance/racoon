@@ -3,14 +3,14 @@ import { StarIcon, theme, mq } from 'ui'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 
 type Props = {
-  score: string
+  score: number
 }
 
 export const Stars = (props: Props) => {
   return (
     <Wrapper>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} filled={index < Math.trunc(Number(props.score))} />
+        <Star key={index} filled={index < Math.trunc(props.score)} />
       ))}
     </Wrapper>
   )

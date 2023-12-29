@@ -41,7 +41,7 @@ export const ProductAverageRatingBlock = () => {
           }}
         >
           <Wrapper>
-            <Stars score={String(averageRating.score)} />
+            <Stars score={averageRating.score} />
 
             <SpaceFlex direction="horizontal" space={0.5} align="center">
               <Text size={{ _: 'sm', md: 'md' }}>
