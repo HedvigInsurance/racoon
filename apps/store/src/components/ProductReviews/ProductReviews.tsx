@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
-import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
+import React, { useState } from 'react'
+import { Space, theme } from 'ui'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type {
@@ -14,9 +13,9 @@ import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { type Review as CompanyReview } from '@/services/trustpilot/trustpilot.types'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { Rating } from './Rating'
-import { ReviewComment, type Review } from './ReviewComment'
+import { type Review } from './ReviewComment'
+import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
-import { ReviewsFilter } from './ReviewsFilter'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
 
 type Props = {
@@ -24,8 +23,6 @@ type Props = {
 }
 
 export const ProductReviews = (props: Props) => {
-  const { t } = useTranslation('common')
-
   const getReviewsData = useGetReviewsData()
 
   const [selectedScore, setSelectedScore] = useState<Score>(5)
@@ -36,7 +33,7 @@ export const ProductReviews = (props: Props) => {
     console.warn('[ProductReviews]: No review data available. Skip rendering.')
     return null
   }
-  const { rating, comments, reviewsDistribution } = reviewsData
+  const { rating, reviewsDistribution, comments } = reviewsData
 
   return (
     <Wrapper y={3.5}>
@@ -61,48 +58,16 @@ export const ProductReviews = (props: Props) => {
           <StyledTrustpilotWidget variant="mini" data-style-height="112px" />
         )}
 
-        <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
-          </Dialog.Trigger>
-
-          <DialogContent centerContent={true}>
-            <DialogWindow>
-              <Dialog.Close asChild={true}>
-                <CloseButton>
-                  <CrossIcon size={'1.5rem'} />
-                </CloseButton>
-              </Dialog.Close>
-
-              <Space y={3.5}>
-                <Rating
-                  score={rating.score}
-                  maxScore={MAX_SCORE}
-                  reviewsCount={rating.totalOfReviews}
-                  explanation={props.tooltipText}
-                />
-
-                <Space y={1}>
-                  <ReviewTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
-
-                  {selectedTab === TABS.PRODUCT && (
-                    <ReviewsFilter
-                      reviewsDistribution={reviewsDistribution}
-                      selectedScore={selectedScore}
-                      onSelectedScoreChange={setSelectedScore}
-                    />
-                  )}
-
-                  <CommentsList y={{ base: 0.5, md: 1 }}>
-                    {comments.map((comment) => (
-                      <Comment key={comment.id} {...comment} />
-                    ))}
-                  </CommentsList>
-                </Space>
-              </Space>
-            </DialogWindow>
-          </DialogContent>
-        </Dialog.Root>
+        <ReviewsDialog
+          reviews={comments}
+          rating={rating}
+          reviewsDistribution={reviewsDistribution}
+          selectedTab={selectedTab}
+          onSelectedTabChange={setSelectedTab}
+          selectedScore={selectedScore}
+          onSelectedScoreChange={setSelectedScore}
+          tooltipText={props.tooltipText}
+        />
       </Space>
     </Wrapper>
   )
@@ -183,70 +148,4 @@ const StyledTrustpilotWidget = styled(TrustpilotWidget)({
   paddingLeft: '2.5rem',
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.md,
-})
-
-const DialogContent = styled(Dialog.Content)({
-  alignSelf: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  width: `calc(100% - ${theme.space.md} * 2)`,
-  maxWidth: '28.5rem',
-  maxHeight: `calc(100% - ${theme.space.md} * 2)`,
-
-  [mq.md]: {
-    width: `calc(100% - ${theme.space.md} * 2)`,
-    maxWidth: '36rem',
-    maxHeight: `calc(100% - ${theme.space.xxxl} * 2)`,
-  },
-})
-
-const DialogWindow = styled(Dialog.Window)({
-  position: 'relative',
-  borderRadius: theme.radius.lg,
-  paddingInline: theme.space.md,
-  paddingBlock: theme.space.xxxl,
-  overflowY: 'auto',
-
-  [mq.md]: {
-    padding: theme.space.xxxl,
-  },
-})
-
-const CloseButton = styled.button({
-  position: 'absolute',
-  top: theme.space.md,
-  right: theme.space.md,
-  borderRadius: '50%',
-  padding: theme.space.xs,
-  cursor: 'pointer',
-
-  [mq.md]: {
-    top: theme.space.lg,
-    right: theme.space.lg,
-  },
-
-  '@media (hover: hover)': {
-    ':hover': {
-      backgroundColor: theme.colors.opaque1,
-    },
-  },
-})
-
-const CommentsList = styled(Space)({
-  marginBottom: `-${theme.space.xxxl}`,
-  overflowY: 'auto',
-})
-
-const Comment = styled(ReviewComment)({
-  width: '100%',
-
-  ':last-of-type': {
-    marginBottom: theme.space.md,
-  },
-
-  [mq.md]: {
-    ':last-of-type': {
-      marginBottom: theme.space.xxl,
-    },
-  },
 })
