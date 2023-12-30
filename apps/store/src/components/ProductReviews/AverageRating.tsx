@@ -11,7 +11,7 @@ type Props = {
   explanation?: string
 }
 
-export const Rating = (props: Props) => {
+export const AverageRating = (props: Props) => {
   const { t } = useTranslation('common')
 
   return (

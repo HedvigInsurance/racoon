@@ -4,16 +4,9 @@ import { Text, theme, mq } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
 import { useFormatter } from '@/utils/useFormatter'
+import { Review } from './ProductReviews.types'
 import { Stars } from './Stars'
 import { VerifiedIcon } from './VerifiedIcon'
-
-export type Review = {
-  id: string
-  type: 'company' | 'product'
-  score: number
-  date: string
-  content: string
-}
 
 type Props = Review & {
   className?: string
