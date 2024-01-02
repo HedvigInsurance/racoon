@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from 'next'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
-import { LayoutWithMenu } from '../components/LayoutWithMenu'
+import { MemberAreaLayout } from '../components/MemberAreaLayout'
 import { InsuranceDetailsSection } from '../InsuranceSection/InsuranceDetailsSection'
 
 export const InsuranceDetailsPage: NextPageWithLayout = () => {
@@ -8,4 +8,4 @@ export const InsuranceDetailsPage: NextPageWithLayout = () => {
   return <>{loading ? 'Loading...' : <InsuranceDetailsSection />}</>
 }
 
-InsuranceDetailsPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+InsuranceDetailsPage.getLayout = (children) => <MemberAreaLayout>{children}</MemberAreaLayout>

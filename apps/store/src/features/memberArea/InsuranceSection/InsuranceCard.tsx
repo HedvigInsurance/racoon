@@ -12,7 +12,7 @@ export const InsuranceCard = ({ contract }: InsuranceCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <HedvigSymbol size="1.5rem" />
+        <HedvigSymbol size="1.5rem" color={theme.colors.textNegative} />
       </CardHeader>
       <Info>
         <Text size="md" color="textNegative">

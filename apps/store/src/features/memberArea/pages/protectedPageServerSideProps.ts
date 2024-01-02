@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { getAccessToken } from '@/services/authApi/persist'
 import { Features } from '@/utils/Features'
@@ -26,10 +27,11 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
   }
 
   const apolloClient = await initializeApolloServerSide({ locale, req, res })
-
+  const layoutWithMenuProps = await getLayoutWithMenuProps(context, apolloClient)
   const translations = await serverSideTranslations(locale)
   return addApolloState(apolloClient, {
     props: {
+      ...layoutWithMenuProps,
       ...translations,
     },
   })
