@@ -7,6 +7,7 @@ import { getReviewsDistribution } from '@/services/productReviews/getReviewsDist
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type { Score } from '@/services/productReviews/productReviews.types'
 import type { Comment, ReviewsDistribution } from '@/services/productReviews/productReviews.types'
+import { TrustpilotWidget } from '@/services/trustpilot/TruspilotWidget'
 import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { Rating } from './Rating'
@@ -76,14 +77,16 @@ export const ProductReviews = (props: Props) => {
           </SpaceFlex>
         )}
 
-        <div>
-          {selectedTab === Tabs.PRODUCT &&
-            reviewsDistribution.map(([score, percentage]) => (
+        {selectedTab === Tabs.PRODUCT && (
+          <div>
+            {reviewsDistribution.map(([score, percentage]) => (
               <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
             ))}
-          {/* TODO: change this with actual Trustpilot widget */}
-          {selectedTab === Tabs.TRUSTPILOT && <div>Trustpilot</div>}
-        </div>
+          </div>
+        )}
+        {selectedTab === Tabs.TRUSTPILOT && (
+          <StyledTrustpilotWidget variant="mini" data-style-height="112px" />
+        )}
 
         {selectedTab === Tabs.PRODUCT && (
           <Dialog.Root>
@@ -177,6 +180,17 @@ const Wrapper = styled(Space)({
   width: 'min(28.5rem, 100%)',
   marginInline: 'auto',
   paddingInline: theme.space.md,
+})
+
+const StyledTrustpilotWidget = styled(TrustpilotWidget)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: theme.space.lg,
+  // Optical alignment so widget gets horizontally centered
+  paddingLeft: '2.5rem',
+  backgroundColor: theme.colors.opaque1,
+  borderRadius: theme.radius.md,
 })
 
 const DialogContent = styled(Dialog.Content)({
