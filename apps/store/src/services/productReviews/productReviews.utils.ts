@@ -5,7 +5,7 @@ export const averageRatingSchema = z.object({
   reviewCount: z.number(),
 })
 
-export const commentSchema = z.object({
+export const reviewSchema = z.object({
   id: z.string(),
   date: z.string(),
   score: z.number(),
@@ -15,16 +15,16 @@ export const commentSchema = z.object({
 
 const commentsByScoreSchema = z.object({
   total: z.number(),
-  latestComments: z.array(commentSchema),
+  latestComments: z.array(reviewSchema),
 })
 
 export const reviewCommentsSchema = z.object({
   commentsByScore: z.object({
-    '5': commentsByScoreSchema,
-    '4': commentsByScoreSchema,
-    '3': commentsByScoreSchema,
-    '2': commentsByScoreSchema,
-    '1': commentsByScoreSchema,
+    5: commentsByScoreSchema,
+    4: commentsByScoreSchema,
+    3: commentsByScoreSchema,
+    2: commentsByScoreSchema,
+    1: commentsByScoreSchema,
   }),
 })
 

@@ -3,7 +3,7 @@ import { Text, theme, mq } from 'ui'
 import { Stars } from './Stars'
 
 type Props = {
-  score: string
+  score: number
   percentage: number
 }
 

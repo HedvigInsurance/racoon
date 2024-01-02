@@ -2,38 +2,49 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text, theme, mq } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
 import { useFormatter } from '@/utils/useFormatter'
 import { Stars } from './Stars'
 import { VerifiedIcon } from './VerifiedIcon'
 
-type Props = {
+export type Review = {
+  id: string
+  type: 'company' | 'product'
   score: number
   date: string
   content: string
+}
+
+type Props = Review & {
   className?: string
 }
 
-export const ReviewComment = ({ content, date, score, className }: Props) => {
+export const ReviewComment = ({ type, score, date, content, className }: Props) => {
   const { t } = useTranslation('common')
   const formatter = useFormatter()
 
   return (
     <Wrapper className={className}>
-      <Stars score={String(score)} />
+      <Stars score={score} />
       <Content>
         <Text balance={true}>{content}</Text>
       </Content>
       <Footer>
         <SpaceFlex direction="horizontal" align="center" space={0.25}>
-          <VerifiedIcon />
+          {type === 'product' && (
+            <>
+              <VerifiedIcon />
 
-          <Text
-            size={{
-              _: 'xs',
-            }}
-          >
-            {t('VERIFIED_CUSTOMER_LABEL')}
-          </Text>
+              <Text
+                size={{
+                  _: 'xs',
+                }}
+              >
+                {t('VERIFIED_CUSTOMER_LABEL')}
+              </Text>
+            </>
+          )}
+          {type === 'company' && <TrustpilotLogo width={97} height={24} />}
         </SpaceFlex>
 
         {formatter.dateFull(new Date(date), { abbreviateMonth: true })}
@@ -53,7 +64,6 @@ const Wrapper = styled.div({
   backgroundColor: theme.colors.opaque1,
   width: 'min(40ch, 100%)',
   minHeight: '8.5rem',
-  maxHeight: '12.5rem',
 
   [mq.md]: {
     padding: theme.space.lg,

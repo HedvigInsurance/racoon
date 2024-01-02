@@ -6,13 +6,13 @@ import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 
 type Props = {
   reviewsDistribution: ReviewsDistribution
-  selectedScore: string
+  selectedScore: number
   onSelectedScoreChange: (score: Score) => void
 }
 
 export const ReviewsFilter = (props: Props) => {
   const handleFilterOptionClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    const selectedScore = event.currentTarget.value as Score
+    const selectedScore = Number(event.currentTarget.value) as Score
     props.onSelectedScoreChange(selectedScore)
   }
 
