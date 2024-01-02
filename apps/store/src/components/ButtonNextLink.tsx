@@ -5,11 +5,11 @@ import { Button } from 'ui'
 type ButtonProps = ComponentProps<typeof Button>
 
 type Props = LinkProps &
-  Partial<Pick<HTMLAnchorElement, 'target' | 'title' | 'download'>> &
+  Partial<Pick<HTMLAnchorElement, 'target' | 'title' | 'download' | 'rel'>> &
   Pick<ButtonProps, 'variant' | 'size' | 'loading' | 'onClick' | 'children' | 'className'>
 
 export const ButtonNextLink = (props: Props) => {
-  const { onClick, variant, size, loading, children, className, title, target, ...linkProps } =
+  const { onClick, variant, size, loading, children, className, title, target, rel, ...linkProps } =
     props
   return (
     <Link {...linkProps} passHref={true} legacyBehavior={true}>
@@ -20,7 +20,8 @@ export const ButtonNextLink = (props: Props) => {
         loading={loading}
         title={title}
         className={className}
-        {...(target === '_blank' ? { target: '_blank', rel: 'noreferrer' } : {})}
+        rel={rel}
+        target={target}
       >
         {children}
       </Button>

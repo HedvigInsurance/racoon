@@ -71,7 +71,12 @@ const PendingContractCard = (props: ContractCardProps) => {
             </Text>
           </div>
           {props.url ? (
-            <ButtonNextLink href={props.url} target="_blank" onClick={handleClickOpen(props.id)}>
+            <ButtonNextLink
+              href={props.url}
+              target="_blank"
+              rel="noreferrer"
+              onClick={handleClickOpen(props.id)}
+            >
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
             </ButtonNextLink>
           ) : (

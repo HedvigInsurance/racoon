@@ -87,6 +87,7 @@ export const ContactUs = () => {
                   data-dd-action-name="Contact us | IOS App"
                   href={getAppStoreLink('apple', routingLocale).toString()}
                   target="_blank"
+                  rel="noopener noreferrer"
                   variant="secondary"
                   size="small"
                   Icon={<AppleIcon size="18px" />}
@@ -98,6 +99,7 @@ export const ContactUs = () => {
                   data-dd-action-name="Contact us | Android App"
                   href={getAppStoreLink('google', routingLocale).toString()}
                   target="_blank"
+                  rel="noopener noreferrer"
                   variant="secondary"
                   size="small"
                   Icon={<AndroidIcon size="18px" />}
