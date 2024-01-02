@@ -5,7 +5,7 @@ export const averageRatingSchema = z.object({
   reviewCount: z.number(),
 })
 
-const commentSchema = z.object({
+export const commentSchema = z.object({
   id: z.string(),
   date: z.string(),
   score: z.number(),

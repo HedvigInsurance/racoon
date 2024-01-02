@@ -1,15 +1,25 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useState, useMemo } from 'react'
+import { useState, type MouseEventHandler } from 'react'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type { Score } from '@/services/productReviews/productReviews.types'
+import type { Comment, ReviewsDistribution } from '@/services/productReviews/productReviews.types'
+import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { Rating } from './Rating'
 import { ReviewComment } from './ReviewComment'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 import { ReviewsFilter } from './ReviewsFilter'
+
+const Tabs = {
+  PRODUCT: 'product',
+  TRUSTPILOT: 'trustpilot',
+} as const
+
+type Tab = (typeof Tabs)[keyof typeof Tabs]
 
 type Props = {
   tooltipText?: string
@@ -17,86 +27,150 @@ type Props = {
 
 export const ProductReviews = (props: Props) => {
   const { t } = useTranslation('common')
-  const { averageRating, reviewComments } = useProductPageContext()
+
+  const { averageRating } = useProductPageContext()
+  const trustpilotData = useTrustpilotData()
+  const getReviewsData = useGetReviewsData()
+
   const [selectedScore, setSelectedScore] = useState<Score>('5')
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tabs.PRODUCT)
 
-  const reviewsDistribution = useMemo(() => {
-    if (!reviewComments) {
-      return []
-    }
-
-    return getReviewsDistribution(reviewComments)
-  }, [reviewComments])
-
-  if (!averageRating || !reviewComments) {
-    // We already log the absence of 'averageRating'/'reviewComments' during build time
-    return null
+  const handleTabChange: MouseEventHandler<HTMLButtonElement> = (event) => {
+    const tab = event.currentTarget.value as Tab
+    setSelectedTab(tab)
   }
 
-  const comments = reviewComments.commentsByScore[selectedScore].latestComments
+  const reviewsData = getReviewsData(selectedTab, selectedScore)
+  if (!reviewsData) {
+    console.warn('[ProductReviews]: No review data available. Skip rendering.')
+    return null
+  }
+  const { rating, comments, reviewsDistribution } = reviewsData
 
   return (
     <Wrapper y={3.5}>
       <Rating
-        score={averageRating.score}
+        score={Number(rating.score)}
         maxScore={MAX_SCORE}
-        reviewsCount={averageRating.reviewCount}
+        reviewsCount={rating.totalOfReviews}
         explanation={props.tooltipText}
       />
 
-      <div>
+      <Space y={1}>
+        {averageRating && trustpilotData && (
+          <SpaceFlex space={0.5}>
+            <Button
+              value={Tabs.PRODUCT}
+              size="medium"
+              variant={selectedTab === Tabs.PRODUCT ? 'primary-alt' : 'secondary'}
+              fullWidth={true}
+              onClick={handleTabChange}
+            >{`Omdömen (${averageRating.score})`}</Button>
+            <Button
+              value={Tabs.TRUSTPILOT}
+              size="medium"
+              variant={selectedTab === Tabs.TRUSTPILOT ? 'primary-alt' : 'secondary'}
+              fullWidth={true}
+              onClick={handleTabChange}
+            >{`Trustpilot (${trustpilotData.score})`}</Button>
+          </SpaceFlex>
+        )}
+
         <div>
-          {reviewsDistribution.map(([score, percentage]) => (
-            <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
-          ))}
+          {selectedTab === Tabs.PRODUCT &&
+            reviewsDistribution.map(([score, percentage]) => (
+              <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
+            ))}
+          {/* TODO: change this with actual Trustpilot widget */}
+          {selectedTab === Tabs.TRUSTPILOT && <div>Trustpilot</div>}
         </div>
 
-        <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
-          </Dialog.Trigger>
+        {selectedTab === Tabs.PRODUCT && (
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
+            </Dialog.Trigger>
 
-          <DialogContent centerContent={true}>
-            <DialogWindow>
-              <Dialog.Close asChild={true}>
-                <CloseButton>
-                  <CrossIcon size={'1.5rem'} />
-                </CloseButton>
-              </Dialog.Close>
+            <DialogContent centerContent={true}>
+              <DialogWindow>
+                <Dialog.Close asChild={true}>
+                  <CloseButton>
+                    <CrossIcon size={'1.5rem'} />
+                  </CloseButton>
+                </Dialog.Close>
 
-              <Space y={3.5}>
-                <Rating
-                  score={averageRating.score}
-                  maxScore={MAX_SCORE}
-                  reviewsCount={averageRating.reviewCount}
-                  explanation={props.tooltipText}
-                />
-
-                <Space y={1}>
-                  <ReviewsFilter
-                    reviewsDistribution={reviewsDistribution}
-                    selectedScore={selectedScore}
-                    onSelectedScoreChange={setSelectedScore}
+                <Space y={3.5}>
+                  <Rating
+                    score={rating.score}
+                    maxScore={MAX_SCORE}
+                    reviewsCount={rating.totalOfReviews}
+                    explanation={props.tooltipText}
                   />
 
-                  <CommentsList y={{ base: 0.5, md: 1 }}>
-                    {comments.map((comment) => (
-                      <Comment
-                        key={comment.id}
-                        score={comment.score}
-                        date={comment.date}
-                        content={comment.content}
-                      />
-                    ))}
-                  </CommentsList>
+                  <Space y={1}>
+                    <ReviewsFilter
+                      reviewsDistribution={reviewsDistribution}
+                      selectedScore={selectedScore}
+                      onSelectedScoreChange={setSelectedScore}
+                    />
+
+                    <CommentsList y={{ base: 0.5, md: 1 }}>
+                      {comments.map((comment) => (
+                        <Comment
+                          key={comment.id}
+                          score={comment.score}
+                          date={comment.date}
+                          content={comment.content}
+                        />
+                      ))}
+                    </CommentsList>
+                  </Space>
                 </Space>
-              </Space>
-            </DialogWindow>
-          </DialogContent>
-        </Dialog.Root>
-      </div>
+              </DialogWindow>
+            </DialogContent>
+          </Dialog.Root>
+        )}
+      </Space>
     </Wrapper>
   )
+}
+
+const useGetReviewsData = () => {
+  const { averageRating, reviewComments } = useProductPageContext()
+  const trustpilotData = useTrustpilotData()
+
+  const getReviewsData = (selectedTab: Tab, selectedScore: Score) => {
+    if (!averageRating && !reviewComments && !trustpilotData) {
+      return null
+    }
+
+    const rating = { score: 0, totalOfReviews: 0 }
+    if (selectedTab === Tabs.PRODUCT && averageRating) {
+      rating.score = averageRating.score
+      rating.totalOfReviews = averageRating.reviewCount
+    } else if (selectedTab === Tabs.TRUSTPILOT && trustpilotData) {
+      rating.score = trustpilotData.score
+      rating.totalOfReviews = trustpilotData.totalReviews
+    }
+
+    let comments: Array<Comment> = []
+    if (selectedTab === Tabs.PRODUCT && reviewComments) {
+      comments = reviewComments.commentsByScore[selectedScore].latestComments
+    }
+
+    let reviewsDistribution: ReviewsDistribution = []
+    if (selectedTab === Tabs.PRODUCT && reviewComments) {
+      reviewsDistribution = getReviewsDistribution(reviewComments)
+    }
+
+    return {
+      rating,
+      comments,
+      reviewsDistribution,
+    }
+  }
+
+  return getReviewsData
 }
 
 const Wrapper = styled(Space)({

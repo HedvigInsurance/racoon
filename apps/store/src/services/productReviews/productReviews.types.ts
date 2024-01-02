@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { reviewCommentsSchema, averageRatingSchema } from './productReviews.utils'
+import { reviewCommentsSchema, averageRatingSchema, commentSchema } from './productReviews.utils'
 
 export type Score = '5' | '4' | '3' | '2' | '1'
 
@@ -12,3 +12,5 @@ export type ReviewsDistribution = Array<ScoreDistributionTuple>
 export type ReviewComments = z.infer<typeof reviewCommentsSchema>
 
 export type AverageRating = z.infer<typeof averageRatingSchema>
+
+export type Comment = z.infer<typeof commentSchema>
