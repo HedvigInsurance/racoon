@@ -3,22 +3,17 @@ import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Space, Heading, mq, theme, Text } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
 import {
   type WidgetPriceIntentFragment,
-  useCancellationRequestedUpdateMutation,
-  useStartDateUpdateMutation,
   type ProductOfferFragment,
   type RedeemedCampaignFragment,
-  useWidgetPriceIntentQuery,
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
-import { convertToDate, formatAPIDate } from '@/utils/date'
 import { PageLink } from '@/utils/PageLink'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
@@ -61,7 +56,7 @@ export const SwitchPage = (props: Props) => {
                 campaign={props.shopSession.cart.redeemedCampaign ?? undefined}
               />
               <Space y={0.25}>
-                <IEXCancellation priceIntentId={props.priceIntent.id} offer={offer} />
+                <CancellationForm priceIntentId={props.priceIntent.id} offer={offer} />
                 <ButtonNextLink
                   href={PageLink.widgetSign({
                     flow: props.flow,
@@ -143,55 +138,5 @@ const ProductPrice = (props: ProductPriceProps) => {
         </Text>
       </Space>
     </SpaceFlex>
-  )
-}
-
-type IEXCancellationProps = {
-  priceIntentId: string
-  offer: ProductOfferFragment
-}
-
-const IEXCancellation = (props: IEXCancellationProps) => {
-  const { t } = useTranslation('purchase-form')
-
-  const { data } = useWidgetPriceIntentQuery({ variables: { priceIntentId: props.priceIntentId } })
-  if (!data) throw new Error('Cancellation | Missing data')
-
-  const productOfferIds = data.priceIntent.offers.map((item) => item.id)
-  const [mutate] = useCancellationRequestedUpdateMutation()
-  const handleCheckedChange = (checked: boolean) => {
-    mutate({ variables: { productOfferIds, requested: checked } })
-  }
-
-  const startDate = convertToDate(props.offer.startDate)
-  const [updateStartDate] = useStartDateUpdateMutation()
-  const handleChangeStartDate = (date: Date) => {
-    updateStartDate({
-      variables: {
-        productOfferIds,
-        startDate: formatAPIDate(date),
-      },
-    })
-  }
-
-  return (
-    <Space y={0.25}>
-      <ToggleCard
-        label={t('AUTO_SWITCH_FIELD_LABEL')}
-        defaultChecked={props.offer.cancellation.requested}
-        onCheckedChange={handleCheckedChange}
-      >
-        {props.offer.cancellation.requested && (
-          <Text as="p" size="xs" color="textSecondary">
-            {t('AUTO_SWITCH_FIELD_MESSAGE', {
-              COMPANY: props.offer.cancellation.externalInsurer?.displayName,
-            })}
-          </Text>
-        )}
-      </ToggleCard>
-      {!props.offer.cancellation.requested && (
-        <InputStartDay date={startDate ?? undefined} onChange={handleChangeStartDate} />
-      )}
-    </Space>
   )
 }
