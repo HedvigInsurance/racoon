@@ -1,7 +1,6 @@
-import { useTranslation } from 'next-i18next'
-import { Space, Text } from 'ui'
+import { Space } from 'ui'
 import { InputStartDay } from '@/components/InputDay/InputStartDay'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
+import { AutoSwitchToggleCard } from './AutoSwitchToggleCard'
 
 type Props = {
   requested: boolean
@@ -9,28 +8,23 @@ type Props = {
   companyName: string
   startDate?: Date
   onStartDateChange: (date: Date) => void
+  loading?: boolean
 }
 
 export const IEXCancellation = (props: Props) => {
-  const { t } = useTranslation('purchase-form')
-
   return (
     <Space y={0.25}>
-      <ToggleCard
-        label={t('AUTO_SWITCH_FIELD_LABEL')}
-        defaultChecked={props.requested}
+      <AutoSwitchToggleCard
+        checked={props.requested}
         onCheckedChange={props.onAutoSwitchChange}
-      >
-        {props.requested && (
-          <Text as="p" size="xs" color="textSecondary">
-            {t('AUTO_SWITCH_FIELD_MESSAGE', {
-              COMPANY: props.companyName,
-            })}
-          </Text>
-        )}
-      </ToggleCard>
+        companyName={props.companyName}
+      />
       {!props.requested && (
-        <InputStartDay date={props.startDate} onChange={props.onStartDateChange} />
+        <InputStartDay
+          date={props.startDate}
+          onChange={props.onStartDateChange}
+          loading={props.loading}
+        />
       )}
     </Space>
   )

@@ -1,4 +1,4 @@
-import { addYears } from 'date-fns'
+import { addYears } from 'date-fns/addYears'
 import { useTranslation } from 'next-i18next'
 import { InputDay } from './InputDay'
 
@@ -7,6 +7,7 @@ type Props = {
   label?: string
   date?: Date
   onChange?: (date: Date) => void
+  loading?: boolean
 }
 
 export const InputStartDay = (props: Props) => {
@@ -30,6 +31,7 @@ export const InputStartDay = (props: Props) => {
       fromDate={fromDate}
       toDate={toDate}
       onSelect={handleSelect}
+      loading={props.loading}
     />
   )
 }

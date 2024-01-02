@@ -57,10 +57,13 @@ export const CalculatePricePage = (props: Props) => {
 
       await priceLoaderPromise.current
 
-      const offer = updatedCart.entries.find((item) => item.id === productOfferId)
-      if (WIDGET_SWITCH && offer?.cancellation.option === ExternalInsuranceCancellationOption.Iex) {
+      const addedOffer = updatedCart.entries.find((item) => item.id === productOfferId)
+      if (
+        !WIDGET_SWITCH ||
+        addedOffer?.cancellation.option === ExternalInsuranceCancellationOption.None
+      ) {
         await router.push(
-          PageLink.widgetSwitch({
+          PageLink.widgetSign({
             flow: props.flow,
             shopSessionId: props.shopSession.id,
             priceIntentId: props.priceIntent.id,
@@ -68,7 +71,7 @@ export const CalculatePricePage = (props: Props) => {
         )
       } else {
         await router.push(
-          PageLink.widgetSign({
+          PageLink.widgetSwitch({
             flow: props.flow,
             shopSessionId: props.shopSession.id,
             priceIntentId: props.priceIntent.id,
