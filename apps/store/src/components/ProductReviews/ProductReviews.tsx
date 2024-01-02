@@ -3,17 +3,13 @@ import React, { useState } from 'react'
 import { Space, theme } from 'ui'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
-import type {
-  Score,
-  ReviewsDistribution,
-  Review as ProductReview,
-} from '@/services/productReviews/productReviews.types'
+import type { Review as ProductReview } from '@/services/productReviews/productReviews.types'
 import { TrustpilotWidget } from '@/services/trustpilot/TruspilotWidget'
 import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { type Review as CompanyReview } from '@/services/trustpilot/trustpilot.types'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
-import { Rating } from './Rating'
-import { type Review } from './ReviewComment'
+import { AverageRating } from './AverageRating'
+import type { Score, Review, ReviewsDistribution } from './ProductReviews.types'
 import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
@@ -33,11 +29,11 @@ export const ProductReviews = (props: Props) => {
     console.warn('[ProductReviews]: No review data available. Skip rendering.')
     return null
   }
-  const { rating, reviewsDistribution, comments } = reviewsData
+  const { rating, reviewsDistribution, reviews } = reviewsData
 
   return (
     <Wrapper y={3.5}>
-      <Rating
+      <AverageRating
         score={Number(rating.score)}
         maxScore={MAX_SCORE}
         reviewsCount={rating.totalOfReviews}
@@ -59,7 +55,7 @@ export const ProductReviews = (props: Props) => {
         )}
 
         <ReviewsDialog
-          reviews={comments}
+          reviews={reviews}
           rating={rating}
           reviewsDistribution={reviewsDistribution}
           selectedTab={selectedTab}
@@ -91,11 +87,11 @@ const useGetReviewsData = () => {
       rating.totalOfReviews = trustpilotData.totalReviews
     }
 
-    let comments: Array<Review> = []
+    let reviews: Array<Review> = []
     if (selectedTab === TABS.PRODUCT && reviewComments) {
-      comments = parseProductReviews(reviewComments.commentsByScore[selectedScore].latestComments)
+      reviews = parseProductReviews(reviewComments.commentsByScore[selectedScore].latestComments)
     } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData?.reviews) {
-      comments = parseCompanyReviews(trustpilotData.reviews)
+      reviews = parseCompanyReviews(trustpilotData.reviews)
     }
 
     let reviewsDistribution: ReviewsDistribution = []
@@ -105,7 +101,7 @@ const useGetReviewsData = () => {
 
     return {
       rating,
-      comments,
+      reviews,
       reviewsDistribution,
     }
   }

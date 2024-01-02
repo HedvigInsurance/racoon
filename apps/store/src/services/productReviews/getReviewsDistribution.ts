@@ -1,9 +1,9 @@
+import type { Score } from '@/components/ProductReviews/ProductReviews.types'
 import type {
   ReviewsDistribution,
-  Score,
   ScoreDistributionTuple,
-  ReviewComments,
-} from './productReviews.types'
+} from '@/components/ProductReviews/ProductReviews.types'
+import type { ReviewComments } from './productReviews.types'
 
 // It uses Largest Remainder Method (LRM) to distribute round the percetages
 // https://stackoverflow.com/questions/13483430/how-to-make-rounded-percentages-add-up-to-100
@@ -21,7 +21,7 @@ export const getReviewsDistribution = (reviews: ReviewComments) => {
   const truncatedReviewsDistribution: ReviewsDistribution = realReviewsDistribution.map(
     ([score, percentage]) => {
       const roundedPercentage = Math.trunc(percentage)
-      return [score as Score, roundedPercentage]
+      return [score, roundedPercentage]
     },
   )
 

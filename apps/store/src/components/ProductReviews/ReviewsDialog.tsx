@@ -2,16 +2,11 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
-import type { Score, ReviewsDistribution } from '@/services/productReviews/productReviews.types'
-import { Rating } from './Rating'
-import { ReviewComment, type Review } from './ReviewComment'
+import { AverageRating } from './AverageRating'
+import type { Review, Rating, Score, ReviewsDistribution } from './ProductReviews.types'
+import { ReviewComment } from './ReviewComment'
 import { ReviewsFilter } from './ReviewsFilter'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
-
-type Rating = {
-  score: number
-  totalOfReviews: number
-}
 
 type Props = {
   reviews: Array<Review>
@@ -51,7 +46,7 @@ export const ReviewsDialog = ({
           </Dialog.Close>
 
           <Space y={3.5}>
-            <Rating
+            <AverageRating
               score={Number(rating.score)}
               maxScore={MAX_SCORE}
               reviewsCount={rating.totalOfReviews}

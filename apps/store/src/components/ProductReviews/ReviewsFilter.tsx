@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { theme } from 'ui'
-import type { ReviewsDistribution } from '@/services/productReviews/productReviews.types'
-import type { Score } from '@/services/productReviews/productReviews.types'
+import type { Score, ReviewsDistribution } from './ProductReviews.types'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 
 type Props = {
