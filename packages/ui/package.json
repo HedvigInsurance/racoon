@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@emotion/is-prop-valid": "1.2.1",
-    "@emotion/react": "11.11.1",
+    "@emotion/react": "11.11.3",
     "@emotion/styled": "11.11.0",
     "@radix-ui/react-dialog": "1.0.5",
     "react": "18.2.0",
