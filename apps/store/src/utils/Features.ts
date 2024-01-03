@@ -20,6 +20,7 @@ const config = {
   CUSTOM_CHAT: process.env.NEXT_PUBLIC_FEATURE_CUSTOM_CHAT === 'true',
   DAY_PICKER: process.env.NEXT_PUBLIC_FEATURE_DAY_PICKER === 'true',
   QUICK_ADD_BUNDLE_VIEW: process.env.NEXT_PUBLIC_FEATURE_QUICK_ADD_BUNDLE_VIEW === 'true',
+  WIDGET_SWITCH: process.env.NEXT_PUBLIC_FEATURE_WIDGET_SWITCH === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

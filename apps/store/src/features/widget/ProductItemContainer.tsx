@@ -16,6 +16,7 @@ type Offer = Pick<
   | 'variant'
   | 'product'
   | 'exposure'
+  | 'cancellation'
 >
 
 type Props = {
@@ -77,6 +78,7 @@ export const ProductItemContainer = (props: Props) => {
       variant={props.variant}
       exposure={props.offer.exposure.displayNameShort}
       tooltip={tooltip}
+      autoSwitch={props.offer.cancellation.requested}
       startDate={props.offer.startDate}
       onChangeStartDate={handleChangeStartDate}
       disableStartDate={props.disableStartDate ?? false}
