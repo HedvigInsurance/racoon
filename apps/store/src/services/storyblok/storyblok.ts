@@ -34,8 +34,6 @@ import {
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeadingLabelBlock } from '@/blocks/HeadingLabelBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
-import { HeroVideoBlock } from '@/blocks/HeroVideoBlock'
-import { HeroVideoVimeoBlock } from '@/blocks/HeroVideoVimeoBlock'
 import { ImageBlock } from '@/blocks/ImageBlock'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock'
 import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
@@ -278,8 +276,6 @@ export const initStoryblok = () => {
     HeadingBlock,
     HeadingLabelBlock,
     HeroBlock,
-    HeroVideoBlock,
-    HeroVideoVimeoBlock,
     ImageBlock,
     ImageTextBlock,
     InlineSpaceBlock,
