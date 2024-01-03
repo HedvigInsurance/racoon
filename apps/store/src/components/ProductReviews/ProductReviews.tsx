@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Space, theme } from 'ui'
-import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type { Review as ProductReview } from '@/services/productReviews/productReviews.types'
 import { TrustpilotWidget } from '@/services/trustpilot/TruspilotWidget'
@@ -29,7 +28,7 @@ export const ProductReviews = (props: Props) => {
     console.warn('[ProductReviews]: No review data available. Skip rendering.')
     return null
   }
-  const { rating, reviewsDistribution, reviews } = reviewsData
+  const { rating, reviews, reviewsDistribution } = reviewsData
 
   return (
     <Wrapper y={3.5}>
@@ -70,7 +69,11 @@ export const ProductReviews = (props: Props) => {
 }
 
 const useGetReviewsData = () => {
-  const { averageRating, reviewComments } = useProductData()
+  const {
+    averageRating,
+    reviewComments,
+    reviewsDistribution: productReviewsDistribution,
+  } = useProductData()
   const trustpilotData = useTrustpilotData()
 
   const getReviewsData = (selectedTab: Tab, selectedScore: Score) => {
@@ -95,8 +98,8 @@ const useGetReviewsData = () => {
     }
 
     let reviewsDistribution: ReviewsDistribution = []
-    if (selectedTab === TABS.PRODUCT && reviewComments) {
-      reviewsDistribution = getReviewsDistribution(reviewComments)
+    if (selectedTab === TABS.PRODUCT && productReviewsDistribution) {
+      reviewsDistribution = productReviewsDistribution
     }
 
     return {

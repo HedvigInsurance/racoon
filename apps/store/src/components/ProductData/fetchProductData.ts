@@ -4,6 +4,7 @@ import {
   type ProductDataQuery,
   type ProductDataQueryVariables,
 } from '@/services/graphql/generated'
+import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import {
   getProductAverageRating,
   getProductReviewComments,
@@ -29,10 +30,12 @@ export const fetchProductData = async ({
 
   const averageRating = await getProductAverageRating(variables.productName)
   const reviewComments = await getProductReviewComments(variables.productName)
+  const reviewsDistribution = reviewComments ? getReviewsDistribution(reviewComments) : null
 
   return {
     ...data.product,
     averageRating,
     reviewComments,
+    reviewsDistribution,
   }
 }
