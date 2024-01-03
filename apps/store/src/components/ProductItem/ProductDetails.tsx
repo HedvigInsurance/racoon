@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Heading, Text, theme } from 'ui'
+import { useIsEmbedded } from '@/utils/useIsEmbedded'
+import { PDFViewer } from '../PDFViewer'
 
 type Props = {
   items: Array<{ title: string; value: string }>
@@ -9,6 +11,7 @@ type Props = {
 
 export const ProductDetails = ({ items, documents, ...props }: Props) => {
   const { t } = useTranslation('cart')
+  const isEmbedded = useIsEmbedded()
 
   return (
     <Wrapper {...props}>
@@ -32,10 +35,19 @@ export const ProductDetails = ({ items, documents, ...props }: Props) => {
       <ul>
         {documents.map(({ title, url }) => (
           <li key={title}>
-            <DocumentLink href={url} target="_blank" rel="noopener noreferrer">
-              {title}
-              <Sup> PDF</Sup>
-            </DocumentLink>
+            {isEmbedded ? (
+              <PDFViewer url={url}>
+                <DocumentLink as="button">
+                  {title}
+                  <Sup> PDF</Sup>
+                </DocumentLink>
+              </PDFViewer>
+            ) : (
+              <DocumentLink href={url} target="_blank" rel="noopener noreferrer">
+                {title}
+                <Sup> PDF</Sup>
+              </DocumentLink>
+            )}
           </li>
         ))}
       </ul>
