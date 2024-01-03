@@ -7,7 +7,7 @@ import type { Review as ProductReview } from '@/services/productReviews/productR
 import { TrustpilotWidget } from '@/services/trustpilot/TruspilotWidget'
 import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { type Review as CompanyReview } from '@/services/trustpilot/trustpilot.types'
-import { useProductPageContext } from '../ProductPage/ProductPageContext'
+import { useProductData } from '../ProductData/ProductDataProvider'
 import { AverageRating } from './AverageRating'
 import type { Score, Review, ReviewsDistribution } from './ProductReviews.types'
 import { ReviewsDialog } from './ReviewsDialog'
@@ -70,7 +70,7 @@ export const ProductReviews = (props: Props) => {
 }
 
 const useGetReviewsData = () => {
-  const { averageRating, reviewComments } = useProductPageContext()
+  const { averageRating, reviewComments } = useProductData()
   const trustpilotData = useTrustpilotData()
 
   const getReviewsData = (selectedTab: Tab, selectedScore: Score) => {

@@ -294,4 +294,6 @@ export const productData: ProductData = {
       ],
     },
   ],
+  averageRating: null,
+  reviewComments: null,
 }

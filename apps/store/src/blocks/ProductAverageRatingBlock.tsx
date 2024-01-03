@@ -4,16 +4,13 @@ import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { Stars } from '@/components/ProductReviews/Stars'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 
-type AverageRating = NonNullable<ReturnType<typeof useProductPageContext>['averageRating']>
-
 export const ProductAverageRatingBlock = () => {
-  const { averageRating } = useProductPageContext()
+  const { averageRating } = useProductData()
   const productData = useProductData()
 
   if (!averageRating) {
@@ -77,7 +74,10 @@ const Wrapper = styled.div({
   flexWrap: 'wrap',
 })
 
-const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
+const getProductStructuredData = (
+  product: ProductData,
+  averageRating: NonNullable<ProductData['averageRating']>,
+) => {
   return {
     '@context': 'https://schema.org/',
     '@type': 'Product',

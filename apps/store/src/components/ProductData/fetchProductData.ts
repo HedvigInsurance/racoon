@@ -4,6 +4,10 @@ import {
   type ProductDataQuery,
   type ProductDataQueryVariables,
 } from '@/services/graphql/generated'
+import {
+  getProductAverageRating,
+  getProductReviewComments,
+} from '@/services/productReviews/productReviews'
 import { ProductData } from './ProductData.types'
 
 type Params = ProductDataQueryVariables & {
@@ -23,5 +27,12 @@ export const fetchProductData = async ({
     throw new Error(`Unable to fetch product data: ${variables.productName}`)
   }
 
-  return data.product
+  const averageRating = await getProductAverageRating(variables.productName)
+  const reviewComments = await getProductReviewComments(variables.productName)
+
+  return {
+    ...data.product,
+    averageRating,
+    reviewComments,
+  }
 }

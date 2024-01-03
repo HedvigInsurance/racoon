@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { Button } from 'ui'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 
@@ -18,7 +18,7 @@ type Props = {
 
 export const ReviewTabs = (props: Props) => {
   const { t } = useTranslation('common')
-  const { averageRating } = useProductPageContext()
+  const { averageRating } = useProductData()
   const trustpilotData = useTrustpilotData()
 
   const handleTabChange: React.MouseEventHandler<HTMLButtonElement> = (event) => {
