@@ -5,8 +5,7 @@ import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
-import { useUpdateCancellation } from '@/components/ProductPage/PurchaseForm/useUpdateCancellation'
-import { useUpdateStartDate } from '@/components/ProductPage/PurchaseForm/useUpdateStartDate'
+import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -19,14 +18,12 @@ import {
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { convertToDate } from '@/utils/date'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
 import { useCartEntryToReplace } from '../ProductPage'
-import { CancellationForm, CancellationOption } from './CancellationForm/CancellationForm'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
@@ -76,8 +73,6 @@ export const OfferPresenter = (props: Props) => {
     }
   }, [selectedOffer, tracking, isInView])
 
-  const [updateStartDate, updateStartDateResult] = useUpdateStartDate({ priceIntent })
-
   const entryToReplace = useCartEntryToReplace()
   const [addToCart, loadingAddToCart] = useAddToCart({
     shopSessionId: shopSession.id,
@@ -114,24 +109,12 @@ export const OfferPresenter = (props: Props) => {
     setAddToCartRedirect(redirect)
   }
 
-  const [handleUpdateCancellation, updateCancellationInfo] = useUpdateCancellation({ priceIntent })
-
   const discountTooltipProps = useDiscountTooltipProps(
     selectedOffer,
     shopSession.cart.redeemedCampaign ?? undefined,
   )
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
-
-  const cancellationOption = getCancellationOption({
-    priceIntent,
-    productOffer: selectedOffer,
-  })
-
-  const loading =
-    loadingAddToCart || updateCancellationInfo.loading || updateStartDateResult.loading
-
-  const startDate = convertToDate(selectedOffer.startDate)
 
   // Sort deductibles based on monthly price
   const sortedOffers = useMemo(() => getOffersByPrice(priceIntent.offers), [priceIntent.offers])
@@ -214,19 +197,14 @@ export const OfferPresenter = (props: Props) => {
                 />
               )}
 
-              <CancellationForm
-                option={cancellationOption}
-                startDate={startDate}
-                onAutoSwitchChange={handleUpdateCancellation}
-                onStartDateChange={(startDate) => updateStartDate({ dateValue: startDate })}
-              />
+              <CancellationForm priceIntentId={priceIntent.id} offer={selectedOffer} />
 
               <Button
                 type="submit"
                 variant="primary"
                 onClick={handleClickSubmit(AddToCartRedirect.Cart)}
-                loading={loading && addToCartRedirect === AddToCartRedirect.Cart}
-                disabled={loading}
+                loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Cart}
+                disabled={loadingAddToCart}
               >
                 {t('ADD_TO_CART_BUTTON_LABEL')}
               </Button>
@@ -235,8 +213,8 @@ export const OfferPresenter = (props: Props) => {
                 type="submit"
                 variant="primary-alt"
                 onClick={handleClickSubmit(AddToCartRedirect.Checkout)}
-                loading={loading && addToCartRedirect === AddToCartRedirect.Checkout}
-                disabled={loading}
+                loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Checkout}
+                disabled={loadingAddToCart}
               >
                 {t('QUICK_CHECKOUT_BUTTON_LABEL')}
               </Button>
@@ -296,11 +274,6 @@ const Separator = styled.div({
   alignSelf: 'stretch',
 })
 
-type GetCancellationOptionParams = {
-  priceIntent: PriceIntent
-  productOffer: ProductOfferFragment
-}
-
 const useDiscountTooltipProps = (
   selectedOffer: ProductOfferFragment,
   campaign?: RedeemedCampaignFragment,
@@ -348,37 +321,4 @@ const useDiscountTooltipProps = (
   }, [t, formatter, getDiscountExplanation, selectedOffer, campaign])
 
   return tooltipProps
-}
-
-const getCancellationOption = (params: GetCancellationOptionParams): CancellationOption => {
-  const {
-    productOffer: { cancellation, startDate },
-    priceIntent: { externalInsurer },
-  } = params
-
-  const offerStartDate = convertToDate(startDate)
-  const hasInvalidRenewalDate =
-    cancellation.option === ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-  const invalidRenewalDate = offerStartDate && hasInvalidRenewalDate ? offerStartDate : null
-
-  switch (cancellation.option) {
-    case ExternalInsuranceCancellationOption.Iex:
-      return {
-        type: ExternalInsuranceCancellationOption.Iex,
-        companyName: externalInsurer?.displayName ?? 'Unknown',
-        requested: cancellation.requested,
-      }
-
-    case ExternalInsuranceCancellationOption.Banksignering:
-    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
-      return {
-        type: ExternalInsuranceCancellationOption.Banksignering,
-        companyName: externalInsurer?.displayName ?? 'Unknown',
-        requested: cancellation.requested,
-        invalidRenewalDate,
-      }
-
-    default:
-      return { type: ExternalInsuranceCancellationOption.None }
-  }
 }

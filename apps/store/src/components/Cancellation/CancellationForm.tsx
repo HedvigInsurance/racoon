@@ -7,6 +7,8 @@ import {
   ExternalInsuranceCancellationOption,
 } from '@/services/graphql/generated'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { BankSigneringCancellation } from './BankSigneringCancellation'
+import { BankSigneringInvalidRenewalDateCancellation } from './BankSigneringInvalidRenewalDateCancellation'
 import { IEXCancellation } from './IEXCancellation'
 
 type Props = {
@@ -24,8 +26,8 @@ export const CancellationForm = (props: Props) => {
     mutate({ variables: { productOfferIds, requested: checked } })
   }
 
-  const startDate = convertToDate(props.offer.startDate)
-  const [updateStartDate] = useStartDateUpdateMutation()
+  const startDate = convertToDate(props.offer.startDate) ?? undefined
+  const [updateStartDate, updateStartDateResult] = useStartDateUpdateMutation()
   const handleChangeStartDate = (date: Date) => {
     updateStartDate({
       variables: {
@@ -35,20 +37,43 @@ export const CancellationForm = (props: Props) => {
     })
   }
 
+  const startDateProps = {
+    startDate,
+    onStartDateChange: handleChangeStartDate,
+    loading: updateStartDateResult.loading,
+  }
+
+  const autoSwitchProps = {
+    requested: props.offer.cancellation.requested,
+    onAutoSwitchChange: handleAutoSwitchChange,
+    companyName: props.offer.cancellation.externalInsurer?.displayName ?? 'Unknown',
+  }
+
   switch (props.offer.cancellation.option) {
     case ExternalInsuranceCancellationOption.None:
       return (
-        <InputStartDay date={props.offer.startDate ?? undefined} onChange={handleChangeStartDate} />
+        <InputStartDay
+          date={startDate}
+          onChange={handleChangeStartDate}
+          loading={updateStartDateResult.loading}
+        />
       )
 
     case ExternalInsuranceCancellationOption.Iex:
+      return <IEXCancellation {...autoSwitchProps} {...startDateProps} />
+
+    case ExternalInsuranceCancellationOption.Banksignering:
+      return <BankSigneringCancellation {...autoSwitchProps} {...startDateProps} />
+
+    case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
+      if (startDateProps.startDate === undefined) {
+        throw new Error('Cancellation | Missing start date')
+      }
+
       return (
-        <IEXCancellation
-          requested={props.offer.cancellation.requested}
-          onAutoSwitchChange={handleAutoSwitchChange}
-          companyName={props.offer.cancellation.externalInsurer?.displayName ?? ''}
-          startDate={startDate ?? undefined}
-          onStartDateChange={handleChangeStartDate}
+        <BankSigneringInvalidRenewalDateCancellation
+          {...startDateProps}
+          startDate={startDateProps.startDate}
         />
       )
   }
