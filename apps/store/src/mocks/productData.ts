@@ -1,4 +1,4 @@
-import { ProductData } from '@/components/ProductPage/ProductPage.types'
+import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { InsurableLimitType } from '@/services/graphql/generated'
 
 export const productData: ProductData = {
