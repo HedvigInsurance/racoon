@@ -72,7 +72,6 @@ import { TrustpilotBlock } from '@/blocks/TrustpilotBlock'
 import { TrustpilotReviewsBlock } from '@/blocks/TrustpilotReviewsBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
-import { VideoListBlock } from '@/blocks/VideoListBlock'
 import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
 import { type ContentWidth, type ContentAlignment } from '@/components/GridLayout/GridLayout.helper'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
@@ -307,7 +306,6 @@ export const initStoryblok = () => {
     TrustpilotBlock,
     TrustpilotReviewsBlock,
     VideoBlock,
-    VideoListBlock,
     WidgetFlowBlock,
     ProductNavContainerBlock,
     USPBlock,
