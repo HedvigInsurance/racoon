@@ -1,4 +1,4 @@
-import { CountryCode, CountryLabel, IsoLocale, Locale } from './types'
+import { CountryCode, CountryLabel, type IsoLocale, Locale } from './types'
 
 export type CountryData = {
   id: CountryLabel
@@ -6,6 +6,7 @@ export type CountryData = {
   countryCode: CountryCode
   defaultLocale: IsoLocale
   locales: Array<IsoLocale>
+  currencyCode: string
 }
 
 export const countries: Record<CountryLabel, CountryData> = {
@@ -15,6 +16,7 @@ export const countries: Record<CountryLabel, CountryData> = {
     countryCode: CountryCode.Se,
     defaultLocale: Locale.SvSe,
     locales: [Locale.SvSe, Locale.EnSe],
+    currencyCode: 'SEK',
   },
   [CountryLabel.NO]: {
     id: CountryLabel.NO,
@@ -22,6 +24,7 @@ export const countries: Record<CountryLabel, CountryData> = {
     countryCode: CountryCode.No,
     defaultLocale: Locale.NbNo,
     locales: [Locale.NbNo, Locale.EnNo],
+    currencyCode: 'NOK',
   },
   [CountryLabel.DK]: {
     id: CountryLabel.DK,
@@ -29,5 +32,6 @@ export const countries: Record<CountryLabel, CountryData> = {
     countryCode: CountryCode.Dk,
     defaultLocale: Locale.DaDk,
     locales: [Locale.DaDk, Locale.EnDk],
+    currencyCode: 'DKK',
   },
 }
