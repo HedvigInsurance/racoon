@@ -149,6 +149,10 @@ const connectSrc = [
   // Clearbits partnership tracking
   'https://app.clearbit.com',
 
+  // PCMS / Insurance documents
+  'https://promise.hedvig.com',
+  'https://promise-cms.s3.eu-central-1.amazonaws.com',
+
   'https://*.hedvigit.com',
   "'self'",
 ]
