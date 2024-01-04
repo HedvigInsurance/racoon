@@ -1,14 +1,8 @@
-import { ProductDataQuery } from '@/services/graphql/generated'
+import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { AverageRating, ReviewComments } from '@/services/productReviews/productReviews.types'
 import { ProductStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { type TrustpilotData } from '@/services/trustpilot/trustpilot.types'
-
-export type ProductData = Exclude<ProductDataQuery['product'], null | undefined>
-
-export type ProductDataVariant =
-  | Exclude<ProductDataQuery['product'], undefined | null>['variants'][number]
-  | null
 
 export type ProductPageProps = StoryblokPageProps & {
   story: ProductStory
