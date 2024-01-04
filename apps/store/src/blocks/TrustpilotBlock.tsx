@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Text, InfoIcon, theme, mq } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
+import { useTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
-import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = SbBaseBlockProps<{

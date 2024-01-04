@@ -8,6 +8,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
+import { useHydrateTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { initializeApollo } from '@/services/apollo/client'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
@@ -23,7 +24,6 @@ import {
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type NextContentPageProps = StoryblokPageProps & { type: 'content' }

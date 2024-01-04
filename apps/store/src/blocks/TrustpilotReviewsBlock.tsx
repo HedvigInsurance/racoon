@@ -1,5 +1,5 @@
 import { theme } from 'ui'
-import { TrustpilotWidget } from '@/services/trustpilot/TruspilotWidget'
+import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 export const TrustpilotReviewsBlock = () => {

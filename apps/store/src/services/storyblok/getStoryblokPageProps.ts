@@ -1,10 +1,10 @@
 import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
+import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
 import { hideChatOnPage } from '../CustomerFirst'
-import { fetchTrustpilotData } from '../trustpilot/trustpilot'
 import { PageStory, ProductStory, getStoryBySlug } from './storyblok'
 import { STORY_PROP_NAME } from './Storyblok.constant'
 

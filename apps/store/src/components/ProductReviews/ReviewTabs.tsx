@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 import { Button } from 'ui'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { useTrustpilotData } from '@/services/trustpilot/trustpilot'
+import { useTrustpilotData } from '@/features/memberReviews/trustpilot'
 
 export const TABS = {
   PRODUCT: 'product',
