@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 import { ProductPageProps } from './ProductPage.types'
 
-type ProductPageContextData = Omit<ProductPageProps, 'productData'> & {
+type ProductPageContextData = Omit<ProductPageProps, 'productData' | 'trustpilotData'> & {
   content: {
     product: {
       name: string
@@ -13,7 +13,7 @@ type ProductPageContextData = Omit<ProductPageProps, 'productData'> & {
 
 const ProductPageContext = createContext<ProductPageContextData | null>(null)
 
-type Props = PropsWithChildren<ProductPageProps>
+type Props = PropsWithChildren<Omit<ProductPageProps, 'trustpilotData'>>
 
 export const ProductPageContextProvider = ({ children, ...rest }: Props) => {
   const contextValue = useMemo(

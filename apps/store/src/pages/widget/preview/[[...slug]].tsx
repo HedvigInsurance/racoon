@@ -4,6 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
+import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
+import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApollo } from '@/services/apollo/client'
 import {
@@ -20,6 +23,7 @@ const EXAMPLE_PRODUCT_NAME = 'SE_APARTMENT_RENT'
 type PageProps = {
   story: WidgetFlowStory
   productData: ProductData
+  trustpilotData: TrustpilotData | null
 }
 
 const WidgetCmsPage = (props: PageProps) => {
@@ -29,7 +33,9 @@ const WidgetCmsPage = (props: PageProps) => {
 
   return (
     <ProductDataProvider productData={props.productData}>
-      <StoryblokComponent blok={story.content} />
+      <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
+        <StoryblokComponent blok={story.content} />
+      </TrustpilotDataProvider>
     </ProductDataProvider>
   )
 }
@@ -43,19 +49,20 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/flows/${params.slug.join('/')}`
   const version = draftMode ? 'draft' : undefined
 
-  const [story, translations, productData] = await Promise.all([
+  const [story, translations, productData, trustpilotData] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     serverSideTranslations(locale),
     fetchProductData({
       apolloClient: initializeApollo({ locale }),
       productName: EXAMPLE_PRODUCT_NAME,
     }),
+    fetchTrustpilotData(locale),
   ])
 
   if (!isWidgetFlowStory(story)) throw new Error(`Invalid story type: ${story.slug}.`)
 
   return {
-    props: { ...translations, story, productData },
+    props: { ...translations, story, productData, trustpilotData },
     revalidate: getRevalidate(),
   }
 }

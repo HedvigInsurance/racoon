@@ -80,7 +80,6 @@ import { blogBlocks } from '@/features/blog/blogBlocks'
 import { carDealershipBlocks } from '@/features/carDealership/carDealershipBlocks'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
-import { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
@@ -105,7 +104,6 @@ export type StoryblokQueryParams = {
 export type StoryblokPageProps = {
   [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
-  trustpilot: TrustpilotData | null
 }
 
 export type StoryblokVersion = 'draft' | 'published'

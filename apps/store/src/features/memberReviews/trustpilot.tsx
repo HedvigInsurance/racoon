@@ -1,9 +1,5 @@
-import { atom, useAtomValue } from 'jotai'
-import { useHydrateAtoms } from 'jotai/utils'
-import { globalStore } from '@/utils/globalStore'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { type RoutingLocale, Language } from '@/utils/l10n/types'
-import type { TrustpilotData } from './trustpilot.types'
 
 type AverageRatingJSONResponse = {
   score: {
@@ -24,29 +20,17 @@ type ReviewsJSONResponse = {
   }>
 }
 
-const trustpilotAtom = atom<TrustpilotData | null>(null)
-
-export const useTrustpilotData = () => {
-  return useAtomValue(trustpilotAtom, { store: globalStore })
-}
-
-export const useHydrateTrustpilotData = (data: TrustpilotData | null) => {
-  useHydrateAtoms([[trustpilotAtom, data]], { store: globalStore })
-}
-
 export const fetchTrustpilotData = async (locale: RoutingLocale) => {
   try {
     const hedvigBusinessUnitId = process.env.NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID
     if (!hedvigBusinessUnitId) {
-      logMissingSetting(
-        'NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured, skipping Trustpilot data',
-      )
+      logMissingSetting('NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID is not configured')
       return null
     }
 
     const trustpilotApiKey = process.env.TRUSTPILOT_API_KEY
     if (!trustpilotApiKey) {
-      logMissingSetting('TRUSTPILOT_API_KEY is not configured, skipping Trustpilot data')
+      logMissingSetting('TRUSTPILOT_API_KEY is not configured')
       return null
     }
 
@@ -59,7 +43,7 @@ export const fetchTrustpilotData = async (locale: RoutingLocale) => {
 
     return { ...averageRating, reviews }
   } catch (error) {
-    console.error(error)
+    console.error(`Could not get Trustpilot data: ${error}`)
     return null
   }
 }

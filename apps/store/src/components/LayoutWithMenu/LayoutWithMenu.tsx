@@ -6,7 +6,7 @@ import { theme } from 'ui'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
-import { GlobalStory, PageStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
+import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
@@ -19,15 +19,13 @@ const Wrapper = styled.div({
 })
 
 type LayoutWithMenuProps = {
-  children: ReactElement<
-    Pick<StoryblokPageProps, 'trustpilot'> & {
-      className: string
-      [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
-      story: PageStory | undefined
-      globalStory: GlobalStory | undefined
-      breadcrumbs?: Array<BreadcrumbListItem>
-    }
-  >
+  children: ReactElement<{
+    className: string
+    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
+    story: PageStory | undefined
+    globalStory: GlobalStory | undefined
+    breadcrumbs?: Array<BreadcrumbListItem>
+  }>
   overlayMenu?: boolean
   hideFooter?: boolean
 }

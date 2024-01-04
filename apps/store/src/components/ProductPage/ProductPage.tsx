@@ -6,6 +6,7 @@ import {
   PriceIntentContextProvider,
   usePriceIntent,
 } from '@/components/ProductPage/PriceIntentContext'
+import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -33,8 +34,10 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
       <ProductPageContextProvider {...props} story={story}>
         <PriceIntentContextProvider>
           <ProductPageTrackingProvider>
-            <StoryblokComponent blok={story.content} />
-            <PageDebugDialog />
+            <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
+              <StoryblokComponent blok={story.content} />
+              <PageDebugDialog />
+            </TrustpilotDataProvider>
           </ProductPageTrackingProvider>
         </PriceIntentContextProvider>
       </ProductPageContextProvider>
