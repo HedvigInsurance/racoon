@@ -52,8 +52,16 @@ This step renders the Trustly widget. The user is redirected to the next step af
 
 This step renders a custom "confirmation" page. This is the end of the flow.
 
+## PDF Viewer
+
+- We are using the default PDF.js Viewer from Mozilla (same as Firefox PDF viewer). It's [downloaded](https://github.com/mozilla/pdf.js/releases) and stored in the /public folder.
+
+- We have removed some code to allow displaying PDF files from other domains. We have also removed unused locales and all the Cmaps (character maps) to reduce the size of the viewer.
+
 ## Testing
 
 - "Hedvig Embedded" can be tested in the [iframe simulator](http://localhost:8040/se/debugger/iframe). It runs the widget in an iframe while listing all the post messages sent to the parent window.
 
 - "Hedvig Included" can be tested by first visiting the [Trial Contract Debugger](http://localhost:8040/se/debugger/trial). After creating a trial contract, you will be redirected to the widget.
+
+- WebView embedding can be tested in the [WebViewTest](https://github.com/HedvigInsurance/WebViewTest) example iOS app.

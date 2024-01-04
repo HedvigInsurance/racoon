@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { mq, NeArrow, theme } from 'ui'
+import { PDFViewer } from './PDFViewer'
 
 type Props = {
   url: string
@@ -9,14 +10,28 @@ type Props = {
 export const InsuranceDocumentLink = ({ url, displayName }: Props) => {
   const extension = getExtensionFromUrl(url)
 
+  if (!isWebview(window.navigator.userAgent)) {
+    return (
+      <PDFViewer url={url}>
+        <FileLink as="button">
+          <Ellipsis>
+            {displayName} <DocumentType>{extension}</DocumentType>
+          </Ellipsis>
+
+          <StyledNeArrow size="1rem" />
+        </FileLink>
+      </PDFViewer>
+    )
+  }
+
   return (
-    <DownloadFileLink href={url} target="_blank" rel="noopener nofollow">
+    <FileLink href={url} target="_blank" rel="noopener nofollow">
       <Ellipsis>
         {displayName} <DocumentType>{extension}</DocumentType>
       </Ellipsis>
 
       <StyledNeArrow size="1rem" />
-    </DownloadFileLink>
+    </FileLink>
   )
 }
 const getExtensionFromUrl = (urlString: string): string => {
@@ -32,7 +47,7 @@ const getExtensionFromUrl = (urlString: string): string => {
   }
 }
 
-const DownloadFileLink = styled.a({
+const FileLink = styled.a({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -43,6 +58,8 @@ const DownloadFileLink = styled.a({
   fontSize: theme.fontSizes.md,
   backgroundColor: theme.colors.opaque1,
   borderRadius: theme.radius.sm,
+  cursor: 'pointer',
+  width: '100%',
 
   ':hover': {
     backgroundColor: theme.colors.gray200,
@@ -77,3 +94,8 @@ const StyledNeArrow = styled(NeArrow)({
   position: 'relative',
   top: theme.space.xxs,
 })
+
+// Source: https://github.com/dvlden/is-webview/blob/main/src/index.ts
+const isWebview = (userAgent: string) => {
+  return /webview|wv|ip((?!.*Safari)|(?=.*like Safari))/i.test(userAgent)
+}
