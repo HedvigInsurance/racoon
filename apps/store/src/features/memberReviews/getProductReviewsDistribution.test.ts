@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { getReviewsDistribution } from './getReviewsDistribution'
+import { getProductReviewsDistribution } from './getProductReviewsDistribution'
 import { type ReviewComments } from './productReviews.types'
 
 test('should return a distribution where the sum of the scores percentages equals to 100%', () => {
@@ -15,7 +15,7 @@ test('should return a distribution where the sum of the scores percentages equal
   }
 
   // Act
-  const reviewsDistribution = getReviewsDistribution(reviews)
+  const reviewsDistribution = getProductReviewsDistribution(reviews)
   const distributionSum = reviewsDistribution.reduce(
     (acc, [, percentage]) => acc + Number(percentage),
     0,
@@ -45,7 +45,7 @@ test('should not do any rounding when percentages already sum 100%', () => {
   }
 
   // Act
-  const reviewsDistribution = getReviewsDistribution(reviews)
+  const reviewsDistribution = getProductReviewsDistribution(reviews)
 
   // Assert
   expect(reviewsDistribution).toEqual([

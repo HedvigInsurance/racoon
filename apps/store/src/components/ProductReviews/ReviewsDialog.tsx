@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
-import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
+import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { AverageRating } from './AverageRating'
 import type { Review, Rating, Score, ReviewsDistribution } from './ProductReviews.types'
 import { ReviewComment } from './ReviewComment'
