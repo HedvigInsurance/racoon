@@ -12,7 +12,7 @@ import { useAdyenTranslations } from './useAdyenTranslations'
 import { useTokenizePaymentDetails } from './useTokenizePaymentDetails'
 
 export const useGetAdyenCheckout = (): ((options: CoreOptions) => AdyenCheckoutAPI) => {
-  const { countryCode } = useCurrentCountry()
+  const { countryCode, currencyCode } = useCurrentCountry()
   const { payButton, locale } = useAdyenTranslations()
   const handleSubmit = useHandleSubmit()
 
@@ -31,11 +31,11 @@ export const useGetAdyenCheckout = (): ((options: CoreOptions) => AdyenCheckoutA
           'applepay',
         ],
 
-        paymentMethodsConfiguration: getPaymentMethodsConfiguration(locale, countryCode),
+        paymentMethodsConfiguration: getPaymentMethodsConfiguration(currencyCode, countryCode),
         ...options,
       })
     },
-    [countryCode, locale, payButton, handleSubmit],
+    [countryCode, currencyCode, locale, payButton, handleSubmit],
   )
 }
 
