@@ -34,7 +34,7 @@ const Page = (props: Props) => {
   )
 }
 
-const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy-embedded'
+const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy-offer'
 
 export const getServerSideProps = (
   context: GetServerSidePropsContext,

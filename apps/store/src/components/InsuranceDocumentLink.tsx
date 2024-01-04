@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { mq, NeArrow, theme } from 'ui'
+import { useIsEmbedded } from '@/utils/useIsEmbedded'
 import { PDFViewer } from './PDFViewer'
 
 type Props = {
@@ -9,8 +10,9 @@ type Props = {
 
 export const InsuranceDocumentLink = ({ url, displayName }: Props) => {
   const extension = getExtensionFromUrl(url)
+  const isEmbedded = useIsEmbedded()
 
-  if (!isWebview(window.navigator.userAgent)) {
+  if (isEmbedded) {
     return (
       <PDFViewer url={url}>
         <FileLink as="button">
@@ -94,8 +96,3 @@ const StyledNeArrow = styled(NeArrow)({
   position: 'relative',
   top: theme.space.xxs,
 })
-
-// Source: https://github.com/dvlden/is-webview/blob/main/src/index.ts
-const isWebview = (userAgent: string) => {
-  return /webview|wv|ip((?!.*Safari)|(?=.*like Safari))/i.test(userAgent)
-}

@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
+import { ReactNode } from 'react'
 import { theme, Dialog, CrossIcon } from 'ui'
 
 type Props = {
   url: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const PDFViewer = (props: Props) => {
