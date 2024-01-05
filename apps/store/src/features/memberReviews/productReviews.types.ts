@@ -1,10 +1,20 @@
-import { z } from 'zod'
-import { reviewCommentsSchema, averageRatingSchema, reviewSchema } from './productReviews.utils'
+export type Score = 5 | 4 | 3 | 2 | 1
 
-// Data format and used keys are defined in the cloud function:
-// https://console.cloud.google.com/functions/details/europe-north1/product_review_v2?env=gen2&cloudshell=false&project=hedvig-dagobah
-export type ReviewComments = z.infer<typeof reviewCommentsSchema>
+export type Review = {
+  id: string
+  score: number
+  date: string
+  content: string
+}
 
-export type Review = z.infer<typeof reviewSchema>
+export type ScoreDistributionTuple = [Score, number]
 
-export type AverageRating = z.infer<typeof averageRatingSchema>
+export type ReviewsDistribution = Array<ScoreDistributionTuple>
+
+export type ReviewsByScore = Record<
+  Score,
+  {
+    total: number
+    reviews: Array<Review>
+  }
+>

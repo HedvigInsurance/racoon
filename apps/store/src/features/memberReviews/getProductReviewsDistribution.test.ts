@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
 import { getProductReviewsDistribution } from './getProductReviewsDistribution'
-import { type ReviewComments } from './productReviews.types'
+import type { ProductReviewCommentResponse } from './productReviews'
 
 test('should return a distribution where the sum of the scores percentages equals to 100%', () => {
   // Arrange
-  const reviews: ReviewComments = {
+  const reviews: ProductReviewCommentResponse = {
     commentsByScore: {
       5: { total: 183, latestComments: [] },
       4: { total: 247, latestComments: [] },
@@ -34,7 +34,7 @@ test('should return a distribution where the sum of the scores percentages equal
 
 test('should not do any rounding when percentages already sum 100%', () => {
   // Arrange
-  const reviews: ReviewComments = {
+  const reviews: ProductReviewCommentResponse = {
     commentsByScore: {
       5: { total: 60, latestComments: [] },
       4: { total: 10, latestComments: [] },

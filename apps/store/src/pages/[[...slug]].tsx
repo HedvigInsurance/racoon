@@ -8,10 +8,7 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
-import {
-  getProductAverageRating,
-  getProductReviewComments,
-} from '@/features/memberReviews/productReviews'
+import { fetchProductReviewsData } from '@/features/memberReviews/productReviews'
 import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { initializeApollo } from '@/services/apollo/client'
@@ -105,8 +102,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       )
       const initialSelectedTypeOfContract = initialSelectedVariant?.typeOfContract
 
-      const averageRating = await getProductAverageRating(productData.name)
-      const reviewComments = await getProductReviewComments(productData.name)
+      const productReviewsData = await fetchProductReviewsData(productData.name)
 
       return {
         props: {
@@ -114,8 +110,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
           ...props,
           [STORY_PROP_NAME]: props.story,
           productData,
-          averageRating,
-          reviewComments,
+          productReviewsData,
           priceTemplate,
           ...(initialSelectedTypeOfContract && { initialSelectedTypeOfContract }),
         },

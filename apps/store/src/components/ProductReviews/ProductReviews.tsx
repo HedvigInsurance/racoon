@@ -1,15 +1,18 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Space, theme } from 'ui'
-import { getProductReviewsDistribution } from '@/features/memberReviews/getProductReviewsDistribution'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import type { Review as ProductReview } from '@/features/memberReviews/productReviews.types'
+import type {
+  Review as ProductReview,
+  Score,
+  ReviewsDistribution,
+} from '@/features/memberReviews/productReviews.types'
+import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
 import { type Review as CompanyReview } from '@/features/memberReviews/trustpilot.types'
 import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
-import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { AverageRating } from './AverageRating'
-import type { Score, Review, ReviewsDistribution } from './ProductReviews.types'
+import type { Review } from './ProductReviews.types'
 import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
@@ -70,33 +73,33 @@ export const ProductReviews = (props: Props) => {
 }
 
 const useGetReviewsData = () => {
-  const { averageRating, reviewComments } = useProductPageContext()
+  const productReviewsData = useProuctReviewsDataContext()
   const trustpilotData = useTrustpilotData()
 
   const getReviewsData = (selectedTab: Tab, selectedScore: Score) => {
-    if (!averageRating && !reviewComments && !trustpilotData) {
+    if (!productReviewsData && !trustpilotData) {
       return null
     }
 
     const rating = { score: 0, totalOfReviews: 0 }
-    if (selectedTab === TABS.PRODUCT && averageRating) {
-      rating.score = averageRating.score
-      rating.totalOfReviews = averageRating.reviewCount
+    if (selectedTab === TABS.PRODUCT && productReviewsData?.averageRating) {
+      rating.score = productReviewsData.averageRating.score
+      rating.totalOfReviews = productReviewsData.averageRating.totalOfReviews
     } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
       rating.score = trustpilotData.score
       rating.totalOfReviews = trustpilotData.totalReviews
     }
 
     let reviews: Array<Review> = []
-    if (selectedTab === TABS.PRODUCT && reviewComments) {
-      reviews = parseProductReviews(reviewComments.commentsByScore[selectedScore].latestComments)
-    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
+    if (selectedTab === TABS.PRODUCT && productReviewsData?.reviewsByScore) {
+      reviews = parseProductReviews(productReviewsData.reviewsByScore[selectedScore].reviews)
+    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData?.reviews) {
       reviews = parseCompanyReviews(trustpilotData.reviews)
     }
 
     let reviewsDistribution: ReviewsDistribution = []
-    if (selectedTab === TABS.PRODUCT && reviewComments) {
-      reviewsDistribution = getProductReviewsDistribution(reviewComments)
+    if (selectedTab === TABS.PRODUCT && productReviewsData?.reviewsDistribution) {
+      reviewsDistribution = productReviewsData.reviewsDistribution
     }
 
     return {

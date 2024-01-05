@@ -6,6 +6,7 @@ import {
   PriceIntentContextProvider,
   usePriceIntent,
 } from '@/components/ProductPage/PriceIntentContext'
+import { ProductReviewsDataProvider } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -35,8 +36,10 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
         <PriceIntentContextProvider>
           <ProductPageTrackingProvider>
             <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-              <StoryblokComponent blok={story.content} />
-              <PageDebugDialog />
+              <ProductReviewsDataProvider productReviewsData={props.productReviewsData}>
+                <StoryblokComponent blok={story.content} />
+                <PageDebugDialog />
+              </ProductReviewsDataProvider>
             </TrustpilotDataProvider>
           </ProductPageTrackingProvider>
         </PriceIntentContextProvider>

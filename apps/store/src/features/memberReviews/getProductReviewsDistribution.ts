@@ -1,13 +1,9 @@
-import type { Score } from '@/components/ProductReviews/ProductReviews.types'
-import type {
-  ReviewsDistribution,
-  ScoreDistributionTuple,
-} from '@/components/ProductReviews/ProductReviews.types'
-import type { ReviewComments } from './productReviews.types'
+import type { ProductReviewCommentResponse } from './productReviews'
+import type { Score, ReviewsDistribution, ScoreDistributionTuple } from './productReviews.types'
 
 // It uses Largest Remainder Method (LRM) to distribute round the percetages
 // https://stackoverflow.com/questions/13483430/how-to-make-rounded-percentages-add-up-to-100
-export const getProductReviewsDistribution = (reviews: ReviewComments) => {
+export const getProductReviewsDistribution = (reviews: ProductReviewCommentResponse) => {
   // TODO: get this from DB
   const reviewsTotal = getReviewsTotal(reviews)
 
@@ -52,7 +48,7 @@ export const getProductReviewsDistribution = (reviews: ReviewComments) => {
   return sortedRoundedReviewsDistribution
 }
 
-const getReviewsTotal = (reviews: ReviewComments) => {
+const getReviewsTotal = (reviews: ProductReviewCommentResponse) => {
   const total = Object.values(reviews.commentsByScore).reduce((acc, { total }) => acc + total, 0)
 
   return total
