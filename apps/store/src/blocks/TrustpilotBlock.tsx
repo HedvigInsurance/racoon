@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Text, InfoIcon, theme, mq } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
-import { useTrustpilotData } from '@/features/memberReviews/trustpilot'
+import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -17,9 +17,9 @@ type Props = SbBaseBlockProps<{
 export const TrustpilotBlock = ({ blok }: Props) => {
   const { t } = useTranslation('common')
   const { numberGrouping } = useFormatter()
-  const data = useTrustpilotData()
+  const trustpilotData = useTrustpilotData()
 
-  if (!data) {
+  if (!trustpilotData) {
     console.warn('[TrustpilotBlock]: No Trustpilot data found. Skip rendering.')
     return null
   }
@@ -33,12 +33,12 @@ export const TrustpilotBlock = ({ blok }: Props) => {
     <Wrapper {...storyblokEditable(blok)}>
       <StyledTrustpilotLogo />
 
-      <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: data.score })}</ScoreText>
+      <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: trustpilotData.score })}</ScoreText>
 
       <ReviewText as="span" size="md" color="textSecondaryOnGray">
         <a href={getLinkFieldURL(blok.link)} target={isInternalLink ? '_self' : '_blank'} rel={rel}>
           {t('TRUSTPILOT_REVIEWS_COUNT', {
-            numberOfReviews: numberGrouping(data.totalReviews),
+            numberOfReviews: numberGrouping(trustpilotData.totalReviews),
           })}
         </a>
 

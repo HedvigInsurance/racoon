@@ -4,7 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
-import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/features/memberReviews/trustpilot'
+import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
+import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
+import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { hideChatOnPage } from '@/services/CustomerFirst'
@@ -19,10 +21,9 @@ import {
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type PageProps = Pick<StoryblokPageProps, 'story' | 'trustpilot'>
+type PageProps = Pick<StoryblokPageProps, 'story'> & { trustpilotData: TrustpilotData | null }
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
-  useHydrateTrustpilotData(props.trustpilot)
   const story = useStoryblokState(props.story)
 
   if (!story) return null
@@ -40,7 +41,9 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
           <HedvigLogo />
         </LogoArea>
       </HeaderFrame>
-      <StoryblokComponent blok={story.content} />
+      <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
+        <StoryblokComponent blok={story.content} />
+      </TrustpilotDataProvider>
       <DefaultDebugDialog />
     </>
   )
@@ -69,7 +72,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await serverSideTranslations(context.locale)),
       ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
-      trustpilot: await fetchTrustpilotData(context.locale),
+      trustpilotData: await fetchTrustpilotData(context.locale),
     },
     revalidate: getRevalidate(),
   }

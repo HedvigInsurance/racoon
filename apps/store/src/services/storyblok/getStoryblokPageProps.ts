@@ -27,7 +27,7 @@ export const getStoryblokPageProps = async ({
 
   const timerName = `Get Storyblok page props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
-  const [layoutWithMenuProps, breadcrumbs, trustpilot] = await Promise.all([
+  const [layoutWithMenuProps, breadcrumbs, trustpilotData] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
     fetchTrustpilotData(locale),
@@ -49,6 +49,6 @@ export const getStoryblokPageProps = async ({
     ...hideChatOnPage(story.content.hideChat ?? false),
     [STORY_PROP_NAME]: story,
     breadcrumbs,
-    trustpilot,
+    trustpilotData,
   }
 }

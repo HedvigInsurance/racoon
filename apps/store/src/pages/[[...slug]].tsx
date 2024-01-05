@@ -8,7 +8,8 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
-import { useHydrateTrustpilotData } from '@/features/memberReviews/trustpilot'
+import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
+import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { initializeApollo } from '@/services/apollo/client'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
@@ -26,14 +27,15 @@ import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
-type NextContentPageProps = StoryblokPageProps & { type: 'content' }
+type NextContentPageProps = StoryblokPageProps & {
+  type: 'content'
+  trustpilotData: TrustpilotData | null
+}
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
 type PageProps = NextContentPageProps | NextProductPageProps
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
-  useHydrateTrustpilotData(props.trustpilot)
-
   if (props.type === 'product') return <NextProductPage {...props} />
   return <NextStoryblokPage {...props} />
 }
@@ -47,14 +49,16 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <HeadSeoInfo
-        // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        story={abTestOriginStory || story}
-        robots={robots}
-      />
-      <StoryblokComponent blok={story.content} />
-      <DefaultDebugDialog />
+      <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
+        <HeadSeoInfo
+          // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          story={abTestOriginStory || story}
+          robots={robots}
+        />
+        <StoryblokComponent blok={story.content} />
+        <DefaultDebugDialog />
+      </TrustpilotDataProvider>
     </BlogContext.Provider>
   )
 }

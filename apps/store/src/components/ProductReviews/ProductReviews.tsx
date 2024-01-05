@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Space, theme } from 'ui'
 import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
-import { useTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { type Review as CompanyReview } from '@/features/memberReviews/trustpilot.types'
+import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
 import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
 import type { Review as ProductReview } from '@/services/productReviews/productReviews.types'
@@ -90,7 +90,7 @@ const useGetReviewsData = () => {
     let reviews: Array<Review> = []
     if (selectedTab === TABS.PRODUCT && reviewComments) {
       reviews = parseProductReviews(reviewComments.commentsByScore[selectedScore].latestComments)
-    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData?.reviews) {
+    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
       reviews = parseCompanyReviews(trustpilotData.reviews)
     }
 
