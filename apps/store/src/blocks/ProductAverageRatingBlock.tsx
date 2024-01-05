@@ -4,23 +4,24 @@ import { Text, InfoIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { Stars } from '@/components/ProductReviews/Stars'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
+import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 
-type AverageRating = NonNullable<ReturnType<typeof useProductPageContext>['averageRating']>
+type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
 
 export const ProductAverageRatingBlock = () => {
-  const { averageRating } = useProductPageContext()
+  const productReviewsData = useProuctReviewsDataContext()
   const productData = useProductData()
 
-  if (!averageRating) {
+  if (!productReviewsData) {
     console.warn(`AverageRatingBlock | Average rating for product ${productData.name} not found`)
-
     return null
   }
+
+  const { averageRating } = productReviewsData
 
   return (
     <>
@@ -51,7 +52,7 @@ export const ProductAverageRatingBlock = () => {
 
               <Text color="textSecondaryOnGray" size={{ _: 'xs', md: 'sm' }}>
                 {/* TODO: lokalise this */}
-                Based on {averageRating.reviewCount} reviews
+                Based on {averageRating.totalOfReviews} reviews
               </Text>
 
               {/* TODO: lokalise this */}
@@ -86,7 +87,7 @@ const getProductStructuredData = (product: ProductData, averageRating: AverageRa
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: averageRating.score,
-      reviewCount: averageRating.reviewCount,
+      reviewCount: averageRating.totalOfReviews,
     },
   }
 }
