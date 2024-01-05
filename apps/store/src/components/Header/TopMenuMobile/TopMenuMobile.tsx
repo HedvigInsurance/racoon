@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import React, { useEffect } from 'react'
 import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'

@@ -14,9 +14,6 @@
 
   "labels": ["needs approval/merge"],
   "ignoreDeps": [
-    // Don't update nextjs until client-side navigation issue is solved
-    // https://github.com/vercel/next.js/issues/53967
-    "next", "eslint-config-next", "@next/bundle-analyzer",
     // Not actively used, only needed in closing markets
     "@adyen/adyen-web",
     // Following dependencies are brought in as direct to solve versioning conflicts

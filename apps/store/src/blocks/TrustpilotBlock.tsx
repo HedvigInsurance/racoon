@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Text, InfoIcon, theme, mq } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'

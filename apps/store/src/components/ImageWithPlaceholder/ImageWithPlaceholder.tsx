@@ -6,7 +6,7 @@ import { theme, DEFAULT_IMAGE_QUALITY } from 'ui'
 export const ImageWithPlaceholder = ({ ...props }: ImageProps) => {
   const [hasLoaded, setHasLoaded] = useState(false)
 
-  const hasLoadedHandler = () => {
+  const handleLoad = () => {
     setHasLoaded(true)
   }
 
@@ -16,7 +16,7 @@ export const ImageWithPlaceholder = ({ ...props }: ImageProps) => {
     ...(hasLoaded && { 'data-loaded': true }),
   } as const
 
-  return <StyledImage {...imageProps} onLoadingComplete={hasLoadedHandler} />
+  return <StyledImage {...imageProps} onLoad={handleLoad} />
 }
 
 const StyledImage = styled(NextImage)({

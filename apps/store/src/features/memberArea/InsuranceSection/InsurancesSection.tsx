@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { Heading, mq, theme } from 'ui'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'

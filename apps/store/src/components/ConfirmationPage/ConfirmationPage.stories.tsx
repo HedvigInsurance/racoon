@@ -72,6 +72,16 @@ const cart = {
         perils: [],
         documents: [],
       },
+      product: {
+        id: 'oidajwoijawd',
+        name: 'SE_APARTMENT_BRF',
+        displayNameFull: 'Home Insurance Homeowner',
+        pillowImage: {
+          id: '6646216',
+          alt: '',
+          src: 'https://a.storyblok.com/f/165473/512x512/7996914970/se-apartment-rental.png',
+        },
+      },
       price: {
         amount: 125,
         currencyCode: CurrencyCode.Sek,
@@ -94,6 +104,10 @@ const cart = {
         option: ExternalInsuranceCancellationOption.None,
         requested: false,
         bankSigneringApproveByDate: null,
+      },
+      displayItems: [],
+      exposure: {
+        displayNameShort: 'Fodgevägen 73',
       },
     },
   ],

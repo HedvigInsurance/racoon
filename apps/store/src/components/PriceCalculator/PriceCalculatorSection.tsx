@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { Button, Space, Text } from 'ui'
 import { linkStyles } from '@/components/RichText/RichText.styles'

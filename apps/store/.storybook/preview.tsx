@@ -1,4 +1,3 @@
-import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { MockedProvider } from '@apollo/client/testing'
 import './i18next'
 import { Preview } from '@storybook/react'
@@ -17,7 +16,6 @@ export const parameters = {
     },
   },
   nextRouter: {
-    Provider: RouterContext.Provider,
     locale: 'se-en',
     path: '/se-en',
   },
