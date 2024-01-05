@@ -1,18 +1,19 @@
-import type { ProductReviewCommentResponse } from './productReviews'
-import type { Score, ReviewsDistribution, ScoreDistributionTuple } from './productReviews.types'
+import type { Score } from './memberReviews.types'
+import type { ReviewsDistribution, ScoreDistributionTuple } from './memberReviews.types'
 
-// It uses Largest Remainder Method (LRM) to distribute round the percetages
+type CountByScoreTuple = [Score, number]
+
+export type ReviewsCountByScore = Array<CountByScoreTuple>
+
+// It uses Largest Remainder Method (LRM) to round the percetages
 // https://stackoverflow.com/questions/13483430/how-to-make-rounded-percentages-add-up-to-100
-export const getProductReviewsDistribution = (reviews: ProductReviewCommentResponse) => {
-  // TODO: get this from DB
-  const reviewsTotal = getReviewsTotal(reviews)
+export const getReviewsDistribution = (reviewsCountByScore: ReviewsCountByScore) => {
+  const totalOfReviews = getTotalOfReviews(reviewsCountByScore)
 
-  const realReviewsDistribution: ReviewsDistribution = Object.entries(reviews.commentsByScore).map(
-    ([score, comments]) => {
-      const percentage = (comments.total / reviewsTotal) * 100
-      return [Number(score) as Score, percentage]
-    },
-  )
+  const realReviewsDistribution: ReviewsDistribution = reviewsCountByScore.map(([score, total]) => {
+    const percentage = (total / totalOfReviews) * 100
+    return [score, percentage]
+  })
 
   const truncatedReviewsDistribution: ReviewsDistribution = realReviewsDistribution.map(
     ([score, percentage]) => {
@@ -41,15 +42,12 @@ export const getProductReviewsDistribution = (reviews: ProductReviewCommentRespo
       return [score, percentage]
     },
   )
-  const sortedRoundedReviewsDistribution = roundedReviewsDistribution.sort(
-    sortReviewsDistributionByScore,
-  )
 
-  return sortedRoundedReviewsDistribution
+  return roundedReviewsDistribution
 }
 
-const getReviewsTotal = (reviews: ProductReviewCommentResponse) => {
-  const total = Object.values(reviews.commentsByScore).reduce((acc, { total }) => acc + total, 0)
+const getTotalOfReviews = (reviewsCountByScore: ReviewsCountByScore) => {
+  const total = reviewsCountByScore.reduce((acc, [, count]) => acc + count, 0)
 
   return total
 }
@@ -75,11 +73,4 @@ const sortReviewsDistributionByDecimals = (
   const decimalPercentageB = getDecimalPart(percentageB)
 
   return decimalPercentageB - decimalPercentageA
-}
-
-const sortReviewsDistributionByScore = (a: ScoreDistributionTuple, b: ScoreDistributionTuple) => {
-  const [scoreA] = a
-  const [scoreB] = b
-
-  return Number(scoreB) - Number(scoreA)
 }

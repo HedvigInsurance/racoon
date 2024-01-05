@@ -5,8 +5,10 @@ import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
-import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
-import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
+import {
+  TrustpilotDataProvider,
+  type TrustpilotData,
+} from '@/features/memberReviews/TrustpilotDataProvider'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApollo } from '@/services/apollo/client'
 import {

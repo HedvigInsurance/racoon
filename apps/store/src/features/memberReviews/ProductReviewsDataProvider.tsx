@@ -1,11 +1,16 @@
 import { createContext, useContext, type PropsWithChildren } from 'react'
-import type { ReviewsDistribution, ReviewsByScore } from './productReviews.types'
+import type { Score, Rating, Review, ReviewsDistribution } from './memberReviews.types'
+
+type ReviewsByScore = Record<
+  Score,
+  {
+    total: number
+    reviews: Array<Review>
+  }
+>
 
 export type ProductReviewsData = {
-  averageRating: {
-    score: number
-    totalOfReviews: number
-  }
+  averageRating: Rating
   reviewsByScore: ReviewsByScore
   reviewsDistribution: ReviewsDistribution
 }

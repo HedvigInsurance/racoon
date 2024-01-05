@@ -2,9 +2,13 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import type { Score, ReviewsDistribution } from '@/features/memberReviews/productReviews.types'
+import type { Score } from '@/features/memberReviews/memberReviews.types'
+import type {
+  Review,
+  Rating,
+  ReviewsDistribution,
+} from '@/features/memberReviews/memberReviews.types'
 import { AverageRating } from './AverageRating'
-import type { Review, Rating } from './ProductReviews.types'
 import { ReviewComment } from './ReviewComment'
 import { ReviewsFilter } from './ReviewsFilter'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'

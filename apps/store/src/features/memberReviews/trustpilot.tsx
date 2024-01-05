@@ -1,5 +1,6 @@
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { type RoutingLocale, Language } from '@/utils/l10n/types'
+import type { TrustpilotData } from './TrustpilotDataProvider'
 
 type AverageRatingJSONResponse = {
   score: {
@@ -20,7 +21,9 @@ type ReviewsJSONResponse = {
   }>
 }
 
-export const fetchTrustpilotData = async (locale: RoutingLocale) => {
+export const fetchTrustpilotData = async (
+  locale: RoutingLocale,
+): Promise<TrustpilotData | null> => {
   try {
     const hedvigBusinessUnitId = process.env.NEXT_PUBLIC_TRUSTPILOT_HEDVIG_BUSINESS_UNIT_ID
     if (!hedvigBusinessUnitId) {
@@ -41,14 +44,17 @@ export const fetchTrustpilotData = async (locale: RoutingLocale) => {
       fetchLatestReviews(hedvigBusinessUnitId, trustpilotApiKey, language),
     ])
 
-    return { ...averageRating, reviews }
+    return { averageRating, reviews }
   } catch (error) {
     console.error(`Could not get Trustpilot data: ${error}`)
     return null
   }
 }
 
-const fetchAverageRating = async (unitId: string, apiKey: string) => {
+const fetchAverageRating = async (
+  unitId: string,
+  apiKey: string,
+): Promise<TrustpilotData['averageRating']> => {
   const response = await fetch(`https://api.trustpilot.com/v1/business-units/${unitId}`, {
     headers: {
       apiKey,
@@ -65,11 +71,15 @@ const fetchAverageRating = async (unitId: string, apiKey: string) => {
 
   return {
     score: score.trustScore,
-    totalReviews: numberOfReviews.total,
+    totalOfReviews: numberOfReviews.total,
   }
 }
 
-const fetchLatestReviews = async (unitId: string, apiKey: string, language: Language) => {
+const fetchLatestReviews = async (
+  unitId: string,
+  apiKey: string,
+  language: Language,
+): Promise<TrustpilotData['reviews']> => {
   const response = await fetch(
     `https://api.trustpilot.com/v1/business-units/${unitId}/reviews?language=${language}&orderBy=createdat.desc&perPage=10&page=1`,
     {
@@ -87,10 +97,10 @@ const fetchLatestReviews = async (unitId: string, apiKey: string, language: Lang
 
   return reviews.map((review) => ({
     id: review.id,
-    stars: review.stars,
-    text: review.text,
-    createdAt: review.createdAt,
-    isVerified: review.isVerified,
+    type: 'company',
+    score: review.stars,
+    date: review.createdAt,
+    content: review.text,
   }))
 }
 

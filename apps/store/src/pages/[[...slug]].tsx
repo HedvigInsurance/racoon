@@ -9,7 +9,7 @@ import { type ProductPageProps } from '@/components/ProductPage/ProductPage.type
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { fetchProductReviewsData } from '@/features/memberReviews/productReviews'
-import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
+import type { TrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { initializeApollo } from '@/services/apollo/client'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
