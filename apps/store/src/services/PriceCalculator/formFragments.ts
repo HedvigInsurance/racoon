@@ -24,6 +24,7 @@ export const postalCodeField: InputField = {
   minLength: 5,
   maxLength: 5,
   required: true,
+  pattern: '[0-9]{5}',
 }
 
 export const livingSpaceField: InputField = {
