@@ -7,7 +7,7 @@ import type { ReviewComments } from './productReviews.types'
 
 // It uses Largest Remainder Method (LRM) to distribute round the percetages
 // https://stackoverflow.com/questions/13483430/how-to-make-rounded-percentages-add-up-to-100
-export const getReviewsDistribution = (reviews: ReviewComments) => {
+export const getProductReviewsDistribution = (reviews: ReviewComments) => {
   // TODO: get this from DB
   const reviewsTotal = getReviewsTotal(reviews)
 

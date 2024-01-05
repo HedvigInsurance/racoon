@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Space, theme } from 'ui'
+import { getProductReviewsDistribution } from '@/features/memberReviews/getProductReviewsDistribution'
+import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
+import type { Review as ProductReview } from '@/features/memberReviews/productReviews.types'
 import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
 import { type Review as CompanyReview } from '@/features/memberReviews/trustpilot.types'
 import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
-import { getReviewsDistribution } from '@/services/productReviews/getReviewsDistribution'
-import { MAX_SCORE } from '@/services/productReviews/productReviews.constants'
-import type { Review as ProductReview } from '@/services/productReviews/productReviews.types'
 import { useProductPageContext } from '../ProductPage/ProductPageContext'
 import { AverageRating } from './AverageRating'
 import type { Score, Review, ReviewsDistribution } from './ProductReviews.types'
@@ -96,7 +96,7 @@ const useGetReviewsData = () => {
 
     let reviewsDistribution: ReviewsDistribution = []
     if (selectedTab === TABS.PRODUCT && reviewComments) {
-      reviewsDistribution = getReviewsDistribution(reviewComments)
+      reviewsDistribution = getProductReviewsDistribution(reviewComments)
     }
 
     return {

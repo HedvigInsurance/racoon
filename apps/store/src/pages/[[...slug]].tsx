@@ -8,14 +8,14 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
+import {
+  getProductAverageRating,
+  getProductReviewComments,
+} from '@/features/memberReviews/productReviews'
 import type { TrustpilotData } from '@/features/memberReviews/trustpilot.types'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { initializeApollo } from '@/services/apollo/client'
 import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import {
-  getProductAverageRating,
-  getProductReviewComments,
-} from '@/services/productReviews/productReviews'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
 import {
   StoryblokPageProps,
