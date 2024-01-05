@@ -33,12 +33,14 @@ export const TrustpilotBlock = ({ blok }: Props) => {
     <Wrapper {...storyblokEditable(blok)}>
       <StyledTrustpilotLogo />
 
-      <ScoreText as="span">{t('TRUSTPILOT_SCORE', { score: trustpilotData.score })}</ScoreText>
+      <ScoreText as="span">
+        {t('TRUSTPILOT_SCORE', { score: trustpilotData.averageRating.score })}
+      </ScoreText>
 
       <ReviewText as="span" size="md" color="textSecondaryOnGray">
         <a href={getLinkFieldURL(blok.link)} target={isInternalLink ? '_self' : '_blank'} rel={rel}>
           {t('TRUSTPILOT_REVIEWS_COUNT', {
-            numberOfReviews: numberGrouping(trustpilotData.totalReviews),
+            numberOfReviews: numberGrouping(trustpilotData.averageRating.totalOfReviews),
           })}
         </a>
 

@@ -1,6 +1,7 @@
 import { kv } from '@vercel/kv'
 import { z } from 'zod'
-import { getProductReviewsDistribution } from './getProductReviewsDistribution'
+import { getReviewsDistribution, type ReviewsCountByScore } from './getReviewsDistribution'
+import type { Score } from './memberReviews.types'
 import {
   averageRatingSchema,
   reviewCommentsSchema,
@@ -21,7 +22,7 @@ type AverageRatingsResponse = { updatedAt: string } & Record<
   ProductAverageRatingResponse | undefined
 >
 
-export type ProductReviewCommentResponse = z.infer<typeof reviewCommentsSchema>
+type ProductReviewCommentResponse = z.infer<typeof reviewCommentsSchema>
 
 type ReviewCommentsResponse = Record<string, ProductReviewCommentResponse | undefined>
 
@@ -29,20 +30,20 @@ export const fetchProductReviewsData = async (
   productId: string,
 ): Promise<ProductReviewsData | null> => {
   try {
-    const [averageRating, reviewComments] = await Promise.all([
-      fetchProductAverageRating(productId),
-      fetchProductReviewComments(productId),
+    const [averageRating, reviewsByScore] = await Promise.all([
+      fetchAverageRating(productId),
+      fetchReviewsByScore(productId),
     ])
 
-    if (!averageRating || !reviewComments) {
+    if (!averageRating || !reviewsByScore) {
       console.log(`Could not found product reviews data for product ${productId}`)
       return null
     }
 
     return {
-      averageRating: parseProductAverageRating(averageRating),
-      reviewsByScore: parseProductReviewsByScore(reviewComments),
-      reviewsDistribution: getProductReviewsDistribution(reviewComments),
+      averageRating,
+      reviewsByScore,
+      reviewsDistribution: getProductReviewsCountByScore(reviewsByScore),
     }
   } catch (error) {
     console.log(`Failed to fetch product reviews data for product ${productId}`, error)
@@ -50,38 +51,9 @@ export const fetchProductReviewsData = async (
   }
 }
 
-const parseProductAverageRating = (
-  averageRating: ProductAverageRatingResponse,
-): ProductReviewsData['averageRating'] => {
-  return {
-    score: averageRating.score,
-    totalOfReviews: averageRating.reviewCount,
-  }
-}
-
-const parseProductReviewsByScore = (
-  reviewComments: ProductReviewCommentResponse,
-): ProductReviewsData['reviewsByScore'] => {
-  return Object.entries(reviewComments.commentsByScore).reduce<
-    ProductReviewsData['reviewsByScore']
-  >(
-    (acc, [score, commentsByScore]) => ({
-      ...acc,
-      [score]: {
-        total: commentsByScore.total,
-        reviews: commentsByScore.latestComments.map((comment) => ({
-          id: comment.id,
-          date: comment.date,
-          score: comment.score,
-          content: comment.content,
-        })),
-      },
-    }),
-    {} as ProductReviewsData['reviewsByScore'],
-  )
-}
-
-const fetchProductAverageRating = async (productId: string) => {
+const fetchAverageRating = async (
+  productId: string,
+): Promise<ProductReviewsData['averageRating'] | null> => {
   const averageRatings = await kv.get<AverageRatingsResponse>(KV_AVERAGE_RATINGS_KEY)
 
   if (!averageRatings) {
@@ -101,10 +73,15 @@ const fetchProductAverageRating = async (productId: string) => {
     return null
   }
 
-  return productAverageRating
+  return {
+    score: productAverageRating.score,
+    totalOfReviews: productAverageRating.reviewCount,
+  }
 }
 
-const fetchProductReviewComments = async (productId: string) => {
+const fetchReviewsByScore = async (
+  productId: string,
+): Promise<ProductReviewsData['reviewsByScore'] | null> => {
   const reviewComments = await kv.get<ReviewCommentsResponse>(KV_REVIEW_COMMENTS_KEY)
 
   if (!reviewComments) {
@@ -124,5 +101,41 @@ const fetchProductReviewComments = async (productId: string) => {
     return null
   }
 
-  return productReviewComments
+  return parseReviewsByScore(productReviewComments)
+}
+
+const parseReviewsByScore = (
+  reviewComments: ProductReviewCommentResponse,
+): ProductReviewsData['reviewsByScore'] => {
+  return Object.entries(reviewComments.commentsByScore).reduce<
+    ProductReviewsData['reviewsByScore']
+  >(
+    (acc, [score, commentsByScore]) => ({
+      ...acc,
+      [score]: {
+        total: commentsByScore.total,
+        reviews: commentsByScore.latestComments.map((comment) => ({
+          id: comment.id,
+          type: 'product',
+          date: comment.date,
+          score: comment.score,
+          content: comment.content,
+        })),
+      },
+    }),
+    {} as ProductReviewsData['reviewsByScore'],
+  )
+}
+
+const getProductReviewsCountByScore = (
+  reviewsByScore: ProductReviewsData['reviewsByScore'],
+): ProductReviewsData['reviewsDistribution'] => {
+  const scores: Array<Score> = [5, 4, 3, 2, 1]
+  const reviewsCountByScore: ReviewsCountByScore = scores.map((score) => {
+    const total = reviewsByScore[score].total
+    return [score, total]
+  })
+  const reviewsDistribution = getReviewsDistribution(reviewsCountByScore)
+
+  return reviewsDistribution
 }

@@ -1,5 +1,10 @@
 import { createContext, useContext, type PropsWithChildren } from 'react'
-import type { TrustpilotData } from './trustpilot.types'
+import type { Rating, Review } from '@/features/memberReviews/memberReviews.types'
+
+export type TrustpilotData = {
+  averageRating: Rating
+  reviews: Array<Review>
+}
 
 const TrustpilotDataContext = createContext<TrustpilotData | null>(null)
 

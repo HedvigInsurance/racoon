@@ -48,7 +48,7 @@ export const ReviewTabs = (props: Props) => {
         fullWidth={true}
         onClick={handleTabChange}
       >
-        {t('TRUSTPILOT_REVIEWS_TAB_LABEL', { score: trustpilotData.score })}
+        {t('TRUSTPILOT_REVIEWS_TAB_LABEL', { score: trustpilotData.averageRating.score })}
       </Button>
     </SpaceFlex>
   )
