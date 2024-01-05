@@ -11,6 +11,7 @@ module.exports = withBundleAnalyzer({
   experimental: {
     instrumentationHook: true,
     strictNextHead: true,
+    serverActions: true,
   },
   reactStrictMode: true,
   swcMinify: true,
