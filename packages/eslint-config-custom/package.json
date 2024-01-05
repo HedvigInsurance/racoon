@@ -5,8 +5,8 @@
   "main": "eslint-config-custom.js",
   "license": "MIT",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "6.16.0",
-    "@typescript-eslint/parser": "6.16.0",
+    "@typescript-eslint/eslint-plugin": "6.17.0",
+    "@typescript-eslint/parser": "6.17.0",
     "eslint-config-next": "13.4.12",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-jest": "27.6.1",
