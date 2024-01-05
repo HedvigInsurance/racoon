@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { hideChatOnPage } from '@/services/CustomerFirst'
@@ -16,7 +17,6 @@ import {
   getPageLinks,
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
-import { fetchTrustpilotData, useHydrateTrustpilotData } from '@/services/trustpilot/trustpilot'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 type PageProps = Pick<StoryblokPageProps, 'story' | 'trustpilot'>

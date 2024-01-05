@@ -1,6 +1,7 @@
 import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { globalStore } from '@/utils/globalStore'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { type RoutingLocale, Language } from '@/utils/l10n/types'
 import type { TrustpilotData } from './trustpilot.types'
 
@@ -49,7 +50,7 @@ export const fetchTrustpilotData = async (locale: RoutingLocale) => {
       return null
     }
 
-    const language = getLanguage(locale)
+    const { language } = getLocaleOrFallback(locale)
 
     const [averageRating, reviews] = await Promise.all([
       fetchAverageRating(hedvigBusinessUnitId, trustpilotApiKey),
@@ -107,22 +108,6 @@ const fetchLatestReviews = async (unitId: string, apiKey: string, language: Lang
     createdAt: review.createdAt,
     isVerified: review.isVerified,
   }))
-}
-
-const getLanguage = (locale: RoutingLocale): Language => {
-  switch (locale) {
-    case 'se':
-      return Language.Sv
-    case 'dk':
-      return Language.Da
-    case 'no':
-      return Language.No
-    case 'se-en':
-    case 'dk-en':
-    case 'no-en':
-    default:
-      return Language.En
-  }
 }
 
 const logMissingSetting = (message: string) => {
