@@ -11,7 +11,6 @@ module.exports = withBundleAnalyzer({
   experimental: {
     instrumentationHook: true,
     strictNextHead: true,
-    serverActions: true,
   },
   reactStrictMode: true,
   swcMinify: true,
@@ -20,7 +19,16 @@ module.exports = withBundleAnalyzer({
     emotion: true,
   },
   images: {
-    domains: ['a.storyblok.com', 'assets.hedvig.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'a.storyblok.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.hedvig.com',
+      },
+    ],
   },
   productionBrowserSourceMaps: true,
   i18n,

@@ -6,13 +6,17 @@ import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { contentFontClassName } from '@/utils/fonts'
+import { ORIGIN_URL } from '@/utils/PageLink'
 import { GlobalStyles } from './GlobalStyles'
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       {/* head-tag needed, even if empty: https://docs.tss-react.dev/ssr/next.js */}
-      <head></head>
+      <head>
+        {/* theme.colors.light */}
+        <meta name="theme-color" content="hsl(0, 0%, 98%)" />
+      </head>
       <body className={contentFontClassName}>
         <ApolloWrapper>
           <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
@@ -28,8 +32,8 @@ const Layout = ({ children }: PropsWithChildren) => {
 export default Layout
 
 export const metadata = {
+  metadataBase: new URL(ORIGIN_URL),
   twitter: { site: '@hedvigapp', card: 'summary_large_image' },
-  themeColor: 'hsl(0, 0%, 98%)', // theme.colors.light
   icons: [
     { rel: 'apple-touch-icon', sizes: '76x76', url: '/apple-touch-icon.png' },
     {

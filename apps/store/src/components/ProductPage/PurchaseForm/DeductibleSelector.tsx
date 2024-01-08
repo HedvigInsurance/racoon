@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Text } from 'ui'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'

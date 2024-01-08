@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPageWithLayout } from 'next'
-import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
+import { useTranslation } from 'next-i18next'
 import { CartPage } from '@/components/CartPage/CartPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'

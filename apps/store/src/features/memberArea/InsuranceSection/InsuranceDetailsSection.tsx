@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
-import { useTranslation } from 'next-i18next'
 import router, { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
 import { Button, Heading, Space, Text, theme } from 'ui'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'

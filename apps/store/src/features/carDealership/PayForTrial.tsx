@@ -1,6 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'

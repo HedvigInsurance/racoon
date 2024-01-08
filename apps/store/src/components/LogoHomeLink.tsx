@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { HedvigLogo } from 'ui'
 import { PageLink } from '@/utils/PageLink'
 

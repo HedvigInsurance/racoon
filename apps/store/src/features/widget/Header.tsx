@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { CheckIcon, ChevronIcon, HedvigLogo, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { STYLES as GRID_LAYOUT_STYLES } from '@/components/GridLayout/GridLayout.helper'

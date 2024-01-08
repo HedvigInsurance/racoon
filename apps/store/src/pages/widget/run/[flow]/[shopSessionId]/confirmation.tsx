@@ -1,6 +1,6 @@
 import { type GetServerSideProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentProps } from 'react'
 import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { ChangeEventHandler } from 'react'
 import { mq, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'

@@ -1,6 +1,6 @@
 import { type GetServerSideProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentPropsWithoutRef } from 'react'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'

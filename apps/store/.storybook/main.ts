@@ -24,7 +24,9 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: resolveDependency('@storybook/nextjs'),
-    options: {},
+    options: {
+      builder: { useSWC: true },
+    },
   },
   features: {
     buildStoriesJson: true,
@@ -37,13 +39,15 @@ const config: StorybookConfig = {
      * @see https://github.com/storybookjs/storybook/issues/4082#issuecomment-758272734
      * @see https://webpack.js.org/migrate/5/
      */
-    config.resolve.fallback = {
-      fs: false,
-      tls: false,
-      net: false,
-      module: false,
-      path: require.resolve('path-browserify'),
-      crypto: false,
+    if (config.resolve) {
+      config.resolve.fallback = {
+        fs: false,
+        tls: false,
+        net: false,
+        module: false,
+        path: require.resolve('path-browserify'),
+        crypto: false,
+      }
     }
     return config
   },

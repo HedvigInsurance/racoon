@@ -1,8 +1,8 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
-import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { useState, useEffect } from 'react'
 import {
   Text,
