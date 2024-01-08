@@ -1,8 +1,9 @@
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { theme, mq, Button } from 'ui'
+import { theme, mq } from 'ui'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -62,11 +63,7 @@ const LogoutButton = () => {
     window.location.reload()
   }
 
-  return (
-    <Button size="medium" variant="secondary" onClick={handleLogout}>
-      Logout
-    </Button>
-  )
+  return <NavigationButton onClick={handleLogout}>Logout</NavigationButton>
 }
 
 const Navigation = styled.nav({
@@ -99,7 +96,7 @@ const NavgationItem = styled.li({
   },
 })
 
-const NavigationLink = styled(Link)({
+const NavigationItemStyles = css({
   display: 'flex',
   alignItems: 'center',
   height: '2.5rem',
@@ -110,7 +107,7 @@ const NavigationLink = styled(Link)({
 
   [mq.lg]: {
     width: '100%',
-    height: '3.25rem',
+    height: '3rem',
   },
 
   '@media (hover: hover)': {
@@ -120,12 +117,13 @@ const NavigationLink = styled(Link)({
   },
 
   '&[data-active="true"]': {
-    backgroundColor: theme.colors.blueFill1,
-
-    '@media (hover: hover)': {
-      '&:hover': {
-        backgroundColor: theme.colors.blueFill1,
-      },
-    },
+    backgroundColor: theme.colors.grayTranslucent100,
   },
 })
+
+const NavigationButton = styled.button(NavigationItemStyles, {
+  color: theme.colors.signalRedElement,
+  cursor: 'pointer',
+})
+
+const NavigationLink = styled(Link)(NavigationItemStyles)

@@ -10,6 +10,7 @@ import { MemberContractFragment } from '@/services/graphql/generated'
 import { singleQueryParam } from '@/utils/singleQueryParam'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
+import { CONTENT_WIDTH } from './InsurancesSection'
 
 const SECTION_QUERY_PARAM = 'section'
 
@@ -21,14 +22,12 @@ export const InsuranceDetailsSection = () => {
   return (
     <>
       {contract && (
-        <div>
-          <Overview>
-            <Space y={2}>
-              <InsuranceCard key={contract.id} contract={contract} />
-              <InsuranceTabs contract={contract} />
-            </Space>
-          </Overview>
-        </div>
+        <Overview>
+          <Space y={2}>
+            <InsuranceCard key={contract.id} contract={contract} />
+            <InsuranceTabs contract={contract} />
+          </Space>
+        </Overview>
       )}
     </>
   )
@@ -142,7 +141,7 @@ const TabButton = styled(Button)({
   },
 })
 
-const Overview = styled.div({ maxWidth: '400px' })
+const Overview = styled.div({ width: `min(${CONTENT_WIDTH}, 100%)` })
 
 const DocumentList = styled.div({
   display: 'flex',
