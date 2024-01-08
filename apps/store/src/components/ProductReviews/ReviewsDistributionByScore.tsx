@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Text, theme, mq } from 'ui'
+import { Text, theme } from 'ui'
 import { Stars } from './Stars'
 
 type Props = {
@@ -25,11 +25,6 @@ const Wrapper = styled.div({
   width: 'min(28.5rem, 100%)',
   padding: theme.space.md,
   borderRadius: theme.radius.md,
-
-  [mq.md]: {
-    padding: theme.space.lg,
-    borderRadius: theme.radius.lg,
-  },
 })
 
 const AmountBar = styled.div(({ filledPortion }: { filledPortion: number }) => ({

@@ -11,7 +11,8 @@ export const getReviewsDistribution = (reviewsCountByScore: ReviewsCountByScore)
   const totalOfReviews = getTotalOfReviews(reviewsCountByScore)
 
   const realReviewsDistribution: ReviewsDistribution = reviewsCountByScore.map(([score, total]) => {
-    const percentage = (total / totalOfReviews) * 100
+    const percentage = totalOfReviews > 0 ? (total / totalOfReviews) * 100 : 0
+
     return [score, percentage]
   })
 
@@ -26,7 +27,7 @@ export const getReviewsDistribution = (reviewsCountByScore: ReviewsCountByScore)
     (acc, [, percentage]) => acc + percentage,
     0,
   )
-  const pointsToBeDistributed = 100 - truncatedPercentagesTotal
+  const pointsToBeDistributed = truncatedPercentagesTotal > 0 ? 100 - truncatedPercentagesTotal : 0
 
   const scoresThatShouldReceiveExtraPoint = [...realReviewsDistribution]
     .sort(sortReviewsDistributionByDecimals)

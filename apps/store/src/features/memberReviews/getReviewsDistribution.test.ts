@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { getReviewsDistribution, type ReviewsCountByScore } from './getReviewsDistribution'
 
-test('should return a distribution where the sum of the scores percentages equals to 100%', () => {
+test('it should return a distribution where the sum of the scores percentages equals to 100%', () => {
   // Arrange
   const reviews: ReviewsCountByScore = [
     [5, 83],
@@ -29,7 +29,7 @@ test('should return a distribution where the sum of the scores percentages equal
   expect(distributionSum).toEqual(100)
 })
 
-test('should not do any rounding when percentages already sum 100%', () => {
+test('it should not do any rounding when percentages already sum 100%', () => {
   // Arrange
   const reviews: ReviewsCountByScore = [
     [5, 60],
@@ -49,5 +49,25 @@ test('should not do any rounding when percentages already sum 100%', () => {
     [3, 20],
     [2, 6],
     [1, 4],
+  ])
+})
+
+test('it should work properly when there is no comments, meaning 0% for each category', () => {
+  const reviews: ReviewsCountByScore = [
+    [5, 0],
+    [4, 0],
+    [3, 0],
+    [2, 0],
+    [1, 0],
+  ]
+
+  const reviewsDistribution = getReviewsDistribution(reviews)
+
+  expect(reviewsDistribution).toEqual([
+    [5, 0],
+    [4, 0],
+    [3, 0],
+    [2, 0],
+    [1, 0],
   ])
 })
