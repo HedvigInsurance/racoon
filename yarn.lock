@@ -17459,12 +17459,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.7.13":
-  version: 23.7.13
-  resolution: "i18next@npm:23.7.13"
+"i18next@npm:23.7.16":
+  version: 23.7.16
+  resolution: "i18next@npm:23.7.16"
   dependencies:
     "@babel/runtime": ^7.23.2
-  checksum: 58d188979d04d23547abcbceb20299df379c82e69d1a5387051668a05db92480a8ff98b1d12c4e3501ee6566e533873738dac2042db193e810bc6f8bc505368e
+  checksum: 907eb4429598a53780152a54e8f8edadb224b506dc419b8cc3130e74ace7445dfbaa03af8a173d5145834fa8b45c39310673420f825ace2002dc56bb5879add0
   languageName: node
   linkType: hard
 
@@ -24048,7 +24048,7 @@ __metadata:
     framer-motion: 10.16.16
     graphql: 16.8.1
     graphql-tag: 2.12.6
-    i18next: 23.7.13
+    i18next: 23.7.16
     i18next-parser: 8.12.0
     jest: 29.7.0
     jest-environment-jsdom: 29.7.0
